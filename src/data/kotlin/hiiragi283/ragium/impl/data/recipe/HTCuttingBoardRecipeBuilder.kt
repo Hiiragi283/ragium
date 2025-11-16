@@ -13,7 +13,7 @@ import vectorwing.farmersdelight.common.crafting.CuttingBoardRecipe
 import vectorwing.farmersdelight.common.crafting.ingredient.ChanceResult
 
 /**
- * @see [vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder]
+ * @see vectorwing.farmersdelight.data.builder.CuttingBoardRecipeBuilder
  */
 class HTCuttingBoardRecipeBuilder(stack: ImmutableItemStack, chance: Float) :
     HTStackRecipeBuilder<HTCuttingBoardRecipeBuilder>("cutting", stack),
@@ -46,8 +46,8 @@ class HTCuttingBoardRecipeBuilder(stack: ImmutableItemStack, chance: Float) :
 
     private var group: String? = null
 
-    override fun group(groupName: String?): HTCuttingBoardRecipeBuilder = apply {
-        this.group = groupName
+    fun setGroup(group: String?): HTCuttingBoardRecipeBuilder = apply {
+        this.group = group
     }
 
     override fun createRecipe(output: ItemStack): CuttingBoardRecipe = CuttingBoardRecipe(

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.serialization.codec
 
 import com.mojang.datafixers.util.Function3
 import com.mojang.datafixers.util.Function4
+import com.mojang.datafixers.util.Function5
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.DynamicOps
@@ -19,8 +20,6 @@ import java.util.function.UnaryOperator
 
 /**
  * [Codec]と[StreamCodec]を束ねたデータクラス
- * @see [BiCodecs]
- * @see [MapBiCodec]
  */
 @ConsistentCopyVisibility
 @JvmRecord
@@ -197,6 +196,54 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
                 getter3,
                 codec4.streamCodec,
                 getter4,
+                factory,
+            ),
+        )
+
+        /**
+         * 指定された[codec1], [codec2], [codec3], [codec4], [codec5]に基づいて，別の[BiCodec]を生成します。
+         * @param T1 [factory]の第1引数に使われるクラス
+         * @param T2 [factory]の第2引数に使われるクラス
+         * @param T3 [factory]の第3引数に使われるクラス
+         * @param T4 [factory]の第4引数に使われるクラス
+         * @param T5 [factory]の第5引数に使われるクラス
+         * @param C 変換後のコーデックの対象となるクラス
+         */
+        @JvmStatic
+        fun <B : ByteBuf, C : Any, T1 : Any, T2 : Any, T3 : Any, T4 : Any, T5 : Any> composite(
+            codec1: MapBiCodec<in B, T1>,
+            getter1: Function<C, T1>,
+            codec2: MapBiCodec<in B, T2>,
+            getter2: Function<C, T2>,
+            codec3: MapBiCodec<in B, T3>,
+            getter3: Function<C, T3>,
+            codec4: MapBiCodec<in B, T4>,
+            getter4: Function<C, T4>,
+            codec5: MapBiCodec<in B, T5>,
+            getter5: Function<C, T5>,
+            factory: Function5<T1, T2, T3, T4, T5, C>,
+        ): BiCodec<B, C> = of(
+            RecordCodecBuilder.create { instance ->
+                instance
+                    .group(
+                        codec1.codec.forGetter(getter1),
+                        codec2.codec.forGetter(getter2),
+                        codec3.codec.forGetter(getter3),
+                        codec4.codec.forGetter(getter4),
+                        codec5.codec.forGetter(getter5),
+                    ).apply(instance, factory)
+            },
+            StreamCodec.composite(
+                codec1.streamCodec,
+                getter1,
+                codec2.streamCodec,
+                getter2,
+                codec3.streamCodec,
+                getter3,
+                codec4.streamCodec,
+                getter4,
+                codec5.streamCodec,
+                getter5,
                 factory,
             ),
         )

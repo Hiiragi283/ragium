@@ -14,28 +14,26 @@ import net.minecraft.world.level.block.state.BlockState
  */
 class HTDimensionalAnchorBlockEntity(pos: BlockPos, state: BlockState) :
     ExtendedBlockEntity(RagiumBlockEntityTypes.DIM_ANCHOR, pos, state) {
-    override fun afterLevelInit(level: Level) {
-        super.afterLevelInit(level)
-        forceChunk()
+    override fun onUpdateLevel(level: Level, pos: BlockPos) {
+        super.onUpdateLevel(level, pos)
+        forceChunk(level, pos)
     }
 
-    override fun setRemoved() {
-        super.setRemoved()
-        releaseChunk()
+    override fun onRemove(level: Level, pos: BlockPos) {
+        super.onRemove(level, pos)
+        releaseChunk(level, pos)
     }
 
-    private fun forceChunk(): Boolean {
-        val level: ServerLevel = this.getServerLevel() ?: return false
-        if (this.isRemoved) return false
-        val forced: Boolean = RagiumChunkLoader.forceChunk(level, blockPos, ChunkPos(blockPos))
+    private fun forceChunk(level: Level, pos: BlockPos): Boolean {
+        val serverLevel: ServerLevel = level as? ServerLevel ?: return false
+        val forced: Boolean = RagiumChunkLoader.forceChunk(serverLevel, pos, ChunkPos(pos))
         if (forced) setChanged()
         return forced
     }
 
-    private fun releaseChunk(): Boolean {
-        val level: ServerLevel = this.getServerLevel() ?: return false
-        if (this.isRemoved) return false
-        val released: Boolean = RagiumChunkLoader.releaseChunk(level, blockPos, ChunkPos(blockPos))
+    private fun releaseChunk(level: Level, pos: BlockPos): Boolean {
+        val serverLevel: ServerLevel = level as? ServerLevel ?: return false
+        val released: Boolean = RagiumChunkLoader.releaseChunk(serverLevel, pos, ChunkPos(pos))
         if (released) setChanged()
         return released
     }

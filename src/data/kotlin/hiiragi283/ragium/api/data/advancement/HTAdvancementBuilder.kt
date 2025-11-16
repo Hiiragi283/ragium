@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.data.advancement
 
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.api.util.HTDslMarker
@@ -45,6 +47,12 @@ class HTAdvancementBuilder private constructor(private val parent: HTAdvancement
 
     //    Criteria    //
 
+    fun itemPredicate(vararg items: ItemLike): ItemPredicate.Builder = ItemPredicate.Builder.item().of(*items)
+
+    fun itemPredicate(prefix: HTPrefixLike, material: HTMaterialLike): ItemPredicate.Builder = itemPredicate(prefix.itemTagKey(material))
+
+    fun itemPredicate(tagKey: TagKey<Item>): ItemPredicate.Builder = ItemPredicate.Builder.item().of(tagKey)
+
     fun addCriterion(key: String, criterion: Criterion<*>): HTAdvancementBuilder = apply {
         criteria[key] = criterion
     }
@@ -56,7 +64,7 @@ class HTAdvancementBuilder private constructor(private val parent: HTAdvancement
 
     fun hasAnyItem(key: String, items: Collection<ItemLike>): HTAdvancementBuilder = hasAnyItem(key, *items.toTypedArray())
 
-    fun hasAnyItem(key: String, vararg items: ItemLike): HTAdvancementBuilder = hasItem(key, ItemPredicate.Builder.item().of(*items))
+    fun hasAnyItem(key: String, vararg items: ItemLike): HTAdvancementBuilder = hasItem(key, itemPredicate(*items))
 
     fun hasAnyItem(tagKey: TagKey<Item>): HTAdvancementBuilder =
         hasItem("has_${tagKey.location.toDebugFileName()}", ItemPredicate.Builder.item().of(tagKey))
@@ -65,7 +73,7 @@ class HTAdvancementBuilder private constructor(private val parent: HTAdvancement
         addCriterion(key, InventoryChangeTrigger.TriggerInstance.hasItems(*items))
 
     fun useItem(item: HTItemHolderLike): HTAdvancementBuilder =
-        addCriterion("use_${item.getPath()}", ConsumeItemTrigger.TriggerInstance.usedItem(item))
+        addCriterion("use_${item.getPath()}", ConsumeItemTrigger.TriggerInstance.usedItem(itemPredicate(item)))
 
     //    Conditions    //
 

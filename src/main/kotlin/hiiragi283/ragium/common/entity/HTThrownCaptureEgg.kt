@@ -5,8 +5,10 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.client.Minecraft
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -53,6 +55,11 @@ class HTThrownCaptureEgg : ThrowableItemProjectile {
             // パーティクルを出す
             if (level().isClientSide) {
                 Minecraft.getInstance().particleEngine.createTrackingEmitter(target, ParticleTypes.FIREWORK)
+            }
+            // 進捗を解除させる
+            val owner: Entity? = this.owner
+            if (owner is ServerPlayer) {
+                CriteriaTriggers.PLAYER_INTERACTED_WITH_ENTITY.trigger(owner, item, target)
             }
             // 対象を消す
             target.discard()

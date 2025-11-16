@@ -2,12 +2,15 @@ package hiiragi283.ragium.api
 
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
-import hiiragi283.ragium.api.data.registry.HTBrewingEffect
+import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.registry.HTSolarPower
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.registry.toId
 import net.minecraft.core.Registry
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.registries.RegistryBuilder
@@ -15,18 +18,13 @@ import org.slf4j.Logger
 import java.util.ServiceLoader
 
 /**
- * @see [mekanism.api.MekanismAPI]
+ * @see mekanism.api.MekanismAPI
  */
 object RagiumAPI {
     /**
      * Ragiumで使用する名前空間
      */
     const val MOD_ID = "ragium"
-
-    /**
-     * Ragiumの表示名
-     */
-    const val MOD_NAME = "Ragium"
 
     @JvmField
     val LOGGER: Logger = LogUtils.getLogger()
@@ -56,34 +54,49 @@ object RagiumAPI {
 
     //    Registry    //
 
-    @JvmField
-    val BREWING_EFFECT_KEY: ResourceKey<Registry<HTBrewingEffect>> = ResourceKey.createRegistryKey(id("brewing_effect"))
+    @JvmStatic
+    private fun <T : Any> createKey(path: String): ResourceKey<Registry<T>> = ResourceKey.createRegistryKey(id(path))
 
-    @JvmField
-    val MATERIAL_PREFIX_KEY: ResourceKey<Registry<HTMaterialPrefix>> = ResourceKey.createRegistryKey(id("material_prefix"))
-
-    @JvmField
-    val MATERIAL_PREFIX_REGISTRY: Registry<HTMaterialPrefix> = RegistryBuilder(MATERIAL_PREFIX_KEY)
+    @JvmStatic
+    private fun <T : Any> createRegistry(key: ResourceKey<Registry<T>>): Registry<T> = RegistryBuilder<T>(key)
         .sync(true)
         .create()
 
+    // Builtin
     @JvmField
-    val MATERIAL_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTMaterialRecipeData>>> = ResourceKey.createRegistryKey(
-        id("material_recipe_type"),
+    val EQUIP_ACTION_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTEquipAction>>> = createKey("equip_action_type")
+
+    @JvmField
+    val EQUIP_ACTION_TYPE_REGISTRY: Registry<MapCodec<out HTEquipAction>> = createRegistry(EQUIP_ACTION_TYPE_KEY)
+
+    @JvmField
+    val MATERIAL_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTMaterialRecipeData>>> = createKey("material_recipe_type")
+
+    @JvmField
+    val MATERIAL_RECIPE_TYPE_REGISTRY: Registry<MapCodec<out HTMaterialRecipeData>> = createRegistry(MATERIAL_RECIPE_TYPE_KEY)
+
+    @JvmField
+    val SLOT_TYPE_KEY: ResourceKey<Registry<StreamCodec<RegistryFriendlyByteBuf, out HTSyncablePayload>>> = createKey("syncable_slot_type")
+
+    @JvmField
+    val SLOT_TYPE_REGISTRY: Registry<StreamCodec<RegistryFriendlyByteBuf, out HTSyncablePayload>> = createRegistry(SLOT_TYPE_KEY)
+
+    @JvmField
+    val SUB_ENTITY_INGREDIENT_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTSubEntityTypeIngredient>>> = createKey("entity_ingredient_type")
+
+    @JvmField
+    val SUB_ENTITY_INGREDIENT_TYPE_REGISTRY: Registry<MapCodec<out HTSubEntityTypeIngredient>> = createRegistry(
+        SUB_ENTITY_INGREDIENT_TYPE_KEY,
     )
 
+    // Dynamic
     @JvmField
-    val MATERIAL_RECIPE_TYPE_REGISTRY: Registry<MapCodec<out HTMaterialRecipeData>> = RegistryBuilder(MATERIAL_RECIPE_TYPE_KEY)
-        .sync(true)
-        .create()
-
-    @JvmField
-    val SOLAR_POWER_KEY: ResourceKey<Registry<HTSolarPower>> = ResourceKey.createRegistryKey(id("solar_power"))
+    val SOLAR_POWER_KEY: ResourceKey<Registry<HTSolarPower>> = createKey("solar_power")
 
     //    Service    //
 
     /**
-     * @see [mekanism.api.MekanismAPI.getService]
+     * @see mekanism.api.MekanismAPI.getService
      */
     @Suppress("UnstableApiUsage")
     @JvmStatic

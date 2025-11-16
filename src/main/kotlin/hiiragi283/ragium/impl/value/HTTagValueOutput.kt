@@ -9,8 +9,8 @@ import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 
-internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, private val compoundTag: CompoundTag) : HTValueOutput {
-    private val registryOps: RegistryOps<Tag> = lookup.createSerializationContext(NbtOps.INSTANCE)
+internal class HTTagValueOutput(private val provider: HolderLookup.Provider, private val compoundTag: CompoundTag) : HTValueOutput {
+    private val registryOps: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
 
     //    HTValueOutput    //
 
@@ -58,31 +58,31 @@ internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, priva
     override fun child(key: String): HTValueOutput {
         val tagIn = CompoundTag()
         compoundTag.put(key, tagIn)
-        return HTTagValueOutput(lookup, tagIn)
+        return HTTagValueOutput(provider, tagIn)
     }
 
     override fun childrenList(key: String): HTValueOutput.ValueOutputList {
         val list = ListTag()
         compoundTag.put(key, list)
-        return ValueOutputList(lookup, list)
+        return ValueOutputList(provider, list)
     }
 
     override fun <T : Any> list(key: String, codec: Codec<T>): HTValueOutput.TypedOutputList<T> {
         val list = ListTag()
         compoundTag.put(key, list)
-        return TypedOutputList(lookup, list, codec)
+        return TypedOutputList(provider, list, codec)
     }
 
     //    ValueOutputList    //
 
-    private class ValueOutputList(private val lookup: HolderLookup.Provider, private val list: ListTag) : HTValueOutput.ValueOutputList {
+    private class ValueOutputList(private val provider: HolderLookup.Provider, private val list: ListTag) : HTValueOutput.ValueOutputList {
         override val isEmpty: Boolean
             get() = list.isEmpty()
 
         override fun addChild(): HTValueOutput {
             val tagIn = CompoundTag()
             list.add(tagIn)
-            return HTTagValueOutput(lookup, tagIn)
+            return HTTagValueOutput(provider, tagIn)
         }
 
         override fun discardLast() {
@@ -92,9 +92,9 @@ internal class HTTagValueOutput(private val lookup: HolderLookup.Provider, priva
 
     //    TypedOutputList    //
 
-    private class TypedOutputList<T : Any>(lookup: HolderLookup.Provider, private val list: ListTag, private val codec: Codec<T>) :
+    private class TypedOutputList<T : Any>(provider: HolderLookup.Provider, private val list: ListTag, private val codec: Codec<T>) :
         HTValueOutput.TypedOutputList<T> {
-        private val registryOps: RegistryOps<Tag> = lookup.createSerializationContext(NbtOps.INSTANCE)
+        private val registryOps: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
 
         override val isEmpty: Boolean
             get() = list.isEmpty()

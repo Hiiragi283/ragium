@@ -1,8 +1,0 @@
-{
-  "type": "ragium:simulating",
-  "catalyst": "minecraft:bee_nest",
-  "result": {
-    "count": 1,
-    "id": "minecraft:honeycomb"
-  }
-}

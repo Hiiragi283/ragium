@@ -3,9 +3,9 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.recipe.HTSingleInputRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.base.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
@@ -13,39 +13,41 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
-import hiiragi283.ragium.api.storage.capability.HTExperienceCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTAlloySmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTBlockBreakerBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTBreweryBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTMultiSmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTPlanterBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTSimulatorBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTSingleItemInputBlockEntity
-import hiiragi283.ragium.common.block.entity.consumer.HTWasherBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTLavaCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTMilkCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTEnchGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTSolarGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTSolarPanelControllerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAutoSmithingTableBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAutoStonecutterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTBlockBreakerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTElectricFurnaceBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMultiSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTWasherBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTOpenCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTieredDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -108,9 +110,9 @@ object RagiumBlockEntityTypes {
 
     // Elite
     @JvmField
-    val SOLAR_PANEL_CONTROLLER: HTDeferredBlockEntityType<HTSolarGeneratorBlockEntity> = registerTick(
+    val SOLAR_PANEL_CONTROLLER: HTDeferredBlockEntityType<HTSolarPanelControllerBlockEntity> = registerTick(
         "solar_panel_controller",
-        ::HTSolarGeneratorBlockEntity,
+        ::HTSolarPanelControllerBlockEntity,
     )
 
     // Ultimate
@@ -126,7 +128,26 @@ object RagiumBlockEntityTypes {
         ::HTNuclearReactorBlockEntity,
     )
 
-    //    Consumer    //
+    //    Processor    //
+
+    // Vanilla
+    @JvmField
+    val ELECTRIC_FURNACE: HTDeferredBlockEntityType<HTElectricFurnaceBlockEntity> = registerTick(
+        "electric_furnace",
+        ::HTElectricFurnaceBlockEntity,
+    )
+
+    @JvmField
+    val AUTO_SMITHING_TABLE: HTDeferredBlockEntityType<HTAutoSmithingTableBlockEntity> = registerTick(
+        "auto_smithing_table",
+        ::HTAutoSmithingTableBlockEntity,
+    )
+
+    @JvmField
+    val AUTO_STONECUTTER: HTDeferredBlockEntityType<HTAutoStonecutterBlockEntity> = registerTick(
+        "auto_stonecutter",
+        ::HTAutoStonecutterBlockEntity,
+    )
 
     // Basic
     @JvmField
@@ -152,14 +173,7 @@ object RagiumBlockEntityTypes {
     )
 
     @JvmField
-    val EXTRACTOR: HTDeferredBlockEntityType<HTSingleItemInputBlockEntity<HTSingleInputRecipe>> = registerTick(
-        "extractor",
-        HTSingleItemInputBlockEntity.createSimple(
-            SoundEvents.SPONGE_ABSORB,
-            1f to 0.5f,
-            RagiumRecipeTypes.EXTRACTING,
-        ),
-    )
+    val EXTRACTOR: HTDeferredBlockEntityType<HTExtractorBlockEntity> = registerTick("extractor", ::HTExtractorBlockEntity)
 
     @JvmField
     val PULVERIZER: HTDeferredBlockEntityType<HTSingleItemInputBlockEntity<HTItemToChancedItemRecipe>> = registerTick(
@@ -209,12 +223,6 @@ object RagiumBlockEntityTypes {
     )
 
     @JvmField
-    val MILK_COLLECTOR: HTDeferredBlockEntityType<HTMilkCollectorBlockEntity> = registerTick(
-        "milk_collector",
-        ::HTMilkCollectorBlockEntity,
-    )
-
-    @JvmField
     val WATER_COLLECTOR: HTDeferredBlockEntityType<HTWaterCollectorBlockEntity> = registerTick(
         "water_collector",
         ::HTWaterCollectorBlockEntity,
@@ -225,12 +233,6 @@ object RagiumBlockEntityTypes {
     val EXP_COLLECTOR: HTDeferredBlockEntityType<HTExpCollectorBlockEntity> = registerTick(
         "exp_collector",
         ::HTExpCollectorBlockEntity,
-    )
-
-    @JvmField
-    val LAVA_COLLECTOR: HTDeferredBlockEntityType<HTLavaCollectorBlockEntity> = registerTick(
-        "lava_collector",
-        ::HTLavaCollectorBlockEntity,
     )
 
     // Elite
@@ -275,6 +277,9 @@ object RagiumBlockEntityTypes {
         }
 
     @JvmField
+    val OPEN_CRATE: HTDeferredBlockEntityType<HTOpenCrateBlockEntity> = REGISTER.registerType("open_crate", ::HTOpenCrateBlockEntity)
+
+    @JvmField
     val DRUMS: Map<HTDrumTier, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
         HTDrumTier.entries.associateWith { tier: HTDrumTier ->
             registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTTieredDrumBlockEntity(tier.getBlock(), pos, state) }
@@ -301,8 +306,6 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        event.setProxyable(HTExperienceCapabilities.block)
-
         // Generator
         registerHandler(event, THERMAL_GENERATOR.get())
 
@@ -312,7 +315,11 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, ENCHANTMENT_GENERATOR.get())
         registerHandler(event, NUCLEAR_REACTOR.get())
-        // Consumer
+        // Processor
+        registerHandler(event, ELECTRIC_FURNACE.get())
+        registerHandler(event, AUTO_SMITHING_TABLE.get())
+        registerHandler(event, AUTO_STONECUTTER.get())
+
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, BLOCK_BREAKER.get())
         registerHandler(event, COMPRESSOR.get())
@@ -331,11 +338,9 @@ object RagiumBlockEntityTypes {
         registerHandler(event, SIMULATOR.get())
         // Devices
         registerHandler(event, ITEM_BUFFER.get())
-        registerHandler(event, MILK_COLLECTOR.get())
         registerHandler(event, WATER_COLLECTOR.get())
 
         registerHandler(event, EXP_COLLECTOR.get())
-        registerHandler(event, LAVA_COLLECTOR.get())
 
         registerHandler(event, ENI.get())
 
@@ -347,6 +352,7 @@ object RagiumBlockEntityTypes {
         for (type: HTDeferredBlockEntityType<HTCrateBlockEntity> in CRATES.values) {
             registerHandler(event, type.get())
         }
+        registerHandler(event, OPEN_CRATE.get())
         for (type: HTDeferredBlockEntityType<HTDrumBlockEntity> in DRUMS.values) {
             registerHandler(event, type.get())
         }
@@ -360,6 +366,5 @@ object RagiumBlockEntityTypes {
         event.registerBlockEntity(HTItemCapabilities.block, type, HTHandlerProvider::getItemHandler)
         event.registerBlockEntity(HTFluidCapabilities.block, type, HTHandlerProvider::getFluidHandler)
         event.registerBlockEntity(HTEnergyCapabilities.block, type, HTHandlerProvider::getEnergyStorage)
-        event.registerBlockEntity(HTExperienceCapabilities.block, type, HTHandlerProvider::getExperienceHandler)
     }
 }

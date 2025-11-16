@@ -6,14 +6,15 @@ import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
+import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.setup.MekanismMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumFoods
 import hiiragi283.ragium.setup.RagiumItems
@@ -28,6 +29,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import java.util.function.Consumer
 
 object RagiumMekanismAddon : RagiumAddon {
     //    Chemical    //
@@ -56,13 +58,25 @@ object RagiumMekanismAddon : RagiumAddon {
     @JvmField
     val ITEM_REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
+    /**
+     * @see RagiumItems.MATERIALS
+     */
+    @JvmStatic
     val MATERIAL_ITEMS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
         // Enriched
         for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
             val key: HTMaterialKey = essenceType.asMaterialKey()
-            this[MekanismMaterialPrefixes.ENRICHED, key] = ITEM_REGISTER.registerSimpleItem("enriched_${key.name}")
+            this[MekanismMaterialPrefixes.ENRICHED.asMaterialPrefix(), key] = ITEM_REGISTER.registerSimpleItem("enriched_${key.name}")
         }
     }
+
+    /**
+     * @see RagiumItems.getMaterial
+     */
+    @JvmStatic
+    fun getMaterial(prefix: HTPrefixLike, material: HTMaterialLike): HTSimpleDeferredItem =
+        MATERIAL_ITEMS[prefix.asMaterialPrefix(), material.asMaterialKey()]
+            ?: error("Unknown $prefix item for ${material.asMaterialName()}")
 
     @JvmStatic
     fun getEnriched(material: HTMaterialLike): HTItemHolderLike = when (val key: HTMaterialKey = material.asMaterialKey()) {
@@ -71,7 +85,7 @@ object RagiumMekanismAddon : RagiumAddon {
         VanillaMaterialKeys.DIAMOND -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_DIAMOND)
         VanillaMaterialKeys.OBSIDIAN -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_OBSIDIAN)
         VanillaMaterialKeys.GOLD -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_GOLD)
-        else -> MATERIAL_ITEMS[MekanismMaterialPrefixes.ENRICHED, key] ?: error("Unknown enriched item for ${key.name}")
+        else -> getMaterial(MekanismMaterialPrefixes.ENRICHED, key)
     }
 
     @JvmStatic
@@ -84,8 +98,10 @@ object RagiumMekanismAddon : RagiumAddon {
 
         CHEMICAL_REGISTER.register(eventBus)
         ITEM_REGISTER.register(eventBus)
+    }
 
-        MekanismMaterialPrefixes.REGISTER.register(eventBus)
+    override fun bindMaterialPrefixes(consumer: Consumer<HTPrefixLike>) {
+        MekanismMaterialPrefixes.entries.forEach(consumer)
     }
 
     override fun modifyComponents(event: ModifyDefaultComponentsEvent) {
@@ -97,8 +113,9 @@ object RagiumMekanismAddon : RagiumAddon {
     override fun buildCreativeTabs(helper: RagiumAddon.CreativeTabHelper) {
         helper.ifMatchTab(RagiumCreativeTabs.INGREDIENTS) { event: BuildCreativeModeTabContentsEvent ->
             for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
+                val (basePrefix: HTPrefixLike, baseMaterial: HTMaterialKey) = essenceType.getBaseEntry()
                 event.insertAfter(
-                    RagiumItems.getMaterial(essenceType.basePrefix, essenceType.parent).toStack(),
+                    RagiumItems.getMaterial(basePrefix, baseMaterial).toStack(),
                     getEnrichedStack(essenceType),
                     CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
                 )

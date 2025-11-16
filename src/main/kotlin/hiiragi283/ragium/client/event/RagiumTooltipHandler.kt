@@ -3,8 +3,8 @@ package hiiragi283.ragium.client.event
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTItemContents
-import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -21,14 +21,15 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.client.event.RenderTooltipEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
+import java.util.function.Consumer
 
 @EventBusSubscriber(value = [Dist.CLIENT], modid = RagiumAPI.MOD_ID)
 object RagiumTooltipHandler {
     @SubscribeEvent
     fun onItemTooltip(event: ItemTooltipEvent) {
         val stack: ItemStack = event.itemStack
-        val consumer: (Component) -> Unit = event.toolTip::add
         val context: Item.TooltipContext = event.context
+        val consumer: Consumer<Component> = Consumer { event.toolTip.add(1, it) }
         val flag: TooltipFlag = event.flags
 
         information(stack, consumer, flag)
@@ -45,19 +46,17 @@ object RagiumTooltipHandler {
     }
 
     @JvmStatic
-    private fun information(stack: ItemStack, consumer: (Component) -> Unit, flag: TooltipFlag) {
-        if (stack.toImmutable()?.getId()?.namespace == RagiumAPI.MOD_ID) {
-            val text: Component = RagiumTranslation.getTooltipText(stack) ?: return
-            if (flag.hasShiftDown()) {
-                consumer(text)
-            } else {
-                consumer(RagiumTranslation.TOOLTIP_SHOW_INFO.getColoredComponent(ChatFormatting.YELLOW))
-            }
+    private fun information(stack: ItemStack, consumer: Consumer<Component>, flag: TooltipFlag) {
+        val translation: HTTranslation = stack.get(RagiumDataComponents.DESCRIPTION) ?: return
+        if (flag.hasShiftDown()) {
+            consumer.accept(translation.translate())
+        } else {
+            consumer.accept(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW))
         }
     }
 
     @JvmStatic
-    private fun food(stack: ItemStack, consumer: (Component) -> Unit, tickRate: Float) {
+    private fun food(stack: ItemStack, consumer: Consumer<Component>, tickRate: Float) {
         val food: FoodProperties = stack.getFoodProperties(null) ?: return
         val effects: List<FoodProperties.PossibleEffect> = food.effects
         if (effects.isNotEmpty()) {
@@ -71,9 +70,9 @@ object RagiumTooltipHandler {
     }
 
     @JvmStatic
-    private fun workInProgress(stack: ItemStack, consumer: (Component) -> Unit) {
+    private fun workInProgress(stack: ItemStack, consumer: Consumer<Component>) {
         if (stack.`is`(RagiumModTags.Items.WIP)) {
-            consumer(RagiumTranslation.TOOLTIP_WIP.getColoredComponent(ChatFormatting.DARK_RED))
+            consumer.accept(RagiumTranslation.TOOLTIP_WIP.translateColored(ChatFormatting.DARK_RED))
         }
     }
 

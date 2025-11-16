@@ -1,7 +1,8 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
-import hiiragi283.ragium.api.inventory.container.HTContainerMenu
+import hiiragi283.ragium.api.gui.component.HTFluidWidget
+import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
@@ -12,10 +13,12 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-abstract class HTContainerScreen<MENU : HTContainerMenu>(menu: MENU, inventory: Inventory, title: Component) :
-    AbstractContainerScreen<MENU>(menu, inventory, title) {
-    abstract val texture: ResourceLocation?
-
+abstract class HTContainerScreen<MENU : HTContainerMenu>(
+    val texture: ResourceLocation?,
+    menu: MENU,
+    inventory: Inventory,
+    title: Component,
+) : AbstractContainerScreen<MENU>(menu, inventory, title) {
     override fun render(
         guiGraphics: GuiGraphics,
         mouseX: Int,
@@ -40,6 +43,8 @@ abstract class HTContainerScreen<MENU : HTContainerMenu>(menu: MENU, inventory: 
             HTBackgroundRenderable.tryRender(renderable, guiGraphics)
         }
     }
+
+    open fun getFluidWidgets(): List<HTFluidWidget> = listOf()
 
     //    Extensions    //
 

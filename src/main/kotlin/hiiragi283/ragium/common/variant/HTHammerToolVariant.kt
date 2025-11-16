@@ -12,8 +12,8 @@ import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.Item
 
 object HTHammerToolVariant : HTToolVariant {
-    override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*> =
-        register.registerItemWith("${material.asMaterialName()}_hammer", material, ::HTHammerItem) {
+    override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial, name: String): HTDeferredItem<*> =
+        register.registerItemWith(name, material, ::HTHammerItem) {
             it.attributes(DiggerItem.createAttributes(material, material.getPickaxeDamage(), material.getPickaxeAttackSpeed()))
         }
 

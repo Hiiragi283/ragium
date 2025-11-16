@@ -1,95 +1,112 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
-import com.enderio.base.common.tag.EIOTags
+import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe
+import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe
+import com.enderio.machines.common.blocks.vat.FermentingRecipe
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.common.material.CommonMaterialKeys
-import hiiragi283.ragium.common.material.ModMaterialKeys
-import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
-import net.minecraft.tags.ItemTags
-import net.neoforged.neoforge.common.Tags
+import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 
-object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_BASE) {
+object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MACHINES) {
     override fun buildRecipeInternal() {
         alloys()
+        sagMill()
+        fermenting()
     }
 
+    //    Alloy    //
+
     private fun alloys() {
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.CONDUCTIVE_ALLOY),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.COPPER_ALLOY),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY, 4800)
+        alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY, 5600)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.COPPER_ALLOY),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.COPPER),
-                itemCreator.fromTagKey(EIOTags.Items.SILICON),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_SHARD, 3200)
+        alloyFromData(RagiumMaterialRecipeData.AZURE_STEEL, 4800)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fuelOrDust(VanillaMaterialKeys.COAL, 2),
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-            ).save(output)
+        alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL, 5600)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.DARK_STEEL),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fuelOrDust(CommonMaterialKeys.COAL_COKE),
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-            ).saveSuffixed(output, "_from_coal_coke")
+        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL, 4800)
+        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM, 6400)
+    }
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.END_STEEL),
-                itemCreator.fromTagKey(Tags.Items.END_STONES),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.DARK_STEEL),
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-            ).save(output)
+    @JvmStatic
+    private fun alloyFromData(data: HTRecipeData, energy: Int, exp: Float = 0.3f) {
+        save(
+            data.getModifiedId().withPrefix("${RagiumConst.ALLOYING}/"),
+            AlloySmeltingRecipe(
+                data.getSizedItemIngredients(),
+                data.getItemStacks()[0].first,
+                energy,
+                exp,
+            ),
+        )
+    }
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.ENERGETIC_ALLOY),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.GOLD),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
-            ).save(output)
+    //    Sag Mill    //
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.PULSATING_ALLOY),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.IRON),
-                itemCreator.fromTagKey(Tags.Items.ENDER_PEARLS),
-            ).save(output)
+    @JvmStatic
+    private fun sagMill() {
+        // Vanilla
+        sagMillFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
+        sagMillFromData(VanillaMaterialRecipeData.ECHO_DUST)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.REDSTONE_ALLOY),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-                itemCreator.fromTagKey(EIOTags.Items.SILICON),
-            ).save(output)
+        sagMillFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
+        // Ragium
+        sagMillFromData(RagiumMaterialRecipeData.RAGINITE_ORE)
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.SOULARIUM),
-                itemCreator.fromTagKey(ItemTags.SOUL_FIRE_BASE_BLOCKS),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.GOLD),
-            ).save(output)
+        sagMillFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
+        sagMillFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
+        sagMillFromData(RagiumMaterialRecipeData.WARPED_ORE)
+    }
 
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.VIBRANT_ALLOY),
-                itemCreator.ingotOrDust(ModMaterialKeys.Alloys.ENERGETIC_ALLOY),
-                itemCreator.fromTagKey(Tags.Items.ENDER_PEARLS),
-            ).save(output)
+    @JvmStatic
+    private fun sagMillFromData(data: HTRecipeData, energy: Int = 2400) {
+        save(
+            data.getModifiedId().withPrefix("sag_milling/"),
+            SagMillingRecipe(
+                data.getIngredients()[0],
+                data.itemOutputs.map { (entry: Ior<Item, TagKey<Item>>, amount: Int, chance: Float) ->
+                    entry.map(
+                        { item: Item -> SagMillingRecipe.OutputItem.of(item, amount, chance, false) },
+                        { tagKey: TagKey<Item> -> SagMillingRecipe.OutputItem.of(tagKey, amount, chance, false) },
+                    )
+                },
+                energy,
+                SagMillingRecipe.BonusType.MULTIPLY_OUTPUT,
+            ),
+        )
+    }
+
+    //    Vat    //
+
+    @JvmStatic
+    private fun fermenting() {
+        fermentFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_CRIMSON)
+        fermentFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_WARPED)
+    }
+
+    @JvmStatic
+    private fun fermentFromData(data: HTRecipeData, ticks: Int = 200) {
+        save(
+            data.getModifiedId().withPrefix("fermenting/"),
+            FermentingRecipe(
+                data.getSizedFluidIngredients()[0],
+                data.itemInputs[0]
+                    .entry
+                    .right()
+                    .orElse(listOf())[0],
+                data.itemInputs[1]
+                    .entry
+                    .right()
+                    .orElse(listOf())[0],
+                data.getFluidStacks()[0],
+                ticks,
+            ),
+        )
     }
 }

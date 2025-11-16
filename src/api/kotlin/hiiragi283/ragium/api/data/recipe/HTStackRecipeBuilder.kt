@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.Recipe
  * @see HTStackRecipeBuilder.Single
  */
 abstract class HTStackRecipeBuilder<BUILDER : HTStackRecipeBuilder<BUILDER>>(prefix: String, protected val stack: ImmutableItemStack) :
-    HTRecipeBuilder.Prefixed(prefix) {
+    HTRecipeBuilder<BUILDER>(prefix) {
     protected abstract fun createRecipe(output: ItemStack): Recipe<*>
 
     final override fun getPrimalId(): ResourceLocation = stack.getId()

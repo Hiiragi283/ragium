@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
 /**
- * @see [mekanism.client.recipe_viewer.emi.recipe.MekanismEmiHolderRecipe]
+ * @see mekanism.client.recipe_viewer.emi.recipe.MekanismEmiHolderRecipe
  */
 abstract class HTEmiHolderRecipe<RECIPE : Recipe<*>> : HTEmiRecipe<RECIPE> {
     private val holder: RecipeHolder<RECIPE>

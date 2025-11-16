@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#minecraft:crimson_stems",
-  "result": {
-    "amount": 500,
-    "id": "ragium:crimson_sap"
-  }
-}

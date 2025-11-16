@@ -1,12 +1,12 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
+import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -33,18 +33,6 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.COBWEB),
                 resultHelper.item(Items.STRING, 4),
             ).saveSuffixed(output, "_from_web")
-
-        mapOf(
-            VanillaMaterialKeys.AMETHYST to Items.AMETHYST_SHARD,
-            VanillaMaterialKeys.GLOWSTONE to Items.GLOWSTONE_DUST,
-            VanillaMaterialKeys.QUARTZ to Items.QUARTZ,
-        ).forEach { (key: HTMaterialKey, result: Item) ->
-            HTItemToObjRecipeBuilder
-                .pulverizing(
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, key),
-                    resultHelper.item(result, 4),
-                ).saveSuffixed(output, "_from_block")
-        }
 
         HTItemToObjRecipeBuilder
             .pulverizing(
@@ -97,11 +85,8 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(RagiumBlocks.WARPED_WART, 3),
             ).saveSuffixed(output, "_from_block")
         // Ragium
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
-                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
-            ).saveSuffixed(output, "_from_block")
+        pulverizeFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
+        pulverizeFromData(VanillaMaterialRecipeData.OBSIDIAN_DUST)
 
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.GLOW_INK_SAC))

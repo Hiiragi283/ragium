@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "ragium:block/eldritch_stone",
-    "side": "ragium:block/eldritch_stone",
-    "top": "ragium:block/eldritch_stone"
-  }
-}

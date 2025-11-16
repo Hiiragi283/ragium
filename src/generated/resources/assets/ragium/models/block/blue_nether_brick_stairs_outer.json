@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "ragium:block/blue_nether_bricks",
-    "side": "ragium:block/blue_nether_bricks",
-    "top": "ragium:block/blue_nether_bricks"
-  }
-}

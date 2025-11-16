@@ -3,9 +3,11 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -16,12 +18,12 @@ import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -56,6 +58,12 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 .define('B', parent)
                 .savePrefixed(output, "9x_")
         }
+        // Synthetic Book
+        HTShapelessRecipeBuilder
+            .misc(Items.BOOK)
+            .addIngredients(Items.PAPER, count = 3)
+            .addIngredient(RagiumItems.SYNTHETIC_LEATHER)
+            .saveSuffixed(output, "_from_synthetic")
         // Blaze Rod
         HTCombineItemToObjRecipeBuilder
             .alloying(
@@ -81,7 +89,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', Items.END_CRYSTAL)
             .save(output)
         save(
-            gravityUnit.id.withPrefix("smithing/"),
+            gravityUnit.getIdWithPrefix("smithing/"),
             HTSmithingModifyRecipe(
                 Ingredient.of(gravityUnit),
                 Ingredient.of(),
@@ -102,14 +110,15 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun catalyst() {
-        // Plating Catalyst
-        HTShapedRecipeBuilder
-            .misc(RagiumItems.PLATING_CATALYST)
-            .cross8()
-            .define('A', Tags.Items.RODS_BLAZE)
-            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.GILDIUM)
-            .define('C', Items.IRON_BARS)
-            .save(output)
+        // Molds
+        for ((prefix: HTMaterialPrefix, mold: HTSimpleDeferredItem) in RagiumItems.MOLDS) {
+            HTShapedRecipeBuilder
+                .misc(mold)
+                .hollow4()
+                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+                .define('B', prefix.createCommonTagKey(Registries.ITEM))
+                .save(output)
+        }
         // Polymer Catalyst
         HTShapedRecipeBuilder
             .misc(RagiumItems.POLYMER_CATALYST)
@@ -127,14 +136,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .alloying(
                 resultHelper.item(RagiumItems.CIRCUIT_BOARD, 4),
                 itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS),
-                itemCreator.gemOrDust(VanillaMaterialKeys.QUARTZ),
-            ).save(output)
-
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(RagiumItems.ADVANCED_CIRCUIT_BOARD),
-                itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS, 2),
-                itemCreator.fromItem(RagiumItems.BASALT_MESH),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.QUARTZ),
             ).save(output)
         // Basic
         HTShapedRecipeBuilder
@@ -162,7 +164,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.BASIC), 4),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.COPPER, 2),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.COPPER, 2),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE),
                 itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
@@ -172,14 +174,14 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .crossLayered()
             .define('A', Tags.Items.DUSTS_GLOWSTONE)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            .define('C', gemOrDust(VanillaMaterialKeys.LAPIS))
+            .define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.LAPIS)
             .define('D', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
             .saveSuffixed(output, "_from_basic")
 
         HTShapedRecipeBuilder
             .misc(RagiumItems.getCircuit(HTCircuitTier.ADVANCED))
             .cross8()
-            .define('A', gemOrDust(RagiumMaterialKeys.AZURE))
+            .define('A', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.AZURE)
             .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.GOLD)
             .define('C', RagiumItems.CIRCUIT_BOARD)
             .save(output)
@@ -187,25 +189,25 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ADVANCED), 2),
-                itemCreator.ingotOrDust(VanillaMaterialKeys.GOLD, 2),
-                itemCreator.gemOrDust(RagiumMaterialKeys.AZURE),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.GOLD, 2),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.AZURE),
                 itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
         // Elite
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ELITE)),
-                itemCreator.ingotOrDust(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY, 2),
-                itemCreator.gemOrDust(RagiumMaterialKeys.RAGI_CRYSTAL),
-                itemCreator.fromItem(RagiumItems.ADVANCED_CIRCUIT_BOARD),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGI_CRYSTAL),
+                itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
         // Ultimate
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ULTIMATE)),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.NUGGET, RagiumMaterialKeys.IRIDESCENTIUM),
-                itemCreator.gemOrDust(VanillaMaterialKeys.ECHO),
-                itemCreator.fromItem(RagiumItems.ADVANCED_CIRCUIT_BOARD),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.NUGGET, RagiumMaterialKeys.IRIDESCENTIUM, 3),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.ECHO),
+                itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
     }
 
@@ -219,7 +221,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 .misc(coil, 4)
                 .hollow4()
                 .define('A', CommonMaterialPrefixes.INGOT, material)
-                .define('B', ingotOrRod(core))
+                .define('B', CommonMaterialPrefixes.INGOT, core)
                 .save(output)
             // Block
             HTShapedRecipeBuilder

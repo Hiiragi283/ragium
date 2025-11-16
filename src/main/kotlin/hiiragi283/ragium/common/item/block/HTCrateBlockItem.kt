@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item.block
 
 import hiiragi283.ragium.api.block.attribute.getAttributeTier
-import hiiragi283.ragium.api.item.HTBlockItem
+import hiiragi283.ragium.api.item.HTDescriptionBlockItem
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
@@ -11,7 +11,7 @@ import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.ItemStack
 
-class HTCrateBlockItem(block: HTCrateBlock, properties: Properties) : HTBlockItem<HTCrateBlock>(block, properties) {
+class HTCrateBlockItem(block: HTCrateBlock, properties: Properties) : HTDescriptionBlockItem<HTCrateBlock>(block, properties) {
     override fun getTier(): HTCrateTier? = block.getAttributeTier<HTCrateTier>()
 
     override fun onDestroyed(itemEntity: ItemEntity, damageSource: DamageSource) {

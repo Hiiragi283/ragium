@@ -8,7 +8,7 @@ import net.minecraft.world.phys.Vec3
 
 //    Position    //
 
-fun Vec3.getRangedAABB(radius: Number): AABB = AABB.ofSize(this, radius.toDouble(), radius.toDouble(), radius.toDouble())
+fun Vec3.getRangedAABB(radius: Number): AABB = AABB(this, this).inflate(radius.toDouble())
 
 //    Level    //
 

@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
-import hiiragi283.ragium.common.block.entity.consumer.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -26,14 +26,14 @@ class HTRefineryRenderer(context: BlockEntityRendererProvider.Context) : HTBlock
         // input
         poseStack.pushPose()
         poseStack.translate(0.5f)
-        rotate(poseStack, front)
+        rotateY(poseStack, front)
         poseStack.translate(0.01f, -0.5f, 0.01f)
         drawFluid(blockEntity.inputTank, poseStack, bufferSource, packedLight, packedOverlay)
         poseStack.popPose()
         // output
         poseStack.pushPose()
         poseStack.translate(0.5f)
-        rotate(poseStack, front)
+        rotateY(poseStack, front)
         poseStack.translate(0.01f - 0.5f, -0.5f, 0.01f)
         drawFluid(blockEntity.outputTank, poseStack, bufferSource, packedLight, packedOverlay)
         poseStack.popPose()

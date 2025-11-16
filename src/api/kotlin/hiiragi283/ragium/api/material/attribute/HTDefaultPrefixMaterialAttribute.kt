@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.material.attribute
 
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 
 /**
  * 素材のデフォルトのプレフィックスを保持する属性のクラス

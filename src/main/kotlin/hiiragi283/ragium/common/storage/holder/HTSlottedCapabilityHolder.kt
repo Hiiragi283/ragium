@@ -54,9 +54,12 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
             return slot
         }
 
-        fun build(): HOLDER {
+        fun build(): HOLDER? {
             hasBuilt = true
-            return factory(configGetter, slots, inputSlots, outputSlots)
+            return when {
+                slots.isEmpty() -> null
+                else -> factory(configGetter, slots, inputSlots, outputSlots)
+            }
         }
     }
 }

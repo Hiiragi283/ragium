@@ -24,6 +24,9 @@ interface HTItemHolderLike :
     ItemLike,
     HTHolderLike {
     companion object {
+        @JvmStatic
+        fun fromId(id: ResourceLocation): HTItemHolderLike = fromKey(Registries.ITEM.createKey(id))
+
         /**
          * [ResourceKey]を[HTItemHolderLike]に変換します。
          */

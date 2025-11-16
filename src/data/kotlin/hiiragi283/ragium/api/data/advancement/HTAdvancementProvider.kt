@@ -17,7 +17,7 @@ import java.nio.file.Path
 import java.util.concurrent.CompletableFuture
 
 /**
- * @see [AdvancementProvider]
+ * @see AdvancementProvider
  */
 open class HTAdvancementProvider(
     output: PackOutput,

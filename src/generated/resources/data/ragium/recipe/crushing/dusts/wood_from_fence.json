@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "#c:fences/wooden",
-  "result": {
-    "count": 5,
-    "id": "#c:dusts/wood"
-  }
-}

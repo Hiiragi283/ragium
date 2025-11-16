@@ -37,6 +37,7 @@ enum class HTColorMaterial(val dyeColor: DyeColor, private val enName: String, p
     ;
 
     companion object {
+        @JvmStatic
         val VANILLA_TABLE: ImmutableTable<HTColoredVariant, HTColorMaterial, HTDeferredItem<*>> = buildTable {
             for (color: HTColorMaterial in HTColorMaterial.entries) {
                 val id: ResourceLocation = vanillaId(color.asMaterialName())

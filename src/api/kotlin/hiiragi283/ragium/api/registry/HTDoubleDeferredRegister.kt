@@ -48,12 +48,9 @@ open class HTDoubleDeferredRegister<FIRST : Any, SECOND : Any> protected constru
         secondRegister.register(bus)
     }
 
-    fun addFirstAlias(from: String, to: String) {
-        firstRegister.addAlias(firstRegister.createId(from), firstRegister.createId(to))
-    }
-
-    fun addSecondAlias(from: String, to: String) {
-        secondRegister.addAlias(secondRegister.createId(from), secondRegister.createId(to))
+    fun addAlias(from: String, to: String) {
+        firstRegister.addAlias(from, to)
+        secondRegister.addAlias(from, to)
     }
 
     fun interface HolderCombiner<FIRST : Any, SECOND : Any, F : FIRST, S : SECOND, H : HTDoubleDeferredHolder<FIRST, F, SECOND, S>> {

@@ -13,10 +13,10 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.block.HTCropBlock
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
@@ -42,9 +42,16 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
     override fun registerStatesAndModels() {
         // Simple Blocks
         buildSet {
-            add(RagiumBlocks.CRIMSON_SOIL)
+            // Resource
             add(RagiumBlocks.SILT)
 
+            add(RagiumBlocks.BUDDING_AZURE)
+            add(RagiumBlocks.SOOTY_COBBLESTONE)
+            add(RagiumBlocks.CRIMSON_SOIL)
+
+            addAll(RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.STORAGE_BLOCK).values)
+            // Device
+            add(RagiumBlocks.DEVICE_CASING)
             add(RagiumBlocks.ITEM_BUFFER)
 
             add(RagiumBlocks.EXP_COLLECTOR)
@@ -57,10 +64,8 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
             add(RagiumBlocks.CEU)
 
+            // Decoration
             addAll(RagiumBlocks.DECORATION_MAP.values)
-            addAll(RagiumBlocks.MATERIALS.rowValues(CommonMaterialPrefixes.STORAGE_BLOCK))
-
-            add(RagiumBlocks.DEVICE_CASING)
         }.forEach(::simpleBlockAndItem)
 
         layeredBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, vanillaId("block", "obsidian"), RagiumBlocks.MYSTERIOUS_OBSIDIAN.blockId)
@@ -82,8 +87,8 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             itemModels().withExistingParent(block.getPath(), RagiumAPI.id("block", "led_block"))
         }
 
-        RagiumBlocks.MATERIALS.rowValues(CommonMaterialPrefixes.GLASS_BLOCK).forEach(::cutoutSimpleBlock)
-        RagiumBlocks.MATERIALS.rowValues(CommonMaterialPrefixes.GLASS_BLOCK_TINTED).forEach(::translucentSimpleBlock)
+        RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.GLASS_BLOCK).values.forEach(::cutoutSimpleBlock)
+        RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.GLASS_BLOCK_TINTED).values.forEach(::translucentSimpleBlock)
 
         RagiumBlocks.COILS.values.forEach(::cubeColumn)
 
@@ -131,7 +136,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                     2 -> 1
                     else -> 2
                 }
-                val id: ResourceLocation = RagiumBlocks.WARPED_WART.id.withSuffix("_stage$age")
+                val id: ResourceLocation = RagiumBlocks.WARPED_WART.getIdWithSuffix("_stage$age")
                 ConfiguredModel
                     .builder()
                     .modelFile(
@@ -175,9 +180,12 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         val ultimateMachine: ResourceLocation = RagiumAPI.id("block", "ultimate_machine_casing")
 
+        val blackboxMachine: ResourceLocation = RagiumAPI.id("block", "blackbox_machine_casing")
+
         // Generator
         builtIn(RagiumBlocks.THERMAL_GENERATOR, basicCasing)
         builtIn(RagiumBlocks.COMBUSTION_GENERATOR, advancedCasing)
+        altModelBlock(RagiumBlocks.SOLAR_PANEL_UNIT)
         builtIn(RagiumBlocks.ENCHANTMENT_GENERATOR, ultimateMachine)
 
         // Processor
@@ -193,22 +201,31 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         machine(RagiumBlocks.CRUSHER, advancedCasing, blackstone, RagiumAPI.id("block", "pulverizer_front"))
         machine(RagiumBlocks.MELTER, advancedFrame, blackstone)
         altModelBlock(RagiumBlocks.REFINERY, factory = ::horizontalBlock)
+        // machine(RagiumBlocks.SOLIDIFIER, advancedFrame, blackstone)
         machine(RagiumBlocks.WASHER, advancedFrame, blackstone)
         // Elite
         machine(RagiumBlocks.BREWERY, eliteMachine, deepslateTiles)
         machine(RagiumBlocks.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
         machine(RagiumBlocks.PLANTER, eliteMachine, deepslateTiles)
-        machine(RagiumBlocks.SIMULATOR, eliteMachine, deepslateTiles)
+        machine(RagiumBlocks.SIMULATOR, blackboxMachine, blackboxMachine)
 
         // Device
-        fun addFluidCollector(block: HTDeferredBlock<*, *>, fluid: ResourceLocation) {
-            layeredBlock(block, fluid, RagiumAPI.id("block", "device_overlay"))
-        }
-        addFluidCollector(RagiumBlocks.LAVA_COLLECTOR, vanillaId("block", "lava_still"))
-        addFluidCollector(RagiumBlocks.MILK_COLLECTOR, RagiumConst.NEOFORGE.toId("block", "milk_still"))
-        addFluidCollector(RagiumBlocks.WATER_COLLECTOR, vanillaId("block", "water_still"))
+        layeredBlock(
+            RagiumBlocks.WATER_COLLECTOR,
+            vanillaId("block", "water_still"),
+            RagiumAPI.id("block", "device_overlay"),
+        )
 
         // Storages
+        for (crate: HTDeferredBlock<*, *> in RagiumBlocks.CRATES.values) {
+            val id: ResourceLocation = crate.blockId
+            simpleBlockAndItem(crate, models().cubeColumn(id.path, id.withSuffix("_side"), RagiumAPI.id("block", "crate_top")))
+        }
+        /*simpleBlockAndItem(RagiumBlocks.OPEN_CRATE) { block: HTDeferredBlock<*, *> ->
+            val id: ResourceLocation = block.blockId
+            models().cubeBottomTop(id.path, id, id.withSuffix("_bottom"), id)
+        }*/
+
         val drums: List<HTDeferredBlock<*, *>> = buildList {
             addAll(RagiumBlocks.DRUMS.values)
             add(RagiumBlocks.EXP_DRUM)

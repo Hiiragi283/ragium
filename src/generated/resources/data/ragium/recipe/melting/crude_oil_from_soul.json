@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#minecraft:soul_fire_base_blocks",
-  "result": {
-    "amount": 500,
-    "id": "ragium:crude_oil"
-  }
-}

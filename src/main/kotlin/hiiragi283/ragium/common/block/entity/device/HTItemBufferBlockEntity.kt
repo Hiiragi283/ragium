@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.extension.getRangedAABB
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
@@ -19,24 +18,21 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class HTItemBufferBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlockEntity.Tickable(RagiumBlocks.ITEM_BUFFER, pos, state) {
     private lateinit var slots: List<HTItemSlot>
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(null)
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         slots = (0..8).map { index: Int ->
             builder.addSlot(
                 HTSlotInfo.BOTH,
                 HTItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(3 + index % 3), HTSlotHelper.getSlotPosY(index / 3)),
             )
         }
-        return builder.build()
     }
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
-        ItemHandlerHelper.calcRedstoneFromInventory(getItemHandler(null))
+        HTStackSlotHelper.calculateRedstoneLevel(getItemSlots(getItemSideFor()))
 
     //    Ticking    //
 

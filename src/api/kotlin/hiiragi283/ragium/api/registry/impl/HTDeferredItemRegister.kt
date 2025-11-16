@@ -14,7 +14,7 @@ import java.util.function.Supplier
 import java.util.function.UnaryOperator
 
 /**
- * @see [Items]
+ * @see net.neoforged.neoforge.registries.DeferredRegister.Items
  */
 class HTDeferredItemRegister(namespace: String) : HTDeferredRegister<Item>(Registries.ITEM, namespace) {
     fun <ITEM : Item> registerItem(

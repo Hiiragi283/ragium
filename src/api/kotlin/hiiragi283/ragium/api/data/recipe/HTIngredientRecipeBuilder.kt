@@ -1,18 +1,18 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 
 /**
- * バニラの[Ingredient]を使用するレシピ向けの[HTRecipeBuilder]
- * @param BUILDER [HTRecipeBuilder]を継承したクラス
+ * バニラの[Ingredient]を使用するレシピ向けのビルダー
+ * @param BUILDER [HTIngredientRecipeBuilder]を継承したクラス
  */
-interface HTIngredientRecipeBuilder<BUILDER : HTIngredientRecipeBuilder<BUILDER>> : HTRecipeBuilder {
-    fun addIngredient(prefix: HTMaterialPrefix, key: HTMaterialLike): BUILDER = addIngredient(prefix.itemTagKey(key))
+interface HTIngredientRecipeBuilder<BUILDER : HTIngredientRecipeBuilder<BUILDER>> {
+    fun addIngredient(prefix: HTPrefixLike, key: HTMaterialLike): BUILDER = addIngredient(prefix.itemTagKey(key))
 
     fun addIngredient(tagKey: TagKey<Item>): BUILDER = addIngredient(Ingredient.of(tagKey))
 

@@ -6,9 +6,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.setup.RagiumFluidContents
-import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 
 enum class RagiumMoltenCrystalData(val color: Int, private val enName: String, private val jaName: String) :
     HTMaterialLike,
@@ -17,13 +14,6 @@ enum class RagiumMoltenCrystalData(val color: Int, private val enName: String, p
     WARPED(0x006666, "Dew of the Warp", "歪みの雫"),
     ELDRITCH(0x660066, "Eldritch Flux", "異質な流動体"),
     ;
-
-    val log: TagKey<Item>?
-        get() = when (this) {
-            CRIMSON -> ItemTags.CRIMSON_STEMS
-            WARPED -> ItemTags.WARPED_STEMS
-            ELDRITCH -> null
-        }
 
     val sap: HTFluidContent<*, *, *>?
         get() = when (this) {

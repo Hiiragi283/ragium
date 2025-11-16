@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
@@ -24,8 +23,8 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
     private lateinit var inputSlot: HTItemStackSlot
     private lateinit var outputSlots: List<HTItemStackSlot>
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(null)
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        // input
         inputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
             HTItemStackSlot.input(
@@ -35,6 +34,7 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
                 filter = { stack: ImmutableItemStack -> stack.isOf(RagiumItems.ELDRITCH_EGG) },
             ),
         )
+        // outputs
         outputSlots = (0..<9).map { i: Int ->
             builder.addSlot(
                 HTSlotInfo.OUTPUT,
@@ -45,7 +45,6 @@ class HTMobCapturerBlockEntity(pos: BlockPos, state: BlockState) : HTDeviceBlock
                 ),
             )
         }
-        return builder.build()
     }
 
     //    Ticking    //

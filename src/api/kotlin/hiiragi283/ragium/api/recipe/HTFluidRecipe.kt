@@ -14,34 +14,34 @@ import kotlin.jvm.optionals.getOrNull
  */
 interface HTFluidRecipe<INPUT : RecipeInput> : HTRecipe<INPUT> {
     /**
-     * 指定された[input]と[registries]から[ImmutableFluidStack]を返します。
+     * 指定された[input]と[provider]から[ImmutableFluidStack]を返します。
      * @param input レシピの入力
-     * @param registries レジストリのアクセス
+     * @param provider レジストリのアクセス
      * @return 完成品となる[ImmutableFluidStack]
      */
-    fun assembleFluid(input: INPUT, registries: HolderLookup.Provider): ImmutableFluidStack?
+    fun assembleFluid(input: INPUT, provider: HolderLookup.Provider): ImmutableFluidStack?
 
     //    Extension    //
 
     /**
      * 指定された引数からアイテムの完成品を返します。
      * @param input レシピの入力
-     * @param registries レジストリのアクセス
+     * @param provider レジストリのアクセス
      * @param result [ImmutableFluidStack]の[HTRecipeResult]
      * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は`null`
      */
-    fun getFluidResult(input: INPUT, registries: HolderLookup.Provider?, result: HTFluidResult?): ImmutableFluidStack? = when {
-        test(input) -> result?.getStackOrNull(registries)
+    fun getFluidResult(input: INPUT, provider: HolderLookup.Provider?, result: HTFluidResult?): ImmutableFluidStack? = when {
+        test(input) -> result?.getStackOrNull(provider)
         else -> null
     }
 
     /**
      * 指定された引数からアイテムの完成品を返します。
      * @param input レシピの入力
-     * @param registries レジストリのアクセス
+     * @param provider レジストリのアクセス
      * @param result [Optional]の[HTFluidResult]
      * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は`null`
      */
-    fun getFluidResult(input: INPUT, registries: HolderLookup.Provider?, result: Optional<HTFluidResult>): ImmutableFluidStack? =
-        getFluidResult(input, registries, result.getOrNull())
+    fun getFluidResult(input: INPUT, provider: HolderLookup.Provider?, result: Optional<HTFluidResult>): ImmutableFluidStack? =
+        getFluidResult(input, provider, result.getOrNull())
 }

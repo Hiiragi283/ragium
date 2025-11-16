@@ -2,10 +2,9 @@ package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -13,30 +12,25 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
-import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.conditions.ICondition
@@ -53,14 +47,14 @@ sealed class HTRecipeProvider {
     protected lateinit var output: RecipeOutput
         private set
 
-    val itemCreator: HTItemIngredientCreator by lazy { HTItemIngredientCreatorImpl(provider.lookupOrThrow(Registries.ITEM)) }
+    val itemCreator: HTItemIngredientCreator by lazy { RagiumPlatform.INSTANCE.createItemCreator(provider) }
 
-    val fluidCreator: HTFluidIngredientCreator by lazy { HTFluidIngredientCreatorImpl(provider.lookupOrThrow(Registries.FLUID)) }
+    val fluidCreator: HTFluidIngredientCreator by lazy { RagiumPlatform.INSTANCE.createFluidCreator(provider) }
 
     /**
      * [HTResultHelper]のインスタンス
      */
-    val resultHelper: HTResultHelper = HTResultHelper.INSTANCE
+    val resultHelper: HTResultHelper = HTResultHelper
 
     fun buildRecipes(output: RecipeOutput, holderLookup: HolderLookup.Provider) {
         provider = holderLookup
@@ -113,9 +107,12 @@ sealed class HTRecipeProvider {
     abstract class Integration(protected val modid: String) : HTRecipeProvider() {
         protected fun id(path: String): ResourceLocation = modid.toId(path)
 
-        override fun modifyId(id: ResourceLocation): ResourceLocation = when (val namespace: String = id.namespace) {
-            in RagiumConst.BUILTIN_IDS -> RagiumAPI.wrapId(id)
-            else -> {
+        override fun modifyId(id: ResourceLocation): ResourceLocation {
+            val namespace: String = id.namespace
+            return if (namespace in RagiumConst.BUILTIN_IDS) {
+                val path: List<String> = id.path.split("/", limit = 2)
+                return RagiumAPI.id(path[0] + "/$modid/" + path[1])
+            } else {
                 val path: List<String> = id.path.split("/", limit = 2)
                 RagiumAPI.id(path[0] + "/$namespace/" + path[1])
             }
@@ -129,25 +126,6 @@ sealed class HTRecipeProvider {
     protected fun save(recipeId: ResourceLocation, recipe: Recipe<*>, vararg conditions: ICondition) {
         output.accept(recipeId, recipe, null, *conditions)
     }
-
-    // ingredient
-    protected fun fuelOrDust(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.FUEL)
-
-    protected fun gemOrDust(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.GEM)
-
-    protected fun ingotOrDust(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.INGOT)
-
-    protected fun ingotOrRod(material: HTMaterialLike): Ingredient =
-        multiVariants(material, CommonMaterialPrefixes.INGOT, CommonMaterialPrefixes.ROD)
-
-    protected fun multiVariants(material: HTMaterialLike, vararg prefixes: HTMaterialPrefix): Ingredient = prefixes
-        .map { it.itemTagKey(material) }
-        .map(Ingredient::TagValue)
-        .stream()
-        .let(Ingredient::fromValues)
 
     // recipe builders
     protected fun meltAndFreeze(
@@ -171,43 +149,41 @@ sealed class HTRecipeProvider {
             ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
-    protected fun meltAndFreeze(
-        catalyst: HTItemIngredient?,
-        solid: TagKey<Item>,
-        fluid: HTFluidContent<*, *, *>,
-        amount: Int,
-    ) {
-        // Melting
-        HTItemToObjRecipeBuilder
-            .melting(
-                itemCreator.fromTagKey(solid),
-                resultHelper.fluid(fluid, amount),
-            ).saveSuffixed(output, "_from_${solid.location.path}")
+    protected fun meltAndFreeze(data: HTRecipeData) {
         // Solidifying
         HTFluidTransformRecipeBuilder
             .solidifying(
-                catalyst,
-                fluidCreator.fromContent(fluid, amount),
-                resultHelper.item(solid),
-            ).saveSuffixed(output, "_from_${fluid.getPath()}")
+                data.catalyst?.let(itemCreator::fromItem),
+                data.getFluidIngredients(fluidCreator)[0],
+                data.getItemResults()[0].first,
+            ).saveModified(output, data.operator)
+        // Melting
+        val data1: HTRecipeData = data.swap()
+        HTItemToObjRecipeBuilder
+            .melting(
+                data1.getItemIngredients(itemCreator)[0],
+                data1.getFluidResults()[0],
+            ).saveModified(output, data.operator)
     }
 
     protected fun extractAndInfuse(
-        empty: HTItemIngredient,
+        empty: ItemLike,
         filled: HTItemHolderLike,
         fluid: HTFluidContent<*, *, *>,
-        amount: Int,
+        amount: Int = 250,
     ) {
         // Melting
-        HTItemToObjRecipeBuilder
-            .melting(
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
                 itemCreator.fromItem(filled),
+                resultHelper.item(empty),
+                null,
                 resultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${filled.getPath()}")
         // Washing
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                empty,
+                itemCreator.fromItem(empty),
                 fluidCreator.fromContent(fluid, amount),
             ).addResult(resultHelper.item(filled))
             .saveSuffixed(output, "_from_${fluid.getPath()}")
@@ -275,26 +251,34 @@ sealed class HTRecipeProvider {
     protected fun addWoodSawing(type: HTWoodType) {
         val planks: ItemLike = type.planks
         // Log -> 6x Planks
-        HTSingleItemRecipeBuilder
-            .sawmill(planks, 6)
-            .addIngredient(type.log)
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromTagKey(type.log))
+            .addResult(resultHelper.item(planks, 6))
             .modCondition(type.getModId())
             .save(output)
         // Planks -> 2x Slab
         type.getSlab().ifPresent { slab ->
-            HTSingleItemRecipeBuilder
-                .sawmill(slab, 2)
-                .addIngredient(planks)
+            HTItemToChancedItemRecipeBuilder
+                .cutting(itemCreator.fromItem(planks))
+                .addResult(resultHelper.item(slab, 2))
                 .modCondition(type.getModId())
                 .save(output)
         }
         // Planks -> Stairs
         type.getStairs().ifPresent { stairs ->
-            HTSingleItemRecipeBuilder
-                .sawmill(stairs)
-                .addIngredient(planks)
+            HTItemToChancedItemRecipeBuilder
+                .cutting(itemCreator.fromItem(planks))
+                .addResult(resultHelper.item(stairs))
                 .modCondition(type.getModId())
                 .save(output)
         }
+    }
+
+    fun pulverizeFromData(data: HTRecipeData) {
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                data.getItemIngredients(itemCreator)[0],
+                data.getItemResults()[0].first,
+            ).saveModified(output, data.operator)
     }
 }

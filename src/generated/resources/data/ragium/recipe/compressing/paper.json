@@ -1,8 +1,0 @@
-{
-  "type": "ragium:compressing",
-  "ingredient": "#c:crops/sugar_cane",
-  "result": {
-    "count": 2,
-    "id": "minecraft:paper"
-  }
-}

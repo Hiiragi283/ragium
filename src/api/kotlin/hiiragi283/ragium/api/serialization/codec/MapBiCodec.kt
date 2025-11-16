@@ -12,8 +12,6 @@ import java.util.function.UnaryOperator
 
 /**
  * [MapCodec]と[StreamCodec]を束ねたデータクラス
- * @see [BiCodec]
- * @see [BiCodecs]
  */
 @ConsistentCopyVisibility
 @JvmRecord

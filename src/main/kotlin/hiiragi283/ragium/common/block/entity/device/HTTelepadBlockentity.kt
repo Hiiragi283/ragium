@@ -4,9 +4,10 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.inventory.container.HTContainerMenu
+import hiiragi283.ragium.common.inventory.slot.HTTeleportPosSyncSlot
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.config.RagiumConfig
@@ -33,8 +34,8 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEnti
     lateinit var tank: HTVariableFluidStackTank
         private set
 
-    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        // input
         tank = builder.addSlot(
             HTSlotInfo.INPUT,
             HTVariableFluidStackTank.input(
@@ -43,11 +44,14 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEnti
                 filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf,
             ),
         )
-        return builder.build()
     }
 
     var teleportPos: HTTeleportPos? = null
-        private set
+
+    override fun addMenuTrackers(menu: HTContainerMenu) {
+        super.addMenuTrackers(menu)
+        menu.track(HTTeleportPosSyncSlot(this::teleportPos) { this.teleportPos = it })
+    }
 
     fun updateDestination(teleportPos: HTTeleportPos) {
         if (RagiumPlatform.INSTANCE.getLevel(teleportPos.dimension) != null) {

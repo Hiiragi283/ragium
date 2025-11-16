@@ -2,31 +2,40 @@ package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.advancement.HTAdvancementBuilder
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTVanillaToolVariant
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
+import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumCriteriaTriggers
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.advancements.critereon.BlockPredicate
+import net.minecraft.advancements.critereon.ConsumeItemTrigger
+import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
+import net.minecraft.advancements.critereon.LocationPredicate
+import net.minecraft.advancements.critereon.PlayerInteractTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
-import net.minecraft.network.chat.Component
+import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
+import java.util.Optional
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     override fun generate(registries: HolderLookup.Provider) {
         root(RagiumAdvancements.ROOT) {
             display {
-                setIcon(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_ALLOY))
-                title = Component.literal(RagiumAPI.MOD_NAME)
+                setIcon(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
+                title = RagiumTranslation.RAGIUM.translate()
                 setDescFromKey(RagiumAdvancements.ROOT)
-                backGround = RagiumAPI.id("textures/block/${RagiumConst.IRIDESCENTIUM}_block.png")
+                backGround = RagiumAPI.id("textures/block/night_metal_block.png")
                 showToast = false
                 showChat = false
             }
@@ -36,6 +45,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         raginite()
         azure()
         deep()
+        nightMetal()
 
         crimson()
         warped()
@@ -45,15 +55,11 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
         child(RagiumAdvancements.CRAFTABLE_TEMPLATES, RagiumAdvancements.ROOT) {
             display {
-                setIcon(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
+                setIcon(RagiumItems.getSmithingTemplate(RagiumMaterialKeys.AZURE_STEEL))
                 setTitleFromKey(RagiumAdvancements.CRAFTABLE_TEMPLATES)
                 setDescFromKey(RagiumAdvancements.CRAFTABLE_TEMPLATES)
             }
-            hasAnyItem(
-                "has_upgrade",
-                RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE,
-                RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE,
-            )
+            hasAnyItem("has_upgrade", RagiumItems.SMITHING_TEMPLATES.values)
         }
     }
 
@@ -76,27 +82,37 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.RAGI_ALLOY,
             RagiumBlocks.ALLOY_SMELTER,
         ) { setGoal() }
-
         createSimple(
-            RagiumAdvancements.RAGI_CHERRY,
-            RagiumAdvancements.RAGINITE,
-            RagiumItems.RAGI_CHERRY,
-            RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
-        )
-        HTAdvancementBuilder
-            .child(RagiumAdvancements.RAGI_CHERRY)
-            .display {
+            RagiumAdvancements.AMBROSIA,
+            RagiumAdvancements.ALLOY_SMELTER,
+            RagiumItems.AMBROSIA,
+        ) { setChallenge() }
+
+        child(RagiumAdvancements.RAGI_CHERRY, RagiumAdvancements.RAGINITE) {
+            display {
+                setIcon(RagiumItems.RAGI_CHERRY)
+                setTitleFromKey(RagiumAdvancements.RAGI_CHERRY)
+                setDescFromKey(RagiumAdvancements.RAGI_CHERRY)
+            }
+            addCriterion(
+                "use_ragi_cherry",
+                ConsumeItemTrigger.TriggerInstance.usedItem(itemPredicate(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)),
+            )
+        }
+        child(RagiumAdvancements.RAGI_CHERRY_TOAST, RagiumAdvancements.RAGI_CHERRY) {
+            display {
                 setIcon(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
                 setTitleFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
                 setDescFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
                 setGoal()
-            }.hasAnyItem("has_ragi_cherry_toast_block", RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
-            .addConditions(ModLoadedCondition(RagiumConst.FARMERS_DELIGHT))
-            .save(output, RagiumAdvancements.RAGI_CHERRY_TOAST)
+            }
+            hasAnyItem("has_ragi_cherry_toast_block", RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+            addConditions(ModLoadedCondition(RagiumConst.FARMERS_DELIGHT))
+        }
         // Advanced
         createSimple(
             RagiumAdvancements.ADV_RAGI_ALLOY,
-            RagiumAdvancements.RAGI_ALLOY,
+            RagiumAdvancements.ALLOY_SMELTER,
             CommonMaterialPrefixes.INGOT,
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
         )
@@ -104,6 +120,22 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             RagiumAdvancements.MELTER,
             RagiumAdvancements.ADV_RAGI_ALLOY,
             RagiumBlocks.MELTER,
+        ) { setGoal() }
+        createSimple(
+            RagiumAdvancements.REFINERY,
+            RagiumAdvancements.ADV_RAGI_ALLOY,
+            RagiumBlocks.REFINERY,
+        ) { setGoal() }
+        createSimple(
+            RagiumAdvancements.PLASTIC,
+            RagiumAdvancements.REFINERY,
+            RagiumItems.getPlate(CommonMaterialKeys.PLASTIC),
+            RagiumModTags.Items.PLASTICS,
+        )
+        createSimple(
+            RagiumAdvancements.POTION_BUNDLE,
+            RagiumAdvancements.PLASTIC,
+            RagiumItems.POTION_BUNDLE,
         ) { setGoal() }
 
         // Elite
@@ -116,23 +148,35 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.RAGI_CRYSTAL_HAMMER,
             RagiumAdvancements.RAGI_CRYSTAL,
-            RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL),
+            RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL),
         ) { setGoal() }
-        child(RagiumAdvancements.RAGI_TICKET, RagiumAdvancements.RAGI_CRYSTAL) {
-            display {
-                setIcon(RagiumItems.LOOT_TICKET)
-                setTitleFromKey(RagiumAdvancements.RAGI_TICKET)
-                setDescFromKey(RagiumAdvancements.RAGI_TICKET)
-                setGoal()
-            }
-            useItem(RagiumItems.LOOT_TICKET)
-        }
+        createUse(
+            RagiumAdvancements.RAGI_TICKET,
+            RagiumAdvancements.RAGI_CRYSTAL,
+            RagiumItems.LOOT_TICKET,
+        ) { setGoal() }
     }
 
     private fun azure() {
+        child(RagiumAdvancements.BUDDING_AZURE, RagiumAdvancements.ROOT) {
+            display {
+                setIcon(RagiumItems.BLUE_KNOWLEDGE)
+                setTitleFromKey(RagiumAdvancements.BUDDING_AZURE)
+                setDescFromKey(RagiumAdvancements.BUDDING_AZURE)
+            }
+            addCriterion(
+                "use_blue_knowledge",
+                ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
+                    LocationPredicate.Builder
+                        .location()
+                        .setBlock(BlockPredicate.Builder.block().of(Blocks.BUDDING_AMETHYST)),
+                    ItemPredicate.Builder.item().of(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR),
+                ),
+            )
+        }
         createSimple(
             RagiumAdvancements.AZURE_SHARD,
-            RagiumAdvancements.ALLOY_SMELTER,
+            RagiumAdvancements.BUDDING_AZURE,
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.AZURE,
         )
@@ -144,7 +188,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         )
         child(RagiumAdvancements.AZURE_GEARS, RagiumAdvancements.AZURE_STEEL) {
             display {
-                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialKeys.AZURE_STEEL))
+                setIcon(RagiumItems.getTool(VanillaToolVariant.PICKAXE, RagiumMaterialKeys.AZURE_STEEL))
                 setTitleFromKey(RagiumAdvancements.AZURE_GEARS)
                 setDescFromKey(RagiumAdvancements.AZURE_GEARS)
                 setGoal()
@@ -172,21 +216,29 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             CommonMaterialPrefixes.INGOT,
             RagiumMaterialKeys.DEEP_STEEL,
         )
-        child(RagiumAdvancements.DEEP_GEARS, RagiumAdvancements.DEEP_STEEL) {
+        child(RagiumAdvancements.BEHEAD_MOB, RagiumAdvancements.DEEP_STEEL) {
             display {
-                setIcon(RagiumItems.getTool(HTVanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL))
-                setTitleFromKey(RagiumAdvancements.DEEP_GEARS)
-                setDescFromKey(RagiumAdvancements.DEEP_GEARS)
+                setIcon(RagiumItems.getTool(VanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL))
+                setTitleFromKey(RagiumAdvancements.BEHEAD_MOB)
+                setDescFromKey(RagiumAdvancements.BEHEAD_MOB)
                 setGoal()
             }
-            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialKeys.DEEP_STEEL))
+            addCriterion("behead_mob", RagiumCriteriaTriggers.beheadMob())
         }
-
         createSimple(
             RagiumAdvancements.ECHO_STAR,
             RagiumAdvancements.DEEP_STEEL,
             RagiumItems.ECHO_STAR,
         ) { setChallenge() }
+    }
+
+    private fun nightMetal() {
+        createSimple(
+            RagiumAdvancements.NIGHT_METAL,
+            RagiumAdvancements.ALLOY_SMELTER,
+            CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.NIGHT_METAL,
+        )
     }
 
     private fun crimson() {
@@ -226,21 +278,22 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 ItemUsedOnLocationTrigger.TriggerInstance.placedBlock(RagiumBlocks.DIM_ANCHOR.get()),
             )
         }
-        child(RagiumAdvancements.TELEPORT_KEY, RagiumAdvancements.WARPED_CRYSTAL) {
-            display {
-                setIcon(RagiumItems.TELEPORT_KEY)
-                setTitleFromKey(RagiumAdvancements.TELEPORT_KEY)
-                setDescFromKey(RagiumAdvancements.TELEPORT_KEY)
-                setGoal()
-            }
-            useItem(RagiumItems.TELEPORT_KEY)
-        }
+        createUse(
+            RagiumAdvancements.TELEPORT_KEY,
+            RagiumAdvancements.WARPED_CRYSTAL,
+            RagiumItems.TELEPORT_KEY,
+        ) { setGoal() }
+        createUse(
+            RagiumAdvancements.WARPED_WART,
+            RagiumAdvancements.WARPED_CRYSTAL,
+            RagiumBlocks.WARPED_WART,
+        )
     }
 
     private fun eldritch() {
         createSimple(
             RagiumAdvancements.ELDRITCH_PEARL,
-            RagiumAdvancements.MELTER,
+            RagiumAdvancements.ALLOY_SMELTER,
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.ELDRITCH_PEARL,
         )
@@ -251,7 +304,10 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.ELDRITCH_EGG)
                 setGoal()
             }
-            useItem(RagiumItems.ELDRITCH_EGG)
+            addCriterion(
+                "capture_mob",
+                PlayerInteractTrigger.TriggerInstance.itemUsedOnEntity(itemPredicate(RagiumItems.ELDRITCH_EGG), Optional.empty()),
+            )
         }
         child(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, RagiumAdvancements.ELDRITCH_PEARL) {
             display {

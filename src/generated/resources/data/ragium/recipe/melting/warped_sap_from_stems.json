@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#minecraft:warped_stems",
-  "result": {
-    "amount": 500,
-    "id": "ragium:warped_sap"
-  }
-}

@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -12,11 +15,22 @@ import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.FluidTags
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.FluidStack
 
 class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTFluidCollectorBlockEntity(RagiumBlocks.WATER_COLLECTOR, pos, state) {
-    override fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): FluidStack {
+    //    Ticking    //
+
+    override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+        // 液体を生成できるかチェック
+        val stack: ImmutableFluidStack = getGeneratedFluid(level, pos) ?: return false
+        // 液体を搬入できるかチェック
+        if (tank.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) != null) return false
+        tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS)
+        return true
+    }
+
+    private fun getGeneratedFluid(level: ServerLevel, pos: BlockPos): ImmutableFluidStack? {
         var amount = 0
         // 海洋バイオームまたは河川系バイオームの場合 -> +1000 mB
         val biome: Holder<Biome> = level.getBiome(pos)
@@ -29,10 +43,6 @@ class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         if (waterSources >= 2) {
             amount += 500
         }
-        return HTFluidContent.WATER.toStack(amount)
-    }
-
-    override fun playSound(level: ServerLevel, pos: BlockPos) {
-        level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS)
+        return HTFluidContent.WATER.toImmutableStack(amount)
     }
 }

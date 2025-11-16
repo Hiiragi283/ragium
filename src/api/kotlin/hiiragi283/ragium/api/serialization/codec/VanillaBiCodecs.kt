@@ -23,8 +23,10 @@ import net.minecraft.util.StringRepresentable
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 import java.util.UUID
 import java.util.function.Supplier
@@ -34,7 +36,7 @@ object VanillaBiCodecs {
      * [ResourceLocation]の[BiCodec]
      */
     @JvmField
-    val RL: BiCodec<ByteBuf, ResourceLocation> = BiCodec.of(ResourceLocation.CODEC, ResourceLocation.STREAM_CODEC)
+    val ID: BiCodec<ByteBuf, ResourceLocation> = BiCodec.of(ResourceLocation.CODEC, ResourceLocation.STREAM_CODEC)
 
     /**
      * [DyeColor]の[BiCodec]
@@ -60,6 +62,13 @@ object VanillaBiCodecs {
      */
     @JvmField
     val HAND: BiCodec<ByteBuf, InteractionHand> = BiCodecs.enum(InteractionHand::values)
+
+    /**
+     * [PotionContents]の[BiCodec]
+     */
+    @JvmField
+    val POTION: BiCodec<RegistryFriendlyByteBuf, PotionContents> =
+        BiCodec.of(PotionContents.CODEC, PotionContents.STREAM_CODEC)
 
     /**
      * [Component]の[BiCodec]
@@ -93,6 +102,15 @@ object VanillaBiCodecs {
             false -> Ingredient.CODEC_NONEMPTY
         },
         Ingredient.CONTENTS_STREAM_CODEC,
+    )
+
+    @JvmStatic
+    fun fluidIngredient(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, FluidIngredient> = BiCodec.of(
+        when (allowEmpty) {
+            true -> FluidIngredient.CODEC
+            false -> FluidIngredient.CODEC_NON_EMPTY
+        },
+        FluidIngredient.STREAM_CODEC,
     )
 
     @JvmStatic

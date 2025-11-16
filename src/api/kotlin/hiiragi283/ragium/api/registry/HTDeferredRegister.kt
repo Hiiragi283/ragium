@@ -11,6 +11,10 @@ import java.util.function.Supplier
 open class HTDeferredRegister<T : Any>(registryKey: RegistryKey<T>, namespace: String) : DeferredRegister<T>(registryKey, namespace) {
     fun createId(path: String): ResourceLocation = namespace.toId(path)
 
+    fun addAlias(from: String, to: String) {
+        addAlias(createId(from), createId(to))
+    }
+
     open fun asSequence(): Sequence<HTDeferredHolder<T, out T>> = entries.asSequence()
 
     //    DeferredRegister    //

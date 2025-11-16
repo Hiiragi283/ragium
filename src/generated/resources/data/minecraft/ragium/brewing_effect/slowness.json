@@ -1,8 +1,0 @@
-{
-  "content": {
-    "potion": "minecraft:slowness"
-  },
-  "ingredient": {
-    "tag": "c:ingots/iron"
-  }
-}

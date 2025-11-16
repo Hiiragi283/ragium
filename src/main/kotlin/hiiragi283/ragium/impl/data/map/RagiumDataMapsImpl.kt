@@ -2,9 +2,11 @@ package hiiragi283.ragium.impl.data.map
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
 import hiiragi283.ragium.api.data.map.HTMobHead
+import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.map.IdMapDataMap
 import hiiragi283.ragium.api.data.map.MapDataMapValueRemover
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
@@ -15,6 +17,7 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.LevelBasedValue
@@ -38,16 +41,18 @@ class RagiumDataMapsImpl : RagiumDataMaps {
             create("fuel/$path", Registries.FLUID, HTFluidFuelData.CODEC)
     }
 
+    override val enchFuelType: DataMapType<Enchantment, LevelBasedValue> =
+        create("fuel", Registries.ENCHANTMENT, LevelBasedValue.DISPATCH_CODEC)
+
+    override val mobHeadType: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
+
     override val thermalFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("thermal")
     override val combustionFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
     override val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("nuclear")
-    override val enchFuelType: DataMapType<Enchantment, LevelBasedValue> = create(
-        "fuel",
-        Registries.ENCHANTMENT,
-        LevelBasedValue.DISPATCH_CODEC,
-    )
 
-    override val mobHeadType: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
+    override val armorEquipType: DataMapType<Item, HTEquipAction> = create("armor_equip", Registries.ITEM, HTEquipAction.CODEC)
+    override val subEntityIngredientType: DataMapType<Item, HTSubEntityTypeIngredient> =
+        create("sub_entity_ingredient", Registries.ITEM, HTSubEntityTypeIngredient.CODEC)
 
     override val materialRecipeType: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData> =
         AdvancedDataMapType
@@ -62,8 +67,8 @@ class RagiumDataMapsImpl : RagiumDataMaps {
         registryKey: RegistryKey<TYPE>,
         holder: Holder<TYPE>,
         type: DataMapType<TYPE, DATA>,
-    ): DATA? = when (Holder.Kind.REFERENCE) {
-        holder.kind() -> holder.getData(type)
+    ): DATA? = when (holder.kind()) {
+        Holder.Kind.REFERENCE -> holder.getData(type)
         else ->
             access
                 .registry(registryKey)

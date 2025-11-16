@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#c:gems/crimson_crystal",
-  "result": {
-    "amount": 1000,
-    "id": "ragium:crimson_blood"
-  }
-}

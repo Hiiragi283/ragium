@@ -5,18 +5,19 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
 
@@ -70,7 +71,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
 
         // Ice <-> Water
         meltAndFreeze(
-            itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
+            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK)),
             Items.ICE.toHolderLike(),
             HTFluidContent.WATER,
             1000,
@@ -80,7 +81,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
             .washing(
                 itemCreator.fromItem(Items.GLASS_BOTTLE),
                 fluidCreator.water(250),
-            ).addResult(resultHelper.item(PotionContents.createItemStack(Items.POTION, Potions.WATER)))
+            ).addResult(resultHelper.item(HTPotionHelper.createPotion(Items.POTION, Potions.WATER)))
             .save(output, RagiumAPI.id("water_bottle"))
 
         // Concretes
@@ -98,15 +99,16 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
     private fun exp() {
         // Exp Bottle
         extractAndInfuse(
-            itemCreator.fromItem(Items.GLASS_BOTTLE),
+            Items.GLASS_BOTTLE,
             Items.EXPERIENCE_BOTTLE.toHolderLike(),
             RagiumFluidContents.EXPERIENCE,
-            250,
         )
         // Exp Berries -> Liquid Exp
-        HTItemToObjRecipeBuilder
-            .melting(
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
                 itemCreator.fromItem(RagiumBlocks.EXP_BERRIES),
+                null,
+                null,
                 resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 50),
             ).saveSuffixed(output, "_from_berries")
 

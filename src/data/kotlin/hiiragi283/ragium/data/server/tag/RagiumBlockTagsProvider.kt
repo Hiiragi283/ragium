@@ -1,21 +1,23 @@
 package hiiragi283.ragium.data.server.tag
 
+import hiiragi283.ragium.api.collection.ImmutableMultiMap
+import hiiragi283.ragium.api.collection.buildMultiMap
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
@@ -33,6 +35,16 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             VanillaMaterialKeys.GLOWSTONE to Blocks.GLOWSTONE.toHolderLike(),
             VanillaMaterialKeys.QUARTZ to Blocks.QUARTZ_BLOCK.toHolderLike(),
         )
+
+        @JvmStatic
+        val STORAGE_BLOCK_TOOL: ImmutableMultiMap<HTMaterialKey, TagKey<Block>> = buildMultiMap {
+            this[FoodMaterialKeys.CHOCOLATE] = BlockTags.MINEABLE_WITH_PICKAXE
+            this[FoodMaterialKeys.CHOCOLATE] = BlockTags.MINEABLE_WITH_SHOVEL
+
+            this[FoodMaterialKeys.RAW_MEAT] = BlockTags.MINEABLE_WITH_SHOVEL
+
+            this[FoodMaterialKeys.COOKED_MEAT] = BlockTags.MINEABLE_WITH_SHOVEL
+        }
     }
 
     override fun addTags(builder: HTTagBuilder<Block>) {
@@ -45,23 +57,29 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
     private fun mineable(builder: HTTagBuilder<Block>) {
         // Axe
         builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.EXP_BERRIES)
-        builder.add(BlockTags.MINEABLE_WITH_AXE, RagiumBlocks.WOODEN_CASING)
         // Hoe
         builder.add(BlockTags.MINEABLE_WITH_HOE, RagiumBlocks.SWEET_BERRIES_CAKE)
         // Pickaxe
         buildList {
+            add(RagiumBlocks.BUDDING_AZURE)
             add(RagiumBlocks.AZURE_CLUSTER)
             add(RagiumBlocks.RESONANT_DEBRIS)
+            add(RagiumBlocks.SOOTY_COBBLESTONE)
             // Generators
             add(RagiumBlocks.THERMAL_GENERATOR)
 
             add(RagiumBlocks.COMBUSTION_GENERATOR)
 
+            add(RagiumBlocks.SOLAR_PANEL_UNIT)
             add(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
 
             add(RagiumBlocks.ENCHANTMENT_GENERATOR)
             add(RagiumBlocks.NUCLEAR_REACTOR)
-            // Consumers
+            // Processors
+            add(RagiumBlocks.ELECTRIC_FURNACE)
+            add(RagiumBlocks.AUTO_SMITHING_TABLE)
+            add(RagiumBlocks.AUTO_STONECUTTER)
+
             add(RagiumBlocks.ALLOY_SMELTER)
             add(RagiumBlocks.BLOCK_BREAKER)
             add(RagiumBlocks.COMPRESSOR)
@@ -82,11 +100,9 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.DEVICE_CASING)
 
             add(RagiumBlocks.ITEM_BUFFER)
-            add(RagiumBlocks.MILK_COLLECTOR)
             add(RagiumBlocks.WATER_COLLECTOR)
 
             add(RagiumBlocks.EXP_COLLECTOR)
-            add(RagiumBlocks.LAVA_COLLECTOR)
 
             add(RagiumBlocks.DIM_ANCHOR)
             add(RagiumBlocks.ENI)
@@ -96,6 +112,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
             add(RagiumBlocks.CEU)
             // Storage
+            add(RagiumBlocks.OPEN_CRATE)
+
             add(RagiumBlocks.EXP_DRUM)
         }.forEach { builder.add(BlockTags.MINEABLE_WITH_PICKAXE, it) }
         builder.addTag(BlockTags.MINEABLE_WITH_PICKAXE, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
@@ -113,13 +131,24 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             builder.add(BlockTags.WALLS, variant.wall)
         }
 
-        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CASINGS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.COILS)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.CRATES)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DECORATION_MAP)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.DRUMS)
-        builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.MATERIALS.values)
         builder.addBlocks(BlockTags.MINEABLE_WITH_PICKAXE, RagiumBlocks.ORES.values)
+
+        RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, block: HTHolderLike) ->
+            if (prefix.isOf(CommonMaterialPrefixes.STORAGE_BLOCK)) {
+                val tagKeys: Collection<TagKey<Block>> = STORAGE_BLOCK_TOOL[key]
+                    .takeUnless(Collection<TagKey<Block>>::isEmpty)
+                    ?: listOf(BlockTags.MINEABLE_WITH_PICKAXE)
+                for (tagKey: TagKey<Block> in tagKeys) {
+                    builder.add(tagKey, block)
+                }
+            } else {
+                builder.add(BlockTags.MINEABLE_WITH_PICKAXE, block)
+            }
+        }
         // Shovel
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.CRIMSON_SOIL)
         builder.add(BlockTags.MINEABLE_WITH_SHOVEL, RagiumBlocks.SILT)
@@ -159,8 +188,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // Material
         RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, block: HTHolderLike) ->
             builder.addMaterial(prefix, key, block)
-            when (prefix) {
-                CommonMaterialPrefixes.STORAGE_BLOCK -> builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
+            if (prefix.isOf(CommonMaterialPrefixes.STORAGE_BLOCK)) {
+                if (STORAGE_BLOCK_TOOL[key].isEmpty()) {
+                    builder.add(BlockTags.BEACON_BASE_BLOCKS, block)
+                }
             }
         }
 
@@ -170,45 +201,28 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // LED
         builder.addBlocks(RagiumModTags.Blocks.LED_BLOCKS, RagiumBlocks.LED_BLOCKS)
         // Stone
-        builder.add(
-            Tags.Blocks.OBSIDIANS,
-            RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS,
-            RagiumBlocks.MYSTERIOUS_OBSIDIAN,
-        )
+        builder.addTags(Tags.Blocks.OBSIDIANS, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS, RagiumBlocks.MYSTERIOUS_OBSIDIAN)
         builder.addTag(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES, BlockTags.DEEPSLATE_ORE_REPLACEABLES)
         // Crop
         builder.add(BlockTags.BEE_GROWABLES, RagiumBlocks.EXP_BERRIES)
         builder.add(BlockTags.FALL_DAMAGE_RESETTING, RagiumBlocks.EXP_BERRIES)
         builder.add(BlockTags.SWORD_EFFICIENT, RagiumBlocks.EXP_BERRIES)
         // Other
+        builder.add(BlockTags.CRYSTAL_SOUND_BLOCKS, RagiumBlocks.BUDDING_AZURE)
         builder.add(BlockTags.HOGLIN_REPELLENTS, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.WARPED_CRYSTAL))
         builder.add(BlockTags.INFINIBURN_OVERWORLD, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.CRIMSON_CRYSTAL))
         builder.add(BlockTags.SOUL_FIRE_BASE_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.WARPED_CRYSTAL))
         builder.add(BlockTags.STRIDER_WARM_BLOCKS, RagiumBlocks.getStorageBlock(RagiumMaterialKeys.CRIMSON_CRYSTAL))
         builder.add(Tags.Blocks.CLUSTERS, RagiumBlocks.AZURE_CLUSTER)
+        builder.add(Tags.Blocks.BUDDING_BLOCKS, RagiumBlocks.BUDDING_AZURE)
 
         // WIP
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AZURE_CLUSTER)
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.BREWERY)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.NUCLEAR_REACTOR)
-        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.SOLAR_PANEL_CONTROLLER)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.TELEPAD)
-        builder.addBlocks(RagiumModTags.Blocks.WIP, RagiumBlocks.CASINGS)
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }
 
     //    Extensions    //
-
-    private fun HTTagBuilder<Block>.add(parent: TagKey<Block>, child: TagKey<Block>, block: HTHolderLike) {
-        addTag(parent, child)
-        add(child, block)
-    }
-
-    private fun HTTagBuilder<Block>.addMaterial(prefix: HTMaterialPrefix, material: HTMaterialLike, block: HTHolderLike) {
-        val blockCommonTag: TagKey<Block> = prefix.blockCommonTag
-        val tagKey: TagKey<Block> = prefix.blockTagKey(material)
-        add(blockCommonTag, tagKey, block)
-    }
 
     private fun HTTagBuilder<Block>.addBlocks(tagKey: TagKey<Block>, blocks: Map<*, HTHolderLike>) {
         addBlocks(tagKey, blocks.values)

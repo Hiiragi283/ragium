@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "ragium:exp_berries",
-  "result": {
-    "amount": 50,
-    "id": "ragium:experience"
-  }
-}

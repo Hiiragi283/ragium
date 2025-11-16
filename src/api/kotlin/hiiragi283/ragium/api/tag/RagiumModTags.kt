@@ -66,6 +66,12 @@ object RagiumModTags {
 
     object Items {
         @JvmField
+        val BUDDING_AZURE_ACTIVATOR: TagKey<Item> = create("budding_azure_activator")
+
+        @JvmField
+        val BYPASS_MENU_VALIDATION: TagKey<Item> = create("bypass_menu_validation")
+
+        @JvmField
         val ELDRITCH_PEARL_BINDER: TagKey<Item> = create("eldritch_pearl_binder")
 
         @JvmField

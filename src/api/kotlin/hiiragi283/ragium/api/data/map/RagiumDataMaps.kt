@@ -7,6 +7,7 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
@@ -30,6 +31,12 @@ interface RagiumDataMaps {
         val INSTANCE: RagiumDataMaps = RagiumAPI.getService()
 
         @JvmField
+        val ENCHANT_FUEL: DataMapType<Enchantment, LevelBasedValue> = INSTANCE.enchFuelType
+
+        @JvmField
+        val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
+
+        @JvmField
         val THERMAL_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.thermalFuelType
 
         @JvmField
@@ -39,22 +46,25 @@ interface RagiumDataMaps {
         val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.nuclearFuelType
 
         @JvmField
-        val ENCHANT_FUEL: DataMapType<Enchantment, LevelBasedValue> = INSTANCE.enchFuelType
+        val ARMOR_EQUIP: DataMapType<Item, HTEquipAction> = INSTANCE.armorEquipType
 
         @JvmField
-        val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
+        val SUB_ENTITY_INGREDIENT: DataMapType<Item, HTSubEntityTypeIngredient> = INSTANCE.subEntityIngredientType
 
         @JvmField
         val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData> = INSTANCE.materialRecipeType
     }
 
+    val enchFuelType: DataMapType<Enchantment, LevelBasedValue>
+
+    val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
+
     val thermalFuelType: DataMapType<Fluid, HTFluidFuelData>
     val combustionFuelType: DataMapType<Fluid, HTFluidFuelData>
     val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData>
 
-    val enchFuelType: DataMapType<Enchantment, LevelBasedValue>
-
-    val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
+    val armorEquipType: DataMapType<Item, HTEquipAction>
+    val subEntityIngredientType: DataMapType<Item, HTSubEntityTypeIngredient>
 
     val materialRecipeType: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData>
 
@@ -76,6 +86,15 @@ interface RagiumDataMaps {
     ): DATA?
 
     /**
+     * 指定した値からエンチャントでドロップするモブの頭を取得します。
+     */
+    fun getMobHead(access: RegistryAccess, holder: Holder<EntityType<*>>): ItemStack =
+        getData(access, Registries.ENTITY_TYPE, holder, mobHeadType)?.toStack() ?: ItemStack.EMPTY
+
+    fun getEnchBasedValue(access: RegistryAccess, holder: Holder<Enchantment>, level: Int): Int? =
+        getData(access, Registries.ENCHANTMENT, holder, enchFuelType)?.calculate(level)?.toInt()
+
+    /**
      * 指定した値から火力発電機の液体燃料の消費量を取得します。
      */
     fun getThermalFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
@@ -92,13 +111,4 @@ interface RagiumDataMaps {
      */
     fun getNuclearFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
         getData(access, Registries.FLUID, holder, nuclearFuelType)?.amount ?: 0
-
-    fun getEnchBasedValue(access: RegistryAccess, holder: Holder<Enchantment>, level: Int): Int? =
-        getData(access, Registries.ENCHANTMENT, holder, enchFuelType)?.calculate(level)?.toInt()
-
-    /**
-     * 指定した値からエンチャントでドロップするモブの頭を取得します。
-     */
-    fun getMobHead(access: RegistryAccess, holder: Holder<EntityType<*>>): ItemStack =
-        getData(access, Registries.ENTITY_TYPE, holder, mobHeadType)?.toStack() ?: ItemStack.EMPTY
 }

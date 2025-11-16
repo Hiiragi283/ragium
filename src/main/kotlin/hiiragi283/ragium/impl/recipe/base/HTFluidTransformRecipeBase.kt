@@ -1,9 +1,9 @@
 package hiiragi283.ragium.impl.recipe.base
 
-import hiiragi283.ragium.api.recipe.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
+import hiiragi283.ragium.api.recipe.multi.HTFluidTransformRecipe
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
@@ -11,6 +11,9 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
 import java.util.Optional
 
+/**
+ * [HTFluidTransformRecipe]の抽象クラス
+ */
 abstract class HTFluidTransformRecipeBase : HTFluidTransformRecipe {
     abstract val fluidIngredient: HTFluidIngredient
     abstract val itemIngredient: Optional<HTItemIngredient>
@@ -29,11 +32,11 @@ abstract class HTFluidTransformRecipeBase : HTFluidTransformRecipe {
         return bool1 && bool2
     }
 
-    final override fun assembleItem(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ImmutableItemStack? =
-        getItemResult(input, registries, itemResult)
+    final override fun assembleItem(input: HTItemWithFluidRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
+        getItemResult(input, provider, itemResult)
 
-    final override fun assembleFluid(input: HTItemWithFluidRecipeInput, registries: HolderLookup.Provider): ImmutableFluidStack? =
-        getFluidResult(input, registries, fluidResult)
+    final override fun assembleFluid(input: HTItemWithFluidRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? =
+        getFluidResult(input, provider, fluidResult)
 
     final override fun isIncomplete(): Boolean {
         if (itemResult.isEmpty && fluidResult.isEmpty) return true

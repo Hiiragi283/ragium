@@ -13,11 +13,14 @@ import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidType
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import java.util.function.Supplier
+
+typealias HTFlowingFluidContent<TYPE> = HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing>
+
+typealias HTSimpleFluidContent = HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing>
 
 interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> :
     Supplier<STILL>,
@@ -102,9 +105,5 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> :
 
     fun toStack(amount: Int): FluidStack = FluidStack(get(), amount)
 
-    fun toStorageStack(amount: Int): ImmutableFluidStack? = toStack(amount).toImmutable()
-
-    fun toIngredient(): FluidIngredient = FluidIngredient.tag(commonTag)
-
-    fun toIngredient(amount: Int): SizedFluidIngredient = SizedFluidIngredient(toIngredient(), amount)
+    fun toImmutableStack(amount: Int): ImmutableFluidStack? = toStack(amount).toImmutable()
 }

@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.inventory.container.type.HTItemContainerFactory
 import hiiragi283.ragium.api.inventory.container.type.HTItemMenuType
 import hiiragi283.ragium.api.inventory.container.type.HTMenuTypeWithContext
 import hiiragi283.ragium.api.registry.HTDeferredHolder
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
@@ -93,22 +95,27 @@ sealed class HTDeferredMenuType<MENU : AbstractContainerMenu, TYPE : MenuType<ME
         /**
          * 指定された[hand], [stack]から[MenuProvider]を返します。
          * @param hand このGUIを開く[stack]を持っている[InteractionHand]
-         * @param stack このGUIを開く[ItemStack]
+         * @param stack このGUIを開く[ImmutableItemStack]
          * @return [get]の戻り値が[HTItemContainerFactory]を継承していない場合は`null`
          */
-        fun getProvider(hand: InteractionHand?, stack: ItemStack): MenuProvider? {
+        fun getProvider(hand: InteractionHand?, stack: ImmutableItemStack): MenuProvider? {
             val constructor: MenuConstructor = get().create(hand, stack) ?: return null
-            return SimpleMenuProvider(constructor, stack.hoverName)
+            return SimpleMenuProvider(constructor, stack.getText())
+        }
+
+        fun openMenu(player: Player, hand: InteractionHand?, stack: ItemStack): InteractionResult {
+            val immutable: ImmutableItemStack = stack.toImmutable() ?: return InteractionResult.FAIL
+            return openMenu(player, hand, immutable)
         }
 
         /**
          * 指定された[player], [hand], [stack]からGUIを開きます。
          * @param player このGUIを開く[Player]
          * @param hand このGUIを開く[stack]を持っている[InteractionHand]
-         * @param stack このGUIを開く[ItemStack]
+         * @param stack このGUIを開く[ImmutableItemStack]
          * @return クライアント側の場合は[InteractionResult.SUCCESS]，サーバー側の場合はGUIを開いたうえで[InteractionResult.CONSUME], [getProvider]が`null`の場合は[InteractionResult.FAIL]
          */
-        fun openMenu(player: Player, hand: InteractionHand?, stack: ItemStack): InteractionResult = when {
+        fun openMenu(player: Player, hand: InteractionHand?, stack: ImmutableItemStack): InteractionResult = when {
             player.level().isClientSide -> InteractionResult.SUCCESS
             else -> {
                 val provider: MenuProvider = getProvider(hand, stack) ?: return InteractionResult.FAIL

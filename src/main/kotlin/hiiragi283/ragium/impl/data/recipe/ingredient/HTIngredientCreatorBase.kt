@@ -13,10 +13,15 @@ abstract class HTIngredientCreatorBase<TYPE : Any, INGREDIENT : HTIngredient<TYP
 ) : HTIngredientCreator<TYPE, INGREDIENT> {
     final override fun from(type: TYPE, amount: Int): INGREDIENT = fromHolder(holderFactory(type), amount)
 
-    final override fun from(types: Collection<TYPE>, amount: Int): INGREDIENT = fromHolders(types.map(holderFactory), amount)
+    final override fun from(types: Collection<TYPE>, amount: Int): INGREDIENT = when (types.size) {
+        1 -> from(types.first(), amount)
+        else -> fromHolders(types.map(holderFactory), amount)
+    }
 
     final override fun fromTagKey(tagKey: TagKey<TYPE>, amount: Int): INGREDIENT = fromSet(getter.getOrThrow(tagKey), amount)
 
-    final override fun fromTagKeys(tagKeys: Iterable<TagKey<TYPE>>, amount: Int): INGREDIENT =
-        fromSet(OrHolderSet(tagKeys.map(getter::getOrThrow)), amount)
+    final override fun fromTagKeys(tagKeys: Collection<TagKey<TYPE>>, amount: Int): INGREDIENT = when (tagKeys.size) {
+        1 -> fromTagKey(tagKeys.first(), amount)
+        else -> fromSet(OrHolderSet(tagKeys.map(getter::getOrThrow)), amount)
+    }
 }

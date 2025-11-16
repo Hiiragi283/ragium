@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "fluid": "ragium:dew_of_the_warp",
-  "loader": "neoforge:fluid_container"
-}

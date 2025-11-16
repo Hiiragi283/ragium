@@ -1,6 +1,0 @@
-{
-  "type": "neoforge:add_features",
-  "biomes": "minecraft:deep_dark",
-  "features": "ragium:ore_resonant_debris",
-  "step": "underground_ores"
-}

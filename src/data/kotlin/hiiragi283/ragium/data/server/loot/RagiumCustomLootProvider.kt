@@ -68,7 +68,7 @@ sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provi
 
     class Block(provider: HolderLookup.Provider) : RagiumCustomLootProvider(provider) {
         /**
-         * @see [net.minecraft.data.loot.packs.VanillaBlockLoot.createOakLeavesDrops]
+         * @see net.minecraft.data.loot.packs.VanillaBlockLoot.createOakLeavesDrops
          */
         override fun generate(output: BiConsumer<ResourceKey<LootTable>, LootTable.Builder>) {
             // Drops Ragi-Cherry from Cherry Leaves

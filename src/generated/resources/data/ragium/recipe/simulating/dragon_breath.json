@@ -1,9 +1,0 @@
-{
-  "type": "ragium:simulating",
-  "catalyst": "minecraft:dragon_head",
-  "ingredient": "minecraft:glass_bottle",
-  "result": {
-    "count": 1,
-    "id": "minecraft:dragon_breath"
-  }
-}

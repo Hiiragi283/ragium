@@ -1,10 +1,10 @@
 package hiiragi283.ragium.client.integration.emi.recipe.processor
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.recipe.base.HTCombineItemToItemRecipe
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
+import hiiragi283.ragium.impl.recipe.base.HTCombineItemToItemRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTAlloyingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTCombineItemToItemRecipe>) :

@@ -1,5 +1,0 @@
-{
-  "type": "ragium:clear_component",
-  "ingredient": "ragium:large_drum",
-  "targets": "ragium:fluid_content"
-}

@@ -2,9 +2,10 @@ package hiiragi283.ragium.api.serialization.codec
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
-import com.mojang.serialization.DataResult
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.network.codec.StreamCodec
+import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import java.util.function.Supplier
 
 object BiCodecs {
@@ -28,7 +29,7 @@ object BiCodecs {
 
     /**
      * `0`以上の値を対象とする[Long]の[BiCodec]
-     * @see [mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC]
+     * @see mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC
      */
     @JvmField
     val NON_NEGATIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(0..Long.MAX_VALUE)
@@ -41,7 +42,7 @@ object BiCodecs {
 
     /**
      * `1`以上の値を対象とする[Long]の[BiCodec]
-     * @see [mekanism.api.SerializerHelper.POSITIVE_NONZERO_LONG_CODEC]
+     * @see mekanism.api.SerializerHelper.POSITIVE_NONZERO_LONG_CODEC
      */
     @JvmField
     val POSITIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(1..Long.MAX_VALUE)
@@ -91,18 +92,25 @@ object BiCodecs {
     )
 
     @JvmStatic
+    fun <B : ByteBuf, T : Any> withAlternative(primal: BiCodec<in B, T>, secondary: BiCodec<in B, T>): BiCodec<B, T> = BiCodec.of(
+        NeoForgeExtraCodecs.withAlternative(primal.codec, secondary.codec),
+        AlternativeStreamCodec(primal.streamCodec, secondary.streamCodec),
+    )
+
+    @JvmStatic
     inline fun <reified V : Enum<V>> enum(values: Supplier<Array<V>>): BiCodec<ByteBuf, V> =
         NON_NEGATIVE_INT.flatXmap({ value: Int -> values.get()[value] }, Enum<V>::ordinal)
-}
 
-/**
- * 指定された[BiCodec]を，別の[BiCodec]に変換します。
- * @param X 変換後のコーデックの対象となるクラス
- * @param V [X]を継承したクラス
- * @return [X]を対象とした[BiCodec]
- */
-inline fun <B : ByteBuf, reified X : Any, reified V : X> BiCodec<B, V>.downCast(): BiCodec<B, X> = this.flatXmap({ it as X }, { it as V })
+    /**
+     * @see NeoForgeExtraCodecs.AlternativeCodec
+     */
+    @JvmRecord
+    private data class AlternativeStreamCodec<B : Any, V : Any>(val primal: StreamCodec<in B, V>, val secondary: StreamCodec<in B, V>) :
+        StreamCodec<B, V> {
+        override fun decode(buffer: B): V = runCatching { primal.decode(buffer) }.getOrElse { secondary.decode(buffer) }
 
-fun <T : Any> Result<T>.toData(): DataResult<T> = fold(DataResult<T>::success) { throwable: Throwable ->
-    DataResult.error { throwable.message ?: "Thrown exception" }
+        override fun encode(buffer: B, value: V) {
+            runCatching { primal.encode(buffer, value) }.onFailure { secondary.encode(buffer, value) }
+        }
+    }
 }

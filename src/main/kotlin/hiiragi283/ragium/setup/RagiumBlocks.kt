@@ -1,18 +1,24 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.HTTypedBlock
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
+import hiiragi283.ragium.api.function.BlockWithContextFactory
 import hiiragi283.ragium.api.function.partially1
+import hiiragi283.ragium.api.item.HTDescriptionBlockItem
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
+import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
-import hiiragi283.ragium.common.block.AzureClusterBlock
+import hiiragi283.ragium.common.block.HTAzureClusterBlock
+import hiiragi283.ragium.common.block.HTBuddingAzureBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
@@ -23,7 +29,7 @@ import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
 import hiiragi283.ragium.common.block.HTTintedGlassBlock
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
-import hiiragi283.ragium.common.block.consumer.HTRefineryBlock
+import hiiragi283.ragium.common.block.processor.HTRefineryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
@@ -32,6 +38,8 @@ import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -51,7 +59,6 @@ import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
-import java.util.function.UnaryOperator
 
 object RagiumBlocks {
     @JvmField
@@ -62,20 +69,24 @@ object RagiumBlocks {
         REGISTER.register(eventBus)
 
         // Eldritch Stone
-        REGISTER.addFirstAlias("polished_eldritch_stone", "eldritch_stone")
-        REGISTER.addFirstAlias("polished_eldritch_stone_bricks", "eldritch_stone_bricks")
+        REGISTER.addAlias("polished_eldritch_stone", "eldritch_stone")
+        REGISTER.addAlias("polished_eldritch_stone_bricks", "eldritch_stone_bricks")
 
         for (suffix: String in listOf("_slab", "_stairs", "_wall")) {
-            REGISTER.addFirstAlias("polished_eldritch_stone$suffix", "eldritch_stone$suffix")
-            REGISTER.addFirstAlias("polished_eldritch_stone_brick$suffix", "eldritch_stone_brick$suffix")
+            REGISTER.addAlias("polished_eldritch_stone$suffix", "eldritch_stone$suffix")
+            REGISTER.addAlias("polished_eldritch_stone_brick$suffix", "eldritch_stone_brick$suffix")
         }
+        // Raw Meat
+        REGISTER.addAlias("meat_block", "raw_meat_block")
     }
 
     @JvmStatic
     fun <BLOCK : HTTypedEntityBlock<*>> registerMachineTier(
         name: String,
-        blockGetter: () -> BLOCK,
-    ): HTDeferredBlock<BLOCK, HTMachineBlockItem> = REGISTER.register(name, blockGetter, ::HTMachineBlockItem)
+        blockType: HTEntityBlockType,
+        blockProp: BlockBehaviour.Properties,
+        blockFactory: BlockWithContextFactory<HTEntityBlockType, BLOCK>,
+    ): HTDeferredBlock<BLOCK, HTMachineBlockItem> = REGISTER.registerTyped(name, blockType, blockProp, blockFactory, ::HTMachineBlockItem)
 
     @JvmStatic
     fun registerMachineTier(
@@ -83,14 +94,14 @@ object RagiumBlocks {
         blockType: HTEntityBlockType,
         properties: BlockBehaviour.Properties,
     ): HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier(name) { HTTypedEntityBlock(blockType, properties) }
+        registerMachineTier(name, blockType, properties, ::HTTypedEntityBlock)
 
     @JvmStatic
     fun registerSimpleEntity(
         name: String,
         blockType: HTEntityBlockType,
-        operator: UnaryOperator<BlockBehaviour.Properties>,
-    ): HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(name, { HTTypedEntityBlock(blockType, operator) })
+        properties: BlockBehaviour.Properties,
+    ): HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(name, { HTTypedEntityBlock(blockType, properties) })
 
     @JvmStatic
     fun machineProperty(): BlockBehaviour.Properties = BlockBehaviour.Properties
@@ -119,10 +130,27 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val BUDDING_AZURE: HTSimpleDeferredBlock = REGISTER.registerSimple(
+        "budding_azure",
+        copyOf(Blocks.BUDDING_AMETHYST, MapColor.TERRACOTTA_BLUE),
+        ::HTBuddingAzureBlock,
+    )
+
+    @JvmField
     val AZURE_CLUSTER: HTSimpleDeferredBlock = REGISTER.registerSimple(
         "azure_cluster",
         copyOf(Blocks.AMETHYST_CLUSTER, MapColor.TERRACOTTA_BLUE),
-        ::AzureClusterBlock,
+        ::HTAzureClusterBlock,
+    )
+
+    @JvmField
+    val RESONANT_DEBRIS: HTSimpleDeferredBlock =
+        REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
+
+    @JvmField
+    val SOOTY_COBBLESTONE: HTSimpleDeferredBlock = REGISTER.registerSimple(
+        "sooty_cobblestone",
+        copyOf(Blocks.COBBLESTONE).mapColor(MapColor.COLOR_BLACK),
     )
 
     @JvmField
@@ -131,10 +159,6 @@ object RagiumBlocks {
         copyOf(Blocks.SOUL_SOIL),
         ::HTCrimsonSoilBlock,
     )
-
-    @JvmField
-    val EXP_BERRIES: HTDeferredBlock<HTExpBerriesBushBlock, HTExpBerriesItem> =
-        REGISTER.register("exp_berries", copyOf(Blocks.SWEET_BERRY_BUSH), ::HTExpBerriesBushBlock, ::HTExpBerriesItem)
 
     @JvmField
     val WARPED_WART: HTDeferredBlock<HTWarpedWartBlock, HTWarpedWartItem> = REGISTER.register(
@@ -146,8 +170,8 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val RESONANT_DEBRIS: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
+    val EXP_BERRIES: HTDeferredBlock<HTExpBerriesBushBlock, HTExpBerriesItem> =
+        REGISTER.register("exp_berries", copyOf(Blocks.SWEET_BERRY_BUSH), ::HTExpBerriesBushBlock, ::HTExpBerriesItem)
 
     @JvmField
     val MYSTERIOUS_OBSIDIAN: HTBasicDeferredBlock<HTEnchantPowerBlock> =
@@ -157,6 +181,7 @@ object RagiumBlocks {
 
     //    Materials    //
 
+    @JvmStatic
     val ORES: ImmutableTable<HTOreVariant, HTMaterialKey, HTSimpleDeferredBlock> = buildTable {
         HTOreVariant.entries.forEach { variant: HTOreVariant ->
             val pattern: String = when (variant) {
@@ -182,29 +207,31 @@ object RagiumBlocks {
         }
     }
 
+    @JvmStatic
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredBlock> = buildTable {
         // Storage Blocks
         mapOf(
             // Gems
             RagiumMaterialKeys.RAGI_CRYSTAL to copyOf(Blocks.AMETHYST_BLOCK, MapColor.COLOR_PINK),
+            RagiumMaterialKeys.AZURE to copyOf(Blocks.AMETHYST_BLOCK, MapColor.TERRACOTTA_BLUE),
             RagiumMaterialKeys.CRIMSON_CRYSTAL to copyOf(Blocks.AMETHYST_BLOCK, MapColor.CRIMSON_STEM),
             RagiumMaterialKeys.WARPED_CRYSTAL to copyOf(Blocks.AMETHYST_BLOCK, MapColor.WARPED_STEM),
-            RagiumMaterialKeys.ELDRITCH_PEARL to copyOf(Blocks.SHROOMLIGHT, MapColor.COLOR_PURPLE),
+            RagiumMaterialKeys.ELDRITCH_PEARL to copyOf(Blocks.AMETHYST_BLOCK),
             // Ingots
             RagiumMaterialKeys.RAGI_ALLOY to copyOf(Blocks.COPPER_BLOCK, MapColor.COLOR_RED),
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY to copyOf(Blocks.IRON_BLOCK, MapColor.COLOR_ORANGE),
             RagiumMaterialKeys.AZURE_STEEL to copyOf(Blocks.IRON_BLOCK, MapColor.TERRACOTTA_BLUE),
             RagiumMaterialKeys.DEEP_STEEL to copyOf(Blocks.NETHERITE_BLOCK, MapColor.COLOR_CYAN),
-            RagiumMaterialKeys.GILDIUM to copyOf(Blocks.GOLD_BLOCK),
+            RagiumMaterialKeys.NIGHT_METAL to copyOf(Blocks.GOLD_BLOCK, MapColor.COLOR_BLACK),
             RagiumMaterialKeys.IRIDESCENTIUM to copyOf(Blocks.IRON_BLOCK),
             // Foods
-            RagiumMaterialKeys.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),
-            RagiumMaterialKeys.MEAT to copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK),
-            RagiumMaterialKeys.COOKED_MEAT to copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK),
+            FoodMaterialKeys.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),
+            FoodMaterialKeys.RAW_MEAT to copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK),
+            FoodMaterialKeys.COOKED_MEAT to copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK),
             // Misc
             CommonMaterialKeys.PLASTIC to copyOf(Blocks.TUFF, MapColor.NONE),
         ).forEach { (key: HTMaterialKey, properties: BlockBehaviour.Properties) ->
-            this[CommonMaterialPrefixes.STORAGE_BLOCK, key] =
+            this[CommonMaterialPrefixes.STORAGE_BLOCK.asMaterialPrefix(), key] =
                 REGISTER.registerSimple("${key.name}_block", properties)
         }
 
@@ -215,7 +242,7 @@ object RagiumBlocks {
             canPlayerThrough: Boolean,
             blastProof: Boolean,
         ) {
-            this[CommonMaterialPrefixes.GLASS_BLOCK, key] = REGISTER.registerSimple(
+            this[CommonMaterialPrefixes.GLASS_BLOCK.asMaterialPrefix(), key] = REGISTER.registerSimple(
                 "${key.name}_glass",
                 properties.apply { if (blastProof) strength(5f, 1200f) },
                 ::HTGlassBlock.partially1(canPlayerThrough),
@@ -233,7 +260,7 @@ object RagiumBlocks {
             canPlayerThrough: Boolean,
             blastProof: Boolean,
         ) {
-            this[CommonMaterialPrefixes.GLASS_BLOCK_TINTED, key] = REGISTER.registerSimple(
+            this[CommonMaterialPrefixes.GLASS_BLOCK_TINTED.asMaterialPrefix(), key] = REGISTER.registerSimple(
                 "tinted_${key.name}_glass",
                 properties.apply { if (blastProof) strength(5f, 1200f) },
                 ::HTTintedGlassBlock.partially1(canPlayerThrough),
@@ -246,8 +273,9 @@ object RagiumBlocks {
     }
 
     @JvmStatic
-    fun getMaterial(prefix: HTMaterialPrefix, material: HTMaterialLike): HTSimpleDeferredBlock = MATERIALS[prefix, material.asMaterialKey()]
-        ?: error("Unknown $prefix block for ${material.asMaterialName()}")
+    fun getMaterial(prefix: HTPrefixLike, material: HTMaterialLike): HTSimpleDeferredBlock =
+        MATERIALS[prefix.asMaterialPrefix(), material.asMaterialKey()]
+            ?: error("Unknown $prefix block for ${material.asMaterialName()}")
 
     @JvmStatic
     fun getStorageBlock(material: HTMaterialLike): HTSimpleDeferredBlock = getMaterial(CommonMaterialPrefixes.STORAGE_BLOCK, material)
@@ -257,6 +285,9 @@ object RagiumBlocks {
 
     @JvmStatic
     fun getTintedGlass(material: HTMaterialLike): HTSimpleDeferredBlock = getMaterial(CommonMaterialPrefixes.GLASS_BLOCK_TINTED, material)
+
+    @JvmStatic
+    fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredBlock> = MATERIALS.row(prefix.asMaterialPrefix())
 
     @JvmField
     val COILS: Map<HTMaterialKey, HTBasicDeferredBlock<RotatedPillarBlock>> = arrayOf(
@@ -319,7 +350,7 @@ object RagiumBlocks {
     @JvmField
     val SLABS: Map<HTDecorationVariant, HTBasicDeferredBlock<SlabBlock>> =
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
-            REGISTER.registerSimple("${variant.variantName()}_slab", { copyOf(variant.base.get()) }, ::SlabBlock)
+            REGISTER.registerSimple("${variant.variantName()}_slab", { SlabBlock(copyOf(variant.base.get())) })
         }
 
     @JvmField
@@ -339,8 +370,7 @@ object RagiumBlocks {
         HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
             REGISTER.registerSimple(
                 "${variant.variantName()}_wall",
-                { copyOf(variant.base.get()) },
-                ::WallBlock,
+                { WallBlock(copyOf(variant.base.get())) },
             )
         }
 
@@ -359,8 +389,7 @@ object RagiumBlocks {
     val SWEET_BERRIES_CAKE: HTSimpleDeferredBlock =
         REGISTER.registerSimple(
             "sweet_berries_cake",
-            { copyOf(SPONGE_CAKE.get()).forceSolidOn() },
-            ::HTSweetBerriesCakeBlock,
+            { HTSweetBerriesCakeBlock(copyOf(SPONGE_CAKE.get()).forceSolidOn()) },
         )
 
     //    Generators    //
@@ -383,6 +412,16 @@ object RagiumBlocks {
 
     // Elite
     @JvmField
+    val SOLAR_PANEL_UNIT: HTDescriptionDeferredBlock<HTTypedBlock<*>> =
+        REGISTER.registerTyped(
+            "solar_panel_unit",
+            RagiumBlockTypes.SOLAR_PANEL_UNIT,
+            machineProperty().noOcclusion(),
+            ::HTTypedBlock,
+            ::HTDescriptionBlockItem,
+        )
+
+    @JvmField
     val SOLAR_PANEL_CONTROLLER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "solar_panel_controller",
         RagiumBlockTypes.SOLAR_PANEL_CONTROLLER,
@@ -404,7 +443,20 @@ object RagiumBlocks {
         machineProperty().noOcclusion(),
     )
 
-    //    Consumer    //
+    //    Processor    //
+
+    // Vanilla
+    @JvmField
+    val ELECTRIC_FURNACE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("electric_furnace", RagiumBlockTypes.ELECTRIC_FURNACE, machineProperty())
+
+    @JvmField
+    val AUTO_SMITHING_TABLE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("auto_smithing_table", RagiumBlockTypes.AUTO_SMITHING_TABLE, machineProperty())
+
+    @JvmField
+    val AUTO_STONECUTTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("auto_stonecutter", RagiumBlockTypes.AUTO_STONECUTTER, machineProperty())
 
     // Basic
     @JvmField
@@ -442,7 +494,12 @@ object RagiumBlocks {
 
     @JvmField
     val REFINERY: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("refinery") { HTRefineryBlock(RagiumBlockTypes.REFINERY, machineProperty().noOcclusion()) }
+        registerMachineTier(
+            "refinery",
+            RagiumBlockTypes.REFINERY,
+            machineProperty().noOcclusion(),
+            ::HTRefineryBlock,
+        )
 
     @JvmField
     val WASHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
@@ -467,27 +524,6 @@ object RagiumBlocks {
 
     // Ultimate
 
-    //    Parts    //
-
-    @JvmField
-    val WOODEN_CASING: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("wooden_casing", copyOf(Blocks.NOTE_BLOCK))
-
-    @JvmField
-    val STONE_CASING: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("stone_casing", copyOf(Blocks.COBBLESTONE))
-
-    @JvmField
-    val REINFORCED_STONE_CASING: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("reinforced_stone_casing", copyOf(Blocks.COBBLED_DEEPSLATE))
-
-    @JvmField
-    val CASINGS: List<HTSimpleDeferredBlock> = listOf(
-        WOODEN_CASING,
-        STONE_CASING,
-        REINFORCED_STONE_CASING,
-    )
-
     //    Device    //
 
     @JvmField
@@ -500,10 +536,6 @@ object RagiumBlocks {
         registerMachineTier("item_buffer", RagiumBlockTypes.ITEM_BUFFER, machineProperty())
 
     @JvmField
-    val MILK_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("milk_collector", RagiumBlockTypes.MILK_COLLECTOR, machineProperty())
-
-    @JvmField
     val WATER_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("water_collector", RagiumBlockTypes.WATER_COLLECTOR, machineProperty())
 
@@ -511,10 +543,6 @@ object RagiumBlocks {
     @JvmField
     val EXP_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("exp_collector", RagiumBlockTypes.EXP_COLLECTOR, machineProperty())
-
-    @JvmField
-    val LAVA_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("lava_collector", RagiumBlockTypes.LAVA_COLLECTOR, machineProperty())
 
     // Elite
     @JvmField
@@ -556,6 +584,13 @@ object RagiumBlocks {
                 ::HTCrateBlockItem,
             )
         }
+
+    @JvmField
+    val OPEN_CRATE: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
+        "open_crate",
+        RagiumBlockTypes.OPEN_CRATE,
+        machineProperty(),
+    )
 
     @JvmField
     val DRUMS: Map<HTDrumTier, HTDeferredBlock<HTDrumBlock, HTDrumBlockItem>> =

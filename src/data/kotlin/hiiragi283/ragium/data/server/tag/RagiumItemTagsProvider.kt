@@ -1,36 +1,39 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.ragium.api.collection.buildMultiMap
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
+import hiiragi283.ragium.api.data.tag.HTTagDependType
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
-import hiiragi283.ragium.common.accessory.HTAccessorySlot
+import hiiragi283.ragium.common.integration.RagiumCreateAddon
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumFoodAddon
-import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.tier.HTCircuitTier
-import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
-import hiiragi283.ragium.common.variant.HTVanillaToolVariant
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
+import hiiragi283.ragium.common.variant.HTSandPaperToolVariant
+import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import io.wispforest.accessories.api.data.AccessoriesTags
 import me.desht.pneumaticcraft.api.data.PneumaticCraftTags
 import mekanism.common.registries.MekanismItems
 import net.minecraft.core.HolderLookup
@@ -57,6 +60,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         categories(builder)
 
         accessories(builder)
+        create(builder)
         pneumatic(builder)
     }
 
@@ -92,14 +96,17 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         copy(BlockTags.WALLS, ItemTags.WALLS)
         copy(RagiumModTags.Blocks.LED_BLOCKS, RagiumModTags.Items.LED_BLOCKS)
 
+        copy(Tags.Blocks.CLUSTERS, Tags.Items.CLUSTERS)
+        copy(Tags.Blocks.BUDDING_BLOCKS, Tags.Items.BUDDING_BLOCKS)
+
         copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
 
-    private fun copy(prefix: HTMaterialPrefix) {
-        copy(prefix.blockCommonTag, prefix.itemCommonTag)
+    private fun copy(prefix: HTPrefixLike) {
+        copy(prefix.createCommonTagKey(Registries.BLOCK), prefix.createCommonTagKey(Registries.ITEM))
     }
 
-    private fun copy(prefix: HTMaterialPrefix, material: HTMaterialLike) {
+    private fun copy(prefix: HTPrefixLike, material: HTMaterialLike) {
         copy(prefix.blockTagKey(material), prefix.itemTagKey(material))
     }
 
@@ -110,26 +117,24 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     //    Material    //
 
     private fun material(builder: HTTagBuilder<Item>) {
-        fromTriples(builder, RagiumItems.MATERIALS.entries)
-        fromTriples(
-            builder,
-            RagiumItems.CIRCUITS.map { (tier: HTCircuitTier, item: HTHolderLike) ->
-                Triple(CommonMaterialPrefixes.CIRCUIT, tier, item)
-            },
-        )
+        fromTable(builder, RagiumItems.MATERIALS)
+        fromMap(builder, CommonMaterialPrefixes.CIRCUIT, RagiumItems.CIRCUITS)
         // Fuels
         builder.addMaterial(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL, Items.COAL.toHolderLike())
         builder.addMaterial(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, Items.CHARCOAL.toHolderLike())
-
-        val coalCoke: TagKey<Item> = CommonMaterialPrefixes.FUEL.itemTagKey(CommonMaterialKeys.COAL_COKE)
-        builder.addTag(CommonMaterialPrefixes.FUEL.itemCommonTag, coalCoke)
-        builder.addTag(coalCoke, RagiumCommonTags.Items.COAL_COKE, HTTagBuilder.DependType.OPTIONAL)
-
+        builder.addMaterial(
+            CommonMaterialPrefixes.FUEL,
+            CommonMaterialKeys.COAL_COKE,
+            RagiumCommonTags.Items.COAL_COKE,
+            HTTagDependType.OPTIONAL,
+        )
+        // Gems
         builder.addMaterial(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO, Items.ECHO_SHARD.toHolderLike())
+
         // Scraps
         builder.addMaterial(CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, Items.NETHERITE_SCRAP.toHolderLike())
         // Mekanism Addon
-        fromTriples(builder, RagiumMekanismAddon.MATERIAL_ITEMS.entries)
+        fromTable(builder, RagiumMekanismAddon.MATERIAL_ITEMS, HTTagDependType.OPTIONAL)
     }
 
     companion object {
@@ -138,29 +143,40 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             CommonMaterialPrefixes.GEM to ItemTags.BEACON_PAYMENT_ITEMS,
             CommonMaterialPrefixes.INGOT to ItemTags.BEACON_PAYMENT_ITEMS,
             CommonMaterialPrefixes.FUEL to ItemTags.COALS,
-        )
+        ).mapKeys { (prefix: CommonMaterialPrefixes, _) -> prefix.asMaterialPrefix() }
     }
 
-    private fun fromTriples(builder: HTTagBuilder<Item>, triples: Iterable<Triple<HTMaterialPrefix, HTMaterialLike, HTHolderLike>>) {
-        triples.forEach { (prefix: HTMaterialPrefix, key: HTMaterialLike, item: HTHolderLike) ->
-            builder.addMaterial(prefix, key, item)
+    private fun fromMap(builder: HTTagBuilder<Item>, prefix: HTPrefixLike, map: Map<out HTMaterialLike, HTHolderLike>) {
+        for ((material: HTMaterialLike, item: HTHolderLike) in map) {
+            builder.addMaterial(prefix, material, item)
+            val customTag: TagKey<Item> = MATERIAL_TAG[prefix] ?: continue
+            builder.addTag(customTag, prefix, material)
+        }
+    }
+
+    private fun fromTable(
+        builder: HTTagBuilder<Item>,
+        table: ImmutableTable<out HTPrefixLike, out HTMaterialLike, out HTHolderLike>,
+        type: HTTagDependType = HTTagDependType.REQUIRED,
+    ) {
+        table.forEach { (prefix: HTPrefixLike, key: HTMaterialLike, item: HTHolderLike) ->
+            builder.addMaterial(prefix, key, item, type)
             val customTag: TagKey<Item> = MATERIAL_TAG[prefix] ?: return@forEach
-            builder.addTag(customTag, prefix.itemTagKey(key))
+            builder.addTag(customTag, prefix, key, type)
         }
     }
 
     //    Foods    //
 
     private fun food(builder: HTTagBuilder<Item>) {
-        fun ingot(key: HTMaterialLike): TagKey<Item> = CommonMaterialPrefixes.INGOT.itemTagKey(key)
+        val foodsFruit = HTMaterialPrefix("food/fruit", "c:foods/fruit", "c:foods/%s")
+
+        fun ingot(key: HTMaterialLike): TagKey<Item> = builder.createTag(CommonMaterialPrefixes.INGOT, key)
 
         // Crop
-        builder.add(Tags.Items.CROPS, RagiumCommonTags.Items.CROPS_WARPED_WART, RagiumBlocks.WARPED_WART)
+        builder.addMaterial(CommonMaterialPrefixes.CROP, FoodMaterialKeys.WARPED_WART, RagiumBlocks.WARPED_WART)
         // Food
-        builder.addTag(Tags.Items.FOODS, ingot(RagiumMaterialKeys.COOKED_MEAT))
-        builder.addTag(Tags.Items.FOODS, ingot(RagiumMaterialKeys.MEAT))
-        builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_CHOCOLATE)
-        builder.addTag(Tags.Items.FOODS, RagiumCommonTags.Items.JAMS)
+        builder.addTag(Tags.Items.FOODS, CommonMaterialPrefixes.JAM)
         builder.add(Tags.Items.FOODS, RagiumItems.AMBROSIA)
         builder.add(Tags.Items.FOODS, RagiumItems.CANNED_COOKED_MEAT)
         builder.add(Tags.Items.FOODS, RagiumItems.ICE_CREAM)
@@ -172,33 +188,29 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(Tags.Items.FOODS_BERRY, RagiumBlocks.EXP_BERRIES)
         builder.add(Tags.Items.FOODS_GOLDEN, RagiumItems.FEVER_CHERRY)
 
-        builder.add(Tags.Items.FOODS, RagiumCommonTags.Items.FOODS_APPLE, Items.APPLE.toHolderLike())
-
-        builder.addTag(Tags.Items.FOODS_FRUIT, RagiumCommonTags.Items.FOODS_CHERRY)
         builder.add(Tags.Items.FOODS_FRUIT, RagiumItems.FEVER_CHERRY)
-        builder.add(
-            RagiumCommonTags.Items.FOODS_CHERRY,
-            RagiumCommonTags.Items.FOODS_RAGI_CHERRY,
-            RagiumItems.RAGI_CHERRY,
-        )
 
-        builder.addTag(RagiumCommonTags.Items.FOODS_CHOCOLATE, ingot(RagiumMaterialKeys.CHOCOLATE))
-
-        builder.addTag(ItemTags.MEAT, ingot(RagiumMaterialKeys.COOKED_MEAT))
-        builder.addTag(ItemTags.MEAT, ingot(RagiumMaterialKeys.MEAT))
+        builder.addTag(ItemTags.MEAT, CommonMaterialPrefixes.INGOT, FoodMaterialKeys.COOKED_MEAT)
+        builder.addTag(ItemTags.MEAT, CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT)
 
         builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_MEAT)
         builder.addTag(RagiumModTags.Items.RAW_MEAT, Tags.Items.FOODS_RAW_FISH)
         builder.add(RagiumModTags.Items.RAW_MEAT, Items.ROTTEN_FLESH.toHolderLike())
+
+        builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE, Items.APPLE.toHolderLike())
+        builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE, ingot(FoodMaterialKeys.CHOCOLATE))
+        builder.addMaterial(foodsFruit, FoodMaterialKeys.RAGI_CHERRY, RagiumItems.RAGI_CHERRY)
+        builder.addMaterial(foodsFruit, FoodMaterialKeys.RAGI_CHERRY, RagiumItems.RAGI_CHERRY_PULP)
+
+        builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAW_MEAT, ingot(FoodMaterialKeys.RAW_MEAT))
+        builder.addMaterial(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.COOKED_MEAT, ingot(FoodMaterialKeys.COOKED_MEAT))
         // Delight
-        builder.add(RagiumCommonTags.Items.FOODS_CHERRY, RagiumCommonTags.Items.FOODS_RAGI_CHERRY, RagiumFoodAddon.RAGI_CHERRY_PULP)
+        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_PIE, HTTagDependType.OPTIONAL)
+        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
 
-        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_PIE)
-        builder.add(Tags.Items.FOODS_EDIBLE_WHEN_PLACED, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
-
-        builder.add(RagiumCommonTags.Items.JAMS, RagiumCommonTags.Items.JAMS_RAGI_CHERRY, RagiumFoodAddon.RAGI_CHERRY_JAM)
-        builder.add(ModTags.MEALS, RagiumDelightAddon.RAGI_CHERRY_TOAST)
-        builder.add(ModTags.FEASTS, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+        builder.addMaterial(CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY, RagiumItems.RAGI_CHERRY_JAM)
+        builder.add(ModTags.MEALS, RagiumItems.RAGI_CHERRY_TOAST)
+        builder.add(ModTags.FEASTS, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
     }
 
     //    Categories    //
@@ -208,10 +220,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC, ItemTags.SMELTS_TO_GLASS)
 
-        builder.addTag(
-            RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED,
-            CommonMaterialPrefixes.DUST.itemTagKey(CommonMaterialKeys.Gems.CINNABAR),
-        )
+        builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.CINNABAR)
         builder.addTag(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED, ItemTags.SOUL_FIRE_BASE_BLOCKS)
 
         // Enchantments
@@ -230,23 +239,20 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.CAPACITY_ENCHANTABLE)
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.RANGE_ENCHANTABLE)
         builder.addTag(Tags.Items.ENCHANTABLES, RagiumModTags.Items.STRIKE_ENCHANTABLE)
-        // Armors
-        buildMultiMap {
-            putAll(RagiumItems.AZURE_ARMORS)
-            putAll(RagiumItems.DEEP_ARMORS)
-        }.forEach { (variant: HTArmorVariant, armor: HTHolderLike) -> builder.add(variant.tagKey, armor) }
-        // Tools
-        RagiumItems.TOOLS.forEach { (variant: HTToolVariant, _, item: HTHolderLike) ->
+        // Equipments
+        buildTable {
+            putAll(RagiumItems.ARMORS)
+            putAll(RagiumItems.TOOLS)
+        }.forEach { (variant: HTToolVariant, _, item: HTHolderLike) ->
             for (tagKey: TagKey<Item> in variant.tagKeys) {
                 builder.add(tagKey, item)
             }
-
-            if (variant == HTVanillaToolVariant.PICKAXE) {
+            if (variant == VanillaToolVariant.PICKAXE) {
                 builder.add(ItemTags.CLUSTER_MAX_HARVESTABLES, item)
             }
         }
 
-        builder.add(Tags.Items.TOOLS_WRENCH, RagiumItems.WRENCH)
+        builder.add(Tags.Items.TOOLS_WRENCH, RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
 
         builder.add(RagiumModTags.Items.TOOLS_DRILL, RagiumItems.DRILL)
 
@@ -266,7 +272,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         setupTool(RagiumModTags.Items.TOOLS_HAMMER)
         // Buckets
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            builder.add(Tags.Items.BUCKETS, content.bucketTag, content.getBucket().toHolderLike())
+            builder.addTags(Tags.Items.BUCKETS, content.bucketTag, content.getBucket().toHolderLike())
         }
         // LED
         for ((color: HTColorMaterial, block: HTHolderLike) in RagiumBlocks.LED_BLOCKS) {
@@ -283,50 +289,50 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .forEach { holder: HTHolderLike -> builder.add(RagiumModTags.Items.ELDRITCH_PEARL_BINDER, holder) }
 
         builder.add(RagiumModTags.Items.POLYMER_RESIN, RagiumItems.POLYMER_RESIN)
-        builder.add(RagiumModTags.Items.POLYMER_RESIN, ItemContent.POLYMER_RESIN.toHolderLike(), HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumModTags.Items.POLYMER_RESIN, ItemContent.POLYMER_RESIN.toHolderLike(), HTTagDependType.OPTIONAL)
 
-        val plastics: TagKey<Item> = RagiumCommonTags.Items.PLASTIC
-        builder.add(plastics, RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
-        builder.addTag(RagiumModTags.Items.PLASTICS, CommonMaterialPrefixes.PLATE.itemTagKey(CommonMaterialKeys.PLASTIC))
-        builder.addTag(RagiumModTags.Items.PLASTICS, plastics, HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumCommonTags.Items.PLASTIC, RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
+        builder.addTag(RagiumModTags.Items.PLASTICS, CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC)
+        builder.addTag(RagiumModTags.Items.PLASTICS, RagiumCommonTags.Items.PLASTIC, HTTagDependType.OPTIONAL)
         builder.addTag(
             RagiumModTags.Items.PLASTICS,
             PneumaticCraftTags.Items.PLASTIC_SHEETS,
-            HTTagBuilder.DependType.OPTIONAL,
+            HTTagDependType.OPTIONAL,
         )
         // Fuels
         builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, RagiumItems.GREEN_PELLET)
-        builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, MekanismItems.REPROCESSED_FISSILE_FRAGMENT.id, HTTagBuilder.DependType.OPTIONAL)
+        builder.add(RagiumModTags.Items.IS_NUCLEAR_FUEL, MekanismItems.REPROCESSED_FISSILE_FRAGMENT.id, HTTagDependType.OPTIONAL)
         builder.add(
             RagiumModTags.Items.IS_NUCLEAR_FUEL,
             ItemContent.SMALL_URANIUM_PELLET.toHolderLike(),
-            HTTagBuilder.DependType.OPTIONAL,
+            HTTagDependType.OPTIONAL,
         )
         // Other
-        builder.addTag(
-            ItemTags.PIGLIN_LOVED,
-            CommonMaterialPrefixes.INGOT.itemTagKey(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY),
-        )
+        builder.addTag(ItemTags.PIGLIN_LOVED, CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
         builder.add(ItemTags.PIGLIN_LOVED, RagiumItems.FEVER_CHERRY)
+
+        builder.add(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR, RagiumItems.BLUE_KNOWLEDGE)
         // WIP
-        builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST)
-        builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+        builder.add(RagiumModTags.Items.WIP, RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.BOTTLED_BEE)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.DRILL)
-        builder.add(RagiumModTags.Items.WIP, RagiumItems.SLOT_COVER)
-        builder.add(RagiumModTags.Items.WIP, RagiumItems.SOLAR_PANEL)
     }
 
     //    Integration    //
 
     private fun accessories(builder: HTTagBuilder<Item>) {
-        builder.addAccessory(HTAccessorySlot.BACK, RagiumItems.ECHO_STAR)
-        // builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.POTION_BUNDLE)
-        builder.addAccessory(HTAccessorySlot.BELT, RagiumItems.UNIVERSAL_BUNDLE)
-        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.ADVANCED_MAGNET)
-        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.DYNAMIC_LANTERN)
-        builder.addAccessory(HTAccessorySlot.CHARM, RagiumItems.MAGNET)
-        builder.addAccessory(HTAccessorySlot.FACE, RagiumItems.NIGHT_VISION_GOGGLES)
+        builder.add(AccessoriesTags.BACK_TAG, RagiumItems.ECHO_STAR)
+        builder.add(AccessoriesTags.BELT_TAG, RagiumItems.UNIVERSAL_BUNDLE)
+        builder.add(AccessoriesTags.CHARM_TAG, RagiumItems.ADVANCED_MAGNET)
+        builder.add(AccessoriesTags.CHARM_TAG, RagiumItems.DYNAMIC_LANTERN)
+        builder.add(AccessoriesTags.CHARM_TAG, RagiumItems.MAGNET)
+        builder.add(AccessoriesTags.FACE_TAG, RagiumItems.NIGHT_VISION_GOGGLES)
+
+        builder.add(RagiumModTags.Items.BYPASS_MENU_VALIDATION, RagiumItems.UNIVERSAL_BUNDLE)
+    }
+
+    private fun create(builder: HTTagBuilder<Item>) {
+        builder.addTool(HTSandPaperToolVariant, RagiumCreateAddon.SAND_PAPER_MAP.values)
     }
 
     private fun pneumatic(builder: HTTagBuilder<Item>) {
@@ -335,25 +341,13 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Item>.add(parent: TagKey<Item>, child: TagKey<Item>, holder: HTHolderLike) =
-        this.addTag(parent, child).add(child, holder)
-
-    private fun HTTagBuilder<Item>.addMaterial(prefix: HTMaterialPrefix, key: HTMaterialLike, holder: HTHolderLike): HTTagBuilder<Item> {
-        val itemCommonTag: TagKey<Item> = prefix.itemCommonTag
-        val tagKey: TagKey<Item> = prefix.itemTagKey(key)
-        return this.add(itemCommonTag, tagKey, holder)
-    }
-
     private fun HTTagBuilder<Item>.addTool(variant: HTToolVariant, holders: Iterable<HTHolderLike>) {
         for (tagKey: TagKey<Item> in variant.tagKeys) {
             for (holder: HTHolderLike in holders) {
-                this.add(tagKey, holder)
+                this.add(tagKey, holder, HTTagDependType.OPTIONAL)
             }
         }
     }
-
-    private fun HTTagBuilder<Item>.addAccessory(slot: HTAccessorySlot, holder: HTHolderLike): HTTagBuilder<Item> =
-        this.add(slot.slotTag, holder)
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super
         .createContentsProvider()

@@ -1,8 +1,0 @@
-{
-  "content": {
-    "potion": "minecraft:regeneration"
-  },
-  "ingredient": {
-    "item": "minecraft:ghast_tear"
-  }
-}

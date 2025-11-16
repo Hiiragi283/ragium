@@ -59,16 +59,13 @@ class HTFluidContentRegister(modId: String) {
         }
     }
 
-    fun register(
-        name: String,
-        properties: FluidType.Properties,
-    ): HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = register(name, properties, ::FluidType)
+    fun register(name: String, properties: FluidType.Properties): HTSimpleFluidContent = register(name, properties, ::FluidType)
 
     fun <TYPE : FluidType> register(
         name: String,
         properties: FluidType.Properties,
         typeFactory: (FluidType.Properties) -> TYPE,
-    ): HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> {
+    ): HTFlowingFluidContent<TYPE> {
         // Fluid Type
         val typeHolder: HTDeferredFluidType<TYPE> = typeRegister.registerType(name, properties, typeFactory)
         // Fluid Holder

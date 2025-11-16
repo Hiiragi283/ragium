@@ -2,7 +2,7 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTStackRecipeBuilder
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -36,7 +36,7 @@ class HTShapedRecipeBuilder(private val category: CraftingBookCategory, stack: I
 
     private val symbols: MutableMap<Char, Ingredient> = mutableMapOf()
 
-    fun define(symbol: Char, prefix: HTMaterialPrefix, key: HTMaterialLike): HTShapedRecipeBuilder = define(symbol, prefix.itemTagKey(key))
+    fun define(symbol: Char, prefix: HTPrefixLike, key: HTMaterialLike): HTShapedRecipeBuilder = define(symbol, prefix.itemTagKey(key))
 
     fun define(symbol: Char, tagKey: TagKey<Item>): HTShapedRecipeBuilder = define(symbol, Ingredient.of(tagKey))
 
@@ -79,14 +79,14 @@ class HTShapedRecipeBuilder(private val category: CraftingBookCategory, stack: I
 
     //    RecipeBuilder    //
 
-    private var groupName: String? = null
+    private var group: String? = null
 
-    override fun group(groupName: String?): HTShapedRecipeBuilder = apply {
-        this.groupName = groupName
+    fun setGroup(group: String?): HTShapedRecipeBuilder = apply {
+        this.group = group
     }
 
     override fun createRecipe(output: ItemStack): ShapedRecipe = ShapedRecipe(
-        groupName ?: "",
+        group ?: "",
         category,
         ShapedRecipePattern.of(symbols, patterns),
         output,

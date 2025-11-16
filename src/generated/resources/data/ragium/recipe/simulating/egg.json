@@ -1,9 +1,0 @@
-{
-  "type": "ragium:simulating",
-  "catalyst": "minecraft:chicken_spawn_egg",
-  "ingredient": "#c:seeds",
-  "result": {
-    "count": 1,
-    "id": "minecraft:egg"
-  }
-}

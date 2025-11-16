@@ -10,7 +10,8 @@ import java.util.function.Supplier
 /**
  * @see mekanism.common.block.attribute.AttributeGui
  */
-class HTMenuBlockAttribute<C>(val type: Supplier<HTDeferredMenuType.WithContext<*, C>>) : HTBlockAttribute {
+@JvmRecord
+data class HTMenuBlockAttribute<C>(val type: Supplier<HTDeferredMenuType.WithContext<*, C>>) : HTBlockAttribute {
     fun openMenu(
         player: Player,
         title: Component,

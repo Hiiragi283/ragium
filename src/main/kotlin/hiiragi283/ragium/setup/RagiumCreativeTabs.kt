@@ -1,35 +1,30 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.collection.ImmutableTable
-import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.function.andThen
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.HTSimpleDeferredHolder
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
-import hiiragi283.ragium.api.registry.toDescriptionKey
-import hiiragi283.ragium.api.variant.HTVariantKey
-import hiiragi283.ragium.common.item.HTUniversalBundleItem
+import hiiragi283.ragium.api.text.HTTranslation
+import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
-import hiiragi283.ragium.common.variant.HTHammerToolVariant
-import hiiragi283.ragium.common.variant.HTVanillaToolVariant
+import hiiragi283.ragium.common.util.HTPotionHelper
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.CreativeModeTabs
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
+import java.util.function.Supplier
 
 object RagiumCreativeTabs {
     @JvmField
@@ -45,64 +40,29 @@ object RagiumCreativeTabs {
 
     @JvmField
     val BLOCKS: HTSimpleDeferredHolder<CreativeModeTab> =
-        REGISTER.register("blocks") { id: ResourceLocation ->
+        REGISTER.register("blocks") { _ ->
             CreativeModeTab
                 .builder()
-                .title(Component.translatable(id.toDescriptionKey("itemGroup")))
+                .title(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS.translate())
                 .icon { RagiumBlocks.PULVERIZER.toStack() }
                 .displayItems(RagiumBlocks.REGISTER.blockEntries)
                 .build()
         }
 
-    /*{ _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-        // Natural Resources
-        output.accept(RagiumBlocks.ASH_LOG)
-        output.accept(RagiumBlocks.SILT)
-        output.accept(RagiumBlocks.CRIMSON_SOIL)
-        output.accept(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
-
-        RagiumBlocks.ORES.values.forEach(output::accept)
-        output.accept(RagiumBlocks.RESONANT_DEBRIS)
-        // Storage Blocks
-        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.STORAGE_BLOCK).forEach(output::accept)
-        // Machines
-        output.acceptItems<HTGeneratorVariant>()
-
-        output.acceptItems(RagiumBlocks.FRAMES)
-        output.acceptItems<HTMachineVariant>()
-
-        output.acceptItems(RagiumBlocks.CASINGS)
-        output.acceptItems<HTDeviceVariant>()
-
-        output.acceptItems<HTDrumVariant>()
-        output.accept(RagiumItems.MEDIUM_DRUM_UPGRADE)
-        output.accept(RagiumItems.LARGE_DRUM_UPGRADE)
-        output.accept(RagiumItems.HUGE_DRUM_UPGRADE)
-        // Decorations
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            output.accept(variant.base)
-            output.accept(variant.slab)
-            output.accept(variant.stairs)
-            output.accept(variant.wall)
-        }
-
-        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.GLASS_BLOCK).forEach(output::accept)
-        RagiumBlocks.MATERIALS.rowValues(HTMaterialVariant.TINTED_GLASS_BLOCK).forEach(output::accept)
-        output.acceptItems(RagiumBlocks.LED_BLOCKS.values)
-    }*/
-
     @JvmField
     val INGREDIENTS: HTSimpleDeferredHolder<CreativeModeTab> = register(
         "ingredients",
-        "ragi_alloy_ingot",
+        RagiumCommonTranslation.CREATIVE_TAB_INGREDIENTS,
+        { RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY) },
     ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Fluid Buckets
         output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
         // Materials
         output.acceptItems(RagiumItems.MATERIALS.values)
         // Ingredients
+        output.acceptItems(RagiumItems.MOLDS.values)
+
         output.accept(RagiumItems.TAR)
-        output.accept(RagiumItems.PLATING_CATALYST)
 
         output.accept(RagiumItems.POTATO_SPROUTS)
         output.accept(RagiumItems.GREEN_CAKE)
@@ -126,8 +86,6 @@ object RagiumCreativeTabs {
         output.accept(RagiumItems.SYNTHETIC_LEATHER)
 
         output.accept(RagiumItems.CIRCUIT_BOARD)
-        output.accept(RagiumItems.BASALT_MESH)
-        output.accept(RagiumItems.ADVANCED_CIRCUIT_BOARD)
 
         RagiumItems.COILS.values.forEach(output::accept)
         RagiumItems.CIRCUITS.values.forEach(output::accept)
@@ -138,24 +96,27 @@ object RagiumCreativeTabs {
     val ITEMS: HTSimpleDeferredHolder<CreativeModeTab> =
         register(
             "items",
-            "ragi_ticket",
-        ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+            RagiumCommonTranslation.CREATIVE_TAB_ITEMS,
+            { RagiumItems.LOOT_TICKET },
+        ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
             // Tools
+            output.acceptItems(RagiumItems.DRUM_MINECARTS.values)
             // Raginite
-            output.accept(RagiumItems.WRENCH)
-            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_ALLOY))
+            output.accept(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
             output.accept(RagiumItems.MAGNET)
 
             output.accept(RagiumItems.ADVANCED_MAGNET)
 
-            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL))
+            output.accept(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL))
             output.accept(RagiumItems.DYNAMIC_LANTERN)
             output.accept(RagiumItems.NIGHT_VISION_GOGGLES)
             // Azure
-            output.accept(RagiumItems.AZURE_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            RagiumItems.AZURE_ARMORS.values.forEach(output::accept)
-            output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialKeys.AZURE_STEEL)
-            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.AZURE_STEEL))
+            output.acceptEquipments(RagiumMaterialKeys.AZURE_STEEL)
+            output.accept(RagiumItems.BLUE_KNOWLEDGE)
+            // Deep
+            output.acceptEquipments(RagiumMaterialKeys.DEEP_STEEL)
+            // Night
+            output.acceptEquipments(RagiumMaterialKeys.NIGHT_METAL)
             // Molten
             output.accept(RagiumItems.BLAST_CHARGE)
 
@@ -164,26 +125,29 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.ELDRITCH_EGG)
 
             DyeColor.entries.map(HTUniversalBundleItem::createBundle).forEach(output::accept)
-            // Deep
-            output.accept(RagiumItems.DEEP_STEEL_UPGRADE_SMITHING_TEMPLATE)
-            RagiumItems.DEEP_ARMORS.values.forEach(output::accept)
-            output.acceptFromTable(RagiumItems.TOOLS, HTVanillaToolVariant.entries, RagiumMaterialKeys.DEEP_STEEL)
-            output.accept(RagiumItems.getTool(HTHammerToolVariant, RagiumMaterialKeys.DEEP_STEEL))
             // Other
             output.accept(RagiumItems.DRILL)
 
             output.accept(RagiumItems.POTION_BUNDLE)
+            parameters
+                .holders()
+                .lookupOrThrow(Registries.POTION)
+                .listElements()
+                .forEach { holder: Holder.Reference<Potion> ->
+                    output.accept(HTPotionHelper.createPotion(RagiumItems.POTION_DROP, holder))
+                }
+
             output.accept(RagiumItems.SLOT_COVER)
             output.accept(RagiumItems.TRADER_CATALOG)
             // Foods
-            output.accept(RagiumItems.getIngot(RagiumMaterialKeys.CHOCOLATE))
+            output.accept(RagiumItems.getIngot(FoodMaterialKeys.CHOCOLATE))
 
             output.accept(RagiumItems.ICE_CREAM)
             output.accept(RagiumItems.ICE_CREAM_SODA)
 
-            output.accept(RagiumItems.getDust(RagiumMaterialKeys.MEAT))
-            output.accept(RagiumItems.getIngot(RagiumMaterialKeys.MEAT))
-            output.accept(RagiumItems.getIngot(RagiumMaterialKeys.COOKED_MEAT))
+            output.accept(RagiumItems.getDust(FoodMaterialKeys.RAW_MEAT))
+            output.accept(RagiumItems.getIngot(FoodMaterialKeys.RAW_MEAT))
+            output.accept(RagiumItems.getIngot(FoodMaterialKeys.COOKED_MEAT))
             output.accept(RagiumItems.CANNED_COOKED_MEAT)
 
             output.accept(RagiumItems.MELON_PIE)
@@ -192,6 +156,9 @@ object RagiumCreativeTabs {
             output.accept(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
 
             output.accept(RagiumItems.RAGI_CHERRY)
+            output.accept(RagiumItems.RAGI_CHERRY_PULP)
+            output.accept(RagiumItems.RAGI_CHERRY_JAM)
+            output.accept(RagiumItems.RAGI_CHERRY_TOAST)
             output.accept(RagiumItems.FEVER_CHERRY)
 
             output.accept(RagiumItems.BOTTLED_BEE)
@@ -206,25 +173,25 @@ object RagiumCreativeTabs {
     @JvmStatic
     private fun register(
         name: String,
-        icon: String,
+        title: HTTranslation,
+        icon: Supplier<out ItemLike>,
         action: CreativeModeTab.DisplayItemsGenerator,
-    ): HTSimpleDeferredHolder<CreativeModeTab> = REGISTER.register(name) { id: ResourceLocation ->
+    ): HTSimpleDeferredHolder<CreativeModeTab> = REGISTER.register(name) { _ ->
         CreativeModeTab
             .builder()
-            .title(Component.translatable(id.toDescriptionKey("itemGroup")))
-            .icon(HTDeferredItem<Item>(RagiumAPI.id(icon))::toStack)
+            .title(title.translate())
+            .icon(icon::get.andThen(::ItemStack))
             .displayItems(action)
             .build()
     }
 
-    fun <V : HTVariantKey> CreativeModeTab.Output.acceptFromTable(
-        table: ImmutableTable<V, HTMaterialKey, HTDeferredItem<*>>,
-        variants: Iterable<V>,
-        key: HTMaterialLike,
-    ) {
-        variants
-            .mapNotNull(table.column(key.asMaterialKey())::get)
-            .forEach(this::accept)
+    fun CreativeModeTab.Output.acceptEquipments(material: HTMaterialLike) {
+        // Smithing Template
+        this.accept(RagiumItems.getSmithingTemplate(material))
+        // Armor
+        RagiumItems.getArmorMap(material).values.forEach(this::accept)
+        // Tool
+        RagiumItems.getToolMap(material).values.forEach(this::accept)
     }
 
     @JvmStatic
@@ -252,33 +219,12 @@ object RagiumCreativeTabs {
             )
         }
 
-        val key: ResourceKey<CreativeModeTab> = event.tabKey
-        // 道具タブに鍛造ハンマーを追加する
-        if (key == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            insertAfter(
-                Items.IRON_PICKAXE,
-                RagiumItems.getTool(HTHammerToolVariant, VanillaMaterialKeys.IRON),
-            )
-            insertAfter(
-                Items.DIAMOND_PICKAXE,
-                RagiumItems.getTool(HTHammerToolVariant, VanillaMaterialKeys.DIAMOND),
-            )
-            insertAfter(
-                Items.NETHERITE_PICKAXE,
-                RagiumItems.getTool(HTHammerToolVariant, VanillaMaterialKeys.NETHERITE),
-            )
-        }
-
-        if (BLOCKS.`is`(key)) {
-            for (tier: HTDrumTier in HTDrumTier.entries) {
-                insertAfter(tier.getBlock(), tier.getMinecartItem())
-            }
-        }
-
-        if (INGREDIENTS.`is`(key)) {
+        if (INGREDIENTS.`is`(event.tabKey)) {
             insertAfter(RagiumItems.getDust(RagiumMaterialKeys.RAGINITE), RagiumItems.RAGI_COKE)
             insertBefore(RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY), RagiumItems.RAGI_ALLOY_COMPOUND)
 
+            insertAfter(RagiumItems.getDust(VanillaMaterialKeys.COAL), RagiumItems.COAL_CHIP)
+            insertAfter(RagiumItems.COAL_CHIP, RagiumItems.COAL_CHUNK)
             insertAfter(RagiumItems.getDust(VanillaMaterialKeys.WOOD), RagiumItems.COMPRESSED_SAWDUST)
             insertAfter(RagiumItems.COMPRESSED_SAWDUST, RagiumItems.RESIN)
 

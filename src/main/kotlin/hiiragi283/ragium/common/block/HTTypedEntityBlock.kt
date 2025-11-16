@@ -9,7 +9,10 @@ import hiiragi283.ragium.api.block.attribute.hasAttribute
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -110,7 +113,14 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
     ) {
         if (!state.`is`(newState.block)) {
             level.getTypedBlockEntity<HTBlockEntity>(pos)?.let { blockEntity: HTBlockEntity ->
-                blockEntity.onRemove(level, pos)
+                if (blockEntity.doDropItems()) {
+                    blockEntity
+                        .getItemSlots(blockEntity.getItemSideFor())
+                        .mapNotNull(HTItemSlot::getStack)
+                        .forEach { stack: ImmutableItemStack ->
+                            HTItemDropHelper.dropStackAt(level, pos, stack)
+                        }
+                }
             }
         }
         super.onRemove(state, level, pos, newState, movedByPiston)

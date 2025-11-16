@@ -4,26 +4,19 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.data.registry.HTBrewingEffect
 import hiiragi283.ragium.api.data.registry.HTSolarPower
-import hiiragi283.ragium.api.network.HTPayloadRegister
-import hiiragi283.ragium.client.network.HTOpenPotionBundlePacket
-import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
+import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
-import hiiragi283.ragium.client.network.HTUpdateTelepadPacket
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
-import hiiragi283.ragium.common.network.HTUpdateEnergyStoragePacket
-import hiiragi283.ragium.common.network.HTUpdateExperienceStoragePacket
-import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
+import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
-import hiiragi283.ragium.setup.RagiumAccessoryRegister
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
+import hiiragi283.ragium.setup.RagiumCriteriaTriggers
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -49,6 +42,7 @@ import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
@@ -66,7 +60,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(::registerDataPackRegistries)
         eventBus.addListener(RagiumChunkLoader::registerController)
 
-        CommonMaterialPrefixes.REGISTER.register(eventBus)
         RagiumDataComponents.REGISTER.register(eventBus)
         RagiumEnchantmentComponents.REGISTER.register(eventBus)
 
@@ -78,6 +71,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
         RagiumCreativeTabs.init(eventBus)
+        RagiumCriteriaTriggers.REGISTER.register(eventBus)
         RagiumEntityTypes.init(eventBus)
         RagiumFeatures.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
@@ -105,14 +99,15 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerRegistries(event: NewRegistryEvent) {
-        event.register(RagiumAPI.MATERIAL_PREFIX_REGISTRY)
+        event.register(RagiumAPI.EQUIP_ACTION_TYPE_REGISTRY)
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_REGISTRY)
+        event.register(RagiumAPI.SLOT_TYPE_REGISTRY)
+        event.register(RagiumAPI.SUB_ENTITY_INGREDIENT_TYPE_REGISTRY)
 
         RagiumAPI.LOGGER.info("Registered new registries!")
     }
 
     private fun registerDataPackRegistries(event: DataPackRegistryEvent.NewRegistry) {
-        event.dataPackRegistry(RagiumAPI.BREWING_EFFECT_KEY, HTBrewingEffect.DIRECT_CODEC, HTBrewingEffect.DIRECT_CODEC)
         event.dataPackRegistry(RagiumAPI.SOLAR_POWER_KEY, HTSolarPower.DIRECT_CODEC, HTSolarPower.DIRECT_CODEC)
 
         RagiumAPI.LOGGER.info("Registered new data pack registries!")
@@ -130,7 +125,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
             RagiumFluidContents.registerInteractions()
             RagiumAPI.LOGGER.info("Registered dispenser behaviors!")
         }
-        event.enqueueWork(RagiumAccessoryRegister::register)
         event.enqueueWork(RagiumFluidContents::registerInteractions)
         event.enqueueWork(RagiumMaterialManager::gatherAttributes)
 
@@ -141,12 +135,16 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.THERMAL_FUEL)
-        event.register(RagiumDataMaps.COMBUSTION_FUEL)
-        event.register(RagiumDataMaps.NUCLEAR_FUEL)
         event.register(RagiumDataMaps.ENCHANT_FUEL)
 
         event.register(RagiumDataMaps.MOB_HEAD)
+
+        event.register(RagiumDataMaps.THERMAL_FUEL)
+        event.register(RagiumDataMaps.COMBUSTION_FUEL)
+        event.register(RagiumDataMaps.NUCLEAR_FUEL)
+
+        event.register(RagiumDataMaps.ARMOR_EQUIP)
+        event.register(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
 
         event.register(RagiumDataMaps.MATERIAL_RECIPE)
 
@@ -154,17 +152,16 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerPackets(event: RegisterPayloadHandlersEvent) {
-        with(HTPayloadRegister(event.registrar(RagiumAPI.MOD_ID))) {
-            // Server -> Client
-            registerS2C(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC)
-            registerS2C(HTUpdateEnergyStoragePacket.TYPE, HTUpdateEnergyStoragePacket.STREAM_CODEC)
-            registerS2C(HTUpdateExperienceStoragePacket.TYPE, HTUpdateExperienceStoragePacket.STREAM_CODEC)
-            registerS2C(HTUpdateFluidTankPacket.TYPE, HTUpdateFluidTankPacket.STREAM_CODEC)
-            // Client -> Server
-            registerC2S(HTOpenPotionBundlePacket.TYPE, HTOpenPotionBundlePacket.STREAM_CODEC)
-            registerC2S(HTOpenUniversalBundlePacket.TYPE, HTOpenUniversalBundlePacket.STREAM_CODEC)
-            registerC2S(HTUpdateAccessConfigPayload.TYPE, HTUpdateAccessConfigPayload.STREAM_CODEC)
-            registerC2S(HTUpdateTelepadPacket.TYPE, HTUpdateTelepadPacket.STREAM_CODEC)
+        val registrar: PayloadRegistrar = event.registrar(RagiumAPI.MOD_ID)
+        registrar.playBidirectional(HTUpdateMenuPacket.TYPE, HTUpdateMenuPacket.STREAM_CODEC, HTPayloadHandlers::handleBoth)
+
+        // Server -> Client
+        registrar.playToClient(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC, HTPayloadHandlers::handleS2C)
+        // Client -> Server
+        registrar.playToServer(HTUpdateAccessConfigPayload.TYPE, HTUpdateAccessConfigPayload.STREAM_CODEC, HTPayloadHandlers::handleC2S)
+
+        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
+            addon.registerPayloads(registrar)
         }
 
         RagiumAPI.LOGGER.info("Registered packets!")

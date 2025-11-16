@@ -28,12 +28,15 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     @JvmField
     val generatorInputTankCapacity: HTIntConfigValue
 
-    // Consumer
+    // Processor
     @JvmField
     val breweryTankCapacity: HTIntConfigValue
 
     @JvmField
     val crusherTankCapacity: HTIntConfigValue
+
+    @JvmField
+    val extractorTankCapacity: HTIntConfigValue
 
     @JvmField
     val melterTankCapacity: HTIntConfigValue
@@ -46,6 +49,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
     @JvmField
     val refineryOutputTankCapacity: HTIntConfigValue
+
+    @JvmField
+    val simulatorTankCapacity: HTIntConfigValue
 
     @JvmField
     val washerTankCapacity: HTIntConfigValue
@@ -79,6 +85,12 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     val spongeCakeFallDamage: HTDoubleConfigValue
 
     // Item
+    @JvmField
+    val basicMagnetRange: HTDoubleConfigValue
+
+    @JvmField
+    val advancedMagnetRange: HTDoubleConfigValue
+
     @JvmField
     val expBerriesValue: HTIntConfigValue
 
@@ -137,6 +149,10 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         crusherTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
 
+        builder.push("extractor")
+        extractorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.pop()
+
         builder.push("melter")
         melterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
@@ -152,6 +168,10 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.push("output")
         refineryOutputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop(2)
+
+        builder.push("simulator")
+        simulatorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.pop()
 
         builder.push("washer")
         washerTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
@@ -217,6 +237,8 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Item
         builder.push("item")
+        basicMagnetRange = builder.definePositiveDouble("basicMagnetRange", 5.0, 0, Int.MAX_VALUE)
+        advancedMagnetRange = builder.definePositiveDouble("advancedMagnetRange", 8.0, 0, Int.MAX_VALUE)
         expBerriesValue = builder.definePositiveInt("expBerriesValue", 8)
         teleportKeyCost = builder.definePositiveInt("teleportKeyCost", 10)
         builder.pop()

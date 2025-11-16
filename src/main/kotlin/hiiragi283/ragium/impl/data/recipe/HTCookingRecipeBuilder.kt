@@ -12,15 +12,15 @@ import net.minecraft.world.level.ItemLike
 import java.util.function.IntUnaryOperator
 import kotlin.math.max
 
-class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
+class HTCookingRecipeBuilder(
     prefix: String,
-    private val factory: AbstractCookingRecipe.Factory<RECIPE>,
+    private val factory: AbstractCookingRecipe.Factory<*>,
     private val timeOperator: IntUnaryOperator,
     stack: ImmutableItemStack,
-) : HTStackRecipeBuilder.Single<HTCookingRecipeBuilder<RECIPE>>(prefix, stack) {
+) : HTStackRecipeBuilder.Single<HTCookingRecipeBuilder>(prefix, stack) {
     companion object {
         @JvmStatic
-        fun smelting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder<SmeltingRecipe> = HTCookingRecipeBuilder(
+        fun smelting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder = HTCookingRecipeBuilder(
             "smelting",
             ::SmeltingRecipe,
             IntUnaryOperator.identity(),
@@ -28,7 +28,7 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
         )
 
         @JvmStatic
-        fun blasting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder<BlastingRecipe> = HTCookingRecipeBuilder(
+        fun blasting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder = HTCookingRecipeBuilder(
             "blasting",
             ::BlastingRecipe,
             { it / 2 },
@@ -36,7 +36,7 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
         )
 
         @JvmStatic
-        fun smoking(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder<SmokingRecipe> = HTCookingRecipeBuilder(
+        fun smoking(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder = HTCookingRecipeBuilder(
             "smoking",
             ::SmokingRecipe,
             { it / 2 },
@@ -44,13 +44,13 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
         )
 
         @JvmStatic
-        fun smeltingAndBlasting(item: ItemLike, count: Int = 1, builderAction: HTCookingRecipeBuilder<*>.() -> Unit) {
+        fun smeltingAndBlasting(item: ItemLike, count: Int = 1, builderAction: HTCookingRecipeBuilder.() -> Unit) {
             smelting(item, count).apply(builderAction)
             blasting(item, count).apply(builderAction)
         }
 
         @JvmStatic
-        fun smeltingAndSmoking(item: ItemLike, count: Int = 1, builderAction: HTCookingRecipeBuilder<*>.() -> Unit) {
+        fun smeltingAndSmoking(item: ItemLike, count: Int = 1, builderAction: HTCookingRecipeBuilder.() -> Unit) {
             smelting(item, count).apply(builderAction)
             smoking(item, count).apply(builderAction)
         }
@@ -60,18 +60,18 @@ class HTCookingRecipeBuilder<RECIPE : AbstractCookingRecipe>(
     private var time: Int = 200
     private var exp: Float = 0f
 
-    fun setTime(time: Int): HTCookingRecipeBuilder<RECIPE> = apply {
+    fun setTime(time: Int): HTCookingRecipeBuilder = apply {
         this.time = max(0, time)
     }
 
-    fun setExp(exp: Float): HTCookingRecipeBuilder<RECIPE> = apply {
+    fun setExp(exp: Float): HTCookingRecipeBuilder = apply {
         this.exp = max(0f, exp)
     }
 
-    override fun group(groupName: String?): HTCookingRecipeBuilder<RECIPE> = apply {
-        this.group = groupName
+    fun setGroup(group: String?): HTCookingRecipeBuilder = apply {
+        this.group = group
     }
 
-    override fun createRecipe(output: ItemStack): RECIPE =
+    override fun createRecipe(output: ItemStack): AbstractCookingRecipe =
         factory.create(group ?: "", CookingBookCategory.MISC, ingredient, output, exp, timeOperator.applyAsInt(time))
 }

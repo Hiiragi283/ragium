@@ -14,7 +14,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /**
  * Ragiumで使用する[Recipe]の拡張インターフェース
- * @see [mekanism.api.recipes.MekanismRecipe]
+ * @see mekanism.api.recipes.MekanismRecipe
  */
 interface HTRecipe<INPUT : RecipeInput> :
     Recipe<INPUT>,
@@ -29,7 +29,7 @@ interface HTRecipe<INPUT : RecipeInput> :
     @Deprecated("Not used in Ragium", level = DeprecationLevel.ERROR)
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
 
-    fun assembleItem(input: INPUT, registries: HolderLookup.Provider): ImmutableItemStack?
+    fun assembleItem(input: INPUT, provider: HolderLookup.Provider): ImmutableItemStack?
 
     @Deprecated(
         "Use `assembleItem(INPUT, HolderLookup.Provider) `instead",
@@ -51,22 +51,22 @@ interface HTRecipe<INPUT : RecipeInput> :
     /**
      * 指定された引数からアイテムの完成品を返します。
      * @param input レシピの入力
-     * @param registries レジストリのアクセス
+     * @param provider レジストリのアクセス
      * @param result [ImmutableItemStack]の[HTRecipeResult]
      * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は`null`
      */
-    fun getItemResult(input: INPUT, registries: HolderLookup.Provider?, result: HTItemResult?): ImmutableItemStack? = when {
-        test(input) -> result?.getStackOrNull(registries)
+    fun getItemResult(input: INPUT, provider: HolderLookup.Provider?, result: HTItemResult?): ImmutableItemStack? = when {
+        test(input) -> result?.getStackOrNull(provider)
         else -> null
     }
 
     /**
      * 指定された引数からアイテムの完成品を返します。
      * @param input レシピの入力
-     * @param registries レジストリのアクセス
+     * @param provider レジストリのアクセス
      * @param result [Optional]で包まれた[HTItemResult]
      * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は`null`
      */
-    fun getItemResult(input: INPUT, registries: HolderLookup.Provider?, result: Optional<HTItemResult>): ImmutableItemStack? =
-        getItemResult(input, registries, result.getOrNull())
+    fun getItemResult(input: INPUT, provider: HolderLookup.Provider?, result: Optional<HTItemResult>): ImmutableItemStack? =
+        getItemResult(input, provider, result.getOrNull())
 }

@@ -8,10 +8,7 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.getStorage
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
-import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
@@ -45,8 +42,8 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
     lateinit var tank: HTVariableFluidStackTank
         private set
 
-    override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
-        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+    final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        // input
         tank = builder.addSlot(
             HTSlotInfo.INPUT,
             HTVariableFluidStackTank.input(
@@ -58,14 +55,12 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
                 },
             ),
         )
-        return builder.build()
     }
 
     protected lateinit var fuelSlot: HTFluidFuelItemStackSlot
         private set
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+    final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // fuel
         fuelSlot = builder.addSlot(
             HTSlotInfo.INPUT,
@@ -78,14 +73,13 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
                 HTSlotHelper.getSlotPosY(1),
             ),
         )
-        return builder.build()
     }
 
     //    Ticking    //
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // バッテリー内の電力を正面に自動搬出させる
-        val frontBattery: HTEnergyBattery? = getEnergyCache(level, pos, state.getAttributeFront())?.getStorage()
+        val frontBattery: HTEnergyBattery? = energyCache.getBattery(level, pos, state.getAttributeFront())
         HTEnergyHelper.moveEnergy(this.battery, frontBattery, this.battery::onContentsChanged)
         // スロット内のアイテムを液体に変換する
         fuelSlot.fillOrBurn()
@@ -93,7 +87,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         val required: Int = getRequiredAmount(level.registryAccess(), tank.getStack())
         if (required <= 0) return false
         if (tank.extract(required, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null) return false
-        battery.currentEnergyPerTick = getModifiedEnergy(battery.currentEnergyPerTick)
+        battery.currentEnergyPerTick = getModifiedEnergy(battery.baseEnergyPerTick)
         return if (battery.generate() > 0) {
             tank.extract(required, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             true
@@ -120,7 +114,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
     ) : HTFuelGeneratorBlockEntity(blockHolder, pos, state) {
         override fun getFuelValue(stack: ImmutableItemStack): Int = itemValueGetter(stack)
 
-        override fun getFuelStack(value: Int): ImmutableFluidStack? = fuelContent.toStorageStack(value)
+        override fun getFuelStack(value: Int): ImmutableFluidStack? = fuelContent.toImmutableStack(value)
 
         override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int = when (stack) {
             null -> 0

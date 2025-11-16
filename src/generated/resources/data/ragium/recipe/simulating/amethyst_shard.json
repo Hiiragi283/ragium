@@ -1,8 +1,0 @@
-{
-  "type": "ragium:simulating",
-  "catalyst": "minecraft:budding_amethyst",
-  "result": {
-    "count": 4,
-    "id": "minecraft:amethyst_shard"
-  }
-}

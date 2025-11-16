@@ -7,31 +7,26 @@ import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.inventory.HTMenuCallback
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
-import hiiragi283.ragium.api.storage.experience.HTExperienceHandler
-import hiiragi283.ragium.api.storage.experience.HTExperienceTank
-import hiiragi283.ragium.api.storage.experience.IExperienceHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.holder.HTEnergyBatteryHolder
-import hiiragi283.ragium.api.storage.holder.HTExperienceTankHolder
 import hiiragi283.ragium.api.storage.holder.HTFluidTankHolder
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.network.HTUpdateEnergyStoragePacket
-import hiiragi283.ragium.common.network.HTUpdateExperienceStoragePacket
-import hiiragi283.ragium.common.network.HTUpdateFluidTankPacket
+import hiiragi283.ragium.common.inventory.container.HTContainerMenu
+import hiiragi283.ragium.common.inventory.slot.HTFluidSyncSlot
+import hiiragi283.ragium.common.inventory.slot.HTIntSyncSlot
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
+import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
-import hiiragi283.ragium.common.storage.resolver.HTExperienceHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
-import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -53,7 +48,6 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import java.util.UUID
-import java.util.function.Consumer
 
 /**
  * キャパビリティやオーナーを保持する[ExtendedBlockEntity]の拡張クラス
@@ -67,7 +61,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     ),
     Nameable,
     HTEnergyHandler,
-    HTExperienceHandler,
     HTFluidHandler,
     HTHandlerProvider,
     HTItemHandler,
@@ -175,16 +168,24 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         }
     }
 
-    override fun sendPassivePacket(level: ServerLevel) {
-        super.sendPassivePacket(level)
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.addContainerTrackers
+     */
+    open fun addMenuTrackers(menu: HTContainerMenu) {
+        // Fluid Tanks
         if (hasFluidHandler()) {
-            HTPacketHelper.sendToClient(level, blockPos, HTUpdateFluidTankPacket.create(this))
+            for (tank: HTFluidTank in this.getFluidTanks(this.getFluidSideFor())) {
+                if (tank is HTFluidStackTank) {
+                    menu.track(HTFluidSyncSlot(tank))
+                }
+            }
         }
-        if (this.getEnergyStorage(null) != null) {
-            HTPacketHelper.sendToClient(level, blockPos, HTUpdateEnergyStoragePacket.create(this))
-        }
-        if (this.getExperienceHandler(null) != null) {
-            HTPacketHelper.sendToClient(level, blockPos, HTUpdateExperienceStoragePacket.create(this))
+        // Energy Battery
+        if (hasEnergyStorage()) {
+            val battery: HTEnergyBattery? = this.getEnergyBattery(this.getEnergySideFor())
+            if (battery is HTBasicEnergyBattery) {
+                menu.track(HTIntSyncSlot(battery::getAmount, battery::setAmountUnchecked))
+            }
         }
     }
 
@@ -213,7 +214,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     protected val fluidHandlerManager: HTFluidHandlerManager?
     protected val energyHandlerManager: HTEnergyStorageManager?
-    protected val experienceHandlerManager: HTExperienceHandlerManager?
     protected val itemHandlerManager: HTItemHandlerManager?
 
     init {
@@ -221,7 +221,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         enchantment = ItemEnchantments.EMPTY
         fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
         energyHandlerManager = initializeEnergyHandler(::setOnlySave)?.let { HTEnergyStorageManager(it, this) }
-        experienceHandlerManager = initializeExperienceHandler(::setOnlySave)?.let { HTExperienceHandlerManager(it, this) }
         itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
     }
 
@@ -259,16 +258,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = energyHandlerManager?.resolve(direction)
 
-    // Experience
-
-    protected open fun initializeExperienceHandler(listener: HTContentListener): HTExperienceTankHolder? = null
-
-    final override fun hasExperienceHandler(): Boolean = experienceHandlerManager?.canHandle() ?: false
-
-    final override fun getExpTanks(side: Direction?): List<HTExperienceTank> = experienceHandlerManager?.getContainers(side) ?: listOf()
-
-    final override fun getExperienceHandler(direction: Direction?): IExperienceHandler? = experienceHandlerManager?.resolve(direction)
-
     // Item
 
     /**
@@ -283,10 +272,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
 
-    override fun dropInventory(consumer: Consumer<ImmutableItemStack>) {
-        super.dropInventory(consumer)
-        getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
-    }
+    open fun doDropItems(): Boolean = hasItemHandler()
 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(direction)
 }

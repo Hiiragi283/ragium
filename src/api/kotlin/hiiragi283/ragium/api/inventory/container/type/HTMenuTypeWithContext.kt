@@ -8,7 +8,7 @@ import net.neoforged.neoforge.network.IContainerFactory
 
 /**
  * [HTContainerFactory]を受け取る[HTMenuType]の拡張クラス
- * @see [mekanism.common.inventory.container.type.MekanismContainerType]
+ * @see mekanism.common.inventory.container.type.MekanismContainerType
  */
 class HTMenuTypeWithContext<MENU : AbstractContainerMenu, C>(
     private val clazz: Class<C>,

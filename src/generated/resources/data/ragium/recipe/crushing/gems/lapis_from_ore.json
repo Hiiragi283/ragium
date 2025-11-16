@@ -1,8 +1,0 @@
-{
-  "type": "ragium:crushing",
-  "ingredient": "#c:ores/lapis",
-  "results": {
-    "count": 8,
-    "id": "#c:gems/lapis"
-  }
-}

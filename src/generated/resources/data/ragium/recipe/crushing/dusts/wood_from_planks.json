@@ -1,8 +1,0 @@
-{
-  "type": "ragium:pulverizing",
-  "ingredient": "#minecraft:planks",
-  "result": {
-    "count": 1,
-    "id": "#c:dusts/wood"
-  }
-}

@@ -9,35 +9,35 @@ import hiiragi283.ragium.api.data.advancement.descKey
 import hiiragi283.ragium.api.data.advancement.titleKey
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.variant.HTVariantKey
+import hiiragi283.ragium.common.integration.RagiumCreateAddon
+import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.integration.RagiumReplicationAddon
-import hiiragi283.ragium.common.integration.food.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.food.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
+import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.text.HTSmithingTranslation
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
 import hiiragi283.ragium.common.variant.HTKnifeToolVariant
+import hiiragi283.ragium.common.variant.HTSandPaperToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.text.IHasTranslationKey
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.data.LanguageProvider
 import snownee.jade.api.IJadeProvider
 
@@ -59,13 +59,21 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromMapWithRow(HTSimpleLangPattern("%s Coil", "%sコイル"), RagiumItems.COILS)
         fromMapWithRow(HTSimpleLangPattern("%s Component", "%s構造体"), RagiumItems.COMPONENTS)
 
-        fromMapWithColumn(RagiumMaterialKeys.AZURE_STEEL, RagiumItems.AZURE_ARMORS)
-        fromMapWithColumn(RagiumMaterialKeys.DEEP_STEEL, RagiumItems.DEEP_ARMORS)
+        fromVariantTable(RagiumItems.ARMORS)
         fromVariantTable(RagiumItems.TOOLS)
+        fromMapWithRow(HTSimpleLangPattern("%s Upgrade", "%s強化"), RagiumItems.SMITHING_TEMPLATES)
+        addTemplate(RagiumMaterialKeys.AZURE_STEEL, VanillaMaterialKeys.IRON)
+        addTemplate(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
+        addTemplate(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)
 
+        // Translation
         addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
         addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)
 
+        translations()
+
+        // Create
+        fromMapWithRow(HTSandPaperToolVariant, RagiumCreateAddon.SAND_PAPER_MAP)
         // Delight
         fromMapWithRow(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP)
         // Kaleido
@@ -88,6 +96,27 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
+    private fun translations() {
+        // API - Constants
+        add(RagiumTranslation.RAGIUM, "Ragium")
+
+        add(RagiumTranslation.TRUE, "True")
+        add(RagiumTranslation.FALSE, "False")
+
+        // API - GUI
+        add(RagiumTranslation.CAPACITY, $$"Capacity: %1$s")
+        add(RagiumTranslation.CAPACITY_MB, $$"Capacity: %1$s mB")
+        add(RagiumTranslation.CAPACITY_FE, $$"Capacity: %1$s FE")
+
+        add(RagiumTranslation.STORED, $$"%1$s: %2$s")
+        add(RagiumTranslation.STORED_MB, $$"%1$s: %2$s mB")
+        add(RagiumTranslation.STORED_FE, $$"%1$s FE")
+
+        add(RagiumTranslation.FRACTION, $$"%1$s / %2$s")
+        add(RagiumTranslation.PERCENTAGE, $$"%1$s %")
+    }
+
+    // Collection
     private fun <T : HTLangPatternProvider> addTranslations(entries: Iterable<T>, blockGetter: (T) -> HTHasTranslationKey) {
         for (entry: T in entries) {
             add(blockGetter(entry), entry.translate(type, "%s"))
@@ -101,31 +130,27 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
-    private fun fromMapWithColumn(material: HTMaterialLike, map: Map<out HTVariantKey, HTHasTranslationKey>) {
-        val langName: HTLangName = HTMaterialTranslations.getLangName(material) ?: return
-        fromMapWithColumn(langName, map)
-    }
-
-    private fun fromMapWithColumn(translatedName: HTLangName, map: Map<out HTVariantKey, HTHasTranslationKey>) {
-        for ((variant: HTVariantKey, translationKey: HTHasTranslationKey) in map) {
-            add(translationKey, variant.translate(type, translatedName))
+    private fun fromMapWithColumn(translatedName: HTLangName, map: Map<out HTLangPatternProvider, HTHasTranslationKey>) {
+        for ((provider: HTLangPatternProvider, translationKey: HTHasTranslationKey) in map) {
+            add(translationKey, provider.translate(type, translatedName))
         }
     }
 
-    private fun fromVariantTable(table: ImmutableTable<out HTVariantKey, HTMaterialKey, out HTHasTranslationKey>) {
-        table.forEach { (variant: HTVariantKey, key: HTMaterialKey, translationKey: HTHasTranslationKey) ->
+    private fun fromVariantTable(table: ImmutableTable<out HTLangPatternProvider, HTMaterialKey, out HTHasTranslationKey>) {
+        table.forEach { (provider: HTLangPatternProvider, key: HTMaterialKey, translationKey: HTHasTranslationKey) ->
             val langName: HTLangName = HTMaterialTranslations.getLangName(key) ?: return@forEach
-            add(translationKey, variant.translate(type, langName))
+            add(translationKey, provider.translate(type, langName))
         }
     }
 
-    private fun fromMaterialTable(table: ImmutableTable<HTMaterialPrefix, HTMaterialKey, out HTHasTranslationKey>) {
-        table.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, translationKey: HTHasTranslationKey) ->
+    private fun fromMaterialTable(table: ImmutableTable<out HTPrefixLike, HTMaterialKey, out HTHasTranslationKey>) {
+        table.forEach { (prefix: HTPrefixLike, key: HTMaterialKey, translationKey: HTHasTranslationKey) ->
             val translatedName: String = HTMaterialTranslations.translate(type, prefix, key) ?: return@forEach
             add(translationKey, translatedName)
         }
     }
 
+    // HTHasTranslationKey
     fun add(translatable: HTHasTranslationKey, value: String) {
         add(translatable.translationKey, value)
     }
@@ -139,6 +164,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         }
     }
 
+    // Registry
     fun addAdvancement(key: HTAdvancementKey, title: String, desc: String) {
         add(key.titleKey, title)
         add(key.descKey, desc)
@@ -157,16 +183,14 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
     protected abstract fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String)
 
-    fun addInfo(item: ItemLike, vararg values: String) {
-        add(
-            RagiumTranslation.getTooltipKey(ItemStack(item)),
-            values.joinToString(separator = "\n"),
-        )
+    fun addTemplate(material: HTMaterialLike, before: HTMaterialLike) {
+        val translation = HTSmithingTranslation(RagiumAPI.MOD_ID, material)
+        val langName: HTLangName = HTMaterialTranslations.getLangName(material) ?: return
+        val beforeName: HTLangName = HTMaterialTranslations.getLangName(before) ?: return
+        addTemplate(translation, langName.getTranslatedName(type), beforeName.getTranslatedName(type))
     }
 
-    fun addItemGroup(group: HTHolderLike, value: String) {
-        add(group.getId().toDescriptionKey("itemGroup"), value)
-    }
+    protected abstract fun addTemplate(translation: HTSmithingTranslation, material: String, before: String)
 
     // Mekanism
     fun add(translatable: IHasTranslationKey, value: String) {
@@ -186,6 +210,14 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         final override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
             add(content.getBucket(), "$value Bucket")
         }
+
+        final override fun addTemplate(translation: HTSmithingTranslation, material: String, before: String) {
+            add(translation.appliesTo, "$material Equipment")
+            add(translation.ingredients, "$material Ingot")
+            add(translation.upgradeDescription, "$material Upgrade")
+            add(translation.baseSlotDescription, "Add ${before.lowercase()} armor, weapon, ot tool")
+            add(translation.additionsSlotDescription, "Add $material Ingot")
+        }
     }
 
     //    Japanese    //
@@ -193,6 +225,14 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     abstract class Japanese(output: PackOutput) : HTLanguageProvider(output, HTLanguageType.JA_JP) {
         final override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
             add(content.getBucket(), "${value}入りバケツ")
+        }
+
+        final override fun addTemplate(translation: HTSmithingTranslation, material: String, before: String) {
+            add(translation.appliesTo, "${material}の装備品")
+            add(translation.ingredients, "${material}インゴット")
+            add(translation.upgradeDescription, "${material}強化")
+            add(translation.baseSlotDescription, "${before}製の防具，武器，道具を置いてください")
+            add(translation.additionsSlotDescription, "${material}インゴットを置いてください")
         }
     }
 }

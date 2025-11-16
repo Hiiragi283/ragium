@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "fluid": "ragium:crimson_blood",
-  "loader": "neoforge:fluid_container"
-}

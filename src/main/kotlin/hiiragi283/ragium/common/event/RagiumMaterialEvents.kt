@@ -4,10 +4,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.HTMaterialDefinitionEvent
 import hiiragi283.ragium.api.material.addDefaultPrefix
 import hiiragi283.ragium.api.material.addName
+import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
 import hiiragi283.ragium.common.material.CommonMaterialKeys
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.FoodMaterialKeys
+import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -27,22 +30,27 @@ object RagiumMaterialEvents {
         event.modify(VanillaMaterialKeys.LAPIS) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Lapis", "ラピス")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(VanillaMaterialKeys.QUARTZ) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Quartz", "水晶")
+            add(HTStorageBlockMaterialAttribute.TWO_BY_TWO)
         }
         event.modify(VanillaMaterialKeys.AMETHYST) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Amethyst", "アメシスト")
+            add(HTStorageBlockMaterialAttribute.TWO_BY_TWO)
         }
         event.modify(VanillaMaterialKeys.DIAMOND) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Diamond", "ダイアモンド")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(VanillaMaterialKeys.EMERALD) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Emerald", "エメラルド")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(VanillaMaterialKeys.ECHO) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
@@ -69,29 +77,44 @@ object RagiumMaterialEvents {
         event.modify(VanillaMaterialKeys.COAL) {
             addDefaultPrefix(CommonMaterialPrefixes.FUEL)
             addName("Coal", "石炭")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(VanillaMaterialKeys.CHARCOAL) {
             addDefaultPrefix(CommonMaterialPrefixes.FUEL)
             addName("Charcoal", "木炭")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(VanillaMaterialKeys.REDSTONE) {
             addDefaultPrefix(CommonMaterialPrefixes.DUST)
             addName("Redstone", "レッドストーン")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(VanillaMaterialKeys.GLOWSTONE) {
             addDefaultPrefix(CommonMaterialPrefixes.DUST)
             addName("Glowstone", "グロウストーン")
+            add(HTStorageBlockMaterialAttribute.TWO_BY_TWO)
         }
         event.modify(VanillaMaterialKeys.SOUL) {
             addName("Soul", "ソウル")
         }
 
+        event.modify(VanillaMaterialKeys.BLACKSTONE) {
+            addName("Blackstone", "ブラックストーン")
+        }
         event.modify(VanillaMaterialKeys.OBSIDIAN) {
             addName("Obsidian", "黒曜石")
         }
 
         event.modify(VanillaMaterialKeys.WOOD) {
             addName("Wood", "木")
+        }
+
+        // Elements
+        event.modify(RagiumEssenceType.RAGIUM.asMaterialKey()) {
+            addName("Ragium Essence", "ラギウムエッセンス")
+        }
+        event.modify(RagiumEssenceType.DEEP.asMaterialKey()) {
+            addName("Deep Essence", "深層エッセンス")
         }
 
         RagiumAPI.LOGGER.info("Modified Vanilla materials!")
@@ -117,10 +140,12 @@ object RagiumMaterialEvents {
         event.modify(CommonMaterialKeys.COAL_COKE) {
             addDefaultPrefix(CommonMaterialPrefixes.FUEL)
             addName("Coal Coke", "石炭コークス")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(CommonMaterialKeys.PLASTIC) {
             addDefaultPrefix(CommonMaterialPrefixes.PLATE)
             addName("Plastic", "プラスチック")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
     }
 
@@ -135,22 +160,27 @@ object RagiumMaterialEvents {
         event.modify(RagiumMaterialKeys.RAGI_CRYSTAL) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Ragi-Crystal", "ラギクリスタリル")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(RagiumMaterialKeys.AZURE) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Azure Shard", "紺碧の欠片")
+            add(HTStorageBlockMaterialAttribute.TWO_BY_TWO)
         }
         event.modify(RagiumMaterialKeys.CRIMSON_CRYSTAL) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Crimson Crystal", "深紅のクリスタリル")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(RagiumMaterialKeys.WARPED_CRYSTAL) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Warped Crystal", "歪んだクリスタリル")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(RagiumMaterialKeys.ELDRITCH_PEARL) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName("Eldritch Pearl", "異質な真珠")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         // Metal
         event.modify(RagiumMaterialKeys.RAGI_ALLOY) {
@@ -169,24 +199,34 @@ object RagiumMaterialEvents {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Deep Steel", "深層鋼")
         }
-        event.modify(RagiumMaterialKeys.GILDIUM) {
+        event.modify(RagiumMaterialKeys.NIGHT_METAL) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
-            addName("Gildium", "鍍金")
+            addName("Night Metal", "夜金")
         }
         event.modify(RagiumMaterialKeys.IRIDESCENTIUM) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Iridescentium", "七色金")
         }
         // Food
-        event.modify(RagiumMaterialKeys.CHOCOLATE) {
+        event.modify(FoodMaterialKeys.CHOCOLATE) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Chocolate", "チョコレート")
         }
-        event.modify(RagiumMaterialKeys.MEAT) {
-            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
-            addName("Meat", "生肉")
+
+        event.modify(FoodMaterialKeys.WARPED_WART) {
+            addDefaultPrefix(CommonMaterialPrefixes.CROP)
+            addName("Warped Wart", "歪んだウォート")
         }
-        event.modify(RagiumMaterialKeys.COOKED_MEAT) {
+        event.modify(FoodMaterialKeys.WHEAT) {
+            addDefaultPrefix(CommonMaterialPrefixes.CROP)
+            addName("Wheat", "小麦")
+        }
+
+        event.modify(FoodMaterialKeys.RAW_MEAT) {
+            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+            addName("Raw Meat", "生肉")
+        }
+        event.modify(FoodMaterialKeys.COOKED_MEAT) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Cooked Meat", "焼肉")
         }
@@ -194,6 +234,7 @@ object RagiumMaterialEvents {
         event.modify(RagiumMaterialKeys.BAMBOO_CHARCOAL) {
             addDefaultPrefix(CommonMaterialPrefixes.FUEL)
             addName("Bamboo Charcoal", "竹炭")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         RagiumAPI.LOGGER.info("Modified Ragium materials!")
     }

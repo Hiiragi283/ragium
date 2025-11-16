@@ -5,32 +5,30 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
-import hiiragi283.ragium.common.inventory.HTAccessConfigurationMenu
-import hiiragi283.ragium.common.util.HTPacketHelper
+import hiiragi283.ragium.common.inventory.container.HTAccessConfigurationMenu
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Tooltip
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton
+import net.neoforged.neoforge.network.PacketDistributor
 
 @OnlyIn(Dist.CLIENT)
 class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: Inventory, title: Component) :
     HTContainerScreen<HTAccessConfigurationMenu>(
+        null,
         menu,
         inventory,
         title,
     ) {
     private val blockEntity: HTConfigurableBlockEntity = menu.context
-
-    override val texture: ResourceLocation? = null
 
     private fun addButton(side: Direction, x: Int, y: Int): ConfigButton = ConfigButton(
         blockEntity.blockPos,
@@ -42,7 +40,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
         tooltip = blockEntity.getAccessConfig(side).let(::createTooltip)
     }
 
-    private fun createTooltip(config: HTAccessConfig): Tooltip = config.translationKey.let(Component::translatable).let(Tooltip::create)
+    private fun createTooltip(config: HTAccessConfig): Tooltip = config.translate().let(Tooltip::create)
 
     override fun init() {
         super.init()
@@ -75,7 +73,7 @@ class HTAccessConfigurationScreen(menu: HTAccessConfigurationMenu, inventory: In
             // Client update
             blockEntity.setAccessConfig(side, value)
             // Server update
-            HTPacketHelper.sendToServer(HTUpdateAccessConfigPayload(pos, side, value))
+            PacketDistributor.sendToServer(HTUpdateAccessConfigPayload(pos, side, value))
         }
 
         override fun renderWidget(

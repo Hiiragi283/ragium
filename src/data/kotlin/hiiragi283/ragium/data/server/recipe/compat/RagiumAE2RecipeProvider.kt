@@ -7,13 +7,13 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystToItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.setup.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
@@ -33,8 +33,8 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
         // Fluix Crystal
         combineWithRedstone(
             resultHelper.item(CommonMaterialPrefixes.GEM, ModMaterialKeys.Gems.FLUIX, 2),
-            itemCreator.gemOrDust(ModMaterialKeys.Gems.CERTUS_QUARTZ),
-            itemCreator.gemOrDust(VanillaMaterialKeys.QUARTZ),
+            itemCreator.fromItem(AEItems.CERTUS_QUARTZ_CRYSTAL_CHARGED),
+            itemCreator.multiPrefixes(VanillaMaterialKeys.QUARTZ, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.GEM),
         )
         // Sky Stone
         HTItemToObjRecipeBuilder
@@ -63,7 +63,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
 
     @JvmStatic
     private fun certusBudding(budding: BlockDefinition<*>, count: Int) {
-        HTItemWithCatalystToItemRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
                 itemCreator.fromItem(budding),

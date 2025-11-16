@@ -11,17 +11,17 @@ import hiiragi283.ragium.api.serialization.value.HTValueInput
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.RegistryOps
 
-internal class HTJsonValueInput private constructor(private val lookup: HolderLookup.Provider, private val jsonObject: JsonObject) :
+internal class HTJsonValueInput private constructor(private val provider: HolderLookup.Provider, private val jsonObject: JsonObject) :
     HTValueInput {
         companion object {
             @JvmStatic
-            fun create(lookup: HolderLookup.Provider, jsonObject: JsonObject): HTValueInput = when {
+            fun create(provider: HolderLookup.Provider, jsonObject: JsonObject): HTValueInput = when {
                 jsonObject.isEmpty -> HTEmptyValueInput
-                else -> HTJsonValueInput(lookup, jsonObject)
+                else -> HTJsonValueInput(provider, jsonObject)
             }
         }
 
-        private val registryOps: RegistryOps<JsonElement> = lookup.createSerializationContext(JsonOps.INSTANCE)
+        private val registryOps: RegistryOps<JsonElement> = provider.createSerializationContext(JsonOps.INSTANCE)
 
         private fun getJsonPrimitive(key: String): JsonPrimitive? {
             val jsonIn: JsonElement = jsonObject.get(key) ?: return null
@@ -37,7 +37,7 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
 
         override fun child(key: String): HTValueInput? {
             val jsonIn: JsonObject = jsonObject.get(key) as? JsonObject ?: return null
-            return create(lookup, jsonIn)
+            return create(provider, jsonIn)
         }
 
         override fun childOrEmpty(key: String): HTValueInput = child(key) ?: HTEmptyValueInput
@@ -46,7 +46,7 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
             val list: JsonArray = jsonObject.get(key) as? JsonArray ?: return null
             return when {
                 list.isEmpty -> null
-                else -> ValueInputList(lookup, list)
+                else -> ValueInputList(provider, list)
             }
         }
 
@@ -56,7 +56,7 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
             val list: JsonArray = jsonObject.get(key) as? JsonArray ?: return null
             return when {
                 list.isEmpty -> null
-                else -> TypedInputList(lookup, list, codec)
+                else -> TypedInputList(provider, list, codec)
             }
         }
 
@@ -94,22 +94,23 @@ internal class HTJsonValueInput private constructor(private val lookup: HolderLo
 
         //    ValueInputList    //
 
-        private class ValueInputList(private val lookup: HolderLookup.Provider, private val list: JsonArray) : HTValueInput.ValueInputList {
+        private class ValueInputList(private val provider: HolderLookup.Provider, private val list: JsonArray) :
+            HTValueInput.ValueInputList {
             override val isEmpty: Boolean
                 get() = list.isEmpty
 
             override fun iterator(): Iterator<HTValueInput> = list
                 .filterIsInstance<JsonObject>()
                 .map { jsonObject: JsonObject ->
-                    create(lookup, jsonObject)
+                    create(provider, jsonObject)
                 }.iterator()
         }
 
         //    TypedInputList    //
 
-        private class TypedInputList<T : Any>(lookup: HolderLookup.Provider, private val list: JsonArray, private val codec: Codec<T>) :
+        private class TypedInputList<T : Any>(provider: HolderLookup.Provider, private val list: JsonArray, private val codec: Codec<T>) :
             HTValueInput.TypedInputList<T> {
-            private val registryOps: RegistryOps<JsonElement> = lookup.createSerializationContext(JsonOps.INSTANCE)
+            private val registryOps: RegistryOps<JsonElement> = provider.createSerializationContext(JsonOps.INSTANCE)
 
             override val isEmpty: Boolean
                 get() = list.isEmpty

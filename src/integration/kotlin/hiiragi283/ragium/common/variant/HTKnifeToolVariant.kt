@@ -13,10 +13,8 @@ import vectorwing.farmersdelight.common.tag.CommonTags
 import vectorwing.farmersdelight.common.tag.ModTags
 
 object HTKnifeToolVariant : HTToolVariant {
-    override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*> =
-        register.register("${material.asMaterialName()}_knife") { _ ->
-            KnifeItem(material, ModItems.knifeItem(material))
-        }
+    override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial, name: String): HTDeferredItem<*> =
+        register.register(name) { _ -> KnifeItem(material, ModItems.knifeItem(material)) }
 
     override val tagKeys: Iterable<TagKey<Item>> = listOf(CommonTags.TOOLS_KNIFE, ModTags.KNIVES)
 

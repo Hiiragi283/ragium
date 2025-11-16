@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.entity.vehicle
 
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
-import hiiragi283.ragium.api.storage.experience.IExperienceHandler
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponents
@@ -70,8 +70,14 @@ abstract class HTMinecart<BE : HTBlockEntity> :
                 result.set(DataComponents.CUSTOM_NAME, this.customName)
             }
             this.spawnAtLocation(result)
-            bindBlockEntity().dropInventory { stack: ImmutableItemStack ->
-                this.spawnAtLocation(stack.unwrap())
+            val blockEntity: BE = bindBlockEntity()
+            if (blockEntity.doDropItems()) {
+                blockEntity
+                    .getItemSlots(blockEntity.getItemSideFor())
+                    .mapNotNull(HTItemSlot::getStack)
+                    .forEach { stack: ImmutableItemStack ->
+                        this.spawnAtLocation(stack.unwrap())
+                    }
             }
         }
     }
@@ -131,8 +137,6 @@ abstract class HTMinecart<BE : HTBlockEntity> :
     //    HTHandlerProvider    //
 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = bindBlockEntity().getItemHandler(direction)
-
-    final override fun getExperienceHandler(direction: Direction?): IExperienceHandler? = bindBlockEntity().getExperienceHandler(direction)
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? = bindBlockEntity().getFluidHandler(direction)
 

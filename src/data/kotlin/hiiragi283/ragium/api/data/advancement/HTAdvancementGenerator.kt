@@ -1,8 +1,10 @@
 package hiiragi283.ragium.api.data.advancement
 
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.HTMaterialPrefix
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.tags.TagKey
@@ -32,7 +34,7 @@ abstract class HTAdvancementGenerator {
     protected inline fun createSimple(
         key: HTAdvancementKey,
         parent: HTAdvancementKey,
-        prefix: HTMaterialPrefix,
+        prefix: CommonMaterialPrefixes,
         material: HTMaterialKey,
         builderAction: HTDisplayInfoBuilder.() -> Unit = {},
     ) {
@@ -40,7 +42,8 @@ abstract class HTAdvancementGenerator {
             key,
             parent,
             RagiumItems.getMaterial(prefix, material),
-            prefix.itemTagKey(material),
+            prefix,
+            material,
             builderAction,
         )
     }
@@ -64,6 +67,42 @@ abstract class HTAdvancementGenerator {
             } else {
                 hasAnyItem(item)
             }
+        }
+    }
+
+    protected inline fun createSimple(
+        key: HTAdvancementKey,
+        parent: HTAdvancementKey,
+        item: HTItemHolderLike,
+        prefix: HTPrefixLike,
+        material: HTMaterialLike,
+        builderAction: HTDisplayInfoBuilder.() -> Unit = {},
+    ) {
+        child(key, parent) {
+            display {
+                setIcon(item)
+                setTitleFromKey(key)
+                setDescFromKey(key)
+                builderAction()
+            }
+            hasAnyItem(prefix.itemTagKey(material))
+        }
+    }
+
+    protected inline fun createUse(
+        key: HTAdvancementKey,
+        parent: HTAdvancementKey,
+        item: HTItemHolderLike,
+        builderAction: HTDisplayInfoBuilder.() -> Unit = {},
+    ) {
+        child(key, parent) {
+            display {
+                setIcon(item)
+                setTitleFromKey(key)
+                setDescFromKey(key)
+                builderAction()
+            }
+            useItem(item)
         }
     }
 }

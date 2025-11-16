@@ -2,10 +2,7 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTAbstractBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
-import hiiragi283.ragium.common.util.HTItemDropHelper
-import hiiragi283.ragium.common.util.HTPacketHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -15,11 +12,12 @@ import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import java.util.function.Consumer
+import net.neoforged.neoforge.network.PacketDistributor
 
 /**
  * Ragiumで使用する[BlockEntity]の拡張クラス
@@ -45,19 +43,26 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     fun sendUpdatePacket(level: ServerLevel) {
         if (isRemoved) return
-        HTPacketHelper.sendToClient(level, blockPos, HTUpdateBlockEntityPacket.create(this))
+        val payload: HTUpdateBlockEntityPacket = HTUpdateBlockEntityPacket.create(this) ?: return
+        PacketDistributor.sendToPlayersTrackingChunk(level, ChunkPos(blockPos), payload)
     }
 
     @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun setBlockState(blockState: BlockState) {
         super.setBlockState(blockState)
-        afterUpdateState(blockState)
+        onUpdatedState(blockState)
     }
 
     final override fun setLevel(level: Level) {
         super.setLevel(level)
-        afterLevelInit(level)
+        onUpdateLevel(level, blockPos)
+    }
+
+    final override fun setRemoved() {
+        super.setRemoved()
+        val level: Level = this.level ?: return
+        onRemove(level, blockPos)
     }
 
     //    HTContentListener    //
@@ -86,12 +91,9 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
         if (updateComparator && !level.isClientSide) {
             markDirtyComparator()
         }
-        (level as? ServerLevel)?.let(::sendPassivePacket)
     }
 
     protected open fun markDirtyComparator() {}
-
-    protected open fun sendPassivePacket(level: ServerLevel) {}
 
     //    Extensions    //
 
@@ -103,12 +105,17 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     /**
      * [BlockEntity.setBlockState]の後で呼び出されます。
      */
-    open fun afterUpdateState(state: BlockState) {}
+    open fun onUpdatedState(state: BlockState) {}
 
     /**
      * [BlockEntity.setLevel]の後で呼び出されます。
      */
-    open fun afterLevelInit(level: Level) {}
+    open fun onUpdateLevel(level: Level, pos: BlockPos) {}
+
+    /**
+     * [BlockEntity.setRemoved]の後で呼び出されます。
+     */
+    open fun onRemove(level: Level, pos: BlockPos) {}
 
     /**
      * [Block.useWithoutItem]でGUIを開くときに，クライアント側へ送るデータを書き込みます。
@@ -116,15 +123,6 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
      */
     open fun writeExtraContainerData(buf: RegistryFriendlyByteBuf) {
         buf.writeBlockPos(getBlockPos())
-    }
-
-    /**
-     * ブロックが破壊されたときにインベントリの中身をドロップします。
-     */
-    open fun dropInventory(consumer: Consumer<ImmutableItemStack>) {}
-
-    open fun onRemove(level: Level, pos: BlockPos) {
-        dropInventory { stack: ImmutableItemStack -> HTItemDropHelper.dropStackAt(level, pos, stack) }
     }
 
     /**

@@ -1,15 +1,19 @@
 package hiiragi283.ragium.api.block.type
 
 import hiiragi283.ragium.api.block.attribute.HTBlockAttribute
+import hiiragi283.ragium.api.block.attribute.HTShapeBlockAttribute
 import hiiragi283.ragium.api.collection.AttributeMap
 import hiiragi283.ragium.api.collection.MutableAttributeMap
-import java.util.function.Function
+import hiiragi283.ragium.api.text.HTTranslation
+import hiiragi283.ragium.api.text.RagiumTranslation
+import net.minecraft.world.phys.shapes.VoxelShape
+import java.util.function.BiFunction
 
 /**
  * ブロックの属性を保持するクラス
  * @see mekanism.common.content.blocktype.BlockType
  */
-open class HTBlockType(private val attributeMap: AttributeMap<HTBlockAttribute>) {
+open class HTBlockType(val description: HTTranslation, private val attributeMap: AttributeMap<HTBlockAttribute>) {
     companion object {
         @JvmStatic
         fun builder(): Builder.Impl<HTBlockType> = Builder.Impl(::HTBlockType)
@@ -44,7 +48,7 @@ open class HTBlockType(private val attributeMap: AttributeMap<HTBlockAttribute>)
      * @param factory [AttributeMap]から[TYPE]に変換するブロック
      */
     abstract class Builder<TYPE : HTBlockType, BUILDER : Builder<TYPE, BUILDER>>(
-        protected val factory: Function<AttributeMap<HTBlockAttribute>, TYPE>,
+        protected val factory: BiFunction<HTTranslation, AttributeMap<HTBlockAttribute>, TYPE>,
     ) {
         private var hasBuilt = false
         private val attributeMap: MutableAttributeMap<HTBlockAttribute> = hashMapOf()
@@ -70,6 +74,8 @@ open class HTBlockType(private val attributeMap: AttributeMap<HTBlockAttribute>)
             }
             return self()
         }
+
+        fun addShape(shape: VoxelShape): BUILDER = add(HTShapeBlockAttribute(shape))
 
         /**
          * 指定された[attributes]を追加します。
@@ -98,16 +104,20 @@ open class HTBlockType(private val attributeMap: AttributeMap<HTBlockAttribute>)
         /**
          * このビルダーを無効にし，タイプを作成します。
          */
-        fun build(): TYPE {
+        fun build(description: HTTranslation): TYPE {
             this.hasBuilt = true
-            return factory.apply(attributeMap)
+            return factory.apply(description, attributeMap)
         }
+
+        @Deprecated("Use `build(HTTranslation)` instead")
+        fun build(): TYPE = build(RagiumTranslation.EMPTY_ENTRY)
 
         //    Impl    //
 
         /**
          * [Builder]の簡易的な実装
          */
-        class Impl<TYPE : HTBlockType>(factory: (AttributeMap<HTBlockAttribute>) -> TYPE) : Builder<TYPE, Impl<TYPE>>(factory)
+        class Impl<TYPE : HTBlockType>(factory: BiFunction<HTTranslation, AttributeMap<HTBlockAttribute>, TYPE>) :
+            Builder<TYPE, Impl<TYPE>>(factory)
     }
 }

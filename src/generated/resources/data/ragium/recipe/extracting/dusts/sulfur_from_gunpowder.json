@@ -1,8 +1,0 @@
-{
-  "type": "ragium:extracting",
-  "ingredient": "#c:gunpowders",
-  "result": {
-    "count": 1,
-    "id": "#c:dusts/sulfur"
-  }
-}

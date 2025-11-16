@@ -11,8 +11,8 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
 object HTKitchenKnifeToolVariant : HTToolVariant {
-    override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial): HTDeferredItem<*> =
-        register.registerItemWith("${material.asMaterialName()}_kitchen_knife", material, ::KitchenKnifeItem)
+    override fun registerItem(register: HTDeferredItemRegister, material: HTEquipmentMaterial, name: String): HTDeferredItem<*> =
+        register.registerItemWith(name, material, ::KitchenKnifeItem)
 
     override val tagKeys: Iterable<TagKey<Item>> = listOf(TagMod.KITCHEN_KNIFE)
 

@@ -1,8 +1,0 @@
-{
-  "type": "ragium:extracting",
-  "ingredient": "minecraft:poisonous_potato",
-  "result": {
-    "count": 1,
-    "id": "ragium:potato_sprouts"
-  }
-}

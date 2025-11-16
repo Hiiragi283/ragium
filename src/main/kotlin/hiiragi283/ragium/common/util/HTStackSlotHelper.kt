@@ -9,17 +9,21 @@ import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.stack.toImmutable
+import hiiragi283.ragium.api.storage.HTAmountView
 import hiiragi283.ragium.api.storage.HTStackSetter
 import hiiragi283.ragium.api.storage.HTStackSlot
+import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidHandlerItemWrapper
+import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.redstone.Redstone
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import java.util.Optional
 import java.util.function.ToIntFunction
@@ -57,6 +61,37 @@ object HTStackSlotHelper {
         return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
     }
 
+    /**
+     * @see net.neoforged.neoforge.items.ItemHandlerHelper.calcRedstoneFromInventory
+     * @see mekanism.common.util.MekanismUtils.redstoneLevelFromContents
+     */
+    @JvmStatic
+    fun <STACK : ImmutableStack<*, STACK>> calculateRedstoneLevel(views: Iterable<HTStackView<STACK>>): Int {
+        var amountSum = 0
+        var capacitySum = 0
+        for (view: HTStackView<STACK> in views) {
+            amountSum += view.getAmount()
+            capacitySum += view.getCapacity(view.getStack())
+        }
+        return calculateRedstoneLevel(amountSum, capacitySum)
+    }
+
+    /**
+     * @see mekanism.common.util.MekanismUtils.redstoneLevelFromContents
+     */
+    @JvmStatic
+    fun calculateRedstoneLevel(amount: Int, capacity: Int): Int {
+        val level: Float = when (capacity) {
+            0 -> 0f
+            else -> amount / capacity.toFloat()
+        }
+        return Mth.lerpDiscrete(level, Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+    }
+
+    @JvmStatic
+    fun calculateRedstoneLevel(view: HTAmountView<*>): Int =
+        Mth.lerpDiscrete(view.getStoredLevelAsFloat(), Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+
     //    Item    //
 
     @JvmStatic
@@ -66,8 +101,8 @@ object HTStackSlotHelper {
         ingredient: ToIntFunction<ImmutableItemStack>,
         action: HTStorageAction,
     ): Int {
-        val stackIn: ImmutableItemStack? = slot.getStack()
-        if (stackIn != null && stackIn.hasCraftingRemainingItem() && stackIn.amount() == 1) {
+        val stackIn: ImmutableItemStack = slot.getStack() ?: return 0
+        if (stackIn.hasCraftingRemainingItem() && stackIn.amount() == 1) {
             if (action.execute) {
                 stackSetter.setStack(stackIn.getCraftingRemainingItem())
             }
