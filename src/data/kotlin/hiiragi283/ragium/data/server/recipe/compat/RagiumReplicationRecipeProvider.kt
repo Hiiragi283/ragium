@@ -7,12 +7,12 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.integration.RagiumReplicationAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.DefaultMatterTypes
+import hiiragi283.ragium.setup.RagiumMatterTypes
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -29,7 +29,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
         register(
             CommonMaterialPrefixes.DUST,
             RagiumMaterialKeys.RAGINITE,
-            RagiumReplicationAddon.getMatterType(RagiumEssenceType.RAGIUM).toValue(9.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.RAGIUM).toValue(9.0),
         )
 
         register(
@@ -37,20 +37,20 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
             DefaultMatterTypes.PRECIOUS.toValue(9.0),
             DefaultMatterTypes.METALLIC.toValue(9.0),
-            RagiumReplicationAddon.getMatterType(RagiumEssenceType.RAGIUM).toValue(36.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.RAGIUM).toValue(36.0),
         )
         // Azure
         register(
             CommonMaterialPrefixes.GEM,
             RagiumEssenceType.AZURE,
-            RagiumReplicationAddon.getMatterType(RagiumEssenceType.AZURE).toValue(2.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.AZURE).toValue(2.0),
             DefaultMatterTypes.PRECIOUS.toValue(5.0),
         )
 
         register(
             CommonMaterialPrefixes.INGOT,
             RagiumMaterialKeys.AZURE_STEEL,
-            RagiumReplicationAddon.getMatterType(RagiumEssenceType.AZURE).toValue(4.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.AZURE).toValue(4.0),
             DefaultMatterTypes.METALLIC.toValue(9.0),
             DefaultMatterTypes.PRECIOUS.toValue(10.0),
         )
@@ -58,14 +58,14 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
         register(
             RagiumCommonTags.Items.ORES_DEEP_SCRAP,
             DefaultMatterTypes.PRECIOUS.toValue(18.0),
-            RagiumReplicationAddon.getMatterType(RagiumEssenceType.DEEP).toValue(18.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.DEEP).toValue(18.0),
         )
 
         register(
             CommonMaterialPrefixes.SCRAP,
             RagiumEssenceType.DEEP,
             DefaultMatterTypes.PRECIOUS.toValue(18.0),
-            RagiumReplicationAddon.getMatterType(RagiumEssenceType.DEEP).toValue(18.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.DEEP).toValue(18.0),
         )
         // Crimson
         register(
@@ -101,7 +101,7 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
             FoodMaterialKeys.RAGI_CHERRY,
             DefaultMatterTypes.LIVING.toValue(4.0),
             DefaultMatterTypes.ORGANIC.toValue(4.0),
-            RagiumReplicationAddon.getMatterType(RagiumEssenceType.RAGIUM).toValue(4.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.RAGIUM).toValue(4.0),
         )
     }
 

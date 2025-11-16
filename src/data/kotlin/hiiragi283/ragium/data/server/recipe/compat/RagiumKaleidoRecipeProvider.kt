@@ -4,13 +4,13 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
-import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
+import hiiragi283.ragium.setup.RagiumIntegrationItems
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.common.Tags
 
@@ -24,7 +24,7 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
     @JvmStatic
     private fun knife() {
         HTShapedRecipeBuilder
-            .equipment(RagiumKaleidoCookeryAddon.getKnife(RagiumMaterialKeys.RAGI_ALLOY))
+            .equipment(RagiumIntegrationItems.getKitchenKnife(RagiumMaterialKeys.RAGI_ALLOY))
             .pattern(
                 "AA",
                 "AB",
@@ -34,8 +34,8 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
 
         createComponentUpgrade(
             HTComponentTier.ELITE,
-            RagiumKaleidoCookeryAddon.getKnife(RagiumMaterialKeys.RAGI_CRYSTAL),
-            RagiumKaleidoCookeryAddon.getKnife(RagiumMaterialKeys.RAGI_ALLOY),
+            RagiumIntegrationItems.getKitchenKnife(RagiumMaterialKeys.RAGI_CRYSTAL),
+            RagiumIntegrationItems.getKitchenKnife(RagiumMaterialKeys.RAGI_ALLOY),
         ).addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
     }

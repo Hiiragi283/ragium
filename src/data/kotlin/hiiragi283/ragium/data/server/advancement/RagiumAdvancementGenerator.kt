@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -101,12 +101,12 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         }
         child(RagiumAdvancements.RAGI_CHERRY_TOAST, RagiumAdvancements.RAGI_CHERRY) {
             display {
-                setIcon(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+                setIcon(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK)
                 setTitleFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
                 setDescFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
                 setGoal()
             }
-            hasAnyItem("has_ragi_cherry_toast_block", RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+            hasAnyItem("has_ragi_cherry_toast_block", RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK)
             addConditions(ModLoadedCondition(RagiumConst.FARMERS_DELIGHT))
         }
         // Advanced

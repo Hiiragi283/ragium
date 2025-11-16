@@ -1,9 +1,9 @@
 package hiiragi283.ragium.client.integration.jade.provider
 
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
-import hiiragi283.ragium.api.integration.jade.HTBasicJadeDataProvider
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.text.HTTextUtil
+import hiiragi283.ragium.client.integration.jade.provider.base.HTBasicJadeDataProvider
 import net.minecraft.ChatFormatting
 import snownee.jade.api.BlockAccessor
 import snownee.jade.api.ITooltip

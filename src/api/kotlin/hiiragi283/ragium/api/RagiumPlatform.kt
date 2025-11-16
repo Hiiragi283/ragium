@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api
 
 import com.google.gson.JsonObject
-import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialDefinition
@@ -37,10 +36,6 @@ interface RagiumPlatform {
         @JvmField
         val INSTANCE: RagiumPlatform = RagiumAPI.getService()
     }
-
-    //    Addon    //
-
-    fun getAddons(): List<RagiumAddon>
 
     //    Material    //
 

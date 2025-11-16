@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -18,6 +18,7 @@ import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuil
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -57,7 +58,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     @JvmStatic
     private fun knife() {
         HTShapedRecipeBuilder
-            .equipment(RagiumDelightAddon.getKnife(RagiumMaterialKeys.RAGI_ALLOY))
+            .equipment(RagiumIntegrationItems.getKnife(RagiumMaterialKeys.RAGI_ALLOY))
             .pattern("A", "B")
             .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             .define('B', Tags.Items.RODS_WOODEN)
@@ -65,8 +66,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
         createComponentUpgrade(
             HTComponentTier.ELITE,
-            RagiumDelightAddon.getKnife(RagiumMaterialKeys.RAGI_CRYSTAL),
-            RagiumDelightAddon.getKnife(RagiumMaterialKeys.RAGI_ALLOY),
+            RagiumIntegrationItems.getKnife(RagiumMaterialKeys.RAGI_CRYSTAL),
+            RagiumIntegrationItems.getKnife(RagiumMaterialKeys.RAGI_ALLOY),
         ).addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
     }
@@ -76,7 +77,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         cuttingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PULP)
         // Pie
         HTShapedRecipeBuilder
-            .misc(RagiumDelightAddon.RAGI_CHERRY_PIE)
+            .misc(RagiumDelightContents.RAGI_CHERRY_PIE)
             .pattern(
                 "AAA",
                 "BBB",
@@ -88,15 +89,15 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
 
         HTCuttingBoardRecipeBuilder
-            .create(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, 4)
-            .addIngredient(RagiumDelightAddon.RAGI_CHERRY_PIE)
+            .create(RagiumDelightContents.RAGI_CHERRY_PIE_SLICE, 4)
+            .addIngredient(RagiumDelightContents.RAGI_CHERRY_PIE)
             .addIngredient(CommonTags.TOOLS_KNIFE)
             .save(output)
 
         HTShapedRecipeBuilder
-            .misc(RagiumDelightAddon.RAGI_CHERRY_PIE)
+            .misc(RagiumDelightContents.RAGI_CHERRY_PIE)
             .storage4()
-            .define('A', RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE)
+            .define('A', RagiumDelightContents.RAGI_CHERRY_PIE_SLICE)
             .saveSuffixed(output, "_from_slice")
         // Jam
         HTCookingPotRecipeBuilder
@@ -109,7 +110,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
 
         HTShapedRecipeBuilder
-            .misc(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK)
+            .misc(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK)
             .pattern(
                 "ABA",
                 "ACA",

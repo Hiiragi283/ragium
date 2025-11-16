@@ -1,8 +1,6 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -97,10 +95,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     }
 
     private fun clientSetup(event: FMLClientSetupEvent) {
-        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
-            addon.onClientSetup(event)
-        }
-
         RagiumAPI.LOGGER.info("Loaded Client Setup!")
     }
 

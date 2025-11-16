@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
@@ -19,6 +18,8 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
+import hiiragi283.ragium.setup.RagiumChemicals
+import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
 import mekanism.api.IMekanismAccess
 import mekanism.api.chemical.ChemicalStack
@@ -77,7 +78,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ItemStackToItemStackRecipeBuilder
                 .enriching(
                     itemHelper.from(basePrefix, baseMaterial),
-                    RagiumMekanismAddon.getEnrichedStack(essenceType),
+                    RagiumIntegrationItems.getEnriched(essenceType).toStack(),
                 ).build(output, id("enriching/enrich/${essenceType.asMaterialName()}"))
         }
     }
@@ -237,7 +238,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         IMekanismAccess.INSTANCE.chemicalStackIngredientCreator()
 
     @JvmStatic
-    private fun HTMaterialLike.asStack(size: Long): ChemicalStack = RagiumMekanismAddon.getChemical(this).asStack(size)
+    private fun HTMaterialLike.asStack(size: Long): ChemicalStack = RagiumChemicals.getChemical(this).asStack(size)
 
     @JvmStatic
     private fun IItemStackIngredientCreator.from(prefix: HTPrefixLike, material: HTMaterialLike, count: Int = 1): ItemStackIngredient =
@@ -245,7 +246,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
 
     @JvmStatic
     private fun IChemicalStackIngredientCreator.from(material: HTMaterialLike, amount: Number): ChemicalStackIngredient =
-        fromHolder(RagiumMekanismAddon.getChemical(material), amount.toLong())
+        fromHolder(RagiumChemicals.getChemical(material), amount.toLong())
 
     @JvmStatic
     private fun enrichOreFromData(data: HTRecipeData, material: HTMaterialLike) {

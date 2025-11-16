@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.accessory
+package hiiragi283.ragium.client.integration.accessories
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis

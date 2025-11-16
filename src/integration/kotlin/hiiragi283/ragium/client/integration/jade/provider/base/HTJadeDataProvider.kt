@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.integration.jade
+package hiiragi283.ragium.client.integration.jade.provider.base
 
 import snownee.jade.api.Accessor
 import snownee.jade.api.IComponentProvider

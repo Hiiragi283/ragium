@@ -4,7 +4,6 @@ import net.neoforged.bus.api.Event
 
 /**
  * 素材の属性を改変するイベント
- * @see net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
  */
 class HTMaterialDefinitionEvent(val factory: (HTMaterialKey) -> HTMaterialDefinition.Builder) : Event() {
     /**

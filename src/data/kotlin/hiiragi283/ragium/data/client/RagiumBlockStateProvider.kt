@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.block.HTCropBlock
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
@@ -246,7 +246,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         }
 
         // Delight
-        pieBlock(RagiumDelightAddon.RAGI_CHERRY_PIE)
+        pieBlock(RagiumDelightContents.RAGI_CHERRY_PIE)
     }
 
     //    Extensions    //

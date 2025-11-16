@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.addon.HTAddon
 import net.neoforged.fml.ModList
 import net.neoforged.neoforgespi.language.ModFileScanData
 import org.objectweb.asm.Type
@@ -32,4 +31,6 @@ internal object HTAddonHelper {
                 }.getOrNull()
             }
     }
+
+    annotation class HTAddon
 }

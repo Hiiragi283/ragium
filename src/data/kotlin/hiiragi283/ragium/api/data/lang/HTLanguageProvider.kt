@@ -16,11 +16,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.integration.RagiumCreateAddon
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
-import hiiragi283.ragium.common.integration.RagiumMekanismAddon
-import hiiragi283.ragium.common.integration.RagiumReplicationAddon
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
@@ -28,11 +23,11 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.text.HTSmithingTranslation
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTKitchenKnifeToolVariant
-import hiiragi283.ragium.common.variant.HTKnifeToolVariant
-import hiiragi283.ragium.common.variant.HTSandPaperToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumChemicals
+import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumMatterTypes
 import mekanism.api.text.IHasTranslationKey
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceKey
@@ -72,26 +67,22 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         translations()
 
-        // Create
-        fromMapWithRow(HTSandPaperToolVariant, RagiumCreateAddon.SAND_PAPER_MAP)
-        // Delight
-        fromMapWithRow(HTKnifeToolVariant, RagiumDelightAddon.KNIFE_MAP)
-        // Kaleido
-        fromMapWithRow(HTKitchenKnifeToolVariant, RagiumKaleidoCookeryAddon.KNIFE_MAP)
+        // Integration
+        fromMaterialTable(RagiumIntegrationItems.MATERIALS)
+        fromVariantTable(RagiumIntegrationItems.TOOLS)
+
         // Mekanism
         for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
-            add(RagiumMekanismAddon.getChemical(essenceType), essenceType.getTranslatedName(type))
+            add(RagiumChemicals.getChemical(essenceType), essenceType.getTranslatedName(type))
         }
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val value: String = data.getTranslatedName(type)
             addFluid(data.molten, value)
-            add(RagiumMekanismAddon.getChemical(data), value)
+            add(RagiumChemicals.getChemical(data), value)
         }
-
-        fromMaterialTable(RagiumMekanismAddon.MATERIAL_ITEMS)
         // Replication
-        for ((essence: RagiumEssenceType, matterType: HTDeferredMatterType<IMatterType>) in RagiumReplicationAddon.MATTER_MAP) {
+        for ((essence: RagiumEssenceType, matterType: HTDeferredMatterType<IMatterType>) in RagiumMatterTypes.MATTER_TYPES) {
             add("${RagiumConst.REPLICATION}.matter_type.${matterType.name}", essence.getTranslatedName(type))
         }
     }

@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.material.prefix
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.tag.createTagKey
@@ -13,7 +12,7 @@ import net.minecraft.tags.TagKey
 /**
  * タグのプレフィックスを表すクラス
  *
- * [RagiumAddon.bindMaterialPrefixes]を通して登録する必要があります。
+ * [HTRegisterPrefixEvent]を通して登録する必要があります。
  */
 @JvmRecord
 data class HTMaterialPrefix(

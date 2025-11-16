@@ -1,8 +1,6 @@
 package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.network.HTPayloadHandlers
@@ -32,15 +30,12 @@ import net.minecraft.world.item.ProjectileItem
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.DispenserBlock
 import net.neoforged.api.distmarker.Dist
-import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.common.NeoForgeMod
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
-import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.network.registration.PayloadRegistrar
 import net.neoforged.neoforge.registries.DataPackRegistryEvent
@@ -76,21 +71,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumFeatures.REGISTER.register(eventBus)
         RagiumMenuTypes.REGISTER.register(eventBus)
         RagiumRecipeSerializers.REGISTER.register(eventBus)
-
-        val addons: List<RagiumAddon> = RagiumPlatform.INSTANCE.getAddons()
-        for (addon: RagiumAddon in addons) {
-            addon.onModConstruct(eventBus, dist)
-        }
-        eventBus.addListener(EventPriority.LOW) { event: ModifyDefaultComponentsEvent ->
-            for (addon: RagiumAddon in addons) {
-                addon.modifyComponents(event)
-            }
-        }
-        eventBus.addListener(EventPriority.LOW) { event: BuildCreativeModeTabContentsEvent ->
-            for (addon: RagiumAddon in addons) {
-                addon.buildCreativeTabs(RagiumAddon.CreativeTabHelper(event))
-            }
-        }
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
         container.registerConfig(ModConfig.Type.CLIENT, RagiumConfig.CLIENT_SPEC)
@@ -128,9 +108,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.enqueueWork(RagiumFluidContents::registerInteractions)
         event.enqueueWork(RagiumMaterialManager::gatherAttributes)
 
-        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
-            addon.onCommonSetup(event)
-        }
         RagiumAPI.LOGGER.info("Loaded common setup!")
     }
 
@@ -159,10 +136,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         registrar.playToClient(HTUpdateBlockEntityPacket.TYPE, HTUpdateBlockEntityPacket.STREAM_CODEC, HTPayloadHandlers::handleS2C)
         // Client -> Server
         registrar.playToServer(HTUpdateAccessConfigPayload.TYPE, HTUpdateAccessConfigPayload.STREAM_CODEC, HTPayloadHandlers::handleC2S)
-
-        for (addon: RagiumAddon in RagiumPlatform.INSTANCE.getAddons()) {
-            addon.registerPayloads(registrar)
-        }
 
         RagiumAPI.LOGGER.info("Registered packets!")
     }

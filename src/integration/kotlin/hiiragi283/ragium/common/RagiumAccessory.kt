@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.integration
+package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.data.map.RagiumDataMaps

@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.client.text.RagiumClientTranslation
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -447,10 +447,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     //    Addon    //
 
     private fun delight() {
-        add(RagiumDelightAddon.RAGI_CHERRY_PIE, "らぎチェリーパイ")
-        add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "らぎチェリーのトーストタワー")
+        add(RagiumDelightContents.RAGI_CHERRY_PIE, "らぎチェリーパイ")
+        add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, "らぎチェリーのトーストタワー")
 
-        add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
+        add(RagiumDelightContents.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
     }
 
     private fun jade() {

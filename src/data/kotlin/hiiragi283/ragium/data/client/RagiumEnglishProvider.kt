@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.client.text.RagiumClientTranslation
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
+import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -444,10 +444,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     //    Addon    //
 
     private fun delight() {
-        add(RagiumDelightAddon.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
-        add(RagiumDelightAddon.RAGI_CHERRY_TOAST_BLOCK, "Ragi-Cherry Toast Tower")
+        add(RagiumDelightContents.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
+        add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, "Ragi-Cherry Toast Tower")
 
-        add(RagiumDelightAddon.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
+        add(RagiumDelightContents.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
     }
 
     private fun jade() {

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.integration
+package hiiragi283.ragium.common
 
 import com.almostreliable.unified.api.constant.RecipeConstants
 import com.almostreliable.unified.api.plugin.AlmostUnifiedNeoPlugin

@@ -9,11 +9,8 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.common.integration.RagiumCreateAddon
-import hiiragi283.ragium.common.integration.RagiumDelightAddon
-import hiiragi283.ragium.common.integration.RagiumKaleidoCookeryAddon
-import hiiragi283.ragium.common.integration.RagiumMekanismAddon
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
@@ -26,6 +23,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
 
     private fun registerItems() {
         val tools: Collection<HTDeferredItem<*>> = RagiumItems.TOOLS.values
+        val tools1: Collection<HTDeferredItem<*>> = RagiumIntegrationItems.TOOLS.values
 
         buildSet {
             // Ragium
@@ -40,16 +38,10 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.HUGE_DRUM_UPGRADE)
             removeAll(tools)
 
-            // Create
-            addAll(RagiumCreateAddon.ITEM_REGISTER.entries)
-            // Food
-            addAll(RagiumDelightAddon.ITEM_REGISTER.entries)
-            addAll(RagiumKaleidoCookeryAddon.ITEM_REGISTER.entries)
+            // Integration
+            addAll(RagiumIntegrationItems.REGISTER.entries)
 
-            removeAll(RagiumDelightAddon.KNIFE_MAP.values)
-            removeAll(RagiumKaleidoCookeryAddon.KNIFE_MAP.values)
-            // Mekanism
-            addAll(RagiumMekanismAddon.ITEM_REGISTER.entries)
+            removeAll(tools1)
         }.asSequence()
             .map(HTHolderLike::getId)
             .forEach(::basicItem)
@@ -72,8 +64,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             addAll(tools)
             add(RagiumItems.BLAST_CHARGE)
 
-            addAll(RagiumDelightAddon.KNIFE_MAP.values)
-            addAll(RagiumKaleidoCookeryAddon.KNIFE_MAP.values)
+            addAll(tools1)
         }.asSequence()
             .map(HTHolderLike::getId)
             .forEach(::handheldItem)

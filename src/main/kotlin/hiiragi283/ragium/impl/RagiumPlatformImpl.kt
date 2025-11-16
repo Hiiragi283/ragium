@@ -1,22 +1,20 @@
 package hiiragi283.ragium.impl
 
 import com.google.gson.JsonObject
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.addon.RagiumAddon
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.material.prefix.HTRegisterPrefixEvent
 import hiiragi283.ragium.api.recipe.HTMaterialRecipeManager
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.util.HTAddonHelper
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
@@ -35,29 +33,11 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.fml.ModList
+import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import java.util.function.Consumer
 
 class RagiumPlatformImpl : RagiumPlatform {
-    //    Addon    //
-
-    private lateinit var addonCache: List<RagiumAddon>
-
-    override fun getAddons(): List<RagiumAddon> {
-        if (!::addonCache.isInitialized) {
-            RagiumAPI.LOGGER.info("Collecting addons for Ragium...")
-            addonCache = HTAddonHelper
-                .collectInstances<RagiumAddon.Provider>()
-                .flatMap { it.getAddons(ModList.get()) }
-                .sortedBy(RagiumAddon::priority)
-                .onEach { addon: RagiumAddon ->
-                    RagiumAPI.LOGGER.info("Loaded addon from ${addon::class.qualifiedName}!")
-                }
-        }
-        return addonCache
-    }
-
     //    Material    //
 
     override fun getMaterialDefinitions(): Map<HTMaterialKey, HTMaterialDefinition> = RagiumMaterialManager.definitions
@@ -75,9 +55,7 @@ class RagiumPlatformImpl : RagiumPlatform {
                 }
                 CommonMaterialPrefixes.entries.forEach(consumer)
 
-                for (addon: RagiumAddon in getAddons()) {
-                    addon.bindMaterialPrefixes(consumer)
-                }
+                NeoForge.EVENT_BUS.post(HTRegisterPrefixEvent(this))
             }
         }
         return prefixMap[name]

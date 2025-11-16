@@ -15,13 +15,13 @@ import hiiragi283.ragium.api.function.IdToFunction
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.util.Ior
-import hiiragi283.ragium.common.integration.RagiumCreateAddon
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.setup.RagiumIntegrationItems
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -40,7 +40,7 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
             CommonMaterialPrefixes.INGOT to RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { (prefix: HTPrefixLike, key: HTMaterialKey) ->
             HTShapelessRecipeBuilder
-                .equipment(RagiumCreateAddon.getSandPaper(key))
+                .equipment(RagiumIntegrationItems.getSandPaper(key))
                 .addIngredient(Items.PAPER)
                 .addIngredient(prefix, key)
                 .save(output)

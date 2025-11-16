@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.integration.jade
+package hiiragi283.ragium.client.integration.jade.provider.base
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.serialization.codec.BiCodec
