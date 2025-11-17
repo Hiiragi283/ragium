@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.client.text.RagiumClientTranslation
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -311,9 +310,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun keyMapping() {
-        add(RagiumClientTranslation.KEY_CATEGORY, "Ragium")
+        add(RagiumCommonTranslation.KEY_CATEGORY, "Ragium")
 
-        add(RagiumClientTranslation.KEY_OPEN_UNIVERSAL_BUNDLE, "共有バンドルを開く")
+        add(RagiumCommonTranslation.KEY_OPEN_UNIVERSAL_BUNDLE, "共有バンドルを開く")
     }
 
     private fun modTags() {
@@ -376,6 +375,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.INVALID_PACKET_C2S, $$"クライアント側からの不正なパケットを受信しました: %1$s")
         add(RagiumTranslation.MISSING_REGISTRY, $$"不明なレジストリ: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"不明なキー: %1$s")
+        // API - GUI
+        add(RagiumTranslation.BURN_TIME, $$"燃焼時間: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
@@ -467,7 +468,5 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")
         add(HTBlockOwnerProvider, "ブロックの所有者")
-
-        add(RagiumClientTranslation.JADE_EXP_STORAGE, "経験値: %s")
     }
 }

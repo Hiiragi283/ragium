@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.renderer.block
 import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.api.block.attribute.HTDirectionalBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttribute
-import hiiragi283.ragium.api.extension.translate
+import hiiragi283.ragium.client.renderer.translate
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider

@@ -1,6 +1,6 @@
 @file:OnlyIn(Dist.CLIENT)
 
-package hiiragi283.ragium.api.extension
+package hiiragi283.ragium.client.renderer
 
 import com.mojang.blaze3d.vertex.PoseStack
 import net.minecraft.client.renderer.MultiBufferSource

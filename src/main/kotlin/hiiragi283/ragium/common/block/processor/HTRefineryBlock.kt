@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.processor
 
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
-import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.util.HTStackSlotHelper

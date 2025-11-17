@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.gui.component
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
@@ -43,7 +44,7 @@ class HTFluidTankWidget(
             HTFluidView::getStoredLevelAsFloat,
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
                 guiGraphics.blit(
-                    HTFluidWidget.TANK_ID,
+                    RagiumAPI.id("textures/gui/tank.png"),
                     bounds.x - 1,
                     bounds.y - 1,
                     0f,

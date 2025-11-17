@@ -91,6 +91,10 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     AMBROSIA("description", "ambrosia"),
     ICE_CREAM("description", "ice_cream"),
     RAGI_CHERRY("description", "ragi_cherry"),
+
+    // Key Mapping
+    KEY_CATEGORY("key", "category"),
+    KEY_OPEN_UNIVERSAL_BUNDLE("key", "open_universal_bundle"),
     ;
 
     override val translationKey: String = Util.makeDescriptionId(type, RagiumAPI.id(path.joinToString(separator = ".")))

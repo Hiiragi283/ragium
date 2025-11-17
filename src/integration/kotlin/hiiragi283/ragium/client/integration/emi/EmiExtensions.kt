@@ -2,15 +2,12 @@ package hiiragi283.ragium.client.integration.emi
 
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
-import dev.emi.emi.api.widget.Bounds
 import dev.emi.emi.api.widget.FillingArrowWidget
 import dev.emi.emi.api.widget.SlotWidget
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.gui.component.HTWidget
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -21,7 +18,6 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.client.integration.emi.widget.HTEmiWidget
 import hiiragi283.ragium.client.integration.emi.widget.HTTankWidget
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
@@ -127,10 +123,6 @@ fun createErrorStack(message: Component): EmiStack = createItemStack(Items.BARRI
 
 //    Widget    //
 
-fun HTBounds.toEmi(): Bounds = Bounds(this.x, this.y, this.width, this.height)
-
 fun WidgetHolder.addArrow(x: Int, y: Int): FillingArrowWidget = addFillingArrow(x, y, 2000)
 
 fun WidgetHolder.addTank(result: EmiIngredient?, x: Int, y: Int): SlotWidget = add(HTTankWidget(result, x, y).drawBack(false))
-
-fun WidgetHolder.addWidget(widget: HTWidget): HTEmiWidget = add(HTEmiWidget(widget))
