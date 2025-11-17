@@ -217,7 +217,11 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         builder.add(Tags.Blocks.BUDDING_BLOCKS, RagiumBlocks.BUDDING_AZURE)
 
         // WIP
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AUTO_SMITHING_TABLE)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.AUTO_STONECUTTER)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.ELECTRIC_FURNACE)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.NUCLEAR_REACTOR)
+        builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.OPEN_CRATE)
         builder.add(RagiumModTags.Blocks.WIP, RagiumBlocks.TELEPAD)
         builder.addTag(RagiumModTags.Blocks.WIP, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }

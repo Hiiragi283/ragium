@@ -309,6 +309,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         builder.add(RagiumModTags.Items.WIP, RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.BOTTLED_BEE)
         builder.add(RagiumModTags.Items.WIP, RagiumItems.DRILL)
+        builder.add(RagiumModTags.Items.WIP, RagiumItems.HUGE_DRUM_UPGRADE)
+        builder.add(RagiumModTags.Items.WIP, RagiumItems.LARGE_DRUM_UPGRADE)
+        builder.add(RagiumModTags.Items.WIP, RagiumItems.MEDIUM_DRUM_UPGRADE)
     }
 
     //    Integration    //

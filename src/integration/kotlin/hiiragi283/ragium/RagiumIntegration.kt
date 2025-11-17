@@ -77,7 +77,7 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
             RagiumMatterTypes.REGISTER.register(eventBus)
         }
     }
-    
+
     private fun register(event: RegisterEvent) {
         // Sub Entity Type Ingredient
         if (isLoaded(RagiumConst.EIO_BASE)) {
