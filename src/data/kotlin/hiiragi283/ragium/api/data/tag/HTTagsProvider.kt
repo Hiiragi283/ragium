@@ -3,12 +3,14 @@ package hiiragi283.ragium.api.data.tag
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.collection.buildMultiMap
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.RegistryKey
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.TagEntry
 import net.minecraft.tags.TagKey
-import kotlin.collections.forEach
+import java.util.function.Function
 
 /**
  * [HTTagBuilder]に基づいた[TagsProvider]の拡張クラス
@@ -31,8 +33,9 @@ abstract class HTTagsProvider<T : Any>(registryKey: RegistryKey<T>, context: HTD
 
     @Suppress("DEPRECATION")
     final override fun addTags(provider: HolderLookup.Provider) {
-        buildMultiMap { HTTagBuilder(this@HTTagsProvider.registryKey, this).apply(::addTags) }
-            .map
+        buildMultiMap {
+            addTagsInternal { tagKey: TagKey<T> -> HTTagBuilder(registryKey) { this.put(tagKey, it) } }
+        }.map
             .forEach { (tagKey: TagKey<T>, entries: Collection<TagEntry>) ->
                 entries
                     .sortedWith(COMPARATOR)
@@ -42,10 +45,22 @@ abstract class HTTagsProvider<T : Any>(registryKey: RegistryKey<T>, context: HTD
     }
 
     /**
-     * 指定された[builder]にタグを登録します。
+     * タグを登録します。
      */
-    protected abstract fun addTags(builder: HTTagBuilder<T>)
+    protected abstract fun addTagsInternal(factory: BuilderFactory<T>)
 
-    @Deprecated("Use `HTTagBuilder` instead")
+    protected fun addTags(factory: BuilderFactory<T>, parent: TagKey<T>, child: TagKey<T>): HTTagBuilder<T> {
+        factory.apply(parent).addTag(child)
+        return factory.apply(child)
+    }
+
+    protected fun addMaterial(factory: BuilderFactory<T>, prefix: HTPrefixLike, material: HTMaterialLike): HTTagBuilder<T> =
+        addTags(factory, prefix.createCommonTagKey(registryKey), prefix.createTagKey(registryKey, material))
+
+    @Deprecated("Use `addTagsInternal(HolderLookup.Provider, TagKey<T>)` instead")
     override fun tag(tag: TagKey<T>): TagAppender<T> = super.tag(tag)
+
+    //    Factory    //
+
+    fun interface BuilderFactory<T : Any> : Function<TagKey<T>, HTTagBuilder<T>>
 }
