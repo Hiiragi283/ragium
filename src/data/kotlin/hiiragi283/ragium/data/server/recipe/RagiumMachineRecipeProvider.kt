@@ -239,6 +239,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.EXP_COLLECTOR, RagiumBlocks.DEVICE_CASING)
             .addIngredient(Items.HOPPER)
             .save(output)
+
+        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.FISHER, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.TOOLS_FISHING_ROD)
+            .save(output)
         // Elite
         createComponentUpgrade(HTComponentTier.ELITE, RagiumBlocks.DIM_ANCHOR, RagiumBlocks.DEVICE_CASING)
             .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)

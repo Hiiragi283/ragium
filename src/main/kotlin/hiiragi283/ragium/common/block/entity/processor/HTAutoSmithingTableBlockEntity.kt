@@ -44,6 +44,8 @@ class HTAutoSmithingTableBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot = singleOutput(builder, listener)
     }
 
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
+
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SmithingRecipeInput = SmithingRecipeInput(
         inputSlots[0].getItemStack(),
         inputSlots[1].getItemStack(),

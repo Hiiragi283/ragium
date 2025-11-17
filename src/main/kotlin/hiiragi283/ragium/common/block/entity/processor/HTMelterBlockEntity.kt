@@ -53,6 +53,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputTank.getNeeded() > 0
+
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputFluidRecipe): Boolean =
         outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null

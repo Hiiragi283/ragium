@@ -38,6 +38,9 @@ class HTAutoStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlots = multiOutputs(builder, listener)
     }
 
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
+        outputSlots.any { slot: HTItemStackSlot -> slot.getNeeded() > 0 }
+
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): StonecutterRecipe? {
         // 指定されたアイテムと同じものを出力するレシピだけを選ぶ
         var matchedRecipe: StonecutterRecipe? = null

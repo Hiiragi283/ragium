@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTExpCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTFisherBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
@@ -235,6 +236,12 @@ object RagiumBlockEntityTypes {
         ::HTExpCollectorBlockEntity,
     )
 
+    @JvmField
+    val FISHER: HTDeferredBlockEntityType<HTFisherBlockEntity> = registerTick(
+        "fisher",
+        ::HTFisherBlockEntity,
+    )
+
     // Elite
     @JvmField
     val DIM_ANCHOR: HTDeferredBlockEntityType<HTDimensionalAnchorBlockEntity> = REGISTER.registerType(
@@ -341,6 +348,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, WATER_COLLECTOR.get())
 
         registerHandler(event, EXP_COLLECTOR.get())
+        registerHandler(event, FISHER.get())
 
         registerHandler(event, ENI.get())
 

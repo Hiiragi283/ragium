@@ -41,7 +41,17 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     SIMULATOR("description", "simulator"),
 
     // Blocks - Devices
+    ITEM_BUFFER("description", "item_buffer"),
+    WATER_COLLECTOR("description", "water_collector"),
+
+    EXP_COLLECTOR("description", "exp_collector"),
+    FISHER("description", "fisher"),
+
+    DIM_ANCHOR("description", "dimensional_anchor"),
+    ENI("description", "energy_network_interface"),
+
     MOB_CAPTURER("description", "mob_capturer"),
+
     CEU("description", "creative_energy_unit"),
 
     // Blocks - Storages

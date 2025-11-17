@@ -53,6 +53,8 @@ abstract class HTMultiOutputsBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOu
     lateinit var outputSlot: HTItemStackSlot
         protected set
 
+    final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
+
     final override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         val access: RegistryAccess = level.registryAccess()
         val bool1: Boolean =

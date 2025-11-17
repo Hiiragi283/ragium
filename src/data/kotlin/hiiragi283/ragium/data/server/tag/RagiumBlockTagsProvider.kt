@@ -108,6 +108,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.WATER_COLLECTOR)
 
             add(RagiumBlocks.EXP_COLLECTOR)
+            add(RagiumBlocks.FISHER)
 
             add(RagiumBlocks.DIM_ANCHOR)
             add(RagiumBlocks.ENI)

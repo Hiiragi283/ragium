@@ -213,14 +213,14 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.ITEM_BUFFER }
         .addMenu { RagiumMenuTypes.ITEM_BUFFER }
         .addTier(HTMachineTier.BASIC)
-        .build()
+        .build(RagiumCommonTranslation.ITEM_BUFFER)
 
     @JvmField
     val WATER_COLLECTOR: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.WATER_COLLECTOR }
         .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
         .addTier(HTMachineTier.BASIC)
-        .build()
+        .build(RagiumCommonTranslation.WATER_COLLECTOR)
 
     // Advanced
     @JvmField
@@ -228,27 +228,34 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.EXP_COLLECTOR }
         .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
         .addTier(HTMachineTier.ADVANCED)
-        .build()
+        .build(RagiumCommonTranslation.EXP_COLLECTOR)
+
+    @JvmField
+    val FISHER: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.FISHER }
+        .addMenu { RagiumMenuTypes.CAPTURER }
+        .addTier(HTMachineTier.ADVANCED)
+        .build(RagiumCommonTranslation.FISHER)
 
     // Elite
     @JvmField
     val DIM_ANCHOR: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.DIM_ANCHOR }
         .addTier(HTMachineTier.ELITE)
-        .build()
+        .build(RagiumCommonTranslation.DIM_ANCHOR)
 
     @JvmField
     val ENI: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.ENI }
         .addMenu { RagiumMenuTypes.ENERGY_NETWORK_ACCESS }
         .addTier(HTMachineTier.ELITE)
-        .build()
+        .build(RagiumCommonTranslation.ENI)
 
     // Ultimate
     @JvmField
     val MOB_CAPTURER: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.MOB_CAPTURER }
-        .addMenu { RagiumMenuTypes.MOB_CAPTURER }
+        .addMenu { RagiumMenuTypes.CAPTURER }
         .addTier(HTMachineTier.ULTIMATE)
         .build(RagiumCommonTranslation.MOB_CAPTURER)
 

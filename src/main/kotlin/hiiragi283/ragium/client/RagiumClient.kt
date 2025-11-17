@@ -252,7 +252,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.FUEL_GENERATOR, ::HTFuelGeneratorScreen)
         event.register(RagiumMenuTypes.ITEM_BUFFER, ::HTBlockEntityContainerScreen)
         event.register(RagiumMenuTypes.MELTER, HTSingleFluidProcessorScreen.Companion::melter)
-        event.register(RagiumMenuTypes.MOB_CAPTURER, ::HTBlockEntityContainerScreen)
+        event.register(RagiumMenuTypes.CAPTURER, ::HTBlockEntityContainerScreen)
         event.register(RagiumMenuTypes.PLANTER, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
         event.register(RagiumMenuTypes.PULVERIZER, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.REFINERY, ::HTRefineryScreen)

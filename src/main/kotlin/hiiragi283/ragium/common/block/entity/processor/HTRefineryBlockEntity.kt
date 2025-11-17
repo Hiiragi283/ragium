@@ -68,6 +68,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0 || outputTank.getNeeded() > 0
+
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
         HTItemWithFluidRecipeInput(catalystSlot, inputTank)
 

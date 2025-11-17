@@ -31,6 +31,8 @@ abstract class HTEnergizedProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockH
 
     final override fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(battery.currentEnergyPerTick * getRecipeTime(recipe))
 
+    protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
+
     final override fun gatherEnergy(level: ServerLevel, pos: BlockPos): Int = battery.consume()
 
     //    Cached    //
