@@ -23,22 +23,28 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
 
     // Error
     EMPTY_TAG_KEY("error", "empty.tag_key"),
-    INVALID_PACKET_S2C("error", "invalid_packet.s2c"),
-    INVALID_PACKET_C2S("error", "invalid_packet.c2s"),
+    INVALID_PACKET_S2C("error", "invalid_packet", "s2c"),
+    INVALID_PACKET_C2S("error", "invalid_packet", "c2s"),
     MISSING_REGISTRY("error", "missing_registry"),
     MISSING_KEY("error", "missing_key"),
 
     // GUI
     CAPACITY("gui", "capacity"),
-    CAPACITY_MB("gui", "capacity.mb"),
-    CAPACITY_FE("gui", "capacity.fe"),
+    CAPACITY_MB("gui", "capacity", "mb"),
+    CAPACITY_FE("gui", "capacity", "fe"),
 
     STORED("gui", "stored"),
-    STORED_MB("gui", "stored.mb"),
-    STORED_FE("gui", "stored.fe"),
+    STORED_MB("gui", "stored", "mb"),
+    STORED_FE("gui", "stored", "fe"),
 
     FRACTION("gui", "fraction"),
     PERCENTAGE("gui", "percentage"),
+    TICK("gui", "tick"),
+
+    PER_MB("gui", "per", "mb"),
+    PER_TICK("gui", "per", "tick"),
+
+    BURN_TIME("gui", "burn_tick"),
 
     // Item Description
     TOOLTIP_BLOCK_POS("tooltip", "block_pos"),

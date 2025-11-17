@@ -20,6 +20,7 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.castRecipe
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -54,6 +55,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
@@ -187,10 +189,14 @@ class RagiumEmiPlugin : EmiPlugin {
             combustionUsage,
         )
 
+        val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
         val itemRegistry: Registry<Item> = EmiPort.getItemRegistry()
 
         // Thermal Generator
-        val lavaConsumption: Int = RagiumDataMaps.INSTANCE.getThermalFuel(registryAccess, HTFluidContent.LAVA.toStack(1).fluidHolder)
+        val lavaFuelData: HTFluidFuelData = fluidRegistry.getData(
+            RagiumDataMaps.THERMAL_FUEL,
+            Registries.FLUID.createKey(HTFluidContent.LAVA.getId()),
+        ) ?: return
         addRecipes(
             registry,
             thermalCategory,
@@ -198,10 +204,10 @@ class RagiumEmiPlugin : EmiPlugin {
                 .getDataMap(NeoForgeDataMaps.FURNACE_FUELS)
                 .map { (key: ResourceKey<Item>, fuel: FurnaceFuel) ->
                     val lavaInput: EmiStack = HTFluidContent.LAVA.toFluidEmi(fuel.burnTime / 10)
-                    val lavaLevel: Float = lavaInput.amount / lavaConsumption.toFloat()
                     key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/") to
                         HTEmiFluidFuelData(
-                            (thermalUsage * lavaLevel).toInt(),
+                            thermalUsage,
+                            lavaFuelData,
                             itemRegistry.getOrThrow(key).toEmi(),
                             lavaInput,
                         )
@@ -209,11 +215,20 @@ class RagiumEmiPlugin : EmiPlugin {
             ::HTFuelGeneratorEmiRecipe,
         )
         // Combustion Generator
+        val crudeOilFuelData: HTFluidFuelData = fluidRegistry.getData(
+            RagiumDataMaps.THERMAL_FUEL,
+            Registries.FLUID.createKey(RagiumFluidContents.CRUDE_OIL.getId()),
+        ) ?: return
         registry.addRecipeSafe(RagiumDataMaps.THERMAL_FUEL.id().withPrefix("/")) { id: ResourceLocation ->
             HTFuelGeneratorEmiRecipe(
                 combustionCategory,
                 id,
-                HTEmiFluidFuelData(combustionUsage, ItemTags.COALS.toEmi(), RagiumFluidContents.CRUDE_OIL.toFluidEmi(100)),
+                HTEmiFluidFuelData(
+                    combustionUsage,
+                    crudeOilFuelData,
+                    ItemTags.COALS.toEmi(),
+                    RagiumFluidContents.CRUDE_OIL.toFluidEmi(crudeOilFuelData.amount),
+                ),
             )
         }
     }
@@ -355,6 +370,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     key.location().withPrefix("/${dataMapType.id().path}/") to
                         HTEmiFluidFuelData(
                             energyRate,
+                            fuelData,
                             EmiStack.EMPTY,
                             fluidRegistry.getOrThrow(key).let(EmiStack::of).setAmount(fuelData.amount.toLong()),
                         )

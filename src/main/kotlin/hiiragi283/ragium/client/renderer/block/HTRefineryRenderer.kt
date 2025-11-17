@@ -2,10 +2,10 @@ package hiiragi283.ragium.client.renderer.block
 
 import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.api.block.attribute.getAttributeFront
-import hiiragi283.ragium.api.extension.translate
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.client.renderer.translate
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource

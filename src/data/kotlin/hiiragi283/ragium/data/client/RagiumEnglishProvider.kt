@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.client.text.RagiumClientTranslation
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -310,9 +309,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun keyMapping() {
-        add(RagiumClientTranslation.KEY_CATEGORY, "Ragium")
+        add(RagiumCommonTranslation.KEY_CATEGORY, "Ragium")
 
-        add(RagiumClientTranslation.KEY_OPEN_UNIVERSAL_BUNDLE, "Open Universal Bundle")
+        add(RagiumCommonTranslation.KEY_OPEN_UNIVERSAL_BUNDLE, "Open Universal Bundle")
     }
 
     private fun modTags() {
@@ -375,6 +374,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.INVALID_PACKET_C2S, $$"Invalid packet received from client side: %1$s")
         add(RagiumTranslation.MISSING_REGISTRY, $$"Missing registry: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"Missing key: %1$s")
+        // API - GUI
+        add(RagiumTranslation.BURN_TIME, $$"Burn Time: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
@@ -467,7 +468,5 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")
         add(HTBlockOwnerProvider, "Block Owner")
-
-        add(RagiumClientTranslation.JADE_EXP_STORAGE, "Experience: %s")
     }
 }

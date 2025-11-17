@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.block.attribute.HTMenuBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttribute
 import hiiragi283.ragium.api.block.attribute.hasAttribute
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
-import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes

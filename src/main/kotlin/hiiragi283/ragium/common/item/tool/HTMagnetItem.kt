@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.getRangedAABB
+import hiiragi283.ragium.api.world.getRangedAABB
 import hiiragi283.ragium.common.item.base.HTActivatableItem
 import hiiragi283.ragium.common.util.HTItemHelper
 import net.minecraft.server.level.ServerLevel

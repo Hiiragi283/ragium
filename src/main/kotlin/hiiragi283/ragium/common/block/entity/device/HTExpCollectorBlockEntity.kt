@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.extension.getRangedAABB
+import hiiragi283.ragium.api.world.getRangedAABB
 import hiiragi283.ragium.common.storage.fluid.tank.HTExpOrbTank
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper

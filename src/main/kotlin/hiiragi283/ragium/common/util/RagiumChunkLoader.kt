@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.extension.getTypedBlockEntity
+import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
