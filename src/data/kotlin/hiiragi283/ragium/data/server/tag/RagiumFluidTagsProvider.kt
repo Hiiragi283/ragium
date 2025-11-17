@@ -7,31 +7,30 @@ import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.registries.Registries
-import net.minecraft.tags.TagKey
 import net.minecraft.world.level.material.Fluid
 
 class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>(Registries.FLUID, context) {
-    override fun addTags(builder: HTTagBuilder<Fluid>) {
-        contents(builder)
-        category(builder)
+    override fun addTagsInternal(factory: BuilderFactory<Fluid>) {
+        contents(factory)
+        category(factory)
     }
 
-    private fun contents(builder: HTTagBuilder<Fluid>) {
+    private fun contents(factory: BuilderFactory<Fluid>) {
         // Common Tag
         for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            builder.addContent(content.commonTag, content)
+            factory.apply(content.commonTag).addContent(content)
         }
     }
 
-    private fun category(builder: HTTagBuilder<Fluid>) {
+    private fun category(factory: BuilderFactory<Fluid>) {
     }
 
     //    Integrations    //
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Fluid>.addContent(tagKey: TagKey<Fluid>, content: HTFluidContent<*, *, *>) {
-        add(tagKey, HTHolderLike.fromFluid(content.getStill()))
-        add(tagKey, HTHolderLike.fromFluid(content.getFlow()))
+    private fun HTTagBuilder<Fluid>.addContent(content: HTFluidContent<*, *, *>) {
+        add(HTHolderLike.fromFluid(content.getStill()))
+        add(HTHolderLike.fromFluid(content.getFlow()))
     }
 }
