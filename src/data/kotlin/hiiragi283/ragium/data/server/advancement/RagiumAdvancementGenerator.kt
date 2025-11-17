@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -15,6 +14,7 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCriteriaTriggers
+import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.critereon.BlockPredicate
 import net.minecraft.advancements.critereon.ConsumeItemTrigger

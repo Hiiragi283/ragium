@@ -13,11 +13,11 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.block.HTCropBlock
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation

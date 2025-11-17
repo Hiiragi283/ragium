@@ -181,8 +181,9 @@ object RagiumIntegrationItems {
             insertAfter(items.toList())
         }
 
+        val key: ResourceKey<CreativeModeTab> = event.tabKey
         when {
-            RagiumCreativeTabs.INGREDIENTS.`is`(event.tabKey) -> {
+            RagiumCreativeTabs.INGREDIENTS.`is`(key) -> {
                 // Mekanism
                 if (RagiumIntegration.isLoaded(RagiumConst.MEKANISM)) {
                     for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
@@ -194,7 +195,7 @@ object RagiumIntegrationItems {
                     }
                 }
             }
-            RagiumCreativeTabs.ITEMS.`is`(event.tabKey) -> {
+            RagiumCreativeTabs.ITEMS.`is`(key) -> {
                 // Create
                 if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
                     insertAfter(
