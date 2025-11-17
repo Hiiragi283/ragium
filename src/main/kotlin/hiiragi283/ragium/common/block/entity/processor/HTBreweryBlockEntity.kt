@@ -56,6 +56,8 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot = singleOutput(builder, listener)
     }
 
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
+
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean {
         val amount: Int = FluidType.BUCKET_VOLUME
         val bool1: Boolean = inputTank.extract(amount, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount() == amount

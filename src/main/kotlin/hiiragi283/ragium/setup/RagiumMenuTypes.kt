@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
@@ -78,6 +78,9 @@ object RagiumMenuTypes {
     val BREWERY: DeferredBEMenu<HTBreweryBlockEntity> = registerBE("brewery")
 
     @JvmField
+    val CAPTURER: DeferredBEMenu<HTCapturerBlockEntity> = registerBE("capturer")
+
+    @JvmField
     val COMPRESSOR: DeferredBEMenu<HTSingleItemInputBlockEntity<*>> = registerBE("compressor")
 
     @JvmField
@@ -100,9 +103,6 @@ object RagiumMenuTypes {
 
     @JvmField
     val MELTER: DeferredBEMenu<HTMelterBlockEntity> = registerBE("melter")
-
-    @JvmField
-    val MOB_CAPTURER: DeferredBEMenu<HTMobCapturerBlockEntity> = registerBE("mob_capturer")
 
     @JvmField
     val PLANTER: DeferredBEMenu<HTPlanterBlockEntity> = registerBE("planter")

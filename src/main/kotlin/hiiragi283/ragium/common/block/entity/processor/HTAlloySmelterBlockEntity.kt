@@ -44,6 +44,8 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot = singleOutput(builder, listener)
     }
 
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
+
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput = HTMultiRecipeInput.fromSlots(inputSlots)
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTMultiItemsToItemRecipe): Boolean =

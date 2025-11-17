@@ -36,6 +36,9 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         outputSlots = multiOutputs(builder, listener)
     }
 
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
+        outputSlots.any { slot: HTItemStackSlot -> slot.getNeeded() > 0 }
+
     override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         // アウトプットに搬出できるか判定する
         for (stackIn: ImmutableItemStack in recipe.getPreviewItems(input, level.registryAccess())) {

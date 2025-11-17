@@ -55,6 +55,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             add(RagiumBlocks.ITEM_BUFFER)
 
             add(RagiumBlocks.EXP_COLLECTOR)
+            add(RagiumBlocks.FISHER)
 
             add(RagiumBlocks.DIM_ANCHOR)
             add(RagiumBlocks.ENI)

@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.Block
@@ -47,4 +48,6 @@ abstract class HTAbstractSmelterBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
             Items.SMOKER -> smokingCache
             else -> smeltingCache
         }
+
+    final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 }

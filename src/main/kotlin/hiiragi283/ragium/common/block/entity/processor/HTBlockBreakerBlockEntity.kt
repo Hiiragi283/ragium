@@ -46,6 +46,8 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = true
+
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): BlockPos? = blockState.getAttributeFront()?.let(pos::relative)
 
     override fun getMatchedRecipe(input: BlockPos, level: ServerLevel): MiningRecipe? {

@@ -155,6 +155,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.WATER_COLLECTOR, "水収集機")
 
         add(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
+        add(RagiumBlocks.FISHER, "自動釣り機")
 
         add(RagiumBlocks.DIM_ANCHOR, "次元アンカー")
         add(RagiumBlocks.ENI, "E.N.I.")
@@ -414,8 +415,18 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.PLANTER, "種子や苗木から植物を成長さる機械です。")
         add(RagiumCommonTranslation.SIMULATOR, "ブロックやモブの行動を再現して資源を生産する機械です。")
 
-        add(RagiumCommonTranslation.MOB_CAPTURER, "周囲のモブをスポーンエッグに変換します。")
-        add(RagiumCommonTranslation.CEU, "クリエイティブ用のバッテリー。")
+        add(RagiumCommonTranslation.ITEM_BUFFER, "周囲のアイテムを収集する設備です。")
+        add(RagiumCommonTranslation.WATER_COLLECTOR, "周囲の水源やバイオームに応じて水を生産する設備です。")
+
+        add(RagiumCommonTranslation.EXP_COLLECTOR, "周囲の経験値オーブを収集し，液体に変換する設備です。")
+        add(RagiumCommonTranslation.FISHER, "下にある3x3の水源から釣りを行う設備です。")
+
+        add(RagiumCommonTranslation.DIM_ANCHOR, "設置されたチャンクを強制的に読み込む設備です。")
+        add(RagiumCommonTranslation.ENI, "エネルギーネットワークにアクセスする設備です。")
+
+        add(RagiumCommonTranslation.MOB_CAPTURER, "周囲のモブを異質な卵に捕まえる設備です。")
+
+        add(RagiumCommonTranslation.CEU, "無制限にエネルギーを供給する設備です。")
 
         add(RagiumCommonTranslation.CRATE, "1種類のアイテムを保管するストレージです。")
         add(RagiumCommonTranslation.OPEN_CRATE, "搬入されたアイテムを真下に落とすストレージです。")

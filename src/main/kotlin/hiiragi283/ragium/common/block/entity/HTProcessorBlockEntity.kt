@@ -38,6 +38,8 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         }
 
     final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+        // アウトプットが埋まっていないか判定する
+        if (!shouldCheckRecipe(level, pos)) return false
         // インプットに一致するレシピを探索する
         val input: INPUT = createRecipeInput(level, pos) ?: return false
         val recipe: RECIPE = getMatchedRecipe(input, level) ?: return false
@@ -52,7 +54,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         }
         return when {
             usedEnergy < requiredEnergy -> false
-            // レシピを正常に扱えるか判定する
+            // アウトプットに完成品を搬出できるか判定する
             canProgressRecipe(level, input, recipe) -> {
                 usedEnergy -= requiredEnergy
                 // レシピを実行する
@@ -64,18 +66,44 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         }
     }
 
+    /**
+     * 指定された引数から，レシピチェックを行うかどうかを判定します。
+     * @return レシピチェックを行う場合は`true`, それ以外の場合は`false`
+     */
+    protected abstract fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean
+
+    /**
+     * 指定された引数から，入力を取得します。
+     * @return 入力を生成できない場合は`null`
+     */
     protected abstract fun createRecipeInput(level: ServerLevel, pos: BlockPos): INPUT?
 
+    /**
+     * 指定された[input]と[level]に一致するレシピを取得します。
+     * @return 一致するレシピがない場合は`null`
+     */
     protected abstract fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE?
 
+    /**
+     * 指定された[recipe]から，レシピに必要なエネルギー量を取得します。
+     */
     protected abstract fun getRequiredEnergy(recipe: RECIPE): Int
 
-    protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
-
+    /**
+     * 指定された引数から，処理に必要なエネルギーを供給します。
+     * @return 供給されるエネルギー
+     */
     protected abstract fun gatherEnergy(level: ServerLevel, pos: BlockPos): Int
 
+    /**
+     * 指定された引数から，レシピ処理を完了できるかどうか判定します。
+     * @return 完了できる場合は`true`, それ以外の場合は`false`
+     */
     protected abstract fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean
 
+    /**
+     * 指定された引数から，レシピ処理を実行します。
+     */
     protected abstract fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,

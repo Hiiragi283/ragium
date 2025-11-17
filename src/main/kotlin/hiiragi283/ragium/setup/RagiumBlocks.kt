@@ -544,6 +544,10 @@ object RagiumBlocks {
     val EXP_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("exp_collector", RagiumBlockTypes.EXP_COLLECTOR, machineProperty())
 
+    @JvmField
+    val FISHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("fisher", RagiumBlockTypes.FISHER, machineProperty())
+
     // Elite
     @JvmField
     val DIM_ANCHOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =

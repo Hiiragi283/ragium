@@ -164,6 +164,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
 
         add(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
+        add(RagiumBlocks.FISHER, "Fisher")
 
         add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
         add(RagiumBlocks.ENI, "E.N.I.")
@@ -413,6 +414,19 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.MULTI_SMELTER, "A machine which smelts items simultaneously.")
         add(RagiumCommonTranslation.PLANTER, "A machine which grows plant from seeds or sapling.")
         add(RagiumCommonTranslation.SIMULATOR, "A machine which simulates behavior of blocks or mobs to generate resources.")
+
+        add(RagiumCommonTranslation.ITEM_BUFFER, "A device which collects items around.")
+        add(RagiumCommonTranslation.WATER_COLLECTOR, "A device which generates Water from surrounded sources or biomes.")
+
+        add(RagiumCommonTranslation.EXP_COLLECTOR, "A device which collects Experience Orbs and converts into liquid.")
+        add(RagiumCommonTranslation.FISHER, "A device which do fishing from below 3x3 water sources.")
+
+        add(RagiumCommonTranslation.DIM_ANCHOR, "A device which forces to load chunk placed in.")
+        add(RagiumCommonTranslation.ENI, "A device which enables to access Energy Network.")
+
+        add(RagiumCommonTranslation.MOB_CAPTURER, "A device which captures mobs into Eldritch Egg.")
+
+        add(RagiumCommonTranslation.CEU, "A device which provides unlimited amount of energy.")
 
         add(RagiumCommonTranslation.CRATE, "A storage which stores one type of item.")
         add(RagiumCommonTranslation.OPEN_CRATE, "A storage which drops inserted items below.")
