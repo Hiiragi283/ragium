@@ -50,6 +50,12 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .addResult(resultHelper.item(ModItems.STRAW.get()), 0.5f)
             .save(output)
 
+        // Crops
+        cropAndSeed(ModItems.CABBAGE_SEEDS.get(), ModItems.CABBAGE.get())
+        cropAndCrop(ModItems.ONION.get())
+        cropAndSeed(ModItems.RICE.get(), ModItems.RICE_PANICLE.get(), 500)
+        cropAndSeed(ModItems.TOMATO_SEEDS.get(), ModItems.TOMATO.get())
+
         knife()
         cherry()
         cake()

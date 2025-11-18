@@ -171,7 +171,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     //    Mixing    //
-    
+
     @JvmStatic
     private fun mixing() {
         // Water + Lava -> Obsidian
@@ -181,10 +181,10 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fluidCreator.lava(1000))
             .setResult(resultHelper.item(Items.OBSIDIAN))
             .save(output)
-        
+
         nitro()
     }
-    
+
     @JvmStatic
     private fun nitro() {
         // Sulfur + Water -> Sulfuric Acid
@@ -215,13 +215,14 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fluidCreator.fromContent(RagiumFluidContents.MIXTURE_ACID, 1000))
             .setResult(resultHelper.item(RagiumItems.NITROPOWDER))
             .save(output)
-        
+
         // Nitropowder -> Gunpowder
-        HTShapelessRecipeBuilder.misc(Items.GUNPOWDER, 4)
+        HTShapelessRecipeBuilder
+            .misc(Items.GUNPOWDER, 4)
             .addIngredient(RagiumItems.NITROPOWDER)
             .save(output)
     }
-    
+
     //    Refining    //
 
     @JvmStatic
@@ -384,7 +385,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
             .save(output)
     }
-    
+
     //    Extensions    //
 
     @JvmStatic

@@ -122,7 +122,7 @@ object RagiumItems {
     // Oil
     @JvmField
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
-    
+
     // Explosives
     @JvmField
     val NITROPOWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("nitropowder")
