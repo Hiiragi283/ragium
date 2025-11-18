@@ -227,6 +227,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
+
+        addFluid(RagiumFluidContents.NITRIC_ACID, "Nitric Acid")
+        addFluid(RagiumFluidContents.SULFURIC_ACID, "Sulfuric Acid")
+        addFluid(RagiumFluidContents.MIXTURE_ACID, "Mixture Acid")
     }
 
     private fun item() {
@@ -236,6 +240,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
+        add(RagiumItems.NITROPOWDER, "Nitropowder")
         add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")

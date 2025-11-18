@@ -204,8 +204,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .equipment(RagiumItems.BLAST_CHARGE, 8)
             .hollow8()
-            .define('A', Tags.Items.GUNPOWDERS)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
+            .define('A', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.CRIMSON_CRYSTAL)
+            .define('B', Items.PAPER)
             .save(output)
 
         save(
