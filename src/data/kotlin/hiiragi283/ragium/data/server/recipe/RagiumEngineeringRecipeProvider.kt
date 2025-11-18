@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -15,17 +14,13 @@ import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.crafting.Ingredient
@@ -34,51 +29,6 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
-        // Plastic Plate
-        HTItemToObjRecipeBuilder
-            .compressing(
-                itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN),
-                resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC),
-            ).save(output)
-        // Synthetic Fiber / Leather
-        mapOf(
-            RagiumItems.SYNTHETIC_FIBER to Tags.Items.STRINGS,
-            RagiumItems.SYNTHETIC_LEATHER to Tags.Items.LEATHERS,
-        ).forEach { (result: ItemLike, parent: TagKey<Item>) ->
-            HTShapelessRecipeBuilder
-                .misc(result, 2)
-                .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
-                .addIngredient(parent)
-                .savePrefixed(output, "2x_")
-
-            HTShapedRecipeBuilder
-                .misc(result, 9)
-                .hollow8()
-                .define('A', RagiumModTags.Items.POLYMER_RESIN)
-                .define('B', parent)
-                .savePrefixed(output, "9x_")
-        }
-        // Synthetic Book
-        HTShapelessRecipeBuilder
-            .misc(Items.BOOK)
-            .addIngredients(Items.PAPER, count = 3)
-            .addIngredient(RagiumItems.SYNTHETIC_LEATHER)
-            .saveSuffixed(output, "_from_synthetic")
-        // Blaze Rod
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(Items.BLAZE_ROD),
-                itemCreator.fromItem(Items.BLAZE_POWDER, 4),
-                itemCreator.fromTagKey(Tags.Items.RODS_WOODEN),
-            ).save(output)
-        // Breeze Rod
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(Items.BREEZE_ROD),
-                itemCreator.fromItem(Items.WIND_CHARGE, 6),
-                itemCreator.fromTagKey(Tags.Items.RODS_WOODEN),
-            ).save(output)
-
         // Gravity-Unit
         val gravityUnit: HTSimpleDeferredItem = RagiumItems.GRAVITATIONAL_UNIT
         HTShapedRecipeBuilder

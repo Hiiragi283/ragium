@@ -213,6 +213,10 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
         event.liquid(RagiumFluidContents.SAP, Color(0x996633))
 
+        event.liquid(RagiumFluidContents.SULFURIC_ACID, Color(0xff3300))
+        event.liquid(RagiumFluidContents.NITRIC_ACID, Color(0xcc99ff))
+        event.liquid(RagiumFluidContents.MIXTURE_ACID, Color(0xcc6600))
+
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val color = Color(data.color)
             // molten
