@@ -22,7 +22,6 @@ import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
-import hiiragi283.ragium.common.item.HTCatalystItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
@@ -123,6 +122,10 @@ object RagiumItems {
     // Oil
     @JvmField
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
+    
+    // Explosives
+    @JvmField
+    val NITROPOWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("nitropowder")
 
     // Nuclear Fuel
     @JvmField
@@ -178,6 +181,8 @@ object RagiumItems {
             RagiumMaterialKeys.RAGINITE,
             RagiumMaterialKeys.AZURE,
             RagiumMaterialKeys.RAGI_CRYSTAL,
+            RagiumMaterialKeys.CRIMSON_CRYSTAL,
+            RagiumMaterialKeys.WARPED_CRYSTAL,
             RagiumMaterialKeys.ELDRITCH_PEARL,
         ).forEach { register(CommonMaterialPrefixes.DUST, it.asMaterialKey(), "${it.asMaterialName()}_dust") }
         register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "sawdust")
@@ -468,7 +473,7 @@ object RagiumItems {
         CommonMaterialPrefixes.GEM,
         CommonMaterialPrefixes.INGOT,
     ).associate { prefixes: CommonMaterialPrefixes ->
-        prefixes.asMaterialPrefix() to REGISTER.registerItem("${prefixes.asPrefixName()}_mold", ::HTCatalystItem)
+        prefixes.asMaterialPrefix() to REGISTER.registerSimpleItem("${prefixes.asPrefixName()}_mold")
     }
 
     @JvmStatic
@@ -476,7 +481,7 @@ object RagiumItems {
         MOLDS[prefix.asMaterialPrefix()] ?: error("Unknown mold for ${prefix.asPrefixName()}")
 
     @JvmField
-    val POLYMER_CATALYST: HTSimpleDeferredItem = REGISTER.registerItem("polymer_catalyst", ::HTCatalystItem)
+    val POLYMER_CATALYST: HTSimpleDeferredItem = REGISTER.registerSimpleItem("polymer_catalyst")
 
     // LED
     @JvmField

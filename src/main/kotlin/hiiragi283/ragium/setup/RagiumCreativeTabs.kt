@@ -64,6 +64,8 @@ object RagiumCreativeTabs {
 
         output.accept(RagiumItems.TAR)
 
+        output.accept(RagiumItems.NITROPOWDER)
+
         output.accept(RagiumItems.POTATO_SPROUTS)
         output.accept(RagiumItems.GREEN_CAKE)
         output.accept(RagiumItems.GREEN_CAKE_DUST)
