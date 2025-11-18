@@ -29,6 +29,11 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
                 resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 8 * 20),
             ).saveSuffixed(output, "_from_solidified_aa")
 
+        // Crops
+        cropAndSeed(ActuallyItems.CANOLA_SEEDS, ActuallyItems.CANOLA)
+        cropAndSeed(ActuallyItems.COFFEE_BEANS, ActuallyItems.COFFEE_BEANS)
+        cropAndSeed(ActuallyItems.RICE_SEEDS, ActuallyItems.RICE)
+
         canola()
     }
 

@@ -4,6 +4,7 @@ import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.api.crafting.IngredientWithSize
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles
 import blusunrize.immersiveengineering.common.register.IEBlocks
+import blusunrize.immersiveengineering.common.register.IEItems
 import blusunrize.immersiveengineering.data.recipes.builder.AlloyRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.ArcFurnaceRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.BaseHelpers
@@ -49,6 +50,8 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
             .addIngredient(fluidCreator.water(1000))
             .setResult(resultHelper.fluid(IETags.fluidRedstoneAcid, 1000))
             .save(output)
+        // Hemp Fiber
+        cropAndSeed(IEItems.Misc.HEMP_SEEDS, IEItems.Ingredients.HEMP_FIBER)
 
         alloy()
         crush()
