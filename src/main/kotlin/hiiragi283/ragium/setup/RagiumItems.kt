@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
@@ -87,8 +88,13 @@ object RagiumItems {
     @JvmStatic
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias("meat_ingot", "raw_meat_ingot")
+
         REGISTER.addAlias("wrench", "ragi_alloy_hammer")
+
         REGISTER.addAlias("advanced_circuit_board", "circuit_board")
+
+        REGISTER.addAlias(RagiumAPI.id("blackstone_dust"), vanillaId("blackstone"))
+        REGISTER.addAlias(RagiumAPI.id("obsidian_dust"), vanillaId("obsidian"))
 
         REGISTER.register(eventBus)
 
@@ -171,19 +177,24 @@ object RagiumItems {
             VanillaMaterialKeys.ECHO,
             // Vanilla - Other
             VanillaMaterialKeys.COAL,
-            VanillaMaterialKeys.BLACKSTONE,
-            VanillaMaterialKeys.OBSIDIAN,
             // Common
             CommonMaterialKeys.Gems.CINNABAR,
             CommonMaterialKeys.Gems.SALTPETER,
             CommonMaterialKeys.Gems.SULFUR,
-            // Ragium
+            // Ragium - Gem
             RagiumMaterialKeys.RAGINITE,
             RagiumMaterialKeys.AZURE,
             RagiumMaterialKeys.RAGI_CRYSTAL,
             RagiumMaterialKeys.CRIMSON_CRYSTAL,
             RagiumMaterialKeys.WARPED_CRYSTAL,
             RagiumMaterialKeys.ELDRITCH_PEARL,
+            // Ragium - Metal
+            RagiumMaterialKeys.RAGI_ALLOY,
+            RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
+            RagiumMaterialKeys.AZURE_STEEL,
+            RagiumMaterialKeys.DEEP_STEEL,
+            RagiumMaterialKeys.NIGHT_METAL,
+            RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { register(CommonMaterialPrefixes.DUST, it.asMaterialKey(), "${it.asMaterialName()}_dust") }
         register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "sawdust")
         register(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT, "minced_meat")
@@ -234,7 +245,7 @@ object RagiumItems {
     @JvmStatic
     fun getMaterial(prefix: HTPrefixLike, material: HTMaterialLike): HTSimpleDeferredItem =
         MATERIALS[prefix.asMaterialPrefix(), material.asMaterialKey()]
-            ?: error("Unknown $prefix item for ${material.asMaterialName()}")
+            ?: error("Unknown ${prefix.asPrefixName()} item for ${material.asMaterialName()}")
 
     @JvmStatic
     fun getDust(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.DUST, material)
