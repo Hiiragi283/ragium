@@ -274,6 +274,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             val material: HTMaterialKey = when (variant) {
                 HTChargeVariant.BLAST -> RagiumMaterialKeys.CRIMSON_CRYSTAL
                 HTChargeVariant.FISHING -> RagiumMaterialKeys.AZURE
+                HTChargeVariant.TELEPORT -> RagiumMaterialKeys.WARPED_CRYSTAL
             }
             HTShapedRecipeBuilder
                 .equipment(variant, 8)

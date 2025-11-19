@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
 import hiiragi283.ragium.common.entity.charge.HTFishingCharge
+import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTChargeVariant
@@ -37,15 +38,15 @@ object RagiumEntityTypes {
     val ELDRITCH_EGG: HTDeferredEntityType<HTThrownCaptureEgg> = registerThrowable("eldritch_egg", ::HTThrownCaptureEgg)
 
     @JvmField
-    val CHARGES: Map<HTChargeVariant, HTDeferredEntityType<out HTAbstractCharge>> = HTChargeVariant.entries.associateWith { variant: HTChargeVariant ->
-        registerThrowable(
-            "${variant.variantName()}_charge",
-            when (variant) {
-                HTChargeVariant.BLAST -> EntityType.EntityFactory(::HTBlastCharge)
-                HTChargeVariant.FISHING -> EntityType.EntityFactory(::HTFishingCharge)
-            },
-        )
-    }
+    val CHARGES: Map<HTChargeVariant, HTDeferredEntityType<out HTAbstractCharge>> =
+        HTChargeVariant.entries.associateWith { variant: HTChargeVariant ->
+            val factory: (EntityType<out HTAbstractCharge>, Level) -> HTAbstractCharge = when (variant) {
+                HTChargeVariant.BLAST -> ::HTBlastCharge
+                HTChargeVariant.FISHING -> ::HTFishingCharge
+                HTChargeVariant.TELEPORT -> ::HTTeleportCharge
+            }
+            registerThrowable("${variant.variantName()}_charge", factory)
+        }
 
     @JvmStatic
     private fun <T : Entity> registerThrowable(name: String, factory: EntityType.EntityFactory<T>): HTDeferredEntityType<T> =

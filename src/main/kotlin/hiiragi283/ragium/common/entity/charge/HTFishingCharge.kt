@@ -16,7 +16,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.minecraft.world.phys.HitResult
 
 class HTFishingCharge : HTAbstractCharge {
-    constructor(entityType: EntityType<out HTFishingCharge>, level: Level) : super(entityType, level)
+    constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
 
     constructor(level: Level, shooter: LivingEntity) : super(HTChargeVariant.FISHING, level, shooter)
 
