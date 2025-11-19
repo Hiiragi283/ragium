@@ -149,11 +149,14 @@ object RagiumFluidContents {
 
     //    Chemicals    //
 
-    // val NITRIC_ACID: HTSimpleFluidContent = register("nitric_acid", liquid())
+    @JvmField
+    val NITRIC_ACID: HTSimpleFluidContent = register("nitric_acid", liquid())
 
-    // val SULFURIC_ACID: HTSimpleFluidContent = register("sulfuric_acid", liquid())
+    @JvmField
+    val SULFURIC_ACID: HTSimpleFluidContent = register("sulfuric_acid", liquid())
 
-    // val MIXTURE_ACID: HTSimpleFluidContent = register("mixture_acid", liquid())
+    @JvmField
+    val MIXTURE_ACID: HTSimpleFluidContent = register("mixture_acid", liquid())
 
     //    Interaction    //
 

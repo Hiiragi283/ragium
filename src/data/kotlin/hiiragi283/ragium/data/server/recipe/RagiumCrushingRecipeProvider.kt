@@ -6,7 +6,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -85,9 +84,6 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(RagiumBlocks.WARPED_WART, 3),
             ).saveSuffixed(output, "_from_block")
         // Ragium
-        pulverizeFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
-        pulverizeFromData(VanillaMaterialRecipeData.OBSIDIAN_DUST)
-
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.GLOW_INK_SAC))
             .addResult(resultHelper.item(RagiumItems.LUMINOUS_PASTE))

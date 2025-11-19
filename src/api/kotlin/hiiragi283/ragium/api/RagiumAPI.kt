@@ -3,7 +3,7 @@ package hiiragi283.ragium.api
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.data.map.HTEquipAction
-import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
+import hiiragi283.ragium.api.data.map.HTMaterialRecipe
 import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
@@ -70,10 +70,10 @@ object RagiumAPI {
     val EQUIP_ACTION_TYPE_REGISTRY: Registry<MapCodec<out HTEquipAction>> = createRegistry(EQUIP_ACTION_TYPE_KEY)
 
     @JvmField
-    val MATERIAL_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTMaterialRecipeData>>> = createKey("material_recipe_type")
+    val MATERIAL_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTMaterialRecipe>>> = createKey("material_recipe_type")
 
     @JvmField
-    val MATERIAL_RECIPE_TYPE_REGISTRY: Registry<MapCodec<out HTMaterialRecipeData>> = createRegistry(MATERIAL_RECIPE_TYPE_KEY)
+    val MATERIAL_RECIPE_TYPE_REGISTRY: Registry<MapCodec<out HTMaterialRecipe>> = createRegistry(MATERIAL_RECIPE_TYPE_KEY)
 
     @JvmField
     val SLOT_TYPE_KEY: ResourceKey<Registry<StreamCodec<RegistryFriendlyByteBuf, out HTSyncablePayload>>> = createKey("syncable_slot_type")

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
+import hiiragi283.ragium.api.recipe.HTCustomRecipe
 import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.util.HTPotionHelper
@@ -11,16 +12,14 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.CraftingInput
-import net.minecraft.world.item.crafting.CustomRecipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
 
-class HTPotionDropRecipe(category: CraftingBookCategory) : CustomRecipe(category) {
-    override fun matches(input: CraftingInput, level: Level): Boolean {
+class HTPotionDropRecipe(category: CraftingBookCategory) : HTCustomRecipe(category) {
+    override fun matches(input: ImmutableRecipeInput, level: Level): Boolean {
         var drops = 0
         var bottles = 0
-        for (stack: ImmutableItemStack? in ImmutableRecipeInput(input)) {
+        for (stack: ImmutableItemStack? in input) {
             if (stack == null) continue
             if (stack.isOf(RagiumItems.POTION_DROP)) {
                 drops++
@@ -31,9 +30,9 @@ class HTPotionDropRecipe(category: CraftingBookCategory) : CustomRecipe(category
         return drops == 1 && bottles == 4
     }
 
-    override fun assemble(input: CraftingInput, registries: HolderLookup.Provider): ItemStack {
+    override fun assemble(input: ImmutableRecipeInput, registries: HolderLookup.Provider): ItemStack {
         var potion: PotionContents = PotionContents.EMPTY
-        for (stack: ImmutableItemStack? in ImmutableRecipeInput(input)) {
+        for (stack: ImmutableItemStack? in input) {
             if (stack == null) continue
             if (stack.has(DataComponents.POTION_CONTENTS)) {
                 potion = stack.get(DataComponents.POTION_CONTENTS)!!

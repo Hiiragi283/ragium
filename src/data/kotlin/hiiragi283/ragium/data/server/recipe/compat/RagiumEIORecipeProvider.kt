@@ -54,8 +54,6 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
         // Vanilla
         sagMillFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
         sagMillFromData(VanillaMaterialRecipeData.ECHO_DUST)
-
-        sagMillFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
         // Ragium
         sagMillFromData(RagiumMaterialRecipeData.RAGINITE_ORE)
 

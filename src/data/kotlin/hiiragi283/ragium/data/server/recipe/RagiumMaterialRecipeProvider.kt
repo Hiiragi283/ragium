@@ -185,12 +185,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 // Base -> Block
                 HTShapedRecipeBuilder
                     .building(storage)
-                    .apply {
-                        when (storageBlock) {
-                            HTStorageBlockMaterialAttribute.TWO_BY_TWO -> pattern("AA", "AB")
-                            HTStorageBlockMaterialAttribute.THREE_BY_THREE -> hollow8()
-                        }
-                    }.define('A', basePrefix, key)
+                    .pattern(storageBlock.pattern)
+                    .define('A', basePrefix, key)
                     .define('B', base)
                     .saveSuffixed(output, "_from_base")
             }

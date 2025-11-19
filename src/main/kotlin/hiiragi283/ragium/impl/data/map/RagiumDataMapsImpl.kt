@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
-import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
+import hiiragi283.ragium.api.data.map.HTMaterialRecipe
 import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.map.IdMapDataMap
@@ -54,10 +54,10 @@ class RagiumDataMapsImpl : RagiumDataMaps {
     override val subEntityIngredientType: DataMapType<Item, HTSubEntityTypeIngredient> =
         create("sub_entity_ingredient", Registries.ITEM, HTSubEntityTypeIngredient.CODEC)
 
-    override val materialRecipeType: IdMapDataMap<RecipeType<*>, HTMaterialRecipeData> =
+    override val materialRecipeType: IdMapDataMap<RecipeType<*>, HTMaterialRecipe> =
         AdvancedDataMapType
-            .builder(RagiumAPI.id("material_recipe"), Registries.RECIPE_TYPE, HTMaterialRecipeData.ID_MAP_CODEC)
-            .synced(HTMaterialRecipeData.ID_MAP_CODEC, false)
+            .builder(RagiumAPI.id("material_recipe"), Registries.RECIPE_TYPE, HTMaterialRecipe.ID_MAP_CODEC)
+            .synced(HTMaterialRecipe.ID_MAP_CODEC, false)
             .merger(DataMapValueMerger.mapMerger())
             .remover(MapDataMapValueRemover.codec())
             .build()

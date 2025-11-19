@@ -40,18 +40,4 @@ data object VanillaMaterialRecipeData {
 
         addOutput(RagiumItems.getDust(VanillaMaterialKeys.ECHO), CommonMaterialPrefixes.DUST, VanillaMaterialKeys.ECHO)
     }
-
-    @JvmField
-    val BLACKSTONE_DUST: HTRecipeData = HTRecipeData.create {
-        addInput(Items.BLACKSTONE)
-
-        addOutput(RagiumItems.getDust(VanillaMaterialKeys.BLACKSTONE), CommonMaterialPrefixes.DUST, VanillaMaterialKeys.BLACKSTONE, 4)
-    }
-
-    @JvmField
-    val OBSIDIAN_DUST: HTRecipeData = HTRecipeData.create {
-        addInput(Tags.Items.OBSIDIANS_NORMAL)
-
-        addOutput(RagiumItems.getDust(VanillaMaterialKeys.OBSIDIAN), CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4)
-    }
 }

@@ -94,13 +94,7 @@ object RagiumMaterialEvents {
             addName("Glowstone", "グロウストーン")
             add(HTStorageBlockMaterialAttribute.TWO_BY_TWO)
         }
-        event.modify(VanillaMaterialKeys.SOUL) {
-            addName("Soul", "ソウル")
-        }
 
-        event.modify(VanillaMaterialKeys.BLACKSTONE) {
-            addName("Blackstone", "ブラックストーン")
-        }
         event.modify(VanillaMaterialKeys.OBSIDIAN) {
             addName("Obsidian", "黒曜石")
         }

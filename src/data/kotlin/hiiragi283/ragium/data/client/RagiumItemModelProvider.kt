@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
@@ -32,7 +33,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.POTION_DROP)
 
-            remove(RagiumItems.BLAST_CHARGE)
+            removeAll(HTChargeVariant.entries.map(HTChargeVariant::getItem))
             remove(RagiumItems.MEDIUM_DRUM_UPGRADE)
             remove(RagiumItems.LARGE_DRUM_UPGRADE)
             remove(RagiumItems.HUGE_DRUM_UPGRADE)
@@ -62,7 +63,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         // Tools
         buildList {
             addAll(tools)
-            add(RagiumItems.BLAST_CHARGE)
+            addAll(HTChargeVariant.entries)
 
             addAll(tools1)
         }.asSequence()

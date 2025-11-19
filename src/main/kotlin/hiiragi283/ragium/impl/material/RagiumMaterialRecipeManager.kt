@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.collection.buildMultiMap
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.collection.immutableMultiMapOf
 import hiiragi283.ragium.api.collection.immutableTableOf
-import hiiragi283.ragium.api.data.map.HTMaterialRecipeData
+import hiiragi283.ragium.api.data.map.HTMaterialRecipe
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
@@ -84,12 +84,12 @@ object RagiumMaterialRecipeManager : HTMaterialRecipeManager {
         fluidCreator = RagiumPlatform.INSTANCE.createFluidCreator(registries)
 
         event.ifRegistry(Registries.RECIPE_TYPE) { registry: Registry<RecipeType<*>> ->
-            val keyMap: Map<ResourceKey<RecipeType<*>>, Map<ResourceLocation, HTMaterialRecipeData>> =
+            val keyMap: Map<ResourceKey<RecipeType<*>>, Map<ResourceLocation, HTMaterialRecipe>> =
                 registry.getDataMap(RagiumDataMaps.MATERIAL_RECIPE)
             recipeMultiMap = buildMultiMap {
-                for ((key: ResourceKey<RecipeType<*>>, map: Map<ResourceLocation, HTMaterialRecipeData>) in keyMap) {
+                for ((key: ResourceKey<RecipeType<*>>, map: Map<ResourceLocation, HTMaterialRecipe>) in keyMap) {
                     val recipeType: RecipeType<*> = registry.get(key) ?: continue
-                    for (data: HTMaterialRecipeData in map.values) {
+                    for (data: HTMaterialRecipe in map.values) {
                         val recipes: List<RecipeHolder<*>> = data.generateRecipes(registries, itemCreator, fluidCreator)
                         putAll(recipeType, recipes)
                     }

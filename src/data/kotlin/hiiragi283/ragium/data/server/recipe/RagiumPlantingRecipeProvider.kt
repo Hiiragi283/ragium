@@ -1,12 +1,10 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.Tags
 
 object RagiumPlantingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -17,82 +15,28 @@ object RagiumPlantingRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun crops() {
         // Beetroot
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromTagKey(Tags.Items.SEEDS_BEETROOT),
-                fluidCreator.water(125),
-            ).addResult(resultHelper.item(Items.BEETROOT, 3))
-            .addResult(resultHelper.item(Items.BEETROOT_SEEDS))
-            .save(output)
+        cropAndSeed(Items.BEETROOT, Items.BEETROOT)
         // Carrot
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromTagKey(Tags.Items.CROPS_CARROT),
-                fluidCreator.water(125),
-            ).addResult(resultHelper.item(Items.CARROT, 3))
-            .addResult(resultHelper.item(Items.CARROT), 1 / 3f)
-            .save(output)
+        cropAndCrop(Items.CARROT)
         // Potato
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromTagKey(Tags.Items.CROPS_POTATO),
-                fluidCreator.water(125),
-            ).addResult(resultHelper.item(Items.POTATO, 3))
-            .addResult(resultHelper.item(Items.POTATO), 1 / 3f)
-            .save(output)
+        cropAndCrop(Items.POTATO)
         // Wheat
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromTagKey(Tags.Items.SEEDS_WHEAT),
-                fluidCreator.water(125),
-            ).addResult(resultHelper.item(Items.WHEAT, 2))
-            .addResult(resultHelper.item(Items.WHEAT_SEEDS))
-            .save(output)
+        cropAndSeed(Items.WHEAT_SEEDS, Items.WHEAT)
 
         // Cactus
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromTagKey(Tags.Items.CROPS_CACTUS),
-                fluidCreator.water(25),
-            ).addResult(resultHelper.item(Items.CACTUS, 3))
-            .save(output)
+        cropAndCrop(Items.CACTUS, 25)
         // Sugar Cane
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromTagKey(Tags.Items.CROPS_SUGAR_CANE),
-                fluidCreator.water(250),
-            ).addResult(resultHelper.item(Items.SUGAR_CANE, 3))
-            .save(output)
+        cropAndCrop(Items.SUGAR_CANE)
 
         // Melon
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromTagKey(Tags.Items.SEEDS_MELON),
-                fluidCreator.water(125),
-            ).addResult(resultHelper.item(Items.MELON))
-            .save(output)
+        cropAndSeed(Items.MELON_SEEDS, Items.MELON)
         // Pumpkin
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromTagKey(Tags.Items.SEEDS_PUMPKIN),
-                fluidCreator.water(125),
-            ).addResult(resultHelper.item(Items.PUMPKIN))
-            .save(output)
+        cropAndSeed(Items.PUMPKIN_SEEDS, Items.PUMPKIN)
 
         // Sweet Berries
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromItem(Items.SWEET_BERRIES),
-                fluidCreator.water(125),
-            ).addResult(resultHelper.item(Items.SWEET_BERRIES, 3))
-            .save(output)
+        cropAndCrop(Items.SWEET_BERRIES)
         // Glow Berries
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromItem(Items.GLOW_BERRIES),
-                fluidCreator.water(125),
-            ).addResult(resultHelper.item(Items.GLOW_BERRIES, 3))
-            .save(output)
+        cropAndCrop(Items.GLOW_BERRIES)
 
         // Water Plants
         mapOf(
@@ -126,16 +70,5 @@ object RagiumPlantingRecipeProvider : HTRecipeProvider.Direct() {
         tree(Items.WARPED_FUNGUS, Items.WARPED_STEM, fluidCreator.lava(250))
 
         tree(Items.CHORUS_FLOWER, Items.CHORUS_FRUIT, fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 25))
-    }
-
-    @JvmStatic
-    private fun tree(sapling: ItemLike, log: ItemLike, fluid: HTFluidIngredient = fluidCreator.water(250)) {
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromItem(sapling),
-                fluid,
-            ).addResult(resultHelper.item(log, 6))
-            .addResult(resultHelper.item(sapling), 1 / 6f)
-            .save(output)
     }
 }

@@ -6,18 +6,18 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.HTUpgradeBlastChargeRecipe
+import hiiragi283.ragium.common.recipe.HTUpgradeChargeRecipe
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
@@ -76,7 +76,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         molten()
 
         forgeHammers()
-
+        charges()
         lootTickets()
     }
 
@@ -200,18 +200,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun molten() {
-        // Crimson
-        HTShapedRecipeBuilder
-            .equipment(RagiumItems.BLAST_CHARGE, 8)
-            .hollow8()
-            .define('A', Tags.Items.GUNPOWDERS)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
-            .save(output)
-
-        save(
-            RagiumAPI.id("shapeless/upgrade_blast_charge"),
-            HTUpgradeBlastChargeRecipe(CraftingBookCategory.EQUIPMENT),
-        )
         // Warped
         HTShapedRecipeBuilder
             .equipment(RagiumItems.TELEPORT_KEY)
@@ -242,7 +230,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         for (variant: HTColorMaterial in HTColorMaterial.entries) {
-            val bundle: ImmutableItemStack = HTUniversalBundleItem.createBundle(variant.dyeColor).toImmutable() ?: return
+            val bundle: ImmutableItemStack = HTUniversalBundleItem.createBundle(variant.dyeColor)
             HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, bundle)
                 .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
                 .addIngredient(variant.dyeTag)
@@ -273,6 +261,34 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY),
         ).addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
+    }
+
+    @JvmStatic
+    private fun charges() {
+        save(
+            RagiumAPI.id("shapeless/upgrade_charge"),
+            HTUpgradeChargeRecipe(CraftingBookCategory.EQUIPMENT),
+        )
+
+        for (variant: HTChargeVariant in HTChargeVariant.entries) {
+            val material: HTMaterialKey = when (variant) {
+                HTChargeVariant.FISHING -> RagiumMaterialKeys.AZURE
+                HTChargeVariant.BLAST -> RagiumMaterialKeys.CRIMSON_CRYSTAL
+                HTChargeVariant.TELEPORT -> RagiumMaterialKeys.WARPED_CRYSTAL
+                HTChargeVariant.CONFUSING -> RagiumMaterialKeys.ELDRITCH_PEARL
+            }
+            HTShapedRecipeBuilder
+                .equipment(variant, 3)
+                .pattern(
+                    " AA",
+                    " BA",
+                    "C  ",
+                ).hollow8()
+                .define('A', CommonMaterialPrefixes.GEM, material)
+                .define('B', Tags.Items.GUNPOWDERS)
+                .define('C', Items.PAPER)
+                .save(output)
+        }
     }
 
     @JvmStatic
@@ -350,7 +366,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, builderAction: HTShapelessRecipeBuilder.() -> Unit) {
-        val ticket: ImmutableItemStack = HTDefaultLootTickets.getLootTicket(lootTicket).toImmutable() ?: return
+        val ticket: ImmutableItemStack = HTDefaultLootTickets.getLootTicket(lootTicket)
         HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, ticket)
             .addIngredient(RagiumItems.LOOT_TICKET)
             .apply(builderAction)

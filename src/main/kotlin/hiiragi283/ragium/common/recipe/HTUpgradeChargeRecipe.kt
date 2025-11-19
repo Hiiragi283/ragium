@@ -1,26 +1,25 @@
 package hiiragi283.ragium.common.recipe
 
+import hiiragi283.ragium.api.recipe.HTCustomRecipe
 import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.setup.RagiumDataComponents
-import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.CraftingInput
-import net.minecraft.world.item.crafting.CustomRecipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.Tags
 
-class HTUpgradeBlastChargeRecipe(category: CraftingBookCategory) : CustomRecipe(category) {
-    override fun matches(input: CraftingInput, level: Level): Boolean {
+class HTUpgradeChargeRecipe(category: CraftingBookCategory) : HTCustomRecipe(category) {
+    override fun matches(input: ImmutableRecipeInput, level: Level): Boolean {
         var blastCharge = 0
         var gunpowder = 0
-        for (stack: ImmutableItemStack? in ImmutableRecipeInput(input)) {
+        for (stack: ImmutableItemStack? in input) {
             if (stack == null) continue
-            if (stack.isOf(RagiumItems.BLAST_CHARGE)) {
+            if (HTChargeVariant.entries.any { variant: HTChargeVariant -> variant.isOf(stack) }) {
                 blastCharge++
             } else if (stack.isOf(Tags.Items.GUNPOWDERS)) {
                 gunpowder++
@@ -29,10 +28,10 @@ class HTUpgradeBlastChargeRecipe(category: CraftingBookCategory) : CustomRecipe(
         return blastCharge == 1 && gunpowder > 1
     }
 
-    override fun assemble(input: CraftingInput, registries: HolderLookup.Provider): ItemStack {
+    override fun assemble(input: ImmutableRecipeInput, registries: HolderLookup.Provider): ItemStack {
         var blastCharge: ItemStack = ItemStack.EMPTY
         var gunpowder = 0
-        for (stack: ImmutableItemStack? in ImmutableRecipeInput(input)) {
+        for (stack: ImmutableItemStack? in input) {
             if (stack == null) continue
             if (stack.has(RagiumDataComponents.BLAST_POWER)) {
                 blastCharge = stack.unwrap()
@@ -49,5 +48,5 @@ class HTUpgradeBlastChargeRecipe(category: CraftingBookCategory) : CustomRecipe(
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width * height >= 2
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.UPGRADE_BLAST_CHARGE
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.UPGRADE_CHARGE
 }

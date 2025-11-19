@@ -9,7 +9,6 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDa
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDelightContents
@@ -29,7 +28,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         entity()
         fluid()
         item()
-        itemGroup()
         keyMapping()
         modTags()
         recipeType()
@@ -180,15 +178,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun entity() {
-        add(RagiumEntityTypes.BLAST_CHARGE, "ブラストチャージ")
         add(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
-
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            val value: String = tier.translate(type, "%s付きトロッコ")
-            add(tier.getEntityType(), value)
-            add(tier.getMinecartItem(), value)
-        }
-
         // add(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
         // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
         // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
@@ -218,6 +208,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
+
+        addFluid(RagiumFluidContents.NITRIC_ACID, "硝酸")
+        addFluid(RagiumFluidContents.SULFURIC_ACID, "硫酸")
+        addFluid(RagiumFluidContents.MIXTURE_ACID, "混酸")
     }
 
     private fun item() {
@@ -227,6 +221,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
+        add(RagiumItems.NITROPOWDER, "ニトロパウダー")
         add(RagiumItems.POTION_DROP, "ポーションの雫")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RAGI_COKE, "らぎコークス")
@@ -248,7 +243,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.DRILL, "電動ドリル")
 
         add(RagiumItems.ADVANCED_MAGNET, "発展らぎマグネット")
-        add(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
         add(RagiumItems.BLUE_KNOWLEDGE, "青の知識")
         add(RagiumItems.DYNAMIC_LANTERN, "らぎランタン")
         add(RagiumItems.ELDRITCH_EGG, "異質な卵")
@@ -301,12 +295,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成革")
-    }
-
-    private fun itemGroup() {
-        add(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS, "Ragium - ブロック")
-        add(RagiumCommonTranslation.CREATIVE_TAB_INGREDIENTS, "Ragium - 素材")
-        add(RagiumCommonTranslation.CREATIVE_TAB_ITEMS, "Ragium - アイテム")
     }
 
     private fun keyMapping() {
@@ -390,6 +378,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Common
         add(RagiumCommonTranslation.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
         add(RagiumCommonTranslation.EXP_BERRIES, "食べると経験値を付与します。")
+
+        add(RagiumCommonTranslation.QUARTZ_GLASS, "シルクタッチがなくても回収できるガラスです。")
+        add(RagiumCommonTranslation.OBSIDIAN_GLASS, "ネザーポータルのフレームに使用できるガラスです。")
+        add(RagiumCommonTranslation.CRIMSON_GLASS, "上に乗るとマグマブロックと同じダメージを与えるガラスです。")
+        add(RagiumCommonTranslation.WARPED_GLASS, "プレイヤーのみが通り抜けられるガラスです。")
 
         add(RagiumCommonTranslation.THERMAL_GENERATOR, "かまど燃料や高温の液体から発電する機械です。")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "液体燃料から発電する機械です。")

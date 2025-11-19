@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDelightContents
@@ -143,6 +144,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         pickaxe.addBlocks(RagiumBlocks.CRATES)
         pickaxe.addBlocks(RagiumBlocks.DECORATION_MAP)
         pickaxe.addBlocks(RagiumBlocks.DRUMS)
+        pickaxe.addBlocks(RagiumBlocks.GLASSES.values)
         pickaxe.addBlocks(RagiumBlocks.ORES.values)
 
         RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, block: HTHolderLike) ->
@@ -212,6 +214,14 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         for ((key: HTMaterialKey, holder: HTHolderLike) in VANILLA_STORAGE_BLOCKS) {
             addMaterial(factory, CommonMaterialPrefixes.STORAGE_BLOCK, key).add(holder)
         }
+        // Glasses
+        RagiumBlocks.GLASSES.forEach { (variant: HTGlassVariant, key: HTMaterialKey, glass: HTHolderLike) ->
+            when (variant) {
+                HTGlassVariant.DEFAULT -> addMaterial(factory, CommonMaterialPrefixes.GLASS_BLOCK, key)
+                HTGlassVariant.TINTED -> factory.apply(Tags.Blocks.GLASS_BLOCKS_TINTED)
+            }.add(glass)
+        }
+
         // LED
         factory.apply(RagiumModTags.Blocks.LED_BLOCKS).addBlocks(RagiumBlocks.LED_BLOCKS)
         // Stone

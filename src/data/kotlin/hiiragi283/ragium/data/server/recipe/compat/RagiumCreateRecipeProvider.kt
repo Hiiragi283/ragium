@@ -18,7 +18,7 @@ import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumIntegrationItems
@@ -46,11 +46,11 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
                 .save(output)
         }
         // Cardboard
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(itemCreator.fromTagKey(AllTags.AllItemTags.PULPIFIABLE.tag, 4))
-            .addIngredient(fluidCreator.water(250))
-            .setResult(resultHelper.item(AllItems.PULP))
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
+                itemCreator.fromTagKey(AllTags.AllItemTags.PULPIFIABLE.tag, 4),
+                fluidCreator.water(250),
+            ).addResult(resultHelper.item(AllItems.PULP))
             .save(output)
 
         HTItemToObjRecipeBuilder

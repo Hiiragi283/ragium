@@ -6,10 +6,12 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
+import hiiragi283.ragium.common.recipe.HTEternalUpgradeRecipe
+import hiiragi283.ragium.common.recipe.HTExpExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTGravitationalUpgradeRecipe
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.HTPotionDropRecipe
-import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
-import hiiragi283.ragium.common.recipe.HTUpgradeBlastChargeRecipe
+import hiiragi283.ragium.common.recipe.HTUpgradeChargeRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
@@ -54,6 +56,18 @@ object RagiumRecipeSerializers {
         register("clear_component", HTClearComponentRecipe.CODEC)
 
     @JvmField
+    val ETERNAL_UPGRADE: RecipeSerializer<HTEternalUpgradeRecipe> =
+        register("eternal_upgrade", SimpleCraftingRecipeSerializer(::HTEternalUpgradeRecipe))
+
+    @JvmField
+    val EXP_EXTRACTING: RecipeSerializer<HTExpExtractingRecipe> =
+        register("exp_extracting", MapBiCodec.unit(HTExpExtractingRecipe))
+
+    @JvmField
+    val GRAVITATIONAL_UPGRADE: RecipeSerializer<HTGravitationalUpgradeRecipe> =
+        register("gravitational_upgrade", SimpleCraftingRecipeSerializer(::HTGravitationalUpgradeRecipe))
+
+    @JvmField
     val ICE_CREAM_SODA: RecipeSerializer<HTIceCreamSodaRecipe> =
         register("ice_cream_soda", SimpleCraftingRecipeSerializer(::HTIceCreamSodaRecipe))
 
@@ -62,12 +76,8 @@ object RagiumRecipeSerializers {
         register("potion_drop", SimpleCraftingRecipeSerializer(::HTPotionDropRecipe))
 
     @JvmField
-    val SMITHING_MODIFY: RecipeSerializer<HTSmithingModifyRecipe> =
-        register("smithing_modify", HTSmithingModifyRecipe.CODEC)
-
-    @JvmField
-    val UPGRADE_BLAST_CHARGE: RecipeSerializer<HTUpgradeBlastChargeRecipe> =
-        register("upgrade_blast_charge", SimpleCraftingRecipeSerializer(::HTUpgradeBlastChargeRecipe))
+    val UPGRADE_CHARGE: RecipeSerializer<HTUpgradeChargeRecipe> =
+        register("upgrade_charge", SimpleCraftingRecipeSerializer(::HTUpgradeChargeRecipe))
 
     //    Machine    //
 

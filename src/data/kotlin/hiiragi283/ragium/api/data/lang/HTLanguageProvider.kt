@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumChemicals
+import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMatterTypes
@@ -43,6 +44,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     fun addPatterned() {
         fromVariantTable(RagiumBlocks.ORES)
         fromMaterialTable(RagiumBlocks.MATERIALS)
+        fromVariantTable(RagiumBlocks.GLASSES)
         fromMapWithRow(HTSimpleLangPattern("%s Coil Block", "%sコイルブロック"), RagiumBlocks.COILS)
         fromMapWithRow(HTSimpleLangPattern("%s LED Block", "%sのLEDブロック"), RagiumBlocks.LED_BLOCKS)
         fromMapWithColumn(HTSimpleLangName("Slab", "ハーフブロック"), RagiumBlocks.SLABS)
@@ -56,6 +58,11 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         fromVariantTable(RagiumItems.ARMORS)
         fromVariantTable(RagiumItems.TOOLS)
+
+        val charge = HTSimpleLangName("Charge", "チャージ")
+        fromMapWithColumn(charge, RagiumItems.CHARGES)
+        fromMapWithColumn(charge, RagiumEntityTypes.CHARGES)
+
         fromMapWithRow(HTSimpleLangPattern("%s Upgrade", "%s強化"), RagiumItems.SMITHING_TEMPLATES)
         addTemplate(RagiumMaterialKeys.AZURE_STEEL, VanillaMaterialKeys.IRON)
         addTemplate(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
@@ -64,6 +71,10 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         // Translation
         addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
         addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)
+
+        val minecart = HTSimpleLangName("Minecart with %s", "%s付きトロッコ")
+        fromMapWithColumn(minecart, RagiumItems.DRUM_MINECARTS)
+        fromMapWithColumn(minecart, RagiumEntityTypes.DRUMS)
 
         translations()
 

@@ -13,6 +13,11 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     WARPED_WART("description", "warped_wart"),
     EXP_BERRIES("description", "exp_berries"),
 
+    QUARTZ_GLASS("description", "quartz_glass"),
+    OBSIDIAN_GLASS("description", "obsidian_glass"),
+    CRIMSON_GLASS("description", "crimson_crystal_glass"),
+    WARPED_GLASS("description", "warped_crystal_glass"),
+
     // Blocks - Generators
     THERMAL_GENERATOR("description", "thermal_generator"),
     COMBUSTION_GENERATOR("description", "combustion_generator"),
@@ -65,11 +70,6 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     COMMAND_ENERGY_ADD("command", "energy_network.add"),
     COMMAND_ENERGY_GET("command", "energy_network.get"),
     COMMAND_ENERGY_SET("command", "energy_network.set"),
-
-    // Creative Mode Tab
-    CREATIVE_TAB_BLOCKS("itemGroup", "blocks"),
-    CREATIVE_TAB_INGREDIENTS("itemGroup", "ingredients"),
-    CREATIVE_TAB_ITEMS("itemGroup", "items"),
 
     // Error
     NO_DESTINATION("error", "no_destination"),

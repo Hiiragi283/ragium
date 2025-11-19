@@ -9,7 +9,6 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDa
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDelightContents
@@ -29,7 +28,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         entity()
         fluid()
         item()
-        itemGroup()
         keyMapping()
         modTags()
         recipeType()
@@ -189,15 +187,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun entity() {
-        add(RagiumEntityTypes.BLAST_CHARGE, "Blast Charge")
         add(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
-
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            val value: String = tier.translate(type, "Minecart with %s")
-            add(tier.getEntityType(), value)
-            add(tier.getMinecartItem(), value)
-        }
-
         // add(RagiumEntityTypes.DYNAMITE, "Dynamite")
         // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
         // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
@@ -227,6 +217,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
+
+        addFluid(RagiumFluidContents.NITRIC_ACID, "Nitric Acid")
+        addFluid(RagiumFluidContents.SULFURIC_ACID, "Sulfuric Acid")
+        addFluid(RagiumFluidContents.MIXTURE_ACID, "Mixture Acid")
     }
 
     private fun item() {
@@ -236,6 +230,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
+        add(RagiumItems.NITROPOWDER, "Nitropowder")
         add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")
@@ -257,7 +252,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.DRILL, "Electric Drill")
 
         add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
-        add(RagiumItems.BLAST_CHARGE, "Blast Charge")
         add(RagiumItems.BLUE_KNOWLEDGE, "Blue Knowledge")
         add(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")
         add(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
@@ -300,12 +294,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
-    }
-
-    private fun itemGroup() {
-        add(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS, "Ragium - Blocks")
-        add(RagiumCommonTranslation.CREATIVE_TAB_INGREDIENTS, "Ragium - Ingredients")
-        add(RagiumCommonTranslation.CREATIVE_TAB_ITEMS, "Ragium - Items")
     }
 
     private fun keyMapping() {
@@ -390,6 +378,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Common
         add(RagiumCommonTranslation.WARPED_WART, "Clears one bad effect randomly when eaten.")
         add(RagiumCommonTranslation.EXP_BERRIES, "Gives experience when eaten.")
+
+        add(RagiumCommonTranslation.QUARTZ_GLASS, "A glass which can be harvested without silk Touch.")
+        add(RagiumCommonTranslation.OBSIDIAN_GLASS, "A glass which can be used to frame of Nether Portal.")
+        add(RagiumCommonTranslation.CRIMSON_GLASS, "A glass which gives damage as same as the Magma Block.")
+        add(RagiumCommonTranslation.WARPED_GLASS, "A glass which is passible by only players.")
 
         add(RagiumCommonTranslation.THERMAL_GENERATOR, "A machine which generates energy from furnace fuels or hot fluids.")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "A machine which generates energy from fuel fluids.")

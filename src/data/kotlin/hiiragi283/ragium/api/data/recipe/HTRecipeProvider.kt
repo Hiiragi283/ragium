@@ -274,11 +274,35 @@ sealed class HTRecipeProvider {
         }
     }
 
-    fun pulverizeFromData(data: HTRecipeData) {
+    protected fun pulverizeFromData(data: HTRecipeData) {
         HTItemToObjRecipeBuilder
             .pulverizing(
                 data.getItemIngredients(itemCreator)[0],
                 data.getItemResults()[0].first,
             ).saveModified(output, data.operator)
+    }
+
+    protected fun cropAndSeed(seed: ItemLike, crop: ItemLike, water: Int = 125) {
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .planting(
+                itemCreator.fromItem(seed),
+                fluidCreator.water(water),
+            ).addResult(resultHelper.item(crop, 3))
+            .addResult(resultHelper.item(seed), 1 / 3f)
+            .save(output)
+    }
+
+    protected fun cropAndCrop(crop: ItemLike, water: Int = 125) {
+        cropAndSeed(crop, crop, water)
+    }
+
+    protected fun tree(sapling: ItemLike, log: ItemLike, fluid: HTFluidIngredient = fluidCreator.water(250)) {
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .planting(
+                itemCreator.fromItem(sapling),
+                fluid,
+            ).addResult(resultHelper.item(log, 6))
+            .addResult(resultHelper.item(sapling), 1 / 6f)
+            .save(output)
     }
 }
