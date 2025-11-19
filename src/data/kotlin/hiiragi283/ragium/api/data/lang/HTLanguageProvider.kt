@@ -43,6 +43,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     fun addPatterned() {
         fromVariantTable(RagiumBlocks.ORES)
         fromMaterialTable(RagiumBlocks.MATERIALS)
+        fromVariantTable(RagiumBlocks.GLASSES)
         fromMapWithRow(HTSimpleLangPattern("%s Coil Block", "%sコイルブロック"), RagiumBlocks.COILS)
         fromMapWithRow(HTSimpleLangPattern("%s LED Block", "%sのLEDブロック"), RagiumBlocks.LED_BLOCKS)
         fromMapWithColumn(HTSimpleLangName("Slab", "ハーフブロック"), RagiumBlocks.SLABS)

@@ -389,6 +389,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
         add(RagiumCommonTranslation.EXP_BERRIES, "食べると経験値を付与します。")
 
+        add(RagiumCommonTranslation.QUARTZ_GLASS, "シルクタッチがなくても回収できるガラスです。")
+        add(RagiumCommonTranslation.OBSIDIAN_GLASS, "ネザーポータルのフレームに使用できるガラスです。")
+        add(RagiumCommonTranslation.CRIMSON_GLASS, "上に乗るとマグマブロックと同じダメージを与えるガラスです。")
+        add(RagiumCommonTranslation.WARPED_GLASS, "プレイヤーのみが通り抜けられるガラスです。")
+
         add(RagiumCommonTranslation.THERMAL_GENERATOR, "かまど燃料や高温の液体から発電する機械です。")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "液体燃料から発電する機械です。")
         add(RagiumCommonTranslation.SOLAR_PANEL_UNIT, "太陽光パネルコントローラーと組み合わせて使用します。")

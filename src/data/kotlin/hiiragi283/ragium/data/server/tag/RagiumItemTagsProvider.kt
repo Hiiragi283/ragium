@@ -88,6 +88,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             copy(CommonMaterialPrefixes.STORAGE_BLOCK, key)
         }
 
+        for (key: HTMaterialKey in RagiumBlocks.GLASSES.columnKeys) {
+            copy(CommonMaterialPrefixes.GLASS_BLOCK, key)
+        }
+        copy(Tags.Blocks.GLASS_BLOCKS_TINTED, Tags.Items.GLASS_BLOCKS_TINTED)
+
         copy(Tags.Blocks.OBSIDIANS, Tags.Items.OBSIDIANS)
         copy(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS, RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
 

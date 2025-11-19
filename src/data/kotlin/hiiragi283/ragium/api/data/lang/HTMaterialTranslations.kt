@@ -22,8 +22,6 @@ object HTMaterialTranslations {
         }
 
         // Block
-        register(CommonMaterialPrefixes.GLASS_BLOCK, "%s Glass", "%sガラス")
-        register(CommonMaterialPrefixes.GLASS_BLOCK_TINTED, "Tinted %s Glass", "遮光%sガラス")
         register(CommonMaterialPrefixes.STORAGE_BLOCK, "Block of %s", "%sブロック")
         register(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, "Block of Raw %s", "%sの原石ブロック")
         // Item

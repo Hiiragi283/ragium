@@ -13,6 +13,11 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     WARPED_WART("description", "warped_wart"),
     EXP_BERRIES("description", "exp_berries"),
 
+    QUARTZ_GLASS("description", "quartz_glass"),
+    OBSIDIAN_GLASS("description", "obsidian_glass"),
+    CRIMSON_GLASS("description", "crimson_crystal_glass"),
+    WARPED_GLASS("description", "warped_crystal_glass"),
+
     // Blocks - Generators
     THERMAL_GENERATOR("description", "thermal_generator"),
     COMBUSTION_GENERATOR("description", "combustion_generator"),

@@ -389,6 +389,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.WARPED_WART, "Clears one bad effect randomly when eaten.")
         add(RagiumCommonTranslation.EXP_BERRIES, "Gives experience when eaten.")
 
+        add(RagiumCommonTranslation.QUARTZ_GLASS, "A glass which can be harvested without silk Touch.")
+        add(RagiumCommonTranslation.OBSIDIAN_GLASS, "A glass which can be used to frame of Nether Portal.")
+        add(RagiumCommonTranslation.CRIMSON_GLASS, "A glass which gives damage as same as the Magma Block.")
+        add(RagiumCommonTranslation.WARPED_GLASS, "A glass which is passible by only players.")
+
         add(RagiumCommonTranslation.THERMAL_GENERATOR, "A machine which generates energy from furnace fuels or hot fluids.")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "A machine which generates energy from fuel fluids.")
         add(RagiumCommonTranslation.SOLAR_PANEL_UNIT, "A unit to use with Solar Panel Controller.")

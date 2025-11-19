@@ -2,13 +2,13 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.impl.data.HTVanillaWoodType
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
@@ -102,28 +102,38 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun glass() {
-        val materials: List<HTMaterialKey> = listOf(
-            // Vanilla
-            VanillaMaterialKeys.QUARTZ,
-            VanillaMaterialKeys.OBSIDIAN,
-            // Ragium
-            RagiumMaterialKeys.WARPED_CRYSTAL,
-        )
-        for (key: HTMaterialKey in materials) {
-            // Normal
-            HTCombineItemToObjRecipeBuilder
-                .alloying(
-                    resultHelper.item(RagiumBlocks.getGlass(key)),
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, key, 4),
-                    itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-                ).save(output)
-            // Normal -> Tinted
-            HTShapedRecipeBuilder
-                .building(RagiumBlocks.getTintedGlass(key))
-                .hollow4()
-                .define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
-                .define('B', CommonMaterialPrefixes.GLASS_BLOCK, key)
-                .save(output)
+        RagiumBlocks.GLASSES.forEach { (variant: HTGlassVariant, key: HTMaterialKey, block: ItemLike) ->
+            when (variant) {
+                HTGlassVariant.DEFAULT ->
+                    HTCombineItemToObjRecipeBuilder
+                        .alloying(
+                            resultHelper.item(block, 2),
+                            when (key) {
+                                VanillaMaterialKeys.QUARTZ -> listOf(
+                                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.QUARTZ),
+                                    itemCreator.fromTagKey(ItemTags.SMELTS_TO_GLASS),
+                                )
+                                VanillaMaterialKeys.OBSIDIAN -> listOf(
+                                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.DEEP_STEEL),
+                                    itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
+                                )
+                                else -> listOf(
+                                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, key),
+                                    itemCreator.fromTagKey(CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN, 2),
+                                )
+                            },
+                        ).save(output)
+
+                HTGlassVariant.TINTED -> {
+                    // Normal -> Tinted
+                    HTShapedRecipeBuilder
+                        .building(block)
+                        .hollow4()
+                        .define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
+                        .define('B', CommonMaterialPrefixes.GLASS_BLOCK, key)
+                        .save(output)
+                }
+            }
         }
     }
 
