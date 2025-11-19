@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.HitResult
 
 class HTBlastCharge : HTAbstractCharge {
-    constructor(entityType: EntityType<out HTBlastCharge>, level: Level) : super(entityType, level)
+    constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
 
     constructor(level: Level, shooter: LivingEntity) : super(HTChargeVariant.BLAST, level, shooter)
 
