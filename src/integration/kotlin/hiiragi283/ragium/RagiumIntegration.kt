@@ -13,6 +13,7 @@ import hiiragi283.ragium.client.integration.accessories.HTGogglesAccessoryRender
 import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
 import hiiragi283.ragium.common.RagiumAccessory
+import hiiragi283.ragium.common.data.map.HTDataModelEntityIngredient
 import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
@@ -82,9 +83,12 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
 
     private fun register(event: RegisterEvent) {
         // Sub Entity Type Ingredient
-        if (isLoaded(RagiumConst.EIO_BASE)) {
-            event.register(RagiumAPI.SUB_ENTITY_INGREDIENT_TYPE_KEY) { helper ->
+        event.register(RagiumAPI.SUB_ENTITY_INGREDIENT_TYPE_KEY) { helper ->
+            if (isLoaded(RagiumConst.EIO_BASE)) {
                 helper.register(RagiumConst.EIO_BASE.toId("soul_vial"), HTSoulVialEntityIngredient.CODEC)
+            }
+            if (isLoaded(RagiumConst.HOSTILE_NETWORKS)) {
+                helper.register(RagiumConst.HOSTILE_NETWORKS.toId("data_model"), HTDataModelEntityIngredient.CODEC)
             }
         }
     }

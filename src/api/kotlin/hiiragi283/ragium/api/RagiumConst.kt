@@ -34,6 +34,7 @@ object RagiumConst {
     const val EIO_MACHINES = "enderio_machines"
     const val FARMERS_DELIGHT = "farmersdelight"
     const val FOREGOING = "industrialforegoing"
+    const val HOSTILE_NETWORKS = "hostilenetworks"
     const val IMMERSIVE = "immersiveengineering"
     const val KALEIDO_COOKERY = "kaleidoscope_cookery"
     const val MAGITECH = "magitech"
