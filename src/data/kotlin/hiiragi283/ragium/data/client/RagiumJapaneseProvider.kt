@@ -29,7 +29,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         entity()
         fluid()
         item()
-        itemGroup()
         keyMapping()
         modTags()
         recipeType()
@@ -306,12 +305,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成革")
-    }
-
-    private fun itemGroup() {
-        add(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS, "Ragium - ブロック")
-        add(RagiumCommonTranslation.CREATIVE_TAB_INGREDIENTS, "Ragium - 素材")
-        add(RagiumCommonTranslation.CREATIVE_TAB_ITEMS, "Ragium - アイテム")
     }
 
     private fun keyMapping() {

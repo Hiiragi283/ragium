@@ -65,7 +65,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
-        RagiumCreativeTabs.init(eventBus)
+        RagiumCreativeTabs.REGISTER.register(eventBus)
         RagiumCriteriaTriggers.REGISTER.register(eventBus)
         RagiumEntityTypes.init(eventBus)
         RagiumFeatures.REGISTER.register(eventBus)

@@ -29,7 +29,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         entity()
         fluid()
         item()
-        itemGroup()
         keyMapping()
         modTags()
         recipeType()
@@ -305,12 +304,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
-    }
-
-    private fun itemGroup() {
-        add(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS, "Ragium - Blocks")
-        add(RagiumCommonTranslation.CREATIVE_TAB_INGREDIENTS, "Ragium - Ingredients")
-        add(RagiumCommonTranslation.CREATIVE_TAB_ITEMS, "Ragium - Items")
     }
 
     private fun keyMapping() {

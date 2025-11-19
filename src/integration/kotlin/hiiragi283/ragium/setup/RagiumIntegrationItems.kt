@@ -33,19 +33,13 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.iterator
 import com.github.ysbbbbbb.kaleidoscopecookery.init.ModItems as KaleidoItems
 import vectorwing.farmersdelight.common.registry.ModItems as DelightItems
 
@@ -60,7 +54,7 @@ object RagiumIntegrationItems {
     fun init(eventBus: IEventBus) {
         REGISTER.register(eventBus)
 
-        eventBus.addListener(::modifyCreativeTabs)
+        // eventBus.addListener(::modifyCreativeTabs)
         eventBus.addListener(::modifyComponents)
     }
 
@@ -170,8 +164,7 @@ object RagiumIntegrationItems {
 
     //    Event    //
 
-    @JvmStatic
-    private fun modifyCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
+    /*private fun modifyCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
         fun insertAfter(items: List<ItemLike>) {
             for (i: Int in items.indices) {
                 val item: ItemLike = items[i]
@@ -179,7 +172,7 @@ object RagiumIntegrationItems {
                 event.insertAfter(
                     ItemStack(item),
                     ItemStack(nextItem),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
+                    CreativeModeTab.TabVisibility.PARENT_TAB_ONLY,
                 )
             }
         }
@@ -188,55 +181,49 @@ object RagiumIntegrationItems {
             insertAfter(items.toList())
         }
 
-        val key: ResourceKey<CreativeModeTab> = event.tabKey
-        when {
-            RagiumCreativeTabs.INGREDIENTS.`is`(key) -> {
-                // Mekanism
-                if (RagiumIntegration.isLoaded(RagiumConst.MEKANISM)) {
-                    for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
-                        val (basePrefix: HTPrefixLike, baseMaterial: HTMaterialKey) = essenceType.getBaseEntry()
-                        insertAfter(
-                            RagiumItems.getMaterial(basePrefix, baseMaterial),
-                            getEnriched(essenceType),
-                        )
-                    }
-                }
+        if (!RagiumCreativeTabs.COMMON.`is`(event.tabKey)) return
+        // Create
+        if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
+            insertAfter(
+                RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL),
+                getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL),
+                getSandPaper(RagiumMaterialKeys.IRIDESCENTIUM),
+            )
+        }
+        // Delight
+        if (RagiumIntegration.isLoaded(RagiumConst.FARMERS_DELIGHT)) {
+            for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in TOOLS.row(HTKnifeToolVariant)) {
+                insertAfter(RagiumItems.getHammer(key), knife)
             }
-            RagiumCreativeTabs.ITEMS.`is`(key) -> {
-                // Create
-                if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
-                    insertAfter(
-                        RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL),
-                        getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL),
-                        getSandPaper(RagiumMaterialKeys.IRIDESCENTIUM),
-                    )
-                }
-                // Delight
-                if (RagiumIntegration.isLoaded(RagiumConst.FARMERS_DELIGHT)) {
-                    for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in TOOLS.row(HTKnifeToolVariant)) {
-                        insertAfter(RagiumItems.getHammer(key), knife)
-                    }
 
-                    insertAfter(
-                        RagiumItems.RAGI_CHERRY_PULP,
-                        RagiumDelightContents.RAGI_CHERRY_PIE,
-                        RagiumDelightContents.RAGI_CHERRY_PIE_SLICE,
-                    )
+            insertAfter(
+                RagiumItems.RAGI_CHERRY_PULP,
+                RagiumDelightContents.RAGI_CHERRY_PIE,
+                RagiumDelightContents.RAGI_CHERRY_PIE_SLICE,
+            )
 
-                    insertAfter(
-                        RagiumItems.RAGI_CHERRY_TOAST,
-                        RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK,
-                    )
-                }
-                // Kaleido
-                if (RagiumIntegration.isLoaded(RagiumConst.KALEIDO_COOKERY)) {
-                    for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in TOOLS.row(HTKitchenKnifeToolVariant)) {
-                        insertAfter(RagiumItems.getHammer(key), knife)
-                    }
-                }
+            insertAfter(
+                RagiumItems.RAGI_CHERRY_TOAST,
+                RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK,
+            )
+        }
+        // Kaleido
+        if (RagiumIntegration.isLoaded(RagiumConst.KALEIDO_COOKERY)) {
+            for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in TOOLS.row(HTKitchenKnifeToolVariant)) {
+                insertAfter(RagiumItems.getHammer(key), knife)
             }
         }
-    }
+        // Mekanism
+        if (RagiumIntegration.isLoaded(RagiumConst.MEKANISM)) {
+            for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
+                val (basePrefix: HTPrefixLike, baseMaterial: HTMaterialKey) = essenceType.getBaseEntry()
+                insertAfter(
+                    RagiumItems.getMaterial(basePrefix, baseMaterial),
+                    getEnriched(essenceType),
+                )
+            }
+        }
+    }*/
 
     @JvmStatic
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {

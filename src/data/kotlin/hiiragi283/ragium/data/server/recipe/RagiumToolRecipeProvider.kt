@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -242,7 +241,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         for (variant: HTColorMaterial in HTColorMaterial.entries) {
-            val bundle: ImmutableItemStack = HTUniversalBundleItem.createBundle(variant.dyeColor).toImmutable() ?: return
+            val bundle: ImmutableItemStack = HTUniversalBundleItem.createBundle(variant.dyeColor)
             HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, bundle)
                 .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
                 .addIngredient(variant.dyeTag)
@@ -350,7 +349,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, builderAction: HTShapelessRecipeBuilder.() -> Unit) {
-        val ticket: ImmutableItemStack = HTDefaultLootTickets.getLootTicket(lootTicket).toImmutable() ?: return
+        val ticket: ImmutableItemStack = HTDefaultLootTickets.getLootTicket(lootTicket)
         HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, ticket)
             .addIngredient(RagiumItems.LOOT_TICKET)
             .apply(builderAction)
