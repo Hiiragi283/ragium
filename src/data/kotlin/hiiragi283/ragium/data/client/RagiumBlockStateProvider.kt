@@ -9,12 +9,14 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.blockId
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
+import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDelightContents
@@ -88,9 +90,12 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             itemModels().withExistingParent(block.getPath(), RagiumAPI.id("block", "led_block"))
         }
 
-        RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.GLASS_BLOCK).values.forEach(::cutoutSimpleBlock)
-        RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.GLASS_BLOCK_TINTED).values.forEach(::translucentSimpleBlock)
-
+        RagiumBlocks.GLASSES.forEach { (variant: HTGlassVariant, _, block: HTDescriptionDeferredBlock<*>) ->
+            when (variant) {
+                HTGlassVariant.DEFAULT -> cutoutSimpleBlock(block)
+                HTGlassVariant.TINTED -> translucentSimpleBlock(block)
+            }
+        }
         RagiumBlocks.COILS.values.forEach(::cubeColumn)
 
         // Ore

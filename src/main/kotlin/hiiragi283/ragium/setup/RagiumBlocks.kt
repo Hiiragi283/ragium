@@ -22,13 +22,15 @@ import hiiragi283.ragium.common.block.HTBuddingAzureBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
-import hiiragi283.ragium.common.block.HTGlassBlock
 import hiiragi283.ragium.common.block.HTSimpleTypedEntityBlock
 import hiiragi283.ragium.common.block.HTSpongeCakeBlock
 import hiiragi283.ragium.common.block.HTSweetBerriesCakeBlock
-import hiiragi283.ragium.common.block.HTTintedGlassBlock
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.HTWarpedWartBlock
+import hiiragi283.ragium.common.block.glass.HTCrimsonGlassBlock
+import hiiragi283.ragium.common.block.glass.HTGlassBlock
+import hiiragi283.ragium.common.block.glass.HTObsidianGlass
+import hiiragi283.ragium.common.block.glass.HTWarpedGlassBlock
 import hiiragi283.ragium.common.block.processor.HTRefineryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
@@ -46,6 +48,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -237,42 +240,6 @@ object RagiumBlocks {
             this[CommonMaterialPrefixes.STORAGE_BLOCK.asMaterialPrefix(), key] =
                 REGISTER.registerSimple("${key.name}_block", properties)
         }
-
-        // Glasses
-        fun glass(
-            key: HTMaterialKey,
-            properties: BlockBehaviour.Properties,
-            canPlayerThrough: Boolean,
-            blastProof: Boolean,
-        ) {
-            this[CommonMaterialPrefixes.GLASS_BLOCK.asMaterialPrefix(), key] = REGISTER.registerSimple(
-                "${key.name}_glass",
-                properties.apply { if (blastProof) strength(5f, 1200f) },
-                ::HTGlassBlock.partially1(canPlayerThrough),
-            )
-        }
-
-        glass(VanillaMaterialKeys.QUARTZ, glass(), canPlayerThrough = false, blastProof = false)
-        glass(VanillaMaterialKeys.OBSIDIAN, glass(), canPlayerThrough = false, blastProof = true)
-        glass(RagiumMaterialKeys.WARPED_CRYSTAL, glass(), canPlayerThrough = true, blastProof = false)
-
-        // Tinted Glasses
-        fun tintedGlass(
-            key: HTMaterialKey,
-            properties: BlockBehaviour.Properties,
-            canPlayerThrough: Boolean,
-            blastProof: Boolean,
-        ) {
-            this[CommonMaterialPrefixes.GLASS_BLOCK_TINTED.asMaterialPrefix(), key] = REGISTER.registerSimple(
-                "tinted_${key.name}_glass",
-                properties.apply { if (blastProof) strength(5f, 1200f) },
-                ::HTTintedGlassBlock.partially1(canPlayerThrough),
-            )
-        }
-
-        tintedGlass(VanillaMaterialKeys.QUARTZ, glass(), canPlayerThrough = false, blastProof = false)
-        tintedGlass(VanillaMaterialKeys.OBSIDIAN, glass(), canPlayerThrough = false, blastProof = true)
-        tintedGlass(RagiumMaterialKeys.WARPED_CRYSTAL, glass(), canPlayerThrough = true, blastProof = false)
     }
 
     @JvmStatic
@@ -284,13 +251,39 @@ object RagiumBlocks {
     fun getStorageBlock(material: HTMaterialLike): HTSimpleDeferredBlock = getMaterial(CommonMaterialPrefixes.STORAGE_BLOCK, material)
 
     @JvmStatic
-    fun getGlass(material: HTMaterialLike): HTSimpleDeferredBlock = getMaterial(CommonMaterialPrefixes.GLASS_BLOCK, material)
-
-    @JvmStatic
-    fun getTintedGlass(material: HTMaterialLike): HTSimpleDeferredBlock = getMaterial(CommonMaterialPrefixes.GLASS_BLOCK_TINTED, material)
-
-    @JvmStatic
     fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredBlock> = MATERIALS.row(prefix.asMaterialPrefix())
+
+    @JvmStatic
+    val GLASSES: ImmutableTable<HTGlassVariant, HTMaterialKey, HTDescriptionDeferredBlock<*>> = buildTable {
+        fun glass(
+            key: HTMaterialKey,
+            factory: BlockWithContextFactory<Boolean, HTGlassBlock>,
+            properties: BlockBehaviour.Properties = glass().strength(0.3f, 1200f),
+        ) {
+            this[HTGlassVariant.DEFAULT, key] =
+                REGISTER.register("${key.name}_glass", properties, factory.partially1(false), ::HTDescriptionBlockItem)
+            this[HTGlassVariant.TINTED, key] =
+                REGISTER.register("tinted_${key.name}_glass", properties, factory.partially1(true), ::HTDescriptionBlockItem)
+        }
+
+        // Quartz
+        glass(VanillaMaterialKeys.QUARTZ, ::HTGlassBlock, glass())
+
+        // Obsidian
+        glass(VanillaMaterialKeys.OBSIDIAN, ::HTObsidianGlass)
+        // Crimson
+        glass(RagiumMaterialKeys.CRIMSON_CRYSTAL, ::HTCrimsonGlassBlock)
+        // Warped
+        glass(RagiumMaterialKeys.WARPED_CRYSTAL, ::HTWarpedGlassBlock)
+    }
+
+    @JvmStatic
+    fun getGlass(material: HTMaterialLike): HTDescriptionDeferredBlock<*> =
+        GLASSES[HTGlassVariant.DEFAULT, material.asMaterialKey()] ?: error("Unknown glass for ${material.asMaterialName()}")
+
+    @JvmStatic
+    fun getTintedGlass(material: HTMaterialLike): HTDescriptionDeferredBlock<*> =
+        GLASSES[HTGlassVariant.TINTED, material.asMaterialKey()] ?: error("Unknown tinted glass for ${material.asMaterialName()}")
 
     @JvmField
     val COILS: Map<HTMaterialKey, HTBasicDeferredBlock<RotatedPillarBlock>> = arrayOf(
