@@ -9,10 +9,10 @@ import hiiragi283.ragium.api.registry.commonId
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
-import hiiragi283.ragium.common.data.map.HTBlockCrushingMaterialRecipeData
-import hiiragi283.ragium.common.data.map.HTCompressingMaterialRecipeData
-import hiiragi283.ragium.common.data.map.HTCrushingMaterialRecipeData
-import hiiragi283.ragium.common.data.map.HTRawSmeltingMaterialRecipeData
+import hiiragi283.ragium.common.data.map.HTBlockCrushingMaterialRecipe
+import hiiragi283.ragium.common.data.map.HTCompressingMaterialRecipe
+import hiiragi283.ragium.common.data.map.HTCrushingMaterialRecipe
+import hiiragi283.ragium.common.data.map.HTRawSmeltingMaterialRecipe
 import hiiragi283.ragium.common.inventory.slot.payload.HTFluidSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTIntSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
@@ -73,10 +73,10 @@ object RagiumMiscRegister {
         }
         // Material Recipe Type
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_KEY) { helper ->
-            helper.register(RagiumAPI.id(RagiumConst.COMPRESSING), HTCompressingMaterialRecipeData.CODEC)
-            helper.register(RagiumAPI.id(RagiumConst.CRUSHING), HTCrushingMaterialRecipeData.CODEC)
-            helper.register(RagiumAPI.id(RagiumConst.CRUSHING, "storage_block"), HTBlockCrushingMaterialRecipeData.CODEC)
-            helper.register(RagiumAPI.id("raw_smelting"), HTRawSmeltingMaterialRecipeData.CODEC)
+            helper.register(RagiumAPI.id(RagiumConst.COMPRESSING), HTCompressingMaterialRecipe.CODEC)
+            helper.register(RagiumAPI.id(RagiumConst.CRUSHING), HTCrushingMaterialRecipe.CODEC)
+            helper.register(RagiumAPI.id(RagiumConst.CRUSHING, "storage_block"), HTBlockCrushingMaterialRecipe.CODEC)
+            helper.register(RagiumAPI.id("raw_smelting"), HTRawSmeltingMaterialRecipe.CODEC)
         }
     }
 

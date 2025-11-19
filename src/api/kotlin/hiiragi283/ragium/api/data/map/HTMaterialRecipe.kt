@@ -26,19 +26,19 @@ import net.neoforged.neoforge.common.conditions.ICondition
 import java.util.Optional
 import java.util.function.Function
 
-interface HTMaterialRecipeData {
+interface HTMaterialRecipe {
     companion object {
         @JvmField
-        val CODEC: Codec<HTMaterialRecipeData> = RagiumAPI.MATERIAL_RECIPE_TYPE_REGISTRY
+        val CODEC: Codec<HTMaterialRecipe> = RagiumAPI.MATERIAL_RECIPE_TYPE_REGISTRY
             .byNameCodec()
-            .dispatch(HTMaterialRecipeData::type, Function.identity())
+            .dispatch(HTMaterialRecipe::type, Function.identity())
 
         @JvmField
-        val ID_MAP_CODEC: Codec<Map<ResourceLocation, HTMaterialRecipeData>> =
+        val ID_MAP_CODEC: Codec<Map<ResourceLocation, HTMaterialRecipe>> =
             Codec.unboundedMap(ResourceLocation.CODEC, CODEC)
     }
 
-    fun type(): MapCodec<out HTMaterialRecipeData>
+    fun type(): MapCodec<out HTMaterialRecipe>
 
     fun generateRecipes(
         access: RegistryAccess,
