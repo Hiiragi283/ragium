@@ -272,15 +272,21 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         for (variant: HTChargeVariant in HTChargeVariant.entries) {
             val material: HTMaterialKey = when (variant) {
-                HTChargeVariant.BLAST -> RagiumMaterialKeys.CRIMSON_CRYSTAL
                 HTChargeVariant.FISHING -> RagiumMaterialKeys.AZURE
+                HTChargeVariant.BLAST -> RagiumMaterialKeys.CRIMSON_CRYSTAL
                 HTChargeVariant.TELEPORT -> RagiumMaterialKeys.WARPED_CRYSTAL
+                HTChargeVariant.CONFUSING -> RagiumMaterialKeys.ELDRITCH_PEARL
             }
             HTShapedRecipeBuilder
-                .equipment(variant, 8)
-                .hollow8()
-                .define('A', CommonMaterialPrefixes.DUST, material)
-                .define('B', Items.PAPER)
+                .equipment(variant, 3)
+                .pattern(
+                    " AA",
+                    " BA",
+                    "C  ",
+                ).hollow8()
+                .define('A', CommonMaterialPrefixes.GEM, material)
+                .define('B', Tags.Items.GUNPOWDERS)
+                .define('C', Items.PAPER)
                 .save(output)
         }
     }

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
+import hiiragi283.ragium.common.entity.charge.HTConfusingCharge
 import hiiragi283.ragium.common.entity.charge.HTFishingCharge
 import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -22,18 +23,20 @@ import net.minecraft.world.level.Level
 enum class HTChargeVariant(private val enPattern: String, private val jaPattern: String) :
     HTVariantKey,
     HTItemHolderLike {
-    BLAST("Blast %s", "ブラスト%s"),
     FISHING("Fishing %s", "フィッシング%s"),
+    BLAST("Blast %s", "ブラスト%s"),
     TELEPORT("Teleport %s", "テレポート%s"),
+    CONFUSING("Confusing %s", "コンフュージョン%s"),
     ;
 
     // Item
     fun getItem(): HTSimpleDeferredItem = RagiumItems.CHARGES[this]!!
 
     fun getShootSound(): SoundEvent = when (this) {
-        BLAST -> SoundEvents.WITHER_SHOOT
         FISHING -> SoundEvents.FISHING_BOBBER_THROW
+        BLAST -> SoundEvents.WITHER_SHOOT
         TELEPORT -> SoundEvents.ENDER_PEARL_THROW
+        CONFUSING -> SoundEvents.ELDER_GUARDIAN_CURSE
     }
 
     override fun asItem(): Item = getItem().get()
@@ -44,9 +47,10 @@ enum class HTChargeVariant(private val enPattern: String, private val jaPattern:
     fun getEntityType(): HTDeferredEntityType<out HTAbstractCharge> = RagiumEntityTypes.CHARGES[this]!!
 
     fun createCharge(level: Level, player: Player): ThrowableItemProjectile = when (this) {
-        BLAST -> HTBlastCharge(level, player)
         FISHING -> HTFishingCharge(level, player)
+        BLAST -> HTBlastCharge(level, player)
         TELEPORT -> HTTeleportCharge(level, player)
+        CONFUSING -> HTConfusingCharge(level, player)
     }
 
     fun createCharge(
@@ -55,9 +59,10 @@ enum class HTChargeVariant(private val enPattern: String, private val jaPattern:
         y: Double,
         z: Double,
     ): ThrowableItemProjectile = when (this) {
-        BLAST -> HTBlastCharge(level, x, y, z)
         FISHING -> HTFishingCharge(level, x, y, z)
+        BLAST -> HTBlastCharge(level, x, y, z)
         TELEPORT -> HTTeleportCharge(level, x, y, z)
+        CONFUSING -> HTConfusingCharge(level, x, y, z)
     }
 
     override fun translate(type: HTLanguageType, value: String): String = when (type) {
