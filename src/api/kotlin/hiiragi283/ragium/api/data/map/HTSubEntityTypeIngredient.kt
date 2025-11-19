@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import java.util.function.Function
+import java.util.stream.Stream
 
 interface HTSubEntityTypeIngredient {
     companion object {
@@ -39,7 +40,7 @@ interface HTSubEntityTypeIngredient {
 
     fun getEntityType(stack: ItemStack): EntityType<*>?
 
-    fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): ItemStack
+    fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): Stream<ItemStack>
 
     @JvmRecord
     private data class Simple(private val entityType: EntityType<*>) : HTSubEntityTypeIngredient {
@@ -60,9 +61,9 @@ interface HTSubEntityTypeIngredient {
 
         override fun getEntityType(stack: ItemStack): EntityType<*> = entityType
 
-        override fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): ItemStack = when {
-            this.entityType.isOf(entityType) -> ItemStack(baseItem)
-            else -> ItemStack.EMPTY
+        override fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): Stream<ItemStack> = when {
+            this.entityType.isOf(entityType) -> Stream.of(ItemStack(baseItem))
+            else -> Stream.empty()
         }
     }
 }

@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import com.enderio.base.common.init.EIOBlocks
 import com.enderio.base.common.init.EIOItems
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
+import dev.shadowsoffire.hostilenetworks.Hostile
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
@@ -23,6 +24,7 @@ import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.common.data.map.HTBlockCrushingMaterialRecipe
 import hiiragi283.ragium.common.data.map.HTCompressingMaterialRecipe
 import hiiragi283.ragium.common.data.map.HTCrushingMaterialRecipe
+import hiiragi283.ragium.common.data.map.HTDataModelEntityIngredient
 import hiiragi283.ragium.common.data.map.HTRawSmeltingMaterialRecipe
 import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -162,6 +164,13 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                 HTSoulVialEntityIngredient,
                 false,
                 ModLoadedCondition(RagiumConst.EIO_BASE),
+            )
+            // HNN
+            .add(
+                Hostile.Items.DATA_MODEL,
+                HTDataModelEntityIngredient,
+                false,
+                ModLoadedCondition(RagiumConst.HOSTILE_NETWORKS),
             )
     }
 

@@ -68,9 +68,10 @@ data class HTEntityTypeIngredient private constructor(private val holderSet: Hol
             for ((key: ResourceKey<Item>, ingredient: HTSubEntityTypeIngredient) in dataMap) {
                 registry
                     .getHolder(key)
-                    .map { item: Holder.Reference<Item> -> ingredient.getPreviewStack(item, holder) }
+                    .stream()
+                    .flatMap { item: Holder.Reference<Item> -> ingredient.getPreviewStack(item, holder) }
                     .filter { stack: ItemStack -> !stack.isEmpty }
-                    .ifPresent(this::add)
+                    .forEach(this::add)
             }
         }
     }.stream()
