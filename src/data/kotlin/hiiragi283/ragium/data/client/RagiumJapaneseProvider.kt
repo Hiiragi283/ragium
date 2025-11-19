@@ -9,7 +9,6 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDa
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDelightContents
@@ -179,15 +178,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun entity() {
-        add(RagiumEntityTypes.BLAST_CHARGE, "ブラストチャージ")
         add(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
-
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            val value: String = tier.translate(type, "%s付きトロッコ")
-            add(tier.getEntityType(), value)
-            add(tier.getMinecartItem(), value)
-        }
-
         // add(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
         // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
         // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
@@ -252,7 +243,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.DRILL, "電動ドリル")
 
         add(RagiumItems.ADVANCED_MAGNET, "発展らぎマグネット")
-        add(RagiumItems.BLAST_CHARGE, "ブラストチャージ")
         add(RagiumItems.BLUE_KNOWLEDGE, "青の知識")
         add(RagiumItems.DYNAMIC_LANTERN, "らぎランタン")
         add(RagiumItems.ELDRITCH_EGG, "異質な卵")

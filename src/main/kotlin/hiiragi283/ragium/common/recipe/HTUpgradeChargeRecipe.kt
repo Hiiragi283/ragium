@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.setup.RagiumDataComponents
-import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
@@ -14,13 +14,13 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.Tags
 
-class HTUpgradeBlastChargeRecipe(category: CraftingBookCategory) : CustomRecipe(category) {
+class HTUpgradeChargeRecipe(category: CraftingBookCategory) : CustomRecipe(category) {
     override fun matches(input: CraftingInput, level: Level): Boolean {
         var blastCharge = 0
         var gunpowder = 0
         for (stack: ImmutableItemStack? in ImmutableRecipeInput(input)) {
             if (stack == null) continue
-            if (stack.isOf(RagiumItems.BLAST_CHARGE)) {
+            if (HTChargeVariant.entries.any { variant: HTChargeVariant -> variant.isOf(stack) }) {
                 blastCharge++
             } else if (stack.isOf(Tags.Items.GUNPOWDERS)) {
                 gunpowder++
@@ -49,5 +49,5 @@ class HTUpgradeBlastChargeRecipe(category: CraftingBookCategory) : CustomRecipe(
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width * height >= 2
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.UPGRADE_BLAST_CHARGE
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.UPGRADE_CHARGE
 }

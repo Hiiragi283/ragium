@@ -9,7 +9,6 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDa
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDelightContents
@@ -188,15 +187,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun entity() {
-        add(RagiumEntityTypes.BLAST_CHARGE, "Blast Charge")
         add(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
-
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            val value: String = tier.translate(type, "Minecart with %s")
-            add(tier.getEntityType(), value)
-            add(tier.getMinecartItem(), value)
-        }
-
         // add(RagiumEntityTypes.DYNAMITE, "Dynamite")
         // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
         // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
@@ -261,7 +252,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.DRILL, "Electric Drill")
 
         add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
-        add(RagiumItems.BLAST_CHARGE, "Blast Charge")
         add(RagiumItems.BLUE_KNOWLEDGE, "Blue Knowledge")
         add(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")
         add(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")

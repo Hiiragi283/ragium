@@ -30,6 +30,7 @@ import hiiragi283.ragium.common.block.HTWarpedWartBlock
 import hiiragi283.ragium.common.block.glass.HTCrimsonGlassBlock
 import hiiragi283.ragium.common.block.glass.HTGlassBlock
 import hiiragi283.ragium.common.block.glass.HTObsidianGlass
+import hiiragi283.ragium.common.block.glass.HTQuartzGlassBlock
 import hiiragi283.ragium.common.block.glass.HTWarpedGlassBlock
 import hiiragi283.ragium.common.block.processor.HTRefineryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
@@ -267,7 +268,7 @@ object RagiumBlocks {
         }
 
         // Quartz
-        glass(VanillaMaterialKeys.QUARTZ, ::HTGlassBlock, glass())
+        glass(VanillaMaterialKeys.QUARTZ, ::HTQuartzGlassBlock, glass())
 
         // Obsidian
         glass(VanillaMaterialKeys.OBSIDIAN, ::HTObsidianGlass)

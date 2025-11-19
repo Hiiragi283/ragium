@@ -12,11 +12,12 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.HTUpgradeBlastChargeRecipe
+import hiiragi283.ragium.common.recipe.HTUpgradeChargeRecipe
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
@@ -75,7 +76,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         molten()
 
         forgeHammers()
-
+        charges()
         lootTickets()
     }
 
@@ -199,18 +200,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun molten() {
-        // Crimson
-        HTShapedRecipeBuilder
-            .equipment(RagiumItems.BLAST_CHARGE, 8)
-            .hollow8()
-            .define('A', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.CRIMSON_CRYSTAL)
-            .define('B', Items.PAPER)
-            .save(output)
-
-        save(
-            RagiumAPI.id("shapeless/upgrade_blast_charge"),
-            HTUpgradeBlastChargeRecipe(CraftingBookCategory.EQUIPMENT),
-        )
         // Warped
         HTShapedRecipeBuilder
             .equipment(RagiumItems.TELEPORT_KEY)
@@ -272,6 +261,27 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY),
         ).addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
+    }
+
+    @JvmStatic
+    private fun charges() {
+        save(
+            RagiumAPI.id("shapeless/upgrade_charge"),
+            HTUpgradeChargeRecipe(CraftingBookCategory.EQUIPMENT),
+        )
+
+        for (variant: HTChargeVariant in HTChargeVariant.entries) {
+            val material: HTMaterialKey = when (variant) {
+                HTChargeVariant.BLAST -> RagiumMaterialKeys.CRIMSON_CRYSTAL
+                HTChargeVariant.FISHING -> RagiumMaterialKeys.AZURE
+            }
+            HTShapedRecipeBuilder
+                .equipment(variant, 8)
+                .hollow8()
+                .define('A', CommonMaterialPrefixes.DUST, material)
+                .define('B', Items.PAPER)
+                .save(output)
+        }
     }
 
     @JvmStatic
