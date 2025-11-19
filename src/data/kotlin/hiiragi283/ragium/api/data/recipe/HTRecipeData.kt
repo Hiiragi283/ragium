@@ -220,24 +220,24 @@ data class HTRecipeData private constructor(
 
         fun fuelOrDust(material: HTMaterialLike, count: Int = 1): Builder = addInput(
             listOf(
-                CommonMaterialPrefixes.DUST.itemTagKey(material),
                 CommonMaterialPrefixes.FUEL.itemTagKey(material),
+                CommonMaterialPrefixes.DUST.itemTagKey(material),
             ),
             count,
         )
 
         fun gemOrDust(material: HTMaterialLike, count: Int = 1): Builder = addInput(
             listOf(
-                CommonMaterialPrefixes.DUST.itemTagKey(material),
                 CommonMaterialPrefixes.GEM.itemTagKey(material),
+                CommonMaterialPrefixes.DUST.itemTagKey(material),
             ),
             count,
         )
 
         fun ingotOrDust(material: HTMaterialLike, count: Int = 1): Builder = addInput(
             listOf(
-                CommonMaterialPrefixes.DUST.itemTagKey(material),
                 CommonMaterialPrefixes.INGOT.itemTagKey(material),
+                CommonMaterialPrefixes.DUST.itemTagKey(material),
             ),
             count,
         )
