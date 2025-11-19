@@ -102,34 +102,22 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun glass() {
-        // Quartz Glass
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(RagiumBlocks.getGlass(VanillaMaterialKeys.QUARTZ)),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ),
-                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-            ).save(output)
-        // Soul Glass
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(RagiumBlocks.getGlass(VanillaMaterialKeys.SOUL)),
-                itemCreator.fromItem(Items.SOUL_SAND),
-                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
-            ).save(output)
-        // Obsidian Glass
-        HTCombineItemToObjRecipeBuilder
-            .alloying(
-                resultHelper.item(RagiumBlocks.getGlass(VanillaMaterialKeys.OBSIDIAN)),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
-                itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED),
-            ).save(output)
-
-        // Normal -> Tinted
-        listOf(
+        val materials: List<HTMaterialKey> = listOf(
+            // Vanilla
             VanillaMaterialKeys.QUARTZ,
-            VanillaMaterialKeys.SOUL,
             VanillaMaterialKeys.OBSIDIAN,
-        ).forEach { key: HTMaterialKey ->
+            // Ragium
+            RagiumMaterialKeys.WARPED_CRYSTAL,
+        )
+        for (key: HTMaterialKey in materials) {
+            // Normal
+            HTCombineItemToObjRecipeBuilder
+                .alloying(
+                    resultHelper.item(RagiumBlocks.getGlass(key)),
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, key, 4),
+                    itemCreator.fromTagKey(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC),
+                ).save(output)
+            // Normal -> Tinted
             HTShapedRecipeBuilder
                 .building(RagiumBlocks.getTintedGlass(key))
                 .hollow4()

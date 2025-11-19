@@ -213,16 +213,14 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Night Metal
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                itemHelper.from(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
-                chemicalHelper.fromHolder(MekanismChemicals.GOLD, 10),
+                itemHelper.from(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GOLD),
+                chemicalHelper.fromHolder(MekanismChemicals.REFINED_OBSIDIAN, 20),
                 RagiumItems.getIngot(RagiumMaterialKeys.NIGHT_METAL).toStack(),
                 false,
             ).build(output, id("metallurgic_infusing/night_metal"))
 
         crushFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
         crushFromData(VanillaMaterialRecipeData.ECHO_DUST)
-
-        crushFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
     }
 
     //    Extensions    //

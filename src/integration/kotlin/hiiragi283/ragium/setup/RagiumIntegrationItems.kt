@@ -19,7 +19,9 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
+import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -89,9 +91,14 @@ object RagiumIntegrationItems {
         VanillaMaterialKeys.COAL -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_CARBON)
         VanillaMaterialKeys.REDSTONE -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_REDSTONE)
         VanillaMaterialKeys.DIAMOND -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_DIAMOND)
-        VanillaMaterialKeys.OBSIDIAN -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_OBSIDIAN)
         VanillaMaterialKeys.GOLD -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_GOLD)
-        else -> getMaterial(MekanismMaterialPrefixes.ENRICHED, key)
+        else -> {
+            when {
+                ModMaterialKeys.Alloys.REFINED_OBSIDIAN.isOf(key) -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_OBSIDIAN)
+                CommonMaterialKeys.Metals.TIN.isOf(key) -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_TIN)
+                else -> getMaterial(MekanismMaterialPrefixes.ENRICHED, key)
+            }
+        }
     }
 
     //    Tools    //

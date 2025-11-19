@@ -56,12 +56,6 @@ object VanillaMaterialKeys {
     val GLOWSTONE: HTMaterialKey = HTMaterialKey.of("glowstone")
 
     @JvmStatic
-    val SOUL: HTMaterialKey = HTMaterialKey.of("soul")
-
-    @JvmStatic
-    val BLACKSTONE: HTMaterialKey = HTMaterialKey.of("blackstone")
-
-    @JvmStatic
     val OBSIDIAN: HTMaterialKey = HTMaterialKey.of("obsidian")
 
     @JvmStatic

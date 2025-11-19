@@ -97,7 +97,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun particle() {
         ParticleCollisionRecipeBuilder
             .build()
-            .input(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN)
+            .input(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO)
             .input(Items.DEEPSLATE)
             .result(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL))
             .time(2500)
@@ -109,7 +109,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         // Vanilla
         pulverizerFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
         pulverizerFromData(VanillaMaterialRecipeData.ECHO_DUST)
-        pulverizerFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
         // Ragium
         pulverizerFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
         pulverizerFromData(RagiumMaterialRecipeData.CRIMSON_ORE)

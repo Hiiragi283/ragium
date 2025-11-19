@@ -12,6 +12,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
 data object RagiumMaterialRecipeData {
@@ -194,8 +195,8 @@ data object RagiumMaterialRecipeData {
     @JvmField
     val NIGHT_METAL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.GOLD)
-        addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4)
-        addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.BLACKSTONE, 4)
+        addInput(Tags.Items.OBSIDIANS)
+        addInput(Items.BLACKSTONE, count = 4)
 
         addOutput(RagiumItems.getIngot(RagiumMaterialKeys.NIGHT_METAL), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
     }

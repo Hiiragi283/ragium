@@ -78,6 +78,9 @@ object RagiumBlocks {
         }
         // Raw Meat
         REGISTER.addAlias("meat_block", "raw_meat_block")
+        // Warped Glass
+        REGISTER.addAlias("soul_glass", "warped_crystal_glass")
+        REGISTER.addAlias("tinted_soul_glass", "tinted_warped_crystal_glass")
     }
 
     @JvmStatic
@@ -250,8 +253,8 @@ object RagiumBlocks {
         }
 
         glass(VanillaMaterialKeys.QUARTZ, glass(), canPlayerThrough = false, blastProof = false)
-        glass(VanillaMaterialKeys.SOUL, glass(), canPlayerThrough = true, blastProof = false)
         glass(VanillaMaterialKeys.OBSIDIAN, glass(), canPlayerThrough = false, blastProof = true)
+        glass(RagiumMaterialKeys.WARPED_CRYSTAL, glass(), canPlayerThrough = true, blastProof = false)
 
         // Tinted Glasses
         fun tintedGlass(
@@ -268,8 +271,8 @@ object RagiumBlocks {
         }
 
         tintedGlass(VanillaMaterialKeys.QUARTZ, glass(), canPlayerThrough = false, blastProof = false)
-        tintedGlass(VanillaMaterialKeys.SOUL, glass(), canPlayerThrough = true, blastProof = false)
         tintedGlass(VanillaMaterialKeys.OBSIDIAN, glass(), canPlayerThrough = false, blastProof = true)
+        tintedGlass(RagiumMaterialKeys.WARPED_CRYSTAL, glass(), canPlayerThrough = true, blastProof = false)
     }
 
     @JvmStatic
