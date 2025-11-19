@@ -33,9 +33,9 @@ import hiiragi283.ragium.common.item.food.HTAmbrosiaItem
 import hiiragi283.ragium.common.item.food.HTIceCreamItem
 import hiiragi283.ragium.common.item.food.HTPotionBundleItem
 import hiiragi283.ragium.common.item.food.HTPotionSodaItem
-import hiiragi283.ragium.common.item.tool.HTBlastChargeItem
 import hiiragi283.ragium.common.item.tool.HTBottledBeeItem
 import hiiragi283.ragium.common.item.tool.HTCaptureEggItem
+import hiiragi283.ragium.common.item.tool.HTChargeItem
 import hiiragi283.ragium.common.item.tool.HTDestructionHammerItem
 import hiiragi283.ragium.common.item.tool.HTDrillItem
 import hiiragi283.ragium.common.item.tool.HTDynamicLanternItem
@@ -61,6 +61,7 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTItemHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.config.RagiumConfig
@@ -317,7 +318,9 @@ object RagiumItems {
 
     // Crimson
     @JvmField
-    val BLAST_CHARGE: HTSimpleDeferredItem = REGISTER.registerItem("blast_charge", ::HTBlastChargeItem)
+    val CHARGES: Map<HTChargeVariant, HTSimpleDeferredItem> = HTChargeVariant.entries.associateWith { variant: HTChargeVariant ->
+        REGISTER.registerItemWith("${variant.variantName()}_charge", variant, ::HTChargeItem)
+    }
 
     // Warped
     @JvmField
@@ -662,7 +665,10 @@ object RagiumItems {
         setEnch(ECHO_STAR, RagiumEnchantments.SONIC_PROTECTION)
         modify(UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR, DyeColor.WHITE)
 
-        modify(BLAST_CHARGE, RagiumDataComponents.BLAST_POWER, 4f)
+        for (item: HTSimpleDeferredItem in CHARGES.values) {
+            modify(item, RagiumDataComponents.BLAST_POWER, 4f)
+        }
+
         setDesc(DYNAMIC_LANTERN, RagiumCommonTranslation.DYNAMIC_LANTERN)
         setDesc(ELDRITCH_EGG, RagiumCommonTranslation.ELDRITCH_EGG)
         setDesc(MAGNET, RagiumCommonTranslation.MAGNET)

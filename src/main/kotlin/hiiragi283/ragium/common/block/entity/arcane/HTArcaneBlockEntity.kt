@@ -21,6 +21,8 @@ abstract class HTArcaneBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Holde
     HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
     //    Ticking    //
 
+    override fun getRequiredEnergy(recipe: RECIPE): Int = 15 * 20 * 10
+
     final override fun gatherEnergy(level: ServerLevel, pos: BlockPos): Int = EnchantingTableBlock.BOOKSHELF_OFFSETS
         .filter { posIn: BlockPos -> EnchantingTableBlock.isValidBookShelf(level, pos, posIn) }
         .map { posIn: BlockPos ->

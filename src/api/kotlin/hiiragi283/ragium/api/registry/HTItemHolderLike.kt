@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.function.andThen
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.downCast
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
@@ -74,6 +75,8 @@ interface HTItemHolderLike :
     }
 
     fun isOf(stack: ItemStack): Boolean = stack.`is`(this.asItem())
+
+    fun isOf(stack: ImmutableItemStack): Boolean = stack.isOf(this.asItem())
 
     /**
      * 指定した[count]から[ItemStack]を返します。
