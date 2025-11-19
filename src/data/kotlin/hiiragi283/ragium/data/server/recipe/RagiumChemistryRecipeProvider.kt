@@ -209,11 +209,11 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.fluid(RagiumFluidContents.MIXTURE_ACID, 1000))
             .save(output)
         // Mixture Acid -> Nitropowder
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.CRIMSON_CRYSTAL))
-            .addIngredient(fluidCreator.fromContent(RagiumFluidContents.MIXTURE_ACID, 1000))
-            .setResult(resultHelper.item(RagiumItems.NITROPOWDER))
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.CRIMSON_CRYSTAL),
+                fluidCreator.fromContent(RagiumFluidContents.MIXTURE_ACID, 1000),
+            ).addResult(resultHelper.item(RagiumItems.NITROPOWDER))
             .save(output)
 
         // Nitropowder -> Gunpowder
@@ -283,10 +283,10 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fluidCreator.fromContent(RagiumFluidContents.NAPHTHA, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000))
             .save(output)
-        // Fuel + Crimson Crystal -> Crimson Fuel
+        // Fuel + Nitropowder -> Crimson Fuel
         HTMixingRecipeBuilder
             .create()
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL))
+            .addIngredient(itemCreator.fromItem(RagiumItems.NITROPOWDER))
             .addIngredient(fluidCreator.fromContent(RagiumFluidContents.FUEL, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.CRIMSON_FUEL, 1000))
             .save(output)

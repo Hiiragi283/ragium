@@ -66,11 +66,6 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     COMMAND_ENERGY_GET("command", "energy_network.get"),
     COMMAND_ENERGY_SET("command", "energy_network.set"),
 
-    // Creative Mode Tab
-    CREATIVE_TAB_BLOCKS("itemGroup", "blocks"),
-    CREATIVE_TAB_INGREDIENTS("itemGroup", "ingredients"),
-    CREATIVE_TAB_ITEMS("itemGroup", "items"),
-
     // Error
     NO_DESTINATION("error", "no_destination"),
     UNKNOWN_DIMENSION("error", "unknown_dimension"),

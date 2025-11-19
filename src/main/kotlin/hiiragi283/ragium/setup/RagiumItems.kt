@@ -154,9 +154,6 @@ object RagiumItems {
     val ELDER_HEART: HTSimpleDeferredItem = REGISTER.registerSimpleItem("elder_heart") { it.rarity(Rarity.UNCOMMON) }
 
     @JvmField
-    val POTION_DROP: HTSimpleDeferredItem = REGISTER.registerItem("potion_drop", ::HTPotionDropItem)
-
-    @JvmField
     val WITHER_DOLl: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_doll")
 
     @JvmStatic
@@ -268,29 +265,6 @@ object RagiumItems {
     @JvmStatic
     fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredItem> = MATERIALS.row(prefix.asMaterialPrefix())
 
-    @JvmField
-    val COILS: Map<HTMaterialKey, HTSimpleDeferredItem> = arrayOf(RagiumMaterialKeys.RAGI_ALLOY, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-        .associateWith { key: HTMaterialKey -> REGISTER.registerSimpleItem("${key.name}_coil") }
-
-    @JvmField
-    val CIRCUITS: Map<HTCircuitTier, HTDeferredItem<*>> = HTCircuitTier.entries.associateWith { tier: HTCircuitTier ->
-        REGISTER.registerItemWith("${tier.asMaterialName()}_circuit", tier, ::HTTierBasedItem)
-    }
-
-    @JvmField
-    val COMPONENTS: Map<HTComponentTier, HTDeferredItem<*>> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
-        REGISTER.registerItemWith("${tier.asMaterialName()}_component", tier, ::HTTierBasedItem)
-    }
-
-    @JvmStatic
-    fun getCoil(key: HTMaterialKey): HTDeferredItem<*> = COILS[key]!!
-
-    @JvmStatic
-    fun getCircuit(tier: HTCircuitTier): HTDeferredItem<*> = CIRCUITS[tier]!!
-
-    @JvmStatic
-    fun getComponent(tier: HTComponentTier): HTDeferredItem<*> = COMPONENTS[tier]!!
-
     //    Armors    //
 
     @JvmField
@@ -299,13 +273,14 @@ object RagiumItems {
 
     @JvmStatic
     val ARMORS: ImmutableTable<HTArmorVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
-        fun register(variant: HTArmorVariant, material: HTEquipmentMaterial) {
-            this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
-        }
-        // Azure, Deep
-        for (variant: HTArmorVariant in HTArmorVariant.entries) {
-            register(variant, RagiumEquipmentMaterials.AZURE_STEEL)
-            register(variant, RagiumEquipmentMaterials.DEEP_STEEL)
+        val materials: List<HTEquipmentMaterial> = listOf(
+            RagiumEquipmentMaterials.AZURE_STEEL,
+            RagiumEquipmentMaterials.DEEP_STEEL,
+        )
+        for (material: HTEquipmentMaterial in materials) {
+            for (variant: HTArmorVariant in HTArmorVariant.entries) {
+                this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
+            }
         }
     }
 
@@ -375,39 +350,6 @@ object RagiumItems {
     @JvmField
     val HUGE_DRUM_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
 
-    @JvmStatic
-    val TOOLS: ImmutableTable<HTToolVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
-        fun register(variant: HTToolVariant, material: HTEquipmentMaterial) {
-            this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
-        }
-        // Hammer
-        register(HTHammerToolVariant, RagiumEquipmentMaterials.RAGI_ALLOY)
-        this[HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL] = REGISTER.registerItemWith(
-            "ragi_crystal_hammer",
-            RagiumEquipmentMaterials.RAGI_CRYSTAL,
-            HTDestructionHammerItem::create,
-        )
-        // Tools
-        for (variant: VanillaToolVariant in VanillaToolVariant.entries) {
-            // Azure Iron
-            register(variant, RagiumEquipmentMaterials.AZURE_STEEL)
-            // Deep Steel
-            register(variant, RagiumEquipmentMaterials.DEEP_STEEL)
-            // Night Metal
-            register(variant, RagiumEquipmentMaterials.NIGHT_METAL)
-        }
-    }
-
-    @JvmStatic
-    fun getTool(variant: HTToolVariant, material: HTMaterialLike): HTDeferredItem<*> = TOOLS[variant, material.asMaterialKey()]
-        ?: error("Unknown ${variant.variantName()} item for ${material.asMaterialName()}")
-
-    @JvmStatic
-    fun getHammer(material: HTMaterialLike): HTDeferredItem<*> = getTool(HTHammerToolVariant, material)
-
-    @JvmStatic
-    fun getToolMap(material: HTMaterialLike): Map<HTToolVariant, HTDeferredItem<*>> = TOOLS.column(material.asMaterialKey())
-
     @JvmField
     val SMITHING_TEMPLATES: Map<HTMaterialKey, HTSimpleDeferredItem> = listOf(
         RagiumMaterialKeys.AZURE_STEEL,
@@ -423,6 +365,40 @@ object RagiumItems {
     fun getSmithingTemplate(material: HTMaterialLike): HTSimpleDeferredItem =
         SMITHING_TEMPLATES[material.asMaterialKey()] ?: error("Unknown smithing template for ${material.asMaterialName()}")
 
+    @JvmStatic
+    val TOOLS: ImmutableTable<HTToolVariant, HTMaterialKey, HTDeferredItem<*>> = buildTable {
+        fun register(variant: HTToolVariant, material: HTEquipmentMaterial) {
+            this[variant, material.asMaterialKey()] = variant.registerItem(REGISTER, material)
+        }
+        // Hammer
+        register(HTHammerToolVariant, RagiumEquipmentMaterials.RAGI_ALLOY)
+        this[HTHammerToolVariant, RagiumMaterialKeys.RAGI_CRYSTAL] = REGISTER.registerItemWith(
+            "ragi_crystal_hammer",
+            RagiumEquipmentMaterials.RAGI_CRYSTAL,
+            HTDestructionHammerItem::create,
+        )
+        // Tools
+        listOf(
+            RagiumEquipmentMaterials.AZURE_STEEL,
+            RagiumEquipmentMaterials.DEEP_STEEL,
+            RagiumEquipmentMaterials.NIGHT_METAL,
+        ).forEach { material: HTEquipmentMaterial ->
+            for (variant: HTToolVariant in VanillaToolVariant.entries) {
+                register(variant, material)
+            }
+        }
+    }
+
+    @JvmStatic
+    fun getTool(variant: HTToolVariant, material: HTMaterialLike): HTDeferredItem<*> = TOOLS[variant, material.asMaterialKey()]
+        ?: error("Unknown ${variant.variantName()} item for ${material.asMaterialName()}")
+
+    @JvmStatic
+    fun getHammer(material: HTMaterialLike): HTDeferredItem<*> = getTool(HTHammerToolVariant, material)
+
+    @JvmStatic
+    fun getToolMap(material: HTMaterialLike): Map<HTToolVariant, HTDeferredItem<*>> = TOOLS.column(material.asMaterialKey())
+
     //    Foods    //
 
     @JvmStatic
@@ -435,6 +411,9 @@ object RagiumItems {
 
     @JvmField
     val ICE_CREAM_SODA: HTSimpleDeferredItem = REGISTER.registerItem("ice_cream_soda", ::HTPotionSodaItem)
+
+    @JvmField
+    val POTION_DROP: HTSimpleDeferredItem = REGISTER.registerItem("potion_drop", ::HTPotionDropItem)
 
     // Meat
     @JvmField
@@ -473,6 +452,29 @@ object RagiumItems {
     val AMBROSIA: HTSimpleDeferredItem = REGISTER.registerItem("ambrosia", ::HTAmbrosiaItem) { it.food(RagiumFoods.AMBROSIA) }
 
     //    Machine Parts    //
+
+    @JvmField
+    val COILS: Map<HTMaterialKey, HTSimpleDeferredItem> = arrayOf(RagiumMaterialKeys.RAGI_ALLOY, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+        .associateWith { key: HTMaterialKey -> REGISTER.registerSimpleItem("${key.name}_coil") }
+
+    @JvmField
+    val CIRCUITS: Map<HTCircuitTier, HTDeferredItem<*>> = HTCircuitTier.entries.associateWith { tier: HTCircuitTier ->
+        REGISTER.registerItemWith("${tier.asMaterialName()}_circuit", tier, ::HTTierBasedItem)
+    }
+
+    @JvmField
+    val COMPONENTS: Map<HTComponentTier, HTDeferredItem<*>> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
+        REGISTER.registerItemWith("${tier.asMaterialName()}_component", tier, ::HTTierBasedItem)
+    }
+
+    @JvmStatic
+    fun getCoil(key: HTMaterialKey): HTDeferredItem<*> = COILS[key]!!
+
+    @JvmStatic
+    fun getCircuit(tier: HTCircuitTier): HTDeferredItem<*> = CIRCUITS[tier]!!
+
+    @JvmStatic
+    fun getComponent(tier: HTComponentTier): HTDeferredItem<*> = COMPONENTS[tier]!!
 
     @JvmField
     val GRAVITATIONAL_UNIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("gravitational_unit")

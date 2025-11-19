@@ -112,10 +112,10 @@ class RagiumEmiPlugin : EmiPlugin {
         // Functions
         registry.addGenericStackProvider(RagiumEmiStackProvider)
 
-        registry.setDefaultComparison(
-            RagiumItems.POTION_DROP.get(),
-            Comparison.compareData { stack: EmiStack -> stack.get(DataComponents.POTION_CONTENTS) },
-        )
+        val potion: Comparison = Comparison.compareData { stack: EmiStack -> stack.get(DataComponents.POTION_CONTENTS) }
+        registry.setDefaultComparison(RagiumItems.ICE_CREAM_SODA.get(), potion)
+        registry.setDefaultComparison(RagiumItems.POTION_DROP.get(), potion)
+
         registry.setDefaultComparison(
             RagiumItems.LOOT_TICKET.get(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TICKET) },
