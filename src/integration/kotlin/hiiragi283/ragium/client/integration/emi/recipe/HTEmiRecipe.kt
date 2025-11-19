@@ -18,6 +18,8 @@ import net.minecraft.client.gui.components.events.AbstractContainerEventHandler
 import net.minecraft.client.gui.components.events.GuiEventListener
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
+import java.util.Random
+import java.util.function.Function
 
 /**
  * @see mekanism.client.recipe_viewer.emi.recipe.MekanismEmiRecipe
@@ -133,5 +135,17 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     ): SlotWidget = when {
         large -> addSlot(output(index), x - 4, y - 4).large(true)
         else -> addSlot(output(index), x, y)
+    }.recipeContext(this@HTEmiRecipe).drawBack(drawBack)
+
+    fun WidgetHolder.addGeneratedOutput(
+        factory: Function<Random, EmiIngredient>,
+        unique: Int,
+        x: Int,
+        y: Int,
+        large: Boolean = false,
+        drawBack: Boolean = true,
+    ): SlotWidget = when {
+        large -> addGeneratedSlot(factory, unique, x - 4, y - 4).large(true)
+        else -> addGeneratedSlot(factory, unique, x, y)
     }.recipeContext(this@HTEmiRecipe).drawBack(drawBack)
 }

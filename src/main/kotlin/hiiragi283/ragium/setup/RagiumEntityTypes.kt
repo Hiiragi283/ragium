@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
+import hiiragi283.ragium.common.entity.charge.HTConfusingCharge
 import hiiragi283.ragium.common.entity.charge.HTFishingCharge
 import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
@@ -41,9 +42,10 @@ object RagiumEntityTypes {
     val CHARGES: Map<HTChargeVariant, HTDeferredEntityType<out HTAbstractCharge>> =
         HTChargeVariant.entries.associateWith { variant: HTChargeVariant ->
             val factory: (EntityType<out HTAbstractCharge>, Level) -> HTAbstractCharge = when (variant) {
-                HTChargeVariant.BLAST -> ::HTBlastCharge
                 HTChargeVariant.FISHING -> ::HTFishingCharge
+                HTChargeVariant.BLAST -> ::HTBlastCharge
                 HTChargeVariant.TELEPORT -> ::HTTeleportCharge
+                HTChargeVariant.CONFUSING -> ::HTConfusingCharge
             }
             registerThrowable("${variant.variantName()}_charge", factory)
         }
