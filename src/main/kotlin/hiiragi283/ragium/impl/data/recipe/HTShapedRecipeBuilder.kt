@@ -52,7 +52,9 @@ class HTShapedRecipeBuilder(private val category: CraftingBookCategory, stack: I
 
     private val patterns: MutableList<String> = mutableListOf()
 
-    fun pattern(vararg pattern: String): HTShapedRecipeBuilder = apply {
+    fun pattern(vararg pattern: String): HTShapedRecipeBuilder = pattern(pattern.toList())
+
+    fun pattern(pattern: Iterable<String>): HTShapedRecipeBuilder = apply {
         check(pattern.map(String::length).toSet().size == 1) { "Each pattern must be the same length!" }
         patterns.addAll(pattern)
     }
