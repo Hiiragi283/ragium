@@ -3,50 +3,47 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.ragium.api.recipe.HTCustomRecipe
 import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.Tags
 
-class HTUpgradeChargeRecipe(category: CraftingBookCategory) : HTCustomRecipe(category) {
+class HTGravitationalUpgradeRecipe(category: CraftingBookCategory) : HTCustomRecipe(category) {
     override fun matches(input: ImmutableRecipeInput, level: Level): Boolean {
-        var blastCharge = 0
-        var gunpowder = 0
+        var chestplate = 0
+        var component = 0
         for (stack: ImmutableItemStack? in input) {
             if (stack == null) continue
-            if (HTChargeVariant.entries.any { variant: HTChargeVariant -> variant.isOf(stack) }) {
-                blastCharge++
-            } else if (stack.isOf(Tags.Items.GUNPOWDERS)) {
-                gunpowder++
+            if (stack.isOf(ItemTags.CHEST_ARMOR)) {
+                chestplate++
+            } else if (stack.isOf(RagiumItems.GRAVITATIONAL_UNIT)) {
+                component++
             }
         }
-        return blastCharge == 1 && gunpowder > 1
+        return chestplate == 1 && component == 1
     }
 
     override fun assemble(input: ImmutableRecipeInput, registries: HolderLookup.Provider): ItemStack {
-        var blastCharge: ItemStack = ItemStack.EMPTY
-        var gunpowder = 0
+        var item: ItemStack = ItemStack.EMPTY
         for (stack: ImmutableItemStack? in input) {
             if (stack == null) continue
-            if (stack.has(RagiumDataComponents.BLAST_POWER)) {
-                blastCharge = stack.unwrap()
-            } else if (stack.isOf(Tags.Items.GUNPOWDERS)) {
-                gunpowder++
+            if (stack.isOf(ItemTags.CHEST_ARMOR)) {
+                item = stack.unwrap()
+                break
             }
         }
-        if (blastCharge.isEmpty || gunpowder < 0) {
-            return ItemStack.EMPTY
+        if (!item.isEmpty) {
+            item.set(RagiumDataComponents.ANTI_GRAVITY, true)
         }
-        blastCharge.update(RagiumDataComponents.BLAST_POWER, 4f) { it + gunpowder.toFloat() }
-        return blastCharge
+        return item
     }
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width * height >= 2
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.UPGRADE_CHARGE
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.GRAVITATIONAL_UPGRADE
 }

@@ -10,20 +10,17 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
+import hiiragi283.ragium.common.recipe.HTEternalUpgradeRecipe
+import hiiragi283.ragium.common.recipe.HTGravitationalUpgradeRecipe
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.component.Unbreakable
-import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -39,15 +36,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', Items.END_CRYSTAL)
             .save(output)
         save(
-            gravityUnit.getIdWithPrefix("smithing/"),
-            HTSmithingModifyRecipe(
-                Ingredient.of(gravityUnit),
-                Ingredient.of(),
-                DataComponentPatch
-                    .builder()
-                    .set(RagiumDataComponents.ANTI_GRAVITY, true)
-                    .build(),
-            ),
+            RagiumAPI.id("crafting", "gravitational_upgrade"),
+            HTGravitationalUpgradeRecipe(CraftingBookCategory.EQUIPMENT),
         )
 
         catalyst()
@@ -234,15 +224,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', ultimate)
             .save(output)
         save(
-            RagiumAPI.id("smithing/eternal_ticket"),
-            HTSmithingModifyRecipe(
-                Ingredient.of(eternal),
-                Ingredient.of(),
-                DataComponentPatch
-                    .builder()
-                    .set(DataComponents.UNBREAKABLE, Unbreakable(true))
-                    .build(),
-            ),
+            RagiumAPI.id("crafting", "eternal_upgrade"),
+            HTEternalUpgradeRecipe(CraftingBookCategory.EQUIPMENT),
         )
     }
 

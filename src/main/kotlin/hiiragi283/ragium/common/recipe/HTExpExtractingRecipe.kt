@@ -1,0 +1,52 @@
+package hiiragi283.ragium.common.recipe
+
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
+import hiiragi283.ragium.common.util.HTExperienceHelper
+import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentHelper
+
+data object HTExpExtractingRecipe : HTComplexRecipe {
+    override fun test(input: HTMultiRecipeInput): Boolean =
+        EnchantmentHelper.canStoreEnchantments(input.getItem(0)) && input.getItem(1).`is`(Items.GRINDSTONE)
+
+    /**
+     * @see net.minecraft.world.inventory.GrindstoneMenu
+     */
+    override fun assembleItem(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? {
+        val tool: ItemStack = input.getItem(0)
+        return tool.toImmutable()?.minus(EnchantmentHelper.getComponentType(tool))
+    }
+
+    override fun isIncomplete(): Boolean = false
+
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.EXP_EXTRACTING
+
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.EXTRACTING.get()
+
+    override fun getRequiredCount(index: Int, stack: ImmutableItemStack): Int = when (index) {
+        0 -> 1
+        else -> 0
+    }
+
+    override fun getRequiredAmount(index: Int, stack: ImmutableFluidStack): Int = 0
+
+    override fun assembleFluid(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? = EnchantmentHelper
+        .getEnchantmentsForCrafting(input.getItem(0))
+        .entrySet()
+        .sumOf { (holder: Holder<Enchantment>, level: Int) -> holder.value().getMinCost(level) }
+        .let(HTExperienceHelper::fluidAmountFromExp)
+        .let(RagiumFluidContents.EXPERIENCE::toImmutableStack)
+}
