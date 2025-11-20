@@ -6,6 +6,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.entity.isOf
+import hiiragi283.ragium.api.util.unwrapEither
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EntityType
@@ -23,9 +24,7 @@ interface HTSubEntityTypeIngredient {
         @JvmStatic
         val CODEC: Codec<HTSubEntityTypeIngredient> = Codec
             .either(Simple.CODEC, DISPATCH_CODEC)
-            .xmap(
-                Either<Simple, HTSubEntityTypeIngredient>::unwrap,
-            ) { ingredient: HTSubEntityTypeIngredient ->
+            .xmap(::unwrapEither) { ingredient: HTSubEntityTypeIngredient ->
                 when (ingredient) {
                     is Simple -> Either.left(ingredient)
                     else -> Either.right(ingredient)

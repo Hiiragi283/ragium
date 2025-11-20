@@ -69,10 +69,11 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.enchantment.Enchantment
@@ -81,6 +82,7 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import java.util.function.UnaryOperator
 
 object RagiumItems {
     @JvmField
@@ -149,18 +151,27 @@ object RagiumItems {
 
     // Misc
     @JvmField
-    val ECHO_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("echo_star") { it.rarity(Rarity.UNCOMMON) }
+    val ECHO_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("echo_star") {
+        it.rarity(Rarity.UNCOMMON).enchantment(RagiumEnchantments.SONIC_PROTECTION)
+    }
 
     @JvmField
-    val ELDER_HEART: HTSimpleDeferredItem = REGISTER.registerSimpleItem("elder_heart") { it.rarity(Rarity.UNCOMMON) }
+    val ELDER_HEART: HTSimpleDeferredItem = REGISTER.registerSimpleItem("elder_heart") {
+        it.rarity(Rarity.UNCOMMON).description(RagiumCommonTranslation.ELDER_HEART)
+    }
 
     @JvmField
     val WITHER_DOLl: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_doll")
 
     @JvmStatic
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
-        fun register(prefix: HTPrefixLike, material: HTMaterialLike, name: String) {
-            this[prefix.asMaterialPrefix(), material.asMaterialKey()] = REGISTER.registerSimpleItem(name)
+        fun register(
+            prefix: HTPrefixLike,
+            material: HTMaterialLike,
+            name: String,
+            operator: UnaryOperator<Item.Properties> = UnaryOperator.identity(),
+        ) {
+            this[prefix.asMaterialPrefix(), material.asMaterialKey()] = REGISTER.registerSimpleItem(name, operator)
         }
 
         // Dusts
@@ -204,20 +215,23 @@ object RagiumItems {
             RagiumMaterialKeys.WARPED_CRYSTAL,
             RagiumMaterialKeys.ELDRITCH_PEARL,
         ).forEach { register(CommonMaterialPrefixes.GEM, it, it.name) }
+
         // Ingots
+        fun ingot(material: HTMaterialLike, operator: UnaryOperator<Item.Properties> = UnaryOperator.identity()) {
+            register(CommonMaterialPrefixes.INGOT, material, "${material.asMaterialName()}_ingot", operator)
+        }
+
         arrayOf(
-            // Metals
             RagiumMaterialKeys.RAGI_ALLOY,
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
             RagiumMaterialKeys.NIGHT_METAL,
             RagiumMaterialKeys.IRIDESCENTIUM,
-            // Foods
-            FoodMaterialKeys.CHOCOLATE,
-            FoodMaterialKeys.RAW_MEAT,
-            FoodMaterialKeys.COOKED_MEAT,
-        ).forEach { register(CommonMaterialPrefixes.INGOT, it, "${it.name}_ingot") }
+        ).forEach(::ingot)
+        ingot(FoodMaterialKeys.CHOCOLATE) { it.food(RagiumFoods.CHOCOLATE) }
+        ingot(FoodMaterialKeys.RAW_MEAT) { it.food(Foods.BEEF) }
+        ingot(FoodMaterialKeys.COOKED_MEAT) { it.food(Foods.COOKED_BEEF) }
         // Nuggets
         arrayOf(
             RagiumMaterialKeys.RAGI_ALLOY,
@@ -296,15 +310,20 @@ object RagiumItems {
 
     // Raginite
     @JvmField
-    val MAGNET: HTSimpleDeferredItem =
-        REGISTER.registerItemWith("ragi_magnet", RagiumConfig.COMMON.basicMagnetRange, ::HTMagnetItem)
+    val MAGNET: HTSimpleDeferredItem = REGISTER.registerItemWith(
+        "ragi_magnet",
+        RagiumConfig.COMMON.basicMagnetRange,
+        ::HTMagnetItem,
+    ) { it.description(RagiumCommonTranslation.MAGNET) }
 
     @JvmField
     val ADVANCED_MAGNET: HTSimpleDeferredItem =
         REGISTER.registerItemWith("advanced_ragi_magnet", RagiumConfig.COMMON.advancedMagnetRange, ::HTMagnetItem)
 
     @JvmField
-    val DYNAMIC_LANTERN: HTSimpleDeferredItem = REGISTER.registerItem("ragi_lantern", ::HTDynamicLanternItem)
+    val DYNAMIC_LANTERN: HTSimpleDeferredItem = REGISTER.registerItem("ragi_lantern", ::HTDynamicLanternItem) {
+        it.description(RagiumCommonTranslation.DYNAMIC_LANTERN)
+    }
 
     @JvmField
     val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
@@ -319,7 +338,11 @@ object RagiumItems {
     // Crimson
     @JvmField
     val CHARGES: Map<HTChargeVariant, HTSimpleDeferredItem> = HTChargeVariant.entries.associateWith { variant: HTChargeVariant ->
-        REGISTER.registerItemWith("${variant.variantName()}_charge", variant, ::HTChargeItem)
+        REGISTER.registerItemWith(
+            "${variant.variantName()}_charge",
+            variant,
+            ::HTChargeItem,
+        ) { it.component(RagiumDataComponents.BLAST_POWER, 4f) }
     }
 
     // Warped
@@ -328,24 +351,31 @@ object RagiumItems {
 
     // Eldritch
     @JvmField
-    val ELDRITCH_EGG: HTSimpleDeferredItem = REGISTER.registerItem("eldritch_egg", ::HTCaptureEggItem)
+    val ELDRITCH_EGG: HTSimpleDeferredItem = REGISTER.registerItem("eldritch_egg", ::HTCaptureEggItem) {
+        it.description(RagiumCommonTranslation.ELDRITCH_EGG)
+    }
 
     @JvmField
-    val UNIVERSAL_BUNDLE: HTSimpleDeferredItem = REGISTER.registerItem("universal_bundle", ::HTUniversalBundleItem)
+    val UNIVERSAL_BUNDLE: HTSimpleDeferredItem = REGISTER.registerItem("universal_bundle", ::HTUniversalBundleItem) {
+        it.component(RagiumDataComponents.COLOR, DyeColor.WHITE)
+    }
 
     // Other
     @JvmField
     val POTION_BUNDLE: HTSimpleDeferredItem = REGISTER.registerItem("potion_bundle", ::HTPotionBundleItem)
 
     @JvmField
-    val SLOT_COVER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("slot_cover")
+    val SLOT_COVER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("slot_cover") {
+        it.description(RagiumCommonTranslation.SLOT_COVER)
+    }
 
     @JvmField
-    val TRADER_CATALOG: HTSimpleDeferredItem = REGISTER.registerItem("trader_catalog", ::HTTraderCatalogItem)
+    val TRADER_CATALOG: HTSimpleDeferredItem = REGISTER.registerItem("trader_catalog", ::HTTraderCatalogItem) {
+        it.description(RagiumCommonTranslation.TRADER_CATALOG)
+    }
 
     @JvmField
-    val MEDIUM_DRUM_UPGRADE: HTSimpleDeferredItem =
-        REGISTER.registerItem("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
+    val MEDIUM_DRUM_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
 
     @JvmField
     val LARGE_DRUM_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("large_drum_upgrade", HTDrumUpgradeItem::Large)
@@ -404,43 +434,57 @@ object RagiumItems {
 
     //    Foods    //
 
-    @JvmStatic
-    private fun registerFood(name: String, foodProperties: FoodProperties): HTSimpleDeferredItem =
-        REGISTER.registerSimpleItem(name) { it.food(foodProperties) }
-
     // Ice Cream
     @JvmField
-    val ICE_CREAM: HTSimpleDeferredItem = REGISTER.registerItem("ice_cream", ::HTIceCreamItem) { it.food(RagiumFoods.ICE_CREAM) }
+    val ICE_CREAM: HTSimpleDeferredItem = REGISTER.registerItem("ice_cream", ::HTIceCreamItem) {
+        it.food(RagiumFoods.ICE_CREAM).description(RagiumCommonTranslation.ICE_CREAM)
+    }
 
     @JvmField
-    val ICE_CREAM_SODA: HTSimpleDeferredItem = REGISTER.registerItem("ice_cream_soda", ::HTPotionSodaItem)
+    val ICE_CREAM_SODA: HTSimpleDeferredItem = REGISTER.registerItem("ice_cream_soda", ::HTPotionSodaItem) {
+        it.foodSound(SoundEvents.GENERIC_DRINK)
+    }
 
     @JvmField
     val POTION_DROP: HTSimpleDeferredItem = REGISTER.registerItem("potion_drop", ::HTPotionDropItem)
 
     // Meat
     @JvmField
-    val CANNED_COOKED_MEAT: HTSimpleDeferredItem = registerFood("canned_cooked_meat", RagiumFoods.CANNED_COOKED_MEAT)
+    val CANNED_COOKED_MEAT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("canned_cooked_meat") {
+        it.food(RagiumFoods.CANNED_COOKED_MEAT)
+    }
 
     // Sponge
     @JvmField
-    val MELON_PIE: HTSimpleDeferredItem = registerFood("melon_pie", RagiumFoods.MELON_PIE)
+    val MELON_PIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("melon_pie") {
+        it.food(RagiumFoods.MELON_PIE)
+    }
 
     @JvmField
-    val SWEET_BERRIES_CAKE_SLICE: HTSimpleDeferredItem = registerFood("sweet_berries_cake_slice", RagiumFoods.SWEET_BERRIES_CAKE)
+    val SWEET_BERRIES_CAKE_SLICE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("sweet_berries_cake_slice") {
+        it.food(RagiumFoods.SWEET_BERRIES_CAKE)
+    }
 
     // Cherry
     @JvmField
-    val RAGI_CHERRY: HTSimpleDeferredItem = registerFood("ragi_cherry", RagiumFoods.RAGI_CHERRY)
+    val RAGI_CHERRY: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_cherry") {
+        it.food(RagiumFoods.RAGI_CHERRY).description(RagiumCommonTranslation.RAGI_CHERRY)
+    }
 
     @JvmField
-    val RAGI_CHERRY_PULP: HTSimpleDeferredItem = registerFood("ragi_cherry_pulp", RagiumFoods.RAGI_CHERRY_PULP)
+    val RAGI_CHERRY_PULP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_cherry_pulp") {
+        it.food(RagiumFoods.RAGI_CHERRY_PULP)
+    }
 
     @JvmField
-    val RAGI_CHERRY_JAM: HTSimpleDeferredItem = registerFood("ragi_cherry_jam", RagiumFoods.RAGI_CHERRY_JAM)
+    val RAGI_CHERRY_JAM: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_cherry_jam") {
+        it.food(RagiumFoods.RAGI_CHERRY_JAM).foodSound(SoundEvents.HONEY_DRINK)
+    }
 
     @JvmField
-    val RAGI_CHERRY_TOAST: HTSimpleDeferredItem = registerFood("ragi_cherry_toast", RagiumFoods.RAGI_CHERRY_JAM)
+    val RAGI_CHERRY_TOAST: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_cherry_toast") {
+        it.food(RagiumFoods.RAGI_CHERRY_JAM)
+    }
 
     @JvmField
     val FEVER_CHERRY: HTSimpleDeferredItem = REGISTER.registerSimpleItem("fever_cherry") {
@@ -452,7 +496,10 @@ object RagiumItems {
     val BOTTLED_BEE: HTSimpleDeferredItem = REGISTER.registerItem("bottled_bee", ::HTBottledBeeItem)
 
     @JvmField
-    val AMBROSIA: HTSimpleDeferredItem = REGISTER.registerItem("ambrosia", ::HTAmbrosiaItem) { it.food(RagiumFoods.AMBROSIA) }
+    val AMBROSIA: HTSimpleDeferredItem = REGISTER.registerItem(
+        "ambrosia",
+        ::HTAmbrosiaItem,
+    ) { it.food(RagiumFoods.AMBROSIA).description(RagiumCommonTranslation.AMBROSIA) }
 
     //    Machine Parts    //
 
@@ -628,17 +675,11 @@ object RagiumItems {
             event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
         }
 
-        fun setDesc(item: ItemLike, translation: HTTranslation) {
-            modify(item, RagiumDataComponents.DESCRIPTION, translation)
-        }
-
         fun setEnch(item: ItemLike, ench: ResourceKey<Enchantment>, level: Int = 1) {
             modify(item, RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
         }
 
         // Materials
-        setDesc(ELDER_HEART, RagiumCommonTranslation.ELDER_HEART)
-
         val iridescent: (DataComponentPatch.Builder) -> Unit = { builder: DataComponentPatch.Builder ->
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             builder.set(DataComponents.RARITY, Rarity.RARE)
@@ -650,9 +691,6 @@ object RagiumItems {
             event.modify(item, iridescent)
         }
 
-        modify(getIngot(FoodMaterialKeys.CHOCOLATE), DataComponents.FOOD, RagiumFoods.CHOCOLATE)
-        modify(getIngot(FoodMaterialKeys.RAW_MEAT), DataComponents.FOOD, Foods.BEEF)
-        modify(getIngot(FoodMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
         // Tools
         for (item: HTDeferredItem<*> in getToolMap(RagiumMaterialKeys.AZURE_STEEL).values) {
             setEnch(item, Enchantments.SILK_TOUCH)
@@ -662,33 +700,18 @@ object RagiumItems {
         setEnch(getTool(VanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
         setEnch(getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
 
-        setEnch(ECHO_STAR, RagiumEnchantments.SONIC_PROTECTION)
-        modify(UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR, DyeColor.WHITE)
-
-        for (item: HTSimpleDeferredItem in CHARGES.values) {
-            modify(item, RagiumDataComponents.BLAST_POWER, 4f)
-        }
-
-        setDesc(DYNAMIC_LANTERN, RagiumCommonTranslation.DYNAMIC_LANTERN)
-        setDesc(ELDRITCH_EGG, RagiumCommonTranslation.ELDRITCH_EGG)
-        setDesc(MAGNET, RagiumCommonTranslation.MAGNET)
-        setDesc(SLOT_COVER, RagiumCommonTranslation.SLOT_COVER)
-        setDesc(TRADER_CATALOG, RagiumCommonTranslation.TRADER_CATALOG)
-        // Foods
-        event.modify(ICE_CREAM_SODA) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
-            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.GENERIC_DRINK))
-        }
-
-        event.modify(RAGI_CHERRY_JAM) { builder: DataComponentPatch.Builder ->
-            builder.set(RagiumDataComponents.DRINK_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
-            builder.set(RagiumDataComponents.EAT_SOUND, HTItemSoundEvent.create(SoundEvents.HONEY_DRINK))
-        }
-
-        setDesc(AMBROSIA, RagiumCommonTranslation.AMBROSIA)
-        setDesc(ICE_CREAM, RagiumCommonTranslation.ICE_CREAM)
-        setDesc(RAGI_CHERRY, RagiumCommonTranslation.RAGI_CHERRY)
-
         RagiumAPI.LOGGER.info("Modified default item components!")
+    }
+
+    private fun Item.Properties.description(translation: HTTranslation): Item.Properties =
+        this.component(RagiumDataComponents.DESCRIPTION, translation)
+
+    private fun Item.Properties.enchantment(ench: ResourceKey<Enchantment>, level: Int = 1): Item.Properties =
+        this.component(RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
+
+    private fun Item.Properties.foodSound(sound: SoundEvent): Item.Properties = apply {
+        val itemSound: HTItemSoundEvent = HTItemSoundEvent.create(sound)
+        component(RagiumDataComponents.DRINK_SOUND, itemSound)
+        component(RagiumDataComponents.EAT_SOUND, itemSound)
     }
 }
