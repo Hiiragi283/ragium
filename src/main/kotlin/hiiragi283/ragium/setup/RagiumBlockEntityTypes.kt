@@ -209,10 +209,9 @@ object RagiumBlockEntityTypes {
     @JvmField
     val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> = registerTick("planter", ::HTPlanterBlockEntity)
 
+    // Ultimate
     @JvmField
     val SIMULATOR: HTDeferredBlockEntityType<HTSimulatorBlockEntity> = registerTick("simulator", ::HTSimulatorBlockEntity)
-
-    // Ultimate
 
     //    Device    //
 
@@ -342,6 +341,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, BREWERY.get())
         registerHandler(event, MULTI_SMELTER.get())
         registerHandler(event, PLANTER.get())
+
         registerHandler(event, SIMULATOR.get())
         // Devices
         registerHandler(event, ITEM_BUFFER.get())

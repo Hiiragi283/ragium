@@ -96,6 +96,7 @@ object RagiumRecipeViewerTypes {
     val PLANTING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
         machine(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
+    // Ultimate
     @JvmField
     val SIMULATING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =
         machine(RagiumRecipeTypes.SIMULATING, RagiumBlocks.SIMULATOR)

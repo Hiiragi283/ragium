@@ -155,6 +155,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.MULTI_SMELTER, "Multi Smelter")
         add(RagiumBlocks.PLANTER, "Planting Chamber")
+
         add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")

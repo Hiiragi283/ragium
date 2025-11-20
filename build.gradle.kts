@@ -72,6 +72,7 @@ repositories {
     maven(url = "https://maven.k-4u.nl/") // TOP
     maven(url = "https://maven.rover656.dev/releases") // EIO
     maven(url = "https://maven.saps.dev/releases") // AA
+    maven(url = "https://maven.shadowsoffire.dev/releases") // HNN
     maven(url = "https://maven.su5ed.dev/releases") // FFAPI
     maven(url = "https://maven.tamaized.com/releases") // Twilight
     maven(url = "https://maven.teamresourceful.com/repository/maven-public/") // Athena

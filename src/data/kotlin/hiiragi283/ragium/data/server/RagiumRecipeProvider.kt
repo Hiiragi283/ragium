@@ -33,12 +33,12 @@ import net.minecraft.data.recipes.RecipeProvider
 class RagiumRecipeProvider(context: HTDataGenContext) : RecipeProvider(context.output, context.registries) {
     override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
         RagiumBrewingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumChemistryRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCompressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumEnchantingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumEngineeringRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumChemistryRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumFoodRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMachineRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMaterialRecipeProvider.buildRecipes(recipeOutput, holderLookup)

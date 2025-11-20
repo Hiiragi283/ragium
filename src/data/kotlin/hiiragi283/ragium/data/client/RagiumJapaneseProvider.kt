@@ -146,6 +146,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.MULTI_SMELTER, "並列製錬炉")
         add(RagiumBlocks.PLANTER, "栽培室")
+
         add(RagiumBlocks.SIMULATOR, "シミュレーション室")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")

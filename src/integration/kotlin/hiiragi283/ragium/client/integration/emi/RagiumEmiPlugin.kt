@@ -267,6 +267,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Elite
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.BREWING, ::HTBrewingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTPlantingEmiRecipe)
+        // Ultimate
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SIMULATING, ::HTItemWithCatalystEmiRecipe)
     }
 
