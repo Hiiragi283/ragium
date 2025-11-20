@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaMapBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
+import hiiragi283.ragium.api.util.unwrapEither
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -26,7 +27,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> = BiCodecs
             .xor(HolderBased.CODEC, IngredientBased.CODEC)
-            .xmap(Either<HolderBased, IngredientBased>::unwrap) { ingredient: HTItemIngredient ->
+            .xmap(::unwrapEither) { ingredient: HTItemIngredient ->
                 when (ingredient) {
                     is HolderBased -> Either.left(ingredient)
                     is IngredientBased -> Either.right(ingredient)
@@ -73,7 +74,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodecs
                 .xor(FLAT_CODEC, CODEC_WITH_COUNT)
-                .xmap(Either<HolderBased, HolderBased>::unwrap) { ingredient: HolderBased ->
+                .xmap(::unwrapEither) { ingredient: HolderBased ->
                     when (ingredient.count) {
                         1 -> Either.left(ingredient)
                         else -> Either.right(ingredient)
@@ -112,7 +113,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodecs
                 .either(FLAT_CODEC, CODEC_WITH_COUNT)
-                .xmap(Either<IngredientBased, IngredientBased>::unwrap) { ingredient: IngredientBased ->
+                .xmap(::unwrapEither) { ingredient: IngredientBased ->
                     when (ingredient.count) {
                         1 -> Either.left(ingredient)
                         else -> Either.right(ingredient)

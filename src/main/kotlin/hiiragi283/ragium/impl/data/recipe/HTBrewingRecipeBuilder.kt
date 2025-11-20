@@ -29,7 +29,8 @@ class HTBrewingRecipeBuilder private constructor(val ingredient: HTItemIngredien
 
         override fun getPrimalId(): ResourceLocation = content
             .unwrap()
-            .map(Holder<Potion>::idOrThrow) { instances: Iterable<MobEffectInstance> ->
-                instances.first().effect.idOrThrow
-            }
+            ?.map(
+                { instances: List<MobEffectInstance> -> instances.first().effect.idOrThrow },
+                Holder<Potion>::idOrThrow,
+            ) ?: error("Cannot create HTBrewingRecipe with empty PotionContents")
     }

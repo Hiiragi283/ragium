@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaMapBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.toImmutable
+import hiiragi283.ragium.api.util.unwrapEither
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -27,7 +28,7 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTFluidIngredient> = BiCodecs
             .xor(HolderBased.CODEC, IngredientBased.CODEC)
-            .xmap(Either<HolderBased, IngredientBased>::unwrap) { ingredient: HTFluidIngredient ->
+            .xmap(::unwrapEither) { ingredient: HTFluidIngredient ->
                 when (ingredient) {
                     is HolderBased -> Either.left(ingredient)
                     is IngredientBased -> Either.right(ingredient)
