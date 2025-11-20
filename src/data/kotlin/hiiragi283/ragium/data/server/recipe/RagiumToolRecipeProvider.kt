@@ -283,8 +283,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                     " AA",
                     " BA",
                     "C  ",
-                ).hollow8()
-                .define('A', CommonMaterialPrefixes.GEM, material)
+                ).define('A', CommonMaterialPrefixes.GEM, material)
                 .define('B', Tags.Items.GUNPOWDERS)
                 .define('C', Items.PAPER)
                 .save(output)

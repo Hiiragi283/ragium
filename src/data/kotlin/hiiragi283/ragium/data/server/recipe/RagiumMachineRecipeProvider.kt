@@ -165,16 +165,17 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('B', Items.FLOWER_POT)
             define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
         }
-        machineBase(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
-            define('C', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
-            define('D', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-        }
 
         mapOf(
             RagiumBlocks.MULTI_SMELTER to RagiumBlocks.ALLOY_SMELTER,
         ).forEach { (elite, adv) ->
             createComponentUpgrade(HTComponentTier.ELITE, elite, adv).save(output)
+        }
+        // Ultimate
+        machineBase(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.NIGHT_METAL) {
+            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('C', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
+            define('D', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
         }
     }
 

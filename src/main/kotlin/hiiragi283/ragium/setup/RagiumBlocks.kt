@@ -515,11 +515,10 @@ object RagiumBlocks {
     val PLANTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("planter", RagiumBlockTypes.PLANTER, machineProperty().noOcclusion())
 
+    // Ultimate
     @JvmField
     val SIMULATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("simulator", RagiumBlockTypes.SIMULATOR, machineProperty().noOcclusion())
-
-    // Ultimate
 
     //    Device    //
 

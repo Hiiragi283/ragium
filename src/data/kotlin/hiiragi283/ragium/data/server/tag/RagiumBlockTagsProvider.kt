@@ -101,6 +101,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.BREWERY)
             add(RagiumBlocks.MULTI_SMELTER)
             add(RagiumBlocks.PLANTER)
+
             add(RagiumBlocks.SIMULATOR)
             // Devices
             add(RagiumBlocks.DEVICE_CASING)
@@ -262,7 +263,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             .add(RagiumBlocks.NUCLEAR_REACTOR)
             .add(RagiumBlocks.OPEN_CRATE)
             .add(RagiumBlocks.TELEPAD)
-            .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }
 
     //    Extensions    //

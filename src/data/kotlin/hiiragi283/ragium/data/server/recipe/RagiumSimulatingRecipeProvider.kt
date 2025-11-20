@@ -82,9 +82,9 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         // Heart of the Sea
         HTItemWithCatalystRecipeBuilder
             .simulating(
-                itemCreator.fromItem(RagiumItems.ELDER_HEART),
+                itemCreator.fromTagKey(Tags.Items.FOODS_RAW_FISH, 64),
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.ELDER_GUARDIAN)),
-                resultHelper.item(Items.HEART_OF_THE_SEA),
+                resultHelper.item(RagiumItems.ELDER_HEART),
             ).save(output)
         // Dragon Breath
         HTItemWithCatalystRecipeBuilder

@@ -195,15 +195,15 @@ object RagiumBlockTypes {
         .addMenu { RagiumMenuTypes.PLANTER }
         .build(RagiumCommonTranslation.PLANTER)
 
+    // Ultimate
+
     @JvmField
     val SIMULATOR: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.SIMULATOR }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
-        .addProcessorTier(HTMachineTier.ELITE)
+        .addProcessorTier(HTMachineTier.ULTIMATE)
         .addMenu { RagiumMenuTypes.SIMULATOR }
         .build(RagiumCommonTranslation.SIMULATOR)
-
-    // Ultimate
 
     //    Device    //
 
