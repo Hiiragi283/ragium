@@ -16,7 +16,7 @@ import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -105,7 +105,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun thermalFuels() {
         builder(RagiumDataMaps.THERMAL_FUEL)
             .add("steam", HTFluidFuelData(100))
-            .add(HTFluidContent.LAVA, HTFluidFuelData(10))
+            .add(HTFluidHolderLike.LAVA, HTFluidFuelData(10))
             .add("blaze_blood", HTFluidFuelData(5))
     }
 
@@ -268,8 +268,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun <T : Any> Builder<T, Fluid>.add(fluid: Fluid, value: T, vararg conditions: ICondition): Builder<T, Fluid> =
         addHolder(fluid.toHolderLike(), value, *conditions)
 
-    private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent<*, *, *>, value: T): Builder<T, Fluid> =
-        add(content.commonTag, value, false)
+    private fun <T : Any> Builder<T, Fluid>.add(holder: HTFluidHolderLike, value: T): Builder<T, Fluid> =
+        add(holder.getFluidTag(), value, false)
 
     private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> =
         add(Registries.FLUID.createCommonTag(path), value, false)

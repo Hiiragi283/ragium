@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -21,7 +22,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.function.Supplier
 
 /**
  * 各種[HTRecipeResult]を生成するヘルパー
@@ -87,11 +87,11 @@ data object HTResultHelper {
 
     /**
      * 指定した引数から[HTFluidResult]を返します。
-     * @param fluid 液体の[Supplier]
+     * @param fluid 液体の[HTFluidHolderLike]
      * @param amount　液体の量
      */
     @JvmStatic
-    fun fluid(fluid: Supplier<out Fluid>, amount: Int): HTFluidResult = fluid(fluid.get(), amount)
+    fun fluid(fluid: HTFluidHolderLike, amount: Int): HTFluidResult = fluid(fluid.getFluid(), amount)
 
     /**
      * 指定した引数から[HTFluidResult]を返します。

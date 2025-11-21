@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.generator
 import hiiragi283.ragium.api.block.attribute.getAttributeFront
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -31,7 +31,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         @JvmStatic
         fun createSimple(
             itemValueGetter: (ImmutableItemStack) -> Int,
-            fuelContent: HTFluidContent<*, *, *>,
+            fuelContent: HTFluidHolderLike,
             fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
             blockHolder: Holder<Block>,
         ): HTBlockEntityFactory<HTFuelGeneratorBlockEntity> = HTBlockEntityFactory { pos: BlockPos, state: BlockState ->
@@ -106,7 +106,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
 
     private class Simple(
         private val itemValueGetter: (ImmutableItemStack) -> Int,
-        private val fuelContent: HTFluidContent<*, *, *>,
+        private val fluid: HTFluidHolderLike,
         private val fluidAmountGetter: (RegistryAccess, Holder<Fluid>) -> Int,
         blockHolder: Holder<Block>,
         pos: BlockPos,
@@ -114,7 +114,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
     ) : HTFuelGeneratorBlockEntity(blockHolder, pos, state) {
         override fun getFuelValue(stack: ImmutableItemStack): Int = itemValueGetter(stack)
 
-        override fun getFuelStack(value: Int): ImmutableFluidStack? = fuelContent.toImmutableStack(value)
+        override fun getFuelStack(value: Int): ImmutableFluidStack? = fluid.toImmutableStack(value)
 
         override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int = when (stack) {
             null -> 0

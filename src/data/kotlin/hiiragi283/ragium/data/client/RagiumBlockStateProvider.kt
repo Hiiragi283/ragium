@@ -243,9 +243,9 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         }
 
         // Fluids
-        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
+        for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
             simpleBlock(
-                content.getBlock(),
+                content.block.get(),
                 models()
                     .getBuilder(content.blockId)
                     .texture("particle", vanillaId("block", "water_still")),

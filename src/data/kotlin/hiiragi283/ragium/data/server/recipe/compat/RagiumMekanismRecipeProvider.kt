@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTBasicFluidContentNew
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -171,7 +171,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("chemical_infusing/eldritch_flux"))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            val molten: HTFluidContent<*, *, *> = data.molten
+            val molten: HTBasicFluidContentNew = data.molten
             // Fluid <-> Chemical
             RotaryRecipeBuilder
                 .rotary(

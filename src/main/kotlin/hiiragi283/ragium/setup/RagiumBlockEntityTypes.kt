@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
@@ -88,7 +88,7 @@ object RagiumBlockEntityTypes {
         "thermal_generator",
         HTFuelGeneratorBlockEntity.createSimple(
             { stack: ImmutableItemStack -> stack.unwrap().getBurnTime(null) / 10 },
-            HTFluidContent.LAVA,
+            HTFluidHolderLike.LAVA,
             RagiumDataMaps.INSTANCE::getThermalFuel,
             RagiumBlocks.THERMAL_GENERATOR,
         ),

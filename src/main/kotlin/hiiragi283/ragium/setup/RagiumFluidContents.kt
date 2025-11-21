@@ -3,10 +3,8 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.function.negate
-import hiiragi283.ragium.api.registry.HTFlowingFluidContent
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTBasicFluidContentNew
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
-import hiiragi283.ragium.api.registry.HTSimpleFluidContent
 import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -16,6 +14,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.pathfinder.PathType
+import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry
 import net.neoforged.neoforge.fluids.FluidType
@@ -25,15 +24,15 @@ object RagiumFluidContents {
     val REGISTER = HTFluidContentRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
-    fun register(name: String, properties: FluidType.Properties): HTSimpleFluidContent =
-        REGISTER.register(name, properties.descriptionId("block.ragium.$name"))
+    fun register(name: String, properties: FluidType.Properties): HTBasicFluidContentNew =
+        REGISTER.registerSimple(name, properties.descriptionId("block.ragium.$name"))
 
     @JvmStatic
-    fun <T : FluidType> register(
+    fun <TYPE : FluidType> register(
         name: String,
         properties: FluidType.Properties,
-        typeFactory: (FluidType.Properties) -> T,
-    ): HTFlowingFluidContent<T> = REGISTER.register(name, properties.descriptionId("block.ragium.$name"), typeFactory)
+        typeFactory: (FluidType.Properties) -> TYPE,
+    ): HTBasicFluidContentNew = REGISTER.register(name, properties.descriptionId("block.ragium.$name"), typeFactory)
 
     @JvmStatic
     private fun liquid(): FluidType.Properties = FluidType.Properties
@@ -53,32 +52,32 @@ object RagiumFluidContents {
     //    Vanilla    //
 
     @JvmField
-    val AWKWARD_WATER: HTSimpleFluidContent = register("awkward_water", liquid())
+    val AWKWARD_WATER: HTBasicFluidContentNew = register("awkward_water", liquid())
 
     @JvmField
-    val HONEY: HTSimpleFluidContent = register("honey", liquid())
+    val HONEY: HTBasicFluidContentNew = register("honey", liquid())
 
     @JvmField
-    val EXPERIENCE: HTSimpleFluidContent = register("experience", liquid())
+    val EXPERIENCE: HTBasicFluidContentNew = register("experience", liquid())
 
     @JvmField
-    val MUSHROOM_STEW: HTSimpleFluidContent = register("mushroom_stew", liquid())
+    val MUSHROOM_STEW: HTBasicFluidContentNew = register("mushroom_stew", liquid())
 
     //    Organic    //
 
     @JvmField
-    val CHOCOLATE: HTSimpleFluidContent = register("chocolate", liquid())
+    val CHOCOLATE: HTBasicFluidContentNew = register("chocolate", liquid())
 
     @JvmField
-    val MEAT: HTSimpleFluidContent = register("meat", liquid())
+    val MEAT: HTBasicFluidContentNew = register("meat", liquid())
 
     @JvmField
-    val ORGANIC_MUTAGEN: HTSimpleFluidContent = register("organic_mutagen", liquid())
+    val ORGANIC_MUTAGEN: HTBasicFluidContentNew = register("organic_mutagen", liquid())
 
     //    Oil    //
 
     @JvmField
-    val CRUDE_OIL: HTSimpleFluidContent = register(
+    val CRUDE_OIL: HTBasicFluidContentNew = register(
         "crude_oil",
         molten()
             .canSwim(false)
@@ -90,40 +89,40 @@ object RagiumFluidContents {
     )
 
     @JvmField
-    val NATURAL_GAS: HTSimpleFluidContent = register("natural_gas", gaseous(), HTFluidType.explosive(4f))
+    val NATURAL_GAS: HTBasicFluidContentNew = register("natural_gas", gaseous(), HTFluidType.explosive(4f))
 
     @JvmField
-    val NAPHTHA: HTSimpleFluidContent = register("naphtha", liquid(), HTFluidType.explosive(3f))
+    val NAPHTHA: HTBasicFluidContentNew = register("naphtha", liquid(), HTFluidType.explosive(3f))
 
     @JvmField
-    val LUBRICANT: HTSimpleFluidContent = register("lubricant", liquid())
+    val LUBRICANT: HTBasicFluidContentNew = register("lubricant", liquid())
 
     //    Fuel    //
 
     @JvmField
-    val FUEL: HTSimpleFluidContent = register("fuel", liquid(), HTFluidType.explosive(4f))
+    val FUEL: HTBasicFluidContentNew = register("fuel", liquid(), HTFluidType.explosive(4f))
 
     @JvmField
-    val CRIMSON_FUEL: HTSimpleFluidContent = register("crimson_fuel", liquid(), HTFluidType.explosive(6f))
+    val CRIMSON_FUEL: HTBasicFluidContentNew = register("crimson_fuel", liquid(), HTFluidType.explosive(6f))
 
     @JvmField
-    val GREEN_FUEL: HTSimpleFluidContent = register("green_fuel", liquid())
+    val GREEN_FUEL: HTBasicFluidContentNew = register("green_fuel", liquid())
 
     //    Sap    //
 
     @JvmField
-    val SAP: HTSimpleFluidContent = register("sap", liquid(), HTFluidType.solidify(HTResultHelper.item(Items.SLIME_BALL)))
+    val SAP: HTBasicFluidContentNew = register("sap", liquid(), HTFluidType.solidify(HTResultHelper.item(Items.SLIME_BALL)))
 
     @JvmField
-    val CRIMSON_SAP: HTSimpleFluidContent = register("crimson_sap", liquid())
+    val CRIMSON_SAP: HTBasicFluidContentNew = register("crimson_sap", liquid())
 
     @JvmField
-    val WARPED_SAP: HTSimpleFluidContent = register("warped_sap", liquid())
+    val WARPED_SAP: HTBasicFluidContentNew = register("warped_sap", liquid())
 
     //    Molten    //
 
     @JvmField
-    val CRIMSON_BLOOD: HTSimpleFluidContent =
+    val CRIMSON_BLOOD: HTBasicFluidContentNew =
         register(
             "crimson_blood",
             molten(),
@@ -134,7 +133,7 @@ object RagiumFluidContents {
         )
 
     @JvmField
-    val DEW_OF_THE_WARP: HTSimpleFluidContent =
+    val DEW_OF_THE_WARP: HTBasicFluidContentNew =
         register(
             "dew_of_the_warp",
             molten(),
@@ -145,32 +144,32 @@ object RagiumFluidContents {
         )
 
     @JvmField
-    val ELDRITCH_FLUX: HTSimpleFluidContent = register("eldritch_flux", molten())
+    val ELDRITCH_FLUX: HTBasicFluidContentNew = register("eldritch_flux", molten())
 
     //    Chemicals    //
 
     @JvmField
-    val NITRIC_ACID: HTSimpleFluidContent = register("nitric_acid", liquid())
+    val NITRIC_ACID: HTBasicFluidContentNew = register("nitric_acid", liquid())
 
     @JvmField
-    val SULFURIC_ACID: HTSimpleFluidContent = register("sulfuric_acid", liquid())
+    val SULFURIC_ACID: HTBasicFluidContentNew = register("sulfuric_acid", liquid())
 
     @JvmField
-    val MIXTURE_ACID: HTSimpleFluidContent = register("mixture_acid", liquid())
+    val MIXTURE_ACID: HTBasicFluidContentNew = register("mixture_acid", liquid())
 
     //    Interaction    //
 
     @JvmStatic
-    private fun registerInteraction(content: HTFluidContent<*, *, *>, other: FluidType, getter: (FluidState) -> BlockState) {
+    private fun registerInteraction(content: FluidType, other: FluidType, getter: (FluidState) -> BlockState) {
         FluidInteractionRegistry.addInteraction(
-            content.getType(),
+            content,
             FluidInteractionRegistry.InteractionInformation(other, getter),
         )
     }
 
     @JvmStatic
     private fun registerInteraction(
-        content: HTFluidContent<*, *, *>,
+        content: FluidType,
         other: FluidType,
         toSource: BlockState,
         toFlowing: BlockState,
@@ -186,14 +185,14 @@ object RagiumFluidContents {
     @JvmStatic
     fun registerInteractions() {
         registerInteraction(
-            CRUDE_OIL,
-            HTFluidContent.LAVA.getType(),
+            CRUDE_OIL.getType(),
+            NeoForgeMod.LAVA_TYPE.value(),
             Blocks.AIR.defaultBlockState(),
             Blocks.SOUL_SAND.defaultBlockState(),
         )
 
         registerInteraction(
-            HTFluidContent.WATER,
+            NeoForgeMod.WATER_TYPE.value(),
             ELDRITCH_FLUX.getType(),
             Blocks.AIR.defaultBlockState(),
             RagiumBlocks.ELDRITCH_STONE.get().defaultBlockState(),
