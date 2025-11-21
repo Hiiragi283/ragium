@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
-import hiiragi283.ragium.api.recipe.multi.HTItemWithFluidInputRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
+import hiiragi283.ragium.api.recipe.single.HTExpRequiredRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -98,8 +98,8 @@ object RagiumRecipeViewerTypes {
 
     // Ultimate
     @JvmField
-    val ENCHANTING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidInputRecipe> =
-        machine(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.SIMULATOR)
+    val ENCHANTING: HTRegistryRecipeViewerType<SingleRecipeInput, HTExpRequiredRecipe> =
+        machine(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 
     @JvmField
     val SIMULATING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =

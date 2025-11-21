@@ -206,6 +206,14 @@ object RagiumBlockTypes {
         .build(RagiumCommonTranslation.ENCHANT_COPIER)
 
     @JvmField
+    val ENCHANTER: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.ENCHANTER }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addProcessorTier(HTMachineTier.ULTIMATE)
+        .addMenu { RagiumMenuTypes.ENCHANTER }
+        .build(RagiumCommonTranslation.ENCHANTER)
+
+    @JvmField
     val SIMULATOR: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.SIMULATOR }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)

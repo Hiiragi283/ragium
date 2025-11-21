@@ -110,7 +110,7 @@ class HTShapedRecipeBuilder(stack: ImmutableItemStack) : HTStackRecipeBuilder<HT
     private var category: CraftingBookCategory = CraftingBookCategory.MISC
 
     fun setGroup(): HTShapedRecipeBuilder = setGroup(getPrimalId().toDebugFileName())
-    
+
     fun setGroup(group: String?): HTShapedRecipeBuilder = apply {
         this.group = group
     }

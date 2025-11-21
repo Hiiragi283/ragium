@@ -7,8 +7,8 @@ import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
-import hiiragi283.ragium.api.recipe.multi.HTItemWithFluidInputRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
+import hiiragi283.ragium.api.recipe.single.HTExpRequiredRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
@@ -34,7 +34,7 @@ object RagiumRecipeTypes {
     val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedItemRecipe> = create(RagiumConst.CUTTING)
 
     @JvmField
-    val ENCHANTING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTItemWithFluidInputRecipe> = create(RagiumConst.ENCHANTING)
+    val ENCHANTING: HTDeferredRecipeType<SingleRecipeInput, HTExpRequiredRecipe> = create(RagiumConst.ENCHANTING)
 
     @JvmField
     val EXTRACTING: HTDeferredRecipeType<HTMultiRecipeInput, HTComplexRecipe> = create(RagiumConst.EXTRACTING)

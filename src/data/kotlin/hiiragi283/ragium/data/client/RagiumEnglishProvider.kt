@@ -157,6 +157,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.PLANTER, "Planting Chamber")
 
         add(RagiumBlocks.ENCHANT_COPIER, "Enchantment Copier")
+        add(RagiumBlocks.ENCHANTER, "Enchanter")
         add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
