@@ -147,6 +147,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.MULTI_SMELTER, "並列製錬炉")
         add(RagiumBlocks.PLANTER, "栽培室")
 
+        add(RagiumBlocks.ENCHANT_COPIER, "エンチャントコピー機")
         add(RagiumBlocks.SIMULATOR, "シミュレーション室")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")
@@ -408,6 +409,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.BREWERY, "アイテムと液体からポーションを醸造する機械です。")
         add(RagiumCommonTranslation.MULTI_SMELTER, "複数のアイテムをまとめて精錬する機械です。")
         add(RagiumCommonTranslation.PLANTER, "種子や苗木から植物を成長さる機械です。")
+
+        add(RagiumCommonTranslation.ENCHANT_COPIER, "本からエンチャントをコピーし，道具に付与する機械です。")
+        add(RagiumCommonTranslation.ENCHANTER, "アイテムからエンチャント本を作成する機械です。")
         add(RagiumCommonTranslation.SIMULATOR, "ブロックやモブの行動を再現して資源を生産する機械です。")
 
         add(RagiumCommonTranslation.ITEM_BUFFER, "周囲のアイテムを収集する設備です。")

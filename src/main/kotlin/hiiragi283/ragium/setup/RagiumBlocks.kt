@@ -517,6 +517,10 @@ object RagiumBlocks {
 
     // Ultimate
     @JvmField
+    val ENCHANT_COPIER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("enchantment_copier", RagiumBlockTypes.ENCHANT_COPIER, machineProperty().noOcclusion())
+
+    @JvmField
     val SIMULATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("simulator", RagiumBlockTypes.SIMULATOR, machineProperty().noOcclusion())
 

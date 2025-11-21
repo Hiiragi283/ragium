@@ -9,13 +9,11 @@ import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 
 data object HTExpExtractingRecipe : HTComplexRecipe {
@@ -45,8 +43,7 @@ data object HTExpExtractingRecipe : HTComplexRecipe {
 
     override fun assembleFluid(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? = EnchantmentHelper
         .getEnchantmentsForCrafting(input.getItem(0))
-        .entrySet()
-        .sumOf { (holder: Holder<Enchantment>, level: Int) -> holder.value().getMinCost(level) }
+        .let(HTExperienceHelper::getTotalMinCost)
         .let(HTExperienceHelper::fluidAmountFromExp)
         .let(RagiumFluidContents.EXPERIENCE::toImmutableStack)
 }

@@ -156,6 +156,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.MULTI_SMELTER, "Multi Smelter")
         add(RagiumBlocks.PLANTER, "Planting Chamber")
 
+        add(RagiumBlocks.ENCHANT_COPIER, "Enchantment Copier")
         add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
@@ -408,6 +409,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.BREWERY, "A machine which brews potion from item and fluid.")
         add(RagiumCommonTranslation.MULTI_SMELTER, "A machine which smelts items simultaneously.")
         add(RagiumCommonTranslation.PLANTER, "A machine which grows plant from seeds or sapling.")
+
+        add(RagiumCommonTranslation.ENCHANT_COPIER, "A machine which copies enchantments from the book and apply it to the tool.")
+        add(RagiumCommonTranslation.ENCHANTER, "A machine which create enchanted books from items.")
         add(RagiumCommonTranslation.SIMULATOR, "A machine which simulates behavior of blocks or mobs to generate resources.")
 
         add(RagiumCommonTranslation.ITEM_BUFFER, "A device which collects items around.")

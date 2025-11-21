@@ -15,7 +15,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.entity.player.Player
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
@@ -46,11 +46,11 @@ enum class HTChargeVariant(private val enPattern: String, private val jaPattern:
     // Entity
     fun getEntityType(): HTDeferredEntityType<out HTAbstractCharge> = RagiumEntityTypes.CHARGES[this]!!
 
-    fun createCharge(level: Level, player: Player): ThrowableItemProjectile = when (this) {
-        FISHING -> HTFishingCharge(level, player)
-        BLAST -> HTBlastCharge(level, player)
-        TELEPORT -> HTTeleportCharge(level, player)
-        CONFUSING -> HTConfusingCharge(level, player)
+    fun createCharge(level: Level, shooter: LivingEntity): ThrowableItemProjectile = when (this) {
+        FISHING -> HTFishingCharge(level, shooter)
+        BLAST -> HTBlastCharge(level, shooter)
+        TELEPORT -> HTTeleportCharge(level, shooter)
+        CONFUSING -> HTConfusingCharge(level, shooter)
     }
 
     fun createCharge(

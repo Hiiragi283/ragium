@@ -6,12 +6,12 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache
 import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
-import net.neoforged.neoforge.common.extensions.IItemStackExtension
-import net.neoforged.neoforge.common.extensions.ILevelExtension
 import java.util.function.BooleanSupplier
 
 /**
@@ -32,7 +32,7 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER> {
      * 指定した引数から[HANDLER]を返します。
      * @return [HANDLER]が見つからない場合は`null`
      */
-    fun getCapability(level: ILevelExtension, pos: BlockPos, side: Direction?): HANDLER? = level.getCapability(block, pos, side)
+    fun getCapability(level: Level, pos: BlockPos, side: Direction?): HANDLER? = level.getCapability(block, pos, side)
 
     fun createCache(level: ServerLevel, pos: BlockPos, side: Direction?): BlockCapabilityCache<HANDLER, Direction?> =
         BlockCapabilityCache.create(
@@ -67,9 +67,9 @@ interface HTMultiCapability<HANDLER : Any, ITEM_HANDLER : HANDLER> {
      * 指定した引数から[HANDLER]を返します。
      * @return [HANDLER]が見つからない場合は`null`
      */
-    fun getCapability(stack: IItemStackExtension): ITEM_HANDLER? = stack.getCapability(item)
+    fun getCapability(stack: ItemStack): ITEM_HANDLER? = stack.getCapability(item)
 
-    fun hasCapability(stack: IItemStackExtension): Boolean = getCapability(stack) != null
+    fun hasCapability(stack: ItemStack): Boolean = getCapability(stack) != null
 
     // HTItemStorageStack
     fun getCapability(stack: ImmutableItemStack?): ITEM_HANDLER? = stack?.getCapability(item)
