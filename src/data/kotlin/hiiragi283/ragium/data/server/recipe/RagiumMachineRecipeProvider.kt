@@ -153,26 +153,23 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
             .save(output)
 
-        mapOf(
-            RagiumBlocks.CRUSHER to RagiumBlocks.PULVERIZER,
-            RagiumBlocks.MELTER to RagiumBlocks.EXTRACTOR,
-        ).forEach { (adv: ItemLike, basic: ItemLike) ->
-            createComponentUpgrade(HTComponentTier.ADVANCED, adv, basic).save(output)
-        }
+        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.CRUSHER, RagiumBlocks.PULVERIZER).save(output)
         // Elite
         eliteMachine(RagiumBlocks.BREWERY) {
             define('B', Items.BREWING_STAND)
             define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
         }
+        eliteMachine(RagiumBlocks.MIXER) {
+            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+            define('C', RagiumBlocks.REFINERY)
+        }
+        eliteMachine(RagiumBlocks.MULTI_SMELTER) {
+            define('B', Items.FURNACE)
+            define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+        }
         eliteMachine(RagiumBlocks.PLANTER) {
             define('B', Items.FLOWER_POT)
             define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
-        }
-
-        mapOf(
-            RagiumBlocks.MULTI_SMELTER to RagiumBlocks.ALLOY_SMELTER,
-        ).forEach { (elite, adv) ->
-            createComponentUpgrade(HTComponentTier.ELITE, elite, adv).save(output)
         }
         // Ultimate
         machineBase(RagiumBlocks.ENCHANT_COPIER, RagiumMaterialKeys.NIGHT_METAL) {

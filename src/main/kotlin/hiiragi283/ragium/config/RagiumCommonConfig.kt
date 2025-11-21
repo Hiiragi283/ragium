@@ -42,6 +42,15 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     val melterTankCapacity: HTIntConfigValue
 
     @JvmField
+    val mixerFirstInputTankCapacity: HTIntConfigValue
+
+    @JvmField
+    val mixerSecondInputTankCapacity: HTIntConfigValue
+
+    @JvmField
+    val mixerOutputTankCapacity: HTIntConfigValue
+
+    @JvmField
     val planterTankCapacity: HTIntConfigValue
 
     @JvmField
@@ -156,6 +165,15 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.push("melter")
         melterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
         builder.pop()
+
+        builder.push("mixer")
+        builder.push("input")
+        mixerFirstInputTankCapacity = builder.definePositiveInt("firstTankCapacity", 8000)
+        mixerSecondInputTankCapacity = builder.definePositiveInt("secondTankCapacity", 8000)
+        builder.pop()
+        builder.push("output")
+        mixerOutputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.pop(2)
 
         builder.push("planter")
         planterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
