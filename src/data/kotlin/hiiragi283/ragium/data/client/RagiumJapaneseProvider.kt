@@ -148,6 +148,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.PLANTER, "栽培室")
 
         add(RagiumBlocks.ENCHANT_COPIER, "エンチャントコピー機")
+        add(RagiumBlocks.ENCHANTER, "エンチャンター")
         add(RagiumBlocks.SIMULATOR, "シミュレーション室")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")

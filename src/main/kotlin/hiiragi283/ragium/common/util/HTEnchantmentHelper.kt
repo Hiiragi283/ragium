@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level
 import org.apache.commons.lang3.mutable.MutableFloat
 import kotlin.math.max
 
-object HTItemHelper {
+object HTEnchantmentHelper {
     @JvmField
     val DEFAULT_RANDOM: RandomSource = RandomSource.create()
 

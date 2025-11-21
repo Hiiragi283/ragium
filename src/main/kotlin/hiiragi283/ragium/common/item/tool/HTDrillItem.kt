@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.item.base.HTEnergyItem
-import hiiragi283.ragium.common.util.HTItemHelper
+import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.LivingEntity
@@ -41,7 +41,7 @@ class HTDrillItem(properties: Properties) :
 
     override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
         val battery: HTEnergyBattery = getBattery(stack) ?: return 0f
-        val usage: Int = HTItemHelper.getFixedUsage(stack, energyUsage)
+        val usage: Int = HTEnchantmentHelper.getFixedUsage(stack, energyUsage)
         if (battery.extract(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
             return if (state.`is`(RagiumModTags.Blocks.MINEABLE_WITH_DRILL)) super.getDestroySpeed(stack, state) else 1f
         }
@@ -58,7 +58,7 @@ class HTDrillItem(properties: Properties) :
         if (level.isClientSide) return false
         if (state.getDestroySpeed(level, pos) == 0f) return false
         val battery: HTEnergyBattery = getBattery(stack) ?: return false
-        val usage: Int = HTItemHelper.getFixedUsage(level, stack, energyUsage)
+        val usage: Int = HTEnchantmentHelper.getFixedUsage(level, stack, energyUsage)
         if (battery.extract(usage, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == usage) {
             battery.extract(usage, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             return true

@@ -180,6 +180,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('C', ItemTags.ANVIL)
             define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
         }
+        machineBase(RagiumBlocks.ENCHANTER, RagiumMaterialKeys.NIGHT_METAL) {
+            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('C', Items.ENCHANTING_TABLE)
+            define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
+        }
         machineBase(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.NIGHT_METAL) {
             define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
             define('C', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)

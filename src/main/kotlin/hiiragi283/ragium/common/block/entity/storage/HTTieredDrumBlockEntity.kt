@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.util.HTItemHelper
+import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.world.level.block.Block
@@ -24,7 +24,8 @@ class HTTieredDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
 
     override fun createTank(listener: HTContentListener): HTFluidStackTank = DrumTank(listener)
 
-    private fun getCapacity(): Int = HTItemHelper.processStorageCapacity(this.getLevel()?.random, enchantment, tier.getDefaultCapacity())
+    private fun getCapacity(): Int =
+        HTEnchantmentHelper.processStorageCapacity(this.getLevel()?.random, enchantment, tier.getDefaultCapacity())
 
     //    DrumTank    //
 

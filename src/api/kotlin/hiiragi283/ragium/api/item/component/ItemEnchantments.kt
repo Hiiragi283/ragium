@@ -6,6 +6,8 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import java.util.function.Predicate
 
+fun ItemEnchantments.toMap(): Map<Holder<Enchantment>, Int> = this.keySet().associateWith(this::getLevel)
+
 fun ItemEnchantments.toMutable(): ItemEnchantments.Mutable = ItemEnchantments.Mutable(this)
 
 fun ItemEnchantments.filter(predicate: Predicate<Holder<Enchantment>>): ItemEnchantments =

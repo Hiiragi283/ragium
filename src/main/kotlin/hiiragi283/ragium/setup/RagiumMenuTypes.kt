@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEnchantCopierBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
@@ -89,6 +90,9 @@ object RagiumMenuTypes {
 
     @JvmField
     val ENCHANT_COPIER: DeferredBEMenu<HTEnchantCopierBlockEntity> = registerBE("enchantment_copier")
+
+    @JvmField
+    val ENCHANTER: DeferredBEMenu<HTEnchanterBlockEntity> = registerBE("enchanter")
 
     @JvmField
     val ENERGY_NETWORK_ACCESS: DeferredBEMenu<HTEnergyNetworkAccessBlockEntity> = registerBE("energy_network_access")

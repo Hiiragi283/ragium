@@ -15,14 +15,15 @@ import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicComplexRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicSingleFluidRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicSingleItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTItemWithCatalystRecipe
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 object RagiumRecipeBiCodecs {
@@ -55,12 +56,10 @@ object RagiumRecipeBiCodecs {
     @JvmField
     val ENCHANTING: MapBiCodec<RegistryFriendlyByteBuf, HTEnchantingRecipe> = MapBiCodec
         .composite(
-            HTItemIngredient.CODEC.fieldOf("item_ingredient"),
-            HTEnchantingRecipe::itemIngredient,
-            HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
-            HTEnchantingRecipe::fluidIngredient,
-            HTItemResult.CODEC.fieldOf("result"),
-            HTEnchantingRecipe::result,
+            HTItemIngredient.CODEC.fieldOf("ingredient"),
+            HTEnchantingRecipe::ingredient,
+            VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment"),
+            HTEnchantingRecipe::holder,
             ::HTEnchantingRecipe,
         )
 

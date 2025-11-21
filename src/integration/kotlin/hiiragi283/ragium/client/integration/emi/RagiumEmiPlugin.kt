@@ -33,9 +33,9 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCuttingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemToItemEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemWithCatalystEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemWithFluidEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRecipe
@@ -269,7 +269,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.BREWING, ::HTBrewingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTPlantingEmiRecipe)
         // Ultimate
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ENCHANTING, ::HTItemWithFluidEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SIMULATING, ::HTItemWithCatalystEmiRecipe)
     }
 

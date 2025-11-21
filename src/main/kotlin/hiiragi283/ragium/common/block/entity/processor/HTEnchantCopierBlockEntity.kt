@@ -8,19 +8,14 @@ import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
-import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.block.entity.processor.base.HTEnchantProcessorBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -29,31 +24,12 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.block.state.BlockState
 
 class HTEnchantCopierBlockEntity(pos: BlockPos, state: BlockState) :
-    HTEnergizedProcessorBlockEntity<HTMultiRecipeInput, HTEnchantCopierBlockEntity.EnchantingRecipe>(
+    HTEnchantProcessorBlockEntity<HTMultiRecipeInput, HTEnchantCopierBlockEntity.EnchantingRecipe>(
         RagiumBlocks.ENCHANT_COPIER,
         pos,
         state,
     ) {
-    lateinit var inputTank: HTVariableFluidStackTank
-        private set
-
-    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
-        // input
-        inputTank = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(
-                listener,
-                RagiumConfig.COMMON.extractorTankCapacity,
-                RagiumFluidContents.EXPERIENCE::isOf,
-            ),
-        )
-    }
-
-    lateinit var inputSlot: HTItemStackSlot
-        private set
     lateinit var catalystSlot: HTItemStackSlot
-        private set
-    lateinit var outputSlot: HTItemStackSlot
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -71,11 +47,6 @@ class HTEnchantCopierBlockEntity(pos: BlockPos, state: BlockState) :
         // output
         outputSlot = singleOutput(builder, listener)
     }
-
-    private fun getStoredEnchantments(stack: ImmutableItemStack): ItemEnchantments =
-        stack.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY)
-
-    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
         items += inputSlot.getStack()
