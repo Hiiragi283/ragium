@@ -10,8 +10,6 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -29,9 +27,6 @@ interface RagiumDataMaps {
          */
         @JvmField
         val INSTANCE: RagiumDataMaps = RagiumAPI.getService()
-
-        @JvmField
-        val ENCHANT_FUEL: DataMapType<Enchantment, LevelBasedValue> = INSTANCE.enchFuelType
 
         @JvmField
         val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
@@ -54,8 +49,6 @@ interface RagiumDataMaps {
         @JvmField
         val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTMaterialRecipe> = INSTANCE.materialRecipeType
     }
-
-    val enchFuelType: DataMapType<Enchantment, LevelBasedValue>
 
     val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
 
@@ -91,9 +84,6 @@ interface RagiumDataMaps {
     fun getMobHead(access: RegistryAccess, holder: Holder<EntityType<*>>): ItemStack =
         getData(access, Registries.ENTITY_TYPE, holder, mobHeadType)?.toStack() ?: ItemStack.EMPTY
 
-    fun getEnchBasedValue(access: RegistryAccess, holder: Holder<Enchantment>, level: Int): Int? =
-        getData(access, Registries.ENCHANTMENT, holder, enchFuelType)?.calculate(level)?.toInt()
-
     /**
      * 指定した値から火力発電機の液体燃料の消費量を取得します。
      */
@@ -104,6 +94,12 @@ interface RagiumDataMaps {
      * 指定した値から燃焼発電機の液体燃料の消費量を取得します。
      */
     fun getCombustionFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
+        getData(access, Registries.FLUID, holder, combustionFuelType)?.amount ?: 0
+
+    /**
+     * 指定した値から燃焼発電機の液体燃料の消費量を取得します。
+     */
+    fun getExperienceFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
         getData(access, Registries.FLUID, holder, combustionFuelType)?.amount ?: 0
 
     /**

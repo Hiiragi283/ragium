@@ -19,8 +19,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -40,9 +38,6 @@ class RagiumDataMapsImpl : RagiumDataMaps {
         private fun createFuel(path: String): DataMapType<Fluid, HTFluidFuelData> =
             create("fuel/$path", Registries.FLUID, HTFluidFuelData.CODEC)
     }
-
-    override val enchFuelType: DataMapType<Enchantment, LevelBasedValue> =
-        create("fuel", Registries.ENCHANTMENT, LevelBasedValue.DISPATCH_CODEC)
 
     override val mobHeadType: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
 

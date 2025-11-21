@@ -82,14 +82,11 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.ENCHANTMENT_GENERATOR)
             add(RagiumBlocks.NUCLEAR_REACTOR)
             // Processors
-            add(RagiumBlocks.ELECTRIC_FURNACE)
-            add(RagiumBlocks.AUTO_SMITHING_TABLE)
-            add(RagiumBlocks.AUTO_STONECUTTER)
-
             add(RagiumBlocks.ALLOY_SMELTER)
             add(RagiumBlocks.BLOCK_BREAKER)
             add(RagiumBlocks.COMPRESSOR)
             add(RagiumBlocks.CUTTING_MACHINE)
+            add(RagiumBlocks.ELECTRIC_FURNACE)
             add(RagiumBlocks.EXTRACTOR)
             add(RagiumBlocks.PULVERIZER)
 
@@ -260,8 +257,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // WIP
         factory
             .apply(RagiumModTags.Blocks.WIP)
-            .add(RagiumBlocks.AUTO_SMITHING_TABLE)
-            .add(RagiumBlocks.AUTO_STONECUTTER)
             .add(RagiumBlocks.ELECTRIC_FURNACE)
             .add(RagiumBlocks.NUCLEAR_REACTOR)
             .add(RagiumBlocks.OPEN_CRATE)

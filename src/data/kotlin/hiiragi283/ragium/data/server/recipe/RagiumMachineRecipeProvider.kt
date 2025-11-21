@@ -38,29 +38,19 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun generators() {
         // Basic
-        HTShapedRecipeBuilder
-            .create(RagiumBlocks.THERMAL_GENERATOR)
-            .pattern(
-                "AAA",
-                " B ",
-                "CDC",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .define('B', Tags.Items.GLASS_BLOCKS)
-            .define('C', RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
-            .define('D', Items.FURNACE)
-            .save(output)
+        generator(RagiumBlocks.THERMAL_GENERATOR) {
+            define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            define('B', Tags.Items.GLASS_BLOCKS)
+            define('C', RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
+            define('D', Items.FURNACE)
+        }
         // Advanced
-        HTShapedRecipeBuilder
-            .create(RagiumBlocks.COMBUSTION_GENERATOR)
-            .pattern(
-                "AAA",
-                " B ",
-                "CDC",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-            .define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.QUARTZ)
-            .define('C', RagiumItems.getCoil(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
-            .define('D', Items.BLAST_FURNACE)
-            .save(output)
+        generator(RagiumBlocks.COMBUSTION_GENERATOR) {
+            define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.QUARTZ)
+            define('C', RagiumItems.getCoil(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
+            define('D', Items.PISTON)
+        }
         // Elite
         for (tier: HTCircuitTier in HTCircuitTier.entries) {
             HTShapedRecipeBuilder
@@ -85,16 +75,23 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
             .save(output)
         // Ultimate
+        generator(RagiumBlocks.ENCHANTMENT_GENERATOR) {
+            define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
+            define('C', Items.GRINDSTONE)
+            define('D', Items.PISTON)
+        }
+    }
+
+    @JvmStatic
+    private inline fun generator(generator: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
         HTShapedRecipeBuilder
-            .create(RagiumBlocks.ENCHANTMENT_GENERATOR)
+            .create(generator)
             .pattern(
                 "AAA",
                 " B ",
                 "CDC",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-            .define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
-            .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            .define('D', Items.GRINDSTONE)
+            ).apply(action)
             .save(output)
     }
 

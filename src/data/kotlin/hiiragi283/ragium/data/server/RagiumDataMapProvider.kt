@@ -36,12 +36,10 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.EnchantmentTags
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
@@ -59,8 +57,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
         compostables()
         furnaceFuels()
-
-        enchFactories()
 
         mobHead()
 
@@ -93,12 +89,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     //    Ragium    //
-
-    private fun enchFactories() {
-        builder(RagiumDataMaps.ENCHANT_FUEL)
-            .add(EnchantmentTags.TREASURE, LevelBasedValue.perLevel(3f), false)
-            .add(EnchantmentTags.CURSE, LevelBasedValue.perLevel(-1f), false)
-    }
 
     private fun mobHead() {
         builder(RagiumDataMaps.MOB_HEAD)

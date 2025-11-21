@@ -25,13 +25,10 @@ import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.device.HTWaterCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTEnchGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarPanelControllerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTAutoSmithingTableBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTAutoStonecutterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
@@ -56,11 +53,13 @@ import hiiragi283.ragium.common.block.entity.storage.HTTieredDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
@@ -123,7 +122,12 @@ object RagiumBlockEntityTypes {
     @JvmField
     val ENCHANTMENT_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
         "enchantment_generator",
-        ::HTEnchGeneratorBlockEntity,
+        HTFuelGeneratorBlockEntity.createSimple(
+            { 0 },
+            RagiumFluidContents.EXPERIENCE,
+            { _, holder: Holder<Fluid> -> if (RagiumFluidContents.EXPERIENCE.isOf(holder)) 10 else 0 },
+            RagiumBlocks.ENCHANTMENT_GENERATOR,
+        ),
     )
 
     @JvmField
@@ -133,25 +137,6 @@ object RagiumBlockEntityTypes {
     )
 
     //    Processor    //
-
-    // Vanilla
-    @JvmField
-    val ELECTRIC_FURNACE: HTDeferredBlockEntityType<HTElectricFurnaceBlockEntity> = registerTick(
-        "electric_furnace",
-        ::HTElectricFurnaceBlockEntity,
-    )
-
-    @JvmField
-    val AUTO_SMITHING_TABLE: HTDeferredBlockEntityType<HTAutoSmithingTableBlockEntity> = registerTick(
-        "auto_smithing_table",
-        ::HTAutoSmithingTableBlockEntity,
-    )
-
-    @JvmField
-    val AUTO_STONECUTTER: HTDeferredBlockEntityType<HTAutoStonecutterBlockEntity> = registerTick(
-        "auto_stonecutter",
-        ::HTAutoStonecutterBlockEntity,
-    )
 
     // Basic
     @JvmField
@@ -174,6 +159,12 @@ object RagiumBlockEntityTypes {
     val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> = registerTick(
         "cutting_machine",
         ::HTCuttingMachineBlockEntity,
+    )
+
+    @JvmField
+    val ELECTRIC_FURNACE: HTDeferredBlockEntityType<HTElectricFurnaceBlockEntity> = registerTick(
+        "electric_furnace",
+        ::HTElectricFurnaceBlockEntity,
     )
 
     @JvmField
@@ -337,14 +328,11 @@ object RagiumBlockEntityTypes {
         registerHandler(event, ENCHANTMENT_GENERATOR.get())
         registerHandler(event, NUCLEAR_REACTOR.get())
         // Processor
-        registerHandler(event, ELECTRIC_FURNACE.get())
-        registerHandler(event, AUTO_SMITHING_TABLE.get())
-        registerHandler(event, AUTO_STONECUTTER.get())
-
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, BLOCK_BREAKER.get())
         registerHandler(event, COMPRESSOR.get())
         registerHandler(event, CUTTING_MACHINE.get())
+        registerHandler(event, ELECTRIC_FURNACE.get())
         registerHandler(event, EXTRACTOR.get())
         registerHandler(event, PULVERIZER.get())
 

@@ -108,8 +108,6 @@ class RagiumEmiPlugin : EmiPlugin {
             registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, block.toEmi())
             registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, block.toEmi())
         }
-        registry.addWorkstation(VanillaEmiRecipeCategories.SMITHING, RagiumBlocks.AUTO_SMITHING_TABLE.toEmi())
-        registry.addWorkstation(VanillaEmiRecipeCategories.STONECUTTING, RagiumBlocks.AUTO_STONECUTTER.toEmi())
         // Functions
         registry.addGenericStackProvider(RagiumEmiStackProvider)
 
