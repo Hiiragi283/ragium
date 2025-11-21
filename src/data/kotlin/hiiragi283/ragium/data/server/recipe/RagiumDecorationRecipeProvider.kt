@@ -16,6 +16,7 @@ import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
@@ -24,30 +25,34 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Ragi-Bricks
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.RAGI_BRICKS, 8)
+            .create(RagiumBlocks.RAGI_BRICKS, 8)
             .hollow8()
             .define('A', ItemTags.STONE_BRICKS)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         // Azure Tiles
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.AZURE_TILES, 8)
+            .create(RagiumBlocks.AZURE_TILES, 8)
             .hollow8()
             .define('A', Items.DEEPSLATE_TILES)
             .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         // Eldritch Stone
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.ELDRITCH_STONE, 8)
+            .create(RagiumBlocks.ELDRITCH_STONE, 8)
             .hollow8()
             .define('A', Tags.Items.END_STONES)
             .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
 
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.ELDRITCH_STONE_BRICKS, 4)
+            .create(RagiumBlocks.ELDRITCH_STONE_BRICKS, 4)
             .storage4()
             .define('A', RagiumBlocks.ELDRITCH_STONE)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
 
         HTSingleItemRecipeBuilder
@@ -56,9 +61,10 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Plastics
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.PLASTIC_BRICKS, 4)
+            .create(RagiumBlocks.PLASTIC_BRICKS, 4)
             .storage4()
             .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, CommonMaterialKeys.PLASTIC)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
 
         HTSingleItemRecipeBuilder
@@ -67,9 +73,10 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.PLASTIC_TILES, 4)
+            .create(RagiumBlocks.PLASTIC_TILES, 4)
             .storage4()
             .define('A', RagiumBlocks.PLASTIC_BRICKS)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
 
         HTSingleItemRecipeBuilder
@@ -78,21 +85,24 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Blue Nether Bricks
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.BLUE_NETHER_BRICKS, 1)
-            .pattern(
-                "AB",
-                "BA",
-            ).define('A', CommonMaterialPrefixes.CROP, FoodMaterialKeys.WARPED_WART)
+            .create(RagiumBlocks.BLUE_NETHER_BRICKS, 1)
+            .mosaic4()
+            .define('A', CommonMaterialPrefixes.CROP, FoodMaterialKeys.WARPED_WART)
             .define('B', Tags.Items.BRICKS_NETHER)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         // Sponge Cake
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.SPONGE_CAKE, 4)
-            .cross8()
-            .define('A', Tags.Items.CROPS_WHEAT)
-            .define('B', Items.SUGAR)
-            .define('C', Tags.Items.EGGS)
-            .save(output)
+            .cross8Mirrored(
+                output,
+                RagiumBlocks.SPONGE_CAKE,
+                4,
+            ) {
+                define('A', Tags.Items.CROPS_WHEAT)
+                define('B', Items.SUGAR)
+                define('C', Tags.Items.EGGS)
+                setCategory(CraftingBookCategory.BUILDING)
+            }
 
         HTDecorationVariant.entries.forEach(::registerBuildings)
         HTVanillaWoodType.entries.forEach(::addWoodSawing)
@@ -127,10 +137,11 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                 HTGlassVariant.TINTED -> {
                     // Normal -> Tinted
                     HTShapedRecipeBuilder
-                        .building(block)
+                        .create(block)
                         .hollow4()
                         .define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
                         .define('B', CommonMaterialPrefixes.GLASS_BLOCK, key)
+                        .setCategory(CraftingBookCategory.BUILDING)
                         .save(output)
                 }
             }
@@ -147,26 +158,29 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         val wall: ItemLike = variant.wall
         // Base -> Slab
         HTShapedRecipeBuilder
-            .building(slab, 6)
+            .create(slab, 6)
             .pattern("AAA")
             .define('A', base)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         // Base -> Stairs
         HTShapedRecipeBuilder
-            .building(stairs, 4)
+            .create(stairs, 4)
             .pattern(
                 "A  ",
                 "AA ",
                 "AAA",
             ).define('A', base)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         // Base -> Wall
         HTShapedRecipeBuilder
-            .building(wall, 4)
+            .create(wall, 4)
             .pattern(
                 "AAA",
                 "AAA",
             ).define('A', base)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         // Stonecutting
         val cuttingIngredient: Ingredient = getCuttingIngredient(variant)

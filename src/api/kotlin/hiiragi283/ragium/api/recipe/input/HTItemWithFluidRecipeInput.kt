@@ -12,8 +12,9 @@ import net.neoforged.neoforge.fluids.FluidStack
 /**
  * [ItemStack]と[FluidStack]を受け取る[RecipeInput]の実装
  */
+@ConsistentCopyVisibility
 @JvmRecord
-data class HTItemWithFluidRecipeInput(val item: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {
+data class HTItemWithFluidRecipeInput private constructor(val item: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {
     constructor(slot: HTItemSlot, tank: HTFluidTank) : this(slot.getItemStack(), tank.getFluidStack())
 
     private fun validateItem(): ItemStack =

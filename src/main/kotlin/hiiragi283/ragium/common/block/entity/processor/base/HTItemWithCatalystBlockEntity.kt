@@ -41,8 +41,10 @@ abstract class HTItemWithCatalystBlockEntity(
         )
     }
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput =
-        HTMultiRecipeInput.fromSlots(inputSlot, catalystSlot)
+    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
+        items += inputSlot.getStack()
+        items += catalystSlot.getStack()
+    }
 
     override fun completeRecipe(
         level: ServerLevel,

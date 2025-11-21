@@ -85,7 +85,7 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
 
         HTShapedRecipeBuilder
-            .misc(RagiumItems.COAL_CHUNK)
+            .create(RagiumItems.COAL_CHUNK)
             .hollow8()
             .define('A', RagiumItems.COAL_CHIP)
             .define('B', CommonMaterialPrefixes.NUGGET, RagiumMaterialKeys.NIGHT_METAL)

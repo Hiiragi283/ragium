@@ -27,14 +27,12 @@ import net.neoforged.neoforge.common.Tags
 object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Gravity-Unit
-        val gravityUnit: HTSimpleDeferredItem = RagiumItems.GRAVITATIONAL_UNIT
         HTShapedRecipeBuilder
-            .misc(gravityUnit)
-            .cross8()
-            .define('A', Items.SHULKER_SHELL)
-            .define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
-            .define('C', Items.END_CRYSTAL)
-            .save(output)
+            .cross8Mirrored(output, RagiumItems.GRAVITATIONAL_UNIT) {
+                define('A', Items.SHULKER_SHELL)
+                define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+                define('C', Items.END_CRYSTAL)
+            }
         save(
             RagiumAPI.id("crafting", "gravitational_upgrade"),
             HTGravitationalUpgradeRecipe(CraftingBookCategory.EQUIPMENT),
@@ -53,7 +51,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Molds
         for ((prefix: HTMaterialPrefix, mold: HTSimpleDeferredItem) in RagiumItems.MOLDS) {
             HTShapedRecipeBuilder
-                .misc(mold)
+                .create(mold)
                 .hollow4()
                 .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
                 .define('B', prefix.createCommonTagKey(Registries.ITEM))
@@ -61,7 +59,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         }
         // Polymer Catalyst
         HTShapedRecipeBuilder
-            .misc(RagiumItems.POLYMER_CATALYST)
+            .create(RagiumItems.POLYMER_CATALYST)
             .cross8()
             .define('A', Tags.Items.RODS_BREEZE)
             .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
@@ -80,7 +78,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
         // Basic
         HTShapedRecipeBuilder
-            .misc(RagiumItems.getCircuit(HTCircuitTier.BASIC))
+            .create(RagiumItems.getCircuit(HTCircuitTier.BASIC))
             .pattern(
                 "AAA",
                 "BCB",
@@ -91,7 +89,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTShapedRecipeBuilder
-            .misc(RagiumItems.getCircuit(HTCircuitTier.BASIC), 2)
+            .create(RagiumItems.getCircuit(HTCircuitTier.BASIC), 2)
             .pattern(
                 "AAA",
                 "BCB",
@@ -110,21 +108,22 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
         // Advanced
         HTShapedRecipeBuilder
-            .misc(RagiumItems.getCircuit(HTCircuitTier.ADVANCED))
-            .crossLayered()
-            .define('A', Tags.Items.DUSTS_GLOWSTONE)
-            .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            .define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.LAPIS)
-            .define('D', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
-            .saveSuffixed(output, "_from_basic")
+            .crossLayeredMirrored(
+                output,
+                RagiumItems.getCircuit(HTCircuitTier.ADVANCED),
+            ) {
+                define('A', Tags.Items.DUSTS_GLOWSTONE)
+                define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+                define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.LAPIS)
+                define('D', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            }
 
         HTShapedRecipeBuilder
-            .misc(RagiumItems.getCircuit(HTCircuitTier.ADVANCED))
-            .cross8()
-            .define('A', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.AZURE)
-            .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.GOLD)
-            .define('C', RagiumItems.CIRCUIT_BOARD)
-            .save(output)
+            .cross8Mirrored(output, RagiumItems.getCircuit(HTCircuitTier.ADVANCED), suffix = "_good") {
+                define('A', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.AZURE)
+                define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.GOLD)
+                define('C', RagiumItems.CIRCUIT_BOARD)
+            }
 
         HTCombineItemToObjRecipeBuilder
             .alloying(
@@ -158,17 +157,18 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             val coil: ItemLike = RagiumItems.getCoil(material)
             // Item
             HTShapedRecipeBuilder
-                .misc(coil, 4)
+                .create(coil, 4)
                 .hollow4()
                 .define('A', CommonMaterialPrefixes.INGOT, material)
                 .define('B', CommonMaterialPrefixes.INGOT, core)
                 .save(output)
             // Block
             HTShapedRecipeBuilder
-                .building(RagiumBlocks.getCoilBlock(material))
+                .create(RagiumBlocks.getCoilBlock(material))
                 .hollow8()
                 .define('A', coil)
                 .define('B', CommonMaterialPrefixes.INGOT, core)
+                .setCategory(CraftingBookCategory.BUILDING)
                 .save(output)
         }
         registerCoil(RagiumMaterialKeys.RAGI_ALLOY, VanillaMaterialKeys.IRON)
@@ -177,52 +177,47 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         // Component
         val basic: ItemLike = RagiumItems.getComponent(HTComponentTier.BASIC)
         HTShapedRecipeBuilder
-            .misc(basic)
-            .crossLayered()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .define('B', Tags.Items.GLASS_BLOCKS)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
-            .define('D', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-            .save(output)
+            .crossLayeredMirrored(output, basic) {
+                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+                define('B', Tags.Items.GLASS_BLOCKS)
+                define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+                define('D', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
+            }
 
         val adv: ItemLike = RagiumItems.getComponent(HTComponentTier.ADVANCED)
         HTShapedRecipeBuilder
-            .misc(adv)
-            .crossLayered()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-            .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
-            .define('D', basic)
-            .save(output)
+            .crossLayeredMirrored(output, adv) {
+                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+                define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ)
+                define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
+                define('D', basic)
+            }
 
         val elite: ItemLike = RagiumItems.getComponent(HTComponentTier.ELITE)
         HTShapedRecipeBuilder
-            .misc(elite)
-            .crossLayered()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
-            .define('D', adv)
-            .save(output)
+            .crossLayeredMirrored(output, elite) {
+                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+                define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+                define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+                define('D', adv)
+            }
 
         val ultimate: ItemLike = RagiumItems.getComponent(HTComponentTier.ULTIMATE)
         HTShapedRecipeBuilder
-            .misc(ultimate)
-            .crossLayered()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
-            .define('D', elite)
-            .save(output)
+            .crossLayeredMirrored(output, ultimate) {
+                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+                define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+                define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+                define('D', elite)
+            }
 
         val eternal: ItemLike = RagiumItems.getComponent(HTComponentTier.ETERNAL)
         HTShapedRecipeBuilder
-            .misc(eternal)
-            .cross8()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.IRIDESCENTIUM)
-            .define('B', Items.CLOCK)
-            .define('C', ultimate)
-            .save(output)
+            .cross8Mirrored(output, eternal) {
+                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.IRIDESCENTIUM)
+                define('B', Items.CLOCK)
+                define('C', ultimate)
+            }
         save(
             RagiumAPI.id("crafting", "eternal_upgrade"),
             HTEternalUpgradeRecipe(CraftingBookCategory.EQUIPMENT),
@@ -233,10 +228,11 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     private fun redStones() {
         // Redstone Board
         HTShapedRecipeBuilder
-            .redstone(RagiumItems.REDSTONE_BOARD, 4)
+            .create(RagiumItems.REDSTONE_BOARD, 4)
             .hollow4()
             .define('A', Items.SMOOTH_STONE_SLAB)
             .define('B', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
+            .setCategory(CraftingBookCategory.REDSTONE)
             .save(output)
 
         HTCombineItemToObjRecipeBuilder
@@ -274,18 +270,20 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
         // LED Block
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.getLedBlock(HTColorMaterial.WHITE), 8)
+            .create(RagiumBlocks.getLedBlock(HTColorMaterial.WHITE), 8)
             .hollow8()
             .define('A', Tags.Items.GLASS_BLOCKS)
             .define('B', RagiumItems.LED)
+            .setCategory(CraftingBookCategory.BUILDING)
             .saveSuffixed(output, "_from_led")
 
         for ((color: HTColorMaterial, block: ItemLike) in RagiumBlocks.LED_BLOCKS) {
             HTShapedRecipeBuilder
-                .building(block, 8)
+                .create(block, 8)
                 .hollow8()
                 .define('A', RagiumModTags.Items.LED_BLOCKS)
                 .define('B', color.dyeTag)
+                .setCategory(CraftingBookCategory.BUILDING)
                 .save(output)
         }
 

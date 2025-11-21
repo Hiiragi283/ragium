@@ -14,6 +14,7 @@ import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
 
 object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KALEIDO_COOKERY) {
@@ -48,12 +49,13 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
     @JvmStatic
     private fun knife() {
         HTShapedRecipeBuilder
-            .equipment(RagiumIntegrationItems.getKitchenKnife(RagiumMaterialKeys.RAGI_ALLOY))
+            .create(RagiumIntegrationItems.getKitchenKnife(RagiumMaterialKeys.RAGI_ALLOY))
             .pattern(
                 "AA",
                 "AB",
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             .define('B', Tags.Items.RODS_WOODEN)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         createComponentUpgrade(

@@ -19,6 +19,7 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -38,7 +39,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     private fun generators() {
         // Basic
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.THERMAL_GENERATOR)
+            .create(RagiumBlocks.THERMAL_GENERATOR)
             .pattern(
                 "AAA",
                 " B ",
@@ -50,7 +51,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Advanced
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.COMBUSTION_GENERATOR)
+            .create(RagiumBlocks.COMBUSTION_GENERATOR)
             .pattern(
                 "AAA",
                 " B ",
@@ -63,7 +64,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         // Elite
         for (tier: HTCircuitTier in HTCircuitTier.entries) {
             HTShapedRecipeBuilder
-                .misc(RagiumBlocks.SOLAR_PANEL_UNIT, (tier.ordinal + 1) * 4)
+                .create(RagiumBlocks.SOLAR_PANEL_UNIT, (tier.ordinal + 1) * 4)
                 .pattern(
                     "AAA",
                     "BCB",
@@ -74,7 +75,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
+            .create(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
             .pattern(
                 "AAA",
                 " B ",
@@ -85,7 +86,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Ultimate
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.ENCHANTMENT_GENERATOR)
+            .create(RagiumBlocks.ENCHANTMENT_GENERATOR)
             .pattern(
                 "AAA",
                 " B ",
@@ -141,7 +142,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.REFINERY)
+            .create(RagiumBlocks.REFINERY)
             .pattern(
                 " A ",
                 "ABA",
@@ -189,7 +190,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private inline fun machineBase(machine: ItemLike, material: HTMaterialLike, action: HTShapedRecipeBuilder.() -> Unit) {
         HTShapedRecipeBuilder
-            .misc(machine)
+            .create(machine)
             .pattern(
                 "AAA",
                 "BCB",
@@ -228,12 +229,12 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun devices() {
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.DEVICE_CASING)
-            .cross8()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-            .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
-            .define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-            .save(output)
+            .cross8Mirrored(output, RagiumBlocks.DEVICE_CASING) {
+                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+                define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
+                define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
+                setCategory(CraftingBookCategory.BUILDING)
+            }
 
         // Basic
         createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.ITEM_BUFFER, RagiumBlocks.DEVICE_CASING)
@@ -284,7 +285,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             }
 
             HTShapedRecipeBuilder
-                .misc(crate)
+                .create(crate)
                 .pattern(
                     "ABA",
                     "ACA",
@@ -298,7 +299,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         createNetheriteUpgrade(HTCrateTier.HUGE.getBlock(), HTCrateTier.LARGE.getBlock()).save(output)
         // Open
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.OPEN_CRATE)
+            .create(RagiumBlocks.OPEN_CRATE)
             .pattern(
                 "AAA",
                 "ABA",
@@ -321,7 +322,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             }
 
             HTShapedRecipeBuilder
-                .misc(drum)
+                .create(drum)
                 .pattern(
                     "ABA",
                     "ACA",
@@ -335,7 +336,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         createNetheriteUpgrade(HTDrumTier.HUGE.getBlock(), HTDrumTier.LARGE.getBlock()).save(output)
         // Exp
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.EXP_DRUM)
+            .create(RagiumBlocks.EXP_DRUM)
             .pattern(
                 "ABA",
                 "ACA",

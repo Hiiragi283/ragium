@@ -83,7 +83,7 @@ abstract class HTEmiRecipe<RECIPE : Any>(
 
     protected fun addOutputs(results: Ior<HTItemResult, HTFluidResult>) {
         addOutputs(results.getLeft())
-        addOutputs(results.getLeft())
+        addOutputs(results.getRight())
     }
 
     protected fun addOutputs(stacks: EmiStack?) {
