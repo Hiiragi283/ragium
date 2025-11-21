@@ -50,7 +50,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 .savePrefixed(output, "2x_")
 
             HTShapedRecipeBuilder
-                .misc(result, 9)
+                .create(result, 9)
                 .hollow8()
                 .define('A', RagiumModTags.Items.POLYMER_RESIN)
                 .define('B', parent)
@@ -378,7 +378,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
         // Green Pellet
         HTShapedRecipeBuilder
-            .misc(RagiumItems.GREEN_PELLET, 8)
+            .create(RagiumItems.GREEN_PELLET, 8)
             .hollow8()
             .define('A', RagiumItems.GREEN_CAKE_DUST)
             .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
@@ -405,15 +405,8 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         data.getItemIngredients(itemCreator).forEach(builder::addIngredient)
         data.getFluidIngredients(fluidCreator).forEach(builder::addIngredient)
         // Outputs
-        data
-            .getItemResults()
-            .getOrNull(0)
-            ?.first
-            ?.let(builder::setResult)
-        data
-            .getFluidResults()
-            .getOrNull(0)
-            ?.let(builder::setResult)
+        builder.setResult(data.getItemResults().getOrNull(0)?.first)
+        builder.setResult(data.getFluidResults().getOrNull(0))
         builder.saveModified(output, data.operator)
     }
 

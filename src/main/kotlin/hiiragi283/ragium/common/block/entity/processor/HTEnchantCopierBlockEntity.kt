@@ -77,8 +77,10 @@ class HTEnchantCopierBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput =
-        HTMultiRecipeInput.fromSlots(inputSlot, catalystSlot)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
+        items += inputSlot.getStack()
+        items += catalystSlot.getStack()
+    }
 
     override fun getMatchedRecipe(input: HTMultiRecipeInput, level: ServerLevel): EnchantingRecipe? {
         val tool: ImmutableItemStack = input.items[0] ?: return null

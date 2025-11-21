@@ -22,6 +22,7 @@ import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab
 import vectorwing.farmersdelight.common.registry.ModItems
@@ -64,10 +65,11 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     @JvmStatic
     private fun knife() {
         HTShapedRecipeBuilder
-            .equipment(RagiumIntegrationItems.getKnife(RagiumMaterialKeys.RAGI_ALLOY))
+            .create(RagiumIntegrationItems.getKnife(RagiumMaterialKeys.RAGI_ALLOY))
             .pattern("A", "B")
             .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             .define('B', Tags.Items.RODS_WOODEN)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         createComponentUpgrade(
@@ -83,7 +85,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         cuttingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PULP)
         // Pie
         HTShapedRecipeBuilder
-            .misc(RagiumDelightContents.RAGI_CHERRY_PIE)
+            .create(RagiumDelightContents.RAGI_CHERRY_PIE)
             .pattern(
                 "AAA",
                 "BBB",
@@ -101,7 +103,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
 
         HTShapedRecipeBuilder
-            .misc(RagiumDelightContents.RAGI_CHERRY_PIE)
+            .create(RagiumDelightContents.RAGI_CHERRY_PIE)
             .storage4()
             .define('A', RagiumDelightContents.RAGI_CHERRY_PIE_SLICE)
             .saveSuffixed(output, "_from_slice")
@@ -116,7 +118,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
 
         HTShapedRecipeBuilder
-            .misc(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK)
+            .create(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK)
             .pattern(
                 "ABA",
                 "ACA",
