@@ -14,15 +14,11 @@ import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCriteriaTriggers
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.advancements.critereon.BlockPredicate
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
-import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
-import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.advancements.critereon.PlayerInteractTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
-import net.minecraft.world.level.block.Blocks
 import java.util.Optional
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
@@ -155,25 +151,9 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun azure() {
-        child(RagiumAdvancements.BUDDING_AZURE, RagiumAdvancements.ROOT) {
-            display {
-                setIcon(RagiumItems.BLUE_KNOWLEDGE)
-                setTitleFromKey(RagiumAdvancements.BUDDING_AZURE)
-                setDescFromKey(RagiumAdvancements.BUDDING_AZURE)
-            }
-            addCriterion(
-                "use_blue_knowledge",
-                ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
-                    LocationPredicate.Builder
-                        .location()
-                        .setBlock(BlockPredicate.Builder.block().of(Blocks.BUDDING_AMETHYST)),
-                    ItemPredicate.Builder.item().of(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR),
-                ),
-            )
-        }
         createSimple(
             RagiumAdvancements.AZURE_SHARD,
-            RagiumAdvancements.BUDDING_AZURE,
+            RagiumAdvancements.ALLOY_SMELTER,
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.AZURE,
         )
@@ -195,7 +175,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
         createSimple(
             RagiumAdvancements.MIXER,
-            RagiumAdvancements.AZURE_STEEL,
+            RagiumAdvancements.REFINERY,
             RagiumBlocks.MIXER,
         ) { setGoal() }
     }

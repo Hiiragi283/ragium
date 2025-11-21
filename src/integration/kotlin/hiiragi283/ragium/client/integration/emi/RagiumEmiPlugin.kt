@@ -26,7 +26,6 @@ import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
@@ -70,7 +69,6 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidType
@@ -299,12 +297,6 @@ class RagiumEmiPlugin : EmiPlugin {
         registry.addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidHolderLike.LAVA)
         // Water + Eldritch Flux -> Eldritch Stone
         registry.addFluidInteraction(RagiumBlocks.ELDRITCH_STONE, HTFluidHolderLike.WATER, RagiumFluidContents.ELDRITCH_FLUX)
-
-        // Budding Azure
-        registry.addInteraction(RagiumBlocks.BUDDING_AZURE.toEmi()) {
-            leftInput(Blocks.BUDDING_AMETHYST.toEmi())
-            rightInput(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR.toEmi(), false)
-        }
     }
 
     //    Extension    //

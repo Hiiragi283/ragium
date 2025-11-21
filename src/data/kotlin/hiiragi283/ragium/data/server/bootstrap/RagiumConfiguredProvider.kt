@@ -7,10 +7,17 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.BlockTags
+import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.levelgen.GeodeBlockSettings
+import net.minecraft.world.level.levelgen.GeodeCrackSettings
+import net.minecraft.world.level.levelgen.GeodeLayerSettings
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
 import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration
+import net.minecraft.world.level.levelgen.feature.configurations.GeodeConfiguration
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest
 
 object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<*, *>> {
@@ -51,19 +58,19 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
             ),
         )
         // Geode
-        /*register(
+        register(
             context,
-            RagiumWorldGenData.GEODE_CRUDE_OIL,
+            RagiumWorldGenData.QUARTZ_GEODE,
             Feature.GEODE,
             GeodeConfiguration(
                 GeodeBlockSettings(
-                    BlockStateProvider.simple(RagiumFluidContents.CRUDE_OIL.getBlock()),
-                    BlockStateProvider.simple(Blocks.SOUL_SOIL),
-                    BlockStateProvider.simple(RagiumBlocks.STICKY_SOUL_SOIL.get()),
+                    BlockStateProvider.simple(Blocks.AIR),
+                    BlockStateProvider.simple(Blocks.SMOOTH_QUARTZ),
+                    BlockStateProvider.simple(RagiumBlocks.BUDDING_QUARTZ.get()),
                     BlockStateProvider.simple(Blocks.BLACKSTONE),
-                    BlockStateProvider.simple(Blocks.SMOOTH_BASALT),
+                    BlockStateProvider.simple(Blocks.SOUL_SOIL),
                     listOf(
-                        RagiumFluidContents.CRUDE_OIL.getBlock().defaultBlockState(),
+                        RagiumBlocks.QUARTZ_CLUSTER.get().defaultBlockState(),
                     ),
                     BlockTags.FEATURES_CANNOT_REPLACE,
                     BlockTags.GEODE_INVALID_BLOCKS,
@@ -81,7 +88,7 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
                 0.05,
                 1,
             ),
-        )*/
+        )
     }
 
     private fun <FC : FeatureConfiguration> register(

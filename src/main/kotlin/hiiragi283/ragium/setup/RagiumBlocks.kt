@@ -17,8 +17,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
-import hiiragi283.ragium.common.block.HTAzureClusterBlock
-import hiiragi283.ragium.common.block.HTBuddingAzureBlock
+import hiiragi283.ragium.common.block.HTBuddingQuartzBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
 import hiiragi283.ragium.common.block.HTExpBerriesBushBlock
@@ -52,6 +51,7 @@ import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.AmethystClusterBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.ConcretePowderBlock
@@ -85,6 +85,9 @@ object RagiumBlocks {
         // Warped Glass
         REGISTER.addAlias("soul_glass", "warped_crystal_glass")
         REGISTER.addAlias("tinted_soul_glass", "tinted_warped_crystal_glass")
+        // Budding Quartz
+        REGISTER.addAlias("budding_azure", "budding_quartz")
+        REGISTER.addAlias("azure_cluster", "quartz_cluster")
     }
 
     @JvmStatic
@@ -137,17 +140,16 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val BUDDING_AZURE: HTSimpleDeferredBlock = REGISTER.registerSimple(
-        "budding_azure",
-        copyOf(Blocks.BUDDING_AMETHYST, MapColor.TERRACOTTA_BLUE),
-        ::HTBuddingAzureBlock,
+    val BUDDING_QUARTZ: HTSimpleDeferredBlock = REGISTER.registerSimple(
+        "budding_quartz",
+        copyOf(Blocks.BUDDING_AMETHYST, MapColor.NONE),
+        ::HTBuddingQuartzBlock,
     )
 
     @JvmField
-    val AZURE_CLUSTER: HTSimpleDeferredBlock = REGISTER.registerSimple(
-        "azure_cluster",
-        copyOf(Blocks.AMETHYST_CLUSTER, MapColor.TERRACOTTA_BLUE),
-        ::HTAzureClusterBlock,
+    val QUARTZ_CLUSTER: HTSimpleDeferredBlock = REGISTER.registerSimple(
+        "quartz_cluster",
+        { AmethystClusterBlock(7f, 3f, copyOf(Blocks.AMETHYST_CLUSTER, MapColor.NONE)) },
     )
 
     @JvmField

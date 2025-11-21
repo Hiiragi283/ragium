@@ -329,8 +329,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .apply(ItemTags.PIGLIN_LOVED)
             .add(RagiumItems.FEVER_CHERRY)
             .addTag(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-
-        factory.apply(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR).add(RagiumItems.BLUE_KNOWLEDGE)
         // WIP
         factory
             .apply(RagiumModTags.Items.WIP)
