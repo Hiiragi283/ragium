@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import com.enderio.base.common.init.EIOBlocks
 import com.enderio.base.common.init.EIOItems
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
+import dev.shadowsoffire.hostilenetworks.Hostile
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
@@ -15,7 +16,7 @@ import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -23,6 +24,7 @@ import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.common.data.map.HTBlockCrushingMaterialRecipe
 import hiiragi283.ragium.common.data.map.HTCompressingMaterialRecipe
 import hiiragi283.ragium.common.data.map.HTCrushingMaterialRecipe
+import hiiragi283.ragium.common.data.map.HTDataModelEntityIngredient
 import hiiragi283.ragium.common.data.map.HTRawSmeltingMaterialRecipe
 import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -34,12 +36,10 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.EnchantmentTags
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
@@ -57,8 +57,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
         compostables()
         furnaceFuels()
-
-        enchFactories()
 
         mobHead()
 
@@ -92,12 +90,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     //    Ragium    //
 
-    private fun enchFactories() {
-        builder(RagiumDataMaps.ENCHANT_FUEL)
-            .add(EnchantmentTags.TREASURE, LevelBasedValue.perLevel(3f), false)
-            .add(EnchantmentTags.CURSE, LevelBasedValue.perLevel(-1f), false)
-    }
-
     private fun mobHead() {
         builder(RagiumDataMaps.MOB_HEAD)
             .add(EntityType.SKELETON, HTMobHead(Items.SKELETON_SKULL))
@@ -113,7 +105,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun thermalFuels() {
         builder(RagiumDataMaps.THERMAL_FUEL)
             .add("steam", HTFluidFuelData(100))
-            .add(HTFluidContent.LAVA, HTFluidFuelData(10))
+            .add(HTFluidHolderLike.LAVA, HTFluidFuelData(10))
             .add("blaze_blood", HTFluidFuelData(5))
     }
 
@@ -162,6 +154,13 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                 HTSoulVialEntityIngredient,
                 false,
                 ModLoadedCondition(RagiumConst.EIO_BASE),
+            )
+            // HNN
+            .add(
+                Hostile.Items.DATA_MODEL,
+                HTDataModelEntityIngredient,
+                false,
+                ModLoadedCondition(RagiumConst.HOSTILE_NETWORKS),
             )
     }
 
@@ -269,8 +268,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun <T : Any> Builder<T, Fluid>.add(fluid: Fluid, value: T, vararg conditions: ICondition): Builder<T, Fluid> =
         addHolder(fluid.toHolderLike(), value, *conditions)
 
-    private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent<*, *, *>, value: T): Builder<T, Fluid> =
-        add(content.commonTag, value, false)
+    private fun <T : Any> Builder<T, Fluid>.add(holder: HTFluidHolderLike, value: T): Builder<T, Fluid> =
+        add(holder.getFluidTag(), value, false)
 
     private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> =
         add(Registries.FLUID.createCommonTag(path), value, false)

@@ -197,16 +197,16 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         }
 
         createSimple(
-            RagiumAdvancements.SIMULATOR,
+            RagiumAdvancements.MIXER,
             RagiumAdvancements.AZURE_STEEL,
-            RagiumBlocks.SIMULATOR,
+            RagiumBlocks.MIXER,
         ) { setGoal() }
     }
 
     private fun deep() {
         createSimple(
             RagiumAdvancements.RESONANT_DEBRIS,
-            RagiumAdvancements.SIMULATOR,
+            RagiumAdvancements.AZURE_STEEL,
             RagiumBlocks.RESONANT_DEBRIS,
             RagiumCommonTags.Items.ORES_DEEP_SCRAP,
         )
@@ -239,6 +239,11 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             CommonMaterialPrefixes.INGOT,
             RagiumMaterialKeys.NIGHT_METAL,
         )
+        createSimple(
+            RagiumAdvancements.SIMULATOR,
+            RagiumAdvancements.NIGHT_METAL,
+            RagiumBlocks.SIMULATOR,
+        ) { setGoal() }
     }
 
     private fun crimson() {
@@ -293,7 +298,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     private fun eldritch() {
         createSimple(
             RagiumAdvancements.ELDRITCH_PEARL,
-            RagiumAdvancements.ALLOY_SMELTER,
+            RagiumAdvancements.MIXER,
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.ELDRITCH_PEARL,
         )

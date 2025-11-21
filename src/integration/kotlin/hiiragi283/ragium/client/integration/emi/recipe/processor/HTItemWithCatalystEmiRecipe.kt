@@ -24,8 +24,7 @@ class HTItemWithCatalystEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeH
                 addCatalyst(recipe.required)
             }
         }
-        addOutputs(recipe.itemResult.getOrNull())
-        addOutputs(recipe.fluidResult.getOrNull())
+        addOutputs(recipe.results)
     }
 
     override fun initInputSlots(widgets: WidgetHolder) {

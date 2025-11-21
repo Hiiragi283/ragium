@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTBasicFluidContentNew
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -15,7 +15,7 @@ import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumChemicals
@@ -149,7 +149,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/azure_steel"))
 
         // Ethene + Catalyst -> HDPE
-        HTFluidTransformRecipeBuilder
+        HTComplexRecipeBuilder
             .solidifying(
                 itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
                 fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100),
@@ -171,7 +171,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("chemical_infusing/eldritch_flux"))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            val molten: HTFluidContent<*, *, *> = data.molten
+            val molten: HTBasicFluidContentNew = data.molten
             // Fluid <-> Chemical
             RotaryRecipeBuilder
                 .rotary(

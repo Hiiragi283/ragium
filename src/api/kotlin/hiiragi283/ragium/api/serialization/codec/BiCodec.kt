@@ -369,6 +369,13 @@ data class BiCodec<B : ByteBuf, V : Any> private constructor(val codec: Codec<V>
      */
     fun listOrElement(min: Int, max: Int): BiCodec<B, List<V>> = of(codec.listOrElement(min, max), streamCodec.listOf())
 
+    /**
+     * 現在の[BiCodec]を，要素が一つの場合はそのままコーデックする[List]の[BiCodec]を返します。
+     * @param range [List.size]の範囲
+     * @return [List.size]が制限された[List]の[BiCodec]
+     */
+    fun listOrElement(range: IntRange): BiCodec<B, List<V>> = listOrElement(range.first, range.last)
+
     // Optional
 
     /**

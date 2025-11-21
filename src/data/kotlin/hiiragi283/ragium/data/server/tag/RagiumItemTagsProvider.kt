@@ -287,8 +287,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         setupTool(RagiumModTags.Items.TOOLS_DRILL)
         setupTool(RagiumModTags.Items.TOOLS_HAMMER)
         // Buckets
-        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.getBucket().toHolderLike())
+        for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
+            addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.bucket)
         }
         // LED
         for ((color: HTColorMaterial, block: HTHolderLike) in RagiumBlocks.LED_BLOCKS) {

@@ -33,7 +33,7 @@ import net.neoforged.neoforge.common.Tags
 object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.DRILL)
+            .create(RagiumItems.DRILL)
             .pattern(
                 " A ",
                 "ABA",
@@ -41,15 +41,17 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.POTION_BUNDLE)
+            .create(RagiumItems.POTION_BUNDLE)
             .pattern(
                 " A ",
                 "BBB",
             ).define('A', RagiumItems.SYNTHETIC_FIBER)
             .define('B', Items.GLASS_BOTTLE)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         HTSingleItemRecipeBuilder
@@ -64,12 +66,12 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.ECHO_STAR)
-            .cross8()
-            .define('A', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.ECHO)
-            .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO)
-            .define('C', CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.DEEP_STEEL)
-            .save(output)
+            .cross8Mirrored(output, RagiumItems.ECHO_STAR) {
+                define('A', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.ECHO)
+                define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO)
+                define('C', CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.DEEP_STEEL)
+                setCategory(CraftingBookCategory.EQUIPMENT)
+            }
 
         raginite()
         azureAndDeepSteel()
@@ -84,7 +86,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     private fun raginite() {
         // Basic
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.MAGNET)
+            .create(RagiumItems.MAGNET)
             .pattern(
                 "A A",
                 "B B",
@@ -92,6 +94,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
             .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         // Advanced
@@ -103,59 +106,58 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         // Elite
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.DYNAMIC_LANTERN)
+            .create(RagiumItems.DYNAMIC_LANTERN)
             .hollow4()
             .define('A', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .define('B', Items.LANTERN)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.LOOT_TICKET)
-            .cross8()
-            .define('A', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .define('B', Tags.Items.DYES_RED)
-            .define('C', Items.PAPER)
-            .save(output)
+            .cross8Mirrored(output, RagiumItems.LOOT_TICKET) {
+                define('A', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+                define('B', Tags.Items.DYES_RED)
+                define('C', Items.PAPER)
+                setCategory(CraftingBookCategory.EQUIPMENT)
+            }
 
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.NIGHT_VISION_GOGGLES)
+            .create(RagiumItems.NIGHT_VISION_GOGGLES)
             .pattern(
                 "AAA",
                 "ABA",
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
             .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
     }
 
     @JvmStatic
     private fun azureAndDeepSteel() {
         HTShapedRecipeBuilder
-            .misc(RagiumItems.BLUE_KNOWLEDGE)
-            .cross8()
-            .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.LAPIS)
-            .define('B', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
-            .define('C', Items.BOOK)
-            .save(output)
+            .cross8Mirrored(output, RagiumItems.BLUE_KNOWLEDGE) {
+                define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.LAPIS)
+                define('B', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
+                define('C', Items.BOOK)
+            }
 
         HTShapedRecipeBuilder
-            .misc(RagiumItems.BLUE_KNOWLEDGE)
-            .cross8()
-            .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.LAPIS)
-            .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
-            .define('C', Items.ENCHANTED_BOOK)
-            .saveSuffixed(output, "_alt")
+            .cross8Mirrored(output, RagiumItems.BLUE_KNOWLEDGE, suffix = "_cheap") {
+                define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.LAPIS)
+                define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
+                define('C', Items.ENCHANTED_BOOK)
+            }
 
         addEquipments(RagiumMaterialKeys.AZURE_STEEL, VanillaMaterialKeys.IRON)
         addEquipments(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
         addEquipments(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)
 
         HTShapedRecipeBuilder
-            .misc(Items.HEAVY_CORE)
-            .cross8()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-            .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
-            .define('C', CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.NIGHT_METAL)
-            .save(output)
+            .cross8Mirrored(output, Items.HEAVY_CORE) {
+                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+                define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
+                define('C', CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.NIGHT_METAL)
+            }
     }
 
     @JvmStatic
@@ -163,12 +165,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         // Template
         val upgrade: ItemLike = RagiumItems.getSmithingTemplate(material)
         HTShapedRecipeBuilder
-            .equipment(upgrade)
+            .create(upgrade)
             .pattern(
                 "A A",
                 "A A",
                 " A ",
             ).define('A', CommonMaterialPrefixes.INGOT, material)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         HTShapelessRecipeBuilder
@@ -202,24 +205,25 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     private fun molten() {
         // Warped
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.TELEPORT_KEY)
-            .cross8()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
-            .define('C', Items.TRIAL_KEY)
-            .save(output)
+            .cross8Mirrored(output, RagiumItems.TELEPORT_KEY) {
+                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+                define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
+                define('C', Items.TRIAL_KEY)
+                setCategory(CraftingBookCategory.EQUIPMENT)
+            }
 
         resetComponent(RagiumItems.TELEPORT_KEY, RagiumDataComponents.FLUID_CONTENT, RagiumDataComponents.TELEPORT_POS)
         // Eldritch
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.ELDRITCH_EGG)
+            .create(RagiumItems.ELDRITCH_EGG)
             .hollow4()
             .define('A', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             .define('B', Tags.Items.EGGS)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         HTShapedRecipeBuilder
-            .equipment(RagiumItems.UNIVERSAL_BUNDLE)
+            .create(RagiumItems.UNIVERSAL_BUNDLE)
             .pattern(
                 "ABA",
                 "BCB",
@@ -227,6 +231,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', RagiumItems.SYNTHETIC_FIBER)
             .define('B', RagiumItems.SYNTHETIC_LEATHER)
             .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         for (variant: HTColorMaterial in HTColorMaterial.entries) {
@@ -244,13 +249,14 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     private fun forgeHammers() {
         fun crafting(prefix: HTPrefixLike, key: HTMaterialLike) {
             HTShapedRecipeBuilder
-                .equipment(RagiumItems.getHammer(key))
+                .create(RagiumItems.getHammer(key))
                 .pattern(
                     " AA",
                     "BBA",
                     " AA",
                 ).define('A', prefix, key)
                 .define('B', Tags.Items.RODS_WOODEN)
+                .setCategory(CraftingBookCategory.EQUIPMENT)
                 .save(output)
         }
         crafting(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
@@ -278,15 +284,15 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 HTChargeVariant.CONFUSING -> RagiumMaterialKeys.ELDRITCH_PEARL
             }
             HTShapedRecipeBuilder
-                .equipment(variant, 3)
+                .create(variant, 3)
                 .pattern(
                     " AA",
                     " BA",
                     "C  ",
-                ).hollow8()
-                .define('A', CommonMaterialPrefixes.GEM, material)
+                ).define('A', CommonMaterialPrefixes.GEM, material)
                 .define('B', Tags.Items.GUNPOWDERS)
                 .define('C', Items.PAPER)
+                .setCategory(CraftingBookCategory.EQUIPMENT)
                 .save(output)
         }
     }

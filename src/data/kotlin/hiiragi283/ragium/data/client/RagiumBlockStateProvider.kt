@@ -185,8 +185,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
         val ultimateMachine: ResourceLocation = RagiumAPI.id("block", "ultimate_machine_casing")
-
-        val blackboxMachine: ResourceLocation = RagiumAPI.id("block", "blackbox_machine_casing")
+        val obsidian: ResourceLocation = vanillaId("block", "obsidian")
 
         // Generator
         builtIn(RagiumBlocks.THERMAL_GENERATOR, basicCasing)
@@ -201,19 +200,21 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         machine(RagiumBlocks.BLOCK_BREAKER, basicCasing, bricks)
         machine(RagiumBlocks.COMPRESSOR, basicCasing, bricks)
         machine(RagiumBlocks.CUTTING_MACHINE, basicCasing, bricks)
+        machine(RagiumBlocks.ELECTRIC_FURNACE, basicCasing, vanillaId("block", "furnace_side"), smelterFront)
         machine(RagiumBlocks.EXTRACTOR, basicCasing, bricks)
         machine(RagiumBlocks.PULVERIZER, basicCasing, bricks)
         // Advanced
         machine(RagiumBlocks.CRUSHER, advancedCasing, blackstone, RagiumAPI.id("block", "pulverizer_front"))
         machine(RagiumBlocks.MELTER, advancedFrame, blackstone)
         altModelBlock(RagiumBlocks.REFINERY, factory = ::horizontalBlock)
-        // machine(RagiumBlocks.SOLIDIFIER, advancedFrame, blackstone)
         machine(RagiumBlocks.WASHER, advancedFrame, blackstone)
         // Elite
         machine(RagiumBlocks.BREWERY, eliteMachine, deepslateTiles)
         machine(RagiumBlocks.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
         machine(RagiumBlocks.PLANTER, eliteMachine, deepslateTiles)
-        machine(RagiumBlocks.SIMULATOR, blackboxMachine, blackboxMachine)
+        // Ultimate
+        machine(RagiumBlocks.ENCHANT_COPIER, ultimateMachine, obsidian)
+        machine(RagiumBlocks.SIMULATOR, ultimateMachine, ultimateMachine)
 
         // Device
         layeredBlock(
@@ -242,9 +243,9 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         }
 
         // Fluids
-        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
+        for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
             simpleBlock(
-                content.getBlock(),
+                content.block.get(),
                 models()
                     .getBuilder(content.blockId)
                     .texture("particle", vanillaId("block", "water_still")),

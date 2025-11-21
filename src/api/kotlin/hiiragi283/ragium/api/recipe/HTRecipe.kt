@@ -4,13 +4,13 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.NonNullList
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.Level
-import java.util.Optional
 import java.util.function.Predicate
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * Ragiumで使用する[Recipe]の拡張インターフェース
@@ -42,6 +42,12 @@ interface HTRecipe<INPUT : RecipeInput> :
     @Deprecated("Use `assemble(INPUT, HolderLookup.Provider) `instead", level = DeprecationLevel.ERROR)
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 
+    @Deprecated("Not used in Ragium", level = DeprecationLevel.ERROR)
+    override fun getRemainingItems(input: INPUT): NonNullList<ItemStack> = super.getRemainingItems(input)
+
+    @Deprecated("Not used in Ragium", level = DeprecationLevel.ERROR)
+    override fun getIngredients(): NonNullList<Ingredient> = super.getIngredients()
+
     override fun isSpecial(): Boolean = true
 
     abstract override fun isIncomplete(): Boolean
@@ -59,14 +65,4 @@ interface HTRecipe<INPUT : RecipeInput> :
         test(input) -> result?.getStackOrNull(provider)
         else -> null
     }
-
-    /**
-     * 指定された引数からアイテムの完成品を返します。
-     * @param input レシピの入力
-     * @param provider レジストリのアクセス
-     * @param result [Optional]で包まれた[HTItemResult]
-     * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は`null`
-     */
-    fun getItemResult(input: INPUT, provider: HolderLookup.Provider?, result: Optional<HTItemResult>): ImmutableItemStack? =
-        getItemResult(input, provider, result.getOrNull())
 }

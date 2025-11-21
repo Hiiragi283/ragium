@@ -67,7 +67,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "Not a azurite", "Get Azure Shard")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "The steel is bluish.", "Get Azure Steel Ingot")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "Get any Azure Steel Tool or Armor")
-        addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "Get Simulator")
+        addAdvancement(RagiumAdvancements.MIXER, "Mix and Mix then Mix", "Get Mixer")
         // Deep
         addAdvancement(RagiumAdvancements.RESONANT_DEBRIS, "Debris in the Ancient", "Get Resonant Debris")
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "Deeper, Deeper, yet Deeper.", "Get Deep Steel")
@@ -76,6 +76,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.ECHO_STAR, "Shrieking Star", "Get Echo Star")
         // Night Metal
         addAdvancement(RagiumAdvancements.NIGHT_METAL, "Night of Knights", "Get Night Metal Ingot")
+        addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "Get Simulator")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "Chao!", "Get Crimson Crystal")
         addAdvancement(
@@ -136,14 +137,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "Enchantment Generator")
         add(RagiumBlocks.NUCLEAR_REACTOR, "Nuclear Reactor")
         // Processors
-        add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Smelter")
-        add(RagiumBlocks.AUTO_SMITHING_TABLE, "Auto Smithing Table")
-        add(RagiumBlocks.AUTO_STONECUTTER, "Auto Stonecutter")
-
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.BLOCK_BREAKER, "Block Breaker")
         add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
+        add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Smelter")
         add(RagiumBlocks.EXTRACTOR, "Extractor")
         add(RagiumBlocks.PULVERIZER, "Pulverizer")
 
@@ -153,8 +151,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.WASHER, "Washer")
 
         add(RagiumBlocks.BREWERY, "Brewery")
+        add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.MULTI_SMELTER, "Multi Smelter")
         add(RagiumBlocks.PLANTER, "Planting Chamber")
+
+        add(RagiumBlocks.ENCHANT_COPIER, "Enchantment Copier")
+        add(RagiumBlocks.ENCHANTER, "Enchanter")
         add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
@@ -237,6 +239,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.RESIN, "Resin")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.WITHER_DOLl, "Wither Doll")
+        add(RagiumItems.WITHER_STAR, "Wither Star")
 
         add(RagiumItems.POTATO_SPROUTS, "Potato Sprouts")
         add(RagiumItems.GREEN_CAKE, "Green Cake")
@@ -308,6 +311,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Blocks.WIP, "Work In Progress")
 
         add(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST, "Blacklisted mobs for capturing")
+        add(RagiumModTags.EntityTypes.CONFUSION_BLACKLIST, "Blacklisted mobs for confusion")
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "Generate Resonant Debris")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "Sensitive to Noise Canceling")
 
@@ -337,10 +341,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
         add(RagiumRecipeTypes.EXTRACTING, "Extracting")
-        add(RagiumRecipeTypes.FLUID_TRANSFORM, "Fluid Transforming")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
+        add(RagiumRecipeTypes.REFINING, "Refining")
         add(RagiumRecipeTypes.SIMULATING, "Simulating")
         add(RagiumRecipeTypes.WASHING, "Washing")
     }
@@ -407,6 +411,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.BREWERY, "A machine which brews potion from item and fluid.")
         add(RagiumCommonTranslation.MULTI_SMELTER, "A machine which smelts items simultaneously.")
         add(RagiumCommonTranslation.PLANTER, "A machine which grows plant from seeds or sapling.")
+
+        add(RagiumCommonTranslation.ENCHANT_COPIER, "A machine which copies enchantments from the book and apply it to the tool.")
+        add(RagiumCommonTranslation.ENCHANTER, "A machine which create enchanted books from items.")
         add(RagiumCommonTranslation.SIMULATOR, "A machine which simulates behavior of blocks or mobs to generate resources.")
 
         add(RagiumCommonTranslation.ITEM_BUFFER, "A device which collects items around.")

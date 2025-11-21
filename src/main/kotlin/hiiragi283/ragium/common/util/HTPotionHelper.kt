@@ -15,10 +15,10 @@ object HTPotionHelper {
     fun content(potion: Holder<Potion>): PotionContents = PotionContents(potion)
 
     @JvmStatic
-    inline fun content(builderAction: MutableList<MobEffectInstance>.() -> Unit): PotionContents = PotionContents(
+    fun content(instances: List<MobEffectInstance>): PotionContents = PotionContents(
         Optional.empty(),
         Optional.empty(),
-        buildList(builderAction),
+        instances,
     )
 
     //    ItemStack    //
@@ -27,8 +27,8 @@ object HTPotionHelper {
     fun createPotion(item: ItemLike, potion: Holder<Potion>, count: Int = 1): ItemStack = createPotion(item, content(potion), count)
 
     @JvmStatic
-    fun createPotion(item: ItemLike, builderAction: MutableList<MobEffectInstance>.() -> Unit, count: Int = 1): ItemStack =
-        createPotion(item, content(builderAction), count)
+    fun createPotion(item: ItemLike, instances: List<MobEffectInstance>, count: Int = 1): ItemStack =
+        createPotion(item, content(instances), count)
 
     @JvmStatic
     fun createPotion(item: ItemLike, contents: PotionContents, count: Int = 1): ItemStack =

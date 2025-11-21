@@ -45,10 +45,10 @@ object RagiumMiscRegister {
             register(helper, RagiumRecipeTypes.CUTTING)
             register(helper, RagiumRecipeTypes.ENCHANTING)
             register(helper, RagiumRecipeTypes.EXTRACTING)
-            register(helper, RagiumRecipeTypes.FLUID_TRANSFORM)
             register(helper, RagiumRecipeTypes.MELTING)
             register(helper, RagiumRecipeTypes.MIXING)
             register(helper, RagiumRecipeTypes.PLANTING)
+            register(helper, RagiumRecipeTypes.REFINING)
             register(helper, RagiumRecipeTypes.SIMULATING)
             register(helper, RagiumRecipeTypes.WASHING)
         }

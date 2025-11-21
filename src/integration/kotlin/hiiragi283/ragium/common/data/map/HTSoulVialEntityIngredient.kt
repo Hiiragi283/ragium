@@ -9,6 +9,7 @@ import net.minecraft.core.Holder
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import java.util.stream.Stream
 
 data object HTSoulVialEntityIngredient : HTSubEntityTypeIngredient {
     @JvmField
@@ -18,6 +19,6 @@ data object HTSoulVialEntityIngredient : HTSubEntityTypeIngredient {
 
     override fun getEntityType(stack: ItemStack): EntityType<*>? = stack.get(EIODataComponents.SOUL)?.entityType()
 
-    override fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): ItemStack =
-        createItemStack(baseItem.value(), EIODataComponents.SOUL, Soul.of(entityType.value()))
+    override fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): Stream<ItemStack> =
+        Stream.of(createItemStack(baseItem.value(), EIODataComponents.SOUL, Soul.of(entityType.value())))
 }

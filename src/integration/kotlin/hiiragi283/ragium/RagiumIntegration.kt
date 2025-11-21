@@ -3,6 +3,8 @@ package hiiragi283.ragium
 import blusunrize.immersiveengineering.api.tool.RailgunHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.material.prefix.HTRegisterPrefixEvent
 import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -12,10 +14,13 @@ import hiiragi283.ragium.client.integration.accessories.HTBundleAccessoryRendere
 import hiiragi283.ragium.client.integration.accessories.HTGogglesAccessoryRenderer
 import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
+import hiiragi283.ragium.common.HTThrowableRailgunProjectile
 import hiiragi283.ragium.common.RagiumAccessory
+import hiiragi283.ragium.common.data.map.HTDataModelEntityIngredient
 import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
+import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.setup.RagiumChemicals
 import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumIntegrationCreativeTabs
@@ -25,9 +30,8 @@ import hiiragi283.ragium.setup.RagiumMatterTypes
 import io.wispforest.accessories.api.AccessoriesAPI
 import io.wispforest.accessories.api.client.AccessoriesRendererRegistry
 import io.wispforest.accessories.api.client.AccessoryRenderer
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.api.distmarker.Dist
@@ -82,9 +86,12 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
 
     private fun register(event: RegisterEvent) {
         // Sub Entity Type Ingredient
-        if (isLoaded(RagiumConst.EIO_BASE)) {
-            event.register(RagiumAPI.SUB_ENTITY_INGREDIENT_TYPE_KEY) { helper ->
+        event.register(RagiumAPI.SUB_ENTITY_INGREDIENT_TYPE_KEY) { helper ->
+            if (isLoaded(RagiumConst.EIO_BASE)) {
                 helper.register(RagiumConst.EIO_BASE.toId("soul_vial"), HTSoulVialEntityIngredient.CODEC)
+            }
+            if (isLoaded(RagiumConst.HOSTILE_NETWORKS)) {
+                helper.register(RagiumConst.HOSTILE_NETWORKS.toId("data_model"), HTDataModelEntityIngredient.CODEC)
             }
         }
     }
@@ -124,21 +131,23 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
     }
 
     private fun registerRailgun() {
-        RailgunHandler.registerProjectile(
-            { Ingredient.of(RagiumItems.ELDRITCH_EGG) },
-            object : RailgunHandler.IRailgunProjectile {
-                override fun getProjectile(shooter: Player?, ammo: ItemStack, defaultProjectile: Entity): Entity? {
-                    if (shooter != null) {
-                        val egg = HTThrownCaptureEgg(shooter.level(), shooter)
-                        egg.item = ammo
-                        egg.shootFromRotation(shooter, shooter.xRot, shooter.yRot, 0f, 2.5f, 0f)
-                        return egg
-                    }
-                    return super.getProjectile(shooter, ammo, defaultProjectile)
-                }
-            },
-        )
+        for (variant: HTChargeVariant in HTChargeVariant.entries) {
+            registerRailgun(variant.getItem(), HTThrowableRailgunProjectile(variant::createCharge))
+        }
+        registerRailgun(RagiumItems.ELDRITCH_EGG, HTThrowableRailgunProjectile(::HTThrownCaptureEgg))
         RagiumAPI.LOGGER.info("Registered Railgun Projectiles!")
+    }
+
+    private fun registerRailgun(item: ItemLike, projectile: RailgunHandler.IRailgunProjectile) {
+        RailgunHandler.registerProjectile({ Ingredient.of(item) }, projectile)
+    }
+
+    private fun registerRailgun(prefix: HTPrefixLike, material: HTMaterialLike, projectile: RailgunHandler.IRailgunProjectile) {
+        registerRailgun(prefix.itemTagKey(material), projectile)
+    }
+
+    private fun registerRailgun(tagKey: TagKey<Item>, projectile: RailgunHandler.IRailgunProjectile) {
+        RailgunHandler.registerProjectile({ Ingredient.of(tagKey) }, projectile)
     }
 
     //    Client    //

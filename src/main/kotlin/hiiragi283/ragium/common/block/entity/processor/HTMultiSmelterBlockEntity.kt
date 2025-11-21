@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
+import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
-import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -72,7 +72,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // インプットを減らす
         HTStackSlotHelper.shrinkStack(inputSlot, { stack: ImmutableItemStack ->
             when {
-                recipe.ingredients[0].test(stack.unwrap()) -> outputCount
+                recipe.ingredient.test(stack.unwrap()) -> outputCount
                 else -> 0
             }
         }, HTStorageAction.EXECUTE)

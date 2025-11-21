@@ -2,7 +2,8 @@ package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.multi.HTMultiOutputsRecipe
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -16,21 +17,19 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTMultiOutputsBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOutputsRecipe<INPUT>> :
-    HTEnergizedProcessorBlockEntity.Cached<INPUT, RECIPE> {
+abstract class HTComplexBlockEntity : HTEnergizedProcessorBlockEntity.Cached<HTMultiRecipeInput, HTComplexRecipe> {
     constructor(
-        recipeCache: HTRecipeCache<INPUT, RECIPE>,
+        recipeCache: HTRecipeCache<HTMultiRecipeInput, HTComplexRecipe>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
     ) : super(recipeCache, blockHolder, pos, state)
 
     constructor(
-        finder: HTRecipeFinder<INPUT, RECIPE>,
+        finder: HTRecipeFinder<HTMultiRecipeInput, HTComplexRecipe>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
@@ -55,7 +54,7 @@ abstract class HTMultiOutputsBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOu
 
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    final override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
+    final override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTComplexRecipe): Boolean {
         val access: RegistryAccess = level.registryAccess()
         val bool1: Boolean =
             outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
@@ -68,8 +67,8 @@ abstract class HTMultiOutputsBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOu
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: INPUT,
-        recipe: RECIPE,
+        input: HTMultiRecipeInput,
+        recipe: HTComplexRecipe,
     ) {
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()

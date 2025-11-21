@@ -5,8 +5,6 @@ import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.crafting.RecipeInput
-import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * 液体を完成品にとるレシピのインターフェース
@@ -34,14 +32,4 @@ interface HTFluidRecipe<INPUT : RecipeInput> : HTRecipe<INPUT> {
         test(input) -> result?.getStackOrNull(provider)
         else -> null
     }
-
-    /**
-     * 指定された引数からアイテムの完成品を返します。
-     * @param input レシピの入力
-     * @param provider レジストリのアクセス
-     * @param result [Optional]の[HTFluidResult]
-     * @return [test]の戻り値が`false`，または[HTRecipeResult.getStackOrNull]が`null`の場合は`null`
-     */
-    fun getFluidResult(input: INPUT, provider: HolderLookup.Provider?, result: Optional<HTFluidResult>): ImmutableFluidStack? =
-        getFluidResult(input, provider, result.getOrNull())
 }

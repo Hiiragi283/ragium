@@ -10,12 +10,12 @@ import hiiragi283.ragium.api.util.HTContentListener
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
-import net.neoforged.neoforge.common.extensions.IItemStackExtension
-import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.energy.IEnergyStorage
 
 object HTEnergyCapabilities : HTMultiCapability.Simple<IEnergyStorage> {
@@ -23,12 +23,12 @@ object HTEnergyCapabilities : HTMultiCapability.Simple<IEnergyStorage> {
     override val entity: EntityCapability<IEnergyStorage, Direction?> = Capabilities.EnergyStorage.ENTITY
     override val item: ItemCapability<IEnergyStorage, Void?> = Capabilities.EnergyStorage.ITEM
 
-    fun getBattery(level: ILevelExtension, pos: BlockPos, side: Direction?): HTEnergyBattery? =
+    fun getBattery(level: Level, pos: BlockPos, side: Direction?): HTEnergyBattery? =
         this.getCapability(level, pos, side)?.let { wrapStorage(it, side) }
 
     fun getBattery(entity: Entity, side: Direction?): HTEnergyBattery? = this.getCapability(entity, side)?.let { wrapStorage(it, side) }
 
-    fun getBattery(stack: IItemStackExtension): HTEnergyBattery? = this.getCapability(stack)?.let { wrapStorage(it, null) }
+    fun getBattery(stack: ItemStack): HTEnergyBattery? = this.getCapability(stack)?.let { wrapStorage(it, null) }
 
     fun getBattery(stack: ImmutableItemStack?): HTEnergyBattery? = this.getCapability(stack)?.let { wrapStorage(it, null) }
 

@@ -63,7 +63,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "紺碧の欠片を手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "鋼は青かった", "紺鉄インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "紺鉄インゴットで作られたツールか装備を手に入れる")
-        addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
+        addAdvancement(RagiumAdvancements.MIXER, "混ぜる，混ぜる，それから混ぜる", "ミキサーを手に入れる")
         // Deep
         addAdvancement(RagiumAdvancements.RESONANT_DEBRIS, "「古代」の残骸", "共振の残骸を手に入れる")
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "深く，深く，なお深く。", "深層鋼を手に入れる")
@@ -72,6 +72,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
         // Night Metal
         addAdvancement(RagiumAdvancements.NIGHT_METAL, "ナイト・オブ・ナイツ", "夜金インゴットを手に入れる")
+        addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
         addAdvancement(RagiumAdvancements.CRIMSON_SOIL, "バラが赤い理由", "ソウルソイルに血塗られたチケットを使って深紅の土壌を手に入れる")
@@ -127,14 +128,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
         add(RagiumBlocks.NUCLEAR_REACTOR, "原子炉")
         // Processors
-        add(RagiumBlocks.ELECTRIC_FURNACE, "電動かまど")
-        add(RagiumBlocks.AUTO_SMITHING_TABLE, "自動鍛冶台")
-        add(RagiumBlocks.AUTO_STONECUTTER, "自動石切台")
-
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         add(RagiumBlocks.BLOCK_BREAKER, "採掘機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
+        add(RagiumBlocks.ELECTRIC_FURNACE, "電動かまど")
         add(RagiumBlocks.EXTRACTOR, "抽出機")
         add(RagiumBlocks.PULVERIZER, "粉砕機")
 
@@ -144,8 +142,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.WASHER, "洗浄機")
 
         add(RagiumBlocks.BREWERY, "醸造機")
+        add(RagiumBlocks.MIXER, "ミキサー")
         add(RagiumBlocks.MULTI_SMELTER, "並列製錬炉")
         add(RagiumBlocks.PLANTER, "栽培室")
+
+        add(RagiumBlocks.ENCHANT_COPIER, "エンチャントコピー機")
+        add(RagiumBlocks.ENCHANTER, "エンチャンター")
         add(RagiumBlocks.SIMULATOR, "シミュレーション室")
         // Devices
         add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")
@@ -228,6 +230,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.RESIN, "樹脂")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.WITHER_DOLl, "ウィザー人形")
+        add(RagiumItems.WITHER_STAR, "ウィザースター")
 
         add(RagiumItems.POTATO_SPROUTS, "ジャガイモの芽")
         add(RagiumItems.GREEN_CAKE, "グリーンケーキ")
@@ -309,6 +312,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Blocks.WIP, "開発中")
 
         add(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST, "捕獲できるモブのブラックリスト")
+        add(RagiumModTags.EntityTypes.CONFUSION_BLACKLIST, "混乱を起こすモブのブラックリスト")
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "共振の残骸を生成する")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "ノイズキャンセリングに反応する")
 
@@ -338,10 +342,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.CUTTING, "裁断")
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.EXTRACTING, "抽出")
-        add(RagiumRecipeTypes.FLUID_TRANSFORM, "液体変換")
         add(RagiumRecipeTypes.MELTING, "融解")
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.PLANTING, "栽培")
+        add(RagiumRecipeTypes.REFINING, "精製")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
         add(RagiumRecipeTypes.WASHING, "洗浄")
     }
@@ -407,6 +411,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.BREWERY, "アイテムと液体からポーションを醸造する機械です。")
         add(RagiumCommonTranslation.MULTI_SMELTER, "複数のアイテムをまとめて精錬する機械です。")
         add(RagiumCommonTranslation.PLANTER, "種子や苗木から植物を成長さる機械です。")
+
+        add(RagiumCommonTranslation.ENCHANT_COPIER, "本からエンチャントをコピーし，道具に付与する機械です。")
+        add(RagiumCommonTranslation.ENCHANTER, "アイテムからエンチャント本を作成する機械です。")
         add(RagiumCommonTranslation.SIMULATOR, "ブロックやモブの行動を再現して資源を生産する機械です。")
 
         add(RagiumCommonTranslation.ITEM_BUFFER, "周囲のアイテムを収集する設備です。")

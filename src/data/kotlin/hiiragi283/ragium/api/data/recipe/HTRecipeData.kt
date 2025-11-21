@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.util.Ior
@@ -246,7 +246,7 @@ data class HTRecipeData private constructor(
             fluidInputs.add(InputEntry.types(listOf(fluid), amount = amount))
         }
 
-        fun addInput(content: HTFluidContent<*, *, *>, amount: Int): Builder = addInput(content.commonTag, amount)
+        fun addInput(holder: HTFluidHolderLike, amount: Int): Builder = addInput(holder.getFluidTag(), amount)
 
         fun addInput(tagKey: TagKey<Fluid>, amount: Int): Builder = apply {
             fluidInputs.add(InputEntry.tagKeys(listOf(tagKey), amount = amount))
@@ -293,7 +293,7 @@ data class HTRecipeData private constructor(
             itemOutputs.add(OutputEntry(entry, count, chance))
         }
 
-        fun addOutput(content: HTFluidContent<*, *, *>, amount: Int): Builder = addOutput(content.get(), content.commonTag, amount)
+        fun addOutput(holder: HTFluidHolderLike, amount: Int): Builder = addOutput(holder.getFluid(), holder.getFluidTag(), amount)
 
         fun addOutput(fluid: Fluid?, tagKey: TagKey<Fluid>?, amount: Int): Builder = apply {
             val entry: Ior<Fluid, TagKey<Fluid>> = if (fluid != null) {

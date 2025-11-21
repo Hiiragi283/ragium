@@ -224,7 +224,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             // molten
             event.molten(data.molten, color)
             // sap
-            val sap: HTFluidContent<*, *, *> = data.sap ?: continue
+            val sap: HTFluidContent<*, *, *, *, *> = data.sap ?: continue
             event.liquid(sap, color)
         }
 
@@ -252,6 +252,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.CRUSHER, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
         event.register(RagiumMenuTypes.CUTTING_MACHINE, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.DRUM, ::HTDrumScreen)
+        event.register(RagiumMenuTypes.ENCHANT_COPIER, HTSingleFluidProcessorScreen.Companion::enchCopier)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.EXTRACTOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
@@ -330,11 +331,11 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     //    Extensions    //
 
-    private fun RegisterClientExtensionsEvent.liquid(content: HTFluidContent<*, *, *>, color: Color) {
+    private fun RegisterClientExtensionsEvent.liquid(content: HTFluidContent<*, *, *, *, *>, color: Color) {
         this.registerFluidType(HTSimpleFluidExtensions.liquid(color), content.getType())
     }
 
-    private fun RegisterClientExtensionsEvent.molten(content: HTFluidContent<*, *, *>, color: Color) {
+    private fun RegisterClientExtensionsEvent.molten(content: HTFluidContent<*, *, *, *, *>, color: Color) {
         this.registerFluidType(HTSimpleFluidExtensions.molten(color), content.getType())
     }
 

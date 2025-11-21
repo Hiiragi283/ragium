@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.recipe.manager
+package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder

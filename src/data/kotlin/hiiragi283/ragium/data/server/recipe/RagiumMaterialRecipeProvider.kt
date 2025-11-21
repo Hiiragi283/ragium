@@ -36,6 +36,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -55,7 +56,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     private fun raginite() {
         // Ragi-Alloy
         HTShapedRecipeBuilder
-            .misc(RagiumItems.RAGI_ALLOY_COMPOUND)
+            .create(RagiumItems.RAGI_ALLOY_COMPOUND)
             .hollow4()
             .define('A', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.COPPER)
@@ -71,7 +72,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY)
 
         HTShapedRecipeBuilder
-            .misc(RagiumItems.RAGI_COKE)
+            .create(RagiumItems.RAGI_COKE)
             .hollow4()
             .define('A', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .define('B', CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL)
@@ -80,7 +81,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
         // Ragi-Crystal
         HTShapedRecipeBuilder
-            .misc(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL))
+            .create(RagiumItems.getGem(RagiumMaterialKeys.RAGI_CRYSTAL))
             .hollow8()
             .define('A', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
@@ -118,7 +119,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     private fun miscMaterials() {
         // Sawdust
         HTShapedRecipeBuilder
-            .misc(RagiumItems.COMPRESSED_SAWDUST)
+            .create(RagiumItems.COMPRESSED_SAWDUST)
             .hollow8()
             .define('A', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD)
             .define('B', RagiumItems.getDust(VanillaMaterialKeys.WOOD))
@@ -132,10 +133,11 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         // Night Metal
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.SOOTY_COBBLESTONE, 8)
+            .create(RagiumBlocks.SOOTY_COBBLESTONE, 8)
             .hollow8()
             .define('A', Tags.Items.COBBLESTONES_NORMAL)
             .define('B', ItemTags.COALS)
+            .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         HTCookingRecipeBuilder
             .blasting(Items.BLACKSTONE)
@@ -184,10 +186,11 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     .saveSuffixed(output, "_from_block")
                 // Base -> Block
                 HTShapedRecipeBuilder
-                    .building(storage)
+                    .create(storage)
                     .pattern(storageBlock.pattern)
                     .define('A', basePrefix, key)
                     .define('B', base)
+                    .setCategory(CraftingBookCategory.BUILDING)
                     .saveSuffixed(output, "_from_base")
             }
 
@@ -199,7 +202,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     .saveSuffixed(output, "_from_base")
                 // Nugget -> Base
                 HTShapedRecipeBuilder
-                    .misc(base)
+                    .create(base)
                     .hollow8()
                     .define('A', CommonMaterialPrefixes.NUGGET, key)
                     .define('B', nugget)

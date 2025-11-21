@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -11,12 +11,11 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
@@ -51,7 +50,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 .savePrefixed(output, "2x_")
 
             HTShapedRecipeBuilder
-                .misc(result, 9)
+                .create(result, 9)
                 .hollow8()
                 .define('A', RagiumModTags.Items.POLYMER_RESIN)
                 .define('B', parent)
@@ -83,7 +82,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         meltAndFreeze(
             itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK)),
             Items.MAGMA_BLOCK.toHolderLike(),
-            HTFluidContent.LAVA,
+            HTFluidHolderLike.LAVA,
             125,
         )
 
@@ -175,8 +174,8 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun mixing() {
         // Water + Lava -> Obsidian
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(fluidCreator.water(1000))
             .addIngredient(fluidCreator.lava(1000))
             .setResult(resultHelper.item(Items.OBSIDIAN))
@@ -188,31 +187,31 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun nitro() {
         // Sulfur + Water -> Sulfuric Acid
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR))
             .addIngredient(fluidCreator.water(1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.SULFURIC_ACID, 1000))
             .save(output)
         // Saltpeter + Water -> Nitric Acid
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER))
             .addIngredient(fluidCreator.water(1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.NITRIC_ACID, 1000))
             .save(output)
         // Sulfuric Acid + Nitric Acid -> Mixture Acid
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(fluidCreator.fromContent(RagiumFluidContents.SULFURIC_ACID, 500))
-            .addIngredient(fluidCreator.fromContent(RagiumFluidContents.NITRIC_ACID, 500))
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.SULFURIC_ACID, 500))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NITRIC_ACID, 500))
             .setResult(resultHelper.fluid(RagiumFluidContents.MIXTURE_ACID, 1000))
             .save(output)
         // Mixture Acid -> Nitropowder
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.CRIMSON_CRYSTAL),
-                fluidCreator.fromContent(RagiumFluidContents.MIXTURE_ACID, 1000),
+                fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 1000),
             ).addResult(resultHelper.item(RagiumItems.NITROPOWDER))
             .save(output)
 
@@ -251,7 +250,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
                 itemCreator.fromItem(Items.CLAY_BALL),
-                fluidCreator.fromContent(RagiumFluidContents.CRUDE_OIL, 125),
+                fluidCreator.fromHolder(RagiumFluidContents.CRUDE_OIL, 125),
             ).addResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN))
             .saveSuffixed(output, "_from_crude_oil")
 
@@ -263,10 +262,10 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 375) to itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS),
         )
         // Natural Gas + Catalyst -> 4x Polymer Resin
-        HTFluidTransformRecipeBuilder
+        HTComplexRecipeBuilder
             .solidifying(
                 itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
-                fluidCreator.fromContent(RagiumFluidContents.NATURAL_GAS, 125),
+                fluidCreator.fromHolder(RagiumFluidContents.NATURAL_GAS, 125),
                 resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4),
             ).saveSuffixed(output, "_from_lpg")
 
@@ -277,17 +276,17 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             resultHelper.fluid(RagiumFluidContents.FUEL, 375) to null,
         )
         // Naphtha + Redstone -> Lubricant
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE))
-            .addIngredient(fluidCreator.fromContent(RagiumFluidContents.NAPHTHA, 1000))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000))
             .save(output)
         // Fuel + Nitropowder -> Crimson Fuel
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromItem(RagiumItems.NITROPOWDER))
-            .addIngredient(fluidCreator.fromContent(RagiumFluidContents.FUEL, 1000))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.FUEL, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.CRIMSON_FUEL, 1000))
             .save(output)
     }
@@ -345,8 +344,8 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun mutagen() {
         // Organic Mutagen
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.FOODS_FOOD_POISONING))
             .addIngredient(fluidCreator.water(1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 1000))
@@ -356,7 +355,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
                 itemCreator.fromTagKey(Tags.Items.CROPS_POTATO),
-                fluidCreator.fromContent(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
+                fluidCreator.fromHolder(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
             ).addResult(resultHelper.item(Items.POISONOUS_POTATO))
             .save(output)
         // Potato Sprouts
@@ -379,7 +378,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             ).save(output)
         // Green Pellet
         HTShapedRecipeBuilder
-            .misc(RagiumItems.GREEN_PELLET, 8)
+            .create(RagiumItems.GREEN_PELLET, 8)
             .hollow8()
             .define('A', RagiumItems.GREEN_CAKE_DUST)
             .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
@@ -401,26 +400,19 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun mixFromData(data: HTRecipeData) {
-        val builder: HTMixingRecipeBuilder = HTMixingRecipeBuilder.create()
+        val builder: HTComplexRecipeBuilder = HTComplexRecipeBuilder.mixing()
         // Inputs
         data.getItemIngredients(itemCreator).forEach(builder::addIngredient)
         data.getFluidIngredients(fluidCreator).forEach(builder::addIngredient)
         // Outputs
-        data
-            .getItemResults()
-            .getOrNull(0)
-            ?.first
-            ?.let(builder::setResult)
-        data
-            .getFluidResults()
-            .getOrNull(0)
-            ?.let(builder::setResult)
+        builder.setResult(data.getItemResults().getOrNull(0)?.first)
+        builder.setResult(data.getFluidResults().getOrNull(0))
         builder.saveModified(output, data.operator)
     }
 
     @JvmStatic
     private fun refiningFromData(data: HTRecipeData) {
-        HTFluidTransformRecipeBuilder
+        HTComplexRecipeBuilder
             .refining(
                 data.getFluidIngredients(fluidCreator)[0],
                 data.getFluidResults()[0],

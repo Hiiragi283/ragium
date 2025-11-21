@@ -3,13 +3,13 @@ package hiiragi283.ragium.common.block.entity.processor.base
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
+import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
-import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
+import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -27,7 +27,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
     HTEnergizedProcessorBlockEntity<SingleRecipeInput, RECIPE>(blockHolder, pos, state) {
     companion object {
         @JvmStatic
-        fun <RECIPE : HTSingleInputRecipe> createSimple(
+        fun <RECIPE : HTSingleItemRecipe> createSimple(
             sound: SoundEvent,
             soundValues: Pair<Float, Float>,
             recipeType: HTRecipeFinder<SingleRecipeInput, RECIPE>,
@@ -62,7 +62,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
 
     //    Simple    //
 
-    private class Simple<RECIPE : HTSingleInputRecipe>(
+    private class Simple<RECIPE : HTSingleItemRecipe>(
         private val sound: SoundEvent,
         private val soundValues: Pair<Float, Float>,
         recipeType: HTRecipeFinder<SingleRecipeInput, RECIPE>,

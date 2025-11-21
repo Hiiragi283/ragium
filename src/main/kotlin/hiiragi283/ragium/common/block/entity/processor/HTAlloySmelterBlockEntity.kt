@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTMultiInputsToObjRecipe
-import hiiragi283.ragium.api.recipe.multi.HTMultiItemsToItemRecipe
+import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -21,7 +21,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTEnergizedProcessorBlockEntity.Cached<HTMultiRecipeInput, HTMultiItemsToItemRecipe>(
+    HTEnergizedProcessorBlockEntity.Cached<HTMultiRecipeInput, HTShapelessInputsRecipe>(
         RagiumRecipeTypes.ALLOYING,
         RagiumBlocks.ALLOY_SMELTER,
         pos,
@@ -46,9 +46,11 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput = HTMultiRecipeInput.fromSlots(inputSlots)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
+        items.addAll(inputSlots.map(HTItemStackSlot::getStack))
+    }
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTMultiItemsToItemRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTShapelessInputsRecipe): Boolean =
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
 
     override fun completeRecipe(
@@ -56,7 +58,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: HTMultiRecipeInput,
-        recipe: HTMultiItemsToItemRecipe,
+        recipe: HTShapelessInputsRecipe,
     ) {
         // 実際にアウトプットに搬出する
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

@@ -12,9 +12,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.crafting.RecipeHolder
 
-/**
- * @see mekanism.client.recipe_viewer.emi.recipe.ItemStackToItemStackEmiRecipe
- */
 class HTBrewingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBrewingRecipe>) :
     HTEmiHolderRecipe<HTBrewingRecipe>(category, holder) {
     init {

@@ -181,13 +181,13 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         add(key.toDescriptionKey("enchantment", "desc"), desc)
     }
 
-    fun addFluid(content: HTFluidContent<*, *, *>, value: String) {
-        add(content.getType().descriptionId, value)
+    fun addFluid(content: HTFluidContent<*, *, *, *, *>, value: String) {
+        add(content.type, value)
         addFluidBucket(content, value)
         add(content.commonTag, value)
     }
 
-    protected abstract fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String)
+    protected abstract fun addFluidBucket(content: HTFluidContent<*, *, *, *, *>, value: String)
 
     fun addTemplate(material: HTMaterialLike, before: HTMaterialLike) {
         val translation = HTSmithingTranslation(RagiumAPI.MOD_ID, material)
@@ -213,8 +213,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     //    English    //
 
     abstract class English(output: PackOutput) : HTLanguageProvider(output, HTLanguageType.EN_US) {
-        final override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
-            add(content.getBucket(), "$value Bucket")
+        final override fun addFluidBucket(content: HTFluidContent<*, *, *, *, *>, value: String) {
+            add(content.bucket, "$value Bucket")
         }
 
         final override fun addTemplate(translation: HTSmithingTranslation, material: String, before: String) {
@@ -229,8 +229,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     //    Japanese    //
 
     abstract class Japanese(output: PackOutput) : HTLanguageProvider(output, HTLanguageType.JA_JP) {
-        final override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
-            add(content.getBucket(), "${value}入りバケツ")
+        final override fun addFluidBucket(content: HTFluidContent<*, *, *, *, *>, value: String) {
+            add(content.bucket, "${value}入りバケツ")
         }
 
         final override fun addTemplate(translation: HTSmithingTranslation, material: String, before: String) {

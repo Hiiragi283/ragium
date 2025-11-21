@@ -6,12 +6,14 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.entity.isOf
+import hiiragi283.ragium.api.util.unwrapEither
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import java.util.function.Function
+import java.util.stream.Stream
 
 interface HTSubEntityTypeIngredient {
     companion object {
@@ -22,9 +24,7 @@ interface HTSubEntityTypeIngredient {
         @JvmStatic
         val CODEC: Codec<HTSubEntityTypeIngredient> = Codec
             .either(Simple.CODEC, DISPATCH_CODEC)
-            .xmap(
-                Either<Simple, HTSubEntityTypeIngredient>::unwrap,
-            ) { ingredient: HTSubEntityTypeIngredient ->
+            .xmap(::unwrapEither) { ingredient: HTSubEntityTypeIngredient ->
                 when (ingredient) {
                     is Simple -> Either.left(ingredient)
                     else -> Either.right(ingredient)
@@ -39,7 +39,7 @@ interface HTSubEntityTypeIngredient {
 
     fun getEntityType(stack: ItemStack): EntityType<*>?
 
-    fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): ItemStack
+    fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): Stream<ItemStack>
 
     @JvmRecord
     private data class Simple(private val entityType: EntityType<*>) : HTSubEntityTypeIngredient {
@@ -60,9 +60,9 @@ interface HTSubEntityTypeIngredient {
 
         override fun getEntityType(stack: ItemStack): EntityType<*> = entityType
 
-        override fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): ItemStack = when {
-            this.entityType.isOf(entityType) -> ItemStack(baseItem)
-            else -> ItemStack.EMPTY
+        override fun getPreviewStack(baseItem: Holder<Item>, entityType: Holder<EntityType<*>>): Stream<ItemStack> = when {
+            this.entityType.isOf(entityType) -> Stream.of(ItemStack(baseItem))
+            else -> Stream.empty()
         }
     }
 }

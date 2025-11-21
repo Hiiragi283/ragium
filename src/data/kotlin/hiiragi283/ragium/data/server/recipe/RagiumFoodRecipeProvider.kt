@@ -11,10 +11,10 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
@@ -28,8 +28,8 @@ import net.neoforged.neoforge.common.Tags
 object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Mushroom Stew
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.MUSHROOMS, 2))
             .addIngredient(fluidCreator.milk(250))
             .setResult(resultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 250))
@@ -42,8 +42,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         )
 
         // Chocolate
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.CROPS_COCOA_BEAN))
             .addIngredient(fluidCreator.milk(250))
             .setResult(resultHelper.fluid(RagiumFluidContents.CHOCOLATE, 250))
@@ -90,7 +90,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     private fun cherry() {
         // Ragi-Cherry
         HTShapedRecipeBuilder
-            .misc(RagiumItems.RAGI_CHERRY, 8)
+            .create(RagiumItems.RAGI_CHERRY, 8)
             .hollow8()
             .define('A', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
@@ -110,7 +110,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Fever Cherry
         HTShapedRecipeBuilder
-            .misc(RagiumItems.FEVER_CHERRY)
+            .create(RagiumItems.FEVER_CHERRY)
             .hollow8()
             .define('A', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.GOLD)
             .define('B', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
@@ -159,7 +159,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             }
         // Canned Cooked Meat
         HTShapedRecipeBuilder
-            .misc(RagiumItems.CANNED_COOKED_MEAT, 8)
+            .create(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
             .define('A', CommonMaterialPrefixes.INGOT, FoodMaterialKeys.COOKED_MEAT)
             .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
@@ -170,7 +170,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     private fun sponge() {
         // Cakes
         HTShapedRecipeBuilder
-            .misc(Items.CAKE)
+            .create(Items.CAKE)
             .pattern(
                 " A ",
                 "BCB",
@@ -182,7 +182,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_with_sponge")
 
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.SWEET_BERRIES_CAKE)
+            .create(RagiumBlocks.SWEET_BERRIES_CAKE)
             .pattern(
                 " A ",
                 "BCB",

@@ -82,14 +82,11 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.ENCHANTMENT_GENERATOR)
             add(RagiumBlocks.NUCLEAR_REACTOR)
             // Processors
-            add(RagiumBlocks.ELECTRIC_FURNACE)
-            add(RagiumBlocks.AUTO_SMITHING_TABLE)
-            add(RagiumBlocks.AUTO_STONECUTTER)
-
             add(RagiumBlocks.ALLOY_SMELTER)
             add(RagiumBlocks.BLOCK_BREAKER)
             add(RagiumBlocks.COMPRESSOR)
             add(RagiumBlocks.CUTTING_MACHINE)
+            add(RagiumBlocks.ELECTRIC_FURNACE)
             add(RagiumBlocks.EXTRACTOR)
             add(RagiumBlocks.PULVERIZER)
 
@@ -99,8 +96,12 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.WASHER)
 
             add(RagiumBlocks.BREWERY)
+            add(RagiumBlocks.MIXER)
             add(RagiumBlocks.MULTI_SMELTER)
             add(RagiumBlocks.PLANTER)
+
+            add(RagiumBlocks.ENCHANT_COPIER)
+            add(RagiumBlocks.ENCHANTER)
             add(RagiumBlocks.SIMULATOR)
             // Devices
             add(RagiumBlocks.DEVICE_CASING)
@@ -256,13 +257,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // WIP
         factory
             .apply(RagiumModTags.Blocks.WIP)
-            .add(RagiumBlocks.AUTO_SMITHING_TABLE)
-            .add(RagiumBlocks.AUTO_STONECUTTER)
             .add(RagiumBlocks.ELECTRIC_FURNACE)
             .add(RagiumBlocks.NUCLEAR_REACTOR)
             .add(RagiumBlocks.OPEN_CRATE)
             .add(RagiumBlocks.TELEPAD)
-            .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
     }
 
     //    Extensions    //

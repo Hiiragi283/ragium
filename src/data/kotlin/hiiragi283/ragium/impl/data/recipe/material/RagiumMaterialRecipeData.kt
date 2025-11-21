@@ -3,7 +3,7 @@ package hiiragi283.ragium.impl.data.recipe.material
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -219,7 +219,7 @@ data object RagiumMaterialRecipeData {
     }
 
     @JvmStatic
-    private fun createGemCast(material: HTMaterialLike, fluid: HTFluidContent<*, *, *>): HTRecipeData = HTRecipeData.create {
+    private fun createGemCast(material: HTMaterialLike, fluid: HTFluidHolderLike): HTRecipeData = HTRecipeData.create {
         addInput(fluid, RagiumConst.MOLTEN_TO_GEM)
 
         setCatalyst(RagiumItems.getMold(CommonMaterialPrefixes.GEM))

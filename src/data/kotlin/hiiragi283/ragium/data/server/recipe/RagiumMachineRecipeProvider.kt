@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -16,7 +17,9 @@ import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -35,33 +38,23 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun generators() {
         // Basic
-        HTShapedRecipeBuilder
-            .misc(RagiumBlocks.THERMAL_GENERATOR)
-            .pattern(
-                "AAA",
-                " B ",
-                "CDC",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .define('B', Tags.Items.GLASS_BLOCKS)
-            .define('C', RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
-            .define('D', Items.FURNACE)
-            .save(output)
+        generator(RagiumBlocks.THERMAL_GENERATOR) {
+            define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            define('B', Tags.Items.GLASS_BLOCKS)
+            define('C', RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
+            define('D', Items.FURNACE)
+        }
         // Advanced
-        HTShapedRecipeBuilder
-            .misc(RagiumBlocks.COMBUSTION_GENERATOR)
-            .pattern(
-                "AAA",
-                " B ",
-                "CDC",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-            .define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.QUARTZ)
-            .define('C', RagiumItems.getCoil(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
-            .define('D', Items.BLAST_FURNACE)
-            .save(output)
+        generator(RagiumBlocks.COMBUSTION_GENERATOR) {
+            define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.QUARTZ)
+            define('C', RagiumItems.getCoil(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
+            define('D', Items.PISTON)
+        }
         // Elite
         for (tier: HTCircuitTier in HTCircuitTier.entries) {
             HTShapedRecipeBuilder
-                .misc(RagiumBlocks.SOLAR_PANEL_UNIT, (tier.ordinal + 1) * 4)
+                .create(RagiumBlocks.SOLAR_PANEL_UNIT, (tier.ordinal + 1) * 4)
                 .pattern(
                     "AAA",
                     "BCB",
@@ -72,7 +65,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
+            .create(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
             .pattern(
                 "AAA",
                 " B ",
@@ -82,16 +75,23 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
             .save(output)
         // Ultimate
+        generator(RagiumBlocks.ENCHANTMENT_GENERATOR) {
+            define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
+            define('C', Items.GRINDSTONE)
+            define('D', Items.PISTON)
+        }
+    }
+
+    @JvmStatic
+    private inline fun generator(generator: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.ENCHANTMENT_GENERATOR)
+            .create(generator)
             .pattern(
                 "AAA",
                 " B ",
                 "CDC",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-            .define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
-            .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            .define('D', Items.GRINDSTONE)
+            ).apply(action)
             .save(output)
     }
 
@@ -139,7 +139,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.REFINERY)
+            .create(RagiumBlocks.REFINERY)
             .pattern(
                 " A ",
                 "ABA",
@@ -150,38 +150,46 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
             .save(output)
 
-        mapOf(
-            RagiumBlocks.CRUSHER to RagiumBlocks.PULVERIZER,
-            RagiumBlocks.MELTER to RagiumBlocks.EXTRACTOR,
-        ).forEach { (adv: ItemLike, basic: ItemLike) ->
-            createComponentUpgrade(HTComponentTier.ADVANCED, adv, basic).save(output)
-        }
+        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.CRUSHER, RagiumBlocks.PULVERIZER).save(output)
         // Elite
         eliteMachine(RagiumBlocks.BREWERY) {
             define('B', Items.BREWING_STAND)
             define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
         }
+        eliteMachine(RagiumBlocks.MIXER) {
+            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+            define('C', RagiumBlocks.REFINERY)
+        }
+        eliteMachine(RagiumBlocks.MULTI_SMELTER) {
+            define('B', Items.FURNACE)
+            define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+        }
         eliteMachine(RagiumBlocks.PLANTER) {
             define('B', Items.FLOWER_POT)
             define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
         }
+        // Ultimate
+        machineBase(RagiumBlocks.ENCHANT_COPIER, RagiumMaterialKeys.NIGHT_METAL) {
+            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('C', ItemTags.ANVIL)
+            define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
+        }
+        machineBase(RagiumBlocks.ENCHANTER, RagiumMaterialKeys.NIGHT_METAL) {
+            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('C', Items.ENCHANTING_TABLE)
+            define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
+        }
         machineBase(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
             define('C', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
             define('D', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-        }
-
-        mapOf(
-            RagiumBlocks.MULTI_SMELTER to RagiumBlocks.ALLOY_SMELTER,
-        ).forEach { (elite, adv) ->
-            createComponentUpgrade(HTComponentTier.ELITE, elite, adv).save(output)
         }
     }
 
     @JvmStatic
     private inline fun machineBase(machine: ItemLike, material: HTMaterialLike, action: HTShapedRecipeBuilder.() -> Unit) {
         HTShapedRecipeBuilder
-            .misc(machine)
+            .create(machine)
             .pattern(
                 "AAA",
                 "BCB",
@@ -220,12 +228,12 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun devices() {
         HTShapedRecipeBuilder
-            .building(RagiumBlocks.DEVICE_CASING)
-            .cross8()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-            .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
-            .define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-            .save(output)
+            .cross8Mirrored(output, RagiumBlocks.DEVICE_CASING) {
+                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+                define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
+                define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
+                setCategory(CraftingBookCategory.BUILDING)
+            }
 
         // Basic
         createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.ITEM_BUFFER, RagiumBlocks.DEVICE_CASING)
@@ -276,7 +284,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             }
 
             HTShapedRecipeBuilder
-                .misc(crate)
+                .create(crate)
                 .pattern(
                     "ABA",
                     "ACA",
@@ -290,7 +298,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         createNetheriteUpgrade(HTCrateTier.HUGE.getBlock(), HTCrateTier.LARGE.getBlock()).save(output)
         // Open
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.OPEN_CRATE)
+            .create(RagiumBlocks.OPEN_CRATE)
             .pattern(
                 "AAA",
                 "ABA",
@@ -313,7 +321,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             }
 
             HTShapedRecipeBuilder
-                .misc(drum)
+                .create(drum)
                 .pattern(
                     "ABA",
                     "ACA",
@@ -327,7 +335,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         createNetheriteUpgrade(HTDrumTier.HUGE.getBlock(), HTDrumTier.LARGE.getBlock()).save(output)
         // Exp
         HTShapedRecipeBuilder
-            .misc(RagiumBlocks.EXP_DRUM)
+            .create(RagiumBlocks.EXP_DRUM)
             .pattern(
                 "ABA",
                 "ACA",

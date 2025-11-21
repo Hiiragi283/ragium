@@ -15,8 +15,6 @@ import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
-import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.material.CommonMaterialKeys
@@ -144,10 +142,10 @@ object RagiumIntegrationItems {
 
     @JvmStatic
     fun getKnife(material: HTMaterialLike): HTItemHolderLike = when (val key: HTMaterialKey = material.asMaterialKey()) {
-        VanillaMaterialKeys.IRON -> DelightItems.IRON_KNIFE.toHolderLike()
-        VanillaMaterialKeys.GOLD -> DelightItems.GOLDEN_KNIFE.toHolderLike()
-        VanillaMaterialKeys.DIAMOND -> DelightItems.DIAMOND_KNIFE.toHolderLike()
-        VanillaMaterialKeys.NETHERITE -> DelightItems.NETHERITE_KNIFE.toHolderLike()
+        VanillaMaterialKeys.IRON -> HTItemHolderLike.fromItem(DelightItems.IRON_KNIFE)
+        VanillaMaterialKeys.GOLD -> HTItemHolderLike.fromItem(DelightItems.GOLDEN_KNIFE)
+        VanillaMaterialKeys.DIAMOND -> HTItemHolderLike.fromItem(DelightItems.DIAMOND_KNIFE)
+        VanillaMaterialKeys.NETHERITE -> HTItemHolderLike.fromItem(DelightItems.NETHERITE_KNIFE)
         else -> getTool(HTKnifeToolVariant, key)
     }
 
@@ -229,10 +227,6 @@ object RagiumIntegrationItems {
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         fun <T : Any> modify(item: ItemLike, type: DataComponentType<T>, value: T) {
             event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
-        }
-
-        fun setDesc(item: ItemLike, translation: HTTranslation) {
-            modify(item, RagiumDataComponents.DESCRIPTION, translation)
         }
 
         fun setEnch(item: ItemLike, ench: ResourceKey<Enchantment>, level: Int = 1) {

@@ -20,6 +20,7 @@ import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.api.registry.holdersSequence
@@ -33,6 +34,7 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCuttingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemToItemEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemWithCatalystEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRecipe
@@ -107,8 +109,6 @@ class RagiumEmiPlugin : EmiPlugin {
             registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, block.toEmi())
             registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, block.toEmi())
         }
-        registry.addWorkstation(VanillaEmiRecipeCategories.SMITHING, RagiumBlocks.AUTO_SMITHING_TABLE.toEmi())
-        registry.addWorkstation(VanillaEmiRecipeCategories.STONECUTTING, RagiumBlocks.AUTO_STONECUTTER.toEmi())
         // Functions
         registry.addGenericStackProvider(RagiumEmiStackProvider)
 
@@ -210,7 +210,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Thermal Generator
         val lavaFuelData: HTFluidFuelData = fluidRegistry.getData(
             RagiumDataMaps.THERMAL_FUEL,
-            Registries.FLUID.createKey(HTFluidContent.LAVA.getId()),
+            Registries.FLUID.createKey(HTFluidHolderLike.LAVA.getId()),
         ) ?: return
         addRecipes(
             registry,
@@ -218,7 +218,7 @@ class RagiumEmiPlugin : EmiPlugin {
             itemRegistry
                 .getDataMap(NeoForgeDataMaps.FURNACE_FUELS)
                 .map { (key: ResourceKey<Item>, fuel: FurnaceFuel) ->
-                    val lavaInput: EmiStack = HTFluidContent.LAVA.toFluidEmi(fuel.burnTime / 10)
+                    val lavaInput: EmiStack = HTFluidHolderLike.LAVA.toFluidEmi(fuel.burnTime / 10)
                     key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/") to
                         HTEmiFluidFuelData(
                             thermalUsage,
@@ -260,19 +260,21 @@ class RagiumEmiPlugin : EmiPlugin {
             HTExpExtractingEmiRecipe(getCategory(RagiumRecipeViewerTypes.EXTRACTING), it)
         }
         // Advanced
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.FLUID_TRANSFORM, ::HTRefiningEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MELTING, ::HTMeltingEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MIXING, ::HTMixingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.REFINING, ::HTRefiningEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTWashingEmiRecipe)
         // Elite
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.BREWING, ::HTBrewingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MIXING, ::HTMixingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTPlantingEmiRecipe)
+        // Ultimate
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SIMULATING, ::HTItemWithCatalystEmiRecipe)
     }
 
     private fun addInteractions(registry: EmiRegistry) {
         // Water Collector
-        registry.addInteraction(HTFluidContent.WATER.toFluidEmi(), prefix = "fluid_generator") {
+        registry.addInteraction(HTFluidHolderLike.WATER.toFluidEmi(), prefix = "fluid_generator") {
             leftInput(RagiumBlocks.WATER_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
@@ -283,7 +285,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
 
         // World Vaporization
-        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
+        for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
             val fluidType: FluidType = content.getType()
             if (fluidType is HTFluidType) {
                 val result: EmiStack = fluidType.dropItem?.toEmi() ?: continue
@@ -294,9 +296,9 @@ class RagiumEmiPlugin : EmiPlugin {
             }
         }
         // Crude Oil + Lava -> Soul Sand
-        registry.addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidContent.LAVA)
+        registry.addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidHolderLike.LAVA)
         // Water + Eldritch Flux -> Eldritch Stone
-        registry.addFluidInteraction(RagiumBlocks.ELDRITCH_STONE, HTFluidContent.WATER, RagiumFluidContents.ELDRITCH_FLUX)
+        registry.addFluidInteraction(RagiumBlocks.ELDRITCH_STONE, HTFluidHolderLike.WATER, RagiumFluidContents.ELDRITCH_FLUX)
 
         // Budding Azure
         registry.addInteraction(RagiumBlocks.BUDDING_AZURE.toEmi()) {
@@ -447,7 +449,7 @@ class RagiumEmiPlugin : EmiPlugin {
     /**
      * @see dev.emi.emi.VanillaPlugin.addWorldInteraction
      */
-    private fun EmiRegistry.addFluidInteraction(output: ItemLike, source: HTFluidContent<*, *, *>, flowing: HTFluidContent<*, *, *>) {
+    private fun EmiRegistry.addFluidInteraction(output: ItemLike, source: HTFluidHolderLike, flowing: HTFluidHolderLike) {
         addInteraction(output.toEmi(), prefix = "fluid_interaction") {
             leftInput(source.toFluidEmi(1000).copyAsCatalyst())
             rightInput(flowing.toFluidEmi(1000).copyAsCatalyst(), false)

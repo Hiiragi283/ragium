@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.recipe.chance
 
-import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
+import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 /**
@@ -8,4 +8,4 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
  */
 interface HTItemToChancedItemRecipe :
     HTChancedItemRecipe<SingleRecipeInput>,
-    HTSingleInputRecipe
+    HTSingleItemRecipe

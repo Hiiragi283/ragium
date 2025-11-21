@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.util.Ior
 import net.minecraft.core.HolderLookup
 import java.util.Optional
 
@@ -16,28 +17,20 @@ import java.util.Optional
 abstract class HTItemWithCatalystRecipe(
     val required: HTItemIngredient,
     val optional: Optional<HTItemIngredient>,
-    val itemResult: Optional<HTItemResult>,
-    val fluidResult: Optional<HTFluidResult>,
+    val results: Ior<HTItemResult, HTFluidResult>,
 ) : HTComplexRecipe {
     final override fun getRequiredAmount(index: Int, stack: ImmutableFluidStack): Int = 0
 
     final override fun assembleItem(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
-        getItemResult(input, provider, itemResult)
+        getItemResult(input, provider, results.getLeft())
 
     final override fun isIncomplete(): Boolean {
         val bool1: Boolean = required.hasNoMatchingStacks()
         val bool2: Boolean = optional.map(HTItemIngredient::hasNoMatchingStacks).orElse(false)
-        return when {
-            bool1 || bool2 -> true
-            itemResult.isEmpty && fluidResult.isEmpty -> true
-            else -> {
-                val bool3: Boolean = itemResult.map(HTItemResult::hasNoMatchingStack).orElse(true)
-                val bool4: Boolean = fluidResult.map(HTFluidResult::hasNoMatchingStack).orElse(true)
-                bool3 && bool4
-            }
-        }
+        val bool3: Boolean = results.map(HTItemResult::hasNoMatchingStack, HTFluidResult::hasNoMatchingStack)
+        return bool1 || bool2 || bool3
     }
 
     final override fun assembleFluid(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? =
-        getFluidResult(input, provider, fluidResult)
+        getFluidResult(input, provider, results.getRight())
 }

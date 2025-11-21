@@ -23,7 +23,7 @@ abstract class HTItemWithCatalystBlockEntity(
     blockHolder: Holder<Block>,
     pos: BlockPos,
     state: BlockState,
-) : HTMultiOutputsBlockEntity<HTMultiRecipeInput, HTComplexRecipe>(finder, blockHolder, pos, state) {
+) : HTComplexBlockEntity(finder, blockHolder, pos, state) {
     lateinit var inputSlot: HTItemStackSlot
         private set
     lateinit var catalystSlot: HTItemStackSlot
@@ -41,8 +41,10 @@ abstract class HTItemWithCatalystBlockEntity(
         )
     }
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput =
-        HTMultiRecipeInput.fromSlots(inputSlot, catalystSlot)
+    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
+        items += inputSlot.getStack()
+        items += catalystSlot.getStack()
+    }
 
     override fun completeRecipe(
         level: ServerLevel,

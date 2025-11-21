@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.recipe.manager.HTFinderRecipeCache
+import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.energy.battery.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import net.minecraft.core.BlockPos
