@@ -203,9 +203,10 @@ data object RagiumMaterialRecipeData {
 
     @JvmField
     val IRIDESCENTIUM: HTRecipeData = HTRecipeData.create {
-        ingotOrDust(RagiumMaterialKeys.NIGHT_METAL, 4)
-        gemOrDust(RagiumMaterialKeys.ELDRITCH_PEARL, 4)
+        addInput(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.NIGHT_METAL)
+        addInput(Items.HEAVY_CORE)
         addInput(Tags.Items.NETHER_STARS)
+        addInput(Items.DRAGON_BREATH)
 
         addOutput(RagiumItems.getIngot(RagiumMaterialKeys.IRIDESCENTIUM), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.IRIDESCENTIUM)
     }

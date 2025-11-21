@@ -73,7 +73,6 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL)
 
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
-        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
     }
 
     @JvmStatic
@@ -95,15 +94,14 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         refineFromData(RagiumMaterialRecipeData.DEW_OF_THE_WARP)
         bottleFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)
         // Eldritch
-        mixFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_CRIMSON)
-        mixFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_WARPED)
+        mixerFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_CRIMSON)
+        mixerFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_WARPED)
         bottleFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
     }
 
     @JvmStatic
     private fun misc() {
         bottleFromData(FoodMaterialRecipeData.CHOCOLATE_INGOT)
-        bottleFromData(FoodMaterialRecipeData.RAW_MEAT_INGOT)
     }
 
     //    Extension    //
@@ -208,7 +206,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
     }
 
     @JvmStatic
-    private fun mixFromData(data: HTRecipeData) {
+    private fun mixerFromData(data: HTRecipeData) {
         val builder: MixerRecipeBuilder = MixerRecipeBuilder.builder()
         // Inputs
         data.addFluidInput(0, builder::fluidInput)

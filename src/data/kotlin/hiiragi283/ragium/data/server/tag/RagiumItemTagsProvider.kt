@@ -199,6 +199,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE)
             .add(Items.APPLE.toHolderLike())
+
+        addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.BUTTER)
+            .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.BUTTER)
         addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE)
             .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.CHOCOLATE)
 

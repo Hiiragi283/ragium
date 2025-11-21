@@ -52,7 +52,7 @@ sealed class HTRecipeProvider {
                     ModLoadedCondition(RagiumConst.FARMERS_DELIGHT),
                     ModLoadedCondition(RagiumConst.KALEIDO_COOKERY),
                 ),
-            )
+            ),
         )
     }
 
@@ -282,6 +282,17 @@ sealed class HTRecipeProvider {
                 data.getItemIngredients(itemCreator)[0],
                 data.getItemResults()[0].first,
             ).saveModified(output, data.operator)
+    }
+
+    protected fun mixFromData(data: HTRecipeData) {
+        val builder: HTComplexRecipeBuilder = HTComplexRecipeBuilder.mixing()
+        // Inputs
+        data.getItemIngredients(itemCreator).forEach(builder::addIngredient)
+        data.getFluidIngredients(fluidCreator).forEach(builder::addIngredient)
+        // Outputs
+        builder.setResult(data.getItemResults().getOrNull(0)?.first)
+        builder.setResult(data.getFluidResults().getOrNull(0))
+        builder.saveModified(output, data.operator)
     }
 
     protected fun cropAndSeed(seed: ItemLike, crop: ItemLike, water: Int = 125) {

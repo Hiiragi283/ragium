@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -86,6 +87,16 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.ELDER_GUARDIAN)),
                 resultHelper.item(RagiumItems.ELDER_HEART),
             ).save(output)
+
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromItem(RagiumItems.ELDER_HEART))
+            .addIngredient(itemCreator.fromItem(Items.PRISMARINE_SHARD, 64))
+            .addIngredient(itemCreator.fromTagKey(Tags.Items.GEMS_PRISMARINE, 64))
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.LAPIS, 64))
+            .addIngredient(fluidCreator.water(8000))
+            .setResult(resultHelper.item(Items.HEART_OF_THE_SEA))
+            .save(output)
         // Dragon Breath
         HTItemWithCatalystRecipeBuilder
             .simulating(
@@ -179,5 +190,15 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.IRIDESCENTIUM),
                 resultHelper.item(RagiumItems.WITHER_STAR),
             ).save(output)
+
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromItem(RagiumItems.WITHER_STAR))
+            .addIngredient(itemCreator.fromItem(Items.GHAST_TEAR, 16))
+            .addIngredient(itemCreator.fromItem(Items.PHANTOM_MEMBRANE, 16))
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ, 64))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NITRIC_ACID, 8000))
+            .setResult(resultHelper.item(Items.NETHER_STAR))
+            .save(output)
     }
 }

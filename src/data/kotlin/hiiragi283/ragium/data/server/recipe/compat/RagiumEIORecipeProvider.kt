@@ -31,7 +31,6 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL, 5600)
 
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL, 4800)
-        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM, 6400)
     }
 
     @JvmStatic

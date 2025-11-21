@@ -10,9 +10,8 @@ import net.minecraft.world.item.crafting.RecipeHolder
 class HTMixingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTMixingRecipe>) :
     HTMultiOutputsEmiRecipe<HTMixingRecipe>(category, holder) {
     init {
-        val range: IntRange = 0..<2
-        range.map(recipe.itemIngredients::getOrNull).forEach(::addInput)
-        range.map(recipe.fluidIngredients::getOrNull).forEach(::addInput)
+        (0..<4).map(recipe.itemIngredients::getOrNull).forEach(::addInput)
+        (0..<2).map(recipe.fluidIngredients::getOrNull).forEach(::addInput)
 
         addOutputs(recipe.results)
     }
@@ -23,8 +22,10 @@ class HTMixingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTMi
         // Input
         widgets.addSlot(input(0), getPosition(1), getPosition(0))
         widgets.addSlot(input(1), getPosition(2), getPosition(0))
+        widgets.addSlot(input(2), getPosition(1), getPosition(1))
+        widgets.addSlot(input(3), getPosition(2), getPosition(1))
 
-        widgets.addSlot(input(2), getPosition(1), getPosition(2))
-        widgets.addSlot(input(3), getPosition(2), getPosition(2))
+        widgets.addSlot(input(4), getPosition(1), getPosition(2))
+        widgets.addSlot(input(5), getPosition(2), getPosition(2))
     }
 }

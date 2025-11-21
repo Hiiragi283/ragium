@@ -60,13 +60,11 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .export(output, RagiumMaterialKeys.ELDRITCH_PEARL)
 
         atomicFromData(RagiumMaterialRecipeData.NIGHT_METAL)
-        atomicFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
     }
 
     @JvmStatic
     private fun cooler() {
         coolerFromData(FoodMaterialRecipeData.CHOCOLATE_INGOT)
-        coolerFromData(FoodMaterialRecipeData.RAW_MEAT_INGOT)
 
         coolerFromData(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
         coolerFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)

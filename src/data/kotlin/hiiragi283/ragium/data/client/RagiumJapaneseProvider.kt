@@ -192,8 +192,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
+        addFluid(RagiumFluidContents.CREAM, "クリーム")
         addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
-        addFluid(RagiumFluidContents.MEAT, "液体肉")
         addFluid(RagiumFluidContents.RAGI_CHERRY_JUICE, "らぎチェリージュース")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "有機的変異原")
 
@@ -256,6 +256,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         add(RagiumItems.UNIVERSAL_BUNDLE, "共有バンドル")
         // Food
+        add(RagiumItems.CREAM_BOWL, "クリーム入りボウル")
+
         add(RagiumItems.ICE_CREAM, "アイスクリーム")
         add(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
 

@@ -197,13 +197,13 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.liquid(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
         event.liquid(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
 
+        event.liquid(RagiumFluidContents.CREAM, Color(0xffffcc))
         event.registerFluidType(
             HTSimpleFluidExtensions(RagiumAPI.id("block", "chocolate")),
             RagiumFluidContents.CHOCOLATE.getType(),
         )
-        event.liquid(RagiumFluidContents.MEAT, Color(0xcc3333))
         event.liquid(RagiumFluidContents.RAGI_CHERRY_JUICE, Color(0xcccc66))
-        event.liquid(RagiumFluidContents.ORGANIC_MUTAGEN, Color(0x336600))
+        event.molten(RagiumFluidContents.ORGANIC_MUTAGEN, Color(0x336600))
 
         event.molten(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
         event.liquid(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))

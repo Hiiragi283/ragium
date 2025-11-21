@@ -144,6 +144,13 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
                 fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 1000),
             ).addResult(resultHelper.item(Items.GHAST_TEAR))
             .save(output)
+        // Phantom Membrane
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
+                itemCreator.fromTagKey(Tags.Items.LEATHERS),
+                fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 250),
+            ).addResult(resultHelper.item(Items.PHANTOM_MEMBRANE))
+            .save(output)
     }
 
     @JvmStatic

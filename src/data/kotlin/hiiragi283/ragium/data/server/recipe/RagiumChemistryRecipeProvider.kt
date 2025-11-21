@@ -128,15 +128,33 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
         HTItemWithCatalystRecipeBuilder
             .extracting(
+                itemCreator.fromItem(Items.DRIED_KELP),
+                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALT),
+            ).saveSuffixed(output, "_from_kelp")
+
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
                 itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
                 resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER),
             ).saveSuffixed(output, "_from_sandstone")
 
         HTItemWithCatalystRecipeBuilder
             .extracting(
+                itemCreator.fromItem(Items.WIND_CHARGE),
+                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER),
+            ).saveSuffixed(output, "_from_breeze")
+
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
                 itemCreator.fromTagKey(Tags.Items.GUNPOWDERS),
                 resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
             ).saveSuffixed(output, "_from_gunpowder")
+
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
+                itemCreator.fromItem(Items.BLAZE_POWDER),
+                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
+            ).saveSuffixed(output, "_from_blaze")
 
         dyes()
     }
@@ -193,11 +211,11 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fluidCreator.water(1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.SULFURIC_ACID, 1000))
             .save(output)
-        // Saltpeter + Water -> Nitric Acid
+        // Saltpeter + Sulfuric Acid -> Nitric Acid
         HTComplexRecipeBuilder
             .mixing()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER))
-            .addIngredient(fluidCreator.water(1000))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.SULFURIC_ACID, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.NITRIC_ACID, 1000))
             .save(output)
         // Sulfuric Acid + Nitric Acid -> Mixture Acid
@@ -396,18 +414,6 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 null,
                 data.getFluidResults().getOrNull(0),
             ).saveModified(output, data.operator)
-    }
-
-    @JvmStatic
-    private fun mixFromData(data: HTRecipeData) {
-        val builder: HTComplexRecipeBuilder = HTComplexRecipeBuilder.mixing()
-        // Inputs
-        data.getItemIngredients(itemCreator).forEach(builder::addIngredient)
-        data.getFluidIngredients(fluidCreator).forEach(builder::addIngredient)
-        // Outputs
-        builder.setResult(data.getItemResults().getOrNull(0)?.first)
-        builder.setResult(data.getFluidResults().getOrNull(0))
-        builder.saveModified(output, data.operator)
     }
 
     @JvmStatic
