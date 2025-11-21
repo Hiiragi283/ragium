@@ -11,7 +11,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -33,7 +32,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         recipeType()
         text()
 
-        delight()
         jade()
     }
 
@@ -196,6 +194,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.MEAT, "液体肉")
+        addFluid(RagiumFluidContents.RAGI_CHERRY_JUICE, "らぎチェリージュース")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "有機的変異原")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
@@ -266,8 +265,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.MELON_PIE, "メロンパイ")
 
         add(RagiumItems.RAGI_CHERRY, "らぎチェリー")
-        add(RagiumItems.RAGI_CHERRY_JAM, "らぎチェリージャム")
         add(RagiumItems.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
+        add(RagiumItems.RAGI_CHERRY_JUICE, "らぎチェリージュース")
+        add(RagiumItems.RAGI_CHERRY_JAM, "らぎチェリージャム")
+        add(RagiumItems.RAGI_CHERRY_PIE, "らぎチェリーパイ")
+        add(RagiumItems.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
         add(RagiumItems.RAGI_CHERRY_TOAST, "らぎチェリーのトースト")
         add(RagiumItems.FEVER_CHERRY, "フィーバーチェリー")
 
@@ -457,13 +459,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     //    Addon    //
-
-    private fun delight() {
-        add(RagiumDelightContents.RAGI_CHERRY_PIE, "らぎチェリーパイ")
-        add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, "らぎチェリーのトーストタワー")
-
-        add(RagiumDelightContents.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
-    }
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")

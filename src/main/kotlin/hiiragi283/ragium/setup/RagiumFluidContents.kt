@@ -72,6 +72,9 @@ object RagiumFluidContents {
     val MEAT: HTBasicFluidContentNew = register("meat", liquid())
 
     @JvmField
+    val RAGI_CHERRY_JUICE: HTBasicFluidContentNew = register("ragi_cherry_juice", liquid())
+
+    @JvmField
     val ORGANIC_MUTAGEN: HTBasicFluidContentNew = register("organic_mutagen", liquid())
 
     //    Oil    //

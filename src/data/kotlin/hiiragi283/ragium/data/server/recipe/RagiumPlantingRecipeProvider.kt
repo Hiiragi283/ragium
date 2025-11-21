@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 
@@ -56,12 +57,12 @@ object RagiumPlantingRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun trees() {
-        tree(Items.OAK_SAPLING, Items.OAK_LOG)
+        tree(Items.OAK_SAPLING, Items.OAK_LOG, Items.APPLE)
         tree(Items.SPRUCE_SAPLING, Items.SPRUCE_LOG)
         tree(Items.BIRCH_SAPLING, Items.BIRCH_LOG)
-        tree(Items.JUNGLE_SAPLING, Items.JUNGLE_LOG)
+        tree(Items.JUNGLE_SAPLING, Items.JUNGLE_LOG, Items.COCOA_BEANS)
         tree(Items.ACACIA_SAPLING, Items.ACACIA_LOG)
-        tree(Items.CHERRY_SAPLING, Items.CHERRY_LOG)
+        tree(Items.CHERRY_SAPLING, Items.CHERRY_LOG, RagiumItems.RAGI_CHERRY)
         tree(Items.DARK_OAK_SAPLING, Items.DARK_OAK_LOG)
         tree(Items.MANGROVE_PROPAGULE, Items.MANGROVE_LOG)
         tree(Items.BAMBOO, Items.BAMBOO)

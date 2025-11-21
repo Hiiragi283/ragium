@@ -99,11 +99,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun exp() {
         // Exp Bottle
-        extractAndInfuse(
-            Items.GLASS_BOTTLE,
-            Items.EXPERIENCE_BOTTLE.toHolderLike(),
-            RagiumFluidContents.EXPERIENCE,
-        )
+        extractAndInfuse(Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE.toHolderLike(), RagiumFluidContents.EXPERIENCE)
         // Exp Berries -> Liquid Exp
         HTItemWithCatalystRecipeBuilder
             .extracting(

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -11,7 +10,6 @@ import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
-import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -19,7 +17,6 @@ import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
@@ -28,7 +25,6 @@ import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -36,7 +32,6 @@ import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import vectorwing.farmersdelight.common.block.PieBlock
 
 class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(context.output, RagiumAPI.MOD_ID, context.fileHelper) {
     private val fileHelper: ExistingFileHelper = context.fileHelper
@@ -251,9 +246,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                     .texture("particle", vanillaId("block", "water_still")),
             )
         }
-
-        // Delight
-        pieBlock(RagiumDelightContents.RAGI_CHERRY_PIE)
     }
 
     //    Extensions    //
@@ -357,7 +349,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             .blockTransforms()
     }
 
-    private fun pieBlock(block: HTDeferredBlock<out PieBlock, *>) {
+    /*private fun pieBlock(block: HTDeferredBlock<out PieBlock, *>) {
         val blockId: ResourceLocation = block.blockId
 
         getVariantBuilder(block.get()).forAllStates { state: BlockState ->
@@ -379,7 +371,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                 .build()
         }
         itemModels().basicItem(block.id)
-    }
+    }*/
 
     // Item
     private fun ItemModelBuilder.blockTransforms(): ItemModelBuilder = this.transforms {

@@ -15,14 +15,13 @@ import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
-import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
@@ -31,10 +30,13 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
+import net.neoforged.neoforge.common.conditions.NotCondition
+import net.neoforged.neoforge.common.conditions.OrCondition
 
 /**
  * Ragiumがレシピ生成で使用するクラス
@@ -42,6 +44,18 @@ import net.neoforged.neoforge.common.conditions.ModLoadedCondition
  * @see Integration
  */
 sealed class HTRecipeProvider {
+    companion object {
+        @JvmField
+        val FOOD_MOD_CONDITION: ICondition = NotCondition(
+            OrCondition(
+                listOf(
+                    ModLoadedCondition(RagiumConst.FARMERS_DELIGHT),
+                    ModLoadedCondition(RagiumConst.KALEIDO_COOKERY),
+                ),
+            )
+        )
+    }
+
     protected lateinit var provider: HolderLookup.Provider
         private set
     protected lateinit var output: RecipeOutput
@@ -234,18 +248,6 @@ sealed class HTRecipeProvider {
         .addIngredient(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
 
     /**
-     * 指定された引数から鍛冶台での強化レシピのビルダーを返します。
-     * @param tier アップグレードにつかう構造体のティア
-     * @param output 強化後のアイテム
-     * @param input 強化前のアイテム
-     */
-    protected fun createComponentUpgrade(tier: HTComponentTier, output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder =
-        HTSmithingRecipeBuilder
-            .create(output)
-            .addIngredient(RagiumItems.getComponent(tier))
-            .addIngredient(input)
-
-    /**
      * 指定された[HTWoodType]に基づいて，木材の製材レシピを追加します。
      */
     protected fun addWoodSawing(type: HTWoodType) {
@@ -304,5 +306,35 @@ sealed class HTRecipeProvider {
             ).addResult(resultHelper.item(log, 6))
             .addResult(resultHelper.item(sapling), 1 / 6f)
             .save(output)
+    }
+
+    protected fun tree(
+        sapling: ItemLike,
+        log: ItemLike,
+        fruit: ItemLike,
+        fluid: HTFluidIngredient = fluidCreator.water(250),
+    ) {
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .planting(
+                itemCreator.fromItem(sapling),
+                fluid,
+            ).addResult(resultHelper.item(log, 6))
+            .addResult(resultHelper.item(sapling), 1 / 6f)
+            .addResult(resultHelper.item(fruit), 1 / 6f)
+            .save(output)
+    }
+
+    protected fun cutAndCombine(hole: ItemLike, slice: ItemLike, count: Int) {
+        // Cutting
+        HTShapelessRecipeBuilder
+            .misc(slice, count)
+            .addIngredient(hole)
+            .addCondition(FOOD_MOD_CONDITION)
+            .saveSuffixed(output, "_from_hole")
+        // Combining
+        HTShapelessRecipeBuilder
+            .misc(hole)
+            .addIngredients(Ingredient.of(slice), count)
+            .saveSuffixed(output, "_from_pieces")
     }
 }

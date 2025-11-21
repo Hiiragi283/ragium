@@ -19,14 +19,12 @@ import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDelightContents
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
-import vectorwing.farmersdelight.common.tag.ModTags
 
 class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>(Registries.BLOCK, context) {
     companion object {
@@ -177,10 +175,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             .apply(RagiumModTags.Blocks.MINEABLE_WITH_HAMMER)
             .addTag(BlockTags.MINEABLE_WITH_PICKAXE)
             .addTag(BlockTags.MINEABLE_WITH_SHOVEL)
-
-        factory
-            .apply(ModTags.MINEABLE_WITH_KNIFE)
-            .add(RagiumDelightContents.RAGI_CHERRY_PIE)
     }
 
     //    Category    //

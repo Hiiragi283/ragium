@@ -23,7 +23,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
@@ -41,7 +40,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import rearth.oritech.init.ItemContent
-import vectorwing.farmersdelight.common.tag.ModTags
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
@@ -208,22 +206,14 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.RAGI_CHERRY)
             .add(RagiumItems.RAGI_CHERRY_PULP)
 
+        addMaterial(factory, CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY)
+            .add(RagiumItems.RAGI_CHERRY_JAM)
+
         addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAW_MEAT)
             .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT)
 
         addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.COOKED_MEAT)
             .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.COOKED_MEAT)
-        // Delight
-        factory
-            .apply(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)
-            .add(RagiumDelightContents.RAGI_CHERRY_PIE, HTTagDependType.OPTIONAL)
-            .add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
-
-        addMaterial(factory, CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY)
-            .add(RagiumItems.RAGI_CHERRY_JAM)
-
-        factory.apply(ModTags.MEALS).add(RagiumItems.RAGI_CHERRY_TOAST)
-        factory.apply(ModTags.FEASTS).add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
     }
 
     //    Categories    //
@@ -341,7 +331,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         // WIP
         factory
             .apply(RagiumModTags.Items.WIP)
-            .add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
+            // .add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
             .add(RagiumItems.BOTTLED_BEE)
             .add(RagiumItems.DRILL)
             .add(RagiumItems.HUGE_DRUM_UPGRADE)
