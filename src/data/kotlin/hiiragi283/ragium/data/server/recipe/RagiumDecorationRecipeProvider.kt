@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.impl.data.HTVanillaWoodType
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -92,17 +93,14 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         // Sponge Cake
-        HTShapedRecipeBuilder
-            .cross8Mirrored(
-                output,
-                RagiumBlocks.SPONGE_CAKE,
-                4,
-            ) {
-                define('A', Tags.Items.CROPS_WHEAT)
-                define('B', Items.SUGAR)
-                define('C', Tags.Items.EGGS)
-                setCategory(CraftingBookCategory.BUILDING)
-            }
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT, 2))
+            .addIngredient(itemCreator.fromTagKey(Tags.Items.EGGS))
+            .addIngredient(itemCreator.fromItem(Items.SUGAR))
+            .addIngredient(fluidCreator.milk(1000))
+            .setResult(resultHelper.item(RagiumBlocks.SPONGE_CAKE, 4))
+            .save(output)
 
         HTDecorationVariant.entries.forEach(::registerBuildings)
         HTVanillaWoodType.entries.forEach(::addWoodSawing)

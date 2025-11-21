@@ -40,21 +40,19 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getOutputTankCapacity(): Int = RagiumConfig.COMMON.mixerOutputTankCapacity.asInt
 
-    lateinit var firstInputSlot: HTItemStackSlot
-        private set
-    lateinit var secondInputSlot: HTItemStackSlot
+    lateinit var inputSlots: List<HTItemStackSlot>
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        // input
-        firstInputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosX(0)),
-        )
-        secondInputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosX(0)),
-        )
+        // inputs
+        inputSlots = (0..1).flatMap { y: Int ->
+            (2..3).map { x: Int ->
+                builder.addSlot(
+                    HTSlotInfo.INPUT,
+                    HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosX(y)),
+                )
+            }
+        }
         // output
         outputSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
@@ -63,8 +61,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
-        items += firstInputSlot.getStack()
-        items += secondInputSlot.getStack()
+        items.addAll(inputSlots.map(HTItemStackSlot::getStack))
         fluids += firstInputTank.getStack()
         fluids += secondInputTank.getStack()
     }

@@ -201,8 +201,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
+        addFluid(RagiumFluidContents.CREAM, "Cream")
         addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
-        addFluid(RagiumFluidContents.MEAT, "Liquid Meat")
         addFluid(RagiumFluidContents.RAGI_CHERRY_JUICE, "Ragi-Cherry Juice")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "Organic Mutagen")
 
@@ -265,6 +265,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         add(RagiumItems.UNIVERSAL_BUNDLE, "Universal Backpack")
         // Food
+        add(RagiumItems.CREAM_BOWL, "Cream Bowl")
+
         add(RagiumItems.ICE_CREAM, "Ice Cream")
         add(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
 

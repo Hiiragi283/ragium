@@ -57,6 +57,7 @@ object CommonMaterialKeys {
         FLUORITE,
         PERIDOT,
         RUBY,
+        SALT,
         SALTPETER,
         SAPPHIRE,
         SULFUR,

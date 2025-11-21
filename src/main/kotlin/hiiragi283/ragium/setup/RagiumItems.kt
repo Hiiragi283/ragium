@@ -191,6 +191,7 @@ object RagiumItems {
             VanillaMaterialKeys.COAL,
             // Common
             CommonMaterialKeys.Gems.CINNABAR,
+            CommonMaterialKeys.Gems.SALT,
             CommonMaterialKeys.Gems.SALTPETER,
             CommonMaterialKeys.Gems.SULFUR,
             // Ragium - Gem
@@ -232,6 +233,7 @@ object RagiumItems {
             RagiumMaterialKeys.NIGHT_METAL,
             RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach(::ingot)
+        ingot(FoodMaterialKeys.BUTTER)
         ingot(FoodMaterialKeys.CHOCOLATE) { it.food(RagiumFoods.CHOCOLATE) }
         ingot(FoodMaterialKeys.RAW_MEAT) { it.food(Foods.BEEF) }
         ingot(FoodMaterialKeys.COOKED_MEAT) { it.food(Foods.COOKED_BEEF) }
@@ -436,6 +438,9 @@ object RagiumItems {
     fun getToolMap(material: HTMaterialLike): Map<HTToolVariant, HTDeferredItem<*>> = TOOLS.column(material.asMaterialKey())
 
     //    Foods    //
+
+    @JvmField
+    val CREAM_BOWL: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cream_bowl")
 
     // Ice Cream
     @JvmField
