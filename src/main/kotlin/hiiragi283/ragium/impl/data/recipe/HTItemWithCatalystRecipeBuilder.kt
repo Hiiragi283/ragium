@@ -5,6 +5,8 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.api.util.toIor
 import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
@@ -52,17 +54,14 @@ class HTItemWithCatalystRecipeBuilder(
         )
     }
 
-    override fun getPrimalId(): ResourceLocation = fluidResult?.id ?: itemResult?.id ?: error("Either item or fluid result required")
+    private fun toIorResult(): Ior<HTItemResult, HTFluidResult> =
+        (itemResult to fluidResult).toIor() ?: error("Either item or fluid result required")
 
-    override fun createRecipe(): HTItemWithCatalystRecipe =
-        factory.create(required, optional.wrapOptional(), itemResult.wrapOptional(), fluidResult.wrapOptional())
+    override fun getPrimalId(): ResourceLocation = toIorResult().map(HTItemResult::id, HTFluidResult::id)
+
+    override fun createRecipe(): HTItemWithCatalystRecipe = factory.create(required, optional.wrapOptional(), toIorResult())
 
     fun interface Factory<RECIPE : HTItemWithCatalystRecipe> {
-        fun create(
-            required: HTItemIngredient,
-            optional: Optional<HTItemIngredient>,
-            itemResult: Optional<HTItemResult>,
-            fluidResult: Optional<HTFluidResult>,
-        ): RECIPE
+        fun create(required: HTItemIngredient, optional: Optional<HTItemIngredient>, results: Ior<HTItemResult, HTFluidResult>): RECIPE
     }
 }

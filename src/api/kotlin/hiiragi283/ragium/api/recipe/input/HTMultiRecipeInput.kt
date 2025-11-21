@@ -18,6 +18,8 @@ data class HTMultiRecipeInput(val items: List<ImmutableItemStack?>, val fluids: 
         fun fromSlots(vararg slots: HTItemSlot): HTMultiRecipeInput = fromSlots(slots.toList())
     }
 
+    constructor(item: ImmutableItemStack?, fluid: ImmutableFluidStack?) : this(listOfNotNull(item), listOfNotNull(fluid))
+
     private fun validateItem(index: Int): ItemStack = items[index]
         ?.takeUnless { stack: ImmutableItemStack -> stack.isOf(RagiumModTags.Items.IGNORED_IN_RECIPES) }
         ?.unwrap()

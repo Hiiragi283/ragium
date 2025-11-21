@@ -7,6 +7,6 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 /**
  * 単一のアイテムから単一のアイテムを生成するレシピ
  */
-interface HTSingleInputRecipe :
+interface HTSingleItemRecipe :
     HTRecipe<SingleRecipeInput>,
     HTItemIngredient.CountGetter

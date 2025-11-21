@@ -78,7 +78,6 @@ object RagiumConst {
     const val CUTTING = "cutting"
     const val ENCHANTING = "enchanting"
     const val EXTRACTING = "extracting"
-    const val FLUID_TRANSFORM = "fluid_transform"
     const val MELTING = "melting"
     const val MIXING = "mixing"
     const val PLANTING = "planting"

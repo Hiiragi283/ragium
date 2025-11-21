@@ -72,7 +72,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // インプットを減らす
         HTStackSlotHelper.shrinkStack(inputSlot, { stack: ImmutableItemStack ->
             when {
-                recipe.ingredients[0].test(stack.unwrap()) -> outputCount
+                recipe.ingredient.test(stack.unwrap()) -> outputCount
                 else -> 0
             }
         }, HTStorageAction.EXECUTE)

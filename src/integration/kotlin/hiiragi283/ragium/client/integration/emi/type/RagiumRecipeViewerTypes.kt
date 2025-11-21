@@ -8,10 +8,10 @@ import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
-import hiiragi283.ragium.api.recipe.multi.HTFluidTransformRecipe
-import hiiragi283.ragium.api.recipe.multi.HTMultiItemsToItemRecipe
-import hiiragi283.ragium.api.recipe.single.HTSingleInputFluidRecipe
-import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
+import hiiragi283.ragium.api.recipe.multi.HTItemWithFluidInputRecipe
+import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
+import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
+import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
@@ -51,11 +51,11 @@ object RagiumRecipeViewerTypes {
 
     // Basic
     @JvmField
-    val ALLOYING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTMultiItemsToItemRecipe> =
+    val ALLOYING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTShapelessInputsRecipe> =
         machine(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val COMPRESSING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleInputRecipe> =
+    val COMPRESSING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleItemRecipe> =
         machine(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
@@ -72,11 +72,7 @@ object RagiumRecipeViewerTypes {
 
     // Advanced
     @JvmField
-    val FLUID_TRANSFORM: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTFluidTransformRecipe> =
-        machine(RagiumRecipeTypes.FLUID_TRANSFORM, RagiumBlocks.REFINERY)
-
-    @JvmField
-    val MELTING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleInputFluidRecipe> =
+    val MELTING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleFluidRecipe> =
         machine(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
@@ -84,12 +80,16 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.MIXING, RagiumBlocks.WASHER)
 
     @JvmField
+    val REFINING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =
+        machine(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
+
+    @JvmField
     val WASHING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
         machine(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
 
     // Elite
     @JvmField
-    val BREWING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleInputRecipe> =
+    val BREWING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleItemRecipe> =
         machine(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
 
     @JvmField
@@ -97,6 +97,10 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Ultimate
+    @JvmField
+    val ENCHANTING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidInputRecipe> =
+        machine(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.SIMULATOR)
+
     @JvmField
     val SIMULATING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =
         machine(RagiumRecipeTypes.SIMULATING, RagiumBlocks.SIMULATOR)

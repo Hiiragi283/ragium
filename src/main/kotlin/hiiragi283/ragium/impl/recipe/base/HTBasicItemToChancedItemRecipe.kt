@@ -9,8 +9,8 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 /**
  * [HTItemToChancedItemRecipe]の抽象クラス
  */
-abstract class HTItemToChancedItemRecipeBase(val ingredient: HTItemIngredient, override val results: List<HTItemResultWithChance>) :
-    HTChancedItemRecipeBase<SingleRecipeInput>(),
+abstract class HTBasicItemToChancedItemRecipe(val ingredient: HTItemIngredient, override val results: List<HTItemResultWithChance>) :
+    HTBasicChancedItemRecipe<SingleRecipeInput>(),
     HTItemToChancedItemRecipe {
     final override fun getRequiredCount(stack: ImmutableItemStack): Int = ingredient.getRequiredAmount(stack)
 

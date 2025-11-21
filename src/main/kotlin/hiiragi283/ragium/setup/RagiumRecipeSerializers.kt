@@ -124,12 +124,6 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val FLUID_TRANSFORM: RecipeSerializer<HTRefiningRecipe> = register(
-        RagiumConst.FLUID_TRANSFORM,
-        RagiumRecipeBiCodecs.fluidTransform(::HTRefiningRecipe),
-    )
-
-    @JvmField
     val MELTING: RecipeSerializer<HTMeltingRecipe> = register(
         RagiumConst.MELTING,
         RagiumRecipeBiCodecs.itemToFluid(::HTMeltingRecipe),
@@ -138,7 +132,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = register(
         RagiumConst.MIXING,
-        RagiumRecipeBiCodecs.MIXING,
+        RagiumRecipeBiCodecs.complex(::HTMixingRecipe, 0..2, 0..2),
     )
 
     @JvmField
@@ -151,6 +145,12 @@ object RagiumRecipeSerializers {
     val PULVERIZING: RecipeSerializer<HTPulverizingRecipe> = register(
         "pulverizing",
         RagiumRecipeBiCodecs.itemToItem(::HTPulverizingRecipe),
+    )
+
+    @JvmField
+    val REFINING: RecipeSerializer<HTRefiningRecipe> = register(
+        RagiumConst.REFINING,
+        RagiumRecipeBiCodecs.complex(::HTRefiningRecipe, 0..1, 1..1),
     )
 
     @JvmField

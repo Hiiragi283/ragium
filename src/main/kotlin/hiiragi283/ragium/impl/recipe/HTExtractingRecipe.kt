@@ -6,19 +6,16 @@ import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.impl.recipe.base.HTItemWithCatalystRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import java.util.*
+import java.util.Optional
 
-class HTExtractingRecipe(
-    ingredient: HTItemIngredient,
-    catalyst: Optional<HTItemIngredient>,
-    itemResult: Optional<HTItemResult>,
-    fluidResult: Optional<HTFluidResult>,
-) : HTItemWithCatalystRecipe(ingredient, catalyst, itemResult, fluidResult) {
+class HTExtractingRecipe(ingredient: HTItemIngredient, catalyst: Optional<HTItemIngredient>, results: Ior<HTItemResult, HTFluidResult>) :
+    HTItemWithCatalystRecipe(ingredient, catalyst, results) {
     override fun getRequiredCount(index: Int, stack: ImmutableItemStack): Int = when (index) {
         0 -> required.getRequiredAmount(stack)
         else -> 0

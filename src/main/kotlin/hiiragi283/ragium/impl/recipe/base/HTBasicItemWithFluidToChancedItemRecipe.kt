@@ -11,11 +11,11 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 /**
  * [HTItemWithFluidToChancedItemRecipe]の抽象クラス
  */
-abstract class HTItemWithFluidToChancedItemRecipeBase(
+abstract class HTBasicItemWithFluidToChancedItemRecipe(
     val ingredient: HTItemIngredient,
     val fluidIngredient: HTFluidIngredient,
     final override val results: List<HTItemResultWithChance>,
-) : HTChancedItemRecipeBase<HTItemWithFluidRecipeInput>(),
+) : HTBasicChancedItemRecipe<HTItemWithFluidRecipeInput>(),
     HTItemWithFluidToChancedItemRecipe {
     final override fun isIncompleteIngredient(): Boolean = ingredient.hasNoMatchingStacks() || fluidIngredient.hasNoMatchingStacks()
 

@@ -6,4 +6,4 @@ class HTVanillaCookingRecipe(
     recipe: AbstractCookingRecipe,
     val cookingTime: Int = recipe.cookingTime,
     val experience: Float = recipe.experience,
-) : HTVanillaSingleInputRecipe(recipe)
+) : HTVanillaSingleItemRecipe(recipe)

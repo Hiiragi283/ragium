@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler
@@ -78,6 +79,11 @@ abstract class HTEmiRecipe<RECIPE : Any>(
 
     protected fun addOutputs(result: HTFluidResult?) {
         addOutputs(result?.let(::result))
+    }
+
+    protected fun addOutputs(results: Ior<HTItemResult, HTFluidResult>) {
+        addOutputs(results.getLeft())
+        addOutputs(results.getLeft())
     }
 
     protected fun addOutputs(stacks: EmiStack?) {

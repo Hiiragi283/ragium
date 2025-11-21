@@ -1,9 +1,10 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTFluidTransformRecipe
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -24,8 +25,8 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTEnergizedProcessorBlockEntity.Cached<HTItemWithFluidRecipeInput, HTFluidTransformRecipe>(
-        RagiumRecipeTypes.FLUID_TRANSFORM,
+    HTEnergizedProcessorBlockEntity.Cached<HTMultiRecipeInput, HTComplexRecipe>(
+        RagiumRecipeTypes.REFINING,
         RagiumBlocks.REFINERY,
         pos,
         state,
@@ -70,11 +71,11 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0 || outputTank.getNeeded() > 0
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
-        HTItemWithFluidRecipeInput(catalystSlot, inputTank)
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput =
+        HTMultiRecipeInput(catalystSlot.getStack(), inputTank.getStack())
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTFluidTransformRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTComplexRecipe): Boolean {
         val access: RegistryAccess = level.registryAccess()
         val bool1: Boolean =
             outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
@@ -87,15 +88,15 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTItemWithFluidRecipeInput,
-        recipe: HTFluidTransformRecipe,
+        input: HTMultiRecipeInput,
+        recipe: HTComplexRecipe,
     ) {
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount, HTStorageAction.EXECUTE)
+        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount.partially1(0), HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
     }

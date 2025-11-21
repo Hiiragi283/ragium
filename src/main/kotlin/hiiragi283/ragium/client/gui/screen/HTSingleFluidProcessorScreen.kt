@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEnchantCopierBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
@@ -46,6 +47,20 @@ class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>>(
             title: Component,
         ): HTSingleFluidProcessorScreen<BE> = HTSingleFluidProcessorScreen(
             { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
+            texture,
+            menu,
+            inventory,
+            title,
+        )
+
+        @JvmStatic
+        fun enchCopier(
+            texture: ResourceLocation,
+            menu: HTBlockEntityContainerMenu<HTEnchantCopierBlockEntity>,
+            inventory: Inventory,
+            title: Component,
+        ): HTSingleFluidProcessorScreen<HTEnchantCopierBlockEntity> = HTSingleFluidProcessorScreen(
+            { createFluidTank(blockEntity.inputTank, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0)) },
             texture,
             menu,
             inventory,

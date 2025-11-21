@@ -8,8 +8,8 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 /**
  * 単一のアイテムから単一の液体を生産するレシピ
  */
-interface HTSingleInputFluidRecipe :
-    HTSingleInputRecipe,
+interface HTSingleFluidRecipe :
+    HTSingleItemRecipe,
     HTFluidRecipe<SingleRecipeInput> {
     override fun assembleItem(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? = null
 }

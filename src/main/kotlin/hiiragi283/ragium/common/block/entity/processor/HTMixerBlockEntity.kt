@@ -3,10 +3,9 @@ package hiiragi283.ragium.common.block.entity.processor
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.base.HTMultiOutputsBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTComplexBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
@@ -16,7 +15,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTMultiOutputsBlockEntity<HTMultiRecipeInput, HTComplexRecipe>(
+    HTComplexBlockEntity(
         RagiumRecipeTypes.MIXING,
         TODO(),
         pos,

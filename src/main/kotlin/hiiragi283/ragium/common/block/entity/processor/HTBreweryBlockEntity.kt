@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
+import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidType
 
 class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity.Cached<HTSingleInputRecipe>(
+    HTSingleItemInputBlockEntity.Cached<HTSingleItemRecipe>(
         RagiumRecipeTypes.BREWING,
         RagiumBlocks.BREWERY,
         pos,
@@ -58,7 +58,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleInputRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleItemRecipe): Boolean {
         val amount: Int = FluidType.BUCKET_VOLUME
         val bool1: Boolean = inputTank.extract(amount, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount() == amount
         val bool2: Boolean =
@@ -72,7 +72,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: HTSingleInputRecipe,
+        recipe: HTSingleItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
