@@ -28,23 +28,18 @@ class HTFishingCharge : HTAbstractCharge {
         z,
     )
 
-    override fun onHit(result: HitResult) {
-        super.onHit(result)
-        val level: Level = level()
-        if (level is ServerLevel) {
-            if (this.isInWater) {
-                val params: LootParams = LootParams
-                    .Builder(level)
-                    .withParameter(LootContextParams.ORIGIN, this.position())
-                    .withParameter(LootContextParams.TOOL, ItemStack(Items.FISHING_ROD))
-                    .withOptionalParameter(LootContextParams.ATTACKING_ENTITY, owner)
-                    .create(LootContextParamSets.FISHING)
-                val lootTable: LootTable = level.server.reloadableRegistries().getLootTable(BuiltInLootTables.FISHING)
-                repeat(getPower().toInt()) {
-                    lootTable.getRandomItems(params).forEach(this::spawnAtLocation)
-                }
+    override fun onHit(level: ServerLevel, result: HitResult) {
+        if (this.isInWater) {
+            val params: LootParams = LootParams
+                .Builder(level)
+                .withParameter(LootContextParams.ORIGIN, this.position())
+                .withParameter(LootContextParams.TOOL, ItemStack(Items.FISHING_ROD))
+                .withOptionalParameter(LootContextParams.ATTACKING_ENTITY, owner)
+                .create(LootContextParamSets.FISHING)
+            val lootTable: LootTable = level.server.reloadableRegistries().getLootTable(BuiltInLootTables.FISHING)
+            repeat(getPower().toInt()) {
+                lootTable.getRandomItems(params).forEach(this::spawnAtLocation)
             }
-            discard()
         }
     }
 

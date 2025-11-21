@@ -25,9 +25,7 @@ class HTTeleportCharge : HTAbstractCharge {
         z,
     )
 
-    override fun onHit(result: HitResult) {
-        super.onHit(result)
-        val level: ServerLevel = level() as? ServerLevel ?: return
+    override fun onHit(level: ServerLevel, result: HitResult) {
         val targets: List<LivingEntity> = level.getEntitiesOfClass(LivingEntity::class.java, position().getRangedAABB(getPower()))
         for (entity: LivingEntity in targets) {
             // 所有者は対象外
@@ -38,7 +36,6 @@ class HTTeleportCharge : HTAbstractCharge {
             entity.teleportTo(event.targetX, event.targetY, event.targetZ)
             entity.playSound(SoundEvents.ENDERMAN_TELEPORT)
         }
-        discard()
     }
 
     override fun getDefaultItem(): Item = HTChargeVariant.TELEPORT.asItem()

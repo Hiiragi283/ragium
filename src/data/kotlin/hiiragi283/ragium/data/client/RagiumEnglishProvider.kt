@@ -310,6 +310,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Blocks.WIP, "Work In Progress")
 
         add(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST, "Blacklisted mobs for capturing")
+        add(RagiumModTags.EntityTypes.CONFUSION_BLACKLIST, "Blacklisted mobs for confusion")
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "Generate Resonant Debris")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "Sensitive to Noise Canceling")
 

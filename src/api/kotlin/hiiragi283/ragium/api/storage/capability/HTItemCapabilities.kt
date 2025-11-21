@@ -60,8 +60,7 @@ object HTItemCapabilities : HTMultiCapability.Simple<IItemHandler> {
 
     //    Block    //
 
-    fun getItemHandler(level: Level, pos: BlockPos, side: Direction?): HTItemHandler? =
-        getCapability(level, pos, side)?.let(::wrapHandler)
+    fun getItemHandler(level: Level, pos: BlockPos, side: Direction?): HTItemHandler? = getCapability(level, pos, side)?.let(::wrapHandler)
 
     /**
      * 指定した引数から[HTItemSlot]の一覧を返します。
