@@ -185,8 +185,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
         val ultimateMachine: ResourceLocation = RagiumAPI.id("block", "ultimate_machine_casing")
-
-        val blackboxMachine: ResourceLocation = RagiumAPI.id("block", "blackbox_machine_casing")
+        val obsidian: ResourceLocation = vanillaId("block", "obsidian")
 
         // Generator
         builtIn(RagiumBlocks.THERMAL_GENERATOR, basicCasing)
@@ -214,7 +213,8 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         machine(RagiumBlocks.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
         machine(RagiumBlocks.PLANTER, eliteMachine, deepslateTiles)
         // Ultimate
-        machine(RagiumBlocks.SIMULATOR, blackboxMachine, blackboxMachine)
+        machine(RagiumBlocks.ENCHANT_COPIER, ultimateMachine, obsidian)
+        machine(RagiumBlocks.SIMULATOR, ultimateMachine, ultimateMachine)
 
         // Device
         layeredBlock(

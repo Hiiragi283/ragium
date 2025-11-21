@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -16,6 +17,7 @@ import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
@@ -172,6 +174,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             createComponentUpgrade(HTComponentTier.ELITE, elite, adv).save(output)
         }
         // Ultimate
+        machineBase(RagiumBlocks.ENCHANT_COPIER, RagiumMaterialKeys.NIGHT_METAL) {
+            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('C', ItemTags.ANVIL)
+            define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
+        }
         machineBase(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.NIGHT_METAL) {
             define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
             define('C', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)

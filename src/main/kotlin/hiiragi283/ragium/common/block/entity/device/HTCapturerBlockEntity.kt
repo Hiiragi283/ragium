@@ -27,7 +27,7 @@ abstract class HTCapturerBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, 
                 listener,
                 HTSlotHelper.getSlotPosX(2),
                 HTSlotHelper.getSlotPosY(1),
-                filter = ::inputFilter,
+                canInsert = ::inputFilter,
             ),
         )
         // outputs

@@ -37,6 +37,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTElectricFurnaceBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEnchantCopierBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMultiSmelterBlockEntity
@@ -211,6 +212,12 @@ object RagiumBlockEntityTypes {
 
     // Ultimate
     @JvmField
+    val ENCHANT_COPIER: HTDeferredBlockEntityType<HTEnchantCopierBlockEntity> = registerTick(
+        "enchantment_copier",
+        ::HTEnchantCopierBlockEntity,
+    )
+
+    @JvmField
     val SIMULATOR: HTDeferredBlockEntityType<HTSimulatorBlockEntity> = registerTick("simulator", ::HTSimulatorBlockEntity)
 
     //    Device    //
@@ -342,6 +349,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, MULTI_SMELTER.get())
         registerHandler(event, PLANTER.get())
 
+        registerHandler(event, ENCHANT_COPIER.get())
         registerHandler(event, SIMULATOR.get())
         // Devices
         registerHandler(event, ITEM_BUFFER.get())

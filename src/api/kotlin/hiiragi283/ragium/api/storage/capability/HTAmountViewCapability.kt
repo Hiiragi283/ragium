@@ -5,8 +5,8 @@ import hiiragi283.ragium.api.storage.HTAmountView
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
-import net.neoforged.neoforge.common.extensions.IItemStackExtension
-import net.neoforged.neoforge.common.extensions.ILevelExtension
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 
 /**
  * [HTAmountView]を取得する[HTMultiCapability]の拡張インターフェース
@@ -21,7 +21,7 @@ interface HTAmountViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, N> :
      * 指定した引数から[HTAmountView]の一覧を返します。
      * @return [HTAmountView]の[List]
      */
-    fun getCapabilityViews(level: ILevelExtension, pos: BlockPos, side: Direction?): List<HTAmountView<N>> =
+    fun getCapabilityViews(level: Level, pos: BlockPos, side: Direction?): List<HTAmountView<N>> =
         getCapability(level, pos, side)?.let { apply(it, side) } ?: listOf()
 
     /**
@@ -29,7 +29,7 @@ interface HTAmountViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, N> :
      * @return 見つからない場合は`null`
      */
     fun getCapabilityView(
-        level: ILevelExtension,
+        level: Level,
         pos: BlockPos,
         side: Direction?,
         index: Int,
@@ -53,17 +53,17 @@ interface HTAmountViewCapability<HANDLER : Any, ITEM_HANDLER : HANDLER, N> :
      * 指定した引数から[HTAmountView]の一覧を返します。
      * @return [HTAmountView]の[List]
      */
-    fun getCapabilityViews(stack: IItemStackExtension): List<HTAmountView<N>> = getCapability(stack)?.let { apply(it, null) } ?: listOf()
+    fun getCapabilityViews(stack: ItemStack): List<HTAmountView<N>> = getCapability(stack)?.let { apply(it, null) } ?: listOf()
 
     /**
      * 指定した引数から[index]に対応する[HTAmountView]を返します。
      * @return 見つからない場合は`null`
      */
-    fun getCapabilityView(stack: IItemStackExtension, index: Int): HTAmountView<N>? = getCapabilityViews(stack).getOrNull(index)
+    fun getCapabilityView(stack: ItemStack, index: Int): HTAmountView<N>? = getCapabilityViews(stack).getOrNull(index)
 
-    fun getCapabilityAmounts(stack: IItemStackExtension): List<N> = getCapabilityViews(stack).map(HTAmountView<N>::getAmount)
+    fun getCapabilityAmounts(stack: ItemStack): List<N> = getCapabilityViews(stack).map(HTAmountView<N>::getAmount)
 
-    fun getCapabilityAmount(stack: IItemStackExtension, index: Int): N? = getCapabilityView(stack, index)?.getAmount()
+    fun getCapabilityAmount(stack: ItemStack, index: Int): N? = getCapabilityView(stack, index)?.getAmount()
 
     // HTItemStorageStack
 

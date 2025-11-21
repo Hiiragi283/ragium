@@ -8,12 +8,12 @@ import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
-import net.neoforged.neoforge.common.extensions.IItemStackExtension
-import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 
@@ -36,11 +36,11 @@ object HTFluidCapabilities : HTMultiCapability<IFluidHandler, IFluidHandlerItem>
 
     //    Block    //
 
-    fun getFluidViews(level: ILevelExtension, pos: BlockPos, side: Direction?): List<HTFluidView> =
+    fun getFluidViews(level: Level, pos: BlockPos, side: Direction?): List<HTFluidView> =
         getCapability(level, pos, side)?.let { wrapHandler(it, side) } ?: listOf()
 
     fun getFluidView(
-        level: ILevelExtension,
+        level: Level,
         pos: BlockPos,
         side: Direction?,
         tank: Int,
@@ -55,9 +55,9 @@ object HTFluidCapabilities : HTMultiCapability<IFluidHandler, IFluidHandlerItem>
 
     //    Item    //
 
-    fun getFluidViews(stack: IItemStackExtension): List<HTFluidView> = getCapability(stack)?.let { wrapHandler(it, null) } ?: listOf()
+    fun getFluidViews(stack: ItemStack): List<HTFluidView> = getCapability(stack)?.let { wrapHandler(it, null) } ?: listOf()
 
-    fun getFluidView(stack: IItemStackExtension, tank: Int): HTFluidView? = getFluidViews(stack).getOrNull(tank)
+    fun getFluidView(stack: ItemStack, tank: Int): HTFluidView? = getFluidViews(stack).getOrNull(tank)
 
     // HTItemStorageStack
 

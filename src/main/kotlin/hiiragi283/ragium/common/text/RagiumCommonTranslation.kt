@@ -43,6 +43,9 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     BREWERY("description", "brewery"),
     MULTI_SMELTER("description", "multi_smelter"),
     PLANTER("description", "planter"),
+
+    ENCHANT_COPIER("description", "enchantment_copier"),
+    ENCHANTER("description", "enchanter"),
     SIMULATOR("description", "simulator"),
 
     // Blocks - Devices

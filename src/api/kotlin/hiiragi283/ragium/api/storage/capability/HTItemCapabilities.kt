@@ -12,12 +12,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.neoforged.neoforge.capabilities.BlockCapability
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.EntityCapability
 import net.neoforged.neoforge.capabilities.ItemCapability
-import net.neoforged.neoforge.common.extensions.IItemStackExtension
-import net.neoforged.neoforge.common.extensions.ILevelExtension
 import net.neoforged.neoforge.items.IItemHandler
 
 object HTItemCapabilities : HTMultiCapability.Simple<IItemHandler> {
@@ -61,18 +60,18 @@ object HTItemCapabilities : HTMultiCapability.Simple<IItemHandler> {
 
     //    Block    //
 
-    fun getItemHandler(level: ILevelExtension, pos: BlockPos, side: Direction?): HTItemHandler? =
+    fun getItemHandler(level: Level, pos: BlockPos, side: Direction?): HTItemHandler? =
         getCapability(level, pos, side)?.let(::wrapHandler)
 
     /**
      * 指定した引数から[HTItemSlot]の一覧を返します。
      * @return [HTItemSlot]の[List]
      */
-    fun getItemSlots(level: ILevelExtension, pos: BlockPos, side: Direction?): List<HTItemSlot> =
+    fun getItemSlots(level: Level, pos: BlockPos, side: Direction?): List<HTItemSlot> =
         getItemHandler(level, pos, side)?.getItemSlots(side) ?: listOf()
 
     fun getItemSlot(
-        level: ILevelExtension,
+        level: Level,
         pos: BlockPos,
         side: Direction?,
         slot: Int,
@@ -88,19 +87,19 @@ object HTItemCapabilities : HTMultiCapability.Simple<IItemHandler> {
 
     //    Item    //
 
-    fun getItemHandler(stack: IItemStackExtension): HTItemHandler? = getCapability(stack)?.let(::wrapHandler)
+    fun getItemHandler(stack: ItemStack): HTItemHandler? = getCapability(stack)?.let(::wrapHandler)
 
     /**
      * 指定した引数から[HTItemSlot]の一覧を返します。
      * @return [HTItemSlot]の[List]
      */
-    fun getItemSlots(stack: IItemStackExtension): List<HTItemSlot> = getItemHandler(stack)?.getItemSlots(null) ?: listOf()
+    fun getItemSlots(stack: ItemStack): List<HTItemSlot> = getItemHandler(stack)?.getItemSlots(null) ?: listOf()
 
     /**
      * 指定した引数から[index]に対応する[HTItemSlot]を返します。
      * @return 見つからない場合は`null`
      */
-    fun getItemSlot(stack: IItemStackExtension, index: Int): HTItemSlot? = getItemSlots(stack).getOrNull(index)
+    fun getItemSlot(stack: ItemStack, index: Int): HTItemSlot? = getItemSlots(stack).getOrNull(index)
 
     // HTItemStorageStack
 
