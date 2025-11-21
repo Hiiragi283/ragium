@@ -372,10 +372,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.BURN_TIME, $$"Burn Time: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
+        add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
-        add(RagiumTranslation.TOOLTIP_BLAST_POWER, $$"Power: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")
@@ -446,7 +446,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumCommonTranslation.ELDER_HEART, "Dropped from Elder Guardian.")
 
-        add(RagiumCommonTranslation.BLAST_CHARGE, "Can be upgraded by gunpowders in Crafting Table.")
+        add(RagiumCommonTranslation.BLAST_CHARGE, "A charge which explodes when hit.")
+        add(RagiumCommonTranslation.STRIKE_CHARGE, "A charge which strikes thunder when hit.")
+        add(RagiumCommonTranslation.NEUTRAL_CHARGE, "A charge which steal equipments from around mobs when hit.")
+        add(RagiumCommonTranslation.FISHING_CHARGE, "A charge which does fishing when hit in water.")
+        add(RagiumCommonTranslation.TELEPORT_CHARGE, "A charge which teleports around mobs to hit point.")
+        add(RagiumCommonTranslation.CONFUSING_CHARGE, "A charge which confuses around mobs when hit.")
+
         add(RagiumCommonTranslation.DYNAMIC_LANTERN, "Light up darkness in range.")
         add(RagiumCommonTranslation.ELDRITCH_EGG, "Can be throwable by right-click，and capture mobs when hit.")
         add(RagiumCommonTranslation.MAGNET, "Collect dropped items in the effective range")

@@ -55,7 +55,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(::registerDataPackRegistries)
         eventBus.addListener(RagiumChunkLoader::registerController)
 
-        RagiumDataComponents.REGISTER.register(eventBus)
+        RagiumDataComponents.init(eventBus)
         RagiumEnchantmentComponents.REGISTER.register(eventBus)
 
         RagiumFluidContents.REGISTER.init(eventBus)

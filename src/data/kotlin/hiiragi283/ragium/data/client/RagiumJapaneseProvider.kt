@@ -373,10 +373,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.BURN_TIME, $$"燃焼時間: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
+        add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
-        add(RagiumTranslation.TOOLTIP_BLAST_POWER, $$"爆発力: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")
@@ -446,7 +446,13 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumCommonTranslation.ELDER_HEART, "エルダーガーディアンからドロップします。")
 
-        add(RagiumCommonTranslation.BLAST_CHARGE, "作業台で火薬を用いて強化することができます。")
+        add(RagiumCommonTranslation.BLAST_CHARGE, "着弾すると爆発するチャージです。")
+        add(RagiumCommonTranslation.STRIKE_CHARGE, "着弾すると落雷を起こすチャージです。")
+        add(RagiumCommonTranslation.NEUTRAL_CHARGE, "着弾すると周囲のモブから装備を奪うチャージです。")
+        add(RagiumCommonTranslation.FISHING_CHARGE, "水中に着弾すると魚を釣るチャージです。")
+        add(RagiumCommonTranslation.TELEPORT_CHARGE, "着弾すると周囲のモブをテレポートさせるチャージです。")
+        add(RagiumCommonTranslation.CONFUSING_CHARGE, "着弾すると周囲のモブを混乱させるチャージです。")
+
         add(RagiumCommonTranslation.DYNAMIC_LANTERN, "範囲内の暗所に光源を設置します。")
         add(RagiumCommonTranslation.ELDRITCH_EGG, "右クリックで投げることができ，モブに当たるとスポーンエッグになります。")
         add(RagiumCommonTranslation.MAGNET, "範囲内のドロップアイテムを回収します。")

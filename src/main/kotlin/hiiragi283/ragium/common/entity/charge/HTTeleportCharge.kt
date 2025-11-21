@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.entity.charge
 
-import hiiragi283.ragium.api.world.getRangedAABB
+import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.common.variant.HTChargeVariant
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -8,7 +8,8 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.HitResult
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.EntityHitResult
 import net.neoforged.neoforge.event.EventHooks
 import net.neoforged.neoforge.event.entity.EntityTeleportEvent
 
@@ -25,8 +26,8 @@ class HTTeleportCharge : HTAbstractCharge {
         z,
     )
 
-    override fun onHit(level: ServerLevel, result: HitResult) {
-        val targets: List<LivingEntity> = level.getEntitiesOfClass(LivingEntity::class.java, position().getRangedAABB(getPower()))
+    override fun onHit(level: ServerLevel, result: Either<EntityHitResult, BlockHitResult>) {
+        val targets: List<LivingEntity> = getAffectedEntities()
         for (entity: LivingEntity in targets) {
             // 所有者は対象外
             if (entity == this.owner) continue

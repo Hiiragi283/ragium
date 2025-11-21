@@ -48,10 +48,10 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
 
     // Item Description
     TOOLTIP_BLOCK_POS("tooltip", "block_pos"),
+    TOOLTIP_CHARGE_POWER("tooltip", "blast_power"),
     TOOLTIP_DIMENSION("tooltip", "dimension"),
     TOOLTIP_INTRINSIC_ENCHANTMENT("tooltip", "intrinsic_enchantment"),
     TOOLTIP_LOOT_TABLE_ID("tooltip", "loot_table_id"),
-    TOOLTIP_BLAST_POWER("tooltip", "blast_power"),
 
     TOOLTIP_SHOW_DESCRIPTION("tooltip", "show_description"),
     TOOLTIP_SHOW_DETAILS("tooltip", "show_details"),
