@@ -1,12 +1,14 @@
 package hiiragi283.ragium.common.entity.charge
 
+import hiiragi283.ragium.api.entity.isOf
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.world.getRangedAABB
 import hiiragi283.ragium.common.variant.HTChargeVariant
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.Mob
-import net.minecraft.world.entity.player.Player
+import net.minecraft.world.entity.monster.Enemy
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.HitResult
@@ -24,19 +26,18 @@ class HTConfusingCharge : HTAbstractCharge {
         z,
     )
 
-    override fun onHit(result: HitResult) {
-        super.onHit(result)
-        val level: ServerLevel = level() as? ServerLevel ?: return
-        val targets: List<LivingEntity> = level.getEntitiesOfClass(LivingEntity::class.java, position().getRangedAABB(getPower()))
+    override fun onHit(level: ServerLevel, result: HitResult) {
+        val targets: List<Mob> = level
+            .getEntitiesOfClass(Mob::class.java, position().getRangedAABB(getPower()))
+            .filterNot { mob: Mob -> mob.isOf(RagiumModTags.EntityTypes.CONFUSION_BLACKLIST) }
 
         for (i: Int in targets.indices) {
-            val current: LivingEntity = targets[i]
-            val next: LivingEntity = targets.getOrNull(i + 1) ?: continue
-            if (current is Mob && next !is Player) {
+            val current: Mob = targets[i]
+            val next: Mob = targets.getOrNull(i + 1) ?: continue
+            if (current is Enemy && next is Enemy) {
                 current.target = next
             }
         }
-        discard()
     }
 
     override fun getDefaultItem(): Item = HTChargeVariant.CONFUSING.asItem()

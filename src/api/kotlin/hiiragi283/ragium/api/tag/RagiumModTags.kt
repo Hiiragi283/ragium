@@ -51,6 +51,9 @@ object RagiumModTags {
         val CAPTURE_BLACKLIST: TagKey<EntityType<*>> = create("capture_blacklist")
 
         @JvmField
+        val CONFUSION_BLACKLIST: TagKey<EntityType<*>> = create("confusion_blacklist")
+
+        @JvmField
         val GENERATE_RESONANT_DEBRIS: TagKey<EntityType<*>> = create("generate_resonant_debris")
 
         @JvmField

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.entity.charge
 
 import hiiragi283.ragium.common.variant.HTChargeVariant
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.Item
@@ -20,12 +21,8 @@ class HTBlastCharge : HTAbstractCharge {
         z,
     )
 
-    override fun onHit(result: HitResult) {
-        super.onHit(result)
-        if (!level().isClientSide) {
-            level().explode(this, x, y, z, getPower(), false, Level.ExplosionInteraction.MOB)
-            discard()
-        }
+    override fun onHit(level: ServerLevel, result: HitResult) {
+        level.explode(this, x, y, z, getPower(), false, Level.ExplosionInteraction.MOB)
     }
 
     override fun getDefaultItem(): Item = HTChargeVariant.BLAST.asItem()

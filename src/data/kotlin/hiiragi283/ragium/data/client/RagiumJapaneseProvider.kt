@@ -311,6 +311,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Blocks.WIP, "開発中")
 
         add(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST, "捕獲できるモブのブラックリスト")
+        add(RagiumModTags.EntityTypes.CONFUSION_BLACKLIST, "混乱を起こすモブのブラックリスト")
         add(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS, "共振の残骸を生成する")
         add(RagiumModTags.EntityTypes.SENSITIVE_TO_NOISE_CANCELLING, "ノイズキャンセリングに反応する")
 
