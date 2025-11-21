@@ -508,6 +508,10 @@ object RagiumBlocks {
         registerMachineTier("brewery", RagiumBlockTypes.BREWERY, machineProperty())
 
     @JvmField
+    val MIXER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("mixer", RagiumBlockTypes.MIXER, machineProperty())
+
+    @JvmField
     val MULTI_SMELTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("multi_smelter", RagiumBlockTypes.MULTI_SMELTER, machineProperty())
 

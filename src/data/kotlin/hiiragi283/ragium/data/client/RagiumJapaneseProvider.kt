@@ -63,7 +63,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "紺碧の欠片を手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "鋼は青かった", "紺鉄インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "紺鉄インゴットで作られたツールか装備を手に入れる")
-        addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
+        addAdvancement(RagiumAdvancements.MIXER, "混ぜる，混ぜる，それから混ぜる", "ミキサーを手に入れる")
         // Deep
         addAdvancement(RagiumAdvancements.RESONANT_DEBRIS, "「古代」の残骸", "共振の残骸を手に入れる")
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "深く，深く，なお深く。", "深層鋼を手に入れる")
@@ -72,6 +72,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
         // Night Metal
         addAdvancement(RagiumAdvancements.NIGHT_METAL, "ナイト・オブ・ナイツ", "夜金インゴットを手に入れる")
+        addAdvancement(RagiumAdvancements.SIMULATOR,  "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
         addAdvancement(RagiumAdvancements.CRIMSON_SOIL, "バラが赤い理由", "ソウルソイルに血塗られたチケットを使って深紅の土壌を手に入れる")
@@ -144,6 +145,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.WASHER, "洗浄機")
 
         add(RagiumBlocks.BREWERY, "醸造機")
+        add(RagiumBlocks.MIXER, "ミキサー")
         add(RagiumBlocks.MULTI_SMELTER, "並列製錬炉")
         add(RagiumBlocks.PLANTER, "栽培室")
 

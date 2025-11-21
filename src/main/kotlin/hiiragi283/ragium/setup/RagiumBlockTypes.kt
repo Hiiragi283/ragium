@@ -180,6 +180,13 @@ object RagiumBlockTypes {
         .build(RagiumCommonTranslation.BREWERY)
 
     @JvmField
+    val MIXER: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.MIXER }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addProcessorTier(HTMachineTier.ELITE)
+        .build(RagiumCommonTranslation.MIXER)
+
+    @JvmField
     val MULTI_SMELTER: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.MULTI_SMELTER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)

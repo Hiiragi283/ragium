@@ -5,6 +5,6 @@ import net.minecraft.world.item.crafting.RecipeType
 
 interface HTExpRequiredRecipe : HTSingleItemRecipe {
     fun getRequiredExpFluid(): Int
-    
+
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTING.get()
 }

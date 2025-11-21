@@ -262,11 +262,11 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         // Advanced
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MELTING, ::HTMeltingEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MIXING, ::HTMixingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.REFINING, ::HTRefiningEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTWashingEmiRecipe)
         // Elite
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.BREWING, ::HTBrewingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MIXING, ::HTMixingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTPlantingEmiRecipe)
         // Ultimate
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ENCHANTING, ::HTEnchantingEmiRecipe)

@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.common.util.HTPotionHelper
-import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
+import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import net.minecraft.core.Holder

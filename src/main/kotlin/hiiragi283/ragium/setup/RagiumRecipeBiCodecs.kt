@@ -15,8 +15,8 @@ import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
+import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicComplexRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithFluidToChancedItemRecipe
