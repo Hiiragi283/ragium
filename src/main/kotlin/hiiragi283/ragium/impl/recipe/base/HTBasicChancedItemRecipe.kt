@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 /**
  * [HTChancedItemRecipe]の抽象クラス
  */
-abstract class HTChancedItemRecipeBase<INPUT : RecipeInput> : HTChancedItemRecipe<INPUT> {
+abstract class HTBasicChancedItemRecipe<INPUT : RecipeInput> : HTChancedItemRecipe<INPUT> {
     /**
      * 完成品の一覧
      */

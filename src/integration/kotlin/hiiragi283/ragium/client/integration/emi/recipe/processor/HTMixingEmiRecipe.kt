@@ -6,7 +6,6 @@ import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputsEmiRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
-import kotlin.jvm.optionals.getOrNull
 
 class HTMixingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTMixingRecipe>) :
     HTMultiOutputsEmiRecipe<HTMixingRecipe>(category, holder) {
@@ -15,8 +14,7 @@ class HTMixingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTMi
         range.map(recipe.itemIngredients::getOrNull).forEach(::addInput)
         range.map(recipe.fluidIngredients::getOrNull).forEach(::addInput)
 
-        addOutputs(recipe.itemResult.getOrNull())
-        addOutputs(recipe.fluidResult.getOrNull())
+        addOutputs(recipe.results)
     }
 
     override fun initInputSlots(widgets: WidgetHolder) {

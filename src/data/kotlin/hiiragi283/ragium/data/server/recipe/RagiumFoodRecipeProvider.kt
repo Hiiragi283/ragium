@@ -11,10 +11,10 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
@@ -28,8 +28,8 @@ import net.neoforged.neoforge.common.Tags
 object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Mushroom Stew
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.MUSHROOMS, 2))
             .addIngredient(fluidCreator.milk(250))
             .setResult(resultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 250))
@@ -42,8 +42,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         )
 
         // Chocolate
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.CROPS_COCOA_BEAN))
             .addIngredient(fluidCreator.milk(250))
             .setResult(resultHelper.fluid(RagiumFluidContents.CHOCOLATE, 250))

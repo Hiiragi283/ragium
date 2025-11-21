@@ -3,11 +3,11 @@ package hiiragi283.ragium.client.integration.emi.recipe.processor
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTChancedOutputsEmiRecipe
-import hiiragi283.ragium.impl.recipe.base.HTItemToChancedItemRecipeBase
+import hiiragi283.ragium.impl.recipe.base.HTBasicItemToChancedItemRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemToChancedItemRecipeBase>) :
-    HTChancedOutputsEmiRecipe<HTItemToChancedItemRecipeBase>(category, holder) {
+class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicItemToChancedItemRecipe>) :
+    HTChancedOutputsEmiRecipe<HTBasicItemToChancedItemRecipe>(category, holder) {
     init {
         addInput(recipe.ingredient)
         recipe.results.forEach(::addChancedOutputs)

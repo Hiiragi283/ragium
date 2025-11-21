@@ -19,6 +19,7 @@ import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import java.util.function.Predicate
 
 /**
  * 機械全般に使用される[HTConfigurableBlockEntity]の拡張クラス
@@ -38,17 +39,24 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
 
         // Slot
         @JvmStatic
-        protected fun singleInput(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTItemStackSlot = builder.addSlot(
+        protected fun singleInput(
+            builder: HTBasicItemSlotHolder.Builder,
+            listener: HTContentListener,
+            canInsert: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
+        ): HTItemStackSlot = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0)),
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0), canInsert = canInsert),
         )
 
         @JvmStatic
-        protected fun singleCatalyst(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTItemStackSlot =
-            builder.addSlot(
-                HTSlotInfo.CATALYST,
-                HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2), 1),
-            )
+        protected fun singleCatalyst(
+            builder: HTBasicItemSlotHolder.Builder,
+            listener: HTContentListener,
+            canInsert: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
+        ): HTItemStackSlot = builder.addSlot(
+            HTSlotInfo.CATALYST,
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2), 1, canInsert),
+        )
 
         @JvmStatic
         protected fun singleOutput(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTItemStackSlot = builder.addSlot(

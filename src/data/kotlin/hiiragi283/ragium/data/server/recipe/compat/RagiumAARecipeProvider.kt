@@ -5,10 +5,9 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALLY) {
@@ -48,7 +47,7 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
                 resultHelper.fluid(InitFluids.CANOLA_OIL, 80),
             ).save(output)
         // Canola Oil -> Refined
-        HTFluidTransformRecipeBuilder
+        HTComplexRecipeBuilder
             .refining(
                 fluidCreator.from(InitFluids.CANOLA_OIL.get(), 80),
                 resultHelper.fluid(InitFluids.REFINED_CANOLA_OIL, 80),
@@ -56,15 +55,15 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
                 null,
             ).save(output)
         // Refined -> Crystallized
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromItem(ActuallyItems.CRYSTALLIZED_CANOLA_SEED))
             .addIngredient(fluidCreator.from(InitFluids.REFINED_CANOLA_OIL.get(), 1000))
             .setResult(resultHelper.fluid(InitFluids.CRYSTALLIZED_OIL, 1000))
             .save(output)
         // Crystallized -> Empowered
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromItem(ActuallyItems.EMPOWERED_CANOLA_SEED))
             .addIngredient(fluidCreator.from(InitFluids.CRYSTALLIZED_OIL.get(), 1000))
             .setResult(resultHelper.fluid(InitFluids.EMPOWERED_OIL, 1000))

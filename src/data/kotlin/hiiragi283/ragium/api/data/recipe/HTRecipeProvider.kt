@@ -16,7 +16,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
@@ -141,7 +141,7 @@ sealed class HTRecipeProvider {
                 resultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${solid.getPath()}")
         // Solidifying
-        HTFluidTransformRecipeBuilder
+        HTComplexRecipeBuilder
             .solidifying(
                 catalyst,
                 fluidCreator.fromContent(fluid, amount),
@@ -151,7 +151,7 @@ sealed class HTRecipeProvider {
 
     protected fun meltAndFreeze(data: HTRecipeData) {
         // Solidifying
-        HTFluidTransformRecipeBuilder
+        HTComplexRecipeBuilder
             .solidifying(
                 data.catalyst?.let(itemCreator::fromItem),
                 data.getFluidIngredients(fluidCreator)[0],
@@ -199,7 +199,7 @@ sealed class HTRecipeProvider {
         val ingredient: HTFluidIngredient = fluidCreator.fromContent(content, amount)
         // Refining
         for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
-            HTFluidTransformRecipeBuilder
+            HTComplexRecipeBuilder
                 .refining(ingredient, result, catalyst, itemResult)
                 .saveSuffixed(output, suffix)
         }

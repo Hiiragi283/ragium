@@ -2,7 +2,7 @@ package hiiragi283.ragium.impl.recipe
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.single.HTSingleInputRecipe
+import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.common.util.HTPotionHelper
@@ -14,7 +14,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
-class HTBrewingRecipe(val ingredient: HTItemIngredient, val contents: PotionContents) : HTSingleInputRecipe {
+class HTBrewingRecipe(val ingredient: HTItemIngredient, val contents: PotionContents) : HTSingleItemRecipe {
     override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 
     override fun assembleItem(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? = when {
