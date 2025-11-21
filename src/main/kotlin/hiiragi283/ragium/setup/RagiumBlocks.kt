@@ -442,19 +442,6 @@ object RagiumBlocks {
 
     //    Processor    //
 
-    // Vanilla
-    @JvmField
-    val ELECTRIC_FURNACE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("electric_furnace", RagiumBlockTypes.ELECTRIC_FURNACE, machineProperty())
-
-    @JvmField
-    val AUTO_SMITHING_TABLE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("auto_smithing_table", RagiumBlockTypes.AUTO_SMITHING_TABLE, machineProperty())
-
-    @JvmField
-    val AUTO_STONECUTTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("auto_stonecutter", RagiumBlockTypes.AUTO_STONECUTTER, machineProperty())
-
     // Basic
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
@@ -471,6 +458,10 @@ object RagiumBlocks {
     @JvmField
     val COMPRESSOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("compressor", RagiumBlockTypes.COMPRESSOR, machineProperty())
+
+    @JvmField
+    val ELECTRIC_FURNACE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("electric_furnace", RagiumBlockTypes.ELECTRIC_FURNACE, machineProperty())
 
     @JvmField
     val EXTRACTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =

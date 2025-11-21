@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.toImmutable
+import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -100,6 +101,8 @@ interface HTFluidContent<TYPE : FluidType, STILL : Fluid, FLOW : Fluid> :
     override fun get(): STILL = getStill()
 
     fun isOf(stack: FluidStack): Boolean = stack.`is`(commonTag)
+
+    fun isOf(holder: Holder<Fluid>): Boolean = holder.`is`(commonTag)
 
     fun isOf(stack: ImmutableFluidStack?): Boolean = stack?.isOf(commonTag) ?: false
 

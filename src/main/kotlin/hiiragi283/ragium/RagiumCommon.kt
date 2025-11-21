@@ -112,8 +112,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.ENCHANT_FUEL)
-
         event.register(RagiumDataMaps.MOB_HEAD)
 
         event.register(RagiumDataMaps.THERMAL_FUEL)

@@ -35,9 +35,6 @@ data class HTMultiRecipeInput private constructor(val items: List<ImmutableItemS
             val items: MutableList<ImmutableItemStack?> = mutableListOf()
             val fluids: MutableList<ImmutableFluidStack?> = mutableListOf()
 
-            fun build(): HTMultiRecipeInput? {
-                if (HTMultiInputsToObjRecipe.isEmpty(items) || HTMultiInputsToObjRecipe.isEmpty(fluids)) return null
-                return HTMultiRecipeInput(items, fluids)
-            }
+            fun build(): HTMultiRecipeInput? = HTMultiRecipeInput(items, fluids).takeUnless(HTMultiRecipeInput::isEmpty)
         }
     }

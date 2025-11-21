@@ -72,7 +72,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
         // Night Metal
         addAdvancement(RagiumAdvancements.NIGHT_METAL, "ナイト・オブ・ナイツ", "夜金インゴットを手に入れる")
-        addAdvancement(RagiumAdvancements.SIMULATOR,  "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
+        addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
         addAdvancement(RagiumAdvancements.CRIMSON_SOIL, "バラが赤い理由", "ソウルソイルに血塗られたチケットを使って深紅の土壌を手に入れる")
@@ -128,14 +128,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.ENCHANTMENT_GENERATOR, "エンチャント発電機")
         add(RagiumBlocks.NUCLEAR_REACTOR, "原子炉")
         // Processors
-        add(RagiumBlocks.ELECTRIC_FURNACE, "電動かまど")
-        add(RagiumBlocks.AUTO_SMITHING_TABLE, "自動鍛冶台")
-        add(RagiumBlocks.AUTO_STONECUTTER, "自動石切台")
-
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         add(RagiumBlocks.BLOCK_BREAKER, "採掘機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CUTTING_MACHINE, "裁断機")
+        add(RagiumBlocks.ELECTRIC_FURNACE, "電動かまど")
         add(RagiumBlocks.EXTRACTOR, "抽出機")
         add(RagiumBlocks.PULVERIZER, "粉砕機")
 

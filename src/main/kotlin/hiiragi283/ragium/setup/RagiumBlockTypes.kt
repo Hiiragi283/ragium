@@ -64,28 +64,6 @@ object RagiumBlockTypes {
 
     //    Processor    //
 
-    // Vanilla
-    @JvmField
-    val ELECTRIC_FURNACE: HTMachineBlockType = HTMachineBlockType
-        .builder { RagiumBlockEntityTypes.ELECTRIC_FURNACE }
-        .add(HTDirectionalBlockAttribute.HORIZONTAL)
-        .addProcessorTier(HTMachineTier.BASIC)
-        .addMenu { RagiumMenuTypes.SMELTER }
-        .build()
-
-    @JvmField
-    val AUTO_SMITHING_TABLE: HTMachineBlockType = HTMachineBlockType
-        .builder { RagiumBlockEntityTypes.AUTO_SMITHING_TABLE }
-        .addProcessorTier(HTMachineTier.BASIC)
-        .build()
-
-    @JvmField
-    val AUTO_STONECUTTER: HTMachineBlockType = HTMachineBlockType
-        .builder { RagiumBlockEntityTypes.AUTO_STONECUTTER }
-        .add(HTDirectionalBlockAttribute.HORIZONTAL)
-        .addProcessorTier(HTMachineTier.BASIC)
-        .build()
-
     // Basic
     @JvmField
     val ALLOY_SMELTER: HTMachineBlockType = HTMachineBlockType
@@ -118,6 +96,14 @@ object RagiumBlockTypes {
         .addProcessorTier(HTMachineTier.BASIC)
         .addMenu { RagiumMenuTypes.COMPRESSOR }
         .build(RagiumCommonTranslation.COMPRESSOR)
+
+    @JvmField
+    val ELECTRIC_FURNACE: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.ELECTRIC_FURNACE }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addProcessorTier(HTMachineTier.BASIC)
+        .addMenu { RagiumMenuTypes.SMELTER }
+        .build()
 
     @JvmField
     val EXTRACTOR: HTMachineBlockType = HTMachineBlockType
