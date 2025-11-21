@@ -220,6 +220,14 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
                 fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 4000),
             ).addResult(resultHelper.item(Items.BUDDING_AMETHYST))
             .save(output)
+        // Budding Quartz
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
+                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ),
+                fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 4000),
+            ).addResult(resultHelper.item(RagiumBlocks.BUDDING_QUARTZ))
+            .save(output)
+
         // Ominous Trial Key
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(

@@ -54,7 +54,7 @@ class HTEnchantCopierBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun getMatchedRecipe(input: HTMultiRecipeInput, level: ServerLevel): EnchantingRecipe? {
-        val tool: ImmutableItemStack = input.items[0] ?: return null
+        val tool: ImmutableItemStack = input.items[0]?.copyWithAmount(1) ?: return null
         val book: ImmutableItemStack = input.items[1] ?: return null
         val enchantments: ItemEnchantments = book
             .let(::getStoredEnchantments)

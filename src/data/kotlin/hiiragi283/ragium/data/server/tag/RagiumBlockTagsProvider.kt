@@ -65,8 +65,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // Pickaxe
         val pickaxe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_PICKAXE)
         buildList {
-            add(RagiumBlocks.BUDDING_AZURE)
-            add(RagiumBlocks.AZURE_CLUSTER)
+            add(RagiumBlocks.BUDDING_QUARTZ)
+            add(RagiumBlocks.QUARTZ_CLUSTER)
             add(RagiumBlocks.RESONANT_DEBRIS)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
             // Generators
@@ -229,7 +229,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // Other
         factory
             .apply(BlockTags.CRYSTAL_SOUND_BLOCKS)
-            .add(RagiumBlocks.BUDDING_AZURE)
+            .add(RagiumBlocks.BUDDING_QUARTZ)
         factory
             .apply(BlockTags.HOGLIN_REPELLENTS)
             .add(RagiumBlocks.getStorageBlock(RagiumMaterialKeys.WARPED_CRYSTAL))
@@ -244,10 +244,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             .add(RagiumBlocks.getStorageBlock(RagiumMaterialKeys.CRIMSON_CRYSTAL))
         factory
             .apply(Tags.Blocks.CLUSTERS)
-            .add(RagiumBlocks.AZURE_CLUSTER)
+            .add(RagiumBlocks.QUARTZ_CLUSTER)
         factory
             .apply(Tags.Blocks.BUDDING_BLOCKS)
-            .add(RagiumBlocks.BUDDING_AZURE)
+            .add(RagiumBlocks.BUDDING_QUARTZ)
         // WIP
         factory
             .apply(RagiumModTags.Blocks.WIP)

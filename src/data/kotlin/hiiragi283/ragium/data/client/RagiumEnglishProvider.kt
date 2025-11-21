@@ -61,7 +61,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL_HAMMER, "Ragi-Disassembler", "Get Ragi-Crystal Hammer")
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "Good Old Halcyon Days?", "Get Ragi-Ticket to roll treasure chests")
         // Azure
-        addAdvancement(RagiumAdvancements.BUDDING_AZURE, "Dyed in blue", "Use Blue Knowledge to Budding Amethyst")
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "Not a azurite", "Get Azure Shard")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "The steel is bluish.", "Get Azure Steel Ingot")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "Get any Azure Steel Tool or Armor")
@@ -71,7 +70,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "Deeper, Deeper, yet Deeper.", "Get Deep Steel")
         addAdvancement(RagiumAdvancements.BEHEAD_MOB, "Not more charged", "Behead mob by weapons with Strike enchantment")
 
-        addAdvancement(RagiumAdvancements.ECHO_STAR, "Shrieking Star", "Get Echo Star")
+        addAdvancement(RagiumAdvancements.ECHO_STAR, "Sonic the Boom", "Get Echo Star")
         // Night Metal
         addAdvancement(RagiumAdvancements.NIGHT_METAL, "Night of Knights", "Get Night Metal Ingot")
         addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "Get Simulator")
@@ -99,8 +98,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun block() {
         add(RagiumBlocks.SILT, "Silt")
 
-        add(RagiumBlocks.BUDDING_AZURE, "Budding Azure")
-        add(RagiumBlocks.AZURE_CLUSTER, "Azure Cluster")
+        add(RagiumBlocks.BUDDING_QUARTZ, "Budding Quartz")
+        add(RagiumBlocks.QUARTZ_CLUSTER, "Quartz Cluster")
         add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "Sooty Cobblestone")
 
@@ -254,7 +253,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.DRILL, "Electric Drill")
 
         add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
-        add(RagiumItems.BLUE_KNOWLEDGE, "Blue Knowledge")
         add(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")
         add(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")

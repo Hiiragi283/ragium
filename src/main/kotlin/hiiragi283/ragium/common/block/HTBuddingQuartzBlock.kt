@@ -16,7 +16,7 @@ import net.minecraft.world.level.material.Fluids
  * @see net.minecraft.world.level.block.BuddingAmethystBlock
  * @see appeng.decorative.solid.BuddingCertusQuartzBlock
  */
-class HTBuddingAzureBlock(properties: Properties) : AmethystBlock(properties) {
+class HTBuddingQuartzBlock(properties: Properties) : AmethystBlock(properties) {
     companion object {
         @JvmStatic
         fun canClusterGrowAt(state: BlockState): Boolean = state.isAir || state.`is`(Blocks.WATER) || state.fluidState.amount == 8
@@ -34,7 +34,7 @@ class HTBuddingAzureBlock(properties: Properties) : AmethystBlock(properties) {
         val posTo: BlockPos = pos.relative(direction)
         val stateTo: BlockState = level.getBlockState(posTo)
         if (canClusterGrowAt(stateTo)) {
-            val cluster: BlockState = RagiumBlocks.AZURE_CLUSTER
+            val cluster: BlockState = RagiumBlocks.QUARTZ_CLUSTER
                 .get()
                 .defaultBlockState()
                 .setValue(AmethystClusterBlock.FACING, direction)

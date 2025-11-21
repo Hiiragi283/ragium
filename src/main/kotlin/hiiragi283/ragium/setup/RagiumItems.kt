@@ -337,9 +337,6 @@ object RagiumItems {
     val DRILL: HTSimpleDeferredItem = REGISTER.registerItem("drill", ::HTDrillItem)
 
     // Azure
-    @JvmField
-    val BLUE_KNOWLEDGE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blue_knowledge") { it.stacksTo(1) }
-
     // Crimson
     @JvmField
     val CHARGES: Map<HTChargeVariant, HTSimpleDeferredItem> = HTChargeVariant.entries.associateWith { variant: HTChargeVariant ->

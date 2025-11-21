@@ -42,7 +42,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             // Resource
             add(RagiumBlocks.SILT)
 
-            add(RagiumBlocks.BUDDING_AZURE)
+            add(RagiumBlocks.BUDDING_QUARTZ)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
             add(RagiumBlocks.CRIMSON_SOIL)
 
@@ -111,7 +111,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         cubeColumn(RagiumBlocks.RESONANT_DEBRIS)
 
-        crossBlock(RagiumBlocks.AZURE_CLUSTER)
+        crossBlock(RagiumBlocks.QUARTZ_CLUSTER)
 
         // Crop
         getVariantBuilder(RagiumBlocks.EXP_BERRIES.get())

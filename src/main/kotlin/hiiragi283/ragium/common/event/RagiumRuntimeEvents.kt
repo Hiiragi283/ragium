@@ -4,15 +4,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.entity.isOf
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
@@ -25,9 +20,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Equipable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.EffectCure
@@ -61,8 +53,7 @@ object RagiumRuntimeEvents {
 
     //    Block    //
 
-    @SubscribeEvent
-    fun onInteractBlock(event: PlayerInteractEvent.RightClickBlock) {
+    /*fun onInteractBlock(event: PlayerInteractEvent.RightClickBlock) {
         val level: Level = event.level
 
         val pos: BlockPos = event.pos
@@ -75,13 +66,13 @@ object RagiumRuntimeEvents {
                 if (player is ServerPlayer) {
                     CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(player, pos, stack)
                 }
-                level.setBlockAndUpdate(pos, RagiumBlocks.BUDDING_AZURE.get().defaultBlockState())
+                level.setBlockAndUpdate(pos, RagiumBlocks.BUDDING_QUARTZ.get().defaultBlockState())
                 stack.consume(1, player)
             }
             event.cancellationResult = InteractionResult.sidedSuccess(level.isClientSide)
             event.isCanceled = true
         }
-    }
+    }*/
 
     //    Entity    //
 

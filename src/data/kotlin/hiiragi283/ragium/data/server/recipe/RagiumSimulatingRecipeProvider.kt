@@ -31,6 +31,14 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.BUDDING_AMETHYST),
                 resultHelper.item(Items.AMETHYST_SHARD, 4),
             ).save(output)
+        // Quartz
+        // Amethyst
+        HTItemWithCatalystRecipeBuilder
+            .simulating(
+                null,
+                itemCreator.fromItem(RagiumBlocks.BUDDING_QUARTZ),
+                resultHelper.item(Items.QUARTZ, 4),
+            ).save(output)
         // Echo Shard
         HTItemWithCatalystRecipeBuilder
             .simulating(
@@ -187,7 +195,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(RagiumItems.WITHER_DOLl),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.IRIDESCENTIUM),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.NIGHT_METAL),
                 resultHelper.item(RagiumItems.WITHER_STAR),
             ).save(output)
 
@@ -195,10 +203,17 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .mixing()
             .addIngredient(itemCreator.fromItem(RagiumItems.WITHER_STAR))
             .addIngredient(itemCreator.fromItem(Items.GHAST_TEAR, 16))
-            .addIngredient(itemCreator.fromItem(Items.PHANTOM_MEMBRANE, 16))
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 16))
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ, 64))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NITRIC_ACID, 8000))
             .setResult(resultHelper.item(Items.NETHER_STAR))
             .save(output)
+
+        HTItemWithCatalystRecipeBuilder
+            .simulating(
+                itemCreator.fromItem(RagiumItems.WITHER_DOLl),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.IRIDESCENTIUM),
+                resultHelper.item(Items.NETHER_STAR),
+            ).save(output)
     }
 }

@@ -57,7 +57,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL_HAMMER, "らぎ分解機", "ラギクリスタリルのハンマーを手に入れる")
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "古き良きあの頃", "らぎチケットを手に入れてお宝チェストを開く")
         // Azure
-        addAdvancement(RagiumAdvancements.BUDDING_AZURE, "青に染まる", "青の知識を芽生えたアメジストに使う")
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "紺碧の欠片を手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "鋼は青かった", "紺鉄インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "紺鉄インゴットで作られたツールか装備を手に入れる")
@@ -67,7 +66,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "深く，深く，なお深く。", "深層鋼を手に入れる")
         addAdvancement(RagiumAdvancements.BEHEAD_MOB, "帯電なんていらない", "雷撃エンチャントが付与された武器でモブの頭を切り落とす")
 
-        addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
+        addAdvancement(RagiumAdvancements.ECHO_STAR, "ソニック・ザ・ブーム", "残響の星を手に入れる")
         // Night Metal
         addAdvancement(RagiumAdvancements.NIGHT_METAL, "ナイト・オブ・ナイツ", "夜金インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
@@ -91,8 +90,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun block() {
         add(RagiumBlocks.SILT, "シルト")
 
-        add(RagiumBlocks.BUDDING_AZURE, "芽生えた紺碧")
-        add(RagiumBlocks.AZURE_CLUSTER, "紺碧の塊")
+        add(RagiumBlocks.BUDDING_QUARTZ, "芽生えた水晶")
+        add(RagiumBlocks.QUARTZ_CLUSTER, "水晶の塊")
         add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "煤けた丸石")
 
@@ -245,7 +244,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.DRILL, "電動ドリル")
 
         add(RagiumItems.ADVANCED_MAGNET, "発展らぎマグネット")
-        add(RagiumItems.BLUE_KNOWLEDGE, "青の知識")
         add(RagiumItems.DYNAMIC_LANTERN, "らぎランタン")
         add(RagiumItems.ELDRITCH_EGG, "異質な卵")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")

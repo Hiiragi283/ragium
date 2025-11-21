@@ -34,6 +34,13 @@ object RagiumBiomeModifierProvider : RegistrySetBuilder.RegistryBootstrap<BiomeM
             HolderSet.direct(biomeGetter::getOrThrow, Biomes.DEEP_DARK),
             GenerationStep.Decoration.UNDERGROUND_ORES,
         )
+        // Geode
+        registerFeature(
+            context,
+            RagiumWorldGenData.QUARTZ_GEODE,
+            biomeGetter.getOrThrow(BiomeTags.IS_NETHER),
+            GenerationStep.Decoration.LOCAL_MODIFICATIONS,
+        )
     }
 
     private fun registerFeature(

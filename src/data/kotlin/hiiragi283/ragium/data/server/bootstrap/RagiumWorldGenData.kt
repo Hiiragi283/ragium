@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.bootstrap
 
 import hiiragi283.ragium.api.data.HTWorldGenData
+import net.minecraft.data.worldgen.features.CaveFeatures
 import net.minecraft.data.worldgen.placement.OrePlacements
 
 object RagiumWorldGenData {
@@ -21,4 +22,10 @@ object RagiumWorldGenData {
      */
     @JvmField
     val ORE_RESONANT_DEBRIS: HTWorldGenData = HTWorldGenData("ore_resonant_debris")
+
+    /**
+     * @see CaveFeatures.AMETHYST_GEODE
+     */
+    @JvmField
+    val QUARTZ_GEODE: HTWorldGenData = HTWorldGenData("quartz_geode")
 }

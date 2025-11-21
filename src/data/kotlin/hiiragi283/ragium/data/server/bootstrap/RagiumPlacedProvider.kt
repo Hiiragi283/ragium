@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.placement.HeightRangePlacement
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement
 import net.minecraft.world.level.levelgen.placement.PlacedFeature
 import net.minecraft.world.level.levelgen.placement.PlacementModifier
+import net.minecraft.world.level.levelgen.placement.RarityFilter
 
 object RagiumPlacedProvider : RegistrySetBuilder.RegistryBootstrap<PlacedFeature> {
     override fun run(context: BootstrapContext<PlacedFeature>) {
@@ -41,6 +42,13 @@ object RagiumPlacedProvider : RegistrySetBuilder.RegistryBootstrap<PlacedFeature
                 VerticalAnchor.bottom(),
                 VerticalAnchor.absolute(15),
             ),
+        )
+        // Geode
+        register(
+            context,
+            RagiumWorldGenData.QUARTZ_GEODE,
+            RarityFilter.onAverageOnceEvery(24),
+            HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(6), VerticalAnchor.belowTop(6)),
         )
     }
 
