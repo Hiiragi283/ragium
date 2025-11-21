@@ -14,6 +14,7 @@ import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -35,11 +36,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 250))
             .save(output)
 
-        extractAndInfuse(
-            Items.BOWL,
-            Items.MUSHROOM_STEW.toHolderLike(),
-            RagiumFluidContents.MUSHROOM_STEW,
-        )
+        extractAndInfuse(Items.BOWL, Items.MUSHROOM_STEW.toHolderLike(), RagiumFluidContents.MUSHROOM_STEW)
 
         // Chocolate
         HTComplexRecipeBuilder
@@ -95,13 +92,37 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .save(output)
+        // Ragi-Cherry Juice
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
+                itemCreator.fromTagKey(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY),
+                null,
+                fluidResult = resultHelper.fluid(RagiumFluidContents.RAGI_CHERRY_JUICE, 125),
+            ).save(output)
+
+        extractAndInfuse(Items.GLASS_BOTTLE, RagiumItems.RAGI_CHERRY_JUICE, RagiumFluidContents.RAGI_CHERRY_JUICE)
         // Ragi-Cherry Jam
         HTShapelessRecipeBuilder
             .misc(RagiumItems.RAGI_CHERRY_JAM)
             .addIngredients(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY, 2)
             .addIngredient(Items.SUGAR)
             .addIngredient(Items.GLASS_BOTTLE)
+            .addCondition(FOOD_MOD_CONDITION)
             .save(output)
+        // Ragi-Cherry Pie
+        HTShapedRecipeBuilder
+            .create(RagiumItems.RAGI_CHERRY_PIE)
+            .pattern(
+                "AAA",
+                "BBB",
+                "CDC",
+            ).define('A', Tags.Items.CROPS_WHEAT)
+            .define('B', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
+            .define('C', Items.SUGAR)
+            .define('D', CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT)
+            .save(output)
+
+        cutAndCombine(RagiumItems.RAGI_CHERRY_PIE, RagiumItems.RAGI_CHERRY_PIE_SLICE, 4)
         // Ragi-Cherry Toast
         HTShapelessRecipeBuilder
             .misc(RagiumItems.RAGI_CHERRY_TOAST, 2)
@@ -127,11 +148,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             1000,
         )
         // Honey Bottle <-> Honey
-        extractAndInfuse(
-            Items.GLASS_BOTTLE,
-            Items.HONEY_BOTTLE.toHolderLike(),
-            RagiumFluidContents.HONEY,
-        )
+        extractAndInfuse(Items.GLASS_BOTTLE, Items.HONEY_BOTTLE.toHolderLike(), RagiumFluidContents.HONEY)
     }
 
     @JvmStatic
@@ -193,15 +210,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', HTDecorationVariant.SPONGE_CAKE.slab)
             .saveSuffixed(output, "_with_sponge")
 
-        HTShapelessRecipeBuilder
-            .misc(RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
-            .addIngredient(RagiumBlocks.SWEET_BERRIES_CAKE)
-            .save(output)
-
-        HTShapelessRecipeBuilder
-            .misc(RagiumBlocks.SWEET_BERRIES_CAKE)
-            .addIngredients(RagiumItems.SWEET_BERRIES_CAKE_SLICE, count = 7)
-            .save(output)
+        cutAndCombine(RagiumBlocks.SWEET_BERRIES_CAKE, RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
     }
 
     @JvmStatic

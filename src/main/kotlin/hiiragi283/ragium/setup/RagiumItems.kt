@@ -480,8 +480,21 @@ object RagiumItems {
     }
 
     @JvmField
+    val RAGI_CHERRY_JUICE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_cherry_juice") {
+        it.food(RagiumFoods.RAGI_CHERRY_JAM).foodSound(SoundEvents.GENERIC_DRINK)
+    }
+
+    @JvmField
     val RAGI_CHERRY_JAM: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_cherry_jam") {
         it.food(RagiumFoods.RAGI_CHERRY_JAM).foodSound(SoundEvents.HONEY_DRINK)
+    }
+
+    @JvmField
+    val RAGI_CHERRY_PIE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_cherry_pie")
+
+    @JvmField
+    val RAGI_CHERRY_PIE_SLICE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_cherry_pie_slice") {
+        it.food(RagiumFoods.RAGI_CHERRY_PIE_SLICE)
     }
 
     @JvmField

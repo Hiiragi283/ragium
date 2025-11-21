@@ -14,7 +14,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTUpgradeChargeRecipe
 import hiiragi283.ragium.common.tier.HTCircuitTier
-import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTChargeVariant
@@ -73,11 +72,27 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 setCategory(CraftingBookCategory.EQUIPMENT)
             }
 
+        // Hammers
+        mapOf(
+            RagiumMaterialKeys.RAGI_ALLOY to CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.RAGI_CRYSTAL to CommonMaterialPrefixes.GEM,
+        ).forEach { (key: HTMaterialKey, prefix: HTPrefixLike) ->
+            HTShapedRecipeBuilder
+                .create(RagiumItems.getHammer(key))
+                .pattern(
+                    " AA",
+                    "BBA",
+                    " AA",
+                ).define('A', prefix, key)
+                .define('B', Tags.Items.RODS_WOODEN)
+                .setCategory(CraftingBookCategory.EQUIPMENT)
+                .save(output)
+        }
+
         raginite()
         azureAndDeepSteel()
         molten()
 
-        forgeHammers()
         charges()
         lootTickets()
     }
@@ -96,14 +111,17 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
-
         // Advanced
-        createComponentUpgrade(
-            HTComponentTier.ADVANCED,
-            RagiumItems.ADVANCED_MAGNET,
-            RagiumItems.MAGNET,
-        ).save(output)
-
+        HTShapedRecipeBuilder
+            .create(RagiumItems.ADVANCED_MAGNET)
+            .pattern(
+                "A A",
+                "ABA",
+                " A ",
+            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            .define('B', RagiumItems.MAGNET)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
+            .save(output)
         // Elite
         HTShapedRecipeBuilder
             .create(RagiumItems.DYNAMIC_LANTERN)
@@ -243,30 +261,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         resetComponent(RagiumItems.UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR)
-    }
-
-    @JvmStatic
-    private fun forgeHammers() {
-        fun crafting(prefix: HTPrefixLike, key: HTMaterialLike) {
-            HTShapedRecipeBuilder
-                .create(RagiumItems.getHammer(key))
-                .pattern(
-                    " AA",
-                    "BBA",
-                    " AA",
-                ).define('A', prefix, key)
-                .define('B', Tags.Items.RODS_WOODEN)
-                .setCategory(CraftingBookCategory.EQUIPMENT)
-                .save(output)
-        }
-        crafting(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-
-        createComponentUpgrade(
-            HTComponentTier.ELITE,
-            RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL),
-            RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY),
-        ).addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .save(output)
     }
 
     @JvmStatic

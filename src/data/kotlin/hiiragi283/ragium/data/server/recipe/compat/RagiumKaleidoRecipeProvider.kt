@@ -4,10 +4,11 @@ import com.github.ysbbbbbb.kaleidoscopecookery.init.ModItems
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
@@ -41,34 +42,30 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
             .addResult(resultHelper.item(ModItems.RICE_PANICLE), 1 / 4f)
             .save(output)
 
-        knife()
+        // Knives
+        mapOf(
+            RagiumMaterialKeys.RAGI_ALLOY to CommonMaterialPrefixes.INGOT,
+            RagiumMaterialKeys.RAGI_CRYSTAL to CommonMaterialPrefixes.GEM,
+        ).forEach { (key: HTMaterialKey, prefix: HTPrefixLike) ->
+            HTShapedRecipeBuilder
+                .create(RagiumIntegrationItems.getKitchenKnife(key))
+                .pattern(
+                    "AA",
+                    "AB",
+                ).define('A', prefix, key)
+                .define('B', Tags.Items.RODS_WOODEN)
+                .setCategory(CraftingBookCategory.EQUIPMENT)
+                .save(output)
+        }
+
         cherry()
         cake()
     }
 
     @JvmStatic
-    private fun knife() {
-        HTShapedRecipeBuilder
-            .create(RagiumIntegrationItems.getKitchenKnife(RagiumMaterialKeys.RAGI_ALLOY))
-            .pattern(
-                "AA",
-                "AB",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .define('B', Tags.Items.RODS_WOODEN)
-            .setCategory(CraftingBookCategory.EQUIPMENT)
-            .save(output)
-
-        createComponentUpgrade(
-            HTComponentTier.ELITE,
-            RagiumIntegrationItems.getKitchenKnife(RagiumMaterialKeys.RAGI_CRYSTAL),
-            RagiumIntegrationItems.getKitchenKnife(RagiumMaterialKeys.RAGI_ALLOY),
-        ).addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .save(output)
-    }
-
-    @JvmStatic
     private fun cherry() {
         choppingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PULP)
+        choppingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PIE)
     }
 
     @JvmStatic

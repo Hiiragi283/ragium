@@ -22,7 +22,6 @@ import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.setup.RagiumChemicals
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumIntegrationCreativeTabs
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
@@ -73,9 +72,6 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
         RagiumIntegrationItems.init(eventBus)
         RagiumIntegrationCreativeTabs.REGISTER.register(eventBus)
 
-        if (isLoaded(RagiumConst.FARMERS_DELIGHT)) {
-            RagiumDelightContents.register(eventBus)
-        }
         if (isLoaded(RagiumConst.MEKANISM)) {
             RagiumChemicals.init(eventBus)
         }

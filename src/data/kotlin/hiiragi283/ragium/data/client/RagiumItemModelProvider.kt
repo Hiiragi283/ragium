@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
@@ -47,14 +48,19 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             .map(HTHolderLike::getId)
             .forEach(::basicItem)
 
-        mapOf(RagiumItems.POTION_DROP to "ghast_tear").forEach { (item: HTHolderLike, path: String) ->
+        mapOf(RagiumItems.POTION_DROP to "item/ghast_tear").forEach { (item: HTHolderLike, path: String) ->
             withExistingParent(item.getPath(), vanillaId("item", "generated"))
-                .texture("layer0", "minecraft:item/$path")
+                .texture("layer0", vanillaId(path))
         }
 
-        withExistingParent(RagiumItems.RAGI_ALLOY_COMPOUND.getPath(), vanillaId("item", "generated"))
-            .texture("layer0", "minecraft:item/copper_ingot")
-            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
+        mapOf(
+            RagiumItems.RAGI_ALLOY_COMPOUND to "item/copper_ingot",
+            RagiumItems.RAGI_CHERRY_JUICE to "item/potion",
+        ).forEach { (item: HTSimpleDeferredItem, path: String) ->
+            withExistingParent(item.getPath(), vanillaId("item", "generated"))
+                .texture("layer0", vanillaId(path))
+                .texture("layer1", item.itemId)
+        }
 
         for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
             withExistingParent(content.bucket.getPath(), RagiumConst.NEOFORGE.toId("item", "bucket"))

@@ -11,7 +11,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -33,7 +32,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         recipeType()
         text()
 
-        delight()
         jade()
     }
 
@@ -205,6 +203,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
         addFluid(RagiumFluidContents.MEAT, "Liquid Meat")
+        addFluid(RagiumFluidContents.RAGI_CHERRY_JUICE, "Ragi-Cherry Juice")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "Organic Mutagen")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
@@ -275,8 +274,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.MELON_PIE, "Melon Pie")
 
         add(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
-        add(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
         add(RagiumItems.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+        add(RagiumItems.RAGI_CHERRY_JUICE, "Ragi-Cherry Juice")
+        add(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
+        add(RagiumItems.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
+        add(RagiumItems.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
         add(RagiumItems.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
         add(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
@@ -457,13 +459,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     //    Addon    //
-
-    private fun delight() {
-        add(RagiumDelightContents.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
-        add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, "Ragi-Cherry Toast Tower")
-
-        add(RagiumDelightContents.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
-    }
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")
