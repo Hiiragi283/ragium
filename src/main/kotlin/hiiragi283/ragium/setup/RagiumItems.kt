@@ -344,7 +344,7 @@ object RagiumItems {
             "${variant.variantName()}_charge",
             variant,
             ::HTChargeItem,
-        ) { it.component(RagiumDataComponents.BLAST_POWER, 4f) }
+        ) { it.component(RagiumDataComponents.CHARGE_POWER, 4f) }
     }
 
     // Warped

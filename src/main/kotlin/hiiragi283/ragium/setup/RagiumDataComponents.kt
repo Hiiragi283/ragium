@@ -20,16 +20,24 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
+import net.neoforged.bus.api.IEventBus
 
 object RagiumDataComponents {
     @JvmField
     val REGISTER = HTDeferredDataComponentRegister(Registries.DATA_COMPONENT_TYPE, RagiumAPI.MOD_ID)
 
+    @JvmStatic
+    fun init(eventBus: IEventBus) {
+        REGISTER.addAlias("blast_power", "charge_power")
+        
+        REGISTER.register(eventBus)
+    }
+    
     @JvmField
     val ANTI_GRAVITY: DataComponentType<Boolean> = REGISTER.registerType("anti_gravity", BiCodec.BOOL)
 
     @JvmField
-    val BLAST_POWER: DataComponentType<Float> = REGISTER.registerType("blast_power", BiCodecs.POSITIVE_FLOAT)
+    val CHARGE_POWER: DataComponentType<Float> = REGISTER.registerType("charge_power", BiCodecs.POSITIVE_FLOAT)
 
     @JvmField
     val COLOR: DataComponentType<DyeColor> = REGISTER.registerType("color", VanillaBiCodecs.COLOR)

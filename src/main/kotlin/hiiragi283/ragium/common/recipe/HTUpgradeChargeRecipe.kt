@@ -33,7 +33,7 @@ class HTUpgradeChargeRecipe(category: CraftingBookCategory) : HTCustomRecipe(cat
         var gunpowder = 0
         for (stack: ImmutableItemStack? in input) {
             if (stack == null) continue
-            if (stack.has(RagiumDataComponents.BLAST_POWER)) {
+            if (stack.has(RagiumDataComponents.CHARGE_POWER)) {
                 blastCharge = stack.unwrap()
             } else if (stack.isOf(Tags.Items.GUNPOWDERS)) {
                 gunpowder++
@@ -42,7 +42,7 @@ class HTUpgradeChargeRecipe(category: CraftingBookCategory) : HTCustomRecipe(cat
         if (blastCharge.isEmpty || gunpowder < 0) {
             return ItemStack.EMPTY
         }
-        blastCharge.update(RagiumDataComponents.BLAST_POWER, 4f) { it + gunpowder.toFloat() }
+        blastCharge.update(RagiumDataComponents.CHARGE_POWER, 4f) { it + gunpowder.toFloat() }
         return blastCharge
     }
 

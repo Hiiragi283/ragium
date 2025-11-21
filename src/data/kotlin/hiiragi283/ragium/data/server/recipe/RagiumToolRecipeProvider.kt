@@ -257,11 +257,13 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         )
 
         for (variant: HTChargeVariant in HTChargeVariant.entries) {
-            val material: HTMaterialKey = when (variant) {
-                HTChargeVariant.FISHING -> RagiumMaterialKeys.AZURE
-                HTChargeVariant.BLAST -> RagiumMaterialKeys.CRIMSON_CRYSTAL
-                HTChargeVariant.TELEPORT -> RagiumMaterialKeys.WARPED_CRYSTAL
-                HTChargeVariant.CONFUSING -> RagiumMaterialKeys.ELDRITCH_PEARL
+            val (prefix: HTPrefixLike, material: HTMaterialLike) = when (variant) {
+                HTChargeVariant.BLAST -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.CRIMSON_CRYSTAL
+                HTChargeVariant.STRIKE -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
+                HTChargeVariant.NEUTRAL -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.EMERALD
+                HTChargeVariant.FISHING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.AZURE
+                HTChargeVariant.TELEPORT -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.WARPED_CRYSTAL
+                HTChargeVariant.CONFUSING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.ELDRITCH_PEARL
             }
             HTShapedRecipeBuilder
                 .create(variant, 3)
@@ -269,7 +271,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                     " AA",
                     " BA",
                     "C  ",
-                ).define('A', CommonMaterialPrefixes.GEM, material)
+                ).define('A', prefix, material)
                 .define('B', Tags.Items.GUNPOWDERS)
                 .define('C', Items.PAPER)
                 .setCategory(CraftingBookCategory.EQUIPMENT)

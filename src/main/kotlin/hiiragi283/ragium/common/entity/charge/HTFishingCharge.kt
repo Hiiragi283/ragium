@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.entity.charge
 
+import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.common.variant.HTChargeVariant
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntityType
@@ -13,7 +15,8 @@ import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
-import net.minecraft.world.phys.HitResult
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.EntityHitResult
 
 class HTFishingCharge : HTAbstractCharge {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
@@ -28,7 +31,7 @@ class HTFishingCharge : HTAbstractCharge {
         z,
     )
 
-    override fun onHit(level: ServerLevel, result: HitResult) {
+    override fun onHit(level: ServerLevel, result: Either<EntityHitResult, BlockHitResult>) {
         if (this.isInWater) {
             val params: LootParams = LootParams
                 .Builder(level)
@@ -38,7 +41,9 @@ class HTFishingCharge : HTAbstractCharge {
                 .create(LootContextParamSets.FISHING)
             val lootTable: LootTable = level.server.reloadableRegistries().getLootTable(BuiltInLootTables.FISHING)
             repeat(getPower().toInt()) {
-                lootTable.getRandomItems(params).forEach(this::spawnAtLocation)
+                for (stack: ItemStack in lootTable.getRandomItems(params)) {
+                    HTItemDropHelper.giveOrDropStack(getOwnerOrSelf(), stack)
+                }
             }
         }
     }
