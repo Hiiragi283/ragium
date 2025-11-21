@@ -27,7 +27,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
                 itemCreator.fromItem(AEBlocks.QUARTZ_BLOCK),
-                fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 8000),
+                fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 8000),
             ).addResult(resultHelper.item(AEBlocks.FLAWLESS_BUDDING_QUARTZ))
             .save(output)
         // Fluix Crystal

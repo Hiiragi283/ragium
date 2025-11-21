@@ -230,6 +230,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.RESIN, "樹脂")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.WITHER_DOLl, "ウィザー人形")
+        add(RagiumItems.WITHER_STAR, "ウィザースター")
 
         add(RagiumItems.POTATO_SPROUTS, "ジャガイモの芽")
         add(RagiumItems.GREEN_CAKE, "グリーンケーキ")

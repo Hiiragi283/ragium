@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTBasicFluidContentNew
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 enum class RagiumMoltenCrystalData(val color: Int, private val enName: String, private val jaName: String) :
@@ -15,14 +15,14 @@ enum class RagiumMoltenCrystalData(val color: Int, private val enName: String, p
     ELDRITCH(0x660066, "Eldritch Flux", "異質な流動体"),
     ;
 
-    val sap: HTFluidContent<*, *, *>?
+    val sap: HTBasicFluidContentNew?
         get() = when (this) {
             CRIMSON -> RagiumFluidContents.CRIMSON_SAP
             WARPED -> RagiumFluidContents.WARPED_SAP
             ELDRITCH -> null
         }
 
-    val molten: HTFluidContent<*, *, *>
+    val molten: HTBasicFluidContentNew
         get() = when (this) {
             CRIMSON -> RagiumFluidContents.CRIMSON_BLOOD
             WARPED -> RagiumFluidContents.DEW_OF_THE_WARP

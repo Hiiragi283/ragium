@@ -239,6 +239,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.RESIN, "Resin")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.WITHER_DOLl, "Wither Doll")
+        add(RagiumItems.WITHER_STAR, "Wither Star")
 
         add(RagiumItems.POTATO_SPROUTS, "Potato Sprouts")
         add(RagiumItems.GREEN_CAKE, "Green Cake")

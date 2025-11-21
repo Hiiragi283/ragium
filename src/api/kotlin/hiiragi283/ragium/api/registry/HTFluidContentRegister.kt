@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.registry
 
+import hiiragi283.ragium.api.function.BlockWithContextFactory
+import hiiragi283.ragium.api.function.ItemWithContextFactory
 import hiiragi283.ragium.api.registry.impl.HTDeferredFluid
 import hiiragi283.ragium.api.registry.impl.HTDeferredFluidRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredFluidType
@@ -8,18 +10,12 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlockRegister
-import hiiragi283.ragium.api.tag.createTagKey
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.BucketItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.DispenserBlock
 import net.minecraft.world.level.block.LiquidBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
-import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.PushReaction
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
@@ -41,8 +37,8 @@ class HTFluidContentRegister(modId: String) {
     val blockEntries: Collection<HTDeferredOnlyBlock<*>> get() = blockRegister.entries
     val itemEntries: Collection<HTDeferredItem<*>> get() = itemRegister.entries
 
-    private val contentCache: MutableList<HTFluidContent<*, *, *>> = mutableListOf()
-    val contents: List<HTFluidContent<*, *, *>> get() = contentCache
+    private val contentCache: MutableList<HTFluidContent<*, *, *, *, *>> = mutableListOf()
+    val contents: List<HTFluidContent<*, *, *, *, *>> get() = contentCache
 
     fun init(eventBus: IEventBus) {
         fluidRegister.register(eventBus)
@@ -59,25 +55,42 @@ class HTFluidContentRegister(modId: String) {
         }
     }
 
-    fun register(name: String, properties: FluidType.Properties): HTSimpleFluidContent = register(name, properties, ::FluidType)
+    fun registerSimple(name: String, properties: FluidType.Properties): HTBasicFluidContentNew = register(name, properties, ::FluidType)
 
     fun <TYPE : FluidType> register(
         name: String,
         properties: FluidType.Properties,
         typeFactory: (FluidType.Properties) -> TYPE,
-    ): HTFlowingFluidContent<TYPE> {
+    ): HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing, LiquidBlock, BucketItem> =
+        register(name, properties, typeFactory, ::LiquidBlock)
+
+    fun <TYPE : FluidType, BLOCK : LiquidBlock> register(
+        name: String,
+        properties: FluidType.Properties,
+        typeFactory: (FluidType.Properties) -> TYPE,
+        blockFactory: BlockWithContextFactory<BaseFlowingFluid.Source, BLOCK>,
+    ): HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing, BLOCK, BucketItem> =
+        register(name, properties, typeFactory, blockFactory, ::BucketItem)
+
+    fun <TYPE : FluidType, BLOCK : LiquidBlock, BUCKET : Item> register(
+        name: String,
+        properties: FluidType.Properties,
+        typeFactory: (FluidType.Properties) -> TYPE,
+        blockFactory: BlockWithContextFactory<BaseFlowingFluid.Source, BLOCK>,
+        bucketFactory: ItemWithContextFactory<BaseFlowingFluid.Source, BUCKET>,
+    ): HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing, BLOCK, BUCKET> {
         // Fluid Type
         val typeHolder: HTDeferredFluidType<TYPE> = typeRegister.registerType(name, properties, typeFactory)
         // Fluid Holder
         val stillHolder: HTDeferredFluid<BaseFlowingFluid.Source> = HTDeferredFluid(fluidRegister.createId(name))
         // Bucket Item
-        val bucket: HTDeferredItem<BucketItem> = itemRegister.registerItem(
+        val bucket: HTDeferredItem<BUCKET> = itemRegister.registerItem(
             "${name}_bucket",
-            { BucketItem(stillHolder.get(), it) },
+            { bucketFactory(stillHolder.get(), it) },
             { it.stacksTo(1).craftRemainder(Items.BUCKET) },
         )
         // Liquid Block
-        val liquidBlock: HTDeferredOnlyBlock<LiquidBlock> = blockRegister.registerBlock(
+        val liquidBlock: HTDeferredOnlyBlock<BLOCK> = blockRegister.registerBlock(
             name,
             BlockBehaviour.Properties
                 .of()
@@ -87,46 +100,21 @@ class HTFluidContentRegister(modId: String) {
                 .replaceable()
                 .pushReaction(PushReaction.DESTROY)
                 .liquid(),
-        ) { prop: BlockBehaviour.Properties ->
-            LiquidBlock(stillHolder.get(), prop)
-        }
+        ) { prop: BlockBehaviour.Properties -> blockFactory(stillHolder.get(), prop) }
         // Fluid
         val (_, flowingHolder: HTDeferredFluid<BaseFlowingFluid.Flowing>) = fluidRegister.registerFluids(name, typeHolder) {
             it.bucket(bucket).block(liquidBlock)
         }
         // Content
-        val content: HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing> = ContentImpl(
-            typeHolder,
-            stillHolder,
-            flowingHolder,
-            liquidBlock,
-            bucket,
-        )
+        val content: HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing, BLOCK, BUCKET> =
+            HTFluidContent(
+                typeHolder,
+                stillHolder,
+                flowingHolder,
+                liquidBlock,
+                bucket,
+            )
         contentCache.add(content)
         return content
-    }
-
-    private class ContentImpl<TYPE : FluidType, STILL : Fluid, FLOW : Fluid>(
-        val typeHolder: HTDeferredFluidType<TYPE>,
-        val stillHolder: HTDeferredFluid<STILL>,
-        val flowHolder: HTDeferredFluid<FLOW>,
-        val blockHolder: HTDeferredOnlyBlock<*>,
-        val bucketHolder: HTDeferredItem<*>,
-    ) : HTFluidContent<TYPE, STILL, FLOW> {
-        override val commonTag: TagKey<Fluid> = Registries.FLUID.createTagKey(commonId(getPath()))
-
-        override val bucketTag: TagKey<Item> = Registries.ITEM.createTagKey(commonId("buckets", getPath()))
-
-        override fun getType(): TYPE = typeHolder.get()
-
-        override fun getStill(): STILL = stillHolder.get()
-
-        override fun getFlow(): FLOW = flowHolder.get()
-
-        override fun getBlock(): Block = blockHolder.get()
-
-        override fun getBucket(): Item = bucketHolder.get()
-
-        override fun getId(): ResourceLocation = stillHolder.id
     }
 }

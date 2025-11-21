@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -43,6 +43,6 @@ class HTWaterCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         if (waterSources >= 2) {
             amount += 500
         }
-        return HTFluidContent.WATER.toImmutableStack(amount)
+        return HTFluidHolderLike.WATER.toImmutableStack(amount)
     }
 }

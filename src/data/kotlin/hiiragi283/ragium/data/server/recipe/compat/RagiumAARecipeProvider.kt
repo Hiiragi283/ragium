@@ -44,13 +44,13 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
                 itemCreator.fromTagKey(ActuallyTags.Items.CROPS_CANOLA),
                 null,
                 null,
-                resultHelper.fluid(InitFluids.CANOLA_OIL, 80),
+                resultHelper.fluid(InitFluids.CANOLA_OIL.get(), 80),
             ).save(output)
         // Canola Oil -> Refined
         HTComplexRecipeBuilder
             .refining(
                 fluidCreator.from(InitFluids.CANOLA_OIL.get(), 80),
-                resultHelper.fluid(InitFluids.REFINED_CANOLA_OIL, 80),
+                resultHelper.fluid(InitFluids.REFINED_CANOLA_OIL.get(), 80),
                 null,
                 null,
             ).save(output)
@@ -59,14 +59,14 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
             .mixing()
             .addIngredient(itemCreator.fromItem(ActuallyItems.CRYSTALLIZED_CANOLA_SEED))
             .addIngredient(fluidCreator.from(InitFluids.REFINED_CANOLA_OIL.get(), 1000))
-            .setResult(resultHelper.fluid(InitFluids.CRYSTALLIZED_OIL, 1000))
+            .setResult(resultHelper.fluid(InitFluids.CRYSTALLIZED_OIL.get(), 1000))
             .save(output)
         // Crystallized -> Empowered
         HTComplexRecipeBuilder
             .mixing()
             .addIngredient(itemCreator.fromItem(ActuallyItems.EMPOWERED_CANOLA_SEED))
             .addIngredient(fluidCreator.from(InitFluids.CRYSTALLIZED_OIL.get(), 1000))
-            .setResult(resultHelper.fluid(InitFluids.EMPOWERED_OIL, 1000))
+            .setResult(resultHelper.fluid(InitFluids.EMPOWERED_OIL.get(), 1000))
             .save(output)
     }
 }

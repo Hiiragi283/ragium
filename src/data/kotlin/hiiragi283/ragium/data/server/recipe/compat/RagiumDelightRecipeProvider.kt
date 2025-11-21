@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.server.recipe.compat
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.toHolderLike
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -33,14 +33,14 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         // Milk
         extractAndInfuse(
             Items.GLASS_BOTTLE,
-            ModItems.MILK_BOTTLE.toHolderLike(),
-            HTFluidContent.MILK,
+            HTItemHolderLike.fromItem(ModItems.MILK_BOTTLE),
+            HTFluidHolderLike.MILK,
         )
         // Rich soil
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
                 itemCreator.fromItem(ModItems.ORGANIC_COMPOST.get()),
-                fluidCreator.fromContent(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
+                fluidCreator.fromHolder(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
             ).addResult(resultHelper.item(ModItems.RICH_SOIL.get()))
             .save(output)
 

@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -111,11 +111,11 @@ fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).fold(ImmutableIte
 fun HTFluidResult.toEmi(): EmiStack = this.getStackResult(null).fold(ImmutableFluidStack::toEmi, ::createErrorStack)
 
 // Fluid Content
-fun HTFluidContent<*, *, *>.toFluidEmi(): EmiStack = EmiStack.of(this.get())
+fun HTFluidHolderLike.toFluidEmi(): EmiStack = EmiStack.of(this.getFluid())
 
-fun HTFluidContent<*, *, *>.toFluidEmi(amount: Number): EmiStack = EmiStack.of(this.get(), amount.toLong())
+fun HTFluidHolderLike.toFluidEmi(amount: Number): EmiStack = EmiStack.of(this.getFluid(), amount.toLong())
 
-fun HTFluidContent<*, *, *>.toTagEmi(): EmiIngredient = this.commonTag.toEmi()
+fun HTFluidHolderLike.toTagEmi(): EmiIngredient = this.getFluidTag().toEmi()
 
 fun createErrorStack(translation: HTTranslation): EmiStack = createErrorStack(translation.translate())
 

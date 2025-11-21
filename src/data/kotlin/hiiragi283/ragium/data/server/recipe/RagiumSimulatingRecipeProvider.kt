@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -77,7 +77,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 null,
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.COW)),
                 null,
-                resultHelper.fluid(HTFluidContent.MILK, 250),
+                resultHelper.fluid(HTFluidHolderLike.MILK, 250),
             ).saveSuffixed(output, "_from_cow")
         // Heart of the Sea
         HTItemWithCatalystRecipeBuilder
@@ -108,7 +108,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 null,
                 itemCreator.fromVanilla(HTEntityTypeIngredient.of(EntityType.GOAT)),
                 null,
-                resultHelper.fluid(HTFluidContent.MILK, 500),
+                resultHelper.fluid(HTFluidHolderLike.MILK, 500),
             ).saveSuffixed(output, "_from_goat")
         // Poppy
         HTItemWithCatalystRecipeBuilder
@@ -177,7 +177,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .simulating(
                 itemCreator.fromItem(RagiumItems.WITHER_DOLl),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.IRIDESCENTIUM),
-                resultHelper.item(Tags.Items.NETHER_STARS),
+                resultHelper.item(RagiumItems.WITHER_STAR),
             ).save(output)
     }
 }

@@ -2,7 +2,7 @@ package hiiragi283.ragium.impl.data.recipe.material
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -35,7 +35,7 @@ object FoodMaterialRecipeData {
     val RAW_MEAT_INGOT: HTRecipeData = createCast(FoodMaterialKeys.RAW_MEAT, RagiumFluidContents.MEAT)
 
     @JvmStatic
-    private fun createCast(material: HTMaterialLike, fluid: HTFluidContent<*, *, *>): HTRecipeData = HTRecipeData.create {
+    private fun createCast(material: HTMaterialLike, fluid: HTFluidHolderLike): HTRecipeData = HTRecipeData.create {
         addInput(fluid, 250)
 
         setCatalyst(RagiumItems.getMold(CommonMaterialPrefixes.INGOT))

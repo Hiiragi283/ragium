@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -131,20 +131,20 @@ sealed class HTRecipeProvider {
     protected fun meltAndFreeze(
         catalyst: HTItemIngredient?,
         solid: HTItemHolderLike,
-        fluid: HTFluidContent<*, *, *>,
+        fluid: HTFluidHolderLike,
         amount: Int,
     ) {
         // Melting
         HTItemToObjRecipeBuilder
             .melting(
                 itemCreator.fromItem(solid),
-                resultHelper.fluid(fluid, amount),
+                resultHelper.fluid(fluid.getFluid(), amount),
             ).saveSuffixed(output, "_from_${solid.getPath()}")
         // Solidifying
         HTComplexRecipeBuilder
             .solidifying(
                 catalyst,
-                fluidCreator.fromContent(fluid, amount),
+                fluidCreator.fromHolder(fluid, amount),
                 resultHelper.item(solid),
             ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
@@ -169,7 +169,7 @@ sealed class HTRecipeProvider {
     protected fun extractAndInfuse(
         empty: ItemLike,
         filled: HTItemHolderLike,
-        fluid: HTFluidContent<*, *, *>,
+        fluid: HTFluidHolderLike,
         amount: Int = 250,
     ) {
         // Melting
@@ -178,25 +178,25 @@ sealed class HTRecipeProvider {
                 itemCreator.fromItem(filled),
                 resultHelper.item(empty),
                 null,
-                resultHelper.fluid(fluid, amount),
+                resultHelper.fluid(fluid.getFluid(), amount),
             ).saveSuffixed(output, "_from_${filled.getPath()}")
         // Washing
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
                 itemCreator.fromItem(empty),
-                fluidCreator.fromContent(fluid, amount),
+                fluidCreator.fromHolder(fluid, amount),
             ).addResult(resultHelper.item(filled))
             .saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
     protected fun distillation(
-        input: Pair<HTFluidContent<*, *, *>, Int>,
+        input: Pair<HTFluidHolderLike, Int>,
         itemResult: HTItemResult?,
         vararg results: Pair<HTFluidResult, HTItemIngredient?>,
     ) {
-        val (content: HTFluidContent<*, *, *>, amount: Int) = input
-        val suffix = "_from_${content.getPath()}"
-        val ingredient: HTFluidIngredient = fluidCreator.fromContent(content, amount)
+        val (holder: HTFluidHolderLike, amount: Int) = input
+        val suffix = "_from_${holder.getPath()}"
+        val ingredient: HTFluidIngredient = fluidCreator.fromHolder(holder, amount)
         // Refining
         for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
             HTComplexRecipeBuilder

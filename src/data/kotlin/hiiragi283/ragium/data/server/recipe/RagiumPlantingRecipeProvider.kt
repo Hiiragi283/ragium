@@ -69,6 +69,6 @@ object RagiumPlantingRecipeProvider : HTRecipeProvider.Direct() {
         tree(Items.CRIMSON_FUNGUS, Items.CRIMSON_STEM, fluidCreator.lava(250))
         tree(Items.WARPED_FUNGUS, Items.WARPED_STEM, fluidCreator.lava(250))
 
-        tree(Items.CHORUS_FLOWER, Items.CHORUS_FRUIT, fluidCreator.fromContent(RagiumFluidContents.ELDRITCH_FLUX, 25))
+        tree(Items.CHORUS_FLOWER, Items.CHORUS_FRUIT, fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 25))
     }
 }

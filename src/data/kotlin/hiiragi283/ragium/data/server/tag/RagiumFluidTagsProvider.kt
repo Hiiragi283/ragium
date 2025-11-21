@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.material.Fluid
@@ -17,7 +16,7 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>
 
     private fun contents(factory: BuilderFactory<Fluid>) {
         // Common Tag
-        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
+        for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
             factory.apply(content.commonTag).addContent(content)
         }
     }
@@ -29,8 +28,8 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>
 
     //    Extensions    //
 
-    private fun HTTagBuilder<Fluid>.addContent(content: HTFluidContent<*, *, *>) {
-        add(HTHolderLike.fromFluid(content.getStill()))
-        add(HTHolderLike.fromFluid(content.getFlow()))
+    private fun HTTagBuilder<Fluid>.addContent(content: HTFluidContent<*, *, *, *, *>) {
+        add(content.still)
+        add(content.flowing)
     }
 }

@@ -163,6 +163,9 @@ object RagiumItems {
     @JvmField
     val WITHER_DOLl: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_doll")
 
+    @JvmField
+    val WITHER_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_star")
+
     @JvmStatic
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
         fun register(

@@ -47,17 +47,19 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             .map(HTHolderLike::getId)
             .forEach(::basicItem)
 
+        mapOf(RagiumItems.POTION_DROP to "ghast_tear").forEach { (item: HTHolderLike, path: String) ->
+            withExistingParent(item.getPath(), vanillaId("item", "generated"))
+                .texture("layer0", "minecraft:item/$path")
+        }
+
         withExistingParent(RagiumItems.RAGI_ALLOY_COMPOUND.getPath(), vanillaId("item", "generated"))
             .texture("layer0", "minecraft:item/copper_ingot")
             .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
 
-        withExistingParent(RagiumItems.POTION_DROP.getPath(), vanillaId("item", "generated"))
-            .texture("layer0", "minecraft:item/ghast_tear")
-
-        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            withExistingParent(content.getIdWithSuffix("_bucket").path, RagiumConst.NEOFORGE.toId("item", "bucket"))
+        for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
+            withExistingParent(content.bucket.getPath(), RagiumConst.NEOFORGE.toId("item", "bucket"))
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
-                .fluid(content.get())
+                .fluid(content.getFluid())
         }
 
         // Tools
