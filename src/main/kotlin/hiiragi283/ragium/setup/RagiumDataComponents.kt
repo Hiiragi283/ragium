@@ -29,10 +29,10 @@ object RagiumDataComponents {
     @JvmStatic
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias("blast_power", "charge_power")
-        
+
         REGISTER.register(eventBus)
     }
-    
+
     @JvmField
     val ANTI_GRAVITY: DataComponentType<Boolean> = REGISTER.registerType("anti_gravity", BiCodec.BOOL)
 

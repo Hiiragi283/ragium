@@ -68,6 +68,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.BUDDING_QUARTZ)
             add(RagiumBlocks.QUARTZ_CLUSTER)
             add(RagiumBlocks.RESONANT_DEBRIS)
+            add(RagiumBlocks.SMOOTH_BLOCKSTONE)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
             // Generators
             add(RagiumBlocks.THERMAL_GENERATOR)
