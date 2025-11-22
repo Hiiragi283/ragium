@@ -93,6 +93,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.BUDDING_QUARTZ, "芽生えた水晶")
         add(RagiumBlocks.QUARTZ_CLUSTER, "水晶の塊")
         add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
+        add(RagiumBlocks.SMOOTH_BLOCKSTONE, "なめらかなブラックストーン")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "煤けた丸石")
 
         add(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")

@@ -101,6 +101,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.BUDDING_QUARTZ, "Budding Quartz")
         add(RagiumBlocks.QUARTZ_CLUSTER, "Quartz Cluster")
         add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
+        add(RagiumBlocks.SMOOTH_BLOCKSTONE, "Smooth Blackstone")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "Sooty Cobblestone")
 
         add(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")

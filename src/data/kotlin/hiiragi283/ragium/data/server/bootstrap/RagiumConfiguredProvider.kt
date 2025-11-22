@@ -67,8 +67,8 @@ object RagiumConfiguredProvider : RegistrySetBuilder.RegistryBootstrap<Configure
                     BlockStateProvider.simple(Blocks.AIR),
                     BlockStateProvider.simple(Blocks.SMOOTH_QUARTZ),
                     BlockStateProvider.simple(RagiumBlocks.BUDDING_QUARTZ.get()),
-                    BlockStateProvider.simple(Blocks.BLACKSTONE),
-                    BlockStateProvider.simple(Blocks.SOUL_SOIL),
+                    BlockStateProvider.simple(Blocks.TUFF),
+                    BlockStateProvider.simple(RagiumBlocks.SMOOTH_BLOCKSTONE.get()),
                     listOf(
                         RagiumBlocks.QUARTZ_CLUSTER.get().defaultBlockState(),
                     ),

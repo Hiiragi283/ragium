@@ -44,6 +44,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
             add(RagiumBlocks.BUDDING_QUARTZ)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
+            add(RagiumBlocks.SMOOTH_BLOCKSTONE)
             add(RagiumBlocks.CRIMSON_SOIL)
 
             addAll(RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.STORAGE_BLOCK).values)

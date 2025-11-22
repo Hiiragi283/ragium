@@ -212,7 +212,7 @@ class RagiumEmiPlugin : EmiPlugin {
         ) ?: return
         addRecipes(
             registry,
-            RagiumRecipeViewerTypes.THERMAL,
+            getCategory(RagiumRecipeViewerTypes.THERMAL),
             itemRegistry
                 .getDataMap(NeoForgeDataMaps.FURNACE_FUELS)
                 .map { (key: ResourceKey<Item>, fuel: FurnaceFuel) ->
@@ -365,23 +365,6 @@ class RagiumEmiPlugin : EmiPlugin {
         recipes: Sequence<Pair<ResourceLocation, RECIPE>>,
         factory: (CATEGORY, ResourceLocation, RECIPE) -> EMI_RECIPE?,
     ): CATEGORY {
-        recipes.mapNotNull { (id: ResourceLocation, recipe: RECIPE) -> factory(category, id, recipe) }.forEach(registry::addRecipe)
-        return category
-    }
-
-    /**
-     * 指定された引数からレシピを生成し，登録します。
-     * @param RECIPE [recipes]で渡す一覧のクラス
-     * @param EMI_RECIPE [factory]で返すレシピのクラス
-     * @return 渡された[category]
-     */
-    private fun <RECIPE : Any, EMI_RECIPE : EmiRecipe> addRecipes(
-        registry: EmiRegistry,
-        viewerType: HTRecipeViewerType<*>,
-        recipes: Sequence<Pair<ResourceLocation, RECIPE>>,
-        factory: (HTEmiRecipeCategory, ResourceLocation, RECIPE) -> EMI_RECIPE?,
-    ): HTEmiRecipeCategory {
-        val category: HTEmiRecipeCategory = getCategory(viewerType)
         recipes.mapNotNull { (id: ResourceLocation, recipe: RECIPE) -> factory(category, id, recipe) }.forEach(registry::addRecipe)
         return category
     }

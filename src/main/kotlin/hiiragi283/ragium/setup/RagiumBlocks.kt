@@ -163,6 +163,12 @@ object RagiumBlocks {
     )
 
     @JvmField
+    val SMOOTH_BLOCKSTONE: HTSimpleDeferredBlock = REGISTER.registerSimple(
+        "smooth_blackstone",
+        copyOf(Blocks.BLACKSTONE),
+    )
+
+    @JvmField
     val CRIMSON_SOIL: HTSimpleDeferredBlock = REGISTER.registerSimple(
         "crimson_soil",
         copyOf(Blocks.SOUL_SOIL),
