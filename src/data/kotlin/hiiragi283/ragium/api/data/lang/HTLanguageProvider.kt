@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
@@ -45,36 +46,38 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromVariantTable(RagiumBlocks.ORES)
         fromMaterialTable(RagiumBlocks.MATERIALS)
         fromVariantTable(RagiumBlocks.GLASSES)
-        fromMapWithRow(HTSimpleLangPattern("%s Coil Block", "%sコイルブロック"), RagiumBlocks.COILS)
-        fromMapWithRow(HTSimpleLangPattern("%s LED Block", "%sのLEDブロック"), RagiumBlocks.LED_BLOCKS)
-        fromMapWithColumn(HTSimpleLangName("Slab", "ハーフブロック"), RagiumBlocks.SLABS)
-        fromMapWithColumn(HTSimpleLangName("Stairs", "階段"), RagiumBlocks.STAIRS)
-        fromMapWithColumn(HTSimpleLangName("Wall", "壁"), RagiumBlocks.WALLS)
+        fromMaterialMap(HTSimpleLangPattern("%s Coil Block", "%sコイルブロック"), RagiumBlocks.COILS)
+        fromMaterialMap(HTSimpleLangPattern("%s LED Block", "%sのLEDブロック"), RagiumBlocks.LED_BLOCKS)
+        fromLangPatternMap(HTSimpleLangName("Slab", "ハーフブロック"), RagiumBlocks.SLABS)
+        fromLangPatternMap(HTSimpleLangName("Stairs", "階段"), RagiumBlocks.STAIRS)
+        fromLangPatternMap(HTSimpleLangName("Wall", "壁"), RagiumBlocks.WALLS)
 
         fromMaterialTable(RagiumItems.MATERIALS)
-        fromMapWithRow(HTSimpleLangPattern("%s Circuit", "%s回路"), RagiumItems.CIRCUITS)
-        fromMapWithRow(HTSimpleLangPattern("%s Coil", "%sコイル"), RagiumItems.COILS)
-        fromMapWithRow(HTSimpleLangPattern("%s Component", "%s構造体"), RagiumItems.COMPONENTS)
+        fromMaterialMap(HTSimpleLangPattern("%s Circuit", "%s回路"), RagiumItems.CIRCUITS)
+        fromMaterialMap(HTSimpleLangPattern("%s Coil", "%sコイル"), RagiumItems.COILS)
+        fromMaterialMap(HTSimpleLangPattern("%s Component", "%s構造体"), RagiumItems.COMPONENTS)
 
         fromVariantTable(RagiumItems.ARMORS)
         fromVariantTable(RagiumItems.TOOLS)
 
         val charge = HTSimpleLangName("Charge", "チャージ")
-        fromMapWithColumn(charge, RagiumItems.CHARGES)
-        fromMapWithColumn(charge, RagiumEntityTypes.CHARGES)
+        fromLangPatternMap(charge, RagiumItems.CHARGES)
+        fromLangPatternMap(charge, RagiumEntityTypes.CHARGES)
 
-        fromMapWithRow(HTSimpleLangPattern("%s Upgrade", "%s強化"), RagiumItems.SMITHING_TEMPLATES)
+        fromMaterialMap(HTSimpleLangPattern("%s Upgrade", "%s強化"), RagiumItems.SMITHING_TEMPLATES)
         addTemplate(RagiumMaterialKeys.AZURE_STEEL, VanillaMaterialKeys.IRON)
         addTemplate(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
         addTemplate(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)
 
         // Translation
+        addTranslations(HTBaseTier.entries) { it }
+
         addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
         addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)
 
-        val minecart = HTSimpleLangName("Minecart with %s", "%s付きトロッコ")
-        fromMapWithColumn(minecart, RagiumItems.DRUM_MINECARTS)
-        fromMapWithColumn(minecart, RagiumEntityTypes.DRUMS)
+        val minecart = HTSimpleLangPattern("Minecart with %s", "%s付きトロッコ")
+        fromLangMap(minecart, RagiumItems.DRUM_MINECARTS)
+        fromLangMap(minecart, RagiumEntityTypes.DRUMS)
 
         translations()
 
@@ -104,7 +107,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         add(RagiumTranslation.TRUE, "True")
         add(RagiumTranslation.FALSE, "False")
-
         // API - GUI
         add(RagiumTranslation.CAPACITY, $$"Capacity: %1$s")
         add(RagiumTranslation.CAPACITY_MB, $$"Capacity: %1$s mB")
@@ -123,20 +125,26 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     }
 
     // Collection
-    private fun <T : HTLangPatternProvider> addTranslations(entries: Iterable<T>, blockGetter: (T) -> HTHasTranslationKey) {
+    private fun <T : HTLangName> addTranslations(entries: Iterable<T>, blockGetter: (T) -> HTHasTranslationKey) {
         for (entry: T in entries) {
-            add(blockGetter(entry), entry.translate(type, "%s"))
+            add(blockGetter(entry), entry.getTranslatedName(type))
         }
     }
 
-    private fun fromMapWithRow(provider: HTLangPatternProvider, map: Map<out HTMaterialLike, HTHasTranslationKey>) {
+    private fun fromLangMap(provider: HTLangPatternProvider, map: Map<out HTLangName, HTHasTranslationKey>) {
+        for ((langName: HTLangName, translationKey: HTHasTranslationKey) in map) {
+            add(translationKey, provider.translate(type, langName))
+        }
+    }
+
+    private fun fromMaterialMap(provider: HTLangPatternProvider, map: Map<out HTMaterialLike, HTHasTranslationKey>) {
         for ((material: HTMaterialLike, translationKey: HTHasTranslationKey) in map) {
             val langName: HTLangName = HTMaterialTranslations.getLangName(material) ?: return
             add(translationKey, provider.translate(type, langName))
         }
     }
 
-    private fun fromMapWithColumn(translatedName: HTLangName, map: Map<out HTLangPatternProvider, HTHasTranslationKey>) {
+    private fun fromLangPatternMap(translatedName: HTLangName, map: Map<out HTLangPatternProvider, HTHasTranslationKey>) {
         for ((provider: HTLangPatternProvider, translationKey: HTHasTranslationKey) in map) {
             add(translationKey, provider.translate(type, translatedName))
         }

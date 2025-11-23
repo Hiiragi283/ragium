@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.tier
 
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
-import hiiragi283.ragium.api.data.lang.HTLangPatternProvider
+import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
@@ -23,7 +23,7 @@ import hiiragi283.ragium.setup.RagiumItems
 
 enum class HTDrumTier(private val enPattern: String, private val jaPattern: String) :
     HTTierProvider,
-    HTLangPatternProvider {
+    HTLangName {
     SMALL("Small Drum", "小型ドラム"),
     MEDIUM("Medium Drum", "中型ドラム"),
     LARGE("Large Drum", "大型ドラム"),
@@ -65,13 +65,10 @@ enum class HTDrumTier(private val enPattern: String, private val jaPattern: Stri
         CREATIVE -> HTBaseTier.CREATIVE
     }
 
-    //    HTTranslationProvider    //
+    //    HTLangName    //
 
-    override fun translate(type: HTLanguageType, value: String): String = value.replace(
-        "%s",
-        when (type) {
-            HTLanguageType.EN_US -> enPattern
-            HTLanguageType.JA_JP -> jaPattern
-        },
-    )
+    override fun getTranslatedName(type: HTLanguageType): String = when (type) {
+        HTLanguageType.EN_US -> enPattern
+        HTLanguageType.JA_JP -> jaPattern
+    }
 }

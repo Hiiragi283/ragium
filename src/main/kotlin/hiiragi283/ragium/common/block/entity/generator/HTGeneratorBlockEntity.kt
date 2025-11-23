@@ -23,7 +23,5 @@ abstract class HTGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos,
         battery = builder.addSlot(HTSlotInfo.OUTPUT, HTMachineEnergyBattery.output(listener, this))
     }
 
-    protected fun getModifiedEnergy(base: Int): Int = getComponentTier()?.modifyGeneratorRate(base) ?: base
-
     protected val energyCache: HTEnergyCache = HTEnergyCache()
 }

@@ -1,11 +1,14 @@
 package hiiragi283.ragium.api.tier
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.serialization.codec.BiCodec
-import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
+import hiiragi283.ragium.api.text.HTTranslation
+import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
-import net.minecraft.network.FriendlyByteBuf
+import net.minecraft.Util
 import net.minecraft.util.StringRepresentable
 
 /**
@@ -14,7 +17,8 @@ import net.minecraft.util.StringRepresentable
  */
 enum class HTBaseTier(val color: ChatFormatting, private val enName: String, private val jpName: String) :
     StringRepresentable,
-    HTLangName {
+    HTLangName,
+    HTTranslation {
     BASIC(ChatFormatting.GREEN, "Basic", "基本"),
     ADVANCED(ChatFormatting.YELLOW, "Advanced", "発展"),
     ELITE(ChatFormatting.AQUA, "Elite", "精鋭"),
@@ -24,8 +28,10 @@ enum class HTBaseTier(val color: ChatFormatting, private val enName: String, pri
 
     companion object {
         @JvmField
-        val CODEC: BiCodec<FriendlyByteBuf, HTBaseTier> = VanillaBiCodecs.stringEnum(HTBaseTier::values)
+        val CODEC: BiCodec<ByteBuf, HTBaseTier> = BiCodecs.stringEnum(HTBaseTier::getSerializedName)
     }
+
+    override val translationKey: String = Util.makeDescriptionId("constants", RagiumAPI.id("tier.${name.lowercase()}"))
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {
         HTLanguageType.EN_US -> enName
