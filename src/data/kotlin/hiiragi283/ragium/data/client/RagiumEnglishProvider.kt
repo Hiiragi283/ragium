@@ -1,12 +1,13 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
-import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachineTierProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
@@ -361,6 +362,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTAccessConfig.BOTH, "Mode: Both")
         add(HTAccessConfig.DISABLED, "Mode: Disabled")
 
+        add(HTMachineUpgrade.Key.DURATION, $$"- Process Duration: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_USAGE, $$"- Energy Usage: %1$s")
         // API - Constants
         add(RagiumTranslation.ERROR, "Error")
         add(RagiumTranslation.INFINITE, "Infinite")
@@ -473,8 +478,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")
+        add(HTBlockMachinePropertiesProvider, "Machine Properties")
         add(HTBlockOwnerProvider, "Block Owner")
-        add(HTBlockMachineTierProvider, "Machine TIer")
 
         add(RagiumCommonTranslation.JADE_MACHINE_TIER, $$"Tier: %1$s")
     }

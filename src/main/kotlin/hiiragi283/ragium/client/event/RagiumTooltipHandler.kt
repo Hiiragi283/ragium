@@ -42,7 +42,7 @@ object RagiumTooltipHandler {
             .asSequence()
             .mapNotNull(stack::get)
             .filterIsInstance<TooltipProvider>()
-            .forEach { provider: TooltipProvider -> provider.addToTooltip(context, consumer, flag) }
+            .forEach { provider: TooltipProvider -> provider.addToTooltip(context, event.toolTip::add, flag) }
     }
 
     @JvmStatic

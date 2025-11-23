@@ -3,9 +3,10 @@ package hiiragi283.ragium.client.model
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.registry.HTHolderLike
-import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
+import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import net.minecraft.client.model.geom.EntityModelSet
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.builders.CubeListBuilder
@@ -92,21 +93,18 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
     }
 
     fun render(
+        blockEntity: HTFuelGeneratorBlockEntity,
+        partialTick: Float,
         poseStack: PoseStack,
         buffer: VertexConsumer,
         packedLight: Int,
         packedOverlay: Int,
-        time: Float,
-        tier: HTBaseTier?,
     ) {
-        val speed: Float = when (tier) {
-            HTBaseTier.BASIC -> 0.3f
-            HTBaseTier.ADVANCED -> 0.4f
-            HTBaseTier.ELITE -> 0.6f
-            HTBaseTier.ULTIMATE -> 0.8f
-            HTBaseTier.CREATIVE -> 1f
-            null -> 0.2f
+        val time: Float = when {
+            blockEntity.isActive -> blockEntity.ticks + partialTick
+            else -> 0f
         }
+        val speed: Float = blockEntity.collectModifier(HTMachineUpgrade.Key.ENERGY_GENERATION) / 4
         top.y = Mth.sin(time * speed + Mth.HALF_PI) * 4 - 4f
         bellow.y = min(Mth.sin(time * speed + Mth.HALF_PI) * 4, 0f)
 

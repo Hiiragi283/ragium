@@ -1,17 +1,17 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.world.sendBlockUpdated
-import hiiragi283.ragium.common.item.HTComponentItem
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
@@ -20,7 +20,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -30,7 +29,8 @@ import java.util.function.Predicate
  * 機械全般に使用される[HTConfigurableBlockEntity]の拡張クラス
  */
 abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTConfigurableBlockEntity(blockHolder, pos, state) {
+    HTConfigurableBlockEntity(blockHolder, pos, state),
+    HTUpgradableBlockEntity {
     companion object {
         // Slot
         @JvmStatic
@@ -78,11 +78,10 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         initializeItemSlots(builder, listener)
         upgradeSlots = (0..3).map { i: Int ->
-            val filter: (ImmutableItemStack) -> Boolean = { stack: ImmutableItemStack ->
-                when {
-                    stack.value() is HTComponentItem -> getMaxMachineTier() == null
-                    else -> stack.isOf(RagiumModTags.Items.MACHINE_UPGRADES)
-                }
+            val filter: (ImmutableItemStack) -> Boolean = filter@{ stack: ImmutableItemStack ->
+                val bool1: Boolean = stack.isOf(RagiumModTags.Items.MACHINE_UPGRADES)
+                val bool2: Boolean = stack.has(RagiumDataComponents.MACHINE_UPGRADE)
+                (bool1 || bool2) && !hasUpgrade(stack.value())
             }
             builder.addSlot(
                 HTSlotInfo.CATALYST,
@@ -100,32 +99,14 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         return builder.build()
     }
 
-    fun hasUpgrade(item: ItemLike): Boolean = upgradeSlots.any { slot: HTItemStackSlot -> slot.getStack()?.isOf(item.asItem()) ?: false }
-
-    fun <T : Any> getUpgradeData(type: DataComponentType<T>): List<T> =
-        upgradeSlots.mapNotNull { slot: HTItemStackSlot -> slot.getStack()?.get(type) }
-
-    fun <T : Any> getFirstUpgradeData(type: DataComponentType<T>): T? = getUpgradeData(type).firstOrNull()
-
-    fun getMaxMachineTier(): HTBaseTier? = upgradeSlots
-        .asSequence()
-        .mapNotNull(HTItemStackSlot::getStack)
-        .map(ImmutableItemStack::value)
-        .filterIsInstance<HTComponentItem>()
-        .map(HTComponentItem::getBaseTier)
-        .maxOrNull()
-
-    fun calculateValue(base: Int, type: DataComponentType<LevelBasedValue>): Int {
-        var result: Int = base
-        for (value: LevelBasedValue in getUpgradeData(type)) {
-            result = value.calculate(result).toInt()
-        }
-        return result
+    final override fun hasUpgrade(item: ItemLike): Boolean = upgradeSlots.any { slot: HTItemStackSlot ->
+        slot.getStack()?.isOf(item.asItem()) ?: false
     }
 
-    fun calculateDuration(base: Int): Int = calculateValue(base, RagiumDataComponents.MACHINE_DURATION)
+    final override fun <T : Any> getUpgradeData(type: DataComponentType<T>): List<T> =
+        upgradeSlots.mapNotNull { slot: HTItemStackSlot -> slot.getStack()?.get(type) }
 
-    fun calculateEnergy(base: Int): Int = calculateValue(base, RagiumDataComponents.MACHINE_ENERGY)
+    final override fun getUpgradeDataType(): DataComponentType<HTMachineUpgrade> = RagiumDataComponents.MACHINE_UPGRADE
 
     //    Save & Load    //
 
