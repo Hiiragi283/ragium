@@ -1,12 +1,13 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
-import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachineTierProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
@@ -362,6 +363,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTAccessConfig.BOTH, "モード：双方")
         add(HTAccessConfig.DISABLED, "モード：無効")
 
+        add(HTMachineUpgrade.Key.DURATION, $$"- 処理時間: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_USAGE, $$"- エネルギー使用率: %1$s")
         // API - Constants
         add(RagiumTranslation.ERROR, "エラー")
         add(RagiumTranslation.INFINITE, "無限")
@@ -473,8 +478,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")
+        add(HTBlockMachinePropertiesProvider, "機械のプロパティ")
         add(HTBlockOwnerProvider, "ブロックの所有者")
-        add(HTBlockMachineTierProvider, "機械のティア")
 
         add(RagiumCommonTranslation.JADE_MACHINE_TIER, $$"ティア: %1$s")
     }

@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
@@ -23,7 +24,6 @@ import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
-import hiiragi283.ragium.common.item.HTComponentItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
@@ -600,12 +600,14 @@ object RagiumItems {
     //    Upgrades    //
 
     @JvmField
-    val COMPONENTS: Map<HTComponentTier, HTDeferredItem<*>> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
-        REGISTER.registerItemWith("${tier.asMaterialName()}_component", tier, ::HTComponentItem)
+    val COMPONENTS: Map<HTComponentTier, HTSimpleDeferredItem> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
+        REGISTER.registerItemWith("${tier.asMaterialName()}_component", tier, ::HTTierBasedItem) {
+            it.component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade(tier.getBaseTier()))
+        }
     }
 
     @JvmStatic
-    fun getComponent(tier: HTComponentTier): HTDeferredItem<*> = COMPONENTS[tier]!!
+    fun getComponent(tier: HTComponentTier): HTSimpleDeferredItem = COMPONENTS[tier]!!
 
     @JvmField
     val EXP_COLLECTOR_UPGRADE: HTSimpleDeferredItem =

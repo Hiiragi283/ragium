@@ -29,6 +29,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         generators()
         processors()
         devices()
+        upgrades()
 
         crate()
         drums()
@@ -272,6 +273,19 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .create(output)
             .addIngredient(RagiumItems.getComponent(tier))
             .addIngredient(input)
+
+    //    Upgrades    //
+
+    @JvmStatic
+    private fun upgrades() {
+        // Exp Collector
+        HTShapedRecipeBuilder
+            .create(RagiumItems.EXP_COLLECTOR_UPGRADE)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .define('B', Items.EXPERIENCE_BOTTLE)
+            .save(output)
+    }
 
     //    Storage    //
 

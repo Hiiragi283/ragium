@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -18,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTEnergizedProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
-    lateinit var battery: HTMachineEnergyBattery<*>
+    lateinit var battery: HTMachineEnergyBattery.Processor
         protected set
 
     final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
@@ -27,9 +28,13 @@ abstract class HTEnergizedProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockH
 
     //    Ticking    //
 
-    final override fun getRequiredEnergy(recipe: RECIPE): Int = calculateEnergy(battery.currentEnergyPerTick * getRecipeTime(recipe))
+    final override fun getRequiredEnergy(recipe: RECIPE): Int {
+        battery.currentEnergyPerTick = calculateValue(battery.baseEnergyPerTick, HTMachineUpgrade.Key.ENERGY_USAGE)
+        val time: Int = calculateValue(getRecipeTime(recipe), HTMachineUpgrade.Key.DURATION)
+        return battery.currentEnergyPerTick * time
+    }
 
-    protected open fun getRecipeTime(recipe: RECIPE): Int = calculateDuration(20 * 10)
+    protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
 
     final override fun gatherEnergy(level: ServerLevel, pos: BlockPos): Int = battery.consume()
 

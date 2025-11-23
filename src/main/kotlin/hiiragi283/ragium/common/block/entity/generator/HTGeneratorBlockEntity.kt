@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState
  */
 abstract class HTGeneratorBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(blockHolder, pos, state) {
-    lateinit var battery: HTMachineEnergyBattery<*>
+    lateinit var battery: HTMachineEnergyBattery.Generator
         protected set
 
     final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {

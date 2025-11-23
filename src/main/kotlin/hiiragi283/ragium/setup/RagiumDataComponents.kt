@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
@@ -18,10 +19,8 @@ import hiiragi283.ragium.api.text.HTSimpleTranslation
 import hiiragi283.ragium.api.text.HTTranslation
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.neoforged.bus.api.IEventBus
 
 object RagiumDataComponents {
@@ -76,14 +75,7 @@ object RagiumDataComponents {
     //    Machine    //
 
     @JvmField
-    val MACHINE_DURATION: DataComponentType<LevelBasedValue> = registerUpgrade("duration")
-
-    @JvmField
-    val MACHINE_ENERGY: DataComponentType<LevelBasedValue> = registerUpgrade("energy")
-
-    @JvmStatic
-    private fun registerUpgrade(name: String): DataComponentType<LevelBasedValue> =
-        REGISTER.registerType("machine/$name", LevelBasedValue.CODEC, ByteBufCodecs.fromCodecWithRegistries(LevelBasedValue.CODEC))
+    val MACHINE_UPGRADE: DataComponentType<HTMachineUpgrade> = REGISTER.registerType("machine_upgrade", HTMachineUpgrade.CODEC)
 
     //    Storage    //
 

@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.integration.jade
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
-import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachineTierProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import net.minecraft.world.level.block.Block
 import snownee.jade.api.IWailaClientRegistration
@@ -18,13 +18,13 @@ class RagiumJadePlugin : IWailaPlugin {
 
     override fun register(registration: IWailaCommonRegistration) {
         registration.registerBlockDataProvider(HTBlockConfigurationDataProvider, Block::class.java)
+        registration.registerBlockDataProvider(HTBlockMachinePropertiesProvider, Block::class.java)
         registration.registerBlockDataProvider(HTBlockOwnerProvider, Block::class.java)
-        registration.registerBlockDataProvider(HTBlockMachineTierProvider, Block::class.java)
     }
 
     override fun registerClient(registration: IWailaClientRegistration) {
         registration.registerBlockComponent(HTBlockConfigurationDataProvider, Block::class.java)
+        registration.registerBlockComponent(HTBlockMachinePropertiesProvider, Block::class.java)
         registration.registerBlockComponent(HTBlockOwnerProvider, Block::class.java)
-        registration.registerBlockComponent(HTBlockMachineTierProvider, Block::class.java)
     }
 }

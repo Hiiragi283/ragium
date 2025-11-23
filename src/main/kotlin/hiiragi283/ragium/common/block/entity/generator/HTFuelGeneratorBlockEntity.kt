@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.generator
 import hiiragi283.ragium.api.block.attribute.getAttributeFront
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -87,7 +88,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         val required: Int = getRequiredAmount(level.registryAccess(), tank.getStack())
         if (required <= 0) return false
         if (tank.extract(required, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null) return false
-        battery.currentEnergyPerTick = calculateEnergy(battery.baseEnergyPerTick)
+        battery.currentEnergyPerTick = calculateValue(battery.baseEnergyPerTick, HTMachineUpgrade.Key.ENERGY_GENERATION)
         return if (battery.generate() > 0) {
             tank.extract(required, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             true
