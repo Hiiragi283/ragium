@@ -175,22 +175,13 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         registerCoil(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY, RagiumMaterialKeys.AZURE_STEEL)
 
         // Component
-        val basic: ItemLike = RagiumItems.getComponent(HTComponentTier.BASIC)
-        HTShapedRecipeBuilder
-            .crossLayeredMirrored(output, basic) {
-                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-                define('B', Tags.Items.GLASS_BLOCKS)
-                define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
-                define('D', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-            }
-
         val adv: ItemLike = RagiumItems.getComponent(HTComponentTier.ADVANCED)
         HTShapedRecipeBuilder
             .crossLayeredMirrored(output, adv) {
                 define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
                 define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ)
                 define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
-                define('D', basic)
+                define('D', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             }
 
         val elite: ItemLike = RagiumItems.getComponent(HTComponentTier.ELITE)
@@ -211,9 +202,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 define('D', elite)
             }
 
-        val eternal: ItemLike = RagiumItems.getComponent(HTComponentTier.ETERNAL)
         HTShapedRecipeBuilder
-            .cross8Mirrored(output, eternal) {
+            .cross8Mirrored(output, RagiumItems.ETERNAL_COMPONENT) {
                 define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.IRIDESCENTIUM)
                 define('B', Items.CLOCK)
                 define('C', ultimate)

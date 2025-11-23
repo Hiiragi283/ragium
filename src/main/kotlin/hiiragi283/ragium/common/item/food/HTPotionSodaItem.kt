@@ -4,7 +4,8 @@ import hiiragi283.ragium.api.item.HTSubCreativeTabContents
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.common.util.HTPotionHelper
 import net.minecraft.core.Holder
-import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.PotionItem
@@ -19,12 +20,10 @@ class HTPotionSodaItem(properties: Properties) :
 
     override fun getDescriptionId(stack: ItemStack): String = super.getDescriptionId()
 
-    override fun addItems(baseItem: HTItemHolderLike, consumer: Consumer<ItemStack>) {
-        BuiltInRegistries.POTION
-            .holders()
-            .forEach { holder: Holder<Potion> ->
-                consumer.accept(HTPotionHelper.createPotion(baseItem, holder))
-            }
+    override fun addItems(baseItem: HTItemHolderLike, provider: HolderLookup.Provider, consumer: Consumer<ItemStack>) {
+        for (holder: Holder<Potion> in provider.lookupOrThrow(Registries.POTION).listElements()) {
+            consumer.accept(HTPotionHelper.createPotion(baseItem, holder))
+        }
     }
 
     override fun shouldAddDefault(): Boolean = false

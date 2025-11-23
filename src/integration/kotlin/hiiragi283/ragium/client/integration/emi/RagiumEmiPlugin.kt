@@ -45,7 +45,6 @@ import hiiragi283.ragium.client.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
-import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -135,7 +134,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     EmiCraftingRecipe(
                         listOf(
                             EmiStack.of(item),
-                            RagiumItems.getComponent(HTComponentTier.ETERNAL).toEmi(),
+                            RagiumItems.ETERNAL_COMPONENT.toEmi(),
                         ),
                         createItemStack(item, DataComponents.UNBREAKABLE, Unbreakable(true)).toEmi(),
                         id1,

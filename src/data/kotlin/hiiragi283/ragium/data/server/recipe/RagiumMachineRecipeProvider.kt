@@ -238,12 +238,18 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             }
 
         // Basic
-        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.FLUID_COLLECTOR, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.BUCKETS_EMPTY)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.FLUID_COLLECTOR)
+            .pattern("ABA")
+            .define('A', Tags.Items.BUCKETS_EMPTY)
+            .define('B', RagiumBlocks.DEVICE_CASING)
             .save(output)
 
-        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.ITEM_BUFFER, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.CHESTS)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.ITEM_BUFFER)
+            .pattern("ABA")
+            .define('A', Tags.Items.CHESTS)
+            .define('B', RagiumBlocks.DEVICE_CASING)
             .save(output)
         // Advanced
         createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.FISHER, RagiumBlocks.DEVICE_CASING)

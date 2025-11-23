@@ -303,14 +303,18 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         // Upgrades
+        add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
+
         add(RagiumItems.ENERGY_CAPACITY_UPGRADE, "Energy Capacity Upgrade")
-        add(RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE, "Advanced Energy Capacity Upgrade")
         add(RagiumItems.SPEED_UPGRADE, "Speed Upgrade")
+        add(RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE, "Advanced Energy Capacity Upgrade")
         add(RagiumItems.ADVANCED_SPEED_UPGRADE, "Advanced Speed Upgrade")
 
         add(RagiumItems.FORTUNE_UPGRADE, "Fortune Upgrade")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
+
+        add(RagiumItems.CREATIVE_UPGRADE, "Creative Upgrade")
     }
 
     private fun keyMapping() {

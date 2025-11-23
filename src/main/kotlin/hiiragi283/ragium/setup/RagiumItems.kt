@@ -21,6 +21,7 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.text.HTTranslation
+import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
@@ -44,6 +45,7 @@ import hiiragi283.ragium.common.item.tool.HTMagnetItem
 import hiiragi283.ragium.common.item.tool.HTTeleportKeyItem
 import hiiragi283.ragium.common.item.tool.HTTraderCatalogItem
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
+import hiiragi283.ragium.common.item.upgrade.HTCreativeUpgradeItem
 import hiiragi283.ragium.common.item.upgrade.HTFortuneUpgradeItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -610,14 +612,14 @@ object RagiumItems {
     @JvmStatic
     fun getComponent(tier: HTComponentTier): HTSimpleDeferredItem = COMPONENTS[tier]!!
 
+    @JvmField
+    val ETERNAL_COMPONENT: HTSimpleDeferredItem =
+        REGISTER.registerItemWith("eternal_component", HTBaseTier.CREATIVE, ::HTTierBasedItem)
+
     // Machine
     @JvmField
     val ENERGY_CAPACITY_UPGRADE: HTSimpleDeferredItem =
         registerUpgrade("energy_capacity", HTMachineUpgrade.Key.ENERGY_CAPACITY to 4f)
-
-    @JvmField
-    val ADVANCED_ENERGY_CAPACITY_UPGRADE: HTSimpleDeferredItem =
-        registerUpgrade("advanced_energy_capacity", HTMachineUpgrade.Key.ENERGY_CAPACITY to 8f)
 
     @JvmField
     val SPEED_UPGRADE: HTSimpleDeferredItem = registerUpgrade(
@@ -626,6 +628,10 @@ object RagiumItems {
         HTMachineUpgrade.Key.ENERGY_GENERATION to 1.2f,
         HTMachineUpgrade.Key.SPEED to 1.2f,
     )
+
+    @JvmField
+    val ADVANCED_ENERGY_CAPACITY_UPGRADE: HTSimpleDeferredItem =
+        registerUpgrade("advanced_energy_capacity", HTMachineUpgrade.Key.ENERGY_CAPACITY to 8f)
 
     @JvmField
     val ADVANCED_SPEED_UPGRADE: HTSimpleDeferredItem = registerUpgrade(
@@ -654,6 +660,11 @@ object RagiumItems {
         REGISTER.registerSimpleItem("${name}_upgrade") {
             it.stacksTo(1).component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create(mapOf(*pairs)))
         }
+
+    @JvmField
+    val CREATIVE_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("creative_upgrade", ::HTCreativeUpgradeItem) {
+        it.stacksTo(1).component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create(HTBaseTier.CREATIVE))
+    }
 
     //    Event    //
 

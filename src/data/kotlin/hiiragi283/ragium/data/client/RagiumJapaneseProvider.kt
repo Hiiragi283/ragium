@@ -304,14 +304,18 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成革")
         // Upgrades
+        add(RagiumItems.ETERNAL_COMPONENT, "永久構造体")
+
         add(RagiumItems.ENERGY_CAPACITY_UPGRADE, "エネルギー容量アップグレード")
-        add(RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE, "発展エネルギー容量アップグレード")
         add(RagiumItems.SPEED_UPGRADE, "スピードアップグレード")
+        add(RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE, "発展エネルギー容量アップグレード")
         add(RagiumItems.ADVANCED_SPEED_UPGRADE, "発展スピードアップグレード")
 
         add(RagiumItems.FORTUNE_UPGRADE, "幸運アップグレード")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")
+
+        add(RagiumItems.CREATIVE_UPGRADE, "クリエイティブ用アップグレード")
     }
 
     private fun keyMapping() {
