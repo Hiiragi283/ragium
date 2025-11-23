@@ -16,6 +16,9 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 
 object HTMaterialTranslations {
     @JvmField
+    val DEFAULT_PREFIX_PATTERN = HTSimpleLangPattern("%s", "%s")
+
+    @JvmField
     val PREFIX_MAP: Map<HTMaterialPrefix, HTLangPatternProvider> = buildMap {
         fun register(prefix: HTPrefixLike, enPattern: String, jaPattern: String) {
             this[prefix.asMaterialPrefix()] = HTSimpleLangPattern(enPattern, jaPattern)
@@ -26,7 +29,6 @@ object HTMaterialTranslations {
         register(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, "Block of Raw %s", "%sの原石ブロック")
         // Item
         register(CommonMaterialPrefixes.DUST, "%s Dust", "%sの粉")
-        register(CommonMaterialPrefixes.GEM, "%s", "%s")
         register(CommonMaterialPrefixes.GEAR, "%s Gear", "%sの歯車")
         register(CommonMaterialPrefixes.INGOT, "%s Ingot", "%sインゴット")
         register(CommonMaterialPrefixes.NUGGET, "%s Nugget", "%sナゲット")
@@ -72,7 +74,7 @@ object HTMaterialTranslations {
         if (customName != null) {
             return customName.getTranslatedName(type)
         } else {
-            val translation: HTLangPatternProvider = PREFIX_MAP[prefix] ?: return null
+            val translation: HTLangPatternProvider = PREFIX_MAP[prefix] ?: DEFAULT_PREFIX_PATTERN
             val translatedName: HTLangName = getLangName(key) ?: return null
             return translation.translate(type, translatedName)
         }

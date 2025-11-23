@@ -19,14 +19,12 @@ import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.createItemStack
-import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
@@ -45,7 +43,6 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTWashingEmiRec
 import hiiragi283.ragium.client.integration.emi.type.HTRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
-import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
@@ -70,10 +67,8 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
@@ -214,7 +209,7 @@ class RagiumEmiPlugin : EmiPlugin {
         ) ?: return
         addRecipes(
             registry,
-            RagiumRecipeViewerTypes.THERMAL,
+            getCategory(RagiumRecipeViewerTypes.THERMAL),
             itemRegistry
                 .getDataMap(NeoForgeDataMaps.FURNACE_FUELS)
                 .map { (key: ResourceKey<Item>, fuel: FurnaceFuel) ->
@@ -285,7 +280,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
 
         // World Vaporization
-        for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
+        /*for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
             val fluidType: FluidType = content.getType()
             if (fluidType is HTFluidType) {
                 val result: EmiStack = fluidType.dropItem?.toEmi() ?: continue
@@ -294,17 +289,11 @@ class RagiumEmiPlugin : EmiPlugin {
                     rightInput(EmiStack.EMPTY, false)
                 }
             }
-        }
+        }*/
         // Crude Oil + Lava -> Soul Sand
         registry.addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidHolderLike.LAVA)
         // Water + Eldritch Flux -> Eldritch Stone
         registry.addFluidInteraction(RagiumBlocks.ELDRITCH_STONE, HTFluidHolderLike.WATER, RagiumFluidContents.ELDRITCH_FLUX)
-
-        // Budding Azure
-        registry.addInteraction(RagiumBlocks.BUDDING_AZURE.toEmi()) {
-            leftInput(Blocks.BUDDING_AMETHYST.toEmi())
-            rightInput(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR.toEmi(), false)
-        }
     }
 
     //    Extension    //
@@ -378,23 +367,6 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     /**
-     * 指定された引数からレシピを生成し，登録します。
-     * @param RECIPE [recipes]で渡す一覧のクラス
-     * @param EMI_RECIPE [factory]で返すレシピのクラス
-     * @return 渡された[category]
-     */
-    private fun <RECIPE : Any, EMI_RECIPE : EmiRecipe> addRecipes(
-        registry: EmiRegistry,
-        viewerType: HTRecipeViewerType<*>,
-        recipes: Sequence<Pair<ResourceLocation, RECIPE>>,
-        factory: (HTEmiRecipeCategory, ResourceLocation, RECIPE) -> EMI_RECIPE?,
-    ): HTEmiRecipeCategory {
-        val category: HTEmiRecipeCategory = getCategory(viewerType)
-        recipes.mapNotNull { (id: ResourceLocation, recipe: RECIPE) -> factory(category, id, recipe) }.forEach(registry::addRecipe)
-        return category
-    }
-
-    /**
      * 指定された[viewerType]から[HTEmiRecipeCategory]を返します。
      */
     private fun registerCategory(registry: EmiRegistry, viewerType: HTRecipeViewerType<*>): HTEmiRecipeCategory {
@@ -436,7 +408,7 @@ class RagiumEmiPlugin : EmiPlugin {
         prefix: String = "interaction",
         builderAction: EmiWorldInteractionRecipe.Builder.() -> Unit,
     ) {
-        addRecipeSafe(RagiumAPI.id("/world/$prefix/${id.toString().replace(':', '/')}")) { id1: ResourceLocation ->
+        addRecipeSafe(RagiumAPI.id("/world", prefix, id.toString().replace(':', '/'))) { id1: ResourceLocation ->
             EmiWorldInteractionRecipe
                 .builder()
                 .apply(builderAction)

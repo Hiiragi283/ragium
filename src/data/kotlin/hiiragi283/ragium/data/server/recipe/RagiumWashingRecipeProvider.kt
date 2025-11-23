@@ -99,11 +99,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun exp() {
         // Exp Bottle
-        extractAndInfuse(
-            Items.GLASS_BOTTLE,
-            Items.EXPERIENCE_BOTTLE.toHolderLike(),
-            RagiumFluidContents.EXPERIENCE,
-        )
+        extractAndInfuse(Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE.toHolderLike(), RagiumFluidContents.EXPERIENCE)
         // Exp Berries -> Liquid Exp
         HTItemWithCatalystRecipeBuilder
             .extracting(
@@ -147,6 +143,13 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.CHISELED_QUARTZ_BLOCK),
                 fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 1000),
             ).addResult(resultHelper.item(Items.GHAST_TEAR))
+            .save(output)
+        // Phantom Membrane
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
+                itemCreator.fromTagKey(Tags.Items.LEATHERS),
+                fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 250),
+            ).addResult(resultHelper.item(Items.PHANTOM_MEMBRANE))
             .save(output)
     }
 
@@ -217,6 +220,14 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
                 fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 4000),
             ).addResult(resultHelper.item(Items.BUDDING_AMETHYST))
             .save(output)
+        // Budding Quartz
+        HTItemWithFluidToChancedItemRecipeBuilder
+            .washing(
+                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ),
+                fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 4000),
+            ).addResult(resultHelper.item(RagiumBlocks.BUDDING_QUARTZ))
+            .save(output)
+
         // Ominous Trial Key
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(

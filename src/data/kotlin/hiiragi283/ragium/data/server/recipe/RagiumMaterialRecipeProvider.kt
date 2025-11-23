@@ -147,7 +147,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
         // Iridescentium
-        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
+        mixFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
         // Other
         HTShapelessRecipeBuilder
             .misc(Items.GUNPOWDER, 3)

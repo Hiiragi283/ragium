@@ -12,6 +12,8 @@ import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
 import hiiragi283.ragium.common.entity.charge.HTConfusingCharge
 import hiiragi283.ragium.common.entity.charge.HTFishingCharge
+import hiiragi283.ragium.common.entity.charge.HTNeutralCharge
+import hiiragi283.ragium.common.entity.charge.HTStrikeCharge
 import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -42,8 +44,10 @@ object RagiumEntityTypes {
     val CHARGES: Map<HTChargeVariant, HTDeferredEntityType<out HTAbstractCharge>> =
         HTChargeVariant.entries.associateWith { variant: HTChargeVariant ->
             val factory: (EntityType<out HTAbstractCharge>, Level) -> HTAbstractCharge = when (variant) {
-                HTChargeVariant.FISHING -> ::HTFishingCharge
                 HTChargeVariant.BLAST -> ::HTBlastCharge
+                HTChargeVariant.STRIKE -> ::HTStrikeCharge
+                HTChargeVariant.NEUTRAL -> ::HTNeutralCharge
+                HTChargeVariant.FISHING -> ::HTFishingCharge
                 HTChargeVariant.TELEPORT -> ::HTTeleportCharge
                 HTChargeVariant.CONFUSING -> ::HTConfusingCharge
             }

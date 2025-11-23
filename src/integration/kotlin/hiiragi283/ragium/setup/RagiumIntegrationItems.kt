@@ -31,8 +31,6 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.Rarity
-import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
@@ -110,7 +108,6 @@ object RagiumIntegrationItems {
         if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
             listOf(
                 RagiumMaterialKeys.RAGI_CRYSTAL,
-                RagiumMaterialKeys.IRIDESCENTIUM,
             ).forEach { key: HTMaterialKey ->
                 this.put(
                     HTSandPaperToolVariant,
@@ -238,11 +235,6 @@ object RagiumIntegrationItems {
         }
         event.modify(getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL)) { builder ->
             builder.set(DataComponents.MAX_DAMAGE, 8 * 8)
-        }
-        event.modify(getSandPaper(RagiumMaterialKeys.IRIDESCENTIUM)) { builder ->
-            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-            builder.set(DataComponents.RARITY, Rarity.EPIC)
-            builder.set(DataComponents.UNBREAKABLE, Unbreakable(true))
         }
 
         // Mekanism

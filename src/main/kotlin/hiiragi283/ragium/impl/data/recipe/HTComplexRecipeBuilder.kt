@@ -56,12 +56,10 @@ class HTComplexRecipeBuilder(prefix: String, private val factory: Factory<*>) :
     private val fluidIngredients: MutableList<HTFluidIngredient> = mutableListOf()
 
     fun addIngredient(ingredient: HTItemIngredient): HTComplexRecipeBuilder = apply {
-        check(itemIngredients.size <= 2) { "Item ingredients already initialized!" }
         itemIngredients.add(ingredient)
     }
 
     fun addIngredient(ingredient: HTFluidIngredient): HTComplexRecipeBuilder = apply {
-        check(fluidIngredients.size <= 2) { "Fluid ingredients already initialized!" }
         fluidIngredients.add(ingredient)
     }
 

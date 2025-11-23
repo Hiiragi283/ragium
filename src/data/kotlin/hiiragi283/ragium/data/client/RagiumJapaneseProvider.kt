@@ -11,7 +11,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -33,7 +32,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         recipeType()
         text()
 
-        delight()
         jade()
     }
 
@@ -59,7 +57,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL_HAMMER, "らぎ分解機", "ラギクリスタリルのハンマーを手に入れる")
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "古き良きあの頃", "らぎチケットを手に入れてお宝チェストを開く")
         // Azure
-        addAdvancement(RagiumAdvancements.BUDDING_AZURE, "青に染まる", "青の知識を芽生えたアメジストに使う")
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "ラズライトではない", "紺碧の欠片を手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "鋼は青かった", "紺鉄インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "紺鉄インゴットで作られたツールか装備を手に入れる")
@@ -69,7 +66,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "深く，深く，なお深く。", "深層鋼を手に入れる")
         addAdvancement(RagiumAdvancements.BEHEAD_MOB, "帯電なんていらない", "雷撃エンチャントが付与された武器でモブの頭を切り落とす")
 
-        addAdvancement(RagiumAdvancements.ECHO_STAR, "取れないブームがあるものか", "残響の星を手に入れる")
+        addAdvancement(RagiumAdvancements.ECHO_STAR, "ソニック・ザ・ブーム", "残響の星を手に入れる")
         // Night Metal
         addAdvancement(RagiumAdvancements.NIGHT_METAL, "ナイト・オブ・ナイツ", "夜金インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
@@ -93,9 +90,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun block() {
         add(RagiumBlocks.SILT, "シルト")
 
-        add(RagiumBlocks.BUDDING_AZURE, "芽生えた紺碧")
-        add(RagiumBlocks.AZURE_CLUSTER, "紺碧の塊")
+        add(RagiumBlocks.BUDDING_QUARTZ, "芽生えた水晶")
+        add(RagiumBlocks.QUARTZ_CLUSTER, "水晶の塊")
         add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
+        add(RagiumBlocks.SMOOTH_BLOCKSTONE, "なめらかなブラックストーン")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "煤けた丸石")
 
         add(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")
@@ -194,8 +192,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
 
+        addFluid(RagiumFluidContents.CREAM, "クリーム")
         addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
-        addFluid(RagiumFluidContents.MEAT, "液体肉")
+        addFluid(RagiumFluidContents.RAGI_CHERRY_JUICE, "らぎチェリージュース")
+        addFluid(RagiumFluidContents.SLIME, "スライム")
+        addFluid(RagiumFluidContents.GLYCEROL, "グリセロール")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "有機的変異原")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
@@ -223,7 +224,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
-        add(RagiumItems.NITROPOWDER, "ニトロパウダー")
         add(RagiumItems.POTION_DROP, "ポーションの雫")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RAGI_COKE, "らぎコークス")
@@ -246,7 +246,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.DRILL, "電動ドリル")
 
         add(RagiumItems.ADVANCED_MAGNET, "発展らぎマグネット")
-        add(RagiumItems.BLUE_KNOWLEDGE, "青の知識")
         add(RagiumItems.DYNAMIC_LANTERN, "らぎランタン")
         add(RagiumItems.ELDRITCH_EGG, "異質な卵")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
@@ -257,6 +256,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
         add(RagiumItems.UNIVERSAL_BUNDLE, "共有バンドル")
         // Food
+        add(RagiumItems.CREAM_BOWL, "クリーム入りボウル")
+
         add(RagiumItems.ICE_CREAM, "アイスクリーム")
         add(RagiumItems.ICE_CREAM_SODA, "クリームソーダ")
 
@@ -266,8 +267,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.MELON_PIE, "メロンパイ")
 
         add(RagiumItems.RAGI_CHERRY, "らぎチェリー")
-        add(RagiumItems.RAGI_CHERRY_JAM, "らぎチェリージャム")
         add(RagiumItems.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
+        add(RagiumItems.RAGI_CHERRY_JUICE, "らぎチェリージュース")
+        add(RagiumItems.RAGI_CHERRY_JAM, "らぎチェリージャム")
+        add(RagiumItems.RAGI_CHERRY_PIE, "らぎチェリーパイ")
+        add(RagiumItems.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
         add(RagiumItems.RAGI_CHERRY_TOAST, "らぎチェリーのトースト")
         add(RagiumItems.FEVER_CHERRY, "フィーバーチェリー")
 
@@ -371,10 +375,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.BURN_TIME, $$"燃焼時間: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
+        add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
-        add(RagiumTranslation.TOOLTIP_BLAST_POWER, $$"爆発力: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")
@@ -444,7 +448,13 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumCommonTranslation.ELDER_HEART, "エルダーガーディアンからドロップします。")
 
-        add(RagiumCommonTranslation.BLAST_CHARGE, "作業台で火薬を用いて強化することができます。")
+        add(RagiumCommonTranslation.BLAST_CHARGE, "着弾すると爆発するチャージです。")
+        add(RagiumCommonTranslation.STRIKE_CHARGE, "着弾すると落雷を起こすチャージです。")
+        add(RagiumCommonTranslation.NEUTRAL_CHARGE, "着弾すると周囲のモブから装備を奪うチャージです。")
+        add(RagiumCommonTranslation.FISHING_CHARGE, "水中に着弾すると魚を釣るチャージです。")
+        add(RagiumCommonTranslation.TELEPORT_CHARGE, "着弾すると周囲のモブをテレポートさせるチャージです。")
+        add(RagiumCommonTranslation.CONFUSING_CHARGE, "着弾すると周囲のモブを混乱させるチャージです。")
+
         add(RagiumCommonTranslation.DYNAMIC_LANTERN, "範囲内の暗所に光源を設置します。")
         add(RagiumCommonTranslation.ELDRITCH_EGG, "右クリックで投げることができ，モブに当たるとスポーンエッグになります。")
         add(RagiumCommonTranslation.MAGNET, "範囲内のドロップアイテムを回収します。")
@@ -457,13 +467,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     //    Addon    //
-
-    private fun delight() {
-        add(RagiumDelightContents.RAGI_CHERRY_PIE, "らぎチェリーパイ")
-        add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, "らぎチェリーのトーストタワー")
-
-        add(RagiumDelightContents.RAGI_CHERRY_PIE_SLICE, "カットらぎチェリーパイ")
-    }
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")

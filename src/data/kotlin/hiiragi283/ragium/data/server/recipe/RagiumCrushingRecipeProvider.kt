@@ -202,7 +202,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.ICE),
                 resultHelper.item(Items.SNOWBALL, 4),
             ).saveSuffixed(output, "_from_ice")
-        // Ice
+        // Blue -> Packed -> Ice
         HTItemToObjRecipeBuilder
             .pulverizing(
                 itemCreator.fromItem(Items.PACKED_ICE),
@@ -213,5 +213,16 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.BLUE_ICE),
                 resultHelper.item(Items.PACKED_ICE, 9),
             ).saveSuffixed(output, "_from_blue")
+        // Ice -> Packed -> Blue
+        HTItemToObjRecipeBuilder
+            .compressing(
+                itemCreator.fromItem(Items.ICE, 4),
+                resultHelper.item(Items.PACKED_ICE),
+            ).saveSuffixed(output, "_from_ice")
+        HTItemToObjRecipeBuilder
+            .compressing(
+                itemCreator.fromItem(Items.PACKED_ICE, 4),
+                resultHelper.item(Items.BLUE_ICE),
+            ).saveSuffixed(output, "_from_packed")
     }
 }

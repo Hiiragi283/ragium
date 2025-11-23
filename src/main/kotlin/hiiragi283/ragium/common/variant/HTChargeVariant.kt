@@ -4,12 +4,16 @@ import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
+import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
 import hiiragi283.ragium.common.entity.charge.HTConfusingCharge
 import hiiragi283.ragium.common.entity.charge.HTFishingCharge
+import hiiragi283.ragium.common.entity.charge.HTNeutralCharge
+import hiiragi283.ragium.common.entity.charge.HTStrikeCharge
 import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
@@ -23,20 +27,33 @@ import net.minecraft.world.level.Level
 enum class HTChargeVariant(private val enPattern: String, private val jaPattern: String) :
     HTVariantKey,
     HTItemHolderLike {
-    FISHING("Fishing %s", "フィッシング%s"),
     BLAST("Blast %s", "ブラスト%s"),
+    STRIKE("Strike %s", "ストライク%s"),
+    NEUTRAL("Neutralize %s", "ニュートラライズ%s"),
+    FISHING("Fishing %s", "フィッシング%s"),
     TELEPORT("Teleport %s", "テレポート%s"),
-    CONFUSING("Confusing %s", "コンフュージョン%s"),
+    CONFUSING("Confusion %s", "コンフュージョン%s"),
     ;
 
     // Item
     fun getItem(): HTSimpleDeferredItem = RagiumItems.CHARGES[this]!!
 
     fun getShootSound(): SoundEvent = when (this) {
-        FISHING -> SoundEvents.FISHING_BOBBER_THROW
         BLAST -> SoundEvents.WITHER_SHOOT
+        STRIKE -> SoundEvents.TRIDENT_THUNDER.value()
+        NEUTRAL -> SoundEvents.BUNDLE_DROP_CONTENTS
+        FISHING -> SoundEvents.FISHING_BOBBER_THROW
         TELEPORT -> SoundEvents.ENDER_PEARL_THROW
         CONFUSING -> SoundEvents.ELDER_GUARDIAN_CURSE
+    }
+
+    fun getTranslation(): HTTranslation = when (this) {
+        BLAST -> RagiumCommonTranslation.BLAST_CHARGE
+        STRIKE -> RagiumCommonTranslation.STRIKE_CHARGE
+        NEUTRAL -> RagiumCommonTranslation.NEUTRAL_CHARGE
+        FISHING -> RagiumCommonTranslation.FISHING_CHARGE
+        TELEPORT -> RagiumCommonTranslation.TELEPORT_CHARGE
+        CONFUSING -> RagiumCommonTranslation.CONFUSING_CHARGE
     }
 
     override fun asItem(): Item = getItem().get()
@@ -47,8 +64,10 @@ enum class HTChargeVariant(private val enPattern: String, private val jaPattern:
     fun getEntityType(): HTDeferredEntityType<out HTAbstractCharge> = RagiumEntityTypes.CHARGES[this]!!
 
     fun createCharge(level: Level, shooter: LivingEntity): ThrowableItemProjectile = when (this) {
-        FISHING -> HTFishingCharge(level, shooter)
         BLAST -> HTBlastCharge(level, shooter)
+        STRIKE -> HTStrikeCharge(level, shooter)
+        NEUTRAL -> HTNeutralCharge(level, shooter)
+        FISHING -> HTFishingCharge(level, shooter)
         TELEPORT -> HTTeleportCharge(level, shooter)
         CONFUSING -> HTConfusingCharge(level, shooter)
     }
@@ -59,7 +78,9 @@ enum class HTChargeVariant(private val enPattern: String, private val jaPattern:
         y: Double,
         z: Double,
     ): ThrowableItemProjectile = when (this) {
+        STRIKE -> HTStrikeCharge(level, x, y, z)
         FISHING -> HTFishingCharge(level, x, y, z)
+        NEUTRAL -> HTNeutralCharge(level, x, y, z)
         BLAST -> HTBlastCharge(level, x, y, z)
         TELEPORT -> HTTeleportCharge(level, x, y, z)
         CONFUSING -> HTConfusingCharge(level, x, y, z)

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -11,7 +10,6 @@ import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
-import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -19,7 +17,6 @@ import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
@@ -28,7 +25,6 @@ import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -36,7 +32,6 @@ import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.client.model.generators.ModelProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import vectorwing.farmersdelight.common.block.PieBlock
 
 class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(context.output, RagiumAPI.MOD_ID, context.fileHelper) {
     private val fileHelper: ExistingFileHelper = context.fileHelper
@@ -47,8 +42,8 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             // Resource
             add(RagiumBlocks.SILT)
 
-            add(RagiumBlocks.BUDDING_AZURE)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
+            add(RagiumBlocks.SMOOTH_BLOCKSTONE)
             add(RagiumBlocks.CRIMSON_SOIL)
 
             addAll(RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.STORAGE_BLOCK).values)
@@ -71,6 +66,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             addAll(RagiumBlocks.DECORATION_MAP.values)
         }.forEach(::simpleBlockAndItem)
 
+        altTextureBlock(RagiumBlocks.BUDDING_QUARTZ, vanillaId("block", "chiseled_quartz_block_top"))
         layeredBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, vanillaId("block", "obsidian"), RagiumBlocks.MYSTERIOUS_OBSIDIAN.blockId)
 
         // Decoration
@@ -86,7 +82,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         }
 
         for (block: HTSimpleDeferredBlock in RagiumBlocks.LED_BLOCKS.values) {
-            altModelBlock(block, RagiumAPI.id("block/led_block"))
+            altModelBlock(block, RagiumAPI.id("block", "led_block"))
             itemModels().withExistingParent(block.getPath(), RagiumAPI.id("block", "led_block"))
         }
 
@@ -100,7 +96,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: HTSimpleDeferredBlock) ->
-            val textureId: ResourceLocation = RagiumAPI.id("block/${key.name}")
+            val textureId: ResourceLocation = RagiumAPI.id("block", key.name)
             val stoneTex: String = when (variant) {
                 HTOreVariant.DEFAULT -> "block/stone"
                 HTOreVariant.DEEP -> "block/deepslate"
@@ -116,7 +112,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         cubeColumn(RagiumBlocks.RESONANT_DEBRIS)
 
-        crossBlock(RagiumBlocks.AZURE_CLUSTER)
+        crossBlock(RagiumBlocks.QUARTZ_CLUSTER)
 
         // Crop
         getVariantBuilder(RagiumBlocks.EXP_BERRIES.get())
@@ -162,19 +158,19 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             block: HTDeferredBlock<*, *>,
             top: ResourceLocation,
             bottom: ResourceLocation,
-            front: ResourceLocation = block.id.withPath { "block/${it}_front" },
+            front: ResourceLocation = block.blockId.withSuffix("_front"),
         ) {
             horizontalBlock(
                 block,
                 models()
-                    .withExistingParent("block/" + block.getPath(), RagiumAPI.id("block/machine_base"))
+                    .withExistingParent(block.blockId.path, RagiumAPI.id("block", "machine_base"))
                     .texture("top", top)
                     .texture("bottom", bottom)
                     .texture("front", front),
             )
         }
 
-        val basicCasing: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
+        val basicCasing: ResourceLocation = RagiumAPI.id("block", "basic_machine_casing")
         val bricks: ResourceLocation = vanillaId("block", "bricks")
 
         val advancedCasing: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
@@ -251,9 +247,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                     .texture("particle", vanillaId("block", "water_still")),
             )
         }
-
-        // Delight
-        pieBlock(RagiumDelightContents.RAGI_CHERRY_PIE)
     }
 
     //    Extensions    //
@@ -275,7 +268,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         simpleBlockAndItem(
             block,
             models()
-                .withExistingParent(block.getPath(), RagiumAPI.id("block/layered"))
+                .withExistingParent(block.getPath(), RagiumAPI.id("block", "layered"))
                 .texture("layer0", layer0)
                 .texture("layer1", layer1)
                 .renderType("cutout"),
@@ -357,7 +350,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             .blockTransforms()
     }
 
-    private fun pieBlock(block: HTDeferredBlock<out PieBlock, *>) {
+    /*private fun pieBlock(block: HTDeferredBlock<out PieBlock, *>) {
         val blockId: ResourceLocation = block.blockId
 
         getVariantBuilder(block.get()).forAllStates { state: BlockState ->
@@ -379,7 +372,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
                 .build()
         }
         itemModels().basicItem(block.id)
-    }
+    }*/
 
     // Item
     private fun ItemModelBuilder.blockTransforms(): ItemModelBuilder = this.transforms {

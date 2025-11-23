@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
@@ -65,13 +64,13 @@ class HTChargeItem(private val variant: HTChargeVariant, properties: Properties)
         flag: TooltipFlag,
     ) {
         if (flag.hasShiftDown()) {
-            tooltips.add(RagiumCommonTranslation.BLAST_CHARGE.translate())
+            tooltips.add(variant.getTranslation().translate())
         } else {
-            RagiumTranslation.TOOLTIP_BLAST_POWER
+            RagiumTranslation.TOOLTIP_CHARGE_POWER
                 .translateColored(
                     ChatFormatting.BLUE,
                     ChatFormatting.GRAY,
-                    stack.getOrDefault(RagiumDataComponents.BLAST_POWER, 4f),
+                    stack.getOrDefault(RagiumDataComponents.CHARGE_POWER, 4f),
                 ).let(tooltips::add)
             RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW).let(tooltips::add)
         }

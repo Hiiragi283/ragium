@@ -1,8 +1,6 @@
 package hiiragi283.ragium.impl.data.recipe.material
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
-import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -20,6 +18,13 @@ object FoodMaterialRecipeData {
     }
 
     @JvmField
+    val RAGI_CHERRY_PIE: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumItems.RAGI_CHERRY_PIE)
+
+        addOutput(RagiumItems.RAGI_CHERRY_PIE_SLICE, null, 4)
+    }
+
+    @JvmField
     val SWEET_BERRIES_CAKE_SLICE: HTRecipeData = HTRecipeData.create {
         addInput(RagiumBlocks.SWEET_BERRIES_CAKE)
 
@@ -29,17 +34,11 @@ object FoodMaterialRecipeData {
     //    Solidifying    //
 
     @JvmField
-    val CHOCOLATE_INGOT: HTRecipeData = createCast(FoodMaterialKeys.CHOCOLATE, RagiumFluidContents.CHOCOLATE)
-
-    @JvmField
-    val RAW_MEAT_INGOT: HTRecipeData = createCast(FoodMaterialKeys.RAW_MEAT, RagiumFluidContents.MEAT)
-
-    @JvmStatic
-    private fun createCast(material: HTMaterialLike, fluid: HTFluidHolderLike): HTRecipeData = HTRecipeData.create {
-        addInput(fluid, 250)
+    val CHOCOLATE_INGOT: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumFluidContents.CHOCOLATE, 250)
 
         setCatalyst(RagiumItems.getMold(CommonMaterialPrefixes.INGOT))
 
-        addOutput(RagiumItems.getIngot(material), CommonMaterialPrefixes.INGOT, material)
+        addOutput(RagiumItems.getFood(FoodMaterialKeys.CHOCOLATE), CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE)
     }
 }

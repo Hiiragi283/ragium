@@ -84,6 +84,12 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
 
     // Items - Tools
     BLAST_CHARGE("description", "blast_charge"),
+    STRIKE_CHARGE("description", "strike_charge"),
+    NEUTRAL_CHARGE("description", "neutral_charge"),
+    FISHING_CHARGE("description", "fishing_charge"),
+    TELEPORT_CHARGE("description", "teleport_charge"),
+    CONFUSING_CHARGE("description", "confusion_charge"),
+
     DYNAMIC_LANTERN("description", "dynamic_lantern"),
     ELDRITCH_EGG("description", "eldritch_heart"),
     MAGNET("description", "magnet"),

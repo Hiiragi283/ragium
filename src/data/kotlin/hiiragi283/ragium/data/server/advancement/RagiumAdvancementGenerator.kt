@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -14,18 +13,12 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCriteriaTriggers
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.advancements.critereon.BlockPredicate
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
-import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
-import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.advancements.critereon.PlayerInteractTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
-import net.minecraft.world.level.block.Blocks
-import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.Optional
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
@@ -35,7 +28,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setIcon(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
                 title = RagiumTranslation.RAGIUM.translate()
                 setDescFromKey(RagiumAdvancements.ROOT)
-                backGround = RagiumAPI.id("textures/block/night_metal_block.png")
+                backGround = RagiumAPI.id("textures", "block", "night_metal_block.png")
                 showToast = false
                 showChat = false
             }
@@ -99,7 +92,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 ConsumeItemTrigger.TriggerInstance.usedItem(itemPredicate(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)),
             )
         }
-        child(RagiumAdvancements.RAGI_CHERRY_TOAST, RagiumAdvancements.RAGI_CHERRY) {
+        /*child(RagiumAdvancements.RAGI_CHERRY_TOAST, RagiumAdvancements.RAGI_CHERRY) {
             display {
                 setIcon(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK)
                 setTitleFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
@@ -108,7 +101,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             }
             hasAnyItem("has_ragi_cherry_toast_block", RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK)
             addConditions(ModLoadedCondition(RagiumConst.FARMERS_DELIGHT))
-        }
+        }*/
         // Advanced
         createSimple(
             RagiumAdvancements.ADV_RAGI_ALLOY,
@@ -158,25 +151,9 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun azure() {
-        child(RagiumAdvancements.BUDDING_AZURE, RagiumAdvancements.ROOT) {
-            display {
-                setIcon(RagiumItems.BLUE_KNOWLEDGE)
-                setTitleFromKey(RagiumAdvancements.BUDDING_AZURE)
-                setDescFromKey(RagiumAdvancements.BUDDING_AZURE)
-            }
-            addCriterion(
-                "use_blue_knowledge",
-                ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
-                    LocationPredicate.Builder
-                        .location()
-                        .setBlock(BlockPredicate.Builder.block().of(Blocks.BUDDING_AMETHYST)),
-                    ItemPredicate.Builder.item().of(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR),
-                ),
-            )
-        }
         createSimple(
             RagiumAdvancements.AZURE_SHARD,
-            RagiumAdvancements.BUDDING_AZURE,
+            RagiumAdvancements.ALLOY_SMELTER,
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.AZURE,
         )
@@ -198,7 +175,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
         createSimple(
             RagiumAdvancements.MIXER,
-            RagiumAdvancements.AZURE_STEEL,
+            RagiumAdvancements.REFINERY,
             RagiumBlocks.MIXER,
         ) { setGoal() }
     }

@@ -11,7 +11,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -33,7 +32,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         recipeType()
         text()
 
-        delight()
         jade()
     }
 
@@ -63,7 +61,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.RAGI_CRYSTAL_HAMMER, "Ragi-Disassembler", "Get Ragi-Crystal Hammer")
         addAdvancement(RagiumAdvancements.RAGI_TICKET, "Good Old Halcyon Days?", "Get Ragi-Ticket to roll treasure chests")
         // Azure
-        addAdvancement(RagiumAdvancements.BUDDING_AZURE, "Dyed in blue", "Use Blue Knowledge to Budding Amethyst")
         addAdvancement(RagiumAdvancements.AZURE_SHARD, "Not a azurite", "Get Azure Shard")
         addAdvancement(RagiumAdvancements.AZURE_STEEL, "The steel is bluish.", "Get Azure Steel Ingot")
         addAdvancement(RagiumAdvancements.AZURE_GEARS, "Wake up! Azure Dragon!", "Get any Azure Steel Tool or Armor")
@@ -73,7 +70,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.DEEP_STEEL, "Deeper, Deeper, yet Deeper.", "Get Deep Steel")
         addAdvancement(RagiumAdvancements.BEHEAD_MOB, "Not more charged", "Behead mob by weapons with Strike enchantment")
 
-        addAdvancement(RagiumAdvancements.ECHO_STAR, "Shrieking Star", "Get Echo Star")
+        addAdvancement(RagiumAdvancements.ECHO_STAR, "Sonic the Boom", "Get Echo Star")
         // Night Metal
         addAdvancement(RagiumAdvancements.NIGHT_METAL, "Night of Knights", "Get Night Metal Ingot")
         addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "Get Simulator")
@@ -101,9 +98,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun block() {
         add(RagiumBlocks.SILT, "Silt")
 
-        add(RagiumBlocks.BUDDING_AZURE, "Budding Azure")
-        add(RagiumBlocks.AZURE_CLUSTER, "Azure Cluster")
+        add(RagiumBlocks.BUDDING_QUARTZ, "Budding Quartz")
+        add(RagiumBlocks.QUARTZ_CLUSTER, "Quartz Cluster")
         add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
+        add(RagiumBlocks.SMOOTH_BLOCKSTONE, "Smooth Blackstone")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "Sooty Cobblestone")
 
         add(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
@@ -203,8 +201,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
 
+        addFluid(RagiumFluidContents.CREAM, "Cream")
         addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
-        addFluid(RagiumFluidContents.MEAT, "Liquid Meat")
+        addFluid(RagiumFluidContents.RAGI_CHERRY_JUICE, "Ragi-Cherry Juice")
+        addFluid(RagiumFluidContents.SLIME, "Slime")
+        addFluid(RagiumFluidContents.GLYCEROL, "Glycerol")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "Organic Mutagen")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
@@ -232,7 +233,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
-        add(RagiumItems.NITROPOWDER, "Nitropowder")
         add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")
@@ -255,7 +255,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.DRILL, "Electric Drill")
 
         add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
-        add(RagiumItems.BLUE_KNOWLEDGE, "Blue Knowledge")
         add(RagiumItems.DYNAMIC_LANTERN, "Ragi-Lantern")
         add(RagiumItems.ELDRITCH_EGG, "Eldritch Egg")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
@@ -266,6 +265,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.TRADER_CATALOG, "Wandering Trader's Catalog")
         add(RagiumItems.UNIVERSAL_BUNDLE, "Universal Backpack")
         // Food
+        add(RagiumItems.CREAM_BOWL, "Cream Bowl")
+
         add(RagiumItems.ICE_CREAM, "Ice Cream")
         add(RagiumItems.ICE_CREAM_SODA, "Ice Cream Soda")
 
@@ -275,8 +276,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.MELON_PIE, "Melon Pie")
 
         add(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
-        add(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
         add(RagiumItems.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
+        add(RagiumItems.RAGI_CHERRY_JUICE, "Ragi-Cherry Juice")
+        add(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
+        add(RagiumItems.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
+        add(RagiumItems.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
         add(RagiumItems.RAGI_CHERRY_TOAST, "Ragi-Cherry Toast")
         add(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
@@ -370,10 +374,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.BURN_TIME, $$"Burn Time: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
+        add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
-        add(RagiumTranslation.TOOLTIP_BLAST_POWER, $$"Power: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")
@@ -444,7 +448,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumCommonTranslation.ELDER_HEART, "Dropped from Elder Guardian.")
 
-        add(RagiumCommonTranslation.BLAST_CHARGE, "Can be upgraded by gunpowders in Crafting Table.")
+        add(RagiumCommonTranslation.BLAST_CHARGE, "A charge which explodes when hit.")
+        add(RagiumCommonTranslation.STRIKE_CHARGE, "A charge which strikes thunder when hit.")
+        add(RagiumCommonTranslation.NEUTRAL_CHARGE, "A charge which steal equipments from around mobs when hit.")
+        add(RagiumCommonTranslation.FISHING_CHARGE, "A charge which does fishing when hit in water.")
+        add(RagiumCommonTranslation.TELEPORT_CHARGE, "A charge which teleports around mobs to hit point.")
+        add(RagiumCommonTranslation.CONFUSING_CHARGE, "A charge which confuses around mobs when hit.")
+
         add(RagiumCommonTranslation.DYNAMIC_LANTERN, "Light up darkness in range.")
         add(RagiumCommonTranslation.ELDRITCH_EGG, "Can be throwable by right-click，and capture mobs when hit.")
         add(RagiumCommonTranslation.MAGNET, "Collect dropped items in the effective range")
@@ -457,13 +467,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     //    Addon    //
-
-    private fun delight() {
-        add(RagiumDelightContents.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
-        add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, "Ragi-Cherry Toast Tower")
-
-        add(RagiumDelightContents.RAGI_CHERRY_PIE_SLICE, "Slice of Ragi-Cherry Pie")
-    }
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")

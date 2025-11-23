@@ -1,8 +1,6 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.ragium.RagiumIntegration
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTSimpleDeferredHolder
 import hiiragi283.ragium.api.registry.impl.HTDeferredCreativeTabRegister
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -22,9 +20,5 @@ object RagiumIntegrationCreativeTabs {
     ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Items
         HTCreativeTabHelper.addToDisplay(output, RagiumIntegrationItems.REGISTER.entries)
-        // Blocks
-        if (RagiumIntegration.isLoaded(RagiumConst.FARMERS_DELIGHT)) {
-            HTCreativeTabHelper.addToDisplay(output, RagiumDelightContents.BLOCK_REGISTER.blockEntries)
-        }
     }
 }

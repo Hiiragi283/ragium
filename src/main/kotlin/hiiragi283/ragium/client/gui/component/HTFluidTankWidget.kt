@@ -44,7 +44,7 @@ class HTFluidTankWidget(
             HTFluidView::getStoredLevelAsFloat,
             { guiGraphics: GuiGraphics, bounds: HTBounds ->
                 guiGraphics.blit(
-                    RagiumAPI.id("textures/gui/tank.png"),
+                    RagiumAPI.id("textures", "gui", "tank.png"),
                     bounds.x - 1,
                     bounds.y - 1,
                     0f,

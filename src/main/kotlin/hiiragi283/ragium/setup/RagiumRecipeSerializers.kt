@@ -132,7 +132,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = register(
         RagiumConst.MIXING,
-        RagiumRecipeBiCodecs.complex(::HTMixingRecipe, 0..2, 0..2),
+        RagiumRecipeBiCodecs.complex(::HTMixingRecipe, 0..4, 0..2),
     )
 
     @JvmField

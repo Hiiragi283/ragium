@@ -122,11 +122,12 @@ object RagiumMaterialEvents {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             when (gems) {
                 CommonMaterialKeys.Gems.CINNABAR -> addName("Cinnabar", "辰砂")
-                CommonMaterialKeys.Gems.FLUORITE -> {}
-                CommonMaterialKeys.Gems.PERIDOT -> {}
-                CommonMaterialKeys.Gems.RUBY -> {}
+                CommonMaterialKeys.Gems.FLUORITE -> addName("Fluorite", "蛍石")
+                CommonMaterialKeys.Gems.PERIDOT -> addName("Peridot", "ペリドット")
+                CommonMaterialKeys.Gems.RUBY -> addName("Ruby", "ルビー")
+                CommonMaterialKeys.Gems.SALT -> addName("Salt", "塩")
                 CommonMaterialKeys.Gems.SALTPETER -> addName("Saltpeter", "硝石")
-                CommonMaterialKeys.Gems.SAPPHIRE -> {}
+                CommonMaterialKeys.Gems.SAPPHIRE -> addName("Sapphire", "サファイア")
                 CommonMaterialKeys.Gems.SULFUR -> addName("Sulfur", "硫黄")
             }
         }
@@ -202,8 +203,12 @@ object RagiumMaterialEvents {
             addName("Iridescentium", "七色金")
         }
         // Food
+        event.modify(FoodMaterialKeys.BUTTER) {
+            addDefaultPrefix(CommonMaterialPrefixes.FOOD)
+            addName("Butter", "バター")
+        }
         event.modify(FoodMaterialKeys.CHOCOLATE) {
-            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+            addDefaultPrefix(CommonMaterialPrefixes.FOOD)
             addName("Chocolate", "チョコレート")
         }
 
