@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.client.event.HTClientItemTooltipComponent
 import hiiragi283.ragium.client.event.HTItemTooltipContent
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
@@ -30,6 +31,7 @@ import hiiragi283.ragium.client.renderer.block.HTRefineryRenderer
 import hiiragi283.ragium.client.renderer.block.HTSingleFluidMachineRenderer
 import hiiragi283.ragium.client.renderer.item.HTFuelGeneratorItemRenderer
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
@@ -106,11 +108,19 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
                 when {
                     tint != 0 -> -1
-                    getter != null && pos != null -> BiomeColors.getAverageWaterColor(getter, pos)
+                    getter != null && pos != null -> {
+                        val collector: HTFluidCollectorBlockEntity? =
+                            getter.getTypedBlockEntity<HTFluidCollectorBlockEntity>(pos)
+                        if (collector != null && collector.hasUpgrade(RagiumItems.EXP_COLLECTOR_UPGRADE)) {
+                            0x66ff33
+                        } else {
+                            BiomeColors.getAverageWaterColor(getter, pos)
+                        }
+                    }
                     else -> -1
                 }
             },
-            RagiumBlocks.WATER_COLLECTOR.get(),
+            RagiumBlocks.FLUID_COLLECTOR.get(),
         )
         // LED Blocks
         for ((color: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
@@ -149,7 +159,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerItemColor(event: RegisterColorHandlersEvent.Item) {
         // Water Collector
-        event.register({ _: ItemStack, tint: Int -> if (tint == 0) 0x3f76e4 else -1 }, RagiumBlocks.WATER_COLLECTOR)
+        event.register({ _: ItemStack, tint: Int -> if (tint == 0) 0x3f76e4 else -1 }, RagiumBlocks.FLUID_COLLECTOR)
         // LED Blocks
         for ((variant: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
             event.register(

@@ -105,10 +105,9 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             // Devices
             add(RagiumBlocks.DEVICE_CASING)
 
+            add(RagiumBlocks.FLUID_COLLECTOR)
             add(RagiumBlocks.ITEM_BUFFER)
-            add(RagiumBlocks.WATER_COLLECTOR)
 
-            add(RagiumBlocks.EXP_COLLECTOR)
             add(RagiumBlocks.FISHER)
 
             add(RagiumBlocks.DIM_ANCHOR)

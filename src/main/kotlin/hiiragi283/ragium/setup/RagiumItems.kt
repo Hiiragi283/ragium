@@ -537,19 +537,11 @@ object RagiumItems {
         REGISTER.registerItemWith("${tier.asMaterialName()}_circuit", tier, ::HTTierBasedItem)
     }
 
-    @JvmField
-    val COMPONENTS: Map<HTComponentTier, HTDeferredItem<*>> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
-        REGISTER.registerItemWith("${tier.asMaterialName()}_component", tier, ::HTComponentItem)
-    }
-
     @JvmStatic
     fun getCoil(key: HTMaterialKey): HTDeferredItem<*> = COILS[key]!!
 
     @JvmStatic
     fun getCircuit(tier: HTCircuitTier): HTDeferredItem<*> = CIRCUITS[tier]!!
-
-    @JvmStatic
-    fun getComponent(tier: HTComponentTier): HTDeferredItem<*> = COMPONENTS[tier]!!
 
     @JvmField
     val GRAVITATIONAL_UNIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("gravitational_unit")
@@ -604,6 +596,24 @@ object RagiumItems {
     val DRUM_MINECARTS: Map<HTDrumTier, HTSimpleDeferredItem> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
         REGISTER.registerItemWith(tier.entityPath, tier, ::HTDrumWithMinecartItem)
     }
+
+    //    Upgrades    //
+
+    @JvmField
+    val COMPONENTS: Map<HTComponentTier, HTDeferredItem<*>> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
+        REGISTER.registerItemWith("${tier.asMaterialName()}_component", tier, ::HTComponentItem)
+    }
+
+    @JvmStatic
+    fun getComponent(tier: HTComponentTier): HTDeferredItem<*> = COMPONENTS[tier]!!
+
+    @JvmField
+    val EXP_COLLECTOR_UPGRADE: HTSimpleDeferredItem =
+        registerUpgrade("exp_collector", RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE)
+
+    @JvmStatic
+    private fun registerUpgrade(name: String, translation: HTTranslation): HTSimpleDeferredItem =
+        REGISTER.registerSimpleItem("${name}_upgrade") { it.stacksTo(1).description(translation) }
 
     //    Event    //
 

@@ -268,15 +268,15 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addInteractions(registry: EmiRegistry) {
-        // Water Collector
+        // Water from Collector
         registry.addInteraction(HTFluidHolderLike.WATER.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(RagiumBlocks.WATER_COLLECTOR.toEmi())
+            leftInput(RagiumBlocks.FLUID_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
-        // Exp Collector
+        // Experience from Collector
         registry.addInteraction(RagiumFluidContents.EXPERIENCE.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(RagiumBlocks.EXP_COLLECTOR.toEmi())
-            rightInput(EmiStack.EMPTY, false)
+            leftInput(RagiumBlocks.FLUID_COLLECTOR.toEmi())
+            rightInput(RagiumItems.EXP_COLLECTOR_UPGRADE.toEmi(), false)
         }
 
         // World Vaporization

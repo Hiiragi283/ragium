@@ -88,6 +88,9 @@ object RagiumBlocks {
         // Budding Quartz
         REGISTER.addAlias("budding_azure", "budding_quartz")
         REGISTER.addAlias("azure_cluster", "quartz_cluster")
+        // Collector
+        REGISTER.addAlias("water_collector", "fluid_collector")
+        REGISTER.addAlias("exp_collector", "fluid_collector")
     }
 
     @JvmStatic
@@ -539,18 +542,14 @@ object RagiumBlocks {
 
     // Basic
     @JvmField
+    val FLUID_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("fluid_collector", RagiumBlockTypes.FLUID_COLLECTOR, machineProperty())
+
+    @JvmField
     val ITEM_BUFFER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("item_buffer", RagiumBlockTypes.ITEM_BUFFER, machineProperty())
 
-    @JvmField
-    val WATER_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("water_collector", RagiumBlockTypes.WATER_COLLECTOR, machineProperty())
-
     // Advanced
-    @JvmField
-    val EXP_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("exp_collector", RagiumBlockTypes.EXP_COLLECTOR, machineProperty())
-
     @JvmField
     val FISHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("fisher", RagiumBlockTypes.FISHER, machineProperty())

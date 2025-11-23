@@ -218,27 +218,20 @@ object RagiumBlockTypes {
 
     // Basic
     @JvmField
+    val FLUID_COLLECTOR: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.FLUID_COLLECTOR }
+        .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
+        .addTier(HTMachineTier.BASIC)
+        .build(RagiumCommonTranslation.FLUID_COLLECTOR)
+
+    @JvmField
     val ITEM_BUFFER: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.ITEM_BUFFER }
         .addMenu { RagiumMenuTypes.ITEM_BUFFER }
         .addTier(HTMachineTier.BASIC)
         .build(RagiumCommonTranslation.ITEM_BUFFER)
 
-    @JvmField
-    val WATER_COLLECTOR: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.WATER_COLLECTOR }
-        .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
-        .addTier(HTMachineTier.BASIC)
-        .build(RagiumCommonTranslation.WATER_COLLECTOR)
-
     // Advanced
-    @JvmField
-    val EXP_COLLECTOR: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.EXP_COLLECTOR }
-        .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
-        .addTier(HTMachineTier.ADVANCED)
-        .build(RagiumCommonTranslation.EXP_COLLECTOR)
-
     @JvmField
     val FISHER: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.FISHER }

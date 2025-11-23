@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.function.andThen
+import hiiragi283.ragium.api.function.identity
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
@@ -189,7 +190,7 @@ data class HTRecipeData private constructor(
                 .mapLeft(::listOf)
                 .mapRight(::listOf)
                 .unwrap()
-                .map({ it }, { (_, tagKeys: List<TagKey<T>>) -> Either.right(tagKeys) }),
+                .map(identity()) { (_, tagKeys: List<TagKey<T>>) -> Either.right(tagKeys) },
             amount,
         )
     }
