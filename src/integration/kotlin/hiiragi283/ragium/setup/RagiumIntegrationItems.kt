@@ -31,8 +31,6 @@ import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.Rarity
-import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike

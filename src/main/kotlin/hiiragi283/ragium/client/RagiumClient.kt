@@ -203,6 +203,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             RagiumFluidContents.CHOCOLATE.getType(),
         )
         event.clear(RagiumFluidContents.RAGI_CHERRY_JUICE, Color(0xcccc66))
+        event.clear(RagiumFluidContents.SLIME, Color(0x33cc33))
+        event.clear(RagiumFluidContents.GLYCEROL, Color(0x009966))
         event.dull(RagiumFluidContents.ORGANIC_MUTAGEN, Color(0x336600))
 
         event.dull(RagiumFluidContents.CRUDE_OIL, Color(0x333333))

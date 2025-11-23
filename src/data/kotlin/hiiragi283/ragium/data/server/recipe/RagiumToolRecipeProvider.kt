@@ -17,11 +17,13 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTChargeVariant
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -256,9 +258,18 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             HTUpgradeChargeRecipe(CraftingBookCategory.EQUIPMENT),
         )
 
+        // Glycerol + Mixture Acid + Paper -> Blast Charge
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromItem(Items.PAPER, 4))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.GLYCEROL, 1000))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 250))
+            .setResult(resultHelper.item(HTChargeVariant.BLAST, 4))
+            .save(output)
+
         for (variant: HTChargeVariant in HTChargeVariant.entries) {
             val (prefix: HTPrefixLike, material: HTMaterialLike) = when (variant) {
-                HTChargeVariant.BLAST -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.CRIMSON_CRYSTAL
+                HTChargeVariant.BLAST -> continue
                 HTChargeVariant.STRIKE -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
                 HTChargeVariant.NEUTRAL -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.EMERALD
                 HTChargeVariant.FISHING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.AZURE
@@ -266,14 +277,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 HTChargeVariant.CONFUSING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.ELDRITCH_PEARL
             }
             HTShapedRecipeBuilder
-                .create(variant, 3)
-                .pattern(
-                    " AA",
-                    " BA",
-                    "C  ",
-                ).define('A', prefix, material)
-                .define('B', Tags.Items.GUNPOWDERS)
-                .define('C', Items.PAPER)
+                .create(variant, 8)
+                .hollow8()
+                .define('A', HTChargeVariant.BLAST)
+                .define('B', prefix, material)
                 .setCategory(CraftingBookCategory.EQUIPMENT)
                 .save(output)
         }
