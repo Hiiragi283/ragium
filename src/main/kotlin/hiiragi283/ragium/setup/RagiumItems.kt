@@ -23,6 +23,7 @@ import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
+import hiiragi283.ragium.common.item.HTComponentItem
 import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
@@ -538,7 +539,7 @@ object RagiumItems {
 
     @JvmField
     val COMPONENTS: Map<HTComponentTier, HTDeferredItem<*>> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
-        REGISTER.registerItemWith("${tier.asMaterialName()}_component", tier, ::HTTierBasedItem)
+        REGISTER.registerItemWith("${tier.asMaterialName()}_component", tier, ::HTComponentItem)
     }
 
     @JvmStatic

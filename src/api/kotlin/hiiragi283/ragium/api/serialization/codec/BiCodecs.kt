@@ -6,7 +6,9 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
+import java.util.function.Function
 import java.util.function.Supplier
+import kotlin.enums.enumEntries
 
 object BiCodecs {
     /**
@@ -100,6 +102,12 @@ object BiCodecs {
     @JvmStatic
     inline fun <reified V : Enum<V>> enum(values: Supplier<Array<V>>): BiCodec<ByteBuf, V> =
         NON_NEGATIVE_INT.flatXmap({ value: Int -> values.get()[value] }, Enum<V>::ordinal)
+
+    @JvmStatic
+    inline fun <reified V : Enum<V>> stringEnum(factory: Function<V, String>): BiCodec<ByteBuf, V> = BiCodec.STRING.flatXmap(
+        { name: String -> enumEntries<V>().first { factory.apply(it) == name } },
+        factory,
+    )
 
     /**
      * @see NeoForgeExtraCodecs.AlternativeCodec

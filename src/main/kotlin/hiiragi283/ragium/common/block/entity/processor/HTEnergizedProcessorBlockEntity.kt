@@ -25,13 +25,11 @@ abstract class HTEnergizedProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockH
         battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
     }
 
-    protected fun getModifiedEnergy(base: Int): Int = getComponentTier()?.modifyProcessorRate(base) ?: base
-
     //    Ticking    //
 
-    final override fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(battery.currentEnergyPerTick * getRecipeTime(recipe))
+    final override fun getRequiredEnergy(recipe: RECIPE): Int = calculateEnergy(battery.currentEnergyPerTick * getRecipeTime(recipe))
 
-    protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
+    protected open fun getRecipeTime(recipe: RECIPE): Int = calculateDuration(20 * 10)
 
     final override fun gatherEnergy(level: ServerLevel, pos: BlockPos): Int = battery.consume()
 

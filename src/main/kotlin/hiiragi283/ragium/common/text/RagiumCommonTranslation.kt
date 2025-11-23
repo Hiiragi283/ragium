@@ -104,6 +104,9 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     // Key Mapping
     KEY_CATEGORY("key", "category"),
     KEY_OPEN_UNIVERSAL_BUNDLE("key", "open_universal_bundle"),
+
+    // Jade
+    JADE_MACHINE_TIER("jade", "machine_tier"),
     ;
 
     override val translationKey: String = Util.makeDescriptionId(type, RagiumAPI.id(path.joinToString(separator = ".")))

@@ -4,8 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
-import hiiragi283.ragium.common.tier.HTComponentTier
 import net.minecraft.client.model.geom.EntityModelSet
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.builders.CubeListBuilder
@@ -97,14 +97,14 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
         packedLight: Int,
         packedOverlay: Int,
         time: Float,
-        tier: HTComponentTier?,
+        tier: HTBaseTier?,
     ) {
         val speed: Float = when (tier) {
-            HTComponentTier.BASIC -> 0.3f
-            HTComponentTier.ADVANCED -> 0.4f
-            HTComponentTier.ELITE -> 0.6f
-            HTComponentTier.ULTIMATE -> 0.8f
-            HTComponentTier.ETERNAL -> 1f
+            HTBaseTier.BASIC -> 0.3f
+            HTBaseTier.ADVANCED -> 0.4f
+            HTBaseTier.ELITE -> 0.6f
+            HTBaseTier.ULTIMATE -> 0.8f
+            HTBaseTier.CREATIVE -> 1f
             null -> 0.2f
         }
         top.y = Mth.sin(time * speed + Mth.HALF_PI) * 4 - 4f

@@ -18,8 +18,10 @@ import hiiragi283.ragium.api.text.HTSimpleTranslation
 import hiiragi283.ragium.api.text.HTTranslation
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
+import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.neoforged.bus.api.IEventBus
 
 object RagiumDataComponents {
@@ -56,20 +58,11 @@ object RagiumDataComponents {
     val EAT_SOUND: DataComponentType<HTItemSoundEvent> = REGISTER.registerType("eating_sound", HTItemSoundEvent.CODEC)
 
     @JvmField
-    val ENERGY: DataComponentType<Int> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_INT)
-
-    @JvmField
-    val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
-
-    @JvmField
     val INTRINSIC_ENCHANTMENT: DataComponentType<HTIntrinsicEnchantment> =
         REGISTER.registerType("intrinsic_enchantment", HTIntrinsicEnchantment.CODEC)
 
     @JvmField
     val IS_ACTIVE: DataComponentType<Boolean> = REGISTER.registerType("is_active", BiCodec.BOOL)
-
-    @JvmField
-    val ITEM_CONTENT: DataComponentType<HTItemContents> = REGISTER.registerType("item_content", HTItemContents.CODEC)
 
     @JvmField
     val LOOT_TICKET: DataComponentType<HTLootTicketTargets> = REGISTER.registerType("loot_ticket", HTLootTicketTargets.CODEC)
@@ -79,4 +72,27 @@ object RagiumDataComponents {
 
     @JvmField
     val TELEPORT_POS: DataComponentType<HTTeleportPos> = REGISTER.registerType("teleport_pos", HTTeleportPos.CODEC)
+
+    //    Machine    //
+
+    @JvmField
+    val MACHINE_DURATION: DataComponentType<LevelBasedValue> = registerUpgrade("duration")
+
+    @JvmField
+    val MACHINE_ENERGY: DataComponentType<LevelBasedValue> = registerUpgrade("energy")
+
+    @JvmStatic
+    private fun registerUpgrade(name: String): DataComponentType<LevelBasedValue> =
+        REGISTER.registerType("machine/$name", LevelBasedValue.CODEC, ByteBufCodecs.fromCodecWithRegistries(LevelBasedValue.CODEC))
+
+    //    Storage    //
+
+    @JvmField
+    val ENERGY: DataComponentType<Int> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_INT)
+
+    @JvmField
+    val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
+
+    @JvmField
+    val ITEM_CONTENT: DataComponentType<HTItemContents> = REGISTER.registerType("item_content", HTItemContents.CODEC)
 }

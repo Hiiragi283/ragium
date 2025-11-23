@@ -2,21 +2,24 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
+import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.item.HTComponentItem
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
-import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Predicate
@@ -27,16 +30,6 @@ import java.util.function.Predicate
 abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
     companion object {
-        @JvmStatic
-        fun getComponentTier(stack: ImmutableItemStack): HTComponentTier? {
-            for ((tier: HTComponentTier, item: HTDeferredItem<*>) in RagiumItems.COMPONENTS) {
-                if (stack.isOf(item)) {
-                    return tier
-                }
-            }
-            return null
-        }
-
         // Slot
         @JvmStatic
         protected fun singleInput(
@@ -79,15 +72,38 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
     lateinit var upgradeSlots: List<HTItemStackSlot>
         private set
 
-    fun getComponentTier(): HTComponentTier? = upgradeSlots[3].getStack()?.let(::getComponentTier)
+    fun <T : Any> getUpgradeData(type: DataComponentType<T>): List<T> =
+        upgradeSlots.mapNotNull { slot: HTItemStackSlot -> slot.getStack()?.get(type) }
+
+    fun getMaxMachineTier(): HTBaseTier? = upgradeSlots
+        .asSequence()
+        .mapNotNull(HTItemStackSlot::getStack)
+        .map(ImmutableItemStack::value)
+        .filterIsInstance<HTComponentItem>()
+        .map(HTComponentItem::getBaseTier)
+        .maxOrNull()
+
+    fun calculateValue(base: Int, type: DataComponentType<LevelBasedValue>): Int {
+        var result: Int = base
+        for (value: LevelBasedValue in getUpgradeData(type)) {
+            result = value.calculate(result).toInt()
+        }
+        return result
+    }
+
+    fun calculateDuration(base: Int): Int = calculateValue(base, RagiumDataComponents.MACHINE_DURATION)
+
+    fun calculateEnergy(base: Int): Int = calculateValue(base, RagiumDataComponents.MACHINE_ENERGY)
 
     final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         initializeItemSlots(builder, listener)
         upgradeSlots = (0..3).map { i: Int ->
-            val filter: (ImmutableItemStack) -> Boolean = when (i) {
-                3 -> { stack -> getComponentTier(stack) != null }
-                else -> { stack -> getComponentTier(stack) == null }
+            val filter: (ImmutableItemStack) -> Boolean = { stack: ImmutableItemStack ->
+                when {
+                    stack.value() is HTComponentItem -> getMaxMachineTier() == null
+                    else -> stack.isOf(RagiumModTags.Items.MACHINE_UPGRADES)
+                }
             }
             builder.addSlot(
                 HTSlotInfo.CATALYST,
@@ -95,9 +111,10 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
                     listener,
                     HTSlotHelper.getSlotPosX(8),
                     HTSlotHelper.getSlotPosY(i - 0.5),
-                    canExtract = HTPredicates.manualOnly(),
-                    canInsert = HTPredicates.manualOnly(),
-                    filter = filter,
+                    1,
+                    HTPredicates.manualOnly(),
+                    HTPredicates.manualOnly(),
+                    filter,
                 ),
             )
         }

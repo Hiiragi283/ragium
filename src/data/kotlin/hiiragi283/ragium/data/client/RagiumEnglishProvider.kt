@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachineTierProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
@@ -471,5 +472,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")
         add(HTBlockOwnerProvider, "Block Owner")
+        add(HTBlockMachineTierProvider, "Machine TIer")
+
+        add(RagiumCommonTranslation.JADE_MACHINE_TIER, $$"Tier: %1$s")
     }
 }

@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagDependType
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -291,6 +292,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(Items.GHAST_TEAR.toHolderLike())
             .add(Items.PHANTOM_MEMBRANE.toHolderLike())
             .add(Items.WIND_CHARGE.toHolderLike())
+
+        val upgrades: HTTagBuilder<Item> = factory.apply(RagiumModTags.Items.MACHINE_UPGRADES)
+        RagiumItems.COMPONENTS.values.forEach(upgrades::add)
 
         factory
             .apply(RagiumModTags.Items.POLYMER_RESIN)

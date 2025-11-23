@@ -87,7 +87,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         val required: Int = getRequiredAmount(level.registryAccess(), tank.getStack())
         if (required <= 0) return false
         if (tank.extract(required, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null) return false
-        battery.currentEnergyPerTick = getModifiedEnergy(battery.baseEnergyPerTick)
+        battery.currentEnergyPerTick = calculateEnergy(battery.baseEnergyPerTick)
         return if (battery.generate() > 0) {
             tank.extract(required, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             true
