@@ -303,6 +303,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
         // Upgrades
+        add(RagiumItems.ENERGY_CAPACITY_UPGRADE, "Energy Capacity Upgrade")
+        add(RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE, "Advanced Energy Capacity Upgrade")
+        add(RagiumItems.SPEED_UPGRADE, "Speed Upgrade")
+        add(RagiumItems.ADVANCED_SPEED_UPGRADE, "Advanced Speed Upgrade")
+
+        add(RagiumItems.FORTUNE_UPGRADE, "Fortune Upgrade")
+
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
     }
 
@@ -362,10 +369,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTAccessConfig.BOTH, "Mode: Both")
         add(HTAccessConfig.DISABLED, "Mode: Disabled")
 
-        add(HTMachineUpgrade.Key.DURATION, $$"- Process Duration: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_USAGE, $$"- Energy Usage: %1$s")
+        add(HTMachineUpgrade.Key.SPEED, $$"- Speed: %1$s")
+
+        add(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE, $$"- Extra Chance: %1$s")
         // API - Constants
         add(RagiumTranslation.ERROR, "Error")
         add(RagiumTranslation.INFINITE, "Infinite")

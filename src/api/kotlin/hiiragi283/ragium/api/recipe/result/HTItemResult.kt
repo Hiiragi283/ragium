@@ -27,6 +27,8 @@ class HTItemResult(entry: HTKeyOrTagEntry<Item>, amount: Int, components: DataCo
         )
     }
 
+    fun copyWithAmount(amount: Int): HTItemResult = HTItemResult(entry, amount, components)
+
     override fun createStack(holder: Holder<Item>, amount: Int, components: DataComponentPatch): HTTextResult<ImmutableItemStack> =
         when (val stack: ImmutableItemStack? = ItemStack(holder, amount, components).toImmutable()) {
             null -> HTTextResult.failure(RagiumTranslation.EMPTY)

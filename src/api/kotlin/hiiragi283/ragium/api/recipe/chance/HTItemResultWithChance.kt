@@ -1,5 +1,7 @@
 package hiiragi283.ragium.api.recipe.chance
 
+import hiiragi283.ragium.api.block.entity.HTUpgradableBlockEntity
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -33,10 +35,24 @@ data class HTItemResultWithChance(val base: HTItemResult, val chance: Float) {
 
     fun getStackOrNull(provider: HolderLookup.Provider?): ImmutableItemStack? = this.base.getStackOrNull(provider)
 
-    fun getStackOrNull(provider: HolderLookup.Provider?, random: RandomSource): ImmutableItemStack? = when {
-        chance > random.nextFloat() -> base.getStackOrNull(provider)
-        else -> null
-    }
+    fun getStackOrNull(provider: HolderLookup.Provider?, random: RandomSource, blockEntity: HTUpgradableBlockEntity): ImmutableItemStack? =
+        blockEntity
+            .calculateValue(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE)
+            .map(
+                { base.getStackOrNull(provider) },
+                { chanceIn: Float ->
+                    if (chance == 1f) return@map base.getStackOrNull(provider)
+                    
+                    val chance1: Float = chance + chanceIn
+                    val extraCount: Int = chance1.toInt()
+
+                    var countSum: Int = base.amount * extraCount
+                    if ((chance1 - extraCount) > random.nextFloat()) {
+                        countSum += base.amount
+                    }
+                    base.copyWithAmount(countSum).getStackOrNull(provider)
+                },
+            )
 
     fun hasNoMatchingStack(): Boolean = this.base.hasNoMatchingStack()
 }

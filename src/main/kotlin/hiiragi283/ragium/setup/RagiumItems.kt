@@ -44,6 +44,7 @@ import hiiragi283.ragium.common.item.tool.HTMagnetItem
 import hiiragi283.ragium.common.item.tool.HTTeleportKeyItem
 import hiiragi283.ragium.common.item.tool.HTTraderCatalogItem
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
+import hiiragi283.ragium.common.item.upgrade.HTFortuneUpgradeItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -602,13 +603,44 @@ object RagiumItems {
     @JvmField
     val COMPONENTS: Map<HTComponentTier, HTSimpleDeferredItem> = HTComponentTier.entries.associateWith { tier: HTComponentTier ->
         REGISTER.registerItemWith("${tier.asMaterialName()}_component", tier, ::HTTierBasedItem) {
-            it.component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade(tier.getBaseTier()))
+            it.stacksTo(1).component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create(tier))
         }
     }
 
     @JvmStatic
     fun getComponent(tier: HTComponentTier): HTSimpleDeferredItem = COMPONENTS[tier]!!
 
+    // Machine
+    @JvmField
+    val ENERGY_CAPACITY_UPGRADE: HTSimpleDeferredItem =
+        registerUpgrade("energy_capacity", HTMachineUpgrade.Key.ENERGY_CAPACITY to 4f)
+
+    @JvmField
+    val ADVANCED_ENERGY_CAPACITY_UPGRADE: HTSimpleDeferredItem =
+        registerUpgrade("advanced_energy_capacity", HTMachineUpgrade.Key.ENERGY_CAPACITY to 8f)
+
+    @JvmField
+    val SPEED_UPGRADE: HTSimpleDeferredItem = registerUpgrade(
+        "speed",
+        HTMachineUpgrade.Key.ENERGY_EFFICIENCY to 0.8f,
+        HTMachineUpgrade.Key.ENERGY_GENERATION to 1.2f,
+        HTMachineUpgrade.Key.SPEED to 1.2f,
+    )
+
+    @JvmField
+    val ADVANCED_SPEED_UPGRADE: HTSimpleDeferredItem = registerUpgrade(
+        "advanced_speed",
+        HTMachineUpgrade.Key.ENERGY_EFFICIENCY to 0.75f,
+        HTMachineUpgrade.Key.ENERGY_GENERATION to 1.5f,
+        HTMachineUpgrade.Key.SPEED to 1.5f,
+    )
+
+    // Processor
+    @JvmField
+    val FORTUNE_UPGRADE: HTSimpleDeferredItem =
+        REGISTER.registerItem("fortune_upgrade", ::HTFortuneUpgradeItem) { it.stacksTo(3) }
+
+    // Device
     @JvmField
     val EXP_COLLECTOR_UPGRADE: HTSimpleDeferredItem =
         registerUpgrade("exp_collector", RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE)
@@ -616,6 +648,12 @@ object RagiumItems {
     @JvmStatic
     private fun registerUpgrade(name: String, translation: HTTranslation): HTSimpleDeferredItem =
         REGISTER.registerSimpleItem("${name}_upgrade") { it.stacksTo(1).description(translation) }
+
+    @JvmStatic
+    private fun registerUpgrade(name: String, vararg pairs: Pair<HTMachineUpgrade.Key, Float>): HTSimpleDeferredItem =
+        REGISTER.registerSimpleItem("${name}_upgrade") {
+            it.stacksTo(1).component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create(mapOf(*pairs)))
+        }
 
     //    Event    //
 

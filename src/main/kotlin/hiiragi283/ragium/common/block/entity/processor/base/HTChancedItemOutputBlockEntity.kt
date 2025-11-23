@@ -58,7 +58,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     ) {
         // 実際にアウトプットに搬出する
         for (result: HTItemResultWithChance in recipe.getResultItems(input)) {
-            val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess(), level.random) ?: continue
+            val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess(), level.random, this) ?: continue
             HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
         }
     }

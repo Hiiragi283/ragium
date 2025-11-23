@@ -43,7 +43,7 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
 
     var currentEnergyPerTick: Int = this.baseEnergyPerTick
 
-    override fun getCapacity(): Int = blockEntity.calculateValue(getBaseCapacity(), HTMachineUpgrade.Key.ENERGY_CAPACITY)
+    override fun getCapacity(): Int = blockEntity.modifyValue(HTMachineUpgrade.Key.ENERGY_CAPACITY) { getBaseCapacity() * it }
 
     fun getBaseCapacity(): Int = super.getCapacity()
 
