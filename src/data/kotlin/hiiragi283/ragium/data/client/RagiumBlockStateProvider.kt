@@ -51,7 +51,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             add(RagiumBlocks.DEVICE_CASING)
             add(RagiumBlocks.ITEM_BUFFER)
 
-            add(RagiumBlocks.EXP_COLLECTOR)
             add(RagiumBlocks.FISHER)
 
             add(RagiumBlocks.DIM_ANCHOR)
@@ -214,7 +213,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Device
         layeredBlock(
-            RagiumBlocks.WATER_COLLECTOR,
+            RagiumBlocks.FLUID_COLLECTOR,
             vanillaId("block", "water_still"),
             RagiumAPI.id("block", "device_overlay"),
         )

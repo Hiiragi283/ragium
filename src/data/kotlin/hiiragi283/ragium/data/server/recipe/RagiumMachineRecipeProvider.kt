@@ -237,18 +237,14 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             }
 
         // Basic
+        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.FLUID_COLLECTOR, RagiumBlocks.DEVICE_CASING)
+            .addIngredient(Tags.Items.BUCKETS_EMPTY)
+            .save(output)
+
         createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.ITEM_BUFFER, RagiumBlocks.DEVICE_CASING)
             .addIngredient(Tags.Items.CHESTS)
             .save(output)
-
-        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.WATER_COLLECTOR, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.BUCKETS_WATER)
-            .save(output)
         // Advanced
-        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.EXP_COLLECTOR, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Items.HOPPER)
-            .save(output)
-
         createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.FISHER, RagiumBlocks.DEVICE_CASING)
             .addIngredient(Tags.Items.TOOLS_FISHING_ROD)
             .save(output)

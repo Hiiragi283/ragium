@@ -158,10 +158,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.ENCHANTER, "Enchanter")
         add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
+        add(RagiumBlocks.FLUID_COLLECTOR, "Fluid Collector")
         add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
-        add(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
 
-        add(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
         add(RagiumBlocks.FISHER, "Fisher")
 
         add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
@@ -302,6 +301,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
+        // Upgrades
+        add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
     }
 
     private fun keyMapping() {
@@ -422,9 +423,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.SIMULATOR, "A machine which simulates behavior of blocks or mobs to generate resources.")
 
         add(RagiumCommonTranslation.ITEM_BUFFER, "A device which collects items around.")
-        add(RagiumCommonTranslation.WATER_COLLECTOR, "A device which generates Water from surrounded sources or biomes.")
+        add(RagiumCommonTranslation.FLUID_COLLECTOR, "A device which generates Water from surrounded sources or biomes.")
 
-        add(RagiumCommonTranslation.EXP_COLLECTOR, "A device which collects Experience Orbs and converts into liquid.")
         add(RagiumCommonTranslation.FISHER, "A device which do fishing from below 3x3 water sources.")
 
         add(RagiumCommonTranslation.DIM_ANCHOR, "A device which forces to load chunk placed in.")
@@ -465,6 +465,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         add(RagiumCommonTranslation.ICE_CREAM, "Extinguish fire when eaten.")
         add(RagiumCommonTranslation.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
+
+        add(RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE, "Allow Fluid Collector to collect Experience Orbs instead of Water.")
     }
 
     //    Addon    //

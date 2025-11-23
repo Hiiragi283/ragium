@@ -80,11 +80,11 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
 
         override val transferRate: Int = Int.MAX_VALUE
 
-        override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+        override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
             for (direction: Direction in Direction.entries) {
                 energyCache.getBattery(level, pos, direction)?.insert(Int.MAX_VALUE, HTStorageAction.EXECUTE, HTStorageAccess.EXTERNAL)
             }
-            return super.onUpdateServer(level, pos, state)
+            return super.onUpdateMachine(level, pos, state)
         }
     }
 

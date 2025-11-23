@@ -60,7 +60,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEnti
         }
     }
 
-    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
+    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)

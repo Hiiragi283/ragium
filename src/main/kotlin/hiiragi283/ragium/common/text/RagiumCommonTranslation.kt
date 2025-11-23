@@ -49,10 +49,9 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     SIMULATOR("description", "simulator"),
 
     // Blocks - Devices
+    FLUID_COLLECTOR("description", "water_collector"),
     ITEM_BUFFER("description", "item_buffer"),
-    WATER_COLLECTOR("description", "water_collector"),
 
-    EXP_COLLECTOR("description", "exp_collector"),
     FISHER("description", "fisher"),
 
     DIM_ANCHOR("description", "dimensional_anchor"),
@@ -100,6 +99,9 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     AMBROSIA("description", "ambrosia"),
     ICE_CREAM("description", "ice_cream"),
     RAGI_CHERRY("description", "ragi_cherry"),
+
+    // Items - Upgrades
+    EXP_COLLECTOR_UPGRADE("description", "upgrade", "exp_collector"),
 
     // Key Mapping
     KEY_CATEGORY("key", "category"),

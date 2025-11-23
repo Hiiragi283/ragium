@@ -7,6 +7,16 @@ package hiiragi283.ragium.api.util
 fun interface HTContentListener : Runnable {
     fun onContentsChanged()
 
+    fun compose(other: Runnable): HTContentListener = HTContentListener {
+        other.run()
+        this.onContentsChanged()
+    }
+
+    fun andThen(other: Runnable): HTContentListener = HTContentListener {
+        this.onContentsChanged()
+        other.run()
+    }
+
     override fun run() {
         onContentsChanged()
     }

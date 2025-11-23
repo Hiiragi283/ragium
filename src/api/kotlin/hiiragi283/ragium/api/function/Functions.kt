@@ -15,6 +15,8 @@ typealias BlockWithContextFactory<C, BLOCK> = (C, BlockBehaviour.Properties) -> 
 
 typealias ItemWithContextFactory<C, ITEM> = (C, Item.Properties) -> ITEM
 
+fun <T> identity(): (T) -> T = { it }
+
 fun <IP, R> (() -> IP).andThen(f: (IP) -> R): () -> R = { this().let(f) }
 
 fun <P1, IP, R> ((P1) -> IP).andThen(f: (IP) -> R): (P1) -> R = { p1: P1 -> this(p1).let(f) }

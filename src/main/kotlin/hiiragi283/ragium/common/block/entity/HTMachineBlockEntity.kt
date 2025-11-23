@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.world.sendBlockUpdated
 import hiiragi283.ragium.common.item.HTComponentItem
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -20,6 +21,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.enchantment.LevelBasedValue
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Predicate
@@ -72,8 +74,38 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
     lateinit var upgradeSlots: List<HTItemStackSlot>
         private set
 
+    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+        initializeItemSlots(builder, listener)
+        upgradeSlots = (0..3).map { i: Int ->
+            val filter: (ImmutableItemStack) -> Boolean = { stack: ImmutableItemStack ->
+                when {
+                    stack.value() is HTComponentItem -> getMaxMachineTier() == null
+                    else -> stack.isOf(RagiumModTags.Items.MACHINE_UPGRADES)
+                }
+            }
+            builder.addSlot(
+                HTSlotInfo.CATALYST,
+                HTItemStackSlot.create(
+                    listener.andThen { level?.sendBlockUpdated(blockPos) },
+                    HTSlotHelper.getSlotPosX(8),
+                    HTSlotHelper.getSlotPosY(i - 0.5),
+                    1,
+                    HTPredicates.manualOnly(),
+                    HTPredicates.manualOnly(),
+                    filter,
+                ),
+            )
+        }
+        return builder.build()
+    }
+
+    fun hasUpgrade(item: ItemLike): Boolean = upgradeSlots.any { slot: HTItemStackSlot -> slot.getStack()?.isOf(item.asItem()) ?: false }
+
     fun <T : Any> getUpgradeData(type: DataComponentType<T>): List<T> =
         upgradeSlots.mapNotNull { slot: HTItemStackSlot -> slot.getStack()?.get(type) }
+
+    fun <T : Any> getFirstUpgradeData(type: DataComponentType<T>): T? = getUpgradeData(type).firstOrNull()
 
     fun getMaxMachineTier(): HTBaseTier? = upgradeSlots
         .asSequence()
@@ -95,31 +127,7 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
 
     fun calculateEnergy(base: Int): Int = calculateValue(base, RagiumDataComponents.MACHINE_ENERGY)
 
-    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
-        initializeItemSlots(builder, listener)
-        upgradeSlots = (0..3).map { i: Int ->
-            val filter: (ImmutableItemStack) -> Boolean = { stack: ImmutableItemStack ->
-                when {
-                    stack.value() is HTComponentItem -> getMaxMachineTier() == null
-                    else -> stack.isOf(RagiumModTags.Items.MACHINE_UPGRADES)
-                }
-            }
-            builder.addSlot(
-                HTSlotInfo.CATALYST,
-                HTItemStackSlot.create(
-                    listener,
-                    HTSlotHelper.getSlotPosX(8),
-                    HTSlotHelper.getSlotPosY(i - 0.5),
-                    1,
-                    HTPredicates.manualOnly(),
-                    HTPredicates.manualOnly(),
-                    filter,
-                ),
-            )
-        }
-        return builder.build()
-    }
+    //    Save & Load    //
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)

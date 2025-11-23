@@ -149,10 +149,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
         add(RagiumBlocks.SIMULATOR, "シミュレーション室")
         // Devices
+        add(RagiumBlocks.FLUID_COLLECTOR, "液体収集機")
         add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")
-        add(RagiumBlocks.WATER_COLLECTOR, "水収集機")
 
-        add(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
         add(RagiumBlocks.FISHER, "自動釣り機")
 
         add(RagiumBlocks.DIM_ANCHOR, "次元アンカー")
@@ -303,6 +302,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成革")
+        // Upgrades
+        add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")
     }
 
     private fun keyMapping() {
@@ -422,9 +423,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.SIMULATOR, "ブロックやモブの行動を再現して資源を生産する機械です。")
 
         add(RagiumCommonTranslation.ITEM_BUFFER, "周囲のアイテムを収集する設備です。")
-        add(RagiumCommonTranslation.WATER_COLLECTOR, "周囲の水源やバイオームに応じて水を生産する設備です。")
+        add(RagiumCommonTranslation.FLUID_COLLECTOR, "周囲の水源やバイオームに応じて水を生産する設備です。")
 
-        add(RagiumCommonTranslation.EXP_COLLECTOR, "周囲の経験値オーブを収集し，液体に変換する設備です。")
         add(RagiumCommonTranslation.FISHER, "下にある3x3の水源から釣りを行う設備です。")
 
         add(RagiumCommonTranslation.DIM_ANCHOR, "設置されたチャンクを強制的に読み込む設備です。")
@@ -465,6 +465,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         add(RagiumCommonTranslation.ICE_CREAM, "食べると鎮火します。")
         add(RagiumCommonTranslation.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
+
+        add(RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE, "液体収集機が水の代わりに経験値オーブを集めるようになります。")
     }
 
     //    Addon    //
