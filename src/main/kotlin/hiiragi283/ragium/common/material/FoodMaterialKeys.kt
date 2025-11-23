@@ -9,6 +9,9 @@ object FoodMaterialKeys {
     @JvmStatic
     val CHOCOLATE: HTMaterialKey = HTMaterialKey.of("chocolate")
 
+    @JvmStatic
+    val MARSHMALLOW: HTMaterialKey = HTMaterialKey.of("marshmallow")
+
     // Crops
     @JvmStatic
     val WARPED_WART: HTMaterialKey = HTMaterialKey.of("warped_wart")

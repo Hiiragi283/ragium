@@ -188,8 +188,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         factory
             .apply(ItemTags.MEAT)
-            .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.COOKED_MEAT)
-            .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT)
+            .addTag(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.COOKED_MEAT)
+            .addTag(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAW_MEAT)
 
         factory
             .apply(RagiumModTags.Items.RAW_MEAT)
@@ -197,26 +197,13 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .addTag(Tags.Items.FOODS_RAW_FISH)
             .add(Items.ROTTEN_FLESH.toHolderLike())
 
-        addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE)
-            .add(Items.APPLE.toHolderLike())
-
-        addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.BUTTER)
-            .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.BUTTER)
-        addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE)
-            .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.CHOCOLATE)
+        addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE).add(Items.APPLE.toHolderLike())
 
         addMaterial(factory, foodsFruit, FoodMaterialKeys.RAGI_CHERRY)
             .add(RagiumItems.RAGI_CHERRY)
             .add(RagiumItems.RAGI_CHERRY_PULP)
 
-        addMaterial(factory, CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY)
-            .add(RagiumItems.RAGI_CHERRY_JAM)
-
-        addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAW_MEAT)
-            .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT)
-
-        addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.COOKED_MEAT)
-            .addTag(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.COOKED_MEAT)
+        addMaterial(factory, CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY).add(RagiumItems.RAGI_CHERRY_JAM)
     }
 
     //    Categories    //

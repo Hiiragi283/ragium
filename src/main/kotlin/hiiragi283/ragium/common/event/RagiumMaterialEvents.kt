@@ -204,11 +204,11 @@ object RagiumMaterialEvents {
         }
         // Food
         event.modify(FoodMaterialKeys.BUTTER) {
-            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+            addDefaultPrefix(CommonMaterialPrefixes.FOOD)
             addName("Butter", "バター")
         }
         event.modify(FoodMaterialKeys.CHOCOLATE) {
-            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+            addDefaultPrefix(CommonMaterialPrefixes.FOOD)
             addName("Chocolate", "チョコレート")
         }
 
