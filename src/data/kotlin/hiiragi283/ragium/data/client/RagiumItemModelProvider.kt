@@ -2,6 +2,8 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.collection.ImmutableTable
+import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.registry.HTBasicFluidContentNew
 import hiiragi283.ragium.api.registry.HTFluidContent
@@ -29,6 +31,14 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         val tools: Collection<HTDeferredItem<*>> = RagiumItems.TOOLS.values
         val tools1: Collection<HTDeferredItem<*>> = RagiumIntegrationItems.TOOLS.values
 
+        val upgrades: ImmutableTable<String, String, HTSimpleDeferredItem> = buildTable {
+            put("basic_upgrade_base", "energy_capacity", RagiumItems.ENERGY_CAPACITY_UPGRADE)
+            put("advanced_upgrade_base", "energy_capacity", RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE)
+
+            put("basic_upgrade_base", "speed", RagiumItems.SPEED_UPGRADE)
+            put("advanced_upgrade_base", "speed", RagiumItems.ADVANCED_SPEED_UPGRADE)
+        }
+
         buildSet {
             // Ragium
             addAll(RagiumItems.REGISTER.entries)
@@ -42,6 +52,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.HUGE_DRUM_UPGRADE)
             removeAll(tools)
 
+            removeAll(upgrades.values)
             // Integration
             addAll(RagiumIntegrationItems.REGISTER.entries)
 
@@ -103,5 +114,12 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         }.asSequence()
             .map(HTHolderLike::getId)
             .forEach(::handheldItem)
+
+        // Upgrades
+        upgrades.forEach { (base: String, layer: String, item: HTHolderLike) ->
+            withExistingParent(item.getPath(), vanillaId("item", "generated"))
+                .texture("layer0", RagiumAPI.id("item", base))
+                .texture("layer1", RagiumAPI.id("item", layer))
+        }
     }
 }

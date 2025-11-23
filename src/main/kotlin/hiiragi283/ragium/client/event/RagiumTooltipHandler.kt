@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.item.component.HTItemContents
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -75,8 +74,7 @@ object RagiumTooltipHandler {
 
     @JvmStatic
     private fun machineUpgrade(stack: ItemStack, consumer: Consumer<Component>) {
-        val upgrade: HTMachineUpgrade = RagiumPlatform.INSTANCE.getMachineUpgrade(stack) ?: return
-        upgrade.addToTooltip(consumer)
+        RagiumPlatform.INSTANCE.getMachineUpgrade(stack)?.addToTooltip(consumer)
     }
 
     @JvmStatic

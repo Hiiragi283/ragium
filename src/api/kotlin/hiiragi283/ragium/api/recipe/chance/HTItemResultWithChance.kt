@@ -42,7 +42,7 @@ data class HTItemResultWithChance(val base: HTItemResult, val chance: Float) {
                 { base.getStackOrNull(provider) },
                 { chanceIn: Float ->
                     if (chance == 1f) return@map base.getStackOrNull(provider)
-                    
+
                     val chance1: Float = chance + chanceIn
                     val extraCount: Int = chance1.toInt()
 

@@ -20,12 +20,12 @@ object RagiumCreativeTabs {
         "common",
         RagiumTranslation.RAGIUM,
         RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY),
-    ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+    ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Items
-        HTCreativeTabHelper.addToDisplay(output, RagiumItems.REGISTER.entries)
+        HTCreativeTabHelper.addToDisplay(parameters, output, RagiumItems.REGISTER.entries)
         // Blocks
-        HTCreativeTabHelper.addToDisplay(output, RagiumBlocks.REGISTER.blockEntries)
+        HTCreativeTabHelper.addToDisplay(parameters, output, RagiumBlocks.REGISTER.blockEntries)
         // Fluids
-        HTCreativeTabHelper.addToDisplay(output, RagiumFluidContents.REGISTER.itemEntries)
+        HTCreativeTabHelper.addToDisplay(parameters, output, RagiumFluidContents.REGISTER.itemEntries)
     }
 }

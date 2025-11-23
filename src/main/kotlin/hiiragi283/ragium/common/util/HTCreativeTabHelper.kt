@@ -8,9 +8,13 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
 
 data object HTCreativeTabHelper {
     @JvmStatic
-    fun addToDisplay(output: CreativeModeTab.Output, items: Iterable<HTItemHolderLike>) {
+    fun addToDisplay(
+        parameters: CreativeModeTab.ItemDisplayParameters,
+        output: CreativeModeTab.Output,
+        items: Iterable<HTItemHolderLike>,
+    ) {
         for (like: HTItemHolderLike in items) {
-            addToDisplay(output, like)
+            addToDisplay(parameters, output, like)
         }
     }
 
@@ -18,7 +22,7 @@ data object HTCreativeTabHelper {
      * @see mekanism.common.registration.impl.CreativeTabDeferredRegister.addToDisplay
      */
     @JvmStatic
-    fun addToDisplay(output: CreativeModeTab.Output, vararg items: HTItemHolderLike) {
+    fun addToDisplay(parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output, vararg items: HTItemHolderLike) {
         val visibility: CreativeModeTab.TabVisibility = when (output) {
             is BuildCreativeModeTabContentsEvent -> CreativeModeTab.TabVisibility.PARENT_TAB_ONLY
             else -> CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS
@@ -29,7 +33,7 @@ data object HTCreativeTabHelper {
                 if (item.shouldAddDefault()) {
                     output.accept(item, visibility)
                 }
-                item.addItems(like) { output.accept(it, visibility) }
+                item.addItems(like, parameters.holders()) { output.accept(it, visibility) }
             } else {
                 output.accept(item, visibility)
             }

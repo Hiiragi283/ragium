@@ -4,8 +4,9 @@ import hiiragi283.ragium.api.item.HTSubCreativeTabContents
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.common.util.HTPotionHelper
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -27,12 +28,10 @@ class HTPotionDropItem(properties: Properties) :
             ?.addPotionTooltip(tooltips::add, 1f, context.tickRate())
     }
 
-    override fun addItems(baseItem: HTItemHolderLike, consumer: Consumer<ItemStack>) {
-        BuiltInRegistries.POTION
-            .holders()
-            .forEach { holder: Holder<Potion> ->
-                consumer.accept(HTPotionHelper.createPotion(baseItem, holder))
-            }
+    override fun addItems(baseItem: HTItemHolderLike, provider: HolderLookup.Provider, consumer: Consumer<ItemStack>) {
+        for (holder: Holder<Potion> in provider.lookupOrThrow(Registries.POTION).listElements()) {
+            consumer.accept(HTPotionHelper.createPotion(baseItem, holder))
+        }
     }
 
     override fun shouldAddDefault(): Boolean = false

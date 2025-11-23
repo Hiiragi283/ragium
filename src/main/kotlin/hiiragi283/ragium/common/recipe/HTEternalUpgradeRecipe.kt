@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.ragium.api.recipe.HTCustomRecipe
 import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
@@ -22,7 +21,7 @@ class HTEternalUpgradeRecipe(category: CraftingBookCategory) : HTCustomRecipe(ca
             if (stack == null) continue
             if (stack.unwrap().isDamageableItem) {
                 damageable++
-            } else if (stack.isOf(RagiumItems.getComponent(HTComponentTier.ETERNAL))) {
+            } else if (stack.isOf(RagiumItems.ETERNAL_COMPONENT)) {
                 component++
             }
         }

@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -61,7 +62,7 @@ class HTLootTicketItem(properties: Properties) :
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
     }
 
-    override fun addItems(baseItem: HTItemHolderLike, consumer: Consumer<ItemStack>) {
+    override fun addItems(baseItem: HTItemHolderLike, provider: HolderLookup.Provider, consumer: Consumer<ItemStack>) {
         for (tickets: HTDefaultLootTickets in HTDefaultLootTickets.entries) {
             val stack: ItemStack = baseItem.toStack()
             stack.set(RagiumDataComponents.LOOT_TICKET, tickets.targets)

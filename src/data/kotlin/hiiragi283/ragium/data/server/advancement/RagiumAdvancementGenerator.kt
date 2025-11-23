@@ -9,7 +9,6 @@ import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCriteriaTriggers
@@ -312,7 +311,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
         createSimple(
             RagiumAdvancements.ETERNAL_COMPONENT,
             RagiumAdvancements.IRIDESCENTIUM,
-            RagiumItems.getComponent(HTComponentTier.ETERNAL),
+            RagiumItems.ETERNAL_COMPONENT,
         ) { setChallenge() }
     }
 }

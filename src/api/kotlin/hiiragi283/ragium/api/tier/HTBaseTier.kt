@@ -17,6 +17,7 @@ import net.minecraft.util.StringRepresentable
  */
 enum class HTBaseTier(val color: ChatFormatting, private val enName: String, private val jpName: String) :
     StringRepresentable,
+    HTTierProvider,
     HTLangName,
     HTTranslation {
     BASIC(ChatFormatting.GREEN, "Basic", "基本"),
@@ -30,6 +31,8 @@ enum class HTBaseTier(val color: ChatFormatting, private val enName: String, pri
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTBaseTier> = BiCodecs.stringEnum(HTBaseTier::getSerializedName)
     }
+
+    override fun getBaseTier(): HTBaseTier = this
 
     override val translationKey: String = Util.makeDescriptionId("constants", RagiumAPI.id("tier.${name.lowercase()}"))
 
