@@ -133,12 +133,18 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
             ).save(output)
         // Elite
+        HTShapedRecipeBuilder
+            .cross8Mirrored(output, RagiumItems.PROCESSOR_SOCKET) {
+                define('A', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
+                define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+                define('C', RagiumItems.CIRCUIT_BOARD)
+            }
+
         HTCombineItemToObjRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ELITE)),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGI_CRYSTAL),
-                itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL),
+                itemCreator.fromItem(RagiumItems.PROCESSOR_SOCKET),
             ).save(output)
         // Ultimate
         HTCombineItemToObjRecipeBuilder
@@ -146,7 +152,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(RagiumItems.getCircuit(HTCircuitTier.ULTIMATE)),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.ECHO),
-                itemCreator.fromItem(RagiumItems.CIRCUIT_BOARD),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL),
             ).save(output)
     }
 

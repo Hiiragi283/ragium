@@ -18,6 +18,7 @@ import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.tier.HTBaseTier
+import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
@@ -54,7 +55,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromLangPatternMap(HTSimpleLangName("Wall", "壁"), RagiumBlocks.WALLS)
 
         fromMaterialTable(RagiumItems.MATERIALS)
-        fromMaterialMap(HTSimpleLangPattern("%s Circuit", "%s回路"), RagiumItems.CIRCUITS)
+        fromMaterialMap(CommonMaterialPrefixes.CIRCUIT, RagiumItems.CIRCUITS)
         fromMaterialMap(HTSimpleLangPattern("%s Coil", "%sコイル"), RagiumItems.COILS)
         fromMaterialMap(HTSimpleLangPattern("%s Component", "%s構造体"), RagiumItems.COMPONENTS)
 
@@ -135,6 +136,13 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     private fun fromLangMap(provider: HTLangPatternProvider, map: Map<out HTLangName, HTHasTranslationKey>) {
         for ((langName: HTLangName, translationKey: HTHasTranslationKey) in map) {
             add(translationKey, provider.translate(type, langName))
+        }
+    }
+
+    private fun fromMaterialMap(prefix: HTPrefixLike, map: Map<out HTMaterialLike, HTHasTranslationKey>) {
+        for ((material: HTMaterialLike, translationKey: HTHasTranslationKey) in map) {
+            val translatedName: String = HTMaterialTranslations.translate(type, prefix, material) ?: continue
+            add(translationKey, translatedName)
         }
     }
 

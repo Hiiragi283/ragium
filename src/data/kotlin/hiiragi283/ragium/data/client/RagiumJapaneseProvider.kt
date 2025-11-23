@@ -292,6 +292,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
         add(RagiumItems.POLYMER_CATALYST, "重合触媒")
         add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
+        add(RagiumItems.PROCESSOR_SOCKET, "プロセッサソケット")
         add(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
@@ -307,7 +308,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.FORTUNE_UPGRADE, "幸運アップグレード")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")
-        add(RagiumItems.FISING_UPGRADE, "釣りアップグレード")
+        add(RagiumItems.FISHING_UPGRADE, "釣りアップグレード")
         add(RagiumItems.MOB_CAPTURE_UPGRADE, "モブ捕獲アップグレード")
 
         add(RagiumItems.CREATIVE_UPGRADE, "クリエイティブ用アップグレード")

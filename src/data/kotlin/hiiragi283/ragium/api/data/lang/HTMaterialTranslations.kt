@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.tier.HTCircuitTier
 
 object HTMaterialTranslations {
     @JvmField
@@ -36,6 +37,7 @@ object HTMaterialTranslations {
         register(CommonMaterialPrefixes.RAW_MATERIAL, "Raw %s", "%sの原石")
         register(CommonMaterialPrefixes.ROD, "%s Rod", "%s棒")
 
+        register(CommonMaterialPrefixes.CIRCUIT, "%s Circuit", "%s回路")
         register(CommonMaterialPrefixes.DOUGH, "%s Dough", "%s粉の生地")
         register(CommonMaterialPrefixes.FLOUR, "%s Flour", "%s粉")
         register(CommonMaterialPrefixes.FUEL, "%s", "%s")
@@ -62,6 +64,9 @@ object HTMaterialTranslations {
 
         register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "Sawdust", "おがくず")
         register(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT, "Minced Meat", "ひき肉")
+
+        register(CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE, "Crystal Processor", "結晶プロセッサ")
+        register(CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE, "Artificial Artifact", "人工的人工物")
     }
 
     fun getLangName(material: HTMaterialLike): HTLangName? = (material as? HTLangName)
@@ -69,13 +74,13 @@ object HTMaterialTranslations {
             .getMaterialDefinition(material.asMaterialKey())
             .get<HTLangNameMaterialAttribute>()
 
-    fun translate(type: HTLanguageType, prefix: HTPrefixLike, key: HTMaterialKey): String? {
-        val customName: HTLangName? = MATERIAL_MAP[prefix.asMaterialPrefix(), key]
+    fun translate(type: HTLanguageType, prefix: HTPrefixLike, material: HTMaterialLike): String? {
+        val customName: HTLangName? = MATERIAL_MAP[prefix.asMaterialPrefix(), material.asMaterialKey()]
         if (customName != null) {
             return customName.getTranslatedName(type)
         } else {
             val translation: HTLangPatternProvider = PREFIX_MAP[prefix] ?: DEFAULT_PREFIX_PATTERN
-            val translatedName: HTLangName = getLangName(key) ?: return null
+            val translatedName: HTLangName = getLangName(material) ?: return null
             return translation.translate(type, translatedName)
         }
     }
