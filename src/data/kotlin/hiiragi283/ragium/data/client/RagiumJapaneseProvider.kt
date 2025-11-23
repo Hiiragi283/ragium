@@ -195,6 +195,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.CREAM, "クリーム")
         addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.RAGI_CHERRY_JUICE, "らぎチェリージュース")
+        addFluid(RagiumFluidContents.SLIME, "スライム")
+        addFluid(RagiumFluidContents.GLYCEROL, "グリセロール")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "有機的変異原")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
@@ -222,7 +224,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
-        add(RagiumItems.NITROPOWDER, "ニトロパウダー")
         add(RagiumItems.POTION_DROP, "ポーションの雫")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RAGI_COKE, "らぎコークス")

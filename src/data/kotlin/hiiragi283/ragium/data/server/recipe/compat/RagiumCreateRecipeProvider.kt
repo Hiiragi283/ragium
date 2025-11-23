@@ -35,7 +35,7 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
 
         // Sandpaper
         listOf(
-            RagiumMaterialKeys.RAGI_CRYSTAL
+            RagiumMaterialKeys.RAGI_CRYSTAL,
         ).forEach { key: HTMaterialKey ->
             HTShapelessRecipeBuilder
                 .equipment(RagiumIntegrationItems.getSandPaper(key))

@@ -199,11 +199,12 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.item(Items.OBSIDIAN))
             .save(output)
 
-        nitro()
+        acid()
+        explosives()
     }
 
     @JvmStatic
-    private fun nitro() {
+    private fun acid() {
         // Sulfur + Water -> Sulfuric Acid
         HTComplexRecipeBuilder
             .mixing()
@@ -225,18 +226,30 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NITRIC_ACID, 500))
             .setResult(resultHelper.fluid(RagiumFluidContents.MIXTURE_ACID, 1000))
             .save(output)
-        // Mixture Acid -> Nitropowder
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.CRIMSON_CRYSTAL),
-                fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 1000),
-            ).addResult(resultHelper.item(RagiumItems.NITROPOWDER))
-            .save(output)
+    }
 
-        // Nitropowder -> Gunpowder
-        HTShapelessRecipeBuilder
-            .misc(Items.GUNPOWDER, 4)
-            .addIngredient(RagiumItems.NITROPOWDER)
+    @JvmStatic
+    private fun explosives() {
+        // Slime
+        meltAndFreeze(
+            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.GEM)),
+            Items.SLIME_BALL.toHolderLike(),
+            RagiumFluidContents.SLIME,
+            250,
+        )
+
+        meltAndFreeze(
+            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK)),
+            Items.SLIME_BLOCK.toHolderLike(),
+            RagiumFluidContents.SLIME,
+            250 * 9,
+        )
+        // Glycerol
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromItem(Items.SUGAR, 2))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.SLIME, 1000))
+            .setResult(resultHelper.fluid(RagiumFluidContents.GLYCEROL, 1000))
             .save(output)
     }
 
@@ -300,11 +313,11 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000))
             .save(output)
-        // Fuel + Nitropowder -> Crimson Fuel
+        // Fuel + Mixture Acid -> Crimson Fuel
         HTComplexRecipeBuilder
             .mixing()
-            .addIngredient(itemCreator.fromItem(RagiumItems.NITROPOWDER))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.FUEL, 1000))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 250))
             .setResult(resultHelper.fluid(RagiumFluidContents.CRIMSON_FUEL, 1000))
             .save(output)
     }

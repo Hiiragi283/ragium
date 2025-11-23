@@ -71,6 +71,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             // Organic
             RagiumFluidContents.CREAM,
             RagiumFluidContents.CHOCOLATE,
+            RagiumFluidContents.SLIME,
             RagiumFluidContents.ORGANIC_MUTAGEN,
             // Oil
             RagiumFluidContents.CRUDE_OIL,
