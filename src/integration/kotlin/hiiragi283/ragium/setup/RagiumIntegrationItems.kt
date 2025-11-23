@@ -110,7 +110,6 @@ object RagiumIntegrationItems {
         if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
             listOf(
                 RagiumMaterialKeys.RAGI_CRYSTAL,
-                RagiumMaterialKeys.IRIDESCENTIUM,
             ).forEach { key: HTMaterialKey ->
                 this.put(
                     HTSandPaperToolVariant,
@@ -236,20 +235,12 @@ object RagiumIntegrationItems {
         for (tool: ItemLike in TOOLS.columnValues(RagiumMaterialKeys.RAGI_CRYSTAL)) {
             setEnch(tool, Enchantments.MENDING)
         }
-        // Create
-        if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
-            event.modify(getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL)) { builder ->
-                builder.set(DataComponents.MAX_DAMAGE, 8 * 8)
-            }
-            event.modify(getSandPaper(RagiumMaterialKeys.IRIDESCENTIUM)) { builder ->
-                builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                builder.set(DataComponents.RARITY, Rarity.EPIC)
-                builder.set(DataComponents.UNBREAKABLE, Unbreakable(true))
-            }
+        event.modify(getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL)) { builder ->
+            builder.set(DataComponents.MAX_DAMAGE, 8 * 8)
         }
 
         // Mekanism
-        if (RagiumIntegration.isLoaded(RagiumConst.MEKANISM)) {
+        if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
             modify(MekanismItems.YELLOW_CAKE_URANIUM, DataComponents.FOOD, RagiumFoods.YELLOW_CAKE)
         }
     }
