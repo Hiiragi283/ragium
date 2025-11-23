@@ -19,7 +19,6 @@ import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.createItemStack
-import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.createKey
@@ -44,7 +43,6 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTWashingEmiRec
 import hiiragi283.ragium.client.integration.emi.type.HTRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
-import hiiragi283.ragium.common.fluid.HTFluidType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
@@ -71,7 +69,6 @@ import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
@@ -283,7 +280,7 @@ class RagiumEmiPlugin : EmiPlugin {
         }
 
         // World Vaporization
-        for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
+        /*for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
             val fluidType: FluidType = content.getType()
             if (fluidType is HTFluidType) {
                 val result: EmiStack = fluidType.dropItem?.toEmi() ?: continue
@@ -292,7 +289,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     rightInput(EmiStack.EMPTY, false)
                 }
             }
-        }
+        }*/
         // Crude Oil + Lava -> Soul Sand
         registry.addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidHolderLike.LAVA)
         // Water + Eldritch Flux -> Eldritch Stone
