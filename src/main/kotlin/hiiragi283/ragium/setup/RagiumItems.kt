@@ -25,7 +25,6 @@ import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
-import hiiragi283.ragium.common.item.HTDrumUpgradeItem
 import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionDropItem
@@ -387,15 +386,6 @@ object RagiumItems {
     }
 
     @JvmField
-    val MEDIUM_DRUM_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("medium_drum_upgrade", HTDrumUpgradeItem::Medium)
-
-    @JvmField
-    val LARGE_DRUM_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("large_drum_upgrade", HTDrumUpgradeItem::Large)
-
-    @JvmField
-    val HUGE_DRUM_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("huge_drum_upgrade", HTDrumUpgradeItem::Huge)
-
-    @JvmField
     val SMITHING_TEMPLATES: Map<HTMaterialKey, HTSimpleDeferredItem> = listOf(
         RagiumMaterialKeys.AZURE_STEEL,
         RagiumMaterialKeys.DEEP_STEEL,
@@ -650,6 +640,14 @@ object RagiumItems {
     @JvmField
     val EXP_COLLECTOR_UPGRADE: HTSimpleDeferredItem =
         registerUpgrade("exp_collector", RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE)
+
+    @JvmField
+    val FISING_UPGRADE: HTSimpleDeferredItem =
+        registerUpgrade("fishing", RagiumCommonTranslation.FISHING_UPGRADE)
+
+    @JvmField
+    val MOB_CAPTURE_UPGRADE: HTSimpleDeferredItem =
+        registerUpgrade("mob_capture", RagiumCommonTranslation.MOB_CAPTURE_UPGRADE)
 
     @JvmStatic
     private fun registerUpgrade(name: String, translation: HTTranslation): HTSimpleDeferredItem =

@@ -151,14 +151,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.SIMULATOR, "シミュレーション室")
         // Devices
         add(RagiumBlocks.FLUID_COLLECTOR, "液体収集機")
-        add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")
-
-        add(RagiumBlocks.FISHER, "自動釣り機")
+        add(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
 
         add(RagiumBlocks.DIM_ANCHOR, "次元アンカー")
         add(RagiumBlocks.ENI, "E.N.I.")
 
-        add(RagiumBlocks.MOB_CAPTURER, "モブ捕獲機")
         add(RagiumBlocks.TELEPAD, "テレパッド")
 
         add(RagiumBlocks.CEU, "C.E.U.")
@@ -240,10 +237,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
         // Tool
-        add(RagiumItems.MEDIUM_DRUM_UPGRADE, "ドラム強化（中）")
-        add(RagiumItems.LARGE_DRUM_UPGRADE, "ドラム強化（大）")
-        add(RagiumItems.HUGE_DRUM_UPGRADE, "ドラム強化（特大）")
-
         add(RagiumItems.DRILL, "電動ドリル")
 
         add(RagiumItems.ADVANCED_MAGNET, "発展らぎマグネット")
@@ -314,6 +307,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.FORTUNE_UPGRADE, "幸運アップグレード")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")
+        add(RagiumItems.FISING_UPGRADE, "釣りアップグレード")
+        add(RagiumItems.MOB_CAPTURE_UPGRADE, "モブ捕獲アップグレード")
 
         add(RagiumItems.CREATIVE_UPGRADE, "クリエイティブ用アップグレード")
     }
@@ -440,15 +435,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.ENCHANTER, "アイテムからエンチャント本を作成する機械です。")
         add(RagiumCommonTranslation.SIMULATOR, "ブロックやモブの行動を再現して資源を生産する機械です。")
 
-        add(RagiumCommonTranslation.ITEM_BUFFER, "周囲のアイテムを収集する設備です。")
         add(RagiumCommonTranslation.FLUID_COLLECTOR, "周囲の水源やバイオームに応じて水を生産する設備です。")
-
-        add(RagiumCommonTranslation.FISHER, "下にある3x3の水源から釣りを行う設備です。")
 
         add(RagiumCommonTranslation.DIM_ANCHOR, "設置されたチャンクを強制的に読み込む設備です。")
         add(RagiumCommonTranslation.ENI, "エネルギーネットワークにアクセスする設備です。")
-
-        add(RagiumCommonTranslation.MOB_CAPTURER, "周囲のモブを異質な卵に捕まえる設備です。")
 
         add(RagiumCommonTranslation.CEU, "無制限にエネルギーを供給する設備です。")
 
@@ -484,7 +474,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.ICE_CREAM, "食べると鎮火します。")
         add(RagiumCommonTranslation.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
 
-        add(RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE, "液体収集機が水の代わりに経験値オーブを集めるようになります。")
+        add(RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE, "液体収集機が経験値オーブを集めるようになります。")
+        add(RagiumCommonTranslation.FISHING_UPGRADE, "アイテム収集機が下の3x3の水源から魚を釣るようになります。")
+        add(RagiumCommonTranslation.MOB_CAPTURE_UPGRADE, "アイテム収集機が異質な卵を消費してモブを捕まえるようになります。")
     }
 
     //    Addon    //

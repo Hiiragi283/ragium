@@ -21,6 +21,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -246,14 +247,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTShapedRecipeBuilder
-            .create(RagiumBlocks.ITEM_BUFFER)
+            .create(RagiumBlocks.ITEM_COLLECTOR)
             .pattern("ABA")
             .define('A', Tags.Items.CHESTS)
             .define('B', RagiumBlocks.DEVICE_CASING)
-            .save(output)
-        // Advanced
-        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.FISHER, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.TOOLS_FISHING_ROD)
             .save(output)
         // Elite
         createComponentUpgrade(HTComponentTier.ELITE, RagiumBlocks.DIM_ANCHOR, RagiumBlocks.DEVICE_CASING)
@@ -264,10 +261,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.DIAMOND)
             .save(output)
         // Ultimate
-        createComponentUpgrade(HTComponentTier.ULTIMATE, RagiumBlocks.MOB_CAPTURER, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.ELDRITCH_PEARL)
-            .save(output)
-
         createComponentUpgrade(HTComponentTier.ULTIMATE, RagiumBlocks.TELEPAD, RagiumBlocks.DEVICE_CASING)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
             .save(output)
@@ -320,13 +313,19 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
             .save(output)
 
-        // Exp Collector
-        HTShapedRecipeBuilder
-            .create(RagiumItems.EXP_COLLECTOR_UPGRADE)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-            .define('B', Items.EXPERIENCE_BOTTLE)
-            .save(output)
+        // Device
+        mapOf(
+            RagiumItems.EXP_COLLECTOR_UPGRADE to Ingredient.of(Items.EXPERIENCE_BOTTLE),
+            RagiumItems.FISING_UPGRADE to Ingredient.of(Tags.Items.TOOLS_FISHING_ROD),
+            RagiumItems.MOB_CAPTURE_UPGRADE to Ingredient.of(RagiumItems.ELDRITCH_EGG),
+        ).forEach { (upgrade: ItemLike, item: Ingredient) ->
+            HTShapedRecipeBuilder
+                .create(upgrade)
+                .hollow4()
+                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+                .define('B', item)
+                .save(output)
+        }
     }
 
     //    Storage    //

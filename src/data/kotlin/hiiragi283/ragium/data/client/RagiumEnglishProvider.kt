@@ -160,14 +160,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
         add(RagiumBlocks.FLUID_COLLECTOR, "Fluid Collector")
-        add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
-
-        add(RagiumBlocks.FISHER, "Fisher")
+        add(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
 
         add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
         add(RagiumBlocks.ENI, "E.N.I.")
 
-        add(RagiumBlocks.MOB_CAPTURER, "Mob Capturer")
         add(RagiumBlocks.TELEPAD, "Telepad")
 
         add(RagiumBlocks.CEU, "C.E.U.")
@@ -249,10 +246,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "Night Vision Goggles")
         // Tool
-        add(RagiumItems.MEDIUM_DRUM_UPGRADE, "Medium Drum Upgrade")
-        add(RagiumItems.LARGE_DRUM_UPGRADE, "Large Drum Upgrade")
-        add(RagiumItems.HUGE_DRUM_UPGRADE, "Huge Drum Upgrade")
-
         add(RagiumItems.DRILL, "Electric Drill")
 
         add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
@@ -313,6 +306,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.FORTUNE_UPGRADE, "Fortune Upgrade")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
+        add(RagiumItems.FISING_UPGRADE, "Fishing Upgrade")
+        add(RagiumItems.MOB_CAPTURE_UPGRADE, "Mob Capture Upgrade")
 
         add(RagiumItems.CREATIVE_UPGRADE, "Creative Upgrade")
     }
@@ -440,15 +435,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.ENCHANTER, "A machine which create enchanted books from items.")
         add(RagiumCommonTranslation.SIMULATOR, "A machine which simulates behavior of blocks or mobs to generate resources.")
 
-        add(RagiumCommonTranslation.ITEM_BUFFER, "A device which collects items around.")
         add(RagiumCommonTranslation.FLUID_COLLECTOR, "A device which generates Water from surrounded sources or biomes.")
-
-        add(RagiumCommonTranslation.FISHER, "A device which do fishing from below 3x3 water sources.")
 
         add(RagiumCommonTranslation.DIM_ANCHOR, "A device which forces to load chunk placed in.")
         add(RagiumCommonTranslation.ENI, "A device which enables to access Energy Network.")
-
-        add(RagiumCommonTranslation.MOB_CAPTURER, "A device which captures mobs into Eldritch Egg.")
 
         add(RagiumCommonTranslation.CEU, "A device which provides unlimited amount of energy.")
 
@@ -484,7 +474,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.ICE_CREAM, "Extinguish fire when eaten.")
         add(RagiumCommonTranslation.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
 
-        add(RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE, "Allow Fluid Collector to collect Experience Orbs instead of Water.")
+        add(RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE, "Allow Fluid Collector to collect Experience Orbs.")
+        add(RagiumCommonTranslation.FISHING_UPGRADE, "Allow Item Collector to do fishing from below 3x3 Water Source.")
+        add(RagiumCommonTranslation.MOB_CAPTURE_UPGRADE, "Allow Item Collector to capture mobs by Eldritch Egg.")
     }
 
     //    Addon    //

@@ -225,19 +225,11 @@ object RagiumBlockTypes {
         .build(RagiumCommonTranslation.FLUID_COLLECTOR)
 
     @JvmField
-    val ITEM_BUFFER: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.ITEM_BUFFER }
-        .addMenu { RagiumMenuTypes.ITEM_BUFFER }
+    val ITEM_COLLECTOR: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.ITEM_COLLECTOR }
+        .addMenu { RagiumMenuTypes.ITEM_COLLECTOR }
         .addTier(HTMachineTier.BASIC)
-        .build(RagiumCommonTranslation.ITEM_BUFFER)
-
-    // Advanced
-    @JvmField
-    val FISHER: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.FISHER }
-        .addMenu { RagiumMenuTypes.CAPTURER }
-        .addTier(HTMachineTier.ADVANCED)
-        .build(RagiumCommonTranslation.FISHER)
+        .build(RagiumCommonTranslation.ITEM_COLLECTOR)
 
     // Elite
     @JvmField
@@ -252,14 +244,6 @@ object RagiumBlockTypes {
         .addMenu { RagiumMenuTypes.ENERGY_NETWORK_ACCESS }
         .addTier(HTMachineTier.ELITE)
         .build(RagiumCommonTranslation.ENI)
-
-    // Ultimate
-    @JvmField
-    val MOB_CAPTURER: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.MOB_CAPTURER }
-        .addMenu { RagiumMenuTypes.CAPTURER }
-        .addTier(HTMachineTier.ULTIMATE)
-        .build(RagiumCommonTranslation.MOB_CAPTURER)
 
     @JvmField
     val TELEPAD: HTEntityBlockType = HTEntityBlockType

@@ -295,6 +295,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         factory
             .apply(RagiumModTags.Items.MACHINE_UPGRADES)
             .add(RagiumItems.EXP_COLLECTOR_UPGRADE)
+            .add(RagiumItems.FISING_UPGRADE)
+            .add(RagiumItems.MOB_CAPTURE_UPGRADE)
 
         factory
             .apply(RagiumModTags.Items.POLYMER_RESIN)
@@ -326,9 +328,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             // .add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
             .add(RagiumItems.BOTTLED_BEE)
             .add(RagiumItems.DRILL)
-            .add(RagiumItems.HUGE_DRUM_UPGRADE)
-            .add(RagiumItems.LARGE_DRUM_UPGRADE)
-            .add(RagiumItems.MEDIUM_DRUM_UPGRADE)
     }
 
     //    Integration    //
