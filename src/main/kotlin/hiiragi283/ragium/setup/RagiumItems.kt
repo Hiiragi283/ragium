@@ -103,6 +103,9 @@ object RagiumItems {
         REGISTER.addAlias(RagiumAPI.id("blackstone_dust"), vanillaId("blackstone"))
         REGISTER.addAlias(RagiumAPI.id("obsidian_dust"), vanillaId("obsidian"))
 
+        REGISTER.addAlias("elite_circuit", "crystal_processor")
+        REGISTER.addAlias("ultimate_circuit", "artificial_artifact")
+
         REGISTER.register(eventBus)
 
         eventBus.addListener(::registerItemCapabilities)
@@ -525,19 +528,8 @@ object RagiumItems {
     val COILS: Map<HTMaterialKey, HTSimpleDeferredItem> = arrayOf(RagiumMaterialKeys.RAGI_ALLOY, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
         .associateWith { key: HTMaterialKey -> REGISTER.registerSimpleItem("${key.name}_coil") }
 
-    @JvmField
-    val CIRCUITS: Map<HTCircuitTier, HTDeferredItem<*>> = HTCircuitTier.entries.associateWith { tier: HTCircuitTier ->
-        REGISTER.registerItemWith("${tier.asMaterialName()}_circuit", tier, ::HTTierBasedItem)
-    }
-
     @JvmStatic
     fun getCoil(key: HTMaterialKey): HTDeferredItem<*> = COILS[key]!!
-
-    @JvmStatic
-    fun getCircuit(tier: HTCircuitTier): HTDeferredItem<*> = CIRCUITS[tier]!!
-
-    @JvmField
-    val GRAVITATIONAL_UNIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("gravitational_unit")
 
     // Catalyst
     @JvmField
@@ -583,6 +575,22 @@ object RagiumItems {
     @JvmField
     val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
 
+    @JvmField
+    val PROCESSOR_SOCKET: HTSimpleDeferredItem = REGISTER.registerSimpleItem("processor_socket")
+
+    @JvmField
+    val CIRCUITS: Map<HTCircuitTier, HTDeferredItem<*>> = HTCircuitTier.entries.associateWith { tier: HTCircuitTier ->
+        val name: String = when (tier) {
+            HTCircuitTier.ELITE -> "crystal_processor"
+            HTCircuitTier.ULTIMATE -> "artificial_artifact"
+            else -> "${tier.asMaterialName()}_circuit"
+        }
+        REGISTER.registerItemWith(name, tier, ::HTTierBasedItem)
+    }
+
+    @JvmStatic
+    fun getCircuit(tier: HTCircuitTier): HTDeferredItem<*> = CIRCUITS[tier]!!
+
     //    Vehicles    //
 
     @JvmField
@@ -601,6 +609,9 @@ object RagiumItems {
 
     @JvmStatic
     fun getComponent(tier: HTComponentTier): HTSimpleDeferredItem = COMPONENTS[tier]!!
+
+    @JvmField
+    val GRAVITATIONAL_UNIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("gravitational_unit")
 
     @JvmField
     val ETERNAL_COMPONENT: HTSimpleDeferredItem =
@@ -642,7 +653,7 @@ object RagiumItems {
         registerUpgrade("exp_collector", RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE)
 
     @JvmField
-    val FISING_UPGRADE: HTSimpleDeferredItem =
+    val FISHING_UPGRADE: HTSimpleDeferredItem =
         registerUpgrade("fishing", RagiumCommonTranslation.FISHING_UPGRADE)
 
     @JvmField

@@ -291,6 +291,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.LUMINOUS_PASTE, "Luminous Paste")
         add(RagiumItems.POLYMER_CATALYST, "Polymerization Catalyst")
         add(RagiumItems.POLYMER_RESIN, "Polymer Resin")
+        add(RagiumItems.PROCESSOR_SOCKET, "Processor Socket")
         add(RagiumItems.REDSTONE_BOARD, "Redstone Board")
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
@@ -306,7 +307,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.FORTUNE_UPGRADE, "Fortune Upgrade")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
-        add(RagiumItems.FISING_UPGRADE, "Fishing Upgrade")
+        add(RagiumItems.FISHING_UPGRADE, "Fishing Upgrade")
         add(RagiumItems.MOB_CAPTURE_UPGRADE, "Mob Capture Upgrade")
 
         add(RagiumItems.CREATIVE_UPGRADE, "Creative Upgrade")

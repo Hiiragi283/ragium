@@ -75,7 +75,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = when {
-        hasUpgrade(RagiumItems.FISING_UPGRADE) -> collectFish(level, pos)
+        hasUpgrade(RagiumItems.FISHING_UPGRADE) -> collectFish(level, pos)
         hasUpgrade(RagiumItems.MOB_CAPTURE_UPGRADE) -> collectMobs(level, pos)
         else -> collectItem(level, pos)
     }
@@ -109,7 +109,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     private fun collectMobs(level: ServerLevel, pos: BlockPos): Boolean {
-        if (!RagiumItems.ELDRITCH_EGG.isOf(inputSlot.getStack())) return false 
+        if (!RagiumItems.ELDRITCH_EGG.isOf(inputSlot.getStack())) return false
         // 範囲内のエンティティを取得する
         val entities: List<LivingEntity> = level.getEntitiesOfClass(
             LivingEntity::class.java,

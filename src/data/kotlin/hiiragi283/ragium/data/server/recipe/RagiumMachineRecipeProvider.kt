@@ -316,7 +316,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         // Device
         mapOf(
             RagiumItems.EXP_COLLECTOR_UPGRADE to Ingredient.of(Items.EXPERIENCE_BOTTLE),
-            RagiumItems.FISING_UPGRADE to Ingredient.of(Tags.Items.TOOLS_FISHING_ROD),
+            RagiumItems.FISHING_UPGRADE to Ingredient.of(Tags.Items.TOOLS_FISHING_ROD),
             RagiumItems.MOB_CAPTURE_UPGRADE to Ingredient.of(RagiumItems.ELDRITCH_EGG),
         ).forEach { (upgrade: ItemLike, item: Ingredient) ->
             HTShapedRecipeBuilder
