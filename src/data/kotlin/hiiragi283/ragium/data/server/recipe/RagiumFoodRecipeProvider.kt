@@ -161,7 +161,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .washing(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALT),
                 fluidCreator.fromHolder(RagiumFluidContents.CREAM, 250),
-            ).addResult(resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.BUTTER))
+            ).addResult(resultHelper.item(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.BUTTER))
             .save(output)
 
         // Cake
@@ -216,12 +216,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToObjRecipeBuilder
             .compressing(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT),
-                resultHelper.item(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT),
+                resultHelper.item(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAW_MEAT),
             ).save(output)
 
         HTCookingRecipeBuilder
-            .smeltingAndSmoking(RagiumItems.getIngot(FoodMaterialKeys.COOKED_MEAT)) {
-                addIngredient(CommonMaterialPrefixes.INGOT, FoodMaterialKeys.RAW_MEAT)
+            .smeltingAndSmoking(RagiumItems.getFood(FoodMaterialKeys.COOKED_MEAT)) {
+                addIngredient(RagiumItems.getFood(FoodMaterialKeys.RAW_MEAT))
                 setExp(0.35f)
                 save(output)
             }
@@ -229,7 +229,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .create(RagiumItems.CANNED_COOKED_MEAT, 8)
             .hollow8()
-            .define('A', CommonMaterialPrefixes.INGOT, FoodMaterialKeys.COOKED_MEAT)
+            .define('A', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.COOKED_MEAT)
             .define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
             .save(output)
     }

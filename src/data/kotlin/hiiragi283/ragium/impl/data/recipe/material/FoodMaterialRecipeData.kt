@@ -39,6 +39,6 @@ object FoodMaterialRecipeData {
 
         setCatalyst(RagiumItems.getMold(CommonMaterialPrefixes.INGOT))
 
-        addOutput(RagiumItems.getIngot(FoodMaterialKeys.CHOCOLATE), CommonMaterialPrefixes.INGOT, FoodMaterialKeys.CHOCOLATE)
+        addOutput(RagiumItems.getFood(FoodMaterialKeys.CHOCOLATE), CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE)
     }
 }

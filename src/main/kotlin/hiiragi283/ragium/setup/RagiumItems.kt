@@ -71,6 +71,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
@@ -217,10 +218,6 @@ object RagiumItems {
         ).forEach { register(CommonMaterialPrefixes.GEM, it, it.name) }
 
         // Ingots
-        fun ingot(material: HTMaterialLike, operator: UnaryOperator<Item.Properties> = UnaryOperator.identity()) {
-            register(CommonMaterialPrefixes.INGOT, material, "${material.asMaterialName()}_ingot", operator)
-        }
-
         arrayOf(
             RagiumMaterialKeys.RAGI_ALLOY,
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
@@ -228,11 +225,21 @@ object RagiumItems {
             RagiumMaterialKeys.DEEP_STEEL,
             RagiumMaterialKeys.NIGHT_METAL,
             RagiumMaterialKeys.IRIDESCENTIUM,
-        ).forEach(::ingot)
-        ingot(FoodMaterialKeys.BUTTER)
-        ingot(FoodMaterialKeys.CHOCOLATE) { it.food(RagiumFoods.CHOCOLATE) }
-        ingot(FoodMaterialKeys.RAW_MEAT) { it.food(Foods.BEEF) }
-        ingot(FoodMaterialKeys.COOKED_MEAT) { it.food(Foods.COOKED_BEEF) }
+        ).forEach { register(CommonMaterialPrefixes.INGOT, it, "${it.asMaterialName()}_ingot") }
+
+        // Foods
+        fun food(key: HTMaterialKey) {
+            register(CommonMaterialPrefixes.FOOD, key, "${key.name}_ingot")
+        }
+
+        fun food(key: HTMaterialKey, food: FoodProperties) {
+            register(CommonMaterialPrefixes.FOOD, key, "${key.name}_ingot") { it.food(food) }
+        }
+
+        food(FoodMaterialKeys.BUTTER)
+        food(FoodMaterialKeys.CHOCOLATE, RagiumFoods.CHOCOLATE)
+        food(FoodMaterialKeys.RAW_MEAT, Foods.BEEF)
+        food(FoodMaterialKeys.COOKED_MEAT, Foods.COOKED_BEEF)
         // Nuggets
         arrayOf(
             RagiumMaterialKeys.RAGI_ALLOY,
@@ -265,6 +272,9 @@ object RagiumItems {
 
     @JvmStatic
     fun getGem(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.GEM, material)
+
+    @JvmStatic
+    fun getFood(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.FOOD, material)
 
     @JvmStatic
     fun getIngot(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.INGOT, material)
