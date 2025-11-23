@@ -49,14 +49,12 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             addAll(RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.STORAGE_BLOCK).values)
             // Device
             add(RagiumBlocks.DEVICE_CASING)
-            add(RagiumBlocks.ITEM_BUFFER)
 
-            add(RagiumBlocks.FISHER)
+            add(RagiumBlocks.ITEM_COLLECTOR)
 
             add(RagiumBlocks.DIM_ANCHOR)
             add(RagiumBlocks.ENI)
 
-            add(RagiumBlocks.MOB_CAPTURER)
             add(RagiumBlocks.TELEPAD)
 
             add(RagiumBlocks.CEU)

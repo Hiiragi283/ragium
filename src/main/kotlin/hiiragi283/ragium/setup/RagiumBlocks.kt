@@ -91,6 +91,10 @@ object RagiumBlocks {
         // Collector
         REGISTER.addAlias("water_collector", "fluid_collector")
         REGISTER.addAlias("exp_collector", "fluid_collector")
+
+        REGISTER.addAlias("fisher", "item_collector")
+        REGISTER.addAlias("item_buffer", "item_collector")
+        REGISTER.addAlias("mob_capturer", "item_collector")
     }
 
     @JvmStatic
@@ -546,13 +550,8 @@ object RagiumBlocks {
         registerMachineTier("fluid_collector", RagiumBlockTypes.FLUID_COLLECTOR, machineProperty())
 
     @JvmField
-    val ITEM_BUFFER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("item_buffer", RagiumBlockTypes.ITEM_BUFFER, machineProperty())
-
-    // Advanced
-    @JvmField
-    val FISHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("fisher", RagiumBlockTypes.FISHER, machineProperty())
+    val ITEM_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("item_collector", RagiumBlockTypes.ITEM_COLLECTOR, machineProperty())
 
     // Elite
     @JvmField
@@ -564,10 +563,6 @@ object RagiumBlocks {
         registerMachineTier("energy_network_interface", RagiumBlockTypes.ENI, machineProperty())
 
     // Ultimate
-    @JvmField
-    val MOB_CAPTURER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("mob_capturer", RagiumBlockTypes.MOB_CAPTURER, machineProperty())
-
     @JvmField
     val TELEPAD: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("telepad", RagiumBlockTypes.TELEPAD, machineProperty())

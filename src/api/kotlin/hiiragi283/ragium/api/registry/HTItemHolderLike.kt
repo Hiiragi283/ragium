@@ -76,7 +76,7 @@ interface HTItemHolderLike :
 
     fun isOf(stack: ItemStack): Boolean = stack.`is`(this.asItem())
 
-    fun isOf(stack: ImmutableItemStack): Boolean = stack.isOf(this.asItem())
+    fun isOf(stack: ImmutableItemStack?): Boolean = stack?.isOf(this.asItem()) ?: false
 
     /**
      * 指定した[count]から[ItemStack]を返します。

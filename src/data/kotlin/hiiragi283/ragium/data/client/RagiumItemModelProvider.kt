@@ -47,9 +47,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.POTION_DROP)
 
             removeAll(HTChargeVariant.entries.map(HTChargeVariant::getItem))
-            remove(RagiumItems.MEDIUM_DRUM_UPGRADE)
-            remove(RagiumItems.LARGE_DRUM_UPGRADE)
-            remove(RagiumItems.HUGE_DRUM_UPGRADE)
             removeAll(tools)
 
             removeAll(upgrades.values)

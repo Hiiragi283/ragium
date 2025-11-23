@@ -19,10 +19,8 @@ import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTFisherBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTMobCapturerBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
@@ -71,6 +69,10 @@ object RagiumBlockEntityTypes {
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias("water_collector", "fluid_collector")
         REGISTER.addAlias("exp_collector", "fluid_collector")
+
+        REGISTER.addAlias("fisher", "item_collector")
+        REGISTER.addAlias("item_buffer", "item_collector")
+        REGISTER.addAlias("mob_capturer", "item_collector")
 
         REGISTER.register(eventBus)
 
@@ -231,16 +233,9 @@ object RagiumBlockEntityTypes {
     )
 
     @JvmField
-    val ITEM_BUFFER: HTDeferredBlockEntityType<HTItemBufferBlockEntity> = registerTick(
-        "item_buffer",
-        ::HTItemBufferBlockEntity,
-    )
-
-    // Advanced
-    @JvmField
-    val FISHER: HTDeferredBlockEntityType<HTFisherBlockEntity> = registerTick(
-        "fisher",
-        ::HTFisherBlockEntity,
+    val ITEM_COLLECTOR: HTDeferredBlockEntityType<HTItemCollectorBlockEntity> = registerTick(
+        "item_collector",
+        ::HTItemCollectorBlockEntity,
     )
 
     // Elite
@@ -257,12 +252,6 @@ object RagiumBlockEntityTypes {
     )
 
     // Ultimate
-    @JvmField
-    val MOB_CAPTURER: HTDeferredBlockEntityType<HTMobCapturerBlockEntity> = registerTick(
-        "mob_capturer",
-        ::HTMobCapturerBlockEntity,
-    )
-
     @JvmField
     val TELEPAD: HTDeferredBlockEntityType<HTTelepadBlockentity> = REGISTER.registerType(
         "telepad",
@@ -346,13 +335,10 @@ object RagiumBlockEntityTypes {
         registerHandler(event, SIMULATOR.get())
         // Devices
         registerHandler(event, FLUID_COLLECTOR.get())
-        registerHandler(event, ITEM_BUFFER.get())
-
-        registerHandler(event, FISHER.get())
+        registerHandler(event, ITEM_COLLECTOR.get())
 
         registerHandler(event, ENI.get())
 
-        registerHandler(event, MOB_CAPTURER.get())
         registerHandler(event, TELEPAD.get())
 
         registerHandler(event, CEU.get())
