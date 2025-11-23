@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.registry.HTBasicFluidContentNew
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -14,6 +15,7 @@ import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
@@ -62,10 +64,33 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
                 .texture("layer1", item.itemId)
         }
 
+        val dripFluids: List<HTBasicFluidContentNew> = listOf(
+            // Vanilla
+            RagiumFluidContents.HONEY,
+            RagiumFluidContents.MUSHROOM_STEW,
+            // Organic
+            RagiumFluidContents.CREAM,
+            RagiumFluidContents.CHOCOLATE,
+            RagiumFluidContents.ORGANIC_MUTAGEN,
+            // Oil
+            RagiumFluidContents.CRUDE_OIL,
+            RagiumFluidContents.NAPHTHA,
+            RagiumFluidContents.LUBRICANT,
+            // Molten
+            RagiumFluidContents.CRIMSON_BLOOD,
+            RagiumFluidContents.DEW_OF_THE_WARP,
+            RagiumFluidContents.ELDRITCH_FLUX,
+        )
         for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
-            withExistingParent(content.bucket.getPath(), RagiumConst.NEOFORGE.toId("item", "bucket"))
+            val parent: ResourceLocation = when (content) {
+                in dripFluids -> "bucket_drip"
+                else -> "bucket"
+            }.let { RagiumConst.NEOFORGE.toId("item", it) }
+
+            withExistingParent(content.bucket.getPath(), parent)
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
                 .fluid(content.getFluid())
+                .flipGas(content.getType().isLighterThanAir)
         }
 
         // Tools

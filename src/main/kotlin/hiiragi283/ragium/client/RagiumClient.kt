@@ -189,44 +189,44 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         // Fluid
-        event.liquid(RagiumFluidContents.AWKWARD_WATER, Color(-0xc7a23a))
+        event.clear(RagiumFluidContents.AWKWARD_WATER, Color(-0xc7a23a))
         event.registerFluidType(
             HTSimpleFluidExtensions(vanillaId("block", "honey_block_top")),
             RagiumFluidContents.HONEY.getType(),
         )
-        event.liquid(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
-        event.liquid(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
+        event.clear(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
+        event.dull(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
 
-        event.liquid(RagiumFluidContents.CREAM, Color(0xffffcc))
+        event.dull(RagiumFluidContents.CREAM, Color(0xffffcc))
         event.registerFluidType(
             HTSimpleFluidExtensions(RagiumAPI.id("block", "chocolate")),
             RagiumFluidContents.CHOCOLATE.getType(),
         )
-        event.liquid(RagiumFluidContents.RAGI_CHERRY_JUICE, Color(0xcccc66))
-        event.molten(RagiumFluidContents.ORGANIC_MUTAGEN, Color(0x336600))
+        event.clear(RagiumFluidContents.RAGI_CHERRY_JUICE, Color(0xcccc66))
+        event.dull(RagiumFluidContents.ORGANIC_MUTAGEN, Color(0x336600))
 
-        event.molten(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
-        event.liquid(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))
-        event.liquid(RagiumFluidContents.NAPHTHA, Color(0xff9966))
-        event.liquid(RagiumFluidContents.LUBRICANT, Color(0xff9900))
+        event.dull(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
+        event.clear(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))
+        event.dull(RagiumFluidContents.NAPHTHA, Color(0xff9966))
+        event.dull(RagiumFluidContents.LUBRICANT, Color(0xff9900))
 
-        event.liquid(RagiumFluidContents.FUEL, Color(0xcc3300))
-        event.liquid(RagiumFluidContents.CRIMSON_FUEL, Color(0x663333))
-        event.liquid(RagiumFluidContents.GREEN_FUEL, Color(0x99cc33))
+        event.clear(RagiumFluidContents.FUEL, Color(0xcc3300))
+        event.clear(RagiumFluidContents.CRIMSON_FUEL, Color(0x663333))
+        event.clear(RagiumFluidContents.GREEN_FUEL, Color(0x99cc33))
 
-        event.liquid(RagiumFluidContents.SAP, Color(0x996633))
+        event.clear(RagiumFluidContents.SAP, Color(0x996633))
 
-        event.liquid(RagiumFluidContents.SULFURIC_ACID, Color(0xff3300))
-        event.liquid(RagiumFluidContents.NITRIC_ACID, Color(0xcc99ff))
-        event.liquid(RagiumFluidContents.MIXTURE_ACID, Color(0xcc6600))
+        event.clear(RagiumFluidContents.SULFURIC_ACID, Color(0xff3300))
+        event.clear(RagiumFluidContents.NITRIC_ACID, Color(0xcc99ff))
+        event.clear(RagiumFluidContents.MIXTURE_ACID, Color(0xcc6600))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val color = Color(data.color)
             // molten
-            event.molten(data.molten, color)
+            event.dull(data.molten, color)
             // sap
             val sap: HTFluidContent<*, *, *, *, *> = data.sap ?: continue
-            event.liquid(sap, color)
+            event.clear(sap, color)
         }
 
         // Item
@@ -332,12 +332,12 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     //    Extensions    //
 
-    private fun RegisterClientExtensionsEvent.liquid(content: HTFluidContent<*, *, *, *, *>, color: Color) {
-        this.registerFluidType(HTSimpleFluidExtensions.liquid(color), content.getType())
+    private fun RegisterClientExtensionsEvent.clear(content: HTFluidContent<*, *, *, *, *>, color: Color) {
+        this.registerFluidType(HTSimpleFluidExtensions.clear(color), content.getType())
     }
 
-    private fun RegisterClientExtensionsEvent.molten(content: HTFluidContent<*, *, *, *, *>, color: Color) {
-        this.registerFluidType(HTSimpleFluidExtensions.molten(color), content.getType())
+    private fun RegisterClientExtensionsEvent.dull(content: HTFluidContent<*, *, *, *, *>, color: Color) {
+        this.registerFluidType(HTSimpleFluidExtensions.dull(color), content.getType())
     }
 
     private fun <BE : HTBlockEntity> RegisterMenuScreensEvent.register(
