@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredFluid
 import hiiragi283.ragium.api.registry.impl.HTDeferredFluidType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
-import hiiragi283.ragium.api.tag.createTagKey
+import hiiragi283.ragium.api.tag.createCommonTag
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -45,10 +45,10 @@ data class HTFluidContent<
         type,
         still,
         flowing,
-        Registries.FLUID.createTagKey(commonId(still.id.path)),
+        Registries.FLUID.createCommonTag(still.id.path),
         block,
         bucket,
-        Registries.ITEM.createTagKey(commonId("buckets", still.id.path)),
+        Registries.ITEM.createCommonTag("buckets", still.id.path),
     )
 
     fun getType(): TYPE = type.get()

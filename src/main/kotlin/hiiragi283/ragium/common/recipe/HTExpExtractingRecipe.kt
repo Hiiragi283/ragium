@@ -24,8 +24,11 @@ data object HTExpExtractingRecipe : HTComplexRecipe {
      * @see net.minecraft.world.inventory.GrindstoneMenu
      */
     override fun assembleItem(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? {
-        val tool: ItemStack = input.getItem(0)
-        return tool.toImmutable()?.minus(EnchantmentHelper.getComponentType(tool))
+        val tool: ItemStack = input.getItem(0).copyWithCount(1)
+        return when {
+            tool.`is`(Items.ENCHANTED_BOOK) -> ImmutableItemStack.of(Items.BOOK)
+            else -> tool.toImmutable()?.minus(EnchantmentHelper.getComponentType(tool))
+        }
     }
 
     override fun isIncomplete(): Boolean = false

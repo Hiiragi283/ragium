@@ -15,7 +15,7 @@ class HTGenericScreen<MENU>(menu: MENU, inventory: Inventory, title: Component) 
     HTContainerScreen<MENU>(null, menu, inventory, title) where MENU : HTContainerMenu, MENU : HTGenericContainerRows {
     companion object {
         @JvmStatic
-        private val TEXTURE_ID: ResourceLocation = vanillaId("textures/gui/container/generic_54.png")
+        private val TEXTURE_ID: ResourceLocation = vanillaId("textures", "gui", "container", "generic_54.png")
     }
 
     val rows: Int = menu.rows

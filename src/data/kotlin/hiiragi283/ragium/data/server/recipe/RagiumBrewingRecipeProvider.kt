@@ -27,7 +27,7 @@ object RagiumBrewingRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Potion Drop -> Potion
         save(
-            RagiumAPI.id("shapeless/potion"),
+            RagiumAPI.id("shapeless", "potion"),
             HTPotionDropRecipe(CraftingBookCategory.MISC),
         )
 
