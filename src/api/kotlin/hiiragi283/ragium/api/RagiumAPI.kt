@@ -41,7 +41,7 @@ object RagiumAPI {
      * 名前空間が`ragium`となる[ResourceLocation]を返します。
      */
     @JvmStatic
-    fun id(prefix: String, suffix: String): ResourceLocation = id("$prefix/$suffix")
+    fun id(vararg path: String): ResourceLocation = MOD_ID.toId(*path)
 
     /**
      * 名前空間が`ragium`となる[ResourceLocation]を返します。

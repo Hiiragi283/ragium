@@ -252,7 +252,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun charges() {
         save(
-            RagiumAPI.id("shapeless/upgrade_charge"),
+            RagiumAPI.id("shapeless", "upgrade_charge"),
             HTUpgradeChargeRecipe(CraftingBookCategory.EQUIPMENT),
         )
 

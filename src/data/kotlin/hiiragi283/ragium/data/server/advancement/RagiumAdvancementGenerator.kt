@@ -28,7 +28,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setIcon(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
                 title = RagiumTranslation.RAGIUM.translate()
                 setDescFromKey(RagiumAdvancements.ROOT)
-                backGround = RagiumAPI.id("textures/block/night_metal_block.png")
+                backGround = RagiumAPI.id("textures", "block", "night_metal_block.png")
                 showToast = false
                 showChat = false
             }

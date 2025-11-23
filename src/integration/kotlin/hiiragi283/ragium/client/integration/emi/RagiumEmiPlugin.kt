@@ -408,7 +408,7 @@ class RagiumEmiPlugin : EmiPlugin {
         prefix: String = "interaction",
         builderAction: EmiWorldInteractionRecipe.Builder.() -> Unit,
     ) {
-        addRecipeSafe(RagiumAPI.id("/world/$prefix/${id.toString().replace(':', '/')}")) { id1: ResourceLocation ->
+        addRecipeSafe(RagiumAPI.id("/world", prefix, id.toString().replace(':', '/'))) { id1: ResourceLocation ->
             EmiWorldInteractionRecipe
                 .builder()
                 .apply(builderAction)

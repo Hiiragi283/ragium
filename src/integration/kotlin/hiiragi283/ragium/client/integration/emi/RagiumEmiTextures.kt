@@ -7,10 +7,10 @@ import net.minecraft.resources.ResourceLocation
 
 object RagiumEmiTextures {
     @JvmField
-    val TANK: EmiTexture = create(RagiumAPI.id("textures/gui/tank.png"), 0, 0, 18, 54)
+    val TANK: EmiTexture = create(RagiumAPI.id("textures", "gui", "tank.png"), 0, 0, 18, 54)
 
     @JvmField
-    val ENERGY_GAUGE: EmiTexture = create(RagiumAPI.id("textures/gui/energy_gauge.png"), 0, 0, 18, 54)
+    val ENERGY_GAUGE: EmiTexture = create(RagiumAPI.id("textures", "gui", "energy_gauge.png"), 0, 0, 18, 54)
 
     @JvmStatic
     fun create(

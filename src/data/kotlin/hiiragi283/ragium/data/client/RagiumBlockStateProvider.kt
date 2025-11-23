@@ -42,7 +42,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             // Resource
             add(RagiumBlocks.SILT)
 
-            add(RagiumBlocks.BUDDING_QUARTZ)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
             add(RagiumBlocks.SMOOTH_BLOCKSTONE)
             add(RagiumBlocks.CRIMSON_SOIL)
@@ -67,6 +66,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             addAll(RagiumBlocks.DECORATION_MAP.values)
         }.forEach(::simpleBlockAndItem)
 
+        altTextureBlock(RagiumBlocks.BUDDING_QUARTZ, vanillaId("block", "chiseled_quartz_block_top"))
         layeredBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, vanillaId("block", "obsidian"), RagiumBlocks.MYSTERIOUS_OBSIDIAN.blockId)
 
         // Decoration
@@ -82,7 +82,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         }
 
         for (block: HTSimpleDeferredBlock in RagiumBlocks.LED_BLOCKS.values) {
-            altModelBlock(block, RagiumAPI.id("block/led_block"))
+            altModelBlock(block, RagiumAPI.id("block", "led_block"))
             itemModels().withExistingParent(block.getPath(), RagiumAPI.id("block", "led_block"))
         }
 
@@ -96,7 +96,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: HTSimpleDeferredBlock) ->
-            val textureId: ResourceLocation = RagiumAPI.id("block/${key.name}")
+            val textureId: ResourceLocation = RagiumAPI.id("block", key.name)
             val stoneTex: String = when (variant) {
                 HTOreVariant.DEFAULT -> "block/stone"
                 HTOreVariant.DEEP -> "block/deepslate"
@@ -158,19 +158,19 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             block: HTDeferredBlock<*, *>,
             top: ResourceLocation,
             bottom: ResourceLocation,
-            front: ResourceLocation = block.id.withPath { "block/${it}_front" },
+            front: ResourceLocation = block.blockId.withSuffix("_front"),
         ) {
             horizontalBlock(
                 block,
                 models()
-                    .withExistingParent("block/" + block.getPath(), RagiumAPI.id("block/machine_base"))
+                    .withExistingParent(block.blockId.path, RagiumAPI.id("block", "machine_base"))
                     .texture("top", top)
                     .texture("bottom", bottom)
                     .texture("front", front),
             )
         }
 
-        val basicCasing: ResourceLocation = RagiumAPI.id("block/basic_machine_casing")
+        val basicCasing: ResourceLocation = RagiumAPI.id("block", "basic_machine_casing")
         val bricks: ResourceLocation = vanillaId("block", "bricks")
 
         val advancedCasing: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
@@ -268,7 +268,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         simpleBlockAndItem(
             block,
             models()
-                .withExistingParent(block.getPath(), RagiumAPI.id("block/layered"))
+                .withExistingParent(block.getPath(), RagiumAPI.id("block", "layered"))
                 .texture("layer0", layer0)
                 .texture("layer1", layer1)
                 .renderType("cutout"),

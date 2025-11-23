@@ -125,10 +125,10 @@ sealed class HTRecipeProvider {
             val namespace: String = id.namespace
             return if (namespace in RagiumConst.BUILTIN_IDS) {
                 val path: List<String> = id.path.split("/", limit = 2)
-                return RagiumAPI.id(path[0] + "/$modid/" + path[1])
+                return RagiumAPI.id(path[0], modid, path[1])
             } else {
                 val path: List<String> = id.path.split("/", limit = 2)
-                RagiumAPI.id(path[0] + "/$namespace/" + path[1])
+                RagiumAPI.id(path[0], namespace, path[1])
             }
         }
 

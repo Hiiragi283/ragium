@@ -186,7 +186,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Ice Cream Soda
         save(
-            RagiumAPI.id("shapeless/ice_cream_soda"),
+            RagiumAPI.id("shapeless", "ice_cream_soda"),
             HTIceCreamSodaRecipe(CraftingBookCategory.MISC),
         )
     }
