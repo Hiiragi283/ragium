@@ -3,6 +3,8 @@ package hiiragi283.ragium.api
 import com.google.gson.JsonObject
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.ragium.api.item.HTDynamicUpgradeItem
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
@@ -10,13 +12,16 @@ import hiiragi283.ragium.api.recipe.HTMaterialRecipeManager
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.api.tag.RagiumModTags
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
@@ -24,6 +29,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.loading.FMLEnvironment
@@ -33,6 +39,30 @@ interface RagiumPlatform {
     companion object {
         @JvmField
         val INSTANCE: RagiumPlatform = RagiumAPI.getService()
+    }
+
+    /**
+     * [HTMachineUpgrade]の[DataComponentType]を返します。
+     */
+    fun getUpgradeDataType(): DataComponentType<HTMachineUpgrade>
+
+    fun getMachineUpgrade(stack: ItemStack): HTMachineUpgrade? {
+        val item: Item = stack.item
+        if (item is HTDynamicUpgradeItem) {
+            val upgrade: HTMachineUpgrade? = item.getUpgrade(stack)
+            if (upgrade != null) return upgrade
+        }
+        return stack.get(getUpgradeDataType())
+    }
+
+    /**
+     * 指定した[stack]がアップグレードかどうか判定します。
+     */
+    fun isUpgrade(stack: ImmutableItemStack): Boolean {
+        val bool1: Boolean = stack.isOf(RagiumModTags.Items.MACHINE_UPGRADES)
+        val bool2: Boolean = stack.has(getUpgradeDataType())
+        val bool3: Boolean = stack.value() is HTDynamicUpgradeItem
+        return bool1 || bool2 || bool3
     }
 
     //    Material    //

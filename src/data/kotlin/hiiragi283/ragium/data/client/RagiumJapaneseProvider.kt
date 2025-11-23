@@ -304,6 +304,13 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成革")
         // Upgrades
+        add(RagiumItems.ENERGY_CAPACITY_UPGRADE, "エネルギー容量アップグレード")
+        add(RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE, "発展エネルギー容量アップグレード")
+        add(RagiumItems.SPEED_UPGRADE, "スピードアップグレード")
+        add(RagiumItems.ADVANCED_SPEED_UPGRADE, "発展スピードアップグレード")
+
+        add(RagiumItems.FORTUNE_UPGRADE, "幸運アップグレード")
+
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")
     }
 
@@ -363,10 +370,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTAccessConfig.BOTH, "モード：双方")
         add(HTAccessConfig.DISABLED, "モード：無効")
 
-        add(HTMachineUpgrade.Key.DURATION, $$"- 処理時間: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_USAGE, $$"- エネルギー使用率: %1$s")
+        add(HTMachineUpgrade.Key.SPEED, $$"- 処理速度: %1$s")
+
+        add(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE, $$"- 追加のチャンス: %1$s")
         // API - Constants
         add(RagiumTranslation.ERROR, "エラー")
         add(RagiumTranslation.INFINITE, "無限")

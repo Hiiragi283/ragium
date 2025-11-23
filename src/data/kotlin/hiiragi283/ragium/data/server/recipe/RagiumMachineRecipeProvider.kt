@@ -278,6 +278,42 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun upgrades() {
+        // Energy Capacity
+        HTShapedRecipeBuilder
+            .create(RagiumItems.ENERGY_CAPACITY_UPGRADE)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+            .define('B', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.RAGI_ALLOY))
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .create(RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+            .define('B', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
+            .save(output)
+        // Speed
+        HTShapedRecipeBuilder
+            .create(RagiumItems.SPEED_UPGRADE)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .create(RagiumItems.ADVANCED_SPEED_UPGRADE)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .save(output)
+        // Fortune
+        HTShapedRecipeBuilder
+            .create(RagiumItems.FORTUNE_UPGRADE)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+            .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
+            .save(output)
+
         // Exp Collector
         HTShapedRecipeBuilder
             .create(RagiumItems.EXP_COLLECTOR_UPGRADE)

@@ -13,7 +13,7 @@ object HTBlockMachinePropertiesProvider : HTBasicJadeDataProvider<BlockAccessor,
 ) {
     override fun streamData(accessor: BlockAccessor): HTMachineUpgrade? {
         val machine: HTMachineBlockEntity = accessor.blockEntity as? HTMachineBlockEntity ?: return null
-        return HTMachineUpgrade(HTMachineUpgrade.Key.entries.associateWith(machine::collectModifier))
+        return HTMachineUpgrade.create(HTMachineUpgrade.Key.entries.associateWith(machine::collectModifier))
     }
 
     override fun appendTooltip(

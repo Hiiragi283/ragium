@@ -29,8 +29,8 @@ abstract class HTEnergizedProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockH
     //    Ticking    //
 
     final override fun getRequiredEnergy(recipe: RECIPE): Int {
-        battery.currentEnergyPerTick = calculateValue(battery.baseEnergyPerTick, HTMachineUpgrade.Key.ENERGY_USAGE)
-        val time: Int = calculateValue(getRecipeTime(recipe), HTMachineUpgrade.Key.DURATION)
+        battery.currentEnergyPerTick = modifyValue(HTMachineUpgrade.Key.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
+        val time: Int = modifyValue(HTMachineUpgrade.Key.SPEED) { getRecipeTime(recipe) / it }
         return battery.currentEnergyPerTick * time
     }
 
