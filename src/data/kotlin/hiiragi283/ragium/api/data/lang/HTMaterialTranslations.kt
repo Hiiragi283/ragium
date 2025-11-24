@@ -17,12 +17,14 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 
 object HTMaterialTranslations {
     @JvmField
-    val DEFAULT_PREFIX_PATTERN = HTSimpleLangPattern("%s", "%s")
-
-    @JvmField
     val PREFIX_MAP: Map<HTMaterialPrefix, HTLangPatternProvider> = buildMap {
         fun register(prefix: HTPrefixLike, enPattern: String, jaPattern: String) {
-            this[prefix.asMaterialPrefix()] = HTSimpleLangPattern(enPattern, jaPattern)
+            this[prefix.asMaterialPrefix()] = HTLangPatternProvider { type: HTLanguageType, value: String ->
+                when (type) {
+                    HTLanguageType.EN_US -> enPattern
+                    HTLanguageType.JA_JP -> jaPattern
+                }.replace("%s", value)
+            }
         }
 
         // Block
@@ -58,7 +60,12 @@ object HTMaterialTranslations {
             enName: String,
             jaName: String,
         ) {
-            this[prefix.asMaterialPrefix(), material.asMaterialKey()] = HTSimpleLangName(enName, jaName)
+            this[prefix.asMaterialPrefix(), material.asMaterialKey()] = HTLangName { type ->
+                when (type) {
+                    HTLanguageType.EN_US -> enName
+                    HTLanguageType.JA_JP -> jaName
+                }
+            }
         }
 
         register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "Sawdust", "おがくず")
@@ -78,7 +85,7 @@ object HTMaterialTranslations {
         if (customName != null) {
             return customName.getTranslatedName(type)
         } else {
-            val translation: HTLangPatternProvider = PREFIX_MAP[prefix] ?: DEFAULT_PREFIX_PATTERN
+            val translation: HTLangPatternProvider = PREFIX_MAP[prefix] ?: return null
             val translatedName: HTLangName = getLangName(material) ?: return null
             return translation.translate(type, translatedName)
         }

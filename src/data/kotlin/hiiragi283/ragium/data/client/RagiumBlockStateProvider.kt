@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.variant.HTDecorationVariant
+import hiiragi283.ragium.common.material.HTDecorationType
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -67,11 +67,11 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         layeredBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, vanillaId("block", "obsidian"), RagiumBlocks.MYSTERIOUS_OBSIDIAN.blockId)
 
         // Decoration
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            val textureId: ResourceLocation = variant.base.blockId
-            val slab: HTBasicDeferredBlock<SlabBlock> = variant.slab
-            val stair: HTBasicDeferredBlock<StairBlock> = variant.stairs
-            val wall: HTBasicDeferredBlock<WallBlock> = variant.wall
+        for (type: HTDecorationType in HTDecorationType.entries) {
+            val textureId: ResourceLocation = type.base.blockId
+            val slab: HTBasicDeferredBlock<SlabBlock> = type.slab
+            val stair: HTBasicDeferredBlock<StairBlock> = type.stairs
+            val wall: HTBasicDeferredBlock<WallBlock> = type.wall
 
             slabBlock(slab, textureId)
             stairsBlock(stair, textureId)

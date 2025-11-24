@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.tier.HTBaseTier
-import hiiragi283.ragium.common.variant.HTChargeVariant
+import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems
@@ -38,7 +38,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.POTION_DROP)
 
-            removeAll(HTChargeVariant.entries.map(HTChargeVariant::getItem))
+            removeAll(HTChargeType.entries.map(HTChargeType::getItem))
             removeAll(tools)
 
             removeAll(RagiumItems.MACHINE_UPGRADES.values)
@@ -97,7 +97,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         // Tools
         buildList {
             addAll(tools)
-            addAll(HTChargeVariant.entries)
+            addAll(HTChargeType.entries)
 
             addAll(tools1)
         }.asSequence()

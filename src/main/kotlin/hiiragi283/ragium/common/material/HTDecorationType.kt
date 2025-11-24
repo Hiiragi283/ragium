@@ -1,23 +1,26 @@
-package hiiragi283.ragium.common.variant
+package hiiragi283.ragium.common.material
 
+import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.setup.RagiumBlocks
+import net.minecraft.util.StringRepresentable
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
 
-enum class HTDecorationVariant(private val enPattern: String, private val jaPattern: String) : HTVariantKey {
-    RAGI_BRICK("Ragi-Brick %s", "らぎレンガの%s"),
-    AZURE_TILE("Azure Tile %s", "紺碧のタイルの%s"),
-    ELDRITCH_STONE("Eldritch Stone %s", "エルドリッチストーンの%s"),
-    ELDRITCH_STONE_BRICK("Eldritch Stone Brick %s", "エルドリッチストーンレンガの%s"),
-    PLASTIC_BRICK("Plastic Brick %s", "プラスチックレンガの%s"),
-    PLASTIC_TILE("Plastic Tile %s", "プラスチックタイルの%s"),
-    BLUE_NETHER_BRICK("Blue Nether Brick %s", "青いネザーレンガの%s"),
-    SPONGE_CAKE("Sponge Cake %s", "スポンジケーキの%s"),
+enum class HTDecorationType(private val enName: String, private val jaName: String) :
+    StringRepresentable,
+    HTLangName {
+    RAGI_BRICK("Ragi-Brick", "らぎレンガ"),
+    AZURE_TILE("Azure Tile", "紺碧のタイル"),
+    ELDRITCH_STONE("Eldritch Stone", "エルドリッチストーン"),
+    ELDRITCH_STONE_BRICK("Eldritch Stone Brick", "エルドリッチストーンレンガ"),
+    PLASTIC_BRICK("Plastic Brick", "プラスチックレンガ"),
+    PLASTIC_TILE("Plastic Tile", "プラスチックタイル"),
+    BLUE_NETHER_BRICK("Blue Nether Brick", "青いネザーレンガ"),
+    SPONGE_CAKE("Sponge Cake", "スポンジケーキ"),
     ;
 
     val base: HTDeferredBlock<*, *> get() = when (this) {
@@ -34,10 +37,10 @@ enum class HTDecorationVariant(private val enPattern: String, private val jaPatt
     val stairs: HTBasicDeferredBlock<StairBlock> get() = RagiumBlocks.STAIRS[this]!!
     val wall: HTBasicDeferredBlock<WallBlock> get() = RagiumBlocks.WALLS[this]!!
 
-    override fun translate(type: HTLanguageType, value: String): String = when (type) {
-        HTLanguageType.EN_US -> enPattern
-        HTLanguageType.JA_JP -> jaPattern
-    }.replace("%s", value)
+    override fun getTranslatedName(type: HTLanguageType): String = when (type) {
+        HTLanguageType.EN_US -> enName
+        HTLanguageType.JA_JP -> jaName
+    }
 
-    override fun variantName(): String = name.lowercase()
+    override fun getSerializedName(): String = name.lowercase()
 }

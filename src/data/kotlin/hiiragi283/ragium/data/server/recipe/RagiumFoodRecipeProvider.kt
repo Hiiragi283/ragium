@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
+import hiiragi283.ragium.common.material.HTDecorationType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
@@ -138,7 +138,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE)
             .define('B', Tags.Items.FOODS_BERRY)
             .define('C', Tags.Items.EGGS)
-            .define('D', HTDecorationVariant.SPONGE_CAKE.slab)
+            .define('D', HTDecorationType.SPONGE_CAKE.slab)
             .saveSuffixed(output, "_with_sponge")
 
         cutAndCombine(RagiumBlocks.SWEET_BERRIES_CAKE, RagiumItems.SWEET_BERRIES_CAKE_SLICE, 7)
@@ -174,7 +174,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', Tags.Items.BUCKETS_MILK)
             .define('B', Items.SUGAR)
             .define('C', Tags.Items.EGGS)
-            .define('D', HTDecorationVariant.SPONGE_CAKE.slab)
+            .define('D', HTDecorationType.SPONGE_CAKE.slab)
             .saveSuffixed(output, "_with_sponge")
 
         // Ice Cream

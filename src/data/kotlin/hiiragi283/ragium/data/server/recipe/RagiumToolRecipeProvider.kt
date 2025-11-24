@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -16,7 +17,6 @@ import hiiragi283.ragium.common.recipe.HTUpgradeChargeRecipe
 import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -264,22 +264,22 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(itemCreator.fromItem(Items.PAPER, 4))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.GLYCEROL, 1000))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 250))
-            .setResult(resultHelper.item(HTChargeVariant.BLAST, 4))
+            .setResult(resultHelper.item(HTChargeType.BLAST, 4))
             .save(output)
 
-        for (variant: HTChargeVariant in HTChargeVariant.entries) {
-            val (prefix: HTPrefixLike, material: HTMaterialLike) = when (variant) {
-                HTChargeVariant.BLAST -> continue
-                HTChargeVariant.STRIKE -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
-                HTChargeVariant.NEUTRAL -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.EMERALD
-                HTChargeVariant.FISHING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.AZURE
-                HTChargeVariant.TELEPORT -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.WARPED_CRYSTAL
-                HTChargeVariant.CONFUSING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.ELDRITCH_PEARL
+        for (chargeType: HTChargeType in HTChargeType.entries) {
+            val (prefix: HTPrefixLike, material: HTMaterialLike) = when (chargeType) {
+                HTChargeType.BLAST -> continue
+                HTChargeType.STRIKE -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
+                HTChargeType.NEUTRAL -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.EMERALD
+                HTChargeType.FISHING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.AZURE
+                HTChargeType.TELEPORT -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.WARPED_CRYSTAL
+                HTChargeType.CONFUSING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.ELDRITCH_PEARL
             }
             HTShapedRecipeBuilder
-                .create(variant, 8)
+                .create(chargeType, 8)
                 .hollow8()
-                .define('A', HTChargeVariant.BLAST)
+                .define('A', HTChargeType.BLAST)
                 .define('B', prefix, material)
                 .setCategory(CraftingBookCategory.EQUIPMENT)
                 .save(output)

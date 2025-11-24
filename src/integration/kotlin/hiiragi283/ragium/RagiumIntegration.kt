@@ -19,8 +19,8 @@ import hiiragi283.ragium.common.RagiumAccessory
 import hiiragi283.ragium.common.data.map.HTDataModelEntityIngredient
 import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
+import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
-import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.setup.RagiumChemicals
 import hiiragi283.ragium.setup.RagiumIntegrationCreativeTabs
 import hiiragi283.ragium.setup.RagiumIntegrationItems
@@ -127,8 +127,8 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
     }
 
     private fun registerRailgun() {
-        for (variant: HTChargeVariant in HTChargeVariant.entries) {
-            registerRailgun(variant.getItem(), HTThrowableRailgunProjectile(variant::createCharge))
+        for (chargeType: HTChargeType in HTChargeType.entries) {
+            registerRailgun(chargeType.getItem(), HTThrowableRailgunProjectile(chargeType::createCharge))
         }
         registerRailgun(RagiumItems.ELDRITCH_EGG, HTThrowableRailgunProjectile(::HTThrownCaptureEgg))
         RagiumAPI.LOGGER.info("Registered Railgun Projectiles!")
