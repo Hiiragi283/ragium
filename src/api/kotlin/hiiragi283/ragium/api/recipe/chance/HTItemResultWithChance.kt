@@ -2,6 +2,9 @@ package hiiragi283.ragium.api.recipe.chance
 
 import hiiragi283.ragium.api.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.minus
+import hiiragi283.ragium.api.math.plus
+import hiiragi283.ragium.api.math.toFraction
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -9,6 +12,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.RandomSource
+import org.apache.commons.lang3.math.Fraction
 
 /**
  * 確率付きの完成品を表すクラス
@@ -40,14 +44,14 @@ data class HTItemResultWithChance(val base: HTItemResult, val chance: Float) {
             .calculateValue(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE)
             .map(
                 { base.getStackOrNull(provider) },
-                { chanceIn: Float ->
+                { chanceIn: Fraction ->
                     if (chance == 1f) return@map base.getStackOrNull(provider)
 
-                    val chance1: Float = chance + chanceIn
-                    val extraCount: Int = chance1.toInt()
+                    val chance1: Fraction = chanceIn + chance
+                    val extraCount: Int = chance1.properWhole
 
                     var countSum: Int = base.amount * extraCount
-                    if ((chance1 - extraCount) > random.nextFloat()) {
+                    if ((chance1 - extraCount) > random.nextFloat().toFraction()) {
                         countSum += base.amount
                     }
                     base.copyWithAmount(countSum).getStackOrNull(provider)

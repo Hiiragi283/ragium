@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
+import org.apache.commons.lang3.math.Fraction
 import java.util.function.Function
 import java.util.function.Supplier
 import kotlin.enums.enumEntries
@@ -54,6 +55,16 @@ object BiCodecs {
      */
     @JvmField
     val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.FLOAT.ranged(0f..Float.MAX_VALUE)
+
+    @JvmField
+    val FRACTION: BiCodec<ByteBuf, Fraction> = BiCodec
+        .composite(
+            BiCodec.INT.fieldOf("numerator"),
+            Fraction::getNumerator,
+            BiCodec.INT.fieldOf("denominator"),
+            Fraction::getDenominator,
+            Fraction::getFraction,
+        ).validate(Fraction::reduce)
 
     /**
      * 指定された[keyCodec], [valueCodec]に基づいて，[Map]の[BiCodec]を返します。

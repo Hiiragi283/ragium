@@ -13,6 +13,7 @@ import net.minecraft.ChatFormatting
 import net.minecraft.Util
 import net.minecraft.network.chat.Component
 import net.minecraft.util.StringRepresentable
+import org.apache.commons.lang3.math.Fraction
 import java.util.function.Consumer
 
 sealed interface HTMachineUpgrade {
@@ -31,34 +32,37 @@ sealed interface HTMachineUpgrade {
         fun create(tier: HTTierProvider): HTMachineUpgrade = Tiered(tier.getBaseTier())
 
         @JvmStatic
-        fun create(vararg pairs: Pair<Key, Float>): HTMachineUpgrade = create(mapOf(*pairs))
+        fun create(vararg pairs: Pair<Key, Fraction>): HTMachineUpgrade = create(mapOf(*pairs))
 
         @JvmStatic
-        fun create(properties: Map<Key, Float>): HTMachineUpgrade = Properties(properties)
+        fun create(properties: Map<Key, Fraction>): HTMachineUpgrade = Properties(properties)
     }
 
     fun getBaseTier(): HTBaseTier?
 
-    fun getProperty(key: Key): Float?
+    fun getProperty(key: Key): Fraction?
 
-    fun forEachProperties(action: (Key, Float) -> Unit) {
+    fun forEachProperties(action: (Key, Fraction) -> Unit) {
         for (key: Key in Key.entries) {
-            val property: Float = getProperty(key) ?: continue
+            val property: Fraction = getProperty(key) ?: continue
             action(key, property)
         }
     }
 
     fun addToTooltip(tooltipAdder: Consumer<Component>) {
-        forEachProperties { key: Key, property: Float ->
-            if (property == 1f) return@forEachProperties
-            tooltipAdder.accept(key.translateColored(ChatFormatting.GRAY, property))
+        forEachProperties { key: Key, property: Fraction ->
+            tooltipAdder.accept(key.translateColored(ChatFormatting.GRAY, getPropertyColor(property), property))
         }
     }
 
     fun addToTooltip(key: Key, tooltipAdder: Consumer<Component>) {
-        val property: Float? = getProperty(key)
-        if (property == 1f) return
-        tooltipAdder.accept(key.translateColored(ChatFormatting.GRAY, property))
+        val property: Fraction = getProperty(key) ?: return
+        tooltipAdder.accept(key.translateColored(ChatFormatting.GRAY, getPropertyColor(property), property))
+    }
+
+    private fun getPropertyColor(property: Fraction): ChatFormatting = when {
+        property >= Fraction.ONE -> ChatFormatting.GREEN
+        else -> ChatFormatting.RED
     }
 
     //    Tiered    //
@@ -72,12 +76,12 @@ sealed interface HTMachineUpgrade {
 
         override fun getBaseTier(): HTBaseTier = tier
 
-        override fun getProperty(key: Key): Float? = when (key) {
+        override fun getProperty(key: Key): Fraction? = when (key) {
             Key.SPEED, Key.ENERGY_CAPACITY, Key.ENERGY_GENERATION, Key.ENERGY_EFFICIENCY -> when (tier) {
-                HTBaseTier.BASIC -> 1f
-                HTBaseTier.ADVANCED -> 2f
-                HTBaseTier.ELITE -> 3f
-                HTBaseTier.ULTIMATE -> 4f
+                HTBaseTier.BASIC -> Fraction.ONE
+                HTBaseTier.ADVANCED -> Fraction.getFraction(2, 1)
+                HTBaseTier.ELITE -> Fraction.getFraction(3, 1)
+                HTBaseTier.ULTIMATE -> Fraction.getFraction(4, 1)
                 else -> null
             }
 
@@ -88,17 +92,17 @@ sealed interface HTMachineUpgrade {
     //    Properties    //
 
     @JvmRecord
-    private data class Properties(private val properties: Map<Key, Float>) : HTMachineUpgrade {
+    private data class Properties(private val properties: Map<Key, Fraction>) : HTMachineUpgrade {
         companion object {
             @JvmField
             val CODEC: BiCodec<ByteBuf, Properties> = BiCodecs
-                .mapOf(Key.CODEC, BiCodecs.POSITIVE_FLOAT)
+                .mapOf(Key.CODEC, BiCodecs.FRACTION)
                 .xmap(::Properties, Properties::properties)
         }
 
         override fun getBaseTier(): HTBaseTier? = null
 
-        override fun getProperty(key: Key): Float? = properties[key]
+        override fun getProperty(key: Key): Fraction? = properties[key]
     }
 
     //    Key    //

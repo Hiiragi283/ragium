@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo

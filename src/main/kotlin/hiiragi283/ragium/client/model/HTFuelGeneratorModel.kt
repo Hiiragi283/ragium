@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
@@ -104,7 +105,7 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
             blockEntity.isActive -> blockEntity.ticks + partialTick
             else -> 0f
         }
-        val speed: Float = blockEntity.collectModifier(HTMachineUpgrade.Key.ENERGY_GENERATION) / 4
+        val speed: Float = (blockEntity.collectModifier(HTMachineUpgrade.Key.ENERGY_GENERATION) / 4).toFloat()
         top.y = Mth.sin(time * speed + Mth.HALF_PI) * 4 - 4f
         bellow.y = min(Mth.sin(time * speed + Mth.HALF_PI) * 4, 0f)
 

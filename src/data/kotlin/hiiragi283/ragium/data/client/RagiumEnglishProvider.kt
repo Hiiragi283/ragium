@@ -299,11 +299,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Upgrades
         add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
 
-        add(RagiumItems.ENERGY_CAPACITY_UPGRADE, "Energy Capacity Upgrade")
-        add(RagiumItems.SPEED_UPGRADE, "Speed Upgrade")
-        add(RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE, "Advanced Energy Capacity Upgrade")
-        add(RagiumItems.ADVANCED_SPEED_UPGRADE, "Advanced Speed Upgrade")
-
         add(RagiumItems.FORTUNE_UPGRADE, "Fortune Upgrade")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
