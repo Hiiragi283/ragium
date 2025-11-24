@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.setup.RagiumBlocks

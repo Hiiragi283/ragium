@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -12,6 +13,7 @@ import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
@@ -277,34 +279,26 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun upgrades() {
-        // Energy Capacity
-        HTShapedRecipeBuilder
-            .create(RagiumItems.ENERGY_CAPACITY_UPGRADE)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.RAGI_ALLOY))
-            .save(output)
+        // Machine
+        RagiumItems.MACHINE_UPGRADES.forEach { (variant: HTUpgradeVariant, tier: HTBaseTier, item: ItemLike) ->
+            val metal: HTMaterialKey = when (tier) {
+                HTBaseTier.BASIC -> RagiumMaterialKeys.AZURE_STEEL
+                HTBaseTier.ADVANCED -> RagiumMaterialKeys.DEEP_STEEL
+                else -> return@forEach
+            }
+            val gem: HTMaterialKey = when (variant) {
+                HTUpgradeVariant.EFFICIENCY -> RagiumMaterialKeys.WARPED_CRYSTAL
+                HTUpgradeVariant.ENERGY_CAPACITY -> RagiumMaterialKeys.RAGI_CRYSTAL
+                HTUpgradeVariant.SPEED -> RagiumMaterialKeys.CRIMSON_CRYSTAL
+            }
+            HTShapedRecipeBuilder
+                .create(item)
+                .hollow4()
+                .define('A', CommonMaterialPrefixes.INGOT, metal)
+                .define('B', CommonMaterialPrefixes.GEM, gem)
+                .save(output)
+        }
 
-        HTShapedRecipeBuilder
-            .create(RagiumItems.ADVANCED_ENERGY_CAPACITY_UPGRADE)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-            .define('B', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
-            .save(output)
-        // Speed
-        HTShapedRecipeBuilder
-            .create(RagiumItems.SPEED_UPGRADE)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .save(output)
-
-        HTShapedRecipeBuilder
-            .create(RagiumItems.ADVANCED_SPEED_UPGRADE)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .save(output)
         // Fortune
         HTShapedRecipeBuilder
             .create(RagiumItems.FORTUNE_UPGRADE)

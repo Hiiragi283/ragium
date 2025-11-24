@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
@@ -66,6 +67,7 @@ import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
+import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
@@ -86,6 +88,7 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import org.apache.commons.lang3.math.Fraction
 import java.util.function.UnaryOperator
 
 object RagiumItems {
@@ -618,29 +621,56 @@ object RagiumItems {
         REGISTER.registerItemWith("eternal_component", HTBaseTier.CREATIVE, ::HTTierBasedItem)
 
     // Machine
-    @JvmField
-    val ENERGY_CAPACITY_UPGRADE: HTSimpleDeferredItem =
-        registerUpgrade("energy_capacity", HTMachineUpgrade.Key.ENERGY_CAPACITY to 4f)
+    @JvmStatic
+    val MACHINE_UPGRADES: ImmutableTable<HTUpgradeVariant, HTBaseTier, HTSimpleDeferredItem> = buildTable {
+        fun register(variant: HTUpgradeVariant, tier: HTBaseTier, vararg pairs: Pair<HTMachineUpgrade.Key, Fraction>) {
+            this[variant, tier] = REGISTER.registerSimpleItem("${tier.serializedName}_${variant.variantName()}_upgrade") {
+                it.stacksTo(1).component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create(mapOf(*pairs)))
+            }
+        }
 
-    @JvmField
-    val SPEED_UPGRADE: HTSimpleDeferredItem = registerUpgrade(
-        "speed",
-        HTMachineUpgrade.Key.ENERGY_EFFICIENCY to 0.8f,
-        HTMachineUpgrade.Key.ENERGY_GENERATION to 1.2f,
-        HTMachineUpgrade.Key.SPEED to 1.2f,
-    )
+        // Efficiency
+        register(
+            HTUpgradeVariant.EFFICIENCY,
+            HTBaseTier.BASIC,
+            HTMachineUpgrade.Key.ENERGY_EFFICIENCY to fraction(4, 5),
+        )
+        register(
+            HTUpgradeVariant.EFFICIENCY,
+            HTBaseTier.ADVANCED,
+            HTMachineUpgrade.Key.ENERGY_EFFICIENCY to fraction(3, 2),
+        )
+        // Energy Capacity
+        register(
+            HTUpgradeVariant.ENERGY_CAPACITY,
+            HTBaseTier.BASIC,
+            HTMachineUpgrade.Key.ENERGY_CAPACITY to fraction(4),
+        )
+        register(
+            HTUpgradeVariant.ENERGY_CAPACITY,
+            HTBaseTier.ADVANCED,
+            HTMachineUpgrade.Key.ENERGY_CAPACITY to fraction(8),
+        )
+        // Speed
+        register(
+            HTUpgradeVariant.SPEED,
+            HTBaseTier.BASIC,
+            HTMachineUpgrade.Key.ENERGY_EFFICIENCY to fraction(4, 5),
+            HTMachineUpgrade.Key.ENERGY_GENERATION to fraction(5, 4),
+            HTMachineUpgrade.Key.SPEED to fraction(5, 4),
+        )
+        register(
+            HTUpgradeVariant.SPEED,
+            HTBaseTier.ADVANCED,
+            HTMachineUpgrade.Key.ENERGY_EFFICIENCY to fraction(2, 3),
+            HTMachineUpgrade.Key.ENERGY_GENERATION to fraction(3, 2),
+            HTMachineUpgrade.Key.SPEED to fraction(3, 2),
+        )
+    }
 
-    @JvmField
-    val ADVANCED_ENERGY_CAPACITY_UPGRADE: HTSimpleDeferredItem =
-        registerUpgrade("advanced_energy_capacity", HTMachineUpgrade.Key.ENERGY_CAPACITY to 8f)
-
-    @JvmField
-    val ADVANCED_SPEED_UPGRADE: HTSimpleDeferredItem = registerUpgrade(
-        "advanced_speed",
-        HTMachineUpgrade.Key.ENERGY_EFFICIENCY to 0.75f,
-        HTMachineUpgrade.Key.ENERGY_GENERATION to 1.5f,
-        HTMachineUpgrade.Key.SPEED to 1.5f,
-    )
+    @JvmStatic
+    fun getUpgrade(variant: HTUpgradeVariant, tier: HTBaseTier): HTSimpleDeferredItem = MACHINE_UPGRADES[variant, tier]
+        ?: error("Unknown ${tier.serializedName} ${variant.variantName()} upgrade")
 
     // Processor
     @JvmField
@@ -665,7 +695,7 @@ object RagiumItems {
         REGISTER.registerSimpleItem("${name}_upgrade") { it.stacksTo(1).description(translation) }
 
     @JvmStatic
-    private fun registerUpgrade(name: String, vararg pairs: Pair<HTMachineUpgrade.Key, Float>): HTSimpleDeferredItem =
+    private fun registerUpgrade(name: String, vararg pairs: Pair<HTMachineUpgrade.Key, Fraction>): HTSimpleDeferredItem =
         REGISTER.registerSimpleItem("${name}_upgrade") {
             it.stacksTo(1).component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create(mapOf(*pairs)))
         }
