@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.ragium.api.recipe.HTCustomRecipe
 import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.common.variant.HTChargeVariant
+import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
@@ -19,7 +19,7 @@ class HTUpgradeChargeRecipe(category: CraftingBookCategory) : HTCustomRecipe(cat
         var gunpowder = 0
         for (stack: ImmutableItemStack? in input) {
             if (stack == null) continue
-            if (HTChargeVariant.entries.any { variant: HTChargeVariant -> variant.isOf(stack) }) {
+            if (HTChargeType.entries.any { chargeType: HTChargeType -> chargeType.isOf(stack) }) {
                 blastCharge++
             } else if (stack.isOf(Tags.Items.GUNPOWDERS)) {
                 gunpowder++

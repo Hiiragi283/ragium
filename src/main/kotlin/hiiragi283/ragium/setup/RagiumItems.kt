@@ -50,6 +50,7 @@ import hiiragi283.ragium.common.item.upgrade.HTFortuneUpgradeItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
+import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyHandler
@@ -65,7 +66,6 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
@@ -354,10 +354,10 @@ object RagiumItems {
     // Azure
     // Crimson
     @JvmField
-    val CHARGES: Map<HTChargeVariant, HTSimpleDeferredItem> = HTChargeVariant.entries.associateWith { variant: HTChargeVariant ->
+    val CHARGES: Map<HTChargeType, HTSimpleDeferredItem> = HTChargeType.entries.associateWith { chargeType: HTChargeType ->
         REGISTER.registerItemWith(
-            "${variant.variantName()}_charge",
-            variant,
+            "${chargeType.serializedName}_charge",
+            chargeType,
             ::HTChargeItem,
         ) { it.component(RagiumDataComponents.CHARGE_POWER, 4f) }
     }

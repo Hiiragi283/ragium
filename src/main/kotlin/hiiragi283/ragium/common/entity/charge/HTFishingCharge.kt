@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.entity.charge
 
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.common.util.HTItemDropHelper
-import hiiragi283.ragium.common.variant.HTChargeVariant
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -21,10 +21,10 @@ import net.minecraft.world.phys.EntityHitResult
 class HTFishingCharge : HTAbstractCharge {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
 
-    constructor(level: Level, shooter: LivingEntity) : super(HTChargeVariant.FISHING, level, shooter)
+    constructor(level: Level, shooter: LivingEntity) : super(HTChargeType.FISHING, level, shooter)
 
     constructor(level: Level, x: Double, y: Double, z: Double) : super(
-        HTChargeVariant.FISHING,
+        HTChargeType.FISHING,
         level,
         x,
         y,
@@ -48,5 +48,5 @@ class HTFishingCharge : HTAbstractCharge {
         }
     }
 
-    override fun getDefaultItem(): Item = HTChargeVariant.FISHING.asItem()
+    override fun getDefaultItem(): Item = HTChargeType.FISHING.asItem()
 }

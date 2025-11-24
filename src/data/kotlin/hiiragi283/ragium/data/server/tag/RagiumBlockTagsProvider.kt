@@ -13,9 +13,9 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
+import hiiragi283.ragium.common.material.HTDecorationType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -124,16 +124,16 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
             .addTag(RagiumModTags.Blocks.LED_BLOCKS)
 
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
+        for (type: HTDecorationType in HTDecorationType.entries) {
             // Slab
-            pickaxe.add(variant.slab)
-            factory.apply(BlockTags.SLABS).add(variant.slab)
+            pickaxe.add(type.slab)
+            factory.apply(BlockTags.SLABS).add(type.slab)
             // Stairs
-            pickaxe.add(variant.stairs)
-            factory.apply(BlockTags.STAIRS).add(variant.stairs)
+            pickaxe.add(type.stairs)
+            factory.apply(BlockTags.STAIRS).add(type.stairs)
             // Wall
-            pickaxe.add(variant.wall)
-            factory.apply(BlockTags.WALLS).add(variant.wall)
+            pickaxe.add(type.wall)
+            factory.apply(BlockTags.WALLS).add(type.wall)
         }
 
         pickaxe.addBlocks(RagiumBlocks.COILS)

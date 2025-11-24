@@ -1,11 +1,11 @@
-package hiiragi283.ragium.common.variant
+package hiiragi283.ragium.common.material
 
+import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.text.HTTranslation
-import hiiragi283.ragium.api.variant.HTVariantKey
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
 import hiiragi283.ragium.common.entity.charge.HTConfusingCharge
@@ -19,20 +19,22 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.util.StringRepresentable
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
 
-enum class HTChargeVariant(private val enPattern: String, private val jaPattern: String) :
-    HTVariantKey,
+enum class HTChargeType(private val enPattern: String, private val jaPattern: String) :
+    StringRepresentable,
+    HTLangName,
     HTItemHolderLike {
-    BLAST("Blast %s", "ブラスト%s"),
-    STRIKE("Strike %s", "ストライク%s"),
-    NEUTRAL("Neutralize %s", "ニュートラライズ%s"),
-    FISHING("Fishing %s", "フィッシング%s"),
-    TELEPORT("Teleport %s", "テレポート%s"),
-    CONFUSING("Confusion %s", "コンフュージョン%s"),
+    BLAST("Blast", "ブラスト"),
+    STRIKE("Strike", "ストライク"),
+    NEUTRAL("Neutralize", "ニュートラライズ"),
+    FISHING("Fishing", "フィッシング"),
+    TELEPORT("Teleport", "テレポート"),
+    CONFUSING("Confusion", "コンフュージョン"),
     ;
 
     // Item
@@ -86,10 +88,10 @@ enum class HTChargeVariant(private val enPattern: String, private val jaPattern:
         CONFUSING -> HTConfusingCharge(level, x, y, z)
     }
 
-    override fun translate(type: HTLanguageType, value: String): String = when (type) {
+    override fun getTranslatedName(type: HTLanguageType): String = when (type) {
         HTLanguageType.EN_US -> enPattern
         HTLanguageType.JA_JP -> jaPattern
-    }.replace("%s", value)
+    }
 
-    override fun variantName(): String = this.name.lowercase()
+    override fun getSerializedName(): String = name.lowercase()
 }

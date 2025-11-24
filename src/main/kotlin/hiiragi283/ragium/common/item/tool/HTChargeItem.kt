@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.variant.HTChargeVariant
+import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Direction
@@ -20,7 +20,7 @@ import net.minecraft.world.item.ProjectileItem
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 
-class HTChargeItem(private val variant: HTChargeVariant, properties: Properties) :
+class HTChargeItem(private val chargeType: HTChargeType, properties: Properties) :
     Item(properties),
     ProjectileItem {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
@@ -30,13 +30,13 @@ class HTChargeItem(private val variant: HTChargeVariant, properties: Properties)
             player.x,
             player.y,
             player.z,
-            variant.getShootSound(),
+            chargeType.getShootSound(),
             SoundSource.PLAYERS,
             0.5f,
             0.4f / (level.getRandom().nextFloat() * 0.4f + 0.8f),
         )
         if (!level.isClientSide) {
-            val charge: ThrowableItemProjectile = variant.createCharge(level, player)
+            val charge: ThrowableItemProjectile = chargeType.createCharge(level, player)
             charge.item = stack
             charge.shootFromRotation(player, player.xRot, player.yRot, 0.0f, 1.5f, 1.0f)
             level.addFreshEntity(charge)
@@ -52,7 +52,7 @@ class HTChargeItem(private val variant: HTChargeVariant, properties: Properties)
         stack: ItemStack,
         direction: Direction,
     ): Projectile {
-        val charge: ThrowableItemProjectile = variant.createCharge(level, pos.x(), pos.y(), pos.z())
+        val charge: ThrowableItemProjectile = chargeType.createCharge(level, pos.x(), pos.y(), pos.z())
         charge.item = stack
         return charge
     }
@@ -64,7 +64,7 @@ class HTChargeItem(private val variant: HTChargeVariant, properties: Properties)
         flag: TooltipFlag,
     ) {
         if (flag.hasShiftDown()) {
-            tooltips.add(variant.getTranslation().translate())
+            tooltips.add(chargeType.getTranslation().translate())
         } else {
             RagiumTranslation.TOOLTIP_CHARGE_POWER
                 .translateColored(

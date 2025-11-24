@@ -43,11 +43,11 @@ import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
+import hiiragi283.ragium.common.material.HTDecorationType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import net.minecraft.world.item.Item
@@ -348,41 +348,41 @@ object RagiumBlocks {
         REGISTER.registerSimple("sponge_cake", copyOf(Blocks.YELLOW_WOOL), ::HTSpongeCakeBlock)
 
     @JvmField
-    val DECORATION_MAP: Map<HTDecorationVariant, HTSimpleDeferredBlock> = mapOf(
-        HTDecorationVariant.RAGI_BRICK to RAGI_BRICKS,
-        HTDecorationVariant.AZURE_TILE to AZURE_TILES,
-        HTDecorationVariant.ELDRITCH_STONE to ELDRITCH_STONE,
-        HTDecorationVariant.ELDRITCH_STONE_BRICK to ELDRITCH_STONE_BRICKS,
-        HTDecorationVariant.PLASTIC_BRICK to PLASTIC_BRICKS,
-        HTDecorationVariant.PLASTIC_TILE to PLASTIC_TILES,
-        HTDecorationVariant.BLUE_NETHER_BRICK to BLUE_NETHER_BRICKS,
-        HTDecorationVariant.SPONGE_CAKE to SPONGE_CAKE,
+    val DECORATION_MAP: Map<HTDecorationType, HTSimpleDeferredBlock> = mapOf(
+        HTDecorationType.RAGI_BRICK to RAGI_BRICKS,
+        HTDecorationType.AZURE_TILE to AZURE_TILES,
+        HTDecorationType.ELDRITCH_STONE to ELDRITCH_STONE,
+        HTDecorationType.ELDRITCH_STONE_BRICK to ELDRITCH_STONE_BRICKS,
+        HTDecorationType.PLASTIC_BRICK to PLASTIC_BRICKS,
+        HTDecorationType.PLASTIC_TILE to PLASTIC_TILES,
+        HTDecorationType.BLUE_NETHER_BRICK to BLUE_NETHER_BRICKS,
+        HTDecorationType.SPONGE_CAKE to SPONGE_CAKE,
     )
 
     @JvmField
-    val SLABS: Map<HTDecorationVariant, HTBasicDeferredBlock<SlabBlock>> =
-        HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
-            REGISTER.registerSimple("${variant.variantName()}_slab", { SlabBlock(copyOf(variant.base.get())) })
+    val SLABS: Map<HTDecorationType, HTBasicDeferredBlock<SlabBlock>> =
+        HTDecorationType.entries.associateWith { type: HTDecorationType ->
+            REGISTER.registerSimple("${type.serializedName}_slab", { SlabBlock(copyOf(type.base.get())) })
         }
 
     @JvmField
-    val STAIRS: Map<HTDecorationVariant, HTBasicDeferredBlock<StairBlock>> =
-        HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
+    val STAIRS: Map<HTDecorationType, HTBasicDeferredBlock<StairBlock>> =
+        HTDecorationType.entries.associateWith { type: HTDecorationType ->
             REGISTER.registerSimple(
-                "${variant.variantName()}_stairs",
+                "${type.serializedName}_stairs",
                 {
-                    val block: Block = variant.base.get()
+                    val block: Block = type.base.get()
                     StairBlock(block.defaultBlockState(), copyOf(block))
                 },
             )
         }
 
     @JvmField
-    val WALLS: Map<HTDecorationVariant, HTBasicDeferredBlock<WallBlock>> =
-        HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
+    val WALLS: Map<HTDecorationType, HTBasicDeferredBlock<WallBlock>> =
+        HTDecorationType.entries.associateWith { type: HTDecorationType ->
             REGISTER.registerSimple(
-                "${variant.variantName()}_wall",
-                { WallBlock(copyOf(variant.base.get())) },
+                "${type.serializedName}_wall",
+                { WallBlock(copyOf(type.base.get())) },
             )
         }
 
