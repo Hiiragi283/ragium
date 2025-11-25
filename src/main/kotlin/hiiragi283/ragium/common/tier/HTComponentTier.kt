@@ -2,11 +2,13 @@ package hiiragi283.ragium.common.tier
 
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.tier.HTBaseTier
-import hiiragi283.ragium.api.tier.HTMaterialTier
 import hiiragi283.ragium.api.tier.HTTierProvider
 
-enum class HTComponentTier(private val base: HTBaseTier) : HTMaterialTier {
+enum class HTComponentTier(private val base: HTBaseTier) :
+    HTMaterialLike.Translatable,
+    HTTierProvider {
     ADVANCED(HTBaseTier.ADVANCED),
     ELITE(HTBaseTier.ELITE),
     ULTIMATE(HTBaseTier.ULTIMATE),

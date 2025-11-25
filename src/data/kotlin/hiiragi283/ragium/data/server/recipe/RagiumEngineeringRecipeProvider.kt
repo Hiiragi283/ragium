@@ -185,9 +185,9 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .crossLayeredMirrored(output, adv) {
                 define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-                define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ)
-                define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
-                define('D', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+                define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.QUARTZ)
+                define('C', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+                define('D', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
             }
 
         val elite: ItemLike = RagiumItems.getComponent(HTComponentTier.ELITE)
@@ -203,7 +203,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .crossLayeredMirrored(output, ultimate) {
                 define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-                define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+                define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
                 define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
                 define('D', elite)
             }
