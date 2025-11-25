@@ -61,7 +61,6 @@ import hiiragi283.ragium.common.storage.item.HTComponentItemHandler
 import hiiragi283.ragium.common.storage.item.slot.HTComponentItemSlot
 import hiiragi283.ragium.common.text.HTSmithingTranslation
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTEnchantmentHelper
@@ -106,8 +105,8 @@ object RagiumItems {
         REGISTER.addAlias(RagiumAPI.id("blackstone_dust"), vanillaId("blackstone"))
         REGISTER.addAlias(RagiumAPI.id("obsidian_dust"), vanillaId("obsidian"))
 
-        REGISTER.addAlias("elite_circuit", "crystal_processor")
-        REGISTER.addAlias("ultimate_circuit", "artificial_artifact")
+        REGISTER.addAlias("elite_circuit", "ragi_crystal")
+        REGISTER.addAlias("ultimate_circuit", "eldritch_pearl")
 
         REGISTER.register(eventBus)
 
@@ -299,6 +298,9 @@ object RagiumItems {
 
     @JvmStatic
     fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredItem> = MATERIALS.row(prefix.asMaterialPrefix())
+
+    @JvmStatic
+    fun getMaterialMap(material: HTMaterialLike): Map<HTMaterialPrefix, HTSimpleDeferredItem> = MATERIALS.column(material.asMaterialKey())
 
     //    Armors    //
 
@@ -579,20 +581,12 @@ object RagiumItems {
     val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
 
     @JvmField
-    val PROCESSOR_SOCKET: HTSimpleDeferredItem = REGISTER.registerSimpleItem("processor_socket")
+    val BASIC_CIRCUIT: HTSimpleDeferredItem =
+        REGISTER.registerItemWith("basic_circuit", HTBaseTier.BASIC, ::HTTierBasedItem)
 
     @JvmField
-    val CIRCUITS: Map<HTCircuitTier, HTDeferredItem<*>> = HTCircuitTier.entries.associateWith { tier: HTCircuitTier ->
-        val name: String = when (tier) {
-            HTCircuitTier.ELITE -> "crystal_processor"
-            HTCircuitTier.ULTIMATE -> "artificial_artifact"
-            else -> "${tier.asMaterialName()}_circuit"
-        }
-        REGISTER.registerItemWith(name, tier, ::HTTierBasedItem)
-    }
-
-    @JvmStatic
-    fun getCircuit(tier: HTCircuitTier): HTDeferredItem<*> = CIRCUITS[tier]!!
+    val ADVANCED_CIRCUIT: HTSimpleDeferredItem =
+        REGISTER.registerItemWith("advanced_circuit", HTBaseTier.ADVANCED, ::HTTierBasedItem)
 
     //    Vehicles    //
 
@@ -693,12 +687,6 @@ object RagiumItems {
     @JvmStatic
     private fun registerUpgrade(name: String, translation: HTTranslation): HTSimpleDeferredItem =
         REGISTER.registerSimpleItem("${name}_upgrade") { it.stacksTo(1).description(translation) }
-
-    @JvmStatic
-    private fun registerUpgrade(name: String, vararg pairs: Pair<HTMachineUpgrade.Key, Fraction>): HTSimpleDeferredItem =
-        REGISTER.registerSimpleItem("${name}_upgrade") {
-            it.stacksTo(1).component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create(mapOf(*pairs)))
-        }
 
     @JvmField
     val CREATIVE_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("creative_upgrade", ::HTCreativeUpgradeItem) {
@@ -809,10 +797,10 @@ object RagiumItems {
             builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
             builder.set(DataComponents.RARITY, Rarity.RARE)
         }
-        for (block: ItemLike in RagiumBlocks.MATERIALS.columnValues(RagiumMaterialKeys.IRIDESCENTIUM)) {
+        for (block: ItemLike in RagiumBlocks.getMaterialMap(RagiumMaterialKeys.IRIDESCENTIUM).values) {
             event.modify(block, iridescent)
         }
-        for (item: ItemLike in MATERIALS.columnValues(RagiumMaterialKeys.IRIDESCENTIUM)) {
+        for (item: ItemLike in getMaterialMap(RagiumMaterialKeys.IRIDESCENTIUM).values) {
             event.modify(item, iridescent)
         }
 

@@ -270,6 +270,9 @@ object RagiumBlocks {
     fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredBlock> = MATERIALS.row(prefix.asMaterialPrefix())
 
     @JvmStatic
+    fun getMaterialMap(material: HTMaterialLike): Map<HTMaterialPrefix, HTSimpleDeferredBlock> = MATERIALS.column(material.asMaterialKey())
+
+    @JvmStatic
     val GLASSES: ImmutableTable<HTGlassVariant, HTMaterialKey, HTDescriptionDeferredBlock<*>> = buildTable {
         fun glass(
             key: HTMaterialKey,

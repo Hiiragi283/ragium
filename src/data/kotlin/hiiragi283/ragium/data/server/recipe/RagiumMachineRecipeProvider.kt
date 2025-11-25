@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
@@ -57,17 +56,25 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('D', Items.PISTON)
         }
         // Elite
-        for (tier: HTCircuitTier in HTCircuitTier.entries) {
-            HTShapedRecipeBuilder
-                .create(RagiumBlocks.SOLAR_PANEL_UNIT, (tier.ordinal + 1) * 4)
-                .pattern(
-                    "AAA",
-                    "BCB",
-                ).define('A', RagiumItems.SOLAR_PANEL)
-                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-                .define('C', CommonMaterialPrefixes.CIRCUIT, tier)
-                .savePrefixed(output, "${tier.asMaterialName()}_")
-        }
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.SOLAR_PANEL_UNIT, 4)
+            .pattern(
+                "AAA",
+                "BCB",
+            ).define('A', RagiumItems.SOLAR_PANEL)
+            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .savePrefixed(output, "basic_")
+
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.SOLAR_PANEL_UNIT, 8)
+            .pattern(
+                "AAA",
+                "BCB",
+            ).define('A', RagiumItems.SOLAR_PANEL)
+            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .savePrefixed(output, "advanced_")
 
         HTShapedRecipeBuilder
             .create(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
@@ -76,7 +83,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 " B ",
                 "CCC",
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .define('C', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
             .save(output)
         // Ultimate
@@ -111,28 +118,28 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
         basicMachine(RagiumBlocks.BLOCK_BREAKER) {
             define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
         basicMachine(RagiumBlocks.COMPRESSOR) {
             define('B', Items.PISTON)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
         basicMachine(RagiumBlocks.CUTTING_MACHINE) {
             define('B', Items.STONECUTTER)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
         basicMachine(RagiumBlocks.EXTRACTOR) {
             define('B', Items.HOPPER)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
         basicMachine(RagiumBlocks.PULVERIZER) {
             define('B', Items.FLINT)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
         // Advanced
         advMachine(RagiumBlocks.CRUSHER) {
             define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
+            define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
         advMachine(RagiumBlocks.MELTER) {
             define('B', Items.BLAST_FURNACE)
@@ -140,7 +147,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
         advMachine(RagiumBlocks.WASHER) {
             define('B', Items.IRON_TRAPDOOR)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
+            define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
 
         HTShapedRecipeBuilder
@@ -159,10 +166,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         // Elite
         eliteMachine(RagiumBlocks.BREWERY) {
             define('B', Items.BREWING_STAND)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+            define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
         }
         eliteMachine(RagiumBlocks.MIXER) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             define('C', RagiumBlocks.REFINERY)
         }
         eliteMachine(RagiumBlocks.MULTI_SMELTER) {
@@ -171,21 +178,21 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
         eliteMachine(RagiumBlocks.PLANTER) {
             define('B', Items.FLOWER_POT)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+            define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
         }
         // Ultimate
         machineBase(RagiumBlocks.ENCHANT_COPIER, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             define('C', ItemTags.ANVIL)
             define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
         }
         machineBase(RagiumBlocks.ENCHANTER, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             define('C', Items.ENCHANTING_TABLE)
             define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
         }
         machineBase(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             define('C', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
             define('D', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
         }

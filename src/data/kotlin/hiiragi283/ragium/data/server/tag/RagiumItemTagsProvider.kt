@@ -113,7 +113,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     }
 
     private fun copy(prefix: HTPrefixLike, material: HTMaterialLike) {
-        copy(prefix.blockTagKey(material), prefix.itemTagKey(material))
+        copy(prefix.createTagKey(Registries.BLOCK, material), prefix.itemTagKey(material))
     }
 
     private fun copy(blockTag: TagKey<Block>, itemTag: TagKey<Item>) {
@@ -124,7 +124,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
     private fun material(factory: BuilderFactory<Item>) {
         fromTable(factory, RagiumItems.MATERIALS)
-        fromMap(factory, CommonMaterialPrefixes.CIRCUIT, RagiumItems.CIRCUITS)
         // Fuels
         addMaterial(factory, CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL)
             .add(Items.COAL.toHolderLike())
@@ -140,14 +139,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(Items.NETHERITE_SCRAP.toHolderLike())
         // Integration
         fromTable(factory, RagiumIntegrationItems.MATERIALS, HTTagDependType.OPTIONAL)
-    }
-
-    private fun fromMap(factory: BuilderFactory<Item>, prefix: HTPrefixLike, map: Map<out HTMaterialLike, HTHolderLike>) {
-        for ((material: HTMaterialLike, item: HTHolderLike) in map) {
-            addMaterial(factory, prefix, material).add(item)
-            val customTag: TagKey<Item> = MATERIAL_TAG[prefix] ?: continue
-            factory.apply(customTag).addTag(prefix, material)
-        }
     }
 
     private fun fromTable(
@@ -275,16 +266,12 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             factory.apply(color.dyedTag).add(block)
         }
         // Parts
-        factory
-            .apply(Tags.Items.LEATHERS)
-            .add(RagiumItems.SYNTHETIC_LEATHER)
+        factory.apply(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
         factory
             .apply(Tags.Items.SLIME_BALLS)
             .add(RagiumItems.RESIN)
             .add(RagiumItems.TAR)
-        factory
-            .apply(Tags.Items.STRINGS)
-            .add(RagiumItems.SYNTHETIC_FIBER)
+        factory.apply(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
 
         factory
             .apply(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
@@ -303,14 +290,15 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.POLYMER_RESIN)
             .add(ItemContent.POLYMER_RESIN.toHolderLike(), HTTagDependType.OPTIONAL)
 
-        factory
-            .apply(RagiumCommonTags.Items.PLASTIC)
-            .add(RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
+        factory.apply(RagiumCommonTags.Items.PLASTIC).add(RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
         factory
             .apply(RagiumModTags.Items.PLASTICS)
             .addTag(RagiumCommonTags.Items.PLASTIC, HTTagDependType.OPTIONAL)
             .addTag(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC)
             .addTag(PneumaticCraftTags.Items.PLASTIC_SHEETS, HTTagDependType.OPTIONAL)
+
+        factory.apply(RagiumCommonTags.Items.CIRCUITS_BASIC).add(RagiumItems.BASIC_CIRCUIT)
+        factory.apply(RagiumCommonTags.Items.CIRCUITS_ADVANCED).add(RagiumItems.ADVANCED_CIRCUIT)
         // Fuels
         factory
             .apply(RagiumModTags.Items.IS_NUCLEAR_FUEL)
