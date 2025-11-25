@@ -10,6 +10,11 @@ import hiiragi283.ragium.api.data.lang.HTLanguageType
 data class HTLangNameMaterialAttribute(private val enName: String, private val jaName: String) :
     HTMaterialAttribute,
     HTLangName {
+    constructor(delegate: HTLangName) : this(
+        delegate.getTranslatedName(HTLanguageType.EN_US),
+        delegate.getTranslatedName(HTLanguageType.JA_JP),
+    )
+
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {
         HTLanguageType.EN_US -> enName
         HTLanguageType.JA_JP -> jaName
