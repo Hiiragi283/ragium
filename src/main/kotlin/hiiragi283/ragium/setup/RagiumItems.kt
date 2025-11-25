@@ -25,6 +25,8 @@ import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.HTChargeType
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
 import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
@@ -50,7 +52,6 @@ import hiiragi283.ragium.common.item.upgrade.HTFortuneUpgradeItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
-import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyHandler
@@ -547,17 +548,9 @@ object RagiumItems {
 
     // Catalyst
     @JvmField
-    val MOLDS: Map<HTMaterialPrefix, HTSimpleDeferredItem> = listOf(
-        CommonMaterialPrefixes.STORAGE_BLOCK,
-        CommonMaterialPrefixes.GEM,
-        CommonMaterialPrefixes.INGOT,
-    ).associate { prefixes: CommonMaterialPrefixes ->
-        prefixes.asMaterialPrefix() to REGISTER.registerSimpleItem("${prefixes.asPrefixName()}_mold")
+    val MOLDS: Map<HTMoldType, HTSimpleDeferredItem> = HTMoldType.entries.associateWith { type: HTMoldType ->
+        REGISTER.registerSimpleItem("${type.prefix.asPrefixName()}_mold")
     }
-
-    @JvmStatic
-    fun getMold(prefix: HTPrefixLike): HTSimpleDeferredItem =
-        MOLDS[prefix.asMaterialPrefix()] ?: error("Unknown mold for ${prefix.asPrefixName()}")
 
     @JvmField
     val POLYMER_CATALYST: HTSimpleDeferredItem = REGISTER.registerSimpleItem("polymer_catalyst")

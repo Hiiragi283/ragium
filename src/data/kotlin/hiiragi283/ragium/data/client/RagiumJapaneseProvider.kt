@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -282,10 +281,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // add(RagiumItems.Molds.ROD, "成形型（棒材）")
         // add(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
-        add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "ブロックの鋳型")
-        add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "宝石の鋳型")
-        add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "インゴットの鋳型")
-
         add(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
         add(RagiumItems.BASIC_CIRCUIT, "基本回路")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")

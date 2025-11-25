@@ -4,10 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.HTDecorationType
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
-import hiiragi283.ragium.common.material.HTDecorationType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
@@ -195,7 +196,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     private fun honey() {
         // Honey Block <-> Honey
         meltAndFreeze(
-            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK)),
+            itemCreator.fromItem(HTMoldType.STORAGE_BLOCK),
             Items.HONEY_BLOCK.toHolderLike(),
             RagiumFluidContents.HONEY,
             1000,

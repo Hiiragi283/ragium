@@ -6,9 +6,13 @@ import hiiragi283.ragium.api.data.map.HTMaterialRecipe
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import net.minecraft.util.ExtraCodecs
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 @JvmRecord
 data class HTCompressingMaterialRecipe(
@@ -16,6 +20,7 @@ data class HTCompressingMaterialRecipe(
     private val inputCount: Int,
     private val outputPrefix: HTMaterialPrefix,
     private val outputCount: Int,
+    private val catalyst: Optional<HTItemIngredient>,
 ) : HTMaterialRecipe {
     companion object {
         @JvmField
@@ -30,19 +35,37 @@ data class HTCompressingMaterialRecipe(
                         .fieldOf("output_prefix")
                         .forGetter(HTCompressingMaterialRecipe::outputPrefix),
                     ExtraCodecs.POSITIVE_INT.optionalFieldOf("output_count", 1).forGetter(HTCompressingMaterialRecipe::outputCount),
+                    HTItemIngredient.CODEC.codec
+                        .optionalFieldOf("catalyst")
+                        .forGetter(HTCompressingMaterialRecipe::catalyst),
                 ).apply(instance, ::HTCompressingMaterialRecipe)
         }
 
         @JvmStatic
-        fun dust(outputPrefix: HTPrefixLike, inputCount: Int = 1, outputCount: Int = 1): HTCompressingMaterialRecipe =
-            HTCompressingMaterialRecipe(CommonMaterialPrefixes.DUST, inputCount, outputPrefix, outputCount)
+        fun dust(
+            outputPrefix: HTPrefixLike,
+            catalyst: HTItemIngredient?,
+            inputCount: Int = 1,
+            outputCount: Int = 1,
+        ): HTCompressingMaterialRecipe =
+            HTCompressingMaterialRecipe(CommonMaterialPrefixes.DUST, inputCount, outputPrefix, outputCount, catalyst)
+
+        @JvmStatic
+        fun ingot(
+            outputPrefix: HTPrefixLike,
+            catalyst: HTItemIngredient?,
+            inputCount: Int = 1,
+            outputCount: Int = 1,
+        ): HTCompressingMaterialRecipe =
+            HTCompressingMaterialRecipe(CommonMaterialPrefixes.INGOT, inputCount, outputPrefix, outputCount, catalyst)
     }
 
-    constructor(inputPrefix: HTPrefixLike, inputCount: Int, outputPrefix: HTPrefixLike, outputCount: Int) : this(
+    constructor(inputPrefix: HTPrefixLike, inputCount: Int, outputPrefix: HTPrefixLike, outputCount: Int, catalyst: HTItemIngredient?) : this(
         inputPrefix.asMaterialPrefix(),
         inputCount,
         outputPrefix.asMaterialPrefix(),
         outputCount,
+        catalyst.wrapOptional(),
     )
 
     override fun type(): MapCodec<out HTMaterialRecipe> = CODEC
@@ -56,6 +79,7 @@ data class HTCompressingMaterialRecipe(
                 .compressing(
                     helper.itemCreator.fromTagKey(inputPrefix, key, inputCount),
                     helper.resultHelper.item(outputPrefix, key, outputCount),
+                    catalyst.getOrNull()
                 ).saveSuffixed(helper.output, "_from_${inputPrefix.name}")
         }
     }

@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -281,10 +280,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.BOTTLED_BEE, "Bottled Bee")
         add(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
-        add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "Block Mold")
-        add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "Gem Mold")
-        add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "Ingot Mold")
-
         add(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
         add(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")

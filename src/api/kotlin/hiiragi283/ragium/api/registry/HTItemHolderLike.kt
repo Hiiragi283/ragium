@@ -97,6 +97,9 @@ interface HTItemHolderLike :
         return stack
     }
 
+    @Suppress("DEPRECATION")
+    fun asBuiltInHolder(): Holder.Reference<Item> = asItem().builtInRegistryHolder()
+
     private class HolderImpl(private val supplier: () -> Holder<Item>) : HTItemHolderLike {
         constructor(holder: Holder<Item>) : this({ holder })
 

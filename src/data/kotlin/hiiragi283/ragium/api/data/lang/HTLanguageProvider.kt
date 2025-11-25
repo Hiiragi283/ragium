@@ -77,6 +77,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addTemplate(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
         addTemplate(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)
 
+        fromLangMap(LangPattern("%s Mold", "%sの鋳型"), RagiumItems.MOLDS)
+
         fromVariantTable(RagiumItems.MACHINE_UPGRADES, identity())
         // Translation
         addTranslations(HTBaseTier.entries, identity())

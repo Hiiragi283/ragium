@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.common.material.HTChargeType
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntityType

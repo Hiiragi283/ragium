@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -223,7 +224,7 @@ data object RagiumMaterialRecipeData {
     private fun createGemCast(material: HTMaterialLike, fluid: HTFluidHolderLike): HTRecipeData = HTRecipeData.create {
         addInput(fluid, RagiumConst.MOLTEN_TO_GEM)
 
-        setCatalyst(RagiumItems.getMold(CommonMaterialPrefixes.GEM))
+        setCatalyst(HTMoldType.GEM)
 
         addOutput(
             RagiumItems.getGem(material),

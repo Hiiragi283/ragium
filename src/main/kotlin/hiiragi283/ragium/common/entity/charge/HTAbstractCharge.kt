@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.entity.charge
 
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.world.getRangedAABB
-import hiiragi283.ragium.common.material.HTChargeType
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity

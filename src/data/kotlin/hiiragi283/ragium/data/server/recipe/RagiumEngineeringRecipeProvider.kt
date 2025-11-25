@@ -3,10 +3,10 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -49,12 +49,12 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun catalyst() {
         // Molds
-        for ((prefix: HTMaterialPrefix, mold: HTSimpleDeferredItem) in RagiumItems.MOLDS) {
+        for ((moldType: HTMoldType, mold: HTSimpleDeferredItem) in RagiumItems.MOLDS) {
             HTShapedRecipeBuilder
                 .create(mold)
                 .hollow4()
                 .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-                .define('B', prefix.createCommonTagKey(Registries.ITEM))
+                .define('B', moldType.prefix.createCommonTagKey(Registries.ITEM))
                 .save(output)
         }
         // Polymer Catalyst
