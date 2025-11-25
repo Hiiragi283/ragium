@@ -14,7 +14,6 @@ import hiiragi283.ragium.data.server.bootstrap.RagiumBiomeModifierProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumConfiguredProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumPlacedProvider
-import hiiragi283.ragium.data.server.bootstrap.RagiumSolarPowerProvider
 import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumCustomLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumGlobalLootProvider
@@ -43,8 +42,6 @@ object RagiumDatagen {
             add(Registries.PLACED_FEATURE, RagiumPlacedProvider)
 
             add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifierProvider)
-
-            add(RagiumAPI.SOLAR_POWER_KEY, RagiumSolarPowerProvider)
         }
 
         RagiumMaterialManager.gatherAttributes()

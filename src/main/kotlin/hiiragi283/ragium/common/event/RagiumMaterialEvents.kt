@@ -116,15 +116,15 @@ object RagiumMaterialEvents {
 
     @JvmStatic
     private fun common(event: HTMaterialDefinitionEvent) {
-        event.modify(CommonMaterialKeys.Metals.entries) { 
+        event.modify(CommonMaterialKeys.Metals.entries) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName(it)
         }
-        event.modify(CommonMaterialKeys.Alloys.entries) { 
+        event.modify(CommonMaterialKeys.Alloys.entries) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName(it)
         }
-        event.modify(CommonMaterialKeys.Gems.entries) { 
+        event.modify(CommonMaterialKeys.Gems.entries) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
             addName(it)
         }

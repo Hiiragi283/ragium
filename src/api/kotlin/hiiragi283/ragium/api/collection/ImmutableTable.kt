@@ -40,10 +40,6 @@ value class ImmutableTable<R : Any, C : Any, V : Any>(private val table: Table<R
 
     //    Extensions    //
 
-    fun rowValues(row: R): Collection<V> = row(row).values
-
-    fun columnValues(column: C): Collection<V> = column(column).values
-
     inline fun forEach(action: (Triple<R, C, V>) -> Unit) {
         entries.forEach(action)
     }

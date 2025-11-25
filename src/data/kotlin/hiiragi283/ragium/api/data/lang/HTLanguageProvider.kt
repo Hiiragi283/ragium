@@ -62,7 +62,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromLangMap(LangPattern("%s Wall", "%sの壁"), RagiumBlocks.WALLS)
 
         fromMaterialTable(RagiumItems.MATERIALS)
-        fromMaterialMap(LangPattern("%s Circuit", "%s回路"), RagiumItems.CIRCUITS)
         fromMaterialMap(LangPattern("%s Coil", "%sコイル"), RagiumItems.COILS)
         fromMaterialMap(LangPattern("%s Component", "%s構造体"), RagiumItems.COMPONENTS)
 

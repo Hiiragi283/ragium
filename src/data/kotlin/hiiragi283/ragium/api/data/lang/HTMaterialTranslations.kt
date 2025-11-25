@@ -13,7 +13,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.tier.HTCircuitTier
 
 object HTMaterialTranslations {
     @JvmField
@@ -32,7 +31,9 @@ object HTMaterialTranslations {
         register(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, "Block of Raw %s", "%sの原石ブロック")
         // Item
         register(CommonMaterialPrefixes.DUST, "%s Dust", "%sの粉")
+        register(CommonMaterialPrefixes.FOOD, "%s", "%s")
         register(CommonMaterialPrefixes.GEAR, "%s Gear", "%sの歯車")
+        register(CommonMaterialPrefixes.GEM, "%s", "%s")
         register(CommonMaterialPrefixes.INGOT, "%s Ingot", "%sインゴット")
         register(CommonMaterialPrefixes.NUGGET, "%s Nugget", "%sナゲット")
         register(CommonMaterialPrefixes.PLATE, "%s Plate", "%s板")
@@ -70,9 +71,6 @@ object HTMaterialTranslations {
 
         register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "Sawdust", "おがくず")
         register(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT, "Minced Meat", "ひき肉")
-
-        register(CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE, "Crystal Processor", "結晶プロセッサ")
-        register(CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE, "Artificial Artifact", "人工的人工物")
     }
 
     fun getLangName(material: HTMaterialLike): HTLangName? = (material as? HTLangName)

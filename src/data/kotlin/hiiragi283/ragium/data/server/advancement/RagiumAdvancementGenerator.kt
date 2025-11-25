@@ -169,7 +169,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.AZURE_GEARS)
                 setGoal()
             }
-            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialKeys.AZURE_STEEL))
+            hasAnyItem("has_azure_tool", RagiumItems.getToolMap(RagiumMaterialKeys.AZURE_STEEL).values)
         }
 
         createSimple(

@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -14,7 +15,6 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTUpgradeChargeRecipe
-import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
@@ -41,7 +41,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 "ACA",
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 

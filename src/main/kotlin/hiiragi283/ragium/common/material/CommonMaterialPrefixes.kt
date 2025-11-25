@@ -25,7 +25,6 @@ enum class CommonMaterialPrefixes : HTPrefixLike {
     ROD,
 
     // Item - Custom
-    CIRCUIT,
     DOUGH,
     FLOUR,
     FUEL,
