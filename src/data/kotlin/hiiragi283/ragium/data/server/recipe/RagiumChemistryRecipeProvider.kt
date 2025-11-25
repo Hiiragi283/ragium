@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -80,7 +81,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
         // Magma Block <-> Lava
         meltAndFreeze(
-            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK)),
+            itemCreator.fromItem(HTMoldType.STORAGE_BLOCK),
             Items.MAGMA_BLOCK.toHolderLike(),
             HTFluidHolderLike.LAVA,
             125,
@@ -232,14 +233,14 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     private fun explosives() {
         // Slime
         meltAndFreeze(
-            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.GEM)),
+            itemCreator.fromItem(HTMoldType.GEM),
             Items.SLIME_BALL.toHolderLike(),
             RagiumFluidContents.SLIME,
             250,
         )
 
         meltAndFreeze(
-            itemCreator.fromItem(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK)),
+            itemCreator.fromItem(HTMoldType.STORAGE_BLOCK),
             Items.SLIME_BLOCK.toHolderLike(),
             RagiumFluidContents.SLIME,
             250 * 9,

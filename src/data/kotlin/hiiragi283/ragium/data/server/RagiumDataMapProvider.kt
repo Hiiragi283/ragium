@@ -6,6 +6,7 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import dev.shadowsoffire.hostilenetworks.Hostile
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
@@ -13,6 +14,7 @@ import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.map.MapDataMapValueRemover
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
+import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -21,6 +23,7 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tag.createCommonTag
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.data.map.HTBlockCrushingMaterialRecipe
 import hiiragi283.ragium.common.data.map.HTCompressingMaterialRecipe
 import hiiragi283.ragium.common.data.map.HTCrushingMaterialRecipe
@@ -51,6 +54,8 @@ import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 @Suppress("DEPRECATION")
 class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
     private lateinit var provider: HolderLookup.Provider
+
+    private val itemCreator: HTItemIngredientCreator by lazy { RagiumPlatform.INSTANCE.createItemCreator(provider) }
 
     override fun gather(provider: HolderLookup.Provider) {
         this.provider = provider
@@ -211,11 +216,15 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             }.getOrCreateMap(RagiumRecipeTypes.COMPRESSING) {
                 put(
                     RagiumAPI.id("dust_to_gem"),
-                    HTCompressingMaterialRecipe.dust(CommonMaterialPrefixes.GEM),
+                    HTCompressingMaterialRecipe.dust(CommonMaterialPrefixes.GEM, itemCreator.fromItem(HTMoldType.GEM)),
                 )
                 put(
                     RagiumAPI.id("dust_to_fuel"),
-                    HTCompressingMaterialRecipe.dust(CommonMaterialPrefixes.FUEL),
+                    HTCompressingMaterialRecipe.dust(CommonMaterialPrefixes.FUEL, itemCreator.fromItem(HTMoldType.GEM)),
+                )
+                put(
+                    RagiumAPI.id("ingot_to_gear"),
+                    HTCompressingMaterialRecipe.ingot(CommonMaterialPrefixes.GEAR, itemCreator.fromItem(HTMoldType.GEAR), inputCount = 4),
                 )
             }.getOrCreateMap(RagiumRecipeTypes.CRUSHING) {
                 put(

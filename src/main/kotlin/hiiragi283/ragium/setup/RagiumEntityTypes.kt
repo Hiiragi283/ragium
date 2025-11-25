@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
@@ -16,7 +17,6 @@ import hiiragi283.ragium.common.entity.charge.HTNeutralCharge
 import hiiragi283.ragium.common.entity.charge.HTStrikeCharge
 import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
-import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.SharedConstants
 import net.minecraft.world.entity.Entity

@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.tier.HTBaseTier
-import hiiragi283.ragium.common.material.HTChargeType
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems

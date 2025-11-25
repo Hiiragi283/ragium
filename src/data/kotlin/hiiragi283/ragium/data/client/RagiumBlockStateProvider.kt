@@ -11,9 +11,9 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.HTDecorationType
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks

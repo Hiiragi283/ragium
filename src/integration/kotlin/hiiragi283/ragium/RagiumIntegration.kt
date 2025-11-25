@@ -14,12 +14,12 @@ import hiiragi283.ragium.client.integration.accessories.HTBundleAccessoryRendere
 import hiiragi283.ragium.client.integration.accessories.HTGogglesAccessoryRenderer
 import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.HTThrowableRailgunProjectile
 import hiiragi283.ragium.common.RagiumAccessory
 import hiiragi283.ragium.common.data.map.HTDataModelEntityIngredient
 import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
-import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumChemicals
 import hiiragi283.ragium.setup.RagiumIntegrationCreativeTabs

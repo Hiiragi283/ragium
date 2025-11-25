@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.material
+package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType

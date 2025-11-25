@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.material.HTChargeType
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Direction

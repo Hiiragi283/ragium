@@ -1,6 +1,7 @@
 package hiiragi283.ragium.impl.data.recipe.material
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -37,7 +38,7 @@ object FoodMaterialRecipeData {
     val CHOCOLATE_INGOT: HTRecipeData = HTRecipeData.create {
         addInput(RagiumFluidContents.CHOCOLATE, 250)
 
-        setCatalyst(RagiumItems.getMold(CommonMaterialPrefixes.INGOT))
+        setCatalyst(HTMoldType.INGOT)
 
         addOutput(RagiumItems.getFood(FoodMaterialKeys.CHOCOLATE), CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE)
     }

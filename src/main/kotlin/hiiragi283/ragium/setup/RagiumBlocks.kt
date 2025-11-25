@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.block.HTBuddingQuartzBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
@@ -43,7 +44,6 @@ import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
-import hiiragi283.ragium.common.material.HTDecorationType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTCrateTier

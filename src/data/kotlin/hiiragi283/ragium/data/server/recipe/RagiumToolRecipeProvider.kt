@@ -8,9 +8,9 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.HTChargeType
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
