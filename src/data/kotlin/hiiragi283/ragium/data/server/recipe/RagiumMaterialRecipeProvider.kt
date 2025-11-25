@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.CommonMaterialRecipeData
@@ -48,6 +49,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         miscMaterials()
 
         blockAndNugget()
+        gear()
         oreToRaw()
         alloying()
     }
@@ -208,6 +210,25 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     .define('B', nugget)
                     .saveSuffixed(output, "_from_nugget")
             }
+        }
+    }
+
+    @JvmStatic
+    private fun gear() {
+        for ((key: HTMaterialKey, gear: ItemLike) in RagiumItems.getMaterialMap(CommonMaterialPrefixes.GEAR)) {
+            // Shaped
+            HTShapedRecipeBuilder
+                .create(gear)
+                .hollow4()
+                .define('A', CommonMaterialPrefixes.INGOT, key)
+                .define('B', CommonMaterialPrefixes.NUGGET, VanillaMaterialKeys.IRON)
+                .save(output)
+            // Compressing
+            HTItemWithCatalystRecipeBuilder
+                .compressing(
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, key),
+                    resultHelper.item(gear),
+                ).save(output)
         }
     }
 

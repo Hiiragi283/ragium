@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import net.minecraft.util.ExtraCodecs
 
 @JvmRecord
@@ -52,7 +52,7 @@ data class HTCompressingMaterialRecipe(
             if (!helper.isPresentTag(inputPrefix, key)) continue
             if (!helper.isPresentTag(outputPrefix, key)) continue
 
-            HTItemToObjRecipeBuilder
+            HTItemWithCatalystRecipeBuilder
                 .compressing(
                     helper.itemCreator.fromTagKey(inputPrefix, key, inputCount),
                     helper.resultHelper.item(outputPrefix, key, outputCount),

@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.recipe.single.HTExpRequiredRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
@@ -55,7 +56,7 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val COMPRESSING: HTRegistryRecipeViewerType<SingleRecipeInput, HTSingleItemRecipe> =
+    val COMPRESSING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTItemWithCatalystRecipe> =
         machine(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField

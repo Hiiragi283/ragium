@@ -213,7 +213,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT),
             ).save(output)
         // Meat Ingot
-        HTItemToObjRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .compressing(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT),
                 resultHelper.item(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAW_MEAT),

@@ -227,6 +227,10 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                     HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.GEM, 1, 1),
                 )
                 put(
+                    RagiumAPI.id("gear_to_dust"),
+                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.GEAR, 1, 4),
+                )
+                put(
                     RagiumAPI.id("plate_to_dust"),
                     HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.PLATE, 1, 1),
                 )

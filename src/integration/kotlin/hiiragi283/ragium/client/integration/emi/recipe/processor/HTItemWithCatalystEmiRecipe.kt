@@ -6,12 +6,12 @@ import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputsEmiRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
-import hiiragi283.ragium.impl.recipe.base.HTItemWithCatalystRecipe
+import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
-class HTItemWithCatalystEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTItemWithCatalystRecipe>) :
-    HTMultiOutputsEmiRecipe<HTItemWithCatalystRecipe>(category, holder) {
+class HTItemWithCatalystEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicItemWithCatalystRecipe>) :
+    HTMultiOutputsEmiRecipe<HTBasicItemWithCatalystRecipe>(category, holder) {
     init {
         when (recipe) {
             is HTExtractingRecipe -> {
