@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
-import hiiragi283.ragium.api.recipe.multi.HTMultiInputsToObjRecipe
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
@@ -25,8 +24,8 @@ abstract class HTBasicComplexRecipe(
     final override fun getRequiredAmount(index: Int, stack: ImmutableFluidStack): Int = fluidIngredients[index].getRequiredAmount(stack)
 
     final override fun test(input: HTMultiRecipeInput): Boolean {
-        val bool1: Boolean = HTMultiInputsToObjRecipe.hasMatchingSlots(itemIngredients, input.items)
-        val bool2: Boolean = HTMultiInputsToObjRecipe.hasMatchingSlots(fluidIngredients, input.fluids)
+        val bool1: Boolean = HTMultiRecipeInput.hasMatchingSlots(itemIngredients, input.items)
+        val bool2: Boolean = HTMultiRecipeInput.hasMatchingSlots(fluidIngredients, input.fluids)
         return bool1 && bool2
     }
 

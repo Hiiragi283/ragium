@@ -4,6 +4,7 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputsEmiRecipe
+import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
@@ -14,6 +15,11 @@ class HTItemWithCatalystEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeH
     HTMultiOutputsEmiRecipe<HTBasicItemWithCatalystRecipe>(category, holder) {
     init {
         when (recipe) {
+            is HTCompressingRecipe -> {
+                addInput(recipe.required)
+                addCatalyst(recipe.optional.getOrNull())
+            }
+
             is HTExtractingRecipe -> {
                 addInput(recipe.required)
                 addCatalyst(recipe.optional.getOrNull())

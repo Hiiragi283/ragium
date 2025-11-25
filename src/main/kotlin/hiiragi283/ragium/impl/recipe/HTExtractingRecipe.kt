@@ -14,11 +14,6 @@ import java.util.Optional
 
 class HTExtractingRecipe(ingredient: HTItemIngredient, catalyst: Optional<HTItemIngredient>, results: HTComplexResult) :
     HTBasicItemWithCatalystRecipe(ingredient, catalyst, results) {
-    override fun getRequiredCount(index: Int, stack: ImmutableItemStack): Int = when (index) {
-        0 -> required.getRequiredAmount(stack)
-        else -> 0
-    }
-
     override fun test(input: HTMultiRecipeInput): Boolean {
         val stackIn: ItemStack = input.getItem(1)
         val bool1: Boolean = optional
