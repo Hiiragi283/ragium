@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -26,7 +26,7 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: HTMultiRecipeInput,
-        recipe: HTComplexRecipe,
+        recipe: HTItemWithCatalystRecipe,
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
         // SEを鳴らす

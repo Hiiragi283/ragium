@@ -226,7 +226,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             // Compressing
             HTItemWithCatalystRecipeBuilder
                 .compressing(
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, key),
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, key, 4),
                     resultHelper.item(gear),
                 ).save(output)
         }

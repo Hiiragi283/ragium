@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
@@ -16,7 +16,13 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 
-data object HTExpExtractingRecipe : HTComplexRecipe {
+data object HTExpExtractingRecipe : HTItemWithCatalystRecipe {
+    override fun assembleFluid(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? = EnchantmentHelper
+        .getEnchantmentsForCrafting(input.getItem(0))
+        .let(HTExperienceHelper::getTotalMinCost)
+        .let(HTExperienceHelper::fluidAmountFromExp)
+        .let(RagiumFluidContents.EXPERIENCE::toImmutableStack)
+
     override fun test(input: HTMultiRecipeInput): Boolean =
         EnchantmentHelper.canStoreEnchantments(input.getItem(0)) && input.getItem(1).`is`(Items.GRINDSTONE)
 
@@ -37,16 +43,5 @@ data object HTExpExtractingRecipe : HTComplexRecipe {
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.EXTRACTING.get()
 
-    override fun getRequiredCount(index: Int, stack: ImmutableItemStack): Int = when (index) {
-        0 -> 1
-        else -> 0
-    }
-
-    override fun getRequiredAmount(index: Int, stack: ImmutableFluidStack): Int = 0
-
-    override fun assembleFluid(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? = EnchantmentHelper
-        .getEnchantmentsForCrafting(input.getItem(0))
-        .let(HTExperienceHelper::getTotalMinCost)
-        .let(HTExperienceHelper::fluidAmountFromExp)
-        .let(RagiumFluidContents.EXPERIENCE::toImmutableStack)
+    override fun getRequiredCount(stack: ImmutableItemStack): Int = 1
 }

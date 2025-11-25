@@ -68,7 +68,7 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
-    val EXTRACTING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =
+    val EXTRACTING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTItemWithCatalystRecipe> =
         machine(RagiumRecipeTypes.EXTRACTING, RagiumBlocks.EXTRACTOR)
 
     // Advanced
@@ -103,6 +103,6 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 
     @JvmField
-    val SIMULATING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =
+    val SIMULATING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTItemWithCatalystRecipe> =
         machine(RagiumRecipeTypes.SIMULATING, RagiumBlocks.SIMULATOR)
 }

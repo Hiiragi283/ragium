@@ -14,11 +14,6 @@ import java.util.Optional
 
 class HTSimulatingRecipe(catalyst: HTItemIngredient, ingredient: Optional<HTItemIngredient>, results: HTComplexResult) :
     HTBasicItemWithCatalystRecipe(catalyst, ingredient, results) {
-    override fun getRequiredCount(index: Int, stack: ImmutableItemStack): Int = when (index) {
-        0 -> optional.map { it.getRequiredAmount(stack) }.orElse(0)
-        else -> 0
-    }
-
     override fun test(input: HTMultiRecipeInput): Boolean {
         val stackIn: ItemStack = input.getItem(0)
         val bool1: Boolean = optional

@@ -3,7 +3,7 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
@@ -85,7 +85,11 @@ object RagiumRecipeSerializers {
     @JvmField
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = register(
         RagiumConst.ALLOYING,
-        RagiumRecipeBiCodecs.ALLOYING,
+        RagiumRecipeBiCodecs.singleOutput(
+            ::HTAlloyingRecipe,
+            HTItemIngredient.CODEC.listOf(2, 3).fieldOf("ingredients"),
+            HTAlloyingRecipe::ingredients,
+        ),
     )
 
     @JvmField
@@ -97,7 +101,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = register(
         RagiumConst.COMPRESSING,
-        RagiumRecipeBiCodecs.itemWithCatalyst(::HTCompressingRecipe, HTItemResult.CODEC.fieldOf("result"), HTCompressingRecipe::result),
+        RagiumRecipeBiCodecs.itemWithCatalyst(::HTCompressingRecipe),
     )
 
     @JvmField
@@ -121,7 +125,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val EXTRACTING: RecipeSerializer<HTExtractingRecipe> = register(
         RagiumConst.EXTRACTING,
-        RagiumRecipeBiCodecs.itemWithCatalyst(::HTExtractingRecipe, RagiumRecipeBiCodecs.RESULTS, HTExtractingRecipe::results),
+        RagiumRecipeBiCodecs.itemWithCatalyst(::HTExtractingRecipe),
     )
 
     @JvmField
@@ -145,7 +149,11 @@ object RagiumRecipeSerializers {
     @JvmField
     val PULVERIZING: RecipeSerializer<HTPulverizingRecipe> = register(
         "pulverizing",
-        RagiumRecipeBiCodecs.PULVERIZING,
+        RagiumRecipeBiCodecs.singleOutput(
+            ::HTPulverizingRecipe,
+            HTItemIngredient.CODEC.fieldOf("ingredient"),
+            HTPulverizingRecipe::ingredient,
+        ),
     )
 
     @JvmField
@@ -157,7 +165,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val SIMULATING: RecipeSerializer<HTSimulatingRecipe> = register(
         RagiumConst.SIMULATING,
-        RagiumRecipeBiCodecs.itemWithCatalyst(::HTSimulatingRecipe, RagiumRecipeBiCodecs.RESULTS, HTSimulatingRecipe::results),
+        RagiumRecipeBiCodecs.itemWithCatalyst(::HTSimulatingRecipe),
     )
 
     @JvmField
