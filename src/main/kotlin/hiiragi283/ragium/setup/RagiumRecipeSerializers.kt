@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
@@ -96,7 +97,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = register(
         RagiumConst.COMPRESSING,
-        RagiumRecipeBiCodecs.itemToItem(::HTCompressingRecipe),
+        RagiumRecipeBiCodecs.itemWithCatalyst(::HTCompressingRecipe, HTItemResult.CODEC.fieldOf("result"), HTCompressingRecipe::result),
     )
 
     @JvmField
@@ -120,13 +121,13 @@ object RagiumRecipeSerializers {
     @JvmField
     val EXTRACTING: RecipeSerializer<HTExtractingRecipe> = register(
         RagiumConst.EXTRACTING,
-        RagiumRecipeBiCodecs.itemWithCatalystToMulti(::HTExtractingRecipe),
+        RagiumRecipeBiCodecs.itemWithCatalyst(::HTExtractingRecipe, RagiumRecipeBiCodecs.RESULTS, HTExtractingRecipe::results),
     )
 
     @JvmField
     val MELTING: RecipeSerializer<HTMeltingRecipe> = register(
         RagiumConst.MELTING,
-        RagiumRecipeBiCodecs.itemToFluid(::HTMeltingRecipe),
+        RagiumRecipeBiCodecs.MELTING,
     )
 
     @JvmField
@@ -144,7 +145,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val PULVERIZING: RecipeSerializer<HTPulverizingRecipe> = register(
         "pulverizing",
-        RagiumRecipeBiCodecs.itemToItem(::HTPulverizingRecipe),
+        RagiumRecipeBiCodecs.PULVERIZING,
     )
 
     @JvmField
@@ -156,7 +157,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val SIMULATING: RecipeSerializer<HTSimulatingRecipe> = register(
         RagiumConst.SIMULATING,
-        RagiumRecipeBiCodecs.itemWithCatalystToMulti(::HTSimulatingRecipe),
+        RagiumRecipeBiCodecs.itemWithCatalyst(::HTSimulatingRecipe, RagiumRecipeBiCodecs.RESULTS, HTSimulatingRecipe::results),
     )
 
     @JvmField

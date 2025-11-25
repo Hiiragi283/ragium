@@ -33,7 +33,7 @@ import net.neoforged.neoforge.common.Tags
 object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Plastic Plate
-        HTItemToObjRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .compressing(
                 itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN),
                 resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC),
@@ -396,7 +396,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(RagiumItems.POTATO_SPROUTS),
             ).save(output)
         // Green Cake
-        HTItemToObjRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .compressing(
                 itemCreator.fromItem(RagiumItems.POTATO_SPROUTS, 16),
                 resultHelper.item(RagiumItems.GREEN_CAKE),

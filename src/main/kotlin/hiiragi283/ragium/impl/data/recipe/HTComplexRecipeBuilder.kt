@@ -4,9 +4,9 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 
@@ -70,10 +70,6 @@ class HTComplexRecipeBuilder(prefix: String, private val factory: Factory<*>) :
     )
 
     fun interface Factory<RECIPE : HTComplexRecipe> {
-        fun create(
-            itemIngredients: List<HTItemIngredient>,
-            fluidIngredients: List<HTFluidIngredient>,
-            results: Ior<HTItemResult, HTFluidResult>,
-        ): RECIPE
+        fun create(itemIngredients: List<HTItemIngredient>, fluidIngredients: List<HTFluidIngredient>, results: HTComplexResult): RECIPE
     }
 }

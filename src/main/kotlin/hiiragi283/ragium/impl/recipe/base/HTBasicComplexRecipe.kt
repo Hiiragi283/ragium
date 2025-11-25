@@ -5,11 +5,11 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.multi.HTMultiInputsToObjRecipe
+import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.util.Ior
 import net.minecraft.core.HolderLookup
 
 /**
@@ -18,7 +18,7 @@ import net.minecraft.core.HolderLookup
 abstract class HTBasicComplexRecipe(
     val itemIngredients: List<HTItemIngredient>,
     val fluidIngredients: List<HTFluidIngredient>,
-    val results: Ior<HTItemResult, HTFluidResult>,
+    val results: HTComplexResult,
 ) : HTComplexRecipe {
     final override fun getRequiredCount(index: Int, stack: ImmutableItemStack): Int = itemIngredients[index].getRequiredAmount(stack)
 

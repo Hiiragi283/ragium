@@ -1,10 +1,10 @@
 package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
+import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.util.Ior
-import hiiragi283.ragium.api.util.toIor
+import hiiragi283.ragium.api.recipe.result.toComplex
 import net.minecraft.resources.ResourceLocation
 
 abstract class HTComplexResultRecipeBuilder<BUILDER : HTComplexResultRecipeBuilder<BUILDER>>(prefix: String) :
@@ -26,6 +26,5 @@ abstract class HTComplexResultRecipeBuilder<BUILDER : HTComplexResultRecipeBuild
 
     final override fun getPrimalId(): ResourceLocation = toIorResult().map(HTItemResult::id, HTFluidResult::id)
 
-    protected fun toIorResult(): Ior<HTItemResult, HTFluidResult> =
-        (itemResult to fluidResult).toIor() ?: error("Either item or fluid result required")
+    protected fun toIorResult(): HTComplexResult = (itemResult to fluidResult).toComplex()
 }

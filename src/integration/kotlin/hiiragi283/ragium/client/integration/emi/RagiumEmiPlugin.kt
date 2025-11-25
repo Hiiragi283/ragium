@@ -30,10 +30,10 @@ import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmi
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCompressingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTEnchantingEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemToItemEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemWithCatalystEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
@@ -245,7 +245,7 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addProcessors(registry: EmiRegistry) {
         // Basic
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ALLOYING, ::HTAlloyingEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.COMPRESSING, ::HTItemToItemEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.COMPRESSING, ::HTCompressingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CRUSHING, ::HTCrushingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CUTTING, ::HTCuttingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.EXTRACTING, ::HTItemWithCatalystEmiRecipe)

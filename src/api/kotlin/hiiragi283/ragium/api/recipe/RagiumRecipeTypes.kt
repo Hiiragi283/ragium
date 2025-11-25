@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.recipe.single.HTExpRequiredRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
@@ -25,7 +26,7 @@ object RagiumRecipeTypes {
     val BREWING: HTDeferredRecipeType<SingleRecipeInput, HTSingleItemRecipe> = create(RagiumConst.BREWING)
 
     @JvmField
-    val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTSingleItemRecipe> = create(RagiumConst.COMPRESSING)
+    val COMPRESSING: HTDeferredRecipeType<HTMultiRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
     val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedItemRecipe> = create(RagiumConst.CRUSHING)

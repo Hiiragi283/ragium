@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
-import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
@@ -47,10 +46,6 @@ class HTItemToObjRecipeBuilder<RESULT : Any>(
                 HTPotionHelper.content(instances),
             )
         }
-
-        @JvmStatic
-        fun compressing(ingredient: HTItemIngredient, result: HTItemResult): HTItemToObjRecipeBuilder<HTItemResult> =
-            HTItemToObjRecipeBuilder(RagiumConst.COMPRESSING, ::HTCompressingRecipe, result::id, ingredient, result)
 
         @JvmStatic
         fun enchanting(ingredient: HTItemIngredient, holder: Holder<Enchantment>): HTItemToObjRecipeBuilder<Holder<Enchantment>> =

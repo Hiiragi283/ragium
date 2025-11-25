@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
@@ -28,6 +27,7 @@ import hiiragi283.ragium.common.block.entity.generator.HTSolarPanelControllerBlo
 import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTElectricFurnaceBlockEntity
@@ -150,14 +150,7 @@ object RagiumBlockEntityTypes {
     val BLOCK_BREAKER: HTDeferredBlockEntityType<HTBlockBreakerBlockEntity> = registerTick("block_breaker", ::HTBlockBreakerBlockEntity)
 
     @JvmField
-    val COMPRESSOR: HTDeferredBlockEntityType<HTSingleItemInputBlockEntity<HTSingleItemRecipe>> = registerTick(
-        "compressor",
-        HTSingleItemInputBlockEntity.createSimple(
-            SoundEvents.ANVIL_PLACE,
-            0.25f to 0.5f,
-            RagiumRecipeTypes.COMPRESSING,
-        ),
-    )
+    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> = registerTick("compressor", ::HTCompressorBlockEntity)
 
     @JvmField
     val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> = registerTick(

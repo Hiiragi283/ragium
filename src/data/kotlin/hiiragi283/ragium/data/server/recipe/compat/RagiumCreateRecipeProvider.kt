@@ -16,7 +16,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
@@ -51,7 +51,7 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
             ).addResult(resultHelper.item(AllItems.PULP))
             .save(output)
 
-        HTItemToObjRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .compressing(
                 itemCreator.fromItem(AllItems.PULP),
                 resultHelper.item(AllItems.CARDBOARD),

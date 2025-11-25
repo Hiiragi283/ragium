@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -214,12 +215,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.PACKED_ICE, 9),
             ).saveSuffixed(output, "_from_blue")
         // Ice -> Packed -> Blue
-        HTItemToObjRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .compressing(
                 itemCreator.fromItem(Items.ICE, 4),
                 resultHelper.item(Items.PACKED_ICE),
             ).saveSuffixed(output, "_from_ice")
-        HTItemToObjRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .compressing(
                 itemCreator.fromItem(Items.PACKED_ICE, 4),
                 resultHelper.item(Items.BLUE_ICE),

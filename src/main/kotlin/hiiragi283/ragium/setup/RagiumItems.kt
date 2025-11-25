@@ -257,6 +257,12 @@ object RagiumItems {
             RagiumMaterialKeys.NIGHT_METAL,
             RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { register(CommonMaterialPrefixes.NUGGET, it, "${it.name}_nugget") }
+        // Gears
+        arrayOf(
+            RagiumMaterialKeys.AZURE_STEEL,
+            RagiumMaterialKeys.DEEP_STEEL,
+            RagiumMaterialKeys.NIGHT_METAL,
+        ).forEach { register(CommonMaterialPrefixes.GEAR, it, "${it.name}_gear") }
 
         // Doughs
         register(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT, "wheat_dough")
@@ -283,6 +289,9 @@ object RagiumItems {
 
     @JvmStatic
     fun getFood(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.FOOD, material)
+
+    @JvmStatic
+    fun getGear(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.GEAR, material)
 
     @JvmStatic
     fun getIngot(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.INGOT, material)

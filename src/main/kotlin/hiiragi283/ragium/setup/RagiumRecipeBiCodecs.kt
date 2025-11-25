@@ -3,32 +3,31 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
+import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
+import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicComplexRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithFluidToChancedItemRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicSingleFluidRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicSingleItemRecipe
-import hiiragi283.ragium.impl.recipe.base.HTItemWithCatalystRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 object RagiumRecipeBiCodecs {
     @JvmField
-    val RESULTS: MapBiCodec<RegistryFriendlyByteBuf, Ior<HTItemResult, HTFluidResult>> = MapBiCodecs.ior(
+    val RESULTS: MapBiCodec<RegistryFriendlyByteBuf, HTComplexResult> = MapBiCodecs.ior(
         HTItemResult.CODEC.optionalFieldOf("item_result"),
         HTFluidResult.CODEC.optionalFieldOf("fluid_result"),
     )
@@ -63,38 +62,36 @@ object RagiumRecipeBiCodecs {
             ::HTEnchantingRecipe,
         )
 
-    @JvmStatic
-    fun <R : HTBasicSingleItemRecipe> itemToItem(
-        factory: HTItemToObjRecipeBuilder.Factory<HTItemResult, R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+    @JvmField
+    val MELTING: MapBiCodec<RegistryFriendlyByteBuf, HTMeltingRecipe> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf("ingredient"),
-        HTBasicSingleItemRecipe::ingredient,
-        HTItemResult.CODEC.fieldOf("result"),
-        HTBasicSingleItemRecipe::result,
-        factory::create,
-    )
-
-    @JvmStatic
-    fun <R : HTBasicSingleFluidRecipe> itemToFluid(
-        factory: HTItemToObjRecipeBuilder.Factory<HTFluidResult, R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf("ingredient"),
-        HTBasicSingleFluidRecipe::ingredient,
+        HTMeltingRecipe::ingredient,
         HTFluidResult.CODEC.fieldOf("result"),
-        HTBasicSingleFluidRecipe::result,
-        factory::create,
+        HTMeltingRecipe::result,
+        ::HTMeltingRecipe,
+    )
+
+    @JvmField
+    val PULVERIZING: MapBiCodec<RegistryFriendlyByteBuf, HTPulverizingRecipe> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf("ingredient"),
+        HTPulverizingRecipe::ingredient,
+        HTItemResult.CODEC.fieldOf("result"),
+        HTPulverizingRecipe::result,
+        ::HTPulverizingRecipe,
     )
 
     @JvmStatic
-    fun <R : HTItemWithCatalystRecipe> itemWithCatalystToMulti(
-        factory: HTItemWithCatalystRecipeBuilder.Factory<R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+    fun <RESULT : Any, RECIPE : HTItemWithCatalystRecipe> itemWithCatalyst(
+        factory: HTItemWithCatalystRecipeBuilder.Factory<RESULT, RECIPE>,
+        result: MapBiCodec<in RegistryFriendlyByteBuf, RESULT>,
+        resultGetter: (RECIPE) -> RESULT,
+    ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf("required"),
         HTItemWithCatalystRecipe::required,
         HTItemIngredient.CODEC.optionalFieldOf("optional"),
         HTItemWithCatalystRecipe::optional,
-        RESULTS,
-        HTItemWithCatalystRecipe::results,
+        result,
+        resultGetter,
         factory::create,
     )
 
