@@ -3,7 +3,6 @@ package hiiragi283.ragium.impl.data.recipe.material
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -82,13 +81,6 @@ data object RagiumMaterialRecipeData {
     }
 
     //    Deep    //
-
-    @JvmField
-    val DEEP_SCRAP: HTRecipeData = HTRecipeData.create {
-        addInput(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
-
-        addOutput(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL), CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 2)
-    }
 
     @JvmField
     val DEEP_STEEL: HTRecipeData = HTRecipeData.create {

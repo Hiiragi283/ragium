@@ -8,9 +8,10 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
 import hiiragi283.ragium.api.material.get
-import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -22,6 +23,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.CommonMaterialRecipeData
@@ -31,6 +33,7 @@ import hiiragi283.ragium.impl.data.recipe.material.OritechMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -39,6 +42,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import kotlin.math.max
 
 object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -253,16 +257,30 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             VanillaMaterialKeys.COPPER to VanillaMaterialKeys.GOLD,
             VanillaMaterialKeys.IRON to CommonMaterialKeys.Metals.TIN,
             VanillaMaterialKeys.GOLD to VanillaMaterialKeys.COPPER,
-            CommonMaterialKeys.Metals.TIN to CommonMaterialKeys.Metals.LEAD,
+            CommonMaterialKeys.Metals.TIN to CommonMaterialKeys.Metals.ZINC,
+            CommonMaterialKeys.Metals.ZINC to CommonMaterialKeys.Metals.TIN,
             CommonMaterialKeys.Metals.LEAD to CommonMaterialKeys.Metals.SILVER,
             CommonMaterialKeys.Metals.SILVER to CommonMaterialKeys.Metals.LEAD,
             CommonMaterialKeys.Metals.NICKEL to CommonMaterialKeys.Metals.PLATINUM,
             CommonMaterialKeys.Metals.PLATINUM to CommonMaterialKeys.Metals.NICKEL,
+            // Mekanism?
+            CommonMaterialKeys.Metals.OSMIUM to CommonMaterialKeys.Metals.URANIUM,
+            CommonMaterialKeys.Metals.URANIUM to CommonMaterialKeys.Metals.OSMIUM,
         ).forEach { (primary: HTMaterialLike, secondary: HTMaterialLike) ->
+            val ore: HTItemIngredient = itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, primary)
+            // Crushing
             HTItemToChancedItemRecipeBuilder
-                .crushing(itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, primary))
+                .crushing(ore)
                 .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, primary, 2))
                 .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, secondary), 1 / 4f)
+                .saveSuffixed(output, "_from_ore")
+            // Washing
+            HTItemWithFluidToChancedItemRecipeBuilder
+                .washing(ore, fluidCreator.fromHolder(RagiumFluidContents.SULFURIC_ACID, 250))
+                .addResult(resultHelper.item(CommonMaterialPrefixes.NUGGET, primary, 18))
+                .addResult(resultHelper.item(CommonMaterialPrefixes.NUGGET, primary, 9), 1 / 4f)
+                .addResult(resultHelper.item(CommonMaterialPrefixes.NUGGET, secondary, 9))
+                .addResult(resultHelper.item(CommonMaterialPrefixes.NUGGET, secondary, 3), 1 / 4f)
                 .saveSuffixed(output, "_from_ore")
         }
 
@@ -273,20 +291,48 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             VanillaMaterialKeys.QUARTZ to 4,
             VanillaMaterialKeys.DIAMOND to 2,
             VanillaMaterialKeys.EMERALD to 2,
-        ).forEach { (key: HTMaterialKey, count: Int) ->
+            // Common
+            CommonMaterialKeys.Gems.FLUORITE to 6,
+            // Ragium
+            RagiumMaterialKeys.RAGI_CRYSTAL to 2,
+            RagiumMaterialKeys.CRIMSON_CRYSTAL to 2,
+            RagiumMaterialKeys.WARPED_CRYSTAL to 2,
+        ).forEach { (material: HTMaterialLike, count: Int) ->
+            val ore: HTItemIngredient = itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, material)
+            // Crushing
             HTItemToChancedItemRecipeBuilder
-                .crushing(itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, key))
-                .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, key, count))
+                .crushing(ore)
+                .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, count))
+                .saveSuffixed(output, "_from_ore")
+            // Washing
+            HTItemWithFluidToChancedItemRecipeBuilder
+                .washing(ore, fluidCreator.fromHolder(RagiumFluidContents.NITRIC_ACID, 250))
+                .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, count))
+                .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, max(1, count / 2)), 1 / 2f)
+                .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, max(1, count / 4)), 1 / 4f)
                 .saveSuffixed(output, "_from_ore")
         }
 
-        pulverizeFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
-        pulverizeFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
-        pulverizeFromData(RagiumMaterialRecipeData.WARPED_ORE)
-
         // Scraps
-        pulverizeFromData(VanillaMaterialRecipeData.NETHERITE_SCRAP)
-        pulverizeFromData(RagiumMaterialRecipeData.DEEP_SCRAP)
+        mapOf(
+            VanillaMaterialKeys.NETHERITE to Tags.Items.ORES_NETHERITE_SCRAP,
+            RagiumMaterialKeys.DEEP_STEEL to RagiumCommonTags.Items.ORES_DEEP_SCRAP,
+        ).forEach { (key: HTMaterialKey, oreTag: TagKey<Item>) ->
+            val ore: HTItemIngredient = itemCreator.fromTagKey(oreTag)
+            val result: HTItemResult = resultHelper.item(CommonMaterialPrefixes.SCRAP, key, 2)
+            // Crushing
+            HTItemToChancedItemRecipeBuilder
+                .crushing(ore)
+                .addResult(result)
+                .saveSuffixed(output, "_from_ore")
+            // Washing
+            HTItemWithFluidToChancedItemRecipeBuilder
+                .washing(ore, fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 250))
+                .addResult(result)
+                .addResult(result.copyWithAmount(1), 1 / 2f)
+                .addResult(result.copyWithAmount(1), 1 / 4f)
+                .saveSuffixed(output, "_from_ore")
+        }
     }
 
     @JvmStatic
