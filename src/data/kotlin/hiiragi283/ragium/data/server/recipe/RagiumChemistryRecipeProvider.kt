@@ -1,7 +1,8 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.data.recipe.HTRecipeData
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -9,6 +10,7 @@ import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
@@ -347,20 +349,51 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 125) to null,
         )
 
-        // Crimson Crystal
-        extractFromData(RagiumMaterialRecipeData.CRIMSON_SAP)
-        refiningFromData(RagiumMaterialRecipeData.CRIMSON_BLOOD)
-        meltAndFreeze(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
+        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
+            val base: TagKey<Item>? = data.base
+            val sap: HTBasicFluidContent? = data.sap
+            // Base -> Sap
+            if (base != null && sap != null) {
+                HTItemWithCatalystRecipeBuilder
+                    .extracting(
+                        itemCreator.fromTagKey(base),
+                        resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4),
+                        null,
+                        resultHelper.fluid(sap, RagiumConst.LOG_TO_SAP),
+                    ).save(output)
+            }
+            // Sap -> Molten
+            val molten: HTBasicFluidContent = data.molten
+            if (sap != null) {
+                HTComplexRecipeBuilder
+                    .refining(
+                        fluidCreator.fromHolder(sap, 1000),
+                        resultHelper.fluid(molten, RagiumConst.SAP_TO_MOLTEN),
+                        null,
+                        null,
+                    ).save(output)
+            }
+            // Molten -> Gem
+            HTComplexRecipeBuilder
+                .solidifying(
+                    itemCreator.fromItem(HTMoldType.GEM),
+                    fluidCreator.fromHolder(molten, 1000),
+                    resultHelper.item(CommonMaterialPrefixes.GEM, data),
+                ).save(output)
 
+            HTItemToObjRecipeBuilder
+                .melting(
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, data),
+                    resultHelper.fluid(molten, 1000),
+                ).saveSuffixed(output, "_from_gem")
+        }
+
+        // Crimson Crystal
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, 3)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL)
             .save(output)
         // Warped Crystal
-        extractFromData(RagiumMaterialRecipeData.WARPED_SAP)
-        refiningFromData(RagiumMaterialRecipeData.DEW_OF_THE_WARP)
-        meltAndFreeze(RagiumMaterialRecipeData.WARPED_CRYSTAL)
-
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, 3)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
@@ -368,8 +401,6 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
         // Eldritch Pearl
         mixFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX)
-
-        meltAndFreeze(RagiumMaterialRecipeData.ELDRITCH_PEARL)
     }
 
     @JvmStatic
@@ -414,29 +445,5 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .define('A', RagiumItems.GREEN_CAKE_DUST)
             .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
             .save(output)
-    }
-
-    //    Extensions    //
-
-    @JvmStatic
-    private fun extractFromData(data: HTRecipeData) {
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                data.getItemIngredients(itemCreator)[0],
-                data.getItemResults().getOrNull(0)?.first,
-                null,
-                data.getFluidResults().getOrNull(0),
-            ).saveModified(output, data.operator)
-    }
-
-    @JvmStatic
-    private fun refiningFromData(data: HTRecipeData) {
-        HTComplexRecipeBuilder
-            .refining(
-                data.getFluidIngredients(fluidCreator)[0],
-                data.getFluidResults()[0],
-                null,
-                data.getItemResults().getOrNull(0)?.first,
-            ).saveModified(output, data.operator)
     }
 }

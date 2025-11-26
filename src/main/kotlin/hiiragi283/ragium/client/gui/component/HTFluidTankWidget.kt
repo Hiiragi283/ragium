@@ -79,7 +79,7 @@ class HTFluidTankWidget(
         background(guiGraphics, getBounds())
     }
 
-    //    HTFluidWidgetNew    //
+    //    HTFluidWidget    //
 
     override fun getStack(): ImmutableFluidStack? = view.getStack()
 

@@ -55,7 +55,7 @@ class HTFluidContentRegister(modId: String) {
         }
     }
 
-    fun registerSimple(name: String, properties: FluidType.Properties): HTBasicFluidContentNew = register(name, properties, ::FluidType)
+    fun registerSimple(name: String, properties: FluidType.Properties): HTBasicFluidContent = register(name, properties, ::FluidType)
 
     fun <TYPE : FluidType> register(
         name: String,

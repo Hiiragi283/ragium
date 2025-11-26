@@ -218,6 +218,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
 
+        addFluid(RagiumFluidContents.DESTABILIZED_RAGINITE, "Destabilized Raginite")
+
         addFluid(RagiumFluidContents.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluidContents.SULFURIC_ACID, "Sulfuric Acid")
         addFluid(RagiumFluidContents.MIXTURE_ACID, "Mixture Acid")

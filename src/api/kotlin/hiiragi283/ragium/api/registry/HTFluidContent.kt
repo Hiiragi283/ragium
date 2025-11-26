@@ -15,7 +15,7 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidType
 
-typealias HTBasicFluidContentNew = HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing, LiquidBlock, BucketItem>
+typealias HTBasicFluidContent = HTFluidContent<FluidType, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing, LiquidBlock, BucketItem>
 
 /**
  * @see mekanism.common.registration.impl.FluidRegistryObject
