@@ -68,6 +68,7 @@ object RagiumConst {
     const val BATTERIES = "batteries"
 
     const val ID = "id"
+    const val TAG = "tag"
     const val COUNT = "count"
     const val COMPONENTS = "components"
     const val CHANCE = "chance"

@@ -28,7 +28,7 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : ImmutableStack<TYPE, STACK
             amountCodec: MapBiCodec<ByteBuf, Int>,
             factory: (HTKeyOrTagEntry<T>, Int, DataComponentPatch) -> R,
         ): BiCodec<RegistryFriendlyByteBuf, R> = BiCodec.composite(
-            HTKeyOrTagHelper.INSTANCE.codec(registryKey).fieldOf(RagiumConst.ID),
+            HTKeyOrTagHelper.INSTANCE.mapCodec(registryKey),
             HTRecipeResultBase<T, *>::entry,
             amountCodec,
             HTRecipeResultBase<T, *>::amount,

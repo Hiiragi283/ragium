@@ -25,9 +25,9 @@ class HTFortuneUpgradeItem(properties: Properties) :
     HTSubCreativeTabContents {
     override fun supportsEnchantment(stack: ItemStack, enchantment: Holder<Enchantment?>): Boolean = enchantment.key == Enchantments.FORTUNE
 
-    override fun getUpgrade(stack: ItemStack): HTMachineUpgrade {
+    override fun getUpgrade(provider: HolderLookup.Provider?, stack: ItemStack): HTMachineUpgrade {
         val fortune: Int = RagiumPlatform.INSTANCE
-            .getHolder(null, Enchantments.FORTUNE)
+            .getHolder(provider, Enchantments.FORTUNE)
             ?.let(stack::getEnchantmentLevel)
             ?.takeIf { it > 0 }
             ?: 1
@@ -47,4 +47,7 @@ class HTFortuneUpgradeItem(properties: Properties) :
             ).let(consumer::accept)
         }
     }
+
+    private fun getEnchantment(provider: HolderLookup.Provider?): Holder<Enchantment>? =
+        RagiumPlatform.INSTANCE.getHolder(provider, Enchantments.FORTUNE)
 }

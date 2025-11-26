@@ -1,13 +1,14 @@
 package hiiragi283.ragium.impl.data
 
 import hiiragi283.ragium.api.data.recipe.HTWoodType
+import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.registry.toHolderLike
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 
-enum class HTVanillaWoodType(override val log: TagKey<Item>, override val planks: ItemLike) : HTWoodType {
+enum class HTVanillaWoodType(override val log: TagKey<Item>, override val planks: HTItemHolderLike) : HTWoodType {
     OAK(ItemTags.OAK_LOGS, Items.OAK_PLANKS),
     SPRUCE(ItemTags.SPRUCE_LOGS, Items.SPRUCE_PLANKS),
     BIRCH(ItemTags.BIRCH_LOGS, Items.BIRCH_PLANKS),
@@ -20,6 +21,8 @@ enum class HTVanillaWoodType(override val log: TagKey<Item>, override val planks
     CRIMSON(ItemTags.CRIMSON_STEMS, Items.CRIMSON_PLANKS),
     WARPED(ItemTags.WARPED_STEMS, Items.WARPED_PLANKS),
     ;
+
+    constructor(log: TagKey<Item>, planks: Item) : this(log, planks.toHolderLike())
 
     override fun getSerializedName(): String = name.lowercase()
 }

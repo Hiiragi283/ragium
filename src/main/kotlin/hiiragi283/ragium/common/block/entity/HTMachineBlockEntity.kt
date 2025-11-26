@@ -102,7 +102,7 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         val upgrade: HTMachineUpgrade = slot
             .getStack()
             ?.unwrap()
-            ?.let(RagiumPlatform.INSTANCE::getMachineUpgrade)
+            ?.let { RagiumPlatform.INSTANCE.getMachineUpgrade(getRegistryAccess(), it) }
             ?: return@mapNotNull null
         upgrade to slot.getAmount()
     }

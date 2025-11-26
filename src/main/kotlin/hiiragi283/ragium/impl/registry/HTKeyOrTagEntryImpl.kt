@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.text.HTTextResult
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.toTextResult
 import hiiragi283.ragium.api.util.wrapOptional
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -88,7 +89,7 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
         .toTextResult(RagiumTranslation.EMPTY_TAG_KEY, tagKey.location())
 
     private fun getFirstHolder(holderSet: HolderSet<T>): Optional<Holder<T>> {
-        for (modId: String in RagiumPlatform.INSTANCE.getModPriorities()) {
+        for (modId: String in RagiumConfig.COMMON.tagOutputPriority.get()) {
             val foundHolder: Holder<T>? = holderSet.firstOrNull { holder: Holder<T> -> holder.idOrThrow.namespace == modId }
             if (foundHolder != null) return foundHolder.wrapOptional()
         }

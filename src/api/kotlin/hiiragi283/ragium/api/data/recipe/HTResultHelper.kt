@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
+import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -50,6 +51,14 @@ data object HTResultHelper {
      */
     @JvmStatic
     fun item(stack: ImmutableItemStack): HTItemResult = item(stack.getId(), stack.amount(), stack.componentsPatch())
+
+    /**
+     * 指定した引数から[HTItemResult]を返します。
+     * @param item アイテムのインスタンス
+     * @param count アイテムの量
+     */
+    @JvmStatic
+    fun item(item: HTItemHolderLike, count: Int = 1): HTItemResult = item(item.getId(), count)
 
     /**
      * 指定した引数から[HTItemResult]を返します。

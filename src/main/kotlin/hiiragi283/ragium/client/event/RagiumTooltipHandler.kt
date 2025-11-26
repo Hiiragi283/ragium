@@ -38,7 +38,7 @@ object RagiumTooltipHandler {
         if (RagiumConfig.COMMON.showFoodEffect.asBoolean) {
             food(stack, consumer, event.context.tickRate())
         }
-        machineUpgrade(stack, consumer1)
+        machineUpgrade(stack, consumer1, context)
         workInProgress(stack, consumer1)
 
         RagiumDataComponents.REGISTER
@@ -73,8 +73,8 @@ object RagiumTooltipHandler {
     }
 
     @JvmStatic
-    private fun machineUpgrade(stack: ItemStack, consumer: Consumer<Component>) {
-        RagiumPlatform.INSTANCE.getMachineUpgrade(stack)?.addToTooltip(consumer)
+    private fun machineUpgrade(stack: ItemStack, consumer: Consumer<Component>, context: Item.TooltipContext) {
+        RagiumPlatform.INSTANCE.getMachineUpgrade(context.registries(), stack)?.addToTooltip(consumer)
     }
 
     @JvmStatic

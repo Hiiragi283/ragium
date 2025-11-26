@@ -34,7 +34,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 define('C', Items.END_CRYSTAL)
             }
         save(
-            RagiumAPI.id("crafting", "gravitational_upgrade"),
+            RagiumAPI.id("shapeless", "gravitational_upgrade"),
             HTGravitationalUpgradeRecipe(CraftingBookCategory.EQUIPMENT),
         )
 
@@ -193,7 +193,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 define('C', ultimate)
             }
         save(
-            RagiumAPI.id("crafting", "eternal_upgrade"),
+            RagiumAPI.id("shapeless", "eternal_upgrade"),
             HTEternalUpgradeRecipe(CraftingBookCategory.EQUIPMENT),
         )
     }

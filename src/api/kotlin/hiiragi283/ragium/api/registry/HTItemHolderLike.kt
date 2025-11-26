@@ -39,27 +39,39 @@ interface HTItemHolderLike :
         }
 
         @JvmStatic
-        fun fromHolder(holder: DeferredHolder<Item, *>): HTItemHolderLike = object : HTItemHolderLike {
-            override fun asItem(): Item = holder.get()
+        fun fromHolder(holder: DeferredHolder<Item, *>): HTItemHolderLike = when (holder) {
+            is HTItemHolderLike -> holder
+            else -> object : HTItemHolderLike {
+                override fun asItem(): Item = holder.get()
 
-            override fun getId(): ResourceLocation = holder.id
+                override fun getId(): ResourceLocation = holder.id
+            }
         }
 
         @JvmStatic
-        fun fromItem(item: Supplier<out Item>): HTItemHolderLike = fromItem(ItemLike(item::get))
+        fun fromItem(item: Supplier<out Item>): HTItemHolderLike = when (item) {
+            is HTItemHolderLike -> item
+            else -> fromItem(ItemLike(item::get))
+        }
 
         /**
          * [ItemLike]を[HTItemHolderLike]に変換します。
          */
         @Suppress("DEPRECATION")
         @JvmStatic
-        fun fromItem(item: ItemLike): HTItemHolderLike = fromHolder(item::asItem.andThen(Item::builtInRegistryHolder))
+        fun fromItem(item: ItemLike): HTItemHolderLike = when (item) {
+            is HTItemHolderLike -> item
+            else -> fromHolder(item::asItem.andThen(Item::builtInRegistryHolder))
+        }
 
         /**
          * [Holder]を[HTItemHolderLike]に変換します。
          */
         @JvmStatic
-        fun fromHolder(holder: Holder<Item>): HTItemHolderLike = HolderImpl(holder)
+        fun fromHolder(holder: Holder<Item>): HTItemHolderLike = when (holder) {
+            is HTItemHolderLike -> holder
+            else -> HolderImpl(holder)
+        }
 
         /**
          * [Holder]を[HTItemHolderLike]に変換します。

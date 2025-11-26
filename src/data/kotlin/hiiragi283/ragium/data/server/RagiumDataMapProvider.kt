@@ -223,7 +223,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                     RagiumAPI.id("dust_to_fuel"),
                     HTCompressingMaterialRecipe.dust(CommonMaterialPrefixes.FUEL, itemCreator.fromItem(HTMoldType.GEM)),
                 )
-                
+
                 put(
                     RagiumAPI.id("ingot_to_gear"),
                     HTCompressingMaterialRecipe.ingot(CommonMaterialPrefixes.GEAR, itemCreator.fromItem(HTMoldType.GEAR), inputCount = 4),
