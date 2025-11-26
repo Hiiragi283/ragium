@@ -63,7 +63,8 @@ class HTShapedRecipeBuilder(stack: ImmutableItemStack) : HTStackRecipeBuilder<HT
 
     private val symbols: MutableMap<Char, Ingredient> = mutableMapOf()
 
-    fun define(symbol: Char, prefix: HTPrefixLike, key: HTMaterialLike): HTShapedRecipeBuilder = define(symbol, prefix.itemTagKey(key))
+    fun define(symbol: Char, prefix: HTPrefixLike, material: HTMaterialLike): HTShapedRecipeBuilder =
+        define(symbol, prefix.itemTagKey(material))
 
     fun define(symbol: Char, tagKey: TagKey<Item>): HTShapedRecipeBuilder = define(symbol, Ingredient.of(tagKey))
 

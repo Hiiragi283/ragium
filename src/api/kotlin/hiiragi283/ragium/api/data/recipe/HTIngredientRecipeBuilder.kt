@@ -12,7 +12,7 @@ import net.minecraft.world.level.ItemLike
  * @param BUILDER [HTIngredientRecipeBuilder]を継承したクラス
  */
 interface HTIngredientRecipeBuilder<BUILDER : HTIngredientRecipeBuilder<BUILDER>> {
-    fun addIngredient(prefix: HTPrefixLike, key: HTMaterialLike): BUILDER = addIngredient(prefix.itemTagKey(key))
+    fun addIngredient(prefix: HTPrefixLike, material: HTMaterialLike): BUILDER = addIngredient(prefix.itemTagKey(material))
 
     fun addIngredient(tagKey: TagKey<Item>): BUILDER = addIngredient(Ingredient.of(tagKey))
 

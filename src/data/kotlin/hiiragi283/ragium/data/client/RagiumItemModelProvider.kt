@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
-import hiiragi283.ragium.api.registry.HTBasicFluidContentNew
+import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -64,7 +64,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
                 .texture("layer1", item.itemId)
         }
 
-        val dripFluids: List<HTBasicFluidContentNew> = listOf(
+        val dripFluids: List<HTBasicFluidContent> = listOf(
             // Vanilla
             RagiumFluidContents.HONEY,
             RagiumFluidContents.MUSHROOM_STEW,
@@ -78,6 +78,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             RagiumFluidContents.NAPHTHA,
             RagiumFluidContents.LUBRICANT,
             // Molten
+            RagiumFluidContents.MOLTEN_RAGIUM,
             RagiumFluidContents.CRIMSON_BLOOD,
             RagiumFluidContents.DEW_OF_THE_WARP,
             RagiumFluidContents.ELDRITCH_FLUX,

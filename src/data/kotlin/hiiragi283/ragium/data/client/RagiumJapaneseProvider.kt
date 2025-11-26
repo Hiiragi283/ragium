@@ -209,6 +209,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
 
+        addFluid(RagiumFluidContents.DESTABILIZED_RAGINITE, "不安定化ラギナイト")
+
         addFluid(RagiumFluidContents.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluidContents.SULFURIC_ACID, "硫酸")
         addFluid(RagiumFluidContents.MIXTURE_ACID, "混酸")

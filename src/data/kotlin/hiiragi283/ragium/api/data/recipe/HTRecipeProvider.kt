@@ -5,6 +5,9 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.getDefaultPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -140,6 +143,9 @@ sealed class HTRecipeProvider {
     protected fun save(recipeId: ResourceLocation, recipe: Recipe<*>, vararg conditions: ICondition) {
         output.accept(recipeId, recipe, null, *conditions)
     }
+
+    protected fun getDefaultPrefix(material: HTMaterialLike): HTMaterialPrefix? =
+        RagiumPlatform.INSTANCE.getMaterialDefinition(material.asMaterialKey()).getDefaultPrefix()
 
     // recipe builders
     protected fun meltAndFreeze(

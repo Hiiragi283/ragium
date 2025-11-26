@@ -171,7 +171,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         for (key: HTMaterialKey in RagiumItems.MATERIALS.columnKeys) {
             val definition: HTMaterialDefinition = RagiumPlatform.INSTANCE.getMaterialDefinition(key)
-            val basePrefix: HTMaterialPrefix = definition.getDefaultPrefix() ?: continue
+            val basePrefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
             val base: ItemLike = RagiumItems.MATERIALS[basePrefix, key] ?: continue
 
             blockMap[key]?.let { storage: ItemLike ->

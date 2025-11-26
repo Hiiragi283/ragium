@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -268,19 +269,20 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         for (chargeType: HTChargeType in HTChargeType.entries) {
-            val (prefix: HTPrefixLike, material: HTMaterialLike) = when (chargeType) {
+            val key: HTMaterialKey = when (chargeType) {
                 HTChargeType.BLAST -> continue
-                HTChargeType.STRIKE -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
-                HTChargeType.NEUTRAL -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.EMERALD
-                HTChargeType.FISHING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.AZURE
-                HTChargeType.TELEPORT -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.WARPED_CRYSTAL
-                HTChargeType.CONFUSING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.ELDRITCH_PEARL
+                HTChargeType.STRIKE -> VanillaMaterialKeys.GOLD
+                HTChargeType.NEUTRAL -> VanillaMaterialKeys.EMERALD
+                HTChargeType.FISHING -> RagiumMaterialKeys.AZURE
+                HTChargeType.TELEPORT -> RagiumMaterialKeys.WARPED_CRYSTAL
+                HTChargeType.CONFUSING -> RagiumMaterialKeys.ELDRITCH_PEARL
             }
+            val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
             HTShapedRecipeBuilder
                 .create(chargeType, 8)
                 .hollow8()
                 .define('A', HTChargeType.BLAST)
-                .define('B', prefix, material)
+                .define('B', prefix, key)
                 .setCategory(CraftingBookCategory.EQUIPMENT)
                 .save(output)
         }

@@ -233,7 +233,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.clear(RagiumFluidContents.MIXTURE_ACID, Color(0xcc6600))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            val color = Color(data.color)
+            val color: Color = data.color
             // molten
             event.dull(data.molten, color)
             // sap
