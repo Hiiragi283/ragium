@@ -24,7 +24,7 @@ class HTFluidCollectorScreen(
         super.init()
         addRenderableOnly(
             HTProgressWidget.arrow(
-                blockEntity::progress,
+                blockEntity::getProgress,
                 startX + HTSlotHelper.getSlotPosX(3.5),
                 startY + HTSlotHelper.getSlotPosY(1),
             ),

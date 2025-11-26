@@ -30,7 +30,7 @@ class HTRefineryScreen(
     override fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
         consumer(
             HTProgressWidget.burn(
-                blockEntity::progress,
+                blockEntity::getProgress,
                 startX + HTSlotHelper.getSlotPosX(4),
                 startY + HTSlotHelper.getSlotPosY(1),
             ),

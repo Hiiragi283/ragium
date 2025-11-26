@@ -28,7 +28,7 @@ open class HTProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>>(
     protected open fun addProgressBar(consumer: (HTProgressWidget) -> Unit) {
         consumer(
             HTProgressWidget.arrow(
-                blockEntity::progress,
+                blockEntity::getProgress,
                 startX + HTSlotHelper.getSlotPosX(3.5),
                 startY + HTSlotHelper.getSlotPosY(1),
             ),

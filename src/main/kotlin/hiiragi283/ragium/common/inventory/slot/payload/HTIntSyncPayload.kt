@@ -22,7 +22,7 @@ data class HTIntSyncPayload(val value: Int) : HTSyncablePayload {
     override fun setValue(menu: HTSyncableMenu, index: Int) {
         val slot: HTSyncableSlot? = menu.getTrackedSlot(index)
         if (slot is HTIntSyncSlot) {
-            slot.setAmount(this.value)
+            slot.setAmountAsInt(this.value)
         }
     }
 }
