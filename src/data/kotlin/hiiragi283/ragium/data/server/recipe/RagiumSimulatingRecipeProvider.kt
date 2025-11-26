@@ -212,7 +212,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(RagiumItems.WITHER_DOLl),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.IRIDESCENTIUM),
+                itemCreator.fromItem(RagiumItems.ETERNAL_COMPONENT),
                 resultHelper.item(Items.NETHER_STAR),
             ).save(output)
     }

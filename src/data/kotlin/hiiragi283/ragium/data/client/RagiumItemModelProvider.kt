@@ -78,7 +78,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             RagiumFluidContents.NAPHTHA,
             RagiumFluidContents.LUBRICANT,
             // Molten
-            RagiumFluidContents.MOLTEN_RAGIUM,
+            RagiumFluidContents.DESTABILIZED_RAGINITE,
             RagiumFluidContents.CRIMSON_BLOOD,
             RagiumFluidContents.DEW_OF_THE_WARP,
             RagiumFluidContents.ELDRITCH_FLUX,

@@ -303,14 +303,13 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
     private fun iridescentium() {
         createSimple(
-            RagiumAdvancements.IRIDESCENTIUM,
+            RagiumAdvancements.IRIDESCENT_POWDER,
             RagiumAdvancements.ELDRITCH_PEARL,
-            CommonMaterialPrefixes.INGOT,
-            RagiumMaterialKeys.IRIDESCENTIUM,
+            RagiumItems.IRIDESCENT_POWDER,
         )
         createSimple(
             RagiumAdvancements.ETERNAL_COMPONENT,
-            RagiumAdvancements.IRIDESCENTIUM,
+            RagiumAdvancements.IRIDESCENT_POWDER,
             RagiumItems.ETERNAL_COMPONENT,
         ) { setChallenge() }
     }

@@ -195,10 +195,6 @@ object RagiumMaterialEvents {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Night Metal", "夜金")
         }
-        event.modify(RagiumMaterialKeys.IRIDESCENTIUM) {
-            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
-            addName("Iridescentium", "七色金")
-        }
         // Food
         event.modify(FoodMaterialKeys.BUTTER) {
             addDefaultPrefix(CommonMaterialPrefixes.FOOD)

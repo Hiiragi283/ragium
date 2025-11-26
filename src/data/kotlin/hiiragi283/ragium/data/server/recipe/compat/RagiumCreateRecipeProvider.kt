@@ -13,9 +13,9 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.function.IdToFunction
 import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
@@ -46,11 +46,7 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
             ).addResult(resultHelper.item(AllItems.PULP))
             .save(output)
 
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
-                itemCreator.fromItem(AllItems.PULP),
-                resultHelper.item(AllItems.CARDBOARD),
-            ).save(output)
+        compressingTo(HTMoldType.PLATE, itemCreator.fromItem(AllItems.PULP), resultHelper.item(AllItems.CARDBOARD))
     }
 
     @JvmStatic

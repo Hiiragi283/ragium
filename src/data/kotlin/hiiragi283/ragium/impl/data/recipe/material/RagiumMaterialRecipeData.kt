@@ -161,7 +161,7 @@ data object RagiumMaterialRecipeData {
         addInput(Items.HEART_OF_THE_SEA)
         addInput(Items.DRAGON_BREATH)
 
-        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.IRIDESCENTIUM), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.IRIDESCENTIUM)
+        addOutput(RagiumItems.IRIDESCENT_POWDER, null)
     }
 
     @JvmStatic

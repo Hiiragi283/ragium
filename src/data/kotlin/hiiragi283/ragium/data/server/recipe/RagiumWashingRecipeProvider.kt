@@ -72,7 +72,7 @@ object RagiumWashingRecipeProvider : HTRecipeProvider.Direct() {
 
         // Ice <-> Water
         meltAndFreeze(
-            itemCreator.fromItem(HTMoldType.STORAGE_BLOCK),
+            HTMoldType.STORAGE_BLOCK,
             Items.ICE.toHolderLike(),
             HTFluidHolderLike.WATER,
             1000,

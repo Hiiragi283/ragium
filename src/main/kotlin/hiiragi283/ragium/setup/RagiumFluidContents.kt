@@ -132,9 +132,6 @@ object RagiumFluidContents {
     val DESTABILIZED_RAGINITE: HTBasicFluidContent = register("destabilized_raginite", molten())
 
     @JvmField
-    val MOLTEN_RAGIUM: HTBasicFluidContent = register("molten_ragium", molten())
-
-    @JvmField
     val CRIMSON_BLOOD: HTBasicFluidContent = register("crimson_blood", molten(), ::HTNetherFluidType)
 
     @JvmField

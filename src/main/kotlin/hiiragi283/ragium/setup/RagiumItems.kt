@@ -121,10 +121,12 @@ object RagiumItems {
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
             RagiumMaterialKeys.NIGHT_METAL,
-            RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { key: HTMaterialKey ->
             REGISTER.addAlias("${key.name}_dust", "${key.name}_ingot")
         }
+
+        REGISTER.addAlias("iridescentium_dust", "iridescent_powder")
+        REGISTER.addAlias("iridescentium_ingot", "iridescent_powder")
 
         REGISTER.register(eventBus)
 
@@ -140,6 +142,9 @@ object RagiumItems {
 
     @JvmField
     val RAGI_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_coke")
+
+    @JvmField
+    val RAGIUM_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragium_powder")
 
     // Wood
     @JvmField
@@ -188,6 +193,11 @@ object RagiumItems {
 
     @JvmField
     val WITHER_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_star")
+
+    @JvmField
+    val IRIDESCENT_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("iridescent_powder") {
+        it.rarity(Rarity.RARE).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+    }
 
     @JvmStatic
     val MATERIALS: ImmutableTable<HTMaterialPrefix, HTMaterialKey, HTSimpleDeferredItem> = buildTable {
@@ -239,7 +249,6 @@ object RagiumItems {
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
             RagiumMaterialKeys.NIGHT_METAL,
-            RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { register(CommonMaterialPrefixes.INGOT, it, "${it.asMaterialName()}_ingot") }
 
         // Foods
@@ -262,7 +271,6 @@ object RagiumItems {
             RagiumMaterialKeys.AZURE_STEEL,
             RagiumMaterialKeys.DEEP_STEEL,
             RagiumMaterialKeys.NIGHT_METAL,
-            RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { register(CommonMaterialPrefixes.NUGGET, it, "${it.name}_nugget") }
         // Gears
         arrayOf(
@@ -278,6 +286,7 @@ object RagiumItems {
         // Fuels
         register(CommonMaterialPrefixes.FUEL, RagiumMaterialKeys.BAMBOO_CHARCOAL, "bamboo_charcoal")
         // Plates
+        register(CommonMaterialPrefixes.PLATE, VanillaMaterialKeys.WOOD, "wood_plate")
         register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC, "plastic_plate")
         // Scraps
         register(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, "deep_scrap")
@@ -798,18 +807,6 @@ object RagiumItems {
 
         fun setEnch(item: ItemLike, ench: ResourceKey<Enchantment>, level: Int = 1) {
             modify(item, RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
-        }
-
-        // Materials
-        val iridescent: (DataComponentPatch.Builder) -> Unit = { builder: DataComponentPatch.Builder ->
-            builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-            builder.set(DataComponents.RARITY, Rarity.RARE)
-        }
-        for (block: ItemLike in RagiumBlocks.getMaterialMap(RagiumMaterialKeys.IRIDESCENTIUM).values) {
-            event.modify(block, iridescent)
-        }
-        for (item: ItemLike in getMaterialMap(RagiumMaterialKeys.IRIDESCENTIUM).values) {
-            event.modify(item, iridescent)
         }
 
         // Tools

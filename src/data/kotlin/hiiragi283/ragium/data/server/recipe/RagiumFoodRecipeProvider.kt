@@ -196,7 +196,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     private fun honey() {
         // Honey Block <-> Honey
         meltAndFreeze(
-            itemCreator.fromItem(HTMoldType.STORAGE_BLOCK),
+            HTMoldType.STORAGE_BLOCK,
             Items.HONEY_BLOCK.toHolderLike(),
             RagiumFluidContents.HONEY,
             1000,
@@ -214,12 +214,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT),
             ).save(output)
         // Meat Ingot
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT),
-                resultHelper.item(RagiumItems.getFood(FoodMaterialKeys.RAW_MEAT)),
-                itemCreator.fromItem(HTMoldType.INGOT),
-            ).save(output)
+        compressingTo(HTMoldType.INGOT, FoodMaterialKeys.RAW_MEAT, CommonMaterialPrefixes.DUST, outputPrefix = CommonMaterialPrefixes.FOOD)
 
         HTCookingRecipeBuilder
             .smeltingAndSmoking(RagiumItems.getFood(FoodMaterialKeys.COOKED_MEAT)) {
