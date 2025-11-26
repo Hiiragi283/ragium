@@ -188,7 +188,7 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
 
         HTShapedRecipeBuilder
             .cross8Mirrored(output, RagiumItems.ETERNAL_COMPONENT) {
-                define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.IRIDESCENTIUM)
+                define('A', RagiumItems.IRIDESCENT_POWDER)
                 define('B', Items.CLOCK)
                 define('C', ultimate)
             }

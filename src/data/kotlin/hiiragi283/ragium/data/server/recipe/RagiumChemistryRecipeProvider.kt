@@ -35,11 +35,7 @@ import net.neoforged.neoforge.common.Tags
 object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Plastic Plate
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
-                itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN),
-                resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC),
-            ).save(output)
+        compressingTo(HTMoldType.PLATE, CommonMaterialKeys.PLASTIC, itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN))
         // Synthetic Fiber / Leather
         mapOf(
             RagiumItems.SYNTHETIC_FIBER to Tags.Items.STRINGS,
@@ -82,7 +78,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
         // Magma Block <-> Lava
         meltAndFreeze(
-            itemCreator.fromItem(HTMoldType.STORAGE_BLOCK),
+            HTMoldType.STORAGE_BLOCK,
             Items.MAGMA_BLOCK.toHolderLike(),
             HTFluidHolderLike.LAVA,
             125,
@@ -234,14 +230,14 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     private fun explosives() {
         // Slime
         meltAndFreeze(
-            itemCreator.fromItem(HTMoldType.GEM),
+            HTMoldType.GEM,
             Items.SLIME_BALL.toHolderLike(),
             RagiumFluidContents.SLIME,
             250,
         )
 
         meltAndFreeze(
-            itemCreator.fromItem(HTMoldType.STORAGE_BLOCK),
+            HTMoldType.STORAGE_BLOCK,
             Items.SLIME_BLOCK.toHolderLike(),
             RagiumFluidContents.SLIME,
             250 * 9,

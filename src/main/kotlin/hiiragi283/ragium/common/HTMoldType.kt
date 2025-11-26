@@ -16,6 +16,7 @@ enum class HTMoldType(private val enPattern: String, private val jaPattern: Stri
     GEM("Gem", "宝石"),
     GEAR("Gear", "歯車"),
     INGOT("Ingot", "インゴット"),
+    PLATE("Plate", "板材"),
     ;
 
     val prefix: HTPrefixLike
@@ -24,6 +25,7 @@ enum class HTMoldType(private val enPattern: String, private val jaPattern: Stri
             GEM -> CommonMaterialPrefixes.GEM
             GEAR -> CommonMaterialPrefixes.GEAR
             INGOT -> CommonMaterialPrefixes.INGOT
+            PLATE -> CommonMaterialPrefixes.PLATE
         }
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {

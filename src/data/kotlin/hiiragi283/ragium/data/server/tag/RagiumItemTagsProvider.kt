@@ -285,6 +285,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.FISHING_UPGRADE)
             .add(RagiumItems.MOB_CAPTURE_UPGRADE)
 
+        factory.apply(ItemTags.PLANKS).add(RagiumItems.getPlate(VanillaMaterialKeys.WOOD))
+        // Plastics
         factory
             .apply(RagiumModTags.Items.POLYMER_RESIN)
             .add(RagiumItems.POLYMER_RESIN)

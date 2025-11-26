@@ -78,6 +78,9 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 8),
                 resultHelper.item(RagiumItems.COMPRESSED_SAWDUST),
             ).save(output)
+        // Sawdust -> Wood Plate
+        compressingTo(HTMoldType.PLATE, VanillaMaterialKeys.WOOD, CommonMaterialPrefixes.DUST)
+
         // Coal -> Diamond
         HTItemWithCatalystRecipeBuilder
             .compressing(

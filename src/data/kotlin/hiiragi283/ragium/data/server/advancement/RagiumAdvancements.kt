@@ -94,7 +94,7 @@ object RagiumAdvancements {
 
     //    Iridescentium    //
 
-    val IRIDESCENTIUM: HTAdvancementKey = create("iridescentium")
+    val IRIDESCENT_POWDER: HTAdvancementKey = create("iridescent_powder")
 
     val ETERNAL_COMPONENT: HTAdvancementKey = create("eternal_component")
 
