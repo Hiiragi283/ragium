@@ -10,14 +10,15 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicComplexRecipe
+import hiiragi283.ragium.impl.recipe.HTMixingRecipe
+import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
+import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithFluidToChancedItemRecipe
@@ -59,6 +60,39 @@ object RagiumRecipeBiCodecs {
         HTFluidResult.CODEC.fieldOf(RagiumConst.RESULT),
         HTMeltingRecipe::result,
         ::HTMeltingRecipe,
+    )
+
+    @JvmField
+    val MIXING: MapBiCodec<RegistryFriendlyByteBuf, HTMixingRecipe> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.listOrElement(0, 4).optionalFieldOf("item_ingredients", listOf()),
+        HTMixingRecipe::itemIngredients,
+        HTFluidIngredient.CODEC.listOrElement(0, 2).optionalFieldOf("fluid_ingredients", listOf()),
+        HTMixingRecipe::fluidIngredients,
+        RESULTS,
+        HTMixingRecipe::results,
+        ::HTMixingRecipe,
+    )
+
+    @JvmField
+    val MIXING_SIMPLE: MapBiCodec<RegistryFriendlyByteBuf, HTSimpleMixingRecipe> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf("item_ingredient"),
+        HTSimpleMixingRecipe::itemIngredient,
+        HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
+        HTSimpleMixingRecipe::fluidIngredient,
+        RESULTS,
+        HTSimpleMixingRecipe::results,
+        ::HTSimpleMixingRecipe,
+    )
+
+    @JvmField
+    val REFINING: MapBiCodec<RegistryFriendlyByteBuf, HTRefiningRecipe> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.optionalFieldOf("item_ingredient"),
+        HTRefiningRecipe::itemIngredient,
+        HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
+        HTRefiningRecipe::fluidIngredient,
+        RESULTS,
+        HTRefiningRecipe::results,
+        ::HTRefiningRecipe,
     )
 
     @JvmStatic
@@ -110,20 +144,4 @@ object RagiumRecipeBiCodecs {
         HTBasicItemWithFluidToChancedItemRecipe::results,
         factory::create,
     )
-
-    @JvmStatic
-    fun <R : HTBasicComplexRecipe> complex(
-        factory: HTComplexRecipeBuilder.Factory<R>,
-        itemRange: IntRange,
-        fluidRange: IntRange,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec
-        .composite(
-            HTItemIngredient.CODEC.listOrElement(itemRange).optionalFieldOf("item_ingredients", listOf()),
-            HTBasicComplexRecipe::itemIngredients,
-            HTFluidIngredient.CODEC.listOrElement(fluidRange).optionalFieldOf("fluid_ingredients", listOf()),
-            HTBasicComplexRecipe::fluidIngredients,
-            RESULTS,
-            HTBasicComplexRecipe::results,
-            factory::create,
-        )
 }

@@ -5,15 +5,28 @@ import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputsEmiRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
+import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
+import hiiragi283.ragium.impl.recipe.base.HTBasicComplexRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTMixingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTMixingRecipe>) :
-    HTMultiOutputsEmiRecipe<HTMixingRecipe>(category, holder) {
-    init {
-        (0..<4).map(recipe.itemIngredients::getOrNull).forEach(::addInput)
-        (0..<2).map(recipe.fluidIngredients::getOrNull).forEach(::addInput)
+class HTMixingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicComplexRecipe>) :
+    HTMultiOutputsEmiRecipe<HTBasicComplexRecipe>(category, holder) {
+    override fun initInputs() {
+        when (recipe) {
+            is HTMixingRecipe -> {
+                (0..<4).map(recipe.itemIngredients::getOrNull).forEach(::addInput)
+                (0..<2).map(recipe.fluidIngredients::getOrNull).forEach(::addInput)
+            }
 
-        addOutputs(recipe.results)
+            is HTSimpleMixingRecipe -> {
+                addInput(recipe.itemIngredient)
+                addEmptyInput()
+                addEmptyInput()
+                addEmptyInput()
+                addInput(recipe.fluidIngredient)
+                addEmptyInput()
+            }
+        }
     }
 
     override fun initInputSlots(widgets: WidgetHolder) {

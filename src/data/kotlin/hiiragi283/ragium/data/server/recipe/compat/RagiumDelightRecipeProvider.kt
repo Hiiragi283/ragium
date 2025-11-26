@@ -11,10 +11,10 @@ import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingPotRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -37,11 +37,11 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             HTFluidHolderLike.MILK,
         )
         // Rich soil
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
-                itemCreator.fromItem(ModItems.ORGANIC_COMPOST.get()),
-                fluidCreator.fromHolder(RagiumFluidContents.ORGANIC_MUTAGEN, 250),
-            ).addResult(resultHelper.item(ModItems.RICH_SOIL.get()))
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromItem(ModItems.ORGANIC_COMPOST.get()))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ORGANIC_MUTAGEN, 250))
+            .setResult(resultHelper.item(ModItems.RICH_SOIL.get()))
             .save(output)
 
         // Rice Panicle

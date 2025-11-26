@@ -208,6 +208,21 @@ sealed class HTRecipeProvider {
             ).saveSuffixed(output, "_with_mold")
     }
 
+    protected fun crushAndCompress(base: ItemLike, crushed: ItemLike, crushedCount: Int) {
+        // Pulverizing
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                itemCreator.fromItem(base),
+                resultHelper.item(crushed, crushedCount),
+            ).saveSuffixed(output, "_from_base")
+        // Compressing
+        HTItemWithCatalystRecipeBuilder
+            .compressing(
+                itemCreator.fromItem(crushed, crushedCount),
+                resultHelper.item(base),
+            ).saveSuffixed(output, "_from_crushed")
+    }
+
     // Cutting
     protected fun cutAndCombine(hole: ItemLike, slice: ItemLike, count: Int) {
         // Cutting
@@ -263,12 +278,12 @@ sealed class HTRecipeProvider {
                 null,
                 resultHelper.fluid(fluid.getFluid(), amount),
             ).saveSuffixed(output, "_from_${filled.getPath()}")
-        // Washing
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
-                itemCreator.fromItem(empty),
-                fluidCreator.fromHolder(fluid, amount),
-            ).addResult(resultHelper.item(filled))
+        // Mixing
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromItem(empty))
+            .addIngredient(fluidCreator.fromHolder(fluid, amount))
+            .setResult(resultHelper.item(filled))
             .saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 

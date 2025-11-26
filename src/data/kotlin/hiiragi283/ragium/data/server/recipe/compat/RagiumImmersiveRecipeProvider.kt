@@ -23,7 +23,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import net.minecraft.tags.ItemTags
@@ -40,11 +39,11 @@ import net.neoforged.neoforge.fluids.FluidStack
 object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.IMMERSIVE) {
     override fun buildRecipeInternal() {
         // Treated Planks
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
-                itemCreator.fromTagKey(ItemTags.PLANKS),
-                fluidCreator.fromTagKey(IETags.fluidCreosote, 125),
-            ).addResult(resultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!))
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromTagKey(ItemTags.PLANKS))
+            .addIngredient(fluidCreator.fromTagKey(IETags.fluidCreosote, 125))
+            .setResult(resultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!))
             .save(output)
         // Redstone Acid
         HTComplexRecipeBuilder
