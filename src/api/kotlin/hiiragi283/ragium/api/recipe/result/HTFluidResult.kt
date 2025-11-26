@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe.result
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
@@ -22,7 +23,7 @@ class HTFluidResult(entry: HTKeyOrTagEntry<Fluid>, amount: Int, components: Data
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTFluidResult> = createCodec(
             Registries.FLUID,
-            BiCodec.INT.fieldOf("amount"),
+            BiCodec.INT.fieldOf(RagiumConst.AMOUNT),
             ::HTFluidResult,
         )
     }

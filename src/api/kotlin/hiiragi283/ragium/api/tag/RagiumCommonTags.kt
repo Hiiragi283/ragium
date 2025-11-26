@@ -35,12 +35,6 @@ object RagiumCommonTags {
         val CIRCUITS_ADVANCED: TagKey<Item> = create("circuits", "advanced")
 
         @JvmField
-        val FUELS_BIO: TagKey<Item> = create("fuels", "bio")
-
-        @JvmField
-        val FUELS_BIO_BLOCK: TagKey<Item> = create("fuels", "block", "bio")
-
-        @JvmField
         val ORES_IN_GROUND_END_STONE: TagKey<Item> = create("ores_in_ground", "end_stone")
 
         @JvmField
@@ -55,9 +49,6 @@ object RagiumCommonTags {
 
         @JvmStatic
         private fun create(path: String): TagKey<Item> = Registries.ITEM.createCommonTag(path)
-
-        @JvmStatic
-        private fun create(vararg path: String): TagKey<Item> = Registries.ITEM.createCommonTag(*path)
 
         @JvmStatic
         private fun create(prefix: String, value: String): TagKey<Item> = Registries.ITEM.createCommonTag(prefix, value)

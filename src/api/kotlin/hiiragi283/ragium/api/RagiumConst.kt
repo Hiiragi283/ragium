@@ -49,7 +49,7 @@ object RagiumConst {
     @JvmField
     val BUILTIN_IDS: Set<String> = setOf(MINECRAFT, NEOFORGE, COMMON, RagiumAPI.MOD_ID)
 
-    //    Nbt    //
+    //    Serialization    //
 
     const val ACCESS_CONFIG = "access_config"
     const val ENCHANTMENT = "enchantment"
@@ -66,6 +66,11 @@ object RagiumConst {
     const val AMOUNT = "amount"
     const val CAPACITY = "capacity"
     const val BATTERIES = "batteries"
+
+    const val ID = "id"
+    const val COUNT = "count"
+    const val COMPONENTS = "components"
+    const val CHANCE = "chance"
 
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 
@@ -85,4 +90,11 @@ object RagiumConst {
     const val SIMULATING = "simulating"
     const val SOLIDIFYING = "solidifying"
     const val WASHING = "washing"
+
+    const val INGREDIENT = "ingredient"
+
+    const val RESULT = "result"
+    const val RESULTS = "results"
+    const val ITEM_RESULT = "item_result"
+    const val FLUID_RESULT = "fluid_result"
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -95,6 +96,7 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
             .compressing(
                 itemCreator.fromItem(RagiumItems.COAL_CHUNK, 8),
                 resultHelper.item(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
+                itemCreator.fromItem(HTMoldType.GEM),
             ).saveSuffixed(output, "_from_coal")
     }
 }

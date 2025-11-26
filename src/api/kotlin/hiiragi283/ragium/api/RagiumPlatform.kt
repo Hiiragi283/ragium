@@ -89,6 +89,8 @@ interface RagiumPlatform {
 
     fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator
 
+    fun getModPriorities(): Iterable<String>
+
     //    Server    //
 
     fun getCurrentServer(): MinecraftServer?

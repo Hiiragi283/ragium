@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.tag.createTagKey
 import hiiragi283.ragium.api.text.HTTextResult
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.toTextResult
-import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
@@ -80,20 +80,19 @@ internal data class HTKeyOrTagEntryImpl<T : Any>(
     }
 
     private fun getFirstHolderFromId(lookup: HolderGetter<T>, key: ResourceKey<T>): HTTextResult<Holder<T>> =
-        lookup.get(key).toTextResult(RagiumTranslation.MISSING_KEY.translate(key.location()))
+        lookup.get(key).toTextResult(RagiumTranslation.MISSING_KEY, key.location())
 
     private fun getFirstHolderFromTag(lookup: HolderGetter<T>, tagKey: TagKey<T>): HTTextResult<Holder<T>> = lookup
         .get(tagKey)
         .flatMap(::getFirstHolder)
-        .toTextResult(RagiumTranslation.EMPTY_TAG_KEY.translate(tagKey.location()))
+        .toTextResult(RagiumTranslation.EMPTY_TAG_KEY, tagKey.location())
 
     private fun getFirstHolder(holderSet: HolderSet<T>): Optional<Holder<T>> {
-        for (modId: String in RagiumConfig.COMMON.tagOutputPriority.get()) {
-            val foundHolder: Optional<Holder<T>> =
-                holderSet.stream().filter { holder: Holder<T> -> holder.idOrThrow.namespace == modId }.findFirst()
-            if (foundHolder.isPresent) return foundHolder
+        for (modId: String in RagiumPlatform.INSTANCE.getModPriorities()) {
+            val foundHolder: Holder<T>? = holderSet.firstOrNull { holder: Holder<T> -> holder.idOrThrow.namespace == modId }
+            if (foundHolder != null) return foundHolder.wrapOptional()
         }
-        return holderSet.stream().findFirst()
+        return holderSet.firstOrNull().wrapOptional()
     }
 
     @JvmRecord
