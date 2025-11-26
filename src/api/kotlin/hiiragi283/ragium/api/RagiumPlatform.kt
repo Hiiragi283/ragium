@@ -46,10 +46,10 @@ interface RagiumPlatform {
      */
     fun getUpgradeDataType(): DataComponentType<HTMachineUpgrade>
 
-    fun getMachineUpgrade(stack: ItemStack): HTMachineUpgrade? {
+    fun getMachineUpgrade(provider: HolderLookup.Provider?, stack: ItemStack): HTMachineUpgrade? {
         val item: Item = stack.item
         if (item is HTDynamicUpgradeItem) {
-            val upgrade: HTMachineUpgrade? = item.getUpgrade(stack)
+            val upgrade: HTMachineUpgrade? = item.getUpgrade(provider, stack)
             if (upgrade != null) return upgrade
         }
         return stack.get(getUpgradeDataType())
@@ -88,8 +88,6 @@ interface RagiumPlatform {
         createFluidCreator(provider.lookupOrThrow(Registries.FLUID))
 
     fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator
-
-    fun getModPriorities(): Iterable<String>
 
     //    Server    //
 

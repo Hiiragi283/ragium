@@ -378,6 +378,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.EMPTY_TAG_KEY, $$"Empty tag key: %1$s")
         add(RagiumTranslation.INVALID_PACKET_S2C, $$"Invalid packet received from server side: %1$s")
         add(RagiumTranslation.INVALID_PACKET_C2S, $$"Invalid packet received from client side: %1$s")
+
+        add(RagiumTranslation.MISSING_SERVER, "Could not find current server")
         add(RagiumTranslation.MISSING_REGISTRY, $$"Missing registry: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"Missing key: %1$s")
         // API - GUI

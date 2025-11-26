@@ -1,15 +1,24 @@
 package hiiragi283.ragium.api.serialization.codec
 
+import com.mojang.datafixers.util.Either
 import com.mojang.datafixers.util.Pair
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.api.util.toIor
 import io.netty.buffer.ByteBuf
+import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 object MapBiCodecs {
+    @JvmStatic
+    fun <B : ByteBuf, F : Any, S : Any> either(first: MapBiCodec<in B, F>, second: MapBiCodec<in B, S>): MapBiCodec<B, Either<F, S>> =
+        MapBiCodec.of(
+            Codec.mapEither(first.codec, second.codec),
+            ByteBufCodecs.either(first.streamCodec, second.streamCodec),
+        )
+
     @JvmStatic
     fun <B : ByteBuf, F : Any, S : Any> pair(left: MapBiCodec<in B, F>, right: MapBiCodec<in B, S>): MapBiCodec<B, Pair<F, S>> =
         MapBiCodec.of(

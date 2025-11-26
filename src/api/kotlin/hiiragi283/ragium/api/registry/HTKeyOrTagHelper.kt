@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import io.netty.buffer.ByteBuf
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -41,5 +42,11 @@ interface HTKeyOrTagHelper {
      * 指定した[ResourceKey]から[HTKeyOrTagEntry]の[BiCodec]を返します。
      * @param T 種類のクラス
      */
-    fun <T : Any> codec(registryKey: RegistryKey<T>): BiCodec<ByteBuf, HTKeyOrTagEntry<T>>
+    fun <T : Any> codec(registryKey: RegistryKey<T>): BiCodec<ByteBuf, HTKeyOrTagEntry<T>> = mapCodec(registryKey).toCodec()
+
+    /**
+     * 指定した[ResourceKey]から[HTKeyOrTagEntry]の[MapBiCodec]を返します。
+     * @param T 種類のクラス
+     */
+    fun <T : Any> mapCodec(registryKey: RegistryKey<T>): MapBiCodec<ByteBuf, HTKeyOrTagEntry<T>>
 }

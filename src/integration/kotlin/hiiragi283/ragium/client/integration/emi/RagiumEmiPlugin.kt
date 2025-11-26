@@ -89,6 +89,8 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     override fun register(registry: EmiRegistry) {
+        // Clear Cache
+        categoryCache.clear()
         // Recipe
         recipeManager = registry.recipeManager
 

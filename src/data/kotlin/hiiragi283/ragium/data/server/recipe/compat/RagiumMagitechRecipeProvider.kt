@@ -9,14 +9,13 @@ import hiiragi283.ragium.api.tag.createTagKey
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 
 object RagiumMagitechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.MAGITECH) {
     override fun buildRecipeInternal() {
-        // HTMagitechWoodType.entries.forEach(::addWoodSawing)
+        HTMagitechWoodType.entries.forEach(::addWoodSawing)
     }
 
-    enum class HTMagitechWoodType(path: String, override val planks: ItemLike) : HTWoodType {
+    enum class HTMagitechWoodType(path: String, override val planks: HTItemHolderLike) : HTWoodType {
         CELIFERN("celifern"),
         CHARCOAL_BIRCH("charcoal_birch"),
         ;

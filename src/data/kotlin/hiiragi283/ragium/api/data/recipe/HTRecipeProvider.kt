@@ -227,7 +227,7 @@ sealed class HTRecipeProvider {
      * 指定された[HTWoodType]に基づいて，木材の製材レシピを追加します。
      */
     protected fun addWoodSawing(type: HTWoodType) {
-        val planks: ItemLike = type.planks
+        val planks: HTItemHolderLike = type.planks
         // Log -> 6x Planks
         HTItemToChancedItemRecipeBuilder
             .cutting(itemCreator.fromTagKey(type.log))
@@ -235,21 +235,17 @@ sealed class HTRecipeProvider {
             .modCondition(type.getModId())
             .save(output)
         // Planks -> 2x Slab
-        type.getSlab().ifPresent { slab ->
-            HTItemToChancedItemRecipeBuilder
-                .cutting(itemCreator.fromItem(planks))
-                .addResult(resultHelper.item(slab, 2))
-                .modCondition(type.getModId())
-                .save(output)
-        }
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromItem(planks))
+            .addResult(resultHelper.item(type.getSlab(), 2))
+            .modCondition(type.getModId())
+            .save(output)
         // Planks -> Stairs
-        type.getStairs().ifPresent { stairs ->
-            HTItemToChancedItemRecipeBuilder
-                .cutting(itemCreator.fromItem(planks))
-                .addResult(resultHelper.item(stairs))
-                .modCondition(type.getModId())
-                .save(output)
-        }
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromItem(planks))
+            .addResult(resultHelper.item(type.getStairs()))
+            .modCondition(type.getModId())
+            .save(output)
     }
 
     // Extracting
@@ -297,7 +293,7 @@ sealed class HTRecipeProvider {
                 resultHelper.item(solid),
             ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
-    
+
     protected fun meltAndFreeze(data: HTRecipeData) {
         // Solidifying
         HTComplexRecipeBuilder

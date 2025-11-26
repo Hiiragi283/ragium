@@ -379,6 +379,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.EMPTY_TAG_KEY, $$"空のタグ: %1$s")
         add(RagiumTranslation.INVALID_PACKET_S2C, $$"サーバー側からの不正なパケットを受信しました: %1$s")
         add(RagiumTranslation.INVALID_PACKET_C2S, $$"クライアント側からの不正なパケットを受信しました: %1$s")
+
+        add(RagiumTranslation.MISSING_SERVER, "サーバーが見つかりません")
         add(RagiumTranslation.MISSING_REGISTRY, $$"不明なレジストリ: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"不明なキー: %1$s")
         // API - GUI

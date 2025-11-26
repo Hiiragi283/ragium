@@ -1,8 +1,6 @@
 package hiiragi283.ragium.impl
 
-import com.almostreliable.unified.api.AlmostUnified
 import com.google.gson.JsonObject
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
@@ -18,7 +16,6 @@ import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
@@ -39,7 +36,6 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.fml.ModList
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import java.util.function.Consumer
@@ -77,17 +73,6 @@ class RagiumPlatformImpl : RagiumPlatform {
     override fun createItemCreator(getter: HolderGetter<Item>): HTItemIngredientCreator = HTItemIngredientCreatorImpl(getter)
 
     override fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator = HTFluidIngredientCreatorImpl(getter)
-
-    override fun getModPriorities(): Iterable<String> {
-        if (ModList.get().isLoaded(RagiumConst.ALMOST)) {
-            val modIds: Iterable<String> = AlmostUnified.INSTANCE.runtime
-                ?.getUnificationSettings("materials")
-                ?.modPriorities
-                ?: listOf()
-            if (modIds.any()) return modIds
-        }
-        return RagiumConfig.COMMON.tagOutputPriority.get()
-    }
 
     //    Server    //
 
