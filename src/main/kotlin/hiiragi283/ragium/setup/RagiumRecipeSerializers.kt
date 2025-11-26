@@ -25,6 +25,7 @@ import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTPlantingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
+import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
 import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 import net.minecraft.core.registries.Registries
@@ -137,7 +138,13 @@ object RagiumRecipeSerializers {
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = register(
         RagiumConst.MIXING,
-        RagiumRecipeBiCodecs.complex(::HTMixingRecipe, 0..4, 0..2),
+        RagiumRecipeBiCodecs.MIXING,
+    )
+
+    @JvmField
+    val MIXING_SIMPLE: RecipeSerializer<HTSimpleMixingRecipe> = register(
+        "${RagiumConst.MIXING}/simple",
+        RagiumRecipeBiCodecs.MIXING_SIMPLE,
     )
 
     @JvmField
@@ -159,7 +166,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val REFINING: RecipeSerializer<HTRefiningRecipe> = register(
         RagiumConst.REFINING,
-        RagiumRecipeBiCodecs.complex(::HTRefiningRecipe, 0..1, 1..1),
+        RagiumRecipeBiCodecs.REFINING,
     )
 
     @JvmField

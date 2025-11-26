@@ -52,16 +52,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.SUGAR, 3),
             ).saveSuffixed(output, "_from_cane")
 
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromTagKey(Tags.Items.RODS_BLAZE),
-                resultHelper.item(Items.BLAZE_POWDER, 4),
-            ).saveSuffixed(output, "_from_rod")
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromTagKey(Tags.Items.RODS_BREEZE),
-                resultHelper.item(Items.WIND_CHARGE, 6),
-            ).saveSuffixed(output, "_from_rod")
+        // Bone <-> Bone Meal
+        crushAndCompress(Items.BONE, Items.BONE_MEAL, 4)
+        // Blaze Rod <-> Blaze Powder
+        crushAndCompress(Items.BLAZE_ROD, Items.BLAZE_POWDER, 4)
+        // Breeze Rod <-> Wind Charge
+        crushAndCompress(Items.BREEZE_ROD, Items.WIND_CHARGE, 6)
 
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.COARSE_DIRT))

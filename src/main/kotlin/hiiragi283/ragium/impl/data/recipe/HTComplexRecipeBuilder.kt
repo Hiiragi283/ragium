@@ -7,17 +7,31 @@ import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
+import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
 
 class HTComplexRecipeBuilder(prefix: String, private val factory: Factory<*>) :
     HTComplexResultRecipeBuilder<HTComplexRecipeBuilder>(prefix) {
     companion object {
         @JvmStatic
-        fun mixing(): HTComplexRecipeBuilder = HTComplexRecipeBuilder(RagiumConst.MIXING, ::HTMixingRecipe)
+        fun mixing(): HTComplexRecipeBuilder = HTComplexRecipeBuilder(
+            RagiumConst.MIXING,
+        ) { itemIngredients: List<HTItemIngredient>, fluidIngredients: List<HTFluidIngredient>, results: HTComplexResult ->
+            if (itemIngredients.size == 1 && fluidIngredients.size == 1) {
+                HTSimpleMixingRecipe(itemIngredients[0], fluidIngredients[0], results)
+            } else {
+                HTMixingRecipe(itemIngredients, fluidIngredients, results)
+            }
+        }
 
         @JvmStatic
-        fun refining(prefix: String): HTComplexRecipeBuilder = HTComplexRecipeBuilder(prefix, ::HTRefiningRecipe)
+        fun refining(prefix: String): HTComplexRecipeBuilder = HTComplexRecipeBuilder(
+            prefix,
+        ) { itemIngredients: List<HTItemIngredient>, fluidIngredients: List<HTFluidIngredient>, results: HTComplexResult ->
+            HTRefiningRecipe(itemIngredients.getOrNull(0).wrapOptional(), fluidIngredients[0], results)
+        }
 
         @JvmStatic
         fun refining(

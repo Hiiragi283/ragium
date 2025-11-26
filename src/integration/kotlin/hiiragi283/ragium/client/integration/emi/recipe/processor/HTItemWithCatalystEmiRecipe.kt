@@ -13,7 +13,7 @@ import kotlin.jvm.optionals.getOrNull
 
 class HTItemWithCatalystEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicItemWithCatalystRecipe>) :
     HTMultiOutputsEmiRecipe<HTBasicItemWithCatalystRecipe>(category, holder) {
-    init {
+    override fun initInputs() {
         when (recipe) {
             is HTCompressingRecipe -> {
                 addInput(recipe.required)
@@ -30,7 +30,6 @@ class HTItemWithCatalystEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeH
                 addCatalyst(recipe.required)
             }
         }
-        addOutputs(recipe.results)
     }
 
     override fun initInputSlots(widgets: WidgetHolder) {

@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item
 
 object RagiumMagitechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.MAGITECH) {
     override fun buildRecipeInternal() {
-        HTMagitechWoodType.entries.forEach(::addWoodSawing)
+        // HTMagitechWoodType.entries.forEach(::addWoodSawing)
     }
 
     enum class HTMagitechWoodType(path: String, override val planks: HTItemHolderLike) : HTWoodType {
