@@ -146,13 +146,14 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.MELTER, "Melter")
-        add(RagiumBlocks.REFINERY, "Refinery")
-        add(RagiumBlocks.WASHER, "Washer")
-
-        add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.MIXER, "Mixer")
+        add(RagiumBlocks.REFINERY, "Refinery")
+
+        add(RagiumBlocks.ADVANCED_MIXER, "Advanced Mixer")
+        add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.MULTI_SMELTER, "Multi Smelter")
         add(RagiumBlocks.PLANTER, "Planting Chamber")
+        add(RagiumBlocks.WASHER, "Washer")
 
         add(RagiumBlocks.ENCHANT_COPIER, "Enchantment Copier")
         add(RagiumBlocks.ENCHANTER, "Enchanter")

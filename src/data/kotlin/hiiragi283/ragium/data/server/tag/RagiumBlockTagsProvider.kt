@@ -91,13 +91,14 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
             add(RagiumBlocks.CRUSHER)
             add(RagiumBlocks.MELTER)
-            add(RagiumBlocks.REFINERY)
-            add(RagiumBlocks.WASHER)
-
-            add(RagiumBlocks.BREWERY)
             add(RagiumBlocks.MIXER)
+            add(RagiumBlocks.REFINERY)
+
+            add(RagiumBlocks.ADVANCED_MIXER)
+            add(RagiumBlocks.BREWERY)
             add(RagiumBlocks.MULTI_SMELTER)
             add(RagiumBlocks.PLANTER)
+            add(RagiumBlocks.WASHER)
 
             add(RagiumBlocks.ENCHANT_COPIER)
             add(RagiumBlocks.ENCHANTER)
@@ -248,7 +249,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // WIP
         factory
             .apply(RagiumModTags.Blocks.WIP)
-            .add(RagiumBlocks.ELECTRIC_FURNACE)
             .add(RagiumBlocks.NUCLEAR_REACTOR)
             .add(RagiumBlocks.OPEN_CRATE)
             .add(RagiumBlocks.TELEPAD)

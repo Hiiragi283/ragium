@@ -467,14 +467,14 @@ object RagiumBlocks {
     @JvmField
     val BLOCK_BREAKER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("block_breaker", RagiumBlockTypes.BLOCK_BREAKER, machineProperty())
+    
+    @JvmField
+    val COMPRESSOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("compressor", RagiumBlockTypes.COMPRESSOR, machineProperty())
 
     @JvmField
     val CUTTING_MACHINE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("cutting_machine", RagiumBlockTypes.CUTTING_MACHINE, machineProperty())
-
-    @JvmField
-    val COMPRESSOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("compressor", RagiumBlockTypes.COMPRESSOR, machineProperty())
 
     @JvmField
     val ELECTRIC_FURNACE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
@@ -498,6 +498,10 @@ object RagiumBlocks {
         registerMachineTier("melter", RagiumBlockTypes.MELTER, machineProperty().noOcclusion())
 
     @JvmField
+    val MIXER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("mixer", RagiumBlockTypes.MIXER, machineProperty())
+
+    @JvmField
     val REFINERY: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier(
             "refinery",
@@ -506,18 +510,14 @@ object RagiumBlocks {
             ::HTRefineryBlock,
         )
 
-    @JvmField
-    val WASHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("washer", RagiumBlockTypes.WASHER, machineProperty().noOcclusion())
-
     // Elite
     @JvmField
     val BREWERY: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("brewery", RagiumBlockTypes.BREWERY, machineProperty())
 
     @JvmField
-    val MIXER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("mixer", RagiumBlockTypes.MIXER, machineProperty())
+    val ADVANCED_MIXER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("advanced_mixer", RagiumBlockTypes.ADVANCED_MIXER, machineProperty())
 
     @JvmField
     val MULTI_SMELTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
@@ -526,6 +526,10 @@ object RagiumBlocks {
     @JvmField
     val PLANTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("planter", RagiumBlockTypes.PLANTER, machineProperty().noOcclusion())
+
+    @JvmField
+    val WASHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("washer", RagiumBlockTypes.WASHER, machineProperty().noOcclusion())
 
     // Ultimate
     @JvmField

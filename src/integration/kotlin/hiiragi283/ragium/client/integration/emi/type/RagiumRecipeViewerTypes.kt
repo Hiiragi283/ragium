@@ -77,12 +77,12 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val REFINING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =
-        machine(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
+    val MIXING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =
+        machine(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, RagiumBlocks.ADVANCED_MIXER)
 
     @JvmField
-    val WASHING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
-        machine(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
+    val REFINING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =
+        machine(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     // Elite
     @JvmField
@@ -90,12 +90,12 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
 
     @JvmField
-    val MIXING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTComplexRecipe> =
-        machine(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
-
-    @JvmField
     val PLANTING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
         machine(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
+
+    @JvmField
+    val WASHING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
+        machine(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
 
     // Ultimate
     @JvmField

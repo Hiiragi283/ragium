@@ -19,32 +19,41 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
-class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
+class HTAdvancedMixerBlockEntity(pos: BlockPos, state: BlockState) :
     HTComplexBlockEntity<HTComplexRecipe>(
         RagiumRecipeTypes.MIXING,
-        RagiumBlocks.MIXER,
+        RagiumBlocks.ADVANCED_MIXER,
         pos,
         state,
     ) {
-    lateinit var inputTank: HTFluidStackTank
+    lateinit var firstInputTank: HTFluidStackTank
+        private set
+    lateinit var secondInputTank: HTFluidStackTank
         private set
 
     override fun initInputTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
-        inputTank = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.mixerFirstInputTankCapacity),
-        )
+        firstInputTank =
+            builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.mixerFirstInputTankCapacity))
+        secondInputTank =
+            builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.mixerSecondInputTankCapacity))
     }
 
     override fun getOutputTankCapacity(): Int = RagiumConfig.COMMON.mixerOutputTankCapacity.asInt
 
-    lateinit var inputSlot: HTItemStackSlot
+    lateinit var inputSlots: List<HTItemStackSlot>
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // inputs
-        inputSlot = singleInput(builder, listener)
+        inputSlots = (0..1).flatMap { y: Int ->
+            (2..3).map { x: Int ->
+                builder.addSlot(
+                    HTSlotInfo.INPUT,
+                    HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosX(y)),
+                )
+            }
+        }
         // output
         outputSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
@@ -53,7 +62,8 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
-        items += inputSlot.getStack()
-        fluids += inputTank.getStack()
+        items.addAll(inputSlots.map(HTItemStackSlot::getStack))
+        fluids += firstInputTank.getStack()
+        fluids += secondInputTank.getStack()
     }
 }
