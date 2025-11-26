@@ -1,13 +1,14 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.common.inventory.slot.HTIntSyncSlot
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.util.Mth
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import org.apache.commons.lang3.math.Fraction
 
 /**
  * レシピの処理を行う機械に使用される[HTMachineBlockEntity]の拡張クラス
@@ -24,18 +25,16 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
     override fun addMenuTrackers(menu: HTContainerMenu) {
         super.addMenuTrackers(menu)
         // Progress
-        menu.track(HTIntSyncSlot(::usedEnergy))
-        menu.track(HTIntSyncSlot(::requiredEnergy))
+        menu.track(HTIntSyncSlot.create(::usedEnergy))
+        menu.track(HTIntSyncSlot.create(::requiredEnergy))
     }
 
-    val progress: Float
-        get() {
-            val totalTick: Int = usedEnergy
-            val maxTicks: Int = requiredEnergy
-            if (maxTicks <= 0) return 0f
-            val fixedTotalTicks: Int = totalTick % maxTicks
-            return Mth.clamp(fixedTotalTicks / maxTicks.toFloat(), 0f, 1f)
-        }
+    fun getProgress(): Fraction {
+        val totalTick: Int = usedEnergy
+        val maxTicks: Int = requiredEnergy
+        if (maxTicks <= 0) return Fraction.ZERO
+        return fraction(totalTick, maxTicks)
+    }
 
     final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // アウトプットが埋まっていないか判定する

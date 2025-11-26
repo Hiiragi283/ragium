@@ -184,7 +184,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         if (hasEnergyStorage()) {
             val battery: HTEnergyBattery? = this.getEnergyBattery(this.getEnergySideFor())
             if (battery is HTBasicEnergyBattery) {
-                menu.track(HTIntSyncSlot(battery::getAmount, battery::setAmountUnchecked))
+                menu.track(HTIntSyncSlot.create(battery::getAmount, battery::setAmountUnchecked))
             }
         }
     }
