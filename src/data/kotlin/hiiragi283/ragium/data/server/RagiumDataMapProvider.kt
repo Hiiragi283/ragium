@@ -172,6 +172,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun materialRecipe() {
         MapDataMapBuilder(builder(RagiumDataMaps.MATERIAL_RECIPE))
             .getOrCreateMap(RagiumRecipeTypes.ALLOYING) {
+                // Raw -> Ingot
                 put(
                     RagiumAPI.id("raw_to_ingot_with_basic"),
                     HTRawSmeltingMaterialRecipe(
@@ -192,7 +193,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                         1,
                     ),
                 )
-
+                // Raw Block -> Ingot
                 put(
                     RagiumAPI.id("raw_block_to_ingot_with_basic"),
                     HTRawSmeltingMaterialRecipe(
@@ -227,6 +228,11 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                     HTCompressingMaterialRecipe.ingot(CommonMaterialPrefixes.GEAR, itemCreator.fromItem(HTMoldType.GEAR), inputCount = 4),
                 )
             }.getOrCreateMap(RagiumRecipeTypes.CRUSHING) {
+                put(
+                    RagiumAPI.id("raw_block_to_dust"),
+                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, 1, 12),
+                )
+
                 put(
                     RagiumAPI.id("ingot_to_dust"),
                     HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.INGOT, 1, 1),

@@ -109,6 +109,23 @@ object RagiumItems {
         REGISTER.addAlias("elite_circuit", "ragi_crystal")
         REGISTER.addAlias("ultimate_circuit", "eldritch_pearl")
 
+        arrayOf(
+            // Gems
+            RagiumMaterialKeys.RAGI_CRYSTAL,
+            RagiumMaterialKeys.CRIMSON_CRYSTAL,
+            RagiumMaterialKeys.WARPED_CRYSTAL,
+            RagiumMaterialKeys.ELDRITCH_PEARL,
+            // Metals
+            RagiumMaterialKeys.RAGI_ALLOY,
+            RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
+            RagiumMaterialKeys.AZURE_STEEL,
+            RagiumMaterialKeys.DEEP_STEEL,
+            RagiumMaterialKeys.NIGHT_METAL,
+            RagiumMaterialKeys.IRIDESCENTIUM,
+        ).forEach { key: HTMaterialKey ->
+            REGISTER.addAlias("${key.name}_dust", "${key.name}_ingot")
+        }
+
         REGISTER.register(eventBus)
 
         eventBus.addListener(::registerItemCapabilities)
@@ -203,17 +220,6 @@ object RagiumItems {
             // Ragium - Gem
             RagiumMaterialKeys.RAGINITE,
             RagiumMaterialKeys.AZURE,
-            RagiumMaterialKeys.RAGI_CRYSTAL,
-            RagiumMaterialKeys.CRIMSON_CRYSTAL,
-            RagiumMaterialKeys.WARPED_CRYSTAL,
-            RagiumMaterialKeys.ELDRITCH_PEARL,
-            // Ragium - Metal
-            RagiumMaterialKeys.RAGI_ALLOY,
-            RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
-            RagiumMaterialKeys.AZURE_STEEL,
-            RagiumMaterialKeys.DEEP_STEEL,
-            RagiumMaterialKeys.NIGHT_METAL,
-            RagiumMaterialKeys.IRIDESCENTIUM,
         ).forEach { register(CommonMaterialPrefixes.DUST, it.asMaterialKey(), "${it.asMaterialName()}_dust") }
         register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "sawdust")
         register(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT, "minced_meat")

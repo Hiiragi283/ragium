@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -27,14 +28,14 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 object RagiumRecipeBiCodecs {
     @JvmField
     val RESULTS: MapBiCodec<RegistryFriendlyByteBuf, HTComplexResult> = MapBiCodecs.ior(
-        HTItemResult.CODEC.optionalFieldOf("item_result"),
-        HTFluidResult.CODEC.optionalFieldOf("fluid_result"),
+        HTItemResult.CODEC.optionalFieldOf(RagiumConst.ITEM_RESULT),
+        HTFluidResult.CODEC.optionalFieldOf(RagiumConst.FLUID_RESULT),
     )
 
     @JvmField
     val BREWING: MapBiCodec<RegistryFriendlyByteBuf, HTBrewingRecipe> = MapBiCodec
         .composite(
-            HTItemIngredient.CODEC.fieldOf("ingredient"),
+            HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT),
             HTBrewingRecipe::ingredient,
             VanillaBiCodecs.POTION.fieldOf("potion"),
             HTBrewingRecipe::contents,
@@ -44,7 +45,7 @@ object RagiumRecipeBiCodecs {
     @JvmField
     val ENCHANTING: MapBiCodec<RegistryFriendlyByteBuf, HTEnchantingRecipe> = MapBiCodec
         .composite(
-            HTItemIngredient.CODEC.fieldOf("ingredient"),
+            HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT),
             HTEnchantingRecipe::ingredient,
             VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment"),
             HTEnchantingRecipe::holder,
@@ -53,9 +54,9 @@ object RagiumRecipeBiCodecs {
 
     @JvmField
     val MELTING: MapBiCodec<RegistryFriendlyByteBuf, HTMeltingRecipe> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf("ingredient"),
+        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT),
         HTMeltingRecipe::ingredient,
-        HTFluidResult.CODEC.fieldOf("result"),
+        HTFluidResult.CODEC.fieldOf(RagiumConst.RESULT),
         HTMeltingRecipe::result,
         ::HTMeltingRecipe,
     )
@@ -68,7 +69,7 @@ object RagiumRecipeBiCodecs {
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         ingredient,
         ingredientGetter,
-        HTItemResult.CODEC.fieldOf("result"),
+        HTItemResult.CODEC.fieldOf(RagiumConst.RESULT),
         HTBasicSingleOutputRecipe<*>::result,
         factory,
     )
@@ -90,9 +91,9 @@ object RagiumRecipeBiCodecs {
     fun <R : HTBasicItemToChancedItemRecipe> itemToChanced(
         factory: HTItemToChancedItemRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf("ingredient"),
+        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT),
         HTBasicItemToChancedItemRecipe::ingredient,
-        HTItemResultWithChance.CODEC.listOrElement(1, 4).fieldOf("results"),
+        HTItemResultWithChance.CODEC.listOrElement(1, 4).fieldOf(RagiumConst.RESULTS),
         HTBasicItemToChancedItemRecipe::results,
         factory::create,
     )

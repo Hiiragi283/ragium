@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialKeys
@@ -325,19 +324,19 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun sap() {
-        // Bio Fuel + Water -> polymer Resin
+        // Slime + Salt -> Polymer Resin
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(
-                itemCreator.fromTagKey(RagiumCommonTags.Items.FUELS_BIO_BLOCK),
-                fluidCreator.water(250),
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALT),
+                fluidCreator.fromHolder(RagiumFluidContents.SLIME, 125),
             ).addResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN))
-            .saveSuffixed(output, "_from_bio")
+            .saveSuffixed(output, "_from_slime")
 
         // XX Log -> Wood Dust + Sap
         HTItemWithCatalystRecipeBuilder
             .extracting(
                 itemCreator.fromTagKey(ItemTags.LOGS_THAT_BURN),
-                null,
+                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4),
                 null,
                 resultHelper.fluid(RagiumFluidContents.SAP, 125),
             ).saveSuffixed(output, "_from_log")

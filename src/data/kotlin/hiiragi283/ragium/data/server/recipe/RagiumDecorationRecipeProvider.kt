@@ -130,11 +130,11 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                                     itemCreator.fromTagKey(ItemTags.SMELTS_TO_GLASS),
                                 )
                                 VanillaMaterialKeys.OBSIDIAN -> listOf(
-                                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.DEEP_STEEL),
+                                    itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL),
                                     itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
                                 )
                                 else -> listOf(
-                                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, key),
+                                    itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, key),
                                     itemCreator.fromTagKey(CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN, 2),
                                 )
                             },

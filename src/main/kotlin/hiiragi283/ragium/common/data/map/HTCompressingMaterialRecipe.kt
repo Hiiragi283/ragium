@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import net.minecraft.util.ExtraCodecs
 import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
 @JvmRecord
 data class HTCompressingMaterialRecipe(
@@ -60,7 +59,13 @@ data class HTCompressingMaterialRecipe(
             HTCompressingMaterialRecipe(CommonMaterialPrefixes.INGOT, inputCount, outputPrefix, outputCount, catalyst)
     }
 
-    constructor(inputPrefix: HTPrefixLike, inputCount: Int, outputPrefix: HTPrefixLike, outputCount: Int, catalyst: HTItemIngredient?) : this(
+    constructor(
+        inputPrefix: HTPrefixLike,
+        inputCount: Int,
+        outputPrefix: HTPrefixLike,
+        outputCount: Int,
+        catalyst: HTItemIngredient?,
+    ) : this(
         inputPrefix.asMaterialPrefix(),
         inputCount,
         outputPrefix.asMaterialPrefix(),
@@ -78,9 +83,9 @@ data class HTCompressingMaterialRecipe(
             HTItemWithCatalystRecipeBuilder
                 .compressing(
                     helper.itemCreator.fromTagKey(inputPrefix, key, inputCount),
-                    helper.resultHelper.item(outputPrefix, key, outputCount),
-                    catalyst.getOrNull()
-                ).saveSuffixed(helper.output, "_from_${inputPrefix.name}")
+                    catalyst,
+                ).setResult(helper.resultHelper.item(outputPrefix, key, outputCount))
+                .saveSuffixed(helper.output, "_from_${inputPrefix.name}")
         }
     }
 }

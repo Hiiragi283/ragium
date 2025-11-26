@@ -261,8 +261,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { (primary: HTMaterialLike, secondary: HTMaterialLike) ->
             HTItemToChancedItemRecipeBuilder
                 .crushing(itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, primary))
-                .addResult(resultHelper.item(CommonMaterialPrefixes.RAW_MATERIAL, primary, 2))
-                .addResult(resultHelper.item(CommonMaterialPrefixes.RAW_MATERIAL, secondary), 1 / 4f)
+                .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, primary, 2))
+                .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, secondary), 1 / 4f)
                 .saveSuffixed(output, "_from_ore")
         }
 

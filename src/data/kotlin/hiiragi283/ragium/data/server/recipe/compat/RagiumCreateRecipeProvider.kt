@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.function.IdToFunction
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -34,15 +33,11 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
         mixing { createBuilder<MixingRecipe>(AllRecipeTypes.MIXING, it) }
 
         // Sandpaper
-        listOf(
-            RagiumMaterialKeys.RAGI_CRYSTAL,
-        ).forEach { key: HTMaterialKey ->
-            HTShapelessRecipeBuilder
-                .equipment(RagiumIntegrationItems.getSandPaper(key))
-                .addIngredient(Items.PAPER)
-                .addIngredient(CommonMaterialPrefixes.DUST, key)
-                .save(output)
-        }
+        HTShapelessRecipeBuilder
+            .equipment(RagiumIntegrationItems.getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL))
+            .addIngredient(Items.PAPER)
+            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .save(output)
         // Cardboard
         HTItemWithFluidToChancedItemRecipeBuilder
             .washing(

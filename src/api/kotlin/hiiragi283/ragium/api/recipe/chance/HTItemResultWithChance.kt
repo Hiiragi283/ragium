@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.recipe.chance
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.minus
@@ -25,7 +26,7 @@ data class HTItemResultWithChance(val base: HTItemResult, val chance: Float) {
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemResultWithChance> = BiCodec.composite(
             HTItemResult.CODEC.toMap(),
             HTItemResultWithChance::base,
-            BiCodec.floatRange(0f, 1f).optionalFieldOf("chance", 1f),
+            BiCodec.floatRange(0f, 1f).optionalFieldOf(RagiumConst.CHANCE, 1f),
             HTItemResultWithChance::chance,
             ::HTItemResultWithChance,
         )

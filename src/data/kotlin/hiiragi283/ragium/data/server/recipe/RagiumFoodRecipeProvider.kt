@@ -218,6 +218,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .compressing(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT),
                 resultHelper.item(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAW_MEAT),
+                itemCreator.fromItem(HTMoldType.INGOT),
             ).save(output)
 
         HTCookingRecipeBuilder
