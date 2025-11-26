@@ -230,8 +230,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
         event.dull(RagiumFluidContents.DESTABILIZED_RAGINITE, Color(0xcc0033))
 
-        event.clear(RagiumFluidContents.SULFURIC_ACID, Color(0xff3300))
         event.clear(RagiumFluidContents.NITRIC_ACID, Color(0xcc99ff))
+        event.clear(RagiumFluidContents.SULFURIC_ACID, Color(0xff3300))
         event.clear(RagiumFluidContents.MIXTURE_ACID, Color(0xcc6600))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {

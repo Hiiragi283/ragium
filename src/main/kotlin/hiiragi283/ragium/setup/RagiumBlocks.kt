@@ -467,7 +467,7 @@ object RagiumBlocks {
     @JvmField
     val BLOCK_BREAKER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("block_breaker", RagiumBlockTypes.BLOCK_BREAKER, machineProperty())
-    
+
     @JvmField
     val COMPRESSOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("compressor", RagiumBlockTypes.COMPRESSOR, machineProperty())

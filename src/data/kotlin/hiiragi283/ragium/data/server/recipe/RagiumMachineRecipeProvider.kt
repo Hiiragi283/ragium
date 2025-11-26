@@ -126,7 +126,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .pattern(
                 " A ",
                 "ABA",
-                "ACA"
+                "ACA",
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             .define('B', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .define('C', Items.FURNACE)

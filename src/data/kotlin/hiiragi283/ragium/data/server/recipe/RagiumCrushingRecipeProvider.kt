@@ -86,6 +86,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(resultHelper.item(RagiumItems.LUMINOUS_PASTE))
             .addResult(resultHelper.item(Items.INK_SAC))
             .save(output)
+        // Common
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
+                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN)
+            ).save(output)
 
         woodDust()
         sand()
