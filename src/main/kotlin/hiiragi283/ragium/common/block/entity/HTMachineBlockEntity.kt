@@ -59,8 +59,8 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
 
         @JvmStatic
         protected fun multiOutputs(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): List<HTItemStackSlot> =
-            intArrayOf(5, 6).flatMap { x: Int ->
-                doubleArrayOf(0.5, 1.5).map { y: Double ->
+            doubleArrayOf(0.5, 1.5).flatMap { y: Double ->
+                intArrayOf(5, 6).map { x: Int ->
                     builder.addSlot(
                         HTSlotInfo.OUTPUT,
                         HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y)),

@@ -175,6 +175,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         val blackstone: ResourceLocation = vanillaId("block", "polished_blackstone_bricks")
 
         val eliteMachine: ResourceLocation = RagiumAPI.id("block", "elite_machine_casing")
+        val eliteFrame: ResourceLocation = RagiumAPI.id("block", "elite_machine_frame")
         val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
         val ultimateMachine: ResourceLocation = RagiumAPI.id("block", "ultimate_machine_casing")
@@ -199,12 +200,14 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Advanced
         machine(RagiumBlocks.CRUSHER, advancedCasing, blackstone, RagiumAPI.id("block", "pulverizer_front"))
         machine(RagiumBlocks.MELTER, advancedFrame, blackstone)
+        machine(RagiumBlocks.MIXER, advancedFrame, blackstone)
         altModelBlock(RagiumBlocks.REFINERY, factory = ::horizontalBlock)
-        machine(RagiumBlocks.WASHER, advancedFrame, blackstone)
         // Elite
+        machine(RagiumBlocks.ADVANCED_MIXER, eliteFrame, deepslateTiles, RagiumAPI.id("block", "mixer_front"))
         machine(RagiumBlocks.BREWERY, eliteMachine, deepslateTiles)
         machine(RagiumBlocks.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
         machine(RagiumBlocks.PLANTER, eliteMachine, deepslateTiles)
+        machine(RagiumBlocks.WASHER, eliteFrame, deepslateTiles)
         // Ultimate
         machine(RagiumBlocks.ENCHANT_COPIER, ultimateMachine, obsidian)
         machine(RagiumBlocks.SIMULATOR, ultimateMachine, ultimateMachine)

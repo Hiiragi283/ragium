@@ -24,6 +24,7 @@ import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarPanelControllerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAdvancedMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTBlockBreakerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
@@ -185,23 +186,26 @@ object RagiumBlockEntityTypes {
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick("melter", ::HTMelterBlockEntity)
 
     @JvmField
-    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
+    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> = registerTick("mixer", ::HTMixerBlockEntity)
 
     @JvmField
-    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> = registerTick("washer", ::HTWasherBlockEntity)
+    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = registerTick("refinery", ::HTRefineryBlockEntity)
 
     // Elite
     @JvmField
-    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> = registerTick("brewery", ::HTBreweryBlockEntity)
+    val ADVANCED_MIXER: HTDeferredBlockEntityType<HTAdvancedMixerBlockEntity> = registerTick("advanced_mixer", ::HTAdvancedMixerBlockEntity)
 
     @JvmField
-    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> = registerTick("mixer", ::HTMixerBlockEntity)
+    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> = registerTick("brewery", ::HTBreweryBlockEntity)
 
     @JvmField
     val MULTI_SMELTER: HTDeferredBlockEntityType<HTMultiSmelterBlockEntity> = registerTick("multi_smelter", ::HTMultiSmelterBlockEntity)
 
     @JvmField
     val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> = registerTick("planter", ::HTPlanterBlockEntity)
+
+    @JvmField
+    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> = registerTick("washer", ::HTWasherBlockEntity)
 
     // Ultimate
     @JvmField
@@ -316,11 +320,12 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, CRUSHER.get())
         registerHandler(event, MELTER.get())
+        registerHandler(event, MIXER.get())
         registerHandler(event, REFINERY.get())
         registerHandler(event, WASHER.get())
 
+        registerHandler(event, ADVANCED_MIXER.get())
         registerHandler(event, BREWERY.get())
-        registerHandler(event, MIXER.get())
         registerHandler(event, MULTI_SMELTER.get())
         registerHandler(event, PLANTER.get())
 

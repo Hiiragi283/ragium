@@ -14,7 +14,6 @@ import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumPlantingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumSimulatingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumWashingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAARecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAE2RecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumCreateRecipeProvider
@@ -45,7 +44,6 @@ class RagiumRecipeProvider(context: HTDataGenContext) : RecipeProvider(context.o
         RagiumPlantingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumSimulatingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumWashingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
         RagiumAARecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumAE2RecipeProvider.buildRecipes(recipeOutput, holderLookup)

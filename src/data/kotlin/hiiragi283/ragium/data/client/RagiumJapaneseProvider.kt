@@ -137,13 +137,14 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumBlocks.CRUSHER, "破砕機")
         add(RagiumBlocks.MELTER, "溶融炉")
-        add(RagiumBlocks.REFINERY, "精製機")
-        add(RagiumBlocks.WASHER, "洗浄機")
-
-        add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.MIXER, "ミキサー")
+        add(RagiumBlocks.REFINERY, "精製機")
+
+        add(RagiumBlocks.ADVANCED_MIXER, "発展型ミキサー")
+        add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.MULTI_SMELTER, "並列製錬炉")
         add(RagiumBlocks.PLANTER, "栽培室")
+        add(RagiumBlocks.WASHER, "洗浄機")
 
         add(RagiumBlocks.ENCHANT_COPIER, "エンチャントコピー機")
         add(RagiumBlocks.ENCHANTER, "エンチャンター")

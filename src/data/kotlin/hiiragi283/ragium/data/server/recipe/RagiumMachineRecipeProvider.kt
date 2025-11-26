@@ -121,6 +121,16 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('B', Items.STONECUTTER)
             define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.ELECTRIC_FURNACE)
+            .pattern(
+                " A ",
+                "ABA",
+                "ACA"
+            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('B', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .define('C', Items.FURNACE)
+            .save(output)
         basicMachine(RagiumBlocks.EXTRACTOR) {
             define('B', Items.HOPPER)
             define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
@@ -149,8 +159,8 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('B', Items.BLAST_FURNACE)
             define('C', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
         }
-        advMachine(RagiumBlocks.WASHER) {
-            define('B', Items.IRON_TRAPDOOR)
+        advMachine(RagiumBlocks.MIXER) {
+            define('B', Tags.Items.BUCKETS_EMPTY)
             define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
 
@@ -166,21 +176,25 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('D', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
             .save(output)
         // Elite
+        eliteMachine(RagiumBlocks.ADVANCED_MIXER) {
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            define('C', RagiumBlocks.MIXER)
+        }
         eliteMachine(RagiumBlocks.BREWERY) {
             define('B', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
             define('C', Items.BREWING_STAND)
         }
-        eliteMachine(RagiumBlocks.MIXER) {
-            define('B', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
-            define('C', RagiumBlocks.REFINERY)
-        }
         eliteMachine(RagiumBlocks.MULTI_SMELTER) {
-            define('B', Items.FURNACE)
-            define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            define('C', RagiumBlocks.ELECTRIC_FURNACE)
         }
         eliteMachine(RagiumBlocks.PLANTER) {
             define('B', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
             define('C', Items.FLOWER_POT)
+        }
+        eliteMachine(RagiumBlocks.WASHER) {
+            define('B', Items.IRON_TRAPDOOR)
+            define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
         // Ultimate
         machineBase(RagiumBlocks.ENCHANT_COPIER, RagiumMaterialKeys.NIGHT_METAL) {

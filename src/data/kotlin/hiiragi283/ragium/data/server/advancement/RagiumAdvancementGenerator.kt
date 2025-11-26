@@ -174,8 +174,8 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
         createSimple(
             RagiumAdvancements.MIXER,
-            RagiumAdvancements.REFINERY,
-            RagiumBlocks.MIXER,
+            RagiumAdvancements.AZURE_STEEL,
+            RagiumBlocks.ADVANCED_MIXER,
         ) { setGoal() }
     }
 

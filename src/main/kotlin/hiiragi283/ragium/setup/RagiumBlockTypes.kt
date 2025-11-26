@@ -140,6 +140,13 @@ object RagiumBlockTypes {
         .build(RagiumCommonTranslation.MELTER)
 
     @JvmField
+    val MIXER: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.MIXER }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addProcessorTier(HTMachineTier.ADVANCED)
+        .build(RagiumCommonTranslation.MIXER)
+
+    @JvmField
     val REFINERY: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.REFINERY }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
@@ -147,15 +154,14 @@ object RagiumBlockTypes {
         .addMenu { RagiumMenuTypes.REFINERY }
         .build(RagiumCommonTranslation.REFINERY)
 
-    @JvmField
-    val WASHER: HTMachineBlockType = HTMachineBlockType
-        .builder { RagiumBlockEntityTypes.WASHER }
-        .add(HTDirectionalBlockAttribute.HORIZONTAL)
-        .addProcessorTier(HTMachineTier.ADVANCED)
-        .addMenu { RagiumMenuTypes.WASHER }
-        .build(RagiumCommonTranslation.WASHER)
-
     // Elite
+
+    @JvmField
+    val ADVANCED_MIXER: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.ADVANCED_MIXER }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addProcessorTier(HTMachineTier.ELITE)
+        .build(RagiumCommonTranslation.MIXER)
 
     @JvmField
     val BREWERY: HTMachineBlockType = HTMachineBlockType
@@ -164,13 +170,6 @@ object RagiumBlockTypes {
         .addProcessorTier(HTMachineTier.ELITE)
         .addMenu { RagiumMenuTypes.BREWERY }
         .build(RagiumCommonTranslation.BREWERY)
-
-    @JvmField
-    val MIXER: HTMachineBlockType = HTMachineBlockType
-        .builder { RagiumBlockEntityTypes.MIXER }
-        .add(HTDirectionalBlockAttribute.HORIZONTAL)
-        .addProcessorTier(HTMachineTier.ELITE)
-        .build(RagiumCommonTranslation.MIXER)
 
     @JvmField
     val MULTI_SMELTER: HTMachineBlockType = HTMachineBlockType
@@ -187,6 +186,14 @@ object RagiumBlockTypes {
         .addProcessorTier(HTMachineTier.ELITE)
         .addMenu { RagiumMenuTypes.PLANTER }
         .build(RagiumCommonTranslation.PLANTER)
+
+    @JvmField
+    val WASHER: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.WASHER }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addProcessorTier(HTMachineTier.ELITE)
+        .addMenu { RagiumMenuTypes.WASHER }
+        .build(RagiumCommonTranslation.WASHER)
 
     // Ultimate
 
