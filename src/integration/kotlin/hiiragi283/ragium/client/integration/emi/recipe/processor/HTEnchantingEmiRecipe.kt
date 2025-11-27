@@ -3,15 +3,15 @@ package hiiragi283.ragium.client.integration.emi.recipe.processor
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
-import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.client.integration.emi.toFluidEmi
-import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumFluidContents
-import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.resources.ResourceLocation
 
-class HTEnchantingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTEnchantingRecipe>) :
-    HTEmiHolderRecipe<HTEnchantingRecipe>(category, holder) {
+class HTEnchantingEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTEnchantingRecipe) :
+    HTEmiRecipe<HTEnchantingRecipe>(category, id, recipe) {
     init {
         addInput(recipe.ingredient)
         addInput(RagiumFluidContents.EXPERIENCE.toFluidEmi(recipe.getRequiredExpFluid()))

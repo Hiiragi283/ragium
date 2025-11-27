@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.recipe.HTExpExtractingRecipe
 import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
@@ -124,6 +125,11 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.BLAZE_POWDER),
                 resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
             ).saveSuffixed(output, "_from_blaze")
+
+        save(
+            RagiumAPI.id(RagiumConst.EXTRACTING, "experience_from_items"),
+            HTExpExtractingRecipe,
+        )
 
         dyes()
     }

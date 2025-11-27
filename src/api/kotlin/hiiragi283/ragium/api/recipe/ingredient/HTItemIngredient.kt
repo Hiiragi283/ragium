@@ -106,7 +106,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
             private val CODEC_WITH_COUNT: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
                 VanillaMapBiCodecs.INGREDIENT,
                 IngredientBased::ingredient,
-                BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.COUNT, 1),
+                BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1),
                 IngredientBased::count,
                 ::IngredientBased,
             )

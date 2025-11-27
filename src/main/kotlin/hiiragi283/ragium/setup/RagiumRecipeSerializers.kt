@@ -18,7 +18,6 @@ import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
-import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
@@ -115,12 +114,6 @@ object RagiumRecipeSerializers {
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = register(
         RagiumConst.CUTTING,
         RagiumRecipeBiCodecs.itemToChanced(::HTCuttingRecipe),
-    )
-
-    @JvmField
-    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = register(
-        RagiumConst.ENCHANTING,
-        RagiumRecipeBiCodecs.ENCHANTING,
     )
 
     @JvmField

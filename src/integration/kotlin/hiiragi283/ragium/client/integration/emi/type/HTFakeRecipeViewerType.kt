@@ -24,8 +24,9 @@ class HTFakeRecipeViewerType<RECIPE : Any>(
         fun <RECIPE : Any, ITEM> create(
             item: ITEM,
             bounds: HTBounds,
+            id: ResourceLocation = item.getId(),
         ): HTFakeRecipeViewerType<RECIPE> where ITEM : HTItemHolderLike, ITEM : HTHasText = HTFakeRecipeViewerType(
-            item.getId(),
+            id,
             item,
             item.toStack(),
             null,
