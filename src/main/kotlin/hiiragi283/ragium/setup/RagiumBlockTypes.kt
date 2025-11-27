@@ -70,7 +70,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.ALLOY_SMELTER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.BASIC)
-        .addMenu { RagiumMenuTypes.ALLOY_SMELTER }
+        .addMenu { RagiumMenuTypes.PROCESSOR }
         .build(RagiumCommonTranslation.ALLOY_SMELTER)
 
     @JvmField
@@ -78,7 +78,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.BLOCK_BREAKER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.BASIC)
-        .addMenu { RagiumMenuTypes.SINGLE_ITEM }
+        .addMenu { RagiumMenuTypes.PROCESSOR }
         .build(RagiumCommonTranslation.BLOCK_BREAKER)
 
     @JvmField
@@ -86,7 +86,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.CUTTING_MACHINE }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.BASIC)
-        .addMenu { RagiumMenuTypes.CUTTING_MACHINE }
+        .addMenu { RagiumMenuTypes.PROCESSOR }
         .build(RagiumCommonTranslation.CUTTING_MACHINE)
 
     @JvmField
@@ -94,7 +94,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.COMPRESSOR }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.BASIC)
-        .addMenu { RagiumMenuTypes.COMPRESSOR }
+        .addMenu { RagiumMenuTypes.ITEM_WITH_CATALYST }
         .build(RagiumCommonTranslation.COMPRESSOR)
 
     @JvmField
@@ -102,7 +102,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.ELECTRIC_FURNACE }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.BASIC)
-        .addMenu { RagiumMenuTypes.SMELTER }
+        .addMenu { RagiumMenuTypes.PROCESSOR }
         .build()
 
     @JvmField
@@ -110,7 +110,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.EXTRACTOR }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.BASIC)
-        .addMenu { RagiumMenuTypes.EXTRACTOR }
+        .addMenu { RagiumMenuTypes.ITEM_WITH_CATALYST }
         .build(RagiumCommonTranslation.EXTRACTOR)
 
     @JvmField
@@ -118,7 +118,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.PULVERIZER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.BASIC)
-        .addMenu { RagiumMenuTypes.PULVERIZER }
+        .addMenu { RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID }
         .build(RagiumCommonTranslation.PULVERIZER)
 
     // Advanced
@@ -128,7 +128,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.CRUSHER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ADVANCED)
-        .addMenu { RagiumMenuTypes.CRUSHER }
+        .addMenu { RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID }
         .build(RagiumCommonTranslation.CRUSHER)
 
     @JvmField
@@ -144,6 +144,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.MIXER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ADVANCED)
+        .addMenu { RagiumMenuTypes.MIXER }
         .build(RagiumCommonTranslation.MIXER)
 
     @JvmField
@@ -168,7 +169,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.BREWERY }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ELITE)
-        .addMenu { RagiumMenuTypes.BREWERY }
+        .addMenu { RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID }
         .build(RagiumCommonTranslation.BREWERY)
 
     @JvmField
@@ -176,7 +177,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.MULTI_SMELTER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ELITE)
-        .addMenu { RagiumMenuTypes.SMELTER }
+        .addMenu { RagiumMenuTypes.PROCESSOR }
         .build(RagiumCommonTranslation.MULTI_SMELTER)
 
     @JvmField
@@ -184,7 +185,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.PLANTER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ELITE)
-        .addMenu { RagiumMenuTypes.PLANTER }
+        .addMenu { RagiumMenuTypes.FLUID_TO_CHANCED }
         .build(RagiumCommonTranslation.PLANTER)
 
     @JvmField
@@ -192,7 +193,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.WASHER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ELITE)
-        .addMenu { RagiumMenuTypes.WASHER }
+        .addMenu { RagiumMenuTypes.FLUID_TO_CHANCED }
         .build(RagiumCommonTranslation.WASHER)
 
     // Ultimate
@@ -210,7 +211,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.ENCHANTER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ULTIMATE)
-        .addMenu { RagiumMenuTypes.ENCHANTER }
+        .addMenu { RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID }
         .build(RagiumCommonTranslation.ENCHANTER)
 
     @JvmField
@@ -218,7 +219,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.SIMULATOR }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ULTIMATE)
-        .addMenu { RagiumMenuTypes.SIMULATOR }
+        .addMenu { RagiumMenuTypes.ITEM_WITH_CATALYST }
         .build(RagiumCommonTranslation.SIMULATOR)
 
     //    Device    //

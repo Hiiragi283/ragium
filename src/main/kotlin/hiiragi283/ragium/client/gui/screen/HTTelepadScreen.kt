@@ -17,12 +17,8 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.level.Level
 import org.lwjgl.glfw.GLFW
 
-class HTTelepadScreen(
-    texture: ResourceLocation,
-    menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>,
-    inventory: Inventory,
-    title: Component,
-) : HTBlockEntityContainerScreen<HTTelepadBlockentity>(texture, menu, inventory, title) {
+class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, inventory: Inventory, title: Component) :
+    HTBlockEntityContainerScreen<HTTelepadBlockentity>(menu, inventory, title) {
     private lateinit var fluidWidget: HTFluidWidget
 
     private lateinit var editBoxX: HTNumberEditBox.IntRanged

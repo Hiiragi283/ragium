@@ -6,13 +6,17 @@ import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.base.HTEnchantProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -27,12 +31,21 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTEnchantProcessorBlockEntity.Cached<SingleRecipeInput, HTEnchantingRecipe>(
+    HTSingleItemInputBlockEntity.CachedWithTank<HTEnchantingRecipe>(
         RecipeCache(),
         RagiumBlocks.ENCHANTER,
         pos,
         state,
     ) {
+    override fun createTank(listener: HTContentListener): HTFluidStackTank = HTVariableFluidStackTank.input(
+        listener,
+        RagiumConfig.COMMON.extractorTankCapacity,
+        RagiumFluidContents.EXPERIENCE::isOf,
+    )
+
+    lateinit var outputSlot: HTItemStackSlot
+        private set
+
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = singleInput(builder, listener)
@@ -40,7 +53,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot = singleOutput(builder, listener)
     }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTEnchantingRecipe): Boolean {
         val bool1: Boolean = outputSlot.insert(

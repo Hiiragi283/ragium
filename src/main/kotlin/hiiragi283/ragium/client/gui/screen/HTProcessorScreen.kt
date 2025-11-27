@@ -11,12 +11,20 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-open class HTProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>>(
-    texture: ResourceLocation,
-    menu: HTBlockEntityContainerMenu<BE>,
-    inventory: Inventory,
-    title: Component,
-) : HTBlockEntityContainerScreen<BE>(texture, menu, inventory, title) {
+open class HTProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> : HTBlockEntityContainerScreen<BE> {
+    constructor(
+        texture: ResourceLocation,
+        menu: HTBlockEntityContainerMenu<BE>,
+        inventory: Inventory,
+        title: Component,
+    ) : super(texture, menu, inventory, title)
+
+    constructor(menu: HTBlockEntityContainerMenu<BE>, inventory: Inventory, title: Component) : super(
+        menu,
+        inventory,
+        title,
+    )
+
     override fun init() {
         super.init()
         // Progress Widget

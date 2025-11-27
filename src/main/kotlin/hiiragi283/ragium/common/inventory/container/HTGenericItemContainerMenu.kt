@@ -11,7 +11,7 @@ import net.neoforged.api.distmarker.Dist
 
 @Suppress("DEPRECATION")
 abstract class HTGenericItemContainerMenu(
-    menuType: HTDeferredMenuType.OnHand<*>,
+    override val menuType: HTDeferredMenuType.OnHand<*>,
     containerId: Int,
     inventory: Inventory,
     context: HTItemContainerContext,
