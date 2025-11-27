@@ -2,9 +2,13 @@ package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.toRecipeInput
+import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -38,5 +42,31 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
 
         final override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): RECIPE? =
             recipeCache.getFirstRecipe(input, level)
+    }
+
+    abstract class CachedWithTank<RECIPE : Recipe<SingleRecipeInput>> : Cached<RECIPE> {
+        constructor(
+            recipeCache: HTRecipeCache<SingleRecipeInput, RECIPE>,
+            blockHolder: Holder<Block>,
+            pos: BlockPos,
+            state: BlockState,
+        ) : super(recipeCache, blockHolder, pos, state)
+
+        constructor(
+            finder: HTRecipeFinder<SingleRecipeInput, RECIPE>,
+            blockHolder: Holder<Block>,
+            pos: BlockPos,
+            state: BlockState,
+        ) : super(finder, blockHolder, pos, state)
+
+        lateinit var inputTank: HTFluidStackTank
+            private set
+
+        final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+            // input
+            inputTank = builder.addSlot(HTSlotInfo.INPUT, createTank(listener))
+        }
+
+        protected abstract fun createTank(listener: HTContentListener): HTFluidStackTank
     }
 }

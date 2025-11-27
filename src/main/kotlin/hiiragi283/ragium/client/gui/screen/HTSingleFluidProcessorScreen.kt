@@ -3,13 +3,12 @@ package hiiragi283.ragium.client.gui.screen
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
-import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEnchantCopierBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -26,20 +25,6 @@ class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>>(
     title: Component,
 ) : HTProcessorScreen<BE>(texture, menu, inventory, title) {
     companion object {
-        @JvmStatic
-        fun brewery(
-            texture: ResourceLocation,
-            menu: HTBlockEntityContainerMenu<HTBreweryBlockEntity>,
-            inventory: Inventory,
-            title: Component,
-        ): HTSingleFluidProcessorScreen<HTBreweryBlockEntity> = HTSingleFluidProcessorScreen(
-            { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
-            texture,
-            menu,
-            inventory,
-            title,
-        )
-
         @JvmStatic
         fun <BE : HTFluidToChancedItemOutputBlockEntity<*, *>> chancedItemOutput(
             texture: ResourceLocation,
@@ -97,12 +82,12 @@ class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>>(
         )
 
         @JvmStatic
-        fun pulverizer(
+        fun <BE : HTSingleItemInputBlockEntity.CachedWithTank<*>> singleItem(
             texture: ResourceLocation,
-            menu: HTBlockEntityContainerMenu<HTPulverizerBlockEntity>,
+            menu: HTBlockEntityContainerMenu<BE>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidProcessorScreen<HTPulverizerBlockEntity> = HTSingleFluidProcessorScreen(
+        ): HTSingleFluidProcessorScreen<BE> = HTSingleFluidProcessorScreen(
             { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
             texture,
             menu,
