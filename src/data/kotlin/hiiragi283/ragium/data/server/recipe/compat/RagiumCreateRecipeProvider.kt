@@ -115,6 +115,6 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
         fromData(RagiumMaterialRecipeData.ELDRITCH_FLUX, HeatCondition.SUPERHEATED)
 
         fromData(RagiumMaterialRecipeData.NIGHT_METAL, HeatCondition.HEATED)
-        fromData(RagiumMaterialRecipeData.IRIDESCENTIUM, HeatCondition.SUPERHEATED)
+        fromData(RagiumMaterialRecipeData.IRIDESCENT_POWDER, HeatCondition.SUPERHEATED)
     }
 }

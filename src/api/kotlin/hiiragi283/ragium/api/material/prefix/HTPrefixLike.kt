@@ -20,7 +20,4 @@ fun interface HTPrefixLike {
     fun <T : Any> createTagKey(key: RegistryKey<T>, name: String): TagKey<T> = asMaterialPrefix().createTagKey(key, name)
 
     fun itemTagKey(material: HTMaterialLike): TagKey<Item> = createTagKey(Registries.ITEM, material)
-
-    @Deprecated("Use `itemTagKey(HTMaterialLike) instead`")
-    fun itemTagKey(name: String): TagKey<Item> = createTagKey(Registries.ITEM, name)
 }

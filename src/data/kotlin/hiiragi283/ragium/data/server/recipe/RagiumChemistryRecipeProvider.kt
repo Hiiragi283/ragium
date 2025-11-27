@@ -30,7 +30,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.DyeItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -145,15 +144,12 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.BLACK_DYE),
             ).saveSuffixed(output, "_from_coal")
 
-        for (color: DyeColor in DyeColor.entries) {
-            val name: String = color.serializedName
-            val dye: DyeItem = DyeItem.byColor(color)
-
+        for (material: HTColorMaterial in HTColorMaterial.entries) {
             HTItemWithCatalystRecipeBuilder
                 .extracting(
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_MATERIAL.itemTagKey("dyes/$name")),
-                    resultHelper.item(dye, 2),
-                ).saveSuffixed(output, "_from_$name")
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_MATERIAL_DYE, material),
+                    resultHelper.item(DyeItem.byColor(material.dyeColor), 2),
+                ).saveSuffixed(output, "_from_${material.asMaterialName()}")
         }
     }
 

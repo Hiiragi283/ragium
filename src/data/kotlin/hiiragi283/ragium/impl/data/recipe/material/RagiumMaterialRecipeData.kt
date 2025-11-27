@@ -147,7 +147,7 @@ data object RagiumMaterialRecipeData {
     }
 
     @JvmField
-    val IRIDESCENTIUM: HTRecipeData = HTRecipeData.create {
+    val IRIDESCENT_POWDER: HTRecipeData = HTRecipeData.create {
         addInput(Tags.Items.NETHER_STARS)
         addInput(Items.HEAVY_CORE)
         addInput(Items.HEART_OF_THE_SEA)
