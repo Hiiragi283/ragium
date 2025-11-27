@@ -33,6 +33,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         recipeType()
         text()
 
+        emi()
         jade()
     }
 
@@ -478,6 +479,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     //    Addon    //
+
+    private fun emi() {
+        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE, "Machine Upgrades")
+    }
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")

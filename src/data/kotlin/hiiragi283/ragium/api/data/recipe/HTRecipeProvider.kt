@@ -228,7 +228,7 @@ sealed class HTRecipeProvider {
                 catalyst,
             ).saveSuffixed(output, "_from_crushed")
     }
-    
+
     // Cutting
     protected fun cutAndCombine(hole: ItemLike, slice: ItemLike, count: Int) {
         // Cutting

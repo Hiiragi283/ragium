@@ -33,6 +33,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         recipeType()
         text()
 
+        emi()
         jade()
     }
 
@@ -480,6 +481,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     //    Addon    //
+
+    private fun emi() {
+        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE, "機械のアップグレード")
+    }
 
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")

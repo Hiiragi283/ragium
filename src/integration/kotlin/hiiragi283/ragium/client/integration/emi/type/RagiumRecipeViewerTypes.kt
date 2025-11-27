@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.integration.emi.type
 
+import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.inventory.HTSlotHelper
@@ -18,8 +19,11 @@ import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -30,6 +34,13 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 object RagiumRecipeViewerTypes {
     @JvmField
     val MACHINE_BOUNDS = HTBounds(HTSlotHelper.getSlotPosX(1) - 1, HTSlotHelper.getSlotPosY(0) - 1, 7 * 18, 3 * 18)
+
+    @JvmField
+    val MACHINE_UPGRADE: HTFakeRecipeViewerType<EmiStack> = HTFakeRecipeViewerType.create(
+        RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY),
+        RagiumCommonTranslation.EMI_MACHINE_UPGRADE::translate,
+        MACHINE_BOUNDS,
+    )
 
     //    Generators    //
 

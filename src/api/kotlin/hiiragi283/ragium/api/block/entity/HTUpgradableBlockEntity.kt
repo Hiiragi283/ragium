@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.function.identity
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.tier.HTBaseTier
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import org.apache.commons.lang3.math.Fraction
 import java.util.function.UnaryOperator
@@ -19,6 +20,8 @@ interface HTUpgradableBlockEntity {
      * 現在保持しているアップグレードの一覧を返します。。
      */
     fun getMachineUpgrades(): List<Pair<HTMachineUpgrade, Int>>
+
+    fun canApplyUpgrade(stack: ItemStack): Boolean
 
     /**
      * アップグレードスロットから機械の最大のティアを返します。

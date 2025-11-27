@@ -21,6 +21,7 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 
 object RagiumDataComponents {
@@ -76,6 +77,10 @@ object RagiumDataComponents {
 
     @JvmField
     val MACHINE_UPGRADE: DataComponentType<HTMachineUpgrade> = REGISTER.registerType("machine_upgrade", HTMachineUpgrade.CODEC)
+
+    @JvmField
+    val MACHINE_UPGRADE_FILTER: DataComponentType<HTKeyOrTagEntry<BlockEntityType<*>>> =
+        REGISTER.registerType("machine_upgrade/filter", HTKeyOrTagHelper.INSTANCE.codec(Registries.BLOCK_ENTITY_TYPE))
 
     //    Storage    //
 

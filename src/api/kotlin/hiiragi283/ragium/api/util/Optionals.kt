@@ -12,14 +12,13 @@ fun <T : Any> T?.toTextResult(message: Component): HTTextResult<T> = when {
     else -> HTTextResult.failure(message)
 }
 
-fun <T : Any> T?.toTextResult(translation: HTTranslation): HTTextResult<T> = this.toTextResult(translation.translate())
+fun <T : Any> T?.toTextResult(translation: HTTranslation, vararg args: Any?): HTTextResult<T> =
+    this.toTextResult(translation.translate(*args))
 
 fun <T : Any, R : T> Optional<R>.toTextResult(message: Component): HTTextResult<T> = when {
     this.isPresent -> HTTextResult.success(this.get())
     else -> HTTextResult.failure(message)
 }
-
-fun <T : Any, R : T> Optional<R>.toTextResult(translation: HTTranslation): HTTextResult<T> = this.toTextResult(translation.translate())
 
 fun <T : Any, R : T> Optional<R>.toTextResult(translation: HTTranslation, vararg args: Any?): HTTextResult<T> =
     this.toTextResult(translation.translate(*args))

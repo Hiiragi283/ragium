@@ -315,15 +315,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .addItem(Items.PHANTOM_MEMBRANE)
             .addItem(Items.WIND_CHARGE)
 
-        factory
-            .apply(RagiumModTags.Items.MACHINE_UPGRADES)
-            // Processor
-            .add(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
-            // Device
-            .add(RagiumItems.EXP_COLLECTOR_UPGRADE)
-            .add(RagiumItems.FISHING_UPGRADE)
-            .add(RagiumItems.MOB_CAPTURE_UPGRADE)
-
         factory.apply(ItemTags.PLANKS).add(RagiumItems.getPlate(VanillaMaterialKeys.WOOD))
         // Plastics
         factory
