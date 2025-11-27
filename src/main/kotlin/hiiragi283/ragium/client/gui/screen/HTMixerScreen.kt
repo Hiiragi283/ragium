@@ -20,6 +20,6 @@ class HTMixerScreen(menu: HTBlockEntityContainerMenu<HTMixerBlockEntity>, invent
         fluidWidget = createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
         fluidWidget1 = createFluidSlot(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(2))
     }
-    
+
     override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget, fluidWidget1)
 }

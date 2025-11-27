@@ -45,22 +45,6 @@ object RagiumMaterialRecipeManager : HTMaterialRecipeManager {
     override fun <RECIPE : Recipe<*>> getAllRecipes(recipeType: RecipeType<RECIPE>): List<RecipeHolder<RECIPE>> =
         recipeMultiMap[recipeType].mapNotNull { it.castRecipe() }
 
-    @JvmStatic
-    fun <RECIPE : Recipe<*>> getRecipeById(recipeType: RecipeType<RECIPE>, id: ResourceLocation?): RecipeHolder<RECIPE>? = when (id) {
-        null -> null
-        else -> recipeTable[recipeType, id]?.castRecipe()
-    }
-
-    override fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> getRecipeFor(
-        recipeType: RecipeType<RECIPE>,
-        input: INPUT,
-        level: Level,
-        lastRecipe: ResourceLocation?,
-    ): RecipeHolder<RECIPE>? {
-        val holder: RecipeHolder<RECIPE>? = getRecipeById(recipeType, lastRecipe)
-        return getRecipeFor(recipeType, input, level, holder)
-    }
-
     override fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> getRecipeFor(
         recipeType: RecipeType<RECIPE>,
         input: INPUT,

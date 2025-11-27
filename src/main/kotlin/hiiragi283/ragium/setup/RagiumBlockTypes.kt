@@ -102,7 +102,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.ELECTRIC_FURNACE }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.BASIC)
-        .addMenu { RagiumMenuTypes.PROCESSOR }
+        .addMenu { RagiumMenuTypes.SMELTER }
         .build()
 
     @JvmField
@@ -177,7 +177,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.MULTI_SMELTER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ELITE)
-        .addMenu { RagiumMenuTypes.PROCESSOR }
+        .addMenu { RagiumMenuTypes.SMELTER }
         .build(RagiumCommonTranslation.MULTI_SMELTER)
 
     @JvmField

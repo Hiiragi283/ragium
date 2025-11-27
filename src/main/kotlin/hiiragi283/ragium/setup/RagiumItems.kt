@@ -644,7 +644,7 @@ object RagiumItems {
         register(
             HTUpgradeVariant.EFFICIENCY,
             HTBaseTier.BASIC,
-            HTMachineUpgrade.Key.ENERGY_EFFICIENCY to fraction(4, 5),
+            HTMachineUpgrade.Key.ENERGY_EFFICIENCY to fraction(5, 4),
         )
         register(
             HTUpgradeVariant.EFFICIENCY,

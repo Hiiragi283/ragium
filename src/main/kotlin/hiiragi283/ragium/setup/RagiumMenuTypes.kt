@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlock
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
@@ -101,6 +102,9 @@ object RagiumMenuTypes {
     @JvmField
     val SINGLE_ITEM_WITH_FLUID: DeferredBEMenu<HTSingleItemInputBlockEntity.CachedWithTank<*>> =
         registerBE("single_item_with_fluid")
+
+    @JvmField
+    val SMELTER: DeferredBEMenu<HTAbstractSmelterBlockEntity<*>> = registerBE("smelter")
 
     @JvmField
     val TELEPAD: DeferredBEMenu<HTTelepadBlockentity> = registerBE("telepad")

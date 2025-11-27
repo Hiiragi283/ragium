@@ -20,6 +20,6 @@ class HTRefineryScreen(menu: HTBlockEntityContainerMenu<HTRefineryBlockEntity>, 
         fluidWidget = createFluidTank(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0))
         fluidWidget1 = createFluidTank(blockEntity.outputTank, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0))
     }
-    
+
     override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget, fluidWidget1)
 }
