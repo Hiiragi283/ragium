@@ -317,6 +317,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         factory
             .apply(RagiumModTags.Items.MACHINE_UPGRADES)
+            // Processor
+            .add(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
+            // Device
             .add(RagiumItems.EXP_COLLECTOR_UPGRADE)
             .add(RagiumItems.FISHING_UPGRADE)
             .add(RagiumItems.MOB_CAPTURE_UPGRADE)

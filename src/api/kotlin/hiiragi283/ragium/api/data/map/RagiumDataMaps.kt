@@ -30,12 +30,15 @@ interface RagiumDataMaps {
         @JvmField
         val INSTANCE: RagiumDataMaps = RagiumAPI.getService()
 
-        @JvmField
-        val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
-
+        // Enchantment
         @JvmField
         val ENCHANT_INGREDIENT: DataMapType<Enchantment, HTItemIngredient> = INSTANCE.enchantIngredientType
 
+        // Entity Type
+        @JvmField
+        val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = INSTANCE.mobHeadType
+
+        // Fluid
         @JvmField
         val THERMAL_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.thermalFuelType
 
@@ -45,19 +48,21 @@ interface RagiumDataMaps {
         @JvmField
         val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.nuclearFuelType
 
+        // Item
         @JvmField
         val ARMOR_EQUIP: DataMapType<Item, HTEquipAction> = INSTANCE.armorEquipType
 
         @JvmField
         val SUB_ENTITY_INGREDIENT: DataMapType<Item, HTSubEntityTypeIngredient> = INSTANCE.subEntityIngredientType
 
+        // Recipe Type
         @JvmField
         val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTMaterialRecipe> = INSTANCE.materialRecipeType
     }
 
-    val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
-
     val enchantIngredientType: DataMapType<Enchantment, HTItemIngredient>
+
+    val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
 
     val thermalFuelType: DataMapType<Fluid, HTFluidFuelData>
     val combustionFuelType: DataMapType<Fluid, HTFluidFuelData>

@@ -688,6 +688,10 @@ object RagiumItems {
     val FORTUNE_UPGRADE: HTSimpleDeferredItem =
         REGISTER.registerItem("fortune_upgrade", ::HTFortuneUpgradeItem) { it.stacksTo(3) }
 
+    @JvmField
+    val EFFICIENT_CRUSH_UPGRADE: HTSimpleDeferredItem =
+        registerUpgrade("efficient_crush", RagiumCommonTranslation.EFFICIENT_CRUSH_UPGRADE)
+
     // Device
     @JvmField
     val EXP_COLLECTOR_UPGRADE: HTSimpleDeferredItem =
