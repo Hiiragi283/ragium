@@ -140,11 +140,11 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
 
         // Ethene + Catalyst -> HDPE
         HTComplexRecipeBuilder
-            .solidifying(
-                itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
-                fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100),
-                resultHelper.item(MekanismItems.HDPE_PELLET),
-            ).save(output)
+            .solidifying()
+            .addIngredient(itemCreator.fromItem(RagiumItems.POLYMER_CATALYST))
+            .addIngredient(fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100))
+            .setResult(resultHelper.item(MekanismItems.HDPE_PELLET))
+            .save(output)
     }
 
     @JvmStatic

@@ -18,11 +18,13 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -293,6 +295,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             VanillaMaterialKeys.EMERALD to 2,
             // Common
             CommonMaterialKeys.Gems.FLUORITE to 6,
+            ModMaterialKeys.Gems.BLACK_QUARTZ to 4,
             // Ragium
             RagiumMaterialKeys.RAGI_CRYSTAL to 2,
             RagiumMaterialKeys.CRIMSON_CRYSTAL to 2,
@@ -300,9 +303,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { (material: HTMaterialLike, count: Int) ->
             val ore: HTItemIngredient = itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, material)
             // Crushing
-            HTItemToChancedItemRecipeBuilder
-                .crushing(ore)
-                .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, count))
+            HTItemToObjRecipeBuilder
+                .pulverizing(ore, resultHelper.item(CommonMaterialPrefixes.GEM, material, count))
                 .saveSuffixed(output, "_from_ore")
             // Washing
             HTItemWithFluidToChancedItemRecipeBuilder
@@ -321,10 +323,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             val ore: HTItemIngredient = itemCreator.fromTagKey(oreTag)
             val result: HTItemResult = resultHelper.item(CommonMaterialPrefixes.SCRAP, key, 2)
             // Crushing
-            HTItemToChancedItemRecipeBuilder
-                .crushing(ore)
-                .addResult(result)
-                .saveSuffixed(output, "_from_ore")
+            HTItemToObjRecipeBuilder.pulverizing(ore, result).saveSuffixed(output, "_from_ore")
             // Washing
             HTItemWithFluidToChancedItemRecipeBuilder
                 .washing(ore, fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 250))
@@ -364,6 +363,9 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         alloyFromData(EIOMaterialRecipeData.REDSTONE_ALLOY, true)
         alloyFromData(EIOMaterialRecipeData.SOULARIUM, true)
         alloyFromData(EIOMaterialRecipeData.VIBRANT_ALLOY, true)
+
+        alloyFromData(EIOMaterialRecipeData.PULSATING_CRYSTAL, true)
+        alloyFromData(EIOMaterialRecipeData.VIBRANT_CRYSTAL, true)
 
         // Oritech
         alloyFromData(OritechMaterialRecipeData.ADAMANT, true)

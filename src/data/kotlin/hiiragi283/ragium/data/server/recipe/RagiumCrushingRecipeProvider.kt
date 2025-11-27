@@ -34,11 +34,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.STRING, 4),
             ).saveSuffixed(output, "_from_web")
 
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromItem(Items.MAGMA_BLOCK),
-                resultHelper.item(Items.MAGMA_CREAM, 4),
-            ).saveSuffixed(output, "_from_block")
+        crushAndCompress(Items.MAGMA_BLOCK, Items.MAGMA_CREAM, 4)
 
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.MUDDY_MANGROVE_ROOTS))
@@ -87,11 +83,11 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(resultHelper.item(Items.INK_SAC))
             .save(output)
         // Common
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN)
-            ).save(output)
+        crushAndCompress(
+            Tags.Items.OBSIDIANS,
+            CommonMaterialPrefixes.DUST.itemTagKey(VanillaMaterialKeys.OBSIDIAN),
+            4,
+        )
 
         woodDust()
         sand()
