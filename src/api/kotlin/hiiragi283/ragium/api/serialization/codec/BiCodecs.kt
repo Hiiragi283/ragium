@@ -57,14 +57,7 @@ object BiCodecs {
     val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.FLOAT.ranged(0f..Float.MAX_VALUE)
 
     @JvmField
-    val FRACTION: BiCodec<ByteBuf, Fraction> = BiCodec
-        .composite(
-            BiCodec.INT.fieldOf("numerator"),
-            Fraction::getNumerator,
-            BiCodec.INT.fieldOf("denominator"),
-            Fraction::getDenominator,
-            Fraction::getFraction,
-        ).validate(Fraction::reduce)
+    val FRACTION: BiCodec<ByteBuf, Fraction> = BiCodec.STRING.flatXmap(Fraction::getFraction, Fraction::toString)
 
     /**
      * 指定された[keyCodec], [valueCodec]に基づいて，[Map]の[BiCodec]を返します。
