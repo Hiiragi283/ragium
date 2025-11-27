@@ -1,5 +1,7 @@
 package hiiragi283.ragium.client.integration.emi.type
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -10,13 +12,13 @@ import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
-import hiiragi283.ragium.api.recipe.single.HTExpRequiredRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
+import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -99,8 +101,8 @@ object RagiumRecipeViewerTypes {
 
     // Ultimate
     @JvmField
-    val ENCHANTING: HTRegistryRecipeViewerType<SingleRecipeInput, HTExpRequiredRecipe> =
-        machine(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
+    val ENCHANTING: HTFakeRecipeViewerType<HTEnchantingRecipe> =
+        HTFakeRecipeViewerType.create(RagiumBlocks.ENCHANTER, MACHINE_BOUNDS, RagiumAPI.id(RagiumConst.ENCHANTING))
 
     @JvmField
     val SIMULATING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTItemWithCatalystRecipe> =

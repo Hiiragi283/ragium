@@ -9,6 +9,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import java.util.function.Predicate
 
@@ -64,5 +66,15 @@ interface HTRecipe<INPUT : RecipeInput> :
     fun getItemResult(input: INPUT, provider: HolderLookup.Provider?, result: HTItemResult?): ImmutableItemStack? = when {
         test(input) -> result?.getStackOrNull(provider)
         else -> null
+    }
+
+    //    Fake    //
+
+    interface Fake<INPUT : RecipeInput> : HTRecipe<INPUT> {
+        @Deprecated("Not implemented", level = DeprecationLevel.ERROR)
+        override fun getSerializer(): RecipeSerializer<*> = throw UnsupportedOperationException()
+
+        @Deprecated("Not implemented", level = DeprecationLevel.ERROR)
+        override fun getType(): RecipeType<*> = throw UnsupportedOperationException()
     }
 }

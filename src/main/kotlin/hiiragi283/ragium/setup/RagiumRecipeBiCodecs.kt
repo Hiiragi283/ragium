@@ -14,7 +14,6 @@ import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
-import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
@@ -23,7 +22,6 @@ import hiiragi283.ragium.impl.recipe.base.HTBasicItemToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicSingleOutputRecipe
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 object RagiumRecipeBiCodecs {
@@ -41,16 +39,6 @@ object RagiumRecipeBiCodecs {
             VanillaBiCodecs.POTION.fieldOf("potion"),
             HTBrewingRecipe::contents,
             ::HTBrewingRecipe,
-        )
-
-    @JvmField
-    val ENCHANTING: MapBiCodec<RegistryFriendlyByteBuf, HTEnchantingRecipe> = MapBiCodec
-        .composite(
-            HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT),
-            HTEnchantingRecipe::ingredient,
-            VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment"),
-            HTEnchantingRecipe::holder,
-            ::HTEnchantingRecipe,
         )
 
     @JvmField
