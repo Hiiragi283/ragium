@@ -37,8 +37,8 @@ class HTClearComponentRecipe(
             HTClearComponentRecipe::item,
             VanillaBiCodecs
                 .registryBased(BuiltInRegistries.DATA_COMPONENT_TYPE)
-                .listOrElement()
-                .optionalFieldOf("targets", listOf()),
+                .nonEmptyListOf()
+                .fieldOf("targets"),
             HTClearComponentRecipe::targetTypes,
             ::HTClearComponentRecipe,
         )

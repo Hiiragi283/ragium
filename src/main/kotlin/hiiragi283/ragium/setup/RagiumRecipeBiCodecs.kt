@@ -54,7 +54,7 @@ object RagiumRecipeBiCodecs {
     val MIXING: MapBiCodec<RegistryFriendlyByteBuf, HTMixingRecipe> = MapBiCodec.composite(
         HTItemIngredient.CODEC.listOrElement(0, 4).optionalFieldOf("item_ingredients", listOf()),
         HTMixingRecipe::itemIngredients,
-        HTFluidIngredient.CODEC.listOrElement(0, 2).optionalFieldOf("fluid_ingredients", listOf()),
+        HTFluidIngredient.CODEC.nonEmptyListOf(2).fieldOf("fluid_ingredients"),
         HTMixingRecipe::fluidIngredients,
         RESULTS,
         HTMixingRecipe::results,
@@ -115,7 +115,7 @@ object RagiumRecipeBiCodecs {
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT),
         HTBasicItemToChancedItemRecipe::ingredient,
-        HTItemResultWithChance.CODEC.listOrElement(1, 4).fieldOf(RagiumConst.RESULTS),
+        HTItemResultWithChance.CODEC.nonEmptyListOf(4).fieldOf(RagiumConst.RESULTS),
         HTBasicItemToChancedItemRecipe::results,
         factory::create,
     )
@@ -128,7 +128,7 @@ object RagiumRecipeBiCodecs {
         HTBasicItemWithFluidToChancedItemRecipe::ingredient,
         HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
         HTBasicItemWithFluidToChancedItemRecipe::fluidIngredient,
-        HTItemResultWithChance.CODEC.listOrElement(1, 4).fieldOf("results"),
+        HTItemResultWithChance.CODEC.nonEmptyListOf(4).fieldOf("results"),
         HTBasicItemWithFluidToChancedItemRecipe::results,
         factory::create,
     )

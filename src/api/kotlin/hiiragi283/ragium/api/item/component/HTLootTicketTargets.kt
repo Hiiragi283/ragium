@@ -23,7 +23,7 @@ data class HTLootTicketTargets private constructor(private val lootTables: List<
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTLootTicketTargets> = VanillaBiCodecs
             .resourceKey(Registries.LOOT_TABLE)
-            .listOrElement()
+            .listOrElement(0, Int.MAX_VALUE)
             .xmap(::HTLootTicketTargets, HTLootTicketTargets::lootTables)
 
         @JvmField

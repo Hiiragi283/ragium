@@ -33,8 +33,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -230,28 +228,7 @@ sealed class HTRecipeProvider {
                 catalyst,
             ).saveSuffixed(output, "_from_crushed")
     }
-
-    protected fun crushAndCompress(
-        base: TagKey<Item>,
-        crushed: TagKey<Item>,
-        crushedCount: Int,
-        catalyst: HTItemIngredient? = null,
-    ) {
-        // Pulverizing
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromTagKey(base),
-                resultHelper.item(crushed, crushedCount),
-            ).saveSuffixed(output, "_from_base")
-        // Compressing
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
-                itemCreator.fromTagKey(crushed, crushedCount),
-                resultHelper.item(base),
-                catalyst,
-            ).saveSuffixed(output, "_from_crushed")
-    }
-
+    
     // Cutting
     protected fun cutAndCombine(hole: ItemLike, slice: ItemLike, count: Int) {
         // Cutting

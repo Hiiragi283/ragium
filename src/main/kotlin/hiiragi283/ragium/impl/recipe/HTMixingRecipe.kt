@@ -18,9 +18,17 @@ class HTMixingRecipe(
     results: HTComplexResult,
 ) : HTBasicComplexRecipe(results) {
     override fun isIncompleteIngredient(): Boolean {
-        val bool1: Boolean = itemIngredients.isEmpty() || itemIngredients.any(HTItemIngredient::hasNoMatchingStacks)
-        val bool2: Boolean = fluidIngredients.isEmpty() || fluidIngredients.any(HTFluidIngredient::hasNoMatchingStacks)
-        return bool1 || bool2
+        if (!itemIngredients.isEmpty()) {
+            if (itemIngredients.any(HTItemIngredient::hasNoMatchingStacks)) {
+                return true
+            }
+        }
+        if (!fluidIngredients.isEmpty()) {
+            if (fluidIngredients.any(HTFluidIngredient::hasNoMatchingStacks)) {
+                return true
+            }
+        }
+        return false
     }
 
     override fun test(input: HTMultiRecipeInput): Boolean {

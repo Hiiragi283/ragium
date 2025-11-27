@@ -83,11 +83,17 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(resultHelper.item(Items.INK_SAC))
             .save(output)
         // Common
-        crushAndCompress(
-            Tags.Items.OBSIDIANS,
-            CommonMaterialPrefixes.DUST.itemTagKey(VanillaMaterialKeys.OBSIDIAN),
-            4,
-        )
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
+                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
+            ).saveSuffixed(output, "_from_base")
+
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
+                resultHelper.item(Items.OBSIDIAN),
+            ).saveSuffixed(output, "_from_dust")
 
         woodDust()
         sand()

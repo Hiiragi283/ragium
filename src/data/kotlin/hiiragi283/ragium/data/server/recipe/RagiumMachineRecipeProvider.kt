@@ -374,7 +374,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun crate() {
         for ((tier: HTCrateTier, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
-            resetComponent(crate)
+            resetComponent(crate, RagiumDataComponents.ITEM_CONTENT)
 
             val key: HTMaterialKey = when (tier) {
                 HTCrateTier.SMALL -> VanillaMaterialKeys.IRON
