@@ -28,6 +28,7 @@ import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
@@ -96,6 +97,19 @@ class RagiumEmiPlugin : EmiPlugin {
         categoryCache.clear()
         // Recipe
         recipeManager = registry.recipeManager
+
+        addCategoryAndRecipes(
+            registry,
+            RagiumRecipeViewerTypes.MACHINE_UPGRADE,
+            EmiPort
+                .getItemRegistry()
+                .holdersSequence()
+                .filter { holder: Holder<Item> -> holder.value().defaultInstance.has(RagiumDataComponents.MACHINE_UPGRADE_FILTER) }
+                .map { holder: Holder<Item> ->
+                    holder.idOrThrow.withPrefix("/machine/upgrade/") to EmiStack.of(holder.value())
+                },
+            ::HTMachineUpgradeEmiRecipe,
+        )
 
         addCustomRecipe(registry)
         addGenerators(registry)

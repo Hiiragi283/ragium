@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -15,11 +16,14 @@ import hiiragi283.ragium.api.world.sendBlockUpdated
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Predicate
 
@@ -77,7 +81,7 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         initializeItemSlots(builder, listener)
         upgradeSlots = (0..3).map { i: Int ->
             val filter: (ImmutableItemStack) -> Boolean = filter@{ stack: ImmutableItemStack ->
-                RagiumPlatform.INSTANCE.isUpgrade(stack) && !hasUpgrade(stack.value())
+                canApplyUpgrade(stack.unwrap()) && !hasUpgrade(stack.value())
             }
             builder.addSlot(
                 HTSlotInfo.CATALYST,
@@ -105,6 +109,12 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
             ?.let { RagiumPlatform.INSTANCE.getMachineUpgrade(getRegistryAccess(), it) }
             ?: return@mapNotNull null
         upgrade to slot.getAmount()
+    }
+
+    override fun canApplyUpgrade(stack: ItemStack): Boolean {
+        if (RagiumPlatform.INSTANCE.getMachineUpgrade(getRegistryAccess(), stack) == null) return false
+        val filter: HTKeyOrTagEntry<BlockEntityType<*>> = stack.get(RagiumDataComponents.MACHINE_UPGRADE_FILTER) ?: return true
+        return filter.isOf(getBlockEntityType(this.blockHolder))
     }
 
     //    Save & Load    //

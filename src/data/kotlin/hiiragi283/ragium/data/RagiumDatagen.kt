@@ -18,6 +18,7 @@ import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumCustomLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumGlobalLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumLootTableProvider
+import hiiragi283.ragium.data.server.tag.RagiumBlockEntityTypeTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumDamageTypeTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumEnchantmentTagsProvider
@@ -61,6 +62,7 @@ object RagiumDatagen {
 
         context.addProvider(event.includeServer(), ::RagiumRecipeProvider)
 
+        context.addProvider(event.includeServer(), ::RagiumBlockEntityTypeTagsProvider)
         context.addProvider(event.includeServer(), ::RagiumDamageTypeTagsProvider)
         context.addProvider(event.includeServer(), ::RagiumEnchantmentTagsProvider)
         context.addProvider(event.includeServer(), ::RagiumEntityTypeTagsProvider)

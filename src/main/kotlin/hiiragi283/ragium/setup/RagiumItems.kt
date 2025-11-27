@@ -11,6 +11,8 @@ import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.math.fraction
+import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
@@ -21,6 +23,7 @@ import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
@@ -76,6 +79,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
@@ -85,6 +89,7 @@ import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
@@ -636,7 +641,13 @@ object RagiumItems {
     val MACHINE_UPGRADES: ImmutableTable<HTUpgradeVariant, HTBaseTier, HTSimpleDeferredItem> = buildTable {
         fun register(variant: HTUpgradeVariant, tier: HTBaseTier, vararg pairs: Pair<HTMachineUpgrade.Key, Fraction>) {
             this[variant, tier] = REGISTER.registerSimpleItem("${tier.serializedName}_${variant.variantName()}_upgrade") {
-                it.stacksTo(1).component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create(mapOf(*pairs)))
+                it
+                    .stacksTo(1)
+                    .component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create(mapOf(*pairs)))
+                    .component(
+                        RagiumDataComponents.MACHINE_UPGRADE_FILTER,
+                        HTKeyOrTagHelper.INSTANCE.create(RagiumModTags.BlockEntityTypes.MACHINES_ELECTRIC),
+                    )
             }
         }
 
@@ -707,7 +718,12 @@ object RagiumItems {
 
     @JvmStatic
     private fun registerUpgrade(name: String, translation: HTTranslation): HTSimpleDeferredItem =
-        REGISTER.registerSimpleItem("${name}_upgrade") { it.stacksTo(1).description(translation) }
+        REGISTER.registerSimpleItem("${name}_upgrade") {
+            it
+                .stacksTo(1)
+                .description(translation)
+                .component(RagiumDataComponents.MACHINE_UPGRADE, HTMachineUpgrade.create())
+        }
 
     @JvmField
     val CREATIVE_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItem("creative_upgrade", ::HTCreativeUpgradeItem) {
@@ -813,6 +829,14 @@ object RagiumItems {
             modify(item, RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
         }
 
+        fun setFilter(item: ItemLike, type: HTDeferredBlockEntityType<*>) {
+            modify(item, RagiumDataComponents.MACHINE_UPGRADE_FILTER, HTKeyOrTagHelper.INSTANCE.create(type.key))
+        }
+
+        fun setFilter(item: ItemLike, tagKey: TagKey<BlockEntityType<*>>) {
+            modify(item, RagiumDataComponents.MACHINE_UPGRADE_FILTER, HTKeyOrTagHelper.INSTANCE.create(tagKey))
+        }
+
         // Tools
         for (item: HTDeferredItem<*> in getToolMap(RagiumMaterialKeys.AZURE_STEEL).values) {
             setEnch(item, Enchantments.SILK_TOUCH)
@@ -821,6 +845,14 @@ object RagiumItems {
         setEnch(getTool(VanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL), Enchantments.FORTUNE, 5)
         setEnch(getTool(VanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
         setEnch(getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
+
+        // Upgrades
+        setFilter(FORTUNE_UPGRADE, RagiumModTags.BlockEntityTypes.FORTUNE_UPGRADABLE)
+        setFilter(EFFICIENT_CRUSH_UPGRADE, RagiumModTags.BlockEntityTypes.EFFICIENT_CRUSH_UPGRADABLE)
+
+        setFilter(EXP_COLLECTOR_UPGRADE, RagiumBlockEntityTypes.FLUID_COLLECTOR)
+        setFilter(FISHING_UPGRADE, RagiumBlockEntityTypes.ITEM_COLLECTOR)
+        setFilter(MOB_CAPTURE_UPGRADE, RagiumBlockEntityTypes.ITEM_COLLECTOR)
 
         RagiumAPI.LOGGER.info("Modified default item components!")
     }

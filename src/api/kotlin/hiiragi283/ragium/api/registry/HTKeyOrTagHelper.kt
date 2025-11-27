@@ -24,7 +24,7 @@ interface HTKeyOrTagHelper {
      * 指定した[RegistryKey]と[ResourceLocation]から[HTKeyOrTagEntry]を返します。
      * @param T 種類のクラス
      */
-    fun <T : Any> create(registryKey: RegistryKey<T>, id: ResourceLocation): HTKeyOrTagEntry<T>
+    fun <T : Any> create(registryKey: RegistryKey<T>, id: ResourceLocation): HTKeyOrTagEntry<T> = create(registryKey.createKey(id))
 
     /**
      * 指定した[ResourceKey]から[HTKeyOrTagEntry]を返します。

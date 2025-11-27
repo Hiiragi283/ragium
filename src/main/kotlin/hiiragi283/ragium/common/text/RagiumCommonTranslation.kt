@@ -107,6 +107,9 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     KEY_CATEGORY("key", "category"),
     KEY_OPEN_UNIVERSAL_BUNDLE("key", "open_universal_bundle"),
 
+    // EMI
+    EMI_MACHINE_UPGRADE("emi.category", "machine_upgrade"),
+
     // Jade
     JADE_MACHINE_TIER("jade", "machine_tier"),
     ;

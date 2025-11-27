@@ -7,6 +7,7 @@ import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntityType
 
 object RagiumModTags {
     //    Blocks    //
@@ -32,6 +33,35 @@ object RagiumModTags {
 
         @JvmStatic
         private fun create(path: String): TagKey<Block> = Registries.BLOCK.createTagKey(RagiumAPI.id(path))
+    }
+
+    //    BlockEntityTypes    //
+
+    object BlockEntityTypes {
+        @JvmField
+        val MACHINES: TagKey<BlockEntityType<*>> = create("machines")
+
+        @JvmField
+        val MACHINES_ELECTRIC: TagKey<BlockEntityType<*>> = create("machines", "electric")
+
+        @JvmField
+        val GENERATORS: TagKey<BlockEntityType<*>> = create("machines", "generator")
+
+        @JvmField
+        val PROCESSORS: TagKey<BlockEntityType<*>> = create("machines", "processors")
+
+        @JvmField
+        val DEVICES: TagKey<BlockEntityType<*>> = create("machines", "devices")
+
+        // Specific
+        @JvmField
+        val FORTUNE_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "fortune")
+
+        @JvmField
+        val EFFICIENT_CRUSH_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "efficient_crush")
+
+        @JvmStatic
+        private fun create(vararg path: String): TagKey<BlockEntityType<*>> = Registries.BLOCK_ENTITY_TYPE.createTagKey(RagiumAPI.id(*path))
     }
 
     //    DamageTypes    //
@@ -82,9 +112,6 @@ object RagiumModTags {
 
         @JvmField
         val LED_BLOCKS: TagKey<Item> = create("led_blocks")
-
-        @JvmField
-        val MACHINE_UPGRADES: TagKey<Item> = create("machine_upgrades")
 
         @JvmField
         val PLASTICS: TagKey<Item> = create("plastics")

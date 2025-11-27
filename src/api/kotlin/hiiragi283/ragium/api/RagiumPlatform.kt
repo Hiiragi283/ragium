@@ -12,10 +12,8 @@ import hiiragi283.ragium.api.recipe.HTMaterialRecipeManager
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
-import hiiragi283.ragium.api.tag.RagiumModTags
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
@@ -55,16 +53,6 @@ interface RagiumPlatform {
         return stack.get(getUpgradeDataType())
     }
 
-    /**
-     * 指定した[stack]がアップグレードかどうか判定します。
-     */
-    fun isUpgrade(stack: ImmutableItemStack): Boolean {
-        val bool1: Boolean = stack.isOf(RagiumModTags.Items.MACHINE_UPGRADES)
-        val bool2: Boolean = stack.has(getUpgradeDataType())
-        val bool3: Boolean = stack.value() is HTDynamicUpgradeItem
-        return bool1 || bool2 || bool3
-    }
-
     //    Material    //
 
     fun getMaterialDefinitions(): Map<HTMaterialKey, HTMaterialDefinition>
@@ -73,7 +61,9 @@ interface RagiumPlatform {
 
     fun getMaterialDefinition(key: HTMaterialKey): HTMaterialDefinition = getMaterialDefinitions()[key] ?: HTMaterialDefinition.Empty
 
-    fun getPrefix(name: String): HTMaterialPrefix?
+    fun getPrefixMap(): Map<String, HTMaterialPrefix>
+
+    fun getPrefix(name: String): HTMaterialPrefix? = getPrefixMap()[name]
 
     //    Recipe    //
 

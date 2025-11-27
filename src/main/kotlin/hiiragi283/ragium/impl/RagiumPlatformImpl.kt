@@ -49,7 +49,7 @@ class RagiumPlatformImpl : RagiumPlatform {
 
     private lateinit var prefixMap: Map<String, HTMaterialPrefix>
 
-    override fun getPrefix(name: String): HTMaterialPrefix? {
+    override fun getPrefixMap(): Map<String, HTMaterialPrefix> {
         if (!::prefixMap.isInitialized) {
             prefixMap = buildMap {
                 val consumer = Consumer { prefix: HTPrefixLike ->
@@ -63,7 +63,7 @@ class RagiumPlatformImpl : RagiumPlatform {
                 NeoForge.EVENT_BUS.post(HTRegisterPrefixEvent(this))
             }
         }
-        return prefixMap[name]
+        return prefixMap
     }
 
     //    Recipe    //
