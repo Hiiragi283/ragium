@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
-import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -25,7 +25,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ) {
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): Pair<HTVanillaCookingRecipe, Int>? {
-        val cache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = getRecipeCache()
+        val cache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = getRecipeCache()
         val baseRecipe: HTVanillaCookingRecipe = cache.getFirstRecipe(input, level) ?: return null
         val result: ImmutableItemStack = baseRecipe.assembleItem(input, level.registryAccess()) ?: return null
         val resultMaxSize: Int = result.maxStackSize()

@@ -12,6 +12,7 @@ import hiiragi283.ragium.client.event.HTClientItemTooltipComponent
 import hiiragi283.ragium.client.event.HTItemTooltipContent
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen
+import hiiragi283.ragium.client.gui.screen.HTBlockEntityScreenFactory
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
@@ -53,8 +54,6 @@ import net.minecraft.client.renderer.entity.MinecartRenderer
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
-import net.minecraft.network.chat.Component
-import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.BlockAndTintGetter
@@ -271,6 +270,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.MELTER, HTSingleFluidProcessorScreen.Companion::melter)
         event.register(RagiumMenuTypes.MIXER, ::HTMixerScreen)
         event.register(RagiumMenuTypes.PROCESSOR, ::HTProcessorScreen)
+        event.register(RagiumMenuTypes.SMELTER, HTProcessorScreen.createFactory("smelter"))
         event.register(RagiumMenuTypes.REFINERY, ::HTRefineryScreen)
         event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, HTSingleFluidProcessorScreen.Companion::singleItem)
         event.register(RagiumMenuTypes.TELEPAD, ::HTTelepadScreen)
@@ -352,7 +352,3 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         this.register(menuType.get(), factory)
     }
 }
-
-private typealias HTScreenFactory<MENU, SCREEN> = (MENU, Inventory, Component) -> SCREEN
-
-private typealias HTBlockEntityScreenFactory<BE> = HTScreenFactory<HTBlockEntityContainerMenu<BE>, HTBlockEntityContainerScreen<BE>>

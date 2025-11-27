@@ -15,7 +15,6 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import kotlin.jvm.optionals.getOrNull
 
 class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
     HTDeferredHolder<RecipeType<*>, RecipeType<RECIPE>>,
@@ -33,12 +32,28 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
         manager: RecipeManager,
         input: INPUT,
         level: Level,
-        lastRecipe: ResourceLocation?,
-    ): RecipeHolder<RECIPE>? = manager.getRecipeFor(get(), input, level, lastRecipe).getOrNull()
-        ?: RagiumPlatform.INSTANCE.getMaterialRecipeManager().getRecipeFor(get(), input, level, lastRecipe)
+        lastRecipe: RecipeHolder<RECIPE>?,
+    ): RecipeHolder<RECIPE>? {
+        // 入力が空の場合は即座に抜ける
+        if (input.isEmpty) return null
+        // キャッシュから判定を行う
+        if (lastRecipe != null && matches(lastRecipe.value, input, level)) {
+            return lastRecipe
+        }
+        // 次にRecipeManagerから行う
+        for (holder: RecipeHolder<RECIPE> in manager.getAllRecipesFor(get())) {
+            if (matches(holder.value, input, level)) {
+                return holder
+            }
+        }
+        // 最後にHTMaterialRecipeManagerから行う
+        return RagiumPlatform.INSTANCE.getMaterialRecipeManager().getRecipeFor(get(), input, level, lastRecipe)
+    }
+
+    private fun matches(recipe: RECIPE, input: INPUT, level: Level): Boolean = recipe.matches(input, level) && !recipe.isIncomplete
 
     override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = buildList {
-        addAll(manager.getAllRecipesFor(get()))
+        addAll(manager.getAllRecipesFor(get()).filterNot { holder: RecipeHolder<RECIPE> -> holder.value.isIncomplete })
         addAll(RagiumPlatform.INSTANCE.getMaterialRecipeManager().getAllRecipes(get()))
     }.asSequence()
 }

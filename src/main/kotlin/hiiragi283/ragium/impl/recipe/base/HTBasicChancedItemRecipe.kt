@@ -20,8 +20,11 @@ abstract class HTBasicChancedItemRecipe<INPUT : RecipeInput> : HTChancedItemReci
     final override fun assembleItem(input: INPUT, provider: HolderLookup.Provider): ImmutableItemStack? =
         getItemResult(input, provider, results.getOrNull(0)?.base)
 
-    final override fun isIncomplete(): Boolean =
-        isIncompleteIngredient() || (results.isEmpty() || results.all(HTItemResultWithChance::hasNoMatchingStack))
+    final override fun isIncomplete(): Boolean {
+        if (isIncompleteIngredient()) return false
+        if (results.isEmpty()) return false
+        return results[0].hasNoMatchingStack() || results.all(HTItemResultWithChance::hasNoMatchingStack)
+    }
 
     /**
      * 材料が有効かどうか判定します

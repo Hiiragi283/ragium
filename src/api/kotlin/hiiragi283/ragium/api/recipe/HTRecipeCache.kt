@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level
  * @param INPUT レシピの入力となるクラス
  * @param RECIPE レシピのクラス
  */
-interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
+fun interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
     /**
      * 指定された[input], [level]から最初に一致するレシピを返します。
      * @param input レシピの入力
@@ -17,4 +17,7 @@ interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
      * @return 見つからなかった場合は`null`
      */
     fun getFirstRecipe(input: INPUT, level: Level): RECIPE?
+
+    fun <R : Recipe<INPUT>> wrap(transform: (RECIPE) -> R): HTRecipeCache<INPUT, R> =
+        HTRecipeCache { input: INPUT, level: Level -> this@HTRecipeCache.getFirstRecipe(input, level)?.let(transform) }
 }
