@@ -13,17 +13,34 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import java.util.function.IntConsumer
 
-open class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
-    texture: ResourceLocation,
-    menu: HTBlockEntityContainerMenu<BE>,
-    inventory: Inventory,
-    title: Component,
-) : HTContainerScreen<HTBlockEntityContainerMenu<BE>>(
+open class HTBlockEntityContainerScreen<BE : HTBlockEntity> : HTContainerScreen<HTBlockEntityContainerMenu<BE>> {
+    constructor(
+        texture: ResourceLocation,
+        menu: HTBlockEntityContainerMenu<BE>,
+        inventory: Inventory,
+        title: Component,
+    ) : super(
         texture,
         menu,
         inventory,
         title,
-    ) {
+    )
+
+    constructor(menu: HTBlockEntityContainerMenu<BE>, inventory: Inventory, title: Component) : super(
+        getMenuTexture(menu),
+        menu,
+        inventory,
+        title,
+    )
+
+    companion object {
+        @JvmStatic
+        fun <BE : HTBlockEntity> getMenuTexture(menu: HTBlockEntityContainerMenu<BE>): ResourceLocation = HTBlockEntity
+            .getBlockEntityType(menu.context.blockHolder)
+            .id
+            .withPath { "textures/gui/container/$it.png" }
+    }
+
     val blockEntity: BE get() = menu.context
 
     //    Extensions    //

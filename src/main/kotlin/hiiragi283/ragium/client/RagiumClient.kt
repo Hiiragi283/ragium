@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -18,6 +17,7 @@ import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTFuelGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.HTGenericScreen
+import hiiragi283.ragium.client.gui.screen.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.HTProcessorScreen
 import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.HTSingleFluidProcessorScreen
@@ -54,7 +54,6 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
@@ -261,27 +260,20 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTGenericScreen)
         event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
-        event.register(RagiumMenuTypes.ALLOY_SMELTER, ::HTProcessorScreen)
-        event.register(RagiumMenuTypes.BREWERY, HTSingleFluidProcessorScreen.Companion::singleItem)
-        event.register(RagiumMenuTypes.COMPRESSOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
-        event.register(RagiumMenuTypes.CRUSHER, HTSingleFluidProcessorScreen.Companion::singleItem)
-        event.register(RagiumMenuTypes.CUTTING_MACHINE, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.DRUM, ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENCHANT_COPIER, HTSingleFluidProcessorScreen.Companion::enchCopier)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
-        event.register(RagiumMenuTypes.EXTRACTOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
+        event.register(RagiumMenuTypes.FLUID_TO_CHANCED, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
         event.register(RagiumMenuTypes.FUEL_GENERATOR, ::HTFuelGeneratorScreen)
         event.register(RagiumMenuTypes.ITEM_COLLECTOR, ::HTBlockEntityContainerScreen)
+        event.register(RagiumMenuTypes.ITEM_WITH_CATALYST, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.MELTER, HTSingleFluidProcessorScreen.Companion::melter)
-        event.register(RagiumMenuTypes.PLANTER, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
-        event.register(RagiumMenuTypes.PULVERIZER, HTSingleFluidProcessorScreen.Companion::singleItem)
+        event.register(RagiumMenuTypes.MIXER, ::HTMixerScreen)
+        event.register(RagiumMenuTypes.PROCESSOR, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.REFINERY, ::HTRefineryScreen)
-        event.register(RagiumMenuTypes.SIMULATOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
-        event.register(RagiumMenuTypes.SINGLE_ITEM, ::HTProcessorScreen)
-        event.register(RagiumMenuTypes.SMELTER, ::HTProcessorScreen)
+        event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, HTSingleFluidProcessorScreen.Companion::singleItem)
         event.register(RagiumMenuTypes.TELEPAD, ::HTTelepadScreen)
-        event.register(RagiumMenuTypes.WASHER, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
 
         RagiumAPI.LOGGER.info("Registered Screens!")
     }
@@ -357,13 +349,10 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         menuType: HTDeferredMenuType.WithContext<out HTBlockEntityContainerMenu<BE>, BE>,
         factory: HTBlockEntityScreenFactory<BE>,
     ) {
-        this.register(
-            menuType.get(),
-            factory.partially1(menuType.id.withPath { "textures/gui/container/$it.png" }),
-        )
+        this.register(menuType.get(), factory)
     }
 }
 
-private typealias HTScreenFactory<MENU, SCREEN> = (ResourceLocation, MENU, Inventory, Component) -> SCREEN
+private typealias HTScreenFactory<MENU, SCREEN> = (MENU, Inventory, Component) -> SCREEN
 
 private typealias HTBlockEntityScreenFactory<BE> = HTScreenFactory<HTBlockEntityContainerMenu<BE>, HTBlockEntityContainerScreen<BE>>
