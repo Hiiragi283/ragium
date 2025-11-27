@@ -47,12 +47,10 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
             ).save(output)
         // Canola Oil -> Refined
         HTComplexRecipeBuilder
-            .refining(
-                fluidCreator.from(InitFluids.CANOLA_OIL.get(), 80),
-                resultHelper.fluid(InitFluids.REFINED_CANOLA_OIL.get(), 80),
-                null,
-                null,
-            ).save(output)
+            .refining()
+            .addIngredient(fluidCreator.from(InitFluids.CANOLA_OIL.get(), 80))
+            .setResult(resultHelper.fluid(InitFluids.REFINED_CANOLA_OIL.get(), 80))
+            .save(output)
         // Refined -> Crystallized
         HTComplexRecipeBuilder
             .mixing()

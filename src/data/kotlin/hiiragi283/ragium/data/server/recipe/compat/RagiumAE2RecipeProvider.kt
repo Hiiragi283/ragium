@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 
@@ -37,11 +36,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
             itemCreator.multiPrefixes(VanillaMaterialKeys.QUARTZ, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.GEM),
         )
         // Sky Stone
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromItem(AEBlocks.SKY_STONE_BLOCK),
-                resultHelper.item(AEItems.SKY_DUST),
-            ).save(output)
+        crushAndCompress(AEBlocks.SKY_STONE_BLOCK, AEItems.SKY_DUST, 1)
 
         // Processor
         combineWithRedstone(

@@ -33,6 +33,8 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -208,7 +210,12 @@ sealed class HTRecipeProvider {
             ).saveSuffixed(output, "_with_mold")
     }
 
-    protected fun crushAndCompress(base: ItemLike, crushed: ItemLike, crushedCount: Int) {
+    protected fun crushAndCompress(
+        base: ItemLike,
+        crushed: ItemLike,
+        crushedCount: Int,
+        catalyst: HTItemIngredient? = null,
+    ) {
         // Pulverizing
         HTItemToObjRecipeBuilder
             .pulverizing(
@@ -220,6 +227,28 @@ sealed class HTRecipeProvider {
             .compressing(
                 itemCreator.fromItem(crushed, crushedCount),
                 resultHelper.item(base),
+                catalyst,
+            ).saveSuffixed(output, "_from_crushed")
+    }
+
+    protected fun crushAndCompress(
+        base: TagKey<Item>,
+        crushed: TagKey<Item>,
+        crushedCount: Int,
+        catalyst: HTItemIngredient? = null,
+    ) {
+        // Pulverizing
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                itemCreator.fromTagKey(base),
+                resultHelper.item(crushed, crushedCount),
+            ).saveSuffixed(output, "_from_base")
+        // Compressing
+        HTItemWithCatalystRecipeBuilder
+            .compressing(
+                itemCreator.fromTagKey(crushed, crushedCount),
+                resultHelper.item(base),
+                catalyst,
             ).saveSuffixed(output, "_from_crushed")
     }
 
@@ -302,21 +331,21 @@ sealed class HTRecipeProvider {
             ).saveSuffixed(output, "_from_${solid.getPath()}")
         // Solidifying
         HTComplexRecipeBuilder
-            .solidifying(
-                itemCreator.fromItem(mold),
-                fluidCreator.fromHolder(fluid, amount),
-                resultHelper.item(solid),
-            ).saveSuffixed(output, "_from_${fluid.getPath()}")
+            .solidifying()
+            .addIngredient(itemCreator.fromItem(mold))
+            .addIngredient(fluidCreator.fromHolder(fluid, amount))
+            .setResult(resultHelper.item(solid))
+            .saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
     protected fun meltAndFreeze(data: HTRecipeData) {
         // Solidifying
         HTComplexRecipeBuilder
-            .solidifying(
-                data.catalyst?.let(itemCreator::fromItem),
-                data.getFluidIngredients(fluidCreator)[0],
-                data.getItemResults()[0].first,
-            ).saveModified(output, data.operator)
+            .solidifying()
+            .addIngredient(data.catalyst?.let(itemCreator::fromItem))
+            .addIngredient(data.getFluidIngredients(fluidCreator)[0])
+            .setResult(data.getItemResults()[0].first)
+            .saveModified(output, data.operator)
         // Melting
         val data1: HTRecipeData = data.swap()
         HTItemToObjRecipeBuilder
@@ -379,15 +408,6 @@ sealed class HTRecipeProvider {
             .save(output)
     }
 
-    // Pulverizing
-    protected fun pulverizeFromData(data: HTRecipeData) {
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                data.getItemIngredients(itemCreator)[0],
-                data.getItemResults()[0].first,
-            ).saveModified(output, data.operator)
-    }
-
     // Refining
     protected fun distillation(
         input: Pair<HTFluidHolderLike, Int>,
@@ -400,7 +420,11 @@ sealed class HTRecipeProvider {
         // Refining
         for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
             HTComplexRecipeBuilder
-                .refining(ingredient, result, catalyst, itemResult)
+                .refining()
+                .addIngredient(catalyst)
+                .addIngredient(ingredient)
+                .setResult(itemResult)
+                .setResult(result)
                 .saveSuffixed(output, suffix)
         }
     }

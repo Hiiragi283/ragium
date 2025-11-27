@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTDecorationType
@@ -148,13 +149,11 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun cream() {
         // Milk -> Cream
-        HTComplexRecipeBuilder
-            .refining(
-                fluidCreator.milk(1000),
-                resultHelper.fluid(RagiumFluidContents.CREAM, 250),
-                null,
-                null,
-            ).save(output)
+        distillation(
+            HTFluidHolderLike.MILK to 1000,
+            null,
+            resultHelper.fluid(RagiumFluidContents.CREAM, 250) to null,
+        )
 
         extractAndInfuse(Items.BOWL, RagiumItems.CREAM_BOWL, RagiumFluidContents.CREAM)
         // Cream -> Butter

@@ -502,11 +502,11 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_crude_oil")
         // Natural Gas + Catalyst -> 4x Polymer Resin
         HTComplexRecipeBuilder
-            .solidifying(
-                itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
-                fluidCreator.fromHolder(RagiumFluidContents.NATURAL_GAS, 125),
-                resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4),
-            ).saveSuffixed(output, "_from_lpg")
+            .solidifying()
+            .addIngredient(itemCreator.fromItem(RagiumItems.POLYMER_CATALYST))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NATURAL_GAS, 125))
+            .setResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4))
+            .saveSuffixed(output, "_from_lpg")
 
         // Plastic Plate
         compressingTo(HTMoldType.PLATE, CommonMaterialKeys.PLASTIC, itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN))
@@ -569,21 +569,19 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             // Sap -> Molten
             val molten: HTBasicFluidContent = data.molten
             if (sap != null) {
-                HTComplexRecipeBuilder
-                    .refining(
-                        fluidCreator.fromHolder(sap, 1000),
-                        resultHelper.fluid(molten, RagiumConst.SAP_TO_MOLTEN),
-                        null,
-                        null,
-                    ).save(output)
+                distillation(
+                    sap to 1000,
+                    null,
+                    resultHelper.fluid(molten, RagiumConst.SAP_TO_MOLTEN) to null,
+                )
             }
             // Molten -> Gem
             HTComplexRecipeBuilder
-                .solidifying(
-                    itemCreator.fromItem(HTMoldType.GEM),
-                    fluidCreator.fromHolder(molten, 1000),
-                    resultHelper.item(CommonMaterialPrefixes.GEM, data),
-                ).save(output)
+                .solidifying()
+                .addIngredient(itemCreator.fromItem(HTMoldType.GEM))
+                .addIngredient(fluidCreator.fromHolder(molten, 1000))
+                .setResult(resultHelper.item(CommonMaterialPrefixes.GEM, data))
+                .save(output)
 
             HTItemToObjRecipeBuilder
                 .melting(
