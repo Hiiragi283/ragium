@@ -18,11 +18,11 @@ import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
@@ -329,27 +329,44 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 .save(output)
         }
 
-        // Fortune
-        HTShapedRecipeBuilder
-            .create(RagiumItems.FORTUNE_UPGRADE)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
-            .save(output)
+        // Processor
+        processorUpgrade(RagiumItems.FORTUNE_UPGRADE) {
+            define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
+        }
+        processorUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) {
+            define('B', RagiumFluidContents.LUBRICANT.bucketTag)
+        }
 
         // Device
-        mapOf(
-            RagiumItems.EXP_COLLECTOR_UPGRADE to Ingredient.of(Items.EXPERIENCE_BOTTLE),
-            RagiumItems.FISHING_UPGRADE to Ingredient.of(Tags.Items.TOOLS_FISHING_ROD),
-            RagiumItems.MOB_CAPTURE_UPGRADE to Ingredient.of(RagiumItems.ELDRITCH_EGG),
-        ).forEach { (upgrade: ItemLike, item: Ingredient) ->
-            HTShapedRecipeBuilder
-                .create(upgrade)
-                .hollow4()
-                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-                .define('B', item)
-                .save(output)
+        deviceUpgrade(RagiumItems.EXP_COLLECTOR_UPGRADE) {
+            define('B', Items.EXPERIENCE_BOTTLE)
         }
+        deviceUpgrade(RagiumItems.FISHING_UPGRADE) {
+            define('B', Tags.Items.TOOLS_FISHING_ROD)
+        }
+        deviceUpgrade(RagiumItems.MOB_CAPTURE_UPGRADE) {
+            define('B', RagiumItems.ELDRITCH_EGG)
+        }
+    }
+
+    @JvmStatic
+    private inline fun processorUpgrade(upgrade: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
+        HTShapedRecipeBuilder
+            .create(upgrade)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+            .apply(action)
+            .save(output)
+    }
+
+    @JvmStatic
+    private inline fun deviceUpgrade(upgrade: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
+        HTShapedRecipeBuilder
+            .create(upgrade)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .apply(action)
+            .save(output)
     }
 
     //    Storage    //

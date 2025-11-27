@@ -98,4 +98,6 @@ object RagiumConst {
     const val RESULTS = "results"
     const val ITEM_RESULT = "item_result"
     const val FLUID_RESULT = "fluid_result"
+
+    const val LUBRICANT_CONSUME = 25
 }

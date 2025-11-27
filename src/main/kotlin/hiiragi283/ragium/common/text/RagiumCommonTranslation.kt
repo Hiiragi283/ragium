@@ -97,6 +97,8 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     RAGI_CHERRY("description", "ragi_cherry"),
 
     // Items - Upgrades
+    EFFICIENT_CRUSH_UPGRADE("description", "upgrade", "efficient_crush"),
+
     EXP_COLLECTOR_UPGRADE("description", "upgrade", "exp_collector"),
     FISHING_UPGRADE("description", "upgrade", "fishing"),
     MOB_CAPTURE_UPGRADE("description", "upgrade", "mob_capture"),

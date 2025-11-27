@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
@@ -29,7 +29,8 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createTank(listener: HTContentListener): HTVariableFluidStackTank = HTVariableFluidStackTank.input(
         listener,
         RagiumConfig.COMMON.crusherTankCapacity,
-        canInsert = RagiumFluidContents.LUBRICANT::isOf,
+        canInsert = { HTProcessorHelper.hasLubricantUpgrade(this) },
+        filter = RagiumFluidContents.LUBRICANT::isOf,
     )
 
     //    Ticking    //
@@ -37,10 +38,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
 
     override fun getRecipeTime(recipe: HTItemToChancedItemRecipe): Int =
-        when (inputTank.extract(10, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount()) {
-            10 -> 18 * 10
-            else -> super.getRecipeTime(recipe)
-        }
+        (HTProcessorHelper.getLubricantModifier(this, inputTank) * super.getRecipeTime(recipe)).toInt()
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -53,7 +51,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // インプットを減らす
         HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
         // 潤滑油があれば減らす
-        inputTank.extract(10, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        HTProcessorHelper.consumeLubricant(this, inputTank)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1f, 0.25f)
     }
