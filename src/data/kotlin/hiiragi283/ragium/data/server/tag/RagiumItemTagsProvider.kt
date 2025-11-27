@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagDependType
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -37,6 +38,7 @@ import net.minecraft.tags.TagBuilder
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import rearth.oritech.init.ItemContent
@@ -126,19 +128,53 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         fromTable(factory, RagiumItems.MATERIALS)
         // Fuels
         addMaterial(factory, CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL)
-            .add(Items.COAL.toHolderLike())
+            .addItem(Items.COAL)
         addMaterial(factory, CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL)
-            .add(Items.CHARCOAL.toHolderLike())
+            .addItem(Items.CHARCOAL)
         addMaterial(factory, CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE)
             .addTag(RagiumCommonTags.Items.COAL_COKE, HTTagDependType.OPTIONAL)
         // Gems
         addMaterial(factory, CommonMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO)
-            .add(Items.ECHO_SHARD.toHolderLike())
+            .addItem(Items.ECHO_SHARD)
         // Scraps
         addMaterial(factory, CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE)
-            .add(Items.NETHERITE_SCRAP.toHolderLike())
+            .addItem(Items.NETHERITE_SCRAP)
         // Integration
         fromTable(factory, RagiumIntegrationItems.MATERIALS, HTTagDependType.OPTIONAL)
+
+        // Dyes
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.WHITE)
+            .addItem(Items.BONE_MEAL)
+            .addItem(Items.LILY_OF_THE_VALLEY)
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.ORANGE)
+            .addItem(Items.ORANGE_TULIP)
+            .addItem(Items.TORCHFLOWER)
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.MAGENTA)
+            .addItem(Items.ALLIUM)
+            .addItem(Items.LILAC)
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.YELLOW)
+            .addItem(Items.DANDELION)
+            .addItem(Items.SUNFLOWER)
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.PINK)
+            .addItem(Items.PINK_TULIP)
+            .addItem(Items.PEONY)
+            .addItem(Items.PINK_PETALS)
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.LIGHT_GRAY)
+            .addItem(Items.AZURE_BLUET)
+            .addItem(Items.OXEYE_DAISY)
+            .addItem(Items.WHITE_TULIP)
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.CYAN)
+            .addItem(Items.PITCHER_PLANT)
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.BLUE)
+            .addItem(Items.CORNFLOWER)
+            .addItem(Items.LAPIS_LAZULI)
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.RED)
+            .addItem(Items.POPPY)
+            .addItem(Items.RED_TULIP)
+            .addItem(Items.ROSE_BUSH)
+        addMaterial(factory, CommonMaterialPrefixes.RAW_MATERIAL_DYE, HTColorMaterial.BLACK)
+            .addItem(Items.INK_SAC)
+            .addItem(Items.WITHER_ROSE)
     }
 
     private fun fromTable(
@@ -186,9 +222,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .apply(RagiumModTags.Items.RAW_MEAT)
             .addTag(Tags.Items.FOODS_RAW_MEAT)
             .addTag(Tags.Items.FOODS_RAW_FISH)
-            .add(Items.ROTTEN_FLESH.toHolderLike())
+            .addItem(Items.ROTTEN_FLESH)
 
-        addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE).add(Items.APPLE.toHolderLike())
+        addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE).addItem(Items.APPLE)
 
         addMaterial(factory, foodsFruit, FoodMaterialKeys.RAGI_CHERRY)
             .add(RagiumItems.RAGI_CHERRY)
@@ -275,9 +311,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         factory
             .apply(RagiumModTags.Items.ELDRITCH_PEARL_BINDER)
-            .add(Items.GHAST_TEAR.toHolderLike())
-            .add(Items.PHANTOM_MEMBRANE.toHolderLike())
-            .add(Items.WIND_CHARGE.toHolderLike())
+            .addItem(Items.GHAST_TEAR)
+            .addItem(Items.PHANTOM_MEMBRANE)
+            .addItem(Items.WIND_CHARGE)
 
         factory
             .apply(RagiumModTags.Items.MACHINE_UPGRADES)
@@ -290,7 +326,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         factory
             .apply(RagiumModTags.Items.POLYMER_RESIN)
             .add(RagiumItems.POLYMER_RESIN)
-            .add(ItemContent.POLYMER_RESIN.toHolderLike(), HTTagDependType.OPTIONAL)
+            .addItem(ItemContent.POLYMER_RESIN, HTTagDependType.OPTIONAL)
 
         factory.apply(RagiumCommonTags.Items.PLASTIC).add(RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
         factory
@@ -306,7 +342,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .apply(RagiumModTags.Items.IS_NUCLEAR_FUEL)
             .add(RagiumItems.GREEN_PELLET)
             .add(MekanismItems.REPROCESSED_FISSILE_FRAGMENT.id, HTTagDependType.OPTIONAL)
-            .add(ItemContent.SMALL_URANIUM_PELLET.toHolderLike(), HTTagDependType.OPTIONAL)
+            .addItem(ItemContent.SMALL_URANIUM_PELLET, HTTagDependType.OPTIONAL)
         // Other
         factory
             .apply(ItemTags.PIGLIN_LOVED)
@@ -346,6 +382,9 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
     }
 
     //    Extensions    //
+
+    fun HTTagBuilder<Item>.addItem(item: ItemLike, type: HTTagDependType = HTTagDependType.REQUIRED): HTTagBuilder<Item> =
+        this.add(item.toHolderLike(), type)
 
     override fun createContentsProvider(): CompletableFuture<HolderLookup.Provider> = super
         .createContentsProvider()

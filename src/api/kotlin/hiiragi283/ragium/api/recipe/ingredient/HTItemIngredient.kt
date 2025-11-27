@@ -99,7 +99,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
         companion object {
             @JvmStatic
             private val FLAT_CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = VanillaBiCodecs
-                .ingredient(false)
+                .INGREDIENT
                 .xmap(::IngredientBased, IngredientBased::ingredient)
 
             @JvmStatic
