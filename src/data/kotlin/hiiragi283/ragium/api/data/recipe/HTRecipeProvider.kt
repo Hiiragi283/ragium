@@ -233,13 +233,13 @@ sealed class HTRecipeProvider {
     protected fun cutAndCombine(hole: ItemLike, slice: ItemLike, count: Int) {
         // Cutting
         HTShapelessRecipeBuilder
-            .misc(slice, count)
+            .create(slice, count)
             .addIngredient(hole)
             .addCondition(FOOD_MOD_CONDITION)
             .saveSuffixed(output, "_from_hole")
         // Combining
         HTShapelessRecipeBuilder
-            .misc(hole)
+            .create(hole)
             .addIngredients(Ingredient.of(slice), count)
             .saveSuffixed(output, "_from_pieces")
     }

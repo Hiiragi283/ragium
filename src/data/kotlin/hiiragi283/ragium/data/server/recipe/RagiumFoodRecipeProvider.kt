@@ -41,7 +41,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
         // Melon Pie
         HTShapelessRecipeBuilder
-            .misc(RagiumItems.MELON_PIE)
+            .create(RagiumItems.MELON_PIE)
             .addIngredient(Tags.Items.CROPS_MELON)
             .addIngredient(Items.SUGAR)
             .addIngredient(Tags.Items.EGGS)
@@ -85,7 +85,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         extractAndInfuse(Items.GLASS_BOTTLE, RagiumItems.RAGI_CHERRY_JUICE, RagiumFluidContents.RAGI_CHERRY_JUICE)
         // Ragi-Cherry Jam
         HTShapelessRecipeBuilder
-            .misc(RagiumItems.RAGI_CHERRY_JAM)
+            .create(RagiumItems.RAGI_CHERRY_JAM)
             .addIngredients(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY, 2)
             .addIngredient(Items.SUGAR)
             .addIngredient(Items.GLASS_BOTTLE)
@@ -107,7 +107,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         cutAndCombine(RagiumItems.RAGI_CHERRY_PIE, RagiumItems.RAGI_CHERRY_PIE_SLICE, 4)
         // Ragi-Cherry Toast
         HTShapelessRecipeBuilder
-            .misc(RagiumItems.RAGI_CHERRY_TOAST, 2)
+            .create(RagiumItems.RAGI_CHERRY_TOAST, 2)
             .addIngredients(Tags.Items.FOODS_BREAD, 2)
             .addIngredient(CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY)
             .save(output)
@@ -234,7 +234,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     private fun wheat() {
         // Dough
         HTShapelessRecipeBuilder
-            .misc(RagiumItems.getMaterial(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT), 3)
+            .create(RagiumItems.getMaterial(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT), 3)
             .addIngredients(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT, 3)
             .addIngredient(Tags.Items.BUCKETS_WATER)
             .save(output)

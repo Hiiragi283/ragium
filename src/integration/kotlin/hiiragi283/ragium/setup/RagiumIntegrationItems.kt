@@ -233,8 +233,11 @@ object RagiumIntegrationItems {
         for (tool: ItemLike in TOOLS.column(RagiumMaterialKeys.RAGI_CRYSTAL).values) {
             setEnch(tool, Enchantments.MENDING)
         }
-        event.modify(getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL)) { builder ->
-            builder.set(DataComponents.MAX_DAMAGE, 8 * 8)
+        // Create
+        if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
+            event.modify(getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL)) { builder: DataComponentPatch.Builder ->
+                builder.set(DataComponents.MAX_DAMAGE, 8 * 8)
+            }
         }
 
         // Mekanism

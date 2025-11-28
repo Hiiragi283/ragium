@@ -25,6 +25,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CREATE) {
@@ -34,9 +35,10 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
 
         // Sandpaper
         HTShapelessRecipeBuilder
-            .equipment(RagiumIntegrationItems.getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL))
+            .create(RagiumIntegrationItems.getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL))
             .addIngredient(Items.PAPER)
             .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
         // Cardboard
         HTComplexRecipeBuilder
