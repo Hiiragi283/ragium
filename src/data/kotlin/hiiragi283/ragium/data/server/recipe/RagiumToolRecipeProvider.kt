@@ -62,9 +62,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTShapelessRecipeBuilder
-            .equipment(RagiumItems.TRADER_CATALOG)
+            .create(RagiumItems.TRADER_CATALOG)
             .addIngredient(Items.BOOK)
             .addIngredient(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
         HTShapedRecipeBuilder
@@ -182,9 +183,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         HTShapelessRecipeBuilder
-            .equipment(upgrade, 2)
+            .create(upgrade, 2)
             .addIngredient(upgrade)
             .addIngredients(CommonMaterialPrefixes.INGOT, material, 2)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .saveSuffixed(output, "_duplicate")
         // Armor
         for ((variant: HTArmorVariant, armor: ItemLike) in RagiumItems.getArmorMap(material)) {
@@ -243,9 +245,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
 
         for (variant: HTColorMaterial in HTColorMaterial.entries) {
             val bundle: ImmutableItemStack = HTUniversalBundleItem.createBundle(variant.dyeColor)
-            HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, bundle)
+            HTShapelessRecipeBuilder(bundle)
                 .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
                 .addIngredient(variant.dyeTag)
+                .setCategory(CraftingBookCategory.EQUIPMENT)
                 .savePrefixed(output, "${variant.asMaterialName()}_")
         }
 
@@ -364,9 +367,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, builderAction: HTShapelessRecipeBuilder.() -> Unit) {
         val ticket: ImmutableItemStack = HTDefaultLootTickets.getLootTicket(lootTicket)
-        HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, ticket)
+        HTShapelessRecipeBuilder(ticket)
             .addIngredient(RagiumItems.LOOT_TICKET)
             .apply(builderAction)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
             .saveSuffixed(output, "/${lootTicket.name.lowercase()}")
     }
 }

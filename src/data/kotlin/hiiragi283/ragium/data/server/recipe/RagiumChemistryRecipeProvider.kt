@@ -518,7 +518,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             RagiumItems.SYNTHETIC_LEATHER to Tags.Items.LEATHERS,
         ).forEach { (result: ItemLike, parent: TagKey<Item>) ->
             HTShapelessRecipeBuilder
-                .misc(result, 2)
+                .create(result, 2)
                 .addIngredient(RagiumModTags.Items.POLYMER_RESIN)
                 .addIngredient(parent)
                 .savePrefixed(output, "2x_")
@@ -532,7 +532,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         }
         // Synthetic Book
         HTShapelessRecipeBuilder
-            .misc(Items.BOOK)
+            .create(Items.BOOK)
             .addIngredients(Items.PAPER, count = 3)
             .addIngredient(RagiumItems.SYNTHETIC_LEATHER)
             .saveSuffixed(output, "_from_synthetic")

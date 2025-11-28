@@ -114,7 +114,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             }
 
         HTShapelessRecipeBuilder
-            .misc(RagiumItems.getIngot(RagiumMaterialKeys.DEEP_STEEL))
+            .create(RagiumItems.getIngot(RagiumMaterialKeys.DEEP_STEEL))
             .addIngredients(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 4)
             .addIngredients(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL, 4)
             .save(output)
@@ -157,7 +157,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         mixFromData(RagiumMaterialRecipeData.IRIDESCENT_POWDER)
         // Other
         HTShapelessRecipeBuilder
-            .misc(Items.GUNPOWDER, 3)
+            .create(Items.GUNPOWDER, 3)
             .addIngredient(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
             .addIngredient(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER)
             .addIngredient(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.CHARCOAL)
@@ -188,7 +188,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 }
                 // Block -> Base
                 HTShapelessRecipeBuilder
-                    .misc(base, storageBlock.baseCount)
+                    .create(base, storageBlock.baseCount)
                     .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, key)
                     .saveSuffixed(output, "_from_block")
                 // Base -> Block
@@ -204,7 +204,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             nuggetMap[key]?.let { nugget: ItemLike ->
                 // Base -> Nugget
                 HTShapelessRecipeBuilder
-                    .misc(nugget, 9)
+                    .create(nugget, 9)
                     .addIngredient(basePrefix, key)
                     .saveSuffixed(output, "_from_base")
                 // Nugget -> Base

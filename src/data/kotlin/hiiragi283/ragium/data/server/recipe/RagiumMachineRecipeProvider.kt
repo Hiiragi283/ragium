@@ -265,44 +265,44 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             }
 
         // Basic
-        HTShapedRecipeBuilder
+        HTShapelessRecipeBuilder
             .create(RagiumBlocks.FLUID_COLLECTOR)
-            .cross4()
-            .define('A', RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
-            .define('B', Tags.Items.BUCKETS_EMPTY)
-            .define('C', RagiumBlocks.DEVICE_CASING)
+            .addIngredient(RagiumBlocks.DEVICE_CASING)
+            .addIngredient(RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
+            .addIngredient(RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .addIngredient(Tags.Items.BUCKETS_EMPTY)
             .save(output)
 
-        HTShapedRecipeBuilder
+        HTShapelessRecipeBuilder
             .create(RagiumBlocks.ITEM_COLLECTOR)
-            .cross4()
-            .define('A', RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
-            .define('B', Tags.Items.CHESTS)
-            .define('C', RagiumBlocks.DEVICE_CASING)
+            .addIngredient(RagiumBlocks.DEVICE_CASING)
+            .addIngredient(RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
+            .addIngredient(RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .addIngredient(Tags.Items.CHESTS)
             .save(output)
         // Elite
-        HTShapedRecipeBuilder
+        HTShapelessRecipeBuilder
             .create(RagiumBlocks.DIM_ANCHOR)
-            .cross4()
-            .define('A', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
-            .define('C', RagiumBlocks.DEVICE_CASING)
+            .addIngredient(RagiumBlocks.DEVICE_CASING)
+            .addIngredient(CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
+            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
+            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
 
-        HTShapedRecipeBuilder
+        HTShapelessRecipeBuilder
             .create(RagiumBlocks.ENI)
-            .cross4()
-            .define('A', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.DIAMOND)
-            .define('C', RagiumBlocks.DEVICE_CASING)
+            .addIngredient(RagiumBlocks.DEVICE_CASING)
+            .addIngredient(CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
+            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.DIAMOND)
+            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
         // Ultimate
-        HTShapedRecipeBuilder
+        HTShapelessRecipeBuilder
             .create(RagiumBlocks.TELEPAD)
-            .cross4()
-            .define('A', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.DEEP_STEEL)
-            .define('B', CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
-            .define('C', RagiumBlocks.DEVICE_CASING)
+            .addIngredient(RagiumBlocks.DEVICE_CASING)
+            .addIngredient(CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.DEEP_STEEL)
+            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
+            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             .save(output)
     }
 
@@ -456,7 +456,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         // Minecarts
         for (tier: HTDrumTier in HTDrumTier.entries) {
             HTShapelessRecipeBuilder
-                .misc(tier.getMinecartItem())
+                .create(tier.getMinecartItem())
                 .addIngredient(tier.getBlock())
                 .addIngredient(Items.MINECART)
                 .save(output)
