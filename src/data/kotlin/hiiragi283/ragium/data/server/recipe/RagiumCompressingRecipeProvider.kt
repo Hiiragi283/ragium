@@ -58,13 +58,6 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.SCULK),
             ).save(output)
 
-        // TNT
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
-                itemCreator.fromItem(Items.GUNPOWDER, 4),
-                resultHelper.item(Items.TNT),
-            ).save(output)
-
         // Paper
         HTItemWithCatalystRecipeBuilder
             .compressing(

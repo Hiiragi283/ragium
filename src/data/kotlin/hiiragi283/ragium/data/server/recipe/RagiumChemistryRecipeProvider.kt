@@ -92,7 +92,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .extracting(
                 itemCreator.fromItem(Items.MAGMA_CREAM, 3),
-                resultHelper.item(RagiumItems.MAGMA_SHARD)
+                resultHelper.item(RagiumItems.MAGMA_SHARD),
             ).save(output)
 
         HTItemWithCatalystRecipeBuilder
@@ -250,14 +250,14 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         // Blaze Powder
         HTComplexRecipeBuilder
             .mixing()
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR))
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR, 2))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 250))
             .setResult(resultHelper.item(Items.BLAZE_POWDER))
             .save(output)
         // Wind Charge
         HTComplexRecipeBuilder
             .mixing()
-            .addIngredient(itemCreator.fromItem(Items.SNOWBALL))
+            .addIngredient(itemCreator.fromItem(Items.SNOWBALL, 2))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 250))
             .setResult(resultHelper.item(Items.WIND_CHARGE))
             .save(output)
@@ -383,10 +383,10 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fluidCreator.water(1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.SULFURIC_ACID, 1000))
             .save(output)
-        // Saltpeter + Sulfuric Acid -> Nitric Acid
+        // Bone Meal + Sulfuric Acid -> Nitric Acid
         HTComplexRecipeBuilder
             .mixing()
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER))
+            .addIngredient(itemCreator.fromTagKey(Tags.Items.FERTILIZERS))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.SULFURIC_ACID, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.NITRIC_ACID, 1000))
             .save(output)
@@ -421,6 +421,14 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(itemCreator.fromItem(Items.SUGAR, 2))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.SLIME, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.GLYCEROL, 1000))
+            .save(output)
+        // Naphtha + Mixture Acid -> TNT
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromTagKey(Tags.Items.SANDS, 2))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 250))
+            .setResult(resultHelper.item(Items.TNT, 8))
             .save(output)
     }
 

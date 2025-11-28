@@ -78,7 +78,7 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
         fun generate(): Int {
             val simulated: Int = this.insert(currentEnergyPerTick, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
             return when {
-                simulated > 0 -> this.insert(currentEnergyPerTick, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                simulated < currentEnergyPerTick -> this.insert(currentEnergyPerTick, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 else -> 0
             }
         }

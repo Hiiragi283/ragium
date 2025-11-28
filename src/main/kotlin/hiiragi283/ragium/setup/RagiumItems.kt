@@ -134,6 +134,7 @@ object RagiumItems {
         REGISTER.addAlias("iridescentium_ingot", "iridescent_powder")
 
         REGISTER.addAlias("cinnabar_dust", "magma_shard")
+        REGISTER.addAlias(RagiumAPI.id("saltpeter_dust"), vanillaId("bone_meal"))
 
         REGISTER.register(eventBus)
 
@@ -234,7 +235,6 @@ object RagiumItems {
             VanillaMaterialKeys.COAL,
             // Common
             CommonMaterialKeys.Gems.SALT,
-            CommonMaterialKeys.Gems.SALTPETER,
             CommonMaterialKeys.Gems.SULFUR,
             // Ragium - Gem
             RagiumMaterialKeys.RAGINITE,
