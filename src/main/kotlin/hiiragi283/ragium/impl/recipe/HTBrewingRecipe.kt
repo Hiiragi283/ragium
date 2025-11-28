@@ -20,7 +20,7 @@ class HTBrewingRecipe(ingredient: HTItemIngredient, val contents: PotionContents
         else -> null
     }
 
-    override fun isIncompleteResult(): Boolean = contents.allEffects.none()
+    override fun isIncompleteResult(): Boolean = HTPotionHelper.isEmpty(contents)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BREWING
 

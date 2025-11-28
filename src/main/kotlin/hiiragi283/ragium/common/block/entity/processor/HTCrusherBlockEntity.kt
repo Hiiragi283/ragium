@@ -1,12 +1,11 @@
 package hiiragi283.ragium.common.block.entity.processor
 
-import hiiragi283.ragium.api.math.times
-import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -49,9 +48,6 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToChancedItemRecipe) {
         // 実際にアウトプットに搬出する
-        for (result: HTItemResultWithChance in recipe.getResultItems(input)) {
-            val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess(), level.random, this) ?: continue
-            HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
-        }
+        HTChancedItemOutputBlockEntity.exportOutputs(this, outputSlots, level, input, recipe)
     }
 }

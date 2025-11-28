@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -310,31 +311,38 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun upgrades() {
         // Machine
-        RagiumItems.MACHINE_UPGRADES.forEach { (variant: HTUpgradeVariant, tier: HTBaseTier, item: ItemLike) ->
-            val metal: HTMaterialKey = when (tier) {
-                HTBaseTier.BASIC -> RagiumMaterialKeys.AZURE_STEEL
-                HTBaseTier.ADVANCED -> RagiumMaterialKeys.DEEP_STEEL
-                else -> return@forEach
-            }
+        for ((variant: HTUpgradeVariant, upgrade: ItemLike) in RagiumItems.MACHINE_UPGRADES.column(HTBaseTier.BASIC)) {
             val gem: HTMaterialKey = when (variant) {
                 HTUpgradeVariant.EFFICIENCY -> RagiumMaterialKeys.WARPED_CRYSTAL
                 HTUpgradeVariant.ENERGY_CAPACITY -> RagiumMaterialKeys.RAGI_CRYSTAL
                 HTUpgradeVariant.SPEED -> RagiumMaterialKeys.CRIMSON_CRYSTAL
             }
             HTShapedRecipeBuilder
-                .create(item)
+                .cross8Mirrored(output, upgrade) {
+                    define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+                    define('B', RagiumModTags.Items.PLASTICS)
+                    define('C', CommonMaterialPrefixes.GEM, gem)
+                }
+        }
+
+        for ((variant: HTUpgradeVariant, upgrade: ItemLike) in RagiumItems.MACHINE_UPGRADES.column(HTBaseTier.ADVANCED)) {
+            HTShapedRecipeBuilder
+                .create(upgrade)
                 .hollow4()
-                .define('A', CommonMaterialPrefixes.INGOT, metal)
-                .define('B', CommonMaterialPrefixes.GEM, gem)
+                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+                .define('B', RagiumItems.getUpgrade(variant, HTBaseTier.BASIC))
                 .save(output)
         }
 
         // Processor
+        processorUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) {
+            define('B', RagiumFluidContents.LUBRICANT.bucketTag)
+        }
         processorUpgrade(RagiumItems.FORTUNE_UPGRADE) {
             define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
         }
-        processorUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) {
-            define('B', RagiumFluidContents.LUBRICANT.bucketTag)
+        processorUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE) {
+            define('B', Tags.Items.BUCKETS_LAVA)
         }
 
         // Device
@@ -354,7 +362,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .create(upgrade)
             .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
             .apply(action)
             .save(output)
     }

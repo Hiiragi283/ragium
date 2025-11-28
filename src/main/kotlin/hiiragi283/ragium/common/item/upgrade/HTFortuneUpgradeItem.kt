@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.item.component.toMutable
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.math.fraction
-import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -31,7 +30,7 @@ class HTFortuneUpgradeItem(properties: Properties) :
             ?.let(stack::getEnchantmentLevel)
             ?.takeIf { it > 0 }
             ?: 1
-        return HTMachineUpgrade.create(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE to fraction(1, 3) * fortune)
+        return HTMachineUpgrade.create(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE to fraction(fortune, 3))
     }
 
     override fun addItems(baseItem: HTItemHolderLike, provider: HolderLookup.Provider, consumer: Consumer<ItemStack>) {
