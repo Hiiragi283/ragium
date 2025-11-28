@@ -204,7 +204,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.ENCHANT_COPIER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ULTIMATE, RagiumConfig.COMMON.processor.enchantCopier)
-        .addMenu { RagiumMenuTypes.ENCHANT_COPIER }
+        .addMenu { RagiumMenuTypes.ENCHANTER }
         .build(RagiumCommonTranslation.ENCHANT_COPIER)
 
     @JvmField

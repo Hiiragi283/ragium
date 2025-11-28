@@ -46,16 +46,6 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         )
 
         @JvmStatic
-        protected fun singleCatalyst(
-            builder: HTBasicItemSlotHolder.Builder,
-            listener: HTContentListener,
-            canInsert: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
-        ): HTItemStackSlot = builder.addSlot(
-            HTSlotInfo.CATALYST,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2), 1, canInsert),
-        )
-
-        @JvmStatic
         protected fun singleOutput(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTItemStackSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
             HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),

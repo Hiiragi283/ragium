@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
 import hiiragi283.ragium.common.recipe.HTEternalUpgradeRecipe
 import hiiragi283.ragium.common.recipe.HTExpExtractingRecipe
@@ -18,6 +19,7 @@ import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
+import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
@@ -95,7 +97,11 @@ object RagiumRecipeSerializers {
     @JvmField
     val BREWING: RecipeSerializer<HTBrewingRecipe> = register(
         RagiumConst.BREWING,
-        RagiumRecipeBiCodecs.BREWING,
+        RagiumRecipeBiCodecs.combine(
+            ::HTBrewingRecipe,
+            VanillaBiCodecs.POTION.fieldOf("potion"),
+            HTBrewingRecipe::contents,
+        ),
     )
 
     @JvmField
@@ -114,6 +120,16 @@ object RagiumRecipeSerializers {
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = register(
         RagiumConst.CUTTING,
         RagiumRecipeBiCodecs.itemToChanced(::HTCuttingRecipe),
+    )
+
+    @JvmField
+    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = register(
+        RagiumConst.ENCHANTING,
+        RagiumRecipeBiCodecs.combine(
+            ::HTEnchantingRecipe,
+            VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment"),
+            HTEnchantingRecipe::holder,
+        ),
     )
 
     @JvmField

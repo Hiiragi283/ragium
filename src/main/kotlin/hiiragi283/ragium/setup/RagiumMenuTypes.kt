@@ -68,7 +68,7 @@ object RagiumMenuTypes {
     //    Machine    //
 
     @JvmField
-    val ENCHANT_COPIER: DeferredBEMenu<HTEnchantCopierBlockEntity> = registerBE("enchantment_copier")
+    val ENCHANTER: DeferredBEMenu<HTEnchantCopierBlockEntity> = registerBE("enchanter")
 
     @JvmField
     val ENERGY_NETWORK_ACCESS: DeferredBEMenu<HTEnergyNetworkAccessBlockEntity> = registerBE("energy_network_access")
@@ -104,7 +104,7 @@ object RagiumMenuTypes {
         registerBE("single_item_with_fluid")
 
     @JvmField
-    val SMELTER: DeferredBEMenu<HTAbstractSmelterBlockEntity<*>> = registerBE("smelter")
+    val SMELTER: DeferredBEMenu<HTAbstractSmelterBlockEntity> = registerBE("smelter")
 
     @JvmField
     val TELEPAD: DeferredBEMenu<HTTelepadBlockentity> = registerBE("telepad")

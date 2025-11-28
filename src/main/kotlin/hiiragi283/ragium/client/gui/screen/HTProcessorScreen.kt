@@ -15,8 +15,11 @@ import net.neoforged.api.distmarker.OnlyIn
 open class HTProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> : HTBlockEntityContainerScreen<BE> {
     companion object {
         @JvmStatic
+        fun createTexture(texture: String): ResourceLocation = RagiumAPI.id("textures", "gui", "container", "$texture.png")
+
+        @JvmStatic
         fun <BE : HTEnergizedProcessorBlockEntity<*, *>> createFactory(texture: String): HTBlockEntityScreenFactory<BE> =
-            createFactory(RagiumAPI.id("textures", "gui", "container", "$texture.png"))
+            createFactory(createTexture(texture))
 
         @JvmStatic
         fun <BE : HTEnergizedProcessorBlockEntity<*, *>> createFactory(texture: ResourceLocation): HTBlockEntityScreenFactory<BE> =

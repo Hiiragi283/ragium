@@ -1,28 +1,48 @@
 package hiiragi283.ragium.impl.recipe
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.common.util.HTPotionHelper
-import hiiragi283.ragium.impl.recipe.base.HTBasicSingleItemRecipe
+import hiiragi283.ragium.impl.recipe.base.HTBasicCombineRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
-class HTBrewingRecipe(ingredient: HTItemIngredient, val contents: PotionContents) : HTBasicSingleItemRecipe(ingredient) {
-    override fun assembleItem(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? = when {
-        test(input) -> HTPotionHelper.createPotion(RagiumItems.POTION_DROP, contents).toImmutable()
-        else -> null
+class HTBrewingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredient>, val contents: PotionContents) :
+    HTBasicCombineRecipe(itemIngredients) {
+    companion object {
+        @JvmField
+        val FLUID_INGREDIENT: HTFluidIngredient = HTFluidIngredient.of(FluidIngredient.tag(Tags.Fluids.WATER), 1000)
     }
 
-    override fun isIncompleteResult(): Boolean = HTPotionHelper.isEmpty(contents)
+    override fun testFluid(input: HTMultiRecipeInput): Boolean = FLUID_INGREDIENT.test(input.getFluid(0))
+
+    override fun assembleItem(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? = when (test(input)) {
+        true -> HTPotionHelper.createPotion(RagiumItems.POTION_DROP, contents).toImmutable()
+        false -> null
+    }
+
+    override fun isIncomplete(): Boolean {
+        val (left: HTItemIngredient, right: HTItemIngredient) = itemIngredients
+        val bool1: Boolean = left.hasNoMatchingStacks()
+        val bool2: Boolean = right.hasNoMatchingStacks()
+        val bool3: Boolean = HTPotionHelper.isEmpty(contents)
+        return bool1 || bool2 || bool3
+    }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BREWING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.BREWING.get()
+
+    override fun getRequiredAmount(stack: ImmutableFluidStack): Int = FLUID_INGREDIENT.getRequiredAmount(stack)
 }

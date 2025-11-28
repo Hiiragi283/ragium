@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.function.andThen
 import hiiragi283.ragium.api.function.compose
 import hiiragi283.ragium.api.function.negate
+import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.filter
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -16,6 +17,7 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -60,17 +62,33 @@ class HTEnchantCopierBlockEntity(pos: BlockPos, state: BlockState) :
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         // エンチャントされていないツールのみ対応する
-        inputSlot = singleInput(
-            builder,
-            listener,
-            EnchantmentHelper::getEnchantmentsForCrafting
-                .compose(ImmutableItemStack::unwrap)
-                .andThen(ItemEnchantments::isEmpty),
+        inputSlot = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTItemStackSlot.input(
+                listener,
+                HTSlotHelper.getSlotPosX(1),
+                HTSlotHelper.getSlotPosY(0),
+                canInsert = EnchantmentHelper::getEnchantmentsForCrafting
+                    .compose(ImmutableItemStack::unwrap)
+                    .andThen(ItemEnchantments::isEmpty),
+            ),
         )
         // catalyst
-        catalystSlot = singleCatalyst(builder, listener, ::getStoredEnchantments.andThen(ItemEnchantments::isEmpty).negate())
+        catalystSlot = builder.addSlot(
+            HTSlotInfo.CATALYST,
+            HTItemStackSlot.input(
+                listener,
+                HTSlotHelper.getSlotPosX(3),
+                HTSlotHelper.getSlotPosY(0),
+                1,
+                ::getStoredEnchantments.andThen(ItemEnchantments::isEmpty).negate(),
+            ),
+        )
         // output
-        outputSlot = singleOutput(builder, listener)
+        outputSlot = builder.addSlot(
+            HTSlotInfo.OUTPUT,
+            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(6.5), HTSlotHelper.getSlotPosY(1)),
+        )
     }
 
     private fun getStoredEnchantments(stack: ImmutableItemStack): ItemEnchantments =

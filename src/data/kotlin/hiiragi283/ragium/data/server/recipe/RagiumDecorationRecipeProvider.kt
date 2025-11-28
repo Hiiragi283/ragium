@@ -10,10 +10,10 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.impl.data.HTVanillaWoodType
-import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.tags.ItemTags
@@ -121,7 +121,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         RagiumBlocks.GLASSES.forEach { (variant: HTGlassVariant, key: HTMaterialKey, block: ItemLike) ->
             when (variant) {
                 HTGlassVariant.DEFAULT ->
-                    HTCombineItemToObjRecipeBuilder
+                    HTShapelessInputsRecipeBuilder
                         .alloying(
                             resultHelper.item(block, 2),
                             when (key) {

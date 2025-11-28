@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.map.IdMapDataMap
 import hiiragi283.ragium.api.data.map.MapDataMapValueRemover
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.RegistryKey
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
@@ -20,7 +19,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -42,9 +40,6 @@ class RagiumDataMapsImpl : RagiumDataMaps {
     }
 
     override val mobHeadType: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
-
-    override val enchantIngredientType: DataMapType<Enchantment, HTItemIngredient> =
-        create("enchanter", Registries.ENCHANTMENT, HTItemIngredient.CODEC.codec)
 
     override val thermalFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("thermal")
     override val combustionFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
