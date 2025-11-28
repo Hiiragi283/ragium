@@ -22,20 +22,28 @@ object RagiumBlockTypes {
     val THERMAL_GENERATOR: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.THERMAL_GENERATOR }
         .add(HTDirectionalBlockAttribute.FACING)
-        .addMenu { RagiumMenuTypes.THERMAL_GENERATOR }
+        .addMenu { RagiumMenuTypes.ITEM_GENERATOR }
         .addMachineTier(HTMachineTier.BASIC, RagiumConfig.COMMON.generator.thermal)
         .build(RagiumCommonTranslation.THERMAL_GENERATOR)
 
     // Advanced
     @JvmField
+    val CULINARY_GENERATOR: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.CULINARY_GENERATOR }
+        .add(HTDirectionalBlockAttribute.FACING)
+        .addMenu { RagiumMenuTypes.ITEM_GENERATOR }
+        .addMachineTier(HTMachineTier.ADVANCED, RagiumConfig.COMMON.generator.culinary)
+        .build(RagiumCommonTranslation.CULINARY_GENERATOR)
+
+    // Elite
+    @JvmField
     val COMBUSTION_GENERATOR: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.COMBUSTION_GENERATOR }
         .add(HTDirectionalBlockAttribute.FACING)
         .addMenu { RagiumMenuTypes.COMBUSTION_GENERATOR }
-        .addMachineTier(HTMachineTier.ADVANCED, RagiumConfig.COMMON.generator.combustion)
-        .build(RagiumCommonTranslation.THERMAL_GENERATOR)
+        .addMachineTier(HTMachineTier.ELITE, RagiumConfig.COMMON.generator.combustion)
+        .build(RagiumCommonTranslation.COMBUSTION_GENERATOR)
 
-    // Elite
     @JvmField
     val SOLAR_PANEL_UNIT: HTBlockType = HTBlockType
         .builder()

@@ -9,7 +9,7 @@ import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTFuelGeneratorEmiRecipe
 import net.minecraft.resources.ResourceLocation
 
-class HTThermalGeneratorEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTEmiFluidFuelData) :
+class HTItemGeneratorEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTEmiFluidFuelData) :
     HTFuelGeneratorEmiRecipe(category, id, recipe) {
     override fun addFuelWidgets(widgets: WidgetHolder) {
         // Fuel Slot

@@ -180,13 +180,21 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     class Generator(builder: ModConfigSpec.Builder) {
         // Basic
         @JvmField
-        val thermal: HTMachineConfig = HTMachineConfig.createSimple(builder, "thermal", HTFluidBlockAttribute.TankType.INPUT)
+        val thermal: HTMachineConfig = HTMachineConfig.createSimple(builder, "thermal")
 
         // Advanced
         @JvmField
-        val combustion: HTMachineConfig = HTMachineConfig.createSimple(builder, "combustion", HTFluidBlockAttribute.TankType.INPUT)
+        val culinary: HTMachineConfig = HTMachineConfig.createSimple(builder, "culinary")
 
         // Elite
+        @JvmField
+        val combustion: HTMachineConfig = HTMachineConfig.createSimple(
+            builder,
+            "combustion",
+            HTFluidBlockAttribute.TankType.FIRST_INPUT,
+            HTFluidBlockAttribute.TankType.SECOND_INPUT,
+        )
+
         @JvmField
         val solarPanelController: HTMachineConfig = HTMachineConfig.createSimple(builder, "solar_panel_controller")
 

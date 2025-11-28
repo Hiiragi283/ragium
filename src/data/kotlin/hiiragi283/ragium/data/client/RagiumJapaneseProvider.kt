@@ -121,8 +121,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Generators
         add(RagiumBlocks.THERMAL_GENERATOR, "火力発電機")
 
-        add(RagiumBlocks.COMBUSTION_GENERATOR, "燃焼発電機")
+        add(RagiumBlocks.CULINARY_GENERATOR, "料理発電機")
 
+        add(RagiumBlocks.COMBUSTION_GENERATOR, "燃焼発電機")
         add(RagiumBlocks.SOLAR_PANEL_UNIT, "太陽光パネルユニット")
         add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "太陽光パネルコントローラー")
 
@@ -413,7 +414,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.CRIMSON_GLASS, "上に乗るとマグマブロックと同じダメージを与えるガラスです。")
         add(RagiumCommonTranslation.WARPED_GLASS, "プレイヤーのみが通り抜けられるガラスです。")
 
-        add(RagiumCommonTranslation.THERMAL_GENERATOR, "かまど燃料や高温の液体から発電する機械です。")
+        add(RagiumCommonTranslation.THERMAL_GENERATOR, "かまど燃料から発電する機械です。")
+        add(RagiumCommonTranslation.CULINARY_GENERATOR, "食料から発電する機械です。")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "液体燃料から発電する機械です。")
         add(RagiumCommonTranslation.SOLAR_PANEL_UNIT, "太陽光パネルコントローラーと組み合わせて使用します。")
         add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "9x9の範囲にある太陽光パネルユニットの台数から発電する機械です。")

@@ -20,14 +20,15 @@ class HTCombustionGeneratorEmiRecipe(category: HTEmiRecipeCategory, id: Resource
     companion object {
         @JvmStatic
         val COOLANT: EmiIngredient by lazy {
-            EmiPort.getFluidRegistry()
+            EmiPort
+                .getFluidRegistry()
                 .getHolderDataMap(RagiumDataMaps.COOLANT)
                 .mapNotNull { (holder: Holder.Reference<Fluid>, data: HTFluidCoolantData) ->
                     EmiStack.of(holder.value(), data.amount.toLong())
                 }.let(EmiIngredient::of)
         }
     }
-    
+
     override fun addFuelWidgets(widgets: WidgetHolder) {
         // Coolant Tank
         widgets.addTank(COOLANT, getPosition(1), getPosition(0))

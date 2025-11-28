@@ -28,7 +28,7 @@ import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEm
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTCombustionGeneratorEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.generator.HTThermalGeneratorEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.generator.HTItemGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRecipe
@@ -43,6 +43,7 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTWashingEmiRec
 import hiiragi283.ragium.client.integration.emi.type.HTRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
+import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.util.HTPotionHelper
@@ -55,6 +56,7 @@ import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -205,26 +207,32 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addGenerators(registry: EmiRegistry) {
         // Basic
-        addCategoryAndRecipes(
+        addItemStackRecipes(
             registry,
             RagiumRecipeViewerTypes.THERMAL,
-            EmiPort
-                .getItemRegistry()
-                .holdersSequence()
-                .mapNotNull { holder: Holder<Item> ->
-                    val item: Item = holder.value()
-                    val stack: ItemStack = item.defaultInstance
-                    val burnTime: Int = stack.getBurnTime(null)
-                    if (burnTime <= 0) return@mapNotNull null
-                    val stack1: EmiStack = item.toEmi()
-                    stack1.remainder = stack.craftingRemainingItem.toEmi()
-                    val id: ResourceLocation = stack1.id.withPrefix("/${RagiumAPI.MOD_ID}/thermal_generator/")
-                    id to HTEmiFluidFuelData(stack1, burnTime)
-                },
-            ::HTThermalGeneratorEmiRecipe,
+            { stack: ItemStack ->
+                val burnTime: Int = stack.getBurnTime(null)
+                if (burnTime <= 0) return@addItemStackRecipes null
+                val stack1: EmiStack = stack.toEmi()
+                stack1.remainder = stack.craftingRemainingItem.toEmi()
+                HTEmiFluidFuelData(stack1, burnTime)
+            },
+            ::HTItemGeneratorEmiRecipe,
         )
         // Advanced
-        addCategoryAndRecipes(
+        addItemStackRecipes(
+            registry,
+            RagiumRecipeViewerTypes.CULINARY,
+            { stack: ItemStack ->
+                val food: FoodProperties = stack.getFoodProperties(null) ?: return@addItemStackRecipes null
+                val stack1: EmiStack = stack.toEmi()
+                stack1.remainder = stack.craftingRemainingItem.toEmi()
+                HTEmiFluidFuelData(stack1, HTCulinaryGeneratorBlockEntity.getEnergy(food))
+            },
+            ::HTItemGeneratorEmiRecipe,
+        )
+        // Elite
+        addDataMapRecipes(
             registry,
             RagiumRecipeViewerTypes.COMBUSTION,
             EmiPort.getFluidRegistry(),
@@ -332,6 +340,28 @@ class RagiumEmiPlugin : EmiPlugin {
         return category
     }
 
+    private fun <RECIPE : Any, EMI_RECIPE : EmiRecipe> addItemStackRecipes(
+        registry: EmiRegistry,
+        viewerType: HTRecipeViewerType<RECIPE>,
+        recipeFactory: (ItemStack) -> RECIPE?,
+        factory: (HTEmiRecipeCategory, ResourceLocation, RECIPE) -> EMI_RECIPE?,
+    ): HTEmiRecipeCategory = addCategoryAndRecipes(
+        registry,
+        viewerType,
+        EmiPort
+            .getItemRegistry()
+            .holdersSequence()
+            .mapNotNull { holder: Holder<Item> ->
+                val item: Item = holder.value()
+                val stack: ItemStack = item.defaultInstance
+                val recipe: RECIPE = recipeFactory(stack) ?: return@mapNotNull null
+                val typeId: ResourceLocation = viewerType.getId()
+                val id: ResourceLocation = holder.idOrThrow.withPrefix("/${typeId.namespace}/${typeId.path}/")
+                id to recipe
+            },
+        factory,
+    )
+
     /**
      * 指定された引数からレシピを生成し，登録します。
      * @param R レジストリのクラス
@@ -341,7 +371,7 @@ class RagiumEmiPlugin : EmiPlugin {
      * @return 渡された[category]
      * @see mekanism.client.recipe_viewer.emi.MekanismEmi.addCategoryAndRecipes
      */
-    private fun <R : Any, T : Any, RECIPE : Any, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
+    private fun <R : Any, T : Any, RECIPE : Any, EMI_RECIPE : EmiRecipe> addDataMapRecipes(
         registry: EmiRegistry,
         viewerType: HTRecipeViewerType<RECIPE>,
         registry1: Registry<R>,
@@ -355,7 +385,7 @@ class RagiumEmiPlugin : EmiPlugin {
             .getHolderDataMap(dataMapType)
             .mapNotNull { (holder: Holder.Reference<R>, value: T) ->
                 val recipe: RECIPE = recipeFactory(holder, value) ?: return@mapNotNull null
-                val typeId: ResourceLocation = dataMapType.id()
+                val typeId: ResourceLocation = viewerType.getId()
                 val id: ResourceLocation = holder.idOrThrow.withPrefix("/${typeId.namespace}/${typeId.path}/")
                 id to recipe
             }.asSequence(),

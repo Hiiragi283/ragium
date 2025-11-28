@@ -50,10 +50,10 @@ object RagiumRecipeViewerTypes {
     val THERMAL: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.THERMAL_GENERATOR)
 
     @JvmField
-    val COOLANT: HTFakeRecipeViewerType<EmiStack> = generator(RagiumBlocks.COMBUSTION_GENERATOR)
+    val COMBUSTION: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.COMBUSTION_GENERATOR)
 
     @JvmField
-    val COMBUSTION: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.COMBUSTION_GENERATOR)
+    val CULINARY: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.CULINARY_GENERATOR)
 
     //    Machines    //
 

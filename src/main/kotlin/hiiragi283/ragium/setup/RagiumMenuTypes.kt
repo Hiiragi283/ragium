@@ -12,7 +12,7 @@ import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.base.HTItemGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
@@ -64,7 +64,7 @@ object RagiumMenuTypes {
     //    Generator    //
 
     @JvmField
-    val THERMAL_GENERATOR: DeferredBEMenu<HTThermalGeneratorBlockEntity> = registerBE("thermal_generator")
+    val ITEM_GENERATOR: DeferredBEMenu<HTItemGeneratorBlockEntity<*>> = registerBE("item_generator")
 
     @JvmField
     val COMBUSTION_GENERATOR: DeferredBEMenu<HTCombustionGeneratorBlockEntity> = registerBE("combustion_generator")

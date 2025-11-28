@@ -20,6 +20,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
 
     // Blocks - Generators
     THERMAL_GENERATOR("description", "thermal_generator"),
+    CULINARY_GENERATOR("description", "culinary_generator"),
     COMBUSTION_GENERATOR("description", "combustion_generator"),
     SOLAR_PANEL_UNIT("description", "solar_panel_unit"),
     SOLAR_PANEL_CONTROLLER("description", "solar_panel_controller"),
