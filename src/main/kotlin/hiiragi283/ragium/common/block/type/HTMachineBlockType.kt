@@ -32,17 +32,10 @@ class HTMachineBlockType(
     class Builder(blockEntityTypeGetter: Supplier<HTDeferredBlockEntityType<*>>, factory: HTEntityBlockTypeFactory<HTMachineBlockType>) :
         HTEntityBlockType.Builder<HTMachineBlockType, Builder>(blockEntityTypeGetter, factory) {
         /**
-         * 発電機として，ティアを追加します。
+         * 機械として，ティアを追加します。
          */
-        fun addGeneratorTier(tier: HTMachineTier, config: HTMachineConfig): Builder = addTier(tier)
-            .addEnergy(config.capacity, config.rate)
-            .addFluid(config.tankMap)
-
-        /**
-         * 処理機械として，ティアを追加します。
-         */
-        fun addProcessorTier(tier: HTMachineTier, config: HTMachineConfig): Builder = addTier(tier)
-            .addEnergy(config.capacity, config.rate)
+        fun addMachineTier(tier: HTMachineTier, config: HTMachineConfig): Builder = addTier(tier)
+            .addEnergy(config.rate, config.capacity)
             .addFluid(config.tankMap)
     }
 }

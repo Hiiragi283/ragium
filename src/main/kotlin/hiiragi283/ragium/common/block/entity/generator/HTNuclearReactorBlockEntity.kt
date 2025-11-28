@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.generator
 
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -23,8 +22,5 @@ class HTNuclearReactorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getFuelStack(value: Int): ImmutableFluidStack? = RagiumFluidContents.GREEN_FUEL.toImmutableStack(value)
 
-    override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int = when (stack) {
-        null -> 0
-        else -> RagiumDataMaps.INSTANCE.getNuclearFuel(access, stack.holder())
-    }
+    override fun getRequiredAmount(access: RegistryAccess, stack: ImmutableFluidStack?): Int = 0
 }

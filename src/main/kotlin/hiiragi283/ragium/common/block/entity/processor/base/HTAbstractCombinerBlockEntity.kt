@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
@@ -26,7 +26,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTAbstractCombinerBlockEntity : HTEnergizedProcessorBlockEntity.Cached<HTMultiRecipeInput, HTCombineRecipe> {
+abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTCombineRecipe> {
     constructor(
         recipeCache: HTRecipeCache<HTMultiRecipeInput, HTCombineRecipe>,
         blockHolder: Holder<Block>,

@@ -43,11 +43,14 @@ object RagiumRecipeViewerTypes {
     //    Generators    //
 
     @JvmStatic
-    private fun generator(block: HTDeferredBlock<*, *>): HTFakeRecipeViewerType<HTEmiFluidFuelData> =
+    private fun <RECIPE : Any> generator(block: HTDeferredBlock<*, *>): HTFakeRecipeViewerType<RECIPE> =
         HTFakeRecipeViewerType.create(block, MACHINE_BOUNDS)
 
     @JvmField
     val THERMAL: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.THERMAL_GENERATOR)
+
+    @JvmField
+    val COOLANT: HTFakeRecipeViewerType<EmiStack> = generator(RagiumBlocks.COMBUSTION_GENERATOR)
 
     @JvmField
     val COMBUSTION: HTFakeRecipeViewerType<HTEmiFluidFuelData> = generator(RagiumBlocks.COMBUSTION_GENERATOR)

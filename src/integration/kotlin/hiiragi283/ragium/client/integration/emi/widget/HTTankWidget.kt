@@ -6,14 +6,18 @@ import dev.emi.emi.api.widget.TankWidget
 import hiiragi283.ragium.client.integration.emi.RagiumEmiTextures
 import net.minecraft.client.gui.GuiGraphics
 
-class HTTankWidget(stack: EmiIngredient?, x: Int, y: Int) :
-    TankWidget(
+class HTTankWidget(
+    stack: EmiIngredient?,
+    x: Int,
+    y: Int,
+    capacity: Long,
+) : TankWidget(
         stack ?: EmiStack.EMPTY,
         x,
         y,
         18,
         18 * 3,
-        stack?.amount ?: 0,
+        capacity,
     ) {
     override fun render(
         draw: GuiGraphics,

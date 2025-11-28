@@ -125,4 +125,9 @@ fun createErrorStack(message: Component): EmiStack = createItemStack(Items.BARRI
 
 fun WidgetHolder.addArrow(x: Int, y: Int): FillingArrowWidget = addFillingArrow(x, y, 2000)
 
-fun WidgetHolder.addTank(result: EmiIngredient?, x: Int, y: Int): SlotWidget = add(HTTankWidget(result, x, y).drawBack(false))
+fun WidgetHolder.addTank(
+    result: EmiIngredient?,
+    x: Int,
+    y: Int,
+    capacity: Long = result?.amount ?: 8000,
+): SlotWidget = add(HTTankWidget(result, x, y, capacity).drawBack(false))

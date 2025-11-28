@@ -2,15 +2,14 @@ package hiiragi283.ragium.api.recipe.ingredient
 
 import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.registry.getHolderDataMap
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import net.minecraft.core.DefaultedRegistry
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -59,16 +58,14 @@ data class HTEntityTypeIngredient private constructor(private val holderSet: Hol
             // Spawn Egg
             SpawnEggItem.byId(entityType)?.let(::ItemStack)?.let(this::add)
             // Custom Stacks
-            val registry: DefaultedRegistry<Item> = BuiltInRegistries.ITEM
-            val dataMap: Map<ResourceKey<Item>, HTSubEntityTypeIngredient> = registry.getDataMap(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
-            for ((key: ResourceKey<Item>, ingredient: HTSubEntityTypeIngredient) in dataMap) {
-                registry
-                    .getHolder(key)
-                    .stream()
-                    .flatMap { item: Holder.Reference<Item> -> ingredient.getPreviewStack(item, holder) }
-                    .filter { stack: ItemStack -> !stack.isEmpty }
-                    .forEach(this::add)
-            }
+            BuiltInRegistries.ITEM
+                .getHolderDataMap(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
+                .forEach { (holderIn: Holder<Item>, ingredient: HTSubEntityTypeIngredient) ->
+                    ingredient
+                        .getPreviewStack(holderIn, holder)
+                        .filter { stack: ItemStack -> !stack.isEmpty }
+                        .forEach(this::add)
+                }
         }
     }.stream()
 

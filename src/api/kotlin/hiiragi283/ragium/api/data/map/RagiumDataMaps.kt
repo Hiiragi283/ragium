@@ -34,13 +34,13 @@ interface RagiumDataMaps {
 
         // Fluid
         @JvmField
-        val THERMAL_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.thermalFuelType
+        val COOLANT: DataMapType<Fluid, HTFluidCoolantData> = INSTANCE.coolantType
+
+        @JvmField
+        val MAGMATIC_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.magmaticFuelType
 
         @JvmField
         val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.combustionFuelType
-
-        @JvmField
-        val NUCLEAR_FUEL: DataMapType<Fluid, HTFluidFuelData> = INSTANCE.nuclearFuelType
 
         // Item
         @JvmField
@@ -56,9 +56,9 @@ interface RagiumDataMaps {
 
     val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
 
-    val thermalFuelType: DataMapType<Fluid, HTFluidFuelData>
+    val coolantType: DataMapType<Fluid, HTFluidCoolantData>
+    val magmaticFuelType: DataMapType<Fluid, HTFluidFuelData>
     val combustionFuelType: DataMapType<Fluid, HTFluidFuelData>
-    val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData>
 
     val armorEquipType: DataMapType<Item, HTEquipAction>
     val subEntityIngredientType: DataMapType<Item, HTSubEntityTypeIngredient>
@@ -89,26 +89,20 @@ interface RagiumDataMaps {
         getData(access, Registries.ENTITY_TYPE, holder, mobHeadType)?.toStack() ?: ItemStack.EMPTY
 
     /**
-     * 指定した値から火力発電機の液体燃料の消費量を取得します。
+     * 指定した値から高温の液体燃料による発電量を取得します。
      */
-    fun getThermalFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
-        getData(access, Registries.FLUID, holder, thermalFuelType)?.amount ?: 0
+    fun getCoolantAmount(access: RegistryAccess, holder: Holder<Fluid>): Int =
+        getData(access, Registries.FLUID, holder, coolantType)?.amount ?: 0
 
     /**
-     * 指定した値から燃焼発電機の液体燃料の消費量を取得します。
+     * 指定した値から高温の液体燃料による発電量を取得します。
      */
-    fun getCombustionFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
-        getData(access, Registries.FLUID, holder, combustionFuelType)?.amount ?: 0
+    fun getEnergyFromMagmatic(access: RegistryAccess, holder: Holder<Fluid>): Int =
+        getData(access, Registries.FLUID, holder, magmaticFuelType)?.energy ?: 0
 
     /**
-     * 指定した値から燃焼発電機の液体燃料の消費量を取得します。
+     * 指定した値から液体燃料による発電量を取得します。
      */
-    fun getExperienceFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
-        getData(access, Registries.FLUID, holder, combustionFuelType)?.amount ?: 0
-
-    /**
-     * 指定した値から原子炉の液体燃料の消費量を取得します。
-     */
-    fun getNuclearFuel(access: RegistryAccess, holder: Holder<Fluid>): Int =
-        getData(access, Registries.FLUID, holder, nuclearFuelType)?.amount ?: 0
+    fun getEnergyFromCombustion(access: RegistryAccess, holder: Holder<Fluid>): Int =
+        getData(access, Registries.FLUID, holder, combustionFuelType)?.energy ?: 0
 }

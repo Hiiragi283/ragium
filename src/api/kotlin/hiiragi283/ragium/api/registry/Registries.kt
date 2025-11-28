@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.neoforged.neoforge.registries.DeferredHolder
+import net.neoforged.neoforge.registries.datamaps.DataMapType
 import java.util.function.Function
 import kotlin.streams.asSequence
 
@@ -31,7 +32,12 @@ typealias RegistryKey<T> = ResourceKey<out Registry<T>>
  */
 fun <T : Any> RegistryKey<T>.createKey(id: ResourceLocation): ResourceKey<T> = ResourceKey.create(this, id)
 
+//    Registry    //
+
 fun <T : Any> Registry<T>.holdersSequence(): Sequence<Holder<T>> = holders().asSequence()
+
+fun <R : Any, T : Any> Registry<R>.getHolderDataMap(type: DataMapType<R, T>): Map<Holder.Reference<R>, T> =
+    this.getDataMap(type).mapKeys { (key: ResourceKey<R>, _) -> this.getHolderOrThrow(key) }
 
 //    Holder    //
 

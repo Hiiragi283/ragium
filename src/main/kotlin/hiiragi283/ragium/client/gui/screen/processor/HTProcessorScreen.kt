@@ -1,8 +1,10 @@
-package hiiragi283.ragium.client.gui.screen
+package hiiragi283.ragium.client.gui.screen.processor
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
-import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
+import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen
+import hiiragi283.ragium.client.gui.screen.HTBlockEntityScreenFactory
+import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -11,14 +13,14 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-open class HTProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> : HTBlockEntityContainerScreen<BE> {
+open class HTProcessorScreen<BE : HTProcessorBlockEntity<*, *>> : HTBlockEntityContainerScreen<BE> {
     companion object {
         @JvmStatic
-        fun <BE : HTEnergizedProcessorBlockEntity<*, *>> createFactory(texture: String): HTBlockEntityScreenFactory<BE> =
+        fun <BE : HTProcessorBlockEntity<*, *>> createFactory(texture: String): HTBlockEntityScreenFactory<BE> =
             createFactory(createTexture(texture))
 
         @JvmStatic
-        fun <BE : HTEnergizedProcessorBlockEntity<*, *>> createFactory(texture: ResourceLocation): HTBlockEntityScreenFactory<BE> =
+        fun <BE : HTProcessorBlockEntity<*, *>> createFactory(texture: ResourceLocation): HTBlockEntityScreenFactory<BE> =
             HTBlockEntityScreenFactory { menu: HTBlockEntityContainerMenu<BE>, inventory: Inventory, title: Component ->
                 HTProcessorScreen(texture, menu, inventory, title)
             }
