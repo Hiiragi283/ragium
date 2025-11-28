@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.common.recipe.machine
 
 import hiiragi283.ragium.api.item.component.filter
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes

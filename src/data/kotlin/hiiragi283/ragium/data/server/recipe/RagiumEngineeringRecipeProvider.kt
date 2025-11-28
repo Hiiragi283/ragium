@@ -11,8 +11,8 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.HTEternalUpgradeRecipe
-import hiiragi283.ragium.common.recipe.HTGravitationalUpgradeRecipe
+import hiiragi283.ragium.common.recipe.crafting.HTEternalUpgradeRecipe
+import hiiragi283.ragium.common.recipe.crafting.HTGravitationalUpgradeRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder

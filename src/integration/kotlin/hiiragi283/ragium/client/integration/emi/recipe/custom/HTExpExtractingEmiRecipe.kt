@@ -7,7 +7,7 @@ import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toFluidEmi
-import hiiragi283.ragium.common.recipe.HTExpExtractingRecipe
+import hiiragi283.ragium.common.recipe.machine.HTExpExtractingRecipe
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
