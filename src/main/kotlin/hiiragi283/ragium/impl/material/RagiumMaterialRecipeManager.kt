@@ -14,10 +14,11 @@ import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.recipe.HTMaterialRecipeManager
 import hiiragi283.ragium.api.recipe.castRecipe
+import hiiragi283.ragium.api.registry.getHolderDataMap
+import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -68,11 +69,11 @@ object RagiumMaterialRecipeManager : HTMaterialRecipeManager {
         fluidCreator = RagiumPlatform.INSTANCE.createFluidCreator(registries)
 
         event.ifRegistry(Registries.RECIPE_TYPE) { registry: Registry<RecipeType<*>> ->
-            val keyMap: Map<ResourceKey<RecipeType<*>>, Map<ResourceLocation, HTMaterialRecipe>> =
-                registry.getDataMap(RagiumDataMaps.MATERIAL_RECIPE)
+            val holderMap: Map<Holder.Reference<RecipeType<*>>, Map<ResourceLocation, HTMaterialRecipe>> =
+                registry.getHolderDataMap(RagiumDataMaps.MATERIAL_RECIPE)
             recipeMultiMap = buildMultiMap {
-                for ((key: ResourceKey<RecipeType<*>>, map: Map<ResourceLocation, HTMaterialRecipe>) in keyMap) {
-                    val recipeType: RecipeType<*> = registry.get(key) ?: continue
+                for ((holder: Holder.Reference<RecipeType<*>>, map: Map<ResourceLocation, HTMaterialRecipe>) in holderMap) {
+                    val recipeType: RecipeType<*> = holder.value()
                     for (data: HTMaterialRecipe in map.values) {
                         val recipes: List<RecipeHolder<*>> = data.generateRecipes(registries, itemCreator, fluidCreator)
                         putAll(recipeType, recipes)

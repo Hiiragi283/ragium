@@ -20,7 +20,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTEnergizedProcessorBlockEntity.Cached<HTMultiRecipeInput, HTShapelessInputsRecipe>(
+    HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTShapelessInputsRecipe>(
         RagiumRecipeTypes.ALLOYING,
         RagiumBlocks.ALLOY_SMELTER,
         pos,

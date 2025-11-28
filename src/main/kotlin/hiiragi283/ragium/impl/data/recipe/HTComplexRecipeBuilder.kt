@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.util.wrapOptional
+import hiiragi283.ragium.impl.data.recipe.base.HTComplexResultRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe

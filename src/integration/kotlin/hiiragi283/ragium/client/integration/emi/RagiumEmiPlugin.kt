@@ -13,15 +13,13 @@ import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
-import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.api.registry.createKey
+import hiiragi283.ragium.api.registry.getHolderDataMap
 import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.registry.toHolderLike
@@ -29,7 +27,8 @@ import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.generator.HTCombustionGeneratorEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.generator.HTThermalGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRecipe
@@ -54,11 +53,10 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.component.Unbreakable
@@ -70,8 +68,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.datamaps.DataMapType
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 
 @EmiEntrypoint
 class RagiumEmiPlugin : EmiPlugin {
@@ -208,54 +204,36 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addGenerators(registry: EmiRegistry) {
-        val thermalUsage: Int = RagiumBlocks.THERMAL_GENERATOR.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
-        val combustionUsage: Int = RagiumBlocks.COMBUSTION_GENERATOR.getAttributeOrThrow<HTEnergyBlockAttribute>().getUsage()
-
-        addCategoryAndFuelRecipes(registry, RagiumRecipeViewerTypes.THERMAL, RagiumDataMaps.THERMAL_FUEL, thermalUsage)
-        addCategoryAndFuelRecipes(registry, RagiumRecipeViewerTypes.COMBUSTION, RagiumDataMaps.COMBUSTION_FUEL, combustionUsage)
-
-        val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
-        val itemRegistry: Registry<Item> = EmiPort.getItemRegistry()
-
-        // Thermal Generator
-        val lavaFuelData: HTFluidFuelData = fluidRegistry.getData(
-            RagiumDataMaps.THERMAL_FUEL,
-            Registries.FLUID.createKey(HTFluidHolderLike.LAVA.getId()),
-        ) ?: return
-        addRecipes(
+        // Basic
+        addCategoryAndRecipes(
             registry,
-            getCategory(RagiumRecipeViewerTypes.THERMAL),
-            itemRegistry
-                .getDataMap(NeoForgeDataMaps.FURNACE_FUELS)
-                .map { (key: ResourceKey<Item>, fuel: FurnaceFuel) ->
-                    val lavaInput: EmiStack = HTFluidHolderLike.LAVA.toFluidEmi(fuel.burnTime / 10)
-                    key.location().withPrefix("/${RagiumDataMaps.THERMAL_FUEL.id().path}/") to
-                        HTEmiFluidFuelData(
-                            thermalUsage,
-                            lavaFuelData,
-                            itemRegistry.getOrThrow(key).toEmi(),
-                            lavaInput,
-                        )
-                }.asSequence(),
-            ::HTFuelGeneratorEmiRecipe,
+            RagiumRecipeViewerTypes.THERMAL,
+            EmiPort
+                .getItemRegistry()
+                .holdersSequence()
+                .mapNotNull { holder: Holder<Item> ->
+                    val item: Item = holder.value()
+                    val stack: ItemStack = item.defaultInstance
+                    val burnTime: Int = stack.getBurnTime(null)
+                    if (burnTime <= 0) return@mapNotNull null
+                    val stack1: EmiStack = item.toEmi()
+                    stack1.remainder = stack.craftingRemainingItem.toEmi()
+                    val id: ResourceLocation = stack1.id.withPrefix("/${RagiumAPI.MOD_ID}/thermal_generator/")
+                    id to HTEmiFluidFuelData(stack1, burnTime)
+                },
+            ::HTThermalGeneratorEmiRecipe,
         )
-        // Combustion Generator
-        val crudeOilFuelData: HTFluidFuelData = fluidRegistry.getData(
-            RagiumDataMaps.THERMAL_FUEL,
-            Registries.FLUID.createKey(RagiumFluidContents.CRUDE_OIL.getId()),
-        ) ?: return
-        registry.addRecipeSafe(RagiumDataMaps.THERMAL_FUEL.id().withPrefix("/")) { id: ResourceLocation ->
-            HTFuelGeneratorEmiRecipe(
-                getCategory(RagiumRecipeViewerTypes.COMBUSTION),
-                id,
-                HTEmiFluidFuelData(
-                    combustionUsage,
-                    crudeOilFuelData,
-                    ItemTags.COALS.toEmi(),
-                    RagiumFluidContents.CRUDE_OIL.toFluidEmi(crudeOilFuelData.amount),
-                ),
-            )
-        }
+        // Advanced
+        addCategoryAndRecipes(
+            registry,
+            RagiumRecipeViewerTypes.COMBUSTION,
+            EmiPort.getFluidRegistry(),
+            RagiumDataMaps.COMBUSTION_FUEL,
+            { holder: Holder<Fluid>, data: HTFluidFuelData ->
+                HTEmiFluidFuelData(EmiStack.of(holder.value(), 100), data.energy)
+            },
+            ::HTCombustionGeneratorEmiRecipe,
+        )
     }
 
     private fun addProcessors(registry: EmiRegistry) {
@@ -356,6 +334,36 @@ class RagiumEmiPlugin : EmiPlugin {
 
     /**
      * 指定された引数からレシピを生成し，登録します。
+     * @param R レジストリのクラス
+     * @param T [DataMapType]のクラス
+     * @param RECIPE [recipeFactory]で渡す一覧のクラス
+     * @param EMI_RECIPE [factory]で返すレシピのクラス
+     * @return 渡された[category]
+     * @see mekanism.client.recipe_viewer.emi.MekanismEmi.addCategoryAndRecipes
+     */
+    private fun <R : Any, T : Any, RECIPE : Any, EMI_RECIPE : EmiRecipe> addCategoryAndRecipes(
+        registry: EmiRegistry,
+        viewerType: HTRecipeViewerType<RECIPE>,
+        registry1: Registry<R>,
+        dataMapType: DataMapType<R, T>,
+        recipeFactory: (Holder<R>, T) -> RECIPE?,
+        factory: (HTEmiRecipeCategory, ResourceLocation, RECIPE) -> EMI_RECIPE?,
+    ): HTEmiRecipeCategory = addCategoryAndRecipes(
+        registry,
+        viewerType,
+        registry1
+            .getHolderDataMap(dataMapType)
+            .mapNotNull { (holder: Holder.Reference<R>, value: T) ->
+                val recipe: RECIPE = recipeFactory(holder, value) ?: return@mapNotNull null
+                val typeId: ResourceLocation = dataMapType.id()
+                val id: ResourceLocation = holder.idOrThrow.withPrefix("/${typeId.namespace}/${typeId.path}/")
+                id to recipe
+            }.asSequence(),
+        factory,
+    )
+
+    /**
+     * 指定された引数からレシピを生成し，登録します。
      * @param RECIPE [recipes]で渡す一覧のクラス
      * @param EMI_RECIPE [factory]で返すレシピのクラス
      * @return 渡された[category]
@@ -394,31 +402,6 @@ class RagiumEmiPlugin : EmiPlugin {
         registry.addCategory(category)
         viewerType.workStations.map(ItemLike::toEmi).forEach(registry::addWorkstation.partially1(category))
         return category
-    }
-
-    private fun addCategoryAndFuelRecipes(
-        registry: EmiRegistry,
-        viewerType: HTRecipeViewerType<HTEmiFluidFuelData>,
-        dataMapType: DataMapType<Fluid, HTFluidFuelData>,
-        energyRate: Int,
-    ): HTEmiRecipeCategory {
-        val fluidRegistry: Registry<Fluid> = EmiPort.getFluidRegistry()
-        return addCategoryAndRecipes(
-            registry,
-            viewerType,
-            fluidRegistry
-                .getDataMap(dataMapType)
-                .map { (key: ResourceKey<Fluid>, fuelData: HTFluidFuelData) ->
-                    key.location().withPrefix("/${dataMapType.id().path}/") to
-                        HTEmiFluidFuelData(
-                            energyRate,
-                            fuelData,
-                            EmiStack.EMPTY,
-                            fluidRegistry.getOrThrow(key).let(EmiStack::of).setAmount(fuelData.amount.toLong()),
-                        )
-                }.asSequence(),
-            ::HTFuelGeneratorEmiRecipe,
-        )
     }
 
     private fun EmiRegistry.addInteraction(

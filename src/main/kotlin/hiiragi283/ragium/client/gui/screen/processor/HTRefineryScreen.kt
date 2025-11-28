@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.gui.screen
+package hiiragi283.ragium.client.gui.screen.processor
 
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper

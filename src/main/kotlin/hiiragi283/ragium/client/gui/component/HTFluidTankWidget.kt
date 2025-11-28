@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.gui.component.HTBoundsRenderer
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getStillTexture
 import hiiragi283.ragium.api.stack.getTintColor
@@ -19,7 +19,7 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 class HTFluidTankWidget(
     private val levelGetter: (HTFluidView) -> Float,
-    private val background: (GuiGraphics, HTBounds) -> Unit,
+    private val background: HTBoundsRenderer,
     private val view: HTFluidView,
     x: Int,
     y: Int,
@@ -31,7 +31,7 @@ class HTFluidTankWidget(
         @JvmStatic
         fun createSlot(view: HTFluidView, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
             { 1f },
-            { _, _ -> },
+            HTBoundsRenderer.fromSprite(RagiumAPI.id("textures", "gui", "fluid_slot.png")),
             view,
             x,
             y,
@@ -42,19 +42,7 @@ class HTFluidTankWidget(
         @JvmStatic
         fun createTank(view: HTFluidView, x: Int, y: Int): HTFluidTankWidget = HTFluidTankWidget(
             HTFluidView::getStoredLevelAsFloat,
-            { guiGraphics: GuiGraphics, bounds: HTBounds ->
-                guiGraphics.blit(
-                    RagiumAPI.id("textures", "gui", "tank.png"),
-                    bounds.x - 1,
-                    bounds.y - 1,
-                    0f,
-                    0f,
-                    bounds.width + 2,
-                    bounds.height + 2,
-                    bounds.width + 2,
-                    bounds.height + 2,
-                )
-            },
+            HTBoundsRenderer.fromSprite(RagiumAPI.id("textures", "gui", "tank.png")),
             view,
             x,
             y,
@@ -76,7 +64,7 @@ class HTFluidTankWidget(
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {
-        background(guiGraphics, getBounds())
+        background.render(guiGraphics, getBounds())
     }
 
     //    HTFluidWidget    //

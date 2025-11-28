@@ -113,9 +113,9 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         event.register(RagiumDataMaps.MOB_HEAD)
 
-        event.register(RagiumDataMaps.THERMAL_FUEL)
+        event.register(RagiumDataMaps.COOLANT)
+        event.register(RagiumDataMaps.MAGMATIC_FUEL)
         event.register(RagiumDataMaps.COMBUSTION_FUEL)
-        event.register(RagiumDataMaps.NUCLEAR_FUEL)
 
         event.register(RagiumDataMaps.ARMOR_EQUIP)
         event.register(RagiumDataMaps.SUB_ENTITY_INGREDIENT)

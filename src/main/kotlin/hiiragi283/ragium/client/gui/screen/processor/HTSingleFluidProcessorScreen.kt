@@ -1,14 +1,13 @@
-package hiiragi283.ragium.client.gui.screen
+package hiiragi283.ragium.client.gui.screen.processor
 
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
-import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCombinerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -17,27 +16,19 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> : HTProcessorScreen<BE> {
-    private val factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget
-
+abstract class HTSingleFluidProcessorScreen<BE : HTProcessorBlockEntity<*, *>> : HTProcessorScreen<BE> {
     constructor(
-        factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget,
         texture: ResourceLocation,
         menu: HTBlockEntityContainerMenu<BE>,
         inventory: Inventory,
         title: Component,
-    ) : super(texture, menu, inventory, title) {
-        this.factory = factory
-    }
+    ) : super(texture, menu, inventory, title)
 
     constructor(
-        factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget,
         menu: HTBlockEntityContainerMenu<BE>,
         inventory: Inventory,
         title: Component,
-    ) : super(menu, inventory, title) {
-        this.factory = factory
-    }
+    ) : super(menu, inventory, title)
 
     companion object {
         @JvmStatic
@@ -45,7 +36,7 @@ class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> :
             menu: HTBlockEntityContainerMenu<BE>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidProcessorScreen<BE> = HTSingleFluidProcessorScreen(
+        ): HTSingleFluidProcessorScreen<BE> = Impl(
             { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
             menu,
             inventory,
@@ -57,7 +48,7 @@ class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> :
             menu: HTBlockEntityContainerMenu<BE>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidProcessorScreen<BE> = HTSingleFluidProcessorScreen(
+        ): HTSingleFluidProcessorScreen<BE> = Impl(
             { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
             menu,
             inventory,
@@ -69,7 +60,7 @@ class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> :
             menu: HTBlockEntityContainerMenu<BE>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidProcessorScreen<BE> = HTSingleFluidProcessorScreen(
+        ): HTSingleFluidProcessorScreen<BE> = Impl(
             { createFluidSlot(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(2)) },
             menu,
             inventory,
@@ -81,32 +72,32 @@ class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> :
             menu: HTBlockEntityContainerMenu<HTMelterBlockEntity>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidProcessorScreen<HTMelterBlockEntity> = HTSingleFluidProcessorScreen(
+        ): HTSingleFluidProcessorScreen<HTMelterBlockEntity> = Impl(
             { createFluidTank(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0)) },
             menu,
             inventory,
             title,
         )
-
-        @JvmStatic
-        fun <BE : HTSingleItemInputBlockEntity.CachedWithTank<*>> singleItem(
-            menu: HTBlockEntityContainerMenu<BE>,
-            inventory: Inventory,
-            title: Component,
-        ): HTSingleFluidProcessorScreen<BE> = HTSingleFluidProcessorScreen(
-            { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
-            menu,
-            inventory,
-            title,
-        )
     }
 
-    private lateinit var fluidWidget: HTFluidWidget
+    lateinit var fluidWidget: HTFluidTankWidget
+        private set
 
     override fun init() {
         super.init()
-        fluidWidget = this.factory()
+        fluidWidget = createFluidWidget()
     }
 
-    override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
+    protected abstract fun createFluidWidget(): HTFluidTankWidget
+
+    final override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
+
+    private class Impl<BE : HTProcessorBlockEntity<*, *>>(
+        private val factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget,
+        menu: HTBlockEntityContainerMenu<BE>,
+        inventory: Inventory,
+        title: Component,
+    ) : HTSingleFluidProcessorScreen<BE>(menu, inventory, title) {
+        override fun createFluidWidget(): HTFluidTankWidget = factory()
+    }
 }

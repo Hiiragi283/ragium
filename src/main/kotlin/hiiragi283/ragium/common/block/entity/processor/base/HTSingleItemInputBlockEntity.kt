@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTEnergizedProcessorBlockEntity<SingleRecipeInput, RECIPE>(blockHolder, pos, state) {
+    HTProcessorBlockEntity<SingleRecipeInput, RECIPE>(blockHolder, pos, state) {
     lateinit var inputSlot: HTItemStackSlot
         protected set
 

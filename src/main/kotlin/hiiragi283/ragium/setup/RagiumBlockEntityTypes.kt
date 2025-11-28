@@ -2,12 +2,9 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
@@ -19,9 +16,11 @@ import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEn
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
+import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarPanelControllerBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAdvancedMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTBlockBreakerBlockEntity
@@ -49,7 +48,6 @@ import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -85,32 +83,13 @@ object RagiumBlockEntityTypes {
 
     // Basic
     @JvmField
-    val THERMAL_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
-        "thermal_generator",
-        HTFuelGeneratorBlockEntity.createSimple(
-            { stack: ImmutableItemStack -> stack.unwrap().getBurnTime(null) / 10 },
-            HTFluidHolderLike.LAVA,
-            RagiumDataMaps.INSTANCE::getThermalFuel,
-            RagiumBlocks.THERMAL_GENERATOR,
-        ),
-    )
+    val THERMAL_GENERATOR: HTDeferredBlockEntityType<HTThermalGeneratorBlockEntity> =
+        registerTick("thermal_generator", ::HTThermalGeneratorBlockEntity)
 
     // Advanced
     @JvmField
-    val COMBUSTION_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
-        "combustion_generator",
-        HTFuelGeneratorBlockEntity.createSimple(
-            { stack: ImmutableItemStack ->
-                when {
-                    stack.isOf(ItemTags.COALS) -> 100
-                    else -> 0
-                }
-            },
-            RagiumFluidContents.CRUDE_OIL,
-            RagiumDataMaps.INSTANCE::getCombustionFuel,
-            RagiumBlocks.COMBUSTION_GENERATOR,
-        ),
-    )
+    val COMBUSTION_GENERATOR: HTDeferredBlockEntityType<HTCombustionGeneratorBlockEntity> =
+        registerTick("combustion_generator", ::HTCombustionGeneratorBlockEntity)
 
     // Elite
     @JvmField

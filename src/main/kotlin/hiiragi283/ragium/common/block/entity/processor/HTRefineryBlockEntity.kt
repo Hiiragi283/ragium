@@ -26,7 +26,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTEnergizedProcessorBlockEntity.Cached<HTMultiRecipeInput, HTComplexRecipe>(
+    HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTComplexRecipe>(
         RagiumRecipeTypes.REFINING,
         RagiumBlocks.REFINERY,
         pos,

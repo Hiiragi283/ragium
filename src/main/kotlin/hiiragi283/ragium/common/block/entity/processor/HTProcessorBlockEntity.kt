@@ -1,11 +1,23 @@
-package hiiragi283.ragium.common.block.entity
+package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.math.fraction
+import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTRecipeFinder
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
+import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.common.inventory.slot.HTIntSyncSlot
+import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
+import hiiragi283.ragium.common.storage.energy.battery.HTMachineEnergyBattery
+import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import org.apache.commons.lang3.math.Fraction
@@ -17,6 +29,13 @@ import org.apache.commons.lang3.math.Fraction
  */
 abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(blockHolder, pos, state) {
+    lateinit var battery: HTMachineEnergyBattery.Processor
+        protected set
+
+    final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
+        battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
+    }
+
     //    Ticking    //
 
     protected var requiredEnergy: Int = 0
@@ -49,7 +68,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         }
         // エネルギーを消費する
         if (usedEnergy < requiredEnergy) {
-            usedEnergy += gatherEnergy(level, pos)
+            usedEnergy += battery.consume()
         }
         return when {
             usedEnergy < requiredEnergy -> false
@@ -86,13 +105,13 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
     /**
      * 指定された[recipe]から，レシピに必要なエネルギー量を取得します。
      */
-    protected abstract fun getRequiredEnergy(recipe: RECIPE): Int
+    protected fun getRequiredEnergy(recipe: RECIPE): Int {
+        battery.currentEnergyPerTick = modifyValue(HTMachineUpgrade.Key.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
+        val time: Int = modifyValue(HTMachineUpgrade.Key.SPEED) { getRecipeTime(recipe) / it }
+        return battery.currentEnergyPerTick * time
+    }
 
-    /**
-     * 指定された引数から，処理に必要なエネルギーを供給します。
-     * @return 供給されるエネルギー
-     */
-    protected abstract fun gatherEnergy(level: ServerLevel, pos: BlockPos): Int
+    protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
 
     /**
      * 指定された引数から，レシピ処理を完了できるかどうか判定します。
@@ -110,4 +129,25 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         input: INPUT,
         recipe: RECIPE,
     )
+
+    //    Cached    //
+
+    /**
+     * レシピのキャッシュを保持する[HTProcessorBlockEntity]の拡張クラス
+     */
+    abstract class Cached<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
+        private val recipeCache: HTRecipeCache<INPUT, RECIPE>,
+        blockHolder: Holder<Block>,
+        pos: BlockPos,
+        state: BlockState,
+    ) : HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
+        constructor(
+            finder: HTRecipeFinder<INPUT, RECIPE>,
+            blockHolder: Holder<Block>,
+            pos: BlockPos,
+            state: BlockState,
+        ) : this(HTFinderRecipeCache(finder), blockHolder, pos, state)
+
+        final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
+    }
 }

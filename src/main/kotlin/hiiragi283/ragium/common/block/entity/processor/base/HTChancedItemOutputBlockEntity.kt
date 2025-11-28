@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -26,7 +26,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     blockHolder: Holder<Block>,
     pos: BlockPos,
     state: BlockState,
-) : HTEnergizedProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
+) : HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
     companion object {
         @JvmStatic
         fun <INPUT : RecipeInput, RECIPE : HTChancedItemRecipe<INPUT>> exportOutputs(

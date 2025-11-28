@@ -11,10 +11,11 @@ import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEn
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
-import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCombinerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
@@ -63,7 +64,10 @@ object RagiumMenuTypes {
     //    Generator    //
 
     @JvmField
-    val FUEL_GENERATOR: DeferredBEMenu<HTFuelGeneratorBlockEntity> = registerBE("fuel_generator")
+    val THERMAL_GENERATOR: DeferredBEMenu<HTThermalGeneratorBlockEntity> = registerBE("thermal_generator")
+
+    @JvmField
+    val COMBUSTION_GENERATOR: DeferredBEMenu<HTCombustionGeneratorBlockEntity> = registerBE("combustion_generator")
 
     //    Machine    //
 
@@ -94,7 +98,7 @@ object RagiumMenuTypes {
     val MIXER: DeferredBEMenu<HTMixerBlockEntity> = registerBE("mixer")
 
     @JvmField
-    val PROCESSOR: DeferredBEMenu<HTEnergizedProcessorBlockEntity<*, *>> = registerBE("processor")
+    val PROCESSOR: DeferredBEMenu<HTProcessorBlockEntity<*, *>> = registerBE("processor")
 
     @JvmField
     val REFINERY: DeferredBEMenu<HTRefineryBlockEntity> = registerBE("refinery")

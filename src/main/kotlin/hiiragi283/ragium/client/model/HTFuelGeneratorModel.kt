@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
-import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import net.minecraft.client.model.geom.EntityModelSet
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.builders.CubeListBuilder
@@ -94,7 +94,7 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
     }
 
     fun render(
-        blockEntity: HTFuelGeneratorBlockEntity,
+        blockEntity: HTGeneratorBlockEntity,
         partialTick: Float,
         poseStack: PoseStack,
         buffer: VertexConsumer,

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.impl.data.recipe.base.HTChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe

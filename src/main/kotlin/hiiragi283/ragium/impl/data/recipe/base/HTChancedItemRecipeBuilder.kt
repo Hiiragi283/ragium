@@ -1,4 +1,4 @@
-package hiiragi283.ragium.impl.data.recipe
+package hiiragi283.ragium.impl.data.recipe.base
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance

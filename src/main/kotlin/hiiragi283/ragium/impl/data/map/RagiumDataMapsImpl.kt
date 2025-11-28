@@ -3,6 +3,7 @@ package hiiragi283.ragium.impl.data.map
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.HTEquipAction
+import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMaterialRecipe
 import hiiragi283.ragium.api.data.map.HTMobHead
@@ -41,9 +42,10 @@ class RagiumDataMapsImpl : RagiumDataMaps {
 
     override val mobHeadType: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
 
-    override val thermalFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("thermal")
+    override val coolantType: DataMapType<Fluid, HTFluidCoolantData> =
+        create("coolant", Registries.FLUID, HTFluidCoolantData.CODEC)
+    override val magmaticFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("magmatic")
     override val combustionFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
-    override val nuclearFuelType: DataMapType<Fluid, HTFluidFuelData> = createFuel("nuclear")
 
     override val armorEquipType: DataMapType<Item, HTEquipAction> = create("armor_equip", Registries.ITEM, HTEquipAction.CODEC)
     override val subEntityIngredientType: DataMapType<Item, HTSubEntityTypeIngredient> =

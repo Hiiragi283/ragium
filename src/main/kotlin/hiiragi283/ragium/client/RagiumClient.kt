@@ -16,13 +16,15 @@ import hiiragi283.ragium.client.gui.screen.HTBlockEntityScreenFactory
 import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
-import hiiragi283.ragium.client.gui.screen.HTFuelGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.HTGenericScreen
-import hiiragi283.ragium.client.gui.screen.HTMixerScreen
-import hiiragi283.ragium.client.gui.screen.HTProcessorScreen
-import hiiragi283.ragium.client.gui.screen.HTRefineryScreen
-import hiiragi283.ragium.client.gui.screen.HTSingleFluidProcessorScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
+import hiiragi283.ragium.client.gui.screen.generator.HTCombustionGeneratorScreen
+import hiiragi283.ragium.client.gui.screen.generator.HTGeneratorScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTCrusherScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTMixerScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTProcessorScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTRefineryScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTSingleFluidProcessorScreen
 import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
@@ -259,20 +261,21 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
         event.register(RagiumMenuTypes.COMBINER, HTSingleFluidProcessorScreen.Companion::combine)
+        event.register(RagiumMenuTypes.COMBUSTION_GENERATOR, ::HTCombustionGeneratorScreen)
         event.register(RagiumMenuTypes.DRUM, ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FLUID_TO_CHANCED, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
-        event.register(RagiumMenuTypes.FUEL_GENERATOR, ::HTFuelGeneratorScreen)
         event.register(RagiumMenuTypes.ITEM_COLLECTOR, ::HTBlockEntityContainerScreen)
         event.register(RagiumMenuTypes.ITEM_WITH_CATALYST, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.MELTER, HTSingleFluidProcessorScreen.Companion::melter)
         event.register(RagiumMenuTypes.MIXER, ::HTMixerScreen)
         event.register(RagiumMenuTypes.PROCESSOR, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.REFINERY, ::HTRefineryScreen)
-        event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, HTSingleFluidProcessorScreen.Companion::singleItem)
+        event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, ::HTCrusherScreen)
         event.register(RagiumMenuTypes.SMELTER, HTProcessorScreen.createFactory("smelter"))
         event.register(RagiumMenuTypes.TELEPAD, ::HTTelepadScreen)
+        event.register(RagiumMenuTypes.THERMAL_GENERATOR, ::HTGeneratorScreen)
 
         RagiumAPI.LOGGER.info("Registered Screens!")
     }

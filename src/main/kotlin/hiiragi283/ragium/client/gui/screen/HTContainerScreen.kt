@@ -25,9 +25,12 @@ abstract class HTContainerScreen<MENU : HTContainerMenu>(
         mouseY: Int,
         partialTick: Float,
     ) {
+        updateVisibility()
         super.render(guiGraphics, mouseX, mouseY, partialTick)
         renderTooltip(guiGraphics, mouseX, mouseY)
     }
+
+    protected open fun updateVisibility() {}
 
     override fun renderBg(
         guiGraphics: GuiGraphics,

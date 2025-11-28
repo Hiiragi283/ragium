@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.impl.data.recipe.base.HTChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTPlantingRecipe
 import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 

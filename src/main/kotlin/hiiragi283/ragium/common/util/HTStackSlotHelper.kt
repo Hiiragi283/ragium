@@ -24,7 +24,6 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.redstone.Redstone
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
-import java.util.Optional
 import java.util.function.Consumer
 import java.util.function.ToIntFunction
 
@@ -106,10 +105,8 @@ object HTStackSlotHelper {
             if (action.execute) {
                 stackSetter.accept(stackIn.getCraftingRemainingItem())
             }
-            return 0
-        } else {
-            return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
         }
+        return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
     }
 
     /**
@@ -121,16 +118,6 @@ object HTStackSlotHelper {
     @JvmStatic
     fun shrinkStack(slot: HTItemSlot, ingredient: HTItemIngredient, action: HTStorageAction): Int =
         shrinkStack(slot, ingredient::getRequiredAmount, action)
-
-    /**
-     * 指定された[ingredient]から，現在の個数を削除します。
-     * @param ingredient 削除する個数を提供する材料
-     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
-     * @return [Optional.isEmpty]の場合は`0`，それ以外は実際に削除された個数
-     */
-    @JvmStatic
-    fun shrinkStack(slot: HTItemSlot, ingredient: Optional<HTItemIngredient>, action: HTStorageAction): Int =
-        ingredient.map { ingredient1 -> shrinkStack(slot, ingredient1, action) }.orElse(0)
 
     @JvmStatic
     fun insertStacks(
@@ -164,16 +151,6 @@ object HTStackSlotHelper {
     @JvmStatic
     fun shrinkStack(tank: HTFluidTank, ingredient: HTFluidIngredient, action: HTStorageAction): Int =
         shrinkStack(tank, ingredient::getRequiredAmount, action)
-
-    /**
-     * 指定された[ingredient]から，現在の数量を削除します。
-     * @param ingredient 削除する数量を提供する材料
-     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
-     * @return [Optional.isEmpty]の場合は`0`，それ以外は実際に削除された数量
-     */
-    @JvmStatic
-    fun shrinkStack(tank: HTFluidTank, ingredient: Optional<HTFluidIngredient>, action: HTStorageAction): Int =
-        ingredient.map { ingredient1 -> shrinkStack(tank, ingredient1, action) }.orElse(0)
 
     /**
      * @see net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler

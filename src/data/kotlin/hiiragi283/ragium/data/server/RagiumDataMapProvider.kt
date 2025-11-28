@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
@@ -65,9 +66,9 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
         mobHead()
 
-        thermalFuels()
+        coolants()
+        magmaticFuels()
         combustionFuels()
-        nuclearFuels()
 
         armorEquip()
         subEntityIngredient()
@@ -107,41 +108,49 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(EntityType.ENDERMAN, HTMobHead(EIOBlocks.ENDERMAN_HEAD), ModLoadedCondition(RagiumConst.EIO_BASE))
     }
 
-    private fun thermalFuels() {
-        builder(RagiumDataMaps.THERMAL_FUEL)
-            .add("steam", HTFluidFuelData(100))
-            .add(HTFluidHolderLike.LAVA, HTFluidFuelData(10))
-            .add("blaze_blood", HTFluidFuelData(5))
+    private fun coolants() {
+        builder(RagiumDataMaps.COOLANT)
+            .add(HTFluidHolderLike.WATER, HTFluidCoolantData(100))
+    }
+
+    private fun magmaticFuels() {
+        builder(RagiumDataMaps.MAGMATIC_FUEL)
+            .add("steam", HTFluidFuelData(5 * 1000))
+            .add(HTFluidHolderLike.LAVA, HTFluidFuelData(20 * 1000))
+            .add("blaze_blood", HTFluidFuelData(40 * 1000))
     }
 
     private fun combustionFuels() {
+        val lowest = HTFluidFuelData(4_000)
+        val low = HTFluidFuelData(8_000)
+        val medium = HTFluidFuelData(16_000)
+        val high = HTFluidFuelData(64_000)
+        val highest = HTFluidFuelData(128_000)
+
+        val actually = ModLoadedCondition(RagiumConst.ACTUALLY)
+
         builder(RagiumDataMaps.COMBUSTION_FUEL)
             // lowest
-            .add(RagiumFluidContents.CRUDE_OIL, HTFluidFuelData(100))
-            .add("oil", HTFluidFuelData(100))
-            .add("creosote", HTFluidFuelData(100))
+            .add(RagiumFluidContents.CRUDE_OIL, lowest)
+            .add("oil", lowest)
+            .add("creosote", lowest)
             // low
-            .add(InitFluids.CANOLA_OIL.get(), HTFluidFuelData(50), ModLoadedCondition(RagiumConst.ACTUALLY))
+            .add(InitFluids.CANOLA_OIL.get(), low, actually)
             // medium
-            .add(RagiumFluidContents.NATURAL_GAS, HTFluidFuelData(20))
-            .add("ethanol", HTFluidFuelData(20))
-            .add("bioethanol", HTFluidFuelData(20))
-            .add("lpg", HTFluidFuelData(20))
-            .add(InitFluids.REFINED_CANOLA_OIL.get(), HTFluidFuelData(20), ModLoadedCondition(RagiumConst.ACTUALLY))
+            .add(RagiumFluidContents.NATURAL_GAS, medium)
+            .add("ethanol", medium)
+            .add("bioethanol", medium)
+            .add("lpg", medium)
+            .add(InitFluids.REFINED_CANOLA_OIL.get(), medium, actually)
             // high
-            .add(RagiumFluidContents.FUEL, HTFluidFuelData(10))
-            .add("diesel", HTFluidFuelData(10))
-            .add("biodiesel", HTFluidFuelData(10))
-            .add(InitFluids.CRYSTALLIZED_OIL.get(), HTFluidFuelData(10), ModLoadedCondition(RagiumConst.ACTUALLY))
+            .add(RagiumFluidContents.FUEL, high)
+            .add("diesel", high)
+            .add("biodiesel", high)
+            .add(InitFluids.CRYSTALLIZED_OIL.get(), high, actually)
             // highest
-            .add(RagiumFluidContents.CRIMSON_FUEL, HTFluidFuelData(5))
-            .add("high_power_biodiesel", HTFluidFuelData(5))
-            .add(InitFluids.EMPOWERED_OIL.get(), HTFluidFuelData(5), ModLoadedCondition(RagiumConst.ACTUALLY))
-    }
-
-    private fun nuclearFuels() {
-        builder(RagiumDataMaps.NUCLEAR_FUEL)
-            .add(RagiumFluidContents.GREEN_FUEL, HTFluidFuelData(5))
+            .add(RagiumFluidContents.CRIMSON_FUEL, highest)
+            .add("high_power_biodiesel", highest)
+            .add(InitFluids.EMPOWERED_OIL.get(), highest, actually)
     }
 
     private fun armorEquip() {

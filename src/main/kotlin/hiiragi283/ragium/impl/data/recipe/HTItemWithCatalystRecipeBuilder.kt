@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.api.util.wrapOptional
+import hiiragi283.ragium.impl.data.recipe.base.HTComplexResultRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
