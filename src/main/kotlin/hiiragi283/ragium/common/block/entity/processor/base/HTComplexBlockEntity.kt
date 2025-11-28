@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.HTFluidRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
@@ -43,12 +44,13 @@ abstract class HTComplexBlockEntity<RECIPE : HTFluidRecipe<HTMultiRecipeInput>> 
         // input
         initInputTanks(builder, listener)
         // output
-        outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidStackTank.output(listener, ::getOutputTankCapacity))
+        outputTank = builder.addSlot(
+            HTSlotInfo.OUTPUT,
+            HTVariableFluidStackTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
+        )
     }
 
     protected open fun initInputTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}
-
-    protected abstract fun getOutputTankCapacity(): Int
 
     lateinit var outputSlot: HTItemStackSlot
         protected set

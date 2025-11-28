@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
@@ -10,7 +11,6 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
@@ -32,7 +32,7 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
     ) {
     final override fun createTank(listener: HTContentListener): HTFluidStackTank = HTVariableFluidStackTank.input(
         listener,
-        RagiumConfig.COMMON.crusherTankCapacity,
+        blockHolder.getFluidAttribute().getInputTank(),
         canInsert = { hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) },
         filter = RagiumFluidContents.LUBRICANT::isOf,
     )

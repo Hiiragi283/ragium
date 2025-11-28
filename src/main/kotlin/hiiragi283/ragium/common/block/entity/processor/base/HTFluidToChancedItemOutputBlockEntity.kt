@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.chance.HTChancedItemRecipe
@@ -7,6 +8,7 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -25,10 +27,11 @@ abstract class HTFluidToChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE
 
     final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
-        inputTank = builder.addSlot(HTSlotInfo.INPUT, createTank(listener))
+        inputTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getInputTank()),
+        )
     }
-
-    protected abstract fun createTank(listener: HTContentListener): HTFluidStackTank
 
     //    Cached    //
 

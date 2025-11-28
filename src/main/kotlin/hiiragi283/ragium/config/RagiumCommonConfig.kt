@@ -2,6 +2,7 @@ package hiiragi283.ragium.config
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.block.attribute.HTFluidBlockAttribute
 import hiiragi283.ragium.api.config.HTBoolConfigValue
 import hiiragi283.ragium.api.config.HTDoubleConfigValue
 import hiiragi283.ragium.api.config.HTIntConfigValue
@@ -10,60 +11,16 @@ import hiiragi283.ragium.api.config.definePositiveDouble
 import hiiragi283.ragium.api.config.definePositiveInt
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.tier.HTMachineTier
 import net.neoforged.neoforge.common.ModConfigSpec
 
 class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
-    // Machine
-    @JvmField
-    val energyCapacity: Map<HTMachineTier, HTIntConfigValue>
-
-    @JvmField
-    val energyRate: Map<HTMachineTier, HTIntConfigValue>
-
-    @JvmField
-    val energyUsage: Map<HTMachineTier, HTIntConfigValue>
-
     // Generator
     @JvmField
-    val generatorInputTankCapacity: HTIntConfigValue
+    val generator: Generator
 
     // Processor
     @JvmField
-    val breweryTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val crusherTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val extractorTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val melterTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val mixerFirstInputTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val mixerSecondInputTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val mixerOutputTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val planterTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val refineryInputTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val refineryOutputTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val simulatorTankCapacity: HTIntConfigValue
-
-    @JvmField
-    val washerTankCapacity: HTIntConfigValue
+    val processor: Processor
 
     // Device
     @JvmField
@@ -119,82 +76,14 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     val disableMilkCure: HTBoolConfigValue
 
     init {
-        // Generator
         builder.push("generator")
-        generatorInputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop()
-        // Machine
-        builder.push("machine")
-        energyCapacity = HTMachineTier.entries.associateWith { tier: HTMachineTier ->
-            val name: String = tier.name.lowercase()
-            builder.push(name)
-            // Energy Capacity
-            val value: HTIntConfigValue = builder.definePositiveInt("energyCapacity", tier.batteryCapacity)
-            builder.pop()
-            value
-        }
-        energyRate = HTMachineTier.entries.associateWith { tier: HTMachineTier ->
-            val name: String = tier.name.lowercase()
-            builder.push(name)
-            // Energy Rate
-            val value: HTIntConfigValue = builder.definePositiveInt("energyRate", tier.generatorRate)
-            builder.pop()
-            value
-        }
-        energyUsage = HTMachineTier.entries.associateWith { tier: HTMachineTier ->
-            val name: String = tier.name.lowercase()
-            builder.push(name)
-            // Energy Rate
-            val value: HTIntConfigValue = builder.definePositiveInt("energyUsage", tier.processorRate)
-            builder.pop()
-            value
-        }
-
-        builder.push("brewery")
-        breweryTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
+        builder.comment("Configurations for Generator Machines")
+        generator = Generator(builder)
         builder.pop()
 
-        builder.push("crusher")
-        crusherTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop()
-
-        builder.push("extractor")
-        extractorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop()
-
-        builder.push("melter")
-        melterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop()
-
-        builder.push("mixer")
-        builder.push("input")
-        mixerFirstInputTankCapacity = builder.definePositiveInt("firstTankCapacity", 8000)
-        mixerSecondInputTankCapacity = builder.definePositiveInt("secondTankCapacity", 8000)
-        builder.pop()
-        builder.push("output")
-        mixerOutputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop(2)
-
-        builder.push("planter")
-        planterTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop()
-
-        builder.push("refinery")
-        builder.push("input")
-        refineryInputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop()
-        builder.push("output")
-        refineryOutputTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop(2)
-
-        builder.push("simulator")
-        simulatorTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop()
-
-        builder.push("washer")
-        washerTankCapacity = builder.definePositiveInt("tankCapacity", 8000)
-        builder.pop()
-
+        builder.push("processor")
+        builder.comment("Configurations for Processor Machines")
+        processor = Processor(builder)
         builder.pop()
         // Device
         builder.push("device")
@@ -286,5 +175,99 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.push("world")
         disableMilkCure = HTBoolConfigValue(builder.define("disableMilkCure", false))
         builder.pop()
+    }
+
+    class Generator(builder: ModConfigSpec.Builder) {
+        // Basic
+        @JvmField
+        val thermal: HTMachineConfig = HTMachineConfig.createSimple(builder, "thermal", HTFluidBlockAttribute.TankType.INPUT)
+
+        // Advanced
+        @JvmField
+        val combustion: HTMachineConfig = HTMachineConfig.createSimple(builder, "combustion", HTFluidBlockAttribute.TankType.INPUT)
+
+        // Elite
+        @JvmField
+        val solarPanelController: HTMachineConfig = HTMachineConfig.createSimple(builder, "solar_panel_controller")
+
+        // Ultimate
+        @JvmField
+        val enchantment: HTMachineConfig = HTMachineConfig.createSimple(builder, "enchantment", HTFluidBlockAttribute.TankType.INPUT)
+
+        @JvmField
+        val nuclearReactor: HTMachineConfig = HTMachineConfig.createSimple(builder, "nuclear_reactor", HTFluidBlockAttribute.TankType.INPUT)
+    }
+
+    class Processor(builder: ModConfigSpec.Builder) {
+        // Basic
+        @JvmField
+        val alloySmelter: HTMachineConfig = HTMachineConfig.createSimple(builder, "alloy_smelter")
+
+        @JvmField
+        val blockBreaker: HTMachineConfig = HTMachineConfig.createSimple(builder, "block_breaker")
+
+        @JvmField
+        val cuttingMachine: HTMachineConfig = HTMachineConfig.createSimple(builder, "cutting_machine")
+
+        @JvmField
+        val compressor: HTMachineConfig = HTMachineConfig.createSimple(builder, "compressor", HTFluidBlockAttribute.TankType.OUTPUT)
+
+        @JvmField
+        val extractor: HTMachineConfig = HTMachineConfig.createSimple(builder, "extractor", HTFluidBlockAttribute.TankType.OUTPUT)
+
+        // Advanced
+        @JvmField
+        val crusher: HTMachineConfig = HTMachineConfig.createSimple(builder, "crusher", HTFluidBlockAttribute.TankType.INPUT)
+
+        @JvmField
+        val melter: HTMachineConfig = HTMachineConfig.createSimple(builder, "melter", HTFluidBlockAttribute.TankType.OUTPUT)
+
+        @JvmField
+        val mixer: HTMachineConfig = HTMachineConfig.createSimple(
+            builder,
+            "mixer",
+            HTFluidBlockAttribute.TankType.INPUT,
+            HTFluidBlockAttribute.TankType.OUTPUT,
+        )
+
+        @JvmField
+        val refinery: HTMachineConfig = HTMachineConfig.createSimple(
+            builder,
+            "refinery",
+            HTFluidBlockAttribute.TankType.INPUT,
+            HTFluidBlockAttribute.TankType.OUTPUT,
+        )
+
+        // Elite
+        @JvmField
+        val advancedMixer: HTMachineConfig = HTMachineConfig.createSimple(
+            builder,
+            "advanced_mixer",
+            HTFluidBlockAttribute.TankType.FIRST_INPUT,
+            HTFluidBlockAttribute.TankType.SECOND_INPUT,
+            HTFluidBlockAttribute.TankType.OUTPUT,
+        )
+
+        @JvmField
+        val brewery: HTMachineConfig = HTMachineConfig.createSimple(builder, "brewery", HTFluidBlockAttribute.TankType.INPUT)
+
+        @JvmField
+        val multiSmelter: HTMachineConfig = HTMachineConfig.createSimple(builder, "multi_smelter")
+
+        @JvmField
+        val planter: HTMachineConfig = HTMachineConfig.createSimple(builder, "planter", HTFluidBlockAttribute.TankType.INPUT)
+
+        @JvmField
+        val washer: HTMachineConfig = HTMachineConfig.createSimple(builder, "washer", HTFluidBlockAttribute.TankType.INPUT)
+
+        // Ultimate
+        @JvmField
+        val enchantCopier: HTMachineConfig = HTMachineConfig.createSimple(builder, "enchant_copier", HTFluidBlockAttribute.TankType.INPUT)
+
+        @JvmField
+        val enchanter: HTMachineConfig = HTMachineConfig.createSimple(builder, "enchanter", HTFluidBlockAttribute.TankType.INPUT)
+
+        @JvmField
+        val simulator: HTMachineConfig = HTMachineConfig.createSimple(builder, "simulator", HTFluidBlockAttribute.TankType.OUTPUT)
     }
 }

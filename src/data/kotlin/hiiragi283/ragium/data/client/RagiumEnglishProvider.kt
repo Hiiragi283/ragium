@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.client
 
+import hiiragi283.ragium.api.block.attribute.HTFluidBlockAttribute
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -366,6 +367,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTAccessConfig.BOTH, "Mode: Both")
         add(HTAccessConfig.DISABLED, "Mode: Disabled")
 
+        add(HTFluidBlockAttribute.TankType.INPUT, "Input Tank Capacity")
+        add(HTFluidBlockAttribute.TankType.OUTPUT, "Output Tank Capacity")
+        add(HTFluidBlockAttribute.TankType.FIRST_INPUT, "First Input Tank Capacity")
+        add(HTFluidBlockAttribute.TankType.SECOND_INPUT, "Second Input Tank Capacity")
+
         add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
@@ -446,6 +452,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.OPEN_CRATE, "A storage which drops inserted items below.")
         add(RagiumCommonTranslation.DRUM, "A storage which stores one type of fluid.")
         add(RagiumCommonTranslation.EXP_DRUM, "A storage which stores only Experience Liquid.")
+
+        add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
+        add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
 
         add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"Added %1$s FE into the energy network.")
         add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"%1$s FE stored in the energy network.")
