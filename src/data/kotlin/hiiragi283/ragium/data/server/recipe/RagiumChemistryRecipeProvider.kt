@@ -91,9 +91,9 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         // Ragium
         HTItemWithCatalystRecipeBuilder
             .extracting(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.REDSTONE),
-                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.CINNABAR, 3),
-            ).saveSuffixed(output, "_from_redstone")
+                itemCreator.fromItem(Items.MAGMA_CREAM, 3),
+                resultHelper.item(RagiumItems.MAGMA_SHARD)
+            ).save(output)
 
         HTItemWithCatalystRecipeBuilder
             .extracting(

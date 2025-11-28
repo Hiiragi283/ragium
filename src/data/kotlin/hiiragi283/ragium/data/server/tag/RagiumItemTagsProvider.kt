@@ -246,7 +246,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         factory
             .apply(RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED)
-            .addTag(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.CINNABAR)
+            .add(RagiumItems.MAGMA_SHARD)
             .addTag(ItemTags.SOUL_FIRE_BASE_BLOCKS)
         // Enchantments
         buildList {
