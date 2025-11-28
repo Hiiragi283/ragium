@@ -36,7 +36,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getInputTank(),),
+            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getInputTank()),
         )
     }
 
