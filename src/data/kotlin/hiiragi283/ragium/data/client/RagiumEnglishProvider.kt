@@ -234,6 +234,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
         add(RagiumItems.IRIDESCENT_POWDER, "Iridescent Powder")
+        add(RagiumItems.MAGMA_SHARD, "Magma Shard")
         add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")

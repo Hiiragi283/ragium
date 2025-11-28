@@ -254,7 +254,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .cross8Mirrored(output, RagiumBlocks.DEVICE_CASING) {
                 define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
                 define('B', CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON)
-                define('C', CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
+                define('C', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
                 setCategory(CraftingBookCategory.BUILDING)
             }
 

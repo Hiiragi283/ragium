@@ -133,6 +133,8 @@ object RagiumItems {
         REGISTER.addAlias("iridescentium_dust", "iridescent_powder")
         REGISTER.addAlias("iridescentium_ingot", "iridescent_powder")
 
+        REGISTER.addAlias("cinnabar_dust", "magma_shard")
+
         REGISTER.register(eventBus)
 
         eventBus.addListener(::registerItemCapabilities)
@@ -168,6 +170,9 @@ object RagiumItems {
     // Oil
     @JvmField
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
+
+    @JvmField
+    val MAGMA_SHARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("magma_shard")
 
     // Nuclear Fuel
     @JvmField
@@ -228,7 +233,6 @@ object RagiumItems {
             // Vanilla - Other
             VanillaMaterialKeys.COAL,
             // Common
-            CommonMaterialKeys.Gems.CINNABAR,
             CommonMaterialKeys.Gems.SALT,
             CommonMaterialKeys.Gems.SALTPETER,
             CommonMaterialKeys.Gems.SULFUR,
