@@ -156,13 +156,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         // Iridescentium
         mixFromData(RagiumMaterialRecipeData.IRIDESCENT_POWDER)
         // Other
-        HTShapelessRecipeBuilder
-            .create(Items.GUNPOWDER, 3)
-            .addIngredient(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
-            .addIngredient(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER)
-            .addIngredient(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.CHARCOAL)
-            .saveSuffixed(output, "_with_hammer")
-
         HTCookingRecipeBuilder
             .smelting(RagiumItems.getMaterial(CommonMaterialPrefixes.FUEL, RagiumMaterialKeys.BAMBOO_CHARCOAL))
             .addIngredient(Items.BAMBOO)
