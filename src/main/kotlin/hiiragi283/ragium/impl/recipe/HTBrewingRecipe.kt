@@ -44,5 +44,5 @@ class HTBrewingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredient>,
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.BREWING.get()
 
-    override fun getRequiredAmount(stack: ImmutableFluidStack): Int = FLUID_INGREDIENT.getRequiredAmount(stack)
+    override fun getRequiredAmount(input: HTMultiRecipeInput, stack: ImmutableFluidStack): Int = FLUID_INGREDIENT.getRequiredAmount(stack)
 }

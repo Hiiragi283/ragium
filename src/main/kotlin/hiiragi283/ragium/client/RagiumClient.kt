@@ -258,8 +258,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.POTION_BUNDLE.get(), ::HTGenericScreen)
         event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
+        event.register(RagiumMenuTypes.COMBINER, HTSingleFluidProcessorScreen.Companion::combine)
         event.register(RagiumMenuTypes.DRUM, ::HTDrumScreen)
-        event.register(RagiumMenuTypes.ENCHANTER, HTSingleFluidProcessorScreen.Companion::enchanter)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FLUID_TO_CHANCED, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
@@ -269,9 +269,9 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.MELTER, HTSingleFluidProcessorScreen.Companion::melter)
         event.register(RagiumMenuTypes.MIXER, ::HTMixerScreen)
         event.register(RagiumMenuTypes.PROCESSOR, ::HTProcessorScreen)
-        event.register(RagiumMenuTypes.SMELTER, HTProcessorScreen.createFactory("smelter"))
         event.register(RagiumMenuTypes.REFINERY, ::HTRefineryScreen)
         event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, HTSingleFluidProcessorScreen.Companion::singleItem)
+        event.register(RagiumMenuTypes.SMELTER, HTProcessorScreen.createFactory("smelter"))
         event.register(RagiumMenuTypes.TELEPAD, ::HTTelepadScreen)
 
         RagiumAPI.LOGGER.info("Registered Screens!")

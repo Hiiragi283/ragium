@@ -170,7 +170,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.BREWERY }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ELITE, RagiumConfig.COMMON.processor.brewery)
-        .addMenu { RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID }
+        .addMenu { RagiumMenuTypes.COMBINER }
         .build(RagiumCommonTranslation.BREWERY)
 
     @JvmField
@@ -198,21 +198,12 @@ object RagiumBlockTypes {
         .build(RagiumCommonTranslation.WASHER)
 
     // Ultimate
-
-    @JvmField
-    val ENCHANT_COPIER: HTMachineBlockType = HTMachineBlockType
-        .builder { RagiumBlockEntityTypes.ENCHANT_COPIER }
-        .add(HTDirectionalBlockAttribute.HORIZONTAL)
-        .addProcessorTier(HTMachineTier.ULTIMATE, RagiumConfig.COMMON.processor.enchantCopier)
-        .addMenu { RagiumMenuTypes.ENCHANTER }
-        .build(RagiumCommonTranslation.ENCHANT_COPIER)
-
     @JvmField
     val ENCHANTER: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.ENCHANTER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addProcessorTier(HTMachineTier.ULTIMATE, RagiumConfig.COMMON.processor.enchanter)
-        .addMenu { RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID }
+        .addMenu { RagiumMenuTypes.COMBINER }
         .build(RagiumCommonTranslation.ENCHANTER)
 
     @JvmField

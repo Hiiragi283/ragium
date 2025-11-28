@@ -3,15 +3,19 @@ package hiiragi283.ragium.common.tier
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.api.tier.HTTierProvider
 
-enum class HTMachineTier(private val base: HTBaseTier, val generatorRate: Int, val processorRate: Int) : HTTierProvider {
-    BASIC(HTBaseTier.BASIC, 32, 16),
-    ADVANCED(HTBaseTier.ADVANCED, 128, 32),
-    ELITE(HTBaseTier.ELITE, 512, 64),
-    ULTIMATE(HTBaseTier.ULTIMATE, 2048, 128),
-    CREATIVE(HTBaseTier.CREATIVE, 0, Int.MAX_VALUE),
+enum class HTMachineTier : HTTierProvider {
+    BASIC,
+    ADVANCED,
+    ELITE,
+    ULTIMATE,
+    CREATIVE,
     ;
 
-    val batteryCapacity: Int = processorRate * 256
-
-    override fun getBaseTier(): HTBaseTier = base
+    override fun getBaseTier(): HTBaseTier = when (this) {
+        BASIC -> HTBaseTier.BASIC
+        ADVANCED -> HTBaseTier.ADVANCED
+        ELITE -> HTBaseTier.ELITE
+        ULTIMATE -> HTBaseTier.ULTIMATE
+        CREATIVE -> HTBaseTier.CREATIVE
+    }
 }

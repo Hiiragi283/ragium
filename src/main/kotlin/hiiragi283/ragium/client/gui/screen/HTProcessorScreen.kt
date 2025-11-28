@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
@@ -14,9 +13,6 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 open class HTProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> : HTBlockEntityContainerScreen<BE> {
     companion object {
-        @JvmStatic
-        fun createTexture(texture: String): ResourceLocation = RagiumAPI.id("textures", "gui", "container", "$texture.png")
-
         @JvmStatic
         fun <BE : HTEnergizedProcessorBlockEntity<*, *>> createFactory(texture: String): HTBlockEntityScreenFactory<BE> =
             createFactory(createTexture(texture))

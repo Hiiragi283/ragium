@@ -18,6 +18,9 @@ object HTPotionHelper {
     fun content(potion: Holder<Potion>): PotionContents = PotionContents(potion)
 
     @JvmStatic
+    fun content(vararg instances: MobEffectInstance): PotionContents = content(listOf(*instances))
+
+    @JvmStatic
     fun content(instances: List<MobEffectInstance>): PotionContents = PotionContents(
         Optional.empty(),
         Optional.empty(),

@@ -209,7 +209,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         machine(RagiumBlocks.PLANTER, eliteMachine, deepslateTiles)
         machine(RagiumBlocks.WASHER, eliteFrame, deepslateTiles)
         // Ultimate
-        machine(RagiumBlocks.ENCHANT_COPIER, ultimateMachine, obsidian)
+        machine(RagiumBlocks.ENCHANTER, ultimateMachine, obsidian)
         machine(RagiumBlocks.SIMULATOR, ultimateMachine, ultimateMachine)
 
         // Device

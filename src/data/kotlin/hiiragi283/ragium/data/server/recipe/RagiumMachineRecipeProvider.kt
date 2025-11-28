@@ -21,7 +21,6 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
@@ -198,11 +197,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
         // Ultimate
-        machineBase(RagiumBlocks.ENCHANT_COPIER, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            define('C', ItemTags.ANVIL)
-            define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
-        }
         machineBase(RagiumBlocks.ENCHANTER, RagiumMaterialKeys.NIGHT_METAL) {
             define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             define('C', Items.ENCHANTING_TABLE)

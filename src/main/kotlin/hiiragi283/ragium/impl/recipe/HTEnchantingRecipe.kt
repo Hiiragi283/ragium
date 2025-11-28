@@ -47,5 +47,5 @@ class HTEnchantingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredien
         return bool1 || bool2 || bool3
     }
 
-    override fun getRequiredAmount(stack: ImmutableFluidStack): Int = getRequiredExpFluid()
+    override fun getRequiredAmount(input: HTMultiRecipeInput, stack: ImmutableFluidStack): Int = getRequiredExpFluid()
 }

@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.ragium.api.serialization.codec.VanillaMapBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.util.unwrapEither
@@ -82,7 +81,7 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
         companion object {
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
-                VanillaMapBiCodecs.FLUID_INGREDIENT,
+                VanillaBiCodecs.FLUID_INGREDIENT.fieldOf(RagiumConst.INGREDIENT),
                 IngredientBased::ingredient,
                 BiCodecs.POSITIVE_INT.fieldOf(RagiumConst.AMOUNT),
                 IngredientBased::amount,

@@ -23,6 +23,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.UUID
 
 object VanillaBiCodecs {
@@ -85,6 +86,12 @@ object VanillaBiCodecs {
 
     @JvmField
     val INGREDIENT: BiCodec<RegistryFriendlyByteBuf, Ingredient> = BiCodec.of(Ingredient.CODEC_NONEMPTY, Ingredient.CONTENTS_STREAM_CODEC)
+
+    @JvmField
+    val FLUID_INGREDIENT: BiCodec<RegistryFriendlyByteBuf, FluidIngredient> = BiCodec.of(
+        FluidIngredient.CODEC_NON_EMPTY,
+        FluidIngredient.STREAM_CODEC,
+    )
 
     // Registry
 
