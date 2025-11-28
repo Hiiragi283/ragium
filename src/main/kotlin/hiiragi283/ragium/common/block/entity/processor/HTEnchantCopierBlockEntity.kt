@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.function.andThen
 import hiiragi283.ragium.api.function.compose
 import hiiragi283.ragium.api.function.negate
@@ -17,7 +18,6 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
@@ -44,7 +44,7 @@ class HTEnchantCopierBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.INPUT,
             HTVariableFluidStackTank.input(
                 listener,
-                RagiumConfig.COMMON.extractorTankCapacity,
+                blockHolder.getFluidAttribute().getInputTank(),
                 RagiumFluidContents.EXPERIENCE::isOf,
             ),
         )

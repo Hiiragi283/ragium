@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
@@ -16,7 +17,6 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -48,7 +48,10 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.melterTankCapacity),
+            HTVariableFluidStackTank.output(
+                listener,
+                blockHolder.getFluidAttribute().getOutputTank(),
+            ),
         )
     }
 

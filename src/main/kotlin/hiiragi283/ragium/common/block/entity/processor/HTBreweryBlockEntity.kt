@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -11,7 +12,6 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
@@ -31,7 +31,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
     override fun createTank(listener: HTContentListener): HTFluidStackTank = HTVariableFluidStackTank.input(
         listener,
-        RagiumConfig.COMMON.breweryTankCapacity,
+        blockHolder.getFluidAttribute().getInputTank(),
         canInsert = RagiumFluidContents.AWKWARD_WATER::isOf,
     )
 

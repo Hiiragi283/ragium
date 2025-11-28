@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -14,7 +15,6 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
@@ -39,7 +39,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
     override fun createTank(listener: HTContentListener): HTFluidStackTank = HTVariableFluidStackTank.input(
         listener,
-        RagiumConfig.COMMON.extractorTankCapacity,
+        blockHolder.getFluidAttribute().getInputTank(),
         RagiumFluidContents.EXPERIENCE::isOf,
     )
 

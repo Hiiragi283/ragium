@@ -64,6 +64,10 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     DRUM("description", "drum"),
     EXP_DRUM("description", "experience_drum"),
 
+    // Config
+    CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),
+    CONFIG_ENERGY_RATE("config", "energy_rate"),
+
     // Command
     COMMAND_ENERGY_ADD("command", "energy_network.add"),
     COMMAND_ENERGY_GET("command", "energy_network.get"),

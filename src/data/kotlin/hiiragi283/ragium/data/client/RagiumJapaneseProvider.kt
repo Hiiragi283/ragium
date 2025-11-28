@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.client
 
+import hiiragi283.ragium.api.block.attribute.HTFluidBlockAttribute
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -367,6 +368,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTAccessConfig.BOTH, "モード：双方")
         add(HTAccessConfig.DISABLED, "モード：無効")
 
+        add(HTFluidBlockAttribute.TankType.INPUT, "搬入タンクの容量")
+        add(HTFluidBlockAttribute.TankType.OUTPUT, "搬出タンクの容量")
+        add(HTFluidBlockAttribute.TankType.FIRST_INPUT, "1番目の搬入タンクの容量")
+        add(HTFluidBlockAttribute.TankType.SECOND_INPUT, "2番目の搬入タンクの容量")
+
         add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
@@ -446,6 +452,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.OPEN_CRATE, "搬入されたアイテムを真下に落とすストレージです。")
         add(RagiumCommonTranslation.DRUM, "1種類の液体を保管するストレージです。")
         add(RagiumCommonTranslation.EXP_DRUM, "液体経験値だけを保管するストレージです。")
+
+        add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
+        add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
 
         add(RagiumCommonTranslation.COMMAND_ENERGY_ADD, $$"エネルギーネットワークに%1$s FEを追加しました。")
         add(RagiumCommonTranslation.COMMAND_ENERGY_GET, $$"エネルギーネットワークに%1$s FEだけ保持しています。")

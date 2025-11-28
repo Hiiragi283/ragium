@@ -37,6 +37,9 @@ fun Block.getAllAttributes(): Collection<HTBlockAttribute> = (this as? HTBlockWi
 // direction
 fun BlockState.getAttributeFront(): Direction? = this.getAttribute<HTDirectionalBlockAttribute>()?.getDirection(this)
 
+// fluid
+fun Holder<Block>.getFluidAttribute(): HTFluidBlockAttribute = getAttributeOrThrow<HTFluidBlockAttribute>()
+
 // tier
 inline fun <reified TIER : HTTierProvider> Block.getAttributeTier(): TIER? = getAttribute<HTTierBlockAttribute<TIER>>()?.provider
 

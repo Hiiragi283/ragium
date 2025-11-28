@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
@@ -13,7 +14,6 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -33,13 +33,15 @@ class HTAdvancedMixerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initInputTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
-        firstInputTank =
-            builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.mixerFirstInputTankCapacity))
-        secondInputTank =
-            builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.mixerSecondInputTankCapacity))
+        firstInputTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getFirstInputTank()),
+        )
+        secondInputTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getSecondInputTank()),
+        )
     }
-
-    override fun getOutputTankCapacity(): Int = RagiumConfig.COMMON.mixerOutputTankCapacity.asInt
 
     lateinit var inputSlots: List<HTItemStackSlot>
         private set

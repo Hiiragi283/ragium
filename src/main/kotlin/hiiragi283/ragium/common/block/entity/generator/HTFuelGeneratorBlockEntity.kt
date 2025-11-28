@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.block.attribute.getAttributeFront
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
@@ -19,7 +20,6 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTFluidFuelItemStackSlot
 import hiiragi283.ragium.common.util.HTEnergyHelper
-import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
@@ -51,7 +51,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
             HTSlotInfo.INPUT,
             HTVariableFluidStackTank.input(
                 listener,
-                RagiumConfig.COMMON.generatorInputTankCapacity,
+                blockHolder.getFluidAttribute().getInputTank(),
                 filter = { stack: ImmutableFluidStack ->
                     val access: RegistryAccess = this.getRegistryAccess() ?: return@input false
                     getRequiredAmount(access, stack) > 0
