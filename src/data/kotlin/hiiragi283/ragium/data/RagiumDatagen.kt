@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data
 
+import com.simibubi.create.api.registry.CreateRegistries
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.advancement.HTAdvancementProvider
@@ -14,6 +15,7 @@ import hiiragi283.ragium.data.server.bootstrap.RagiumBiomeModifierProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumConfiguredProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumPlacedProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumPotatoProjectileProvider
 import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumCustomLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumGlobalLootProvider
@@ -43,6 +45,8 @@ object RagiumDatagen {
             add(Registries.PLACED_FEATURE, RagiumPlacedProvider)
 
             add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifierProvider)
+
+            add(CreateRegistries.POTATO_PROJECTILE_TYPE, RagiumPotatoProjectileProvider)
         }
 
         RagiumMaterialManager.gatherAttributes()
