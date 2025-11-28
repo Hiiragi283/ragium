@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.recipe.HTCopyEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTExpExtractingRecipe
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -26,6 +27,10 @@ object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
         save(
             RagiumAPI.id(RagiumConst.EXTRACTING, "experience_from_items"),
             HTExpExtractingRecipe,
+        )
+        save(
+            RagiumAPI.id(RagiumConst.ENCHANTING, "copy_from_book"),
+            HTCopyEnchantingRecipe,
         )
 
         // Vanilla

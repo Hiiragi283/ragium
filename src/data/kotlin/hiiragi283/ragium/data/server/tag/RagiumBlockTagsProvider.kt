@@ -100,7 +100,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.PLANTER)
             add(RagiumBlocks.WASHER)
 
-            add(RagiumBlocks.ENCHANT_COPIER)
             add(RagiumBlocks.ENCHANTER)
             add(RagiumBlocks.SIMULATOR)
             // Devices

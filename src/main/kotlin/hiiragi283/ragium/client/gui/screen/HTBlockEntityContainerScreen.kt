@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.gui.screen
 
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
@@ -14,6 +15,17 @@ import net.minecraft.world.entity.player.Inventory
 import java.util.function.IntConsumer
 
 open class HTBlockEntityContainerScreen<BE : HTBlockEntity> : HTContainerScreen<HTBlockEntityContainerMenu<BE>> {
+    companion object {
+        @JvmStatic
+        fun createTexture(texture: String): ResourceLocation = RagiumAPI.id("textures", "gui", "container", "$texture.png")
+
+        @JvmStatic
+        fun <BE : HTBlockEntity> getMenuTexture(menu: HTBlockEntityContainerMenu<BE>): ResourceLocation = HTBlockEntity
+            .getBlockEntityType(menu.context.blockHolder)
+            .id
+            .withPath { "textures/gui/container/$it.png" }
+    }
+
     constructor(
         texture: ResourceLocation,
         menu: HTBlockEntityContainerMenu<BE>,
@@ -32,14 +44,6 @@ open class HTBlockEntityContainerScreen<BE : HTBlockEntity> : HTContainerScreen<
         inventory,
         title,
     )
-
-    companion object {
-        @JvmStatic
-        fun <BE : HTBlockEntity> getMenuTexture(menu: HTBlockEntityContainerMenu<BE>): ResourceLocation = HTBlockEntity
-            .getBlockEntityType(menu.context.blockHolder)
-            .id
-            .withPath { "textures/gui/container/$it.png" }
-    }
 
     val blockEntity: BE get() = menu.context
 

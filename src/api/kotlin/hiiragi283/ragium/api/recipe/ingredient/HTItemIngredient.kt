@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.ragium.api.serialization.codec.VanillaMapBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.util.unwrapEither
@@ -64,8 +63,8 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
                 ENTRY_CODEC.xmap(::HolderBased, HolderBased::holderSet)
 
             @JvmStatic
-            private val CODEC_WITH_COUNT: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodec.composite(
-                VanillaBiCodecs.holderSet(Registries.ITEM).fieldOf(RagiumConst.ITEMS),
+            private val NESTED_CODEC: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodec.composite(
+                ENTRY_CODEC.fieldOf(RagiumConst.ITEMS),
                 HolderBased::holderSet,
                 BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1),
                 HolderBased::count,
@@ -74,7 +73,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodecs
-                .xor(FLAT_CODEC, CODEC_WITH_COUNT)
+                .xor(FLAT_CODEC, NESTED_CODEC)
                 .xmap(::unwrapEither) { ingredient: HolderBased ->
                     when (ingredient.count) {
                         1 -> Either.left(ingredient)
@@ -93,35 +92,17 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
         override fun copyWithCount(count: Int): HTItemIngredient = HolderBased(holderSet, count)
     }
 
-    //    IngredientBased    //
-
     private class IngredientBased(private val ingredient: Ingredient, count: Int) : HTItemIngredient(count) {
         companion object {
-            @JvmStatic
-            private val FLAT_CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = VanillaBiCodecs
-                .INGREDIENT
-                .xmap(::IngredientBased, IngredientBased::ingredient)
-
-            @JvmStatic
-            private val CODEC_WITH_COUNT: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
-                VanillaMapBiCodecs.INGREDIENT,
+            @JvmField
+            val CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
+                VanillaBiCodecs.INGREDIENT.fieldOf(RagiumConst.INGREDIENT),
                 IngredientBased::ingredient,
                 BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1),
                 IngredientBased::count,
                 ::IngredientBased,
             )
-
-            @JvmField
-            val CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodecs
-                .either(FLAT_CODEC, CODEC_WITH_COUNT)
-                .xmap(::unwrapEither) { ingredient: IngredientBased ->
-                    when (ingredient.count) {
-                        1 -> Either.left(ingredient)
-                        else -> Either.right(ingredient)
-                    }
-                }
         }
-        private constructor(ingredient: Ingredient) : this(ingredient, 1)
 
         override fun testOnlyType(stack: ImmutableItemStack): Boolean = ingredient.test(stack.unwrap())
 

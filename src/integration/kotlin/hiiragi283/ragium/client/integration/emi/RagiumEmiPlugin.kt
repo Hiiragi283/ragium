@@ -26,6 +26,7 @@ import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
+import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
@@ -279,6 +280,10 @@ class RagiumEmiPlugin : EmiPlugin {
         // Ultimate
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SIMULATING, ::HTItemWithCatalystEmiRecipe)
+
+        registry.addRecipeSafe(RagiumAPI.id("/${RagiumConst.ENCHANTING}", "copy_from_book")) {
+            HTCopyEnchantingEmiRecipe(getCategory(RagiumRecipeViewerTypes.ENCHANTING), it)
+        }
     }
 
     private fun addInteractions(registry: EmiRegistry) {

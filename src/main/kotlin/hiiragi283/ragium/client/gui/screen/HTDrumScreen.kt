@@ -11,7 +11,7 @@ import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
 class HTDrumScreen(menu: HTBlockEntityContainerMenu<HTDrumBlockEntity>, inventory: Inventory, title: Component) :
-    HTBlockEntityContainerScreen<HTDrumBlockEntity>(menu, inventory, title) {
+    HTBlockEntityContainerScreen<HTDrumBlockEntity>(createTexture("drum"), menu, inventory, title) {
     private lateinit var fluidWidget: HTFluidWidget
 
     override fun init() {

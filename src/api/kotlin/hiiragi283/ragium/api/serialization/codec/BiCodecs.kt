@@ -4,8 +4,6 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
-import net.minecraft.network.codec.StreamCodec
-import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
 import org.apache.commons.lang3.math.Fraction
 import java.util.function.Function
 import java.util.function.Supplier
@@ -98,12 +96,6 @@ object BiCodecs {
     )
 
     @JvmStatic
-    fun <B : ByteBuf, T : Any> withAlternative(primal: BiCodec<in B, T>, secondary: BiCodec<in B, T>): BiCodec<B, T> = BiCodec.of(
-        NeoForgeExtraCodecs.withAlternative(primal.codec, secondary.codec),
-        AlternativeStreamCodec(primal.streamCodec, secondary.streamCodec),
-    )
-
-    @JvmStatic
     inline fun <reified V : Enum<V>> enum(values: Supplier<Array<V>>): BiCodec<ByteBuf, V> =
         NON_NEGATIVE_INT.flatXmap({ value: Int -> values.get()[value] }, Enum<V>::ordinal)
 
@@ -112,17 +104,4 @@ object BiCodecs {
         { name: String -> enumEntries<V>().first { factory.apply(it) == name } },
         factory,
     )
-
-    /**
-     * @see NeoForgeExtraCodecs.AlternativeCodec
-     */
-    @JvmRecord
-    private data class AlternativeStreamCodec<B : Any, V : Any>(val primal: StreamCodec<in B, V>, val secondary: StreamCodec<in B, V>) :
-        StreamCodec<B, V> {
-        override fun decode(buffer: B): V = runCatching { primal.decode(buffer) }.getOrElse { secondary.decode(buffer) }
-
-        override fun encode(buffer: B, value: V) {
-            runCatching { primal.encode(buffer, value) }.onFailure { secondary.encode(buffer, value) }
-        }
-    }
 }

@@ -12,11 +12,11 @@ import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTEnchantCopierBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCombinerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
@@ -68,7 +68,7 @@ object RagiumMenuTypes {
     //    Machine    //
 
     @JvmField
-    val ENCHANTER: DeferredBEMenu<HTEnchantCopierBlockEntity> = registerBE("enchanter")
+    val COMBINER: DeferredBEMenu<HTAbstractCombinerBlockEntity> = registerBE("combiner")
 
     @JvmField
     val ENERGY_NETWORK_ACCESS: DeferredBEMenu<HTEnergyNetworkAccessBlockEntity> = registerBE("energy_network_access")

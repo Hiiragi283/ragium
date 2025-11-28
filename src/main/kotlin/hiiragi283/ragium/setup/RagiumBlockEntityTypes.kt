@@ -30,7 +30,6 @@ import hiiragi283.ragium.common.block.entity.processor.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTElectricFurnaceBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTEnchantCopierBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
@@ -199,12 +198,6 @@ object RagiumBlockEntityTypes {
 
     // Ultimate
     @JvmField
-    val ENCHANT_COPIER: HTDeferredBlockEntityType<HTEnchantCopierBlockEntity> = registerTick(
-        "enchantment_copier",
-        ::HTEnchantCopierBlockEntity,
-    )
-
-    @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> = registerTick("enchanter", ::HTEnchanterBlockEntity)
 
     @JvmField
@@ -319,7 +312,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, MULTI_SMELTER.get())
         registerHandler(event, PLANTER.get())
 
-        registerHandler(event, ENCHANT_COPIER.get())
+        registerHandler(event, ENCHANTER.get())
         registerHandler(event, SIMULATOR.get())
         // Devices
         registerHandler(event, FLUID_COLLECTOR.get())

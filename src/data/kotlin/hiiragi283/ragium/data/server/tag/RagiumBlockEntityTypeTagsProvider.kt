@@ -71,7 +71,6 @@ class RagiumBlockEntityTypeTagsProvider(context: HTDataGenContext) :
             .add(RagiumBlockEntityTypes.PLANTER)
             .add(RagiumBlockEntityTypes.WASHER)
             // Ultimate
-            .add(RagiumBlockEntityTypes.ENCHANT_COPIER)
             .add(RagiumBlockEntityTypes.ENCHANTER)
             .add(RagiumBlockEntityTypes.SIMULATOR)
 

@@ -262,9 +262,6 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
         // Ultimate
         @JvmField
-        val enchantCopier: HTMachineConfig = HTMachineConfig.createSimple(builder, "enchant_copier", HTFluidBlockAttribute.TankType.INPUT)
-
-        @JvmField
         val enchanter: HTMachineConfig = HTMachineConfig.createSimple(builder, "enchanter", HTFluidBlockAttribute.TankType.INPUT)
 
         @JvmField

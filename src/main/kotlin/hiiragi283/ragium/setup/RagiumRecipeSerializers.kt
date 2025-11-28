@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
+import hiiragi283.ragium.common.recipe.HTCopyEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTEternalUpgradeRecipe
 import hiiragi283.ragium.common.recipe.HTExpExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTGravitationalUpgradeRecipe
@@ -57,6 +58,10 @@ object RagiumRecipeSerializers {
     @JvmField
     val CLEAR_COMPONENT: RecipeSerializer<HTClearComponentRecipe> =
         register("clear_component", HTClearComponentRecipe.CODEC)
+
+    @JvmField
+    val COPY_ENCHANTING: RecipeSerializer<HTCopyEnchantingRecipe> =
+        register("copy_enchanting", MapBiCodec.unit(HTCopyEnchantingRecipe))
 
     @JvmField
     val ETERNAL_UPGRADE: RecipeSerializer<HTEternalUpgradeRecipe> =
