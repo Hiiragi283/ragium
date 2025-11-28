@@ -696,12 +696,16 @@ object RagiumItems {
 
     // Processor
     @JvmField
+    val EFFICIENT_CRUSH_UPGRADE: HTSimpleDeferredItem =
+        registerUpgrade("efficient_crush", RagiumCommonTranslation.EFFICIENT_CRUSH_UPGRADE)
+
+    @JvmField
     val FORTUNE_UPGRADE: HTSimpleDeferredItem =
         REGISTER.registerItem("fortune_upgrade", ::HTFortuneUpgradeItem) { it.stacksTo(3) }
 
     @JvmField
-    val EFFICIENT_CRUSH_UPGRADE: HTSimpleDeferredItem =
-        registerUpgrade("efficient_crush", RagiumCommonTranslation.EFFICIENT_CRUSH_UPGRADE)
+    val PRIMARY_ONLY_UPGRADE: HTSimpleDeferredItem =
+        registerUpgrade("primary_only", RagiumCommonTranslation.PRIMARY_ONLY_UPGRADE)
 
     // Device
     @JvmField
@@ -847,8 +851,9 @@ object RagiumItems {
         setEnch(getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
 
         // Upgrades
-        setFilter(FORTUNE_UPGRADE, RagiumModTags.BlockEntityTypes.FORTUNE_UPGRADABLE)
         setFilter(EFFICIENT_CRUSH_UPGRADE, RagiumModTags.BlockEntityTypes.EFFICIENT_CRUSH_UPGRADABLE)
+        setFilter(FORTUNE_UPGRADE, RagiumModTags.BlockEntityTypes.CHANCED_OUTPUT_UPGRADABLE)
+        setFilter(PRIMARY_ONLY_UPGRADE, RagiumModTags.BlockEntityTypes.CHANCED_OUTPUT_UPGRADABLE)
 
         setFilter(EXP_COLLECTOR_UPGRADE, RagiumBlockEntityTypes.FLUID_COLLECTOR)
         setFilter(FISHING_UPGRADE, RagiumBlockEntityTypes.ITEM_COLLECTOR)

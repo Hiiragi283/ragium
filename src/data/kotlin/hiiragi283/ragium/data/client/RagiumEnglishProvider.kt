@@ -300,8 +300,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Upgrades
         add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
 
-        add(RagiumItems.FORTUNE_UPGRADE, "Fortune Upgrade")
         add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "Efficient Crush Upgrade")
+        add(RagiumItems.FORTUNE_UPGRADE, "Fortune Upgrade")
+        add(RagiumItems.PRIMARY_ONLY_UPGRADE, "Primary Only Upgrade")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
         add(RagiumItems.FISHING_UPGRADE, "Fishing Upgrade")

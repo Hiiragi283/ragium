@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.entity.charge
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.common.HTChargeType
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LightningBolt
@@ -36,6 +37,7 @@ class HTStrikeCharge : HTAbstractCharge {
             val bolt: LightningBolt = EntityType.LIGHTNING_BOLT.create(level) ?: continue
             bolt.moveTo(entity.position())
             bolt.damage = damage
+            bolt.cause = this.owner as? ServerPlayer
             level.addFreshEntity(bolt)
             entity.extinguishFire()
         }

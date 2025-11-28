@@ -13,7 +13,8 @@ class RagiumBlockEntityTypeTagsProvider(context: HTDataGenContext) :
         category(factory)
 
         factory
-            .apply(RagiumModTags.BlockEntityTypes.FORTUNE_UPGRADABLE)
+            .apply(RagiumModTags.BlockEntityTypes.CHANCED_OUTPUT_UPGRADABLE)
+            .add(RagiumBlockEntityTypes.CUTTING_MACHINE)
             .add(RagiumBlockEntityTypes.CRUSHER)
             .add(RagiumBlockEntityTypes.PLANTER)
             .add(RagiumBlockEntityTypes.WASHER)

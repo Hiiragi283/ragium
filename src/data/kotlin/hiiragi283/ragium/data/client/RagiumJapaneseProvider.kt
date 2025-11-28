@@ -301,8 +301,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Upgrades
         add(RagiumItems.ETERNAL_COMPONENT, "永久構造体")
 
-        add(RagiumItems.FORTUNE_UPGRADE, "幸運アップグレード")
         add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "効率的粉砕アップグレード")
+        add(RagiumItems.FORTUNE_UPGRADE, "幸運アップグレード")
+        add(RagiumItems.PRIMARY_ONLY_UPGRADE, "主産物特化アップグレード")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")
         add(RagiumItems.FISHING_UPGRADE, "釣りアップグレード")
@@ -474,6 +475,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
 
         add(RagiumCommonTranslation.EFFICIENT_CRUSH_UPGRADE, "潤滑油を消費することにより，短時間で粉砕するようになります。")
+        add(RagiumCommonTranslation.PRIMARY_ONLY_UPGRADE, "副産物を生産しなくなります。")
 
         add(RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE, "液体収集機が経験値オーブを集めるようになります。")
         add(RagiumCommonTranslation.FISHING_UPGRADE, "アイテム収集機が下の3x3の水源から魚を釣るようになります。")

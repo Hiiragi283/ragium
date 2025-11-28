@@ -55,7 +55,7 @@ object RagiumModTags {
 
         // Specific
         @JvmField
-        val FORTUNE_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "fortune")
+        val CHANCED_OUTPUT_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "chanced_output")
 
         @JvmField
         val EFFICIENT_CRUSH_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "efficient_crush")

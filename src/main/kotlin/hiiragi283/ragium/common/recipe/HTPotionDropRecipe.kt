@@ -34,11 +34,16 @@ class HTPotionDropRecipe(category: CraftingBookCategory) : HTCustomRecipe(catego
         var potion: PotionContents = PotionContents.EMPTY
         for (stack: ImmutableItemStack? in input) {
             if (stack == null) continue
-            if (stack.has(DataComponents.POTION_CONTENTS)) {
-                potion = stack.get(DataComponents.POTION_CONTENTS)!!
+            val contents: PotionContents = stack.get(DataComponents.POTION_CONTENTS) ?: continue
+            if (!HTPotionHelper.isEmpty(contents)) {
+                potion = contents
+                break
             }
         }
-        return HTPotionHelper.createPotion(Items.POTION, potion, 4)
+        return when {
+            HTPotionHelper.isEmpty(potion) -> ItemStack.EMPTY
+            else -> HTPotionHelper.createPotion(Items.POTION, potion, 4)
+        }
     }
 
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = width * height >= 5

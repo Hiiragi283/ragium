@@ -51,18 +51,21 @@ sealed interface HTMachineUpgrade {
 
     fun addToTooltip(tooltipAdder: Consumer<Component>) {
         forEachProperties { key: Key, property: Fraction ->
-            tooltipAdder.accept(key.translateColored(ChatFormatting.GRAY, getPropertyColor(property), property))
+            val color: ChatFormatting = getPropertyColor(key, property) ?: return@forEachProperties
+            tooltipAdder.accept(key.translateColored(ChatFormatting.GRAY, color, property))
         }
     }
 
     fun addToTooltip(key: Key, tooltipAdder: Consumer<Component>) {
         val property: Fraction = getProperty(key) ?: return
-        tooltipAdder.accept(key.translateColored(ChatFormatting.GRAY, getPropertyColor(property), property))
+        val color: ChatFormatting = getPropertyColor(key, property) ?: return
+        tooltipAdder.accept(key.translateColored(ChatFormatting.GRAY, color, property))
     }
 
-    private fun getPropertyColor(property: Fraction): ChatFormatting = when {
-        property >= Fraction.ONE -> ChatFormatting.GREEN
-        else -> ChatFormatting.RED
+    private fun getPropertyColor(key: Key, property: Fraction): ChatFormatting? = when {
+        property > key.defaultValue -> ChatFormatting.GREEN
+        property < key.defaultValue -> ChatFormatting.RED
+        else -> null
     }
 
     //    Tiered    //
@@ -107,17 +110,17 @@ sealed interface HTMachineUpgrade {
 
     //    Key    //
 
-    enum class Key(val creativeValue: Int) :
+    enum class Key(val defaultValue: Fraction, val creativeValue: Int) :
         StringRepresentable,
         HTTranslation {
         // Default
-        ENERGY_CAPACITY(Int.MAX_VALUE),
-        ENERGY_EFFICIENCY(0),
-        ENERGY_GENERATION(Int.MAX_VALUE),
-        SPEED(1),
+        ENERGY_CAPACITY(Fraction.ONE, Int.MAX_VALUE),
+        ENERGY_EFFICIENCY(Fraction.ONE, 0),
+        ENERGY_GENERATION(Fraction.ONE, Int.MAX_VALUE),
+        SPEED(Fraction.ONE, 1),
 
         // Processor
-        SUBPRODUCT_CHANCE(1),
+        SUBPRODUCT_CHANCE(Fraction.ZERO, 1),
         ;
 
         companion object {
