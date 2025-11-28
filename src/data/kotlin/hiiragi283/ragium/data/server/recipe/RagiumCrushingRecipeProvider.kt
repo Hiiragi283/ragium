@@ -76,6 +76,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.WARPED_WART_BLOCK),
                 resultHelper.item(RagiumBlocks.WARPED_WART, 3),
             ).saveSuffixed(output, "_from_block")
+
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                itemCreator.fromItems(listOf(Items.CHISELED_QUARTZ_BLOCK, Items.QUARTZ_BRICKS, Items.QUARTZ_PILLAR)),
+                resultHelper.item(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ, 4),
+            ).saveSuffixed(output, "_from_block")
         // Ragium
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.GLOW_INK_SAC))

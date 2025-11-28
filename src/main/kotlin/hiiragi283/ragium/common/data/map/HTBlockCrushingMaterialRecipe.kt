@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
 import hiiragi283.ragium.api.material.get
 import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import kotlin.collections.iterator
@@ -21,6 +22,12 @@ data object HTBlockCrushingMaterialRecipe : HTMaterialRecipe {
     override fun generateRecipes(helper: HTMaterialRecipe.Helper) {
         for ((key: HTMaterialKey, definition: HTMaterialDefinition) in helper.getDefinitions()) {
             val basePrefix: HTMaterialPrefix = definition.getDefaultPrefix() ?: continue
+            val resultPrefix: HTPrefixLike = when {
+                basePrefix.isOf(CommonMaterialPrefixes.GEM) -> CommonMaterialPrefixes.GEM
+                basePrefix.isOf(CommonMaterialPrefixes.FUEL) -> CommonMaterialPrefixes.FUEL
+                else -> CommonMaterialPrefixes.DUST
+            }
+
             val storageBlock: HTStorageBlockMaterialAttribute = if (basePrefix.isOf(CommonMaterialPrefixes.INGOT)) {
                 HTStorageBlockMaterialAttribute.THREE_BY_THREE
             } else {
@@ -33,7 +40,7 @@ data object HTBlockCrushingMaterialRecipe : HTMaterialRecipe {
             HTItemToObjRecipeBuilder
                 .pulverizing(
                     helper.itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, key),
-                    helper.resultHelper.item(CommonMaterialPrefixes.DUST, key, storageBlock.baseCount),
+                    helper.resultHelper.item(resultPrefix, key, storageBlock.baseCount),
                 ).saveSuffixed(helper.output, "_from_storage_block")
         }
     }
