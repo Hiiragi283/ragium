@@ -23,7 +23,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTComplexBlockEntity<HTComplexRecipe>(
+    HTComplexBlockEntity<HTMultiRecipeInput, HTComplexRecipe>(
         RagiumRecipeTypes.MIXING,
         RagiumBlocks.MIXER,
         pos,

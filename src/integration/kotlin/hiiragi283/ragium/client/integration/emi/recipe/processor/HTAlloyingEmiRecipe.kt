@@ -1,5 +1,6 @@
 package hiiragi283.ragium.client.integration.emi.recipe.processor
 
+import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
@@ -22,6 +23,8 @@ class HTAlloyingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HT
         for (i: Int in (0..2)) {
             widgets.addSlot(input(i), getPosition(i), getPosition(0.0))
         }
+        widgets.addTexture(EmiTexture.EMPTY_FLAME, getPosition(1) + 2, getPosition(1) + 2)
+
         // Output
         widgets.addOutput(0, getPosition(4.5), getPosition(1), true)
     }

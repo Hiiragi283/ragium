@@ -8,20 +8,20 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import net.minecraft.resources.ResourceLocation
 
-class HTCombineItemToObjRecipeBuilder(
+class HTShapelessInputsRecipeBuilder(
     prefix: String,
     private val factory: Factory<*>,
     private val ingredients: List<HTItemIngredient>,
     private val result: HTItemResult,
-) : HTRecipeBuilder<HTCombineItemToObjRecipeBuilder>(prefix) {
+) : HTRecipeBuilder<HTShapelessInputsRecipeBuilder>(prefix) {
     companion object {
         @JvmStatic
-        fun alloying(result: HTItemResult, vararg ingredients: HTItemIngredient): HTCombineItemToObjRecipeBuilder =
+        fun alloying(result: HTItemResult, vararg ingredients: HTItemIngredient): HTShapelessInputsRecipeBuilder =
             alloying(result, listOf(*ingredients))
 
         @JvmStatic
-        fun alloying(result: HTItemResult, ingredients: List<HTItemIngredient>): HTCombineItemToObjRecipeBuilder =
-            HTCombineItemToObjRecipeBuilder(RagiumConst.ALLOYING, ::HTAlloyingRecipe, ingredients, result)
+        fun alloying(result: HTItemResult, ingredients: List<HTItemIngredient>): HTShapelessInputsRecipeBuilder =
+            HTShapelessInputsRecipeBuilder(RagiumConst.ALLOYING, ::HTAlloyingRecipe, ingredients, result)
     }
 
     override fun getPrimalId(): ResourceLocation = result.id

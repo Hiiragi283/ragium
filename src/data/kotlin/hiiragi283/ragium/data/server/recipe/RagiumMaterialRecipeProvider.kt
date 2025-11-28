@@ -21,12 +21,12 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.CommonMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.CreateMaterialRecipeData
@@ -376,7 +376,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun alloyFromData(data: HTRecipeData, applyCondition: Boolean = false) {
-        HTCombineItemToObjRecipeBuilder
+        HTShapelessInputsRecipeBuilder
             .alloying(
                 data.getItemResults()[0].first,
                 data.getItemIngredients(itemCreator),

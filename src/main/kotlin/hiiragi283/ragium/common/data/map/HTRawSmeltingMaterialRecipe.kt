@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.tags.TagKey
@@ -57,7 +57,7 @@ class HTRawSmeltingMaterialRecipe(
         for (key: HTMaterialKey in helper.getAllMaterials()) {
             if (!helper.isPresentTag(CommonMaterialPrefixes.INGOT, key)) continue
             if (helper.isPresentTag(prefix, key)) {
-                HTCombineItemToObjRecipeBuilder
+                HTShapelessInputsRecipeBuilder
                     .alloying(
                         resultHelper.item(CommonMaterialPrefixes.INGOT, key, outputCount),
                         itemCreator.fromTagKey(prefix, key, inputCount),

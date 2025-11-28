@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.data.map
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.RegistryKey
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
@@ -11,7 +10,6 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -29,10 +27,6 @@ interface RagiumDataMaps {
          */
         @JvmField
         val INSTANCE: RagiumDataMaps = RagiumAPI.getService()
-
-        // Enchantment
-        @JvmField
-        val ENCHANT_INGREDIENT: DataMapType<Enchantment, HTItemIngredient> = INSTANCE.enchantIngredientType
 
         // Entity Type
         @JvmField
@@ -59,8 +53,6 @@ interface RagiumDataMaps {
         @JvmField
         val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTMaterialRecipe> = INSTANCE.materialRecipeType
     }
-
-    val enchantIngredientType: DataMapType<Enchantment, HTItemIngredient>
 
     val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
 
@@ -95,9 +87,6 @@ interface RagiumDataMaps {
      */
     fun getMobHead(access: RegistryAccess, holder: Holder<EntityType<*>>): ItemStack =
         getData(access, Registries.ENTITY_TYPE, holder, mobHeadType)?.toStack() ?: ItemStack.EMPTY
-
-    fun getIngredientForEnchant(access: RegistryAccess, holder: Holder<Enchantment>): HTItemIngredient? =
-        getData(access, Registries.ENCHANTMENT, holder, enchantIngredientType)
 
     /**
      * 指定した値から火力発電機の液体燃料の消費量を取得します。

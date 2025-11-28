@@ -14,16 +14,15 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.HTExpExtractingRecipe
 import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.common.variant.HTColoredVariant
-import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -125,11 +124,6 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.BLAZE_POWDER),
                 resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
             ).saveSuffixed(output, "_from_blaze")
-
-        save(
-            RagiumAPI.id(RagiumConst.EXTRACTING, "experience_from_items"),
-            HTExpExtractingRecipe,
-        )
 
         dyes()
     }
@@ -247,7 +241,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.item(Items.ENCHANTED_GOLDEN_APPLE))
             .save(output)
         // Exp Berries
-        HTCombineItemToObjRecipeBuilder
+        HTShapelessInputsRecipeBuilder
             .alloying(
                 resultHelper.item(RagiumBlocks.EXP_BERRIES),
                 itemCreator.fromTagKey(Tags.Items.FOODS_BERRY),

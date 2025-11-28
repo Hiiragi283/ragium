@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -18,11 +18,11 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTItemWithCatalystBlockEntity(
-    finder: HTRecipeFinder<HTMultiRecipeInput, HTItemWithCatalystRecipe>,
+    finder: HTRecipeFinder<HTDoubleRecipeInput, HTItemWithCatalystRecipe>,
     blockHolder: Holder<Block>,
     pos: BlockPos,
     state: BlockState,
-) : HTComplexBlockEntity<HTItemWithCatalystRecipe>(finder, blockHolder, pos, state) {
+) : HTComplexBlockEntity<HTDoubleRecipeInput, HTItemWithCatalystRecipe>(finder, blockHolder, pos, state) {
     lateinit var inputSlot: HTItemStackSlot
         private set
     lateinit var catalystSlot: HTItemStackSlot
@@ -32,7 +32,10 @@ abstract class HTItemWithCatalystBlockEntity(
         // input
         inputSlot = singleInput(builder, listener)
         // catalyst
-        catalystSlot = singleCatalyst(builder, listener)
+        catalystSlot = builder.addSlot(
+            HTSlotInfo.CATALYST,
+            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2), 1),
+        )
         // output
         outputSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
@@ -40,16 +43,14 @@ abstract class HTItemWithCatalystBlockEntity(
         )
     }
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
-        items += inputSlot.getStack()
-        items += catalystSlot.getStack()
-    }
+    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTDoubleRecipeInput =
+        HTDoubleRecipeInput(inputSlot, catalystSlot)
 
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTMultiRecipeInput,
+        input: HTDoubleRecipeInput,
         recipe: HTItemWithCatalystRecipe,
     ) {
         super.completeRecipe(level, pos, state, input, recipe)

@@ -2,7 +2,7 @@ package hiiragi283.ragium.impl.recipe
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
@@ -14,7 +14,7 @@ import java.util.Optional
 
 class HTSimulatingRecipe(catalyst: HTItemIngredient, ingredient: Optional<HTItemIngredient>, results: HTComplexResult) :
     HTBasicItemWithCatalystRecipe(catalyst, ingredient, results) {
-    override fun test(input: HTMultiRecipeInput): Boolean {
+    override fun test(input: HTDoubleRecipeInput): Boolean {
         val stackIn: ItemStack = input.getItem(0)
         val bool1: Boolean = optional
             .map { ingredient: HTItemIngredient -> ingredient.testOnlyType(stackIn) }

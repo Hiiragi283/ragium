@@ -187,7 +187,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun fluid() {
-        addFluid(RagiumFluidContents.AWKWARD_WATER, "奇妙な水")
         addFluid(RagiumFluidContents.HONEY, "蜂蜜")
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
@@ -353,6 +352,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CRUSHING, "破砕")
         add(RagiumRecipeTypes.CUTTING, "裁断")
+        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.EXTRACTING, "抽出")
         add(RagiumRecipeTypes.MELTING, "融解")
         add(RagiumRecipeTypes.MIXING, "混合")

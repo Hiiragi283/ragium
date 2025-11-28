@@ -9,15 +9,15 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodecs
-import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
+import hiiragi283.ragium.impl.recipe.base.HTBasicCombineRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithFluidToChancedItemRecipe
@@ -30,16 +30,6 @@ object RagiumRecipeBiCodecs {
         HTItemResult.CODEC.optionalFieldOf(RagiumConst.ITEM_RESULT),
         HTFluidResult.CODEC.optionalFieldOf(RagiumConst.FLUID_RESULT),
     )
-
-    @JvmField
-    val BREWING: MapBiCodec<RegistryFriendlyByteBuf, HTBrewingRecipe> = MapBiCodec
-        .composite(
-            HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT),
-            HTBrewingRecipe::ingredient,
-            VanillaBiCodecs.POTION.fieldOf("potion"),
-            HTBrewingRecipe::contents,
-            ::HTBrewingRecipe,
-        )
 
     @JvmField
     val MELTING: MapBiCodec<RegistryFriendlyByteBuf, HTMeltingRecipe> = MapBiCodec.composite(
@@ -94,6 +84,22 @@ object RagiumRecipeBiCodecs {
         HTItemResult.CODEC.fieldOf(RagiumConst.RESULT),
         HTBasicSingleOutputRecipe<*>::result,
         factory,
+    )
+
+    @JvmStatic
+    fun <RESULT : Any, R : HTBasicCombineRecipe> combine(
+        factory: HTCombineRecipeBuilder.Factory<RESULT, R>,
+        resultCodec: MapBiCodec<in RegistryFriendlyByteBuf, RESULT>,
+        resultGetter: (R) -> RESULT,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        MapBiCodecs.pair(
+            HTItemIngredient.CODEC.fieldOf("left"),
+            HTItemIngredient.CODEC.fieldOf("right"),
+        ),
+        HTBasicCombineRecipe::itemIngredients,
+        resultCodec,
+        resultGetter,
+        factory::create,
     )
 
     @JvmStatic

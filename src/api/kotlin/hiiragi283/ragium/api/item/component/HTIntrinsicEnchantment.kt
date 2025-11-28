@@ -13,13 +13,10 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.EnchantedBookItem
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.component.TooltipProvider
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.EnchantmentInstance
 import java.util.function.Consumer
 import java.util.function.Function
 
@@ -45,11 +42,6 @@ data class HTIntrinsicEnchantment(val entry: HTKeyOrTagEntry<Enchantment>, val l
         entry.getFirstHolder(provider).map { holder: Holder<Enchantment> -> action(holder, level) }
 
     fun getFullName(provider: HolderLookup.Provider?): HTTextResult<Component> = useInstance(provider, Enchantment::getFullname)
-
-    fun toInstance(provider: HolderLookup.Provider?): HTTextResult<EnchantmentInstance> = useInstance(provider, ::EnchantmentInstance)
-
-    fun toEnchBook(provider: HolderLookup.Provider?): HTTextResult<ItemStack> =
-        toInstance(provider).map(EnchantedBookItem::createForEnchantment)
 
     override fun addToTooltip(context: Item.TooltipContext, tooltipAdder: Consumer<Component>, tooltipFlag: TooltipFlag) {
         when {

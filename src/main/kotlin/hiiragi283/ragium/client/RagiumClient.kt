@@ -197,7 +197,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         // Fluid
-        event.clear(RagiumFluidContents.AWKWARD_WATER, Color(-0xc7a23a))
         event.registerFluidType(
             HTSimpleFluidExtensions(vanillaId("block", "honey_block_top")),
             RagiumFluidContents.HONEY.getType(),
@@ -260,7 +259,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
         event.register(RagiumMenuTypes.DRUM, ::HTDrumScreen)
-        event.register(RagiumMenuTypes.ENCHANT_COPIER, HTSingleFluidProcessorScreen.Companion::enchCopier)
+        event.register(RagiumMenuTypes.ENCHANTER, HTSingleFluidProcessorScreen.Companion::enchanter)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.FLUID_TO_CHANCED, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)

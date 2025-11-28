@@ -4,13 +4,14 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
-import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -22,10 +23,10 @@ object RagiumRecipeTypes {
     val ALLOYING: HTDeferredRecipeType<HTMultiRecipeInput, HTShapelessInputsRecipe> = create(RagiumConst.ALLOYING)
 
     @JvmField
-    val BREWING: HTDeferredRecipeType<SingleRecipeInput, HTSingleItemRecipe> = create(RagiumConst.BREWING)
+    val BREWING: HTDeferredRecipeType<HTMultiRecipeInput, HTCombineRecipe> = create(RagiumConst.BREWING)
 
     @JvmField
-    val COMPRESSING: HTDeferredRecipeType<HTMultiRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.COMPRESSING)
+    val COMPRESSING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
     val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedItemRecipe> = create(RagiumConst.CRUSHING)
@@ -34,7 +35,10 @@ object RagiumRecipeTypes {
     val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedItemRecipe> = create(RagiumConst.CUTTING)
 
     @JvmField
-    val EXTRACTING: HTDeferredRecipeType<HTMultiRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.EXTRACTING)
+    val ENCHANTING: HTDeferredRecipeType<HTMultiRecipeInput, HTCombineRecipe> = create(RagiumConst.ENCHANTING)
+
+    @JvmField
+    val EXTRACTING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.EXTRACTING)
 
     @JvmField
     val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTSingleFluidRecipe> = create(RagiumConst.MELTING)
@@ -49,7 +53,7 @@ object RagiumRecipeTypes {
     val REFINING: HTDeferredRecipeType<HTMultiRecipeInput, HTComplexRecipe> = create(RagiumConst.REFINING)
 
     @JvmField
-    val SIMULATING: HTDeferredRecipeType<HTMultiRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.SIMULATING)
+    val SIMULATING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.SIMULATING)
 
     @JvmField
     val WASHING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> = create(RagiumConst.WASHING)

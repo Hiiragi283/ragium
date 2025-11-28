@@ -10,9 +10,9 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
@@ -68,7 +68,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
 
     @JvmStatic
     private fun combineWithRedstone(result: HTItemResult, left: HTItemIngredient, right: HTItemIngredient) {
-        HTCombineItemToObjRecipeBuilder
+        HTShapelessInputsRecipeBuilder
             .alloying(
                 result,
                 left,

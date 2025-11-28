@@ -33,8 +33,6 @@ import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.Holder
@@ -45,10 +43,7 @@ import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.data.DataMapProvider
@@ -69,8 +64,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         furnaceFuels()
 
         mobHead()
-
-        enchantIngredient()
 
         thermalFuels()
         combustionFuels()
@@ -112,56 +105,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(EntityType.PIGLIN, HTMobHead(Items.PIGLIN_HEAD))
             // EIO Integration
             .add(EntityType.ENDERMAN, HTMobHead(EIOBlocks.ENDERMAN_HEAD), ModLoadedCondition(RagiumConst.EIO_BASE))
-    }
-
-    private fun enchantIngredient() {
-        fun ingredient(prefix: HTPrefixLike, material: HTMaterialLike): Ingredient = Ingredient.of(prefix.itemTagKey(material))
-
-        builder(RagiumDataMaps.ENCHANT_INGREDIENT)
-            // Vanilla
-            .add(
-                Enchantments.PROTECTION,
-                itemCreator.fromVanilla(ingredient(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON), 64),
-                false,
-            ).add(
-                Enchantments.FIRE_PROTECTION,
-                itemCreator.fromVanilla(ingredient(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.IRON), 64),
-                false,
-            ).add(
-                Enchantments.FEATHER_FALLING,
-                itemCreator.fromVanilla(Ingredient.of(Tags.Items.FEATHERS), 64),
-                false,
-            ).add(
-                Enchantments.BLAST_PROTECTION,
-                itemCreator.fromVanilla(Ingredient.of(Tags.Items.OBSIDIANS), 64),
-                false,
-            ).add(
-                Enchantments.RESPIRATION,
-                itemCreator.fromItem(Items.PUFFERFISH, 16),
-                false,
-            ).add(
-                Enchantments.THORNS,
-                itemCreator.fromVanilla(Ingredient.of(Tags.Items.CROPS_CACTUS), 64),
-                false,
-            ).add(
-                Enchantments.WIND_BURST,
-                itemCreator.fromItem(Items.WIND_CHARGE, 64),
-                false,
-            )
-            // Ragium
-            .add(
-                RagiumEnchantments.CAPACITY,
-                itemCreator.fromVanilla(Ingredient.of(Tags.Items.CHESTS_ENDER), 8),
-                false,
-            ).add(
-                RagiumEnchantments.NOISE_CANCELING,
-                itemCreator.fromVanilla(ingredient(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL), 16),
-                false,
-            ).add(
-                RagiumEnchantments.SONIC_PROTECTION,
-                itemCreator.fromItem(RagiumItems.ECHO_STAR),
-                false,
-            )
     }
 
     private fun thermalFuels() {

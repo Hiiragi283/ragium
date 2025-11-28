@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.HTFluidRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -18,20 +17,21 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTComplexBlockEntity<RECIPE : HTFluidRecipe<HTMultiRecipeInput>> :
-    HTEnergizedProcessorBlockEntity.Cached<HTMultiRecipeInput, RECIPE> {
+abstract class HTComplexBlockEntity<INPUT : RecipeInput, RECIPE : HTFluidRecipe<INPUT>> :
+    HTEnergizedProcessorBlockEntity.Cached<INPUT, RECIPE> {
     constructor(
-        recipeCache: HTRecipeCache<HTMultiRecipeInput, RECIPE>,
+        recipeCache: HTRecipeCache<INPUT, RECIPE>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
     ) : super(recipeCache, blockHolder, pos, state)
 
     constructor(
-        finder: HTRecipeFinder<HTMultiRecipeInput, RECIPE>,
+        finder: HTRecipeFinder<INPUT, RECIPE>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
@@ -57,7 +57,7 @@ abstract class HTComplexBlockEntity<RECIPE : HTFluidRecipe<HTMultiRecipeInput>> 
 
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    final override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: RECIPE): Boolean {
+    final override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         val access: RegistryAccess = level.registryAccess()
         val bool1: Boolean =
             outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
@@ -70,7 +70,7 @@ abstract class HTComplexBlockEntity<RECIPE : HTFluidRecipe<HTMultiRecipeInput>> 
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTMultiRecipeInput,
+        input: INPUT,
         recipe: RECIPE,
     ) {
         // 実際にアウトプットに搬出する

@@ -43,6 +43,7 @@ object RagiumMiscRegister {
             register(helper, RagiumRecipeTypes.COMPRESSING)
             register(helper, RagiumRecipeTypes.CRUSHING)
             register(helper, RagiumRecipeTypes.CUTTING)
+            register(helper, RagiumRecipeTypes.ENCHANTING)
             register(helper, RagiumRecipeTypes.EXTRACTING)
             register(helper, RagiumRecipeTypes.MELTING)
             register(helper, RagiumRecipeTypes.MIXING)

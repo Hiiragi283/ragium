@@ -95,9 +95,6 @@ object RagiumFluidContents {
     //    Vanilla    //
 
     @JvmField
-    val AWKWARD_WATER: HTBasicFluidContent = registerSimple("awkward_water", liquid())
-
-    @JvmField
     val HONEY: HTBasicFluidContent = registerSimple("honey", liquid()) { it.speedFactor(0.4f) }
 
     @JvmField

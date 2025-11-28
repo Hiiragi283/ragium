@@ -11,17 +11,34 @@ import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBl
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>>(
-    private val factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget,
-    menu: HTBlockEntityContainerMenu<BE>,
-    inventory: Inventory,
-    title: Component,
-) : HTProcessorScreen<BE>(menu, inventory, title) {
+class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>> : HTProcessorScreen<BE> {
+    private val factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget
+
+    constructor(
+        factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget,
+        texture: ResourceLocation,
+        menu: HTBlockEntityContainerMenu<BE>,
+        inventory: Inventory,
+        title: Component,
+    ) : super(texture, menu, inventory, title) {
+        this.factory = factory
+    }
+
+    constructor(
+        factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget,
+        menu: HTBlockEntityContainerMenu<BE>,
+        inventory: Inventory,
+        title: Component,
+    ) : super(menu, inventory, title) {
+        this.factory = factory
+    }
+
     companion object {
         @JvmStatic
         fun <BE : HTFluidToChancedItemOutputBlockEntity<*, *>> chancedItemOutput(
@@ -36,12 +53,13 @@ class HTSingleFluidProcessorScreen<BE : HTEnergizedProcessorBlockEntity<*, *>>(
         )
 
         @JvmStatic
-        fun enchCopier(
+        fun enchanter(
             menu: HTBlockEntityContainerMenu<HTEnchantCopierBlockEntity>,
             inventory: Inventory,
             title: Component,
         ): HTSingleFluidProcessorScreen<HTEnchantCopierBlockEntity> = HTSingleFluidProcessorScreen(
-            { createFluidTank(blockEntity.inputTank, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0)) },
+            { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
+            createTexture("enchanter"),
             menu,
             inventory,
             title,
