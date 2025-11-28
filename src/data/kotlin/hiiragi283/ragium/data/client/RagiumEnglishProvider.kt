@@ -130,8 +130,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Generators
         add(RagiumBlocks.THERMAL_GENERATOR, "Thermal Generator")
 
-        add(RagiumBlocks.COMBUSTION_GENERATOR, "Combustion Generator")
+        add(RagiumBlocks.CULINARY_GENERATOR, "Culinary Generator")
 
+        add(RagiumBlocks.COMBUSTION_GENERATOR, "Combustion Generator")
         add(RagiumBlocks.SOLAR_PANEL_UNIT, "Solar Panel Unit")
         add(RagiumBlocks.SOLAR_PANEL_CONTROLLER, "Solar Panel Controller")
 
@@ -413,7 +414,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.CRIMSON_GLASS, "A glass which gives damage as same as the Magma Block.")
         add(RagiumCommonTranslation.WARPED_GLASS, "A glass which is passible by only players.")
 
-        add(RagiumCommonTranslation.THERMAL_GENERATOR, "A machine which generates energy from furnace fuels or hot fluids.")
+        add(RagiumCommonTranslation.THERMAL_GENERATOR, "A machine which generates energy from furnace fuels.")
+        add(RagiumCommonTranslation.CULINARY_GENERATOR, "A machine which generates energy from foods.")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "A machine which generates energy from fuel fluids.")
         add(RagiumCommonTranslation.SOLAR_PANEL_UNIT, "A unit to use with Solar Panel Controller.")
         add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "A machine which generates energy from connected Solar Panel Units.")

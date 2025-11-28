@@ -418,13 +418,20 @@ object RagiumBlocks {
 
     // Advanced
     @JvmField
+    val CULINARY_GENERATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
+        "culinary_generator",
+        RagiumBlockTypes.CULINARY_GENERATOR,
+        machineProperty().noOcclusion(),
+    )
+
+    // Elite
+    @JvmField
     val COMBUSTION_GENERATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "combustion_generator",
         RagiumBlockTypes.COMBUSTION_GENERATOR,
         machineProperty().noOcclusion(),
     )
 
-    // Elite
     @JvmField
     val SOLAR_PANEL_UNIT: HTDescriptionDeferredBlock<HTTypedBlock<*>> =
         REGISTER.registerTyped(

@@ -17,8 +17,7 @@ import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.generator.HTNuclearReactorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarPanelControllerBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAdvancedMixerBlockEntity
@@ -47,11 +46,9 @@ import hiiragi283.ragium.common.block.entity.storage.HTTieredDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Holder
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
@@ -88,10 +85,14 @@ object RagiumBlockEntityTypes {
 
     // Advanced
     @JvmField
+    val CULINARY_GENERATOR: HTDeferredBlockEntityType<HTCulinaryGeneratorBlockEntity> =
+        registerTick("culinary_generator", ::HTCulinaryGeneratorBlockEntity)
+
+    // Elite
+    @JvmField
     val COMBUSTION_GENERATOR: HTDeferredBlockEntityType<HTCombustionGeneratorBlockEntity> =
         registerTick("combustion_generator", ::HTCombustionGeneratorBlockEntity)
 
-    // Elite
     @JvmField
     val SOLAR_PANEL_CONTROLLER: HTDeferredBlockEntityType<HTSolarPanelControllerBlockEntity> = registerTick(
         "solar_panel_controller",
@@ -100,21 +101,12 @@ object RagiumBlockEntityTypes {
 
     // Ultimate
     @JvmField
-    val ENCHANTMENT_GENERATOR: HTDeferredBlockEntityType<HTFuelGeneratorBlockEntity> = registerTick(
-        "enchantment_generator",
-        HTFuelGeneratorBlockEntity.createSimple(
-            { 0 },
-            RagiumFluidContents.EXPERIENCE,
-            { _, holder: Holder<Fluid> -> if (RagiumFluidContents.EXPERIENCE.isOf(holder)) 10 else 0 },
-            RagiumBlocks.ENCHANTMENT_GENERATOR,
-        ),
-    )
+    val ENCHANTMENT_GENERATOR: HTDeferredBlockEntityType<HTThermalGeneratorBlockEntity> =
+        registerTick("enchantment_generator", ::HTThermalGeneratorBlockEntity)
 
     @JvmField
-    val NUCLEAR_REACTOR: HTDeferredBlockEntityType<HTNuclearReactorBlockEntity> = registerTick(
-        "nuclear_reactor",
-        ::HTNuclearReactorBlockEntity,
-    )
+    val NUCLEAR_REACTOR: HTDeferredBlockEntityType<HTThermalGeneratorBlockEntity> =
+        registerTick("nuclear_reactor", ::HTThermalGeneratorBlockEntity)
 
     //    Processor    //
 
@@ -265,8 +257,9 @@ object RagiumBlockEntityTypes {
         // Generator
         registerHandler(event, THERMAL_GENERATOR.get())
 
-        registerHandler(event, COMBUSTION_GENERATOR.get())
+        registerHandler(event, CULINARY_GENERATOR.get())
 
+        registerHandler(event, COMBUSTION_GENERATOR.get())
         registerHandler(event, SOLAR_PANEL_CONTROLLER.get())
 
         registerHandler(event, ENCHANTMENT_GENERATOR.get())

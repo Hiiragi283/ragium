@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.generator
+package hiiragi283.ragium.common.block.entity.generator.base
 
 import hiiragi283.ragium.api.block.attribute.getAttributeFront
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.util.HTEnergyHelper
 import net.minecraft.core.BlockPos

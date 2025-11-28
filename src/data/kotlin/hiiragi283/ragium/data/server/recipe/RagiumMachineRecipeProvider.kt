@@ -48,12 +48,18 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('D', Items.FURNACE)
         }
         // Advanced
-        generator(RagiumBlocks.COMBUSTION_GENERATOR, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) {
+        generator(RagiumBlocks.CULINARY_GENERATOR, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) {
             define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.QUARTZ)
             define('C', RagiumItems.getCoil(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
-            define('D', Items.PISTON)
+            define('D', Items.SMOKER)
         }
         // Elite
+        generator(RagiumBlocks.COMBUSTION_GENERATOR, RagiumMaterialKeys.AZURE_STEEL) {
+            define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
+            define('C', RagiumItems.getGear(RagiumMaterialKeys.AZURE_STEEL))
+            define('D', Items.PISTON)
+        }
+
         HTShapedRecipeBuilder
             .create(RagiumBlocks.SOLAR_PANEL_UNIT, 4)
             .pattern(

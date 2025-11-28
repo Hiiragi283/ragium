@@ -248,6 +248,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                 override fun getCustomRenderer(): HTFuelGeneratorItemRenderer = HTFuelGeneratorItemRenderer
             },
             RagiumBlocks.THERMAL_GENERATOR.asItem(),
+            RagiumBlocks.CULINARY_GENERATOR.asItem(),
             RagiumBlocks.COMBUSTION_GENERATOR.asItem(),
             RagiumBlocks.ENCHANTMENT_GENERATOR.asItem(),
         )
@@ -275,7 +276,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, ::HTCrusherScreen)
         event.register(RagiumMenuTypes.SMELTER, HTProcessorScreen.createFactory("smelter"))
         event.register(RagiumMenuTypes.TELEPAD, ::HTTelepadScreen)
-        event.register(RagiumMenuTypes.THERMAL_GENERATOR, ::HTGeneratorScreen)
+        event.register(RagiumMenuTypes.ITEM_GENERATOR, HTGeneratorScreen.createFactory("item_generator"))
 
         RagiumAPI.LOGGER.info("Registered Screens!")
     }
@@ -303,6 +304,9 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.WASHER.get(), ::HTSingleFluidMachineRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.THERMAL_GENERATOR.get(), ::HTFuelGeneratorRenderer)
+
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CULINARY_GENERATOR.get(), ::HTFuelGeneratorRenderer)
+
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION_GENERATOR.get(), ::HTFuelGeneratorRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.ENCHANTMENT_GENERATOR.get(), ::HTFuelGeneratorRenderer)
 

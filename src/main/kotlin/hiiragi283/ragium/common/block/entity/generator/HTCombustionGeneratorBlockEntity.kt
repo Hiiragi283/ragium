@@ -1,9 +1,15 @@
 package hiiragi283.ragium.common.block.entity.generator
 
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
+import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.generator.base.HTProgressGeneratorBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -25,6 +31,18 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     lateinit var fuelTank: HTFluidStackTank
         private set
 
+    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        // inputs
+        coolantTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getFirstInputTank()),
+        )
+        fuelTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getSecondInputTank()),
+        )
+    }
+
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
         fluids += coolantTank.getStack()
         fluids += fuelTank.getStack()
@@ -35,7 +53,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         // Coolant
         val coolantStack: FluidStack = input.getFluid(0)
         val coolant: Int = RagiumDataMaps.INSTANCE.getCoolantAmount(access, coolantStack.fluidHolder)
-        if (coolant <= 0) return null
+        if (coolantStack.amount < coolant) return null
         // Fuel
         val fuelStack: FluidStack = input.getFluid(1)
         if (fuelStack.amount < 100) return null
