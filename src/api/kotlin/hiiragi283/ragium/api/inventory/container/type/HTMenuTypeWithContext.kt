@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.inventory.container.type
 
+import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -31,6 +32,9 @@ class HTMenuTypeWithContext<MENU : AbstractContainerMenu, C>(
             val context: C = clazz.cast(obj)
             create(context)
         }
-        else -> null
+        else -> {
+            RagiumAPI.LOGGER.error("Failed to cast ${obj::class.java.simpleName} into ${clazz.simpleName}")
+            null
+        }
     }
 }

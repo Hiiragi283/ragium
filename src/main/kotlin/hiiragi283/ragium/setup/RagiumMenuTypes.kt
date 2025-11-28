@@ -7,25 +7,19 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTCapturerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTItemBufferBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTFuelGeneratorBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTBlockBreakerBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTCrusherBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTEnchantCopierBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTEnchanterBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTWasherBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTAccessConfigurationMenu
@@ -74,67 +68,46 @@ object RagiumMenuTypes {
     //    Machine    //
 
     @JvmField
-    val ALLOY_SMELTER: DeferredBEMenu<HTAlloySmelterBlockEntity> = registerBE("alloy_smelter")
-
-    @JvmField
-    val BREWERY: DeferredBEMenu<HTBreweryBlockEntity> = registerBE("brewery")
-
-    @JvmField
-    val CAPTURER: DeferredBEMenu<HTCapturerBlockEntity> = registerBE("capturer")
-
-    @JvmField
-    val COMPRESSOR: DeferredBEMenu<HTSingleItemInputBlockEntity<*>> = registerBE("compressor")
-
-    @JvmField
-    val CRUSHER: DeferredBEMenu<HTCrusherBlockEntity> = registerBE("crusher")
-
-    @JvmField
     val ENCHANT_COPIER: DeferredBEMenu<HTEnchantCopierBlockEntity> = registerBE("enchantment_copier")
-
-    @JvmField
-    val ENCHANTER: DeferredBEMenu<HTEnchanterBlockEntity> = registerBE("enchanter")
 
     @JvmField
     val ENERGY_NETWORK_ACCESS: DeferredBEMenu<HTEnergyNetworkAccessBlockEntity> = registerBE("energy_network_access")
 
     @JvmField
-    val CUTTING_MACHINE: DeferredBEMenu<HTCuttingMachineBlockEntity> = registerBE("cutting_machine")
-
-    @JvmField
-    val EXTRACTOR: DeferredBEMenu<HTExtractorBlockEntity> = registerBE("extractor")
-
-    @JvmField
     val FLUID_COLLECTOR: DeferredBEMenu<HTFluidCollectorBlockEntity> = registerBE("fluid_collector")
 
     @JvmField
-    val ITEM_BUFFER: DeferredBEMenu<HTItemBufferBlockEntity> = registerBE("item_buffer")
+    val FLUID_TO_CHANCED: DeferredBEMenu<HTFluidToChancedItemOutputBlockEntity<*, *>> =
+        registerBE("fluid_to_chanced_output")
+
+    @JvmField
+    val ITEM_COLLECTOR: DeferredBEMenu<HTItemCollectorBlockEntity> = registerBE("item_collector")
+
+    @JvmField
+    val ITEM_WITH_CATALYST: DeferredBEMenu<HTItemWithCatalystBlockEntity> =
+        registerBE("item_with_catalyst")
 
     @JvmField
     val MELTER: DeferredBEMenu<HTMelterBlockEntity> = registerBE("melter")
 
     @JvmField
-    val PLANTER: DeferredBEMenu<HTPlanterBlockEntity> = registerBE("planter")
+    val MIXER: DeferredBEMenu<HTMixerBlockEntity> = registerBE("mixer")
 
     @JvmField
-    val PULVERIZER: DeferredBEMenu<HTSingleItemInputBlockEntity<*>> = registerBE("pulverizer")
+    val PROCESSOR: DeferredBEMenu<HTEnergizedProcessorBlockEntity<*, *>> = registerBE("processor")
 
     @JvmField
     val REFINERY: DeferredBEMenu<HTRefineryBlockEntity> = registerBE("refinery")
 
     @JvmField
-    val SMELTER: DeferredBEMenu<HTSingleItemInputBlockEntity<*>> = registerBE("smelter")
+    val SINGLE_ITEM_WITH_FLUID: DeferredBEMenu<HTSingleItemInputBlockEntity.CachedWithTank<*>> =
+        registerBE("single_item_with_fluid")
 
     @JvmField
-    val SIMULATOR: DeferredBEMenu<HTSimulatorBlockEntity> = registerBE("simulator")
-
-    @JvmField
-    val SINGLE_ITEM: DeferredBEMenu<HTBlockBreakerBlockEntity> = registerBE("single_item")
+    val SMELTER: DeferredBEMenu<HTAbstractSmelterBlockEntity<*>> = registerBE("smelter")
 
     @JvmField
     val TELEPAD: DeferredBEMenu<HTTelepadBlockentity> = registerBE("telepad")
-
-    @JvmField
-    val WASHER: DeferredBEMenu<HTWasherBlockEntity> = registerBE("washer")
 
     //    Extensions    //
 

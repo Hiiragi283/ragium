@@ -12,6 +12,9 @@ import java.util.Optional
 
 object HTPotionHelper {
     @JvmStatic
+    fun isEmpty(contents: PotionContents): Boolean = contents.allEffects.none()
+
+    @JvmStatic
     fun content(potion: Holder<Potion>): PotionContents = PotionContents(potion)
 
     @JvmStatic

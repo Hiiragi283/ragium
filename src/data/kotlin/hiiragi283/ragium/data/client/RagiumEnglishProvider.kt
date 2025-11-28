@@ -1,13 +1,14 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -32,6 +33,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         recipeType()
         text()
 
+        emi()
         jade()
     }
 
@@ -90,8 +92,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "Not a Primordial", "Get Eldritch Pearl")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "Rotten Egg", "Throw Eldritch Egg to capture mobs")
         addAdvancement(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, "Who is Falling Meteorites?", "")
-        // Iridescentium
-        addAdvancement(RagiumAdvancements.IRIDESCENTIUM, "The sky's the limit", "Get Iridescentium Ingot")
+        // Iridescent
+        addAdvancement(RagiumAdvancements.IRIDESCENT_POWDER, "The sky's the limit", "Get Iridescent Powder")
         addAdvancement(RagiumAdvancements.ETERNAL_COMPONENT, "Eternal Requiem", "Get Eternal Component for making tools unbreakable")
     }
 
@@ -145,28 +147,25 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.MELTER, "Melter")
-        add(RagiumBlocks.REFINERY, "Refinery")
-        add(RagiumBlocks.WASHER, "Washer")
-
-        add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.MIXER, "Mixer")
+        add(RagiumBlocks.REFINERY, "Refinery")
+
+        add(RagiumBlocks.ADVANCED_MIXER, "Advanced Mixer")
+        add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.MULTI_SMELTER, "Multi Smelter")
         add(RagiumBlocks.PLANTER, "Planting Chamber")
+        add(RagiumBlocks.WASHER, "Washer")
 
         add(RagiumBlocks.ENCHANT_COPIER, "Enchantment Copier")
         add(RagiumBlocks.ENCHANTER, "Enchanter")
         add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
-        add(RagiumBlocks.ITEM_BUFFER, "Item Buffer")
-        add(RagiumBlocks.WATER_COLLECTOR, "Water Collector")
-
-        add(RagiumBlocks.EXP_COLLECTOR, "Exp Collector")
-        add(RagiumBlocks.FISHER, "Fisher")
+        add(RagiumBlocks.FLUID_COLLECTOR, "Fluid Collector")
+        add(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
 
         add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
         add(RagiumBlocks.ENI, "E.N.I.")
 
-        add(RagiumBlocks.MOB_CAPTURER, "Mob Capturer")
         add(RagiumBlocks.TELEPAD, "Telepad")
 
         add(RagiumBlocks.CEU, "C.E.U.")
@@ -221,6 +220,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
 
+        addFluid(RagiumFluidContents.DESTABILIZED_RAGINITE, "Destabilized Raginite")
+
         addFluid(RagiumFluidContents.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluidContents.SULFURIC_ACID, "Sulfuric Acid")
         addFluid(RagiumFluidContents.MIXTURE_ACID, "Mixture Acid")
@@ -233,6 +234,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
         add(RagiumItems.ECHO_STAR, "Echo Star")
         add(RagiumItems.ELDER_HEART, "Heart of the Elder")
+        add(RagiumItems.IRIDESCENT_POWDER, "Iridescent Powder")
         add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")
@@ -248,10 +250,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "Night Vision Goggles")
         // Tool
-        add(RagiumItems.MEDIUM_DRUM_UPGRADE, "Medium Drum Upgrade")
-        add(RagiumItems.LARGE_DRUM_UPGRADE, "Large Drum Upgrade")
-        add(RagiumItems.HUGE_DRUM_UPGRADE, "Huge Drum Upgrade")
-
         add(RagiumItems.DRILL, "Electric Drill")
 
         add(RagiumItems.ADVANCED_MAGNET, "Advanced Ragi-Magnet")
@@ -287,10 +285,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.BOTTLED_BEE, "Bottled Bee")
         add(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
-        add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "Block Mold")
-        add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "Gem Mold")
-        add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "Ingot Mold")
-
+        add(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
+        add(RagiumItems.BASIC_CIRCUIT, "Basic Circuit")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.GRAVITATIONAL_UNIT, "Gravitational Unit")
         add(RagiumItems.LED, "Light Emitting Diode")
@@ -301,6 +297,18 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
+        // Upgrades
+        add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
+
+        add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "Efficient Crush Upgrade")
+        add(RagiumItems.FORTUNE_UPGRADE, "Fortune Upgrade")
+        add(RagiumItems.PRIMARY_ONLY_UPGRADE, "Primary Only Upgrade")
+
+        add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
+        add(RagiumItems.FISHING_UPGRADE, "Fishing Upgrade")
+        add(RagiumItems.MOB_CAPTURE_UPGRADE, "Mob Capture Upgrade")
+
+        add(RagiumItems.CREATIVE_UPGRADE, "Creative Upgrade")
     }
 
     private fun keyMapping() {
@@ -343,7 +351,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
-        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
         add(RagiumRecipeTypes.EXTRACTING, "Extracting")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.MIXING, "Mixing")
@@ -359,6 +366,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTAccessConfig.BOTH, "Mode: Both")
         add(HTAccessConfig.DISABLED, "Mode: Disabled")
 
+        add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
+        add(HTMachineUpgrade.Key.SPEED, $$"- Speed: %1$s")
+
+        add(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE, $$"- Extra Chance: %1$s")
         // API - Constants
         add(RagiumTranslation.ERROR, "Error")
         add(RagiumTranslation.INFINITE, "Infinite")
@@ -368,6 +381,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.EMPTY_TAG_KEY, $$"Empty tag key: %1$s")
         add(RagiumTranslation.INVALID_PACKET_S2C, $$"Invalid packet received from server side: %1$s")
         add(RagiumTranslation.INVALID_PACKET_C2S, $$"Invalid packet received from client side: %1$s")
+
+        add(RagiumTranslation.MISSING_SERVER, "Could not find current server")
         add(RagiumTranslation.MISSING_REGISTRY, $$"Missing registry: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"Missing key: %1$s")
         // API - GUI
@@ -420,16 +435,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.ENCHANTER, "A machine which create enchanted books from items.")
         add(RagiumCommonTranslation.SIMULATOR, "A machine which simulates behavior of blocks or mobs to generate resources.")
 
-        add(RagiumCommonTranslation.ITEM_BUFFER, "A device which collects items around.")
-        add(RagiumCommonTranslation.WATER_COLLECTOR, "A device which generates Water from surrounded sources or biomes.")
-
-        add(RagiumCommonTranslation.EXP_COLLECTOR, "A device which collects Experience Orbs and converts into liquid.")
-        add(RagiumCommonTranslation.FISHER, "A device which do fishing from below 3x3 water sources.")
+        add(RagiumCommonTranslation.FLUID_COLLECTOR, "A device which generates Water from surrounded sources or biomes.")
 
         add(RagiumCommonTranslation.DIM_ANCHOR, "A device which forces to load chunk placed in.")
         add(RagiumCommonTranslation.ENI, "A device which enables to access Energy Network.")
-
-        add(RagiumCommonTranslation.MOB_CAPTURER, "A device which captures mobs into Eldritch Egg.")
 
         add(RagiumCommonTranslation.CEU, "A device which provides unlimited amount of energy.")
 
@@ -464,12 +473,23 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         add(RagiumCommonTranslation.ICE_CREAM, "Extinguish fire when eaten.")
         add(RagiumCommonTranslation.RAGI_CHERRY, "Drops from Cherry Leaves as same as Apple.")
+
+        add(RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE, "Allow Fluid Collector to collect Experience Orbs.")
+        add(RagiumCommonTranslation.FISHING_UPGRADE, "Allow Item Collector to do fishing from below 3x3 Water Source.")
+        add(RagiumCommonTranslation.MOB_CAPTURE_UPGRADE, "Allow Item Collector to capture mobs by Eldritch Egg.")
     }
 
     //    Addon    //
 
+    private fun emi() {
+        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE, "Machine Upgrades")
+    }
+
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "Access Configuration")
+        add(HTBlockMachinePropertiesProvider, "Machine Properties")
         add(HTBlockOwnerProvider, "Block Owner")
+
+        add(RagiumCommonTranslation.JADE_MACHINE_TIER, $$"Tier: %1$s")
     }
 }

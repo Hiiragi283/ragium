@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
@@ -23,7 +24,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override fun createTank(listener: HTContentListener): HTVariableFluidStackTank =
+    override fun createTank(listener: HTContentListener): HTFluidStackTank =
         HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.washerTankCapacity)
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
@@ -41,6 +42,6 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
         HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
         HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount, HTStorageAction.EXECUTE)
         // SEを鳴らす
-        level.playSound(null, pos, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1f, 0.25f)
+        level.playSound(null, pos, SoundEvents.GENERIC_SPLASH, SoundSource.BLOCKS, 1f, 0.25f)
     }
 }

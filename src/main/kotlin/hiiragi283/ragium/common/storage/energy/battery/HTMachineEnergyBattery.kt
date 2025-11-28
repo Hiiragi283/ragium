@@ -3,6 +3,8 @@ package hiiragi283.ragium.common.storage.energy.battery
 import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.function.HTPredicates
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -14,7 +16,7 @@ import java.util.function.Predicate
 /**
  * @see mekanism.common.capabilities.energy.MachineEnergyContainer
  */
-class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
+sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
     capacity: Int,
     val baseEnergyPerTick: Int,
     val blockEntity: BE,
@@ -28,60 +30,57 @@ class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
             blockEntity.blockHolder.getAttributeOrThrow<HTEnergyBlockAttribute>()
 
         @JvmStatic
-        fun <BE : HTEnergizedProcessorBlockEntity<*, *>> input(listener: HTContentListener?, blockEntity: BE): HTMachineEnergyBattery<BE> {
+        fun input(listener: HTContentListener?, blockEntity: HTEnergizedProcessorBlockEntity<*, *>): Processor {
             val attribute: HTEnergyBlockAttribute = validateAttribute(blockEntity)
-            return HTMachineEnergyBattery(
-                attribute.getCapacity(),
-                attribute.getUsage(),
-                blockEntity,
-                HTStorageAccess.NOT_EXTERNAL,
-                HTPredicates.alwaysTrue(),
-                listener,
-            )
+            return Processor(attribute, listener, blockEntity)
         }
 
         @JvmStatic
-        fun <BE : HTGeneratorBlockEntity> output(listener: HTContentListener?, blockEntity: BE): HTMachineEnergyBattery<BE> {
+        fun <BE : HTGeneratorBlockEntity> output(listener: HTContentListener?, blockEntity: BE): Generator {
             val attribute: HTEnergyBlockAttribute = validateAttribute(blockEntity)
-            return HTMachineEnergyBattery(
-                attribute.getCapacity(),
-                attribute.getUsage(),
-                blockEntity,
-                HTPredicates.alwaysTrue(),
-                HTStorageAccess.INTERNAL_ONLY,
-                listener,
-            )
+            return Generator(attribute, listener, blockEntity)
         }
     }
 
-    var currentCapacity: Int = capacity
-        private set
     var currentEnergyPerTick: Int = this.baseEnergyPerTick
 
-    override fun getCapacity(): Int = currentCapacity
-
-    fun setCapacity(capacity: Int) {
-        this.currentCapacity = capacity
-        setAmount(getAmount())
-    }
+    override fun getCapacity(): Int = blockEntity.modifyValue(HTMachineUpgrade.Key.ENERGY_CAPACITY) { getBaseCapacity() * it }
 
     fun getBaseCapacity(): Int = super.getCapacity()
 
-    fun consume(): Int {
-        if (blockEntity !is HTEnergizedProcessorBlockEntity<*, *>) return 0
-        val simulated: Int = this.extract(currentEnergyPerTick, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
-        return when {
-            simulated >= currentEnergyPerTick -> this.extract(currentEnergyPerTick, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-            else -> 0
+    class Processor(attribute: HTEnergyBlockAttribute, listener: HTContentListener?, blockEntity: HTEnergizedProcessorBlockEntity<*, *>) :
+        HTMachineEnergyBattery<HTEnergizedProcessorBlockEntity<*, *>>(
+            attribute.getCapacity(),
+            attribute.getUsage(),
+            blockEntity,
+            HTStorageAccess.NOT_EXTERNAL,
+            HTPredicates.alwaysTrue(),
+            listener,
+        ) {
+        fun consume(): Int {
+            val simulated: Int = this.extract(currentEnergyPerTick, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+            return when {
+                simulated >= currentEnergyPerTick -> this.extract(currentEnergyPerTick, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                else -> 0
+            }
         }
     }
 
-    fun generate(): Int {
-        if (blockEntity !is HTGeneratorBlockEntity) return 0
-        val simulated: Int = this.insert(currentEnergyPerTick, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
-        return when {
-            simulated > 0 -> this.insert(currentEnergyPerTick, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-            else -> 0
+    class Generator(attribute: HTEnergyBlockAttribute, listener: HTContentListener?, blockEntity: HTGeneratorBlockEntity) :
+        HTMachineEnergyBattery<HTGeneratorBlockEntity>(
+            attribute.getCapacity(),
+            attribute.getUsage(),
+            blockEntity,
+            HTPredicates.alwaysTrue(),
+            HTStorageAccess.INTERNAL_ONLY,
+            listener,
+        ) {
+        fun generate(): Int {
+            val simulated: Int = this.insert(currentEnergyPerTick, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+            return when {
+                simulated > 0 -> this.insert(currentEnergyPerTick, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+                else -> 0
+            }
         }
     }
 }

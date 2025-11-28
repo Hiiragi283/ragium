@@ -3,6 +3,8 @@ package hiiragi283.ragium.common.block.entity.generator
 import hiiragi283.ragium.api.block.attribute.getAttributeFront
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -11,6 +13,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
@@ -39,7 +42,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         }
     }
 
-    lateinit var tank: HTVariableFluidStackTank
+    lateinit var tank: HTFluidStackTank
         private set
 
     final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
@@ -87,7 +90,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         val required: Int = getRequiredAmount(level.registryAccess(), tank.getStack())
         if (required <= 0) return false
         if (tank.extract(required, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null) return false
-        battery.currentEnergyPerTick = getModifiedEnergy(battery.baseEnergyPerTick)
+        battery.currentEnergyPerTick = modifyValue(HTMachineUpgrade.Key.ENERGY_GENERATION) { battery.baseEnergyPerTick * it }
         return if (battery.generate() > 0) {
             tank.extract(required, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             true

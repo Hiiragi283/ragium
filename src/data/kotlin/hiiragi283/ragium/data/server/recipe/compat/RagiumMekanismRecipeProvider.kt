@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.registry.HTBasicFluidContentNew
+import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
@@ -140,11 +140,11 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
 
         // Ethene + Catalyst -> HDPE
         HTComplexRecipeBuilder
-            .solidifying(
-                itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
-                fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100),
-                resultHelper.item(MekanismItems.HDPE_PELLET),
-            ).save(output)
+            .solidifying()
+            .addIngredient(itemCreator.fromItem(RagiumItems.POLYMER_CATALYST))
+            .addIngredient(fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100))
+            .setResult(resultHelper.item(MekanismItems.HDPE_PELLET))
+            .save(output)
     }
 
     @JvmStatic
@@ -161,7 +161,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("chemical_infusing/eldritch_flux"))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            val molten: HTBasicFluidContentNew = data.molten
+            val molten: HTBasicFluidContent = data.molten
             // Fluid <-> Chemical
             RotaryRecipeBuilder
                 .rotary(

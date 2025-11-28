@@ -9,7 +9,6 @@ import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCriteriaTriggers
@@ -170,13 +169,13 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.AZURE_GEARS)
                 setGoal()
             }
-            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialKeys.AZURE_STEEL))
+            hasAnyItem("has_azure_tool", RagiumItems.getToolMap(RagiumMaterialKeys.AZURE_STEEL).values)
         }
 
         createSimple(
             RagiumAdvancements.MIXER,
-            RagiumAdvancements.REFINERY,
-            RagiumBlocks.MIXER,
+            RagiumAdvancements.AZURE_STEEL,
+            RagiumBlocks.ADVANCED_MIXER,
         ) { setGoal() }
     }
 
@@ -304,15 +303,14 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
     private fun iridescentium() {
         createSimple(
-            RagiumAdvancements.IRIDESCENTIUM,
+            RagiumAdvancements.IRIDESCENT_POWDER,
             RagiumAdvancements.ELDRITCH_PEARL,
-            CommonMaterialPrefixes.INGOT,
-            RagiumMaterialKeys.IRIDESCENTIUM,
+            RagiumItems.IRIDESCENT_POWDER,
         )
         createSimple(
             RagiumAdvancements.ETERNAL_COMPONENT,
-            RagiumAdvancements.IRIDESCENTIUM,
-            RagiumItems.getComponent(HTComponentTier.ETERNAL),
+            RagiumAdvancements.IRIDESCENT_POWDER,
+            RagiumItems.ETERNAL_COMPONENT,
         ) { setChallenge() }
     }
 }

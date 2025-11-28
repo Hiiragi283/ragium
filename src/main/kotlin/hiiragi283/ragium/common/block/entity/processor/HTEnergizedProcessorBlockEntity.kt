@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -18,18 +20,20 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTEnergizedProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
-    lateinit var battery: HTMachineEnergyBattery<*>
+    lateinit var battery: HTMachineEnergyBattery.Processor
         protected set
 
     final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
         battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
     }
 
-    protected fun getModifiedEnergy(base: Int): Int = getComponentTier()?.modifyProcessorRate(base) ?: base
-
     //    Ticking    //
 
-    final override fun getRequiredEnergy(recipe: RECIPE): Int = getModifiedEnergy(battery.currentEnergyPerTick * getRecipeTime(recipe))
+    final override fun getRequiredEnergy(recipe: RECIPE): Int {
+        battery.currentEnergyPerTick = modifyValue(HTMachineUpgrade.Key.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
+        val time: Int = modifyValue(HTMachineUpgrade.Key.SPEED) { getRecipeTime(recipe) / it }
+        return battery.currentEnergyPerTick * time
+    }
 
     protected open fun getRecipeTime(recipe: RECIPE): Int = 20 * 10
 

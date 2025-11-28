@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockRegister
 import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.block.HTBuddingQuartzBlock
 import hiiragi283.ragium.common.block.HTCrimsonSoilBlock
 import hiiragi283.ragium.common.block.HTEnchantPowerBlock
@@ -47,7 +48,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import net.minecraft.world.item.Item
@@ -88,6 +88,13 @@ object RagiumBlocks {
         // Budding Quartz
         REGISTER.addAlias("budding_azure", "budding_quartz")
         REGISTER.addAlias("azure_cluster", "quartz_cluster")
+        // Collector
+        REGISTER.addAlias("water_collector", "fluid_collector")
+        REGISTER.addAlias("exp_collector", "fluid_collector")
+
+        REGISTER.addAlias("fisher", "item_collector")
+        REGISTER.addAlias("item_buffer", "item_collector")
+        REGISTER.addAlias("mob_capturer", "item_collector")
     }
 
     @JvmStatic
@@ -238,7 +245,6 @@ object RagiumBlocks {
             RagiumMaterialKeys.AZURE_STEEL to copyOf(Blocks.IRON_BLOCK, MapColor.TERRACOTTA_BLUE),
             RagiumMaterialKeys.DEEP_STEEL to copyOf(Blocks.NETHERITE_BLOCK, MapColor.COLOR_CYAN),
             RagiumMaterialKeys.NIGHT_METAL to copyOf(Blocks.GOLD_BLOCK, MapColor.COLOR_BLACK),
-            RagiumMaterialKeys.IRIDESCENTIUM to copyOf(Blocks.IRON_BLOCK),
             // Foods
             FoodMaterialKeys.CHOCOLATE to copyOf(Blocks.MUD, MapColor.TERRACOTTA_BROWN),
             FoodMaterialKeys.RAW_MEAT to copyOf(Blocks.MUD).sound(SoundType.HONEY_BLOCK),
@@ -261,6 +267,9 @@ object RagiumBlocks {
 
     @JvmStatic
     fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredBlock> = MATERIALS.row(prefix.asMaterialPrefix())
+
+    @JvmStatic
+    fun getMaterialMap(material: HTMaterialLike): Map<HTMaterialPrefix, HTSimpleDeferredBlock> = MATERIALS.column(material.asMaterialKey())
 
     @JvmStatic
     val GLASSES: ImmutableTable<HTGlassVariant, HTMaterialKey, HTDescriptionDeferredBlock<*>> = buildTable {
@@ -341,41 +350,41 @@ object RagiumBlocks {
         REGISTER.registerSimple("sponge_cake", copyOf(Blocks.YELLOW_WOOL), ::HTSpongeCakeBlock)
 
     @JvmField
-    val DECORATION_MAP: Map<HTDecorationVariant, HTSimpleDeferredBlock> = mapOf(
-        HTDecorationVariant.RAGI_BRICK to RAGI_BRICKS,
-        HTDecorationVariant.AZURE_TILE to AZURE_TILES,
-        HTDecorationVariant.ELDRITCH_STONE to ELDRITCH_STONE,
-        HTDecorationVariant.ELDRITCH_STONE_BRICK to ELDRITCH_STONE_BRICKS,
-        HTDecorationVariant.PLASTIC_BRICK to PLASTIC_BRICKS,
-        HTDecorationVariant.PLASTIC_TILE to PLASTIC_TILES,
-        HTDecorationVariant.BLUE_NETHER_BRICK to BLUE_NETHER_BRICKS,
-        HTDecorationVariant.SPONGE_CAKE to SPONGE_CAKE,
+    val DECORATION_MAP: Map<HTDecorationType, HTSimpleDeferredBlock> = mapOf(
+        HTDecorationType.RAGI_BRICK to RAGI_BRICKS,
+        HTDecorationType.AZURE_TILE to AZURE_TILES,
+        HTDecorationType.ELDRITCH_STONE to ELDRITCH_STONE,
+        HTDecorationType.ELDRITCH_STONE_BRICK to ELDRITCH_STONE_BRICKS,
+        HTDecorationType.PLASTIC_BRICK to PLASTIC_BRICKS,
+        HTDecorationType.PLASTIC_TILE to PLASTIC_TILES,
+        HTDecorationType.BLUE_NETHER_BRICK to BLUE_NETHER_BRICKS,
+        HTDecorationType.SPONGE_CAKE to SPONGE_CAKE,
     )
 
     @JvmField
-    val SLABS: Map<HTDecorationVariant, HTBasicDeferredBlock<SlabBlock>> =
-        HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
-            REGISTER.registerSimple("${variant.variantName()}_slab", { SlabBlock(copyOf(variant.base.get())) })
+    val SLABS: Map<HTDecorationType, HTBasicDeferredBlock<SlabBlock>> =
+        HTDecorationType.entries.associateWith { type: HTDecorationType ->
+            REGISTER.registerSimple("${type.serializedName}_slab", { SlabBlock(copyOf(type.base.get())) })
         }
 
     @JvmField
-    val STAIRS: Map<HTDecorationVariant, HTBasicDeferredBlock<StairBlock>> =
-        HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
+    val STAIRS: Map<HTDecorationType, HTBasicDeferredBlock<StairBlock>> =
+        HTDecorationType.entries.associateWith { type: HTDecorationType ->
             REGISTER.registerSimple(
-                "${variant.variantName()}_stairs",
+                "${type.serializedName}_stairs",
                 {
-                    val block: Block = variant.base.get()
+                    val block: Block = type.base.get()
                     StairBlock(block.defaultBlockState(), copyOf(block))
                 },
             )
         }
 
     @JvmField
-    val WALLS: Map<HTDecorationVariant, HTBasicDeferredBlock<WallBlock>> =
-        HTDecorationVariant.entries.associateWith { variant: HTDecorationVariant ->
+    val WALLS: Map<HTDecorationType, HTBasicDeferredBlock<WallBlock>> =
+        HTDecorationType.entries.associateWith { type: HTDecorationType ->
             REGISTER.registerSimple(
-                "${variant.variantName()}_wall",
-                { WallBlock(copyOf(variant.base.get())) },
+                "${type.serializedName}_wall",
+                { WallBlock(copyOf(type.base.get())) },
             )
         }
 
@@ -460,12 +469,12 @@ object RagiumBlocks {
         registerMachineTier("block_breaker", RagiumBlockTypes.BLOCK_BREAKER, machineProperty())
 
     @JvmField
-    val CUTTING_MACHINE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("cutting_machine", RagiumBlockTypes.CUTTING_MACHINE, machineProperty())
-
-    @JvmField
     val COMPRESSOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("compressor", RagiumBlockTypes.COMPRESSOR, machineProperty())
+
+    @JvmField
+    val CUTTING_MACHINE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("cutting_machine", RagiumBlockTypes.CUTTING_MACHINE, machineProperty())
 
     @JvmField
     val ELECTRIC_FURNACE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
@@ -489,6 +498,10 @@ object RagiumBlocks {
         registerMachineTier("melter", RagiumBlockTypes.MELTER, machineProperty().noOcclusion())
 
     @JvmField
+    val MIXER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("mixer", RagiumBlockTypes.MIXER, machineProperty())
+
+    @JvmField
     val REFINERY: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier(
             "refinery",
@@ -497,18 +510,14 @@ object RagiumBlocks {
             ::HTRefineryBlock,
         )
 
-    @JvmField
-    val WASHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("washer", RagiumBlockTypes.WASHER, machineProperty().noOcclusion())
-
     // Elite
     @JvmField
     val BREWERY: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("brewery", RagiumBlockTypes.BREWERY, machineProperty())
 
     @JvmField
-    val MIXER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("mixer", RagiumBlockTypes.MIXER, machineProperty())
+    val ADVANCED_MIXER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("advanced_mixer", RagiumBlockTypes.ADVANCED_MIXER, machineProperty())
 
     @JvmField
     val MULTI_SMELTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
@@ -517,6 +526,10 @@ object RagiumBlocks {
     @JvmField
     val PLANTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("planter", RagiumBlockTypes.PLANTER, machineProperty().noOcclusion())
+
+    @JvmField
+    val WASHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("washer", RagiumBlockTypes.WASHER, machineProperty().noOcclusion())
 
     // Ultimate
     @JvmField
@@ -539,21 +552,12 @@ object RagiumBlocks {
 
     // Basic
     @JvmField
-    val ITEM_BUFFER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("item_buffer", RagiumBlockTypes.ITEM_BUFFER, machineProperty())
+    val FLUID_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("fluid_collector", RagiumBlockTypes.FLUID_COLLECTOR, machineProperty())
 
     @JvmField
-    val WATER_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("water_collector", RagiumBlockTypes.WATER_COLLECTOR, machineProperty())
-
-    // Advanced
-    @JvmField
-    val EXP_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("exp_collector", RagiumBlockTypes.EXP_COLLECTOR, machineProperty())
-
-    @JvmField
-    val FISHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("fisher", RagiumBlockTypes.FISHER, machineProperty())
+    val ITEM_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("item_collector", RagiumBlockTypes.ITEM_COLLECTOR, machineProperty())
 
     // Elite
     @JvmField
@@ -565,10 +569,6 @@ object RagiumBlocks {
         registerMachineTier("energy_network_interface", RagiumBlockTypes.ENI, machineProperty())
 
     // Ultimate
-    @JvmField
-    val MOB_CAPTURER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("mob_capturer", RagiumBlockTypes.MOB_CAPTURER, machineProperty())
-
     @JvmField
     val TELEPAD: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("telepad", RagiumBlockTypes.TELEPAD, machineProperty())

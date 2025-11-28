@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.inventory.slot
 
 import hiiragi283.ragium.api.inventory.slot.HTChangeType
 import hiiragi283.ragium.api.inventory.slot.HTSyncableSlot
-import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
 import net.minecraft.core.RegistryAccess
 import java.util.function.LongConsumer
@@ -33,5 +32,5 @@ class HTLongSyncSlot(private val getter: LongSupplier, private val setter: LongC
         }
     }
 
-    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTSyncablePayload = HTLongSyncPayload(this.getAmount())
+    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTLongSyncPayload = HTLongSyncPayload(this.getAmount())
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -64,9 +65,9 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
             @JvmStatic
             private val CODEC_WITH_COUNT: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodec.composite(
-                VanillaBiCodecs.holderSet(Registries.ITEM).fieldOf("items"),
+                VanillaBiCodecs.holderSet(Registries.ITEM).fieldOf(RagiumConst.ITEMS),
                 HolderBased::holderSet,
-                BiCodecs.POSITIVE_INT.optionalFieldOf("count", 1),
+                BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1),
                 HolderBased::count,
                 ::HolderBased,
             )
@@ -98,14 +99,14 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
         companion object {
             @JvmStatic
             private val FLAT_CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = VanillaBiCodecs
-                .ingredient(false)
+                .INGREDIENT
                 .xmap(::IngredientBased, IngredientBased::ingredient)
 
             @JvmStatic
             private val CODEC_WITH_COUNT: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
                 VanillaMapBiCodecs.INGREDIENT,
                 IngredientBased::ingredient,
-                BiCodecs.POSITIVE_INT.optionalFieldOf("count", 1),
+                BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1),
                 IngredientBased::count,
                 ::IngredientBased,
             )

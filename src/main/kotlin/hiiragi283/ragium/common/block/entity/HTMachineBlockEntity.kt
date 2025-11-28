@@ -1,23 +1,29 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.world.sendBlockUpdated
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
-import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.Predicate
 
@@ -25,18 +31,9 @@ import java.util.function.Predicate
  * 機械全般に使用される[HTConfigurableBlockEntity]の拡張クラス
  */
 abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTConfigurableBlockEntity(blockHolder, pos, state) {
+    HTConfigurableBlockEntity(blockHolder, pos, state),
+    HTUpgradableBlockEntity {
     companion object {
-        @JvmStatic
-        fun getComponentTier(stack: ImmutableItemStack): HTComponentTier? {
-            for ((tier: HTComponentTier, item: HTDeferredItem<*>) in RagiumItems.COMPONENTS) {
-                if (stack.isOf(item)) {
-                    return tier
-                }
-            }
-            return null
-        }
-
         // Slot
         @JvmStatic
         protected fun singleInput(
@@ -66,8 +63,8 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
 
         @JvmStatic
         protected fun multiOutputs(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): List<HTItemStackSlot> =
-            intArrayOf(5, 6).flatMap { x: Int ->
-                doubleArrayOf(0.5, 1.5).map { y: Double ->
+            doubleArrayOf(0.5, 1.5).flatMap { y: Double ->
+                intArrayOf(5, 6).map { x: Int ->
                     builder.addSlot(
                         HTSlotInfo.OUTPUT,
                         HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y)),
@@ -79,20 +76,17 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
     lateinit var upgradeSlots: List<HTItemStackSlot>
         private set
 
-    fun getComponentTier(): HTComponentTier? = upgradeSlots[3].getStack()?.let(::getComponentTier)
-
     final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         initializeItemSlots(builder, listener)
         upgradeSlots = (0..3).map { i: Int ->
-            val filter: (ImmutableItemStack) -> Boolean = when (i) {
-                3 -> { stack -> getComponentTier(stack) != null }
-                else -> { stack -> getComponentTier(stack) == null }
+            val filter: (ImmutableItemStack) -> Boolean = filter@{ stack: ImmutableItemStack ->
+                canApplyUpgrade(stack.unwrap()) && !hasUpgrade(stack.value())
             }
             builder.addSlot(
                 HTSlotInfo.CATALYST,
                 HTItemStackSlot.create(
-                    listener,
+                    listener.andThen { level?.sendBlockUpdated(blockPos) },
                     HTSlotHelper.getSlotPosX(8),
                     HTSlotHelper.getSlotPosY(i - 0.5),
                     canExtract = HTPredicates.manualOnly(),
@@ -103,6 +97,27 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         }
         return builder.build()
     }
+
+    final override fun hasUpgrade(item: ItemLike): Boolean = upgradeSlots.any { slot: HTItemStackSlot ->
+        slot.getStack()?.isOf(item.asItem()) ?: false
+    }
+
+    override fun getMachineUpgrades(): List<Pair<HTMachineUpgrade, Int>> = upgradeSlots.mapNotNull { slot: HTItemStackSlot ->
+        val upgrade: HTMachineUpgrade = slot
+            .getStack()
+            ?.unwrap()
+            ?.let { RagiumPlatform.INSTANCE.getMachineUpgrade(getRegistryAccess(), it) }
+            ?: return@mapNotNull null
+        upgrade to slot.getAmount()
+    }
+
+    override fun canApplyUpgrade(stack: ItemStack): Boolean {
+        if (RagiumPlatform.INSTANCE.getMachineUpgrade(getRegistryAccess(), stack) == null) return false
+        val filter: HTKeyOrTagEntry<BlockEntityType<*>> = stack.get(RagiumDataComponents.MACHINE_UPGRADE_FILTER) ?: return true
+        return filter.isOf(getBlockEntityType(this.blockHolder))
+    }
+
+    //    Save & Load    //
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)

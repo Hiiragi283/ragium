@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.entity.charge
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.entity.isOf
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.variant.HTChargeVariant
+import hiiragi283.ragium.common.HTChargeType
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -17,10 +17,10 @@ import net.minecraft.world.phys.EntityHitResult
 class HTConfusingCharge : HTAbstractCharge {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
 
-    constructor(level: Level, shooter: LivingEntity) : super(HTChargeVariant.CONFUSING, level, shooter)
+    constructor(level: Level, shooter: LivingEntity) : super(HTChargeType.CONFUSING, level, shooter)
 
     constructor(level: Level, x: Double, y: Double, z: Double) : super(
-        HTChargeVariant.CONFUSING,
+        HTChargeType.CONFUSING,
         level,
         x,
         y,
@@ -48,5 +48,5 @@ class HTConfusingCharge : HTAbstractCharge {
         }
     }
 
-    override fun getDefaultItem(): Item = HTChargeVariant.CONFUSING.asItem()
+    override fun getDefaultItem(): Item = HTChargeType.CONFUSING.asItem()
 }

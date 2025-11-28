@@ -2,12 +2,12 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
+import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.impl.data.HTVanillaWoodType
 import hiiragi283.ragium.impl.data.recipe.HTCombineItemToObjRecipeBuilder
@@ -110,7 +110,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.item(RagiumBlocks.SPONGE_CAKE, 4))
             .save(output)
 
-        HTDecorationVariant.entries.forEach(::registerBuildings)
+        HTDecorationType.entries.forEach(::registerBuildings)
         HTVanillaWoodType.entries.forEach(::addWoodSawing)
 
         glass()
@@ -130,11 +130,11 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                                     itemCreator.fromTagKey(ItemTags.SMELTS_TO_GLASS),
                                 )
                                 VanillaMaterialKeys.OBSIDIAN -> listOf(
-                                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.DEEP_STEEL),
+                                    itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL),
                                     itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
                                 )
                                 else -> listOf(
-                                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, key),
+                                    itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, key),
                                     itemCreator.fromTagKey(CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN, 2),
                                 )
                             },
@@ -157,11 +157,11 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     //    Decorations    //
 
     @JvmStatic
-    private fun registerBuildings(variant: HTDecorationVariant) {
-        val base: ItemLike = variant.base
-        val slab: ItemLike = variant.slab
-        val stairs: ItemLike = variant.stairs
-        val wall: ItemLike = variant.wall
+    private fun registerBuildings(type: HTDecorationType) {
+        val base: ItemLike = type.base
+        val slab: ItemLike = type.slab
+        val stairs: ItemLike = type.stairs
+        val wall: ItemLike = type.wall
         // Base -> Slab
         HTShapedRecipeBuilder
             .create(slab, 6)
@@ -189,7 +189,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         // Stonecutting
-        val cuttingIngredient: Ingredient = getCuttingIngredient(variant)
+        val cuttingIngredient: Ingredient = getCuttingIngredient(type)
 
         HTSingleItemRecipeBuilder
             .stonecutter(slab, 2)
@@ -208,14 +208,14 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
-    private fun getCuttingIngredient(variant: HTDecorationVariant): Ingredient {
-        if (variant == HTDecorationVariant.PLASTIC_BRICK || variant == HTDecorationVariant.PLASTIC_TILE) {
+    private fun getCuttingIngredient(type: HTDecorationType): Ingredient {
+        if (type == HTDecorationType.PLASTIC_BRICK || type == HTDecorationType.PLASTIC_TILE) {
             return Ingredient.of(CommonMaterialPrefixes.STORAGE_BLOCK.itemTagKey(CommonMaterialKeys.PLASTIC))
         }
         return buildList {
-            add(variant.base)
+            add(type.base)
             // Eldritch
-            if (variant == HTDecorationVariant.ELDRITCH_STONE_BRICK) {
+            if (type == HTDecorationType.ELDRITCH_STONE_BRICK) {
                 add(RagiumBlocks.ELDRITCH_STONE)
             }
         }.toTypedArray().let { Ingredient.of(*it) }

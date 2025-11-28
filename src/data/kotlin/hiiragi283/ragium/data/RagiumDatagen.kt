@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data
 
+import com.simibubi.create.api.registry.CreateRegistries
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.advancement.HTAdvancementProvider
@@ -14,11 +15,12 @@ import hiiragi283.ragium.data.server.bootstrap.RagiumBiomeModifierProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumConfiguredProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumPlacedProvider
-import hiiragi283.ragium.data.server.bootstrap.RagiumSolarPowerProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumPotatoProjectileProvider
 import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumCustomLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumGlobalLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumLootTableProvider
+import hiiragi283.ragium.data.server.tag.RagiumBlockEntityTypeTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumDamageTypeTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumEnchantmentTagsProvider
@@ -44,7 +46,7 @@ object RagiumDatagen {
 
             add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifierProvider)
 
-            add(RagiumAPI.SOLAR_POWER_KEY, RagiumSolarPowerProvider)
+            add(CreateRegistries.POTATO_PROJECTILE_TYPE, RagiumPotatoProjectileProvider)
         }
 
         RagiumMaterialManager.gatherAttributes()
@@ -64,6 +66,7 @@ object RagiumDatagen {
 
         context.addProvider(event.includeServer(), ::RagiumRecipeProvider)
 
+        context.addProvider(event.includeServer(), ::RagiumBlockEntityTypeTagsProvider)
         context.addProvider(event.includeServer(), ::RagiumDamageTypeTagsProvider)
         context.addProvider(event.includeServer(), ::RagiumEnchantmentTagsProvider)
         context.addProvider(event.includeServer(), ::RagiumEntityTypeTagsProvider)

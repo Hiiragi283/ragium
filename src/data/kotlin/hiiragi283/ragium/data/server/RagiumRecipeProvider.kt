@@ -6,7 +6,6 @@ import hiiragi283.ragium.data.server.recipe.RagiumChemistryRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCompressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDecorationRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumEnchantingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumEngineeringRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFoodRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMachineRecipeProvider
@@ -14,7 +13,6 @@ import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumPlantingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumSimulatingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumWashingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAARecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAE2RecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumCreateRecipeProvider
@@ -37,7 +35,6 @@ class RagiumRecipeProvider(context: HTDataGenContext) : RecipeProvider(context.o
         RagiumCompressingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCrushingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDecorationRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumEnchantingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumEngineeringRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumFoodRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumMachineRecipeProvider.buildRecipes(recipeOutput, holderLookup)
@@ -45,7 +42,6 @@ class RagiumRecipeProvider(context: HTDataGenContext) : RecipeProvider(context.o
         RagiumPlantingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumSimulatingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumToolRecipeProvider.buildRecipes(recipeOutput, holderLookup)
-        RagiumWashingRecipeProvider.buildRecipes(recipeOutput, holderLookup)
 
         RagiumAARecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumAE2RecipeProvider.buildRecipes(recipeOutput, holderLookup)

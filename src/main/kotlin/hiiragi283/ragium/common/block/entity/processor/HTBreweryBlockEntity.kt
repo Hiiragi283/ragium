@@ -4,12 +4,10 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
-import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -25,26 +23,17 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidType
 
 class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity.Cached<HTSingleItemRecipe>(
+    HTSingleItemInputBlockEntity.CachedWithTank<HTSingleItemRecipe>(
         RagiumRecipeTypes.BREWING,
         RagiumBlocks.BREWERY,
         pos,
         state,
     ) {
-    lateinit var inputTank: HTFluidStackTank
-        private set
-
-    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
-        // input
-        inputTank = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(
-                listener,
-                RagiumConfig.COMMON.breweryTankCapacity,
-                canInsert = RagiumFluidContents.AWKWARD_WATER::isOf,
-            ),
-        )
-    }
+    override fun createTank(listener: HTContentListener): HTFluidStackTank = HTVariableFluidStackTank.input(
+        listener,
+        RagiumConfig.COMMON.breweryTankCapacity,
+        canInsert = RagiumFluidContents.AWKWARD_WATER::isOf,
+    )
 
     lateinit var outputSlot: HTItemStackSlot
         private set

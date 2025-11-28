@@ -17,8 +17,8 @@ object RagiumIntegrationCreativeTabs {
         "integration",
         RagiumTranslation.RAGIUM,
         RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL),
-    ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+    ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Items
-        HTCreativeTabHelper.addToDisplay(output, RagiumIntegrationItems.REGISTER.entries)
+        HTCreativeTabHelper.addToDisplay(parameters, output, RagiumIntegrationItems.REGISTER.entries)
     }
 }

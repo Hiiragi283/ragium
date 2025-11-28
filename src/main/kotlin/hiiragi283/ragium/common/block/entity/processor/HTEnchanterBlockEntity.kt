@@ -1,29 +1,51 @@
 package hiiragi283.ragium.common.block.entity.processor
 
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.single.HTExpRequiredRecipe
+import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.base.HTEnchantProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
+import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistryAccess
+import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTEnchantProcessorBlockEntity.Cached<SingleRecipeInput, HTExpRequiredRecipe>(
-        RagiumRecipeTypes.ENCHANTING,
+    HTSingleItemInputBlockEntity.CachedWithTank<HTEnchantingRecipe>(
+        RecipeCache(),
         RagiumBlocks.ENCHANTER,
         pos,
         state,
     ) {
+    override fun createTank(listener: HTContentListener): HTFluidStackTank = HTVariableFluidStackTank.input(
+        listener,
+        RagiumConfig.COMMON.extractorTankCapacity,
+        RagiumFluidContents.EXPERIENCE::isOf,
+    )
+
+    lateinit var outputSlot: HTItemStackSlot
+        private set
+
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = singleInput(builder, listener)
@@ -31,9 +53,9 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot = singleOutput(builder, listener)
     }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTExpRequiredRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTEnchantingRecipe): Boolean {
         val bool1: Boolean = outputSlot.insert(
             recipe.assembleItem(input, level.registryAccess()),
             HTStorageAction.SIMULATE,
@@ -50,7 +72,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: HTExpRequiredRecipe,
+        recipe: HTEnchantingRecipe,
     ) {
         // 実際にアウトプットに搬出する
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
@@ -59,5 +81,30 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
         HTStackSlotHelper.shrinkStack(inputTank, { recipe.getRequiredExpFluid() }, HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1f, 1f)
+    }
+
+    private class RecipeCache : HTRecipeCache<SingleRecipeInput, HTEnchantingRecipe> {
+        private var cache: Holder<Enchantment>? = null
+
+        override fun getFirstRecipe(input: SingleRecipeInput, level: Level): HTEnchantingRecipe? {
+            val access: RegistryAccess = level.registryAccess()
+            val lookup: HolderLookup<Enchantment> =
+                RagiumPlatform.INSTANCE.getLookup(access, Registries.ENCHANTMENT) ?: return null
+            val holderCached: Holder<Enchantment>? = cache
+            if (holderCached != null) {
+                val ingredient: HTItemIngredient? = RagiumDataMaps.INSTANCE.getIngredientForEnchant(access, holderCached)
+                if (ingredient != null) {
+                    return HTEnchantingRecipe(ingredient, holderCached)
+                } else {
+                    cache = null
+                }
+            }
+            for (holder: Holder<Enchantment> in lookup.listElements()) {
+                val ingredient: HTItemIngredient = RagiumDataMaps.INSTANCE.getIngredientForEnchant(access, holder) ?: continue
+                cache = holder
+                return HTEnchantingRecipe(ingredient, holder)
+            }
+            return null
+        }
     }
 }

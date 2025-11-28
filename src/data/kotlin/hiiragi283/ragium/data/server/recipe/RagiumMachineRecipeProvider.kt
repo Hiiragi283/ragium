@@ -3,20 +3,23 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -29,6 +32,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         generators()
         processors()
         devices()
+        upgrades()
 
         crate()
         drums()
@@ -39,60 +43,61 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun generators() {
         // Basic
-        generator(RagiumBlocks.THERMAL_GENERATOR) {
-            define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+        generator(RagiumBlocks.THERMAL_GENERATOR, RagiumMaterialKeys.RAGI_ALLOY) {
             define('B', Tags.Items.GLASS_BLOCKS)
             define('C', RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
             define('D', Items.FURNACE)
         }
         // Advanced
-        generator(RagiumBlocks.COMBUSTION_GENERATOR) {
-            define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+        generator(RagiumBlocks.COMBUSTION_GENERATOR, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) {
             define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.QUARTZ)
             define('C', RagiumItems.getCoil(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
             define('D', Items.PISTON)
         }
         // Elite
-        for (tier: HTCircuitTier in HTCircuitTier.entries) {
-            HTShapedRecipeBuilder
-                .create(RagiumBlocks.SOLAR_PANEL_UNIT, (tier.ordinal + 1) * 4)
-                .pattern(
-                    "AAA",
-                    "BCB",
-                ).define('A', RagiumItems.SOLAR_PANEL)
-                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-                .define('C', CommonMaterialPrefixes.CIRCUIT, tier)
-                .savePrefixed(output, "${tier.asMaterialName()}_")
-        }
-
         HTShapedRecipeBuilder
-            .create(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
+            .create(RagiumBlocks.SOLAR_PANEL_UNIT, 4)
             .pattern(
                 "AAA",
-                " B ",
-                "CCC",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-            .define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
-            .define('C', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-            .save(output)
-        // Ultimate
-        generator(RagiumBlocks.ENCHANTMENT_GENERATOR) {
-            define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+                "BCB",
+            ).define('A', RagiumItems.SOLAR_PANEL)
+            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .savePrefixed(output, "basic_")
+
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.SOLAR_PANEL_UNIT, 8)
+            .pattern(
+                "AAA",
+                "BCB",
+            ).define('A', RagiumItems.SOLAR_PANEL)
+            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
+            .savePrefixed(output, "advanced_")
+
+        generator(RagiumBlocks.SOLAR_PANEL_CONTROLLER, RagiumMaterialKeys.AZURE_STEEL) {
             define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
-            define('C', Items.GRINDSTONE)
+            define('C', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
+            define('D', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+        }
+        // Ultimate
+        generator(RagiumBlocks.ENCHANTMENT_GENERATOR, RagiumMaterialKeys.NIGHT_METAL) {
+            define('B', CommonMaterialPrefixes.GLASS_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
+            define('C', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.NIGHT_METAL)
             define('D', Items.PISTON)
         }
     }
 
     @JvmStatic
-    private inline fun generator(generator: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
+    private inline fun generator(generator: ItemLike, material: HTMaterialLike, action: HTShapedRecipeBuilder.() -> Unit) {
         HTShapedRecipeBuilder
             .create(generator)
             .pattern(
                 "AAA",
                 " B ",
                 "CDC",
-            ).apply(action)
+            ).define('A', CommonMaterialPrefixes.INGOT, material)
+            .apply(action)
             .save(output)
     }
 
@@ -107,36 +112,57 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         }
         basicMachine(RagiumBlocks.BLOCK_BREAKER) {
             define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
         basicMachine(RagiumBlocks.COMPRESSOR) {
             define('B', Items.PISTON)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
         basicMachine(RagiumBlocks.CUTTING_MACHINE) {
             define('B', Items.STONECUTTER)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.ELECTRIC_FURNACE)
+            .pattern(
+                " A ",
+                "ABA",
+                "ACA",
+            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('B', RagiumCommonTags.Items.CIRCUITS_BASIC)
+            .define('C', Items.FURNACE)
+            .save(output)
         basicMachine(RagiumBlocks.EXTRACTOR) {
             define('B', Items.HOPPER)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
         basicMachine(RagiumBlocks.PULVERIZER) {
             define('B', Items.FLINT)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
         }
         // Advanced
         advMachine(RagiumBlocks.CRUSHER) {
             define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
+            define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.CRUSHER)
+            .pattern(
+                "AAA",
+                " B ",
+                "CCC",
+            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            .define('B', RagiumBlocks.PULVERIZER)
+            .define('C', Items.NETHER_BRICKS)
+            .saveSuffixed(output, "_from_pulverizer")
+
         advMachine(RagiumBlocks.MELTER) {
             define('B', Items.BLAST_FURNACE)
             define('C', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
         }
-        advMachine(RagiumBlocks.WASHER) {
-            define('B', Items.IRON_TRAPDOOR)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ADVANCED)
+        advMachine(RagiumBlocks.MIXER) {
+            define('B', Tags.Items.BUCKETS_EMPTY)
+            define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
 
         HTShapedRecipeBuilder
@@ -150,38 +176,40 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
             .define('D', RagiumBlocks.getCoilBlock(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
             .save(output)
-
-        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.CRUSHER, RagiumBlocks.PULVERIZER).save(output)
         // Elite
-        eliteMachine(RagiumBlocks.BREWERY) {
-            define('B', Items.BREWING_STAND)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+        eliteMachine(RagiumBlocks.ADVANCED_MIXER) {
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            define('C', RagiumBlocks.MIXER)
         }
-        eliteMachine(RagiumBlocks.MIXER) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
-            define('C', RagiumBlocks.REFINERY)
+        eliteMachine(RagiumBlocks.BREWERY) {
+            define('B', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
+            define('C', Items.BREWING_STAND)
         }
         eliteMachine(RagiumBlocks.MULTI_SMELTER) {
-            define('B', Items.FURNACE)
-            define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            define('C', RagiumBlocks.ELECTRIC_FURNACE)
         }
         eliteMachine(RagiumBlocks.PLANTER) {
-            define('B', Items.FLOWER_POT)
-            define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ELITE)
+            define('B', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
+            define('C', Items.FLOWER_POT)
+        }
+        eliteMachine(RagiumBlocks.WASHER) {
+            define('B', Items.IRON_TRAPDOOR)
+            define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
         // Ultimate
         machineBase(RagiumBlocks.ENCHANT_COPIER, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             define('C', ItemTags.ANVIL)
             define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
         }
         machineBase(RagiumBlocks.ENCHANTER, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             define('C', Items.ENCHANTING_TABLE)
             define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
         }
         machineBase(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.ULTIMATE)
+            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             define('C', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
             define('D', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
         }
@@ -237,67 +265,139 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             }
 
         // Basic
-        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.ITEM_BUFFER, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.CHESTS)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.FLUID_COLLECTOR)
+            .cross4()
+            .define('A', RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
+            .define('B', Tags.Items.BUCKETS_EMPTY)
+            .define('C', RagiumBlocks.DEVICE_CASING)
             .save(output)
 
-        createComponentUpgrade(HTComponentTier.BASIC, RagiumBlocks.WATER_COLLECTOR, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.BUCKETS_WATER)
-            .save(output)
-        // Advanced
-        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.EXP_COLLECTOR, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Items.HOPPER)
-            .save(output)
-
-        createComponentUpgrade(HTComponentTier.ADVANCED, RagiumBlocks.FISHER, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(Tags.Items.TOOLS_FISHING_ROD)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.ITEM_COLLECTOR)
+            .cross4()
+            .define('A', RagiumItems.getCoil(RagiumMaterialKeys.RAGI_ALLOY))
+            .define('B', Tags.Items.CHESTS)
+            .define('C', RagiumBlocks.DEVICE_CASING)
             .save(output)
         // Elite
-        createComponentUpgrade(HTComponentTier.ELITE, RagiumBlocks.DIM_ANCHOR, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.DIM_ANCHOR)
+            .cross4()
+            .define('A', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
+            .define('C', RagiumBlocks.DEVICE_CASING)
             .save(output)
 
-        createComponentUpgrade(HTComponentTier.ELITE, RagiumBlocks.ENI, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.DIAMOND)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.ENI)
+            .cross4()
+            .define('A', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
+            .define('B', CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.DIAMOND)
+            .define('C', RagiumBlocks.DEVICE_CASING)
             .save(output)
         // Ultimate
-        createComponentUpgrade(HTComponentTier.ULTIMATE, RagiumBlocks.MOB_CAPTURER, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.ELDRITCH_PEARL)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.TELEPAD)
+            .cross4()
+            .define('A', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.DEEP_STEEL)
+            .define('B', CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
+            .define('C', RagiumBlocks.DEVICE_CASING)
             .save(output)
+    }
 
-        createComponentUpgrade(HTComponentTier.ULTIMATE, RagiumBlocks.TELEPAD, RagiumBlocks.DEVICE_CASING)
-            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
+    //    Upgrades    //
+
+    @JvmStatic
+    private fun upgrades() {
+        // Machine
+        for ((variant: HTUpgradeVariant, upgrade: ItemLike) in RagiumItems.MACHINE_UPGRADES.column(HTBaseTier.BASIC)) {
+            val gem: HTMaterialKey = when (variant) {
+                HTUpgradeVariant.EFFICIENCY -> RagiumMaterialKeys.WARPED_CRYSTAL
+                HTUpgradeVariant.ENERGY_CAPACITY -> RagiumMaterialKeys.RAGI_CRYSTAL
+                HTUpgradeVariant.SPEED -> RagiumMaterialKeys.CRIMSON_CRYSTAL
+            }
+            HTShapedRecipeBuilder
+                .cross8Mirrored(output, upgrade) {
+                    define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+                    define('B', RagiumModTags.Items.PLASTICS)
+                    define('C', CommonMaterialPrefixes.GEM, gem)
+                }
+        }
+
+        for ((variant: HTUpgradeVariant, upgrade: ItemLike) in RagiumItems.MACHINE_UPGRADES.column(HTBaseTier.ADVANCED)) {
+            HTShapedRecipeBuilder
+                .create(upgrade)
+                .hollow4()
+                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+                .define('B', RagiumItems.getUpgrade(variant, HTBaseTier.BASIC))
+                .save(output)
+        }
+
+        // Processor
+        processorUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) {
+            define('B', RagiumFluidContents.LUBRICANT.bucketTag)
+        }
+        processorUpgrade(RagiumItems.FORTUNE_UPGRADE) {
+            define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
+        }
+        processorUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE) {
+            define('B', Tags.Items.BUCKETS_LAVA)
+        }
+
+        // Device
+        deviceUpgrade(RagiumItems.EXP_COLLECTOR_UPGRADE) {
+            define('B', Items.EXPERIENCE_BOTTLE)
+        }
+        deviceUpgrade(RagiumItems.FISHING_UPGRADE) {
+            define('B', Tags.Items.TOOLS_FISHING_ROD)
+        }
+        deviceUpgrade(RagiumItems.MOB_CAPTURE_UPGRADE) {
+            define('B', RagiumItems.ELDRITCH_EGG)
+        }
+    }
+
+    @JvmStatic
+    private inline fun processorUpgrade(upgrade: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
+        HTShapedRecipeBuilder
+            .create(upgrade)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            .apply(action)
             .save(output)
     }
 
     @JvmStatic
-    private fun createComponentUpgrade(tier: HTComponentTier, output: ItemLike, input: ItemLike): HTSmithingRecipeBuilder =
-        HTSmithingRecipeBuilder
-            .create(output)
-            .addIngredient(RagiumItems.getComponent(tier))
-            .addIngredient(input)
+    private inline fun deviceUpgrade(upgrade: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
+        HTShapedRecipeBuilder
+            .create(upgrade)
+            .hollow4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .apply(action)
+            .save(output)
+    }
 
     //    Storage    //
 
     @JvmStatic
     private fun crate() {
         for ((tier: HTCrateTier, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
-            resetComponent(crate)
+            resetComponent(crate, RagiumDataComponents.ITEM_CONTENT)
 
-            val pair: Pair<CommonMaterialPrefixes, HTMaterialKey> = when (tier) {
-                HTCrateTier.SMALL -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.IRON
-                HTCrateTier.MEDIUM -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
-                HTCrateTier.LARGE -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.DIAMOND
+            val key: HTMaterialKey = when (tier) {
+                HTCrateTier.SMALL -> VanillaMaterialKeys.IRON
+                HTCrateTier.MEDIUM -> VanillaMaterialKeys.GOLD
+                HTCrateTier.LARGE -> VanillaMaterialKeys.DIAMOND
                 HTCrateTier.HUGE -> continue
             }
-
+            val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
             HTShapedRecipeBuilder
                 .create(crate)
                 .pattern(
                     "ABA",
                     "ACA",
                     "ABA",
-                ).define('A', pair.first, pair.second)
+                ).define('A', prefix, key)
                 .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
                 .define('C', Tags.Items.CHESTS_WOODEN)
                 .save(output)
@@ -321,20 +421,20 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         for ((tier: HTDrumTier, drum: HTItemHolderLike) in RagiumBlocks.DRUMS) {
             resetComponent(drum, RagiumDataComponents.FLUID_CONTENT)
 
-            val pair: Pair<CommonMaterialPrefixes, HTMaterialKey> = when (tier) {
-                HTDrumTier.SMALL -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.COPPER
-                HTDrumTier.MEDIUM -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
-                HTDrumTier.LARGE -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.DIAMOND
+            val key: HTMaterialKey = when (tier) {
+                HTDrumTier.SMALL -> VanillaMaterialKeys.COPPER
+                HTDrumTier.MEDIUM -> VanillaMaterialKeys.GOLD
+                HTDrumTier.LARGE -> VanillaMaterialKeys.DIAMOND
                 else -> continue
             }
-
+            val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
             HTShapedRecipeBuilder
                 .create(drum)
                 .pattern(
                     "ABA",
                     "ACA",
                     "ABA",
-                ).define('A', pair.first, pair.second)
+                ).define('A', prefix, key)
                 .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
                 .define('C', Tags.Items.BUCKETS_EMPTY)
                 .save(output)

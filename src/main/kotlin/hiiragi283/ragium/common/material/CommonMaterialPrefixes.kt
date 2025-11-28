@@ -25,11 +25,13 @@ enum class CommonMaterialPrefixes : HTPrefixLike {
     ROD,
 
     // Item - Custom
-    CIRCUIT,
     DOUGH,
     FLOUR,
     FUEL,
     JAM,
+    RAW_MATERIAL_DYE {
+        override val prefix: HTMaterialPrefix = HTMaterialPrefix("raw_materials/dye")
+    },
     SCRAP,
     ;
 

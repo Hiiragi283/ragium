@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.util.HTItemDropHelper
-import hiiragi283.ragium.common.variant.HTChargeVariant
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
@@ -20,10 +20,10 @@ import net.minecraft.world.phys.EntityHitResult
 class HTNeutralCharge : HTAbstractCharge {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
 
-    constructor(level: Level, shooter: LivingEntity) : super(HTChargeVariant.STRIKE, level, shooter)
+    constructor(level: Level, shooter: LivingEntity) : super(HTChargeType.STRIKE, level, shooter)
 
     constructor(level: Level, x: Double, y: Double, z: Double) : super(
-        HTChargeVariant.STRIKE,
+        HTChargeType.STRIKE,
         level,
         x,
         y,
@@ -40,5 +40,5 @@ class HTNeutralCharge : HTAbstractCharge {
         }
     }
 
-    override fun getDefaultItem(): Item = HTChargeVariant.STRIKE.asItem()
+    override fun getDefaultItem(): Item = HTChargeType.STRIKE.asItem()
 }

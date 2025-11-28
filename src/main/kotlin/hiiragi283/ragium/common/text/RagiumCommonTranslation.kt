@@ -49,16 +49,11 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     SIMULATOR("description", "simulator"),
 
     // Blocks - Devices
-    ITEM_BUFFER("description", "item_buffer"),
-    WATER_COLLECTOR("description", "water_collector"),
-
-    EXP_COLLECTOR("description", "exp_collector"),
-    FISHER("description", "fisher"),
+    FLUID_COLLECTOR("description", "water_collector"),
+    ITEM_COLLECTOR("description", "item_collector"),
 
     DIM_ANCHOR("description", "dimensional_anchor"),
     ENI("description", "energy_network_interface"),
-
-    MOB_CAPTURER("description", "mob_capturer"),
 
     CEU("description", "creative_energy_unit"),
 
@@ -101,9 +96,23 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     ICE_CREAM("description", "ice_cream"),
     RAGI_CHERRY("description", "ragi_cherry"),
 
+    // Items - Upgrades
+    EFFICIENT_CRUSH_UPGRADE("description", "upgrade", "efficient_crush"),
+    PRIMARY_ONLY_UPGRADE("description", "upgrade", "primary_only"),
+
+    EXP_COLLECTOR_UPGRADE("description", "upgrade", "exp_collector"),
+    FISHING_UPGRADE("description", "upgrade", "fishing"),
+    MOB_CAPTURE_UPGRADE("description", "upgrade", "mob_capture"),
+
     // Key Mapping
     KEY_CATEGORY("key", "category"),
     KEY_OPEN_UNIVERSAL_BUNDLE("key", "open_universal_bundle"),
+
+    // EMI
+    EMI_MACHINE_UPGRADE("emi.category", "machine_upgrade"),
+
+    // Jade
+    JADE_MACHINE_TIER("jade", "machine_tier"),
     ;
 
     override val translationKey: String = Util.makeDescriptionId(type, RagiumAPI.id(path.joinToString(separator = ".")))

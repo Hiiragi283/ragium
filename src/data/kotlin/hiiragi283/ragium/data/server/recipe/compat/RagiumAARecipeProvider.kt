@@ -7,17 +7,16 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALLY) {
     override fun buildRecipeInternal() {
         // Rice Slimeball
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
-                itemCreator.fromItem(ActuallyItems.RICE_DOUGH),
-                fluidCreator.water(250),
-            ).addResult(resultHelper.item(ActuallyItems.RICE_SLIMEBALL))
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromItem(ActuallyItems.RICE_DOUGH))
+            .addIngredient(fluidCreator.water(250))
+            .setResult(resultHelper.item(ActuallyItems.RICE_SLIMEBALL))
             .save(output)
         // Solidified Exp -> Liquid Exp
         HTItemWithCatalystRecipeBuilder
@@ -48,12 +47,10 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
             ).save(output)
         // Canola Oil -> Refined
         HTComplexRecipeBuilder
-            .refining(
-                fluidCreator.from(InitFluids.CANOLA_OIL.get(), 80),
-                resultHelper.fluid(InitFluids.REFINED_CANOLA_OIL.get(), 80),
-                null,
-                null,
-            ).save(output)
+            .refining()
+            .addIngredient(fluidCreator.from(InitFluids.CANOLA_OIL.get(), 80))
+            .setResult(resultHelper.fluid(InitFluids.REFINED_CANOLA_OIL.get(), 80))
+            .save(output)
         // Refined -> Crystallized
         HTComplexRecipeBuilder
             .mixing()

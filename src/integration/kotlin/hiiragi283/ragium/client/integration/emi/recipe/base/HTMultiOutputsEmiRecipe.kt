@@ -3,11 +3,20 @@ package hiiragi283.ragium.client.integration.emi.recipe.base
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
-import net.minecraft.world.item.crafting.Recipe
+import hiiragi283.ragium.impl.recipe.base.HTBasicComplexOutputRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTMultiOutputsEmiRecipe<RECIPE : Recipe<*>>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
-    HTEmiHolderRecipe<RECIPE>(category, holder) {
+abstract class HTMultiOutputsEmiRecipe<RECIPE : HTBasicComplexOutputRecipe<*>>(
+    category: HTEmiRecipeCategory,
+    holder: RecipeHolder<RECIPE>,
+) : HTEmiHolderRecipe<RECIPE>(category, holder) {
+    init {
+        initInputs()
+        addOutputs(recipe.results)
+    }
+
+    protected abstract fun initInputs()
+
     final override fun addWidgets(widgets: WidgetHolder) {
         // Input
         initInputSlots(widgets)

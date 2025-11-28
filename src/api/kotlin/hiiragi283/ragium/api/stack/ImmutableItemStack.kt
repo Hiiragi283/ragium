@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.stack
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -26,11 +27,11 @@ value class ImmutableItemStack private constructor(private val stack: ItemStack)
         @JvmStatic
         private val ITEM_STACK_CODEC: BiCodec<RegistryFriendlyByteBuf, ItemStack> =
             BiCodec.composite(
-                VanillaBiCodecs.holder(Registries.ITEM).fieldOf("id"),
+                VanillaBiCodecs.holder(Registries.ITEM).fieldOf(RagiumConst.ID),
                 ItemStack::getItemHolder,
-                BiCodecs.POSITIVE_INT.optionalOrElseField("count", 1),
+                BiCodecs.POSITIVE_INT.optionalOrElseField(RagiumConst.COUNT, 1),
                 ItemStack::getCount,
-                VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
+                VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf(RagiumConst.COMPONENTS, DataComponentPatch.EMPTY),
                 ItemStack::getComponentsPatch,
                 ::ItemStack,
             )

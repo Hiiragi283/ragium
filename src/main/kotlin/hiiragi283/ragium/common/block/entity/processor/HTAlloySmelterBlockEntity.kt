@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTMultiInputsToObjRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -64,7 +63,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 実際にインプットを減らす
         val ingredients: List<HTItemIngredient> = recipe.ingredients
-        HTMultiInputsToObjRecipe.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
+        HTMultiRecipeInput.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
             HTStackSlotHelper.shrinkStack(inputSlots[slot], ingredients[index], HTStorageAction.EXECUTE)
         }
         // SEを鳴らす

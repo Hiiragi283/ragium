@@ -5,26 +5,22 @@ import hiiragi283.ragium.api.text.HTTextResult
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
-import java.util.function.Function
 
 /**
  * [ResourceKey]または[TagKey]を取得できるインターフェース
  * @param T 種類のクラス
  */
 interface HTKeyOrTagEntry<T : Any> : HTHolderLike {
-    /**
-     * 指定した引数から，このオブジェクトを変換します。
-     * @param U 変換後のクラス
-     * @param fromKey [ResourceKey]から変換するブロック
-     * @param fromTag [TagKey]から変換するブロック
-     * @return 変換された値
-     */
-    fun <U> map(fromKey: Function<ResourceKey<T>, U>, fromTag: Function<TagKey<T>, U>): U
+    fun unwrap(): Either<ResourceKey<T>, TagKey<T>>
 
-    fun toEither(): Either<ResourceKey<T>, TagKey<T>> =
-        map(Either<ResourceKey<T>, TagKey<T>>::left, Either<ResourceKey<T>, TagKey<T>>::right)
+    fun isOf(holder: Holder<T>): Boolean = unwrap().map(holder::`is`, holder::`is`)
+
+    fun getAllHolders(provider: HolderLookup.Provider?): HTTextResult<HolderSet<T>>
+
+    fun getAllHolders(getter: HolderGetter<T>): HTTextResult<HolderSet<T>>
 
     /**
      * 指定した[HolderLookup.Provider]から[Holder]の[HTTextResult]を返します。

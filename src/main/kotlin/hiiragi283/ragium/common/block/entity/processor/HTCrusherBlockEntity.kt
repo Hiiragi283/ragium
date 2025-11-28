@@ -1,60 +1,53 @@
 package hiiragi283.ragium.common.block.entity.processor
 
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
-import hiiragi283.ragium.api.storage.HTStorageAccess
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTChancedItemOutputBlockEntity
+import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTFluidToChancedItemOutputBlockEntity.Cached<SingleRecipeInput, HTItemToChancedItemRecipe>(
-        RagiumRecipeTypes.CRUSHING,
+    HTAbstractCrusherBlockEntity(
         RagiumBlocks.CRUSHER,
         pos,
         state,
     ) {
-    override fun createTank(listener: HTContentListener): HTVariableFluidStackTank = HTVariableFluidStackTank.input(
-        listener,
-        RagiumConfig.COMMON.crusherTankCapacity,
-        canInsert = RagiumFluidContents.LUBRICANT::isOf,
-    )
+    lateinit var outputSlots: List<HTItemStackSlot>
+        private set
+
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        // input
+        inputSlot = singleInput(builder, listener)
+        // outputs
+        outputSlots = multiOutputs(builder, listener)
+    }
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
+        outputSlots.any { slot: HTItemStackSlot -> slot.getNeeded() > 0 }
 
-    override fun getRecipeTime(recipe: HTItemToChancedItemRecipe): Int =
-        when (inputTank.extract(10, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount()) {
-            10 -> 18 * 10
-            else -> super.getRecipeTime(recipe)
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToChancedItemRecipe): Boolean {
+        // アウトプットに搬出できるか判定する
+        for (stackIn: ImmutableItemStack in recipe.getPreviewItems(input, level.registryAccess())) {
+            if (HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.SIMULATE) != null) {
+                return false
+            }
         }
+        return true
+    }
 
-    override fun completeRecipe(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        input: SingleRecipeInput,
-        recipe: HTItemToChancedItemRecipe,
-    ) {
-        super.completeRecipe(level, pos, state, input, recipe)
-        // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
-        // 潤滑油があれば減らす
-        inputTank.extract(10, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        // SEを鳴らす
-        level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 1f, 0.25f)
+    override fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToChancedItemRecipe) {
+        // 実際にアウトプットに搬出する
+        HTChancedItemOutputBlockEntity.exportOutputs(this, outputSlots, level, input, recipe)
     }
 }

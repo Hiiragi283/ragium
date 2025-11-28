@@ -61,6 +61,10 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         inputs.add(ingredient ?: EmiStack.EMPTY)
     }
 
+    protected fun addEmptyInput() {
+        inputs.add(EmiStack.EMPTY)
+    }
+
     protected fun addCatalyst(ingredient: HTItemIngredient?) {
         addCatalyst(ingredient?.let(HTItemIngredient::toEmi))
     }

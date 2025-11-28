@@ -271,6 +271,8 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
                         RagiumAPI.MOD_ID,
                         RagiumConst.MINECRAFT,
                         "alltheores",
+                        RagiumConst.MEKANISM,
+                        RagiumConst.IMMERSIVE,
                     ),
                     { "" },
                     { obj: Any -> obj is String },

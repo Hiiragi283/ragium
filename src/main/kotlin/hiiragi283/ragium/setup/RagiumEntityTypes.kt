@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
@@ -17,7 +18,6 @@ import hiiragi283.ragium.common.entity.charge.HTStrikeCharge
 import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTChargeVariant
 import net.minecraft.SharedConstants
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -41,17 +41,17 @@ object RagiumEntityTypes {
     val ELDRITCH_EGG: HTDeferredEntityType<HTThrownCaptureEgg> = registerThrowable("eldritch_egg", ::HTThrownCaptureEgg)
 
     @JvmField
-    val CHARGES: Map<HTChargeVariant, HTDeferredEntityType<out HTAbstractCharge>> =
-        HTChargeVariant.entries.associateWith { variant: HTChargeVariant ->
-            val factory: (EntityType<out HTAbstractCharge>, Level) -> HTAbstractCharge = when (variant) {
-                HTChargeVariant.BLAST -> ::HTBlastCharge
-                HTChargeVariant.STRIKE -> ::HTStrikeCharge
-                HTChargeVariant.NEUTRAL -> ::HTNeutralCharge
-                HTChargeVariant.FISHING -> ::HTFishingCharge
-                HTChargeVariant.TELEPORT -> ::HTTeleportCharge
-                HTChargeVariant.CONFUSING -> ::HTConfusingCharge
+    val CHARGES: Map<HTChargeType, HTDeferredEntityType<out HTAbstractCharge>> =
+        HTChargeType.entries.associateWith { chargeType: HTChargeType ->
+            val factory: (EntityType<out HTAbstractCharge>, Level) -> HTAbstractCharge = when (chargeType) {
+                HTChargeType.BLAST -> ::HTBlastCharge
+                HTChargeType.STRIKE -> ::HTStrikeCharge
+                HTChargeType.NEUTRAL -> ::HTNeutralCharge
+                HTChargeType.FISHING -> ::HTFishingCharge
+                HTChargeType.TELEPORT -> ::HTTeleportCharge
+                HTChargeType.CONFUSING -> ::HTConfusingCharge
             }
-            registerThrowable("${variant.variantName()}_charge", factory)
+            registerThrowable("${chargeType.serializedName}_charge", factory)
         }
 
     @JvmStatic

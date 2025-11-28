@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
@@ -20,6 +21,7 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 
 object RagiumDataComponents {
@@ -56,20 +58,11 @@ object RagiumDataComponents {
     val EAT_SOUND: DataComponentType<HTItemSoundEvent> = REGISTER.registerType("eating_sound", HTItemSoundEvent.CODEC)
 
     @JvmField
-    val ENERGY: DataComponentType<Int> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_INT)
-
-    @JvmField
-    val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
-
-    @JvmField
     val INTRINSIC_ENCHANTMENT: DataComponentType<HTIntrinsicEnchantment> =
         REGISTER.registerType("intrinsic_enchantment", HTIntrinsicEnchantment.CODEC)
 
     @JvmField
     val IS_ACTIVE: DataComponentType<Boolean> = REGISTER.registerType("is_active", BiCodec.BOOL)
-
-    @JvmField
-    val ITEM_CONTENT: DataComponentType<HTItemContents> = REGISTER.registerType("item_content", HTItemContents.CODEC)
 
     @JvmField
     val LOOT_TICKET: DataComponentType<HTLootTicketTargets> = REGISTER.registerType("loot_ticket", HTLootTicketTargets.CODEC)
@@ -79,4 +72,24 @@ object RagiumDataComponents {
 
     @JvmField
     val TELEPORT_POS: DataComponentType<HTTeleportPos> = REGISTER.registerType("teleport_pos", HTTeleportPos.CODEC)
+
+    //    Machine    //
+
+    @JvmField
+    val MACHINE_UPGRADE: DataComponentType<HTMachineUpgrade> = REGISTER.registerType("machine_upgrade", HTMachineUpgrade.CODEC)
+
+    @JvmField
+    val MACHINE_UPGRADE_FILTER: DataComponentType<HTKeyOrTagEntry<BlockEntityType<*>>> =
+        REGISTER.registerType("machine_upgrade/filter", HTKeyOrTagHelper.INSTANCE.codec(Registries.BLOCK_ENTITY_TYPE))
+
+    //    Storage    //
+
+    @JvmField
+    val ENERGY: DataComponentType<Int> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_INT)
+
+    @JvmField
+    val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
+
+    @JvmField
+    val ITEM_CONTENT: DataComponentType<HTItemContents> = REGISTER.registerType("item_content", HTItemContents.CODEC)
 }

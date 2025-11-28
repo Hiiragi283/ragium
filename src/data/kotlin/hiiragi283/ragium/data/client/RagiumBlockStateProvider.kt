@@ -11,9 +11,9 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -49,15 +49,12 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             addAll(RagiumBlocks.getMaterialMap(CommonMaterialPrefixes.STORAGE_BLOCK).values)
             // Device
             add(RagiumBlocks.DEVICE_CASING)
-            add(RagiumBlocks.ITEM_BUFFER)
 
-            add(RagiumBlocks.EXP_COLLECTOR)
-            add(RagiumBlocks.FISHER)
+            add(RagiumBlocks.ITEM_COLLECTOR)
 
             add(RagiumBlocks.DIM_ANCHOR)
             add(RagiumBlocks.ENI)
 
-            add(RagiumBlocks.MOB_CAPTURER)
             add(RagiumBlocks.TELEPAD)
 
             add(RagiumBlocks.CEU)
@@ -70,11 +67,11 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         layeredBlock(RagiumBlocks.MYSTERIOUS_OBSIDIAN, vanillaId("block", "obsidian"), RagiumBlocks.MYSTERIOUS_OBSIDIAN.blockId)
 
         // Decoration
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
-            val textureId: ResourceLocation = variant.base.blockId
-            val slab: HTBasicDeferredBlock<SlabBlock> = variant.slab
-            val stair: HTBasicDeferredBlock<StairBlock> = variant.stairs
-            val wall: HTBasicDeferredBlock<WallBlock> = variant.wall
+        for (type: HTDecorationType in HTDecorationType.entries) {
+            val textureId: ResourceLocation = type.base.blockId
+            val slab: HTBasicDeferredBlock<SlabBlock> = type.slab
+            val stair: HTBasicDeferredBlock<StairBlock> = type.stairs
+            val wall: HTBasicDeferredBlock<WallBlock> = type.wall
 
             slabBlock(slab, textureId)
             stairsBlock(stair, textureId)
@@ -178,6 +175,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         val blackstone: ResourceLocation = vanillaId("block", "polished_blackstone_bricks")
 
         val eliteMachine: ResourceLocation = RagiumAPI.id("block", "elite_machine_casing")
+        val eliteFrame: ResourceLocation = RagiumAPI.id("block", "elite_machine_frame")
         val deepslateTiles: ResourceLocation = vanillaId("block", "deepslate_tiles")
 
         val ultimateMachine: ResourceLocation = RagiumAPI.id("block", "ultimate_machine_casing")
@@ -202,19 +200,21 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Advanced
         machine(RagiumBlocks.CRUSHER, advancedCasing, blackstone, RagiumAPI.id("block", "pulverizer_front"))
         machine(RagiumBlocks.MELTER, advancedFrame, blackstone)
+        machine(RagiumBlocks.MIXER, advancedFrame, blackstone)
         altModelBlock(RagiumBlocks.REFINERY, factory = ::horizontalBlock)
-        machine(RagiumBlocks.WASHER, advancedFrame, blackstone)
         // Elite
+        machine(RagiumBlocks.ADVANCED_MIXER, eliteFrame, deepslateTiles, RagiumAPI.id("block", "mixer_front"))
         machine(RagiumBlocks.BREWERY, eliteMachine, deepslateTiles)
         machine(RagiumBlocks.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
         machine(RagiumBlocks.PLANTER, eliteMachine, deepslateTiles)
+        machine(RagiumBlocks.WASHER, eliteFrame, deepslateTiles)
         // Ultimate
         machine(RagiumBlocks.ENCHANT_COPIER, ultimateMachine, obsidian)
         machine(RagiumBlocks.SIMULATOR, ultimateMachine, ultimateMachine)
 
         // Device
         layeredBlock(
-            RagiumBlocks.WATER_COLLECTOR,
+            RagiumBlocks.FLUID_COLLECTOR,
             vanillaId("block", "water_still"),
             RagiumAPI.id("block", "device_overlay"),
         )

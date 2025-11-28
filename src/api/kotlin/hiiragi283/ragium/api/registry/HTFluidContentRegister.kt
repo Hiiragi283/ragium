@@ -22,6 +22,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.DispenseFluidContainer
 import net.neoforged.neoforge.fluids.FluidType
+import java.util.function.UnaryOperator
 
 /**
  * @see mekanism.common.registration.impl.FluidDeferredRegister
@@ -55,22 +56,28 @@ class HTFluidContentRegister(modId: String) {
         }
     }
 
-    fun registerSimple(name: String, properties: FluidType.Properties): HTBasicFluidContentNew = register(name, properties, ::FluidType)
+    fun registerSimple(
+        name: String,
+        properties: FluidType.Properties,
+        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
+    ): HTBasicFluidContent = register(name, properties, ::FluidType, blockProperties)
 
     fun <TYPE : FluidType> register(
         name: String,
         properties: FluidType.Properties,
         typeFactory: (FluidType.Properties) -> TYPE,
+        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
     ): HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing, LiquidBlock, BucketItem> =
-        register(name, properties, typeFactory, ::LiquidBlock)
+        register(name, properties, typeFactory, ::LiquidBlock, blockProperties)
 
     fun <TYPE : FluidType, BLOCK : LiquidBlock> register(
         name: String,
         properties: FluidType.Properties,
         typeFactory: (FluidType.Properties) -> TYPE,
         blockFactory: BlockWithContextFactory<BaseFlowingFluid.Source, BLOCK>,
+        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
     ): HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing, BLOCK, BucketItem> =
-        register(name, properties, typeFactory, blockFactory, ::BucketItem)
+        register(name, properties, typeFactory, blockFactory, ::BucketItem, blockProperties)
 
     fun <TYPE : FluidType, BLOCK : LiquidBlock, BUCKET : Item> register(
         name: String,
@@ -78,6 +85,7 @@ class HTFluidContentRegister(modId: String) {
         typeFactory: (FluidType.Properties) -> TYPE,
         blockFactory: BlockWithContextFactory<BaseFlowingFluid.Source, BLOCK>,
         bucketFactory: ItemWithContextFactory<BaseFlowingFluid.Source, BUCKET>,
+        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
     ): HTFluidContent<TYPE, BaseFlowingFluid.Source, BaseFlowingFluid.Flowing, BLOCK, BUCKET> {
         // Fluid Type
         val typeHolder: HTDeferredFluidType<TYPE> = typeRegister.registerType(name, properties, typeFactory)
@@ -94,6 +102,7 @@ class HTFluidContentRegister(modId: String) {
             name,
             BlockBehaviour.Properties
                 .of()
+                .apply(blockProperties::apply)
                 .noCollission()
                 .strength(100f)
                 .noLootTable()

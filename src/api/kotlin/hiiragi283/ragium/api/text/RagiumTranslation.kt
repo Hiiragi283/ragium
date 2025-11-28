@@ -25,8 +25,10 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     EMPTY_TAG_KEY("error", "empty.tag_key"),
     INVALID_PACKET_S2C("error", "invalid_packet", "s2c"),
     INVALID_PACKET_C2S("error", "invalid_packet", "c2s"),
-    MISSING_REGISTRY("error", "missing_registry"),
-    MISSING_KEY("error", "missing_key"),
+
+    MISSING_SERVER("error", "missing", "server"),
+    MISSING_REGISTRY("error", "missing", "registry"),
+    MISSING_KEY("error", "missing", "key"),
 
     // GUI
     CAPACITY("gui", "capacity"),

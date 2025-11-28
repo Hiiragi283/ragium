@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -58,9 +59,9 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
         companion object {
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodec.composite(
-                VanillaBiCodecs.holderSet(Registries.FLUID).fieldOf("fluids"),
+                VanillaBiCodecs.holderSet(Registries.FLUID).fieldOf(RagiumConst.FLUIDS),
                 HolderBased::holderSet,
-                BiCodecs.POSITIVE_INT.fieldOf("amount"),
+                BiCodecs.POSITIVE_INT.fieldOf(RagiumConst.AMOUNT),
                 HolderBased::amount,
                 ::HolderBased,
             )
@@ -83,7 +84,7 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
             val CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
                 VanillaMapBiCodecs.FLUID_INGREDIENT,
                 IngredientBased::ingredient,
-                BiCodecs.POSITIVE_INT.fieldOf("amount"),
+                BiCodecs.POSITIVE_INT.fieldOf(RagiumConst.AMOUNT),
                 IngredientBased::amount,
                 ::IngredientBased,
             )

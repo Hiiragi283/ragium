@@ -21,17 +21,26 @@ class HTFakeRecipeViewerType<RECIPE : Any>(
     HTHasText by hasText {
     companion object {
         @JvmStatic
-        fun <RECIPE : Any, ITEM> create(
+        fun <RECIPE : Any, ITEM : HTItemHolderLike> create(
             item: ITEM,
+            hasText: HTHasText,
             bounds: HTBounds,
-        ): HTFakeRecipeViewerType<RECIPE> where ITEM : HTItemHolderLike, ITEM : HTHasText = HTFakeRecipeViewerType(
-            item.getId(),
-            item,
+            id: ResourceLocation = item.getId(),
+        ): HTFakeRecipeViewerType<RECIPE> = HTFakeRecipeViewerType(
+            id,
+            hasText,
             item.toStack(),
             null,
             bounds,
             listOf(item),
         )
+
+        @JvmStatic
+        fun <RECIPE : Any, ITEM> create(
+            item: ITEM,
+            bounds: HTBounds,
+            id: ResourceLocation = item.getId(),
+        ): HTFakeRecipeViewerType<RECIPE> where ITEM : HTItemHolderLike, ITEM : HTHasText = create(item, item, bounds, id)
     }
 
     override fun getBounds(): HTBounds = bounds

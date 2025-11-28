@@ -116,20 +116,17 @@ object RagiumMaterialEvents {
 
     @JvmStatic
     private fun common(event: HTMaterialDefinitionEvent) {
-        event.modify(CommonMaterialKeys.Metals.entries) { addDefaultPrefix(CommonMaterialPrefixes.INGOT) }
-        event.modify(CommonMaterialKeys.Alloys.entries) { addDefaultPrefix(CommonMaterialPrefixes.INGOT) }
-        event.modify(CommonMaterialKeys.Gems.entries) { gems ->
+        event.modify(CommonMaterialKeys.Metals.entries) {
+            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+            addName(it)
+        }
+        event.modify(CommonMaterialKeys.Alloys.entries) {
+            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+            addName(it)
+        }
+        event.modify(CommonMaterialKeys.Gems.entries) {
             addDefaultPrefix(CommonMaterialPrefixes.GEM)
-            when (gems) {
-                CommonMaterialKeys.Gems.CINNABAR -> addName("Cinnabar", "辰砂")
-                CommonMaterialKeys.Gems.FLUORITE -> addName("Fluorite", "蛍石")
-                CommonMaterialKeys.Gems.PERIDOT -> addName("Peridot", "ペリドット")
-                CommonMaterialKeys.Gems.RUBY -> addName("Ruby", "ルビー")
-                CommonMaterialKeys.Gems.SALT -> addName("Salt", "塩")
-                CommonMaterialKeys.Gems.SALTPETER -> addName("Saltpeter", "硝石")
-                CommonMaterialKeys.Gems.SAPPHIRE -> addName("Sapphire", "サファイア")
-                CommonMaterialKeys.Gems.SULFUR -> addName("Sulfur", "硫黄")
-            }
+            addName(it)
         }
 
         event.modify(CommonMaterialKeys.COAL_COKE) {
@@ -197,10 +194,6 @@ object RagiumMaterialEvents {
         event.modify(RagiumMaterialKeys.NIGHT_METAL) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Night Metal", "夜金")
-        }
-        event.modify(RagiumMaterialKeys.IRIDESCENTIUM) {
-            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
-            addName("Iridescentium", "七色金")
         }
         // Food
         event.modify(FoodMaterialKeys.BUTTER) {

@@ -1,17 +1,20 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
+import hiiragi283.ragium.api.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.chance.HTChancedItemRecipe
 import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.HTEnergizedProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
@@ -24,6 +27,30 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     pos: BlockPos,
     state: BlockState,
 ) : HTEnergizedProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
+    companion object {
+        @JvmStatic
+        fun <INPUT : RecipeInput, RECIPE : HTChancedItemRecipe<INPUT>> exportOutputs(
+            machine: HTUpgradableBlockEntity,
+            outputSlots: Iterable<HTItemSlot>,
+            level: ServerLevel,
+            input: INPUT,
+            recipe: RECIPE,
+        ) {
+            // 実際にアウトプットに搬出する
+            val results: List<HTItemResultWithChance> = when {
+                machine.hasUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE) -> {
+                    recipe.getResultItems(input).firstOrNull().let(::listOfNotNull)
+                }
+                else -> recipe.getResultItems(input)
+            }
+            for (result: HTItemResultWithChance in results) {
+                val stackIn: ImmutableItemStack =
+                    result.getStackOrNull(level.registryAccess(), level.random, machine) ?: continue
+                HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
+            }
+        }
+    }
+
     lateinit var inputSlot: HTItemStackSlot
         private set
     lateinit var outputSlots: List<HTItemStackSlot>
@@ -56,11 +83,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         input: INPUT,
         recipe: RECIPE,
     ) {
-        // 実際にアウトプットに搬出する
-        for (result: HTItemResultWithChance in recipe.getResultItems(input)) {
-            val stackIn: ImmutableItemStack = result.getStackOrNull(level.registryAccess(), level.random) ?: continue
-            HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
-        }
+        exportOutputs(this, outputSlots, level, input, recipe)
     }
 
     //    Cached    //

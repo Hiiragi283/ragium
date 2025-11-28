@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
-import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
-import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -25,7 +25,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         state,
     ) {
     override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): Pair<HTVanillaCookingRecipe, Int>? {
-        val cache: HTFinderRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = getRecipeCache()
+        val cache: HTRecipeCache<SingleRecipeInput, HTVanillaCookingRecipe> = getRecipeCache()
         val baseRecipe: HTVanillaCookingRecipe = cache.getFirstRecipe(input, level) ?: return null
         val result: ImmutableItemStack = baseRecipe.assembleItem(input, level.registryAccess()) ?: return null
         val resultMaxSize: Int = result.maxStackSize()
@@ -41,12 +41,12 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         return baseRecipe to outputCount
     }
 
-    private fun getMaxParallel(): Int = when (getComponentTier()) {
-        HTComponentTier.BASIC -> 2
-        HTComponentTier.ADVANCED -> 4
-        HTComponentTier.ELITE -> 8
-        HTComponentTier.ULTIMATE -> 16
-        HTComponentTier.ETERNAL -> inputSlot.getStack()?.maxStackSize() ?: -1
+    private fun getMaxParallel(): Int = when (getMaxMachineTier()) {
+        HTBaseTier.BASIC -> 2
+        HTBaseTier.ADVANCED -> 4
+        HTBaseTier.ELITE -> 8
+        HTBaseTier.ULTIMATE -> 16
+        HTBaseTier.CREATIVE -> inputSlot.getStack()?.maxStackSize() ?: -1
         null -> 1
     }
 

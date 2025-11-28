@@ -4,19 +4,20 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTUpgradeChargeRecipe
-import hiiragi283.ragium.common.tier.HTCircuitTier
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
-import hiiragi283.ragium.common.variant.HTChargeVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -41,7 +42,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 "ACA",
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            .define('C', CommonMaterialPrefixes.CIRCUIT, HTCircuitTier.BASIC)
+            .define('C', RagiumCommonTags.Items.CIRCUITS_BASIC)
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
@@ -264,23 +265,24 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(itemCreator.fromItem(Items.PAPER, 4))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.GLYCEROL, 1000))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 250))
-            .setResult(resultHelper.item(HTChargeVariant.BLAST, 4))
+            .setResult(resultHelper.item(HTChargeType.BLAST, 4))
             .save(output)
 
-        for (variant: HTChargeVariant in HTChargeVariant.entries) {
-            val (prefix: HTPrefixLike, material: HTMaterialLike) = when (variant) {
-                HTChargeVariant.BLAST -> continue
-                HTChargeVariant.STRIKE -> CommonMaterialPrefixes.INGOT to VanillaMaterialKeys.GOLD
-                HTChargeVariant.NEUTRAL -> CommonMaterialPrefixes.GEM to VanillaMaterialKeys.EMERALD
-                HTChargeVariant.FISHING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.AZURE
-                HTChargeVariant.TELEPORT -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.WARPED_CRYSTAL
-                HTChargeVariant.CONFUSING -> CommonMaterialPrefixes.GEM to RagiumMaterialKeys.ELDRITCH_PEARL
+        for (chargeType: HTChargeType in HTChargeType.entries) {
+            val key: HTMaterialKey = when (chargeType) {
+                HTChargeType.BLAST -> continue
+                HTChargeType.STRIKE -> VanillaMaterialKeys.GOLD
+                HTChargeType.NEUTRAL -> VanillaMaterialKeys.EMERALD
+                HTChargeType.FISHING -> RagiumMaterialKeys.AZURE
+                HTChargeType.TELEPORT -> RagiumMaterialKeys.WARPED_CRYSTAL
+                HTChargeType.CONFUSING -> RagiumMaterialKeys.ELDRITCH_PEARL
             }
+            val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
             HTShapedRecipeBuilder
-                .create(variant, 8)
+                .create(chargeType, 8)
                 .hollow8()
-                .define('A', HTChargeVariant.BLAST)
-                .define('B', prefix, material)
+                .define('A', HTChargeType.BLAST)
+                .define('B', prefix, key)
                 .setCategory(CraftingBookCategory.EQUIPMENT)
                 .save(output)
         }

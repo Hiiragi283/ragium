@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
@@ -66,9 +67,13 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun cooler() {
         coolerFromData(FoodMaterialRecipeData.CHOCOLATE_INGOT)
 
-        coolerFromData(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
-        coolerFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)
-        coolerFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
+        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
+            CoolerRecipeBuilder
+                .build()
+                .fluidInput(data.molten.getFluidTag())
+                .result(RagiumItems.getGem(data))
+                .export(output, data)
+        }
     }
 
     @JvmStatic

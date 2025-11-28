@@ -1,8 +1,9 @@
 package hiiragi283.ragium.common.entity.charge
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.common.variant.HTChargeVariant
+import hiiragi283.ragium.common.HTChargeType
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LightningBolt
@@ -16,10 +17,10 @@ import net.minecraft.world.phys.EntityHitResult
 class HTStrikeCharge : HTAbstractCharge {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
 
-    constructor(level: Level, shooter: LivingEntity) : super(HTChargeVariant.STRIKE, level, shooter)
+    constructor(level: Level, shooter: LivingEntity) : super(HTChargeType.STRIKE, level, shooter)
 
     constructor(level: Level, x: Double, y: Double, z: Double) : super(
-        HTChargeVariant.STRIKE,
+        HTChargeType.STRIKE,
         level,
         x,
         y,
@@ -36,10 +37,11 @@ class HTStrikeCharge : HTAbstractCharge {
             val bolt: LightningBolt = EntityType.LIGHTNING_BOLT.create(level) ?: continue
             bolt.moveTo(entity.position())
             bolt.damage = damage
+            bolt.cause = this.owner as? ServerPlayer
             level.addFreshEntity(bolt)
             entity.extinguishFire()
         }
     }
 
-    override fun getDefaultItem(): Item = HTChargeVariant.STRIKE.asItem()
+    override fun getDefaultItem(): Item = HTChargeType.STRIKE.asItem()
 }

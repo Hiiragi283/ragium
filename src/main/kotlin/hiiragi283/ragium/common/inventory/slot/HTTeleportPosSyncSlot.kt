@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.inventory.slot
 
 import hiiragi283.ragium.api.inventory.slot.HTChangeType
 import hiiragi283.ragium.api.inventory.slot.HTSyncableSlot
-import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.common.inventory.slot.payload.HTTeleportPosSyncPayload
 import net.minecraft.core.RegistryAccess
@@ -32,6 +31,6 @@ class HTTeleportPosSyncSlot(private val getter: Supplier<HTTeleportPos?>, privat
         }
     }
 
-    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTSyncablePayload =
+    override fun createPayload(access: RegistryAccess, changeType: HTChangeType): HTTeleportPosSyncPayload =
         HTTeleportPosSyncPayload(this.getTeleportPos())
 }

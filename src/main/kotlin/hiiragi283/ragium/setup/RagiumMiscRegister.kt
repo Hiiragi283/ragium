@@ -43,7 +43,6 @@ object RagiumMiscRegister {
             register(helper, RagiumRecipeTypes.COMPRESSING)
             register(helper, RagiumRecipeTypes.CRUSHING)
             register(helper, RagiumRecipeTypes.CUTTING)
-            register(helper, RagiumRecipeTypes.ENCHANTING)
             register(helper, RagiumRecipeTypes.EXTRACTING)
             register(helper, RagiumRecipeTypes.MELTING)
             register(helper, RagiumRecipeTypes.MIXING)
@@ -73,10 +72,10 @@ object RagiumMiscRegister {
         }
         // Material Recipe Type
         event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_KEY) { helper ->
+            helper.register(RagiumAPI.id(RagiumConst.ALLOYING, "raw"), HTRawSmeltingMaterialRecipe.CODEC)
             helper.register(RagiumAPI.id(RagiumConst.COMPRESSING), HTCompressingMaterialRecipe.CODEC)
             helper.register(RagiumAPI.id(RagiumConst.CRUSHING), HTCrushingMaterialRecipe.CODEC)
             helper.register(RagiumAPI.id(RagiumConst.CRUSHING, "storage_block"), HTBlockCrushingMaterialRecipe.CODEC)
-            helper.register(RagiumAPI.id("raw_smelting"), HTRawSmeltingMaterialRecipe.CODEC)
         }
     }
 

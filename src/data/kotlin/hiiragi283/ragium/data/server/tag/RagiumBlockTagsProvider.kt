@@ -11,11 +11,11 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.variant.HTDecorationVariant
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -91,13 +91,14 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
             add(RagiumBlocks.CRUSHER)
             add(RagiumBlocks.MELTER)
-            add(RagiumBlocks.REFINERY)
-            add(RagiumBlocks.WASHER)
-
-            add(RagiumBlocks.BREWERY)
             add(RagiumBlocks.MIXER)
+            add(RagiumBlocks.REFINERY)
+
+            add(RagiumBlocks.ADVANCED_MIXER)
+            add(RagiumBlocks.BREWERY)
             add(RagiumBlocks.MULTI_SMELTER)
             add(RagiumBlocks.PLANTER)
+            add(RagiumBlocks.WASHER)
 
             add(RagiumBlocks.ENCHANT_COPIER)
             add(RagiumBlocks.ENCHANTER)
@@ -105,16 +106,12 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             // Devices
             add(RagiumBlocks.DEVICE_CASING)
 
-            add(RagiumBlocks.ITEM_BUFFER)
-            add(RagiumBlocks.WATER_COLLECTOR)
-
-            add(RagiumBlocks.EXP_COLLECTOR)
-            add(RagiumBlocks.FISHER)
+            add(RagiumBlocks.FLUID_COLLECTOR)
+            add(RagiumBlocks.ITEM_COLLECTOR)
 
             add(RagiumBlocks.DIM_ANCHOR)
             add(RagiumBlocks.ENI)
 
-            add(RagiumBlocks.MOB_CAPTURER)
             add(RagiumBlocks.TELEPAD)
 
             add(RagiumBlocks.CEU)
@@ -128,16 +125,16 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             .addTag(RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
             .addTag(RagiumModTags.Blocks.LED_BLOCKS)
 
-        for (variant: HTDecorationVariant in HTDecorationVariant.entries) {
+        for (type: HTDecorationType in HTDecorationType.entries) {
             // Slab
-            pickaxe.add(variant.slab)
-            factory.apply(BlockTags.SLABS).add(variant.slab)
+            pickaxe.add(type.slab)
+            factory.apply(BlockTags.SLABS).add(type.slab)
             // Stairs
-            pickaxe.add(variant.stairs)
-            factory.apply(BlockTags.STAIRS).add(variant.stairs)
+            pickaxe.add(type.stairs)
+            factory.apply(BlockTags.STAIRS).add(type.stairs)
             // Wall
-            pickaxe.add(variant.wall)
-            factory.apply(BlockTags.WALLS).add(variant.wall)
+            pickaxe.add(type.wall)
+            factory.apply(BlockTags.WALLS).add(type.wall)
         }
 
         pickaxe.addBlocks(RagiumBlocks.COILS)
@@ -252,7 +249,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // WIP
         factory
             .apply(RagiumModTags.Blocks.WIP)
-            .add(RagiumBlocks.ELECTRIC_FURNACE)
             .add(RagiumBlocks.NUCLEAR_REACTOR)
             .add(RagiumBlocks.OPEN_CRATE)
             .add(RagiumBlocks.TELEPAD)

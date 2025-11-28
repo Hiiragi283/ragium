@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.common.inventory.slot.HTTeleportPosSyncSlot
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.config.RagiumConfig
@@ -31,7 +32,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEnti
             .all(RagiumBlocks.DEVICE_CASING::isOf)
     }
 
-    lateinit var tank: HTVariableFluidStackTank
+    lateinit var tank: HTFluidStackTank
         private set
 
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
@@ -60,7 +61,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEnti
         }
     }
 
-    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
+    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)

@@ -10,7 +10,6 @@ import net.minecraft.core.Registry
 import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
@@ -19,17 +18,12 @@ import net.minecraft.resources.RegistryFixedCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
-import net.minecraft.util.StringRepresentable
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 import java.util.UUID
-import java.util.function.Supplier
 
 object VanillaBiCodecs {
     /**
@@ -84,38 +78,13 @@ object VanillaBiCodecs {
     val UUID: BiCodec<ByteBuf, UUID> = BiCodec.of(UUIDUtil.CODEC, UUIDUtil.STREAM_CODEC)
 
     @JvmStatic
-    val ITEM_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(ItemStack.CODEC, ItemStack.STREAM_CODEC)
-
-    @JvmStatic
-    val ITEM_STACK: BiCodec<RegistryFriendlyByteBuf, ItemStack> = BiCodec.of(ItemStack.OPTIONAL_CODEC, ItemStack.OPTIONAL_STREAM_CODEC)
-
-    @JvmStatic
     val FLUID_STACK_NON_EMPTY: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.CODEC, FluidStack.STREAM_CODEC)
 
     @JvmStatic
     val FLUID_STACK: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.OPTIONAL_CODEC, FluidStack.OPTIONAL_STREAM_CODEC)
 
-    @JvmStatic
-    fun ingredient(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, Ingredient> = BiCodec.of(
-        when (allowEmpty) {
-            true -> Ingredient.CODEC
-            false -> Ingredient.CODEC_NONEMPTY
-        },
-        Ingredient.CONTENTS_STREAM_CODEC,
-    )
-
-    @JvmStatic
-    fun fluidIngredient(allowEmpty: Boolean): BiCodec<RegistryFriendlyByteBuf, FluidIngredient> = BiCodec.of(
-        when (allowEmpty) {
-            true -> FluidIngredient.CODEC
-            false -> FluidIngredient.CODEC_NON_EMPTY
-        },
-        FluidIngredient.STREAM_CODEC,
-    )
-
-    @JvmStatic
-    inline fun <reified V> stringEnum(values: Supplier<Array<V>>): BiCodec<FriendlyByteBuf, V> where V : Enum<V>, V : StringRepresentable =
-        BiCodec.of(StringRepresentable.fromEnum(values), NeoForgeStreamCodecs.enumCodec(V::class.java))
+    @JvmField
+    val INGREDIENT: BiCodec<RegistryFriendlyByteBuf, Ingredient> = BiCodec.of(Ingredient.CODEC_NONEMPTY, Ingredient.CONTENTS_STREAM_CODEC)
 
     // Registry
 

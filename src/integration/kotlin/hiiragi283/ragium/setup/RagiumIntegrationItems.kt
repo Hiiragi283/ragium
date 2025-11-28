@@ -230,7 +230,7 @@ object RagiumIntegrationItems {
             modify(item, RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
         }
 
-        for (tool: ItemLike in TOOLS.columnValues(RagiumMaterialKeys.RAGI_CRYSTAL)) {
+        for (tool: ItemLike in TOOLS.column(RagiumMaterialKeys.RAGI_CRYSTAL).values) {
             setEnch(tool, Enchantments.MENDING)
         }
         event.modify(getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL)) { builder ->

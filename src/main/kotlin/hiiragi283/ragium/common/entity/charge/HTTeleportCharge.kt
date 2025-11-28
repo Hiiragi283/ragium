@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.entity.charge
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.ragium.common.variant.HTChargeVariant
+import hiiragi283.ragium.common.HTChargeType
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.entity.EntityType
@@ -16,10 +16,10 @@ import net.neoforged.neoforge.event.entity.EntityTeleportEvent
 class HTTeleportCharge : HTAbstractCharge {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
 
-    constructor(level: Level, shooter: LivingEntity) : super(HTChargeVariant.TELEPORT, level, shooter)
+    constructor(level: Level, shooter: LivingEntity) : super(HTChargeType.TELEPORT, level, shooter)
 
     constructor(level: Level, x: Double, y: Double, z: Double) : super(
-        HTChargeVariant.TELEPORT,
+        HTChargeType.TELEPORT,
         level,
         x,
         y,
@@ -39,5 +39,5 @@ class HTTeleportCharge : HTAbstractCharge {
         }
     }
 
-    override fun getDefaultItem(): Item = HTChargeVariant.TELEPORT.asItem()
+    override fun getDefaultItem(): Item = HTChargeType.TELEPORT.asItem()
 }

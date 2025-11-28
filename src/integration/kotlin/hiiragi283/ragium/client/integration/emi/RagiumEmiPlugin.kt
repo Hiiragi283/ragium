@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.createItemStack
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.createKey
@@ -27,13 +28,13 @@ import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTEnchantingEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemToItemEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemWithCatalystEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
@@ -45,7 +46,7 @@ import hiiragi283.ragium.client.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
-import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -66,6 +67,7 @@ import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
@@ -91,8 +93,23 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     override fun register(registry: EmiRegistry) {
+        // Clear Cache
+        categoryCache.clear()
         // Recipe
         recipeManager = registry.recipeManager
+
+        addCategoryAndRecipes(
+            registry,
+            RagiumRecipeViewerTypes.MACHINE_UPGRADE,
+            EmiPort
+                .getItemRegistry()
+                .holdersSequence()
+                .filter { holder: Holder<Item> -> holder.value().defaultInstance.has(RagiumDataComponents.MACHINE_UPGRADE_FILTER) }
+                .map { holder: Holder<Item> ->
+                    holder.idOrThrow.withPrefix("/machine/upgrade/") to EmiStack.of(holder.value())
+                },
+            ::HTMachineUpgradeEmiRecipe,
+        )
 
         addCustomRecipe(registry)
         addGenerators(registry)
@@ -135,7 +152,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     EmiCraftingRecipe(
                         listOf(
                             EmiStack.of(item),
-                            RagiumItems.getComponent(HTComponentTier.ETERNAL).toEmi(),
+                            RagiumItems.ETERNAL_COMPONENT.toEmi(),
                         ),
                         createItemStack(item, DataComponents.UNBREAKABLE, Unbreakable(true)).toEmi(),
                         id1,
@@ -246,7 +263,7 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addProcessors(registry: EmiRegistry) {
         // Basic
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ALLOYING, ::HTAlloyingEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.COMPRESSING, ::HTItemToItemEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.COMPRESSING, ::HTItemWithCatalystEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CRUSHING, ::HTCrushingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CUTTING, ::HTCuttingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.EXTRACTING, ::HTItemWithCatalystEmiRecipe)
@@ -256,27 +273,39 @@ class RagiumEmiPlugin : EmiPlugin {
         }
         // Advanced
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MELTING, ::HTMeltingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MIXING, ::HTMixingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.REFINING, ::HTRefiningEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTWashingEmiRecipe)
         // Elite
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.BREWING, ::HTBrewingEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.MIXING, ::HTMixingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTPlantingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTWashingEmiRecipe)
         // Ultimate
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
+        val enchRegistry: Registry<Enchantment> = EmiPort.getEnchantmentRegistry()
+        addCategoryAndRecipes(
+            registry,
+            RagiumRecipeViewerTypes.ENCHANTING,
+            enchRegistry
+                .getDataMap(RagiumDataMaps.ENCHANT_INGREDIENT)
+                .map { (key: ResourceKey<Enchantment>, ingredient: HTItemIngredient) ->
+                    val id: ResourceLocation = key.location().withPrefix("/enchanter/")
+                    val holder: Holder<Enchantment> = enchRegistry.getHolderOrThrow(key)
+                    id to HTEnchantingRecipe(ingredient, holder)
+                }.asSequence(),
+            ::HTEnchantingEmiRecipe,
+        )
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SIMULATING, ::HTItemWithCatalystEmiRecipe)
     }
 
     private fun addInteractions(registry: EmiRegistry) {
-        // Water Collector
+        // Water from Collector
         registry.addInteraction(HTFluidHolderLike.WATER.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(RagiumBlocks.WATER_COLLECTOR.toEmi())
+            leftInput(RagiumBlocks.FLUID_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
-        // Exp Collector
+        // Experience from Collector
         registry.addInteraction(RagiumFluidContents.EXPERIENCE.toFluidEmi(), prefix = "fluid_generator") {
-            leftInput(RagiumBlocks.EXP_COLLECTOR.toEmi())
-            rightInput(EmiStack.EMPTY, false)
+            leftInput(RagiumBlocks.FLUID_COLLECTOR.toEmi())
+            rightInput(RagiumItems.EXP_COLLECTOR_UPGRADE.toEmi(), false)
         }
 
         // World Vaporization

@@ -8,9 +8,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 /**
  * 複数のインプット（アイテム，液体）から複数の完成品（アイテム，液体）を生産するレシピ
  */
-interface HTComplexRecipe :
-    HTMultiInputsToObjRecipe,
-    HTFluidRecipe<HTMultiRecipeInput> {
+interface HTComplexRecipe : HTFluidRecipe<HTMultiRecipeInput> {
     fun getRequiredCount(index: Int, stack: ImmutableItemStack): Int
 
     fun getRequiredAmount(index: Int, stack: ImmutableFluidStack): Int

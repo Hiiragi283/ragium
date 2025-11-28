@@ -1,13 +1,14 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
+import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
-import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -32,6 +33,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         recipeType()
         text()
 
+        emi()
         jade()
     }
 
@@ -82,8 +84,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addAdvancement(RagiumAdvancements.ELDRITCH_PEARL, "始原ではない", "異質な真珠を手に入れる")
         addAdvancement(RagiumAdvancements.ELDRITCH_EGG, "ガッチャ！", "異質な卵を投げてモブを捕まえる")
         addAdvancement(RagiumAdvancements.MYSTERIOUS_OBSIDIAN, "隕石を落としているのは誰？", "")
-        // Iridescentium
-        addAdvancement(RagiumAdvancements.IRIDESCENTIUM, "虹色の錬金術師", "七色金インゴットを手に入れる")
+        // Iridescent
+        addAdvancement(RagiumAdvancements.IRIDESCENT_POWDER, "虹色の錬金術師", "七色の粉を手に入れる")
         addAdvancement(RagiumAdvancements.ETERNAL_COMPONENT, "さあ，地獄を楽しみな！", "ツールを不可壊にするためにエターナル構造体を手に入れる")
     }
 
@@ -136,28 +138,25 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumBlocks.CRUSHER, "破砕機")
         add(RagiumBlocks.MELTER, "溶融炉")
-        add(RagiumBlocks.REFINERY, "精製機")
-        add(RagiumBlocks.WASHER, "洗浄機")
-
-        add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.MIXER, "ミキサー")
+        add(RagiumBlocks.REFINERY, "精製機")
+
+        add(RagiumBlocks.ADVANCED_MIXER, "発展型ミキサー")
+        add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.MULTI_SMELTER, "並列製錬炉")
         add(RagiumBlocks.PLANTER, "栽培室")
+        add(RagiumBlocks.WASHER, "洗浄機")
 
         add(RagiumBlocks.ENCHANT_COPIER, "エンチャントコピー機")
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
         add(RagiumBlocks.SIMULATOR, "シミュレーション室")
         // Devices
-        add(RagiumBlocks.ITEM_BUFFER, "アイテムバッファ")
-        add(RagiumBlocks.WATER_COLLECTOR, "水収集機")
-
-        add(RagiumBlocks.EXP_COLLECTOR, "経験値収集機")
-        add(RagiumBlocks.FISHER, "自動釣り機")
+        add(RagiumBlocks.FLUID_COLLECTOR, "液体収集機")
+        add(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
 
         add(RagiumBlocks.DIM_ANCHOR, "次元アンカー")
         add(RagiumBlocks.ENI, "E.N.I.")
 
-        add(RagiumBlocks.MOB_CAPTURER, "モブ捕獲機")
         add(RagiumBlocks.TELEPAD, "テレパッド")
 
         add(RagiumBlocks.CEU, "C.E.U.")
@@ -212,6 +211,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
 
+        addFluid(RagiumFluidContents.DESTABILIZED_RAGINITE, "不安定化ラギナイト")
+
         addFluid(RagiumFluidContents.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluidContents.SULFURIC_ACID, "硫酸")
         addFluid(RagiumFluidContents.MIXTURE_ACID, "混酸")
@@ -224,6 +225,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
         add(RagiumItems.ECHO_STAR, "残響の星")
         add(RagiumItems.ELDER_HEART, "エルダーの心臓")
+        add(RagiumItems.IRIDESCENT_POWDER, "七色の粉")
         add(RagiumItems.POTION_DROP, "ポーションの雫")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RAGI_COKE, "らぎコークス")
@@ -239,10 +241,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Armor
         add(RagiumItems.NIGHT_VISION_GOGGLES, "暗視ゴーグル")
         // Tool
-        add(RagiumItems.MEDIUM_DRUM_UPGRADE, "ドラム強化（中）")
-        add(RagiumItems.LARGE_DRUM_UPGRADE, "ドラム強化（大）")
-        add(RagiumItems.HUGE_DRUM_UPGRADE, "ドラム強化（特大）")
-
         add(RagiumItems.DRILL, "電動ドリル")
 
         add(RagiumItems.ADVANCED_MAGNET, "発展らぎマグネット")
@@ -288,10 +286,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // add(RagiumItems.Molds.ROD, "成形型（棒材）")
         // add(RagiumItems.Molds.WIRE, "成形型（ワイヤー）")
         // Parts
-        add(RagiumItems.getMold(CommonMaterialPrefixes.STORAGE_BLOCK), "ブロックの鋳型")
-        add(RagiumItems.getMold(CommonMaterialPrefixes.GEM), "宝石の鋳型")
-        add(RagiumItems.getMold(CommonMaterialPrefixes.INGOT), "インゴットの鋳型")
-
+        add(RagiumItems.ADVANCED_CIRCUIT, "発展回路")
+        add(RagiumItems.BASIC_CIRCUIT, "基本回路")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.GRAVITATIONAL_UNIT, "重力制御ユニット")
         add(RagiumItems.LED, "発光ダイオード")
@@ -302,6 +298,18 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成革")
+        // Upgrades
+        add(RagiumItems.ETERNAL_COMPONENT, "永久構造体")
+
+        add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "効率的粉砕アップグレード")
+        add(RagiumItems.FORTUNE_UPGRADE, "幸運アップグレード")
+        add(RagiumItems.PRIMARY_ONLY_UPGRADE, "主産物特化アップグレード")
+
+        add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")
+        add(RagiumItems.FISHING_UPGRADE, "釣りアップグレード")
+        add(RagiumItems.MOB_CAPTURE_UPGRADE, "モブ捕獲アップグレード")
+
+        add(RagiumItems.CREATIVE_UPGRADE, "クリエイティブ用アップグレード")
     }
 
     private fun keyMapping() {
@@ -344,7 +352,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CRUSHING, "破砕")
         add(RagiumRecipeTypes.CUTTING, "裁断")
-        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.EXTRACTING, "抽出")
         add(RagiumRecipeTypes.MELTING, "融解")
         add(RagiumRecipeTypes.MIXING, "混合")
@@ -360,6 +367,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTAccessConfig.BOTH, "モード：双方")
         add(HTAccessConfig.DISABLED, "モード：無効")
 
+        add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
+        add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
+        add(HTMachineUpgrade.Key.SPEED, $$"- 処理速度: %1$s")
+
+        add(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE, $$"- 追加のチャンス: %1$s")
         // API - Constants
         add(RagiumTranslation.ERROR, "エラー")
         add(RagiumTranslation.INFINITE, "無限")
@@ -369,6 +382,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.EMPTY_TAG_KEY, $$"空のタグ: %1$s")
         add(RagiumTranslation.INVALID_PACKET_S2C, $$"サーバー側からの不正なパケットを受信しました: %1$s")
         add(RagiumTranslation.INVALID_PACKET_C2S, $$"クライアント側からの不正なパケットを受信しました: %1$s")
+
+        add(RagiumTranslation.MISSING_SERVER, "サーバーが見つかりません")
         add(RagiumTranslation.MISSING_REGISTRY, $$"不明なレジストリ: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"不明なキー: %1$s")
         // API - GUI
@@ -420,16 +435,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.ENCHANTER, "アイテムからエンチャント本を作成する機械です。")
         add(RagiumCommonTranslation.SIMULATOR, "ブロックやモブの行動を再現して資源を生産する機械です。")
 
-        add(RagiumCommonTranslation.ITEM_BUFFER, "周囲のアイテムを収集する設備です。")
-        add(RagiumCommonTranslation.WATER_COLLECTOR, "周囲の水源やバイオームに応じて水を生産する設備です。")
-
-        add(RagiumCommonTranslation.EXP_COLLECTOR, "周囲の経験値オーブを収集し，液体に変換する設備です。")
-        add(RagiumCommonTranslation.FISHER, "下にある3x3の水源から釣りを行う設備です。")
+        add(RagiumCommonTranslation.FLUID_COLLECTOR, "周囲の水源やバイオームに応じて水を生産する設備です。")
 
         add(RagiumCommonTranslation.DIM_ANCHOR, "設置されたチャンクを強制的に読み込む設備です。")
         add(RagiumCommonTranslation.ENI, "エネルギーネットワークにアクセスする設備です。")
-
-        add(RagiumCommonTranslation.MOB_CAPTURER, "周囲のモブを異質な卵に捕まえる設備です。")
 
         add(RagiumCommonTranslation.CEU, "無制限にエネルギーを供給する設備です。")
 
@@ -464,12 +473,26 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         add(RagiumCommonTranslation.ICE_CREAM, "食べると鎮火します。")
         add(RagiumCommonTranslation.RAGI_CHERRY, "リンゴと同様にサクラの葉からドロップします。")
+
+        add(RagiumCommonTranslation.EFFICIENT_CRUSH_UPGRADE, "潤滑油を消費することにより，短時間で粉砕するようになります。")
+        add(RagiumCommonTranslation.PRIMARY_ONLY_UPGRADE, "副産物を生産しなくなります。")
+
+        add(RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE, "液体収集機が経験値オーブを集めるようになります。")
+        add(RagiumCommonTranslation.FISHING_UPGRADE, "アイテム収集機が下の3x3の水源から魚を釣るようになります。")
+        add(RagiumCommonTranslation.MOB_CAPTURE_UPGRADE, "アイテム収集機が異質な卵を消費してモブを捕まえるようになります。")
     }
 
     //    Addon    //
 
+    private fun emi() {
+        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE, "機械のアップグレード")
+    }
+
     private fun jade() {
         add(HTBlockConfigurationDataProvider, "アクセス制御")
+        add(HTBlockMachinePropertiesProvider, "機械のプロパティ")
         add(HTBlockOwnerProvider, "ブロックの所有者")
+
+        add(RagiumCommonTranslation.JADE_MACHINE_TIER, $$"ティア: %1$s")
     }
 }

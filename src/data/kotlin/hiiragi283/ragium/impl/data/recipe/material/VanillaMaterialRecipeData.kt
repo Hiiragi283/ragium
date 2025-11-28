@@ -5,17 +5,9 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.common.Tags
 
 data object VanillaMaterialRecipeData {
     //    Netherite    //
-
-    @JvmField
-    val NETHERITE_SCRAP: HTRecipeData = HTRecipeData.create {
-        addInput(Tags.Items.ORES_NETHERITE_SCRAP)
-
-        addOutput(Items.NETHERITE_SCRAP, CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 2)
-    }
 
     @JvmField
     val NETHERITE: HTRecipeData = HTRecipeData.create {

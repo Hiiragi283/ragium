@@ -5,6 +5,10 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.getDefaultPrefix
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
@@ -12,6 +16,7 @@ import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
@@ -141,83 +146,10 @@ sealed class HTRecipeProvider {
         output.accept(recipeId, recipe, null, *conditions)
     }
 
-    // recipe builders
-    protected fun meltAndFreeze(
-        catalyst: HTItemIngredient?,
-        solid: HTItemHolderLike,
-        fluid: HTFluidHolderLike,
-        amount: Int,
-    ) {
-        // Melting
-        HTItemToObjRecipeBuilder
-            .melting(
-                itemCreator.fromItem(solid),
-                resultHelper.fluid(fluid.getFluid(), amount),
-            ).saveSuffixed(output, "_from_${solid.getPath()}")
-        // Solidifying
-        HTComplexRecipeBuilder
-            .solidifying(
-                catalyst,
-                fluidCreator.fromHolder(fluid, amount),
-                resultHelper.item(solid),
-            ).saveSuffixed(output, "_from_${fluid.getPath()}")
-    }
+    protected fun getDefaultPrefix(material: HTMaterialLike): HTMaterialPrefix? =
+        RagiumPlatform.INSTANCE.getMaterialDefinition(material.asMaterialKey()).getDefaultPrefix()
 
-    protected fun meltAndFreeze(data: HTRecipeData) {
-        // Solidifying
-        HTComplexRecipeBuilder
-            .solidifying(
-                data.catalyst?.let(itemCreator::fromItem),
-                data.getFluidIngredients(fluidCreator)[0],
-                data.getItemResults()[0].first,
-            ).saveModified(output, data.operator)
-        // Melting
-        val data1: HTRecipeData = data.swap()
-        HTItemToObjRecipeBuilder
-            .melting(
-                data1.getItemIngredients(itemCreator)[0],
-                data1.getFluidResults()[0],
-            ).saveModified(output, data.operator)
-    }
-
-    protected fun extractAndInfuse(
-        empty: ItemLike,
-        filled: HTItemHolderLike,
-        fluid: HTFluidHolderLike,
-        amount: Int = 250,
-    ) {
-        // Melting
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(filled),
-                resultHelper.item(empty),
-                null,
-                resultHelper.fluid(fluid.getFluid(), amount),
-            ).saveSuffixed(output, "_from_${filled.getPath()}")
-        // Washing
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
-                itemCreator.fromItem(empty),
-                fluidCreator.fromHolder(fluid, amount),
-            ).addResult(resultHelper.item(filled))
-            .saveSuffixed(output, "_from_${fluid.getPath()}")
-    }
-
-    protected fun distillation(
-        input: Pair<HTFluidHolderLike, Int>,
-        itemResult: HTItemResult?,
-        vararg results: Pair<HTFluidResult, HTItemIngredient?>,
-    ) {
-        val (holder: HTFluidHolderLike, amount: Int) = input
-        val suffix = "_from_${holder.getPath()}"
-        val ingredient: HTFluidIngredient = fluidCreator.fromHolder(holder, amount)
-        // Refining
-        for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
-            HTComplexRecipeBuilder
-                .refining(ingredient, result, catalyst, itemResult)
-                .saveSuffixed(output, suffix)
-        }
-    }
+    // Recipe Builders
 
     /**
      * 指定された引数から作業台でのリセットレシピを登録します。
@@ -247,11 +179,76 @@ sealed class HTRecipeProvider {
         .addIngredient(input)
         .addIngredient(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
 
+    // Compressing
+    protected fun compressingTo(
+        mold: HTMoldType,
+        material: HTMaterialLike,
+        inputPrefix: HTPrefixLike,
+        count: Int = 1,
+        outputPrefix: HTPrefixLike = mold.prefix,
+    ) {
+        compressingTo(mold, material, itemCreator.fromTagKey(inputPrefix, material, count), outputPrefix)
+    }
+
+    protected fun compressingTo(
+        mold: HTMoldType,
+        material: HTMaterialLike,
+        ingredient: HTItemIngredient,
+        outputPrefix: HTPrefixLike = mold.prefix,
+    ) {
+        compressingTo(mold, ingredient, resultHelper.item(outputPrefix, material))
+    }
+
+    protected fun compressingTo(mold: HTMoldType, ingredient: HTItemIngredient, result: HTItemResult) {
+        HTItemWithCatalystRecipeBuilder
+            .compressing(
+                ingredient,
+                result,
+                itemCreator.fromItem(mold),
+            ).saveSuffixed(output, "_with_mold")
+    }
+
+    protected fun crushAndCompress(
+        base: ItemLike,
+        crushed: ItemLike,
+        crushedCount: Int,
+        catalyst: HTItemIngredient? = null,
+    ) {
+        // Pulverizing
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                itemCreator.fromItem(base),
+                resultHelper.item(crushed, crushedCount),
+            ).saveSuffixed(output, "_from_base")
+        // Compressing
+        HTItemWithCatalystRecipeBuilder
+            .compressing(
+                itemCreator.fromItem(crushed, crushedCount),
+                resultHelper.item(base),
+                catalyst,
+            ).saveSuffixed(output, "_from_crushed")
+    }
+
+    // Cutting
+    protected fun cutAndCombine(hole: ItemLike, slice: ItemLike, count: Int) {
+        // Cutting
+        HTShapelessRecipeBuilder
+            .misc(slice, count)
+            .addIngredient(hole)
+            .addCondition(FOOD_MOD_CONDITION)
+            .saveSuffixed(output, "_from_hole")
+        // Combining
+        HTShapelessRecipeBuilder
+            .misc(hole)
+            .addIngredients(Ingredient.of(slice), count)
+            .saveSuffixed(output, "_from_pieces")
+    }
+
     /**
      * 指定された[HTWoodType]に基づいて，木材の製材レシピを追加します。
      */
     protected fun addWoodSawing(type: HTWoodType) {
-        val planks: ItemLike = type.planks
+        val planks: HTItemHolderLike = type.planks
         // Log -> 6x Planks
         HTItemToChancedItemRecipeBuilder
             .cutting(itemCreator.fromTagKey(type.log))
@@ -259,31 +256,83 @@ sealed class HTRecipeProvider {
             .modCondition(type.getModId())
             .save(output)
         // Planks -> 2x Slab
-        type.getSlab().ifPresent { slab ->
-            HTItemToChancedItemRecipeBuilder
-                .cutting(itemCreator.fromItem(planks))
-                .addResult(resultHelper.item(slab, 2))
-                .modCondition(type.getModId())
-                .save(output)
-        }
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromItem(planks))
+            .addResult(resultHelper.item(type.getSlab(), 2))
+            .modCondition(type.getModId())
+            .save(output)
         // Planks -> Stairs
-        type.getStairs().ifPresent { stairs ->
-            HTItemToChancedItemRecipeBuilder
-                .cutting(itemCreator.fromItem(planks))
-                .addResult(resultHelper.item(stairs))
-                .modCondition(type.getModId())
-                .save(output)
-        }
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromItem(planks))
+            .addResult(resultHelper.item(type.getStairs()))
+            .modCondition(type.getModId())
+            .save(output)
     }
 
-    protected fun pulverizeFromData(data: HTRecipeData) {
+    // Extracting
+    protected fun extractAndInfuse(
+        empty: ItemLike,
+        filled: HTItemHolderLike,
+        fluid: HTFluidHolderLike,
+        amount: Int = 250,
+    ) {
+        // Extracting
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
+                itemCreator.fromItem(filled),
+                resultHelper.item(empty),
+                null,
+                resultHelper.fluid(fluid.getFluid(), amount),
+            ).saveSuffixed(output, "_from_${filled.getPath()}")
+        // Mixing
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromItem(empty))
+            .addIngredient(fluidCreator.fromHolder(fluid, amount))
+            .setResult(resultHelper.item(filled))
+            .saveSuffixed(output, "_from_${fluid.getPath()}")
+    }
+
+    // Melting
+    protected fun meltAndFreeze(
+        mold: HTMoldType,
+        solid: HTItemHolderLike,
+        fluid: HTFluidHolderLike,
+        amount: Int,
+    ) {
+        // Melting
         HTItemToObjRecipeBuilder
-            .pulverizing(
-                data.getItemIngredients(itemCreator)[0],
-                data.getItemResults()[0].first,
+            .melting(
+                itemCreator.fromItem(solid),
+                resultHelper.fluid(fluid, amount),
+            ).saveSuffixed(output, "_from_${solid.getPath()}")
+        // Solidifying
+        HTComplexRecipeBuilder
+            .solidifying()
+            .addIngredient(itemCreator.fromItem(mold))
+            .addIngredient(fluidCreator.fromHolder(fluid, amount))
+            .setResult(resultHelper.item(solid))
+            .saveSuffixed(output, "_from_${fluid.getPath()}")
+    }
+
+    protected fun meltAndFreeze(data: HTRecipeData) {
+        // Solidifying
+        HTComplexRecipeBuilder
+            .solidifying()
+            .addIngredient(data.catalyst?.let(itemCreator::fromItem))
+            .addIngredient(data.getFluidIngredients(fluidCreator)[0])
+            .setResult(data.getItemResults()[0].first)
+            .saveModified(output, data.operator)
+        // Melting
+        val data1: HTRecipeData = data.swap()
+        HTItemToObjRecipeBuilder
+            .melting(
+                data1.getItemIngredients(itemCreator)[0],
+                data1.getFluidResults()[0],
             ).saveModified(output, data.operator)
     }
 
+    // Mixing
     protected fun mixFromData(data: HTRecipeData) {
         val builder: HTComplexRecipeBuilder = HTComplexRecipeBuilder.mixing()
         // Inputs
@@ -295,6 +344,7 @@ sealed class HTRecipeProvider {
         builder.saveModified(output, data.operator)
     }
 
+    // Planting
     protected fun cropAndSeed(seed: ItemLike, crop: ItemLike, water: Int = 125) {
         HTItemWithFluidToChancedItemRecipeBuilder
             .planting(
@@ -335,17 +385,24 @@ sealed class HTRecipeProvider {
             .save(output)
     }
 
-    protected fun cutAndCombine(hole: ItemLike, slice: ItemLike, count: Int) {
-        // Cutting
-        HTShapelessRecipeBuilder
-            .misc(slice, count)
-            .addIngredient(hole)
-            .addCondition(FOOD_MOD_CONDITION)
-            .saveSuffixed(output, "_from_hole")
-        // Combining
-        HTShapelessRecipeBuilder
-            .misc(hole)
-            .addIngredients(Ingredient.of(slice), count)
-            .saveSuffixed(output, "_from_pieces")
+    // Refining
+    protected fun distillation(
+        input: Pair<HTFluidHolderLike, Int>,
+        itemResult: HTItemResult?,
+        vararg results: Pair<HTFluidResult, HTItemIngredient?>,
+    ) {
+        val (holder: HTFluidHolderLike, amount: Int) = input
+        val suffix = "_from_${holder.getPath()}"
+        val ingredient: HTFluidIngredient = fluidCreator.fromHolder(holder, amount)
+        // Refining
+        for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
+            HTComplexRecipeBuilder
+                .refining()
+                .addIngredient(catalyst)
+                .addIngredient(ingredient)
+                .setResult(itemResult)
+                .setResult(result)
+                .saveSuffixed(output, suffix)
+        }
     }
 }

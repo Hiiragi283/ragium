@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.inventory.HTMenuCallback
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.HTHandlerProvider
@@ -55,7 +56,7 @@ import java.util.UUID
  */
 abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     ExtendedBlockEntity(
-        (blockHolder.value() as HTBlockWithEntity).getBlockEntityType(),
+        getBlockEntityType(blockHolder),
         pos,
         state,
     ),
@@ -100,6 +101,10 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
                 blockEntity.sendUpdatePacket(serverLevel)
             }
         }
+
+        @JvmStatic
+        fun getBlockEntityType(blockHolder: Holder<Block>): HTDeferredBlockEntityType<*> =
+            (blockHolder.value() as HTBlockWithEntity).getBlockEntityType()
     }
 
     var ticks: Int = 0
@@ -184,7 +189,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         if (hasEnergyStorage()) {
             val battery: HTEnergyBattery? = this.getEnergyBattery(this.getEnergySideFor())
             if (battery is HTBasicEnergyBattery) {
-                menu.track(HTIntSyncSlot(battery::getAmount, battery::setAmountUnchecked))
+                menu.track(HTIntSyncSlot.create(battery::getAmount, battery::setAmountUnchecked))
             }
         }
     }

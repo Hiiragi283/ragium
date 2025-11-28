@@ -9,8 +9,6 @@ import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
-import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
-import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import net.minecraft.core.Holder
@@ -18,7 +16,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
-import net.minecraft.world.item.enchantment.Enchantment
 import java.util.function.Supplier
 
 class HTItemToObjRecipeBuilder<RESULT : Any>(
@@ -47,14 +44,6 @@ class HTItemToObjRecipeBuilder<RESULT : Any>(
                 HTPotionHelper.content(instances),
             )
         }
-
-        @JvmStatic
-        fun compressing(ingredient: HTItemIngredient, result: HTItemResult): HTItemToObjRecipeBuilder<HTItemResult> =
-            HTItemToObjRecipeBuilder(RagiumConst.COMPRESSING, ::HTCompressingRecipe, result::id, ingredient, result)
-
-        @JvmStatic
-        fun enchanting(ingredient: HTItemIngredient, holder: Holder<Enchantment>): HTItemToObjRecipeBuilder<Holder<Enchantment>> =
-            HTItemToObjRecipeBuilder(RagiumConst.ENCHANTING, ::HTEnchantingRecipe, holder::idOrThrow, ingredient, holder)
 
         @JvmStatic
         fun pulverizing(ingredient: HTItemIngredient, result: HTItemResult): HTItemToObjRecipeBuilder<HTItemResult> =

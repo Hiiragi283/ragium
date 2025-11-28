@@ -3,7 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
-import hiiragi283.ragium.api.registry.HTBasicFluidContentNew
+import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
@@ -11,7 +11,9 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.common.variant.HTChargeVariant
+import hiiragi283.ragium.api.tier.HTBaseTier
+import hiiragi283.ragium.common.HTChargeType
+import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
@@ -36,12 +38,10 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.POTION_DROP)
 
-            removeAll(HTChargeVariant.entries.map(HTChargeVariant::getItem))
-            remove(RagiumItems.MEDIUM_DRUM_UPGRADE)
-            remove(RagiumItems.LARGE_DRUM_UPGRADE)
-            remove(RagiumItems.HUGE_DRUM_UPGRADE)
+            removeAll(HTChargeType.entries.map(HTChargeType::getItem))
             removeAll(tools)
 
+            removeAll(RagiumItems.MACHINE_UPGRADES.values)
             // Integration
             addAll(RagiumIntegrationItems.REGISTER.entries)
 
@@ -64,7 +64,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
                 .texture("layer1", item.itemId)
         }
 
-        val dripFluids: List<HTBasicFluidContentNew> = listOf(
+        val dripFluids: List<HTBasicFluidContent> = listOf(
             // Vanilla
             RagiumFluidContents.HONEY,
             RagiumFluidContents.MUSHROOM_STEW,
@@ -78,6 +78,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             RagiumFluidContents.NAPHTHA,
             RagiumFluidContents.LUBRICANT,
             // Molten
+            RagiumFluidContents.DESTABILIZED_RAGINITE,
             RagiumFluidContents.CRIMSON_BLOOD,
             RagiumFluidContents.DEW_OF_THE_WARP,
             RagiumFluidContents.ELDRITCH_FLUX,
@@ -97,11 +98,18 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         // Tools
         buildList {
             addAll(tools)
-            addAll(HTChargeVariant.entries)
+            addAll(HTChargeType.entries)
 
             addAll(tools1)
         }.asSequence()
             .map(HTHolderLike::getId)
             .forEach(::handheldItem)
+
+        // Upgrades
+        RagiumItems.MACHINE_UPGRADES.forEach { (variant: HTUpgradeVariant, tier: HTBaseTier, item: HTHolderLike) ->
+            withExistingParent(item.getPath(), vanillaId("item", "generated"))
+                .texture("layer0", RagiumAPI.id("item", "${tier.serializedName}_upgrade_base"))
+                .texture("layer1", RagiumAPI.id("item", variant.variantName()))
+        }
     }
 }

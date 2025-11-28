@@ -6,6 +6,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -33,11 +34,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.STRING, 4),
             ).saveSuffixed(output, "_from_web")
 
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromItem(Items.MAGMA_BLOCK),
-                resultHelper.item(Items.MAGMA_CREAM, 4),
-            ).saveSuffixed(output, "_from_block")
+        crushAndCompress(Items.MAGMA_BLOCK, Items.MAGMA_CREAM, 4)
 
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.MUDDY_MANGROVE_ROOTS))
@@ -51,16 +48,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.SUGAR, 3),
             ).saveSuffixed(output, "_from_cane")
 
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromTagKey(Tags.Items.RODS_BLAZE),
-                resultHelper.item(Items.BLAZE_POWDER, 4),
-            ).saveSuffixed(output, "_from_rod")
-        HTItemToObjRecipeBuilder
-            .pulverizing(
-                itemCreator.fromTagKey(Tags.Items.RODS_BREEZE),
-                resultHelper.item(Items.WIND_CHARGE, 6),
-            ).saveSuffixed(output, "_from_rod")
+        // Bone <-> Bone Meal
+        crushAndCompress(Items.BONE, Items.BONE_MEAL, 4)
+        // Blaze Rod <-> Blaze Powder
+        crushAndCompress(Items.BLAZE_ROD, Items.BLAZE_POWDER, 4)
+        // Breeze Rod <-> Wind Charge
+        crushAndCompress(Items.BREEZE_ROD, Items.WIND_CHARGE, 6)
 
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.COARSE_DIRT))
@@ -89,6 +82,18 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(resultHelper.item(RagiumItems.LUMINOUS_PASTE))
             .addResult(resultHelper.item(Items.INK_SAC))
             .save(output)
+        // Common
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
+                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
+            ).saveSuffixed(output, "_from_base")
+
+        HTItemToObjRecipeBuilder
+            .pulverizing(
+                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
+                resultHelper.item(Items.OBSIDIAN),
+            ).saveSuffixed(output, "_from_dust")
 
         woodDust()
         sand()
@@ -214,12 +219,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.PACKED_ICE, 9),
             ).saveSuffixed(output, "_from_blue")
         // Ice -> Packed -> Blue
-        HTItemToObjRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .compressing(
                 itemCreator.fromItem(Items.ICE, 4),
                 resultHelper.item(Items.PACKED_ICE),
             ).saveSuffixed(output, "_from_ice")
-        HTItemToObjRecipeBuilder
+        HTItemWithCatalystRecipeBuilder
             .compressing(
                 itemCreator.fromItem(Items.PACKED_ICE, 4),
                 resultHelper.item(Items.BLUE_ICE),

@@ -12,12 +12,11 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.function.IdToFunction
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumIntegrationItems
@@ -34,28 +33,20 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
         mixing { createBuilder<MixingRecipe>(AllRecipeTypes.MIXING, it) }
 
         // Sandpaper
-        listOf(
-            RagiumMaterialKeys.RAGI_CRYSTAL,
-        ).forEach { key: HTMaterialKey ->
-            HTShapelessRecipeBuilder
-                .equipment(RagiumIntegrationItems.getSandPaper(key))
-                .addIngredient(Items.PAPER)
-                .addIngredient(CommonMaterialPrefixes.DUST, key)
-                .save(output)
-        }
+        HTShapelessRecipeBuilder
+            .equipment(RagiumIntegrationItems.getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL))
+            .addIngredient(Items.PAPER)
+            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .save(output)
         // Cardboard
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
-                itemCreator.fromTagKey(AllTags.AllItemTags.PULPIFIABLE.tag, 4),
-                fluidCreator.water(250),
-            ).addResult(resultHelper.item(AllItems.PULP))
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromTagKey(AllTags.AllItemTags.PULPIFIABLE.tag, 4))
+            .addIngredient(fluidCreator.water(250))
+            .setResult(resultHelper.item(AllItems.PULP))
             .save(output)
 
-        HTItemToObjRecipeBuilder
-            .compressing(
-                itemCreator.fromItem(AllItems.PULP),
-                resultHelper.item(AllItems.CARDBOARD),
-            ).save(output)
+        compressingTo(HTMoldType.PLATE, itemCreator.fromItem(AllItems.PULP), resultHelper.item(AllItems.CARDBOARD))
     }
 
     @JvmStatic
@@ -124,6 +115,6 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
         fromData(RagiumMaterialRecipeData.ELDRITCH_FLUX, HeatCondition.SUPERHEATED)
 
         fromData(RagiumMaterialRecipeData.NIGHT_METAL, HeatCondition.HEATED)
-        fromData(RagiumMaterialRecipeData.IRIDESCENTIUM, HeatCondition.SUPERHEATED)
+        fromData(RagiumMaterialRecipeData.IRIDESCENT_POWDER, HeatCondition.SUPERHEATED)
     }
 }

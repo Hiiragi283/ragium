@@ -2,7 +2,6 @@ package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
@@ -88,7 +87,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataPackRegistries(event: DataPackRegistryEvent.NewRegistry) {
-        event.dataPackRegistry(RagiumAPI.SOLAR_POWER_KEY, HTSolarPower.DIRECT_CODEC, HTSolarPower.DIRECT_CODEC)
+        // event.dataPackRegistry(RagiumAPI.SOLAR_POWER_KEY, HTSolarPower.DIRECT_CODEC, HTSolarPower.DIRECT_CODEC)
 
         RagiumAPI.LOGGER.info("Registered new data pack registries!")
     }
@@ -113,6 +112,8 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
         event.register(RagiumDataMaps.MOB_HEAD)
+
+        event.register(RagiumDataMaps.ENCHANT_INGREDIENT)
 
         event.register(RagiumDataMaps.THERMAL_FUEL)
         event.register(RagiumDataMaps.COMBUSTION_FUEL)

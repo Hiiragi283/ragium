@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
+import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
@@ -40,7 +41,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    lateinit var outputTank: HTVariableFluidStackTank
+    lateinit var outputTank: HTFluidStackTank
         private set
 
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {

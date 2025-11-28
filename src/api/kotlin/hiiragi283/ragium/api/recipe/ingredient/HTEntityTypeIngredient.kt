@@ -32,10 +32,6 @@ data class HTEntityTypeIngredient private constructor(private val holderSet: Hol
         @JvmField
         val TYPE: IngredientType<HTEntityTypeIngredient> = IngredientType(CODEC.codec, CODEC.streamCodec)
 
-        @Suppress("DEPRECATION")
-        @JvmStatic
-        fun of(vararg entityTypes: EntityType<*>): Ingredient = of(HolderSet.direct(EntityType<*>::builtInRegistryHolder, *entityTypes))
-
         @JvmStatic
         fun of(holderSet: HolderSet<EntityType<*>>): Ingredient = HTEntityTypeIngredient(holderSet).toVanilla()
     }

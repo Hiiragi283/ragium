@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.entity.charge
 
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.world.getRangedAABB
-import hiiragi283.ragium.common.variant.HTChargeVariant
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
@@ -16,8 +16,8 @@ import net.minecraft.world.phys.EntityHitResult
 abstract class HTAbstractCharge : ThrowableItemProjectile {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
 
-    constructor(variant: HTChargeVariant, level: Level, shooter: LivingEntity) : super(
-        variant.getEntityType().get(),
+    constructor(chargeType: HTChargeType, level: Level, shooter: LivingEntity) : super(
+        chargeType.getEntityType().get(),
         shooter,
         level,
     )
@@ -28,8 +28,8 @@ abstract class HTAbstractCharge : ThrowableItemProjectile {
         level,
     )
 
-    constructor(variant: HTChargeVariant, level: Level, x: Double, y: Double, z: Double) : super(
-        variant.getEntityType().get(),
+    constructor(chargeType: HTChargeType, level: Level, x: Double, y: Double, z: Double) : super(
+        chargeType.getEntityType().get(),
         x,
         y,
         z,

@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.data.map.HTMaterialRecipe
 import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
-import hiiragi283.ragium.api.data.registry.HTSolarPower
 import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.registry.toId
 import net.minecraft.core.Registry
@@ -88,10 +87,6 @@ object RagiumAPI {
     val SUB_ENTITY_INGREDIENT_TYPE_REGISTRY: Registry<MapCodec<out HTSubEntityTypeIngredient>> = createRegistry(
         SUB_ENTITY_INGREDIENT_TYPE_KEY,
     )
-
-    // Dynamic
-    @JvmField
-    val SOLAR_POWER_KEY: ResourceKey<Registry<HTSolarPower>> = createKey("solar_power")
 
     //    Service    //
 
