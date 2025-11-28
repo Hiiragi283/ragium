@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.common.recipe.crafting
 
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec

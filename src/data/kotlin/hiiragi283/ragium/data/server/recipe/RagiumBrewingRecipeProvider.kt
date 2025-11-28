@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.HTPotionDropRecipe
+import hiiragi283.ragium.common.recipe.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
