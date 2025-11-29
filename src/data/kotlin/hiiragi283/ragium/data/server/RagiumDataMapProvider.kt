@@ -111,6 +111,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun coolants() {
         builder(RagiumDataMaps.COOLANT)
             .add(HTFluidHolderLike.WATER, HTFluidCoolantData(100))
+            .add(RagiumFluidContents.COOLANT, HTFluidCoolantData(25))
     }
 
     private fun magmaticFuels() {

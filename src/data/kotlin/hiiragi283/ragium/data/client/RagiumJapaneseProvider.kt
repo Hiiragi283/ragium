@@ -188,14 +188,13 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun fluid() {
         addFluid(RagiumFluidContents.HONEY, "蜂蜜")
-        addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "キノコシチュー")
-
         addFluid(RagiumFluidContents.CREAM, "クリーム")
         addFluid(RagiumFluidContents.CHOCOLATE, "チョコレート")
         addFluid(RagiumFluidContents.RAGI_CHERRY_JUICE, "らぎチェリージュース")
+
         addFluid(RagiumFluidContents.SLIME, "スライム")
-        addFluid(RagiumFluidContents.GLYCEROL, "グリセロール")
+        addFluid(RagiumFluidContents.GELLED_EXPLOSIVE, "ゲル状爆薬")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "有機的変異原")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
@@ -204,8 +203,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluidContents.FUEL, "燃料")
-        addFluid(RagiumFluidContents.CRIMSON_FUEL, "深紅の燃料")
-        addFluid(RagiumFluidContents.GREEN_FUEL, "グリーン燃料")
 
         addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
@@ -213,9 +210,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addFluid(RagiumFluidContents.DESTABILIZED_RAGINITE, "不安定化ラギナイト")
 
-        addFluid(RagiumFluidContents.NITRIC_ACID, "硝酸")
+        addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.SULFURIC_ACID, "硫酸")
-        addFluid(RagiumFluidContents.MIXTURE_ACID, "混酸")
+        addFluid(RagiumFluidContents.COOLANT, "冷却液")
     }
 
     private fun item() {

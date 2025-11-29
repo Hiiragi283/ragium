@@ -197,14 +197,13 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun fluid() {
         addFluid(RagiumFluidContents.HONEY, "Honey")
-        addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.MUSHROOM_STEW, "Mushroom Stew")
-
         addFluid(RagiumFluidContents.CREAM, "Cream")
         addFluid(RagiumFluidContents.CHOCOLATE, "Chocolate")
         addFluid(RagiumFluidContents.RAGI_CHERRY_JUICE, "Ragi-Cherry Juice")
+
         addFluid(RagiumFluidContents.SLIME, "Slime")
-        addFluid(RagiumFluidContents.GLYCEROL, "Glycerol")
+        addFluid(RagiumFluidContents.GELLED_EXPLOSIVE, "Gelled Explosive")
         addFluid(RagiumFluidContents.ORGANIC_MUTAGEN, "Organic Mutagen")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
@@ -213,8 +212,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluidContents.FUEL, "Fuel")
-        addFluid(RagiumFluidContents.CRIMSON_FUEL, "Crimson Fuel")
-        addFluid(RagiumFluidContents.GREEN_FUEL, "Green Fuel")
 
         addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
@@ -222,9 +219,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addFluid(RagiumFluidContents.DESTABILIZED_RAGINITE, "Destabilized Raginite")
 
-        addFluid(RagiumFluidContents.NITRIC_ACID, "Nitric Acid")
+        addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.SULFURIC_ACID, "Sulfuric Acid")
-        addFluid(RagiumFluidContents.MIXTURE_ACID, "Mixture Acid")
+        addFluid(RagiumFluidContents.COOLANT, "Coolant")
     }
 
     private fun item() {

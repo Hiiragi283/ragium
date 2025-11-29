@@ -1,11 +1,13 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.client.event.HTClientItemTooltipComponent
@@ -203,18 +205,17 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             HTSimpleFluidExtensions(vanillaId("block", "honey_block_top")),
             RagiumFluidContents.HONEY.getType(),
         )
-        event.clear(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
         event.dull(RagiumFluidContents.MUSHROOM_STEW, Color(0xcc9966))
-
         event.dull(RagiumFluidContents.CREAM, Color(0xffffcc))
         event.registerFluidType(
             HTSimpleFluidExtensions(RagiumAPI.id("block", "chocolate")),
             RagiumFluidContents.CHOCOLATE.getType(),
         )
         event.clear(RagiumFluidContents.RAGI_CHERRY_JUICE, Color(0xcccc66))
-        event.clear(RagiumFluidContents.SLIME, Color(0x33cc33))
-        event.clear(RagiumFluidContents.GLYCEROL, Color(0x009966))
-        event.dull(RagiumFluidContents.ORGANIC_MUTAGEN, Color(0x336600))
+
+        event.dull(RagiumFluidContents.SLIME, Color(0x66cc66))
+        event.molten(RagiumFluidContents.GELLED_EXPLOSIVE, Color(0x339933))
+        event.molten(RagiumFluidContents.ORGANIC_MUTAGEN, Color(0x336600))
 
         event.dull(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
         event.clear(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))
@@ -223,23 +224,22 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
         event.clear(RagiumFluidContents.FUEL, Color(0xcc3300))
         event.clear(RagiumFluidContents.CRIMSON_FUEL, Color(0x663333))
-        event.clear(RagiumFluidContents.GREEN_FUEL, Color(0x99cc33))
 
         event.clear(RagiumFluidContents.SAP, Color(0x996633))
 
-        event.dull(RagiumFluidContents.DESTABILIZED_RAGINITE, Color(0xcc0033))
+        event.molten(RagiumFluidContents.DESTABILIZED_RAGINITE, Color(0xff0033))
 
-        event.clear(RagiumFluidContents.NITRIC_ACID, Color(0xcc99ff))
+        event.clear(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
         event.clear(RagiumFluidContents.SULFURIC_ACID, Color(0xff3300))
-        event.clear(RagiumFluidContents.MIXTURE_ACID, Color(0xcc6600))
+        event.clear(RagiumFluidContents.COOLANT, Color(0x009999))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val color: Color = data.color
             // molten
-            event.dull(data.molten, color)
+            event.molten(data.molten, color)
             // sap
             val sap: HTFluidContent<*, *, *, *, *> = data.sap ?: continue
-            event.clear(sap, color)
+            event.dull(sap, color)
         }
 
         // Item
@@ -344,11 +344,36 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
     //    Extensions    //
 
     private fun RegisterClientExtensionsEvent.clear(content: HTFluidContent<*, *, *, *, *>, color: Color) {
-        this.registerFluidType(HTSimpleFluidExtensions.clear(color), content.getType())
+        this.registerFluidType(
+            HTSimpleFluidExtensions(
+                vanillaId("block", "water_still"),
+                color,
+                vanillaId("block", "water_flow"),
+            ),
+            content.getType(),
+        )
     }
 
     private fun RegisterClientExtensionsEvent.dull(content: HTFluidContent<*, *, *, *, *>, color: Color) {
-        this.registerFluidType(HTSimpleFluidExtensions.dull(color), content.getType())
+        this.registerFluidType(
+            HTSimpleFluidExtensions(
+                RagiumConst.NEOFORGE.toId("block", "milk_still"),
+                color,
+                RagiumConst.NEOFORGE.toId("block", "milk_flowing"),
+            ),
+            content.getType(),
+        )
+    }
+
+    private fun RegisterClientExtensionsEvent.molten(content: HTFluidContent<*, *, *, *, *>, color: Color) {
+        this.registerFluidType(
+            HTSimpleFluidExtensions(
+                RagiumAPI.id("block", "molten_still"),
+                color,
+                RagiumAPI.id("block", "molten_flow"),
+            ),
+            content.getType(),
+        )
     }
 
     private fun <BE : HTBlockEntity> RegisterMenuScreensEvent.register(

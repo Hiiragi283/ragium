@@ -301,7 +301,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 .saveSuffixed(output, "_from_ore")
             // Washing
             HTItemWithFluidToChancedItemRecipeBuilder
-                .washing(ore, fluidCreator.fromHolder(RagiumFluidContents.NITRIC_ACID, 250))
+                .washing(ore, fluidCreator.fromHolder(RagiumFluidContents.SULFURIC_ACID, 500))
                 .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, count))
                 .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, max(1, count / 2)), 1 / 2f)
                 .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, max(1, count / 4)), 1 / 4f)
@@ -319,7 +319,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             HTItemToObjRecipeBuilder.pulverizing(ore, result).saveSuffixed(output, "_from_ore")
             // Washing
             HTItemWithFluidToChancedItemRecipeBuilder
-                .washing(ore, fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 250))
+                .washing(ore, fluidCreator.fromHolder(RagiumFluidContents.SULFURIC_ACID, 1000))
                 .addResult(result)
                 .addResult(result.copyWithAmount(1), 1 / 2f)
                 .addResult(result.copyWithAmount(1), 1 / 4f)

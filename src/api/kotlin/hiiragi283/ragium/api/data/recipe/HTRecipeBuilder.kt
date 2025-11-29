@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.data.recipe
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.material.HTMaterialLike
+import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -30,6 +32,8 @@ abstract class HTRecipeBuilder<BUILDER : HTRecipeBuilder<BUILDER>>(private val p
         }
         return self()
     }
+
+    fun tagCondition(prefix: HTPrefixLike, material: HTMaterialLike): BUILDER = tagCondition(prefix.itemTagKey(material))
 
     fun tagCondition(tagKey: TagKey<Item>): BUILDER = addCondition(NotCondition(TagEmptyCondition(tagKey)))
 
