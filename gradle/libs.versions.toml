@@ -1,6 +1,6 @@
 [versions]
 minecraft = "1.21.1"
-ragium = "0.12.0"
+ragium = "0.12.2"
 
 parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"

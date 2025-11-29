@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.recipe.result
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.text.HTTextResult
@@ -23,7 +24,7 @@ class HTItemResult(entry: HTKeyOrTagEntry<Item>, amount: Int, components: DataCo
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemResult> = createCodec(
             Registries.ITEM,
-            BiCodec.intRange(1, 99).optionalOrElseField(RagiumConst.COUNT, 1),
+            BiCodecs.intRange(1, 99).optionalOrElseField(RagiumConst.COUNT, 1),
             ::HTItemResult,
         )
     }

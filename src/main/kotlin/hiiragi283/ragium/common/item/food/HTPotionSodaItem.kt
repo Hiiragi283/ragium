@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.item.food
 
 import hiiragi283.ragium.api.item.HTSubCreativeTabContents
+import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.common.util.HTPotionHelper
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries

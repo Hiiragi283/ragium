@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.recipe.crafting
 
+import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.recipe.HTCustomRecipe
 import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
-import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
