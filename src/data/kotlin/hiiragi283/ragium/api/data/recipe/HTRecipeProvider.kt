@@ -5,12 +5,15 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
+import hiiragi283.ragium.api.item.alchemy.HTPotionContents
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.ingredient.HTPotionIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
@@ -20,6 +23,7 @@ import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.crafting.HTClearComponentRecipe
+import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
@@ -27,17 +31,22 @@ import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.conditions.NotCondition
@@ -178,6 +187,91 @@ sealed class HTRecipeProvider {
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
         .addIngredient(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
+
+    // Brewing
+    // Potion
+    protected fun brewing(right: HTItemIngredient, potion: Holder<Potion>) {
+        HTCombineRecipeBuilder
+            .brewing(
+                itemCreator.fromTagKey(Tags.Items.CROPS_NETHER_WART),
+                right,
+                potion,
+            ).save(output)
+    }
+
+    protected fun brewing(
+        right: HTItemIngredient,
+        base: Holder<Potion>,
+        long: Holder<Potion>?,
+        strong: Holder<Potion>?,
+    ) {
+        // Base
+        brewing(right, base)
+        val drop: HTItemIngredient =
+            itemCreator.fromVanilla(HTPotionIngredient.of(listOf(RagiumItems.POTION_DROP), HTPotionContents(base)))
+        // Long
+        if (long != null) {
+            HTCombineRecipeBuilder
+                .brewing(
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
+                    drop,
+                    long,
+                ).save(output)
+        }
+        // Strong
+        if (strong != null) {
+            HTCombineRecipeBuilder
+                .brewing(
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
+                    drop,
+                    strong,
+                ).save(output)
+        }
+    }
+
+    // HTMobEffectInstance
+    private fun brewing(
+        right: HTItemIngredient,
+        left: HTItemIngredient = itemCreator.fromTagKey(Tags.Items.CROPS_NETHER_WART),
+        builderAction: MutableList<HTMobEffectInstance>.() -> Unit,
+    ): HTCombineRecipeBuilder<HTPotionContents> = HTCombineRecipeBuilder
+        .brewing(
+            left,
+            right,
+            builderAction,
+        )
+
+    protected fun benefitBrewing(right: HTItemIngredient, effect: Holder<MobEffect>) {
+        longAndStrongBrewing(right, effect, 3600, 9600, 1800)
+    }
+
+    protected fun harmfulBrewing(right: HTItemIngredient, effect: Holder<MobEffect>) {
+        longAndStrongBrewing(right, effect, 900, 1800, 432)
+    }
+
+    private fun longAndStrongBrewing(
+        right: HTItemIngredient,
+        effect: Holder<MobEffect>,
+        baseTime: Int,
+        longTime: Int,
+        strongTime: Int,
+    ) {
+        val instance = HTMobEffectInstance(effect, baseTime)
+        val drop: HTItemIngredient =
+            itemCreator.fromVanilla(HTPotionIngredient.of(listOf(RagiumItems.POTION_DROP), HTPotionContents(instance)))
+        // Base
+        brewing(right) { add(instance) }.save(output)
+        // Long
+        brewing(
+            itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
+            drop,
+        ) { add(HTMobEffectInstance(effect, longTime)) }.savePrefixed(output, "long_")
+        // Strong
+        brewing(
+            itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
+            drop,
+        ) { add(HTMobEffectInstance(effect, strongTime, 1)) }.savePrefixed(output, "strong_")
+    }
 
     // Compressing
     protected fun compressingTo(

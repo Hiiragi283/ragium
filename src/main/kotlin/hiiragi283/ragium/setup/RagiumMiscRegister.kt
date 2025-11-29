@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
+import hiiragi283.ragium.api.recipe.ingredient.HTPotionIngredient
 import hiiragi283.ragium.api.registry.commonId
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.registry.vanillaId
@@ -56,6 +57,7 @@ object RagiumMiscRegister {
         // Ingredient Type
         event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES) { helper ->
             helper.register(RagiumAPI.id("entity_type"), HTEntityTypeIngredient.TYPE)
+            helper.register(RagiumAPI.id("potion"), HTPotionIngredient.TYPE)
         }
 
         // Armor Equip Type

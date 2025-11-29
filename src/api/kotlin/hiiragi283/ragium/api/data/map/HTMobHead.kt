@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.map
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.registry.builtInRegistryHolder
 import hiiragi283.ragium.api.registry.idOrThrow
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
@@ -27,7 +28,7 @@ value class HTMobHead(val head: Holder<Item>) : HTItemHolderLike {
         }
     }
 
-    constructor(item: ItemLike) : this(item.asItem().builtInRegistryHolder())
+    constructor(item: ItemLike) : this(item.builtInRegistryHolder())
 
     override fun asItem(): Item = head.value()
 

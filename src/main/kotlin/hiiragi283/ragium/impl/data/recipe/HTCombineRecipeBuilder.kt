@@ -3,7 +3,7 @@ package hiiragi283.ragium.impl.data.recipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
-import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
+import hiiragi283.ragium.api.item.alchemy.HTPotionContents
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.registry.idOrThrow
@@ -14,7 +14,6 @@ import net.minecraft.core.HolderSet
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.enchantment.Enchantment
 import java.util.function.Supplier
 
@@ -32,13 +31,13 @@ class HTCombineRecipeBuilder<RESULT : Any>(
             leftIngredient: HTItemIngredient,
             rightIngredient: HTItemIngredient,
             potion: Holder<Potion>,
-        ): HTCombineRecipeBuilder<PotionContents> = HTCombineRecipeBuilder(
+        ): HTCombineRecipeBuilder<HTPotionContents> = HTCombineRecipeBuilder(
             RagiumConst.BREWING,
             ::HTBrewingRecipe,
             potion::idOrThrow,
             leftIngredient,
             rightIngredient,
-            HTPotionHelper.contents(potion),
+            HTPotionContents(potion),
         )
 
         @JvmStatic
@@ -46,7 +45,7 @@ class HTCombineRecipeBuilder<RESULT : Any>(
             leftIngredient: HTItemIngredient,
             rightIngredient: HTItemIngredient,
             builderAction: MutableList<HTMobEffectInstance>.() -> Unit,
-        ): HTCombineRecipeBuilder<PotionContents> {
+        ): HTCombineRecipeBuilder<HTPotionContents> {
             val instances: List<HTMobEffectInstance> = buildList(builderAction)
             return HTCombineRecipeBuilder(
                 RagiumConst.BREWING,
@@ -54,7 +53,7 @@ class HTCombineRecipeBuilder<RESULT : Any>(
                 { instances.first().getId() },
                 leftIngredient,
                 rightIngredient,
-                HTPotionHelper.contents(null, null, instances),
+                HTPotionContents(instances),
             )
         }
 

@@ -2,26 +2,15 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
-import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.crafting.HTPotionDropRecipe
-import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 
 object RagiumBrewingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -82,105 +71,5 @@ object RagiumBrewingRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { (item: Item, effect: Holder<MobEffect>) ->
             harmfulBrewing(itemCreator.fromItem(item), effect)
         }
-    }
-
-    //    Extensions    //
-
-    // Potion
-    @JvmStatic
-    private fun dropIngredient(potion: Holder<Potion>): HTItemIngredient = itemCreator.fromVanilla(
-        DataComponentIngredient.of(false, DataComponents.POTION_CONTENTS, PotionContents(potion), RagiumItems.POTION_DROP),
-    )
-
-    @JvmStatic
-    private fun brewing(right: HTItemIngredient, potion: Holder<Potion>) {
-        HTCombineRecipeBuilder
-            .brewing(
-                itemCreator.fromTagKey(Tags.Items.CROPS_NETHER_WART),
-                right,
-                potion,
-            ).save(output)
-    }
-
-    @JvmStatic
-    private fun brewing(
-        right: HTItemIngredient,
-        base: Holder<Potion>,
-        long: Holder<Potion>?,
-        strong: Holder<Potion>?,
-    ) {
-        // Base
-        brewing(right, base)
-        val drop: HTItemIngredient = dropIngredient(base)
-        // Long
-        if (long != null) {
-            HTCombineRecipeBuilder
-                .brewing(
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-                    drop,
-                    long,
-                ).save(output)
-        }
-        // Strong
-        if (strong != null) {
-            HTCombineRecipeBuilder
-                .brewing(
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
-                    drop,
-                    strong,
-                ).save(output)
-        }
-    }
-
-    // HTMobEffectInstance
-    @JvmStatic
-    private fun dropIngredient(instance: HTMobEffectInstance): HTItemIngredient = itemCreator.fromVanilla(
-        DataComponentIngredient.of(false, DataComponents.POTION_CONTENTS, HTPotionHelper.contents(instance), RagiumItems.POTION_DROP),
-    )
-
-    @JvmStatic
-    private fun brewing(
-        right: HTItemIngredient,
-        left: HTItemIngredient = itemCreator.fromTagKey(Tags.Items.CROPS_NETHER_WART),
-        builderAction: MutableList<HTMobEffectInstance>.() -> Unit,
-    ): HTCombineRecipeBuilder<PotionContents> = HTCombineRecipeBuilder
-        .brewing(
-            left,
-            right,
-            builderAction,
-        )
-
-    @JvmStatic
-    private fun benefitBrewing(right: HTItemIngredient, effect: Holder<MobEffect>) {
-        longAndStrongBrewing(right, effect, 3600, 9600, 1800)
-    }
-
-    @JvmStatic
-    private fun harmfulBrewing(right: HTItemIngredient, effect: Holder<MobEffect>) {
-        longAndStrongBrewing(right, effect, 900, 1800, 432)
-    }
-
-    @JvmStatic
-    private fun longAndStrongBrewing(
-        right: HTItemIngredient,
-        effect: Holder<MobEffect>,
-        baseTime: Int,
-        longTime: Int,
-        strongTime: Int,
-    ) {
-        val instance = HTMobEffectInstance(effect, baseTime)
-        val drop: HTItemIngredient = dropIngredient(instance)
-        // Base
-        brewing(right) { add(instance) }.save(output)
-        // Long
-        brewing(
-            itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-            drop,
-        ) { add(HTMobEffectInstance(effect, longTime)) }.savePrefixed(output, "long_")
-        // Strong
-        brewing(
-            itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
-            drop,
-        ) { add(HTMobEffectInstance(effect, strongTime, 1)) }.savePrefixed(output, "strong_")
     }
 }

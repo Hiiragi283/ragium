@@ -1,5 +1,6 @@
 package hiiragi283.ragium.impl.recipe
 
+import hiiragi283.ragium.api.item.alchemy.HTPotionContents
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
@@ -12,13 +13,12 @@ import hiiragi283.ragium.impl.recipe.base.HTBasicCombineRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
-class HTBrewingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredient>, val contents: PotionContents) :
+class HTBrewingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredient>, val contents: HTPotionContents) :
     HTBasicCombineRecipe(itemIngredients) {
     companion object {
         @JvmField
@@ -36,7 +36,7 @@ class HTBrewingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredient>,
         val (left: HTItemIngredient, right: HTItemIngredient) = itemIngredients
         val bool1: Boolean = left.hasNoMatchingStacks()
         val bool2: Boolean = right.hasNoMatchingStacks()
-        val bool3: Boolean = HTPotionHelper.isEmpty(contents)
+        val bool3: Boolean = contents.isEmpty()
         return bool1 || bool2 || bool3
     }
 
