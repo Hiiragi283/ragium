@@ -153,7 +153,7 @@ data object RagiumMaterialRecipeData {
         addInput(Items.HEART_OF_THE_SEA)
         addInput(Items.DRAGON_BREATH)
 
-        addInput(RagiumFluidContents.ELDRITCH_FLUX, 8000)
+        addInput(RagiumFluidContents.DESTABILIZED_RAGINITE, 8000)
 
         addOutput(RagiumItems.IRIDESCENT_POWDER, null)
     }

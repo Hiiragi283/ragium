@@ -266,8 +266,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTComplexRecipeBuilder
             .mixing()
             .addIngredient(itemCreator.fromItem(Items.PAPER, 4))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.GLYCEROL, 1000))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.MIXTURE_ACID, 250))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.GELLED_EXPLOSIVE, 1000))
             .setResult(resultHelper.item(HTChargeType.BLAST, 4))
             .save(output)
 

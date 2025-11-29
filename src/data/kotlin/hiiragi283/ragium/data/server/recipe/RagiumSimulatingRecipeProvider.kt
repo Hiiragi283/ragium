@@ -214,7 +214,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(itemCreator.fromItem(Items.GHAST_TEAR, 16))
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 16))
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ, 64))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NITRIC_ACID, 8000))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 8000))
             .setResult(resultHelper.item(Items.NETHER_STAR))
             .save(output)
 

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -26,6 +27,7 @@ import net.neoforged.neoforge.common.EffectCure
 import net.neoforged.neoforge.common.EffectCures
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.event.ItemAttributeModifierEvent
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent
 import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
@@ -75,6 +77,14 @@ object RagiumRuntimeEvents {
     }*/
 
     //    Entity    //
+
+    @SubscribeEvent
+    fun beforeTeleport(event: EntityTeleportEvent.EnderEntity) {
+        // 異質な流動体に触れているエンダーマンはワープできなくなる
+        if (event.entityLiving.isInFluidType(RagiumFluidContents.ELDRITCH_FLUX.getType())) {
+            event.isCanceled = true
+        }
+    }
 
     @SubscribeEvent
     fun onClickedEntity(event: PlayerInteractEvent.EntityInteract) {

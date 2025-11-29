@@ -7,6 +7,8 @@ import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
 import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
 import hiiragi283.ragium.common.block.fluid.HTEffectLiquidBlock
+import hiiragi283.ragium.common.block.fluid.HTMagicalLiquidBlock
+import hiiragi283.ragium.common.block.fluid.HTMagmaticLiquidBlock
 import hiiragi283.ragium.common.fluid.HTEndFluidType
 import hiiragi283.ragium.common.fluid.HTExplosiveFluidType
 import hiiragi283.ragium.common.fluid.HTNetherFluidType
@@ -90,26 +92,22 @@ object RagiumFluidContents {
         .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
 
     @JvmStatic
-    private fun molten(): FluidType.Properties = FluidType.Properties
+    private fun molten(temp: Int = 1300): FluidType.Properties = FluidType.Properties
         .create()
         .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
         .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
+        .temperature(temp)
 
     @JvmStatic
     private fun gaseous(): FluidType.Properties = liquid().density(-1000)
 
-    //    Vanilla    //
+    //    Foods    //
 
     @JvmField
     val HONEY: HTBasicFluidContent = registerSimple("honey", liquid()) { it.speedFactor(0.4f) }
 
     @JvmField
-    val EXPERIENCE: HTBasicFluidContent = registerEffected("experience", liquid(), MobEffects.HUNGER, 63)
-
-    @JvmField
     val MUSHROOM_STEW: HTBasicFluidContent = registerEffected("mushroom_stew", liquid(), MobEffects.SATURATION)
-
-    //    Organic    //
 
     @JvmField
     val CREAM: HTBasicFluidContent = registerSimple("cream", liquid()) { it.speedFactor(0.8f) }
@@ -120,11 +118,13 @@ object RagiumFluidContents {
     @JvmField
     val RAGI_CHERRY_JUICE: HTBasicFluidContent = registerSimple("ragi_cherry_juice", liquid())
 
+    //    Organic    //
+
     @JvmField
     val SLIME: HTBasicFluidContent = registerEffected("slime", liquid(), MobEffects.OOZING) { it.speedFactor(0.4f) }
 
     @JvmField
-    val GLYCEROL: HTBasicFluidContent = registerSimple("glycerol", liquid())
+    val GELLED_EXPLOSIVE: HTBasicFluidContent = registerSimple("gelled_explosive", liquid())
 
     @JvmField
     val ORGANIC_MUTAGEN: HTBasicFluidContent = registerEffected("organic_mutagen", liquid(), MobEffects.POISON, 4)
@@ -161,9 +161,6 @@ object RagiumFluidContents {
     @JvmField
     val CRIMSON_FUEL: HTBasicFluidContent = register("crimson_fuel", liquid(), ::HTExplosiveFluidType.partially1(6f))
 
-    @JvmField
-    val GREEN_FUEL: HTBasicFluidContent = registerSimple("green_fuel", liquid())
-
     //    Sap    //
 
     @JvmField
@@ -181,24 +178,27 @@ object RagiumFluidContents {
     val DESTABILIZED_RAGINITE: HTBasicFluidContent = registerSimple("destabilized_raginite", molten())
 
     @JvmField
-    val CRIMSON_BLOOD: HTBasicFluidContent = register("crimson_blood", molten(), ::HTNetherFluidType)
+    val CRIMSON_BLOOD: HTBasicFluidContent =
+        register("crimson_blood", molten(), ::HTNetherFluidType, ::HTMagmaticLiquidBlock)
 
     @JvmField
-    val DEW_OF_THE_WARP: HTBasicFluidContent = register("dew_of_the_warp", molten(), ::HTNetherFluidType)
+    val DEW_OF_THE_WARP: HTBasicFluidContent =
+        register("dew_of_the_warp", molten(), ::HTNetherFluidType, ::HTMagmaticLiquidBlock)
 
     @JvmField
-    val ELDRITCH_FLUX: HTBasicFluidContent = register("eldritch_flux", molten(), ::HTEndFluidType)
+    val ELDRITCH_FLUX: HTBasicFluidContent =
+        register("eldritch_flux", molten(), ::HTEndFluidType, ::HTMagicalLiquidBlock)
 
-    //    Chemicals    //
+    //    Misc    //
 
     @JvmField
-    val NITRIC_ACID: HTBasicFluidContent = registerEffected("nitric_acid", liquid(), MobEffects.WITHER)
+    val EXPERIENCE: HTBasicFluidContent = registerEffected("experience", liquid(), MobEffects.HUNGER, 63)
 
     @JvmField
     val SULFURIC_ACID: HTBasicFluidContent = registerEffected("sulfuric_acid", liquid(), MobEffects.WITHER)
 
     @JvmField
-    val MIXTURE_ACID: HTBasicFluidContent = registerEffected("mixture_acid", liquid(), MobEffects.WITHER)
+    val COOLANT: HTBasicFluidContent = registerSimple("coolant", liquid())
 
     //    Interaction    //
 
