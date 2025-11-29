@@ -2,16 +2,16 @@ package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
+import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
+import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.registry.idOrThrow
-import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.PotionContents
@@ -38,23 +38,23 @@ class HTCombineRecipeBuilder<RESULT : Any>(
             potion::idOrThrow,
             leftIngredient,
             rightIngredient,
-            HTPotionHelper.content(potion),
+            HTPotionHelper.contents(potion),
         )
 
         @JvmStatic
         fun brewing(
             leftIngredient: HTItemIngredient,
             rightIngredient: HTItemIngredient,
-            builderAction: MutableList<MobEffectInstance>.() -> Unit,
+            builderAction: MutableList<HTMobEffectInstance>.() -> Unit,
         ): HTCombineRecipeBuilder<PotionContents> {
-            val instances: List<MobEffectInstance> = buildList(builderAction)
+            val instances: List<HTMobEffectInstance> = buildList(builderAction)
             return HTCombineRecipeBuilder(
                 RagiumConst.BREWING,
                 ::HTBrewingRecipe,
-                { instances.first().effect.idOrThrow },
+                { instances.first().getId() },
                 leftIngredient,
                 rightIngredient,
-                HTPotionHelper.content(instances),
+                HTPotionHelper.contents(null, null, instances),
             )
         }
 

@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.function.BlockWithContextFactory
 import hiiragi283.ragium.api.function.partially1
+import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
 import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
 import hiiragi283.ragium.common.block.fluid.HTEffectLiquidBlock
@@ -56,8 +57,13 @@ object RagiumFluidContents {
         amplifier: Int = 0,
         duration: Int = 5 * 20,
         blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
-    ): HTBasicFluidContent =
-        register(name, properties, typeFactory, ::HTEffectLiquidBlock.partially1(Triple(effect, duration, amplifier)), blockProperties)
+    ): HTBasicFluidContent = register(
+        name,
+        properties,
+        typeFactory,
+        ::HTEffectLiquidBlock.partially1(HTMobEffectInstance(effect, duration, amplifier)),
+        blockProperties,
+    )
 
     @JvmStatic
     fun registerEffected(

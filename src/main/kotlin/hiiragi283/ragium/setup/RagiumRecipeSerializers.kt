@@ -104,7 +104,7 @@ object RagiumRecipeSerializers {
         RagiumConst.BREWING,
         RagiumRecipeBiCodecs.combine(
             ::HTBrewingRecipe,
-            VanillaBiCodecs.POTION.fieldOf("potion"),
+            VanillaBiCodecs.POTION,
             HTBrewingRecipe::contents,
         ),
     )

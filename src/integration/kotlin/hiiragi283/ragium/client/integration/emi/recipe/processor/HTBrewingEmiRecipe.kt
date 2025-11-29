@@ -2,10 +2,10 @@ package hiiragi283.ragium.client.integration.emi.recipe.processor
 
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
+import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTCombineEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
-import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.crafting.RecipeHolder

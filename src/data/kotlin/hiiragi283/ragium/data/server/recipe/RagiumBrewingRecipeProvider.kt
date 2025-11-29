@@ -2,17 +2,17 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
+import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.crafting.HTPotionDropRecipe
-import hiiragi283.ragium.common.util.HTPotionHelper
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.effect.MobEffect
-import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -132,17 +132,17 @@ object RagiumBrewingRecipeProvider : HTRecipeProvider.Direct() {
         }
     }
 
-    // MobEffectInstance
+    // HTMobEffectInstance
     @JvmStatic
-    private fun dropIngredient(instance: MobEffectInstance): HTItemIngredient = itemCreator.fromVanilla(
-        DataComponentIngredient.of(false, DataComponents.POTION_CONTENTS, HTPotionHelper.content(instance), RagiumItems.POTION_DROP),
+    private fun dropIngredient(instance: HTMobEffectInstance): HTItemIngredient = itemCreator.fromVanilla(
+        DataComponentIngredient.of(false, DataComponents.POTION_CONTENTS, HTPotionHelper.contents(instance), RagiumItems.POTION_DROP),
     )
 
     @JvmStatic
     private fun brewing(
         right: HTItemIngredient,
         left: HTItemIngredient = itemCreator.fromTagKey(Tags.Items.CROPS_NETHER_WART),
-        builderAction: MutableList<MobEffectInstance>.() -> Unit,
+        builderAction: MutableList<HTMobEffectInstance>.() -> Unit,
     ): HTCombineRecipeBuilder<PotionContents> = HTCombineRecipeBuilder
         .brewing(
             left,
@@ -168,7 +168,7 @@ object RagiumBrewingRecipeProvider : HTRecipeProvider.Direct() {
         longTime: Int,
         strongTime: Int,
     ) {
-        val instance = MobEffectInstance(effect, baseTime)
+        val instance = HTMobEffectInstance(effect, baseTime)
         val drop: HTItemIngredient = dropIngredient(instance)
         // Base
         brewing(right) { add(instance) }.save(output)
@@ -176,11 +176,11 @@ object RagiumBrewingRecipeProvider : HTRecipeProvider.Direct() {
         brewing(
             itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
             drop,
-        ) { add(MobEffectInstance(effect, longTime)) }.savePrefixed(output, "long_")
+        ) { add(HTMobEffectInstance(effect, longTime)) }.savePrefixed(output, "long_")
         // Strong
         brewing(
             itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
             drop,
-        ) { add(MobEffectInstance(effect, strongTime, 1)) }.savePrefixed(output, "strong_")
+        ) { add(HTMobEffectInstance(effect, strongTime, 1)) }.savePrefixed(output, "strong_")
     }
 }

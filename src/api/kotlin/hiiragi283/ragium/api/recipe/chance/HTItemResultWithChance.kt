@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.math.plus
 import hiiragi283.ragium.api.math.toFraction
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -26,7 +27,7 @@ data class HTItemResultWithChance(val base: HTItemResult, val chance: Float) {
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemResultWithChance> = BiCodec.composite(
             HTItemResult.CODEC.toMap(),
             HTItemResultWithChance::base,
-            BiCodec.floatRange(0f, 1f).optionalFieldOf(RagiumConst.CHANCE, 1f),
+            BiCodecs.floatRange(0f, 1f).optionalFieldOf(RagiumConst.CHANCE, 1f),
             HTItemResultWithChance::chance,
             ::HTItemResultWithChance,
         )
