@@ -59,7 +59,7 @@ interface HTItemHolderLike :
             else -> object : HTItemHolderLike {
                 override fun asItem(): Item = item.asItem()
 
-                override fun getId(): ResourceLocation = item.asItem().builtInRegistryHolder().idOrThrow
+                override fun getId(): ResourceLocation = item.builtInRegistryHolder().idOrThrow
             }
         }
 

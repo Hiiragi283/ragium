@@ -1,7 +1,5 @@
 package hiiragi283.ragium.api.serialization.codec
 
-import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
-import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.tag.createTagKey
 import io.netty.buffer.ByteBuf
@@ -12,7 +10,6 @@ import net.minecraft.core.Registry
 import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
@@ -23,7 +20,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
@@ -60,16 +56,6 @@ object VanillaBiCodecs {
      */
     @JvmField
     val HAND: BiCodec<ByteBuf, InteractionHand> = BiCodecs.enum(InteractionHand::values)
-
-    /**
-     * [PotionContents]の[BiCodec]
-     */
-    @JvmField
-    val POTION: MapBiCodec<RegistryFriendlyByteBuf, PotionContents> = MapBiCodecs
-        .ior(
-            holder(Registries.POTION).optionalFieldOf("potion"),
-            HTMobEffectInstance.CODEC.listOf().optionalFieldOf("custom_effects"),
-        ).xmap(HTPotionHelper::toContents, HTPotionHelper::toIor)
 
     /**
      * [Component]の[BiCodec]
