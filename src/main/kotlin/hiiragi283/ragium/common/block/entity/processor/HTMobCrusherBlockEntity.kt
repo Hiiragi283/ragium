@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -8,6 +9,7 @@ import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
+import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
@@ -25,18 +27,21 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.minecraft.world.phys.Vec3
+import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.event.EventHooks
 
 class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
@@ -54,6 +59,8 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     lateinit var inputSlot: HTItemStackSlot
         private set
+    lateinit var toolSlot: HTItemStackSlot
+        private set
     lateinit var outputSlots: List<HTItemStackSlot>
         private set
 
@@ -64,8 +71,18 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
             HTItemStackSlot.input(
                 listener,
                 HTSlotHelper.getSlotPosX(1.5),
-                HTSlotHelper.getSlotPosY(1),
+                HTSlotHelper.getSlotPosY(2),
                 canInsert = { stack: ImmutableItemStack -> stack.value() is SpawnEggItem },
+            ),
+        )
+        toolSlot = builder.addSlot(
+            HTSlotInfo.CATALYST,
+            HTItemStackSlot.create(
+                listener,
+                HTSlotHelper.getSlotPosX(1.5),
+                HTSlotHelper.getSlotPosY(0),
+                canExtract = HTPredicates.manualOnly(),
+                canInsert = HTPredicates.manualOnly(),
             ),
         )
         // outputs
@@ -81,6 +98,17 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
+    private var fakePlayer: ServerPlayer? = null
+
+    override fun onUpdateLevel(level: Level, pos: BlockPos) {
+        super.onUpdateLevel(level, pos)
+        if (level is ServerLevel) {
+            fakePlayer = FakePlayerFactory.get(level, getOwnerProfile())
+        }
+    }
+
+    //    Ticking    //
+
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
         outputSlots.any { slot: HTItemStackSlot -> slot.getNeeded() > 0 }
 
@@ -94,11 +122,9 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         val entityType: EntityType<*> = (stack.item as? SpawnEggItem)?.getType(stack) ?: return null
         val fakeEntity: LivingEntity = entityType.create(level) as? LivingEntity ?: return null
 
-        val owner: ServerPlayer? = getOwnerPlayer(level)
-        val damageSource: DamageSource = when (owner) {
-            null -> level.damageSources().magic()
-            else -> level.damageSources().playerAttack(owner)
-        }
+        fakePlayer?.setItemInHand(InteractionHand.MAIN_HAND, toolSlot.getItemStack())
+        val damageSource: DamageSource =
+            fakePlayer?.let(level.damageSources()::playerAttack) ?: level.damageSources().magic()
         val lootTable: LootTable = level.server.reloadableRegistries().getLootTable(fakeEntity.lootTable)
         val lootParams: LootParams = LootParams
             .Builder(level)
@@ -107,12 +133,12 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
             .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
             .withOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, damageSource.directEntity)
             .withOptionalParameter(LootContextParams.ATTACKING_ENTITY, damageSource.entity)
-            .withOptionalParameter(LootContextParams.LAST_DAMAGE_PLAYER, owner)
-            .withLuck(owner?.luck ?: 0f)
+            .withOptionalParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer)
+            .withLuck(fakePlayer?.luck ?: 0f)
             .create(LootContextParamSets.ENTITY)
         return MobLootRecipe(
             fakeEntity,
-            lootTable.getRandomItems(lootParams, fakeEntity.lootTableSeed).mapNotNull(ItemStack::toImmutable)
+            lootTable.getRandomItems(lootParams, fakeEntity.lootTableSeed).mapNotNull(ItemStack::toImmutable),
         )
     }
 
@@ -142,7 +168,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         for (stackIn: ImmutableItemStack in drops) {
             HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.EXECUTE)
         }
-        recipe.getExpStack(level, getOwnerPlayer(level))?.let { stack: ImmutableFluidStack ->
+        recipe.getExpStack(level, fakePlayer)?.let { stack: ImmutableFluidStack ->
             outputTank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         // インプットを減らす

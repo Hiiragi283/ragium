@@ -214,7 +214,13 @@ object RagiumBlocks {
             }
 
             fun register(key: HTMaterialKey) {
-                this[variant, key] = REGISTER.registerSimple(pattern.replace("%s", key.name), copyOf(variant.baseStone))
+                val baseOre: Block = when (variant) {
+                    HTOreVariant.DEFAULT -> Blocks.DIAMOND_ORE
+                    HTOreVariant.DEEP -> Blocks.DEEPSLATE_DIAMOND_ORE
+                    HTOreVariant.NETHER -> Blocks.NETHER_QUARTZ_ORE
+                    HTOreVariant.END -> Blocks.END_STONE
+                }
+                this[variant, key] = REGISTER.registerSimple(pattern.replace("%s", key.name), copyOf(baseOre))
             }
             register(RagiumMaterialKeys.RAGINITE)
             register(RagiumMaterialKeys.RAGI_CRYSTAL)
