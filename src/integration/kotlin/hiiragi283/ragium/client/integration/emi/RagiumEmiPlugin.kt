@@ -13,6 +13,7 @@ import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.function.partially1
@@ -29,6 +30,7 @@ import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEm
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTCombustionGeneratorEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.generator.HTCoolantEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTItemGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
@@ -220,6 +222,17 @@ class RagiumEmiPlugin : EmiPlugin {
             ::HTItemGeneratorEmiRecipe,
         )
         // Advanced
+        addDataMapRecipes(
+            registry,
+            RagiumRecipeViewerTypes.COOLANT,
+            EmiPort.getFluidRegistry(),
+            RagiumDataMaps.COOLANT,
+            { holder: Holder<Fluid>, data: HTFluidCoolantData ->
+                EmiStack.of(holder.value(), data.amount.toLong())
+            },
+            ::HTCoolantEmiRecipe,
+        )
+
         addItemStackRecipes(
             registry,
             RagiumRecipeViewerTypes.CULINARY,

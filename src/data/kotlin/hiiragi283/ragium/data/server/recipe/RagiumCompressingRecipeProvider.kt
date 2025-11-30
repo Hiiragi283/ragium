@@ -90,7 +90,7 @@ object RagiumCompressingRecipeProvider : HTRecipeProvider.Direct() {
 
         HTItemWithCatalystRecipeBuilder
             .compressing(
-                itemCreator.fromItem(RagiumItems.COAL_CHUNK, 8),
+                itemCreator.fromItem(RagiumItems.COAL_CHUNK),
                 resultHelper.item(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
                 itemCreator.fromItem(HTMoldType.GEM),
             ).saveSuffixed(output, "_from_coal")
