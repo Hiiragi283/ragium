@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.generator
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
@@ -35,11 +36,19 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         // inputs
         coolantTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getFirstInputTank()),
+            HTVariableFluidStackTank.input(
+                listener,
+                blockHolder.getFluidAttribute().getFirstInputTank(),
+                canInsert = { stack: ImmutableFluidStack -> stack.getData(RagiumDataMaps.COOLANT) != null }
+            ),
         )
         fuelTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getSecondInputTank()),
+            HTVariableFluidStackTank.input(
+                listener, 
+                blockHolder.getFluidAttribute().getSecondInputTank(),
+                canInsert = { stack: ImmutableFluidStack -> stack.getData(RagiumDataMaps.COMBUSTION_FUEL) != null }
+            ),
         )
     }
 

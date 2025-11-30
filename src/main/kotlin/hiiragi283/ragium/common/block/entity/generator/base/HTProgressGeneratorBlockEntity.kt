@@ -50,11 +50,11 @@ abstract class HTProgressGeneratorBlockEntity<INPUT : Any, RECIPE : Any>(blockHo
             generatedEnergy += battery.generate()
         }
         return when {
-            generatedEnergy < energyToGenerate -> false
+            generatedEnergy < energyToGenerate -> this.isActive
             else -> {
                 generatedEnergy -= energyToGenerate
                 energyToGenerate = 0
-                false
+                true
             }
         }
     }
