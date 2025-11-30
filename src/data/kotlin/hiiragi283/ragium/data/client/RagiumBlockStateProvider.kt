@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.registry.impl.HTBasicDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDescriptionDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.block.HTCropBlock
@@ -93,17 +94,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
 
         // Ore
         RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: HTSimpleDeferredBlock) ->
-            val textureId: ResourceLocation = RagiumAPI.id("block", key.name)
-            val stoneTex: String = when (variant) {
-                HTOreVariant.DEFAULT -> "block/stone"
-                HTOreVariant.DEEP -> "block/deepslate"
-                HTOreVariant.NETHER -> "block/netherrack"
-                HTOreVariant.END -> "block/end_stone"
-            } ?: return@forEach
             layeredBlock(
                 ore,
-                vanillaId(stoneTex),
-                textureId,
+                variant.baseStone.toHolderLike().getIdWithPrefix("block/"),
+                RagiumAPI.id("block", key.name),
             )
         }
 

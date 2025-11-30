@@ -150,6 +150,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.WASHER, "洗浄機")
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
+        add(RagiumBlocks.MOB_CRUSHER, "モブ粉砕機")
         add(RagiumBlocks.SIMULATOR, "シミュレーション室")
         // Devices
         add(RagiumBlocks.FLUID_COLLECTOR, "液体収集機")

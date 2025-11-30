@@ -214,6 +214,14 @@ object RagiumBlockTypes {
         .build(RagiumCommonTranslation.ENCHANTER)
 
     @JvmField
+    val MOB_CRUSHER: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.MOB_CRUSHER }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addMachineTier(HTMachineTier.ULTIMATE, RagiumConfig.COMMON.processor.mobCrusher)
+        .addMenu { RagiumMenuTypes.MOB_CRUSHER }
+        .build()
+
+    @JvmField
     val SIMULATOR: HTMachineBlockType = HTMachineBlockType
         .builder { RagiumBlockEntityTypes.SIMULATOR }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)

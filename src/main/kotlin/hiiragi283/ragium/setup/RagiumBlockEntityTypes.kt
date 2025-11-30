@@ -32,6 +32,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMobCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
@@ -172,6 +173,9 @@ object RagiumBlockEntityTypes {
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> = registerTick("enchanter", ::HTEnchanterBlockEntity)
 
     @JvmField
+    val MOB_CRUSHER: HTDeferredBlockEntityType<HTMobCrusherBlockEntity> = registerTick("mob_crusher", ::HTMobCrusherBlockEntity)
+
+    @JvmField
     val SIMULATOR: HTDeferredBlockEntityType<HTSimulatorBlockEntity> = registerTick("simulator", ::HTSimulatorBlockEntity)
 
     //    Device    //
@@ -285,6 +289,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, PLANTER.get())
 
         registerHandler(event, ENCHANTER.get())
+        registerHandler(event, MOB_CRUSHER.get())
         registerHandler(event, SIMULATOR.get())
         // Devices
         registerHandler(event, FLUID_COLLECTOR.get())

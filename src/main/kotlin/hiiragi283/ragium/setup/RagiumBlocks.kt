@@ -212,15 +212,9 @@ object RagiumBlocks {
                 HTOreVariant.NETHER -> "nether_%s_ore"
                 HTOreVariant.END -> "end_%s_ore"
             }
-            val stone: Block = when (variant) {
-                HTOreVariant.DEFAULT -> Blocks.DIAMOND_ORE
-                HTOreVariant.DEEP -> Blocks.DEEPSLATE_DIAMOND_ORE
-                HTOreVariant.NETHER -> Blocks.NETHER_QUARTZ_ORE
-                HTOreVariant.END -> Blocks.END_STONE
-            } ?: return@forEach
 
             fun register(key: HTMaterialKey) {
-                this[variant, key] = REGISTER.registerSimple(pattern.replace("%s", key.name), copyOf(stone))
+                this[variant, key] = REGISTER.registerSimple(pattern.replace("%s", key.name), copyOf(variant.baseStone))
             }
             register(RagiumMaterialKeys.RAGINITE)
             register(RagiumMaterialKeys.RAGI_CRYSTAL)
@@ -542,6 +536,10 @@ object RagiumBlocks {
     @JvmField
     val ENCHANTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("enchanter", RagiumBlockTypes.ENCHANTER, machineProperty().noOcclusion())
+
+    @JvmField
+    val MOB_CRUSHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("mob_crusher", RagiumBlockTypes.MOB_CRUSHER, machineProperty().noOcclusion())
 
     @JvmField
     val SIMULATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =

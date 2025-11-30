@@ -203,15 +203,14 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
         // Ultimate
-        machineBase(RagiumBlocks.ENCHANTER, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            define('C', Items.ENCHANTING_TABLE)
-            define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
+        ultimateMachine(RagiumBlocks.ENCHANTER) {
+            define('B', Items.ENCHANTING_TABLE)
         }
-        machineBase(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.NIGHT_METAL) {
-            define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            define('C', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
-            define('D', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+        ultimateMachine(RagiumBlocks.MOB_CRUSHER) {
+            define('B', Items.DIAMOND_SWORD)
+        }
+        ultimateMachine(RagiumBlocks.SIMULATOR) {
+            define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
         }
     }
 
@@ -248,6 +247,15 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     private inline fun eliteMachine(machine: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
         machineBase(machine, RagiumMaterialKeys.AZURE_STEEL) {
             define('D', Items.DEEPSLATE_TILES)
+            action()
+        }
+    }
+
+    @JvmStatic
+    private inline fun ultimateMachine(machine: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
+        machineBase(machine, RagiumMaterialKeys.NIGHT_METAL) {
+            define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+            define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
             action()
         }
     }

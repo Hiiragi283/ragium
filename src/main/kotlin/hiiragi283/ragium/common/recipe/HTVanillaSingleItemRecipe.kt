@@ -10,8 +10,8 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 
 open class HTVanillaSingleItemRecipe<RECIPE : Recipe<SingleRecipeInput>>(
     protected val recipe: RECIPE,
-    private val ingredient: HTItemIngredient,
-    private val resultFactory: HTVanillaResultFactory<SingleRecipeInput>,
+    protected val ingredient: HTItemIngredient,
+    protected val resultFactory: HTVanillaResultFactory<SingleRecipeInput>,
 ) : HTRecipe.Fake<SingleRecipeInput>,
     HTItemIngredient.CountGetter {
     constructor(recipe: RECIPE) : this(

@@ -24,6 +24,7 @@ import hiiragi283.ragium.client.gui.screen.generator.HTCombustionGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTCrusherScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTMixerScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTMobCrusherScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTProcessorScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTRefineryScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTSingleFluidProcessorScreen
@@ -271,6 +272,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.ITEM_WITH_CATALYST, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.MELTER, HTSingleFluidProcessorScreen.Companion::melter)
         event.register(RagiumMenuTypes.MIXER, ::HTMixerScreen)
+        event.register(RagiumMenuTypes.MOB_CRUSHER, ::HTMobCrusherScreen)
         event.register(RagiumMenuTypes.PROCESSOR, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.REFINERY, ::HTRefineryScreen)
         event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, ::HTCrusherScreen)

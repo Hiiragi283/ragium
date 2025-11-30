@@ -273,6 +273,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         val enchanter: HTMachineConfig = HTMachineConfig.createSimple(builder, "enchanter", HTFluidBlockAttribute.TankType.INPUT)
 
         @JvmField
+        val mobCrusher: HTMachineConfig = HTMachineConfig.createSimple(builder, "mob_crusher", HTFluidBlockAttribute.TankType.OUTPUT)
+
+        @JvmField
         val simulator: HTMachineConfig = HTMachineConfig.createSimple(builder, "simulator", HTFluidBlockAttribute.TankType.OUTPUT)
     }
 }

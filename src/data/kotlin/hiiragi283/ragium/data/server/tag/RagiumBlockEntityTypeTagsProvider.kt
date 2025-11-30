@@ -73,6 +73,7 @@ class RagiumBlockEntityTypeTagsProvider(context: HTDataGenContext) :
             .add(RagiumBlockEntityTypes.WASHER)
             // Ultimate
             .add(RagiumBlockEntityTypes.ENCHANTER)
+            .add(RagiumBlockEntityTypes.MOB_CRUSHER)
             .add(RagiumBlockEntityTypes.SIMULATOR)
 
         // Devices

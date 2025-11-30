@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
 import hiiragi283.ragium.api.material.get
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
-import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
@@ -232,18 +231,27 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .addResult(resultHelper.item(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL, 2))
             .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR), 1 / 4f)
             .saveSuffixed(output, "_from_ore")
-        // Redstone
-        HTItemToChancedItemRecipeBuilder
-            .crushing(itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, VanillaMaterialKeys.REDSTONE))
-            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE, 8))
-            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE, 4), 1 / 2f)
-            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.CINNABAR, 4), 1 / 4f)
-            .saveSuffixed(output, "_from_ore")
-        // Raginite
-        with(RagiumMaterialRecipeData.RAGINITE_ORE) {
+
+        // Dusts
+        mapOf(
+            VanillaMaterialKeys.REDSTONE to CommonMaterialKeys.Gems.CINNABAR,
+            RagiumMaterialKeys.RAGINITE to RagiumMaterialKeys.RAGI_CRYSTAL,
+        ).forEach { (primary: HTMaterialLike, secondary: HTMaterialLike) ->
+            val ore: HTItemIngredient = itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, primary)
+            // Crushing
             HTItemToChancedItemRecipeBuilder
-                .crushing(this.getItemIngredients(itemCreator)[0])
-                .addResults(this.getItemResults().map(::HTItemResultWithChance))
+                .crushing(ore)
+                .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, primary, 8))
+                .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, primary, 4), 1 / 2f)
+                .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, secondary, 2), 1 / 4f)
+                .saveSuffixed(output, "_from_ore")
+            // Washing
+            HTItemWithFluidToChancedItemRecipeBuilder
+                .washing(ore, fluidCreator.fromHolder(RagiumFluidContents.SULFURIC_ACID, 500))
+                .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, primary, 12))
+                .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, primary, 6), 1 / 4f)
+                .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, secondary, 2), 1 / 2f)
+                .addResult(resultHelper.item(CommonMaterialPrefixes.GEM, secondary, 2), 1 / 4f)
                 .saveSuffixed(output, "_from_ore")
         }
 

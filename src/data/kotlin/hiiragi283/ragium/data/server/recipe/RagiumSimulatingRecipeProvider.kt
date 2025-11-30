@@ -100,13 +100,6 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.fluid(HTFluidHolderLike.MILK, 250),
             ).saveSuffixed(output, "_from_cow")
         // Heart of the Sea
-        HTItemWithCatalystRecipeBuilder
-            .simulating(
-                itemCreator.fromTagKey(Tags.Items.FOODS_RAW_FISH, 64),
-                itemCreator.fromVanilla(ingredient(EntityType.ELDER_GUARDIAN)),
-                resultHelper.item(RagiumItems.ELDER_HEART),
-            ).save(output)
-
         HTComplexRecipeBuilder
             .mixing()
             .addIngredient(itemCreator.fromItem(RagiumItems.ELDER_HEART))

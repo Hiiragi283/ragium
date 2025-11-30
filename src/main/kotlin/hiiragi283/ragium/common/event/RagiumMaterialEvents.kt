@@ -199,10 +199,12 @@ object RagiumMaterialEvents {
         event.modify(FoodMaterialKeys.BUTTER) {
             addDefaultPrefix(CommonMaterialPrefixes.FOOD)
             addName("Butter", "バター")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(FoodMaterialKeys.CHOCOLATE) {
             addDefaultPrefix(CommonMaterialPrefixes.FOOD)
             addName("Chocolate", "チョコレート")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
 
         event.modify(FoodMaterialKeys.WARPED_WART) {
@@ -217,10 +219,12 @@ object RagiumMaterialEvents {
         event.modify(FoodMaterialKeys.RAW_MEAT) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Raw Meat", "生肉")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(FoodMaterialKeys.COOKED_MEAT) {
             addDefaultPrefix(CommonMaterialPrefixes.INGOT)
             addName("Cooked Meat", "焼肉")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         // Other
         event.modify(RagiumMaterialKeys.BAMBOO_CHARCOAL) {
