@@ -13,9 +13,9 @@ enum class HTOreVariant(private val enPattern: String, private val jaPattern: St
     ;
 
     val baseStone: Block get() = when (this) {
-        DEFAULT -> Blocks.DIAMOND_ORE
-        DEEP -> Blocks.DEEPSLATE_DIAMOND_ORE
-        NETHER -> Blocks.NETHER_QUARTZ_ORE
+        DEFAULT -> Blocks.STONE
+        DEEP -> Blocks.DEEPSLATE
+        NETHER -> Blocks.NETHERRACK
         END -> Blocks.END_STONE
     }
 
