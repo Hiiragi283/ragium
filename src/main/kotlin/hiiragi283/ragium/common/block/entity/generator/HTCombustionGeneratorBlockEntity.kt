@@ -39,15 +39,15 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             HTVariableFluidStackTank.input(
                 listener,
                 blockHolder.getFluidAttribute().getFirstInputTank(),
-                canInsert = { stack: ImmutableFluidStack -> stack.getData(RagiumDataMaps.COOLANT) != null }
+                canInsert = { stack: ImmutableFluidStack -> stack.getData(RagiumDataMaps.COOLANT) != null },
             ),
         )
         fuelTank = builder.addSlot(
             HTSlotInfo.INPUT,
             HTVariableFluidStackTank.input(
-                listener, 
+                listener,
                 blockHolder.getFluidAttribute().getSecondInputTank(),
-                canInsert = { stack: ImmutableFluidStack -> stack.getData(RagiumDataMaps.COMBUSTION_FUEL) != null }
+                canInsert = { stack: ImmutableFluidStack -> stack.getData(RagiumDataMaps.COMBUSTION_FUEL) != null },
             ),
         )
     }

@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBloc
 import hiiragi283.ragium.common.block.entity.generator.base.HTItemGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTMobCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCombinerBlockEntity
@@ -96,6 +97,9 @@ object RagiumMenuTypes {
 
     @JvmField
     val MIXER: DeferredBEMenu<HTMixerBlockEntity> = registerBE("mixer")
+
+    @JvmField
+    val MOB_CRUSHER: DeferredBEMenu<HTMobCrusherBlockEntity> = registerBE("mob_crusher")
 
     @JvmField
     val PROCESSOR: DeferredBEMenu<HTProcessorBlockEntity<*, *>> = registerBE("processor")

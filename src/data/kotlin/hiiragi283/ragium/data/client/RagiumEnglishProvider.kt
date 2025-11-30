@@ -159,6 +159,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.WASHER, "Washer")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
+        add(RagiumBlocks.MOB_CRUSHER, "Mob Crusher")
         add(RagiumBlocks.SIMULATOR, "Simulation Chamber")
         // Devices
         add(RagiumBlocks.FLUID_COLLECTOR, "Fluid Collector")

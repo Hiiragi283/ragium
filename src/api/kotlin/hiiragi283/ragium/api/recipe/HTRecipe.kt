@@ -77,4 +77,10 @@ interface HTRecipe<INPUT : RecipeInput> :
         @Deprecated("Not implemented", level = DeprecationLevel.ERROR)
         override fun getType(): RecipeType<*> = throw UnsupportedOperationException()
     }
+
+    //    Modifiable    //
+
+    interface Modifiable<INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>> : HTRecipe<INPUT> {
+        fun copyAndMultiply(multiplier: Int): RECIPE
+    }
 }

@@ -14,6 +14,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import java.util.function.IntUnaryOperator
 
 /**
  * [ImmutableItemStack]向けの[HTIngredient]の実装クラス
@@ -49,7 +50,9 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
     final override fun getRequiredAmount(stack: ImmutableItemStack): Int = if (test(stack)) this.count else 0
 
-    abstract fun copyWithCount(count: Int): HTItemIngredient
+    fun copyWithCount(count: Int): HTItemIngredient = copyWithCount { count }
+
+    abstract fun copyWithCount(operator: IntUnaryOperator): HTItemIngredient
 
     //    HolderBased    //
 
@@ -89,7 +92,7 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
         override fun unwrap(): Either<Pair<HolderSet<Item>, Int>, List<ImmutableItemStack>> = Either.left(holderSet to count)
 
-        override fun copyWithCount(count: Int): HTItemIngredient = HolderBased(holderSet, count)
+        override fun copyWithCount(operator: IntUnaryOperator): HTItemIngredient = HolderBased(holderSet, operator.applyAsInt(count))
     }
 
     private class IngredientBased(private val ingredient: Ingredient, count: Int) : HTItemIngredient(count) {
@@ -111,6 +114,6 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
         override fun unwrap(): Either<Pair<HolderSet<Item>, Int>, List<ImmutableItemStack>> =
             Either.right(ingredient.items.mapNotNull(ItemStack::toImmutable))
 
-        override fun copyWithCount(count: Int): HTItemIngredient = IngredientBased(ingredient, count)
+        override fun copyWithCount(operator: IntUnaryOperator): HTItemIngredient = IngredientBased(ingredient, operator.applyAsInt(count))
     }
 }

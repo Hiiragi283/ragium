@@ -102,6 +102,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.WASHER)
 
             add(RagiumBlocks.ENCHANTER)
+            add(RagiumBlocks.MOB_CRUSHER)
             add(RagiumBlocks.SIMULATOR)
             // Devices
             add(RagiumBlocks.DEVICE_CASING)
