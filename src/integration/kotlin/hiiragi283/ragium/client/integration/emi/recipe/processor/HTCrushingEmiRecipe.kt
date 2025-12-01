@@ -4,7 +4,7 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTChancedOutputsEmiRecipe
-import hiiragi283.ragium.client.integration.emi.toTagEmi
+import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -22,7 +22,7 @@ class HTCrushingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HT
 
             addOutputs(recipe.result)
         }
-        addCatalyst(RagiumFluidContents.LUBRICANT.toTagEmi())
+        addCatalyst(RagiumFluidContents.LUBRICANT.getFluidTag().toEmi())
     }
 
     override fun initInputSlots(widgets: WidgetHolder) {

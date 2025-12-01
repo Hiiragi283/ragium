@@ -228,7 +228,7 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiPort.getFluidRegistry(),
             RagiumDataMaps.COOLANT,
             { holder: Holder<Fluid>, data: HTFluidCoolantData ->
-                EmiStack.of(holder.value(), data.amount.toLong())
+                holder.value().toEmi(data.amount).takeUnless(EmiStack::isEmpty)
             },
             ::HTCoolantEmiRecipe,
         )
@@ -251,7 +251,8 @@ class RagiumEmiPlugin : EmiPlugin {
             EmiPort.getFluidRegistry(),
             RagiumDataMaps.COMBUSTION_FUEL,
             { holder: Holder<Fluid>, data: HTFluidFuelData ->
-                HTEmiFluidFuelData(EmiStack.of(holder.value(), 100), data.energy)
+                val stack: EmiStack = holder.value().toEmi(100).takeUnless(EmiStack::isEmpty) ?: return@addDataMapRecipes null
+                HTEmiFluidFuelData(stack, data.energy)
             },
             ::HTCombustionGeneratorEmiRecipe,
         )

@@ -29,6 +29,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
 
 //    EmiStack    //
@@ -39,6 +40,12 @@ fun EmiStack.copyAsCatalyst(): EmiStack = copy().setRemainder(this)
 fun ItemLike.toEmi(amount: Int = 1): EmiStack = EmiStack.of(this, amount.toLong())
 
 fun ItemStack.toEmi(): EmiStack = EmiStack.of(this)
+
+fun Fluid.toEmi(amount: Int = 0): EmiStack = when (this) {
+    is FlowingFluid -> if (this == this.source) EmiStack.of(this, amount.toLong()) else EmiStack.EMPTY
+
+    else -> EmiStack.of(this)
+}
 
 // Immutable Stack
 fun ImmutableItemStack?.toEmi(): EmiStack = when (this) {
@@ -92,7 +99,7 @@ fun HTFluidIngredient.toEmi(): EmiIngredient = this
                 { tagKey: TagKey<Fluid> -> tagKey.toEmi(count) },
                 { holders: List<Holder<Fluid>> ->
                     holders
-                        .map { holder: Holder<Fluid> -> EmiStack.of(holder.value(), count.toLong()) }
+                        .map { holder: Holder<Fluid> -> holder.value().toEmi(count) }
                         .let(::ingredient)
                 },
             )
@@ -111,11 +118,7 @@ fun HTItemResult.toEmi(): EmiStack = this.getStackResult(null).fold(ImmutableIte
 fun HTFluidResult.toEmi(): EmiStack = this.getStackResult(null).fold(ImmutableFluidStack::toEmi, ::createErrorStack)
 
 // Fluid Content
-fun HTFluidHolderLike.toFluidEmi(): EmiStack = EmiStack.of(this.getFluid())
-
-fun HTFluidHolderLike.toFluidEmi(amount: Number): EmiStack = EmiStack.of(this.getFluid(), amount.toLong())
-
-fun HTFluidHolderLike.toTagEmi(): EmiIngredient = this.getFluidTag().toEmi()
+fun HTFluidHolderLike.toFluidEmi(amount: Int = 0): EmiStack = this.getFluid().toEmi(amount)
 
 fun createErrorStack(translation: HTTranslation): EmiStack = createErrorStack(translation.translate())
 
