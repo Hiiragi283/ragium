@@ -12,8 +12,8 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -43,7 +43,7 @@ class HTAdvancedMixerBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    lateinit var inputSlots: List<HTItemStackSlot>
+    lateinit var inputSlots: List<HTBasicItemSlot>
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -52,19 +52,19 @@ class HTAdvancedMixerBlockEntity(pos: BlockPos, state: BlockState) :
             (2..3).map { x: Int ->
                 builder.addSlot(
                     HTSlotInfo.INPUT,
-                    HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosX(y)),
+                    HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosX(y)),
                 )
             }
         }
         // output
         outputSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5)),
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1.5)),
         )
     }
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
-        items.addAll(inputSlots.map(HTItemStackSlot::getStack))
+        items.addAll(inputSlots.map(HTBasicItemSlot::getStack))
         fluids += firstInputTank.getStack()
         fluids += secondInputTank.getStack()
     }

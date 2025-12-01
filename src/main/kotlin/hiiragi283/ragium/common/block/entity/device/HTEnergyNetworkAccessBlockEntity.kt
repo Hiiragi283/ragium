@@ -12,7 +12,7 @@ import hiiragi283.ragium.common.storage.energy.HTEnergyCache
 import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTEnergyItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTEnergyItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -34,19 +34,19 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
 
     protected abstract fun createBattery(listener: HTContentListener): HTEnergyBattery
 
-    private lateinit var fillSlot: HTEnergyItemStackSlot
-    private lateinit var drainSlot: HTEnergyItemStackSlot
+    private lateinit var fillSlot: HTEnergyItemSlot
+    private lateinit var drainSlot: HTEnergyItemSlot
 
     final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // extract
         fillSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
-            HTEnergyItemStackSlot.fill(this.battery, listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1)),
+            HTEnergyItemSlot.fill(this.battery, listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1)),
         )
         // insert
         drainSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
-            HTEnergyItemStackSlot.drain(this.battery, listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1)),
+            HTEnergyItemSlot.drain(this.battery, listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1)),
         )
     }
 

@@ -19,7 +19,7 @@ import java.util.function.Predicate
 /**
  * @see mekanism.common.inventory.slot.BasicInventorySlot
  */
-open class HTItemStackSlot protected constructor(
+open class HTBasicItemSlot protected constructor(
     private val limit: Int,
     private val canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess>,
     private val canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess>,
@@ -45,7 +45,7 @@ open class HTItemStackSlot protected constructor(
             canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
             filter: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
-        ): HTItemStackSlot = create(listener, x, y, limit, canExtract, canInsert, filter, HTContainerItemSlot.Type.BOTH)
+        ): HTBasicItemSlot = create(listener, x, y, limit, canExtract, canInsert, filter, HTContainerItemSlot.Type.BOTH)
 
         @JvmStatic
         private fun create(
@@ -57,7 +57,7 @@ open class HTItemStackSlot protected constructor(
             canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
             filter: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
             slotType: HTContainerItemSlot.Type,
-        ): HTItemStackSlot = HTItemStackSlot(validateLimit(limit), canExtract, canInsert, filter, listener, x, y, slotType)
+        ): HTBasicItemSlot = HTBasicItemSlot(validateLimit(limit), canExtract, canInsert, filter, listener, x, y, slotType)
 
         @JvmStatic
         fun input(
@@ -67,7 +67,7 @@ open class HTItemStackSlot protected constructor(
             limit: Int = RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
             canInsert: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
             filter: Predicate<ImmutableItemStack> = canInsert,
-        ): HTItemStackSlot = create(
+        ): HTBasicItemSlot = create(
             listener,
             x,
             y,
@@ -103,7 +103,7 @@ open class HTItemStackSlot protected constructor(
     protected var stack: ItemStack = ItemStack.EMPTY
     private var slotBackground: Pair<ResourceLocation, ResourceLocation>? = null
 
-    fun setSlotBackground(atlas: ResourceLocation, texture: ResourceLocation): HTItemStackSlot = apply {
+    fun setSlotBackground(atlas: ResourceLocation, texture: ResourceLocation): HTBasicItemSlot = apply {
         this.slotBackground = atlas to texture
     }
 

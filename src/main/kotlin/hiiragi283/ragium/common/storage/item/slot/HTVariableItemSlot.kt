@@ -9,7 +9,7 @@ import java.util.function.BiPredicate
 import java.util.function.Predicate
 import java.util.function.ToIntFunction
 
-class HTVariableItemStackSlot(
+class HTVariableItemSlot(
     private val capacityFunction: ToIntFunction<ImmutableItemStack?>,
     canExtract: BiPredicate<ImmutableItemStack, HTStorageAccess>,
     canInsert: BiPredicate<ImmutableItemStack, HTStorageAccess>,
@@ -18,7 +18,7 @@ class HTVariableItemStackSlot(
     x: Int,
     y: Int,
     slotType: HTContainerItemSlot.Type,
-) : HTItemStackSlot(
+) : HTBasicItemSlot(
         capacityFunction.applyAsInt(null),
         canExtract,
         canInsert,
@@ -35,7 +35,7 @@ class HTVariableItemStackSlot(
             capacity: ToIntFunction<ImmutableItemStack?>,
             x: Int,
             y: Int,
-        ): HTVariableItemStackSlot = HTVariableItemStackSlot(
+        ): HTVariableItemSlot = HTVariableItemSlot(
             capacity,
             HTPredicates.alwaysTrueBi(),
             HTPredicates.alwaysTrueBi(),
@@ -54,7 +54,7 @@ class HTVariableItemStackSlot(
             filter: Predicate<ImmutableItemStack> = canInsert,
             x: Int,
             y: Int,
-        ): HTVariableItemStackSlot = HTVariableItemStackSlot(
+        ): HTVariableItemSlot = HTVariableItemSlot(
             capacity,
             HTPredicates.notExternal(),
             { stack: ImmutableItemStack, _ -> canInsert.test(stack) },
@@ -71,7 +71,7 @@ class HTVariableItemStackSlot(
             capacity: ToIntFunction<ImmutableItemStack?>,
             x: Int,
             y: Int,
-        ): HTVariableItemStackSlot = HTVariableItemStackSlot(
+        ): HTVariableItemSlot = HTVariableItemSlot(
             capacity,
             HTPredicates.alwaysTrueBi(),
             HTPredicates.internalOnly(),

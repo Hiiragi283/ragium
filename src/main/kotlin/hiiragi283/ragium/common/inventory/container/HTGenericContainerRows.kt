@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.common.storage.item.HTItemStackHandler
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import java.util.function.Predicate
 
 interface HTGenericContainerRows {
@@ -23,7 +23,7 @@ interface HTGenericContainerRows {
             filter: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
         ): HTItemHandler = HTItemStackHandler(
             (0..<(rows * 9)).map { index: Int ->
-                HTItemStackSlot.create(
+                HTBasicItemSlot.create(
                     null,
                     HTSlotHelper.getSlotPosX(index % 9),
                     HTSlotHelper.getSlotPosY(index / 9),

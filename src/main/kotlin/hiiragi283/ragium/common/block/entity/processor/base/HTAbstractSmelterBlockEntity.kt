@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -32,9 +32,9 @@ import kotlin.jvm.optionals.getOrNull
 
 abstract class HTAbstractSmelterBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTSingleItemInputBlockEntity<HTVanillaCookingRecipe>(blockHolder, pos, state) {
-    lateinit var catalystSlot: HTItemStackSlot
+    lateinit var catalystSlot: HTBasicItemSlot
         private set
-    lateinit var outputSlot: HTItemStackSlot
+    lateinit var outputSlot: HTBasicItemSlot
         private set
 
     final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -43,7 +43,7 @@ abstract class HTAbstractSmelterBlockEntity(blockHolder: Holder<Block>, pos: Blo
         // catalyst
         catalystSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
+            HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
         )
         // output
         outputSlot = singleOutput(builder, listener)

@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -21,7 +21,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    lateinit var outputSlots: List<HTItemStackSlot>
+    lateinit var outputSlots: List<HTBasicItemSlot>
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -34,7 +34,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
-        outputSlots.any { slot: HTItemStackSlot -> slot.getNeeded() > 0 }
+        outputSlots.any { slot: HTBasicItemSlot -> slot.getNeeded() > 0 }
 
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToChancedItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する

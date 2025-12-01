@@ -18,7 +18,7 @@ import java.util.function.ToIntFunction
 /**
  * @see mekanism.generators.common.slot.FluidFuelInventorySlot
  */
-class HTFluidFuelItemStackSlot private constructor(
+class HTFluidFuelItemSlot private constructor(
     tank: HTFluidTank,
     private val stackToAmount: ToIntFunction<ImmutableItemStack>,
     private val amountToFuel: IntFunction<ImmutableFluidStack?>,
@@ -27,7 +27,7 @@ class HTFluidFuelItemStackSlot private constructor(
     listener: HTContentListener?,
     x: Int,
     y: Int,
-) : HTFluidItemStackSlot(tank, canExtract, canInsert, listener, x, y) {
+) : HTFluidItemSlot(tank, canExtract, canInsert, listener, x, y) {
     companion object {
         @JvmStatic
         fun create(
@@ -37,7 +37,7 @@ class HTFluidFuelItemStackSlot private constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-        ): HTFluidFuelItemStackSlot = HTFluidFuelItemStackSlot(
+        ): HTFluidFuelItemSlot = HTFluidFuelItemSlot(
             tank,
             stackToAmount,
             amountToFuel,
@@ -45,7 +45,7 @@ class HTFluidFuelItemStackSlot private constructor(
                 // stackの液体コンテナから吸いだせる場合は取り出し不可
                 for (view: HTFluidView in HTFluidCapabilities.getFluidViews(stack)) {
                     val stack: ImmutableFluidStack = view.getStack() ?: continue
-                    if (tank.isValid(stack)) return@HTFluidFuelItemStackSlot false
+                    if (tank.isValid(stack)) return@HTFluidFuelItemSlot false
                 }
                 // stackを燃料に変換できない場合はtrue
                 stackToAmount.applyAsInt(stack) == 0

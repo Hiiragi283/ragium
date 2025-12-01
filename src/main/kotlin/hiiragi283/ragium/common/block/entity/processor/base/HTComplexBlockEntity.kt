@@ -12,7 +12,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
@@ -51,7 +51,7 @@ abstract class HTComplexBlockEntity<INPUT : RecipeInput, RECIPE : HTFluidRecipe<
 
     protected open fun initInputTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}
 
-    lateinit var outputSlot: HTItemStackSlot
+    lateinit var outputSlot: HTBasicItemSlot
         protected set
 
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0

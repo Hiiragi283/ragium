@@ -17,8 +17,8 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -54,27 +54,27 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTM
 
     protected abstract fun filterFluid(stack: ImmutableFluidStack): Boolean
 
-    lateinit var leftInputSlot: HTItemStackSlot
+    lateinit var leftInputSlot: HTBasicItemSlot
         private set
-    lateinit var rightInputSlot: HTItemStackSlot
+    lateinit var rightInputSlot: HTBasicItemSlot
         private set
-    lateinit var outputSlot: HTItemStackSlot
+    lateinit var outputSlot: HTBasicItemSlot
         private set
 
     final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // inputs
         leftInputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0)),
+            HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(0)),
         )
         rightInputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0)),
+            HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0)),
         )
         // output
         outputSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
         )
     }
 
