@@ -14,8 +14,8 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.world.sendBlockUpdated
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -40,30 +40,30 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
             builder: HTBasicItemSlotHolder.Builder,
             listener: HTContentListener,
             canInsert: Predicate<ImmutableItemStack> = HTPredicates.alwaysTrue(),
-        ): HTItemStackSlot = builder.addSlot(
+        ): HTBasicItemSlot = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0), canInsert = canInsert),
+            HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0), canInsert = canInsert),
         )
 
         @JvmStatic
-        protected fun singleOutput(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTItemStackSlot = builder.addSlot(
+        protected fun singleOutput(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTBasicItemSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(1)),
         )
 
         @JvmStatic
-        protected fun multiOutputs(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): List<HTItemStackSlot> =
+        protected fun multiOutputs(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): List<HTBasicItemSlot> =
             doubleArrayOf(0.5, 1.5).flatMap { y: Double ->
                 intArrayOf(5, 6).map { x: Int ->
                     builder.addSlot(
                         HTSlotInfo.OUTPUT,
-                        HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y)),
+                        HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y)),
                     )
                 }
             }
     }
 
-    lateinit var upgradeSlots: List<HTItemStackSlot>
+    lateinit var upgradeSlots: List<HTBasicItemSlot>
         private set
 
     final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
@@ -75,7 +75,7 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
             }
             builder.addSlot(
                 HTSlotInfo.CATALYST,
-                HTItemStackSlot.create(
+                HTBasicItemSlot.create(
                     listener.andThen { level?.sendBlockUpdated(blockPos) },
                     HTSlotHelper.getSlotPosX(8),
                     HTSlotHelper.getSlotPosY(i - 0.5),
@@ -88,11 +88,11 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         return builder.build()
     }
 
-    final override fun hasUpgrade(item: ItemLike): Boolean = upgradeSlots.any { slot: HTItemStackSlot ->
+    final override fun hasUpgrade(item: ItemLike): Boolean = upgradeSlots.any { slot: HTBasicItemSlot ->
         slot.getStack()?.isOf(item.asItem()) ?: false
     }
 
-    override fun getMachineUpgrades(): List<Pair<HTMachineUpgrade, Int>> = upgradeSlots.mapNotNull { slot: HTItemStackSlot ->
+    override fun getMachineUpgrades(): List<Pair<HTMachineUpgrade, Int>> = upgradeSlots.mapNotNull { slot: HTBasicItemSlot ->
         val upgrade: HTMachineUpgrade = slot
             .getStack()
             ?.unwrap()

@@ -8,8 +8,8 @@ import hiiragi283.ragium.common.inventory.HTContainerItemSlot
 /**
  * @see mekanism.common.inventory.slot.OutputInventorySlot
  */
-class HTOutputItemStackSlot private constructor(listener: HTContentListener?, x: Int, y: Int) :
-    HTItemStackSlot(
+class HTOutputItemSlot private constructor(listener: HTContentListener?, x: Int, y: Int) :
+    HTBasicItemSlot(
         RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
         HTPredicates.alwaysTrueBi(),
         HTPredicates.internalOnly(),
@@ -21,6 +21,6 @@ class HTOutputItemStackSlot private constructor(listener: HTContentListener?, x:
     ) {
         companion object {
             @JvmStatic
-            fun create(listener: HTContentListener?, x: Int, y: Int): HTOutputItemStackSlot = HTOutputItemStackSlot(listener, x, y)
+            fun create(listener: HTContentListener?, x: Int, y: Int): HTOutputItemSlot = HTOutputItemSlot(listener, x, y)
         }
     }

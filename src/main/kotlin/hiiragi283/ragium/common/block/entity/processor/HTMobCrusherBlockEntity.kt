@@ -18,8 +18,8 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -59,18 +59,18 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    lateinit var inputSlot: HTItemStackSlot
+    lateinit var inputSlot: HTBasicItemSlot
         private set
-    lateinit var toolSlot: HTItemStackSlot
+    lateinit var toolSlot: HTBasicItemSlot
         private set
-    lateinit var outputSlots: List<HTItemStackSlot>
+    lateinit var outputSlots: List<HTBasicItemSlot>
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTItemStackSlot
+            HTBasicItemSlot
                 .input(
                     listener,
                     HTSlotHelper.getSlotPosX(1.5),
@@ -80,7 +80,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         )
         toolSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
-            HTItemStackSlot
+            HTBasicItemSlot
                 .create(
                     listener,
                     HTSlotHelper.getSlotPosX(1.5),
@@ -93,7 +93,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlots = (0..<9).map { i: Int ->
             builder.addSlot(
                 HTSlotInfo.OUTPUT,
-                HTOutputItemStackSlot.create(
+                HTOutputItemSlot.create(
                     listener,
                     HTSlotHelper.getSlotPosX(3 + i % 3),
                     HTSlotHelper.getSlotPosY(i / 3),
@@ -114,7 +114,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
-        outputSlots.any { slot: HTItemStackSlot -> slot.getNeeded() > 0 }
+        outputSlots.any { slot: HTBasicItemSlot -> slot.getNeeded() > 0 }
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
 

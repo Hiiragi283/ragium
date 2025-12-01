@@ -12,9 +12,9 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.world.getRangedAABB
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTItemEntitySlot
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
@@ -42,16 +42,16 @@ import net.minecraft.world.phys.Vec3
 
 class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity.Tickable(RagiumBlocks.ITEM_COLLECTOR, pos, state) {
-    lateinit var inputSlot: HTItemStackSlot
+    lateinit var inputSlot: HTBasicItemSlot
         private set
-    lateinit var outputSlots: List<HTItemStackSlot>
+    lateinit var outputSlots: List<HTBasicItemSlot>
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
-            HTItemStackSlot.create(
+            HTBasicItemSlot.create(
                 listener,
                 HTSlotHelper.getSlotPosX(1.5),
                 HTSlotHelper.getSlotPosY(1),
@@ -63,7 +63,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlots = (0..<12).map { i: Int ->
             builder.addSlot(
                 HTSlotInfo.OUTPUT,
-                HTOutputItemStackSlot.create(
+                HTOutputItemSlot.create(
                     listener,
                     HTSlotHelper.getSlotPosX(3 + i % 4),
                     HTSlotHelper.getSlotPosY(i / 4),
@@ -119,7 +119,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         // それぞれのエンティティについて捕獲を行う
         for (entity: LivingEntity in entities) {
             val eggStack: ImmutableItemStack = HTThrownCaptureEgg.getCapturedStack(entity) ?: continue
-            for (slot: HTItemStackSlot in outputSlots) {
+            for (slot: HTBasicItemSlot in outputSlots) {
                 if (slot.insert(eggStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null) {
                     // スポーンエッグをスロットに入れる
                     slot.insert(eggStack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

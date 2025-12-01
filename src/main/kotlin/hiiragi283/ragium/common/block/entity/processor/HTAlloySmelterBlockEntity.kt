@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -26,9 +26,9 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    lateinit var inputSlots: List<HTItemStackSlot>
+    lateinit var inputSlots: List<HTBasicItemSlot>
         private set
-    lateinit var outputSlot: HTItemStackSlot
+    lateinit var outputSlot: HTBasicItemSlot
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -36,7 +36,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         inputSlots = (1..3).map { i: Int ->
             builder.addSlot(
                 HTSlotInfo.INPUT,
-                HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(i), HTSlotHelper.getSlotPosY(0)),
+                HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(i), HTSlotHelper.getSlotPosY(0)),
             )
         }
         // output
@@ -46,7 +46,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
-        items.addAll(inputSlots.map(HTItemStackSlot::getStack))
+        items.addAll(inputSlots.map(HTBasicItemSlot::getStack))
     }
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTShapelessInputsRecipe): Boolean =

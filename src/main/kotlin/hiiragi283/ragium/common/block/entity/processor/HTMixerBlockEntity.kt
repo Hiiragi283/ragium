@@ -14,8 +14,8 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -40,7 +40,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    lateinit var inputSlot: HTItemStackSlot
+    lateinit var inputSlot: HTBasicItemSlot
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -49,7 +49,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         // output
         outputSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0.5)),
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0.5)),
         )
     }
 

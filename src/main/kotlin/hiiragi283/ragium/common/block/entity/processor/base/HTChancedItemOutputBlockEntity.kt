@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
@@ -51,9 +51,9 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
         }
     }
 
-    lateinit var inputSlot: HTItemStackSlot
+    lateinit var inputSlot: HTBasicItemSlot
         private set
-    lateinit var outputSlots: List<HTItemStackSlot>
+    lateinit var outputSlots: List<HTBasicItemSlot>
         private set
 
     final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -64,7 +64,7 @@ abstract class HTChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTCh
     }
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
-        outputSlots.any { slot: HTItemStackSlot -> slot.getNeeded() > 0 }
+        outputSlots.any { slot: HTBasicItemSlot -> slot.getNeeded() > 0 }
 
     override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
         // アウトプットに搬出できるか判定する

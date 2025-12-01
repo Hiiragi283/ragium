@@ -15,7 +15,7 @@ import java.util.function.Predicate
 /**
  * @see mekanism.common.inventory.slot.EnergyInventorySlot
  */
-open class HTEnergyItemStackSlot protected constructor(
+open class HTEnergyItemSlot protected constructor(
     protected val battery: HTEnergyBattery,
     canExtract: Predicate<ImmutableItemStack>,
     canInsert: Predicate<ImmutableItemStack>,
@@ -23,7 +23,7 @@ open class HTEnergyItemStackSlot protected constructor(
     listener: HTContentListener?,
     x: Int,
     y: Int,
-) : HTItemStackSlot(
+) : HTBasicItemSlot(
         RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
         canExtract,
         canInsert,
@@ -43,12 +43,12 @@ open class HTEnergyItemStackSlot protected constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-        ): HTEnergyItemStackSlot {
+        ): HTEnergyItemSlot {
             val filter: (ImmutableItemStack) -> Boolean = filter@{ stack: ImmutableItemStack ->
                 val battery: HTEnergyBattery = HTEnergyCapabilities.getBattery(stack) ?: return@filter false
                 battery.extract(Int.MAX_VALUE, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) > 0
             }
-            return HTEnergyItemStackSlot(
+            return HTEnergyItemSlot(
                 battery,
                 filter.negate(),
                 filter,
@@ -68,7 +68,7 @@ open class HTEnergyItemStackSlot protected constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-        ): HTEnergyItemStackSlot {
+        ): HTEnergyItemSlot {
             val filter: (ImmutableItemStack) -> Boolean = filter@{ stack: ImmutableItemStack ->
                 val battery: HTEnergyBattery = HTEnergyCapabilities.getBattery(stack) ?: return@filter false
                 val stored: Int = battery.getAmount()
@@ -78,7 +78,7 @@ open class HTEnergyItemStackSlot protected constructor(
                     battery.insert(stored, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) > 0
                 }
             }
-            return HTEnergyItemStackSlot(
+            return HTEnergyItemSlot(
                 battery,
                 filter.negate(),
                 filter,

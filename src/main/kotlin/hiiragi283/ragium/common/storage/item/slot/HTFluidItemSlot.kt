@@ -19,14 +19,14 @@ import java.util.function.Predicate
  * @see mekanism.common.inventory.slot.FluidInventorySlot
  * @see mekanism.common.inventory.slot.IFluidHandlerSlot
  */
-open class HTFluidItemStackSlot protected constructor(
+open class HTFluidItemSlot protected constructor(
     protected val tank: HTFluidTank,
     canExtract: Predicate<ImmutableItemStack>,
     canInsert: Predicate<ImmutableItemStack>,
     listener: HTContentListener?,
     x: Int,
     y: Int,
-) : HTItemStackSlot(
+) : HTBasicItemSlot(
         RagiumConst.ABSOLUTE_MAX_STACK_SIZE,
         canExtract,
         canInsert,
@@ -71,7 +71,7 @@ open class HTFluidItemStackSlot protected constructor(
             listener: HTContentListener?,
             x: Int,
             y: Int,
-        ): HTFluidItemStackSlot = create(tank, listener, x, y, HTPredicates.alwaysFalse(), HTFluidCapabilities::hasCapability)
+        ): HTFluidItemSlot = create(tank, listener, x, y, HTPredicates.alwaysFalse(), HTFluidCapabilities::hasCapability)
 
         @JvmStatic
         private fun create(
@@ -81,6 +81,6 @@ open class HTFluidItemStackSlot protected constructor(
             y: Int,
             canExtract: Predicate<ImmutableItemStack>,
             canInsert: Predicate<ImmutableItemStack>,
-        ): HTFluidItemStackSlot = HTFluidItemStackSlot(tank, canExtract, canInsert, listener, x, y)
+        ): HTFluidItemSlot = HTFluidItemSlot(tank, canExtract, canInsert, listener, x, y)
     }
 }

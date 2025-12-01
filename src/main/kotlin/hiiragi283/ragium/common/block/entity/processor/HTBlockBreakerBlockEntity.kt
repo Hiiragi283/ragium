@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -28,13 +28,13 @@ import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<BlockPos, HTBlockBreakerBlockEntity.MiningRecipe>(RagiumBlocks.BLOCK_BREAKER, pos, state) {
-    lateinit var toolSlot: HTItemStackSlot
+    lateinit var toolSlot: HTBasicItemSlot
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         toolSlot = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTItemStackSlot.create(
+            HTBasicItemSlot.create(
                 listener,
                 HTSlotHelper.getSlotPosX(2),
                 HTSlotHelper.getSlotPosY(1),

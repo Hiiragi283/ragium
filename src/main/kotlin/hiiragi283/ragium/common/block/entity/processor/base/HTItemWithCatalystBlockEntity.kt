@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -23,9 +23,9 @@ abstract class HTItemWithCatalystBlockEntity(
     pos: BlockPos,
     state: BlockState,
 ) : HTComplexBlockEntity<HTDoubleRecipeInput, HTItemWithCatalystRecipe>(finder, blockHolder, pos, state) {
-    lateinit var inputSlot: HTItemStackSlot
+    lateinit var inputSlot: HTBasicItemSlot
         private set
-    lateinit var catalystSlot: HTItemStackSlot
+    lateinit var catalystSlot: HTBasicItemSlot
         private set
 
     final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -34,12 +34,12 @@ abstract class HTItemWithCatalystBlockEntity(
         // catalyst
         catalystSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2), 1),
+            HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2), 1),
         )
         // output
         outputSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0.5)),
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0.5)),
         )
     }
 

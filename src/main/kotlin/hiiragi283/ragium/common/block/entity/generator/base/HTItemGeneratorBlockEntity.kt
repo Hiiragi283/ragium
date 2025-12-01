@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
@@ -21,9 +21,9 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTItemGeneratorBlockEntity<RECIPE : Any>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTProgressGeneratorBlockEntity<SingleRecipeInput, RECIPE>(blockHolder, pos, state) {
-    lateinit var inputSlot: HTItemStackSlot
+    lateinit var inputSlot: HTBasicItemSlot
         private set
-    lateinit var remainderSlot: HTItemStackSlot
+    lateinit var remainderSlot: HTBasicItemSlot
         private set
 
     final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -37,7 +37,7 @@ abstract class HTItemGeneratorBlockEntity<RECIPE : Any>(blockHolder: Holder<Bloc
         // output
         remainderSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
         )
     }
 
