@@ -24,7 +24,7 @@ import hiiragi283.ragium.common.inventory.slot.HTFluidSyncSlot
 import hiiragi283.ragium.common.inventory.slot.HTIntSyncSlot
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
@@ -180,7 +180,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         // Fluid Tanks
         if (hasFluidHandler()) {
             for (tank: HTFluidTank in this.getFluidTanks(this.getFluidSideFor())) {
-                if (tank is HTFluidStackTank) {
+                if (tank is HTBasicFluidTank) {
                     menu.track(HTFluidSyncSlot(tank))
                 }
             }

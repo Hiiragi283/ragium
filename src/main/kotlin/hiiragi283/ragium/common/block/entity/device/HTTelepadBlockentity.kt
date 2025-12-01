@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.common.inventory.slot.HTTeleportPosSyncSlot
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -32,14 +32,14 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEnti
             .all(RagiumBlocks.DEVICE_CASING::isOf)
     }
 
-    lateinit var tank: HTFluidStackTank
+    lateinit var tank: HTBasicFluidTank
         private set
 
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
         tank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(
+            HTVariableFluidTank.input(
                 listener,
                 RagiumConfig.COMMON.deviceCollectorTankCapacity,
                 filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf,

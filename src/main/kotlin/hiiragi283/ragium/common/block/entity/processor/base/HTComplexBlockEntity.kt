@@ -9,8 +9,8 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import net.minecraft.core.BlockPos
@@ -36,7 +36,7 @@ abstract class HTComplexBlockEntity<INPUT : RecipeInput, RECIPE : HTFluidRecipe<
         state: BlockState,
     ) : super(finder, blockHolder, pos, state)
 
-    lateinit var outputTank: HTFluidStackTank
+    lateinit var outputTank: HTBasicFluidTank
         private set
 
     final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
@@ -45,7 +45,7 @@ abstract class HTComplexBlockEntity<INPUT : RecipeInput, RECIPE : HTFluidRecipe<
         // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidStackTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
+            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
         )
     }
 

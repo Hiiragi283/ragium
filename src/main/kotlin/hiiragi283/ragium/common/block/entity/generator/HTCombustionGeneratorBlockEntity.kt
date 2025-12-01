@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.generator.base.HTProgressGeneratorBlockEntity
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -27,16 +27,16 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    lateinit var coolantTank: HTFluidStackTank
+    lateinit var coolantTank: HTBasicFluidTank
         private set
-    lateinit var fuelTank: HTFluidStackTank
+    lateinit var fuelTank: HTBasicFluidTank
         private set
 
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // inputs
         coolantTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(
+            HTVariableFluidTank.input(
                 listener,
                 blockHolder.getFluidAttribute().getFirstInputTank(),
                 canInsert = { stack: ImmutableFluidStack -> stack.getData(RagiumDataMaps.COOLANT) != null },
@@ -44,7 +44,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
         )
         fuelTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(
+            HTVariableFluidTank.input(
                 listener,
                 blockHolder.getFluidAttribute().getSecondInputTank(),
                 canInsert = { stack: ImmutableFluidStack -> stack.getData(RagiumDataMaps.COMBUSTION_FUEL) != null },

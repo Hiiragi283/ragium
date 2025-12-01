@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTComplexBlockEntity
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -26,20 +26,20 @@ class HTAdvancedMixerBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    lateinit var firstInputTank: HTFluidStackTank
+    lateinit var firstInputTank: HTBasicFluidTank
         private set
-    lateinit var secondInputTank: HTFluidStackTank
+    lateinit var secondInputTank: HTBasicFluidTank
         private set
 
     override fun initInputTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
         firstInputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getFirstInputTank()),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getFirstInputTank()),
         )
         secondInputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getSecondInputTank()),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getSecondInputTank()),
         )
     }
 

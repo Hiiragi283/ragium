@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.world.getRangedAABB
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTExpOrbTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
@@ -34,14 +34,14 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTFluidCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity.Tickable(RagiumBlocks.FLUID_COLLECTOR, pos, state) {
-    lateinit var tank: HTFluidStackTank
+    lateinit var tank: HTBasicFluidTank
         private set
 
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // output
         tank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.deviceCollectorTankCapacity),
+            HTVariableFluidTank.output(listener, RagiumConfig.COMMON.deviceCollectorTankCapacity),
         )
     }
 

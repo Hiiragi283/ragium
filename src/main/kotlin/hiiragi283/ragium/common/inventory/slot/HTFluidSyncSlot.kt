@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.common.inventory.slot.payload.HTFluidSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTIntSyncPayload
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import net.minecraft.core.RegistryAccess
 import java.util.function.Consumer
 import java.util.function.Supplier
@@ -15,7 +15,7 @@ import java.util.function.Supplier
  */
 class HTFluidSyncSlot(private val getter: Supplier<ImmutableFluidStack?>, private val setter: Consumer<ImmutableFluidStack?>) :
     HTIntSyncSlot {
-    constructor(tank: HTFluidStackTank) : this(tank::getStack, tank::setStackUnchecked)
+    constructor(tank: HTBasicFluidTank) : this(tank::getStack, tank::setStackUnchecked)
 
     private var lastStack: ImmutableFluidStack? = null
 

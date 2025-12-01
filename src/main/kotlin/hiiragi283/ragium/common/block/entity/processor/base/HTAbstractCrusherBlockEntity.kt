@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -30,7 +30,7 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
         pos,
         state,
     ) {
-    final override fun createTank(listener: HTContentListener): HTFluidStackTank = HTVariableFluidStackTank.input(
+    final override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.input(
         listener,
         blockHolder.getFluidAttribute().getInputTank(),
         canInsert = { hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) },
