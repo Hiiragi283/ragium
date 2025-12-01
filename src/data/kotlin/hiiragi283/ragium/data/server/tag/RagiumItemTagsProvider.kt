@@ -369,6 +369,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.NIGHT_VISION_GOGGLES)
 
         factory.apply(RagiumModTags.Items.BYPASS_MENU_VALIDATION).add(RagiumItems.UNIVERSAL_BUNDLE)
+        factory.apply(RagiumModTags.Items.DISABLE_ACCESSORY_EQUIP).add(RagiumItems.UNIVERSAL_BUNDLE)
     }
 
     private fun pneumatic(factory: BuilderFactory<Item>) {

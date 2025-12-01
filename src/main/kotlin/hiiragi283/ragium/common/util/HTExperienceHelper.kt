@@ -20,8 +20,8 @@ object HTExperienceHelper {
     //    Player    //
 
     @JvmStatic
-    fun getPlayerExp(player: Player): Long =
-        getExpForLevel(player.experienceLevel) + (player.experienceProgress * player.xpNeededForNextLevel).toLong()
+    fun getPlayerExp(player: Player): Int =
+        getExpForLevel(player.experienceLevel) + (player.experienceProgress * player.xpNeededForNextLevel).toInt()
 
     @JvmStatic
     fun setPlayerExp(player: Player, amount: Long) {
