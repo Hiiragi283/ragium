@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
-import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
@@ -12,6 +11,7 @@ import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.tankRange
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.inventory.HTContainerItemSlot
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import java.util.function.Predicate
 

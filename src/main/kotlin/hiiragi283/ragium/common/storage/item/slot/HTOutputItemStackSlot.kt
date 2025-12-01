@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
-import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.inventory.HTContainerItemSlot
 
 /**
  * @see mekanism.common.inventory.slot.OutputInventorySlot

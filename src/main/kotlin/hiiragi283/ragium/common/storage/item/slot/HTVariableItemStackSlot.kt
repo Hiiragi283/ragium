@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.function.HTPredicates
-import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.inventory.HTContainerItemSlot
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 import java.util.function.ToIntFunction

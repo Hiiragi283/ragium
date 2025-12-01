@@ -226,8 +226,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .create(RagiumItems.ELDRITCH_EGG)
             .hollow4()
-            .define('A', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            .define('B', Tags.Items.EGGS)
+            .define('A', Tags.Items.EGGS)
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 

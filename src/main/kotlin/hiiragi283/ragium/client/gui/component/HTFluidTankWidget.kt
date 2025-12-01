@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.gui.component.HTBoundsRenderer
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
@@ -11,7 +12,6 @@ import hiiragi283.ragium.api.text.HTTextUtil
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.network.chat.Component
-import net.minecraft.world.inventory.InventoryMenu
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
@@ -53,7 +53,7 @@ class HTFluidTankWidget(
 
     override fun shouldRender(): Boolean = getStack() != null
 
-    override fun getSprite(): TextureAtlasSprite? = getSprite(getStack()?.getStillTexture(), InventoryMenu.BLOCK_ATLAS)
+    override fun getSprite(): TextureAtlasSprite? = getSprite(getStack()?.getStillTexture(), RagiumConst.BLOCK_ATLAS)
 
     override fun getColor(): Int = getStack()?.getTintColor() ?: -1
 

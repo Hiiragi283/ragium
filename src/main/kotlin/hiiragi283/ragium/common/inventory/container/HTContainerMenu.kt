@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.inventory.container
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.inventory.container.HTSyncableMenu
 import hiiragi283.ragium.api.inventory.slot.HTChangeType
@@ -12,6 +11,7 @@ import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.inventory.HTContainerItemSlot
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerPlayer
