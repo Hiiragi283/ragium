@@ -143,6 +143,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         pickaxe.addBlocks(RagiumBlocks.DECORATION_MAP)
         pickaxe.addBlocks(RagiumBlocks.DRUMS)
         pickaxe.addBlocks(RagiumBlocks.GLASSES.values)
+        pickaxe.addBlocks(RagiumBlocks.METAL_BARS)
         pickaxe.addBlocks(RagiumBlocks.ORES.values)
 
         RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, block: HTHolderLike) ->

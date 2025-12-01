@@ -238,6 +238,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")
         add(RagiumItems.RESIN, "Resin")
+        add(RagiumItems.SPAWNER_FRAGMENT, "Spawner Fragment")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.WITHER_DOLl, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")
@@ -464,6 +465,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.FUEL_SHORTAGE, $$"Fuel shortage: required %1$s mB")
 
         add(RagiumCommonTranslation.ELDER_HEART, "Dropped from Elder Guardian.")
+        add(RagiumCommonTranslation.IRIDESCENT_POWDER, "Do not expire with time over or any damage.")
 
         add(RagiumCommonTranslation.BLAST_CHARGE, "A charge which explodes when hit.")
         add(RagiumCommonTranslation.STRIKE_CHARGE, "A charge which strikes thunder when hit.")

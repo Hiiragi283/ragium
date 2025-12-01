@@ -55,6 +55,7 @@ import net.minecraft.world.level.block.AmethystClusterBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.ConcretePowderBlock
+import net.minecraft.world.level.block.IronBarsBlock
 import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.SoundType
@@ -269,7 +270,17 @@ object RagiumBlocks {
     fun getMaterialMap(prefix: HTPrefixLike): Map<HTMaterialKey, HTSimpleDeferredBlock> = MATERIALS.row(prefix.asMaterialPrefix())
 
     @JvmStatic
-    fun getMaterialMap(material: HTMaterialLike): Map<HTMaterialPrefix, HTSimpleDeferredBlock> = MATERIALS.column(material.asMaterialKey())
+    val METAL_BARS: Map<HTMaterialKey, HTBasicDeferredBlock<IronBarsBlock>> = listOf(
+        RagiumMaterialKeys.AZURE_STEEL,
+        RagiumMaterialKeys.DEEP_STEEL,
+        RagiumMaterialKeys.NIGHT_METAL,
+    ).associateWith { key: HTMaterialKey ->
+        REGISTER.registerSimple("${key.name}_bars", copyOf(Blocks.IRON_BARS), ::IronBarsBlock)
+    }
+
+    @JvmStatic
+    fun getMetalBars(material: HTMaterialLike): HTBasicDeferredBlock<IronBarsBlock> =
+        METAL_BARS[material.asMaterialKey()] ?: error("Unknown metal bars for ${material.asMaterialName()}")
 
     @JvmStatic
     val GLASSES: ImmutableTable<HTGlassVariant, HTMaterialKey, HTDescriptionDeferredBlock<*>> = buildTable {

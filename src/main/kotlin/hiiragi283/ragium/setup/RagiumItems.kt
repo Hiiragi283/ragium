@@ -32,6 +32,7 @@ import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
 import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
+import hiiragi283.ragium.common.item.HTIridescentPowderItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionDropItem
 import hiiragi283.ragium.common.item.HTTierBasedItem
@@ -75,7 +76,6 @@ import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
@@ -190,6 +190,9 @@ object RagiumItems {
 
     // Misc
     @JvmField
+    val SPAWNER_FRAGMENT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("spawner_fragment")
+
+    @JvmField
     val ECHO_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("echo_star") {
         it.rarity(Rarity.UNCOMMON).enchantment(RagiumEnchantments.SONIC_PROTECTION)
     }
@@ -206,8 +209,8 @@ object RagiumItems {
     val WITHER_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("wither_star")
 
     @JvmField
-    val IRIDESCENT_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("iridescent_powder") {
-        it.rarity(Rarity.RARE).component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+    val IRIDESCENT_POWDER: HTSimpleDeferredItem = REGISTER.registerItem("iridescent_powder", ::HTIridescentPowderItem) {
+        it.description(RagiumCommonTranslation.IRIDESCENT_POWDER)
     }
 
     @JvmStatic

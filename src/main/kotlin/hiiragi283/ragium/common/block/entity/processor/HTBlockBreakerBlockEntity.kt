@@ -19,11 +19,9 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.GameType
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.CommonHooks
-import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
@@ -44,15 +42,6 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    private var fakePlayer: ServerPlayer? = null
-
-    override fun onUpdateLevel(level: Level, pos: BlockPos) {
-        super.onUpdateLevel(level, pos)
-        if (level is ServerLevel) {
-            fakePlayer = FakePlayerFactory.get(level, getOwnerProfile())
-        }
-    }
-
     //    Ticking    //
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = true
@@ -61,7 +50,7 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getMatchedRecipe(input: BlockPos, level: ServerLevel): MiningRecipe? {
         val state: BlockState = level.getBlockState(input)
-        val player: ServerPlayer = this.fakePlayer ?: return null
+        val player: ServerPlayer = getFakePlayer(level)
         player.setItemInHand(InteractionHand.MAIN_HAND, this.toolSlot.getItemStack())
         val tool: ImmutableItemStack = this.toolSlot.getStack() ?: return null
         return when {
