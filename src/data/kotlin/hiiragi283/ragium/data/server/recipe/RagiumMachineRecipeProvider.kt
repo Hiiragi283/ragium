@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTUpgradeVariant
+import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -203,13 +204,13 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
         }
         // Ultimate
-        ultimateMachine(RagiumBlocks.ENCHANTER) {
+        ultimateMachine(RagiumBlocks.ENCHANTER, RagiumMaterialKeys.ELDRITCH_PEARL) {
             define('B', Items.ENCHANTING_TABLE)
         }
-        ultimateMachine(RagiumBlocks.MOB_CRUSHER) {
-            define('B', Items.DIAMOND_SWORD)
+        ultimateMachine(RagiumBlocks.MOB_CRUSHER, RagiumMaterialKeys.CRIMSON_CRYSTAL) {
+            define('B', RagiumItems.getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL))
         }
-        ultimateMachine(RagiumBlocks.SIMULATOR) {
+        ultimateMachine(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.WARPED_CRYSTAL) {
             define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
         }
     }
@@ -252,10 +253,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
-    private inline fun ultimateMachine(machine: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
+    private inline fun ultimateMachine(machine: ItemLike, material: HTMaterialLike, action: HTShapedRecipeBuilder.() -> Unit) {
         machineBase(machine, RagiumMaterialKeys.NIGHT_METAL) {
-            define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            define('D', RagiumCommonTags.Items.OBSIDIANS_MYSTERIOUS)
+            define('C', CommonMaterialPrefixes.GEM, material)
+            define('D', Items.END_STONE_BRICKS)
             action()
         }
     }

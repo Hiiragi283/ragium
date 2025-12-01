@@ -395,7 +395,7 @@ object RagiumItems {
             "${chargeType.serializedName}_charge",
             chargeType,
             ::HTChargeItem,
-        ) { it.component(RagiumDataComponents.CHARGE_POWER, 4f) }
+        ) { it.component(RagiumDataComponents.CHARGE_POWER, HTChargeType.DEFAULT_POWER) }
     }
 
     // Warped

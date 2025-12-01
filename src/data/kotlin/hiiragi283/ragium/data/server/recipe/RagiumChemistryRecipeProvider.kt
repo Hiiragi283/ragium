@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
@@ -45,7 +46,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromTagKey(Tags.Items.GRAVELS),
                 fluidCreator.water(250),
             ).addResult(resultHelper.item(Items.FLINT))
-            .addResult(resultHelper.item(Items.FLINT), 1 / 2f)
+            .addResult(resultHelper.item(Items.FLINT), fraction(1, 2))
             .save(output)
 
         extracting()

@@ -24,7 +24,7 @@ class HTBlastCharge : HTAbstractCharge {
     )
 
     override fun onHit(level: ServerLevel, result: Either<EntityHitResult, BlockHitResult>) {
-        level.explode(this, x, y, z, getPower(), false, Level.ExplosionInteraction.MOB)
+        level.explode(this, x, y, z, getPower().toFloat(), false, Level.ExplosionInteraction.MOB)
     }
 
     override fun getDefaultItem(): Item = HTChargeType.BLAST.asItem()

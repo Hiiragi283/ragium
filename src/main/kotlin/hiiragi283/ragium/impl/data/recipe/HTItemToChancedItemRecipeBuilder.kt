@@ -8,6 +8,7 @@ import hiiragi283.ragium.impl.data.recipe.base.HTChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
 import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
+import org.apache.commons.lang3.math.Fraction
 
 class HTItemToChancedItemRecipeBuilder(prefix: String, private val factory: Factory<*>, val ingredient: HTItemIngredient) :
     HTChancedItemRecipeBuilder<HTItemToChancedItemRecipeBuilder>(prefix) {
@@ -16,9 +17,10 @@ class HTItemToChancedItemRecipeBuilder(prefix: String, private val factory: Fact
         fun crushing(ingredient: HTItemIngredient): HTItemToChancedItemRecipeBuilder = HTItemToChancedItemRecipeBuilder(
             RagiumConst.CRUSHING,
             { ingredient: HTItemIngredient, results: List<HTItemResultWithChance> ->
-                when (results.size) {
-                    1 if results[0].chance == 1f -> HTPulverizingRecipe(ingredient, results[0].base)
-                    else -> HTCrushingRecipe(ingredient, results)
+                if (results.size == 1 && results[0].chance == Fraction.ONE) {
+                    HTPulverizingRecipe(ingredient, results[0].base)
+                } else {
+                    HTCrushingRecipe(ingredient, results)
                 }
             },
             ingredient,

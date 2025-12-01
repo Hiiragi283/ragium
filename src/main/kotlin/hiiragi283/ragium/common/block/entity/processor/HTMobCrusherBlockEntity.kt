@@ -76,7 +76,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
                     HTSlotHelper.getSlotPosX(1.5),
                     HTSlotHelper.getSlotPosY(2),
                     canInsert = { stack: ImmutableItemStack -> stack.value() is SpawnEggItem },
-                ).setSlotBackground(RagiumConst.GUI_ATLAS, vanillaId("slot/spawn_egg.png")),
+                ).setSlotBackground(RagiumConst.GUI_ATLAS, vanillaId("container/slot/spawn_egg.png")),
         )
         toolSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
@@ -87,7 +87,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
                     HTSlotHelper.getSlotPosY(0),
                     canExtract = HTPredicates.manualOnly(),
                     canInsert = HTPredicates.manualOnly(),
-                ).setSlotBackground(RagiumConst.BLOCK_ATLAS, vanillaId("items/empty_slot_sword.png")),
+                ).setSlotBackground(RagiumConst.BLOCK_ATLAS, vanillaId("item/empty_slot_sword")),
         )
         // outputs
         outputSlots = (0..<9).map { i: Int ->

@@ -63,8 +63,8 @@ sealed interface HTMachineUpgrade {
     }
 
     private fun getPropertyColor(key: Key, property: Fraction): ChatFormatting? = when {
-        property > key.defaultValue -> ChatFormatting.GREEN
-        property < key.defaultValue -> ChatFormatting.RED
+        property > Fraction.ONE -> ChatFormatting.GREEN
+        property < Fraction.ONE -> ChatFormatting.RED
         else -> null
     }
 
@@ -110,17 +110,17 @@ sealed interface HTMachineUpgrade {
 
     //    Key    //
 
-    enum class Key(val defaultValue: Fraction, val creativeValue: Int) :
+    enum class Key(val creativeValue: Int) :
         StringRepresentable,
         HTTranslation {
         // Default
-        ENERGY_CAPACITY(Fraction.ONE, Int.MAX_VALUE),
-        ENERGY_EFFICIENCY(Fraction.ONE, 0),
-        ENERGY_GENERATION(Fraction.ONE, Int.MAX_VALUE),
-        SPEED(Fraction.ONE, 1),
+        ENERGY_CAPACITY(Int.MAX_VALUE),
+        ENERGY_EFFICIENCY(0),
+        ENERGY_GENERATION(Int.MAX_VALUE),
+        SPEED(1),
 
         // Processor
-        SUBPRODUCT_CHANCE(Fraction.ZERO, 1),
+        SUBPRODUCT_CHANCE(1),
         ;
 
         companion object {

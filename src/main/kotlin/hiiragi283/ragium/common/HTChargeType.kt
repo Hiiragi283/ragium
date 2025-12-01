@@ -2,6 +2,7 @@ package hiiragi283.ragium.common
 
 import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
@@ -14,6 +15,7 @@ import hiiragi283.ragium.common.entity.charge.HTNeutralCharge
 import hiiragi283.ragium.common.entity.charge.HTStrikeCharge
 import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
@@ -23,7 +25,9 @@ import net.minecraft.util.StringRepresentable
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import org.apache.commons.lang3.math.Fraction
 
 enum class HTChargeType(private val enPattern: String, private val jaPattern: String) :
     StringRepresentable,
@@ -36,6 +40,14 @@ enum class HTChargeType(private val enPattern: String, private val jaPattern: St
     TELEPORT("Teleport", "テレポート"),
     CONFUSING("Confusion", "コンフュージョン"),
     ;
+
+    companion object {
+        @JvmField
+        val DEFAULT_POWER: Fraction = fraction(4)
+
+        @JvmStatic
+        fun getPower(stack: ItemStack): Fraction = stack.getOrDefault(RagiumDataComponents.CHARGE_POWER, DEFAULT_POWER)
+    }
 
     // Item
     fun getItem(): HTSimpleDeferredItem = RagiumItems.CHARGES[this]!!

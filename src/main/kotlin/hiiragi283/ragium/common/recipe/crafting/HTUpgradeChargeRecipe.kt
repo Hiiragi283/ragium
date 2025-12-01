@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.recipe.crafting
 
+import hiiragi283.ragium.api.math.plus
 import hiiragi283.ragium.api.recipe.HTCustomRecipe
 import hiiragi283.ragium.api.recipe.input.ImmutableRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -42,7 +43,7 @@ class HTUpgradeChargeRecipe(category: CraftingBookCategory) : HTCustomRecipe(cat
         if (blastCharge.isEmpty || gunpowder < 0) {
             return ItemStack.EMPTY
         }
-        blastCharge.update(RagiumDataComponents.CHARGE_POWER, 4f) { it + gunpowder.toFloat() }
+        blastCharge.update(RagiumDataComponents.CHARGE_POWER, HTChargeType.DEFAULT_POWER) { it + gunpowder }
         return blastCharge
     }
 

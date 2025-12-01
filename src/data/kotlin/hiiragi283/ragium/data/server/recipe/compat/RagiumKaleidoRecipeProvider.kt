@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -29,8 +30,8 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
                 itemCreator.fromItem(ModItems.CHILI_SEED),
                 fluidCreator.water(125),
             ).addResult(resultHelper.item(ModItems.RED_CHILI, 2))
-            .addResult(resultHelper.item(ModItems.RED_CHILI), 1 / 2f)
-            .addResult(resultHelper.item(ModItems.GREEN_CHILI), 1 / 4f)
+            .addResult(resultHelper.item(ModItems.RED_CHILI), fraction(1, 2))
+            .addResult(resultHelper.item(ModItems.GREEN_CHILI), fraction(1, 4))
             .save(output)
 
         HTItemWithFluidToChancedItemRecipeBuilder
@@ -38,8 +39,8 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
                 itemCreator.fromItem(ModItems.WILD_RICE_SEED),
                 fluidCreator.water(500),
             ).addResult(resultHelper.item(ModItems.RICE_PANICLE, 4))
-            .addResult(resultHelper.item(ModItems.RICE_PANICLE), 1 / 2f)
-            .addResult(resultHelper.item(ModItems.RICE_PANICLE), 1 / 4f)
+            .addResult(resultHelper.item(ModItems.RICE_PANICLE), fraction(1, 2))
+            .addResult(resultHelper.item(ModItems.RICE_PANICLE), fraction(1, 4))
             .save(output)
 
         // Knives

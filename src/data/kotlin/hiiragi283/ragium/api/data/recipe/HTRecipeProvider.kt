@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTPotionIngredient
@@ -445,7 +446,7 @@ sealed class HTRecipeProvider {
                 itemCreator.fromItem(seed),
                 fluidCreator.water(water),
             ).addResult(resultHelper.item(crop, 3))
-            .addResult(resultHelper.item(seed), 1 / 3f)
+            .addResult(resultHelper.item(seed), fraction(1, 3))
             .save(output)
     }
 
@@ -459,7 +460,7 @@ sealed class HTRecipeProvider {
                 itemCreator.fromItem(sapling),
                 fluid,
             ).addResult(resultHelper.item(log, 6))
-            .addResult(resultHelper.item(sapling), 1 / 6f)
+            .addResult(resultHelper.item(sapling), fraction(1, 6))
             .save(output)
     }
 
@@ -474,8 +475,8 @@ sealed class HTRecipeProvider {
                 itemCreator.fromItem(sapling),
                 fluid,
             ).addResult(resultHelper.item(log, 6))
-            .addResult(resultHelper.item(sapling), 1 / 6f)
-            .addResult(resultHelper.item(fruit), 1 / 6f)
+            .addResult(resultHelper.item(sapling), fraction(1, 6))
+            .addResult(resultHelper.item(fruit), fraction(1, 6))
             .save(output)
     }
 

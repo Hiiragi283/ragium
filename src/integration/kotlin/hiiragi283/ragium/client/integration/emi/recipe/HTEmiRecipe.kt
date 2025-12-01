@@ -78,7 +78,7 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     }
 
     protected fun addChancedOutputs(result: HTItemResultWithChance?) {
-        addOutputs(result?.base?.let(::result)?.let { stack: EmiStack -> stack.setChance(result.chance) })
+        addOutputs(result?.base?.let(::result)?.let { stack: EmiStack -> stack.setChance(result.chance.toFloat()) })
     }
 
     protected fun addOutputs(result: HTFluidResult?) {

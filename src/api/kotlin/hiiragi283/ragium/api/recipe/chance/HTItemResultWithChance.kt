@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.minus
-import hiiragi283.ragium.api.math.plus
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.math.toFraction
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.BiCodec
@@ -21,21 +21,21 @@ import org.apache.commons.lang3.math.Fraction
  * @param base 元となる完成品
  * @param chance 完成品を生成する確率
  */
-data class HTItemResultWithChance(val base: HTItemResult, val chance: Float) {
+data class HTItemResultWithChance(val base: HTItemResult, val chance: Fraction) {
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemResultWithChance> = BiCodec.composite(
             HTItemResult.CODEC.toMap(),
             HTItemResultWithChance::base,
-            BiCodecs.floatRange(0f, 1f).optionalFieldOf(RagiumConst.CHANCE, 1f),
+            BiCodecs.fractionRange(Fraction.ZERO, Fraction.ONE).optionalFieldOf(RagiumConst.CHANCE, Fraction.ONE),
             HTItemResultWithChance::chance,
             ::HTItemResultWithChance,
         )
     }
 
-    constructor(pair: Pair<HTItemResult, Float>) : this(pair.first, pair.second)
+    constructor(pair: Pair<HTItemResult, Fraction>) : this(pair.first, pair.second)
 
-    constructor(base: HTItemResult) : this(base, 1f)
+    constructor(base: HTItemResult) : this(base, Fraction.ONE)
 
     val id: ResourceLocation = base.id
 
@@ -47,9 +47,9 @@ data class HTItemResultWithChance(val base: HTItemResult, val chance: Float) {
             .map(
                 { base.getStackOrNull(provider) },
                 { chanceIn: Fraction ->
-                    if (chance == 1f) return@map base.getStackOrNull(provider)
+                    if (chance == Fraction.ONE) return@map base.getStackOrNull(provider)
 
-                    val chance1: Fraction = chanceIn + chance
+                    val chance1: Fraction = chance * chanceIn
                     val extraCount: Int = chance1.properWhole
 
                     var countSum: Int = base.amount * extraCount
