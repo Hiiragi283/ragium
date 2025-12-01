@@ -87,13 +87,13 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             .all { it == pos || level.getFluidState(it).`is`(FluidTags.WATER) }
         if (!checkWater) return false
         // 釣りの結果を生成する
-        val owner: ServerPlayer? = getOwnerPlayer(level)
+        val owner: ServerPlayer = getOwnerOrFake(level)
         val params: LootParams = LootParams
             .Builder(level)
             .withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
             .withParameter(LootContextParams.TOOL, fishingRod)
             .withOptionalParameter(LootContextParams.ATTACKING_ENTITY, owner)
-            .withLuck(owner?.luck ?: 0f)
+            .withLuck(owner.luck)
             .create(LootContextParamSets.FISHING)
         val lootTable: LootTable = level.server.reloadableRegistries().getLootTable(BuiltInLootTables.FISHING)
         val drops: List<ItemStack> = lootTable.getRandomItems(params)

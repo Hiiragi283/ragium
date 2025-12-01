@@ -22,6 +22,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemDisplayContext
+import net.minecraft.world.level.block.IronBarsBlock
 import net.minecraft.world.level.block.SlabBlock
 import net.minecraft.world.level.block.StairBlock
 import net.minecraft.world.level.block.WallBlock
@@ -84,6 +85,14 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             itemModels().withExistingParent(block.getPath(), RagiumAPI.id("block", "led_block"))
         }
 
+        for ((_, bars: HTBasicDeferredBlock<IronBarsBlock>) in RagiumBlocks.METAL_BARS) {
+            val texture: ResourceLocation = bars.blockId
+            paneBlockWithRenderType(bars.get(), texture, texture, "cutout")
+            itemModels()
+                .getBuilder(bars)
+                .parent(ModelFile.UncheckedModelFile("item/generated"))
+                .texture("layer0", texture)
+        }
         RagiumBlocks.GLASSES.forEach { (variant: HTGlassVariant, _, block: HTDescriptionDeferredBlock<*>) ->
             when (variant) {
                 HTGlassVariant.DEFAULT -> cutoutSimpleBlock(block)

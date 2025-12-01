@@ -113,7 +113,22 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         HTDecorationType.entries.forEach(::registerBuildings)
         HTVanillaWoodType.entries.forEach(::addWoodSawing)
 
+        metalBars()
         glass()
+    }
+
+    @JvmStatic
+    private fun metalBars() {
+        for ((key: HTMaterialKey, bars: ItemLike) in RagiumBlocks.METAL_BARS) {
+            HTShapedRecipeBuilder
+                .create(bars, 16)
+                .pattern(
+                    "AAA",
+                    "AAA",
+                ).define('A', CommonMaterialPrefixes.INGOT, key)
+                .setCategory(CraftingBookCategory.BUILDING)
+                .save(output)
+        }
     }
 
     @JvmStatic

@@ -17,6 +17,8 @@ class RagiumGlobalLootProvider(context: HTDataGenContext) :
     override fun start() {
         // Drops Ragi-Cherry from Cherry Leaves
         add(RagiumCustomLootProvider.DROP_RAGI_CHERRY, builder(Blocks.CHERRY_LEAVES).build())
+        // Drops Spawner Fragment from Spawner
+        add(RagiumCustomLootProvider.DROP_SPAWNER_FRAGMENT, builder(Blocks.SPAWNER).build())
         // Drops Elder Heart from Elder Guardian
         add(RagiumCustomLootProvider.DROP_ELDER_HEART, builder(EntityType.ELDER_GUARDIAN).build())
         // Drops Trader Catalog from Wandering Trader

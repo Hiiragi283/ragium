@@ -80,6 +80,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
 
     // Items - Materials
     ELDER_HEART("description", "elder_heart"),
+    IRIDESCENT_POWDER("description", "iridescent_powder"),
 
     // Items - Tools
     BLAST_CHARGE("description", "blast_charge"),

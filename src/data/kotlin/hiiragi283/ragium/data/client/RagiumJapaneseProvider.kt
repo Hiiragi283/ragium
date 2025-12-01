@@ -229,6 +229,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RAGI_COKE, "らぎコークス")
         add(RagiumItems.RESIN, "樹脂")
+        add(RagiumItems.SPAWNER_FRAGMENT, "スポナーの欠片")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.WITHER_DOLl, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")
@@ -464,6 +465,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.FUEL_SHORTAGE, $$"燃料不足: %1$s mB必要です。")
 
         add(RagiumCommonTranslation.ELDER_HEART, "エルダーガーディアンからドロップします。")
+        add(RagiumCommonTranslation.IRIDESCENT_POWDER, "時間経過やダメージで消滅しません。")
 
         add(RagiumCommonTranslation.BLAST_CHARGE, "着弾すると爆発するチャージです。")
         add(RagiumCommonTranslation.STRIKE_CHARGE, "着弾すると落雷を起こすチャージです。")
