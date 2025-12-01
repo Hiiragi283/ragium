@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.serialization.codec
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.function.andThen
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -13,14 +14,9 @@ import java.util.function.Supplier
 import kotlin.enums.enumEntries
 
 object BiCodecs {
-    /**
-     * 指定された[min]と[max]から[BiCodec]を返します。
-     * @param min 範囲の最小値
-     * @param max 範囲の最大値
-     * @return [min]と[max]を含む範囲の値のみを通す[BiCodec]
-     */
     @JvmStatic
-    fun intRange(min: Int, max: Int): BiCodec<ByteBuf, Int> = BiCodec.of(Codec.intRange(min, max), ByteBufCodecs.VAR_INT)
+    fun <N> checkRange(min: N, max: N): (N) -> N where N : Number, N : Comparable<N> =
+        Codec.checkRange(min, max).andThen(DataResult<N>::getOrThrow)::apply
 
     /**
      * 指定された[min]と[max]から[BiCodec]を返します。
@@ -29,8 +25,7 @@ object BiCodecs {
      * @return [min]と[max]を含む範囲の値のみを通す[BiCodec]
      */
     @JvmStatic
-    fun longRange(min: Long, max: Long): BiCodec<ByteBuf, Long> =
-        BiCodec.of(Codec.LONG.validate(Codec.checkRange(min, max)), ByteBufCodecs.VAR_LONG)
+    fun intRange(min: Int, max: Int): BiCodec<ByteBuf, Int> = BiCodec.INT.validate(checkRange(min, max))
 
     /**
      * 指定された[min]と[max]から[BiCodec]を返します。
@@ -39,7 +34,7 @@ object BiCodecs {
      * @return [min]と[max]を含む範囲の値のみを通す[BiCodec]
      */
     @JvmStatic
-    fun floatRange(min: Float, max: Float): BiCodec<ByteBuf, Float> = BiCodec.of(Codec.floatRange(min, max), ByteBufCodecs.FLOAT)
+    fun longRange(min: Long, max: Long): BiCodec<ByteBuf, Long> = BiCodec.LONG.validate(checkRange(min, max))
 
     /**
      * 指定された[min]と[max]から[BiCodec]を返します。
@@ -48,7 +43,7 @@ object BiCodecs {
      * @return [min]と[max]を含む範囲の値のみを通す[BiCodec]
      */
     @JvmStatic
-    fun doubleRange(min: Double, max: Double): BiCodec<ByteBuf, Double> = BiCodec.of(Codec.doubleRange(min, max), ByteBufCodecs.DOUBLE)
+    fun fractionRange(min: Fraction, max: Fraction): BiCodec<ByteBuf, Fraction> = FRACTION.validate(checkRange(min, max))
 
     /**
      * `0`以上の値を対象とする[Int]の[BiCodec]
@@ -75,12 +70,6 @@ object BiCodecs {
      */
     @JvmField
     val POSITIVE_LONG: BiCodec<ByteBuf, Long> = longRange(1, Long.MAX_VALUE)
-
-    /**
-     * `0f`以上の値を対象とする[Float]の[BiCodec]
-     */
-    @JvmField
-    val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = floatRange(0f, Float.MAX_VALUE)
 
     @JvmField
     val FRACTION: BiCodec<ByteBuf, Fraction> = BiCodec.STRING.flatXmap(Fraction::getFraction, Fraction::toString)

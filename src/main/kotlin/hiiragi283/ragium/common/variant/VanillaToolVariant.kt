@@ -25,8 +25,9 @@ enum class VanillaToolVariant(private val enPattern: String, private val jaPatte
     AXE("%s Axe", "%sの斧", ItemTags.AXES),
     HOE("%s Hoe", "%sのクワ", ItemTags.HOES),
     SWORD("%s Sword", "%sの剣", ItemTags.SWORDS),
+
     // Misc
-    SHEARS("%s Shears", "%sのハサミ", Tags.Items.TOOLS_SHEAR)
+    SHEARS("%s Shears", "%sのハサミ", Tags.Items.TOOLS_SHEAR),
     ;
 
     constructor(enPattern: String, jaPattern: String, tagKey: TagKey<Item>) : this(enPattern, jaPattern, listOf(tagKey))

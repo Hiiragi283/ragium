@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -26,7 +27,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromTagKey(ItemTags.WOOL_CARPETS))
             .addResult(resultHelper.item(Items.STRING, 2))
-            .addResult(resultHelper.item(Items.STRING), 1 / 3f)
+            .addResult(resultHelper.item(Items.STRING), fraction(1, 3))
             .saveSuffixed(output, "_from_carpet")
         HTItemToObjRecipeBuilder
             .pulverizing(
@@ -39,7 +40,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.MUDDY_MANGROVE_ROOTS))
             .addResult(resultHelper.item(Items.MUD))
-            .addResult(resultHelper.item(Items.MANGROVE_ROOTS), 1 / 4f)
+            .addResult(resultHelper.item(Items.MANGROVE_ROOTS), fraction(1, 4))
             .saveSuffixed(output, "_from_roots")
 
         HTItemToObjRecipeBuilder
@@ -58,12 +59,12 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.COARSE_DIRT))
             .addResult(resultHelper.item(Items.DIRT))
-            .addResult(resultHelper.item(Items.FLINT), 1 / 4f)
+            .addResult(resultHelper.item(Items.FLINT), fraction(1, 4))
             .saveSuffixed(output, "_from_coarse")
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(Items.ROOTED_DIRT))
             .addResult(resultHelper.item(Items.DIRT))
-            .addResult(resultHelper.item(Items.HANGING_ROOTS), 1 / 4f)
+            .addResult(resultHelper.item(Items.HANGING_ROOTS), fraction(1, 4))
             .saveSuffixed(output, "_from_rooted")
 
         HTItemToObjRecipeBuilder
@@ -149,13 +150,13 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromTagKey(Tags.Items.GRAVELS))
             .addResult(resultHelper.item(Items.SAND))
-            .addResult(resultHelper.item(Items.FLINT), 1 / 3f)
+            .addResult(resultHelper.item(Items.FLINT), fraction(1, 3))
             .saveSuffixed(output, "_from_gravel")
 
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS))
             .addResult(resultHelper.item(Items.SAND, 4))
-            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER), 1 / 4f)
+            .addResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER), fraction(1, 4))
             .saveSuffixed(output, "_from_sandstone")
 
         HTItemToChancedItemRecipeBuilder
@@ -166,7 +167,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromTagKey(Tags.Items.SANDSTONE_RED_BLOCKS))
             .addResult(resultHelper.item(Items.RED_SAND, 4))
-            .addResult(resultHelper.item(Items.REDSTONE), 1 / 8f)
+            .addResult(resultHelper.item(Items.REDSTONE), fraction(1, 8))
             .saveSuffixed(output, "_from_sandstone")
     }
 

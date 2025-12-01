@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
+import org.apache.commons.lang3.math.Fraction
 
 class HTStrikeCharge : HTAbstractCharge {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
@@ -29,14 +30,14 @@ class HTStrikeCharge : HTAbstractCharge {
 
     override fun onHit(level: ServerLevel, result: Either<EntityHitResult, BlockHitResult>) {
         // エンティティに当たった場合は対象のみ，ブロックの場合は範囲内のモブ
-        val (entities: List<Entity>, damage: Float) = result.map(
+        val (entities: List<Entity>, damage: Fraction) = result.map(
             { listOf(it.entity) to getPower() },
-            { getAffectedEntities<Mob>() to 0f },
+            { getAffectedEntities<Mob>() to Fraction.ZERO },
         )
         for (entity: Entity in entities) {
             val bolt: LightningBolt = EntityType.LIGHTNING_BOLT.create(level) ?: continue
             bolt.moveTo(entity.position())
-            bolt.damage = damage
+            bolt.damage = damage.toFloat()
             bolt.cause = this.owner as? ServerPlayer
             level.addFreshEntity(bolt)
             entity.extinguishFire()

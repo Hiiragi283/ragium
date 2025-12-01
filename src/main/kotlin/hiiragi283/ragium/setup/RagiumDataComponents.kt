@@ -23,6 +23,7 @@ import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
+import org.apache.commons.lang3.math.Fraction
 
 object RagiumDataComponents {
     @JvmField
@@ -39,7 +40,7 @@ object RagiumDataComponents {
     val ANTI_GRAVITY: DataComponentType<Boolean> = REGISTER.registerType("anti_gravity", BiCodec.BOOL)
 
     @JvmField
-    val CHARGE_POWER: DataComponentType<Float> = REGISTER.registerType("charge_power", BiCodecs.POSITIVE_FLOAT)
+    val CHARGE_POWER: DataComponentType<Fraction> = REGISTER.registerType("charge_power", BiCodecs.FRACTION)
 
     @JvmField
     val COLOR: DataComponentType<DyeColor> = REGISTER.registerType("color", VanillaBiCodecs.COLOR)

@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.entity.charge
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.world.getRangedAABB
 import hiiragi283.ragium.common.HTChargeType
-import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -12,6 +11,7 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
+import org.apache.commons.lang3.math.Fraction
 
 abstract class HTAbstractCharge : ThrowableItemProjectile {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
@@ -44,7 +44,7 @@ abstract class HTAbstractCharge : ThrowableItemProjectile {
         level,
     )
 
-    protected fun getPower(): Float = item.getOrDefault(RagiumDataComponents.CHARGE_POWER, 1f)
+    protected fun getPower(): Fraction = HTChargeType.getPower(item)
 
     protected inline fun <reified T : Entity> getAffectedEntities(): List<T> = level()
         .getEntitiesOfClass(T::class.java, position().getRangedAABB(getPower()))

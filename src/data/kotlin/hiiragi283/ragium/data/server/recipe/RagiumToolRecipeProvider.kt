@@ -217,7 +217,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                         .create(tool)
                         .pattern(
                             " A",
-                            "A "
+                            "A ",
                         ).define('A', CommonMaterialPrefixes.INGOT, material)
                         .setCategory(CraftingBookCategory.EQUIPMENT)
                         .save(output)

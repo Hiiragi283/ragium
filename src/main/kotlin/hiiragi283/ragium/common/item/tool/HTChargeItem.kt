@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.HTChargeType
-import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Direction
 import net.minecraft.core.Position
@@ -70,7 +69,7 @@ class HTChargeItem(private val chargeType: HTChargeType, properties: Properties)
                 .translateColored(
                     ChatFormatting.BLUE,
                     ChatFormatting.GRAY,
-                    stack.getOrDefault(RagiumDataComponents.CHARGE_POWER, 4f),
+                    HTChargeType.getPower(stack),
                 ).let(tooltips::add)
             RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW).let(tooltips::add)
         }

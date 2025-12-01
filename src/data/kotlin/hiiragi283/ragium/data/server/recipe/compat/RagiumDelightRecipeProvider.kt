@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
@@ -48,7 +49,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         HTItemToChancedItemRecipeBuilder
             .crushing(itemCreator.fromItem(ModItems.RICE_PANICLE.get()))
             .addResult(resultHelper.item(ModItems.RICE.get()))
-            .addResult(resultHelper.item(ModItems.STRAW.get()), 0.5f)
+            .addResult(resultHelper.item(ModItems.STRAW.get()), fraction(1, 2))
             .save(output)
 
         // Crops
