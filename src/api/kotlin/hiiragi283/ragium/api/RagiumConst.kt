@@ -1,5 +1,8 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.ragium.api.registry.vanillaId
+import net.minecraft.client.renderer.LightTexture
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
 
@@ -12,6 +15,16 @@ object RagiumConst {
     const val LOG_TO_SAP = 500
     const val SAP_TO_MOLTEN = 250
     const val MOLTEN_TO_GEM = 1000
+
+    //    GUI    //
+
+    @JvmField
+    val BLOCK_ATLAS: ResourceLocation = vanillaId("textures/atlas/blocks.png")
+
+    @JvmField
+    val GUI_ATLAS: ResourceLocation = vanillaId("textures/atlas/hui.png")
+
+    const val FULL_BRIGHT: Int = LightTexture.FULL_BRIGHT
 
     //    Item    //
 

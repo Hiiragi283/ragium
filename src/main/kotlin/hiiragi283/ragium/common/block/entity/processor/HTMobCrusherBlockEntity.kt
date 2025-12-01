@@ -1,8 +1,10 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
@@ -68,22 +70,24 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // input
         inputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTItemStackSlot.input(
-                listener,
-                HTSlotHelper.getSlotPosX(1.5),
-                HTSlotHelper.getSlotPosY(2),
-                canInsert = { stack: ImmutableItemStack -> stack.value() is SpawnEggItem },
-            ),
+            HTItemStackSlot
+                .input(
+                    listener,
+                    HTSlotHelper.getSlotPosX(1.5),
+                    HTSlotHelper.getSlotPosY(2),
+                    canInsert = { stack: ImmutableItemStack -> stack.value() is SpawnEggItem },
+                ).setSlotBackground(RagiumConst.GUI_ATLAS, vanillaId("slot/spawn_egg")),
         )
         toolSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
-            HTItemStackSlot.create(
-                listener,
-                HTSlotHelper.getSlotPosX(1.5),
-                HTSlotHelper.getSlotPosY(0),
-                canExtract = HTPredicates.manualOnly(),
-                canInsert = HTPredicates.manualOnly(),
-            ),
+            HTItemStackSlot
+                .create(
+                    listener,
+                    HTSlotHelper.getSlotPosX(1.5),
+                    HTSlotHelper.getSlotPosY(0),
+                    canExtract = HTPredicates.manualOnly(),
+                    canInsert = HTPredicates.manualOnly(),
+                ).setSlotBackground(RagiumConst.BLOCK_ATLAS, vanillaId("items/empty_slot_sword")),
         )
         // outputs
         outputSlots = (0..<9).map { i: Int ->

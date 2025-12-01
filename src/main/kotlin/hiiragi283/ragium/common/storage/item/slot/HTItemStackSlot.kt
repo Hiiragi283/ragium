@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
-import hiiragi283.ragium.api.inventory.HTContainerItemSlot
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -10,6 +9,8 @@ import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.inventory.HTContainerItemSlot
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.function.BiPredicate
@@ -100,6 +101,11 @@ open class HTItemStackSlot protected constructor(
 
     @JvmField
     protected var stack: ItemStack = ItemStack.EMPTY
+    private var slotBackground: Pair<ResourceLocation, ResourceLocation>? = null
+
+    fun setSlotBackground(atlas: ResourceLocation, texture: ResourceLocation): HTItemStackSlot = apply {
+        this.slotBackground = atlas to texture
+    }
 
     override fun getStack(): ImmutableItemStack? = this.stack.toImmutable()
 
@@ -113,7 +119,8 @@ open class HTItemStackSlot protected constructor(
     final override fun canStackExtract(stack: ImmutableItemStack, access: HTStorageAccess): Boolean =
         super.canStackExtract(stack, access) && this.canExtract.test(stack, access)
 
-    override fun createContainerSlot(): Slot? = HTContainerItemSlot(this, x, y, ::setStackUnchecked, ::isStackValidForInsert, this.slotType)
+    override fun createContainerSlot(): Slot? =
+        HTContainerItemSlot(this, x, y, ::setStackUnchecked, ::isStackValidForInsert, this.slotType, this.slotBackground)
 
     override fun serialize(output: HTValueOutput) {
         output.store(RagiumConst.ITEM, ImmutableItemStack.CODEC, getStack())

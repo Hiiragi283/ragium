@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.inventory
+package hiiragi283.ragium.common.inventory
 
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot
@@ -25,10 +26,18 @@ open class HTContainerItemSlot(
     private val stackSetter: Consumer<ImmutableItemStack?>,
     private val manualFilter: (ImmutableItemStack, HTStorageAccess) -> Boolean,
     val slotType: Type,
+    slotBackground: Pair<ResourceLocation, ResourceLocation>?,
 ) : Slot(emptyContainer, 0, x, y) {
     companion object {
         @JvmStatic
         private val emptyContainer = SimpleContainer(0)
+    }
+
+    init {
+        if (slotBackground != null) {
+            val (atlas: ResourceLocation, texture: ResourceLocation) = slotBackground
+            this.setBackground(atlas, texture)
+        }
     }
 
     override fun mayPlace(stack: ItemStack): Boolean {

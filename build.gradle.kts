@@ -63,7 +63,7 @@ repositories {
     }
     maven(url = "https://cursemaven.com")
     maven(url = "https://maven.parchmentmc.org")
-    maven(url = "https://modmaven.dev/") // AU, Mekanism, PnC
+    maven(url = "https://modmaven.dev/") // AU, Mekanism, PnC, Oritech
 
     maven(url = "https://maven4.bai.lol/") // WTHIT
     maven(url = "https://maven.architectury.dev/") // Arch

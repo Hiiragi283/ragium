@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.Tesselator
 import com.mojang.blaze3d.vertex.VertexConsumer
 import com.mojang.blaze3d.vertex.VertexFormat
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getStillTexture
 import net.minecraft.client.Minecraft
@@ -16,7 +17,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.FastColor
-import net.minecraft.world.inventory.InventoryMenu
 import org.joml.Matrix4f
 import org.joml.Vector3f
 
@@ -37,7 +37,7 @@ object HTSpriteRenderHelper {
         val texture: ResourceLocation = stack.getStillTexture() ?: return null
         return Minecraft
             .getInstance()
-            .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
+            .getTextureAtlas(RagiumConst.BLOCK_ATLAS)
             .apply(texture)
     }
 
@@ -171,7 +171,7 @@ object HTSpriteRenderHelper {
         overlay: Int,
         sides: Iterable<Direction> = Direction.entries,
     ) {
-        val consumer: VertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucentCull(InventoryMenu.BLOCK_ATLAS))
+        val consumer: VertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucentCull(RagiumConst.BLOCK_ATLAS))
         val pose: PoseStack.Pose = poseStack.last()
         val matrix: Matrix4f = pose.pose()
 
