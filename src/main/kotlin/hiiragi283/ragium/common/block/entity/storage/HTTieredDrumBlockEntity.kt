@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import net.minecraft.core.BlockPos
@@ -22,7 +22,7 @@ class HTTieredDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
         tier = blockHolder.getAttributeTier()
     }
 
-    override fun createTank(listener: HTContentListener): HTFluidStackTank = DrumTank(listener)
+    override fun createTank(listener: HTContentListener): HTBasicFluidTank = DrumTank(listener)
 
     private fun getCapacity(): Int =
         HTEnchantmentHelper.processStorageCapacity(this.getLevel()?.random, enchantment, tier.getDefaultCapacity())
@@ -33,7 +33,7 @@ class HTTieredDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
      * @see mekanism.common.capabilities.fluid.FluidTankFluidTank
      */
     private inner class DrumTank(listener: HTContentListener) :
-        HTFluidStackTank(
+        HTBasicFluidTank(
             getCapacity(),
             HTPredicates.alwaysTrueBi(),
             HTPredicates.alwaysTrueBi(),

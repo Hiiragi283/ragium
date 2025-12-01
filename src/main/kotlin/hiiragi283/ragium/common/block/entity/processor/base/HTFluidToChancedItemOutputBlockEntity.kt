@@ -7,8 +7,8 @@ import hiiragi283.ragium.api.recipe.chance.HTChancedItemRecipe
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -22,14 +22,14 @@ abstract class HTFluidToChancedItemOutputBlockEntity<INPUT : RecipeInput, RECIPE
     pos: BlockPos,
     state: BlockState,
 ) : HTChancedItemOutputBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
-    lateinit var inputTank: HTFluidStackTank
+    lateinit var inputTank: HTBasicFluidTank
         private set
 
     final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getInputTank()),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank()),
         )
     }
 

@@ -11,16 +11,16 @@ import java.util.function.Predicate
 /**
  * @see mekanism.common.capabilities.fluid.VariableCapacityFluidTank
  */
-class HTVariableFluidStackTank(
+class HTVariableFluidTank(
     private val capacitySupplier: IntSupplier,
     canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     filter: Predicate<ImmutableFluidStack>,
     listener: HTContentListener?,
-) : HTFluidStackTank(capacitySupplier.asInt, canExtract, canInsert, filter, listener) {
+) : HTBasicFluidTank(capacitySupplier.asInt, canExtract, canInsert, filter, listener) {
     companion object {
         @JvmStatic
-        fun create(listener: HTContentListener?, capacity: IntSupplier): HTFluidStackTank = HTVariableFluidStackTank(
+        fun create(listener: HTContentListener?, capacity: IntSupplier): HTBasicFluidTank = HTVariableFluidTank(
             capacity,
             HTPredicates.alwaysTrueBi(),
             HTPredicates.alwaysTrueBi(),
@@ -34,7 +34,7 @@ class HTVariableFluidStackTank(
             capacity: IntSupplier,
             canInsert: Predicate<ImmutableFluidStack> = HTPredicates.alwaysTrue(),
             filter: Predicate<ImmutableFluidStack> = canInsert,
-        ): HTFluidStackTank = HTVariableFluidStackTank(
+        ): HTBasicFluidTank = HTVariableFluidTank(
             capacity,
             HTPredicates.notExternal(),
             { stack: ImmutableFluidStack, _ -> canInsert.test(stack) },
@@ -43,7 +43,7 @@ class HTVariableFluidStackTank(
         )
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: IntSupplier): HTFluidStackTank = HTVariableFluidStackTank(
+        fun output(listener: HTContentListener?, capacity: IntSupplier): HTBasicFluidTank = HTVariableFluidTank(
             capacity,
             HTPredicates.alwaysTrueBi(),
             HTPredicates.internalOnly(),

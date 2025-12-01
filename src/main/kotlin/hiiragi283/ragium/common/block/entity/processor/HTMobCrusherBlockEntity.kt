@@ -14,8 +14,8 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -48,14 +48,14 @@ import net.neoforged.neoforge.event.EventHooks
 
 class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity<SingleRecipeInput, HTMobCrusherBlockEntity.MobLootRecipe>(RagiumBlocks.MOB_CRUSHER, pos, state) {
-    lateinit var outputTank: HTFluidStackTank
+    lateinit var outputTank: HTBasicFluidTank
         private set
 
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidStackTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
+            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
         )
     }
 

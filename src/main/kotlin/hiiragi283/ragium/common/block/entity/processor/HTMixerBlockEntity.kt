@@ -10,8 +10,8 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTComplexBlockEntity
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -29,14 +29,14 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    lateinit var inputTank: HTFluidStackTank
+    lateinit var inputTank: HTBasicFluidTank
         private set
 
     override fun initInputTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getInputTank()),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank()),
         )
     }
 

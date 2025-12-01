@@ -13,8 +13,8 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -41,14 +41,14 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTM
         state: BlockState,
     ) : super(finder, blockHolder, pos, state)
 
-    lateinit var inputTank: HTFluidStackTank
+    lateinit var inputTank: HTBasicFluidTank
         private set
 
     final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, blockHolder.getFluidAttribute().getInputTank(), canInsert = ::filterFluid),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank(), canInsert = ::filterFluid),
         )
     }
 

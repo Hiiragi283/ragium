@@ -16,7 +16,7 @@ import java.util.function.Predicate
 /**
  * @see mekanism.common.capabilities.fluid.BasicFluidTank
  */
-open class HTFluidStackTank protected constructor(
+open class HTBasicFluidTank protected constructor(
     private val capacity: Int,
     private val canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     private val canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
@@ -37,7 +37,7 @@ open class HTFluidStackTank protected constructor(
             canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
             filter: Predicate<ImmutableFluidStack> = HTPredicates.alwaysTrue(),
-        ): HTFluidStackTank = HTFluidStackTank(
+        ): HTBasicFluidTank = HTBasicFluidTank(
             validateCapacity(capacity),
             canExtract,
             canInsert,
@@ -51,7 +51,7 @@ open class HTFluidStackTank protected constructor(
             capacity: Int,
             canInsert: Predicate<ImmutableFluidStack> = HTPredicates.alwaysTrue(),
             filter: Predicate<ImmutableFluidStack> = canInsert,
-        ): HTFluidStackTank = HTFluidStackTank(
+        ): HTBasicFluidTank = HTBasicFluidTank(
             validateCapacity(capacity),
             HTPredicates.notExternal(),
             { stack: ImmutableFluidStack, _ -> canInsert.test(stack) },
@@ -60,7 +60,7 @@ open class HTFluidStackTank protected constructor(
         )
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: Int): HTFluidStackTank = HTFluidStackTank(
+        fun output(listener: HTContentListener?, capacity: Int): HTBasicFluidTank = HTBasicFluidTank(
             validateCapacity(capacity),
             HTPredicates.alwaysTrueBi(),
             HTPredicates.internalOnly(),

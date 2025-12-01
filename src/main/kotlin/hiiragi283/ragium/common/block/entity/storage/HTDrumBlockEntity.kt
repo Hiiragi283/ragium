@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
@@ -21,14 +21,14 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
-    lateinit var tank: HTFluidStackTank
+    lateinit var tank: HTBasicFluidTank
         private set
 
     final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         tank = builder.addSlot(HTSlotInfo.BOTH, createTank(listener))
     }
 
-    protected abstract fun createTank(listener: HTContentListener): HTFluidStackTank
+    protected abstract fun createTank(listener: HTContentListener): HTBasicFluidTank
 
     lateinit var slot: HTItemStackSlot
         private set

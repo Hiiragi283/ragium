@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
 import net.minecraft.core.BlockPos
@@ -59,7 +59,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
             state: BlockState,
         ) : super(finder, blockHolder, pos, state)
 
-        lateinit var inputTank: HTFluidStackTank
+        lateinit var inputTank: HTBasicFluidTank
             private set
 
         final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
@@ -67,6 +67,6 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Bl
             inputTank = builder.addSlot(HTSlotInfo.INPUT, createTank(listener))
         }
 
-        protected abstract fun createTank(listener: HTContentListener): HTFluidStackTank
+        protected abstract fun createTank(listener: HTContentListener): HTBasicFluidTank
     }
 }
