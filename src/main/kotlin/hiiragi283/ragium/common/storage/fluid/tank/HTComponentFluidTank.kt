@@ -16,7 +16,7 @@ import java.util.function.Predicate
  * @see mekanism.common.attachments.containers.fluid.ComponentBackedFluidTank
  */
 open class HTComponentFluidTank(
-    private val parent: ItemStack,
+    protected val parent: ItemStack,
     private val capacity: Int,
     private val canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     private val canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,

@@ -155,7 +155,6 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
     private fun registerRenderer() {
         registerRenderer(RagiumItems.ECHO_STAR, ::HTBackAccessoryRenderer)
         registerRenderer(RagiumItems.NIGHT_VISION_GOGGLES, ::HTGogglesAccessoryRenderer)
-        registerRenderer(RagiumItems.POTION_BUNDLE, ::HTBundleAccessoryRenderer)
         registerRenderer(RagiumItems.UNIVERSAL_BUNDLE, ::HTBundleAccessoryRenderer)
         RagiumAPI.LOGGER.info("Registered Accessory Renderer!")
     }

@@ -35,8 +35,10 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             // Ragium
             addAll(RagiumItems.REGISTER.entries)
 
-            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.POTION_DROP)
+            
+            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.RAGI_CHERRY_JUICE)
 
             removeAll(HTChargeType.entries.map(HTChargeType::getItem))
             removeAll(tools)

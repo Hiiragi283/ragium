@@ -22,7 +22,7 @@ object RagiumConst {
     val BLOCK_ATLAS: ResourceLocation = vanillaId("textures/atlas/blocks.png")
 
     @JvmField
-    val GUI_ATLAS: ResourceLocation = vanillaId("textures/atlas/hui.png")
+    val GUI_ATLAS: ResourceLocation = vanillaId("textures/atlas/gui.png")
 
     const val FULL_BRIGHT: Int = LightTexture.FULL_BRIGHT
 

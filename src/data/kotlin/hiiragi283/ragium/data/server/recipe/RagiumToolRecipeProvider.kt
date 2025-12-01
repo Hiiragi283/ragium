@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.crafting.HTUpgradeChargeRecipe
 import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
+import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -200,13 +201,28 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         }
         // Tool
         for ((variant: HTToolVariant, tool: ItemLike) in RagiumItems.getToolMap(material)) {
-            val beforeTool: ItemLike = VanillaMaterialKeys.TOOL_TABLE[variant, beforeKey] ?: continue
-            HTSmithingRecipeBuilder
-                .create(tool)
-                .addIngredient(upgrade)
-                .addIngredient(beforeTool)
-                .addIngredient(CommonMaterialPrefixes.INGOT, material)
-                .save(this.output)
+            val beforeTool: ItemLike? = VanillaMaterialKeys.TOOL_TABLE[variant, beforeKey]
+            // Upgrade from base tool
+            if (beforeTool != null) {
+                HTSmithingRecipeBuilder
+                    .create(tool)
+                    .addIngredient(upgrade)
+                    .addIngredient(beforeTool)
+                    .addIngredient(CommonMaterialPrefixes.INGOT, material)
+                    .save(this.output)
+            }
+            when (variant) {
+                VanillaToolVariant.SHEARS -> {
+                    HTShapedRecipeBuilder
+                        .create(tool)
+                        .pattern(
+                            " A",
+                            "A "
+                        ).define('A', CommonMaterialPrefixes.INGOT, material)
+                        .setCategory(CraftingBookCategory.EQUIPMENT)
+                        .save(output)
+                }
+            }
         }
     }
 

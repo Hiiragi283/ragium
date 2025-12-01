@@ -102,6 +102,9 @@ object RagiumModTags {
         val BYPASS_MENU_VALIDATION: TagKey<Item> = create("bypass_menu_validation")
 
         @JvmField
+        val DISABLE_ACCESSORY_EQUIP: TagKey<Item> = create("disable_accessory_equip")
+
+        @JvmField
         val ELDRITCH_PEARL_BINDER: TagKey<Item> = create("eldritch_pearl_binder")
 
         @JvmField

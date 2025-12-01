@@ -43,7 +43,6 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.AMETHYST_SHARD, 4),
             ).save(output)
         // Quartz
-        // Amethyst
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
@@ -116,15 +115,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 itemCreator.fromItem(Items.DRAGON_HEAD),
                 resultHelper.item(Items.DRAGON_BREATH),
             ).save(output)
-        // Undying Totem
         // Frog Lights
-        // Glow Ink Sac
-        HTItemWithCatalystRecipeBuilder
-            .simulating(
-                null,
-                itemCreator.fromVanilla(ingredient(EntityType.GLOW_SQUID)),
-                resultHelper.item(Items.GLOW_INK_SAC),
-            ).save(output)
         // Milk from Goat
         HTItemWithCatalystRecipeBuilder
             .simulating(
@@ -161,13 +152,6 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 null,
                 itemCreator.fromVanilla(ingredient(EntityType.SHEEP)),
                 resultHelper.item(Items.WHITE_WOOL),
-            ).save(output)
-        // Ink Sac
-        HTItemWithCatalystRecipeBuilder
-            .simulating(
-                null,
-                itemCreator.fromVanilla(ingredient(EntityType.SQUID)),
-                resultHelper.item(Items.INK_SAC),
             ).save(output)
         // Turtle Scute
         HTItemWithCatalystRecipeBuilder
