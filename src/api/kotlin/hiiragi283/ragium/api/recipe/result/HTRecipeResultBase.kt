@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe.result
 
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.RegistryKey
@@ -28,12 +27,9 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : ImmutableStack<TYPE, STACK
             amountCodec: MapBiCodec<ByteBuf, Int>,
             factory: (HTKeyOrTagEntry<T>, Int, DataComponentPatch) -> R,
         ): BiCodec<RegistryFriendlyByteBuf, R> = BiCodec.composite(
-            HTKeyOrTagHelper.INSTANCE.mapCodec(registryKey),
-            HTRecipeResultBase<T, *>::entry,
-            amountCodec,
-            HTRecipeResultBase<T, *>::amount,
-            VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf(RagiumConst.COMPONENTS, DataComponentPatch.EMPTY),
-            HTRecipeResultBase<T, *>::components,
+            HTKeyOrTagHelper.INSTANCE.mapCodec(registryKey).forGetter(HTRecipeResultBase<T, *>::entry),
+            amountCodec.forGetter(HTRecipeResultBase<T, *>::amount),
+            VanillaBiCodecs.COMPONENT_PATCH.forGetter(HTRecipeResultBase<T, *>::components),
             factory,
         )
     }

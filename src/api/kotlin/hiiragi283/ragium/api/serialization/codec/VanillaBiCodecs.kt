@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.serialization.codec
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.tag.createTagKey
 import io.netty.buffer.ByteBuf
@@ -39,11 +40,13 @@ object VanillaBiCodecs {
     val COLOR: BiCodec<ByteBuf, DyeColor> = BiCodec.of(DyeColor.CODEC, DyeColor.STREAM_CODEC)
 
     /**
-     * [DataComponentPatch]の[BiCodec]
+     * [DataComponentPatch]の[MapBiCodec]
      */
     @JvmField
-    val COMPONENT_PATCH: BiCodec<RegistryFriendlyByteBuf, DataComponentPatch> =
-        BiCodec.of(DataComponentPatch.CODEC, DataComponentPatch.STREAM_CODEC)
+    val COMPONENT_PATCH: MapBiCodec<RegistryFriendlyByteBuf, DataComponentPatch> =
+        BiCodec
+            .of(DataComponentPatch.CODEC, DataComponentPatch.STREAM_CODEC)
+            .optionalFieldOf(RagiumConst.COMPONENTS, DataComponentPatch.EMPTY)
 
     /**
      * [Direction]の[BiCodec]

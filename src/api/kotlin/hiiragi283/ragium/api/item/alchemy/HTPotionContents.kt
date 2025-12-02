@@ -19,10 +19,11 @@ data class HTPotionContents(private val potion: Optional<Holder<Potion>>, privat
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTPotionContents> = BiCodec.composite(
-            holder(Registries.POTION).optionalFieldOf("potion"),
-            HTPotionContents::potion,
-            HTMobEffectInstance.CODEC.listOf().optionalFieldOf("custom_effects", listOf()),
-            HTPotionContents::instances,
+            holder(Registries.POTION).optionalFieldOf("potion").forGetter(HTPotionContents::potion),
+            HTMobEffectInstance.CODEC
+                .listOf()
+                .optionalFieldOf("custom_effects", listOf())
+                .forGetter(HTPotionContents::instances),
             ::HTPotionContents,
         )
 

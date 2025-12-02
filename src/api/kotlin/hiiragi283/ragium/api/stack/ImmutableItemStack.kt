@@ -27,12 +27,9 @@ value class ImmutableItemStack private constructor(private val stack: ItemStack)
         @JvmStatic
         private val ITEM_STACK_CODEC: BiCodec<RegistryFriendlyByteBuf, ItemStack> =
             BiCodec.composite(
-                VanillaBiCodecs.holder(Registries.ITEM).fieldOf(RagiumConst.ID),
-                ItemStack::getItemHolder,
-                BiCodecs.POSITIVE_INT.optionalOrElseField(RagiumConst.COUNT, 1),
-                ItemStack::getCount,
-                VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf(RagiumConst.COMPONENTS, DataComponentPatch.EMPTY),
-                ItemStack::getComponentsPatch,
+                VanillaBiCodecs.holder(Registries.ITEM).fieldOf(RagiumConst.ID).forGetter(ItemStack::getItemHolder),
+                BiCodecs.POSITIVE_INT.optionalOrElseField(RagiumConst.COUNT, 1).forGetter(ItemStack::getCount),
+                VanillaBiCodecs.COMPONENT_PATCH.forGetter(ItemStack::getComponentsPatch),
                 ::ItemStack,
             )
 

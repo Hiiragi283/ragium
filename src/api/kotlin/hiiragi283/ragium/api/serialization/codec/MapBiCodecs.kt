@@ -19,7 +19,7 @@ object MapBiCodecs {
 
     @JvmStatic
     fun <B : ByteBuf, F : Any, S : Any> pair(left: MapBiCodec<in B, F>, right: MapBiCodec<in B, S>): MapBiCodec<B, Pair<F, S>> =
-        MapBiCodec.composite(left, Pair<F, S>::first, right, Pair<F, S>::second, ::Pair)
+        MapBiCodec.composite(left.forGetter(Pair<F, S>::first), right.forGetter(Pair<F, S>::second), ::Pair)
 
     @JvmStatic
     fun <B : ByteBuf, L : Any, R : Any> ior(

@@ -25,10 +25,11 @@ data class HTItemResultWithChance(val base: HTItemResult, val chance: Fraction) 
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemResultWithChance> = BiCodec.composite(
-            HTItemResult.CODEC.toMap(),
-            HTItemResultWithChance::base,
-            BiCodecs.fractionRange(Fraction.ZERO, Fraction.ONE).optionalFieldOf(RagiumConst.CHANCE, Fraction.ONE),
-            HTItemResultWithChance::chance,
+            HTItemResult.CODEC.toMap().forGetter(HTItemResultWithChance::base),
+            BiCodecs
+                .fractionRange(Fraction.ZERO, Fraction.ONE)
+                .optionalFieldOf(RagiumConst.CHANCE, Fraction.ONE)
+                .forGetter(HTItemResultWithChance::chance),
             ::HTItemResultWithChance,
         )
     }

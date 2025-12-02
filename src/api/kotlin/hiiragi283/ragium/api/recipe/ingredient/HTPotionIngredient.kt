@@ -25,10 +25,8 @@ data class HTPotionIngredient(val items: HolderSet<Item>, val contents: HTPotion
     companion object {
         @JvmField
         val CODEC: MapBiCodec<RegistryFriendlyByteBuf, HTPotionIngredient> = MapBiCodec.composite(
-            VanillaBiCodecs.holderSet(Registries.ITEM).fieldOf("items"),
-            HTPotionIngredient::items,
-            HTPotionContents.CODEC.fieldOf("contents"),
-            HTPotionIngredient::contents,
+            VanillaBiCodecs.holderSet(Registries.ITEM).fieldOf("items").forGetter(HTPotionIngredient::items),
+            HTPotionContents.CODEC.fieldOf("contents").forGetter(HTPotionIngredient::contents),
             ::HTPotionIngredient,
         )
 
