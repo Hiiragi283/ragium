@@ -6,9 +6,12 @@ import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTPotionIngredient
+import hiiragi283.ragium.api.recipe.ingredient.RagiumIngredientTypes
+import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.commonId
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.common.data.map.HTBlockCrushingRecipeProvider
 import hiiragi283.ragium.common.data.map.HTCompressingRecipeProvider
@@ -19,11 +22,14 @@ import hiiragi283.ragium.common.inventory.slot.payload.HTIntSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTTeleportPosSyncPayload
 import net.minecraft.core.registries.Registries
+import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
+import net.neoforged.neoforge.common.crafting.ICustomIngredient
+import net.neoforged.neoforge.common.crafting.IngredientType
 import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
 
@@ -56,8 +62,15 @@ object RagiumMiscRegister {
 
         // Ingredient Type
         event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES) { helper ->
-            helper.register(RagiumAPI.id("entity_type"), HTEntityTypeIngredient.TYPE)
-            helper.register(RagiumAPI.id("potion"), HTPotionIngredient.TYPE)
+            fun <T : ICustomIngredient> register(
+                holder: HTDeferredHolder<IngredientType<*>, IngredientType<T>>,
+                codec: MapBiCodec<RegistryFriendlyByteBuf, T>,
+            ) {
+                helper.register(holder.id, codec.toSerializer(::IngredientType))
+            }
+
+            register(RagiumIngredientTypes.ENTITY_TYPE, HTEntityTypeIngredient.CODEC)
+            register(RagiumIngredientTypes.POTION, HTPotionIngredient.CODEC)
         }
 
         // Armor Equip Type

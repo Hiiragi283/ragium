@@ -30,9 +30,6 @@ data class HTPotionIngredient(val items: HolderSet<Item>, val contents: HTPotion
             ::HTPotionIngredient,
         )
 
-        @JvmField
-        val TYPE: IngredientType<HTPotionIngredient> = IngredientType(CODEC.codec, CODEC.streamCodec)
-
         @JvmStatic
         fun of(items: Collection<ItemLike>, contents: HTPotionContents): HTPotionIngredient = HTPotionIngredient(
             HolderSet.direct(ItemLike::builtInRegistryHolder, items),
@@ -50,5 +47,5 @@ data class HTPotionIngredient(val items: HolderSet<Item>, val contents: HTPotion
 
     override fun isSimple(): Boolean = false
 
-    override fun getType(): IngredientType<*> = TYPE
+    override fun getType(): IngredientType<*> = RagiumIngredientTypes.POTION.get()
 }

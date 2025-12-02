@@ -1,10 +1,10 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
+import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.container.HTAccessConfigurationMenu
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics

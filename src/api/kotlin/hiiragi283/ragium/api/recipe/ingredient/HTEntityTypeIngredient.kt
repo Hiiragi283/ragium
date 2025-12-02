@@ -28,9 +28,6 @@ data class HTEntityTypeIngredient private constructor(private val holderSet: Hol
             .fieldOf("entities")
             .xmap(::HTEntityTypeIngredient, HTEntityTypeIngredient::holderSet)
 
-        @JvmField
-        val TYPE: IngredientType<HTEntityTypeIngredient> = IngredientType(CODEC.codec, CODEC.streamCodec)
-
         @JvmStatic
         fun of(holderSet: HolderSet<EntityType<*>>): Ingredient = HTEntityTypeIngredient(holderSet).toVanilla()
     }
@@ -71,5 +68,5 @@ data class HTEntityTypeIngredient private constructor(private val holderSet: Hol
 
     override fun isSimple(): Boolean = false
 
-    override fun getType(): IngredientType<*> = TYPE
+    override fun getType(): IngredientType<*> = RagiumIngredientTypes.ENTITY_TYPE.get()
 }
