@@ -25,11 +25,11 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.common.HTMoldType
-import hiiragi283.ragium.common.data.map.HTBlockCrushingMaterialRecipe
-import hiiragi283.ragium.common.data.map.HTCompressingMaterialRecipe
-import hiiragi283.ragium.common.data.map.HTCrushingMaterialRecipe
+import hiiragi283.ragium.common.data.map.HTBlockCrushingRecipeProvider
+import hiiragi283.ragium.common.data.map.HTCompressingRecipeProvider
+import hiiragi283.ragium.common.data.map.HTCrushingRecipeProvider
 import hiiragi283.ragium.common.data.map.HTDataModelEntityIngredient
-import hiiragi283.ragium.common.data.map.HTRawSmeltingMaterialRecipe
+import hiiragi283.ragium.common.data.map.HTRawSmeltingRecipeProvider
 import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -185,7 +185,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                 // Raw -> Ingot
                 put(
                     RagiumAPI.id("raw_to_ingot_with_basic"),
-                    HTRawSmeltingMaterialRecipe(
+                    HTRawSmeltingRecipeProvider(
                         CommonMaterialPrefixes.RAW_MATERIAL,
                         2,
                         3,
@@ -195,7 +195,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                 )
                 put(
                     RagiumAPI.id("raw_to_ingot_with_advanced"),
-                    HTRawSmeltingMaterialRecipe(
+                    HTRawSmeltingRecipeProvider(
                         CommonMaterialPrefixes.RAW_MATERIAL,
                         1,
                         2,
@@ -206,7 +206,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                 // Raw Block -> Ingot
                 put(
                     RagiumAPI.id("raw_block_to_ingot_with_basic"),
-                    HTRawSmeltingMaterialRecipe(
+                    HTRawSmeltingRecipeProvider(
                         CommonMaterialPrefixes.RAW_STORAGE_BLOCK,
                         2,
                         27,
@@ -216,7 +216,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                 )
                 put(
                     RagiumAPI.id("raw_block_to_ingot_with_advanced"),
-                    HTRawSmeltingMaterialRecipe(
+                    HTRawSmeltingRecipeProvider(
                         CommonMaterialPrefixes.RAW_STORAGE_BLOCK,
                         1,
                         18,
@@ -227,64 +227,64 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             }.getOrCreateMap(RagiumRecipeTypes.COMPRESSING) {
                 put(
                     RagiumAPI.id("dust_to_gem"),
-                    HTCompressingMaterialRecipe.dust(CommonMaterialPrefixes.GEM, itemCreator.fromItem(HTMoldType.GEM)),
+                    HTCompressingRecipeProvider.dust(CommonMaterialPrefixes.GEM, itemCreator.fromItem(HTMoldType.GEM)),
                 )
                 put(
                     RagiumAPI.id("dust_to_fuel"),
-                    HTCompressingMaterialRecipe.dust(CommonMaterialPrefixes.FUEL, itemCreator.fromItem(HTMoldType.GEM)),
+                    HTCompressingRecipeProvider.dust(CommonMaterialPrefixes.FUEL, itemCreator.fromItem(HTMoldType.GEM)),
                 )
 
                 put(
                     RagiumAPI.id("ingot_to_gear"),
-                    HTCompressingMaterialRecipe.ingot(CommonMaterialPrefixes.GEAR, itemCreator.fromItem(HTMoldType.GEAR), inputCount = 4),
+                    HTCompressingRecipeProvider.ingot(CommonMaterialPrefixes.GEAR, itemCreator.fromItem(HTMoldType.GEAR), inputCount = 4),
                 )
                 put(
                     RagiumAPI.id("ingot_to_plate"),
-                    HTCompressingMaterialRecipe.ingot(CommonMaterialPrefixes.PLATE, itemCreator.fromItem(HTMoldType.PLATE)),
+                    HTCompressingRecipeProvider.ingot(CommonMaterialPrefixes.PLATE, itemCreator.fromItem(HTMoldType.PLATE)),
                 )
             }.getOrCreateMap(RagiumRecipeTypes.CRUSHING) {
                 put(
                     RagiumAPI.id("raw_block_to_dust"),
-                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, 1, 12),
+                    HTCrushingRecipeProvider.dust(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, 1, 12),
                 )
 
                 put(
                     RagiumAPI.id("ingot_to_dust"),
-                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.INGOT, 1, 1),
+                    HTCrushingRecipeProvider.dust(CommonMaterialPrefixes.INGOT, 1, 1),
                 )
                 put(
                     RagiumAPI.id("gem_to_dust"),
-                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.GEM, 1, 1),
+                    HTCrushingRecipeProvider.dust(CommonMaterialPrefixes.GEM, 1, 1),
                 )
                 put(
                     RagiumAPI.id("gear_to_dust"),
-                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.GEAR, 1, 4),
+                    HTCrushingRecipeProvider.dust(CommonMaterialPrefixes.GEAR, 1, 4),
                 )
                 put(
                     RagiumAPI.id("plate_to_dust"),
-                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.PLATE, 1, 1),
+                    HTCrushingRecipeProvider.dust(CommonMaterialPrefixes.PLATE, 1, 1),
                 )
                 put(
                     RagiumAPI.id("raw_to_dust"),
-                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.RAW_MATERIAL, 3, 4),
+                    HTCrushingRecipeProvider.dust(CommonMaterialPrefixes.RAW_MATERIAL, 3, 4),
                 )
                 put(
                     RagiumAPI.id("rod_to_dust"),
-                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.ROD, 2, 1),
+                    HTCrushingRecipeProvider.dust(CommonMaterialPrefixes.ROD, 2, 1),
                 )
                 put(
                     RagiumAPI.id("fuel_to_dust"),
-                    HTCrushingMaterialRecipe.dust(CommonMaterialPrefixes.FUEL, 1, 1),
+                    HTCrushingRecipeProvider.dust(CommonMaterialPrefixes.FUEL, 1, 1),
                 )
 
                 put(
                     RagiumAPI.id("crop_to_flour"),
-                    HTCrushingMaterialRecipe(CommonMaterialPrefixes.CROP, 1, CommonMaterialPrefixes.FLOUR, 1),
+                    HTCrushingRecipeProvider(CommonMaterialPrefixes.CROP, 1, CommonMaterialPrefixes.FLOUR, 1),
                 )
 
                 put(
                     RagiumAPI.id("storage_block_to_dust"),
-                    HTBlockCrushingMaterialRecipe,
+                    HTBlockCrushingRecipeProvider,
                 )
             }
     }
@@ -318,8 +318,12 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private class MapDataMapBuilder<R : Any, V : Any>(
         private val builder: AdvancedBuilder<Map<ResourceLocation, V>, R, MapDataMapValueRemover<R, V>>,
     ) {
-        inline fun getOrCreateMap(holder: Holder<R>, builderAction: MutableMap<ResourceLocation, V>.() -> Unit): MapDataMapBuilder<R, V> {
-            builder.add(holder, buildMap(builderAction), false)
+        inline fun getOrCreateMap(
+            holder: Holder<R>,
+            vararg conditions: ICondition,
+            builderAction: MutableMap<ResourceLocation, V>.() -> Unit,
+        ): MapDataMapBuilder<R, V> {
+            builder.add(holder, buildMap(builderAction), false, *conditions)
             return this
         }
     }

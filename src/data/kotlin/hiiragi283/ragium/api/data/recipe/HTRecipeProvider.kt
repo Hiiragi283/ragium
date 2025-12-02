@@ -26,7 +26,6 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
@@ -337,31 +336,6 @@ sealed class HTRecipeProvider {
             .create(hole)
             .addIngredients(Ingredient.of(slice), count)
             .saveSuffixed(output, "_from_pieces")
-    }
-
-    /**
-     * 指定された[HTWoodType]に基づいて，木材の製材レシピを追加します。
-     */
-    protected fun addWoodSawing(type: HTWoodType) {
-        val planks: HTItemHolderLike = type.planks
-        // Log -> 6x Planks
-        HTItemToChancedItemRecipeBuilder
-            .cutting(itemCreator.fromTagKey(type.log))
-            .addResult(resultHelper.item(planks, 6))
-            .modCondition(type.getModId())
-            .save(output)
-        // Planks -> 2x Slab
-        HTItemToChancedItemRecipeBuilder
-            .cutting(itemCreator.fromItem(planks))
-            .addResult(resultHelper.item(type.getSlab(), 2))
-            .modCondition(type.getModId())
-            .save(output)
-        // Planks -> Stairs
-        HTItemToChancedItemRecipeBuilder
-            .cutting(itemCreator.fromItem(planks))
-            .addResult(resultHelper.item(type.getStairs()))
-            .modCondition(type.getModId())
-            .save(output)
     }
 
     // Extracting

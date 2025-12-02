@@ -51,7 +51,7 @@ interface RagiumDataMaps {
 
         // Recipe Type
         @JvmField
-        val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTMaterialRecipe> = INSTANCE.materialRecipeType
+        val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTRuntimeRecipeProvider> = INSTANCE.materialRecipeType
     }
 
     val mobHeadType: DataMapType<EntityType<*>, HTMobHead>
@@ -63,7 +63,7 @@ interface RagiumDataMaps {
     val armorEquipType: DataMapType<Item, HTEquipAction>
     val subEntityIngredientType: DataMapType<Item, HTSubEntityTypeIngredient>
 
-    val materialRecipeType: IdMapDataMap<RecipeType<*>, HTMaterialRecipe>
+    val materialRecipeType: IdMapDataMap<RecipeType<*>, HTRuntimeRecipeProvider>
 
     /**
      * 指定した引数からデータを取得します。

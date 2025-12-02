@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.material.prefix.HTRegisterPrefixEvent
-import hiiragi283.ragium.api.recipe.HTMaterialRecipeManager
+import hiiragi283.ragium.api.recipe.HTRuntimeRecipeManager
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
@@ -19,7 +19,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTFluidIngredientCreatorImpl
 import hiiragi283.ragium.impl.data.recipe.ingredient.HTItemIngredientCreatorImpl
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
-import hiiragi283.ragium.impl.material.RagiumMaterialRecipeManager
+import hiiragi283.ragium.impl.material.RagiumRuntimeRecipeManager
 import hiiragi283.ragium.impl.value.HTJsonValueInput
 import hiiragi283.ragium.impl.value.HTJsonValueOutput
 import hiiragi283.ragium.impl.value.HTTagValueInput
@@ -68,7 +68,7 @@ class RagiumPlatformImpl : RagiumPlatform {
 
     //    Recipe    //
 
-    override fun getMaterialRecipeManager(): HTMaterialRecipeManager = RagiumMaterialRecipeManager
+    override fun getMaterialRecipeManager(): HTRuntimeRecipeManager = RagiumRuntimeRecipeManager
 
     override fun createItemCreator(getter: HolderGetter<Item>): HTItemIngredientCreator = HTItemIngredientCreatorImpl(getter)
 

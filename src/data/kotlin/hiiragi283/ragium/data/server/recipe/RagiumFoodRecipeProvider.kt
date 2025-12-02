@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.HTMoldType
@@ -25,6 +26,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
@@ -101,7 +103,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT)
             .define('B', CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)
             .define('C', Items.SUGAR)
-            .define('D', CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT)
+            .define('D', RagiumCommonTags.Items.FOODS_DOUGH)
             .save(output)
 
         cutAndCombine(RagiumItems.RAGI_CHERRY_PIE, RagiumItems.RAGI_CHERRY_PIE_SLICE, 4)
@@ -232,9 +234,10 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun wheat() {
+        val dough: ItemLike = RagiumItems.getMaterial(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT)
         // Dough
         HTShapelessRecipeBuilder
-            .create(RagiumItems.getMaterial(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT), 3)
+            .create(dough, 3)
             .addIngredients(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT, 3)
             .addIngredient(Tags.Items.BUCKETS_WATER)
             .save(output)
@@ -243,11 +246,11 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .mixing()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT))
             .addIngredient(fluidCreator.water(250))
-            .setResult(resultHelper.item(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT))
+            .setResult(resultHelper.item(dough))
             .save(output)
         // Bread from dough
         HTCookingRecipeBuilder.smeltingAndSmoking(Items.BREAD) {
-            addIngredient(CommonMaterialPrefixes.DOUGH, FoodMaterialKeys.WHEAT)
+            addIngredient(dough)
             saveSuffixed(output, "_from_dough")
         }
     }

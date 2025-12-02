@@ -21,23 +21,21 @@ fun fraction(numerator: Int): Fraction = fraction(numerator, 1)
 
 fun Int.toFraction(denominator: Int): Fraction = fraction(this, denominator)
 
-fun Int.toFraction(): Fraction = fraction(this, 1)
+operator fun Fraction.plus(other: Int): Fraction = this.add(other.toFraction(1))
 
-operator fun Fraction.plus(other: Int): Fraction = this.add(other.toFraction())
+operator fun Fraction.minus(other: Int): Fraction = this.subtract(other.toFraction(1))
 
-operator fun Fraction.minus(other: Int): Fraction = this.subtract(other.toFraction())
+operator fun Fraction.times(other: Int): Fraction = this.multiplyBy(other.toFraction(1))
 
-operator fun Fraction.times(other: Int): Fraction = this.multiplyBy(other.toFraction())
+operator fun Fraction.div(other: Int): Fraction = this.divideBy(other.toFraction(1))
 
-operator fun Fraction.div(other: Int): Fraction = this.divideBy(other.toFraction())
+operator fun Int.plus(other: Fraction): Fraction = this.toFraction(1).add(other)
 
-operator fun Int.plus(other: Fraction): Fraction = this.toFraction().add(other)
+operator fun Int.minus(other: Fraction): Fraction = this.toFraction(1).subtract(other)
 
-operator fun Int.minus(other: Fraction): Fraction = this.toFraction().subtract(other)
+operator fun Int.times(other: Fraction): Fraction = this.toFraction(1).multiplyBy(other)
 
-operator fun Int.times(other: Fraction): Fraction = this.toFraction().multiplyBy(other)
-
-operator fun Int.div(other: Fraction): Fraction = this.toFraction().divideBy(other)
+operator fun Int.div(other: Fraction): Fraction = this.toFraction(1).divideBy(other)
 
 // Float
 fun fraction(value: Float): Fraction = fraction(value.toDouble())

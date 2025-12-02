@@ -16,7 +16,7 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
 @EventBusSubscriber
-object RagiumMaterialEvents {
+object RagiumMaterialHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     fun gatherDefinition(event: HTMaterialDefinitionEvent) {
         vanilla(event)

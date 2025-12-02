@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.data.map
 
 import com.mojang.serialization.MapCodec
-import hiiragi283.ragium.api.data.map.HTMaterialRecipe
+import hiiragi283.ragium.api.data.map.HTRuntimeRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
@@ -13,13 +13,13 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import kotlin.collections.iterator
 
-data object HTBlockCrushingMaterialRecipe : HTMaterialRecipe {
+data object HTBlockCrushingRecipeProvider : HTRuntimeRecipeProvider {
     @JvmField
-    val CODEC: MapCodec<HTBlockCrushingMaterialRecipe> = MapCodec.unit { HTBlockCrushingMaterialRecipe }
+    val CODEC: MapCodec<HTBlockCrushingRecipeProvider> = MapCodec.unit { HTBlockCrushingRecipeProvider }
 
-    override fun type(): MapCodec<HTBlockCrushingMaterialRecipe> = CODEC
+    override fun type(): MapCodec<HTBlockCrushingRecipeProvider> = CODEC
 
-    override fun generateRecipes(helper: HTMaterialRecipe.Helper) {
+    override fun generateRecipes(helper: HTRuntimeRecipeProvider.Helper) {
         for ((key: HTMaterialKey, definition: HTMaterialDefinition) in helper.getDefinitions()) {
             val basePrefix: HTMaterialPrefix = definition.getDefaultPrefix() ?: continue
             val resultPrefix: HTPrefixLike = when {

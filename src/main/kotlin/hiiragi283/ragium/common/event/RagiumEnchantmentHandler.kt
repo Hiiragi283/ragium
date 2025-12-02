@@ -21,7 +21,7 @@ import net.neoforged.neoforge.event.enchanting.GetEnchantmentLevelEvent
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
-object RagiumEnchantmentEvents {
+object RagiumEnchantmentHandler {
     @SubscribeEvent
     fun getEnchantmentLevel(event: GetEnchantmentLevelEvent) {
         event.stack

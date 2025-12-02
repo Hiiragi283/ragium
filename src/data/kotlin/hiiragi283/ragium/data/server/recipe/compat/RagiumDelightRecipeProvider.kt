@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -21,6 +22,7 @@ import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -73,6 +75,8 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
         cherry()
         cake()
+
+        cutting()
     }
 
     @JvmStatic
@@ -106,6 +110,73 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
     private fun cake() {
         cuttingFromData(FoodMaterialRecipeData.SWEET_BERRIES_CAKE_SLICE)
     }
+
+    @JvmStatic
+    private fun cutting() {
+        mapOf(
+            // Meat
+            Items.BEEF to ModItems.MINCED_BEEF.get(),
+            Items.PORKCHOP to ModItems.BACON.get(),
+            Items.MUTTON to ModItems.MUTTON_CHOPS.get(),
+            Items.COOKED_MUTTON to ModItems.COOKED_MUTTON_CHOPS.get(),
+            // Vegetable
+            ModItems.CABBAGE.get() to ModItems.CABBAGE_LEAF.get(),
+        ).forEach { (full: Item, cut: Item) ->
+            HTItemToChancedItemRecipeBuilder
+                .cutting(itemCreator.fromItem(full))
+                .addResult(resultHelper.item(cut, 2))
+                .save(output)
+        }
+
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromTagKey(Tags.Items.CROPS_PUMPKIN))
+            .addResult(resultHelper.item(ModItems.PUMPKIN_SLICE.get(), 4))
+            .save(output)
+
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromItem(ModItems.BROWN_MUSHROOM_COLONY.get()))
+            .addResult(resultHelper.item(Items.BROWN_MUSHROOM, 5))
+            .save(output)
+
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromItem(ModItems.RED_MUSHROOM_COLONY.get()))
+            .addResult(resultHelper.item(Items.RED_MUSHROOM, 5))
+            .save(output)
+
+        HTItemToChancedItemRecipeBuilder
+            .cutting(itemCreator.fromTagKey(RagiumCommonTags.Items.FOODS_DOUGH))
+            .addResult(resultHelper.item(ModItems.RAW_PASTA.get()))
+            .save(output)
+        // with Bone Meal
+        mapOf(
+            // Meat
+            Items.CHICKEN to ModItems.CHICKEN_CUTS.get(),
+            // Fish
+            Items.COD to ModItems.COD_SLICE.get(),
+            Items.SALMON to ModItems.SALMON_SLICE.get(),
+            Items.COOKED_COD to ModItems.COOKED_COD_SLICE.get(),
+            Items.COOKED_SALMON to ModItems.COOKED_SALMON_SLICE.get(),
+        ).forEach { (full: Item, cut: Item) ->
+            HTItemToChancedItemRecipeBuilder
+                .cutting(itemCreator.fromItem(full))
+                .addResult(resultHelper.item(cut, 2))
+                .addResult(resultHelper.item(Items.BONE_MEAL))
+                .save(output)
+        }
+        // With Bone
+        mapOf(
+            ModItems.HAM.get() to Items.PORKCHOP,
+            ModItems.SMOKED_HAM.get() to Items.COOKED_PORKCHOP,
+        ).forEach { (ham: Item, cut: Item) ->
+            HTItemToChancedItemRecipeBuilder
+                .cutting(itemCreator.fromItem(ham))
+                .addResult(resultHelper.item(cut, 2))
+                .addResult(resultHelper.item(Items.BONE))
+                .save(output)
+        }
+    }
+
+    //    Extensions    //
 
     @JvmStatic
     private fun cuttingFromData(data: HTRecipeData) {
