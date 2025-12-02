@@ -200,6 +200,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         factory
             .apply(Tags.Items.FOODS)
             .addTag(CommonMaterialPrefixes.JAM)
+            .addTag(RagiumCommonTags.Items.FOODS_DOUGH)
             .add(RagiumItems.AMBROSIA)
             .add(RagiumItems.CANNED_COOKED_MEAT)
             .add(RagiumItems.ICE_CREAM)
@@ -231,6 +232,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.RAGI_CHERRY_PULP)
 
         addMaterial(factory, CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY).add(RagiumItems.RAGI_CHERRY_JAM)
+
+        factory
+            .apply(RagiumCommonTags.Items.FOODS_DOUGH)
+            .addTag(CommonMaterialPrefixes.DOUGH)
     }
 
     //    Categories    //

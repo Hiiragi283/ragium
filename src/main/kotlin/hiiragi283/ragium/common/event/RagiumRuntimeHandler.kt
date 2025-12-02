@@ -34,7 +34,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
-object RagiumRuntimeEvents {
+object RagiumRuntimeHandler {
     //    Attribute    //
 
     @JvmStatic

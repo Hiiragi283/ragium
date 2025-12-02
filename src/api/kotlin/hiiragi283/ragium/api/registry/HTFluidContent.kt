@@ -20,6 +20,7 @@ typealias HTBasicFluidContent = HTFluidContent<FluidType, BaseFlowingFluid.Sourc
 /**
  * @see mekanism.common.registration.impl.FluidRegistryObject
  */
+@JvmRecord
 data class HTFluidContent<
     TYPE : FluidType,
     STILL : Fluid,

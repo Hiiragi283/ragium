@@ -3,16 +3,11 @@ package hiiragi283.ragium.impl.material
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.collection.ImmutableMultiMap
-import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildMultiMap
-import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.collection.immutableMultiMapOf
-import hiiragi283.ragium.api.collection.immutableTableOf
-import hiiragi283.ragium.api.data.map.HTMaterialRecipe
+import hiiragi283.ragium.api.data.map.HTRuntimeRecipeProvider
 import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
-import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.recipe.HTMaterialRecipeManager
+import hiiragi283.ragium.api.recipe.HTRuntimeRecipeManager
 import hiiragi283.ragium.api.recipe.castRecipe
 import hiiragi283.ragium.api.registry.getHolderDataMap
 import net.minecraft.core.Holder
@@ -23,6 +18,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.bus.api.SubscribeEvent
@@ -30,21 +26,39 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.registries.datamaps.DataMapsUpdatedEvent
 
 @EventBusSubscriber
-object RagiumMaterialRecipeManager : HTMaterialRecipeManager {
+object RagiumRuntimeRecipeManager : HTRuntimeRecipeManager {
     @JvmStatic
-    private lateinit var itemCreator: HTItemIngredientCreator
-
-    @JvmStatic
-    private lateinit var fluidCreator: HTFluidIngredientCreator
+    private var providerCache: ImmutableMultiMap<RecipeType<*>, HTRuntimeRecipeProvider> = immutableMultiMapOf()
 
     @JvmStatic
     private var recipeMultiMap: ImmutableMultiMap<RecipeType<*>, RecipeHolder<*>> = immutableMultiMapOf()
 
     @JvmStatic
-    private var recipeTable: ImmutableTable<RecipeType<*>, ResourceLocation, RecipeHolder<*>> = immutableTableOf()
+    private fun reloadRecipeMap(access: RegistryAccess?, manager: RecipeManager) {
+        if (access == null) return
+        if (this.recipeMultiMap.isEmpty()) {
+            this.recipeMultiMap = buildMultiMap {
+                providerCache.forEach { (recipeType: RecipeType<*>, provider: HTRuntimeRecipeProvider) ->
+                    putAll(recipeType, provider.generateRecipes(access, manager))
+                }
+            }
+        }
+    }
 
-    override fun <RECIPE : Recipe<*>> getAllRecipes(recipeType: RecipeType<RECIPE>): List<RecipeHolder<RECIPE>> =
-        recipeMultiMap[recipeType].mapNotNull { it.castRecipe() }
+    override fun <RECIPE : Recipe<*>> getAllRecipes(
+        recipeManager: RecipeManager,
+        recipeType: RecipeType<RECIPE>,
+    ): List<RecipeHolder<RECIPE>> = getAllRecipes(RagiumPlatform.INSTANCE.getRegistryAccess(), recipeManager, recipeType)
+
+    @JvmStatic
+    private fun <RECIPE : Recipe<*>> getAllRecipes(
+        access: RegistryAccess?,
+        recipeManager: RecipeManager,
+        recipeType: RecipeType<RECIPE>,
+    ): List<RecipeHolder<RECIPE>> {
+        reloadRecipeMap(access, recipeManager)
+        return recipeMultiMap[recipeType].mapNotNull { it.castRecipe() }
+    }
 
     override fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> getRecipeFor(
         recipeType: RecipeType<RECIPE>,
@@ -56,7 +70,8 @@ object RagiumMaterialRecipeManager : HTMaterialRecipeManager {
         else -> {
             when {
                 lastRecipe != null && lastRecipe.value.matches(input, level) -> lastRecipe
-                else -> getAllRecipes(recipeType).firstOrNull { holder -> holder.value.matches(input, level) }
+                else -> getAllRecipes(level.registryAccess(), level.recipeManager, recipeType)
+                    .firstOrNull { holder: RecipeHolder<RECIPE> -> holder.value.matches(input, level) }
             }
         }
     }
@@ -64,27 +79,18 @@ object RagiumMaterialRecipeManager : HTMaterialRecipeManager {
     @SubscribeEvent
     fun onDataMapUpdated(event: DataMapsUpdatedEvent) {
         if (event.cause != DataMapsUpdatedEvent.UpdateCause.SERVER_RELOAD) return
-        val registries: RegistryAccess = event.registries
-        itemCreator = RagiumPlatform.INSTANCE.createItemCreator(registries)
-        fluidCreator = RagiumPlatform.INSTANCE.createFluidCreator(registries)
-
         event.ifRegistry(Registries.RECIPE_TYPE) { registry: Registry<RecipeType<*>> ->
-            val holderMap: Map<Holder.Reference<RecipeType<*>>, Map<ResourceLocation, HTMaterialRecipe>> =
+            val holderMap: Map<Holder.Reference<RecipeType<*>>, Map<ResourceLocation, HTRuntimeRecipeProvider>> =
                 registry.getHolderDataMap(RagiumDataMaps.MATERIAL_RECIPE)
-            recipeMultiMap = buildMultiMap {
-                for ((holder: Holder.Reference<RecipeType<*>>, map: Map<ResourceLocation, HTMaterialRecipe>) in holderMap) {
+
+            providerCache = buildMultiMap {
+                for ((holder: Holder.Reference<RecipeType<*>>, map: Map<ResourceLocation, HTRuntimeRecipeProvider>) in holderMap) {
                     val recipeType: RecipeType<*> = holder.value()
-                    for (data: HTMaterialRecipe in map.values) {
-                        val recipes: List<RecipeHolder<*>> = data.generateRecipes(registries, itemCreator, fluidCreator)
-                        putAll(recipeType, recipes)
-                    }
+                    putAll(recipeType, map.values)
                 }
             }
-            recipeTable = buildTable {
-                recipeMultiMap.forEach { (key: RecipeType<*>, value: RecipeHolder<*>) ->
-                    put(key, value.id, value)
-                }
-            }
+
+            recipeMultiMap = immutableMultiMapOf()
             RagiumAPI.LOGGER.info("Reloaded Material Recipes!")
         }
     }

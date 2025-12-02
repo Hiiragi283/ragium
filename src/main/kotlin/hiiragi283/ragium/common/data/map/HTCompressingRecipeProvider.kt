@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.data.map
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.data.map.HTMaterialRecipe
+import hiiragi283.ragium.api.data.map.HTRuntimeRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
@@ -14,30 +14,30 @@ import net.minecraft.util.ExtraCodecs
 import java.util.Optional
 
 @JvmRecord
-data class HTCompressingMaterialRecipe(
+data class HTCompressingRecipeProvider(
     private val inputPrefix: HTMaterialPrefix,
     private val inputCount: Int,
     private val outputPrefix: HTMaterialPrefix,
     private val outputCount: Int,
     private val catalyst: Optional<HTItemIngredient>,
-) : HTMaterialRecipe {
+) : HTRuntimeRecipeProvider {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTCompressingMaterialRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<HTCompressingRecipeProvider> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
                     HTMaterialPrefix.CODEC.codec
                         .fieldOf("input_prefix")
-                        .forGetter(HTCompressingMaterialRecipe::inputPrefix),
-                    ExtraCodecs.POSITIVE_INT.optionalFieldOf("input_count", 1).forGetter(HTCompressingMaterialRecipe::inputCount),
+                        .forGetter(HTCompressingRecipeProvider::inputPrefix),
+                    ExtraCodecs.POSITIVE_INT.optionalFieldOf("input_count", 1).forGetter(HTCompressingRecipeProvider::inputCount),
                     HTMaterialPrefix.CODEC.codec
                         .fieldOf("output_prefix")
-                        .forGetter(HTCompressingMaterialRecipe::outputPrefix),
-                    ExtraCodecs.POSITIVE_INT.optionalFieldOf("output_count", 1).forGetter(HTCompressingMaterialRecipe::outputCount),
+                        .forGetter(HTCompressingRecipeProvider::outputPrefix),
+                    ExtraCodecs.POSITIVE_INT.optionalFieldOf("output_count", 1).forGetter(HTCompressingRecipeProvider::outputCount),
                     HTItemIngredient.CODEC.codec
                         .optionalFieldOf("catalyst")
-                        .forGetter(HTCompressingMaterialRecipe::catalyst),
-                ).apply(instance, ::HTCompressingMaterialRecipe)
+                        .forGetter(HTCompressingRecipeProvider::catalyst),
+                ).apply(instance, ::HTCompressingRecipeProvider)
         }
 
         @JvmStatic
@@ -46,8 +46,8 @@ data class HTCompressingMaterialRecipe(
             catalyst: HTItemIngredient?,
             inputCount: Int = 1,
             outputCount: Int = 1,
-        ): HTCompressingMaterialRecipe =
-            HTCompressingMaterialRecipe(CommonMaterialPrefixes.DUST, inputCount, outputPrefix, outputCount, catalyst)
+        ): HTCompressingRecipeProvider =
+            HTCompressingRecipeProvider(CommonMaterialPrefixes.DUST, inputCount, outputPrefix, outputCount, catalyst)
 
         @JvmStatic
         fun ingot(
@@ -55,8 +55,8 @@ data class HTCompressingMaterialRecipe(
             catalyst: HTItemIngredient?,
             inputCount: Int = 1,
             outputCount: Int = 1,
-        ): HTCompressingMaterialRecipe =
-            HTCompressingMaterialRecipe(CommonMaterialPrefixes.INGOT, inputCount, outputPrefix, outputCount, catalyst)
+        ): HTCompressingRecipeProvider =
+            HTCompressingRecipeProvider(CommonMaterialPrefixes.INGOT, inputCount, outputPrefix, outputCount, catalyst)
     }
 
     constructor(
@@ -73,9 +73,9 @@ data class HTCompressingMaterialRecipe(
         catalyst.wrapOptional(),
     )
 
-    override fun type(): MapCodec<out HTMaterialRecipe> = CODEC
+    override fun type(): MapCodec<out HTRuntimeRecipeProvider> = CODEC
 
-    override fun generateRecipes(helper: HTMaterialRecipe.Helper) {
+    override fun generateRecipes(helper: HTRuntimeRecipeProvider.Helper) {
         for (key: HTMaterialKey in helper.getAllMaterials()) {
             if (!helper.isPresentTag(inputPrefix, key)) continue
             if (!helper.isPresentTag(outputPrefix, key)) continue

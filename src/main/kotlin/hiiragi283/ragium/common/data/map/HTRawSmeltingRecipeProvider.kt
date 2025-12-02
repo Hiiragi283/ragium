@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.data.map
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import hiiragi283.ragium.api.data.map.HTMaterialRecipe
+import hiiragi283.ragium.api.data.map.HTRuntimeRecipeProvider
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -16,27 +16,27 @@ import net.minecraft.tags.TagKey
 import net.minecraft.util.ExtraCodecs
 import net.minecraft.world.item.Item
 
-class HTRawSmeltingMaterialRecipe(
+class HTRawSmeltingRecipeProvider(
     val prefix: HTMaterialPrefix,
     val inputCount: Int,
     val outputCount: Int,
     val flux: TagKey<Item>,
     val fluxCount: Int,
-) : HTMaterialRecipe {
+) : HTRuntimeRecipeProvider {
     companion object {
         @JvmField
-        val CODEC: MapCodec<HTRawSmeltingMaterialRecipe> = RecordCodecBuilder.mapCodec { instance ->
+        val CODEC: MapCodec<HTRawSmeltingRecipeProvider> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
                     HTMaterialPrefix.CODEC
                         .codec
                         .fieldOf("prefix")
-                        .forGetter(HTRawSmeltingMaterialRecipe::prefix),
-                    ExtraCodecs.POSITIVE_INT.fieldOf("input_count").forGetter(HTRawSmeltingMaterialRecipe::inputCount),
-                    ExtraCodecs.POSITIVE_INT.fieldOf("output_count").forGetter(HTRawSmeltingMaterialRecipe::outputCount),
-                    TagKey.hashedCodec(Registries.ITEM).fieldOf("flux").forGetter(HTRawSmeltingMaterialRecipe::flux),
-                    ExtraCodecs.POSITIVE_INT.fieldOf("flux_count").forGetter(HTRawSmeltingMaterialRecipe::fluxCount),
-                ).apply(instance, ::HTRawSmeltingMaterialRecipe)
+                        .forGetter(HTRawSmeltingRecipeProvider::prefix),
+                    ExtraCodecs.POSITIVE_INT.fieldOf("input_count").forGetter(HTRawSmeltingRecipeProvider::inputCount),
+                    ExtraCodecs.POSITIVE_INT.fieldOf("output_count").forGetter(HTRawSmeltingRecipeProvider::outputCount),
+                    TagKey.hashedCodec(Registries.ITEM).fieldOf("flux").forGetter(HTRawSmeltingRecipeProvider::flux),
+                    ExtraCodecs.POSITIVE_INT.fieldOf("flux_count").forGetter(HTRawSmeltingRecipeProvider::fluxCount),
+                ).apply(instance, ::HTRawSmeltingRecipeProvider)
         }
     }
 
@@ -48,9 +48,9 @@ class HTRawSmeltingMaterialRecipe(
         fluxCount: Int,
     ) : this(prefix.asMaterialPrefix(), inputCount, outputCount, flux, fluxCount)
 
-    override fun type(): MapCodec<out HTMaterialRecipe> = CODEC
+    override fun type(): MapCodec<out HTRuntimeRecipeProvider> = CODEC
 
-    override fun generateRecipes(helper: HTMaterialRecipe.Helper) {
+    override fun generateRecipes(helper: HTRuntimeRecipeProvider.Helper) {
         val itemCreator: HTItemIngredientCreator = helper.itemCreator
         val resultHelper: HTResultHelper = helper.resultHelper
         val output: RecipeOutput = helper.output

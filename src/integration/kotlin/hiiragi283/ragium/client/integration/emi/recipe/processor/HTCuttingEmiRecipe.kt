@@ -15,6 +15,5 @@ class HTCuttingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTB
 
     override fun initInputSlots(widgets: WidgetHolder) {
         widgets.addSlot(input(0), getPosition(1), getPosition(0))
-        widgets.addSlot(output(0).copy().setAmount(1), getPosition(1), getPosition(2)).catalyst(true)
     }
 }

@@ -24,6 +24,7 @@ import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumChemicals
 import hiiragi283.ragium.setup.RagiumIntegrationCreativeTabs
 import hiiragi283.ragium.setup.RagiumIntegrationItems
+import hiiragi283.ragium.setup.RagiumIntegrationMiscRegister
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMatterTypes
 import io.wispforest.accessories.api.AccessoriesAPI
@@ -56,6 +57,7 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
 
     init {
         eventBus.addListener(::commonSetup)
+        eventBus.addListener(RagiumIntegrationMiscRegister::register)
         eventBus.addListener(::clientSetup)
         eventBus.addListener(::register)
         eventBus.addListener(::registerPackets)

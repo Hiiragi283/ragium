@@ -54,6 +54,6 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
 
     override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = buildList {
         addAll(manager.getAllRecipesFor(get()).filterNot { holder: RecipeHolder<RECIPE> -> holder.value.isIncomplete })
-        addAll(RagiumPlatform.INSTANCE.getMaterialRecipeManager().getAllRecipes(get()))
+        addAll(RagiumPlatform.INSTANCE.getMaterialRecipeManager().getAllRecipes(manager, get()))
     }.asSequence()
 }

@@ -9,14 +9,16 @@ import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTGlassVariant
-import hiiragi283.ragium.impl.data.HTVanillaWoodType
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -110,11 +112,11 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.item(RagiumBlocks.SPONGE_CAKE, 4))
             .save(output)
 
-        HTDecorationType.entries.forEach(::registerBuildings)
-        HTVanillaWoodType.entries.forEach(::addWoodSawing)
-
         metalBars()
         glass()
+        planks()
+
+        HTDecorationType.entries.forEach(::registerBuildings)
     }
 
     @JvmStatic
@@ -166,6 +168,29 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
                         .save(output)
                 }
             }
+        }
+    }
+
+    @JvmStatic
+    private fun planks() {
+        mapOf(
+            ItemTags.OAK_LOGS to Items.OAK_PLANKS,
+            ItemTags.SPRUCE_LOGS to Items.SPRUCE_PLANKS,
+            ItemTags.BIRCH_LOGS to Items.BIRCH_PLANKS,
+            ItemTags.JUNGLE_LOGS to Items.JUNGLE_PLANKS,
+            ItemTags.ACACIA_LOGS to Items.ACACIA_PLANKS,
+            ItemTags.CHERRY_LOGS to Items.CHERRY_PLANKS,
+            ItemTags.DARK_OAK_LOGS to Items.DARK_OAK_PLANKS,
+            ItemTags.MANGROVE_LOGS to Items.MANGROVE_PLANKS,
+            ItemTags.BAMBOO_BLOCKS to Items.BAMBOO_PLANKS,
+            ItemTags.CRIMSON_STEMS to Items.CRIMSON_PLANKS,
+            ItemTags.WARPED_STEMS to Items.WARPED_PLANKS,
+        ).forEach { (log: TagKey<Item>, planks: Item) ->
+            // Log -> 6x Planks
+            HTItemToChancedItemRecipeBuilder
+                .cutting(itemCreator.fromTagKey(log))
+                .addResult(resultHelper.item(planks, 6))
+                .save(output)
         }
     }
 

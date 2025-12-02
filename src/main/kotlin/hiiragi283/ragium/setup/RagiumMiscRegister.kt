@@ -10,10 +10,10 @@ import hiiragi283.ragium.api.registry.commonId
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
-import hiiragi283.ragium.common.data.map.HTBlockCrushingMaterialRecipe
-import hiiragi283.ragium.common.data.map.HTCompressingMaterialRecipe
-import hiiragi283.ragium.common.data.map.HTCrushingMaterialRecipe
-import hiiragi283.ragium.common.data.map.HTRawSmeltingMaterialRecipe
+import hiiragi283.ragium.common.data.map.HTBlockCrushingRecipeProvider
+import hiiragi283.ragium.common.data.map.HTCompressingRecipeProvider
+import hiiragi283.ragium.common.data.map.HTCrushingRecipeProvider
+import hiiragi283.ragium.common.data.map.HTRawSmeltingRecipeProvider
 import hiiragi283.ragium.common.inventory.slot.payload.HTFluidSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTIntSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
@@ -73,12 +73,12 @@ object RagiumMiscRegister {
 
             helper.register(RagiumAPI.id("teleport_pos"), HTTeleportPosSyncPayload.STREAM_CODEC)
         }
-        // Material Recipe Type
-        event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_KEY) { helper ->
-            helper.register(RagiumAPI.id(RagiumConst.ALLOYING, "raw"), HTRawSmeltingMaterialRecipe.CODEC)
-            helper.register(RagiumAPI.id(RagiumConst.COMPRESSING), HTCompressingMaterialRecipe.CODEC)
-            helper.register(RagiumAPI.id(RagiumConst.CRUSHING), HTCrushingMaterialRecipe.CODEC)
-            helper.register(RagiumAPI.id(RagiumConst.CRUSHING, "storage_block"), HTBlockCrushingMaterialRecipe.CODEC)
+        // Runtime Recipe Type
+        event.register(RagiumAPI.RUNTIME_RECIPE_TYPE_KEY) { helper ->
+            helper.register(RagiumAPI.id(RagiumConst.ALLOYING, "raw"), HTRawSmeltingRecipeProvider.CODEC)
+            helper.register(RagiumAPI.id(RagiumConst.COMPRESSING), HTCompressingRecipeProvider.CODEC)
+            helper.register(RagiumAPI.id(RagiumConst.CRUSHING), HTCrushingRecipeProvider.CODEC)
+            helper.register(RagiumAPI.id(RagiumConst.CRUSHING, "storage_block"), HTBlockCrushingRecipeProvider.CODEC)
         }
     }
 
