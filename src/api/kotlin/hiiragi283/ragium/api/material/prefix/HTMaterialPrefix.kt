@@ -23,10 +23,8 @@ data class HTMaterialPrefix(
     companion object {
         @JvmField
         val DIRECT_CODEC: BiCodec<ByteBuf, HTMaterialPrefix> = BiCodec.composite(
-            BiCodec.STRING.fieldOf("common_tag_path"),
-            HTMaterialPrefix::commonTagPath,
-            BiCodec.STRING.fieldOf("tag_path"),
-            HTMaterialPrefix::tagPath,
+            BiCodec.STRING.fieldOf("common_tag_path").forGetter(HTMaterialPrefix::commonTagPath),
+            BiCodec.STRING.fieldOf("tag_path").forGetter(HTMaterialPrefix::tagPath),
             ::HTMaterialPrefix,
         )
 

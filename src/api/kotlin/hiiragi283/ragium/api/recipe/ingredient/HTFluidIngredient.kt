@@ -58,10 +58,8 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
         companion object {
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodec.composite(
-                VanillaBiCodecs.holderSet(Registries.FLUID).fieldOf(RagiumConst.FLUIDS),
-                HolderBased::holderSet,
-                BiCodecs.POSITIVE_INT.fieldOf(RagiumConst.AMOUNT),
-                HolderBased::amount,
+                VanillaBiCodecs.holderSet(Registries.FLUID).fieldOf(RagiumConst.FLUIDS).forGetter(HolderBased::holderSet),
+                BiCodecs.POSITIVE_INT.fieldOf(RagiumConst.AMOUNT).forGetter(HolderBased::amount),
                 ::HolderBased,
             )
         }
@@ -81,10 +79,8 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
         companion object {
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
-                VanillaBiCodecs.FLUID_INGREDIENT.fieldOf(RagiumConst.INGREDIENT),
-                IngredientBased::ingredient,
-                BiCodecs.POSITIVE_INT.fieldOf(RagiumConst.AMOUNT),
-                IngredientBased::amount,
+                VanillaBiCodecs.FLUID_INGREDIENT.fieldOf(RagiumConst.INGREDIENT).forGetter(IngredientBased::ingredient),
+                BiCodecs.POSITIVE_INT.fieldOf(RagiumConst.AMOUNT).forGetter(IngredientBased::amount),
                 ::IngredientBased,
             )
         }

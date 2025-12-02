@@ -27,19 +27,22 @@ class HTClearComponentRecipe(
     companion object {
         @JvmField
         val CODEC: MapBiCodec<RegistryFriendlyByteBuf, HTClearComponentRecipe> = MapBiCodec.composite(
-            BiCodec.STRING.optionalFieldOf("group", ""),
-            HTClearComponentRecipe::getGroup,
+            BiCodec.STRING
+                .optionalFieldOf("group", "")
+                .forGetter(HTClearComponentRecipe::getGroup),
             BiCodec
                 .of(CraftingBookCategory.CODEC, CraftingBookCategory.STREAM_CODEC)
-                .optionalFieldOf("category", CraftingBookCategory.MISC),
-            HTClearComponentRecipe::category,
-            VanillaBiCodecs.registryBased(BuiltInRegistries.ITEM).fieldOf("ingredient"),
-            HTClearComponentRecipe::item,
+                .optionalFieldOf("category", CraftingBookCategory.MISC)
+                .forGetter(HTClearComponentRecipe::category),
+            VanillaBiCodecs
+                .registryBased(BuiltInRegistries.ITEM)
+                .fieldOf("ingredient")
+                .forGetter(HTClearComponentRecipe::item),
             VanillaBiCodecs
                 .registryBased(BuiltInRegistries.DATA_COMPONENT_TYPE)
                 .nonEmptyListOf()
-                .fieldOf("targets"),
-            HTClearComponentRecipe::targetTypes,
+                .fieldOf("targets")
+                .forGetter(HTClearComponentRecipe::targetTypes),
             ::HTClearComponentRecipe,
         )
     }

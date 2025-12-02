@@ -25,10 +25,11 @@ data class HTIntrinsicEnchantment(val entry: HTKeyOrTagEntry<Enchantment>, val l
     companion object {
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTIntrinsicEnchantment> = BiCodec.composite(
-            HTKeyOrTagHelper.INSTANCE.codec(Registries.ENCHANTMENT).fieldOf("enchantment"),
-            HTIntrinsicEnchantment::entry,
-            BiCodec.INT.optionalFieldOf("level", 1),
-            HTIntrinsicEnchantment::level,
+            HTKeyOrTagHelper.INSTANCE
+                .codec(Registries.ENCHANTMENT)
+                .fieldOf("enchantment")
+                .forGetter(HTIntrinsicEnchantment::entry),
+            BiCodec.INT.optionalFieldOf("level", 1).forGetter(HTIntrinsicEnchantment::level),
             ::HTIntrinsicEnchantment,
         )
     }

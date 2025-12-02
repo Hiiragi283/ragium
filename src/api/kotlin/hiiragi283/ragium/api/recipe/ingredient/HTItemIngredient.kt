@@ -67,10 +67,8 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
             @JvmStatic
             private val NESTED_CODEC: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodec.composite(
-                ENTRY_CODEC.fieldOf(RagiumConst.ITEMS),
-                HolderBased::holderSet,
-                BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1),
-                HolderBased::count,
+                ENTRY_CODEC.fieldOf(RagiumConst.ITEMS).forGetter(HolderBased::holderSet),
+                BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1).forGetter(HolderBased::count),
                 ::HolderBased,
             )
 
@@ -99,10 +97,8 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
         companion object {
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
-                VanillaBiCodecs.INGREDIENT.fieldOf(RagiumConst.INGREDIENT),
-                IngredientBased::ingredient,
-                BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1),
-                IngredientBased::count,
+                VanillaBiCodecs.INGREDIENT.fieldOf(RagiumConst.INGREDIENT).forGetter(IngredientBased::ingredient),
+                BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1).forGetter(IngredientBased::count),
                 ::IngredientBased,
             )
         }

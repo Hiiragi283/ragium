@@ -95,8 +95,10 @@ object RagiumRecipeSerializers {
         RagiumConst.ALLOYING,
         RagiumRecipeBiCodecs.singleOutput(
             ::HTAlloyingRecipe,
-            HTItemIngredient.CODEC.listOf(2, 3).fieldOf("ingredients"),
-            HTAlloyingRecipe::ingredients,
+            HTItemIngredient.CODEC
+                .listOf(2, 3)
+                .fieldOf("ingredients")
+                .forGetter(HTAlloyingRecipe::ingredients),
         ),
     )
 
@@ -105,8 +107,7 @@ object RagiumRecipeSerializers {
         RagiumConst.BREWING,
         RagiumRecipeBiCodecs.combine(
             ::HTBrewingRecipe,
-            HTPotionContents.CODEC.fieldOf("contents"),
-            HTBrewingRecipe::contents,
+            HTPotionContents.CODEC.fieldOf("contents").forGetter(HTBrewingRecipe::contents),
         ),
     )
 
@@ -133,8 +134,7 @@ object RagiumRecipeSerializers {
         RagiumConst.ENCHANTING,
         RagiumRecipeBiCodecs.combine(
             ::HTEnchantingRecipe,
-            VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment"),
-            HTEnchantingRecipe::holder,
+            VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment").forGetter(HTEnchantingRecipe::holder),
         ),
     )
 
@@ -173,8 +173,7 @@ object RagiumRecipeSerializers {
         "pulverizing",
         RagiumRecipeBiCodecs.singleOutput(
             ::HTPulverizingRecipe,
-            HTItemIngredient.CODEC.fieldOf("ingredient"),
-            HTPulverizingRecipe::ingredient,
+            HTItemIngredient.CODEC.fieldOf("ingredient").forGetter(HTPulverizingRecipe::ingredient),
         ),
     )
 

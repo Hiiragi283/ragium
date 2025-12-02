@@ -10,10 +10,8 @@ class HTExperienceView(private val amount: Long, private val capacity: Long) : H
     companion object {
         @JvmField
         val CODEC: BiCodec<ByteBuf, HTExperienceView> = BiCodec.composite(
-            BiCodecs.NON_NEGATIVE_LONG.fieldOf(RagiumConst.AMOUNT),
-            HTExperienceView::getAmount,
-            BiCodecs.POSITIVE_LONG.fieldOf(RagiumConst.CAPACITY),
-            HTExperienceView::getCapacity,
+            BiCodecs.NON_NEGATIVE_LONG.fieldOf(RagiumConst.AMOUNT).forGetter(HTExperienceView::getAmount),
+            BiCodecs.POSITIVE_LONG.fieldOf(RagiumConst.CAPACITY).forGetter(HTExperienceView::getCapacity),
             ::HTExperienceView,
         )
     }

@@ -21,94 +21,81 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
         fun <B : ByteBuf, V : Any> of(codec: MapCodec<V>, streamCodec: StreamCodec<B, V>): MapBiCodec<B, V> = MapBiCodec(codec, streamCodec)
 
         @JvmStatic
-        fun <B : ByteBuf, C : Any, T1 : Any> composite(
-            codec: MapBiCodec<in B, T1>,
-            getter: Function<C, T1>,
-            factory: Function<T1, C>,
-        ): MapBiCodec<B, C> = of(
+        fun <B : ByteBuf, C : Any, T1 : Any> composite(codec: ParameterCodec<in B, C, T1>, factory: Function<T1, C>): MapBiCodec<B, C> = of(
             RecordCodecBuilder.mapCodec { instance ->
-                instance.group(codec.codec.forGetter(getter)).apply(instance, factory)
+                instance.group(codec.toRecordParam()).apply(instance, factory)
             },
-            StreamCodec.composite(codec.streamCodec, getter, factory),
+            StreamCodec.composite(codec.streamCodec, codec.getter, factory),
         )
 
         @JvmStatic
         fun <B : ByteBuf, C : Any, T1 : Any, T2 : Any> composite(
-            codec1: MapBiCodec<in B, T1>,
-            getter1: Function<C, T1>,
-            codec2: MapBiCodec<in B, T2>,
-            getter2: Function<C, T2>,
+            codec1: ParameterCodec<in B, C, T1>,
+            codec2: ParameterCodec<in B, C, T2>,
             factory: BiFunction<T1, T2, C>,
         ): MapBiCodec<B, C> = of(
             RecordCodecBuilder.mapCodec { instance ->
                 instance
                     .group(
-                        codec1.codec.forGetter(getter1),
-                        codec2.codec.forGetter(getter2),
+                        codec1.toRecordParam(),
+                        codec2.toRecordParam(),
                     ).apply(instance, factory)
             },
-            StreamCodec.composite(codec1.streamCodec, getter1, codec2.streamCodec, getter2, factory),
+            StreamCodec.composite(codec1.streamCodec, codec1.getter, codec2.streamCodec, codec2.getter, factory),
         )
 
         @JvmStatic
         fun <B : ByteBuf, C : Any, T1 : Any, T2 : Any, T3 : Any> composite(
-            codec1: MapBiCodec<in B, T1>,
-            getter1: Function<C, T1>,
-            codec2: MapBiCodec<in B, T2>,
-            getter2: Function<C, T2>,
-            codec3: MapBiCodec<in B, T3>,
-            getter3: Function<C, T3>,
+            codec1: ParameterCodec<in B, C, T1>,
+            codec2: ParameterCodec<in B, C, T2>,
+            codec3: ParameterCodec<in B, C, T3>,
             factory: Function3<T1, T2, T3, C>,
         ): MapBiCodec<B, C> = of(
             RecordCodecBuilder.mapCodec { instance ->
                 instance
                     .group(
-                        codec1.codec.forGetter(getter1),
-                        codec2.codec.forGetter(getter2),
-                        codec3.codec.forGetter(getter3),
+                        codec1.toRecordParam(),
+                        codec2.toRecordParam(),
+                        codec3.toRecordParam(),
                     ).apply(instance, factory)
             },
             StreamCodec.composite(
                 codec1.streamCodec,
-                getter1,
+                codec1.getter,
                 codec2.streamCodec,
-                getter2,
+                codec2.getter,
                 codec3.streamCodec,
-                getter3,
+                codec3.getter,
                 factory,
             ),
         )
 
         @JvmStatic
         fun <B : ByteBuf, C : Any, T1 : Any, T2 : Any, T3 : Any, T4 : Any> composite(
-            codec1: MapBiCodec<in B, T1>,
-            getter1: Function<C, T1>,
-            codec2: MapBiCodec<in B, T2>,
-            getter2: Function<C, T2>,
-            codec3: MapBiCodec<in B, T3>,
-            getter3: Function<C, T3>,
-            codec4: MapBiCodec<in B, T4>,
-            getter4: Function<C, T4>,
+            codec1: ParameterCodec<in B, C, T1>,
+            codec2: ParameterCodec<in B, C, T2>,
+            codec3: ParameterCodec<in B, C, T3>,
+            codec4: ParameterCodec<in B, C, T4>,
             factory: Function4<T1, T2, T3, T4, C>,
         ): MapBiCodec<B, C> = of(
             RecordCodecBuilder.mapCodec { instance ->
                 instance
                     .group(
-                        codec1.codec.forGetter(getter1),
-                        codec2.codec.forGetter(getter2),
-                        codec3.codec.forGetter(getter3),
-                        codec4.codec.forGetter(getter4),
+                        codec1.toRecordParam(),
+                        codec2.toRecordParam(),
+                        codec3.toRecordParam(),
+                        codec4.toRecordParam(),
                     ).apply(instance, factory)
             },
             StreamCodec.composite(
                 codec1.streamCodec,
-                getter1,
+                codec1.getter,
                 codec2.streamCodec,
-                getter2,
+                codec2.getter,
                 codec3.streamCodec,
-                getter3,
+                codec3.getter,
                 codec4.streamCodec,
-                getter4,
+                codec4.getter,
                 factory,
             ),
         )
@@ -141,4 +128,6 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
     )
 
     fun validate(validator: UnaryOperator<V>): MapBiCodec<B, V> = flatXmap(validator::apply, validator::apply)
+
+    fun <C : Any> forGetter(getter: Function<C, V>): ParameterCodec<B, C, V> = ParameterCodec.of(this, getter)
 }

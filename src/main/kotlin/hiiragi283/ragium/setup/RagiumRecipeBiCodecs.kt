@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodecs
+import hiiragi283.ragium.api.serialization.codec.ParameterCodec
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
@@ -33,72 +34,60 @@ object RagiumRecipeBiCodecs {
 
     @JvmField
     val MELTING: MapBiCodec<RegistryFriendlyByteBuf, HTMeltingRecipe> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT),
-        HTMeltingRecipe::ingredient,
-        HTFluidResult.CODEC.fieldOf(RagiumConst.RESULT),
-        HTMeltingRecipe::result,
+        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTMeltingRecipe::ingredient),
+        HTFluidResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTMeltingRecipe::result),
         ::HTMeltingRecipe,
     )
 
     @JvmField
     val MIXING: MapBiCodec<RegistryFriendlyByteBuf, HTMixingRecipe> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.listOrElement(0, 4).optionalFieldOf("item_ingredients", listOf()),
-        HTMixingRecipe::itemIngredients,
-        HTFluidIngredient.CODEC.nonEmptyListOf(2).fieldOf("fluid_ingredients"),
-        HTMixingRecipe::fluidIngredients,
-        RESULTS,
-        HTMixingRecipe::results,
+        HTItemIngredient.CODEC
+            .listOrElement(0, 4)
+            .optionalFieldOf("item_ingredients", listOf())
+            .forGetter(HTMixingRecipe::itemIngredients),
+        HTFluidIngredient.CODEC
+            .nonEmptyListOf(2)
+            .fieldOf("fluid_ingredients")
+            .forGetter(HTMixingRecipe::fluidIngredients),
+        RESULTS.forGetter(HTMixingRecipe::results),
         ::HTMixingRecipe,
     )
 
     @JvmField
     val MIXING_SIMPLE: MapBiCodec<RegistryFriendlyByteBuf, HTSimpleMixingRecipe> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf("item_ingredient"),
-        HTSimpleMixingRecipe::itemIngredient,
-        HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
-        HTSimpleMixingRecipe::fluidIngredient,
-        RESULTS,
-        HTSimpleMixingRecipe::results,
+        HTItemIngredient.CODEC.fieldOf("item_ingredient").forGetter(HTSimpleMixingRecipe::itemIngredient),
+        HTFluidIngredient.CODEC.fieldOf("fluid_ingredient").forGetter(HTSimpleMixingRecipe::fluidIngredient),
+        RESULTS.forGetter(HTSimpleMixingRecipe::results),
         ::HTSimpleMixingRecipe,
     )
 
     @JvmField
     val REFINING: MapBiCodec<RegistryFriendlyByteBuf, HTRefiningRecipe> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.optionalFieldOf("item_ingredient"),
-        HTRefiningRecipe::itemIngredient,
-        HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
-        HTRefiningRecipe::fluidIngredient,
-        RESULTS,
-        HTRefiningRecipe::results,
+        HTItemIngredient.CODEC.optionalFieldOf("item_ingredient").forGetter(HTRefiningRecipe::itemIngredient),
+        HTFluidIngredient.CODEC.fieldOf("fluid_ingredient").forGetter(HTRefiningRecipe::fluidIngredient),
+        RESULTS.forGetter(HTRefiningRecipe::results),
         ::HTRefiningRecipe,
     )
 
     @JvmStatic
     fun <I : Any, R : HTBasicSingleOutputRecipe<*>> singleOutput(
         factory: (I, HTItemResult) -> R,
-        ingredient: MapBiCodec<in RegistryFriendlyByteBuf, I>,
-        ingredientGetter: (R) -> I,
+        ingredient: ParameterCodec<in RegistryFriendlyByteBuf, R, I>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         ingredient,
-        ingredientGetter,
-        HTItemResult.CODEC.fieldOf(RagiumConst.RESULT),
-        HTBasicSingleOutputRecipe<*>::result,
+        HTItemResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTBasicSingleOutputRecipe<*>::result),
         factory,
     )
 
     @JvmStatic
     fun <RESULT : Any, R : HTBasicCombineRecipe> combine(
         factory: HTCombineRecipeBuilder.Factory<RESULT, R>,
-        resultCodec: MapBiCodec<in RegistryFriendlyByteBuf, RESULT>,
-        resultGetter: (R) -> RESULT,
+        resultCodec: ParameterCodec<in RegistryFriendlyByteBuf, R, RESULT>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        MapBiCodecs.pair(
-            HTItemIngredient.CODEC.fieldOf("left"),
-            HTItemIngredient.CODEC.fieldOf("right"),
-        ),
-        HTBasicCombineRecipe::itemIngredients,
+        MapBiCodecs
+            .pair(HTItemIngredient.CODEC.fieldOf("left"), HTItemIngredient.CODEC.fieldOf("right"))
+            .forGetter(HTBasicCombineRecipe::itemIngredients),
         resultCodec,
-        resultGetter,
         factory::create,
     )
 
@@ -106,12 +95,9 @@ object RagiumRecipeBiCodecs {
     fun <R : HTBasicItemWithCatalystRecipe> itemWithCatalyst(
         factory: HTItemWithCatalystRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf("required"),
-        HTBasicItemWithCatalystRecipe::required,
-        HTItemIngredient.CODEC.optionalFieldOf("optional"),
-        HTBasicItemWithCatalystRecipe::optional,
-        RESULTS,
-        HTBasicItemWithCatalystRecipe::results,
+        HTItemIngredient.CODEC.fieldOf("required").forGetter(HTBasicItemWithCatalystRecipe::required),
+        HTItemIngredient.CODEC.optionalFieldOf("optional").forGetter(HTBasicItemWithCatalystRecipe::optional),
+        RESULTS.forGetter(HTBasicItemWithCatalystRecipe::results),
         factory::create,
     )
 
@@ -119,10 +105,11 @@ object RagiumRecipeBiCodecs {
     fun <R : HTBasicItemToChancedItemRecipe> itemToChanced(
         factory: HTItemToChancedItemRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT),
-        HTBasicItemToChancedItemRecipe::ingredient,
-        HTItemResultWithChance.CODEC.nonEmptyListOf(4).fieldOf(RagiumConst.RESULTS),
-        HTBasicItemToChancedItemRecipe::results,
+        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicItemToChancedItemRecipe::ingredient),
+        HTItemResultWithChance.CODEC
+            .nonEmptyListOf(4)
+            .fieldOf(RagiumConst.RESULTS)
+            .forGetter(HTBasicItemToChancedItemRecipe::results),
         factory::create,
     )
 
@@ -130,12 +117,12 @@ object RagiumRecipeBiCodecs {
     fun <R : HTBasicItemWithFluidToChancedItemRecipe> itemWithFluidToChanced(
         factory: HTItemWithFluidToChancedItemRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf("item_ingredient"),
-        HTBasicItemWithFluidToChancedItemRecipe::ingredient,
-        HTFluidIngredient.CODEC.fieldOf("fluid_ingredient"),
-        HTBasicItemWithFluidToChancedItemRecipe::fluidIngredient,
-        HTItemResultWithChance.CODEC.nonEmptyListOf(4).fieldOf("results"),
-        HTBasicItemWithFluidToChancedItemRecipe::results,
+        HTItemIngredient.CODEC.fieldOf("item_ingredient").forGetter(HTBasicItemWithFluidToChancedItemRecipe::ingredient),
+        HTFluidIngredient.CODEC.fieldOf("fluid_ingredient").forGetter(HTBasicItemWithFluidToChancedItemRecipe::fluidIngredient),
+        HTItemResultWithChance.CODEC
+            .nonEmptyListOf(4)
+            .fieldOf("results")
+            .forGetter(HTBasicItemWithFluidToChancedItemRecipe::results),
         factory::create,
     )
 }
