@@ -51,6 +51,7 @@ import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
+import plus.dragons.createenchantmentindustry.common.registry.CEIDataMaps
 
 @Suppress("DEPRECATION")
 class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
@@ -74,6 +75,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         subEntityIngredient()
 
         materialRecipe()
+
+        createEnchIndustry()
     }
 
     //    Vanilla    //
@@ -287,6 +290,12 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                     HTBlockCrushingRecipeProvider,
                 )
             }
+    }
+
+    //    Integration    //
+
+    private fun createEnchIndustry() {
+        builder(CEIDataMaps.FLUID_UNIT_EXPERIENCE).addHolder(RagiumFluidContents.EXPERIENCE, 20)
     }
 
     //    Extensions    //
