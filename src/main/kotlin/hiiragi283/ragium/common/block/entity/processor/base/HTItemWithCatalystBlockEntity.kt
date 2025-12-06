@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -37,10 +36,7 @@ abstract class HTItemWithCatalystBlockEntity(
             HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2), 1),
         )
         // output
-        outputSlot = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0.5)),
-        )
+        outputSlot = upperOutput(builder, listener)
     }
 
     final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTDoubleRecipeInput =

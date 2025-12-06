@@ -78,7 +78,7 @@ abstract class HTConfigurableBlockEntity(blockHolder: Holder<Block>, pos: BlockP
 
     protected open fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {}
 
-    override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
         initializeItemSlots(builder, listener)
         return builder.build()
