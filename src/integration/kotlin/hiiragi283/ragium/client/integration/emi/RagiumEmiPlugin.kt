@@ -42,7 +42,6 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRec
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTRefiningEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTWashingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.type.HTRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.HTRegistryRecipeViewerType
 import hiiragi283.ragium.client.integration.emi.type.RagiumRecipeViewerTypes
@@ -276,7 +275,6 @@ class RagiumEmiPlugin : EmiPlugin {
         // Elite
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.BREWING, ::HTBrewingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.PLANTING, ::HTPlantingEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.WASHING, ::HTWashingEmiRecipe)
         // Ultimate
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.SIMULATING, ::HTItemWithCatalystEmiRecipe)

@@ -196,14 +196,6 @@ object RagiumBlockTypes {
         .addMenu { RagiumMenuTypes.FLUID_TO_CHANCED }
         .build(RagiumCommonTranslation.PLANTER)
 
-    @JvmField
-    val WASHER: HTMachineBlockType = HTMachineBlockType
-        .builder { RagiumBlockEntityTypes.WASHER }
-        .add(HTDirectionalBlockAttribute.HORIZONTAL)
-        .addMachineTier(HTMachineTier.ELITE, RagiumConfig.COMMON.processor.washer)
-        .addMenu { RagiumMenuTypes.FLUID_TO_CHANCED }
-        .build(RagiumCommonTranslation.WASHER)
-
     // Ultimate
     @JvmField
     val ENCHANTER: HTMachineBlockType = HTMachineBlockType

@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
-import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
@@ -21,7 +20,6 @@ import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -46,15 +44,6 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     private val itemLookup: HolderLookup.RegistryLookup<Item> by lazy { provider.lookupOrThrow(Registries.ITEM) }
 
     override fun buildRecipeInternal() {
-        // Gravel -> Flint
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
-                itemCreator.fromTagKey(Tags.Items.GRAVELS),
-                fluidCreator.water(250),
-            ).addResult(resultHelper.item(Items.FLINT))
-            .addResult(resultHelper.item(Items.FLINT), fraction(1, 2))
-            .save(output)
-
         extracting()
         mixing()
         refining()

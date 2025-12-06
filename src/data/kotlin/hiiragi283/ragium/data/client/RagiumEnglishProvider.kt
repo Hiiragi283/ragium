@@ -156,7 +156,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.MULTI_SMELTER, "Multi Smelter")
         add(RagiumBlocks.PLANTER, "Planting Chamber")
-        add(RagiumBlocks.WASHER, "Washer")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
         add(RagiumBlocks.MOB_CRUSHER, "Mob Crusher")
@@ -359,7 +358,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.PLANTING, "Planting")
         add(RagiumRecipeTypes.REFINING, "Refining")
         add(RagiumRecipeTypes.SIMULATING, "Simulating")
-        add(RagiumRecipeTypes.WASHING, "Washing")
     }
 
     private fun text() {
@@ -433,7 +431,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.MELTER, "A machine which melts item into fluid.")
         add(RagiumCommonTranslation.MIXER, "A machine which mixes multiple items and fluids.")
         add(RagiumCommonTranslation.REFINERY, "A machine which transform fluid into another.")
-        add(RagiumCommonTranslation.WASHER, "A machine which washes item with fluid.")
 
         add(RagiumCommonTranslation.BREWERY, "A machine which brews potion from item and fluid.")
         add(RagiumCommonTranslation.MULTI_SMELTER, "A machine which smelts items simultaneously.")

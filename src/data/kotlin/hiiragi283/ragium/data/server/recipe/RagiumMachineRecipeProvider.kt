@@ -199,10 +199,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('B', CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
             define('C', Items.FLOWER_POT)
         }
-        eliteMachine(RagiumBlocks.WASHER) {
-            define('B', Items.IRON_TRAPDOOR)
-            define('C', RagiumCommonTags.Items.CIRCUITS_ADVANCED)
-        }
         // Ultimate
         ultimateMachine(RagiumBlocks.ENCHANTER, RagiumMaterialKeys.ELDRITCH_PEARL) {
             define('B', Items.ENCHANTING_TABLE)

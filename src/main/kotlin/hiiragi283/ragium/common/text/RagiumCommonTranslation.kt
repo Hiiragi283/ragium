@@ -39,7 +39,6 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     MELTER("description", "melter"),
     MIXER("description", "mixer"),
     REFINERY("description", "refinery"),
-    WASHER("description", "washer"),
 
     BREWERY("description", "brewery"),
     MULTI_SMELTER("description", "multi_smelter"),

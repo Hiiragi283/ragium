@@ -147,7 +147,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.MULTI_SMELTER, "並列製錬炉")
         add(RagiumBlocks.PLANTER, "栽培室")
-        add(RagiumBlocks.WASHER, "洗浄機")
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
         add(RagiumBlocks.MOB_CRUSHER, "モブ粉砕機")
@@ -360,7 +359,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.REFINING, "精製")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
-        add(RagiumRecipeTypes.WASHING, "洗浄")
     }
 
     private fun text() {
@@ -433,7 +431,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.MELTER, "アイテムを融かして液体にする機械です。")
         add(RagiumCommonTranslation.MIXER, "複数のアイテムと液体を混合する機械です。")
         add(RagiumCommonTranslation.REFINERY, "液体を別の液体に変換する機械です。")
-        add(RagiumCommonTranslation.WASHER, "アイテムを液体で洗浄する機械です。")
 
         add(RagiumCommonTranslation.BREWERY, "アイテムと液体からポーションを醸造する機械です。")
         add(RagiumCommonTranslation.MULTI_SMELTER, "複数のアイテムをまとめて精錬する機械です。")
