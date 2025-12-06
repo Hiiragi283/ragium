@@ -4,9 +4,9 @@ import dev.emi.emi.EmiUtil
 import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addPlus
+import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toFluidEmi
 import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe

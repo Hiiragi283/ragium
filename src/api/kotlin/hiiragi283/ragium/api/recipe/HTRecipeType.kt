@@ -16,13 +16,4 @@ interface HTRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> : HTHasText 
      * 指定した[manager]から[RecipeHolder]の一覧を返します。
      */
     fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>>
-
-    /**
-     * 指定した[manager]から[RECIPE]の一覧を返します。
-     */
-    fun getAllRecipes(manager: RecipeManager): Sequence<RECIPE> = getAllHolders(manager).map(RecipeHolder<out RECIPE>::value)
-
-    interface Findable<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
-        HTRecipeFinder<INPUT, RECIPE>,
-        HTRecipeType<INPUT, RECIPE>
 }

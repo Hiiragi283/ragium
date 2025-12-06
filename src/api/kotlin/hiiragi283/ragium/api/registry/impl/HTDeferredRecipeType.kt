@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.text.HTHasTranslationKey
@@ -18,7 +19,8 @@ import net.minecraft.world.level.Level
 
 class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
     HTDeferredHolder<RecipeType<*>, RecipeType<RECIPE>>,
-    HTRecipeType.Findable<INPUT, RECIPE>,
+    HTRecipeFinder<INPUT, RECIPE>,
+    HTRecipeType<INPUT, RECIPE>,
     HTHasTranslationKey {
     constructor(key: ResourceKey<RecipeType<*>>) : super(key)
 

@@ -1,9 +1,9 @@
 package hiiragi283.ragium.client.integration.emi.recipe.processor
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addTank
+import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import net.minecraft.world.item.crafting.RecipeHolder

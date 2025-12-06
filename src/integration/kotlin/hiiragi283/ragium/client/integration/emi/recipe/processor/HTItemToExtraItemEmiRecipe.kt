@@ -1,8 +1,8 @@
 package hiiragi283.ragium.client.integration.emi.recipe.processor
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
+import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemToExtraItemRecipe
@@ -28,7 +28,7 @@ class HTItemToExtraItemEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHo
             .addSlot(RagiumFluidContents.LUBRICANT.getFluidTag().toEmi(), getPosition(1), getPosition(2))
             .catalyst(true)
         // outputs
-        widgets.addOutput(0, getPosition(5), getPosition(0) + 4, true)
-        widgets.addSlot(output(1), getPosition(5), getPosition(2))
+        widgets.addOutput(0, getPosition(4.5), getPosition(0) + 4, true)
+        widgets.addSlot(output(1), getPosition(4.5), getPosition(2))
     }
 }
