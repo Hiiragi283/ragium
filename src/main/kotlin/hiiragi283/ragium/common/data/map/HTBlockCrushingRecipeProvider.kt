@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import kotlin.collections.iterator
 
 data object HTBlockCrushingRecipeProvider : HTRuntimeRecipeProvider {
@@ -37,8 +37,8 @@ data object HTBlockCrushingRecipeProvider : HTRuntimeRecipeProvider {
             if (!helper.isPresentTag(CommonMaterialPrefixes.STORAGE_BLOCK, key)) continue
             if (!helper.isPresentTag(CommonMaterialPrefixes.DUST, key)) continue
 
-            HTItemToObjRecipeBuilder
-                .pulverizing(
+            HTItemToExtraItemRecipeBuilder
+                .crushing(
                     helper.itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, key),
                     helper.resultHelper.item(resultPrefix, key, storageBlock.baseCount),
                 ).saveSuffixed(helper.output, "_from_storage_block")

@@ -2,10 +2,7 @@ package hiiragi283.ragium.common.data.map
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.data.map.HTRuntimeRecipeProvider
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.math.toFraction
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 import vectorwing.farmersdelight.common.crafting.CuttingBoardRecipe
@@ -22,14 +19,14 @@ object HTCuttingBoardRecipeProvider : HTRuntimeRecipeProvider {
         for (holder: RecipeHolder<CuttingBoardRecipe> in helper.getAllRecipes(ModRecipeTypes.CUTTING.get())) {
             val id: ResourceLocation = holder.id()
             val recipe: CuttingBoardRecipe = holder.value()
-            // Inputs
-            val builder: HTItemToChancedItemRecipeBuilder = HTItemToChancedItemRecipeBuilder
-                .cutting(HTItemIngredient.of(recipe.ingredients.first()))
-            // Outputs
-            for (result: ChanceResult in recipe.rollableResults) {
-                builder.addResult(HTResultHelper.item(result.stack()), result.chance().toFraction())
-            }
-            builder.save(helper.output, id)
+            val results: List<ChanceResult> = recipe.rollableResults
+
+            HTItemToExtraItemRecipeBuilder
+                .cutting(
+                    helper.itemCreator.fromVanilla(recipe.ingredients.first()),
+                    helper.resultHelper.item(results[0].stack()),
+                    results.getOrNull(1)?.stack()?.let(helper.resultHelper::item),
+                ).save(helper.output, id)
         }
     }
 }

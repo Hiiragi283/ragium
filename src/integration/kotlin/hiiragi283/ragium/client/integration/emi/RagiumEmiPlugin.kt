@@ -34,9 +34,8 @@ import hiiragi283.ragium.client.integration.emi.recipe.generator.HTCoolantEmiRec
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTItemGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCrushingEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTEnchantingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemToExtraItemEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemWithCatalystEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
@@ -261,8 +260,8 @@ class RagiumEmiPlugin : EmiPlugin {
         // Basic
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.ALLOYING, ::HTAlloyingEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.COMPRESSING, ::HTItemWithCatalystEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CRUSHING, ::HTCrushingEmiRecipe)
-        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CUTTING, ::HTCuttingEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CRUSHING, ::HTItemToExtraItemEmiRecipe)
+        addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.CUTTING, ::HTItemToExtraItemEmiRecipe)
         addCategoryAndRecipes(registry, RagiumRecipeViewerTypes.EXTRACTING, ::HTItemWithCatalystEmiRecipe)
 
         registry.addRecipeSafe(RagiumAPI.id("/${RagiumConst.EXTRACTING}", "experience_from_items")) {

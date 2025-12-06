@@ -16,7 +16,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.crafting.HTIceCreamSodaRecipe
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
@@ -209,8 +209,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun meat() {
         // Minced Meat
-        HTItemToObjRecipeBuilder
-            .pulverizing(
+        HTItemToExtraItemRecipeBuilder
+            .crushing(
                 itemCreator.fromTagKey(RagiumModTags.Items.RAW_MEAT),
                 resultHelper.item(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT),
             ).save(output)

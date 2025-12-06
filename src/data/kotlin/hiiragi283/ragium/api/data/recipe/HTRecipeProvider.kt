@@ -26,6 +26,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
@@ -300,9 +301,9 @@ sealed class HTRecipeProvider {
         crushedCount: Int,
         catalyst: HTItemIngredient? = null,
     ) {
-        // Pulverizing
-        HTItemToObjRecipeBuilder
-            .pulverizing(
+        // Crushing
+        HTItemToExtraItemRecipeBuilder
+            .crushing(
                 itemCreator.fromItem(base),
                 resultHelper.item(crushed, crushedCount),
             ).saveSuffixed(output, "_from_base")

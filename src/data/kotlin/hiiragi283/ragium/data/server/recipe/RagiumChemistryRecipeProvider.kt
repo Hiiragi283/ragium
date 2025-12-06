@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
@@ -659,8 +660,8 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(RagiumItems.GREEN_CAKE),
             ).save(output)
 
-        HTItemToObjRecipeBuilder
-            .pulverizing(
+        HTItemToExtraItemRecipeBuilder
+            .crushing(
                 itemCreator.fromItem(RagiumItems.GREEN_CAKE),
                 resultHelper.item(RagiumItems.GREEN_CAKE_DUST, 8),
             ).save(output)

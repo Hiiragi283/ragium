@@ -2,13 +2,13 @@ package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.multi.HTItemToExtraItemRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
@@ -29,10 +29,10 @@ object RagiumRecipeTypes {
     val COMPRESSING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
-    val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedItemRecipe> = create(RagiumConst.CRUSHING)
+    val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTItemToExtraItemRecipe> = create(RagiumConst.CRUSHING)
 
     @JvmField
-    val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedItemRecipe> = create(RagiumConst.CUTTING)
+    val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToExtraItemRecipe> = create(RagiumConst.CUTTING)
 
     @JvmField
     val ENCHANTING: HTDeferredRecipeType<HTMultiRecipeInput, HTCombineRecipe> = create(RagiumConst.ENCHANTING)

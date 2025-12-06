@@ -26,7 +26,6 @@ import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTPlantingRecipe
-import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
@@ -119,13 +118,13 @@ object RagiumRecipeSerializers {
     @JvmField
     val CRUSHING: RecipeSerializer<HTCrushingRecipe> = register(
         RagiumConst.CRUSHING,
-        RagiumRecipeBiCodecs.itemToChanced(::HTCrushingRecipe),
+        RagiumRecipeBiCodecs.itemToExtra(::HTCrushingRecipe),
     )
 
     @JvmField
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = register(
         RagiumConst.CUTTING,
-        RagiumRecipeBiCodecs.itemToChanced(::HTCuttingRecipe),
+        RagiumRecipeBiCodecs.itemToExtra(::HTCuttingRecipe),
     )
 
     @JvmField
@@ -165,15 +164,6 @@ object RagiumRecipeSerializers {
     val PLANTING: RecipeSerializer<HTPlantingRecipe> = register(
         RagiumConst.PLANTING,
         RagiumRecipeBiCodecs.itemWithFluidToChanced(::HTPlantingRecipe),
-    )
-
-    @JvmField
-    val PULVERIZING: RecipeSerializer<HTPulverizingRecipe> = register(
-        "pulverizing",
-        RagiumRecipeBiCodecs.singleOutput(
-            ::HTPulverizingRecipe,
-            HTItemIngredient.CODEC.fieldOf("ingredient").forGetter(HTPulverizingRecipe::ingredient),
-        ),
     )
 
     @JvmField
