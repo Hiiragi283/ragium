@@ -34,7 +34,6 @@ import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMobCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMultiSmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
@@ -162,7 +161,7 @@ object RagiumBlockEntityTypes {
     val MULTI_SMELTER: HTDeferredBlockEntityType<HTMultiSmelterBlockEntity> = registerTick("multi_smelter", ::HTMultiSmelterBlockEntity)
 
     @JvmField
-    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> = registerTick("planter", ::HTPlanterBlockEntity)
+    val PLANTER: HTDeferredBlockEntityType<HTMultiSmelterBlockEntity> = registerTick("planter", ::HTMultiSmelterBlockEntity)
 
     // Ultimate
     @JvmField

@@ -55,10 +55,10 @@ object RagiumModTags {
 
         // Specific
         @JvmField
-        val CHANCED_OUTPUT_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "chanced_output")
+        val EFFICIENT_CRUSH_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "efficient_crush")
 
         @JvmField
-        val EFFICIENT_CRUSH_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "efficient_crush")
+        val EXTRA_OUTPUT_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "extra_output")
 
         @JvmStatic
         private fun create(vararg path: String): TagKey<BlockEntityType<*>> = Registries.BLOCK_ENTITY_TYPE.createTagKey(RagiumAPI.id(*path))
@@ -147,6 +147,13 @@ object RagiumModTags {
 
         @JvmField
         val ALLOY_SMELTER_FLUXES_ADVANCED: TagKey<Item> = create("alloy_smelter_fluxes", "advanced")
+
+        // Soils
+        @JvmField
+        val SOILS_DIRT: TagKey<Item> = create("soils", "dirt")
+
+        @JvmField
+        val SOILS_AQUATIC: TagKey<Item> = create("soils", "aquatic")
 
         // Tools
         @JvmField

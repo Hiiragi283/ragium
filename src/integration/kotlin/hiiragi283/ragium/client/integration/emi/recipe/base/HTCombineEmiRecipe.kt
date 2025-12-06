@@ -28,14 +28,14 @@ abstract class HTCombineEmiRecipe<RECIPE : HTBasicCombineRecipe>(category: HTEmi
 
     final override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(getPosition(2.5), getPosition(1))
-
+        // inputs
         widgets.addSlot(input(0), getPosition(0), getPosition(0))
         widgets.addTexture(EmiTexture.PLUS, getPosition(1) + 3, getPosition(0) + 3)
         widgets.addSlot(input(1), getPosition(2), getPosition(0))
 
         widgets.addTexture(EmiTexture.EMPTY_FLAME, getPosition(1) + 2, getPosition(1) + 2)
         widgets.addSlot(input(2), getPosition(1), getPosition(2))
-
+        // output
         widgets.addOutput(0, getPosition(4.5), getPosition(1), true)
     }
 }

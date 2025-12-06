@@ -2,10 +2,9 @@ package hiiragi283.ragium.client.integration.emi.type
 
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.recipe.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
-import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
@@ -107,7 +106,7 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
 
     @JvmField
-    val PLANTING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
+    val PLANTING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTPlantingRecipe> =
         machine(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Ultimate

@@ -13,15 +13,15 @@ class RagiumBlockEntityTypeTagsProvider(context: HTDataGenContext) :
         category(factory)
 
         factory
-            .apply(RagiumModTags.BlockEntityTypes.CHANCED_OUTPUT_UPGRADABLE)
-            .add(RagiumBlockEntityTypes.CUTTING_MACHINE)
-            .add(RagiumBlockEntityTypes.CRUSHER)
-            .add(RagiumBlockEntityTypes.PLANTER)
-
-        factory
             .apply(RagiumModTags.BlockEntityTypes.EFFICIENT_CRUSH_UPGRADABLE)
             .add(RagiumBlockEntityTypes.PULVERIZER)
             .add(RagiumBlockEntityTypes.CRUSHER)
+
+        factory
+            .apply(RagiumModTags.BlockEntityTypes.EXTRA_OUTPUT_UPGRADABLE)
+            .add(RagiumBlockEntityTypes.CUTTING_MACHINE)
+            .add(RagiumBlockEntityTypes.CRUSHER)
+            .add(RagiumBlockEntityTypes.PLANTER)
     }
 
     private fun category(factory: BuilderFactory<BlockEntityType<*>>) {

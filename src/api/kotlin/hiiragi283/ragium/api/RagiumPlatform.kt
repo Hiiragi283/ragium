@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.recipe.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.HTRuntimeRecipeManager
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
@@ -28,6 +29,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.loading.FMLEnvironment
@@ -78,6 +80,8 @@ interface RagiumPlatform {
         createFluidCreator(provider.lookupOrThrow(Registries.FLUID))
 
     fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator
+
+    fun getPlantingRecipeSerializer(): RecipeSerializer<HTPlantingRecipe>
 
     //    Server    //
 

@@ -232,7 +232,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.molten(RagiumFluidContents.DESTABILIZED_RAGINITE, Color(0xff0033))
 
         event.clear(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
-        event.clear(RagiumFluidContents.SULFURIC_ACID, Color(0xff3300))
         event.clear(RagiumFluidContents.COOLANT, Color(0x009999))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
@@ -268,7 +267,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.DRUM, ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
-        event.register(RagiumMenuTypes.FLUID_TO_CHANCED, HTSingleFluidProcessorScreen.Companion::chancedItemOutput)
         event.register(RagiumMenuTypes.ITEM_COLLECTOR, ::HTBlockEntityContainerScreen)
         event.register(RagiumMenuTypes.ITEM_WITH_CATALYST, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.MELTER, HTSingleFluidProcessorScreen.Companion::melter)
