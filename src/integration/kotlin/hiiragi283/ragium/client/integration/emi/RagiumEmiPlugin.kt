@@ -18,6 +18,8 @@ import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.item.createItemStack
+import hiiragi283.ragium.api.math.times
+import hiiragi283.ragium.api.math.toFraction
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.getHolderDataMap
@@ -27,10 +29,12 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.category.HTRegistryEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
+import hiiragi283.ragium.client.integration.emi.data.HTBiomassRecipeData
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.generator.HTBiomassEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTCoolantEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
@@ -67,6 +71,9 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.datamaps.DataMapType
+import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
+import org.apache.commons.lang3.math.Fraction
 
 @EmiEntrypoint
 class RagiumEmiPlugin : EmiPlugin {
@@ -184,6 +191,20 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addGenerators(registry: EmiRegistry) {
+        fun addFuelRecipes(category: HTEmiRecipeCategory, dataMapType: DataMapType<Fluid, HTFluidFuelData>) {
+            addDataMapRecipes(
+                registry,
+                category,
+                EmiPort.getFluidRegistry(),
+                dataMapType,
+                { holder: Holder<Fluid>, data: HTFluidFuelData ->
+                    val stack: EmiStack = holder.value().toEmi(100).takeUnless(EmiStack::isEmpty) ?: return@addDataMapRecipes null
+                    HTEmiFluidFuelData(stack, data.time)
+                },
+                ::HTFuelGeneratorEmiRecipe,
+            )
+        }
+
         // Basic
         addItemStackRecipes(
             registry,
@@ -198,16 +219,7 @@ class RagiumEmiPlugin : EmiPlugin {
             ::HTFuelGeneratorEmiRecipe,
         )
         // Advanced
-        addDataMapRecipes(
-            registry,
-            RagiumEmiRecipeCategories.COOLANT,
-            EmiPort.getFluidRegistry(),
-            RagiumDataMapTypes.COOLANT,
-            { holder: Holder<Fluid>, data: HTFluidCoolantData ->
-                holder.value().toEmi(data.amount).takeUnless(EmiStack::isEmpty)
-            },
-            ::HTCoolantEmiRecipe,
-        )
+        addFuelRecipes(RagiumEmiRecipeCategories.MAGMATIC, RagiumDataMapTypes.MAGMATIC_FUEL)
 
         addItemStackRecipes(
             registry,
@@ -223,15 +235,31 @@ class RagiumEmiPlugin : EmiPlugin {
         // Elite
         addDataMapRecipes(
             registry,
-            RagiumEmiRecipeCategories.COMBUSTION,
-            EmiPort.getFluidRegistry(),
-            RagiumDataMapTypes.COMBUSTION_FUEL,
-            { holder: Holder<Fluid>, data: HTFluidFuelData ->
-                val stack: EmiStack = holder.value().toEmi(100).takeUnless(EmiStack::isEmpty) ?: return@addDataMapRecipes null
-                HTEmiFluidFuelData(stack, data.time)
+            RagiumEmiRecipeCategories.BIOMASS,
+            EmiPort.getItemRegistry(),
+            NeoForgeDataMaps.COMPOSTABLES,
+            { holder: Holder<Item>, compostable: Compostable ->
+                val chance: Fraction = compostable.chance().toFraction()
+                HTBiomassRecipeData(
+                    holder.value().toEmi(),
+                    RagiumFluidContents.CRUDE_BIO.toFluidEmi((1000 * chance).toInt()),
+                )
             },
-            ::HTFuelGeneratorEmiRecipe,
+            ::HTBiomassEmiRecipe,
         )
+
+        addDataMapRecipes(
+            registry,
+            RagiumEmiRecipeCategories.COOLANT,
+            EmiPort.getFluidRegistry(),
+            RagiumDataMapTypes.COOLANT,
+            { holder: Holder<Fluid>, data: HTFluidCoolantData ->
+                holder.value().toEmi(data.amount).takeUnless(EmiStack::isEmpty)
+            },
+            ::HTCoolantEmiRecipe,
+        )
+
+        addFuelRecipes(RagiumEmiRecipeCategories.COMBUSTION, RagiumDataMapTypes.COMBUSTION_FUEL)
     }
 
     private fun addProcessors(registry: EmiRegistry) {

@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.common.HTMoldType
@@ -148,11 +149,11 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(InitFluids.REFINED_CANOLA_OIL.get(), medium, actually)
             // high
             .add(RagiumFluidContents.FUEL, high)
-            .add("diesel", high)
-            .add("biodiesel", high)
+            .add(RagiumFluidContents.BIOFUEL, high)
+            .add(RagiumCommonTags.Fluids.DIESEL, high, false)
+            .add(RagiumCommonTags.Fluids.BIODIESEL, high, false)
             .add(InitFluids.CRYSTALLIZED_OIL.get(), high, actually)
             // highest
-            .add(RagiumFluidContents.CRIMSON_FUEL, highest)
             .add("high_power_biodiesel", highest)
             .add(InitFluids.EMPOWERED_OIL.get(), highest, actually)
     }

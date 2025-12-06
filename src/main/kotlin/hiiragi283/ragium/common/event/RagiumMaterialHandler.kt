@@ -129,6 +129,11 @@ object RagiumMaterialHandler {
             addName(it)
         }
 
+        event.modify(CommonMaterialKeys.BIO) {
+            addDefaultPrefix(CommonMaterialPrefixes.FUEL)
+            addName("Biomass", "バイオマス")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
+        }
         event.modify(CommonMaterialKeys.COAL_COKE) {
             addDefaultPrefix(CommonMaterialPrefixes.FUEL)
             addName("Coal Coke", "石炭コークス")

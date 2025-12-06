@@ -82,9 +82,14 @@ object CommonMaterialKeys {
         override fun asMaterialKey(): HTMaterialKey = HTMaterialKey.of(name.lowercase())
     }
 
+    // Fuels
+    @JvmStatic
+    val BIO: HTMaterialKey = HTMaterialKey.of("bio")
+
     @JvmStatic
     val COAL_COKE: HTMaterialKey = HTMaterialKey.of("coal_coke")
 
+    // Plates
     @JvmStatic
     val PLASTIC: HTMaterialKey = HTMaterialKey.of("plastic")
 }

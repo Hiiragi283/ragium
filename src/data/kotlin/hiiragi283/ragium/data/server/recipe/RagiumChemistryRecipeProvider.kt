@@ -423,7 +423,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         plastic()
 
         sap()
-        mutagen()
+        biomass()
     }
 
     @JvmStatic
@@ -455,19 +455,12 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
             resultHelper.fluid(RagiumFluidContents.FUEL, 375) to null,
         )
-        // Naphtha + Redstone -> Lubricant
+        // Naphtha + Raginite -> Lubricant
         HTComplexRecipeBuilder
             .mixing()
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE))
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000))
-            .save(output)
-        // Fuel + Gelled Explosive -> Crimson Fuel
-        HTComplexRecipeBuilder
-            .mixing()
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.FUEL, 1000))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.GELLED_EXPLOSIVE, 250))
-            .setResult(resultHelper.fluid(RagiumFluidContents.CRIMSON_FUEL, 1000))
             .save(output)
     }
 
@@ -620,20 +613,19 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
-    private fun mutagen() {
-        // Organic Mutagen
-        HTComplexRecipeBuilder
-            .mixing()
-            .addIngredient(itemCreator.fromTagKey(Tags.Items.FOODS_FOOD_POISONING))
-            .addIngredient(fluidCreator.water(1000))
-            .setResult(resultHelper.fluid(RagiumFluidContents.ORGANIC_MUTAGEN, 1000))
-            .save(output)
+    private fun biomass() {
+        // Crude Bio -> Bio Fuel
+        distillation(
+            RagiumFluidContents.CRUDE_BIO to 1000,
+            resultHelper.item(Items.CLAY_BALL),
+            resultHelper.fluid(RagiumFluidContents.BIOFUEL, 375) to null,
+        )
 
         // Poisonous Potato
         HTComplexRecipeBuilder
             .mixing()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.CROPS_POTATO))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ORGANIC_MUTAGEN, 250))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRUDE_BIO, 250))
             .setResult(resultHelper.item(Items.POISONOUS_POTATO))
             .save(output)
         // Potato Sprouts
