@@ -33,6 +33,8 @@ replica = "1.21-1.2.3"
 
 arch = "13.0.8"
 #ars = "5.10.5.1219"
+create-ench = "2.2.5b"
+create-dragon = "1.8.5"
 #dire = "6369120"
 enchdesc = "21.1.9"
 flywheel = "1.0.6-beta-37"
@@ -68,6 +70,8 @@ replica = { group = "maven.modrinth", name = "replication", version.ref = "repli
 
 arch = { group = "dev.architectury", name = "architectury-neoforge", version.ref = "arch" }
 #ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
+create-ench = { group = "maven.modrinth", name = "create-enchantment-industry", version.ref = "create-ench" }
+create-dragon = { group = "maven.modrinth", name = "create-dragons-plus", version.ref = "create-dragon" }
 #dire = { group = "curse.maven", name = "just-dire-things-1002348", version.ref = "dire" }
 enchdesc = { group = "net.darkhax.enchdesc", name = "enchdesc-neoforge-1.21.1", version.ref = "enchdesc" }
 flywheel = { group = "dev.engine-room.flywheel", name = "flywheel-neoforge-1.21.1", version.ref = "flywheel" }
@@ -104,7 +108,9 @@ mods-impl = [
 mods-transitive = [
     "aa",
     "accessories",
-    "create"
+    "create",
+    "create-ench",
+    "create-dragon",
 ]
 
 mods-compile = []
