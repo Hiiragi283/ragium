@@ -42,7 +42,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
         HTComplexRecipeBuilder
             .mixing()
             .addIngredient(itemCreator.fromItem(ModItems.ORGANIC_COMPOST.get()))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ORGANIC_MUTAGEN, 250))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRUDE_BIO, 250))
             .setResult(resultHelper.item(ModItems.RICH_SOIL.get()))
             .save(output)
 

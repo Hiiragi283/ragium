@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.fluid.HTEndFluidType
 import hiiragi283.ragium.common.fluid.HTExplosiveFluidType
 import hiiragi283.ragium.common.fluid.HTNetherFluidType
 import net.minecraft.core.Holder
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffects
@@ -86,25 +87,23 @@ object RagiumFluidContents {
     ): HTBasicFluidContent = REGISTER.register(name, properties.descriptionId("block.ragium.$name"), typeFactory, blockProperties)
 
     @JvmStatic
-    private fun liquid(): FluidType.Properties = FluidType.Properties
+    private fun create(fill: SoundEvent, empty: SoundEvent): FluidType.Properties = FluidType.Properties
         .create()
-        .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
-        .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
+        .sound(SoundActions.BUCKET_FILL, fill)
+        .sound(SoundActions.BUCKET_EMPTY, empty)
 
     @JvmStatic
-    private fun molten(temp: Int = 1300): FluidType.Properties = FluidType.Properties
-        .create()
-        .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
-        .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
-        .temperature(temp)
+    private fun liquid(): FluidType.Properties = create(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
 
     @JvmStatic
-    private fun gaseous(): FluidType.Properties = liquid().density(-1000)
+    private fun molten(): FluidType.Properties = create(SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA)
 
     //    Foods    //
 
     @JvmField
-    val HONEY: HTBasicFluidContent = registerSimple("honey", liquid()) { it.speedFactor(0.4f) }
+    val HONEY: HTBasicFluidContent = registerSimple("honey", create(SoundEvents.HONEY_BLOCK_PLACE, SoundEvents.HONEY_BLOCK_BREAK)) {
+        it.speedFactor(0.4f)
+    }
 
     @JvmField
     val MUSHROOM_STEW: HTBasicFluidContent = registerEffected("mushroom_stew", liquid(), MobEffects.SATURATION)
@@ -113,21 +112,27 @@ object RagiumFluidContents {
     val CREAM: HTBasicFluidContent = registerSimple("cream", liquid()) { it.speedFactor(0.8f) }
 
     @JvmField
-    val CHOCOLATE: HTBasicFluidContent = registerSimple("chocolate", liquid()) { it.speedFactor(0.8f) }
+    val CHOCOLATE: HTBasicFluidContent = registerSimple("chocolate", molten()) { it.speedFactor(0.8f) }
 
     @JvmField
     val RAGI_CHERRY_JUICE: HTBasicFluidContent = registerSimple("ragi_cherry_juice", liquid())
 
     //    Organic    //
 
-    @JvmField
-    val SLIME: HTBasicFluidContent = registerEffected("slime", liquid(), MobEffects.OOZING) { it.speedFactor(0.4f) }
+    @JvmStatic
+    private fun slimy(): FluidType.Properties = create(SoundEvents.SLIME_BLOCK_PLACE, SoundEvents.SLIME_BLOCK_BREAK)
 
     @JvmField
-    val GELLED_EXPLOSIVE: HTBasicFluidContent = registerSimple("gelled_explosive", liquid())
+    val SLIME: HTBasicFluidContent = registerEffected("slime", slimy(), MobEffects.OOZING) { it.speedFactor(0.4f) }
 
     @JvmField
-    val ORGANIC_MUTAGEN: HTBasicFluidContent = registerEffected("organic_mutagen", liquid(), MobEffects.POISON, 4)
+    val GELLED_EXPLOSIVE: HTBasicFluidContent = registerSimple("gelled_explosive", slimy())
+
+    @JvmField
+    val CRUDE_BIO: HTBasicFluidContent = registerSimple("crude_bio", slimy())
+
+    @JvmField
+    val BIOFUEL: HTBasicFluidContent = registerSimple("biofuel", liquid())
 
     //    Oil    //
 
@@ -145,21 +150,16 @@ object RagiumFluidContents {
 
     @JvmField
     val NATURAL_GAS: HTBasicFluidContent =
-        registerEffected("natural_gas", gaseous(), ::HTExplosiveFluidType.partially1(4f), MobEffects.LEVITATION)
+        registerEffected("natural_gas", liquid().density(-1000), ::HTExplosiveFluidType.partially1(4f), MobEffects.LEVITATION)
 
     @JvmField
     val NAPHTHA: HTBasicFluidContent = register("naphtha", liquid(), ::HTExplosiveFluidType.partially1(3f))
 
     @JvmField
-    val LUBRICANT: HTBasicFluidContent = registerSimple("lubricant", liquid()) { it.speedFactor(0.8f) }
-
-    //    Fuel    //
-
-    @JvmField
     val FUEL: HTBasicFluidContent = register("fuel", liquid(), ::HTExplosiveFluidType.partially1(4f))
 
     @JvmField
-    val CRIMSON_FUEL: HTBasicFluidContent = register("crimson_fuel", liquid(), ::HTExplosiveFluidType.partially1(6f))
+    val LUBRICANT: HTBasicFluidContent = registerSimple("lubricant", liquid()) { it.speedFactor(0.8f) }
 
     //    Sap    //
 
@@ -178,19 +178,20 @@ object RagiumFluidContents {
     //    Molten    //
 
     @JvmField
-    val DESTABILIZED_RAGINITE: HTBasicFluidContent = registerSimple("destabilized_raginite", molten())
+    val DESTABILIZED_RAGINITE: HTBasicFluidContent =
+        registerSimple("destabilized_raginite", molten().temperature(1300))
 
     @JvmField
     val CRIMSON_BLOOD: HTBasicFluidContent =
-        register("crimson_blood", molten(), ::HTNetherFluidType, ::HTMagmaticLiquidBlock)
+        register("crimson_blood", molten().temperature(2300), ::HTNetherFluidType, ::HTMagmaticLiquidBlock)
 
     @JvmField
     val DEW_OF_THE_WARP: HTBasicFluidContent =
-        register("dew_of_the_warp", molten(), ::HTNetherFluidType, ::HTMagmaticLiquidBlock)
+        register("dew_of_the_warp", molten().temperature(1300), ::HTNetherFluidType, ::HTMagmaticLiquidBlock)
 
     @JvmField
     val ELDRITCH_FLUX: HTBasicFluidContent =
-        register("eldritch_flux", molten(), ::HTEndFluidType, ::HTMagicalLiquidBlock)
+        register("eldritch_flux", molten().temperature(1300), ::HTEndFluidType, ::HTMagicalLiquidBlock)
 
     //    Misc    //
 
@@ -198,7 +199,7 @@ object RagiumFluidContents {
     val EXPERIENCE: HTBasicFluidContent = registerEffected("experience", liquid(), MobEffects.HUNGER, 63)
 
     @JvmField
-    val COOLANT: HTBasicFluidContent = registerSimple("coolant", liquid())
+    val COOLANT: HTBasicFluidContent = registerSimple("coolant", liquid().temperature(273))
 
     //    Interaction    //
 

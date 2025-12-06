@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.text.HTHasText
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -43,17 +44,27 @@ object RagiumEmiRecipeCategories {
     private fun <ITEM> generator(item: ITEM): HTEmiRecipeCategory where ITEM : HTItemHolderLike, ITEM : HTHasText =
         HTEmiRecipeCategory.create(GENERATOR_BOUNDS, item)
 
+    // Basic
     @JvmField
     val THERMAL: HTEmiRecipeCategory = generator(RagiumBlocks.THERMAL_GENERATOR)
+
+    // Advanced
+    @JvmField
+    val MAGMATIC: HTEmiRecipeCategory = generator(RagiumBlocks.THERMAL_GENERATOR)
+
+    @JvmField
+    val CULINARY: HTEmiRecipeCategory = generator(RagiumBlocks.CULINARY_GENERATOR)
+
+    // Elite
+    @JvmField
+    val BIOMASS: HTEmiRecipeCategory =
+        HTEmiRecipeCategory.create(HTBounds(0, 0, 5 * 18, 1 * 18), RagiumFluidContents.CRUDE_BIO.bucket)
 
     @JvmField
     val COOLANT: HTEmiRecipeCategory = generator(RagiumBlocks.THERMAL_GENERATOR)
 
     @JvmField
     val COMBUSTION: HTEmiRecipeCategory = generator(RagiumBlocks.COMBUSTION_GENERATOR)
-
-    @JvmField
-    val CULINARY: HTEmiRecipeCategory = generator(RagiumBlocks.CULINARY_GENERATOR)
 
     //    Machines    //
 

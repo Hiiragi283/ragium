@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.material.Fluid
@@ -24,8 +25,10 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>
     }
 
     private fun category(factory: BuilderFactory<Fluid>) {
-        factory
-            .apply(Tags.Fluids.GASEOUS)
-            .add(RagiumFluidContents.NATURAL_GAS)
+        factory.apply(Tags.Fluids.GASEOUS).add(RagiumFluidContents.NATURAL_GAS)
+
+        factory.apply(RagiumCommonTags.Fluids.BIODIESEL).add(RagiumFluidContents.BIOFUEL)
+
+        factory.apply(RagiumCommonTags.Fluids.DIESEL).add(RagiumFluidContents.FUEL)
     }
 }

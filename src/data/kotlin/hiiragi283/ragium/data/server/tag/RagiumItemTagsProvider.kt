@@ -52,7 +52,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         val MATERIAL_TAG: Map<HTMaterialPrefix, TagKey<Item>> = mapOf(
             CommonMaterialPrefixes.GEM to ItemTags.BEACON_PAYMENT_ITEMS,
             CommonMaterialPrefixes.INGOT to ItemTags.BEACON_PAYMENT_ITEMS,
-            CommonMaterialPrefixes.FUEL to ItemTags.COALS,
         ).mapKeys { (prefix: HTPrefixLike, _) -> prefix.asMaterialPrefix() }
     }
 

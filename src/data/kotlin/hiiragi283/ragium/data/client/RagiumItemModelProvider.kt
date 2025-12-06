@@ -67,14 +67,15 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         }
 
         val dripFluids: List<HTBasicFluidContent> = listOf(
-            // Vanilla
+            // Foods
             RagiumFluidContents.HONEY,
             RagiumFluidContents.MUSHROOM_STEW,
-            // Organic
             RagiumFluidContents.CREAM,
             RagiumFluidContents.CHOCOLATE,
+            // Organic
             RagiumFluidContents.SLIME,
-            RagiumFluidContents.ORGANIC_MUTAGEN,
+            RagiumFluidContents.GELLED_EXPLOSIVE,
+            RagiumFluidContents.CRUDE_BIO,
             // Oil
             RagiumFluidContents.CRUDE_OIL,
             RagiumFluidContents.NAPHTHA,
