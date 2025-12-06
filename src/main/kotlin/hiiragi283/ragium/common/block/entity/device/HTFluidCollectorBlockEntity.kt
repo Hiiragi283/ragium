@@ -89,7 +89,7 @@ class HTFluidCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         val amount: Int = calculateWaterAmount(level, pos)
         val stack: ImmutableFluidStack = HTFluidHolderLike.WATER.toImmutableStack(amount) ?: return false
         // 液体を搬入できるかチェック
-        if (tank.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) != null) return false
+        if (!HTStackSlotHelper.canInsertStack(tank, stack, false)) return false
         tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS)
         return true

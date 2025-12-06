@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCrusherBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -26,8 +27,8 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) : HTAbstractCrus
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToExtraItemRecipe): Boolean = outputSlot
-        .insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToExtraItemRecipe): Boolean =
+        HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
     override fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToExtraItemRecipe) {
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

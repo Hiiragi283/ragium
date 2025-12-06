@@ -41,12 +41,7 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
 
     final override fun getRecipeTime(recipe: HTItemToExtraItemRecipe): Int {
         val bool1: Boolean = hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
-        val bool2: Boolean = inputTank
-            .extract(
-                RagiumConst.LUBRICANT_CONSUME,
-                HTStorageAction.SIMULATE,
-                HTStorageAccess.INTERNAL,
-            )?.amount() == RagiumConst.LUBRICANT_CONSUME
+        val bool2: Boolean = HTStackSlotHelper.canShrinkStack(inputTank, RagiumConst.LUBRICANT_CONSUME, true)
         val modifier: Fraction = when (bool1 && bool2) {
             true -> Fraction.THREE_QUARTERS
             false -> Fraction.ONE

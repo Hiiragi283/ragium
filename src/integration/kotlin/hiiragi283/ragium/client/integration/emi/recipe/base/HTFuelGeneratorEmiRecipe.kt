@@ -22,7 +22,7 @@ abstract class HTFuelGeneratorEmiRecipe(category: HTEmiRecipeCategory, id: Resou
                 RagiumEmiTextures.ENERGY_GAUGE,
                 getPosition(3),
                 getPosition(0) + 1,
-            ).tooltipText(listOf(RagiumTranslation.STORED_FE.translate(recipe.energy)))
+            ).tooltipText(listOf(RagiumTranslation.TICK.translate(recipe.time)))
     }
 
     protected abstract fun addFuelWidgets(widgets: WidgetHolder)

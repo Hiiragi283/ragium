@@ -77,11 +77,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTComplexRecipe): Boolean {
-        val access: RegistryAccess = level.registryAccess()
-        val bool1: Boolean =
-            outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
-        val bool2: Boolean =
-            outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+        val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
+        val bool2: Boolean = HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
         return bool1 && bool2
     }
 

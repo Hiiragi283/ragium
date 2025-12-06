@@ -50,7 +50,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTShapelessInputsRecipe): Boolean =
-        outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+        HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -64,7 +64,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にインプットを減らす
         val ingredients: List<HTItemIngredient> = recipe.ingredients
         HTMultiRecipeInput.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
-            HTStackSlotHelper.shrinkStack(inputSlots[slot], ingredients[index], HTStorageAction.EXECUTE)
+            HTStackSlotHelper.shrinkStack(inputSlots[slot], ingredients[index]::getRequiredAmount, HTStorageAction.EXECUTE)
         }
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 0.5f)

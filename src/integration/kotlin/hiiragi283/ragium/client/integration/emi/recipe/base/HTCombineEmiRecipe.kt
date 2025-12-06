@@ -7,6 +7,7 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
+import hiiragi283.ragium.client.integration.emi.addPlus
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicCombineRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -28,9 +29,10 @@ abstract class HTCombineEmiRecipe<RECIPE : HTBasicCombineRecipe>(category: HTEmi
 
     final override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(getPosition(2.5), getPosition(1))
+        widgets.addPlus(getPosition(1), getPosition(0))
+
         // inputs
         widgets.addSlot(input(0), getPosition(0), getPosition(0))
-        widgets.addTexture(EmiTexture.PLUS, getPosition(1) + 3, getPosition(0) + 3)
         widgets.addSlot(input(1), getPosition(2), getPosition(0))
 
         widgets.addTexture(EmiTexture.EMPTY_FLAME, getPosition(1) + 2, getPosition(1) + 2)

@@ -64,7 +64,7 @@ object RagiumMenuTypes {
     //    Generator    //
 
     @JvmField
-    val ITEM_GENERATOR: DeferredBEMenu<HTItemGeneratorBlockEntity<*>> = registerBE("item_generator")
+    val ITEM_GENERATOR: DeferredBEMenu<HTItemGeneratorBlockEntity> = registerBE("item_generator")
 
     @JvmField
     val COMBUSTION_GENERATOR: DeferredBEMenu<HTCombustionGeneratorBlockEntity> = registerBE("combustion_generator")

@@ -370,6 +370,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             // .add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
             .add(RagiumItems.BOTTLED_BEE)
             .add(RagiumItems.DRILL)
+            .add(RagiumItems.RAGIUM_POWDER)
+            .add(RagiumItems.SPAWNER_FRAGMENT)
     }
 
     //    Integration    //

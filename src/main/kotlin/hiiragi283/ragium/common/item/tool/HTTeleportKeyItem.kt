@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.text.levelText
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.util.HTEnchantmentHelper
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
@@ -96,7 +97,7 @@ class HTTeleportKeyItem(properties: Properties) : Item(properties.rarity(Rarity.
             ?: return HTTextResult.failure(RagiumTranslation.ERROR)
         val usage: Int = player.blockPosition().distManhattan(pos) * RagiumConfig.COMMON.teleportKeyCost.asInt
         val toDrain: Int = HTEnchantmentHelper.getFixedUsage(player.serverLevel(), stack, usage)
-        if ((tank.extract(toDrain, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount() ?: 0) < toDrain) {
+        if (!HTStackSlotHelper.canShrinkStack(tank, toDrain, true)) {
             return HTTextResult.failure(RagiumCommonTranslation.FUEL_SHORTAGE.translate(toDrain))
         }
         // 実際にテレポートを行う

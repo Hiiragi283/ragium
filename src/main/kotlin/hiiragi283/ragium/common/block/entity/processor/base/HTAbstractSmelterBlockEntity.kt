@@ -73,7 +73,7 @@ abstract class HTAbstractSmelterBlockEntity(blockHolder: Holder<Block>, pos: Blo
     final override fun getRecipeTime(recipe: HTVanillaCookingRecipe): Int = recipe.cookingTime
 
     final override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTVanillaCookingRecipe): Boolean =
-        outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+        HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
     final override fun completeRecipe(
         level: ServerLevel,

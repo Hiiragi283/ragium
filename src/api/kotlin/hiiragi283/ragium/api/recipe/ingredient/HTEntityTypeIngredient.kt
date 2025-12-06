@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
 import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.registry.getHolderDataMap
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -35,7 +35,7 @@ data class HTEntityTypeIngredient private constructor(private val holderSet: Hol
     override fun test(stack: ItemStack): Boolean {
         // Custom Matching
         val matches: Boolean? = stack.itemHolder
-            .getData(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
+            .getData(RagiumDataMapTypes.SUB_ENTITY_INGREDIENT)
             ?.getEntityType(stack)
             ?.`is`(holderSet)
         if (matches != null) return matches
@@ -56,7 +56,7 @@ data class HTEntityTypeIngredient private constructor(private val holderSet: Hol
             SpawnEggItem.byId(entityType)?.let(::ItemStack)?.let(this::add)
             // Custom Stacks
             BuiltInRegistries.ITEM
-                .getHolderDataMap(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
+                .getHolderDataMap(RagiumDataMapTypes.SUB_ENTITY_INGREDIENT)
                 .forEach { (holderIn: Holder<Item>, ingredient: HTSubEntityTypeIngredient) ->
                     ingredient
                         .getPreviewStack(holderIn, holder)
