@@ -6,12 +6,13 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.math.fraction
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTPlantingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumIntegrationItems
@@ -25,23 +26,21 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
         cropAndSeed(ModItems.LETTUCE_SEED, ModItems.LETTUCE)
         cropAndSeed(ModItems.TOMATO_SEED, ModItems.TOMATO)
 
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromItem(ModItems.CHILI_SEED),
+        HTPlantingRecipeBuilder
+            .create(
+                ModItems.CHILI_SEED.toHolderLike(),
+                itemCreator.fromTagKey(RagiumModTags.Items.SOILS_DIRT),
                 fluidCreator.water(125),
-            ).addResult(resultHelper.item(ModItems.RED_CHILI, 2))
-            .addResult(resultHelper.item(ModItems.RED_CHILI), fraction(1, 2))
-            .addResult(resultHelper.item(ModItems.GREEN_CHILI), fraction(1, 4))
-            .save(output)
+                resultHelper.item(ModItems.RED_CHILI, 3),
+            ).save(output)
 
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromItem(ModItems.WILD_RICE_SEED),
+        HTPlantingRecipeBuilder
+            .create(
+                ModItems.WILD_RICE_SEED.toHolderLike(),
+                itemCreator.fromTagKey(RagiumModTags.Items.SOILS_DIRT),
                 fluidCreator.water(500),
-            ).addResult(resultHelper.item(ModItems.RICE_PANICLE, 4))
-            .addResult(resultHelper.item(ModItems.RICE_PANICLE), fraction(1, 2))
-            .addResult(resultHelper.item(ModItems.RICE_PANICLE), fraction(1, 4))
-            .save(output)
+                resultHelper.item(ModItems.RICE_PANICLE, 6),
+            ).save(output)
 
         // Knives
         mapOf(

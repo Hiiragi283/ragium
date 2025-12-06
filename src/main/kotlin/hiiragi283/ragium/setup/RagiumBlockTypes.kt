@@ -193,7 +193,6 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.PLANTER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addMachineTier(HTMachineTier.ELITE, RagiumConfig.COMMON.processor.planter)
-        .addMenu { RagiumMenuTypes.FLUID_TO_CHANCED }
         .build(RagiumCommonTranslation.PLANTER)
 
     // Ultimate

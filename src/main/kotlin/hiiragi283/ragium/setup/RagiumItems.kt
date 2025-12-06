@@ -52,7 +52,6 @@ import hiiragi283.ragium.common.item.tool.HTTeleportKeyItem
 import hiiragi283.ragium.common.item.tool.HTTraderCatalogItem
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.item.upgrade.HTCreativeUpgradeItem
-import hiiragi283.ragium.common.item.upgrade.HTFortuneUpgradeItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -709,10 +708,6 @@ object RagiumItems {
         registerUpgrade("efficient_crush", RagiumCommonTranslation.EFFICIENT_CRUSH_UPGRADE)
 
     @JvmField
-    val FORTUNE_UPGRADE: HTSimpleDeferredItem =
-        REGISTER.registerItem("fortune_upgrade", ::HTFortuneUpgradeItem) { it.stacksTo(3) }
-
-    @JvmField
     val PRIMARY_ONLY_UPGRADE: HTSimpleDeferredItem =
         registerUpgrade("primary_only", RagiumCommonTranslation.PRIMARY_ONLY_UPGRADE)
 
@@ -861,8 +856,7 @@ object RagiumItems {
 
         // Upgrades
         setFilter(EFFICIENT_CRUSH_UPGRADE, RagiumModTags.BlockEntityTypes.EFFICIENT_CRUSH_UPGRADABLE)
-        setFilter(FORTUNE_UPGRADE, RagiumModTags.BlockEntityTypes.CHANCED_OUTPUT_UPGRADABLE)
-        setFilter(PRIMARY_ONLY_UPGRADE, RagiumModTags.BlockEntityTypes.CHANCED_OUTPUT_UPGRADABLE)
+        setFilter(PRIMARY_ONLY_UPGRADE, RagiumModTags.BlockEntityTypes.EXTRA_OUTPUT_UPGRADABLE)
 
         setFilter(EXP_COLLECTOR_UPGRADE, RagiumBlockEntityTypes.FLUID_COLLECTOR)
         setFilter(FISHING_UPGRADE, RagiumBlockEntityTypes.ITEM_COLLECTOR)

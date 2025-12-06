@@ -1,19 +1,19 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
+import hiiragi283.ragium.api.recipe.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodecs
 import hiiragi283.ragium.api.serialization.codec.ParameterCodec
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
@@ -21,8 +21,8 @@ import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicCombineRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemToExtraItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicSingleOutputRecipe
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 
 object RagiumRecipeBiCodecs {
@@ -59,6 +59,18 @@ object RagiumRecipeBiCodecs {
         HTFluidIngredient.CODEC.fieldOf("fluid_ingredient").forGetter(HTSimpleMixingRecipe::fluidIngredient),
         RESULTS.forGetter(HTSimpleMixingRecipe::results),
         ::HTSimpleMixingRecipe,
+    )
+
+    @JvmField
+    val PLANTING: MapBiCodec<RegistryFriendlyByteBuf, HTPlantingRecipe> = MapBiCodec.composite(
+        HTKeyOrTagHelper.INSTANCE
+            .codec(Registries.ITEM)
+            .fieldOf("seed")
+            .forGetter(HTPlantingRecipe::seed),
+        HTItemIngredient.CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
+        HTFluidIngredient.CODEC.fieldOf("fluid").forGetter(HTPlantingRecipe::fluid),
+        HTItemResult.CODEC.fieldOf("crop").forGetter(HTPlantingRecipe::crop),
+        ::HTPlantingRecipe,
     )
 
     @JvmField
@@ -108,19 +120,6 @@ object RagiumRecipeBiCodecs {
         HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicItemToExtraItemRecipe::ingredient),
         HTItemResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTBasicItemToExtraItemRecipe::result),
         HTItemResult.CODEC.optionalFieldOf("extra").forGetter(HTBasicItemToExtraItemRecipe::extra),
-        factory::create,
-    )
-
-    @JvmStatic
-    fun <R : HTBasicItemWithFluidToChancedItemRecipe> itemWithFluidToChanced(
-        factory: HTItemWithFluidToChancedItemRecipeBuilder.Factory<R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf("item_ingredient").forGetter(HTBasicItemWithFluidToChancedItemRecipe::ingredient),
-        HTFluidIngredient.CODEC.fieldOf("fluid_ingredient").forGetter(HTBasicItemWithFluidToChancedItemRecipe::fluidIngredient),
-        HTItemResultWithChance.CODEC
-            .nonEmptyListOf(4)
-            .fieldOf("results")
-            .forGetter(HTBasicItemWithFluidToChancedItemRecipe::results),
         factory::create,
     )
 }

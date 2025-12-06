@@ -343,9 +343,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         processorUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) {
             define('B', RagiumFluidContents.LUBRICANT.bucketTag)
         }
-        processorUpgrade(RagiumItems.FORTUNE_UPGRADE) {
-            define('B', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
-        }
         processorUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE) {
             define('B', Tags.Items.BUCKETS_LAVA)
         }

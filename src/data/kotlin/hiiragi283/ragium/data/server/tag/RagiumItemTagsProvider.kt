@@ -42,6 +42,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import rearth.oritech.init.ItemContent
+import vectorwing.farmersdelight.common.registry.ModBlocks
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
@@ -342,6 +343,18 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.GREEN_PELLET)
             .add(MekanismItems.REPROCESSED_FISSILE_FRAGMENT.id, HTTagDependType.OPTIONAL)
             .addItem(ItemContent.SMALL_URANIUM_PELLET, HTTagDependType.OPTIONAL)
+        // Soils
+        factory
+            .apply(RagiumModTags.Items.SOILS_DIRT)
+            .addItem(Items.DIRT)
+            .addItem(Items.FARMLAND)
+            .addItem(ModBlocks.RICH_SOIL.get(), HTTagDependType.OPTIONAL)
+            .addItem(ModBlocks.RICH_SOIL_FARMLAND.get(), HTTagDependType.OPTIONAL)
+
+        factory
+            .apply(RagiumModTags.Items.SOILS_AQUATIC)
+            .addTag(ItemTags.SAND)
+            .addTag(Tags.Items.GRAVELS)
         // Other
         factory
             .apply(ItemTags.PIGLIN_LOVED)

@@ -20,7 +20,6 @@ import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCombinerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
@@ -80,10 +79,6 @@ object RagiumMenuTypes {
 
     @JvmField
     val FLUID_COLLECTOR: DeferredBEMenu<HTFluidCollectorBlockEntity> = registerBE("fluid_collector")
-
-    @JvmField
-    val FLUID_TO_CHANCED: DeferredBEMenu<HTFluidToChancedItemOutputBlockEntity<*, *>> =
-        registerBE("fluid_to_chanced_output")
 
     @JvmField
     val ITEM_COLLECTOR: DeferredBEMenu<HTItemCollectorBlockEntity> = registerBE("item_collector")

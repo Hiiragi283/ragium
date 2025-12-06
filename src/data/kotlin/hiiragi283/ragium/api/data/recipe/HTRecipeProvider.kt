@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTPotionIngredient
@@ -19,7 +18,9 @@ import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -29,7 +30,7 @@ import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTPlantingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
@@ -407,44 +408,42 @@ sealed class HTRecipeProvider {
     }
 
     // Planting
-    protected fun cropAndSeed(seed: ItemLike, crop: ItemLike, water: Int = 125) {
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromItem(seed),
+    protected fun cropAndSeed(
+        seed: ItemLike,
+        crop: ItemLike,
+        water: Int = 125,
+        soil: HTItemIngredient = itemCreator.fromTagKey(RagiumModTags.Items.SOILS_DIRT),
+    ) {
+        HTPlantingRecipeBuilder
+            .create(
+                seed.toHolderLike(),
+                soil,
                 fluidCreator.water(water),
-            ).addResult(resultHelper.item(crop, 3))
-            .addResult(resultHelper.item(seed), fraction(1, 3))
-            .save(output)
+                resultHelper.item(crop, 3),
+            ).save(output)
     }
 
-    protected fun cropAndCrop(crop: ItemLike, water: Int = 125) {
-        cropAndSeed(crop, crop, water)
-    }
-
-    protected fun tree(sapling: ItemLike, log: ItemLike, fluid: HTFluidIngredient = fluidCreator.water(250)) {
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromItem(sapling),
-                fluid,
-            ).addResult(resultHelper.item(log, 6))
-            .addResult(resultHelper.item(sapling), fraction(1, 6))
-            .save(output)
+    protected fun cropAndCrop(
+        crop: ItemLike,
+        water: Int = 125,
+        soil: HTItemIngredient = itemCreator.fromTagKey(RagiumModTags.Items.SOILS_DIRT),
+    ) {
+        cropAndSeed(crop, crop, water, soil)
     }
 
     protected fun tree(
         sapling: ItemLike,
         log: ItemLike,
-        fruit: ItemLike,
+        soil: HTItemIngredient = itemCreator.fromTagKey(RagiumModTags.Items.SOILS_DIRT),
         fluid: HTFluidIngredient = fluidCreator.water(250),
     ) {
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .planting(
-                itemCreator.fromItem(sapling),
+        HTPlantingRecipeBuilder
+            .create(
+                sapling.toHolderLike(),
+                soil,
                 fluid,
-            ).addResult(resultHelper.item(log, 6))
-            .addResult(resultHelper.item(sapling), fraction(1, 6))
-            .addResult(resultHelper.item(fruit), fraction(1, 6))
-            .save(output)
+                resultHelper.item(log, 6),
+            ).save(output)
     }
 
     // Refining

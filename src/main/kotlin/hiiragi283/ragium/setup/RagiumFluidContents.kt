@@ -198,9 +198,6 @@ object RagiumFluidContents {
     val EXPERIENCE: HTBasicFluidContent = registerEffected("experience", liquid(), MobEffects.HUNGER, 63)
 
     @JvmField
-    val SULFURIC_ACID: HTBasicFluidContent = registerEffected("sulfuric_acid", liquid(), MobEffects.WITHER)
-
-    @JvmField
     val COOLANT: HTBasicFluidContent = registerSimple("coolant", liquid())
 
     //    Interaction    //

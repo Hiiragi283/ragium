@@ -221,7 +221,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.DESTABILIZED_RAGINITE, "Destabilized Raginite")
 
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
-        addFluid(RagiumFluidContents.SULFURIC_ACID, "Sulfuric Acid")
         addFluid(RagiumFluidContents.COOLANT, "Coolant")
     }
 
@@ -301,7 +300,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
 
         add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "Efficient Crush Upgrade")
-        add(RagiumItems.FORTUNE_UPGRADE, "Fortune Upgrade")
         add(RagiumItems.PRIMARY_ONLY_UPGRADE, "Primary Only Upgrade")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")

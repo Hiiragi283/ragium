@@ -212,7 +212,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.DESTABILIZED_RAGINITE, "不安定化ラギナイト")
 
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
-        addFluid(RagiumFluidContents.SULFURIC_ACID, "硫酸")
         addFluid(RagiumFluidContents.COOLANT, "冷却液")
     }
 
@@ -302,7 +301,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.ETERNAL_COMPONENT, "永久構造体")
 
         add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "効率的粉砕アップグレード")
-        add(RagiumItems.FORTUNE_UPGRADE, "幸運アップグレード")
+
         add(RagiumItems.PRIMARY_ONLY_UPGRADE, "主産物特化アップグレード")
 
         add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")

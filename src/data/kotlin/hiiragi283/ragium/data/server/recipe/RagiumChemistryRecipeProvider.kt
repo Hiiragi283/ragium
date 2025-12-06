@@ -174,7 +174,6 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         warped()
         eldritch()
 
-        acid()
         explosives()
     }
 
@@ -380,17 +379,6 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 4000))
             .setResult(resultHelper.item(Items.CRYING_OBSIDIAN))
-            .save(output)
-    }
-
-    @JvmStatic
-    private fun acid() {
-        // Sulfur + Water -> Sulfuric Acid
-        HTComplexRecipeBuilder
-            .mixing()
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR))
-            .addIngredient(fluidCreator.water(1000))
-            .setResult(resultHelper.fluid(RagiumFluidContents.SULFURIC_ACID, 1000))
             .save(output)
     }
 

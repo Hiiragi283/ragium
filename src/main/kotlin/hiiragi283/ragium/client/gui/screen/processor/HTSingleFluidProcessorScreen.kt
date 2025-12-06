@@ -5,7 +5,6 @@ import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCombinerBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.base.HTFluidToChancedItemOutputBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -31,18 +30,6 @@ abstract class HTSingleFluidProcessorScreen<BE : HTProcessorBlockEntity<*, *>> :
     ) : super(menu, inventory, title)
 
     companion object {
-        @JvmStatic
-        fun <BE : HTFluidToChancedItemOutputBlockEntity<*, *>> chancedItemOutput(
-            menu: HTBlockEntityContainerMenu<BE>,
-            inventory: Inventory,
-            title: Component,
-        ): HTSingleFluidProcessorScreen<BE> = Impl(
-            { createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)) },
-            menu,
-            inventory,
-            title,
-        )
-
         @JvmStatic
         fun <BE : HTAbstractCombinerBlockEntity> combine(
             menu: HTBlockEntityContainerMenu<BE>,
