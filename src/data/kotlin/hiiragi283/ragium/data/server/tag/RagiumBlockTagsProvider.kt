@@ -99,7 +99,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.BREWERY)
             add(RagiumBlocks.MULTI_SMELTER)
             add(RagiumBlocks.PLANTER)
-            add(RagiumBlocks.WASHER)
 
             add(RagiumBlocks.ENCHANTER)
             add(RagiumBlocks.MOB_CRUSHER)

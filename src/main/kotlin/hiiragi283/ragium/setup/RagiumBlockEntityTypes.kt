@@ -38,7 +38,6 @@ import hiiragi283.ragium.common.block.entity.processor.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.HTWasherBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
@@ -165,9 +164,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> = registerTick("planter", ::HTPlanterBlockEntity)
 
-    @JvmField
-    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> = registerTick("washer", ::HTWasherBlockEntity)
-
     // Ultimate
     @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> = registerTick("enchanter", ::HTEnchanterBlockEntity)
@@ -281,7 +277,6 @@ object RagiumBlockEntityTypes {
         registerHandler(event, MELTER.get())
         registerHandler(event, MIXER.get())
         registerHandler(event, REFINERY.get())
-        registerHandler(event, WASHER.get())
 
         registerHandler(event, ADVANCED_MIXER.get())
         registerHandler(event, BREWERY.get())

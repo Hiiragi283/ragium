@@ -211,7 +211,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         machine(RagiumBlocks.BREWERY, eliteMachine, deepslateTiles)
         machine(RagiumBlocks.MULTI_SMELTER, eliteMachine, deepslateTiles, smelterFront)
         machine(RagiumBlocks.PLANTER, eliteMachine, deepslateTiles)
-        machine(RagiumBlocks.WASHER, eliteFrame, deepslateTiles)
         // Ultimate
         machine(RagiumBlocks.ENCHANTER, ultimateMachine, endStoneBricks)
         machine(RagiumBlocks.MOB_CRUSHER, ultimateMachine, endStoneBricks)

@@ -30,7 +30,6 @@ import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
-import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -187,12 +186,6 @@ object RagiumRecipeSerializers {
     val SIMULATING: RecipeSerializer<HTSimulatingRecipe> = register(
         RagiumConst.SIMULATING,
         RagiumRecipeBiCodecs.itemWithCatalyst(::HTSimulatingRecipe),
-    )
-
-    @JvmField
-    val WASHING: RecipeSerializer<HTWashingRecipe> = register(
-        RagiumConst.WASHING,
-        RagiumRecipeBiCodecs.itemWithFluidToChanced(::HTWashingRecipe),
     )
 
     private class SimpleSerializer<RECIPE : Recipe<*>>(private val codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>) :

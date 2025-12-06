@@ -57,7 +57,6 @@ object RagiumMiscRegister {
             register(helper, RagiumRecipeTypes.PLANTING)
             register(helper, RagiumRecipeTypes.REFINING)
             register(helper, RagiumRecipeTypes.SIMULATING)
-            register(helper, RagiumRecipeTypes.WASHING)
         }
 
         // Ingredient Type

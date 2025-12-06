@@ -55,9 +55,6 @@ object RagiumRecipeTypes {
     @JvmField
     val SIMULATING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.SIMULATING)
 
-    @JvmField
-    val WASHING: HTDeferredRecipeType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> = create(RagiumConst.WASHING)
-
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(path: String): HTDeferredRecipeType<INPUT, RECIPE> =
         HTDeferredRecipeType(RagiumAPI.id(path))

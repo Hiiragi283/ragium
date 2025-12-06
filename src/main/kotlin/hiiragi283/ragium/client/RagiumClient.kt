@@ -304,7 +304,6 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         // Block Entity
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.MELTER.get(), ::HTSingleFluidMachineRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.REFINERY.get(), ::HTRefineryRenderer)
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.WASHER.get(), ::HTSingleFluidMachineRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.THERMAL_GENERATOR.get(), ::HTFuelGeneratorRenderer)
 

@@ -110,10 +110,6 @@ object RagiumRecipeViewerTypes {
     val PLANTING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
         machine(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
-    @JvmField
-    val WASHING: HTRegistryRecipeViewerType<HTItemWithFluidRecipeInput, HTItemWithFluidToChancedItemRecipe> =
-        machine(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
-
     // Ultimate
     @JvmField
     val ENCHANTING: HTRegistryRecipeViewerType<HTMultiRecipeInput, HTCombineRecipe> =

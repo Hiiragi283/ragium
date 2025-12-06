@@ -17,7 +17,6 @@ class RagiumBlockEntityTypeTagsProvider(context: HTDataGenContext) :
             .add(RagiumBlockEntityTypes.CUTTING_MACHINE)
             .add(RagiumBlockEntityTypes.CRUSHER)
             .add(RagiumBlockEntityTypes.PLANTER)
-            .add(RagiumBlockEntityTypes.WASHER)
 
         factory
             .apply(RagiumModTags.BlockEntityTypes.EFFICIENT_CRUSH_UPGRADABLE)
@@ -70,7 +69,6 @@ class RagiumBlockEntityTypeTagsProvider(context: HTDataGenContext) :
             .add(RagiumBlockEntityTypes.BREWERY)
             .add(RagiumBlockEntityTypes.MULTI_SMELTER)
             .add(RagiumBlockEntityTypes.PLANTER)
-            .add(RagiumBlockEntityTypes.WASHER)
             // Ultimate
             .add(RagiumBlockEntityTypes.ENCHANTER)
             .add(RagiumBlockEntityTypes.MOB_CRUSHER)

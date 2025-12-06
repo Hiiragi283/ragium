@@ -545,10 +545,6 @@ object RagiumBlocks {
     val PLANTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("planter", RagiumBlockTypes.PLANTER, machineProperty().noOcclusion())
 
-    @JvmField
-    val WASHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("washer", RagiumBlockTypes.WASHER, machineProperty().noOcclusion())
-
     // Ultimate
     @JvmField
     val ENCHANTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
