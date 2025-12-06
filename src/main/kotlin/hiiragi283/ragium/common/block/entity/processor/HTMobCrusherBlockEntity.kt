@@ -147,7 +147,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         val expStack: ImmutableFluidStack = recipe.getExpStack(level) ?: return true
-        return outputTank.insert(expStack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+        return HTStackSlotHelper.canInsertStack(outputTank, expStack, true)
     }
 
     override fun completeRecipe(
@@ -166,7 +166,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
             outputTank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputSlot, { 1 }, HTStorageAction.EXECUTE)
+        inputSlot.extract(1, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.GENERIC_DEATH, SoundSource.BLOCKS, 0.5f, 1f)
     }

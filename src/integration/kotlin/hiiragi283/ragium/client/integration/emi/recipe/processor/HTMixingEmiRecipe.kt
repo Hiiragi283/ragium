@@ -31,6 +31,7 @@ class HTMixingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBa
 
     override fun initInputSlots(widgets: WidgetHolder) {
         widgets.addArrow(getPosition(3), getPosition(1))
+        widgets.setShapeless()
 
         // Input
         widgets.addSlot(input(0), getPosition(1), getPosition(0))

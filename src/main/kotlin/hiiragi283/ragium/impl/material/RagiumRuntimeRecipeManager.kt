@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.collection.ImmutableMultiMap
 import hiiragi283.ragium.api.collection.buildMultiMap
 import hiiragi283.ragium.api.collection.immutableMultiMapOf
 import hiiragi283.ragium.api.data.map.HTRuntimeRecipeProvider
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.HTRuntimeRecipeManager
 import hiiragi283.ragium.api.recipe.castRecipe
 import hiiragi283.ragium.api.registry.getHolderDataMap
@@ -81,7 +81,7 @@ object RagiumRuntimeRecipeManager : HTRuntimeRecipeManager {
         if (event.cause != DataMapsUpdatedEvent.UpdateCause.SERVER_RELOAD) return
         event.ifRegistry(Registries.RECIPE_TYPE) { registry: Registry<RecipeType<*>> ->
             val holderMap: Map<Holder.Reference<RecipeType<*>>, Map<ResourceLocation, HTRuntimeRecipeProvider>> =
-                registry.getHolderDataMap(RagiumDataMaps.MATERIAL_RECIPE)
+                registry.getHolderDataMap(RagiumDataMapTypes.MATERIAL_RECIPE)
 
             providerCache = buildMultiMap {
                 for ((holder: Holder.Reference<RecipeType<*>>, map: Map<ResourceLocation, HTRuntimeRecipeProvider>) in holderMap) {

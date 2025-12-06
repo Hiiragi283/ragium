@@ -18,6 +18,7 @@ class HTAlloyingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HT
 
     override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(getPosition(2.5), getPosition(1))
+        widgets.setShapeless()
 
         // Input
         for (i: Int in (0..2)) {

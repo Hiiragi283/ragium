@@ -6,6 +6,7 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
+import hiiragi283.ragium.client.integration.emi.addPlus
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toFluidEmi
 import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
@@ -23,9 +24,9 @@ class HTCopyEnchantingEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocat
 
     override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(getPosition(2.5), getPosition(1))
+        widgets.addPlus(getPosition(1), getPosition(0))
 
         widgets.addGeneratedSlot({ HTEnchantEmiRecipeHelper.getTool(it, 1) }, UNIQUE_ID, getPosition(0), getPosition(0))
-        widgets.addTexture(EmiTexture.PLUS, getPosition(1) + 3, getPosition(0) + 3)
         widgets.addSlot(EmiStack.of(Items.ENCHANTED_BOOK), getPosition(2), getPosition(0))
 
         widgets.addTexture(EmiTexture.EMPTY_FLAME, getPosition(1) + 2, getPosition(1) + 2)

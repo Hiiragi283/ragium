@@ -1,7 +1,7 @@
 package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
@@ -111,16 +111,16 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.MOB_HEAD)
+        event.register(RagiumDataMapTypes.MOB_HEAD)
 
-        event.register(RagiumDataMaps.COOLANT)
-        event.register(RagiumDataMaps.MAGMATIC_FUEL)
-        event.register(RagiumDataMaps.COMBUSTION_FUEL)
+        event.register(RagiumDataMapTypes.COOLANT)
+        event.register(RagiumDataMapTypes.MAGMATIC_FUEL)
+        event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
 
-        event.register(RagiumDataMaps.ARMOR_EQUIP)
-        event.register(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
+        event.register(RagiumDataMapTypes.ARMOR_EQUIP)
+        event.register(RagiumDataMapTypes.SUB_ENTITY_INGREDIENT)
 
-        event.register(RagiumDataMaps.MATERIAL_RECIPE)
+        event.register(RagiumDataMapTypes.MATERIAL_RECIPE)
 
         RagiumAPI.LOGGER.info("Registered data map types!")
     }

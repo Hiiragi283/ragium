@@ -15,7 +15,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.item.createItemStack
@@ -224,7 +224,7 @@ class RagiumEmiPlugin : EmiPlugin {
             registry,
             RagiumRecipeViewerTypes.COOLANT,
             EmiPort.getFluidRegistry(),
-            RagiumDataMaps.COOLANT,
+            RagiumDataMapTypes.COOLANT,
             { holder: Holder<Fluid>, data: HTFluidCoolantData ->
                 holder.value().toEmi(data.amount).takeUnless(EmiStack::isEmpty)
             },
@@ -238,7 +238,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 val food: FoodProperties = stack.getFoodProperties(null) ?: return@addItemStackRecipes null
                 val stack1: EmiStack = stack.toEmi()
                 stack1.remainder = stack.craftingRemainingItem.toEmi()
-                HTEmiFluidFuelData(stack1, HTCulinaryGeneratorBlockEntity.getEnergy(food))
+                HTEmiFluidFuelData(stack1, HTCulinaryGeneratorBlockEntity.getTime(food))
             },
             ::HTItemGeneratorEmiRecipe,
         )
@@ -247,10 +247,10 @@ class RagiumEmiPlugin : EmiPlugin {
             registry,
             RagiumRecipeViewerTypes.COMBUSTION,
             EmiPort.getFluidRegistry(),
-            RagiumDataMaps.COMBUSTION_FUEL,
+            RagiumDataMapTypes.COMBUSTION_FUEL,
             { holder: Holder<Fluid>, data: HTFluidFuelData ->
                 val stack: EmiStack = holder.value().toEmi(100).takeUnless(EmiStack::isEmpty) ?: return@addDataMapRecipes null
-                HTEmiFluidFuelData(stack, data.energy)
+                HTEmiFluidFuelData(stack, data.time)
             },
             ::HTCombustionGeneratorEmiRecipe,
         )

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.event
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -57,16 +57,13 @@ object RagiumEnchantmentHandler {
         }
     }
 
-    @Suppress("DEPRECATION")
     @JvmStatic
     private fun lootMobHead(entity: LivingEntity, level: Level, source: DamageSource) {
         // 武器にStrike効果が付いているか判定
         val weapon: ItemStack = source.weaponItem ?: return
         if (HTEnchantmentHelper.hasStrike(weapon)) {
             // 対象のモブに対応する頭をドロップする
-            RagiumDataMaps.INSTANCE
-                .getMobHead(level.registryAccess(), entity.type.builtInRegistryHolder())
-                .let(entity::spawnAtLocation)
+            RagiumDataMapTypes.getMobHead(entity).let(entity::spawnAtLocation)
 
             val attacker: Entity? = source.entity
             if (attacker is ServerPlayer) {

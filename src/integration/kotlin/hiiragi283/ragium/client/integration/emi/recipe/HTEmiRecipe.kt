@@ -2,9 +2,11 @@ package hiiragi283.ragium.client.integration.emi.recipe
 
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiRecipeCategory
+import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.SlotWidget
+import dev.emi.emi.api.widget.TextureWidget
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
@@ -130,6 +132,8 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     fun getPosition(index: Int): Int = index * 18
 
     fun getPosition(index: Double): Int = (index * 18).toInt()
+
+    fun WidgetHolder.setShapeless(): TextureWidget = addTexture(EmiTexture.SHAPELESS, getPosition(6) + 1, getPosition(0) + 3)
 
     fun WidgetHolder.addOutput(
         index: Int,

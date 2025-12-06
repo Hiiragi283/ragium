@@ -250,8 +250,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // WIP
         factory
             .apply(RagiumModTags.Blocks.WIP)
+            .add(RagiumBlocks.ENCHANTMENT_GENERATOR)
             .add(RagiumBlocks.NUCLEAR_REACTOR)
             .add(RagiumBlocks.OPEN_CRATE)
+            .add(RagiumBlocks.PLANTER)
             .add(RagiumBlocks.TELEPAD)
     }
 

@@ -1,11 +1,11 @@
 package hiiragi283.ragium.client.integration.emi.recipe.processor
 
 import dev.emi.emi.EmiPort
-import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.recipe.HTPlantingRecipe
 import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
+import hiiragi283.ragium.client.integration.emi.addPlus
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.resources.ResourceKey
@@ -31,11 +31,12 @@ class HTPlantingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HT
 
     override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(getPosition(2.5), getPosition(1))
+        widgets.addPlus(getPosition(1), getPosition(1))
+
         // inputs
         widgets.addSlot(input(0), getPosition(1), getPosition(0))
 
         widgets.addSlot(input(1), getPosition(0), getPosition(2))
-        widgets.addTexture(EmiTexture.PLUS, getPosition(1) + 3, getPosition(2) + 3)
         widgets.addSlot(input(2), getPosition(2), getPosition(2))
         // outputs
         widgets.addOutput(0, getPosition(5), getPosition(0) + 4, true)

@@ -61,7 +61,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleFluidRecipe): Boolean =
-        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+        HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
 
     override fun completeRecipe(
         level: ServerLevel,

@@ -1,9 +1,11 @@
 package hiiragi283.ragium.client.integration.emi
 
+import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.FillingArrowWidget
 import dev.emi.emi.api.widget.SlotWidget
+import dev.emi.emi.api.widget.TextureWidget
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.material.HTMaterialLike
@@ -127,6 +129,8 @@ fun createErrorStack(message: Component): EmiStack = createItemStack(Items.BARRI
 //    Widget    //
 
 fun WidgetHolder.addArrow(x: Int, y: Int): FillingArrowWidget = addFillingArrow(x, y, 2000)
+
+fun WidgetHolder.addPlus(x: Int, y: Int): TextureWidget = addTexture(EmiTexture.PLUS, x + 3, y + 3)
 
 fun WidgetHolder.addTank(
     result: EmiIngredient?,

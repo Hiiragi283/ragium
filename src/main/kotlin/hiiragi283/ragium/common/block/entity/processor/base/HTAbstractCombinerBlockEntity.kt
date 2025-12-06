@@ -86,8 +86,8 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTM
         fluids += inputTank.getStack()
     }
 
-    final override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTCombineRecipe): Boolean = outputSlot
-        .insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+    final override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTCombineRecipe): Boolean =
+        HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
     override fun completeRecipe(
         level: ServerLevel,

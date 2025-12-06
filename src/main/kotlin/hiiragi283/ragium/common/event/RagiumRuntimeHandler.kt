@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.event
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.entity.isOf
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.util.HTItemDropHelper
@@ -115,11 +115,11 @@ object RagiumRuntimeHandler {
         val to: ItemStack = event.to
         // 装着時
         if (from.isEmpty) {
-            to.itemHolder.getData(RagiumDataMaps.ARMOR_EQUIP)?.onEquip(entity, to)
+            RagiumDataMapTypes.getEquipAction(to)?.onEquip(entity, to)
         }
         // 脱着時
         if (to.isEmpty) {
-            from.itemHolder.getData(RagiumDataMaps.ARMOR_EQUIP)?.onUnequip(entity, from)
+            RagiumDataMapTypes.getEquipAction(from)?.onUnequip(entity, from)
         }
     }
 

@@ -13,7 +13,7 @@ import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.map.MapDataMapValueRemover
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialLike
@@ -96,7 +96,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     //    Ragium    //
 
     private fun mobHead() {
-        builder(RagiumDataMaps.MOB_HEAD)
+        builder(RagiumDataMapTypes.MOB_HEAD)
             .add(EntityType.SKELETON, HTMobHead(Items.SKELETON_SKULL))
             .add(EntityType.WITHER_SKELETON, HTMobHead(Items.WITHER_SKELETON_SKULL))
             .add(EntityType.ZOMBIE, HTMobHead(Items.ZOMBIE_HEAD))
@@ -108,16 +108,17 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     private fun coolants() {
-        builder(RagiumDataMaps.COOLANT)
+        builder(RagiumDataMapTypes.COOLANT)
             .add(HTFluidHolderLike.WATER, HTFluidCoolantData(100))
             .add(RagiumFluidContents.COOLANT, HTFluidCoolantData(25))
     }
 
     private fun magmaticFuels() {
-        builder(RagiumDataMaps.MAGMATIC_FUEL)
-            .add("steam", HTFluidFuelData(5 * 1000))
-            .add(HTFluidHolderLike.LAVA, HTFluidFuelData(20 * 1000))
-            .add("blaze_blood", HTFluidFuelData(40 * 1000))
+        builder(RagiumDataMapTypes.MAGMATIC_FUEL)
+            .add("steam", HTFluidFuelData(4_000))
+            .add(HTFluidHolderLike.LAVA, HTFluidFuelData(16_000))
+            .add(RagiumFluidContents.CRIMSON_BLOOD, HTFluidFuelData(32_000))
+            .add("blaze_blood", HTFluidFuelData(32_000))
     }
 
     private fun combustionFuels() {
@@ -129,7 +130,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
         val actually = ModLoadedCondition(RagiumConst.ACTUALLY)
 
-        builder(RagiumDataMaps.COMBUSTION_FUEL)
+        builder(RagiumDataMapTypes.COMBUSTION_FUEL)
             // lowest
             .add(RagiumFluidContents.CRUDE_OIL, lowest)
             .add("oil", lowest)
@@ -154,12 +155,12 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     private fun armorEquip() {
-        builder(RagiumDataMaps.ARMOR_EQUIP)
+        builder(RagiumDataMapTypes.ARMOR_EQUIP)
             .addHolder(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectEquipAction(MobEffects.NIGHT_VISION, -1))
     }
 
     private fun subEntityIngredient() {
-        builder(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
+        builder(RagiumDataMapTypes.SUB_ENTITY_INGREDIENT)
             .addHolder(Items.DRAGON_EGG.toHolderLike(), HTSubEntityTypeIngredient.simple(EntityType.ENDER_DRAGON))
             .addHolder(Items.SNIFFER_EGG.toHolderLike(), HTSubEntityTypeIngredient.simple(EntityType.SNIFFER))
             // EIO
@@ -179,7 +180,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     private fun materialRecipe() {
-        MapDataMapBuilder(builder(RagiumDataMaps.MATERIAL_RECIPE))
+        MapDataMapBuilder(builder(RagiumDataMapTypes.MATERIAL_RECIPE))
             .getOrCreateMap(RagiumRecipeTypes.ALLOYING) {
                 // Raw -> Ingot
                 put(

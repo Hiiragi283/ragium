@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
@@ -57,11 +58,8 @@ abstract class HTComplexBlockEntity<INPUT : RecipeInput, RECIPE : HTFluidRecipe<
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
     final override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
-        val access: RegistryAccess = level.registryAccess()
-        val bool1: Boolean =
-            outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
-        val bool2: Boolean =
-            outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+        val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
+        val bool2: Boolean = HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
         return bool1 && bool2
     }
 
