@@ -279,18 +279,10 @@ sealed class HTRecipeProvider {
         material: HTMaterialLike,
         inputPrefix: HTPrefixLike,
         count: Int = 1,
-        outputPrefix: HTPrefixLike = mold.prefix,
+        outputPrefix: HTPrefixLike? = mold.prefix,
     ) {
-        compressingTo(mold, material, itemCreator.fromTagKey(inputPrefix, material, count), outputPrefix)
-    }
-
-    protected fun compressingTo(
-        mold: HTMoldType,
-        material: HTMaterialLike,
-        ingredient: HTItemIngredient,
-        outputPrefix: HTPrefixLike = mold.prefix,
-    ) {
-        compressingTo(mold, ingredient, resultHelper.item(outputPrefix, material))
+        if (outputPrefix == null) return
+        compressingTo(mold, itemCreator.fromTagKey(inputPrefix, material, count), resultHelper.item(outputPrefix, material))
     }
 
     protected fun compressingTo(mold: HTMoldType, ingredient: HTItemIngredient, result: HTItemResult) {

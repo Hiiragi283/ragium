@@ -310,7 +310,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         factory.apply(Tags.Items.LEATHERS).add(RagiumItems.SYNTHETIC_LEATHER)
         factory
             .apply(Tags.Items.SLIME_BALLS)
-            .add(RagiumItems.RESIN)
+            .add(RagiumItems.ROSIN)
             .add(RagiumItems.TAR)
         factory.apply(Tags.Items.STRINGS).add(RagiumItems.SYNTHETIC_FIBER)
 
@@ -347,6 +347,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .apply(ItemTags.PIGLIN_LOVED)
             .add(RagiumItems.FEVER_CHERRY)
             .addTag(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+
+        for (item: HTHolderLike in RagiumItems.MOLDS.values) {
+            factory.apply(RagiumModTags.Items.MOLDS).add(item)
+        }
         // WIP
         factory
             .apply(RagiumModTags.Items.WIP)

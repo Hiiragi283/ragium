@@ -29,6 +29,8 @@ import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeItem
@@ -37,8 +39,12 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.registries.holdersets.AndHolderSet
+import net.neoforged.neoforge.registries.holdersets.NotHolderSet
 
 object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
+    private val itemLookup: HolderLookup.RegistryLookup<Item> by lazy { provider.lookupOrThrow(Registries.ITEM) }
+
     override fun buildRecipeInternal() {
         // Gravel -> Flint
         HTItemWithFluidToChancedItemRecipeBuilder
@@ -511,7 +517,12 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_lpg")
 
         // Plastic Plate
-        compressingTo(HTMoldType.PLATE, CommonMaterialKeys.PLASTIC, itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN))
+        HTItemWithCatalystRecipeBuilder
+            .compressing(
+                itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN),
+                resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC),
+                itemCreator.fromItem(HTMoldType.PLATE),
+            ).saveSuffixed(output, "_with_mold")
         // Synthetic Fiber / Leather
         mapOf(
             RagiumItems.SYNTHETIC_FIBER to Tags.Items.STRINGS,
@@ -540,19 +551,41 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun sap() {
-        // XX Log -> Wood Dust + Sap
+        // XX Log (excluded Spruce) -> Wood Dust + Sap
         HTItemWithCatalystRecipeBuilder
             .extracting(
-                itemCreator.fromTagKey(ItemTags.LOGS_THAT_BURN),
+                itemCreator.fromSet(
+                    AndHolderSet(
+                        listOf(
+                            itemLookup.getOrThrow(ItemTags.LOGS_THAT_BURN),
+                            NotHolderSet(itemLookup, itemLookup.getOrThrow(ItemTags.SPRUCE_LOGS)),
+                        ),
+                    ),
+                ),
                 resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4),
                 null,
                 resultHelper.fluid(RagiumFluidContents.SAP, 125),
             ).saveSuffixed(output, "_from_log")
-        // Sap -> Resin
+        // Sap -> Natural Gas
         distillation(
             RagiumFluidContents.SAP to 1000,
-            resultHelper.item(RagiumItems.RESIN),
-            resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 125) to null,
+            null,
+            resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 250) to null,
+        )
+
+        // Spruce Log -> Spruce Resin
+        HTItemWithCatalystRecipeBuilder
+            .extracting(
+                itemCreator.fromTagKey(ItemTags.SPRUCE_LOGS),
+                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4),
+                null,
+                resultHelper.fluid(RagiumFluidContents.SPRUCE_RESIN, 250),
+            ).saveSuffixed(output, "_from_log")
+        // Resin -> Rosin
+        distillation(
+            RagiumFluidContents.SPRUCE_RESIN to 1000,
+            resultHelper.item(RagiumItems.ROSIN),
+            resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 250) to null,
         )
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {

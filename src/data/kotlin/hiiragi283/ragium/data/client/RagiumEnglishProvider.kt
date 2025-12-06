@@ -215,6 +215,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.FUEL, "Fuel")
 
         addFluid(RagiumFluidContents.SAP, "Sap")
+        addFluid(RagiumFluidContents.SPRUCE_RESIN, "Spruce Resin")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
 
@@ -237,7 +238,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")
-        add(RagiumItems.RESIN, "Resin")
+        add(RagiumItems.ROSIN, "Rosin")
         add(RagiumItems.SPAWNER_FRAGMENT, "Spawner Fragment")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.WITHER_DOLl, "Wither Doll")

@@ -240,7 +240,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         resetComponent(RagiumItems.TELEPORT_KEY, RagiumDataComponents.FLUID_CONTENT, RagiumDataComponents.TELEPORT_POS)
         // Eldritch
         HTShapedRecipeBuilder
-            .create(RagiumItems.ELDRITCH_EGG)
+            .create(RagiumItems.ELDRITCH_EGG, 4)
             .hollow4()
             .define('A', Tags.Items.EGGS)
             .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)

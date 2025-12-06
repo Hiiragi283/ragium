@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
@@ -16,9 +15,9 @@ import hiiragi283.ragium.common.recipe.crafting.HTGravitationalUpgradeRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
@@ -49,12 +48,16 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun catalyst() {
         // Molds
-        for ((moldType: HTMoldType, mold: HTSimpleDeferredItem) in RagiumItems.MOLDS) {
-            HTShapedRecipeBuilder
-                .create(mold)
-                .hollow4()
-                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-                .define('B', moldType.prefix.createCommonTagKey(Registries.ITEM))
+        HTShapedRecipeBuilder
+            .create(HTMoldType.BLANK)
+            .storage4()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .save(output)
+
+        for (mold: ItemLike in RagiumItems.MOLDS.values) {
+            HTSingleItemRecipeBuilder
+                .stonecutter(mold)
+                .addIngredient(RagiumModTags.Items.MOLDS)
                 .save(output)
         }
         // Polymer Catalyst
