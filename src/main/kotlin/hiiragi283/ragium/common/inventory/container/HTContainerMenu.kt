@@ -119,8 +119,11 @@ abstract class HTContainerMenu(open val menuType: HTDeferredMenuType<*, *>, cont
     }
 
     protected fun addSlots(handler: HTItemHandler) {
-        handler
-            .getItemSlots(handler.getItemSideFor())
+        addSlots(handler.getItemSlots(handler.getItemSideFor()))
+    }
+
+    protected fun addSlots(slots: Iterable<HTItemSlot>) {
+        slots
             .mapNotNull(HTItemSlot::createContainerSlot)
             .forEach(::addSlot)
     }

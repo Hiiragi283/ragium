@@ -8,11 +8,11 @@ import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.world.sendBlockUpdated
 import hiiragi283.ragium.common.inventory.HTSlotHelper
+import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
@@ -52,40 +52,30 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         )
 
         @JvmStatic
-        protected fun multiOutputs(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): List<HTBasicItemSlot> =
-            doubleArrayOf(0.5, 1.5).flatMap { y: Double ->
-                intArrayOf(5, 6).map { x: Int ->
-                    builder.addSlot(
-                        HTSlotInfo.OUTPUT,
-                        HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(x), HTSlotHelper.getSlotPosY(y)),
-                    )
-                }
-            }
+        protected fun upperOutput(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTBasicItemSlot = builder.addSlot(
+            HTSlotInfo.OUTPUT,
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0.5)),
+        )
+
+        @JvmStatic
+        protected fun extraOutput(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener): HTBasicItemSlot = builder.addSlot(
+            HTSlotInfo.OUTPUT,
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(2)),
+        )
     }
 
-    lateinit var upgradeSlots: List<HTBasicItemSlot>
-        private set
-
-    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
-        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
-        initializeItemSlots(builder, listener)
-        upgradeSlots = (0..3).map { i: Int ->
-            val filter: (ImmutableItemStack) -> Boolean = filter@{ stack: ImmutableItemStack ->
-                canApplyUpgrade(stack.unwrap()) && !hasUpgrade(stack.value())
-            }
-            builder.addSlot(
-                HTSlotInfo.CATALYST,
-                HTBasicItemSlot.create(
-                    listener.andThen { level?.sendBlockUpdated(blockPos) },
-                    HTSlotHelper.getSlotPosX(8),
-                    HTSlotHelper.getSlotPosY(i - 0.5),
-                    canExtract = HTPredicates.manualOnly(),
-                    canInsert = HTPredicates.manualOnly(),
-                    filter = filter,
-                ),
-            )
+    val upgradeSlots: List<HTBasicItemSlot> = (0..3).map { i: Int ->
+        val filter: (ImmutableItemStack) -> Boolean = filter@{ stack: ImmutableItemStack ->
+            canApplyUpgrade(stack.unwrap()) && !hasUpgrade(stack.value())
         }
-        return builder.build()
+        HTBasicItemSlot.create(
+            HTContentListener(::setOnlySave).andThen { level?.sendBlockUpdated(blockPos) },
+            HTSlotHelper.getSlotPosX(8),
+            HTSlotHelper.getSlotPosY(i - 0.5),
+            canExtract = HTPredicates.manualOnly(),
+            canInsert = HTPredicates.manualOnly(),
+            filter = filter,
+        )
     }
 
     final override fun hasUpgrade(item: ItemLike): Boolean = upgradeSlots.any { slot: HTBasicItemSlot ->
@@ -112,11 +102,13 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
         output.putBoolean("is_active", this.isActive)
+        HTCapabilityCodec.ITEM.saveTo(output.child("upgrades"), upgradeSlots)
     }
 
     override fun readValue(input: HTValueInput) {
         super.readValue(input)
         this.isActive = input.getBoolean("is_active", false)
+        HTCapabilityCodec.ITEM.loadFrom(input.childOrEmpty("upgrades"), upgradeSlots)
     }
 
     //    Ticking    //

@@ -209,13 +209,14 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             HTFluidHolderLike.WATER,
             1000,
         )
-        // Packed Ice <-> Coolant
-        meltAndFreeze(
-            HTMoldType.STORAGE_BLOCK,
-            Items.PACKED_ICE.toHolderLike(),
-            RagiumFluidContents.COOLANT,
-            1000,
-        )
+        // Water + Wind Charge + Packed Ice -> Coolant
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromItem(Items.WIND_CHARGE, 3))
+            .addIngredient(itemCreator.fromItem(Items.PACKED_ICE))
+            .addIngredient(fluidCreator.water(1000))
+            .setResult(resultHelper.fluid(RagiumFluidContents.COOLANT, 1000))
+            .save(output)
 
         // Concretes
         for (color: HTColorMaterial in HTColorMaterial.entries) {

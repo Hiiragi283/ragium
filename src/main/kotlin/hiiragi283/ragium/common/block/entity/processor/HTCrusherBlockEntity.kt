@@ -3,14 +3,12 @@ package hiiragi283.ragium.common.block.entity.processor
 import hiiragi283.ragium.api.recipe.multi.HTItemToExtraItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCrusherBlockEntity
-import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
@@ -32,14 +30,8 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // input
         inputSlot = singleInput(builder, listener)
         // outputs
-        outputSlot = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0.5)),
-        )
-        extraSlot = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(2.5)),
-        )
+        outputSlot = upperOutput(builder, listener)
+        extraSlot = extraOutput(builder, listener)
     }
 
     //    Ticking    //
@@ -54,6 +46,9 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
             HTStorageAction.SIMULATE,
             HTStorageAccess.INTERNAL,
         ) == null
+        if (hasUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE)) {
+            return bool1
+        }
         val bool2: Boolean = extraSlot.insert(
             recipe.assembleExtraItem(input, access),
             HTStorageAction.SIMULATE,
@@ -66,6 +61,8 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        extraSlot.insert(recipe.assembleExtraItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        if (!hasUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE)) {
+            extraSlot.insert(recipe.assembleExtraItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        }
     }
 }

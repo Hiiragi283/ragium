@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
 import hiiragi283.ragium.api.material.get
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -20,6 +19,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
@@ -32,6 +32,7 @@ import hiiragi283.ragium.impl.data.recipe.material.OritechMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -242,6 +243,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     resultHelper.item(CommonMaterialPrefixes.DUST, primary, 8),
                     resultHelper.item(CommonMaterialPrefixes.GEM, secondary, 2),
                 ).saveSuffixed(output, "_from_ore")
+            // Mixing with Lava
+            HTComplexRecipeBuilder
+                .mixing()
+                .addIngredient(ore)
+                .addIngredient(fluidCreator.lava(500))
+                .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, primary, 12))
+                .saveSuffixed(output, "_from_ore")
         }
 
         // Raws
@@ -267,6 +275,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     resultHelper.item(CommonMaterialPrefixes.DUST, primary, 2),
                     resultHelper.item(CommonMaterialPrefixes.DUST, secondary),
                 ).saveSuffixed(output, "_from_ore")
+            // Mixing with Crimson Blood
+            HTComplexRecipeBuilder
+                .mixing()
+                .addIngredient(ore)
+                .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRIMSON_BLOOD, 250))
+                .setResult(resultHelper.item(CommonMaterialPrefixes.INGOT, primary, 4))
+                .saveSuffixed(output, "_from_ore")
         }
 
         // Gems
@@ -291,6 +306,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     ore,
                     resultHelper.item(CommonMaterialPrefixes.GEM, material, count),
                 ).saveSuffixed(output, "_from_ore")
+            // Mixing with Dew of the Warp
+            HTComplexRecipeBuilder
+                .mixing()
+                .addIngredient(ore)
+                .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.DEW_OF_THE_WARP, 500))
+                .setResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, count * 2))
+                .saveSuffixed(output, "_from_ore")
         }
 
         // Scraps
@@ -299,9 +321,19 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             RagiumMaterialKeys.DEEP_STEEL to RagiumCommonTags.Items.ORES_DEEP_SCRAP,
         ).forEach { (key: HTMaterialKey, oreTag: TagKey<Item>) ->
             val ore: HTItemIngredient = itemCreator.fromTagKey(oreTag)
-            val result: HTItemResult = resultHelper.item(CommonMaterialPrefixes.SCRAP, key, 2)
             // Crushing
-            HTItemToExtraItemRecipeBuilder.crushing(ore, result).saveSuffixed(output, "_from_ore")
+            HTItemToExtraItemRecipeBuilder
+                .crushing(
+                    ore,
+                    resultHelper.item(CommonMaterialPrefixes.SCRAP, key, 2),
+                ).saveSuffixed(output, "_from_ore")
+            // Mixing with Eldritch Flux
+            HTComplexRecipeBuilder
+                .mixing()
+                .addIngredient(ore)
+                .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 500))
+                .setResult(resultHelper.item(CommonMaterialPrefixes.SCRAP, key, 4))
+                .saveSuffixed(output, "_from_ore")
         }
     }
 
