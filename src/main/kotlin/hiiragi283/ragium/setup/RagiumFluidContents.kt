@@ -167,6 +167,9 @@ object RagiumFluidContents {
     val SAP: HTBasicFluidContent = registerSimple("sap", liquid())
 
     @JvmField
+    val SPRUCE_RESIN: HTBasicFluidContent = registerSimple("spruce_resin", liquid())
+
+    @JvmField
     val CRIMSON_SAP: HTBasicFluidContent = register("crimson_sap", liquid(), ::HTNetherFluidType)
 
     @JvmField

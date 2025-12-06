@@ -90,7 +90,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24))
             .add(RagiumItems.COMPRESSED_SAWDUST, FurnaceFuel(200 * 6), false)
             .add(RagiumItems.RAGI_COKE, FurnaceFuel(200 * 16), false)
-            .add(RagiumItems.RESIN, FurnaceFuel(200 * 4), false)
             .add(RagiumItems.TAR, FurnaceFuel(200 * 4), false)
     }
 

@@ -136,6 +136,8 @@ object RagiumItems {
         REGISTER.addAlias("cinnabar_dust", "magma_shard")
         REGISTER.addAlias(RagiumAPI.id("saltpeter_dust"), vanillaId("bone_meal"))
 
+        REGISTER.addAlias("resion", "rosin")
+
         REGISTER.register(eventBus)
 
         eventBus.addListener(::registerItemCapabilities)
@@ -159,7 +161,7 @@ object RagiumItems {
     val COMPRESSED_SAWDUST: HTSimpleDeferredItem = REGISTER.registerSimpleItem("compressed_sawdust")
 
     @JvmField
-    val RESIN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("resin")
+    val ROSIN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("rosin")
 
     // Diamond
     @JvmField
@@ -576,7 +578,7 @@ object RagiumItems {
     // Catalyst
     @JvmField
     val MOLDS: Map<HTMoldType, HTSimpleDeferredItem> = HTMoldType.entries.associateWith { type: HTMoldType ->
-        REGISTER.registerSimpleItem("${type.prefix.asPrefixName()}_mold")
+        REGISTER.registerSimpleItem("${type.serializedName}_mold")
     }
 
     @JvmField
