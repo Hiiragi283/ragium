@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
@@ -16,7 +15,7 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingPotRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -48,11 +47,12 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
 
         // Rice Panicle
-        HTItemToChancedItemRecipeBuilder
-            .crushing(itemCreator.fromItem(ModItems.RICE_PANICLE.get()))
-            .addResult(resultHelper.item(ModItems.RICE.get()))
-            .addResult(resultHelper.item(ModItems.STRAW.get()), fraction(1, 2))
-            .save(output)
+        HTItemToExtraItemRecipeBuilder
+            .crushing(
+                itemCreator.fromItem(ModItems.RICE_PANICLE.get()),
+                resultHelper.item(ModItems.RICE.get()),
+                resultHelper.item(ModItems.STRAW.get()),
+            ).save(output)
 
         // Crops
         cropAndSeed(ModItems.CABBAGE_SEEDS.get(), ModItems.CABBAGE.get())
@@ -122,31 +122,36 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             // Vegetable
             ModItems.CABBAGE.get() to ModItems.CABBAGE_LEAF.get(),
         ).forEach { (full: Item, cut: Item) ->
-            HTItemToChancedItemRecipeBuilder
-                .cutting(itemCreator.fromItem(full))
-                .addResult(resultHelper.item(cut, 2))
-                .save(output)
+            HTItemToExtraItemRecipeBuilder
+                .cutting(
+                    itemCreator.fromItem(full),
+                    resultHelper.item(cut, 2),
+                ).save(output)
         }
 
-        HTItemToChancedItemRecipeBuilder
-            .cutting(itemCreator.fromTagKey(Tags.Items.CROPS_PUMPKIN))
-            .addResult(resultHelper.item(ModItems.PUMPKIN_SLICE.get(), 4))
-            .save(output)
+        HTItemToExtraItemRecipeBuilder
+            .cutting(
+                itemCreator.fromTagKey(Tags.Items.CROPS_PUMPKIN),
+                resultHelper.item(ModItems.PUMPKIN_SLICE.get(), 4),
+            ).save(output)
 
-        HTItemToChancedItemRecipeBuilder
-            .cutting(itemCreator.fromItem(ModItems.BROWN_MUSHROOM_COLONY.get()))
-            .addResult(resultHelper.item(Items.BROWN_MUSHROOM, 5))
-            .save(output)
+        HTItemToExtraItemRecipeBuilder
+            .cutting(
+                itemCreator.fromItem(ModItems.BROWN_MUSHROOM_COLONY.get()),
+                resultHelper.item(Items.BROWN_MUSHROOM, 5),
+            ).save(output)
 
-        HTItemToChancedItemRecipeBuilder
-            .cutting(itemCreator.fromItem(ModItems.RED_MUSHROOM_COLONY.get()))
-            .addResult(resultHelper.item(Items.RED_MUSHROOM, 5))
-            .save(output)
+        HTItemToExtraItemRecipeBuilder
+            .cutting(
+                itemCreator.fromItem(ModItems.RED_MUSHROOM_COLONY.get()),
+                resultHelper.item(Items.RED_MUSHROOM, 5),
+            ).save(output)
 
-        HTItemToChancedItemRecipeBuilder
-            .cutting(itemCreator.fromTagKey(RagiumCommonTags.Items.FOODS_DOUGH))
-            .addResult(resultHelper.item(ModItems.RAW_PASTA.get()))
-            .save(output)
+        HTItemToExtraItemRecipeBuilder
+            .cutting(
+                itemCreator.fromTagKey(RagiumCommonTags.Items.FOODS_DOUGH),
+                resultHelper.item(ModItems.RAW_PASTA.get()),
+            ).save(output)
         // with Bone Meal
         mapOf(
             // Meat
@@ -157,22 +162,24 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             Items.COOKED_COD to ModItems.COOKED_COD_SLICE.get(),
             Items.COOKED_SALMON to ModItems.COOKED_SALMON_SLICE.get(),
         ).forEach { (full: Item, cut: Item) ->
-            HTItemToChancedItemRecipeBuilder
-                .cutting(itemCreator.fromItem(full))
-                .addResult(resultHelper.item(cut, 2))
-                .addResult(resultHelper.item(Items.BONE_MEAL))
-                .save(output)
+            HTItemToExtraItemRecipeBuilder
+                .cutting(
+                    itemCreator.fromItem(full),
+                    resultHelper.item(cut, 2),
+                    resultHelper.item(Items.BONE_MEAL),
+                ).save(output)
         }
         // With Bone
         mapOf(
             ModItems.HAM.get() to Items.PORKCHOP,
             ModItems.SMOKED_HAM.get() to Items.COOKED_PORKCHOP,
         ).forEach { (ham: Item, cut: Item) ->
-            HTItemToChancedItemRecipeBuilder
-                .cutting(itemCreator.fromItem(ham))
-                .addResult(resultHelper.item(cut, 2))
-                .addResult(resultHelper.item(Items.BONE))
-                .save(output)
+            HTItemToExtraItemRecipeBuilder
+                .cutting(
+                    itemCreator.fromItem(ham),
+                    resultHelper.item(cut, 2),
+                    resultHelper.item(Items.BONE),
+                ).save(output)
         }
     }
 

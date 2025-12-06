@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import net.minecraft.util.ExtraCodecs
 
 @JvmRecord
@@ -52,8 +52,8 @@ data class HTCrushingRecipeProvider(
             if (!helper.isPresentTag(inputPrefix, key)) continue
             if (!helper.isPresentTag(outputPrefix, key)) continue
 
-            HTItemToObjRecipeBuilder
-                .pulverizing(
+            HTItemToExtraItemRecipeBuilder
+                .crushing(
                     helper.itemCreator.fromTagKey(inputPrefix, key, inputCount),
                     helper.resultHelper.item(outputPrefix, key, outputCount),
                 ).saveSuffixed(helper.output, "_from_${inputPrefix.name}")

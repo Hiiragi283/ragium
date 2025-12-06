@@ -3,13 +3,13 @@ package hiiragi283.ragium.client.integration.emi.type
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.chance.HTItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.multi.HTItemToExtraItemRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
@@ -77,11 +77,11 @@ object RagiumRecipeViewerTypes {
         machine(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
-    val CRUSHING: HTRegistryRecipeViewerType<SingleRecipeInput, HTItemToChancedItemRecipe> =
+    val CRUSHING: HTRegistryRecipeViewerType<SingleRecipeInput, HTItemToExtraItemRecipe> =
         machine(RagiumRecipeTypes.CRUSHING, RagiumBlocks.PULVERIZER, RagiumBlocks.CRUSHER)
 
     @JvmField
-    val CUTTING: HTRegistryRecipeViewerType<SingleRecipeInput, HTItemToChancedItemRecipe> =
+    val CUTTING: HTRegistryRecipeViewerType<SingleRecipeInput, HTItemToExtraItemRecipe> =
         machine(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField

@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodecs
 import hiiragi283.ragium.api.serialization.codec.ParameterCodec
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
@@ -19,7 +19,7 @@ import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicCombineRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicItemToChancedItemRecipe
+import hiiragi283.ragium.impl.recipe.base.HTBasicItemToExtraItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithFluidToChancedItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicSingleOutputRecipe
@@ -102,14 +102,12 @@ object RagiumRecipeBiCodecs {
     )
 
     @JvmStatic
-    fun <R : HTBasicItemToChancedItemRecipe> itemToChanced(
-        factory: HTItemToChancedItemRecipeBuilder.Factory<R>,
+    fun <R : HTBasicItemToExtraItemRecipe> itemToExtra(
+        factory: HTItemToExtraItemRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicItemToChancedItemRecipe::ingredient),
-        HTItemResultWithChance.CODEC
-            .nonEmptyListOf(4)
-            .fieldOf(RagiumConst.RESULTS)
-            .forGetter(HTBasicItemToChancedItemRecipe::results),
+        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicItemToExtraItemRecipe::ingredient),
+        HTItemResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTBasicItemToExtraItemRecipe::result),
+        HTItemResult.CODEC.optionalFieldOf("extra").forGetter(HTBasicItemToExtraItemRecipe::extra),
         factory::create,
     )
 

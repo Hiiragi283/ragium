@@ -11,7 +11,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToChancedItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
@@ -187,10 +187,11 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             ItemTags.WARPED_STEMS to Items.WARPED_PLANKS,
         ).forEach { (log: TagKey<Item>, planks: Item) ->
             // Log -> 6x Planks
-            HTItemToChancedItemRecipeBuilder
-                .cutting(itemCreator.fromTagKey(log))
-                .addResult(resultHelper.item(planks, 6))
-                .save(output)
+            HTItemToExtraItemRecipeBuilder
+                .cutting(
+                    itemCreator.fromTagKey(log),
+                    resultHelper.item(planks, 6),
+                ).save(output)
         }
     }
 

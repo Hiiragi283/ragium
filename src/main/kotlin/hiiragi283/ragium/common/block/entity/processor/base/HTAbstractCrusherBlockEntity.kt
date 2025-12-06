@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.chance.HTItemToChancedItemRecipe
+import hiiragi283.ragium.api.recipe.multi.HTItemToExtraItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -24,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState
 import org.apache.commons.lang3.math.Fraction
 
 abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity.CachedWithTank<HTItemToChancedItemRecipe>(
+    HTSingleItemInputBlockEntity.CachedWithTank<HTItemToExtraItemRecipe>(
         RagiumRecipeTypes.CRUSHING,
         blockHolder,
         pos,
@@ -39,7 +39,7 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
 
     //    Ticking    //
 
-    final override fun getRecipeTime(recipe: HTItemToChancedItemRecipe): Int {
+    final override fun getRecipeTime(recipe: HTItemToExtraItemRecipe): Int {
         val bool1: Boolean = hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
         val bool2: Boolean = inputTank
             .extract(
@@ -59,7 +59,7 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: HTItemToChancedItemRecipe,
+        recipe: HTItemToExtraItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
         completeOutput(level, input, recipe)
@@ -73,5 +73,5 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
         level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.25f, 1f)
     }
 
-    protected abstract fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToChancedItemRecipe)
+    protected abstract fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToExtraItemRecipe)
 }
