@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.integration.emi.recipe.processor
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.item.createEnchantedBook
-import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTCombineEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.client.integration.emi.toFluidEmi

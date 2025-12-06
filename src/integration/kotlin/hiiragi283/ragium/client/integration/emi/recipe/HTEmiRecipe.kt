@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.util.Ior
-import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler
 import net.minecraft.client.gui.components.events.GuiEventListener
