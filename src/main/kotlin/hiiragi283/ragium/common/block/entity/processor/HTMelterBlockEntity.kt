@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -75,7 +76,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         // インプットを減らす, 返却物がある場合は移動
         HTStackSlotHelper.shrinkItemStack(
             inputSlot,
-            { stack: ImmutableItemStack? ->
+            ImmutableItemStack::getCraftingRemainingItem,
+            { stack: ImmutableItemStack ->
                 val remainder: ImmutableItemStack? = remainderSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 HTItemDropHelper.dropStackAt(level, pos, remainder)
             },
