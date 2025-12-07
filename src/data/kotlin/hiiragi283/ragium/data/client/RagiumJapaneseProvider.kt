@@ -157,6 +157,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.FLUID_COLLECTOR, "液体収集機")
         add(RagiumBlocks.ITEM_COLLECTOR, "アイテム収集機")
 
+        add(RagiumBlocks.STONE_COLLECTOR, "岩石収集機")
+
         add(RagiumBlocks.DIM_ANCHOR, "次元アンカー")
         add(RagiumBlocks.ENI, "E.N.I.")
 

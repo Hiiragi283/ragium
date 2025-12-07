@@ -50,8 +50,6 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
         return null
     }
 
-    private fun matches(recipe: RECIPE, input: INPUT, level: Level): Boolean = recipe.matches(input, level) && !recipe.isIncomplete
-
     override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = manager
         .getAllRecipesFor(get())
         .asSequence()

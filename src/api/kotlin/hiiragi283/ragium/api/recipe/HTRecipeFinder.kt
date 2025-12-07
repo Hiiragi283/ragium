@@ -26,4 +26,6 @@ fun interface HTRecipeFinder<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
         level: Level,
         lastRecipe: RecipeHolder<RECIPE>?,
     ): RecipeHolder<RECIPE>?
+
+    fun matches(recipe: RECIPE, input: INPUT, level: Level): Boolean = recipe.matches(input, level) && !recipe.isIncomplete
 }

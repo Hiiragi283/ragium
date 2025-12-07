@@ -12,11 +12,11 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumRockGeneratingRecipeProvider : HTRecipeProvider.Direct() {
-    val lava: HTFluidIngredient by lazy { fluidCreator.lava(1000) }
-    val water: HTFluidIngredient by lazy { fluidCreator.water(1000) }
+    private val lava: HTFluidIngredient by lazy { fluidCreator.lava(1000) }
+    private val water: HTFluidIngredient by lazy { fluidCreator.water(1000) }
 
-    val packedIce: HTItemIngredient by lazy { itemCreator.fromItem(Items.PACKED_ICE) }
-    val magma: HTItemIngredient by lazy { itemCreator.fromItem(Items.MAGMA_BLOCK) }
+    private val packedIce: HTItemIngredient by lazy { itemCreator.fromItem(Items.PACKED_ICE) }
+    private val magma: HTItemIngredient by lazy { itemCreator.fromItem(Items.MAGMA_BLOCK) }
 
     override fun buildRecipeInternal() {
         // Lava + Water -> Cobble
@@ -27,12 +27,12 @@ object RagiumRockGeneratingRecipeProvider : HTRecipeProvider.Direct() {
         HTRockGeneratingRecipeBuilder
             .create(lava, water, resultHelper.item(Items.STONE), magma)
             .save(output)
-        
+
         overworld()
         nether()
         end()
     }
-    
+
     @JvmStatic
     private fun overworld() {
         listOf(
@@ -44,7 +44,7 @@ object RagiumRockGeneratingRecipeProvider : HTRecipeProvider.Direct() {
                 .create(lava, water, resultHelper.item(stone), itemCreator.fromItem(stone))
                 .save(output)
         }
-        
+
         // Lava + Packed Ice -> Blackstone
         stoneAndCobble(Items.DEEPSLATE, Items.COBBLED_DEEPSLATE, packedIce)
         // Lava + Packed Ice + Bone -> Calcite
@@ -53,7 +53,7 @@ object RagiumRockGeneratingRecipeProvider : HTRecipeProvider.Direct() {
                 lava,
                 packedIce,
                 resultHelper.item(Items.CALCITE),
-                itemCreator.fromTagKey(Tags.Items.STORAGE_BLOCKS_BONE_MEAL)
+                itemCreator.fromTagKey(Tags.Items.STORAGE_BLOCKS_BONE_MEAL),
             ).save(output)
         // Lava + Packed Ice + Clay -> Dripstone
         HTRockGeneratingRecipeBuilder
@@ -61,10 +61,10 @@ object RagiumRockGeneratingRecipeProvider : HTRecipeProvider.Direct() {
                 lava,
                 packedIce,
                 resultHelper.item(Items.DRIPSTONE_BLOCK),
-                itemCreator.fromItem(Items.CLAY)
+                itemCreator.fromItem(Items.CLAY),
             ).save(output)
     }
-    
+
     @JvmStatic
     private fun nether() {
         // Lava + Packed Ice + Soul Sand -> Netherrack
@@ -78,7 +78,7 @@ object RagiumRockGeneratingRecipeProvider : HTRecipeProvider.Direct() {
             .create(lava, packedIce, resultHelper.item(Items.BASALT), itemCreator.fromItem(Items.SOUL_SOIL))
             .save(output)
     }
-    
+
     @JvmStatic
     private fun end() {
         val eldritch: HTFluidIngredient = fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 1000)
@@ -91,7 +91,7 @@ object RagiumRockGeneratingRecipeProvider : HTRecipeProvider.Direct() {
             .create(eldritch, packedIce, resultHelper.item(Items.END_STONE))
             .save(output)
     }
-    
+
     @JvmStatic
     private fun stoneAndCobble(stone: ItemLike, cobble: ItemLike, right: HTItemIngredient) {
         // Lava + Water -> Cobble

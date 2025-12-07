@@ -131,5 +131,5 @@ object RagiumEmiRecipeCategories {
 
     @JvmField
     val ROCK_GENERATING: HTRegistryEmiRecipeCategory<HTMultiRecipeInput, HTRockGeneratingRecipe> =
-        machine(RagiumRecipeTypes.ROCK_GENERATING, RagiumBlocks.ITEM_COLLECTOR)
+        machine(RagiumRecipeTypes.ROCK_GENERATING, RagiumBlocks.STONE_COLLECTOR)
 }
