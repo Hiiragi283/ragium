@@ -188,6 +188,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Generator
         builtIn(RagiumBlocks.THERMAL_GENERATOR, basicCasing)
         builtIn(RagiumBlocks.CULINARY_GENERATOR, advancedCasing)
+        builtIn(RagiumBlocks.MAGMATIC_GENERATOR, advancedCasing)
         builtIn(RagiumBlocks.COMBUSTION_GENERATOR, eliteMachine)
         altModelBlock(RagiumBlocks.SOLAR_PANEL_UNIT)
         builtIn(RagiumBlocks.ENCHANTMENT_GENERATOR, ultimateMachine)

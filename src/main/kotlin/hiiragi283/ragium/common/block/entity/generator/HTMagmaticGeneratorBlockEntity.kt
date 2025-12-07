@@ -19,48 +19,35 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTFuelGeneratorBlockEntity(RagiumBlocks.COMBUSTION_GENERATOR, pos, state) {
-    lateinit var coolantTank: HTBasicFluidTank
-        private set
+class HTMagmaticGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
+    HTFuelGeneratorBlockEntity(RagiumBlocks.MAGMATIC_GENERATOR, pos, state) {
     lateinit var fuelTank: HTBasicFluidTank
         private set
 
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // inputs
-        coolantTank = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(
-                listener,
-                blockHolder.getFluidAttribute().getFirstInputTank(),
-                canInsert = RagiumDataMapTypes::getCoolantAmount.andThen { it > 0 },
-            ),
-        )
         fuelTank = builder.addSlot(
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(
                 listener,
-                blockHolder.getFluidAttribute().getSecondInputTank(),
-                canInsert = RagiumDataMapTypes::getTimeFromCombustion.andThen { it > 0 },
+                blockHolder.getFluidAttribute().getInputTank(),
+                RagiumDataMapTypes::getTimeFromMagmatic.andThen { it > 0 },
             ),
         )
     }
 
     override fun getNewBurnTime(level: ServerLevel, pos: BlockPos): Int {
-        // 冷却液が必要量あるか判定する
-        if (!HTStackSlotHelper.canShrinkStack(coolantTank, RagiumDataMapTypes::getCoolantAmount, true)) return 0
         // 燃料が必要量あるか判定する
         if (!HTStackSlotHelper.canShrinkStack(fuelTank, 100, true)) return 0
-        return fuelTank.getStack()?.let(RagiumDataMapTypes::getTimeFromCombustion) ?: 0
+        return fuelTank.getStack()?.let(RagiumDataMapTypes::getTimeFromMagmatic) ?: 0
     }
 
     override fun onFuelUpdated(level: ServerLevel, pos: BlockPos, isSucceeded: Boolean) {
         if (isSucceeded) {
             // インプットを減らす
-            HTStackSlotHelper.shrinkStack(coolantTank, RagiumDataMapTypes::getCoolantAmount, HTStorageAction.EXECUTE)
             fuelTank.extract(100, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
             // SEを鳴らす
-            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1f, 0.5f)
+            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1f, 0.5f)
         }
     }
 }

@@ -101,11 +101,22 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     private fun magmaticFuels() {
+        val lowest = HTFluidFuelData(40)
+        val low = HTFluidFuelData(60)
+        val medium = HTFluidFuelData(120)
+        val high = HTFluidFuelData(180)
+        val highest = HTFluidFuelData(240)
+
         builder(RagiumDataMapTypes.MAGMATIC_FUEL)
-            .add("steam", HTFluidFuelData(4_000))
-            .add(HTFluidHolderLike.LAVA, HTFluidFuelData(16_000))
-            .add(RagiumFluidContents.CRIMSON_BLOOD, HTFluidFuelData(32_000))
-            .add("blaze_blood", HTFluidFuelData(32_000))
+            // lowest
+            .add("steam", lowest)
+            // low
+            // medium
+            .add(HTFluidHolderLike.LAVA, medium)
+            // high
+            .add(RagiumFluidContents.CRIMSON_BLOOD, high)
+            .add("blaze_blood", high)
+        // highest
     }
 
     private fun combustionFuels() {

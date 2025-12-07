@@ -75,6 +75,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.THERMAL_GENERATOR)
 
             add(RagiumBlocks.CULINARY_GENERATOR)
+            add(RagiumBlocks.MAGMATIC_GENERATOR)
 
             add(RagiumBlocks.COMBUSTION_GENERATOR)
             add(RagiumBlocks.SOLAR_PANEL_UNIT)

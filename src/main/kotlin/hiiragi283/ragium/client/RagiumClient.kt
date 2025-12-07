@@ -22,6 +22,7 @@ import hiiragi283.ragium.client.gui.screen.HTGenericScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTCombustionGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTGeneratorScreen
+import hiiragi283.ragium.client.gui.screen.generator.HTMagmaticGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTCrusherScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTMobCrusherScreen
@@ -249,6 +250,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             },
             RagiumBlocks.THERMAL_GENERATOR.asItem(),
             RagiumBlocks.CULINARY_GENERATOR.asItem(),
+            RagiumBlocks.MAGMATIC_GENERATOR.asItem(),
             RagiumBlocks.COMBUSTION_GENERATOR.asItem(),
             RagiumBlocks.ENCHANTMENT_GENERATOR.asItem(),
         )
@@ -273,6 +275,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.ITEM_COLLECTOR, ::HTBlockEntityContainerScreen)
         event.register(RagiumMenuTypes.ITEM_GENERATOR, HTGeneratorScreen.createFactory("item_generator"))
+        event.register(RagiumMenuTypes.MAGMATIC_GENERATOR, ::HTMagmaticGeneratorScreen)
         event.register(RagiumMenuTypes.MELTER, HTSingleFluidProcessorScreen.Companion::melter)
         event.register(RagiumMenuTypes.MIXER, ::HTMixerScreen)
         event.register(RagiumMenuTypes.MOB_CRUSHER, ::HTMobCrusherScreen)
@@ -310,6 +313,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.THERMAL_GENERATOR.get(), ::HTFuelGeneratorRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CULINARY_GENERATOR.get(), ::HTFuelGeneratorRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.MAGMATIC_GENERATOR.get(), ::HTFuelGeneratorRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION_GENERATOR.get(), ::HTFuelGeneratorRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.ENCHANTMENT_GENERATOR.get(), ::HTFuelGeneratorRenderer)

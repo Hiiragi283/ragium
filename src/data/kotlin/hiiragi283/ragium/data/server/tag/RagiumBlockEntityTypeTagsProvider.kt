@@ -41,6 +41,7 @@ class RagiumBlockEntityTypeTagsProvider(context: HTDataGenContext) :
             .add(RagiumBlockEntityTypes.THERMAL_GENERATOR)
             // Advanced
             .add(RagiumBlockEntityTypes.CULINARY_GENERATOR)
+            .add(RagiumBlockEntityTypes.MAGMATIC_GENERATOR)
             // Elite
             .add(RagiumBlockEntityTypes.COMBUSTION_GENERATOR)
             .add(RagiumBlockEntityTypes.SOLAR_PANEL_CONTROLLER)

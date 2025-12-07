@@ -186,6 +186,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         @JvmField
         val culinary: HTMachineConfig = HTMachineConfig.createSimple(builder, "culinary")
 
+        @JvmField
+        val magmatic: HTMachineConfig = HTMachineConfig.createSimple(builder, "magmatic", HTFluidBlockAttribute.TankType.INPUT)
+
         // Elite
         @JvmField
         val combustion: HTMachineConfig = HTMachineConfig.createSimple(

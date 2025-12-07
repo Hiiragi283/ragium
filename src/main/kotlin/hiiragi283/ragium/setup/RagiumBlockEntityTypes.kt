@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTMagmaticGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTSolarPanelControllerBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTThermalGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAdvancedMixerBlockEntity
@@ -86,6 +87,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val CULINARY_GENERATOR: HTDeferredBlockEntityType<HTCulinaryGeneratorBlockEntity> =
         registerTick("culinary_generator", ::HTCulinaryGeneratorBlockEntity)
+
+    @JvmField
+    val MAGMATIC_GENERATOR: HTDeferredBlockEntityType<HTMagmaticGeneratorBlockEntity> =
+        registerTick("magmatic_generator", ::HTMagmaticGeneratorBlockEntity)
 
     // Elite
     @JvmField
@@ -257,6 +262,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, THERMAL_GENERATOR.get())
 
         registerHandler(event, CULINARY_GENERATOR.get())
+        registerHandler(event, MAGMATIC_GENERATOR.get())
 
         registerHandler(event, COMBUSTION_GENERATOR.get())
         registerHandler(event, SOLAR_PANEL_CONTROLLER.get())

@@ -132,6 +132,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.THERMAL_GENERATOR, "Thermal Generator")
 
         add(RagiumBlocks.CULINARY_GENERATOR, "Culinary Generator")
+        add(RagiumBlocks.MAGMATIC_GENERATOR, "Magmatic Generator")
 
         add(RagiumBlocks.COMBUSTION_GENERATOR, "Combustion Generator")
         add(RagiumBlocks.SOLAR_PANEL_UNIT, "Solar Panel Unit")
