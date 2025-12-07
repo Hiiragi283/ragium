@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.registry.impl
 
-import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
@@ -48,14 +47,13 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
                 return holder
             }
         }
-        // 最後にHTMaterialRecipeManagerから行う
-        return RagiumPlatform.INSTANCE.getMaterialRecipeManager().getRecipeFor(get(), input, level, lastRecipe)
+        return null
     }
 
     private fun matches(recipe: RECIPE, input: INPUT, level: Level): Boolean = recipe.matches(input, level) && !recipe.isIncomplete
 
-    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = buildList {
-        addAll(manager.getAllRecipesFor(get()).filterNot { holder: RecipeHolder<RECIPE> -> holder.value.isIncomplete })
-        addAll(RagiumPlatform.INSTANCE.getMaterialRecipeManager().getAllRecipes(manager, get()))
-    }.asSequence()
+    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = manager
+        .getAllRecipesFor(get())
+        .asSequence()
+        .filterNot { holder: RecipeHolder<RECIPE> -> holder.value.isIncomplete }
 }

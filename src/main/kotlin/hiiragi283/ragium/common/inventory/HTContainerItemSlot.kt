@@ -39,12 +39,12 @@ open class HTContainerItemSlot(
             this.setBackground(atlas, texture)
         }
     }
-    
+
     fun updateCount(count: Int) {
         stackSetter.accept(slot.getStack()?.copyWithAmount(count))
         setChanged()
     }
-    
+
     private fun insertItem(stack: ItemStack, action: HTStorageAction): ItemStack {
         val remainder: ImmutableItemStack? = slot.insert(stack.toImmutable(), action, HTStorageAccess.MANUAL)
         if (action.execute && stack.count != remainder?.amount()) {

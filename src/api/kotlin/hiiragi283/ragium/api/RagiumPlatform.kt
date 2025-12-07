@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.HTPlantingRecipe
-import hiiragi283.ragium.api.recipe.HTRuntimeRecipeManager
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -68,8 +67,6 @@ interface RagiumPlatform {
     fun getPrefix(name: String): HTMaterialPrefix? = getPrefixMap()[name]
 
     //    Recipe    //
-
-    fun getMaterialRecipeManager(): HTRuntimeRecipeManager
 
     fun createItemCreator(provider: HolderLookup.Provider): HTItemIngredientCreator =
         createItemCreator(provider.lookupOrThrow(Registries.ITEM))

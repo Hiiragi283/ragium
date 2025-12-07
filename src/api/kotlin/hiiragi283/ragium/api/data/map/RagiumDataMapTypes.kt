@@ -7,18 +7,12 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.registries.datamaps.AdvancedDataMapType
 import net.neoforged.neoforge.registries.datamaps.DataMapType
-import net.neoforged.neoforge.registries.datamaps.DataMapValueMerger
-
-typealias IdMapDataMap<R, V> = AdvancedDataMapType<R, Map<ResourceLocation, V>, MapDataMapValueRemover<R, V>>
 
 /**
  * Ragiumで使用する[DataMapType]へのアクセス
@@ -47,16 +41,6 @@ object RagiumDataMapTypes {
     @JvmField
     val SUB_ENTITY_INGREDIENT: DataMapType<Item, HTSubEntityTypeIngredient> =
         create("sub_entity_ingredient", Registries.ITEM, HTSubEntityTypeIngredient.CODEC)
-
-    // Recipe Type
-    @JvmField
-    val MATERIAL_RECIPE: IdMapDataMap<RecipeType<*>, HTRuntimeRecipeProvider> =
-        AdvancedDataMapType
-            .builder(RagiumAPI.id("runtime_recipe"), Registries.RECIPE_TYPE, HTRuntimeRecipeProvider.ID_MAP_CODEC)
-            .synced(HTRuntimeRecipeProvider.ID_MAP_CODEC, false)
-            .merger(DataMapValueMerger.mapMerger())
-            .remover(MapDataMapValueRemover.codec())
-            .build()
 
     //    Extensions    //
 
