@@ -29,7 +29,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Smooth Blackstone
         HTCookingRecipeBuilder
-            .smelting(RagiumBlocks.SMOOTH_BLOCKSTONE)
+            .smelting(RagiumBlocks.SMOOTH_BLACKSTONE)
             .addIngredient(Items.BLACKSTONE)
             .setExp(0.1f)
             .save(output)

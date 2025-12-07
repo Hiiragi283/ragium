@@ -30,10 +30,7 @@ sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provi
     companion object {
         @JvmField
         val DROP_RAGI_CHERRY: ResourceKey<LootTable> = create("drop_ragi_cherry")
-
-        @JvmField
-        val DROP_SPAWNER_FRAGMENT: ResourceKey<LootTable> = create("drop_spawner_fragment")
-
+        
         @JvmField
         val DROP_ELDER_HEART: ResourceKey<LootTable> = create("drop_elder_heart")
 
@@ -97,22 +94,6 @@ sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provi
                                             0.025f,
                                         ),
                                     ),
-                            ),
-                    ),
-            )
-            // Drops Spawner Fragment from Spawner
-            output.accept(
-                DROP_SPAWNER_FRAGMENT,
-                LootTable
-                    .lootTable()
-                    .withPool(
-                        LootPool
-                            .lootPool()
-                            .setRolls(ConstantValue.exactly(1f))
-                            .`when`(doesNotHaveShearsOrSilkTouch())
-                            .add(
-                                LootItem
-                                    .lootTableItem(RagiumItems.SPAWNER_FRAGMENT),
                             ),
                     ),
             )

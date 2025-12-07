@@ -370,7 +370,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.BOTTLED_BEE)
             .add(RagiumItems.DRILL)
             .add(RagiumItems.RAGIUM_POWDER)
-            .add(RagiumItems.SPAWNER_FRAGMENT)
     }
 
     //    Integration    //

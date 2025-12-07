@@ -4,10 +4,8 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
@@ -21,7 +19,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
@@ -60,16 +57,17 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.ECHO_SHARD),
             ).save(output)
 
-        // Molten Crystals
-        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            val base: TagKey<Item> = data.base ?: continue
-            HTItemWithCatalystRecipeBuilder
-                .simulating(
-                    itemCreator.fromTagKey(base, 4),
-                    itemCreator.fromItem(HTMoldType.GEM),
-                    resultHelper.item(CommonMaterialPrefixes.GEM, data),
-                ).save(output)
-        }
+        // Imitation Spawner
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.IMITATION_SPAWNER)
+            .pattern(
+                "ABA",
+                "ACA",
+                "ABA",
+            ).define('A', RagiumBlocks.getMetalBars(RagiumMaterialKeys.DEEP_STEEL))
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+            .define('C', Tags.Items.NETHER_STARS)
+            .save(output)
 
         mobExtracting()
     }

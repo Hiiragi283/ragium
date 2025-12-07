@@ -68,7 +68,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.BUDDING_QUARTZ)
             add(RagiumBlocks.QUARTZ_CLUSTER)
             add(RagiumBlocks.RESONANT_DEBRIS)
-            add(RagiumBlocks.SMOOTH_BLOCKSTONE)
+            add(RagiumBlocks.IMITATION_SPAWNER)
+            add(RagiumBlocks.SMOOTH_BLACKSTONE)
             add(RagiumBlocks.SOOTY_COBBLESTONE)
             // Generators
             add(RagiumBlocks.THERMAL_GENERATOR)
@@ -251,6 +252,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         factory
             .apply(RagiumModTags.Blocks.WIP)
             .add(RagiumBlocks.ENCHANTMENT_GENERATOR)
+            .add(RagiumBlocks.IMITATION_SPAWNER)
             .add(RagiumBlocks.NUCLEAR_REACTOR)
             .add(RagiumBlocks.OPEN_CRATE)
             .add(RagiumBlocks.PLANTER)
