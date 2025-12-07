@@ -13,7 +13,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.Recipe
 
 class HTPlantingRecipeBuilder(
     private val seed: HTKeyOrTagEntry<Item>,
@@ -42,5 +41,5 @@ class HTPlantingRecipeBuilder(
 
     override fun getPrimalId(): ResourceLocation = crop.id
 
-    override fun createRecipe(): Recipe<*> = HTPlantingRecipe(seed, soil, fluid, crop)
+    override fun createRecipe(): HTPlantingRecipe = HTPlantingRecipe(seed, soil, fluid, crop)
 }

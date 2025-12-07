@@ -46,7 +46,7 @@ class HTPlantingRecipe(
         return bool1 || bool2 || bool3 || bool4
     }
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumPlatform.Companion.INSTANCE.getPlantingRecipeSerializer()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumPlatform.INSTANCE.getPlantingRecipeSerializer()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.PLANTING.get()
 }
