@@ -11,6 +11,8 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.flag.FeatureFlag
+import net.minecraft.world.flag.FeatureFlags
 import net.neoforged.neoforge.registries.RegistryBuilder
 import org.slf4j.Logger
 import java.util.ServiceLoader
@@ -80,6 +82,10 @@ object RagiumAPI {
     val SUB_ENTITY_INGREDIENT_TYPE_REGISTRY: Registry<MapCodec<out HTSubEntityTypeIngredient>> = createRegistry(
         SUB_ENTITY_INGREDIENT_TYPE_KEY,
     )
+
+    // Feature Flag
+    @JvmField
+    val WORK_IN_PROGRESS: FeatureFlag = FeatureFlags.REGISTRY.getFlag(RagiumAPI.id("work_in_progress"))
 
     //    Service    //
 

@@ -29,11 +29,12 @@ data object HTCreativeTabHelper {
         }
         for (like: HTItemHolderLike in items) {
             val item: Item = like.asItem()
+            if (!item.isEnabled(parameters.enabledFeatures())) continue
             if (item is HTSubCreativeTabContents) {
                 if (item.shouldAddDefault()) {
                     output.accept(item, visibility)
                 }
-                item.addItems(like, parameters.holders()) { output.accept(it, visibility) }
+                item.addItems(like, parameters) { output.accept(it, visibility) }
             } else {
                 output.accept(item, visibility)
             }

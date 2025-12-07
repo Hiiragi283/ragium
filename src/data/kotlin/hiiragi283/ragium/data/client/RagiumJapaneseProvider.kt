@@ -323,7 +323,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun modTags() {
         add(RagiumModTags.Blocks.LED_BLOCKS, "LEDブロック")
         add(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES, "共振の残骸で置換可能")
-        add(RagiumModTags.Blocks.WIP, "開発中")
 
         add(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST, "捕獲できるモブのブラックリスト")
         add(RagiumModTags.EntityTypes.CONFUSION_BLACKLIST, "混乱を起こすモブのブラックリスト")
@@ -335,7 +334,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Items.PLASTICS, "プラスチック")
         add(RagiumModTags.Items.POLYMER_RESIN, "高分子樹脂")
         add(RagiumModTags.Items.RAW_MEAT, "生肉")
-        add(RagiumModTags.Items.WIP, "開発中")
 
         add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "容量増加をエンチャント可能")
         add(RagiumModTags.Items.RANGE_ENCHANTABLE, "範囲増加をエンチャント可能")
@@ -405,7 +403,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")
-        add(RagiumTranslation.TOOLTIP_WIP, "この要素は開発中です！！")
+
+        add(RagiumTranslation.DATAPACK_WIP, "開発中の要素を有効にします")
         // Common
         add(RagiumCommonTranslation.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
         add(RagiumCommonTranslation.EXP_BERRIES, "食べると経験値を付与します。")

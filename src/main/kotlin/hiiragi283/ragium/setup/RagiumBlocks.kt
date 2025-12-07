@@ -118,6 +118,9 @@ object RagiumBlocks {
     @JvmStatic
     private fun copyOf(block: Block, mapColor: MapColor): BlockBehaviour.Properties = copyOf(block).mapColor(mapColor)
 
+    @JvmStatic
+    private fun BlockBehaviour.Properties.workInProgress(): BlockBehaviour.Properties = this.requiredFeatures(RagiumAPI.WORK_IN_PROGRESS)
+
     //    Natural Resources    //
 
     @JvmField
@@ -144,7 +147,7 @@ object RagiumBlocks {
     val RESONANT_DEBRIS: HTSimpleDeferredBlock = REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
 
     @JvmField
-    val IMITATION_SPAWNER: HTSimpleDeferredBlock = REGISTER.registerSimple("imitation_spawner", copyOf(Blocks.SPAWNER))
+    val IMITATION_SPAWNER: HTSimpleDeferredBlock = REGISTER.registerSimple("imitation_spawner", copyOf(Blocks.SPAWNER).workInProgress())
 
     @JvmField
     val SOOTY_COBBLESTONE: HTSimpleDeferredBlock = REGISTER.registerSimple(
@@ -462,14 +465,14 @@ object RagiumBlocks {
     val ENCHANTMENT_GENERATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "enchantment_generator",
         RagiumBlockTypes.ENCHANTMENT_GENERATOR,
-        machine().noOcclusion(),
+        machine().noOcclusion().workInProgress(),
     )
 
     @JvmField
     val NUCLEAR_REACTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "nuclear_reactor",
         RagiumBlockTypes.NUCLEAR_REACTOR,
-        machine().noOcclusion(),
+        machine().noOcclusion().workInProgress(),
     )
 
     //    Processor    //
@@ -535,7 +538,7 @@ object RagiumBlocks {
 
     @JvmField
     val PLANTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("planter", RagiumBlockTypes.PLANTER, machine().noOcclusion())
+        registerMachineTier("planter", RagiumBlockTypes.PLANTER, machine().noOcclusion().workInProgress())
 
     // Ultimate
     @JvmField
@@ -568,7 +571,7 @@ object RagiumBlocks {
     // Advanced
     @JvmField
     val STONE_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("stone_collector", RagiumBlockTypes.STONE_COLLECTOR, machine())
+        registerMachineTier("stone_collector", RagiumBlockTypes.STONE_COLLECTOR, machine().workInProgress())
 
     // Elite
     @JvmField
@@ -582,7 +585,7 @@ object RagiumBlocks {
     // Ultimate
     @JvmField
     val TELEPAD: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("telepad", RagiumBlockTypes.TELEPAD, machine())
+        registerMachineTier("telepad", RagiumBlockTypes.TELEPAD, machine().workInProgress())
 
     // Creative
     @JvmField
@@ -611,7 +614,7 @@ object RagiumBlocks {
     val OPEN_CRATE: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
         "open_crate",
         RagiumBlockTypes.OPEN_CRATE,
-        machine(),
+        machine().workInProgress(),
     )
 
     @JvmField

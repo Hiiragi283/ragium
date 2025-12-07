@@ -251,15 +251,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         factory
             .apply(Tags.Blocks.BUDDING_BLOCKS)
             .add(RagiumBlocks.BUDDING_QUARTZ)
-        // WIP
-        factory
-            .apply(RagiumModTags.Blocks.WIP)
-            .add(RagiumBlocks.ENCHANTMENT_GENERATOR)
-            .add(RagiumBlocks.IMITATION_SPAWNER)
-            .add(RagiumBlocks.NUCLEAR_REACTOR)
-            .add(RagiumBlocks.OPEN_CRATE)
-            .add(RagiumBlocks.PLANTER)
-            .add(RagiumBlocks.TELEPAD)
     }
 
     //    Extensions    //

@@ -6,7 +6,6 @@ import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -15,6 +14,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
@@ -62,7 +62,7 @@ class HTLootTicketItem(properties: Properties) :
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
     }
 
-    override fun addItems(baseItem: HTItemHolderLike, provider: HolderLookup.Provider, consumer: Consumer<ItemStack>) {
+    override fun addItems(baseItem: HTItemHolderLike, parameters: CreativeModeTab.ItemDisplayParameters, consumer: Consumer<ItemStack>) {
         for (tickets: HTDefaultLootTickets in HTDefaultLootTickets.entries) {
             val stack: ItemStack = baseItem.toStack()
             stack.set(RagiumDataComponents.LOOT_TICKET, tickets.targets)

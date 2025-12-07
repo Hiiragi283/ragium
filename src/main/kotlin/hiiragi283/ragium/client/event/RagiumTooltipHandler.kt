@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.item.component.HTItemContents
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
@@ -39,7 +38,6 @@ object RagiumTooltipHandler {
             food(stack, consumer, event.context.tickRate())
         }
         machineUpgrade(stack, consumer1, context)
-        workInProgress(stack, consumer1)
 
         RagiumDataComponents.REGISTER
             .asSequence()
@@ -75,13 +73,6 @@ object RagiumTooltipHandler {
     @JvmStatic
     private fun machineUpgrade(stack: ItemStack, consumer: Consumer<Component>, context: Item.TooltipContext) {
         RagiumPlatform.INSTANCE.getMachineUpgrade(context.registries(), stack)?.addToTooltip(consumer)
-    }
-
-    @JvmStatic
-    private fun workInProgress(stack: ItemStack, consumer: Consumer<Component>) {
-        if (stack.`is`(RagiumModTags.Items.WIP)) {
-            consumer.accept(RagiumTranslation.TOOLTIP_WIP.translateColored(ChatFormatting.DARK_RED))
-        }
     }
 
     @SubscribeEvent

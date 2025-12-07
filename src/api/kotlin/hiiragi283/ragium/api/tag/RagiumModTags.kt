@@ -28,9 +28,6 @@ object RagiumModTags {
         @JvmField
         val RESONANT_DEBRIS_REPLACEABLES: TagKey<Block> = create("deepslate_ore_replaceables")
 
-        @JvmField
-        val WIP: TagKey<Block> = create("work_in_progress")
-
         @JvmStatic
         private fun create(path: String): TagKey<Block> = Registries.BLOCK.createTagKey(RagiumAPI.id(path))
     }
@@ -127,9 +124,6 @@ object RagiumModTags {
 
         @JvmField
         val RAW_MEAT: TagKey<Item> = create("raw_meat")
-
-        @JvmField
-        val WIP: TagKey<Item> = create("work_in_progress")
 
         // Enchantments
         @JvmField

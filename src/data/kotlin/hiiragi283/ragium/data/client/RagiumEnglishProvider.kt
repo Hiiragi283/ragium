@@ -321,7 +321,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun modTags() {
         add(RagiumModTags.Blocks.LED_BLOCKS, "LED Blocks")
         add(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES, "Replaceable by Resonant Debris")
-        add(RagiumModTags.Blocks.WIP, "Work In Progress")
 
         add(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST, "Blacklisted mobs for capturing")
         add(RagiumModTags.EntityTypes.CONFUSION_BLACKLIST, "Blacklisted mobs for confusion")
@@ -333,7 +332,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Items.PLASTICS, "Plastics")
         add(RagiumModTags.Items.POLYMER_RESIN, "Polymer Resins")
         add(RagiumModTags.Items.RAW_MEAT, "Raw Meats")
-        add(RagiumModTags.Items.WIP, "Work In Progress")
 
         add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "Capacity Enchantable")
         add(RagiumModTags.Items.RANGE_ENCHANTABLE, "Range Enchantable")
@@ -403,8 +401,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")
-        add(RagiumTranslation.TOOLTIP_WIP, "This content is work in progress!!")
 
+        add(RagiumTranslation.DATAPACK_WIP, "Enables work in progress contents")
         // Common
         add(RagiumCommonTranslation.WARPED_WART, "Clears one bad effect randomly when eaten.")
         add(RagiumCommonTranslation.EXP_BERRIES, "Gives experience when eaten.")

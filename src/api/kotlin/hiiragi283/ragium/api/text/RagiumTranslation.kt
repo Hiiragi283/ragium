@@ -57,7 +57,8 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
 
     TOOLTIP_SHOW_DESCRIPTION("tooltip", "show_description"),
     TOOLTIP_SHOW_DETAILS("tooltip", "show_details"),
-    TOOLTIP_WIP("tooltip", "work_in_progress"),
+
+    DATAPACK_WIP("datapack", "work_in_progress"),
     ;
 
     override val translationKey: String = Util.makeDescriptionId(type, RagiumAPI.id(path.joinToString(separator = ".")))

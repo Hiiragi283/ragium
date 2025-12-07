@@ -153,7 +153,9 @@ object RagiumItems {
     val RAGI_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_coke")
 
     @JvmField
-    val RAGIUM_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragium_powder")
+    val RAGIUM_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragium_powder") {
+        it.requiredFeatures(RagiumAPI.WORK_IN_PROGRESS)
+    }
 
     // Wood
     @JvmField
@@ -386,7 +388,9 @@ object RagiumItems {
     val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
 
     @JvmField
-    val DRILL: HTSimpleDeferredItem = REGISTER.registerItem("drill", ::HTDrillItem)
+    val DRILL: HTSimpleDeferredItem = REGISTER.registerItem("drill", ::HTDrillItem) {
+        it.requiredFeatures(RagiumAPI.WORK_IN_PROGRESS)
+    }
 
     // Azure
     // Crimson
@@ -554,7 +558,9 @@ object RagiumItems {
 
     // Other
     @JvmField
-    val BOTTLED_BEE: HTSimpleDeferredItem = REGISTER.registerItem("bottled_bee", ::HTBottledBeeItem)
+    val BOTTLED_BEE: HTSimpleDeferredItem = REGISTER.registerItem("bottled_bee", ::HTBottledBeeItem) {
+        it.requiredFeatures(RagiumAPI.WORK_IN_PROGRESS)
+    }
 
     @JvmField
     val AMBROSIA: HTSimpleDeferredItem = REGISTER.registerItem(

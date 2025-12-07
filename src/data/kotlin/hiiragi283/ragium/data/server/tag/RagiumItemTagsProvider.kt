@@ -104,8 +104,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         copy(Tags.Blocks.CLUSTERS, Tags.Items.CLUSTERS)
         copy(Tags.Blocks.BUDDING_BLOCKS, Tags.Items.BUDDING_BLOCKS)
-
-        copy(RagiumModTags.Blocks.WIP, RagiumModTags.Items.WIP)
     }
 
     private val tagsToCopy: MutableMap<TagKey<Block>, TagKey<Item>> = mutableMapOf()
@@ -363,13 +361,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         for (item: HTHolderLike in RagiumItems.MOLDS.values) {
             factory.apply(RagiumModTags.Items.MOLDS).add(item)
         }
-        // WIP
-        factory
-            .apply(RagiumModTags.Items.WIP)
-            // .add(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK, HTTagDependType.OPTIONAL)
-            .add(RagiumItems.BOTTLED_BEE)
-            .add(RagiumItems.DRILL)
-            .add(RagiumItems.RAGIUM_POWDER)
     }
 
     //    Integration    //

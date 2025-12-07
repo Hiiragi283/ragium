@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.data.HTDataGenerator
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.loot.LootTableProvider
 import net.minecraft.data.loot.LootTableProvider.SubProviderEntry
@@ -11,7 +12,7 @@ object RagiumLootTableProvider {
     @JvmStatic
     fun create(
         vararg pairs: Pair<(HolderLookup.Provider) -> LootTableSubProvider, LootContextParamSet>,
-    ): HTDataGenContext.Factory<LootTableProvider> = HTDataGenContext.Factory { context: HTDataGenContext ->
+    ): HTDataGenerator.Factory<LootTableProvider> = HTDataGenerator.Factory { context: HTDataGenContext ->
         LootTableProvider(
             context.output,
             setOf(),
