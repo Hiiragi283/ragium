@@ -113,22 +113,11 @@ object RagiumBlocks {
     ): HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = REGISTER.registerSimple(name, { HTTypedEntityBlock(blockType, properties) })
 
     @JvmStatic
-    fun machineProperty(): BlockBehaviour.Properties = BlockBehaviour.Properties
-        .of()
-        .mapColor(MapColor.COLOR_BLACK)
-        .requiresCorrectToolForDrops()
-        .sound(SoundType.COPPER)
-        .strength(3.5f, 16f)
-
-    @JvmStatic
     private fun copyOf(block: Block): BlockBehaviour.Properties = BlockBehaviour.Properties.ofFullCopy(block)
 
     @JvmStatic
     private fun copyOf(block: Block, mapColor: MapColor): BlockBehaviour.Properties = copyOf(block).mapColor(mapColor)
-
-    @JvmStatic
-    private fun glass(): BlockBehaviour.Properties = copyOf(Blocks.GLASS)
-
+    
     //    Natural Resources    //
 
     @JvmField
@@ -280,7 +269,7 @@ object RagiumBlocks {
         fun glass(
             key: HTMaterialKey,
             factory: BlockWithContextFactory<Boolean, HTGlassBlock>,
-            properties: BlockBehaviour.Properties = glass().strength(0.3f, 1200f),
+            properties: BlockBehaviour.Properties = copyOf(Blocks.GLASS).strength(0.3f, 1200f),
         ) {
             this[HTGlassVariant.DEFAULT, key] =
                 REGISTER.register("${key.name}_glass", properties, factory.partially1(false), ::HTDescriptionBlockItem)
@@ -289,7 +278,7 @@ object RagiumBlocks {
         }
 
         // Quartz
-        glass(VanillaMaterialKeys.QUARTZ, ::HTQuartzGlassBlock, glass())
+        glass(VanillaMaterialKeys.QUARTZ, ::HTQuartzGlassBlock, copyOf(Blocks.GLASS))
 
         // Obsidian
         glass(VanillaMaterialKeys.OBSIDIAN, ::HTObsidianGlass)
@@ -395,7 +384,7 @@ object RagiumBlocks {
     @JvmField
     val LED_BLOCKS: Map<HTColorMaterial, HTSimpleDeferredBlock> =
         HTColorMaterial.entries.associateWith { color: HTColorMaterial ->
-            REGISTER.registerSimple("${color.asMaterialName()}_led_block", glass().mapColor(color.dyeColor).lightLevel { 15 })
+            REGISTER.registerSimple("${color.asMaterialName()}_led_block", copyOf(Blocks.GLASS).mapColor(color.dyeColor).lightLevel { 15 })
         }
 
     @JvmStatic
@@ -412,12 +401,20 @@ object RagiumBlocks {
 
     //    Generators    //
 
+    @JvmStatic
+    fun machine(): BlockBehaviour.Properties = BlockBehaviour.Properties
+        .of()
+        .mapColor(MapColor.COLOR_BLACK)
+        .requiresCorrectToolForDrops()
+        .sound(SoundType.COPPER)
+        .strength(3.5f, 16f)
+
     // Basic
     @JvmField
     val THERMAL_GENERATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "thermal_generator",
         RagiumBlockTypes.THERMAL_GENERATOR,
-        machineProperty().noOcclusion(),
+        machine().noOcclusion(),
     )
 
     // Advanced
@@ -425,7 +422,7 @@ object RagiumBlocks {
     val CULINARY_GENERATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "culinary_generator",
         RagiumBlockTypes.CULINARY_GENERATOR,
-        machineProperty().noOcclusion(),
+        machine().noOcclusion(),
     )
 
     // Elite
@@ -433,7 +430,7 @@ object RagiumBlocks {
     val COMBUSTION_GENERATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "combustion_generator",
         RagiumBlockTypes.COMBUSTION_GENERATOR,
-        machineProperty().noOcclusion(),
+        machine().noOcclusion(),
     )
 
     @JvmField
@@ -441,7 +438,7 @@ object RagiumBlocks {
         REGISTER.registerTyped(
             "solar_panel_unit",
             RagiumBlockTypes.SOLAR_PANEL_UNIT,
-            machineProperty().noOcclusion(),
+            machine().noOcclusion(),
             ::HTTypedBlock,
             ::HTDescriptionBlockItem,
         )
@@ -450,7 +447,7 @@ object RagiumBlocks {
     val SOLAR_PANEL_CONTROLLER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "solar_panel_controller",
         RagiumBlockTypes.SOLAR_PANEL_CONTROLLER,
-        machineProperty().noOcclusion(),
+        machine().noOcclusion(),
     )
 
     // Ultimate
@@ -458,14 +455,14 @@ object RagiumBlocks {
     val ENCHANTMENT_GENERATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "enchantment_generator",
         RagiumBlockTypes.ENCHANTMENT_GENERATOR,
-        machineProperty().noOcclusion(),
+        machine().noOcclusion(),
     )
 
     @JvmField
     val NUCLEAR_REACTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "nuclear_reactor",
         RagiumBlockTypes.NUCLEAR_REACTOR,
-        machineProperty().noOcclusion(),
+        machine().noOcclusion(),
     )
 
     //    Processor    //
@@ -473,112 +470,112 @@ object RagiumBlocks {
     // Basic
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("alloy_smelter", RagiumBlockTypes.ALLOY_SMELTER, machineProperty())
+        registerMachineTier("alloy_smelter", RagiumBlockTypes.ALLOY_SMELTER, machine())
 
     @JvmField
     val BLOCK_BREAKER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("block_breaker", RagiumBlockTypes.BLOCK_BREAKER, machineProperty())
+        registerMachineTier("block_breaker", RagiumBlockTypes.BLOCK_BREAKER, machine())
 
     @JvmField
     val COMPRESSOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("compressor", RagiumBlockTypes.COMPRESSOR, machineProperty())
+        registerMachineTier("compressor", RagiumBlockTypes.COMPRESSOR, machine())
 
     @JvmField
     val CUTTING_MACHINE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("cutting_machine", RagiumBlockTypes.CUTTING_MACHINE, machineProperty())
+        registerMachineTier("cutting_machine", RagiumBlockTypes.CUTTING_MACHINE, machine())
 
     @JvmField
     val ELECTRIC_FURNACE: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("electric_furnace", RagiumBlockTypes.ELECTRIC_FURNACE, machineProperty())
+        registerMachineTier("electric_furnace", RagiumBlockTypes.ELECTRIC_FURNACE, machine())
 
     @JvmField
     val EXTRACTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("extractor", RagiumBlockTypes.EXTRACTOR, machineProperty())
+        registerMachineTier("extractor", RagiumBlockTypes.EXTRACTOR, machine())
 
     @JvmField
     val PULVERIZER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("pulverizer", RagiumBlockTypes.PULVERIZER, machineProperty())
+        registerMachineTier("pulverizer", RagiumBlockTypes.PULVERIZER, machine())
 
     // Advanced
     @JvmField
     val CRUSHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("crusher", RagiumBlockTypes.CRUSHER, machineProperty())
+        registerMachineTier("crusher", RagiumBlockTypes.CRUSHER, machine())
 
     @JvmField
     val MELTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("melter", RagiumBlockTypes.MELTER, machineProperty().noOcclusion())
+        registerMachineTier("melter", RagiumBlockTypes.MELTER, machine().noOcclusion())
 
     @JvmField
     val MIXER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("mixer", RagiumBlockTypes.MIXER, machineProperty())
+        registerMachineTier("mixer", RagiumBlockTypes.MIXER, machine())
 
     @JvmField
     val REFINERY: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("refinery", RagiumBlockTypes.REFINERY, machineProperty().noOcclusion())
+        registerMachineTier("refinery", RagiumBlockTypes.REFINERY, machine().noOcclusion())
 
     // Elite
     @JvmField
     val BREWERY: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("brewery", RagiumBlockTypes.BREWERY, machineProperty())
+        registerMachineTier("brewery", RagiumBlockTypes.BREWERY, machine())
 
     @JvmField
     val ADVANCED_MIXER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("advanced_mixer", RagiumBlockTypes.ADVANCED_MIXER, machineProperty())
+        registerMachineTier("advanced_mixer", RagiumBlockTypes.ADVANCED_MIXER, machine())
 
     @JvmField
     val MULTI_SMELTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("multi_smelter", RagiumBlockTypes.MULTI_SMELTER, machineProperty())
+        registerMachineTier("multi_smelter", RagiumBlockTypes.MULTI_SMELTER, machine())
 
     @JvmField
     val PLANTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("planter", RagiumBlockTypes.PLANTER, machineProperty().noOcclusion())
+        registerMachineTier("planter", RagiumBlockTypes.PLANTER, machine().noOcclusion())
 
     // Ultimate
     @JvmField
     val ENCHANTER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("enchanter", RagiumBlockTypes.ENCHANTER, machineProperty().noOcclusion())
+        registerMachineTier("enchanter", RagiumBlockTypes.ENCHANTER, machine().noOcclusion())
 
     @JvmField
     val MOB_CRUSHER: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("mob_crusher", RagiumBlockTypes.MOB_CRUSHER, machineProperty().noOcclusion())
+        registerMachineTier("mob_crusher", RagiumBlockTypes.MOB_CRUSHER, machine().noOcclusion())
 
     @JvmField
     val SIMULATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("simulator", RagiumBlockTypes.SIMULATOR, machineProperty().noOcclusion())
+        registerMachineTier("simulator", RagiumBlockTypes.SIMULATOR, machine().noOcclusion())
 
     //    Device    //
 
     @JvmField
     val DEVICE_CASING: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("device_casing", machineProperty())
+        REGISTER.registerSimple("device_casing", machine())
 
     // Basic
     @JvmField
     val FLUID_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("fluid_collector", RagiumBlockTypes.FLUID_COLLECTOR, machineProperty())
+        registerMachineTier("fluid_collector", RagiumBlockTypes.FLUID_COLLECTOR, machine())
 
     @JvmField
     val ITEM_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("item_collector", RagiumBlockTypes.ITEM_COLLECTOR, machineProperty())
+        registerMachineTier("item_collector", RagiumBlockTypes.ITEM_COLLECTOR, machine())
 
     // Elite
     @JvmField
     val DIM_ANCHOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("dimensional_anchor", RagiumBlockTypes.DIM_ANCHOR, machineProperty())
+        registerMachineTier("dimensional_anchor", RagiumBlockTypes.DIM_ANCHOR, machine())
 
     @JvmField
     val ENI: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("energy_network_interface", RagiumBlockTypes.ENI, machineProperty())
+        registerMachineTier("energy_network_interface", RagiumBlockTypes.ENI, machine())
 
     // Ultimate
     @JvmField
     val TELEPAD: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("telepad", RagiumBlockTypes.TELEPAD, machineProperty())
+        registerMachineTier("telepad", RagiumBlockTypes.TELEPAD, machine())
 
     // Creative
     @JvmField
     val CEU: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("creative_energy_unit", RagiumBlockTypes.CEU, machineProperty())
+        registerMachineTier("creative_energy_unit", RagiumBlockTypes.CEU, machine())
 
     //    Storages    //
 
@@ -602,7 +599,7 @@ object RagiumBlocks {
     val OPEN_CRATE: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
         "open_crate",
         RagiumBlockTypes.OPEN_CRATE,
-        machineProperty(),
+        machine(),
     )
 
     @JvmField

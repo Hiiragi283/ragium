@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
@@ -53,7 +54,8 @@ abstract class HTItemGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
     private fun consumeFuel(level: ServerLevel, pos: BlockPos) {
         HTStackSlotHelper.shrinkItemStack(
             inputSlot,
-            { stack: ImmutableItemStack? ->
+            ::getRemainder,
+            { stack: ImmutableItemStack ->
                 val remainder: ImmutableItemStack? = remainderSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 HTItemDropHelper.dropStackAt(level, pos, remainder)
             },
@@ -61,6 +63,8 @@ abstract class HTItemGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
             HTStorageAction.EXECUTE,
         )
     }
+    
+    protected abstract fun getRemainder(stack: ImmutableItemStack): ItemStack
 
     protected abstract fun playSound(level: ServerLevel, pos: BlockPos)
 }

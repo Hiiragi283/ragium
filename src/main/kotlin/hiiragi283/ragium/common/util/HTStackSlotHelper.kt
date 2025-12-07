@@ -4,8 +4,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.ImmutableStack
-import hiiragi283.ragium.api.stack.getCraftingRemainingItem
-import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTAmountView
 import hiiragi283.ragium.api.storage.HTStackSlot
@@ -138,17 +136,19 @@ object HTStackSlotHelper {
     //    Item    //
 
     @JvmStatic
-    fun shrinkItemStack(
+    inline fun shrinkItemStack(
         slot: HTItemSlot,
-        stackSetter: Consumer<ImmutableItemStack?>,
+        remainderGetter: (ImmutableItemStack) -> ItemStack,
+        stackSetter: (ImmutableItemStack) -> Unit,
         ingredient: ToIntFunction<ImmutableItemStack>,
         action: HTStorageAction,
     ): Int {
         val stackIn: ImmutableItemStack = slot.getStack() ?: return 0
-        if (stackIn.hasCraftingRemainingItem() && stackIn.amount() == 1) {
-            if (action.execute) {
-                stackSetter.accept(stackIn.getCraftingRemainingItem())
-            }
+        if (action.execute) {
+            stackIn
+                .let(remainderGetter)
+                .let(ItemStack::toImmutable)
+                ?.let(stackSetter)
         }
         return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
     }

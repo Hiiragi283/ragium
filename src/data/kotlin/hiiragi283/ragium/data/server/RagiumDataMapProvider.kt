@@ -109,11 +109,11 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     private fun combustionFuels() {
-        val lowest = HTFluidFuelData(4_000)
-        val low = HTFluidFuelData(8_000)
-        val medium = HTFluidFuelData(16_000)
-        val high = HTFluidFuelData(64_000)
-        val highest = HTFluidFuelData(128_000)
+        val lowest = HTFluidFuelData(80)
+        val low = HTFluidFuelData(120)
+        val medium = HTFluidFuelData(240)
+        val high = HTFluidFuelData(360)
+        val highest = HTFluidFuelData(480)
 
         val actually = ModLoadedCondition(RagiumConst.ACTUALLY)
 

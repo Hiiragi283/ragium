@@ -271,7 +271,7 @@ class RagiumEmiPlugin : EmiPlugin {
             { stack: ItemStack ->
                 val food: FoodProperties = stack.getFoodProperties(null) ?: return@addItemStackRecipes null
                 val stack1: EmiStack = stack.toEmi()
-                stack1.remainder = stack.craftingRemainingItem.toEmi()
+                food.usingConvertsTo().map(ItemStack::toEmi).ifPresent(stack1::setRemainder)
                 HTEmiFluidFuelData(stack1, HTCulinaryGeneratorBlockEntity.getTime(food))
             },
             ::HTFuelGeneratorEmiRecipe,
