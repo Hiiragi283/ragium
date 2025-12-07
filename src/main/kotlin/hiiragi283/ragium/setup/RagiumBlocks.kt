@@ -32,7 +32,6 @@ import hiiragi283.ragium.common.block.glass.HTGlassBlock
 import hiiragi283.ragium.common.block.glass.HTObsidianGlass
 import hiiragi283.ragium.common.block.glass.HTQuartzGlassBlock
 import hiiragi283.ragium.common.block.glass.HTWarpedGlassBlock
-import hiiragi283.ragium.common.block.processor.HTRefineryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
@@ -99,20 +98,12 @@ object RagiumBlocks {
     }
 
     @JvmStatic
-    fun <BLOCK : HTTypedEntityBlock<*>> registerMachineTier(
-        name: String,
-        blockType: HTEntityBlockType,
-        blockProp: BlockBehaviour.Properties,
-        blockFactory: BlockWithContextFactory<HTEntityBlockType, BLOCK>,
-    ): HTDeferredBlock<BLOCK, HTMachineBlockItem> = REGISTER.registerTyped(name, blockType, blockProp, blockFactory, ::HTMachineBlockItem)
-
-    @JvmStatic
     fun registerMachineTier(
         name: String,
         blockType: HTEntityBlockType,
         properties: BlockBehaviour.Properties,
     ): HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier(name, blockType, properties, ::HTTypedEntityBlock)
+        REGISTER.registerTyped(name, blockType, properties, ::HTTypedEntityBlock, ::HTMachineBlockItem)
 
     @JvmStatic
     fun registerSimpleEntity(
@@ -523,12 +514,7 @@ object RagiumBlocks {
 
     @JvmField
     val REFINERY: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier(
-            "refinery",
-            RagiumBlockTypes.REFINERY,
-            machineProperty().noOcclusion(),
-            ::HTRefineryBlock,
-        )
+        registerMachineTier("refinery", RagiumBlockTypes.REFINERY, machineProperty().noOcclusion())
 
     // Elite
     @JvmField
