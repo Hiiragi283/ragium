@@ -4,8 +4,8 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -17,18 +17,18 @@ import net.neoforged.neoforge.common.Tags
 object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Vanilla
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(ItemTags.WOOL),
                 resultHelper.item(Items.STRING, 4),
             ).saveSuffixed(output, "_from_wool")
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(ItemTags.WOOL_CARPETS),
                 resultHelper.item(Items.STRING, 2),
                 resultHelper.item(Items.STRING),
             ).saveSuffixed(output, "_from_carpet")
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.COBWEB),
                 resultHelper.item(Items.STRING, 4),
@@ -36,14 +36,14 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
 
         crushAndCompress(Items.MAGMA_BLOCK, Items.MAGMA_CREAM, 4)
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.MUDDY_MANGROVE_ROOTS),
                 resultHelper.item(Items.MUD),
                 resultHelper.item(Items.MANGROVE_ROOTS),
             ).saveSuffixed(output, "_from_roots")
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.CROPS_SUGAR_CANE),
                 resultHelper.item(Items.SUGAR, 3),
@@ -56,50 +56,50 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
         // Breeze Rod <-> Wind Charge
         crushAndCompress(Items.BREEZE_ROD, Items.WIND_CHARGE, 6)
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.COARSE_DIRT),
                 resultHelper.item(Items.DIRT),
                 resultHelper.item(Items.FLINT),
             ).saveSuffixed(output, "_from_coarse")
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.ROOTED_DIRT),
                 resultHelper.item(Items.DIRT),
                 resultHelper.item(Items.HANGING_ROOTS),
             ).saveSuffixed(output, "_from_rooted")
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.NETHER_WART_BLOCK),
                 resultHelper.item(Items.NETHER_WART, 3),
             ).saveSuffixed(output, "_from_block")
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.WARPED_WART_BLOCK),
                 resultHelper.item(RagiumBlocks.WARPED_WART, 3),
             ).saveSuffixed(output, "_from_block")
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItems(listOf(Items.CHISELED_QUARTZ_BLOCK, Items.QUARTZ_BRICKS, Items.QUARTZ_PILLAR)),
                 resultHelper.item(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ, 4),
             ).saveSuffixed(output, "_from_block")
         // Ragium
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.GLOW_INK_SAC),
                 resultHelper.item(Items.INK_SAC),
                 resultHelper.item(RagiumItems.LUMINOUS_PASTE),
             ).save(output)
         // Common
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
                 resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
             ).saveSuffixed(output, "_from_base")
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
                 resultHelper.item(Items.OBSIDIAN),
@@ -119,7 +119,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             output: Int,
             suffix: String,
         ) {
-            HTItemToExtraItemRecipeBuilder
+            HTSingleExtraItemRecipeBuilder
                 .crushing(
                     itemCreator.fromTagKey(tagKey, input),
                     resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, output),
@@ -145,33 +145,33 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun sand() {
         // Colorless
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.COBBLESTONES),
                 resultHelper.item(Items.GRAVEL),
             ).saveSuffixed(output, "_from_cobble")
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.GRAVELS),
                 resultHelper.item(Items.SAND),
                 resultHelper.item(Items.FLINT),
             ).saveSuffixed(output, "_from_gravel")
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
                 resultHelper.item(Items.SAND, 3),
                 resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER),
             ).saveSuffixed(output, "_from_sandstone")
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.SANDS),
                 resultHelper.item(RagiumBlocks.SILT),
             ).saveSuffixed(output, "_from_sand")
         // Red
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.SANDSTONE_RED_BLOCKS),
                 resultHelper.item(Items.RED_SAND, 3),
@@ -181,28 +181,28 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun prismarine() {
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.SEA_LANTERN),
                 resultHelper.item(Items.PRISMARINE_CRYSTALS, 9),
             ).saveSuffixed(output, "_from_sea_lantern")
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.PRISMARINE_SHARD),
                 resultHelper.item(Items.PRISMARINE_CRYSTALS),
             ).saveSuffixed(output, "_from_shard")
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.PRISMARINE),
                 resultHelper.item(Items.PRISMARINE_SHARD, 4),
             ).saveSuffixed(output, "_from_block")
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.PRISMARINE_BRICKS),
                 resultHelper.item(Items.PRISMARINE_SHARD, 9),
             ).saveSuffixed(output, "_from_bricks")
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.DARK_PRISMARINE),
                 resultHelper.item(Items.PRISMARINE_SHARD, 8),
@@ -212,23 +212,23 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun snow() {
         // Snow
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.SNOW_BLOCK),
                 resultHelper.item(Items.SNOWBALL, 4),
             ).saveSuffixed(output, "_from_block")
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.ICE),
                 resultHelper.item(Items.SNOWBALL, 4),
             ).saveSuffixed(output, "_from_ice")
         // Blue -> Packed -> Ice
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.PACKED_ICE),
                 resultHelper.item(Items.ICE, 9),
             ).saveSuffixed(output, "_from_packed")
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(Items.BLUE_ICE),
                 resultHelper.item(Items.PACKED_ICE, 9),

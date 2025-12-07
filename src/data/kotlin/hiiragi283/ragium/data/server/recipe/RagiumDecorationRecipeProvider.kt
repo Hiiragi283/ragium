@@ -11,10 +11,10 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -66,8 +66,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
 
-        HTSingleItemRecipeBuilder
-            .stonecutter(RagiumBlocks.ELDRITCH_STONE_BRICKS)
+        HTStonecuttingRecipeBuilder
+            .create(RagiumBlocks.ELDRITCH_STONE_BRICKS)
             .addIngredient(RagiumBlocks.ELDRITCH_STONE)
             .save(output)
         // Plastics
@@ -78,8 +78,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
 
-        HTSingleItemRecipeBuilder
-            .stonecutter(RagiumBlocks.PLASTIC_BRICKS)
+        HTStonecuttingRecipeBuilder
+            .create(RagiumBlocks.PLASTIC_BRICKS)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, CommonMaterialKeys.PLASTIC)
             .save(output)
 
@@ -90,8 +90,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
 
-        HTSingleItemRecipeBuilder
-            .stonecutter(RagiumBlocks.PLASTIC_TILES)
+        HTStonecuttingRecipeBuilder
+            .create(RagiumBlocks.PLASTIC_TILES)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, CommonMaterialKeys.PLASTIC)
             .save(output)
         // Blue Nether Bricks
@@ -187,7 +187,7 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             ItemTags.WARPED_STEMS to Items.WARPED_PLANKS,
         ).forEach { (log: TagKey<Item>, planks: Item) ->
             // Log -> 6x Planks
-            HTItemToExtraItemRecipeBuilder
+            HTSingleExtraItemRecipeBuilder
                 .cutting(
                     itemCreator.fromTagKey(log),
                     resultHelper.item(planks, 6),
@@ -232,18 +232,18 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         // Stonecutting
         val cuttingIngredient: Ingredient = getCuttingIngredient(type)
 
-        HTSingleItemRecipeBuilder
-            .stonecutter(slab, 2)
+        HTStonecuttingRecipeBuilder
+            .create(slab, 2)
             .addIngredient(cuttingIngredient)
             .save(output)
 
-        HTSingleItemRecipeBuilder
-            .stonecutter(stairs)
+        HTStonecuttingRecipeBuilder
+            .create(stairs)
             .addIngredient(cuttingIngredient)
             .save(output)
 
-        HTSingleItemRecipeBuilder
-            .stonecutter(wall)
+        HTStonecuttingRecipeBuilder
+            .create(wall)
             .addIngredient(cuttingIngredient)
             .save(output)
     }

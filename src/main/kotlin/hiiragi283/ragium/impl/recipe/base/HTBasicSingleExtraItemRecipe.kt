@@ -1,7 +1,7 @@
 package hiiragi283.ragium.impl.recipe.base
 
+import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.multi.HTItemToExtraItemRecipe
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
@@ -9,8 +9,8 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-abstract class HTBasicItemToExtraItemRecipe(val ingredient: HTItemIngredient, val result: HTItemResult, val extra: Optional<HTItemResult>) :
-    HTItemToExtraItemRecipe {
+abstract class HTBasicSingleExtraItemRecipe(val ingredient: HTItemIngredient, val result: HTItemResult, val extra: Optional<HTItemResult>) :
+    HTSingleExtraItemRecipe {
     final override fun assembleExtraItem(input: SingleRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
         getItemResult(input, provider, extra.getOrNull())
 

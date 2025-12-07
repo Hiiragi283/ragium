@@ -9,16 +9,16 @@ import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import net.minecraft.resources.ResourceLocation
 
-class HTItemToObjRecipeBuilder<RESULT : HTRecipeResult<*>>(
+class HTSingleRecipeBuilder<RESULT : HTRecipeResult<*>>(
     prefix: String,
     private val factory: Factory<RESULT, *>,
     val ingredient: HTItemIngredient,
     val result: RESULT,
-) : HTRecipeBuilder<HTItemToObjRecipeBuilder<RESULT>>(prefix) {
+) : HTRecipeBuilder<HTSingleRecipeBuilder<RESULT>>(prefix) {
     companion object {
         @JvmStatic
-        fun melting(ingredient: HTItemIngredient, result: HTFluidResult): HTItemToObjRecipeBuilder<HTFluidResult> =
-            HTItemToObjRecipeBuilder(RagiumConst.MELTING, ::HTMeltingRecipe, ingredient, result)
+        fun melting(ingredient: HTItemIngredient, result: HTFluidResult): HTSingleRecipeBuilder<HTFluidResult> =
+            HTSingleRecipeBuilder(RagiumConst.MELTING, ::HTMeltingRecipe, ingredient, result)
     }
 
     override fun getPrimalId(): ResourceLocation = result.id

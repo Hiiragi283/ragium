@@ -13,9 +13,9 @@ import hiiragi283.ragium.api.recipe.HTRegisterRuntimeRecipeEvent
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
@@ -168,7 +168,7 @@ object RagiumRuntimeRecipeHandler {
         if (!event.isPresentTag(CommonMaterialPrefixes.STORAGE_BLOCK, key)) return
         if (!event.isPresentTag(resultPrefix, key)) return
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 event.itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, key),
                 event.resultHelper.item(resultPrefix, key, storageBlock.baseCount),
@@ -187,7 +187,7 @@ object RagiumRuntimeRecipeHandler {
         if (!event.isPresentTag(inputPrefix, key)) return
         if (!event.isPresentTag(outputPrefix, key)) return
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 event.itemCreator.fromTagKey(inputPrefix, key, inputCount),
                 event.resultHelper.item(outputPrefix, key, outputCount),

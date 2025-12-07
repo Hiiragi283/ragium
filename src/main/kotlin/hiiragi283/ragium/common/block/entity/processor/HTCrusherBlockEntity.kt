@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor
 
-import hiiragi283.ragium.api.recipe.multi.HTItemToExtraItemRecipe
+import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -39,7 +39,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0 && extraSlot.getNeeded() > 0
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToExtraItemRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
         if (hasUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE)) {
@@ -49,7 +49,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         return bool1 && bool2
     }
 
-    override fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToExtraItemRecipe) {
+    override fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe) {
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

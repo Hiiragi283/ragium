@@ -18,12 +18,12 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -429,13 +429,13 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun crudeOil() {
         // Coal -> Crude Oil
-        HTItemToObjRecipeBuilder
+        HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL),
                 resultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
             ).saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil
-        HTItemToObjRecipeBuilder
+        HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromTagKey(ItemTags.SOUL_FIRE_BASE_BLOCKS),
                 resultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 500),
@@ -590,7 +590,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 .setResult(resultHelper.item(CommonMaterialPrefixes.GEM, data))
                 .save(output)
 
-            HTItemToObjRecipeBuilder
+            HTSingleRecipeBuilder
                 .melting(
                     itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, data),
                     resultHelper.fluid(molten, 1000),
@@ -615,7 +615,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun biomass() {
         // Biomass -> Crude Bio
-        HTItemToObjRecipeBuilder
+        HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.BIO),
                 resultHelper.fluid(RagiumFluidContents.CRUDE_BIO, 125),
@@ -648,7 +648,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(RagiumItems.GREEN_CAKE),
             ).save(output)
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(RagiumItems.GREEN_CAKE),
                 resultHelper.item(RagiumItems.GREEN_CAKE_DUST, 8),

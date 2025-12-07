@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor
 
-import hiiragi283.ragium.api.recipe.multi.HTItemToExtraItemRecipe
+import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -27,10 +27,10 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) : HTAbstractCrus
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToExtraItemRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe): Boolean =
         HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
-    override fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToExtraItemRecipe) {
+    override fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe) {
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
     }
 }

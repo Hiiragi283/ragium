@@ -27,11 +27,11 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTPlantingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
@@ -303,7 +303,7 @@ sealed class HTRecipeProvider {
         catalyst: HTItemIngredient? = null,
     ) {
         // Crushing
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(base),
                 resultHelper.item(crushed, crushedCount),
@@ -364,7 +364,7 @@ sealed class HTRecipeProvider {
         amount: Int,
     ) {
         // Melting
-        HTItemToObjRecipeBuilder
+        HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromItem(solid),
                 resultHelper.fluid(fluid, amount),
@@ -388,7 +388,7 @@ sealed class HTRecipeProvider {
             .saveModified(output, data.operator)
         // Melting
         val data1: HTRecipeData = data.swap()
-        HTItemToObjRecipeBuilder
+        HTSingleRecipeBuilder
             .melting(
                 data1.getItemIngredients(itemCreator)[0],
                 data1.getFluidResults()[0],

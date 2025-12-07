@@ -21,10 +21,10 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.CommonMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.CreateMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.EIOMaterialRecipeData
@@ -223,7 +223,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun oreToRaw() {
         // Coal
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, VanillaMaterialKeys.COAL),
                 resultHelper.item(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL, 2),
@@ -237,7 +237,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { (primary: HTMaterialLike, secondary: HTMaterialLike) ->
             val ore: HTItemIngredient = itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, primary)
             // Crushing
-            HTItemToExtraItemRecipeBuilder
+            HTSingleExtraItemRecipeBuilder
                 .crushing(
                     ore,
                     resultHelper.item(CommonMaterialPrefixes.DUST, primary, 8),
@@ -269,7 +269,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { (primary: HTMaterialLike, secondary: HTMaterialLike) ->
             val ore: HTItemIngredient = itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, primary)
             // Crushing
-            HTItemToExtraItemRecipeBuilder
+            HTSingleExtraItemRecipeBuilder
                 .crushing(
                     ore,
                     resultHelper.item(CommonMaterialPrefixes.DUST, primary, 2),
@@ -301,7 +301,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { (material: HTMaterialLike, count: Int) ->
             val ore: HTItemIngredient = itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, material)
             // Crushing
-            HTItemToExtraItemRecipeBuilder
+            HTSingleExtraItemRecipeBuilder
                 .crushing(
                     ore,
                     resultHelper.item(CommonMaterialPrefixes.GEM, material, count),
@@ -322,7 +322,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         ).forEach { (key: HTMaterialKey, oreTag: TagKey<Item>) ->
             val ore: HTItemIngredient = itemCreator.fromTagKey(oreTag)
             // Crushing
-            HTItemToExtraItemRecipeBuilder
+            HTSingleExtraItemRecipeBuilder
                 .crushing(
                     ore,
                     resultHelper.item(CommonMaterialPrefixes.SCRAP, key, 2),
