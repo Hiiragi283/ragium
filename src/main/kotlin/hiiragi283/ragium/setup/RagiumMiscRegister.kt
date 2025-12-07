@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
@@ -13,10 +12,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
-import hiiragi283.ragium.common.data.map.HTBlockCrushingRecipeProvider
-import hiiragi283.ragium.common.data.map.HTCompressingRecipeProvider
-import hiiragi283.ragium.common.data.map.HTCrushingRecipeProvider
-import hiiragi283.ragium.common.data.map.HTRawSmeltingRecipeProvider
 import hiiragi283.ragium.common.inventory.slot.payload.HTFluidSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTIntSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
@@ -84,13 +79,6 @@ object RagiumMiscRegister {
             helper.register(vanillaId("fluid"), HTFluidSyncPayload.STREAM_CODEC)
 
             helper.register(RagiumAPI.id("teleport_pos"), HTTeleportPosSyncPayload.STREAM_CODEC)
-        }
-        // Runtime Recipe Type
-        event.register(RagiumAPI.RUNTIME_RECIPE_TYPE_KEY) { helper ->
-            helper.register(RagiumAPI.id(RagiumConst.ALLOYING, "raw"), HTRawSmeltingRecipeProvider.CODEC)
-            helper.register(RagiumAPI.id(RagiumConst.COMPRESSING), HTCompressingRecipeProvider.CODEC)
-            helper.register(RagiumAPI.id(RagiumConst.CRUSHING), HTCrushingRecipeProvider.CODEC)
-            helper.register(RagiumAPI.id(RagiumConst.CRUSHING, "storage_block"), HTBlockCrushingRecipeProvider.CODEC)
         }
     }
 

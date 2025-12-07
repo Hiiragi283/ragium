@@ -187,7 +187,7 @@ abstract class HTContainerMenu(open val menuType: HTDeferredMenuType<*, *>, cont
         // 移動処理が一つでも行えればtrue
         return flag
     }
-    
+
     private fun updateCount(slot: Slot, count: Int) {
         if (slot is HTContainerItemSlot) {
             slot.updateCount(count)
@@ -195,7 +195,7 @@ abstract class HTContainerMenu(open val menuType: HTDeferredMenuType<*, *>, cont
             slot.item.count = count
         }
     }
-    
+
     //    Slot Sync    //
 
     private val trackedSlots: MutableList<HTSyncableSlot> = mutableListOf()

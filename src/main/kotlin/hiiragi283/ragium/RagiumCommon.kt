@@ -79,7 +79,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun registerRegistries(event: NewRegistryEvent) {
         event.register(RagiumAPI.EQUIP_ACTION_TYPE_REGISTRY)
-        event.register(RagiumAPI.RUNTIME_RECIPE_TYPE_REGISTRY)
         event.register(RagiumAPI.SLOT_TYPE_REGISTRY)
         event.register(RagiumAPI.SUB_ENTITY_INGREDIENT_TYPE_REGISTRY)
 
@@ -119,8 +118,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         event.register(RagiumDataMapTypes.ARMOR_EQUIP)
         event.register(RagiumDataMapTypes.SUB_ENTITY_INGREDIENT)
-
-        event.register(RagiumDataMapTypes.MATERIAL_RECIPE)
 
         RagiumAPI.LOGGER.info("Registered data map types!")
     }
