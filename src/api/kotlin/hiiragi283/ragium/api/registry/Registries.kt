@@ -1,11 +1,7 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.tag.getName
-import hiiragi283.ragium.api.text.HTTextResult
-import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.util.toTextResult
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.HolderSet
 import net.minecraft.core.Registry
@@ -34,8 +30,6 @@ fun <T : Any> RegistryKey<T>.createKey(id: ResourceLocation): ResourceKey<T> = R
 
 //    Registry    //
 
-fun <T : Any> Registry<T>.holdersSequence(): Sequence<Holder<T>> = holders().asSequence()
-
 fun <R : Any, T : Any> Registry<R>.getHolderDataMap(type: DataMapType<R, T>): Map<Holder.Reference<R>, T> =
     this.getDataMap(type).mapKeys { (key: ResourceKey<R>, _) -> this.getHolderOrThrow(key) }
 
@@ -62,18 +56,12 @@ fun <T : Any> HolderSet<T>.asHolderText(transform: Function<Holder<T>, Component
     .map(TagKey<T>::getName) { ComponentUtils.formatList(it, transform) }
     .copy()
 
-//    HolderGetter    //
-
-fun <T : Any> HolderGetter<T>.getResult(key: ResourceKey<T>): HTTextResult<Holder<T>> =
-    this.get(key).toTextResult(RagiumTranslation.MISSING_KEY, key.location())
-
-fun <T : Any> HolderGetter<T>.getResult(tagKey: TagKey<T>): HTTextResult<HolderSet<T>> =
-    this.get(tagKey).toTextResult(RagiumTranslation.EMPTY_TAG_KEY, tagKey.location())
-
 //    HolderLookup    //
 
-fun <T : Any> HolderLookup.Provider.lookupResult(key: RegistryKey<T>): HTTextResult<HolderLookup.RegistryLookup<T>> = TODO()
-
-fun <T : Any> HolderLookup.Provider.holderResult(key: ResourceKey<T>): HTTextResult<Holder<T>> = TODO()
-
-fun <T : Any> HolderLookup.Provider.holderSetResult(tagKey: TagKey<T>): HTTextResult<HolderSet<T>> = TODO()
+fun <R : Any, T : Any> HolderLookup.RegistryLookup<R>.getHolderDataMap(type: DataMapType<R, T>): Map<Holder.Reference<R>, T> = this
+    .listElementIds()
+    .asSequence()
+    .mapNotNull { key: ResourceKey<R> ->
+        val data: T = this.getData(type, key) ?: return@mapNotNull null
+        key to data
+    }.associate { (key: ResourceKey<R>, data: T) -> this.getOrThrow(key) to data }

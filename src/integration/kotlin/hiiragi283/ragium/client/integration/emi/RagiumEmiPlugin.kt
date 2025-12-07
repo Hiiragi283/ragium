@@ -24,9 +24,7 @@ import hiiragi283.ragium.api.math.toFraction
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.getHolderDataMap
-import hiiragi283.ragium.api.registry.holdersSequence
 import hiiragi283.ragium.api.registry.idOrThrow
-import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.category.HTRegistryEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
@@ -60,7 +58,7 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.Holder
-import net.minecraft.core.Registry
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
@@ -75,26 +73,39 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import org.apache.commons.lang3.math.Fraction
+import kotlin.streams.asSequence
 
 @EmiEntrypoint
 class RagiumEmiPlugin : EmiPlugin {
+    companion object {
+        @JvmStatic
+        private val ITEM_LOOKUP: HolderLookup.RegistryLookup<Item> by lazy(EmiPort.getItemRegistry()::asLookup)
+
+        @JvmStatic
+        private val FLUID_LOOKUP: HolderLookup.RegistryLookup<Fluid> by lazy {
+            EmiPort.getFluidRegistry().asLookup().filterElements { fluid: Fluid ->
+                fluid != Fluids.EMPTY && fluid.isSource(fluid.defaultFluidState())
+            }
+        }
+    }
+
     override fun register(registry: EmiRegistry) {
         // Recipe
         addRecipes(
             registry,
             RagiumEmiRecipeCategories.MACHINE_UPGRADE,
-            EmiPort
-                .getItemRegistry()
-                .holdersSequence()
-                .filter { holder: Holder<Item> -> holder.value().defaultInstance.has(RagiumDataComponents.MACHINE_UPGRADE_FILTER) }
+            ITEM_LOOKUP
+                .filterElements { item: Item -> item.defaultInstance.has(RagiumDataComponents.MACHINE_UPGRADE_FILTER) }
+                .listElements()
                 .map { holder: Holder<Item> ->
                     holder.idOrThrow.withPrefix("/machine/upgrade/") to EmiStack.of(holder.value())
-                },
+                }.asSequence(),
             ::HTMachineUpgradeEmiRecipe,
         )
 
@@ -164,17 +175,17 @@ class RagiumEmiPlugin : EmiPlugin {
 
     private fun addCustomRecipe(registry: EmiRegistry) {
         // Crafting
-        EmiPort.getPotionRegistry().holdersSequence().forEach { potion: Holder<Potion> ->
-            addPotionRecipes(registry, potion, potion.idOrThrow)
-        }
+        EmiPort
+            .getPotionRegistry()
+            .holders()
+            .forEach { potion: Holder<Potion> -> addPotionRecipes(registry, potion, potion.idOrThrow) }
 
-        val itemRegistry: Registry<Item> = EmiPort.getItemRegistry()
-        itemRegistry
-            .asSequence()
-            .filter { item: Item -> item.defaultInstance.isDamageableItem }
-            .forEach { item: Item ->
-                val id: ResourceLocation = item.toHolderLike().getId()
-                registry.addCustomRecipe(id, "eternal_upgrade") { id1: ResourceLocation ->
+        ITEM_LOOKUP
+            .filterElements { item: Item -> item.defaultInstance.isDamageableItem }
+            .listElements()
+            .forEach { holder: Holder<Item> ->
+                val item: Item = holder.value()
+                registry.addCustomRecipe(holder.idOrThrow, "eternal_upgrade") { id1: ResourceLocation ->
                     EmiCraftingRecipe(
                         listOf(
                             EmiStack.of(item),
@@ -186,7 +197,7 @@ class RagiumEmiPlugin : EmiPlugin {
                     )
                 }
             }
-        for (holder: Holder<Item> in itemRegistry.getTagOrEmpty(ItemTags.CHEST_ARMOR)) {
+        for (holder: Holder<Item> in ITEM_LOOKUP.getOrThrow(ItemTags.CHEST_ARMOR)) {
             val item: HTItemHolderLike = HTItemHolderLike.fromHolder(holder)
             val id: ResourceLocation = item.getId()
             registry.addCustomRecipe(id, "gravitational_upgrade") { id1: ResourceLocation ->
@@ -240,7 +251,7 @@ class RagiumEmiPlugin : EmiPlugin {
             addDataMapRecipes(
                 registry,
                 category,
-                EmiPort.getFluidRegistry(),
+                FLUID_LOOKUP,
                 dataMapType,
                 { holder: Holder<Fluid>, data: HTFluidFuelData ->
                     val stack: EmiStack = holder.value().toEmi(100).takeUnless(EmiStack::isEmpty) ?: return@addDataMapRecipes null
@@ -281,7 +292,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addDataMapRecipes(
             registry,
             RagiumEmiRecipeCategories.BIOMASS,
-            EmiPort.getItemRegistry(),
+            ITEM_LOOKUP,
             NeoForgeDataMaps.COMPOSTABLES,
             { holder: Holder<Item>, compostable: Compostable ->
                 val chance: Fraction = compostable.chance().toFraction()
@@ -296,7 +307,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addDataMapRecipes(
             registry,
             RagiumEmiRecipeCategories.COOLANT,
-            EmiPort.getFluidRegistry(),
+            FLUID_LOOKUP,
             RagiumDataMapTypes.COOLANT,
             { holder: Holder<Fluid>, data: HTFluidCoolantData ->
                 holder.value().toEmi(data.amount).takeUnless(EmiStack::isEmpty)
@@ -413,9 +424,9 @@ class RagiumEmiPlugin : EmiPlugin {
         addRecipes(
             registry,
             category,
-            EmiPort
-                .getItemRegistry()
-                .holdersSequence()
+            ITEM_LOOKUP
+                .listElements()
+                .asSequence()
                 .mapNotNull { holder: Holder<Item> ->
                     val item: Item = holder.value()
                     val stack: ItemStack = item.defaultInstance
@@ -440,7 +451,7 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun <R : Any, T : Any, RECIPE : Any, EMI_RECIPE : EmiRecipe> addDataMapRecipes(
         registry: EmiRegistry,
         category: HTEmiRecipeCategory,
-        registry1: Registry<R>,
+        lookup: HolderLookup.RegistryLookup<R>,
         dataMapType: DataMapType<R, T>,
         recipeFactory: (Holder<R>, T) -> RECIPE?,
         factory: (HTEmiRecipeCategory, ResourceLocation, RECIPE) -> EMI_RECIPE?,
@@ -448,7 +459,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addRecipes(
             registry,
             category,
-            registry1
+            lookup
                 .getHolderDataMap(dataMapType)
                 .mapNotNull { (holder: Holder.Reference<R>, value: T) ->
                     val recipe: RECIPE = recipeFactory(holder, value) ?: return@mapNotNull null

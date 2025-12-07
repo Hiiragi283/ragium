@@ -21,6 +21,6 @@ class HTBiomassEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, re
         // input
         widgets.addSlot(input(0), getPosition(0), getPosition(0))
         // output
-        widgets.addOutput(0, getPosition(3.5), getPosition(0))
+        widgets.addOutput(0, getPosition(4), getPosition(0))
     }
 }

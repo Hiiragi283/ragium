@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.data.tag.HTTagBuilder
 import hiiragi283.ragium.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
@@ -18,17 +19,22 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>
     private fun contents(factory: BuilderFactory<Fluid>) {
         // Common Tag
         for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
-            factory
-                .apply(content.commonTag)
-                .add(content.still)
+            factory.apply(content.commonTag).addContent(content)
         }
     }
 
     private fun category(factory: BuilderFactory<Fluid>) {
-        factory.apply(Tags.Fluids.GASEOUS).add(RagiumFluidContents.NATURAL_GAS)
+        factory.apply(Tags.Fluids.GASEOUS).addContent(RagiumFluidContents.NATURAL_GAS)
 
-        factory.apply(RagiumCommonTags.Fluids.BIODIESEL).add(RagiumFluidContents.BIOFUEL)
+        factory.apply(RagiumCommonTags.Fluids.BIODIESEL).addContent(RagiumFluidContents.BIOFUEL)
 
-        factory.apply(RagiumCommonTags.Fluids.DIESEL).add(RagiumFluidContents.FUEL)
+        factory.apply(RagiumCommonTags.Fluids.DIESEL).addContent(RagiumFluidContents.FUEL)
+    }
+
+    //    Extensions    //
+
+    private fun HTTagBuilder<Fluid>.addContent(content: HTFluidContent<*, *, *, *, *>) {
+        add(content.still)
+        add(content.flowing)
     }
 }

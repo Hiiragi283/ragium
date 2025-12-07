@@ -31,7 +31,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.material.FlowingFluid
 import net.minecraft.world.level.material.Fluid
 
 //    EmiStack    //
@@ -43,11 +42,7 @@ fun ItemLike.toEmi(amount: Int = 1): EmiStack = EmiStack.of(this, amount.toLong(
 
 fun ItemStack.toEmi(): EmiStack = EmiStack.of(this)
 
-fun Fluid.toEmi(amount: Int = 0): EmiStack = when (this) {
-    is FlowingFluid -> if (this == this.source) EmiStack.of(this, amount.toLong()) else EmiStack.EMPTY
-
-    else -> EmiStack.of(this)
-}
+fun Fluid.toEmi(amount: Int = 0): EmiStack = EmiStack.of(this, amount.toLong())
 
 // Immutable Stack
 fun ImmutableItemStack?.toEmi(): EmiStack = when (this) {
