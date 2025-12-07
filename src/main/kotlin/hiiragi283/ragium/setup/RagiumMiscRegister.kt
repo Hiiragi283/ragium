@@ -51,6 +51,7 @@ object RagiumMiscRegister {
             register(helper, RagiumRecipeTypes.MIXING)
             register(helper, RagiumRecipeTypes.PLANTING)
             register(helper, RagiumRecipeTypes.REFINING)
+            register(helper, RagiumRecipeTypes.ROCK_GENERATING)
             register(helper, RagiumRecipeTypes.SIMULATING)
         }
 

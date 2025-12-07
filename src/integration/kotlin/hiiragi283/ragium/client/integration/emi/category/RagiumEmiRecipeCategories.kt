@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
+import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -125,4 +126,10 @@ object RagiumEmiRecipeCategories {
     @JvmField
     val SIMULATING: HTRegistryEmiRecipeCategory<HTDoubleRecipeInput, HTItemWithCatalystRecipe> =
         machine(RagiumRecipeTypes.SIMULATING, RagiumBlocks.SIMULATOR)
+
+    //    Device    //
+
+    @JvmField
+    val ROCK_GENERATING: HTRegistryEmiRecipeCategory<HTMultiRecipeInput, HTRockGeneratingRecipe> =
+        machine(RagiumRecipeTypes.ROCK_GENERATING, RagiumBlocks.ITEM_COLLECTOR)
 }

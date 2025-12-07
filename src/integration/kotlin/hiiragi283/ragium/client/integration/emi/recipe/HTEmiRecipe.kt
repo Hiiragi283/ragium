@@ -135,6 +135,11 @@ abstract class HTEmiRecipe<RECIPE : Any>(
 
     fun WidgetHolder.setShapeless(): TextureWidget = addTexture(EmiTexture.SHAPELESS, getPosition(6) + 1, getPosition(0) + 3)
 
+    fun WidgetHolder.addCatalyst(index: Int, x: Int, y: Int): SlotWidget {
+        val catalyst: EmiIngredient = catalyst(index)
+        return addSlot(catalyst, x, y).catalyst(!catalyst.isEmpty)
+    }
+
     fun WidgetHolder.addOutput(
         index: Int,
         x: Int,

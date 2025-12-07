@@ -36,6 +36,7 @@ import hiiragi283.ragium.client.integration.emi.handler.HTEmiRecipeHandler
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.device.HTRockGeneratingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTBiomassEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTCoolantEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
@@ -331,6 +332,9 @@ class RagiumEmiPlugin : EmiPlugin {
         registry.addRecipeSafe(RagiumAPI.id("/${RagiumConst.ENCHANTING}", "copy_from_book")) {
             HTCopyEnchantingEmiRecipe(RagiumEmiRecipeCategories.ENCHANTING, it)
         }
+
+        // Device
+        addRegistryRecipes(registry, RagiumEmiRecipeCategories.ROCK_GENERATING, ::HTRockGeneratingEmiRecipe)
     }
 
     private fun addInteractions(registry: EmiRegistry) {

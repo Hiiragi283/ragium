@@ -358,6 +358,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.REFINING, "精製")
+        add(RagiumRecipeTypes.ROCK_GENERATING, "岩石生成")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
     }
 

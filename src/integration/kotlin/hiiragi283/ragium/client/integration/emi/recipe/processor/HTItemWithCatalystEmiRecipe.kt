@@ -37,6 +37,6 @@ class HTItemWithCatalystEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeH
 
         // Input
         widgets.addSlot(input(0), getPosition(1), getPosition(0))
-        widgets.addSlot(catalyst(0), getPosition(1), getPosition(2)).catalyst(true)
+        widgets.addCatalyst(0, getPosition(1), getPosition(2))
     }
 }
