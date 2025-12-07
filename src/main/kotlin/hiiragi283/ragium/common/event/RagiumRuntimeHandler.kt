@@ -128,18 +128,18 @@ object RagiumRuntimeHandler {
         if (event.lightning.cause != null) return
 
         val target: Entity = event.entity
-        LOGGER.info("Entity: ${target.type} is struck!")
+        RagiumAPI.LOGGER.debug("Entity: {} is struck!", target.type)
         // すでに落雷を受けたエンティティは除外される
         if (target.persistentData.getBoolean("AlreadyStruck")) {
-            LOGGER.info("Already struck entity found!")
+            RagiumAPI.LOGGER.debug("Already struck entity found!")
             event.isCanceled = true
             return
         }
         // アイテムの場合だけ変換を行う
         val itemEntity: ItemEntity = target as? ItemEntity ?: return
         val stackIn: ItemStack = itemEntity.item
-        if (stackIn.`is`(Tags.Items.INGOTS)) {
-            itemEntity.item = RagiumItems.RAGI_ALLOY_INGOT.toStack(stackIn.count)
+        if (RagiumBlocks.IMITATION_SPAWNER.isOf(stackIn)) {
+            itemEntity.item = ItemStack(Items.SPAWNER)
             itemEntity.persistentData.putBoolean("AlreadyStruck", true)
             event.isCanceled = true
         }

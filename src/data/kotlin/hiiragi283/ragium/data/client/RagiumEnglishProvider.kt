@@ -104,7 +104,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.BUDDING_QUARTZ, "Budding Quartz")
         add(RagiumBlocks.QUARTZ_CLUSTER, "Quartz Cluster")
         add(RagiumBlocks.RESONANT_DEBRIS, "Resonant Debris")
-        add(RagiumBlocks.SMOOTH_BLOCKSTONE, "Smooth Blackstone")
+        add(RagiumBlocks.IMITATION_SPAWNER, "Imitation Spawner")
+        add(RagiumBlocks.SMOOTH_BLACKSTONE, "Smooth Blackstone")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "Sooty Cobblestone")
 
         add(RagiumBlocks.CRIMSON_SOIL, "Crimson Soil")
@@ -237,7 +238,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGI_COKE, "Ragi-Coke")
         add(RagiumItems.ROSIN, "Rosin")
-        add(RagiumItems.SPAWNER_FRAGMENT, "Spawner Fragment")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.WITHER_DOLl, "Wither Doll")
         add(RagiumItems.WITHER_STAR, "Wither Star")

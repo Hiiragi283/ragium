@@ -96,7 +96,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.BUDDING_QUARTZ, "芽生えた水晶")
         add(RagiumBlocks.QUARTZ_CLUSTER, "水晶の塊")
         add(RagiumBlocks.RESONANT_DEBRIS, "共振の残骸")
-        add(RagiumBlocks.SMOOTH_BLOCKSTONE, "なめらかなブラックストーン")
+        add(RagiumBlocks.IMITATION_SPAWNER, "スポナーの模造品")
+        add(RagiumBlocks.SMOOTH_BLACKSTONE, "なめらかなブラックストーン")
         add(RagiumBlocks.SOOTY_COBBLESTONE, "煤けた丸石")
 
         add(RagiumBlocks.CRIMSON_SOIL, "深紅の土壌")
@@ -228,7 +229,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RAGI_COKE, "らぎコークス")
         add(RagiumItems.ROSIN, "ロジン")
-        add(RagiumItems.SPAWNER_FRAGMENT, "スポナーの欠片")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.WITHER_DOLl, "ウィザー人形")
         add(RagiumItems.WITHER_STAR, "ウィザースター")

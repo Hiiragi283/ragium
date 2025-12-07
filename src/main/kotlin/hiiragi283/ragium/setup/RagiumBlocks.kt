@@ -161,8 +161,10 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val RESONANT_DEBRIS: HTSimpleDeferredBlock =
-        REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
+    val RESONANT_DEBRIS: HTSimpleDeferredBlock = REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
+
+    @JvmField
+    val IMITATION_SPAWNER: HTSimpleDeferredBlock = REGISTER.registerSimple("imitation_spawner", copyOf(Blocks.SPAWNER))
 
     @JvmField
     val SOOTY_COBBLESTONE: HTSimpleDeferredBlock = REGISTER.registerSimple(
@@ -171,7 +173,7 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val SMOOTH_BLOCKSTONE: HTSimpleDeferredBlock = REGISTER.registerSimple(
+    val SMOOTH_BLACKSTONE: HTSimpleDeferredBlock = REGISTER.registerSimple(
         "smooth_blackstone",
         copyOf(Blocks.BLACKSTONE),
     )

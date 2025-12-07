@@ -191,9 +191,6 @@ object RagiumItems {
 
     // Misc
     @JvmField
-    val SPAWNER_FRAGMENT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("spawner_fragment")
-
-    @JvmField
     val ECHO_STAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("echo_star") {
         it.rarity(Rarity.UNCOMMON).enchantment(RagiumEnchantments.SONIC_PROTECTION)
     }
