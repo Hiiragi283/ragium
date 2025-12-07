@@ -1,13 +1,13 @@
 package hiiragi283.ragium.client.integration.emi.category
 
 import hiiragi283.ragium.api.math.HTBounds
-import hiiragi283.ragium.api.recipe.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
+import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
-import hiiragi283.ragium.api.recipe.multi.HTItemToExtraItemRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
@@ -84,11 +84,11 @@ object RagiumEmiRecipeCategories {
         machine(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
-    val CRUSHING: HTRegistryEmiRecipeCategory<SingleRecipeInput, HTItemToExtraItemRecipe> =
+    val CRUSHING: HTRegistryEmiRecipeCategory<SingleRecipeInput, HTSingleExtraItemRecipe> =
         machine(RagiumRecipeTypes.CRUSHING, RagiumBlocks.PULVERIZER, RagiumBlocks.CRUSHER)
 
     @JvmField
-    val CUTTING: HTRegistryEmiRecipeCategory<SingleRecipeInput, HTItemToExtraItemRecipe> =
+    val CUTTING: HTRegistryEmiRecipeCategory<SingleRecipeInput, HTSingleExtraItemRecipe> =
         machine(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField

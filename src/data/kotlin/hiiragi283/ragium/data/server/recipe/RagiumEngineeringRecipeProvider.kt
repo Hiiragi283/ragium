@@ -15,7 +15,7 @@ import hiiragi283.ragium.common.recipe.crafting.HTGravitationalUpgradeRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
@@ -55,8 +55,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         for (mold: ItemLike in RagiumItems.MOLDS.values) {
-            HTSingleItemRecipeBuilder
-                .stonecutter(mold)
+            HTStonecuttingRecipeBuilder
+                .create(mold)
                 .addIngredient(RagiumModTags.Items.MOLDS)
                 .save(output)
         }

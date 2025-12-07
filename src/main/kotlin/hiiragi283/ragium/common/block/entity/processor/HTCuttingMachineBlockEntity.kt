@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.multi.HTItemToExtraItemRecipe
+import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.item.toRecipeInput
@@ -20,7 +20,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<SingleRecipeInput, HTItemToExtraItemRecipe>(
+    HTProcessorBlockEntity.Cached<SingleRecipeInput, HTSingleExtraItemRecipe>(
         RagiumRecipeTypes.CUTTING,
         RagiumBlocks.CUTTING_MACHINE,
         pos,
@@ -47,7 +47,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToExtraItemRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
         if (hasUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE)) {
@@ -62,7 +62,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: SingleRecipeInput,
-        recipe: HTItemToExtraItemRecipe,
+        recipe: HTSingleExtraItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()

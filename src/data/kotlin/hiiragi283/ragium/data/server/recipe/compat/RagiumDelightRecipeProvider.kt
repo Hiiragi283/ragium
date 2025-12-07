@@ -15,8 +15,8 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingPotRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemToExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems
@@ -47,7 +47,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             .save(output)
 
         // Rice Panicle
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .crushing(
                 itemCreator.fromItem(ModItems.RICE_PANICLE.get()),
                 resultHelper.item(ModItems.RICE.get()),
@@ -122,32 +122,32 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             // Vegetable
             ModItems.CABBAGE.get() to ModItems.CABBAGE_LEAF.get(),
         ).forEach { (full: Item, cut: Item) ->
-            HTItemToExtraItemRecipeBuilder
+            HTSingleExtraItemRecipeBuilder
                 .cutting(
                     itemCreator.fromItem(full),
                     resultHelper.item(cut, 2),
                 ).save(output)
         }
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .cutting(
                 itemCreator.fromTagKey(Tags.Items.CROPS_PUMPKIN),
                 resultHelper.item(ModItems.PUMPKIN_SLICE.get(), 4),
             ).save(output)
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .cutting(
                 itemCreator.fromItem(ModItems.BROWN_MUSHROOM_COLONY.get()),
                 resultHelper.item(Items.BROWN_MUSHROOM, 5),
             ).save(output)
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .cutting(
                 itemCreator.fromItem(ModItems.RED_MUSHROOM_COLONY.get()),
                 resultHelper.item(Items.RED_MUSHROOM, 5),
             ).save(output)
 
-        HTItemToExtraItemRecipeBuilder
+        HTSingleExtraItemRecipeBuilder
             .cutting(
                 itemCreator.fromTagKey(RagiumCommonTags.Items.FOODS_DOUGH),
                 resultHelper.item(ModItems.RAW_PASTA.get()),
@@ -162,7 +162,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             Items.COOKED_COD to ModItems.COOKED_COD_SLICE.get(),
             Items.COOKED_SALMON to ModItems.COOKED_SALMON_SLICE.get(),
         ).forEach { (full: Item, cut: Item) ->
-            HTItemToExtraItemRecipeBuilder
+            HTSingleExtraItemRecipeBuilder
                 .cutting(
                     itemCreator.fromItem(full),
                     resultHelper.item(cut, 2),
@@ -174,7 +174,7 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
             ModItems.HAM.get() to Items.PORKCHOP,
             ModItems.SMOKED_HAM.get() to Items.COOKED_PORKCHOP,
         ).forEach { (ham: Item, cut: Item) ->
-            HTItemToExtraItemRecipeBuilder
+            HTSingleExtraItemRecipeBuilder
                 .cutting(
                     itemCreator.fromItem(ham),
                     resultHelper.item(cut, 2),

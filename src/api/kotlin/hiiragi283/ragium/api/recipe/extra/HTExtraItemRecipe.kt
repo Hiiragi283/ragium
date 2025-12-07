@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe.multi
+package hiiragi283.ragium.api.recipe.extra
 
 import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack

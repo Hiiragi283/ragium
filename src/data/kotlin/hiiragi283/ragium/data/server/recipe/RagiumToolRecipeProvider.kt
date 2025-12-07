@@ -22,8 +22,8 @@ import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -57,8 +57,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
-        HTSingleItemRecipeBuilder
-            .stonecutter(RagiumItems.SLOT_COVER, 3)
+        HTStonecuttingRecipeBuilder
+            .create(RagiumItems.SLOT_COVER, 3)
             .addIngredient(Items.SMOOTH_STONE_SLAB)
             .save(output)
 

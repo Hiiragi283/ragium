@@ -42,12 +42,12 @@ import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGenerator
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTEnchantingEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemToExtraItemEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemWithCatalystEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTRefiningEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSingleExtraItemEmiRecipe
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -310,8 +310,8 @@ class RagiumEmiPlugin : EmiPlugin {
         // Basic
         addRegistryRecipes(registry, RagiumEmiRecipeCategories.ALLOYING, ::HTAlloyingEmiRecipe)
         addRegistryRecipes(registry, RagiumEmiRecipeCategories.COMPRESSING, ::HTItemWithCatalystEmiRecipe)
-        addRegistryRecipes(registry, RagiumEmiRecipeCategories.CRUSHING, ::HTItemToExtraItemEmiRecipe)
-        addRegistryRecipes(registry, RagiumEmiRecipeCategories.CUTTING, ::HTItemToExtraItemEmiRecipe)
+        addRegistryRecipes(registry, RagiumEmiRecipeCategories.CRUSHING, ::HTSingleExtraItemEmiRecipe)
+        addRegistryRecipes(registry, RagiumEmiRecipeCategories.CUTTING, ::HTSingleExtraItemEmiRecipe)
         addRegistryRecipes(registry, RagiumEmiRecipeCategories.EXTRACTING, ::HTItemWithCatalystEmiRecipe)
 
         registry.addRecipeSafe(RagiumAPI.id("/${RagiumConst.EXTRACTING}", "experience_from_items")) {

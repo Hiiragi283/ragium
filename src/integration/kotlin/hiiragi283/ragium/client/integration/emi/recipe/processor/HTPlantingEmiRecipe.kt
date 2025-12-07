@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.integration.emi.recipe.processor
 
 import dev.emi.emi.EmiPort
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.recipe.HTPlantingRecipe
+import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addPlus
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory

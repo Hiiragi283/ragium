@@ -5,13 +5,13 @@ import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
-import hiiragi283.ragium.impl.recipe.base.HTBasicItemToExtraItemRecipe
+import hiiragi283.ragium.impl.recipe.base.HTBasicSingleExtraItemRecipe
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
-class HTItemToExtraItemEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicItemToExtraItemRecipe>) :
-    HTEmiHolderRecipe<HTBasicItemToExtraItemRecipe>(category, holder) {
+class HTSingleExtraItemEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicSingleExtraItemRecipe>) :
+    HTEmiHolderRecipe<HTBasicSingleExtraItemRecipe>(category, holder) {
     init {
         addInput(recipe.ingredient)
 

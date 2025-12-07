@@ -1,10 +1,10 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.extra
 
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTExtraItemRecipe
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -46,7 +46,7 @@ class HTPlantingRecipe(
         return bool1 || bool2 || bool3 || bool4
     }
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumPlatform.INSTANCE.getPlantingRecipeSerializer()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumPlatform.Companion.INSTANCE.getPlantingRecipeSerializer()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.PLANTING.get()
 }
