@@ -16,7 +16,7 @@ open class HTVanillaSingleItemRecipe<RECIPE : Recipe<SingleRecipeInput>>(
     HTItemIngredient.CountGetter {
     constructor(recipe: RECIPE) : this(
         recipe,
-        HTItemIngredient.of(recipe.ingredients[0]),
+        HTItemIngredient.convert(recipe.ingredients[0]),
         { input: SingleRecipeInput, provider: HolderLookup.Provider -> recipe.assemble(input, provider) },
     )
 

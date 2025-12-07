@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.map
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.entity.typeHolder
+import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
@@ -65,6 +66,10 @@ object RagiumDataMapTypes {
     fun getTimeFromCombustion(stack: ImmutableFluidStack): Int = stack.getData(COMBUSTION_FUEL)?.time ?: 0
 
     fun getEquipAction(stack: ItemStack): HTEquipAction? = stack.itemHolder.getData(ARMOR_EQUIP)
+
+    @JvmStatic
+    private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =
+        create(path, registryKey, codec.codec)
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: Codec<T>): DataMapType<R, T> =

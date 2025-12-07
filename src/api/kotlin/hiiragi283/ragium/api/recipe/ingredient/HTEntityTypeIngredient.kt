@@ -19,8 +19,7 @@ import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.IngredientType
 import java.util.stream.Stream
 
-@ConsistentCopyVisibility
-data class HTEntityTypeIngredient private constructor(private val holderSet: HolderSet<EntityType<*>>) : ICustomIngredient {
+data class HTEntityTypeIngredient(private val holderSet: HolderSet<EntityType<*>>) : ICustomIngredient {
     companion object {
         @JvmField
         val CODEC: MapBiCodec<RegistryFriendlyByteBuf, HTEntityTypeIngredient> = VanillaBiCodecs

@@ -39,7 +39,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         if (inputCount <= 0 || outputCount <= 0) return null
         return HTVanillaCookingRecipe(
             baseRecipe,
-            HTItemIngredient.of(baseRecipe.ingredients[0], inputCount),
+            HTItemIngredient.convert(baseRecipe.ingredients[0], inputCount),
             baseRecipe::assemble.andThen { it.copyWithCount(outputCount) },
         )
     }

@@ -210,7 +210,7 @@ sealed class HTRecipeProvider {
         // Base
         brewing(right, base)
         val drop: HTItemIngredient =
-            itemCreator.fromVanilla(HTPotionIngredient.of(listOf(RagiumItems.POTION_DROP), HTPotionContents(base)))
+            itemCreator.fromCustom(HTPotionIngredient.of(listOf(RagiumItems.POTION_DROP), HTPotionContents(base)))
         // Long
         if (long != null) {
             HTCombineRecipeBuilder
@@ -260,7 +260,7 @@ sealed class HTRecipeProvider {
     ) {
         val instance = HTMobEffectInstance(effect, baseTime)
         val drop: HTItemIngredient =
-            itemCreator.fromVanilla(HTPotionIngredient.of(listOf(RagiumItems.POTION_DROP), HTPotionContents(instance)))
+            itemCreator.fromCustom(HTPotionIngredient.of(listOf(RagiumItems.POTION_DROP), HTPotionContents(instance)))
         // Base
         brewing(right) { add(instance) }.save(output)
         // Long

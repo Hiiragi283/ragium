@@ -20,7 +20,6 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
 
 object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
@@ -28,11 +27,11 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
 
     @Suppress("DEPRECATION")
     @JvmStatic
-    private fun ingredient(vararg entityTypes: EntityType<*>): Ingredient =
-        HTEntityTypeIngredient.of(HolderSet.direct(EntityType<*>::builtInRegistryHolder, *entityTypes))
+    private fun ingredient(vararg entityTypes: EntityType<*>): HTEntityTypeIngredient =
+        HTEntityTypeIngredient(HolderSet.direct(EntityType<*>::builtInRegistryHolder, *entityTypes))
 
     @JvmStatic
-    private fun ingredient(tagKey: TagKey<EntityType<*>>): Ingredient = HTEntityTypeIngredient.of(entityLookup.getOrThrow(tagKey))
+    private fun ingredient(tagKey: TagKey<EntityType<*>>): HTEntityTypeIngredient = HTEntityTypeIngredient(entityLookup.getOrThrow(tagKey))
 
     override fun buildRecipeInternal() {
         // Amethyst
@@ -78,7 +77,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
-                itemCreator.fromVanilla(ingredient(EntityType.ARMADILLO)),
+                itemCreator.fromCustom(ingredient(EntityType.ARMADILLO)),
                 resultHelper.item(Items.ARMADILLO_SCUTE),
             ).save(output)
         // Honeycomb
@@ -99,14 +98,14 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromTagKey(Tags.Items.SEEDS),
-                itemCreator.fromVanilla(ingredient(EntityType.CHICKEN)),
+                itemCreator.fromCustom(ingredient(EntityType.CHICKEN)),
                 resultHelper.item(Items.EGG),
             ).save(output)
         // Milk from Cow
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
-                itemCreator.fromVanilla(ingredient(EntityType.COW)),
+                itemCreator.fromCustom(ingredient(EntityType.COW)),
                 null,
                 resultHelper.fluid(HTFluidHolderLike.MILK, 250),
             ).saveSuffixed(output, "_from_cow")
@@ -132,7 +131,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
-                itemCreator.fromVanilla(ingredient(EntityType.GOAT)),
+                itemCreator.fromCustom(ingredient(EntityType.GOAT)),
                 null,
                 resultHelper.fluid(HTFluidHolderLike.MILK, 500),
             ).saveSuffixed(output, "_from_goat")
@@ -140,14 +139,14 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromTagKey(Tags.Items.FERTILIZERS),
-                itemCreator.fromVanilla(ingredient(EntityType.IRON_GOLEM)),
+                itemCreator.fromCustom(ingredient(EntityType.IRON_GOLEM)),
                 resultHelper.item(Items.POPPY),
             ).save(output)
         // Mushroom Stew from Mooshroom
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
-                itemCreator.fromVanilla(ingredient(EntityType.MOOSHROOM)),
+                itemCreator.fromCustom(ingredient(EntityType.MOOSHROOM)),
                 null,
                 resultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 500),
             ).save(output)
@@ -155,28 +154,28 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.NETHER_BRICKS, 64),
-                itemCreator.fromVanilla(ingredient(EntityType.PIGLIN_BRUTE)),
+                itemCreator.fromCustom(ingredient(EntityType.PIGLIN_BRUTE)),
                 resultHelper.item(Items.ANCIENT_DEBRIS),
             ).save(output)
         // Wool
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 null,
-                itemCreator.fromVanilla(ingredient(EntityType.SHEEP)),
+                itemCreator.fromCustom(ingredient(EntityType.SHEEP)),
                 resultHelper.item(Items.WHITE_WOOL),
             ).save(output)
         // Turtle Scute
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.SEAGRASS, 8),
-                itemCreator.fromVanilla(ingredient(EntityType.TURTLE)),
+                itemCreator.fromCustom(ingredient(EntityType.TURTLE)),
                 resultHelper.item(Items.TURTLE_SCUTE),
             ).save(output)
         // Resonant Debris
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.DEEPSLATE, 8),
-                itemCreator.fromVanilla(ingredient(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)),
+                itemCreator.fromCustom(ingredient(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)),
                 resultHelper.item(RagiumBlocks.RESONANT_DEBRIS),
             ).save(output)
         // Nether Star

@@ -9,12 +9,18 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.util.unwrapEither
 import net.minecraft.core.HolderSet
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.neoforged.neoforge.common.crafting.ICustomIngredient
+import net.neoforged.neoforge.common.crafting.IngredientType
+import net.neoforged.neoforge.registries.NeoForgeRegistries
+import net.neoforged.neoforge.registries.holdersets.OrHolderSet
 import java.util.function.IntUnaryOperator
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * [ImmutableItemStack]向けの[HTIngredient]の実装クラス
@@ -39,7 +45,35 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
         fun of(holderSet: HolderSet<Item>, count: Int = 1): HTItemIngredient = HolderBased(holderSet, count)
 
         @JvmStatic
-        fun of(ingredient: Ingredient, count: Int = 1): HTItemIngredient = IngredientBased(ingredient, count)
+        fun of(ingredient: ICustomIngredient, count: Int = 1): HTItemIngredient = IngredientBased(ingredient, count)
+
+        @JvmStatic
+        fun convert(ingredient: Ingredient, count: Int = 1): HTItemIngredient {
+            val custom: ICustomIngredient? = ingredient.customIngredient
+            if (custom != null) {
+                return of(custom, count)
+            } else {
+                val values: Array<out Ingredient.Value> = ingredient.values
+                val holderSet: HolderSet<Item> = when (values.size) {
+                    0 -> null
+                    1 -> resolveValue(values[0])
+                    else -> {
+                        val holderSets: List<HolderSet<Item>> = values.mapNotNull(::resolveValue)
+                        when {
+                            holderSets.isEmpty() -> null
+                            else -> OrHolderSet(holderSets)
+                        }
+                    }
+                } ?: HolderSet.empty()
+                return of(holderSet, count)
+            }
+        }
+
+        @JvmStatic
+        private fun resolveValue(value: Ingredient.Value): HolderSet<Item>? = when (value) {
+            is Ingredient.TagValue -> BuiltInRegistries.ITEM.getTag(value.tag()).getOrNull()
+            else -> HolderSet.direct(ItemStack::getItemHolder, value.items)
+        }
     }
 
     fun test(stack: ItemStack): Boolean = stack.toImmutable()?.let(this::test) ?: false
@@ -49,8 +83,6 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
     final override fun test(stack: ImmutableItemStack): Boolean = testOnlyType(stack) && stack.amount() >= this.count
 
     final override fun getRequiredAmount(stack: ImmutableItemStack): Int = if (test(stack)) this.count else 0
-
-    fun copyWithCount(count: Int): HTItemIngredient = copyWithCount { count }
 
     abstract fun copyWithCount(operator: IntUnaryOperator): HTItemIngredient
 
@@ -93,11 +125,17 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
         override fun copyWithCount(operator: IntUnaryOperator): HTItemIngredient = HolderBased(holderSet, operator.applyAsInt(count))
     }
 
-    private class IngredientBased(private val ingredient: Ingredient, count: Int) : HTItemIngredient(count) {
+    private class IngredientBased(private val ingredient: ICustomIngredient, count: Int) : HTItemIngredient(count) {
         companion object {
+            @JvmStatic
+            private val CUSTOM_CODEC: BiCodec<RegistryFriendlyByteBuf, ICustomIngredient> =
+                VanillaBiCodecs
+                    .registryBased(NeoForgeRegistries.INGREDIENT_TYPES)
+                    .dispatch(ICustomIngredient::getType, IngredientType<*>::codec, IngredientType<*>::streamCodec)
+
             @JvmField
             val CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
-                VanillaBiCodecs.INGREDIENT.fieldOf(RagiumConst.INGREDIENT).forGetter(IngredientBased::ingredient),
+                CUSTOM_CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(IngredientBased::ingredient),
                 BiCodecs.POSITIVE_INT.optionalFieldOf(RagiumConst.AMOUNT, 1).forGetter(IngredientBased::count),
                 ::IngredientBased,
             )
@@ -105,10 +143,10 @@ sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, Imm
 
         override fun testOnlyType(stack: ImmutableItemStack): Boolean = ingredient.test(stack.unwrap())
 
-        override fun hasNoMatchingStacks(): Boolean = ingredient.isEmpty
+        override fun hasNoMatchingStacks(): Boolean = ingredient.items.findAny().isEmpty
 
         override fun unwrap(): Either<Pair<HolderSet<Item>, Int>, List<ImmutableItemStack>> =
-            Either.right(ingredient.items.mapNotNull(ItemStack::toImmutable))
+            Either.right(ingredient.items.toList().mapNotNull(ItemStack::toImmutable))
 
         override fun copyWithCount(operator: IntUnaryOperator): HTItemIngredient = IngredientBased(ingredient, operator.applyAsInt(count))
     }
