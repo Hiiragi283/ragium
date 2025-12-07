@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.material.prefix.HTRegisterPrefixEvent
 import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
+import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
@@ -74,6 +75,8 @@ class RagiumPlatformImpl : RagiumPlatform {
     override fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator = HTFluidIngredientCreatorImpl(getter)
 
     override fun getPlantingRecipeSerializer(): RecipeSerializer<HTPlantingRecipe> = RagiumRecipeSerializers.PLANTING
+
+    override fun getRockGeneratingRecipeSerializer(): RecipeSerializer<HTRockGeneratingRecipe> = RagiumRecipeSerializers.ROCK_GENERATING
 
     //    Server    //
 

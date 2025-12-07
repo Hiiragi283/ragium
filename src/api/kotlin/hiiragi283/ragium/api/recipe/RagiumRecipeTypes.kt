@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
+import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
@@ -17,7 +18,6 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeTypes {
-    // Machine
     @JvmField
     val ALLOYING: HTDeferredRecipeType<HTMultiRecipeInput, HTShapelessInputsRecipe> = create(RagiumConst.ALLOYING)
 
@@ -50,6 +50,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val REFINING: HTDeferredRecipeType<HTMultiRecipeInput, HTComplexRecipe> = create(RagiumConst.REFINING)
+
+    @JvmField
+    val ROCK_GENERATING: HTDeferredRecipeType<HTMultiRecipeInput, HTRockGeneratingRecipe> = create(RagiumConst.ROCK_GENERATING)
 
     @JvmField
     val SIMULATING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.SIMULATING)

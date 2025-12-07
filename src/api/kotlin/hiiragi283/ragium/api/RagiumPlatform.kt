@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
+import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -79,6 +80,8 @@ interface RagiumPlatform {
     fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator
 
     fun getPlantingRecipeSerializer(): RecipeSerializer<HTPlantingRecipe>
+
+    fun getRockGeneratingRecipeSerializer(): RecipeSerializer<HTRockGeneratingRecipe>
 
     //    Server    //
 

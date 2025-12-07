@@ -101,6 +101,7 @@ object RagiumConst {
     const val MIXING = "mixing"
     const val PLANTING = "planting"
     const val REFINING = "refining"
+    const val ROCK_GENERATING = "rock_generating"
     const val SIMULATING = "simulating"
     const val SOLIDIFYING = "solidifying"
     const val WASHING = "washing"
