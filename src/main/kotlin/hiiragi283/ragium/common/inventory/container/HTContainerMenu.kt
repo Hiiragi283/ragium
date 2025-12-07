@@ -150,14 +150,14 @@ abstract class HTContainerMenu(open val menuType: HTDeferredMenuType<*, *>, cont
                     // 個数の合計値がスロットの上限以下の場合，スロット内の個数を変えて現在のstackを無効化
                     if (sumCount <= maxCount) {
                         stack.count = 0
-                        stackIn.count = sumCount
+                        updateCount(slot, sumCount)
                         slot.setChanged()
                         flag = true
                     } else {
                         // スロット内の個数がスロットの上限未満の場合，スロット内の個数を最大にして現在のstackを減らす
                         if (stackIn.count < maxCount) {
                             stack.shrink(maxCount - stackIn.count)
-                            stackIn.count = maxCount
+                            updateCount(slot, maxCount)
                             slot.setChanged()
                             flag = true
                         }
@@ -187,7 +187,15 @@ abstract class HTContainerMenu(open val menuType: HTDeferredMenuType<*, *>, cont
         // 移動処理が一つでも行えればtrue
         return flag
     }
-
+    
+    private fun updateCount(slot: Slot, count: Int) {
+        if (slot is HTContainerItemSlot) {
+            slot.updateCount(count)
+        } else {
+            slot.item.count = count
+        }
+    }
+    
     //    Slot Sync    //
 
     private val trackedSlots: MutableList<HTSyncableSlot> = mutableListOf()

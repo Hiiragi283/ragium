@@ -39,12 +39,24 @@ open class HTContainerItemSlot(
             this.setBackground(atlas, texture)
         }
     }
+    
+    fun updateCount(count: Int) {
+        stackSetter.accept(slot.getStack()?.copyWithAmount(count))
+        setChanged()
+    }
+    
+    private fun insertItem(stack: ItemStack, action: HTStorageAction): ItemStack {
+        val remainder: ImmutableItemStack? = slot.insert(stack.toImmutable(), action, HTStorageAccess.MANUAL)
+        if (action.execute && stack.count != remainder?.amount()) {
+            setChanged()
+        }
+        return remainder?.unwrap() ?: ItemStack.EMPTY
+    }
 
     override fun mayPlace(stack: ItemStack): Boolean {
         val immutable: ImmutableItemStack = stack.toImmutable() ?: return false
         if (slot.getStack() == null) {
-            val remainder: Int = slot.insert(immutable, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL)?.amount() ?: 0
-            return remainder < stack.count
+            return insertItem(stack, HTStorageAction.SIMULATE).count < stack.count
         }
         if (slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL) == null) return false
         return manualFilter(immutable, HTStorageAccess.MANUAL)
@@ -66,7 +78,7 @@ open class HTContainerItemSlot(
 
     override fun getMaxStackSize(): Int = slot.getCapacity()
 
-    override fun getMaxStackSize(stack: ItemStack): Int = slot.getNeeded(stack.toImmutable())
+    override fun getMaxStackSize(stack: ItemStack): Int = slot.getCapacity(stack.toImmutable())
 
     override fun mayPickup(player: Player): Boolean = slot.extract(1, HTStorageAction.SIMULATE, HTStorageAccess.MANUAL) != null
 
