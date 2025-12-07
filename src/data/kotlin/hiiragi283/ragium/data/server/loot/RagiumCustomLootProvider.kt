@@ -30,7 +30,7 @@ sealed class RagiumCustomLootProvider(protected val provider: HolderLookup.Provi
     companion object {
         @JvmField
         val DROP_RAGI_CHERRY: ResourceKey<LootTable> = create("drop_ragi_cherry")
-        
+
         @JvmField
         val DROP_ELDER_HEART: ResourceKey<LootTable> = create("drop_elder_heart")
 

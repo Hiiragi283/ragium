@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.block.attribute.hasAttribute
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.util.HTItemDropHelper
@@ -113,13 +112,8 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
     ) {
         if (!state.`is`(newState.block)) {
             level.getTypedBlockEntity<HTBlockEntity>(pos)?.let { blockEntity: HTBlockEntity ->
-                if (blockEntity.doDropItems()) {
-                    blockEntity
-                        .getItemSlots(blockEntity.getItemSideFor())
-                        .mapNotNull(HTItemSlot::getStack)
-                        .forEach { stack: ImmutableItemStack ->
-                            HTItemDropHelper.dropStackAt(level, pos, stack)
-                        }
+                blockEntity.collectDrops { stack: ImmutableItemStack ->
+                    HTItemDropHelper.dropStackAt(level, pos, stack)
                 }
             }
         }

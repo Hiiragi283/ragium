@@ -6,6 +6,7 @@ import dev.emi.emi.api.EmiPlugin
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
+import dev.emi.emi.api.recipe.EmiRecipeCategory
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
@@ -31,6 +32,7 @@ import hiiragi283.ragium.client.integration.emi.category.HTRegistryEmiRecipeCate
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.data.HTBiomassRecipeData
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
+import hiiragi283.ragium.client.integration.emi.handler.HTEmiRecipeHandler
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
@@ -46,13 +48,16 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRec
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTRefiningEmiRecipe
+import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
+import hiiragi283.ragium.setup.DeferredBEMenu
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.component.DataComponents
@@ -97,6 +102,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addProcessors(registry)
         addInteractions(registry)
 
+        // Workstations
         for (block: ItemLike in listOf(RagiumBlocks.ELECTRIC_FURNACE, RagiumBlocks.MULTI_SMELTER)) {
             registry.addWorkstation(VanillaEmiRecipeCategories.BLASTING, block.toEmi())
             registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, block.toEmi())
@@ -113,6 +119,44 @@ class RagiumEmiPlugin : EmiPlugin {
             RagiumItems.LOOT_TICKET.get(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TICKET) },
         )
+
+        addRecipeHandler(registry)
+    }
+
+    private fun addRecipeHandler(registry: EmiRegistry) {
+        // Generator
+        addRecipeHandler(
+            registry,
+            RagiumMenuTypes.ITEM_GENERATOR,
+            RagiumEmiRecipeCategories.THERMAL,
+            RagiumEmiRecipeCategories.CULINARY,
+        )
+        // Processor
+        addRecipeHandler(
+            registry,
+            RagiumMenuTypes.SMELTER,
+            VanillaEmiRecipeCategories.BLASTING,
+            VanillaEmiRecipeCategories.SMELTING,
+            VanillaEmiRecipeCategories.SMOKING,
+        )
+
+        addRecipeHandler(registry, RagiumMenuTypes.ALLOY_SMELTER, RagiumEmiRecipeCategories.ALLOYING)
+        addRecipeHandler(registry, RagiumMenuTypes.BREWERY, RagiumEmiRecipeCategories.BREWING)
+        addRecipeHandler(registry, RagiumMenuTypes.COMPRESSOR, RagiumEmiRecipeCategories.COMPRESSING)
+        addRecipeHandler(registry, RagiumMenuTypes.CUTTING_MACHINE, RagiumEmiRecipeCategories.CUTTING)
+        addRecipeHandler(registry, RagiumMenuTypes.ENCHANTER, RagiumEmiRecipeCategories.ENCHANTING)
+        addRecipeHandler(registry, RagiumMenuTypes.EXTRACTOR, RagiumEmiRecipeCategories.EXTRACTING)
+        addRecipeHandler(registry, RagiumMenuTypes.MELTER, RagiumEmiRecipeCategories.MELTING)
+        addRecipeHandler(registry, RagiumMenuTypes.SIMULATOR, RagiumEmiRecipeCategories.SIMULATING)
+        addRecipeHandler(registry, RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, RagiumEmiRecipeCategories.CRUSHING)
+    }
+
+    private fun <BE : HTBlockEntity> addRecipeHandler(
+        registry: EmiRegistry,
+        menuType: DeferredBEMenu<BE>,
+        vararg categories: EmiRecipeCategory,
+    ) {
+        registry.addRecipeHandler(menuType.get(), HTEmiRecipeHandler(*categories))
     }
 
     //    Recipes    //

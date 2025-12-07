@@ -25,6 +25,7 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import java.util.function.Consumer
 import java.util.function.Predicate
 
 /**
@@ -64,6 +65,8 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         )
     }
 
+    //    HTUpgradableBlockEntity    //
+
     val upgradeSlots: List<HTBasicItemSlot> = (0..3).map { i: Int ->
         val filter: (ImmutableItemStack) -> Boolean = filter@{ stack: ImmutableItemStack ->
             canApplyUpgrade(stack.unwrap()) && !hasUpgrade(stack.value())
@@ -95,6 +98,11 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         if (RagiumPlatform.INSTANCE.getMachineUpgrade(getRegistryAccess(), stack) == null) return false
         val filter: HTKeyOrTagEntry<BlockEntityType<*>> = stack.get(RagiumDataComponents.MACHINE_UPGRADE_FILTER) ?: return true
         return filter.isOf(getBlockEntityType(this.blockHolder))
+    }
+
+    override fun collectDrops(consumer: Consumer<ImmutableItemStack>) {
+        super.collectDrops(consumer)
+        upgradeSlots.mapNotNull(HTBasicItemSlot::getStack).forEach(consumer)
     }
 
     //    Save & Load    //

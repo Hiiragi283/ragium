@@ -614,6 +614,13 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun biomass() {
+        // Biomass -> Crude Bio
+        HTItemToObjRecipeBuilder
+            .melting(
+                itemCreator.fromTagKey(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.BIO),
+                resultHelper.fluid(RagiumFluidContents.CRUDE_BIO, 125),
+            ).save(output)
+
         // Crude Bio -> Bio Fuel
         distillation(
             RagiumFluidContents.CRUDE_BIO to 1000,
