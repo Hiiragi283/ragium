@@ -117,7 +117,7 @@ object RagiumBlocks {
 
     @JvmStatic
     private fun copyOf(block: Block, mapColor: MapColor): BlockBehaviour.Properties = copyOf(block).mapColor(mapColor)
-    
+
     //    Natural Resources    //
 
     @JvmField
@@ -422,6 +422,13 @@ object RagiumBlocks {
     val CULINARY_GENERATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
         "culinary_generator",
         RagiumBlockTypes.CULINARY_GENERATOR,
+        machine().noOcclusion(),
+    )
+
+    @JvmField
+    val MAGMATIC_GENERATOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> = registerMachineTier(
+        "magmatic_generator",
+        RagiumBlockTypes.MAGMATIC_GENERATOR,
         machine().noOcclusion(),
     )
 

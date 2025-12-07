@@ -54,6 +54,12 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             define('C', RagiumItems.getCoil(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
             define('D', Items.SMOKER)
         }
+
+        generator(RagiumBlocks.MAGMATIC_GENERATOR, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) {
+            define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.QUARTZ)
+            define('C', RagiumItems.getCoil(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY))
+            define('D', Items.BLAST_FURNACE)
+        }
         // Elite
         generator(RagiumBlocks.COMBUSTION_GENERATOR, RagiumMaterialKeys.AZURE_STEEL) {
             define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)

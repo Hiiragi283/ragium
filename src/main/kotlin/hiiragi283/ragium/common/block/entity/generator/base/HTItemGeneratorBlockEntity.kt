@@ -63,7 +63,7 @@ abstract class HTItemGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
             HTStorageAction.EXECUTE,
         )
     }
-    
+
     protected abstract fun getRemainder(stack: ImmutableItemStack): ItemStack
 
     protected abstract fun playSound(level: ServerLevel, pos: BlockPos)

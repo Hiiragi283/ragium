@@ -35,6 +35,14 @@ object RagiumBlockTypes {
         .addMachineTier(HTMachineTier.ADVANCED, RagiumConfig.COMMON.generator.culinary)
         .build(RagiumCommonTranslation.CULINARY_GENERATOR)
 
+    @JvmField
+    val MAGMATIC_GENERATOR: HTMachineBlockType = HTMachineBlockType
+        .builder { RagiumBlockEntityTypes.MAGMATIC_GENERATOR }
+        .add(HTDirectionalBlockAttribute.FACING)
+        .addMenu { RagiumMenuTypes.MAGMATIC_GENERATOR }
+        .addMachineTier(HTMachineTier.ADVANCED, RagiumConfig.COMMON.generator.magmatic)
+        .build()
+
     // Elite
     @JvmField
     val COMBUSTION_GENERATOR: HTMachineBlockType = HTMachineBlockType

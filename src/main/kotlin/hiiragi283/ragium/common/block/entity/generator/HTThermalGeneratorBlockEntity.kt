@@ -16,7 +16,7 @@ class HTThermalGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canInsertFuel(stack: ImmutableItemStack): Boolean = stack.unwrap().getBurnTime(null) > 0
 
     override fun getRemainder(stack: ImmutableItemStack): ItemStack = stack.getCraftingRemainingItem()
-    
+
     override fun playSound(level: ServerLevel, pos: BlockPos) {
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1f, 0.5f)
     }

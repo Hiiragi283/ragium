@@ -24,7 +24,7 @@ class HTCulinaryGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getRemainder(stack: ImmutableItemStack): ItemStack =
         stack.getFoodProperties(null)?.usingConvertsTo()?.getOrNull() ?: ItemStack.EMPTY
-    
+
     override fun playSound(level: ServerLevel, pos: BlockPos) {
         level.playSound(null, pos, SoundEvents.GENERIC_EAT, SoundSource.BLOCKS, 1f, 0.5f)
     }

@@ -50,10 +50,10 @@ object RagiumEmiRecipeCategories {
 
     // Advanced
     @JvmField
-    val MAGMATIC: HTEmiRecipeCategory = generator(RagiumBlocks.THERMAL_GENERATOR)
+    val CULINARY: HTEmiRecipeCategory = generator(RagiumBlocks.CULINARY_GENERATOR)
 
     @JvmField
-    val CULINARY: HTEmiRecipeCategory = generator(RagiumBlocks.CULINARY_GENERATOR)
+    val MAGMATIC: HTEmiRecipeCategory = generator(RagiumBlocks.MAGMATIC_GENERATOR)
 
     // Elite
     @JvmField
