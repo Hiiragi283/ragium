@@ -245,6 +245,14 @@ object RagiumBlockTypes {
         .addTier(HTMachineTier.BASIC)
         .build(RagiumCommonTranslation.ITEM_COLLECTOR)
 
+    // Advanced
+    @JvmField
+    val STONE_COLLECTOR: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.STONE_COLLECTOR }
+        .add(HTDirectionalBlockAttribute.HORIZONTAL)
+        .addTier(HTMachineTier.ADVANCED)
+        .build()
+
     // Elite
     @JvmField
     val DIM_ANCHOR: HTEntityBlockType = HTEntityBlockType

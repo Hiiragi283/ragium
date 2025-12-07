@@ -565,6 +565,11 @@ object RagiumBlocks {
     val ITEM_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("item_collector", RagiumBlockTypes.ITEM_COLLECTOR, machine())
 
+    // Advanced
+    @JvmField
+    val STONE_COLLECTOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
+        registerMachineTier("stone_collector", RagiumBlockTypes.STONE_COLLECTOR, machine())
+
     // Elite
     @JvmField
     val DIM_ANCHOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =

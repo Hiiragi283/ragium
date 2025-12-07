@@ -40,6 +40,9 @@ value class ImmutableItemStack private constructor(private val stack: ItemStack)
         @JvmStatic
         fun of(item: ItemLike, count: Int = 1): ImmutableItemStack = ItemStack(item, count).toImmutableOrThrow()
 
+        @JvmStatic
+        fun ofNullable(item: ItemLike, count: Int = 1): ImmutableItemStack? = ItemStack(item, count).toImmutable()
+
         /**
          * [ItemStack]を[ImmutableItemStack]に変換します。
          * @return [ItemStack.isEmpty]が`true`の場合は`null`を返します。

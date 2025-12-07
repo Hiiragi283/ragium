@@ -81,6 +81,8 @@ class RagiumBlockEntityTypeTagsProvider(context: HTDataGenContext) :
             // Basic
             .add(RagiumBlockEntityTypes.FLUID_COLLECTOR)
             .add(RagiumBlockEntityTypes.ITEM_COLLECTOR)
+            // Advanced
+            .add(RagiumBlockEntityTypes.STONE_COLLECTOR)
             // Elite
             .add(RagiumBlockEntityTypes.DIM_ANCHOR)
             .add(RagiumBlockEntityTypes.ENI)

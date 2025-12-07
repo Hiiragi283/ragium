@@ -166,6 +166,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.FLUID_COLLECTOR, "Fluid Collector")
         add(RagiumBlocks.ITEM_COLLECTOR, "Item Collector")
 
+        add(RagiumBlocks.STONE_COLLECTOR, "Stone Collector")
+
         add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
         add(RagiumBlocks.ENI, "E.N.I.")
 

@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEnti
 import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTStoneCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
@@ -193,6 +194,13 @@ object RagiumBlockEntityTypes {
         ::HTItemCollectorBlockEntity,
     )
 
+    // Advanced
+    @JvmField
+    val STONE_COLLECTOR: HTDeferredBlockEntityType<HTStoneCollectorBlockEntity> = registerTick(
+        "stone_collector",
+        ::HTStoneCollectorBlockEntity,
+    )
+
     // Elite
     @JvmField
     val DIM_ANCHOR: HTDeferredBlockEntityType<HTDimensionalAnchorBlockEntity> = REGISTER.registerType(
@@ -294,6 +302,8 @@ object RagiumBlockEntityTypes {
         // Devices
         registerHandler(event, FLUID_COLLECTOR.get())
         registerHandler(event, ITEM_COLLECTOR.get())
+
+        registerHandler(event, STONE_COLLECTOR.get())
 
         registerHandler(event, ENI.get())
 

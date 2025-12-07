@@ -17,7 +17,4 @@ fun interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
      * @return 見つからなかった場合は`null`
      */
     fun getFirstRecipe(input: INPUT, level: Level): RECIPE?
-
-    fun <R : Recipe<INPUT>> wrap(transform: (RECIPE) -> R): HTRecipeCache<INPUT, R> =
-        HTRecipeCache { input: INPUT, level: Level -> this@HTRecipeCache.getFirstRecipe(input, level)?.let(transform) }
 }

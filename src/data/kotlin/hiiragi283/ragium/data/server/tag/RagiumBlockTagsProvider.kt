@@ -111,6 +111,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.FLUID_COLLECTOR)
             add(RagiumBlocks.ITEM_COLLECTOR)
 
+            add(RagiumBlocks.STONE_COLLECTOR)
+
             add(RagiumBlocks.DIM_ANCHOR)
             add(RagiumBlocks.ENI)
 
