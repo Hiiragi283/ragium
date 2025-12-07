@@ -131,6 +131,10 @@ class RagiumEmiPlugin : EmiPlugin {
             RagiumItems.LOOT_TICKET.get(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TICKET) },
         )
+        registry.setDefaultComparison(
+            RagiumBlocks.IMITATION_SPAWNER.asItem(),
+            Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.SPAWNER_MOB) },
+        )
 
         addRecipeHandler(registry)
     }

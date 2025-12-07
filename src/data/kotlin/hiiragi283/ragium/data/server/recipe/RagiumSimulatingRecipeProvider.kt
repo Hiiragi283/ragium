@@ -1,9 +1,8 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
+import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -11,27 +10,25 @@ import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.HolderGetter
-import net.minecraft.core.HolderSet
-import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient
+import net.neoforged.neoforge.common.crafting.ICustomIngredient
 
 object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
-    private val entityLookup: HolderGetter<EntityType<*>> by lazy { provider.lookupOrThrow(Registries.ENTITY_TYPE) }
-
-    @Suppress("DEPRECATION")
     @JvmStatic
-    private fun ingredient(vararg entityTypes: EntityType<*>): HTEntityTypeIngredient =
-        HTEntityTypeIngredient(HolderSet.direct(EntityType<*>::builtInRegistryHolder, *entityTypes))
-
-    @JvmStatic
-    private fun ingredient(tagKey: TagKey<EntityType<*>>): HTEntityTypeIngredient = HTEntityTypeIngredient(entityLookup.getOrThrow(tagKey))
+    private fun ingredient(entityType: EntityType<*>): ICustomIngredient = DataComponentIngredient
+        .of(
+            false,
+            RagiumDataComponents.SPAWNER_MOB,
+            HTSpawnerMob(entityType),
+            RagiumBlocks.IMITATION_SPAWNER,
+        ).customIngredient!!
 
     override fun buildRecipeInternal() {
         // Amethyst
@@ -65,8 +62,6 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
                 "ABA",
             ).define('A', RagiumBlocks.getMetalBars(RagiumMaterialKeys.DEEP_STEEL))
             .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-            .define('C', Tags.Items.NETHER_STARS)
-            .save(output)
 
         mobExtracting()
     }
@@ -175,7 +170,7 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTItemWithCatalystRecipeBuilder
             .simulating(
                 itemCreator.fromItem(Items.DEEPSLATE, 8),
-                itemCreator.fromCustom(ingredient(RagiumModTags.EntityTypes.GENERATE_RESONANT_DEBRIS)),
+                itemCreator.fromCustom(ingredient(EntityType.WARDEN)),
                 resultHelper.item(RagiumBlocks.RESONANT_DEBRIS),
             ).save(output)
         // Nether Star

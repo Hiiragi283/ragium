@@ -1,15 +1,12 @@
 package hiiragi283.ragium.data.server
 
 import com.enderio.base.common.init.EIOBlocks
-import com.enderio.base.common.init.EIOItems
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
-import dev.shadowsoffire.hostilenetworks.Hostile
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
-import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.material.HTMaterialLike
@@ -19,8 +16,6 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.createCommonTag
-import hiiragi283.ragium.common.data.map.HTDataModelEntityIngredient
-import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -58,7 +53,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         combustionFuels()
 
         armorEquip()
-        subEntityIngredient()
 
         createEnchIndustry()
     }
@@ -155,26 +149,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun armorEquip() {
         builder(RagiumDataMapTypes.ARMOR_EQUIP)
             .addHolder(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectEquipAction(MobEffects.NIGHT_VISION, -1))
-    }
-
-    private fun subEntityIngredient() {
-        builder(RagiumDataMapTypes.SUB_ENTITY_INGREDIENT)
-            .addHolder(Items.DRAGON_EGG.toHolderLike(), HTSubEntityTypeIngredient.simple(EntityType.ENDER_DRAGON))
-            .addHolder(Items.SNIFFER_EGG.toHolderLike(), HTSubEntityTypeIngredient.simple(EntityType.SNIFFER))
-            // EIO
-            .add(
-                EIOItems.SOUL_VIAL,
-                HTSoulVialEntityIngredient,
-                false,
-                ModLoadedCondition(RagiumConst.EIO_BASE),
-            )
-            // HNN
-            .add(
-                Hostile.Items.DATA_MODEL,
-                HTDataModelEntityIngredient,
-                false,
-                ModLoadedCondition(RagiumConst.HOSTILE_NETWORKS),
-            )
     }
 
     //    Integration    //

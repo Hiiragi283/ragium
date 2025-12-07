@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.material.prefix.HTRegisterPrefixEvent
 import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
-import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.client.integration.accessories.HTBackAccessoryRenderer
 import hiiragi283.ragium.client.integration.accessories.HTBundleAccessoryRenderer
 import hiiragi283.ragium.client.integration.accessories.HTGogglesAccessoryRenderer
@@ -17,8 +16,6 @@ import hiiragi283.ragium.client.network.HTOpenUniversalBundlePacket
 import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.HTThrowableRailgunProjectile
 import hiiragi283.ragium.common.RagiumAccessory
-import hiiragi283.ragium.common.data.map.HTDataModelEntityIngredient
-import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumChemicals
@@ -80,17 +77,7 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
         }
     }
 
-    private fun register(event: RegisterEvent) {
-        // Sub Entity Type Ingredient
-        event.register(RagiumAPI.SUB_ENTITY_INGREDIENT_TYPE_KEY) { helper ->
-            if (isLoaded(RagiumConst.EIO_BASE)) {
-                helper.register(RagiumConst.EIO_BASE.toId("soul_vial"), HTSoulVialEntityIngredient.CODEC)
-            }
-            if (isLoaded(RagiumConst.HOSTILE_NETWORKS)) {
-                helper.register(RagiumConst.HOSTILE_NETWORKS.toId("data_model"), HTDataModelEntityIngredient.CODEC)
-            }
-        }
-    }
+    private fun register(event: RegisterEvent) {}
 
     private fun registerPackets(event: RegisterPayloadHandlersEvent) {
         val registrar: PayloadRegistrar = event.registrar(RagiumAPI.MOD_ID)

@@ -155,11 +155,14 @@ object RagiumRuntimeHandler {
 
     //    Recipe    //
 
+    @Suppress("DEPRECATION")
     @SubscribeEvent
     fun onItemCrafted(event: PlayerEvent.ItemCraftedEvent) {
         val result: ItemStack = event.crafting
         if (result.isEmpty) return
-        val stackIn: ImmutableItemStack = result.remove(RagiumDataComponents.ITEM_CONTENT)?.getOrNull(0) ?: return
-        HTItemDropHelper.giveStackTo(event.entity, stackIn.unwrap())
+        // 中身のアイテムをプレイヤーに渡す
+        result.remove(RagiumDataComponents.ITEM_CONTENT)?.forEach { stack: ImmutableItemStack? ->
+            HTItemDropHelper.giveStackTo(event.entity, stack)
+        }
     }
 }

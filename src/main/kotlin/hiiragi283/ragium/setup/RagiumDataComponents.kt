@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
@@ -70,6 +71,9 @@ object RagiumDataComponents {
 
     @JvmField
     val REPAIRABLE: DataComponentType<HTItemIngredient> = REGISTER.registerType("repairable", HTItemIngredient.CODEC)
+
+    @JvmField
+    val SPAWNER_MOB: DataComponentType<HTSpawnerMob> = REGISTER.registerType("spawner_mob", HTSpawnerMob.CODEC)
 
     @JvmField
     val TELEPORT_POS: DataComponentType<HTTeleportPos> = REGISTER.registerType("teleport_pos", HTTeleportPos.CODEC)

@@ -3,7 +3,6 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.ingredient.HTEntityTypeIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTPotionIngredient
 import hiiragi283.ragium.api.recipe.ingredient.RagiumIngredientTypes
 import hiiragi283.ragium.api.registry.HTDeferredHolder
@@ -64,7 +63,6 @@ object RagiumMiscRegister {
                 helper.register(holder.id, codec.toSerializer(::IngredientType))
             }
 
-            register(RagiumIngredientTypes.ENTITY_TYPE, HTEntityTypeIngredient.CODEC)
             register(RagiumIngredientTypes.POTION, HTPotionIngredient.CODEC)
         }
 

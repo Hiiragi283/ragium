@@ -37,6 +37,7 @@ import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTDrumBlockItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
+import hiiragi283.ragium.common.item.block.HTImitationSpawnerBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
@@ -147,7 +148,8 @@ object RagiumBlocks {
     val RESONANT_DEBRIS: HTSimpleDeferredBlock = REGISTER.registerSimple("resonant_debris", copyOf(Blocks.ANCIENT_DEBRIS))
 
     @JvmField
-    val IMITATION_SPAWNER: HTSimpleDeferredBlock = REGISTER.registerSimple("imitation_spawner", copyOf(Blocks.SPAWNER).workInProgress())
+    val IMITATION_SPAWNER: HTDeferredBlock<Block, HTImitationSpawnerBlockItem> =
+        REGISTER.register("imitation_spawner", copyOf(Blocks.SPAWNER), ::Block, ::HTImitationSpawnerBlockItem)
 
     @JvmField
     val SOOTY_COBBLESTONE: HTSimpleDeferredBlock = REGISTER.registerSimple(

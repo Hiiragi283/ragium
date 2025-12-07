@@ -80,7 +80,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     private fun registerRegistries(event: NewRegistryEvent) {
         event.register(RagiumAPI.EQUIP_ACTION_TYPE_REGISTRY)
         event.register(RagiumAPI.SLOT_TYPE_REGISTRY)
-        event.register(RagiumAPI.SUB_ENTITY_INGREDIENT_TYPE_REGISTRY)
 
         RagiumAPI.LOGGER.info("Registered new registries!")
     }
@@ -117,7 +116,6 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
 
         event.register(RagiumDataMapTypes.ARMOR_EQUIP)
-        event.register(RagiumDataMapTypes.SUB_ENTITY_INGREDIENT)
 
         RagiumAPI.LOGGER.info("Registered data map types!")
     }

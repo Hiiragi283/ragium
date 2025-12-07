@@ -39,10 +39,6 @@ object RagiumDataMapTypes {
     val ARMOR_EQUIP: DataMapType<Item, HTEquipAction> =
         create("armor_equip", Registries.ITEM, HTEquipAction.CODEC)
 
-    @JvmField
-    val SUB_ENTITY_INGREDIENT: DataMapType<Item, HTSubEntityTypeIngredient> =
-        create("sub_entity_ingredient", Registries.ITEM, HTSubEntityTypeIngredient.CODEC)
-
     //    Extensions    //
 
     /**

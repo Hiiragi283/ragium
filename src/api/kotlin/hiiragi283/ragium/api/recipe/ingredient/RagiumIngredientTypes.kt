@@ -8,9 +8,6 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 
 object RagiumIngredientTypes {
     @JvmField
-    val ENTITY_TYPE: HTDeferredHolder<IngredientType<*>, IngredientType<HTEntityTypeIngredient>> = create("entity_type")
-
-    @JvmField
     val POTION: HTDeferredHolder<IngredientType<*>, IngredientType<HTPotionIngredient>> = create("potion")
 
     @JvmStatic

@@ -28,11 +28,6 @@ typealias RegistryKey<T> = ResourceKey<out Registry<T>>
  */
 fun <T : Any> RegistryKey<T>.createKey(id: ResourceLocation): ResourceKey<T> = ResourceKey.create(this, id)
 
-//    Registry    //
-
-fun <R : Any, T : Any> Registry<R>.getHolderDataMap(type: DataMapType<R, T>): Map<Holder.Reference<R>, T> =
-    this.getDataMap(type).mapKeys { (key: ResourceKey<R>, _) -> this.getHolderOrThrow(key) }
-
 //    Holder    //
 
 /**
