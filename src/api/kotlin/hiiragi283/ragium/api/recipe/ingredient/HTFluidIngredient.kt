@@ -48,7 +48,7 @@ sealed class HTFluidIngredient(protected val amount: Int) : HTIngredient<Fluid, 
 
     override fun test(stack: ImmutableFluidStack): Boolean = testOnlyType(stack) && stack.amount() >= this.amount
 
-    final override fun getRequiredAmount(stack: ImmutableFluidStack): Int = if (test(stack)) this.amount else 0
+    final override fun getRequiredAmount(stack: ImmutableFluidStack): Int = if (testOnlyType(stack)) this.amount else 0
 
     abstract fun copyWithAmount(amount: Int): HTFluidIngredient
 

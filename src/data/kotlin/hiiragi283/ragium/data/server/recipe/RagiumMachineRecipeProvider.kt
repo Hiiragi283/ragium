@@ -215,6 +215,12 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         ultimateMachine(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.WARPED_CRYSTAL) {
             define('B', CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN)
         }
+
+        /*machineBase(RagiumBlocks.SIMULATOR, RagiumMaterialKeys.NIGHT_METAL) {
+            define('B', RagiumItems.IRIDESCENT_POWDER)
+            define('C', spawnerIngredient(EntityType.ALLAY))
+            define('D', Items.END_STONE_BRICKS)
+        }*/
     }
 
     @JvmStatic

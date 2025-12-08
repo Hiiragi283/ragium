@@ -21,6 +21,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     // Blocks - Generators
     THERMAL_GENERATOR("description", "thermal_generator"),
     CULINARY_GENERATOR("description", "culinary_generator"),
+    MAGMATIC_GENERATOR("description", "magmatic_generator"),
     COMBUSTION_GENERATOR("description", "combustion_generator"),
     SOLAR_PANEL_UNIT("description", "solar_panel_unit"),
     SOLAR_PANEL_CONTROLLER("description", "solar_panel_controller"),
@@ -32,6 +33,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     BLOCK_BREAKER("description", "block_breaker"),
     CUTTING_MACHINE("description", "cutting_machine"),
     COMPRESSOR("description", "compressor"),
+    ELECTRIC_FURNACE("description", "electric_smelter"),
     EXTRACTOR("description", "extractor"),
     PULVERIZER("description", "pulverizer"),
 
@@ -45,6 +47,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     PLANTER("description", "planter"),
 
     ENCHANTER("description", "enchanter"),
+    MOB_CRUSHER("description", "mob_crusher"),
     SIMULATOR("description", "simulator"),
 
     // Blocks - Devices

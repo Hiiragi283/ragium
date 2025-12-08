@@ -80,7 +80,7 @@ object VanillaBiCodecs {
     val FLUID_STACK: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.OPTIONAL_CODEC, FluidStack.OPTIONAL_STREAM_CODEC)
 
     @JvmField
-    val INGREDIENT: BiCodec<RegistryFriendlyByteBuf, Ingredient> = BiCodec.of(Ingredient.CODEC_NONEMPTY, Ingredient.CONTENTS_STREAM_CODEC)
+    val INGREDIENT: BiCodec<RegistryFriendlyByteBuf, Ingredient> = BiCodec.of(HTIngredientCodec.INSTANCE, Ingredient.CONTENTS_STREAM_CODEC)
 
     @JvmField
     val FLUID_INGREDIENT: BiCodec<RegistryFriendlyByteBuf, FluidIngredient> = BiCodec.of(

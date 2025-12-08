@@ -61,14 +61,15 @@ data class HTMultiRecipeInput private constructor(val items: List<ImmutableItemS
 
         constructor(item: ImmutableItemStack?, fluid: ImmutableFluidStack?) : this(listOfNotNull(item), listOfNotNull(fluid))
 
-        private fun validateItem(index: Int): ItemStack = items[index]
+        private fun validateItem(index: Int): ItemStack = items
+            .getOrNull(index)
             ?.takeUnless { stack: ImmutableItemStack -> stack.isOf(RagiumModTags.Items.IGNORED_IN_RECIPES) }
             ?.unwrap()
             ?: ItemStack.EMPTY
 
         override fun getItem(index: Int): ItemStack = validateItem(index)
 
-        override fun getFluid(index: Int): FluidStack = fluids[index]?.unwrap() ?: FluidStack.EMPTY
+        override fun getFluid(index: Int): FluidStack = fluids.getOrNull(index)?.unwrap() ?: FluidStack.EMPTY
 
         override fun size(): Int = items.size
 

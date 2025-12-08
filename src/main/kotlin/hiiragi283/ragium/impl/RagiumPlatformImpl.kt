@@ -70,7 +70,7 @@ class RagiumPlatformImpl : RagiumPlatform {
 
     //    Recipe    //
 
-    override fun createItemCreator(getter: HolderGetter<Item>): HTItemIngredientCreator = HTItemIngredientCreatorImpl(getter)
+    override fun createItemCreator(getter: HolderGetter<Item>): HTItemIngredientCreator = HTItemIngredientCreatorImpl
 
     override fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator = HTFluidIngredientCreatorImpl(getter)
 

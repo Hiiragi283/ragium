@@ -41,7 +41,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.FACING)
         .addMenu { RagiumMenuTypes.MAGMATIC_GENERATOR }
         .addMachineTier(HTMachineTier.ADVANCED, RagiumConfig.COMMON.generator.magmatic)
-        .build()
+        .build(RagiumCommonTranslation.MAGMATIC_GENERATOR)
 
     // Elite
     @JvmField
@@ -119,7 +119,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addMachineTier(HTMachineTier.BASIC, RagiumConfig.COMMON.processor.multiSmelter)
         .addMenu { RagiumMenuTypes.SMELTER }
-        .build()
+        .build(RagiumCommonTranslation.ELECTRIC_FURNACE)
 
     @JvmField
     val EXTRACTOR: HTMachineBlockType = HTMachineBlockType
@@ -218,7 +218,7 @@ object RagiumBlockTypes {
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addMachineTier(HTMachineTier.ULTIMATE, RagiumConfig.COMMON.processor.mobCrusher)
         .addMenu { RagiumMenuTypes.MOB_CRUSHER }
-        .build()
+        .build(RagiumCommonTranslation.MOB_CRUSHER)
 
     @JvmField
     val SIMULATOR: HTMachineBlockType = HTMachineBlockType

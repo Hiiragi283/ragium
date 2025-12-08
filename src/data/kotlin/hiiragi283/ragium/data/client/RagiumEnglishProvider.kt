@@ -414,6 +414,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumCommonTranslation.THERMAL_GENERATOR, "A machine which generates energy from furnace fuels.")
         add(RagiumCommonTranslation.CULINARY_GENERATOR, "A machine which generates energy from foods.")
+        add(RagiumCommonTranslation.MAGMATIC_GENERATOR, "A machine which generates energy from hot fluids like Lava.")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "A machine which generates energy from fuel fluids.")
         add(RagiumCommonTranslation.SOLAR_PANEL_UNIT, "A unit to use with Solar Panel Controller.")
         add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "A machine which generates energy from connected Solar Panel Units.")
@@ -424,6 +425,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.BLOCK_BREAKER, "A machine which mines the block in front.")
         add(RagiumCommonTranslation.CUTTING_MACHINE, "A machine which cut item into another one.")
         add(RagiumCommonTranslation.COMPRESSOR, "A machine which compresses item into another one.")
+        add(RagiumCommonTranslation.ELECTRIC_FURNACE, "A machine which smelts item by energy.")
         add(RagiumCommonTranslation.EXTRACTOR, "A machine which extracts item or fluid from input items.")
         add(RagiumCommonTranslation.PULVERIZER, "A machine which pulverizes item into another one.")
 
@@ -436,7 +438,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.MULTI_SMELTER, "A machine which smelts items simultaneously.")
         add(RagiumCommonTranslation.PLANTER, "A machine which grows plant from seeds or sapling.")
 
-        add(RagiumCommonTranslation.ENCHANTER, "A machine which create enchanted books from items.")
+        add(RagiumCommonTranslation.ENCHANTER, "A machine which creates enchanted books from items.")
+        add(RagiumCommonTranslation.MOB_CRUSHER, "A machine which kills mobs from spawn egg and produces its drops.")
         add(RagiumCommonTranslation.SIMULATOR, "A machine which simulates behavior of blocks or mobs to generate resources.")
 
         add(RagiumCommonTranslation.FLUID_COLLECTOR, "A device which generates Water from surrounded sources or biomes.")

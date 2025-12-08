@@ -25,7 +25,7 @@ class HTAutoCraftingRecipe(
                 for (ingredient: Ingredient in recipe.ingredients) {
                     this[ingredient] = this.getOrDefault(ingredient, 0) + 1
                 }
-            }.map { (ingredient: Ingredient, count: Int) -> HTItemIngredient.convert(ingredient, count) },
+            }.map { (ingredient: Ingredient, count: Int) -> HTItemIngredient(ingredient, count) },
         ) { _: HTMultiRecipeInput, provider: HolderLookup.Provider -> recipe.getResultItem(provider) }
     }
 

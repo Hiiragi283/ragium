@@ -119,6 +119,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         add(RagiumTranslation.TRUE, "True")
         add(RagiumTranslation.FALSE, "False")
+
+        add(RagiumTranslation.EMPTY_ENTRY, "Not Yet Translated")
         // API - GUI
         add(RagiumTranslation.CAPACITY, $$"Capacity: %1$s")
         add(RagiumTranslation.CAPACITY_MB, $$"Capacity: %1$s mB")

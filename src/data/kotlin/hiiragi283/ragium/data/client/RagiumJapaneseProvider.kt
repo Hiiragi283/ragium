@@ -416,6 +416,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumCommonTranslation.THERMAL_GENERATOR, "かまど燃料から発電する機械です。")
         add(RagiumCommonTranslation.CULINARY_GENERATOR, "食料から発電する機械です。")
+        add(RagiumCommonTranslation.MAGMATIC_GENERATOR, "溶岩などの高温の液体から発電する機械です。")
         add(RagiumCommonTranslation.COMBUSTION_GENERATOR, "液体燃料から発電する機械です。")
         add(RagiumCommonTranslation.SOLAR_PANEL_UNIT, "太陽光パネルコントローラーと組み合わせて使用します。")
         add(RagiumCommonTranslation.SOLAR_PANEL_CONTROLLER, "9x9の範囲にある太陽光パネルユニットの台数から発電する機械です。")
@@ -426,6 +427,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.BLOCK_BREAKER, "正面のブロックを採掘する機械です。")
         add(RagiumCommonTranslation.CUTTING_MACHINE, "アイテムを切断して別のアイテムにする機械です。")
         add(RagiumCommonTranslation.COMPRESSOR, "アイテムを圧縮して別のアイテムにする機械です。")
+        add(RagiumCommonTranslation.ELECTRIC_FURNACE, "電気によってアイテムを製錬する機械です。")
         add(RagiumCommonTranslation.EXTRACTOR, "アイテムから別のアイテムと液体を抽出する機械です。")
         add(RagiumCommonTranslation.PULVERIZER, "アイテムを粉砕して別のアイテムにする機械です。")
 
@@ -439,6 +441,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.PLANTER, "種子や苗木から植物を成長さる機械です。")
 
         add(RagiumCommonTranslation.ENCHANTER, "アイテムからエンチャント本を作成する機械です。")
+        add(RagiumCommonTranslation.MOB_CRUSHER, "スポーンエッグからモブを処理し，ドロップ品を生産します。")
         add(RagiumCommonTranslation.SIMULATOR, "ブロックやモブの行動を再現して資源を生産する機械です。")
 
         add(RagiumCommonTranslation.FLUID_COLLECTOR, "周囲の水源やバイオームに応じて水を生産する設備です。")

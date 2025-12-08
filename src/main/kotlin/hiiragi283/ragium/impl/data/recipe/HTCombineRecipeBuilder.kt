@@ -10,10 +10,10 @@ import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderSet
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.enchantment.Enchantment
 import java.util.function.Supplier
 
@@ -65,7 +65,7 @@ class HTCombineRecipeBuilder<RESULT : Any>(
                 ::HTEnchantingRecipe,
                 holder::idOrThrow,
                 ingredient,
-                HTItemIngredient.of(HolderSet.direct(Items.BOOK.builtInRegistryHolder())),
+                HTItemIngredient(Ingredient.of(Items.BOOK), 1),
                 holder,
             )
     }

@@ -28,22 +28,18 @@ import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.registries.holdersets.AndHolderSet
-import net.neoforged.neoforge.registries.holdersets.NotHolderSet
+import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 
 object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
-    private val itemLookup: HolderLookup.RegistryLookup<Item> by lazy { provider.lookupOrThrow(Registries.ITEM) }
-
     override fun buildRecipeInternal() {
         extracting()
         mixing()
@@ -526,13 +522,8 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         // XX Log (excluded Spruce) -> Wood Dust + Sap
         HTItemWithCatalystRecipeBuilder
             .extracting(
-                itemCreator.fromSet(
-                    AndHolderSet(
-                        listOf(
-                            itemLookup.getOrThrow(ItemTags.LOGS_THAT_BURN),
-                            NotHolderSet(itemLookup, itemLookup.getOrThrow(ItemTags.SPRUCE_LOGS)),
-                        ),
-                    ),
+                itemCreator.from(
+                    DifferenceIngredient.of(Ingredient.of(ItemTags.LOGS_THAT_BURN), Ingredient.of(ItemTags.SPRUCE_LOGS)),
                 ),
                 resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4),
                 null,

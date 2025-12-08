@@ -13,6 +13,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import net.neoforged.neoforge.common.crafting.IngredientType
@@ -31,10 +32,16 @@ data class HTPotionIngredient(val items: HolderSet<Item>, val contents: HTPotion
         )
 
         @JvmStatic
-        fun of(items: Collection<ItemLike>, contents: HTPotionContents): HTPotionIngredient = HTPotionIngredient(
+        fun of(contents: HTPotionContents, items: Collection<ItemLike>): Ingredient = HTPotionIngredient(
             HolderSet.direct(ItemLike::builtInRegistryHolder, items),
             contents,
-        )
+        ).toVanilla()
+
+        @JvmStatic
+        fun of(contents: HTPotionContents, vararg items: ItemLike): Ingredient = HTPotionIngredient(
+            HolderSet.direct(ItemLike::builtInRegistryHolder, *items),
+            contents,
+        ).toVanilla()
     }
 
     private val stacks: List<ItemStack> = items
