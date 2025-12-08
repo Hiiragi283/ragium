@@ -1,5 +1,6 @@
 package hiiragi283.ragium.impl.recipe
 
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.item.alchemy.HTPotionContents
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -15,14 +16,12 @@ import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 
 class HTBrewingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredient>, val contents: HTPotionContents) :
     HTBasicCombineRecipe(itemIngredients) {
     companion object {
         @JvmField
-        val FLUID_INGREDIENT: HTFluidIngredient = HTFluidIngredient.of(FluidIngredient.tag(Tags.Fluids.WATER), 1000)
+        val FLUID_INGREDIENT: HTFluidIngredient = RagiumPlatform.INSTANCE.fluidCreator().water(1000)
     }
 
     override fun testFluid(input: HTMultiRecipeInput): Boolean = FLUID_INGREDIENT.test(input.getFluid(0))

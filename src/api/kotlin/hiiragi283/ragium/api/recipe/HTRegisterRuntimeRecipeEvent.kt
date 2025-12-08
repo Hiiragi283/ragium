@@ -48,8 +48,8 @@ class HTRegisterRuntimeRecipeEvent(
         override fun advancement(): Advancement.Builder = Advancement.Builder.recipeAdvancement()
     }
 
-    val itemCreator: HTItemIngredientCreator = RagiumPlatform.INSTANCE.createItemCreator(registryAccess)
-    val fluidCreator: HTFluidIngredientCreator = RagiumPlatform.INSTANCE.createFluidCreator(registryAccess)
+    val itemCreator: HTItemIngredientCreator = RagiumPlatform.INSTANCE.itemCreator()
+    val fluidCreator: HTFluidIngredientCreator = RagiumPlatform.INSTANCE.fluidCreator()
     val resultHelper: HTResultHelper = HTResultHelper
 
     fun isPresentTag(prefix: HTPrefixLike, material: HTMaterialLike): Boolean = isPresentTag(prefix.itemTagKey(material))

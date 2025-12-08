@@ -1,13 +1,17 @@
 package hiiragi283.ragium.common.recipe.crafting
 
+import hiiragi283.ragium.api.registry.builtInRegistryHolder
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.core.NonNullList
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -21,9 +25,9 @@ import net.minecraft.world.level.ItemLike
 class HTClearComponentRecipe(
     group: String,
     category: CraftingBookCategory,
-    private val item: Item,
-    private val targetTypes: List<DataComponentType<*>>,
-) : ShapelessRecipe(group, category, ItemStack(item), NonNullList.of(Ingredient.EMPTY, Ingredient.of(item))) {
+    private val item: Holder<Item>,
+    private val targetTypes: HolderSet<DataComponentType<*>>,
+) : ShapelessRecipe(group, category, ItemStack(item), NonNullList.of(Ingredient.EMPTY, Ingredient.of(item.value()))) {
     companion object {
         @JvmField
         val CODEC: MapBiCodec<RegistryFriendlyByteBuf, HTClearComponentRecipe> = MapBiCodec.composite(
@@ -35,12 +39,11 @@ class HTClearComponentRecipe(
                 .optionalFieldOf("category", CraftingBookCategory.MISC)
                 .forGetter(HTClearComponentRecipe::category),
             VanillaBiCodecs
-                .registryBased(BuiltInRegistries.ITEM)
+                .holder(Registries.ITEM)
                 .fieldOf("ingredient")
                 .forGetter(HTClearComponentRecipe::item),
             VanillaBiCodecs
-                .registryBased(BuiltInRegistries.DATA_COMPONENT_TYPE)
-                .nonEmptyListOf()
+                .holderSet(Registries.DATA_COMPONENT_TYPE)
                 .fieldOf("targets")
                 .forGetter(HTClearComponentRecipe::targetTypes),
             ::HTClearComponentRecipe,
@@ -50,13 +53,15 @@ class HTClearComponentRecipe(
     constructor(group: String, category: CraftingBookCategory, item: ItemLike, targetTypes: List<DataComponentType<*>>) : this(
         group,
         category,
-        item.asItem(),
-        targetTypes,
+        item.builtInRegistryHolder(),
+        HolderSet.direct(BuiltInRegistries.DATA_COMPONENT_TYPE::wrapAsHolder, targetTypes),
     )
 
     override fun assemble(input: CraftingInput, registries: HolderLookup.Provider): ItemStack {
         val item: ItemStack = input.items().firstOrNull()?.copyWithCount(1) ?: return ItemStack.EMPTY
-        targetTypes.forEach(item::remove)
+        for (holder: Holder<DataComponentType<*>> in targetTypes) {
+            item.remove(holder.value())
+        }
         return item
     }
 

@@ -6,7 +6,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.Ingredient
 
-data object HTItemIngredientCreatorImpl : HTItemIngredientCreator {
+internal data object HTItemIngredientCreatorImpl : HTItemIngredientCreator {
     override fun from(type: Item, amount: Int): HTItemIngredient = from(Ingredient.of(type), amount)
 
     override fun from(types: Collection<Item>, amount: Int): HTItemIngredient = from(Ingredient.of(*types.toTypedArray()), amount)

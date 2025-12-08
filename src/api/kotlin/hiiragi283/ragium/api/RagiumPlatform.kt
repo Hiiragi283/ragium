@@ -17,11 +17,9 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
@@ -31,7 +29,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.loading.FMLEnvironment
 import kotlin.jvm.optionals.getOrNull
 
@@ -69,15 +66,9 @@ interface RagiumPlatform {
 
     //    Recipe    //
 
-    fun createItemCreator(provider: HolderLookup.Provider): HTItemIngredientCreator =
-        createItemCreator(provider.lookupOrThrow(Registries.ITEM))
+    fun itemCreator(): HTItemIngredientCreator
 
-    fun createItemCreator(getter: HolderGetter<Item>): HTItemIngredientCreator
-
-    fun createFluidCreator(provider: HolderLookup.Provider): HTFluidIngredientCreator =
-        createFluidCreator(provider.lookupOrThrow(Registries.FLUID))
-
-    fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator
+    fun fluidCreator(): HTFluidIngredientCreator
 
     fun getPlantingRecipeSerializer(): RecipeSerializer<HTPlantingRecipe>
 

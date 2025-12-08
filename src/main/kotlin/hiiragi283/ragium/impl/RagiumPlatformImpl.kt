@@ -27,17 +27,14 @@ import hiiragi283.ragium.impl.value.HTTagValueOutput
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.NeoForge
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 import java.util.function.Consumer
@@ -70,9 +67,9 @@ class RagiumPlatformImpl : RagiumPlatform {
 
     //    Recipe    //
 
-    override fun createItemCreator(getter: HolderGetter<Item>): HTItemIngredientCreator = HTItemIngredientCreatorImpl
+    override fun itemCreator(): HTItemIngredientCreator = HTItemIngredientCreatorImpl
 
-    override fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator = HTFluidIngredientCreatorImpl(getter)
+    override fun fluidCreator(): HTFluidIngredientCreator = HTFluidIngredientCreatorImpl
 
     override fun getPlantingRecipeSerializer(): RecipeSerializer<HTPlantingRecipe> = RagiumRecipeSerializers.PLANTING
 

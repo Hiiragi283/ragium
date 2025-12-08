@@ -8,15 +8,13 @@ import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.util.unwrapEither
-import net.minecraft.core.HolderSet
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.ICustomIngredient
 import java.util.function.IntUnaryOperator
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * [ImmutableItemStack]向けの[HTIngredient]の実装クラス
@@ -47,12 +45,6 @@ class HTItemIngredient(private val ingredient: Ingredient, private val count: In
                     else -> Either.right(ingredient)
                 }
             }
-
-        @JvmStatic
-        private fun resolveValue(value: Ingredient.Value): HolderSet<Item> = when (value) {
-            is Ingredient.TagValue -> BuiltInRegistries.ITEM.getTag(value.tag()).getOrNull() ?: HolderSet.empty()
-            else -> HolderSet.direct(ItemStack::getItemHolder, value.items)
-        }
     }
 
     private constructor(ingredient: Ingredient) : this(ingredient, 1)
@@ -71,7 +63,7 @@ class HTItemIngredient(private val ingredient: Ingredient, private val count: In
 
     override fun hasNoMatchingStacks(): Boolean = ingredient.items.isEmpty()
 
-    override fun unwrap(): Either<Pair<HolderSet<Item>, Int>, List<ImmutableItemStack>> {
+    override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> {
         val custom: ICustomIngredient? = ingredient.customIngredient
         if (custom != null) {
             return Either.right(
@@ -84,14 +76,18 @@ class HTItemIngredient(private val ingredient: Ingredient, private val count: In
             val values: Array<Ingredient.Value> = ingredient.values
             return when (values.size) {
                 0 -> Either.right(listOf())
-                1 -> Either.left(resolveValue(values[0]) to count)
-                else -> Either.right(
-                    values
-                        .flatMap(Ingredient.Value::getItems)
-                        .map { it.copyWithCount(count) }
-                        .mapNotNull(ItemStack::toImmutable),
-                )
+                1 -> {
+                    when (val value: Ingredient.Value = values[0]) {
+                        is Ingredient.TagValue -> Either.left(value.tag() to count)
+                        else -> Either.right(toImmutableList(value.items))
+                    }
+                }
+                else -> Either.right(toImmutableList(values.flatMap(Ingredient.Value::getItems)))
             }
         }
     }
+
+    private fun toImmutableList(stacks: Collection<ItemStack>): List<ImmutableItemStack> = stacks
+        .map { it.copyWithCount(count) }
+        .mapNotNull(ItemStack::toImmutable)
 }

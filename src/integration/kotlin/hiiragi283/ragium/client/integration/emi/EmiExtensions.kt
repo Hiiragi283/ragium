@@ -21,8 +21,6 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.integration.emi.widget.HTTankWidget
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -75,37 +73,20 @@ fun HTPrefixLike.toItemEmi(material: HTMaterialLike, amount: Int = 1): EmiIngred
 fun HTItemIngredient.toEmi(): EmiIngredient = this
     .unwrap()
     .map(
-        { (holderSet: HolderSet<Item>, count: Int) ->
-            holderSet.unwrap().map(
-                { tagKey: TagKey<Item> -> tagKey.toEmi(count) },
-                { holders: List<Holder<Item>> ->
-                    holders
-                        .map { holder: Holder<Item> -> EmiStack.of(holder.value(), count.toLong()) }
-                        .let(::ingredient)
-                },
-            )
-        },
+        { (tagKey: TagKey<Item>, count: Int) -> tagKey.toEmi(count) },
         { stacks: List<ImmutableItemStack> -> stacks.map(ImmutableItemStack::toEmi).let(::ingredient) },
     )
 
 fun HTFluidIngredient.toEmi(): EmiIngredient = this
     .unwrap()
     .map(
-        { (holderSet: HolderSet<Fluid>, count: Int) ->
-            holderSet.unwrap().map(
-                { tagKey: TagKey<Fluid> -> tagKey.toEmi(count) },
-                { holders: List<Holder<Fluid>> ->
-                    holders
-                        .map { holder: Holder<Fluid> -> holder.value().toEmi(count) }
-                        .let(::ingredient)
-                },
-            )
-        },
+        { (tagKey: TagKey<Fluid>, count: Int) -> tagKey.toEmi(count) },
         { stacks: List<ImmutableFluidStack> -> stacks.map(ImmutableFluidStack::toEmi).let(::ingredient) },
     )
 
 private fun ingredient(stacks: List<EmiStack>): EmiIngredient = when {
     stacks.isEmpty() -> createErrorStack(RagiumTranslation.EMPTY)
+    stacks.size == 1 -> stacks[0]
     else -> EmiIngredient.of(stacks)
 }
 

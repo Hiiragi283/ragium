@@ -62,7 +62,7 @@ object RagiumEmiRecipeCategories {
         HTEmiRecipeCategory.create(HTBounds(0, 0, 5 * 18, 1 * 18), RagiumFluidContents.CRUDE_BIO.bucket)
 
     @JvmField
-    val COOLANT: HTEmiRecipeCategory = generator(RagiumBlocks.THERMAL_GENERATOR)
+    val COOLANT: HTEmiRecipeCategory = generator(RagiumBlocks.COMBUSTION_GENERATOR)
 
     @JvmField
     val COMBUSTION: HTEmiRecipeCategory = generator(RagiumBlocks.COMBUSTION_GENERATOR)

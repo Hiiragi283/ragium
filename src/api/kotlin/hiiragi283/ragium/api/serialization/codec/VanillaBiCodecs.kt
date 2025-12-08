@@ -7,7 +7,6 @@ import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
-import net.minecraft.core.Registry
 import net.minecraft.core.RegistryCodecs
 import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentPatch
@@ -23,7 +22,6 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.UUID
 
 object VanillaBiCodecs {
@@ -80,13 +78,7 @@ object VanillaBiCodecs {
     val FLUID_STACK: BiCodec<RegistryFriendlyByteBuf, FluidStack> = BiCodec.of(FluidStack.OPTIONAL_CODEC, FluidStack.OPTIONAL_STREAM_CODEC)
 
     @JvmField
-    val INGREDIENT: BiCodec<RegistryFriendlyByteBuf, Ingredient> = BiCodec.of(HTIngredientCodec.INSTANCE, Ingredient.CONTENTS_STREAM_CODEC)
-
-    @JvmField
-    val FLUID_INGREDIENT: BiCodec<RegistryFriendlyByteBuf, FluidIngredient> = BiCodec.of(
-        FluidIngredient.CODEC_NON_EMPTY,
-        FluidIngredient.STREAM_CODEC,
-    )
+    val INGREDIENT: BiCodec<RegistryFriendlyByteBuf, Ingredient> = BiCodec.of(HTIngredientCodec.ITEM, Ingredient.CONTENTS_STREAM_CODEC)
 
     // Registry
 
@@ -107,14 +99,6 @@ object VanillaBiCodecs {
         TagKey.hashedCodec(registryKey),
         ResourceLocation.STREAM_CODEC.map(registryKey::createTagKey, TagKey<T>::location),
     )
-
-    /**
-     * 指定された[registry]から[T]の[BiCodec]を返します。
-     * @param T レジストリの要素のクラス
-     */
-    @JvmStatic
-    fun <T : Any> registryBased(registry: Registry<T>): BiCodec<RegistryFriendlyByteBuf, T> =
-        BiCodec.of(registry.byNameCodec(), ByteBufCodecs.registry(registry.key()))
 
     /**
      * 指定された[registryKey]から[Holder]の[BiCodec]を返します。

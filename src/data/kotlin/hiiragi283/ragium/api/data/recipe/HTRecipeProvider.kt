@@ -82,9 +82,8 @@ sealed class HTRecipeProvider {
     protected lateinit var output: RecipeOutput
         private set
 
-    val itemCreator: HTItemIngredientCreator by lazy { RagiumPlatform.INSTANCE.createItemCreator(provider) }
-
-    val fluidCreator: HTFluidIngredientCreator by lazy { RagiumPlatform.INSTANCE.createFluidCreator(provider) }
+    val itemCreator: HTItemIngredientCreator = RagiumPlatform.INSTANCE.itemCreator()
+    val fluidCreator: HTFluidIngredientCreator = RagiumPlatform.INSTANCE.fluidCreator()
 
     /**
      * [HTResultHelper]のインスタンス
