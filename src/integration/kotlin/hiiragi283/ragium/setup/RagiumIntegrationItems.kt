@@ -1,5 +1,8 @@
 package hiiragi283.ragium.setup
 
+import com.enderio.base.api.soul.Soul
+import com.enderio.base.api.soul.binding.ISoulBindable
+import com.enderio.base.common.init.EIOCapabilities
 import com.simibubi.create.content.equipment.sandPaper.SandPaperItem
 import hiiragi283.ragium.RagiumIntegration
 import hiiragi283.ragium.api.RagiumAPI
@@ -7,6 +10,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
@@ -30,11 +34,14 @@ import mekanism.common.registries.MekanismItems
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import com.github.ysbbbbbb.kaleidoscopecookery.init.ModItems as KaleidoItems
 import vectorwing.farmersdelight.common.registry.ModItems as DelightItems
@@ -50,7 +57,7 @@ object RagiumIntegrationItems {
     fun init(eventBus: IEventBus) {
         REGISTER.register(eventBus)
 
-        // eventBus.addListener(::modifyCreativeTabs)
+        eventBus.addListener(::registerItemCapabilities)
         eventBus.addListener(::modifyComponents)
     }
 
@@ -159,66 +166,32 @@ object RagiumIntegrationItems {
 
     //    Event    //
 
-    /*private fun modifyCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        fun insertAfter(items: List<ItemLike>) {
-            for (i: Int in items.indices) {
-                val item: ItemLike = items[i]
-                val nextItem: ItemLike = items.getOrNull(i + 1) ?: continue
-                event.insertAfter(
-                    ItemStack(item),
-                    ItemStack(nextItem),
-                    CreativeModeTab.TabVisibility.PARENT_TAB_ONLY,
-                )
-            }
-        }
+    @Suppress("UnstableApiUsage")
+    @JvmStatic
+    private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
+        if (RagiumIntegration.isLoaded(RagiumConst.EIO_BASE)) {
+            event.registerItem(
+                EIOCapabilities.SoulBindable.ITEM,
+                { stack: ItemStack, _: Void? ->
+                    object : ISoulBindable {
+                        override fun getBoundSoul(): Soul {
+                            val spawnerMob: HTSpawnerMob = stack.get(RagiumDataComponents.SPAWNER_MOB) ?: return Soul.EMPTY
+                            return Soul(spawnerMob.entityType, CompoundTag())
+                        }
 
-        fun insertAfter(vararg items: ItemLike) {
-            insertAfter(items.toList())
-        }
+                        override fun canBind(): Boolean = true
 
-        if (!RagiumCreativeTabs.COMMON.`is`(event.tabKey)) return
-        // Create
-        if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
-            insertAfter(
-                RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL),
-                getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL),
-                getSandPaper(RagiumMaterialKeys.IRIDESCENTIUM),
+                        override fun isSoulValid(soul: Soul): Boolean = true
+
+                        override fun bindSoul(newSoul: Soul) {
+                            stack.set(RagiumDataComponents.SPAWNER_MOB, newSoul.entityType()?.let(::HTSpawnerMob))
+                        }
+                    }
+                },
+                RagiumBlocks.IMITATION_SPAWNER,
             )
         }
-        // Delight
-        if (RagiumIntegration.isLoaded(RagiumConst.FARMERS_DELIGHT)) {
-            for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in TOOLS.row(HTKnifeToolVariant)) {
-                insertAfter(RagiumItems.getHammer(key), knife)
-            }
-
-            insertAfter(
-                RagiumItems.RAGI_CHERRY_PULP,
-                RagiumDelightContents.RAGI_CHERRY_PIE,
-                RagiumDelightContents.RAGI_CHERRY_PIE_SLICE,
-            )
-
-            insertAfter(
-                RagiumItems.RAGI_CHERRY_TOAST,
-                RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK,
-            )
-        }
-        // Kaleido
-        if (RagiumIntegration.isLoaded(RagiumConst.KALEIDO_COOKERY)) {
-            for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in TOOLS.row(HTKitchenKnifeToolVariant)) {
-                insertAfter(RagiumItems.getHammer(key), knife)
-            }
-        }
-        // Mekanism
-        if (RagiumIntegration.isLoaded(RagiumConst.MEKANISM)) {
-            for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
-                val (basePrefix: HTPrefixLike, baseMaterial: HTMaterialKey) = essenceType.getBaseEntry()
-                insertAfter(
-                    RagiumItems.getMaterial(basePrefix, baseMaterial),
-                    getEnriched(essenceType),
-                )
-            }
-        }
-    }*/
+    }
 
     @JvmStatic
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {

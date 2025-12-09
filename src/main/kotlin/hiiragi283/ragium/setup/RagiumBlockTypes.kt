@@ -15,11 +15,6 @@ import net.minecraft.world.level.block.Block
  * @see mekanism.common.registries.MekanismBlockTypes
  */
 object RagiumBlockTypes {
-    @JvmField
-    val IMITATION_SPAWNER: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.IMITATION_SPAWNER }
-        .build(RagiumCommonTranslation.IMITATION_SPAWNER)
-
     //    Generator    //
 
     // Basic

@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.event
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
@@ -11,24 +10,14 @@ import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.HTRegisterRuntimeRecipeEvent
-import hiiragi283.ragium.api.registry.idOrThrow
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
-import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDataComponents
-import net.minecraft.core.Holder
-import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
-import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.SpawnEggItem
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
@@ -47,27 +36,6 @@ object RagiumRuntimeRecipeHandler {
             // Crushing
             crushing(event, key, definition)
         }
-
-        // Imitation Spawner
-        event.registryAccess
-            .lookupOrThrow(Registries.ENTITY_TYPE)
-            .filterElements { entityType: EntityType<*> -> !entityType.`is`(RagiumModTags.EntityTypes.CAPTURE_BLACKLIST) }
-            .listElements()
-            .forEach { holder: Holder<EntityType<*>> ->
-                val item: SpawnEggItem = SpawnEggItem.byId(holder.value()) ?: return@forEach
-                HTShapedRecipeBuilder(
-                    ImmutableItemStack
-                        .of(RagiumBlocks.IMITATION_SPAWNER)
-                        .plus(RagiumDataComponents.SPAWNER_MOB, HTSpawnerMob(holder)),
-                ).pattern(
-                    "ABA",
-                    "ACA",
-                    "ABA",
-                ).define('A', RagiumBlocks.getMetalBars(RagiumMaterialKeys.DEEP_STEEL))
-                    .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
-                    .define('C', item)
-                    .saveSuffixed(event.output, "/${holder.idOrThrow.toDebugFileName()}")
-            }
     }
 
     //    Alloying    //

@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.renderer.block
 import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
-import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.blockentity.SpawnerRenderer
@@ -27,7 +26,7 @@ class HTImitationSpawnerRenderer(context: BlockEntityRendererProvider.Context) :
         packedOverlay: Int,
     ) {
         val level: Level = blockEntity.level ?: return
-        val spawnerMob: HTSpawnerMob = blockEntity.components().get(RagiumDataComponents.SPAWNER_MOB) ?: return
+        val spawnerMob: HTSpawnerMob = blockEntity.spawnerMob ?: return
         val entity: Entity = spawnerMob.entityType.create(level) ?: return
         SpawnerRenderer.renderEntityInSpawner(
             partialTick,

@@ -18,6 +18,7 @@ import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
+import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.math.toFraction
@@ -47,6 +48,8 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiReci
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSingleExtraItemEmiRecipe
+import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
+import hiiragi283.ragium.common.block.HTImitationSpawnerBlock.Companion.filterEntityType
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -60,12 +63,15 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.crafting.Recipe
@@ -353,35 +359,42 @@ class RagiumEmiPlugin : EmiPlugin {
     }
 
     private fun addInteractions(registry: EmiRegistry) {
+        // Imitation Spawner
+        BuiltInRegistries.ENTITY_TYPE
+            .asLookup()
+            .filterElements(HTImitationSpawnerBlock::filterEntityType)
+            .listElements()
+            .forEach { holder: Holder.Reference<EntityType<*>> ->
+                val spawner: EmiStack = createItemStack(
+                    RagiumBlocks.IMITATION_SPAWNER,
+                    RagiumDataComponents.SPAWNER_MOB,
+                    HTSpawnerMob(holder),
+                ).toEmi()
+                val egg: EmiStack = SpawnEggItem.byId(holder.value())?.toEmi() ?: return@forEach
+                registry.addInteraction(spawner, id = holder.idOrThrow, prefix = "imitation_spawner") {
+                    leftInput(RagiumBlocks.IMITATION_SPAWNER.toEmi())
+                    rightInput(egg, false)
+                }
+            }
+
         // Water from Collector
-        registry.addInteraction(HTFluidHolderLike.WATER.toFluidEmi(), prefix = "fluid_generator") {
+        registry.addInteraction(HTFluidHolderLike.WATER.toFluidEmi(), prefix = "fluid_collector") {
             leftInput(RagiumBlocks.FLUID_COLLECTOR.toEmi())
             rightInput(EmiStack.EMPTY, false)
         }
         // Experience from Collector
-        registry.addInteraction(RagiumFluidContents.EXPERIENCE.toFluidEmi(), prefix = "fluid_generator") {
+        registry.addInteraction(RagiumFluidContents.EXPERIENCE.toFluidEmi(), prefix = "fluid_collector") {
             leftInput(RagiumBlocks.FLUID_COLLECTOR.toEmi())
             rightInput(RagiumItems.EXP_COLLECTOR_UPGRADE.toEmi(), false)
         }
 
-        // World Vaporization
-        /*for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
-            val fluidType: FluidType = content.getType()
-            if (fluidType is HTFluidType) {
-                val result: EmiStack = fluidType.dropItem?.toEmi() ?: continue
-                registry.addInteraction(result) {
-                    leftInput(content.toTagEmi())
-                    rightInput(EmiStack.EMPTY, false)
-                }
-            }
-        }*/
         // Crude Oil + Lava -> Soul Sand
         registry.addFluidInteraction(Items.SOUL_SAND, RagiumFluidContents.CRUDE_OIL, HTFluidHolderLike.LAVA)
         // Water + Eldritch Flux -> Eldritch Stone
         registry.addFluidInteraction(RagiumBlocks.ELDRITCH_STONE, HTFluidHolderLike.WATER, RagiumFluidContents.ELDRITCH_FLUX)
     }
 
-    //    Extension    //
+    //    Extensions    //
 
     private inline fun EmiRegistry.addRecipeSafe(id: ResourceLocation, factory: (ResourceLocation) -> EmiRecipe) {
         runCatching {

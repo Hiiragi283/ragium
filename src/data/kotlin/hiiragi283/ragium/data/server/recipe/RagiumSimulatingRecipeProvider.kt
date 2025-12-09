@@ -44,11 +44,12 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .create(RagiumBlocks.IMITATION_SPAWNER)
             .pattern(
+                " AA",
                 "ABA",
-                "ACA",
-                "ABA",
+                "AA ",
             ).define('A', RagiumBlocks.getMetalBars(RagiumMaterialKeys.DEEP_STEEL))
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
+            .define('B', CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.ELDRITCH_PEARL)
+            .save(output)
 
         mobExtracting()
     }

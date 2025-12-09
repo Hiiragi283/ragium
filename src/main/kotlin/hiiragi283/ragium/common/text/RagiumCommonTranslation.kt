@@ -10,8 +10,6 @@ import net.minecraft.Util
  */
 enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTranslation {
     // Blocks
-    IMITATION_SPAWNER("description", "imitation_spawner"),
-
     WARPED_WART("description", "warped_wart"),
     EXP_BERRIES("description", "exp_berries"),
 
