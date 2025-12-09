@@ -34,6 +34,7 @@ import hiiragi283.ragium.client.model.HTFuelGeneratorModel
 import hiiragi283.ragium.client.renderer.RagiumModelLayers
 import hiiragi283.ragium.client.renderer.block.HTCrateRenderer
 import hiiragi283.ragium.client.renderer.block.HTFuelGeneratorRenderer
+import hiiragi283.ragium.client.renderer.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.client.renderer.block.HTRefineryRenderer
 import hiiragi283.ragium.client.renderer.block.HTSingleFluidMachineRenderer
 import hiiragi283.ragium.client.renderer.item.HTFuelGeneratorItemRenderer
@@ -307,6 +308,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         // Block Entity
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.IMITATION_SPAWNER.get(), ::HTImitationSpawnerRenderer)
+
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.MELTER.get(), ::HTSingleFluidMachineRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.REFINERY.get(), ::HTRefineryRenderer)
 

@@ -406,6 +406,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumTranslation.DATAPACK_WIP, "開発中の要素を有効にします")
         // Common
+        add(RagiumCommonTranslation.IMITATION_SPAWNER, "スポナーとしての機能はありません。")
+
         add(RagiumCommonTranslation.WARPED_WART, "食べるとランダムにデバフを一つだけ消します。")
         add(RagiumCommonTranslation.EXP_BERRIES, "食べると経験値を付与します。")
 

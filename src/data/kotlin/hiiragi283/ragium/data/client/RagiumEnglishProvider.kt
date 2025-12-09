@@ -404,6 +404,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumTranslation.DATAPACK_WIP, "Enables work in progress contents")
         // Common
+        add(RagiumCommonTranslation.IMITATION_SPAWNER, "No functions as a Spawner.")
+
         add(RagiumCommonTranslation.WARPED_WART, "Clears one bad effect randomly when eaten.")
         add(RagiumCommonTranslation.EXP_BERRIES, "Gives experience when eaten.")
 

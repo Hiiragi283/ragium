@@ -1,9 +1,10 @@
 package hiiragi283.ragium.common.item.block
 
-import hiiragi283.ragium.api.item.HTBlockItem
+import hiiragi283.ragium.api.item.HTDescriptionBlockItem
 import hiiragi283.ragium.api.item.HTSubCreativeTabContents
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder
@@ -15,19 +16,17 @@ import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.level.block.Block
 import java.util.function.Consumer
 
-class HTImitationSpawnerBlockItem(block: Block, properties: Properties) :
-    HTBlockItem<Block>(block, properties),
+class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Properties) :
+    HTDescriptionBlockItem<HTImitationSpawnerBlock>(block, properties),
     HTSubCreativeTabContents {
-    override fun appendHoverText(
+    override fun addStats(
         stack: ItemStack,
         context: TooltipContext,
         tooltips: MutableList<Component>,
         flag: TooltipFlag,
     ) {
-        super.appendHoverText(stack, context, tooltips, flag)
         stack
             .get(RagiumDataComponents.SPAWNER_MOB)
             ?.let(HTSpawnerMob::entityType)
