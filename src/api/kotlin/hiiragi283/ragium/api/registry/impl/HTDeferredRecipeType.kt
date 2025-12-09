@@ -15,6 +15,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
+import kotlin.jvm.optionals.getOrNull
 
 class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
     HTDeferredHolder<RecipeType<*>, RecipeType<RECIPE>>,
@@ -34,24 +35,7 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
         input: INPUT,
         level: Level,
         lastRecipe: RecipeHolder<RECIPE>?,
-    ): RecipeHolder<RECIPE>? {
-        // 入力が空の場合は即座に抜ける
-        if (input.isEmpty) return null
-        // キャッシュから判定を行う
-        if (lastRecipe != null && matches(lastRecipe.value, input, level)) {
-            return lastRecipe
-        }
-        // 次にRecipeManagerから行う
-        for (holder: RecipeHolder<RECIPE> in manager.getAllRecipesFor(get())) {
-            if (matches(holder.value, input, level)) {
-                return holder
-            }
-        }
-        return null
-    }
+    ): RecipeHolder<RECIPE>? = manager.getRecipeFor(get(), input, level, lastRecipe).getOrNull()
 
-    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = manager
-        .getAllRecipesFor(get())
-        .asSequence()
-        .filterNot { holder: RecipeHolder<RECIPE> -> holder.value.isIncomplete }
+    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = manager.getAllRecipesFor(get()).asSequence()
 }

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
@@ -20,7 +20,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAdvancedMixerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTComplexBlockEntity<HTMultiRecipeInput, HTComplexRecipe>(
+    HTComplexBlockEntity<HTComplexRecipe>(
         RagiumRecipeTypes.MIXING,
         RagiumBlocks.ADVANCED_MIXER,
         pos,
@@ -63,7 +63,7 @@ class HTAdvancedMixerBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create {
         items.addAll(inputSlots.map(HTBasicItemSlot::getStack))
         fluids += firstInputTank.getStack()
         fluids += secondInputTank.getStack()

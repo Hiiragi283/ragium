@@ -3,7 +3,7 @@ package hiiragi283.ragium.impl.recipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -11,18 +11,13 @@ import hiiragi283.ragium.impl.recipe.base.HTBasicComplexRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.Level
 
 class HTSimpleMixingRecipe(val itemIngredient: HTItemIngredient, val fluidIngredient: HTFluidIngredient, results: HTComplexResult) :
     HTBasicComplexRecipe(results) {
-    override fun isIncompleteIngredient(): Boolean {
-        val bool1: Boolean = itemIngredient.hasNoMatchingStacks()
-        val bool2: Boolean = fluidIngredient.hasNoMatchingStacks()
-        return bool1 || bool2
-    }
-
-    override fun test(input: HTMultiRecipeInput): Boolean {
-        val bool1: Boolean = itemIngredient.test(input.getItem(0))
-        val bool2: Boolean = fluidIngredient.test(input.getFluid(0))
+    override fun matches(input: HTRecipeInput, level: Level): Boolean {
+        val bool1: Boolean = input.testItem(0, itemIngredient)
+        val bool2: Boolean = input.testFluid(0, fluidIngredient)
         return bool1 && bool2
     }
 

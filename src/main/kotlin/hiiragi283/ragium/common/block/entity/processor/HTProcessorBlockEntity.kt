@@ -3,8 +3,10 @@ package hiiragi283.ragium.common.block.entity.processor
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.math.fraction
+import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
@@ -16,8 +18,6 @@ import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import org.apache.commons.lang3.math.Fraction
@@ -135,19 +135,19 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
     /**
      * レシピのキャッシュを保持する[HTProcessorBlockEntity]の拡張クラス
      */
-    abstract class Cached<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
-        private val recipeCache: HTRecipeCache<INPUT, RECIPE>,
+    abstract class Cached<RECIPE : HTRecipe>(
+        private val recipeCache: HTRecipeCache<HTRecipeInput, RECIPE>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
-    ) : HTProcessorBlockEntity<INPUT, RECIPE>(blockHolder, pos, state) {
+    ) : HTProcessorBlockEntity<HTRecipeInput, RECIPE>(blockHolder, pos, state) {
         constructor(
-            finder: HTRecipeFinder<INPUT, RECIPE>,
+            finder: HTRecipeFinder<HTRecipeInput, RECIPE>,
             blockHolder: Holder<Block>,
             pos: BlockPos,
             state: BlockState,
         ) : this(HTFinderRecipeCache(finder), blockHolder, pos, state)
 
-        final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
+        final override fun getMatchedRecipe(input: HTRecipeInput, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
     }
 }

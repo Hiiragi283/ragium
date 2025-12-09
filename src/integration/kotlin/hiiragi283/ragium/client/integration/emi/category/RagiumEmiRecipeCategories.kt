@@ -4,8 +4,7 @@ import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
-import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
@@ -22,7 +21,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.ItemLike
 
 object RagiumEmiRecipeCategories {
@@ -77,59 +75,59 @@ object RagiumEmiRecipeCategories {
 
     // Basic
     @JvmField
-    val ALLOYING: HTRegistryEmiRecipeCategory<HTMultiRecipeInput, HTShapelessInputsRecipe> =
+    val ALLOYING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTShapelessInputsRecipe> =
         machine(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val COMPRESSING: HTRegistryEmiRecipeCategory<HTDoubleRecipeInput, HTItemWithCatalystRecipe> =
+    val COMPRESSING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTItemWithCatalystRecipe> =
         machine(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
-    val CRUSHING: HTRegistryEmiRecipeCategory<SingleRecipeInput, HTSingleExtraItemRecipe> =
+    val CRUSHING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTSingleExtraItemRecipe> =
         machine(RagiumRecipeTypes.CRUSHING, RagiumBlocks.PULVERIZER, RagiumBlocks.CRUSHER)
 
     @JvmField
-    val CUTTING: HTRegistryEmiRecipeCategory<SingleRecipeInput, HTSingleExtraItemRecipe> =
+    val CUTTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTSingleExtraItemRecipe> =
         machine(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
-    val EXTRACTING: HTRegistryEmiRecipeCategory<HTDoubleRecipeInput, HTItemWithCatalystRecipe> =
+    val EXTRACTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTItemWithCatalystRecipe> =
         machine(RagiumRecipeTypes.EXTRACTING, RagiumBlocks.EXTRACTOR)
 
     // Advanced
     @JvmField
-    val MELTING: HTRegistryEmiRecipeCategory<SingleRecipeInput, HTSingleFluidRecipe> =
+    val MELTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTSingleFluidRecipe> =
         machine(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val MIXING: HTRegistryEmiRecipeCategory<HTMultiRecipeInput, HTComplexRecipe> =
+    val MIXING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTComplexRecipe> =
         machine(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, RagiumBlocks.ADVANCED_MIXER)
 
     @JvmField
-    val REFINING: HTRegistryEmiRecipeCategory<HTMultiRecipeInput, HTComplexRecipe> =
+    val REFINING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTComplexRecipe> =
         machine(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     // Elite
     @JvmField
-    val BREWING: HTRegistryEmiRecipeCategory<HTMultiRecipeInput, HTCombineRecipe> =
+    val BREWING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTCombineRecipe> =
         machine(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
 
     @JvmField
-    val PLANTING: HTRegistryEmiRecipeCategory<HTMultiRecipeInput, HTPlantingRecipe> =
+    val PLANTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTPlantingRecipe> =
         machine(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Ultimate
     @JvmField
-    val ENCHANTING: HTRegistryEmiRecipeCategory<HTMultiRecipeInput, HTCombineRecipe> =
+    val ENCHANTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTCombineRecipe> =
         machine(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 
     @JvmField
-    val SIMULATING: HTRegistryEmiRecipeCategory<HTDoubleRecipeInput, HTItemWithCatalystRecipe> =
+    val SIMULATING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTItemWithCatalystRecipe> =
         machine(RagiumRecipeTypes.SIMULATING, RagiumBlocks.SIMULATOR)
 
     //    Device    //
 
     @JvmField
-    val ROCK_GENERATING: HTRegistryEmiRecipeCategory<HTMultiRecipeInput, HTRockGeneratingRecipe> =
+    val ROCK_GENERATING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTRockGeneratingRecipe> =
         machine(RagiumRecipeTypes.ROCK_GENERATING, RagiumBlocks.STONE_COLLECTOR)
 }

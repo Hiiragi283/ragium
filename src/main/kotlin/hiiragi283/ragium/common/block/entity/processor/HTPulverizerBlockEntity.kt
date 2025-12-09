@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -11,7 +12,6 @@ import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) : HTAbstractCrusherBlockEntity(RagiumBlocks.PULVERIZER, pos, state) {
@@ -27,10 +27,10 @@ class HTPulverizerBlockEntity(pos: BlockPos, state: BlockState) : HTAbstractCrus
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTSingleExtraItemRecipe): Boolean =
         HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
-    override fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe) {
+    override fun completeOutput(level: ServerLevel, input: HTRecipeInput, recipe: HTSingleExtraItemRecipe) {
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
     }
 }

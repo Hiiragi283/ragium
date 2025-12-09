@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -17,11 +17,11 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTItemWithCatalystBlockEntity(
-    finder: HTRecipeFinder<HTDoubleRecipeInput, HTItemWithCatalystRecipe>,
+    finder: HTRecipeFinder<HTRecipeInput, HTItemWithCatalystRecipe>,
     blockHolder: Holder<Block>,
     pos: BlockPos,
     state: BlockState,
-) : HTComplexBlockEntity<HTDoubleRecipeInput, HTItemWithCatalystRecipe>(finder, blockHolder, pos, state) {
+) : HTComplexBlockEntity<HTItemWithCatalystRecipe>(finder, blockHolder, pos, state) {
     lateinit var inputSlot: HTBasicItemSlot
         private set
     lateinit var catalystSlot: HTBasicItemSlot
@@ -39,14 +39,16 @@ abstract class HTItemWithCatalystBlockEntity(
         outputSlot = upperOutput(builder, listener)
     }
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTDoubleRecipeInput =
-        HTDoubleRecipeInput(inputSlot, catalystSlot)
+    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create {
+        items += inputSlot.getStack()
+        items += catalystSlot.getStack()
+    }
 
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTDoubleRecipeInput,
+        input: HTRecipeInput,
         recipe: HTItemWithCatalystRecipe,
     ) {
         super.completeRecipe(level, pos, state, input, recipe)

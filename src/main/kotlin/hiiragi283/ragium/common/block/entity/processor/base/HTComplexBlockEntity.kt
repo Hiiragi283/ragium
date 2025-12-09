@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.HTFluidRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -18,20 +19,19 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTComplexBlockEntity<INPUT : RecipeInput, RECIPE : HTFluidRecipe<INPUT>> : HTProcessorBlockEntity.Cached<INPUT, RECIPE> {
+abstract class HTComplexBlockEntity<RECIPE : HTFluidRecipe> : HTProcessorBlockEntity.Cached<RECIPE> {
     constructor(
-        recipeCache: HTRecipeCache<INPUT, RECIPE>,
+        recipeCache: HTRecipeCache<HTRecipeInput, RECIPE>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
     ) : super(recipeCache, blockHolder, pos, state)
 
     constructor(
-        finder: HTRecipeFinder<INPUT, RECIPE>,
+        finder: HTRecipeFinder<HTRecipeInput, RECIPE>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
@@ -57,7 +57,7 @@ abstract class HTComplexBlockEntity<INPUT : RecipeInput, RECIPE : HTFluidRecipe<
 
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    final override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean {
+    final override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: RECIPE): Boolean {
         val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
         val bool2: Boolean = HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
         return bool1 && bool2
@@ -67,7 +67,7 @@ abstract class HTComplexBlockEntity<INPUT : RecipeInput, RECIPE : HTFluidRecipe<
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: INPUT,
+        input: HTRecipeInput,
         recipe: RECIPE,
     ) {
         // 実際にアウトプットに搬出する

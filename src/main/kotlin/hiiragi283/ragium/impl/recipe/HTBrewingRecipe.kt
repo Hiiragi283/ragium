@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
@@ -24,24 +24,14 @@ class HTBrewingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredient>,
         val FLUID_INGREDIENT: HTFluidIngredient = RagiumPlatform.INSTANCE.fluidCreator().water(1000)
     }
 
-    override fun testFluid(input: HTMultiRecipeInput): Boolean = FLUID_INGREDIENT.test(input.getFluid(0))
+    override fun testFluid(stack: ImmutableFluidStack): Boolean = FLUID_INGREDIENT.test(stack)
 
-    override fun assembleItem(input: HTMultiRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? = when (test(input)) {
-        true -> HTPotionHelper.createPotion(RagiumItems.POTION_DROP, contents).toImmutable()
-        false -> null
-    }
+    override fun getRequiredAmount(input: HTRecipeInput, stack: ImmutableFluidStack): Int = FLUID_INGREDIENT.getRequiredAmount(stack)
 
-    override fun isIncomplete(): Boolean {
-        val (left: HTItemIngredient, right: HTItemIngredient) = itemIngredients
-        val bool1: Boolean = left.hasNoMatchingStacks()
-        val bool2: Boolean = right.hasNoMatchingStacks()
-        val bool3: Boolean = contents.isEmpty()
-        return bool1 || bool2 || bool3
-    }
+    override fun assembleItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
+        HTPotionHelper.createPotion(RagiumItems.POTION_DROP, contents).toImmutable()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BREWING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.BREWING.get()
-
-    override fun getRequiredAmount(input: HTMultiRecipeInput, stack: ImmutableFluidStack): Int = FLUID_INGREDIENT.getRequiredAmount(stack)
 }

@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -26,16 +26,16 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTCombineRecipe> {
+abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTCombineRecipe> {
     constructor(
-        recipeCache: HTRecipeCache<HTMultiRecipeInput, HTCombineRecipe>,
+        recipeCache: HTRecipeCache<HTRecipeInput, HTCombineRecipe>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
     ) : super(recipeCache, blockHolder, pos, state)
 
     constructor(
-        finder: HTRecipeFinder<HTMultiRecipeInput, HTCombineRecipe>,
+        finder: HTRecipeFinder<HTRecipeInput, HTCombineRecipe>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
@@ -80,20 +80,20 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTM
 
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
+    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create {
         items += leftInputSlot.getStack()
         items += rightInputSlot.getStack()
         fluids += inputTank.getStack()
     }
 
-    final override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTCombineRecipe): Boolean =
+    final override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTCombineRecipe): Boolean =
         HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTMultiRecipeInput,
+        input: HTRecipeInput,
         recipe: HTCombineRecipe,
     ) {
         // 実際にアウトプットに搬出する

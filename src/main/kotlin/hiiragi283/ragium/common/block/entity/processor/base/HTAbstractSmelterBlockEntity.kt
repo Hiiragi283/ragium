@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -72,14 +73,14 @@ abstract class HTAbstractSmelterBlockEntity(blockHolder: Holder<Block>, pos: Blo
 
     final override fun getRecipeTime(recipe: HTVanillaCookingRecipe): Int = recipe.cookingTime
 
-    final override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTVanillaCookingRecipe): Boolean =
+    final override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTVanillaCookingRecipe): Boolean =
         HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
     final override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: SingleRecipeInput,
+        input: HTRecipeInput,
         recipe: HTVanillaCookingRecipe,
     ) {
         // 実際にアウトプットに搬出する

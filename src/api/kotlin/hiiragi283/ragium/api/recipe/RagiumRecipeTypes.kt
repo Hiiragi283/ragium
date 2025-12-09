@@ -4,8 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
-import hiiragi283.ragium.api.recipe.input.HTDoubleRecipeInput
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
@@ -15,47 +14,46 @@ import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeTypes {
     @JvmField
-    val ALLOYING: HTDeferredRecipeType<HTMultiRecipeInput, HTShapelessInputsRecipe> = create(RagiumConst.ALLOYING)
+    val ALLOYING: HTDeferredRecipeType<HTRecipeInput, HTShapelessInputsRecipe> = create(RagiumConst.ALLOYING)
 
     @JvmField
-    val BREWING: HTDeferredRecipeType<HTMultiRecipeInput, HTCombineRecipe> = create(RagiumConst.BREWING)
+    val BREWING: HTDeferredRecipeType<HTRecipeInput, HTCombineRecipe> = create(RagiumConst.BREWING)
 
     @JvmField
-    val COMPRESSING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.COMPRESSING)
+    val COMPRESSING: HTDeferredRecipeType<HTRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
-    val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTSingleExtraItemRecipe> = create(RagiumConst.CRUSHING)
+    val CRUSHING: HTDeferredRecipeType<HTRecipeInput, HTSingleExtraItemRecipe> = create(RagiumConst.CRUSHING)
 
     @JvmField
-    val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTSingleExtraItemRecipe> = create(RagiumConst.CUTTING)
+    val CUTTING: HTDeferredRecipeType<HTRecipeInput, HTSingleExtraItemRecipe> = create(RagiumConst.CUTTING)
 
     @JvmField
-    val ENCHANTING: HTDeferredRecipeType<HTMultiRecipeInput, HTCombineRecipe> = create(RagiumConst.ENCHANTING)
+    val ENCHANTING: HTDeferredRecipeType<HTRecipeInput, HTCombineRecipe> = create(RagiumConst.ENCHANTING)
 
     @JvmField
-    val EXTRACTING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.EXTRACTING)
+    val EXTRACTING: HTDeferredRecipeType<HTRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.EXTRACTING)
 
     @JvmField
-    val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTSingleFluidRecipe> = create(RagiumConst.MELTING)
+    val MELTING: HTDeferredRecipeType<HTRecipeInput, HTSingleFluidRecipe> = create(RagiumConst.MELTING)
 
     @JvmField
-    val MIXING: HTDeferredRecipeType<HTMultiRecipeInput, HTComplexRecipe> = create(RagiumConst.MIXING)
+    val MIXING: HTDeferredRecipeType<HTRecipeInput, HTComplexRecipe> = create(RagiumConst.MIXING)
 
     @JvmField
-    val PLANTING: HTDeferredRecipeType<HTMultiRecipeInput, HTPlantingRecipe> = create(RagiumConst.PLANTING)
+    val PLANTING: HTDeferredRecipeType<HTRecipeInput, HTPlantingRecipe> = create(RagiumConst.PLANTING)
 
     @JvmField
-    val REFINING: HTDeferredRecipeType<HTMultiRecipeInput, HTComplexRecipe> = create(RagiumConst.REFINING)
+    val REFINING: HTDeferredRecipeType<HTRecipeInput, HTComplexRecipe> = create(RagiumConst.REFINING)
 
     @JvmField
-    val ROCK_GENERATING: HTDeferredRecipeType<HTMultiRecipeInput, HTRockGeneratingRecipe> = create(RagiumConst.ROCK_GENERATING)
+    val ROCK_GENERATING: HTDeferredRecipeType<HTRecipeInput, HTRockGeneratingRecipe> = create(RagiumConst.ROCK_GENERATING)
 
     @JvmField
-    val SIMULATING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.SIMULATING)
+    val SIMULATING: HTDeferredRecipeType<HTRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.SIMULATING)
 
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(path: String): HTDeferredRecipeType<INPUT, RECIPE> =
