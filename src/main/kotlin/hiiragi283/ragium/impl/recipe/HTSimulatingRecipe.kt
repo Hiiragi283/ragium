@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -24,5 +23,5 @@ class HTSimulatingRecipe(catalyst: HTItemIngredient, ingredient: Optional<HTItem
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.SIMULATING.get()
 
-    override fun getRequiredCount(stack: ImmutableItemStack): Int = optional.map { it.getRequiredAmount(stack) }.orElse(0)
+    override fun getRequiredCount(): Int = optional.map(HTItemIngredient::getRequiredAmount).orElse(0)
 }

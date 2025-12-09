@@ -16,11 +16,11 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.ItemEnchantments
 
 object HTCopyEnchantingRecipe : HTCombineRecipe {
-    override fun getLeftRequiredCount(stack: ImmutableItemStack): Int = 1
+    override fun getLeftRequiredCount(): Int = 1
 
-    override fun getRightRequiredCount(stack: ImmutableItemStack): Int = 0
+    override fun getRightRequiredCount(): Int = 0
 
-    override fun getRequiredAmount(input: HTRecipeInput, stack: ImmutableFluidStack): Int {
+    override fun getRequiredAmount(input: HTRecipeInput): Int {
         val tool: ImmutableItemStack = input.items[0]?.copyWithAmount(1) ?: return 0
         val book: ImmutableItemStack = input.items[1] ?: return 0
         return getFilteredEnchantments(tool, book)

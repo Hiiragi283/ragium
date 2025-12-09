@@ -21,7 +21,7 @@ import java.util.function.IntUnaryOperator
  */
 class HTItemIngredient(private val ingredient: Ingredient, private val count: Int) : HTIngredient<Item, ImmutableItemStack> {
     fun interface CountGetter {
-        fun getRequiredCount(stack: ImmutableItemStack): Int
+        fun getRequiredCount(): Int
     }
 
     companion object {
@@ -56,8 +56,6 @@ class HTItemIngredient(private val ingredient: Ingredient, private val count: In
     fun copyWithCount(operator: IntUnaryOperator): HTItemIngredient = HTItemIngredient(this.ingredient, operator.applyAsInt(this.count))
 
     override fun testOnlyType(stack: ImmutableItemStack): Boolean = ingredient.test(stack.unwrap())
-
-    override fun getRequiredAmount(stack: ImmutableItemStack): Int = if (testOnlyType(stack)) this.count else 0
 
     override fun getRequiredAmount(): Int = this.count
 

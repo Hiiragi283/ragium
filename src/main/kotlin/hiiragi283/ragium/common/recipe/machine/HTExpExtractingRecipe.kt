@@ -45,5 +45,5 @@ data object HTExpExtractingRecipe : HTItemWithCatalystRecipe {
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.EXTRACTING.get()
 
-    override fun getRequiredCount(stack: ImmutableItemStack): Int = 1
+    override fun getRequiredCount(): Int = 1
 }

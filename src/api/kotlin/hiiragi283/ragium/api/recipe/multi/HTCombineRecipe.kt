@@ -13,11 +13,11 @@ import net.neoforged.neoforge.common.util.TriPredicate
 interface HTCombineRecipe :
     HTRecipe,
     TriPredicate<ImmutableItemStack, ImmutableItemStack, ImmutableFluidStack> {
-    fun getLeftRequiredCount(stack: ImmutableItemStack): Int
+    fun getLeftRequiredCount(): Int
 
-    fun getRightRequiredCount(stack: ImmutableItemStack): Int
+    fun getRightRequiredCount(): Int
 
-    fun getRequiredAmount(input: HTRecipeInput, stack: ImmutableFluidStack): Int
+    fun getRequiredAmount(input: HTRecipeInput): Int
 
     override fun matches(input: HTRecipeInput, level: Level): Boolean {
         val left: ImmutableItemStack = input.item(0) ?: return false

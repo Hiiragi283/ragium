@@ -81,7 +81,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
                 val remainder: ImmutableItemStack? = remainderSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 HTItemDropHelper.dropStackAt(level, pos, remainder)
             },
-            recipe::getRequiredCount,
+            recipe.getRequiredCount(),
             HTStorageAction.EXECUTE,
         )
         // SEを鳴らす

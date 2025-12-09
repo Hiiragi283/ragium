@@ -31,7 +31,7 @@ class HTEnchantingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredien
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTING.get()
 
-    override fun getRequiredAmount(input: HTRecipeInput, stack: ImmutableFluidStack): Int = getRequiredExpFluid()
+    override fun getRequiredAmount(input: HTRecipeInput): Int = getRequiredExpFluid()
 
     override fun assembleItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
         createEnchantedBook(holder).toImmutable()

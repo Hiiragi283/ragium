@@ -140,7 +140,7 @@ object HTStackSlotHelper {
         slot: HTItemSlot,
         remainderGetter: (ImmutableItemStack) -> ItemStack,
         stackSetter: (ImmutableItemStack) -> Unit,
-        ingredient: ToIntFunction<ImmutableItemStack>,
+        amount: Int,
         action: HTStorageAction,
     ): Int {
         val stackIn: ImmutableItemStack = slot.getStack() ?: return 0
@@ -150,7 +150,7 @@ object HTStackSlotHelper {
                 .let(ItemStack::toImmutable)
                 ?.let(stackSetter)
         }
-        return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
+        return slot.extract(amount, action, HTStorageAccess.INTERNAL)?.amount() ?: 0
     }
 
     @JvmStatic

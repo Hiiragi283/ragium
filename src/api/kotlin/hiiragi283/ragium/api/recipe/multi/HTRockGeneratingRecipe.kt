@@ -21,14 +21,14 @@ class HTRockGeneratingRecipe(
     val bottom: Optional<HTItemIngredient>,
     val result: HTItemResult,
 ) : HTComplexRecipe {
-    override fun getRequiredCount(index: Int, stack: ImmutableItemStack): Int = when (index) {
-        1 -> right.left().map { ingredient: HTItemIngredient -> ingredient.getRequiredAmount(stack) }
+    override fun getRequiredCount(index: Int): Int = when (index) {
+        1 -> right.left().map(HTItemIngredient::getRequiredAmount)
         else -> Optional.empty()
     }.orElse(0)
 
-    override fun getRequiredAmount(index: Int, stack: ImmutableFluidStack): Int = when (index) {
-        0 -> left.getRequiredAmount(stack)
-        1 -> right.right().map { ingredient: HTFluidIngredient -> ingredient.getRequiredAmount(stack) }.orElse(0)
+    override fun getRequiredAmount(index: Int): Int = when (index) {
+        0 -> left.getRequiredAmount()
+        1 -> right.right().map(HTFluidIngredient::getRequiredAmount).orElse(0)
         else -> 0
     }
 

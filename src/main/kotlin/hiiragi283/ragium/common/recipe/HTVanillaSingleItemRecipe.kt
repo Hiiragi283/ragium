@@ -35,5 +35,5 @@ open class HTVanillaSingleItemRecipe<RECIPE : Recipe<SingleRecipeInput>>(
 
     override fun test(stack: ImmutableItemStack): Boolean = ingredient.test(stack)
 
-    override fun getRequiredCount(stack: ImmutableItemStack): Int = ingredient.getRequiredAmount(stack)
+    override fun getRequiredCount(): Int = ingredient.getRequiredAmount()
 }

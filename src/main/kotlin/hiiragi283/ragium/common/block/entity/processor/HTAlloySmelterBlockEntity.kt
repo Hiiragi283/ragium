@@ -64,7 +64,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にインプットを減らす
         val ingredients: List<HTItemIngredient> = recipe.ingredients
         HTRecipeInput.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->
-            HTStackSlotHelper.shrinkStack(inputSlots[slot], ingredients[index]::getRequiredAmount, HTStorageAction.EXECUTE)
+            inputSlots[slot].extract(ingredients[index].getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5f, 0.5f)

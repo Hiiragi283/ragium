@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
-import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
@@ -96,7 +95,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount.partially1(0), HTStorageAction.EXECUTE)
+        inputTank.extract(recipe.getRequiredAmount(0), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
     }

@@ -40,8 +40,6 @@ data class HTFluidIngredient(private val ingredient: FluidIngredient, private va
 
     override fun testOnlyType(stack: ImmutableFluidStack): Boolean = ingredient.test(stack.unwrap())
 
-    override fun getRequiredAmount(stack: ImmutableFluidStack): Int = if (testOnlyType(stack)) this.amount else 0
-
     override fun getRequiredAmount(): Int = this.amount
 
     override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<ImmutableFluidStack>> = when (ingredient) {

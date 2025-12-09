@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
-import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
@@ -99,8 +98,8 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTC
         // 実際にアウトプットに搬出する
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 実際にインプットを減らす
-        HTStackSlotHelper.shrinkStack(leftInputSlot, recipe::getLeftRequiredCount, HTStorageAction.EXECUTE)
-        HTStackSlotHelper.shrinkStack(rightInputSlot, recipe::getRightRequiredCount, HTStorageAction.EXECUTE)
-        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount.partially1(input), HTStorageAction.EXECUTE)
+        leftInputSlot.extract(recipe.getLeftRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        rightInputSlot.extract(recipe.getRightRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        inputTank.extract(recipe.getRequiredAmount(input), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
     }
 }

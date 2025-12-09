@@ -26,7 +26,7 @@ class HTBrewingRecipe(itemIngredients: Pair<HTItemIngredient, HTItemIngredient>,
 
     override fun testFluid(stack: ImmutableFluidStack): Boolean = FLUID_INGREDIENT.test(stack)
 
-    override fun getRequiredAmount(input: HTRecipeInput, stack: ImmutableFluidStack): Int = FLUID_INGREDIENT.getRequiredAmount(stack)
+    override fun getRequiredAmount(input: HTRecipeInput): Int = FLUID_INGREDIENT.getRequiredAmount()
 
     override fun assembleItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
         HTPotionHelper.createPotion(RagiumItems.POTION_DROP, contents).toImmutable()

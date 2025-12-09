@@ -16,7 +16,7 @@ abstract class HTBasicSingleExtraItemRecipe(val ingredient: HTItemIngredient, va
     final override fun assembleItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
         result.getStackOrNull(provider)
 
-    final override fun getRequiredCount(stack: ImmutableItemStack): Int = ingredient.getRequiredAmount(stack)
+    final override fun getRequiredCount(): Int = ingredient.getRequiredAmount()
 
     final override fun assembleExtraItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
         extra.getOrNull()?.getStackOrNull(provider)

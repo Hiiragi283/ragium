@@ -5,8 +5,6 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
-import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.impl.recipe.base.HTBasicComplexRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -25,13 +23,13 @@ class HTSimpleMixingRecipe(val itemIngredient: HTItemIngredient, val fluidIngred
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING.get()
 
-    override fun getRequiredCount(index: Int, stack: ImmutableItemStack): Int = when (index) {
-        0 -> itemIngredient.getRequiredAmount(stack)
+    override fun getRequiredCount(index: Int): Int = when (index) {
+        0 -> itemIngredient.getRequiredAmount()
         else -> 0
     }
 
-    override fun getRequiredAmount(index: Int, stack: ImmutableFluidStack): Int = when (index) {
-        0 -> fluidIngredient.getRequiredAmount(stack)
+    override fun getRequiredAmount(index: Int): Int = when (index) {
+        0 -> fluidIngredient.getRequiredAmount()
         else -> 0
     }
 }

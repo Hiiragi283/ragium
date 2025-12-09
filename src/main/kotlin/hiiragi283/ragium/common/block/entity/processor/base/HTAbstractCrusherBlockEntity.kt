@@ -59,7 +59,7 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
         // 実際にアウトプットに搬出する
         completeOutput(level, input, recipe)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
+        inputSlot.extract(recipe.getRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 潤滑油があれば減らす
         if (hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)) {
             inputTank.extract(RagiumConst.LUBRICANT_CONSUME, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

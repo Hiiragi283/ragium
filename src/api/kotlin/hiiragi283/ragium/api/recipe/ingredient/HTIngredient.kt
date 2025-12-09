@@ -24,10 +24,8 @@ interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> : Predic
     fun testOnlyType(stack: STACK): Boolean
 
     /**
-     * 指定された[stack]から，この[HTIngredient]に合致する数量を返します。
+     * この[HTIngredient]に合致する数量を返します。
      */
-    fun getRequiredAmount(stack: STACK): Int
-
     fun getRequiredAmount(): Int
 
     fun unwrap(): Either<Pair<TagKey<TYPE>, Int>, List<STACK>>

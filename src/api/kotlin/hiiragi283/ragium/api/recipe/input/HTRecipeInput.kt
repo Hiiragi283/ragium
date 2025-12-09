@@ -40,7 +40,7 @@ data class HTRecipeInput private constructor(val items: List<ImmutableItemStack?
                     if (stack != null) {
                         if (ingredient.test(stack)) {
                             result[index] = index1
-                            val count: Int = ingredient.getRequiredAmount(stack)
+                            val count: Int = ingredient.getRequiredAmount()
                             stacks1[index1] = stack.copyWithAmount(stack.amount() - count)
                             return@stack
                         }

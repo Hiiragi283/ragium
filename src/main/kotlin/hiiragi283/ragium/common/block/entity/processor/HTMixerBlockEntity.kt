@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
-import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
@@ -14,7 +14,6 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -62,7 +61,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         super.completeRecipe(level, pos, state, input, recipe)
         // 実際にインプットを減らす
-        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount.partially1(0), HTStorageAction.EXECUTE)
-        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount.partially1(0), HTStorageAction.EXECUTE)
+        inputSlot.extract(recipe.getRequiredCount(0), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        inputTank.extract(recipe.getRequiredAmount(0), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
     }
 }

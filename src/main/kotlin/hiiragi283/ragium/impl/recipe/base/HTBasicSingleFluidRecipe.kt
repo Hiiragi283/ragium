@@ -14,7 +14,7 @@ import net.minecraft.core.HolderLookup
 abstract class HTBasicSingleFluidRecipe(val ingredient: HTItemIngredient, val result: HTFluidResult) : HTSingleFluidRecipe {
     final override fun test(stack: ImmutableItemStack): Boolean = ingredient.test(stack)
 
-    final override fun getRequiredCount(stack: ImmutableItemStack): Int = ingredient.getRequiredAmount(stack)
+    final override fun getRequiredCount(): Int = ingredient.getRequiredAmount()
 
     final override fun assembleFluid(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? =
         result.getStackOrNull(provider)
