@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.registry.impl
 
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
+import hiiragi283.ragium.api.text.HTHasText
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.translatableText
 import net.minecraft.core.registries.Registries
@@ -20,8 +20,8 @@ import kotlin.jvm.optionals.getOrNull
 class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
     HTDeferredHolder<RecipeType<*>, RecipeType<RECIPE>>,
     HTRecipeFinder<INPUT, RECIPE>,
-    HTRecipeType<INPUT, RECIPE>,
-    HTHasTranslationKey {
+    HTHasTranslationKey,
+    HTHasText {
     constructor(key: ResourceKey<RecipeType<*>>) : super(key)
 
     constructor(id: ResourceLocation) : super(Registries.RECIPE_TYPE, id)
@@ -36,6 +36,4 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
         level: Level,
         lastRecipe: RecipeHolder<RECIPE>?,
     ): RecipeHolder<RECIPE>? = manager.getRecipeFor(get(), input, level, lastRecipe).getOrNull()
-
-    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = manager.getAllRecipesFor(get()).asSequence()
 }

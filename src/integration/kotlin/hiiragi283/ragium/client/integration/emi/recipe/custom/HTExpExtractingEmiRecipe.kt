@@ -4,7 +4,7 @@ import dev.emi.emi.EmiUtil
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.addArrow
-import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toFluidEmi
 import hiiragi283.ragium.common.recipe.machine.HTExpExtractingRecipe
@@ -13,8 +13,8 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTExpExtractingEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation) :
-    HTEmiRecipe<HTExpExtractingRecipe>(category, id, HTExpExtractingRecipe) {
+class HTExpExtractingEmiRecipe(id: ResourceLocation) :
+    HTEmiRecipe<HTExpExtractingRecipe>(RagiumEmiRecipeCategories.EXTRACTING, id, HTExpExtractingRecipe) {
     companion object {
         @JvmStatic
         private val UNIQUE_ID: Int = EmiUtil.RANDOM.nextInt()

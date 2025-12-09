@@ -5,7 +5,7 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addPlus
-import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.resources.ResourceKey
@@ -13,8 +13,8 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTPlantingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTPlantingRecipe>) :
-    HTEmiHolderRecipe<HTPlantingRecipe>(category, holder) {
+class HTPlantingEmiRecipe(holder: RecipeHolder<HTPlantingRecipe>) :
+    HTEmiHolderRecipe<HTPlantingRecipe>(RagiumEmiRecipeCategories.PLANTING, holder) {
     init {
         recipe.seed
             .unwrap()

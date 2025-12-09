@@ -2,12 +2,12 @@ package hiiragi283.ragium.client.integration.emi.recipe.generator
 
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
 import net.minecraft.resources.ResourceLocation
 
-class HTCoolantEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: EmiStack) :
-    HTEmiRecipe<EmiStack>(category, id, recipe) {
+class HTCoolantEmiRecipe(id: ResourceLocation, recipe: EmiStack) :
+    HTEmiRecipe<EmiStack>(RagiumEmiRecipeCategories.COOLANT, id, recipe) {
     init {
         addInput(recipe)
     }

@@ -29,6 +29,6 @@ interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> : Predic
     fun getRequiredAmount(stack: STACK): Int
 
     fun getRequiredAmount(): Int
-    
+
     fun unwrap(): Either<Pair<TagKey<TYPE>, Int>, List<STACK>>
 }

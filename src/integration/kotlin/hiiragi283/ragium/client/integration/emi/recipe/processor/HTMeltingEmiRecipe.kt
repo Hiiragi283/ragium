@@ -5,13 +5,13 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addTank
-import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicSingleFluidRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTMeltingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicSingleFluidRecipe>) :
-    HTEmiHolderRecipe<HTBasicSingleFluidRecipe>(category, holder) {
+class HTMeltingEmiRecipe(holder: RecipeHolder<HTBasicSingleFluidRecipe>) :
+    HTEmiHolderRecipe<HTBasicSingleFluidRecipe>(RagiumEmiRecipeCategories.MELTING, holder) {
     init {
         addInput(recipe.ingredient)
 

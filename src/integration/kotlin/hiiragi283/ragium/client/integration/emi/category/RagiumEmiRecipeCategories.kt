@@ -1,19 +1,14 @@
 package hiiragi283.ragium.client.integration.emi.category
 
+import dev.emi.emi.api.EmiRegistry
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
+import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
-import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
-import hiiragi283.ragium.api.recipe.input.HTRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
-import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
-import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
-import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
-import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
-import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.text.HTHasText
+import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -65,69 +60,114 @@ object RagiumEmiRecipeCategories {
     @JvmField
     val COMBUSTION: HTEmiRecipeCategory = generator(RagiumBlocks.COMBUSTION_GENERATOR)
 
-    //    Machines    //
+    //    Processors    //
 
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> machine(
         recipeType: HTDeferredRecipeType<INPUT, RECIPE>,
         vararg workStations: ItemLike,
-    ): HTRegistryEmiRecipeCategory<INPUT, RECIPE> = HTRegistryEmiRecipeCategory(MACHINE_BOUNDS, recipeType, *workStations)
+    ): HTEmiRecipeCategory = HTEmiRecipeCategory.create(MACHINE_BOUNDS, recipeType, *workStations)
 
     // Basic
     @JvmField
-    val ALLOYING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTShapelessInputsRecipe> =
+    val ALLOYING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val COMPRESSING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTItemWithCatalystRecipe> =
+    val COMPRESSING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
-    val CRUSHING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTSingleExtraItemRecipe> =
+    val CRUSHING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.CRUSHING, RagiumBlocks.PULVERIZER, RagiumBlocks.CRUSHER)
 
     @JvmField
-    val CUTTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTSingleExtraItemRecipe> =
+    val CUTTING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
-    val EXTRACTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTItemWithCatalystRecipe> =
+    val EXTRACTING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.EXTRACTING, RagiumBlocks.EXTRACTOR)
 
     // Advanced
     @JvmField
-    val MELTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTSingleFluidRecipe> =
+    val MELTING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val MIXING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTComplexRecipe> =
+    val MIXING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, RagiumBlocks.ADVANCED_MIXER)
 
     @JvmField
-    val REFINING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTComplexRecipe> =
+    val REFINING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     // Elite
     @JvmField
-    val BREWING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTCombineRecipe> =
+    val BREWING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
 
     @JvmField
-    val PLANTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTPlantingRecipe> =
+    val PLANTING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     // Ultimate
     @JvmField
-    val ENCHANTING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTCombineRecipe> =
+    val ENCHANTING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 
     @JvmField
-    val SIMULATING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTItemWithCatalystRecipe> =
+    val SIMULATING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.SIMULATING, RagiumBlocks.SIMULATOR)
 
     //    Device    //
 
     @JvmField
-    val ROCK_GENERATING: HTRegistryEmiRecipeCategory<HTRecipeInput, HTRockGeneratingRecipe> =
+    val ROCK_GENERATING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.ROCK_GENERATING, RagiumBlocks.STONE_COLLECTOR)
+
+    //    Register    //
+
+    @JvmStatic
+    fun register(registry: EmiRegistry) {
+        register(registry, MACHINE_UPGRADE)
+        // Generator
+        register(registry, THERMAL)
+
+        register(registry, CULINARY)
+        register(registry, MAGMATIC)
+
+        register(registry, BIOMASS)
+        register(registry, COOLANT)
+        register(registry, COMBUSTION)
+        // Processor
+        register(registry, ALLOYING)
+        register(registry, COMPRESSING)
+        register(registry, CRUSHING)
+        register(registry, CUTTING)
+        register(registry, EXTRACTING)
+
+        register(registry, MELTING)
+        register(registry, MIXING)
+        register(registry, REFINING)
+
+        register(registry, BREWING)
+        register(registry, PLANTING)
+        for (block: ItemLike in listOf(RagiumBlocks.ELECTRIC_FURNACE, RagiumBlocks.MULTI_SMELTER)) {
+            registry.addWorkstation(VanillaEmiRecipeCategories.BLASTING, block.toEmi())
+            registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, block.toEmi())
+            registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, block.toEmi())
+        }
+
+        register(registry, ENCHANTING)
+        register(registry, SIMULATING)
+        // Device
+        register(registry, ROCK_GENERATING)
+    }
+
+    @JvmStatic
+    private fun register(registry: EmiRegistry, category: HTEmiRecipeCategory) {
+        registry.addCategory(category)
+        category.workStations.forEach(registry::addWorkstation.partially1(category))
+    }
 }

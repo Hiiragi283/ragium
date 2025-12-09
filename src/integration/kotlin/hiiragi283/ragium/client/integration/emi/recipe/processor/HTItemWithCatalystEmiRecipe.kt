@@ -3,6 +3,7 @@ package hiiragi283.ragium.client.integration.emi.recipe.processor
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputsEmiRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
@@ -13,6 +14,20 @@ import kotlin.jvm.optionals.getOrNull
 
 class HTItemWithCatalystEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicItemWithCatalystRecipe>) :
     HTMultiOutputsEmiRecipe<HTBasicItemWithCatalystRecipe>(category, holder) {
+    companion object {
+        @JvmStatic
+        fun compressing(holder: RecipeHolder<HTBasicItemWithCatalystRecipe>): HTItemWithCatalystEmiRecipe =
+            HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.COMPRESSING, holder)
+
+        @JvmStatic
+        fun extracting(holder: RecipeHolder<HTBasicItemWithCatalystRecipe>): HTItemWithCatalystEmiRecipe =
+            HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.EXTRACTING, holder)
+
+        @JvmStatic
+        fun simulating(holder: RecipeHolder<HTBasicItemWithCatalystRecipe>): HTItemWithCatalystEmiRecipe =
+            HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.SIMULATING, holder)
+    }
+
     override fun initInputs() {
         when (recipe) {
             is HTCompressingRecipe -> {

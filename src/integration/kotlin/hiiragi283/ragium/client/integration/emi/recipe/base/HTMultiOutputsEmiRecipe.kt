@@ -6,10 +6,8 @@ import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicComplexOutputRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTMultiOutputsEmiRecipe<RECIPE : HTBasicComplexOutputRecipe>(
-    category: HTEmiRecipeCategory,
-    holder: RecipeHolder<RECIPE>,
-) : HTEmiHolderRecipe<RECIPE>(category, holder) {
+abstract class HTMultiOutputsEmiRecipe<RECIPE : HTBasicComplexOutputRecipe>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
+    HTEmiHolderRecipe<RECIPE>(category, holder) {
     init {
         initInputs()
         addOutputs(recipe.results)
