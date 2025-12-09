@@ -15,6 +15,8 @@ typealias BlockWithContextFactory<C, BLOCK> = (C, BlockBehaviour.Properties) -> 
 
 typealias ItemWithContextFactory<C, ITEM> = (C, Item.Properties) -> ITEM
 
+fun <T> identity(): (T) -> T = { it }
+
 fun <IP, R> (() -> IP).andThen(f: (IP) -> R): () -> R = { this().let(f) }
 
 fun <P1, IP, R> ((P1) -> IP).andThen(f: (IP) -> R): (P1) -> R = { p1: P1 -> this(p1).let(f) }
@@ -34,6 +36,11 @@ fun <P1, P2, P3, P4, R> ((P1, P2, P3, P4) -> R).partially1(p1: P1): (P2, P3, P4)
 fun <P1, P2, R> ((P1, P2) -> R).partially2(p1: P1, p2: P2): () -> R = { this(p1, p2) }
 
 fun <P1, P2, P3, R> ((P1, P2, P3) -> R).partially2(p1: P1, p2: P2): (P3) -> R = { p3: P3 -> this(p1, p2, p3) }
+
+// Predicate
+fun (() -> Boolean).and(other: () -> Boolean): () -> Boolean = { this() && other() }
+
+fun <P1> ((P1) -> Boolean).and(other: () -> Boolean): (P1) -> Boolean = { p1: P1 -> this(p1) && other() }
 
 fun (() -> Boolean).negate(): () -> Boolean = { !this() }
 

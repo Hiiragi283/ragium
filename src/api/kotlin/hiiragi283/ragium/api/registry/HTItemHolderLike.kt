@@ -1,14 +1,10 @@
 package hiiragi283.ragium.api.registry
 
-import hiiragi283.ragium.api.function.andThen
-import hiiragi283.ragium.api.serialization.codec.BiCodec
-import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.ragium.api.serialization.codec.downCast
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -38,42 +34,52 @@ interface HTItemHolderLike :
         }
 
         @JvmStatic
-        fun fromHolder(holder: DeferredHolder<Item, *>): HTItemHolderLike = object : HTItemHolderLike {
-            override fun asItem(): Item = holder.get()
+        fun fromHolder(holder: DeferredHolder<Item, *>): HTItemHolderLike = when (holder) {
+            is HTItemHolderLike -> holder
+            else -> object : HTItemHolderLike {
+                override fun asItem(): Item = holder.get()
 
-            override fun getId(): ResourceLocation = holder.id
+                override fun getId(): ResourceLocation = holder.id
+            }
         }
 
         @JvmStatic
-        fun fromItem(item: Supplier<out Item>): HTItemHolderLike = fromItem(ItemLike(item::get))
+        fun fromItem(item: Supplier<out Item>): HTItemHolderLike = when (item) {
+            is HTItemHolderLike -> item
+            else -> fromItem(ItemLike(item::get))
+        }
 
         /**
          * [ItemLike]を[HTItemHolderLike]に変換します。
          */
         @Suppress("DEPRECATION")
         @JvmStatic
-        fun fromItem(item: ItemLike): HTItemHolderLike = fromHolder(item::asItem.andThen(Item::builtInRegistryHolder))
+        fun fromItem(item: ItemLike): HTItemHolderLike = when (item) {
+            is HTItemHolderLike -> item
+            else -> object : HTItemHolderLike {
+                override fun asItem(): Item = item.asItem()
+
+                override fun getId(): ResourceLocation = item.builtInRegistryHolder().idOrThrow
+            }
+        }
 
         /**
          * [Holder]を[HTItemHolderLike]に変換します。
          */
         @JvmStatic
-        fun fromHolder(holder: Holder<Item>): HTItemHolderLike = HolderImpl(holder)
+        fun fromHolder(holder: Holder<Item>): HTItemHolderLike = when (holder) {
+            is HTItemHolderLike -> holder
+            else -> object : HTItemHolderLike {
+                override fun asItem(): Item = holder.value()
 
-        /**
-         * [Holder]を[HTItemHolderLike]に変換します。
-         */
-        @JvmStatic
-        fun fromHolder(supplier: () -> Holder<Item>): HTItemHolderLike = HolderImpl(supplier)
-
-        @JvmField
-        val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemHolderLike> = VanillaBiCodecs
-            .holder(Registries.ITEM)
-            .xmap(::HolderImpl, HolderImpl::holder)
-            .downCast()
+                override fun getId(): ResourceLocation = holder.idOrThrow
+            }
+        }
     }
 
     fun isOf(stack: ItemStack): Boolean = stack.`is`(this.asItem())
+
+    fun isOf(stack: ImmutableItemStack?): Boolean = stack?.isOf(this.asItem()) ?: false
 
     /**
      * 指定した[count]から[ItemStack]を返します。
@@ -92,15 +98,5 @@ interface HTItemHolderLike :
         val stack: ItemStack = toStack(count)
         stack.applyComponents(components)
         return stack
-    }
-
-    private class HolderImpl(private val supplier: () -> Holder<Item>) : HTItemHolderLike {
-        constructor(holder: Holder<Item>) : this({ holder })
-
-        val holder: Holder<Item> get() = supplier()
-
-        override fun asItem(): Item = holder.value()
-
-        override fun getId(): ResourceLocation = holder.idOrThrow
     }
 }

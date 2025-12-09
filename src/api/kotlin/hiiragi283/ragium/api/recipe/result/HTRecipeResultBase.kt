@@ -27,12 +27,9 @@ abstract class HTRecipeResultBase<TYPE : Any, STACK : ImmutableStack<TYPE, STACK
             amountCodec: MapBiCodec<ByteBuf, Int>,
             factory: (HTKeyOrTagEntry<T>, Int, DataComponentPatch) -> R,
         ): BiCodec<RegistryFriendlyByteBuf, R> = BiCodec.composite(
-            HTKeyOrTagHelper.INSTANCE.codec(registryKey).fieldOf("id"),
-            HTRecipeResultBase<T, *>::entry,
-            amountCodec,
-            HTRecipeResultBase<T, *>::amount,
-            VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
-            HTRecipeResultBase<T, *>::components,
+            HTKeyOrTagHelper.INSTANCE.mapCodec(registryKey).forGetter(HTRecipeResultBase<T, *>::entry),
+            amountCodec.forGetter(HTRecipeResultBase<T, *>::amount),
+            VanillaBiCodecs.COMPONENT_PATCH.forGetter(HTRecipeResultBase<T, *>::components),
             factory,
         )
     }

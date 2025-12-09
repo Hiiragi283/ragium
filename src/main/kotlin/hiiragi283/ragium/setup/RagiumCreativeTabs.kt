@@ -1,235 +1,31 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.function.andThen
-import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.registry.HTSimpleDeferredHolder
-import hiiragi283.ragium.api.text.HTTranslation
-import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
-import hiiragi283.ragium.common.material.CommonMaterialKeys
-import hiiragi283.ragium.common.material.FoodMaterialKeys
+import hiiragi283.ragium.api.registry.impl.HTDeferredCreativeTabRegister
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.util.HTDefaultLootTickets
-import hiiragi283.ragium.common.util.HTPotionHelper
-import net.minecraft.core.Holder
-import net.minecraft.core.registries.Registries
+import hiiragi283.ragium.common.util.HTCreativeTabHelper
 import net.minecraft.world.item.CreativeModeTab
-import net.minecraft.world.item.DyeColor
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potion
-import net.minecraft.world.level.ItemLike
-import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
-import java.util.function.Supplier
 
+/**
+ * @see mekanism.common.registries.MekanismCreativeTabs
+ */
 object RagiumCreativeTabs {
     @JvmField
-    val REGISTER: HTDeferredRegister<CreativeModeTab> =
-        HTDeferredRegister(Registries.CREATIVE_MODE_TAB, RagiumAPI.MOD_ID)
-
-    @JvmStatic
-    fun init(eventBus: IEventBus) {
-        REGISTER.register(eventBus)
-
-        eventBus.addListener(::modifyCreativeTabs)
-    }
+    val REGISTER = HTDeferredCreativeTabRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val BLOCKS: HTSimpleDeferredHolder<CreativeModeTab> =
-        REGISTER.register("blocks") { _ ->
-            CreativeModeTab
-                .builder()
-                .title(RagiumCommonTranslation.CREATIVE_TAB_BLOCKS.translate())
-                .icon { RagiumBlocks.PULVERIZER.toStack() }
-                .displayItems(RagiumBlocks.REGISTER.blockEntries)
-                .build()
-        }
-
-    @JvmField
-    val INGREDIENTS: HTSimpleDeferredHolder<CreativeModeTab> = register(
-        "ingredients",
-        RagiumCommonTranslation.CREATIVE_TAB_INGREDIENTS,
-        { RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY) },
-    ) { _: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-        // Fluid Buckets
-        output.acceptItems(RagiumFluidContents.REGISTER.itemEntries)
-        // Materials
-        output.acceptItems(RagiumItems.MATERIALS.values)
-        // Ingredients
-        output.acceptItems(RagiumItems.MOLDS.values)
-
-        output.accept(RagiumItems.TAR)
-
-        output.accept(RagiumItems.POTATO_SPROUTS)
-        output.accept(RagiumItems.GREEN_CAKE)
-        output.accept(RagiumItems.GREEN_CAKE_DUST)
-        output.accept(RagiumItems.GREEN_PELLET)
-
-        output.accept(RagiumItems.ELDER_HEART)
-        output.accept(RagiumItems.GRAVITATIONAL_UNIT)
-        output.accept(RagiumItems.WITHER_DOLl)
-
-        output.accept(RagiumItems.LUMINOUS_PASTE)
-        output.accept(RagiumItems.LED)
-
-        output.accept(RagiumItems.SOLAR_PANEL)
-        output.accept(RagiumItems.REDSTONE_BOARD)
-
-        output.accept(RagiumItems.POLYMER_RESIN)
-        output.accept(RagiumItems.POLYMER_CATALYST)
-        output.accept(RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))
-        output.accept(RagiumItems.SYNTHETIC_FIBER)
-        output.accept(RagiumItems.SYNTHETIC_LEATHER)
-
-        output.accept(RagiumItems.CIRCUIT_BOARD)
-
-        RagiumItems.COILS.values.forEach(output::accept)
-        RagiumItems.CIRCUITS.values.forEach(output::accept)
-        RagiumItems.COMPONENTS.values.forEach(output::accept)
-    }
-
-    @JvmField
-    val ITEMS: HTSimpleDeferredHolder<CreativeModeTab> =
-        register(
-            "items",
-            RagiumCommonTranslation.CREATIVE_TAB_ITEMS,
-            { RagiumItems.LOOT_TICKET },
-        ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-            // Tools
-            output.acceptItems(RagiumItems.DRUM_MINECARTS.values)
-            // Raginite
-            output.accept(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
-            output.accept(RagiumItems.MAGNET)
-
-            output.accept(RagiumItems.ADVANCED_MAGNET)
-
-            output.accept(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL))
-            output.accept(RagiumItems.DYNAMIC_LANTERN)
-            output.accept(RagiumItems.NIGHT_VISION_GOGGLES)
-            // Azure
-            output.acceptEquipments(RagiumMaterialKeys.AZURE_STEEL)
-            output.accept(RagiumItems.BLUE_KNOWLEDGE)
-            // Deep
-            output.acceptEquipments(RagiumMaterialKeys.DEEP_STEEL)
-            // Night
-            output.acceptEquipments(RagiumMaterialKeys.NIGHT_METAL)
-            // Molten
-            output.accept(RagiumItems.BLAST_CHARGE)
-
-            output.accept(RagiumItems.TELEPORT_KEY)
-
-            output.accept(RagiumItems.ELDRITCH_EGG)
-
-            DyeColor.entries.map(HTUniversalBundleItem::createBundle).forEach(output::accept)
-            // Other
-            output.accept(RagiumItems.DRILL)
-
-            output.accept(RagiumItems.POTION_BUNDLE)
-            parameters
-                .holders()
-                .lookupOrThrow(Registries.POTION)
-                .listElements()
-                .forEach { holder: Holder.Reference<Potion> ->
-                    output.accept(HTPotionHelper.createPotion(RagiumItems.POTION_DROP, holder))
-                }
-
-            output.accept(RagiumItems.SLOT_COVER)
-            output.accept(RagiumItems.TRADER_CATALOG)
-            // Foods
-            output.accept(RagiumItems.getIngot(FoodMaterialKeys.CHOCOLATE))
-
-            output.accept(RagiumItems.ICE_CREAM)
-            output.accept(RagiumItems.ICE_CREAM_SODA)
-
-            output.accept(RagiumItems.getDust(FoodMaterialKeys.RAW_MEAT))
-            output.accept(RagiumItems.getIngot(FoodMaterialKeys.RAW_MEAT))
-            output.accept(RagiumItems.getIngot(FoodMaterialKeys.COOKED_MEAT))
-            output.accept(RagiumItems.CANNED_COOKED_MEAT)
-
-            output.accept(RagiumItems.MELON_PIE)
-
-            output.accept(RagiumBlocks.SWEET_BERRIES_CAKE)
-            output.accept(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-
-            output.accept(RagiumItems.RAGI_CHERRY)
-            output.accept(RagiumItems.RAGI_CHERRY_PULP)
-            output.accept(RagiumItems.RAGI_CHERRY_JAM)
-            output.accept(RagiumItems.RAGI_CHERRY_TOAST)
-            output.accept(RagiumItems.FEVER_CHERRY)
-
-            output.accept(RagiumItems.BOTTLED_BEE)
-            output.accept(RagiumItems.AMBROSIA)
-            // Tickets
-            output.accept(RagiumItems.LOOT_TICKET)
-            output.acceptAll(HTDefaultLootTickets.getDefaultLootTickets().values)
-        }
-
-    //    Extensions    //
-
-    @JvmStatic
-    private fun register(
-        name: String,
-        title: HTTranslation,
-        icon: Supplier<out ItemLike>,
-        action: CreativeModeTab.DisplayItemsGenerator,
-    ): HTSimpleDeferredHolder<CreativeModeTab> = REGISTER.register(name) { _ ->
-        CreativeModeTab
-            .builder()
-            .title(title.translate())
-            .icon(icon::get.andThen(::ItemStack))
-            .displayItems(action)
-            .build()
-    }
-
-    fun CreativeModeTab.Output.acceptEquipments(material: HTMaterialLike) {
-        // Smithing Template
-        this.accept(RagiumItems.getSmithingTemplate(material))
-        // Armor
-        RagiumItems.getArmorMap(material).values.forEach(this::accept)
-        // Tool
-        RagiumItems.getToolMap(material).values.forEach(this::accept)
-    }
-
-    @JvmStatic
-    private fun CreativeModeTab.Output.acceptItems(items: Iterable<ItemLike>) {
-        items.forEach(this::accept)
-    }
-
-    //    Events    //
-
-    @JvmStatic
-    private fun modifyCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        fun insertBefore(after: ItemLike, before: ItemLike) {
-            event.insertBefore(
-                ItemStack(after),
-                ItemStack(before),
-                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-            )
-        }
-
-        fun insertAfter(before: ItemLike, after: ItemLike) {
-            event.insertAfter(
-                ItemStack(before),
-                ItemStack(after),
-                CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-            )
-        }
-
-        if (INGREDIENTS.`is`(event.tabKey)) {
-            insertAfter(RagiumItems.getDust(RagiumMaterialKeys.RAGINITE), RagiumItems.RAGI_COKE)
-            insertBefore(RagiumItems.getIngot(RagiumMaterialKeys.RAGI_ALLOY), RagiumItems.RAGI_ALLOY_COMPOUND)
-
-            insertAfter(RagiumItems.getDust(VanillaMaterialKeys.COAL), RagiumItems.COAL_CHIP)
-            insertAfter(RagiumItems.COAL_CHIP, RagiumItems.COAL_CHUNK)
-            insertAfter(RagiumItems.getDust(VanillaMaterialKeys.WOOD), RagiumItems.COMPRESSED_SAWDUST)
-            insertAfter(RagiumItems.COMPRESSED_SAWDUST, RagiumItems.RESIN)
-
-            insertAfter(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), Items.ECHO_SHARD)
-            insertAfter(Items.ECHO_SHARD, RagiumItems.ECHO_STAR)
-        }
+    val COMMON: HTSimpleDeferredHolder<CreativeModeTab> = REGISTER.registerSimpleTab(
+        "common",
+        RagiumTranslation.RAGIUM,
+        RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY),
+    ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+        // Items
+        HTCreativeTabHelper.addToDisplay(parameters, output, RagiumItems.REGISTER.entries)
+        // Blocks
+        HTCreativeTabHelper.addToDisplay(parameters, output, RagiumBlocks.REGISTER.blockEntries)
+        // Fluids
+        HTCreativeTabHelper.addToDisplay(parameters, output, RagiumFluidContents.REGISTER.itemEntries)
     }
 }

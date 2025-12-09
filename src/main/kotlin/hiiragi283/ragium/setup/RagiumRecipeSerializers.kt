@@ -3,13 +3,21 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.item.alchemy.HTPotionContents
+import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
-import hiiragi283.ragium.common.recipe.HTClearComponentRecipe
-import hiiragi283.ragium.common.recipe.HTIceCreamSodaRecipe
-import hiiragi283.ragium.common.recipe.HTPotionDropRecipe
-import hiiragi283.ragium.common.recipe.HTSmithingModifyRecipe
-import hiiragi283.ragium.common.recipe.HTUpgradeBlastChargeRecipe
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.common.recipe.crafting.HTClearComponentRecipe
+import hiiragi283.ragium.common.recipe.crafting.HTEternalUpgradeRecipe
+import hiiragi283.ragium.common.recipe.crafting.HTGravitationalUpgradeRecipe
+import hiiragi283.ragium.common.recipe.crafting.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.recipe.crafting.HTPotionDropRecipe
+import hiiragi283.ragium.common.recipe.crafting.HTUpgradeChargeRecipe
+import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
+import hiiragi283.ragium.common.recipe.machine.HTExpExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
@@ -19,11 +27,9 @@ import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
-import hiiragi283.ragium.impl.recipe.HTPlantingRecipe
-import hiiragi283.ragium.impl.recipe.HTPulverizingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
+import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
-import hiiragi283.ragium.impl.recipe.HTWashingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -54,6 +60,22 @@ object RagiumRecipeSerializers {
         register("clear_component", HTClearComponentRecipe.CODEC)
 
     @JvmField
+    val COPY_ENCHANTING: RecipeSerializer<HTCopyEnchantingRecipe> =
+        register("copy_enchanting", MapBiCodec.unit(HTCopyEnchantingRecipe))
+
+    @JvmField
+    val ETERNAL_UPGRADE: RecipeSerializer<HTEternalUpgradeRecipe> =
+        register("eternal_upgrade", SimpleCraftingRecipeSerializer(::HTEternalUpgradeRecipe))
+
+    @JvmField
+    val EXP_EXTRACTING: RecipeSerializer<HTExpExtractingRecipe> =
+        register("exp_extracting", MapBiCodec.unit(HTExpExtractingRecipe))
+
+    @JvmField
+    val GRAVITATIONAL_UPGRADE: RecipeSerializer<HTGravitationalUpgradeRecipe> =
+        register("gravitational_upgrade", SimpleCraftingRecipeSerializer(::HTGravitationalUpgradeRecipe))
+
+    @JvmField
     val ICE_CREAM_SODA: RecipeSerializer<HTIceCreamSodaRecipe> =
         register("ice_cream_soda", SimpleCraftingRecipeSerializer(::HTIceCreamSodaRecipe))
 
@@ -62,67 +84,69 @@ object RagiumRecipeSerializers {
         register("potion_drop", SimpleCraftingRecipeSerializer(::HTPotionDropRecipe))
 
     @JvmField
-    val SMITHING_MODIFY: RecipeSerializer<HTSmithingModifyRecipe> =
-        register("smithing_modify", HTSmithingModifyRecipe.CODEC)
-
-    @JvmField
-    val UPGRADE_BLAST_CHARGE: RecipeSerializer<HTUpgradeBlastChargeRecipe> =
-        register("upgrade_blast_charge", SimpleCraftingRecipeSerializer(::HTUpgradeBlastChargeRecipe))
+    val UPGRADE_CHARGE: RecipeSerializer<HTUpgradeChargeRecipe> =
+        register("upgrade_charge", SimpleCraftingRecipeSerializer(::HTUpgradeChargeRecipe))
 
     //    Machine    //
 
     @JvmField
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = register(
         RagiumConst.ALLOYING,
-        RagiumRecipeBiCodecs.ALLOYING,
+        RagiumRecipeBiCodecs.singleOutput(
+            ::HTAlloyingRecipe,
+            HTItemIngredient.CODEC
+                .listOf(2, 3)
+                .fieldOf("ingredients")
+                .forGetter(HTAlloyingRecipe::ingredients),
+        ),
     )
 
     @JvmField
     val BREWING: RecipeSerializer<HTBrewingRecipe> = register(
         RagiumConst.BREWING,
-        RagiumRecipeBiCodecs.BREWING,
+        RagiumRecipeBiCodecs.combine(
+            ::HTBrewingRecipe,
+            HTPotionContents.CODEC.fieldOf("contents").forGetter(HTBrewingRecipe::contents),
+        ),
     )
 
     @JvmField
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = register(
         RagiumConst.COMPRESSING,
-        RagiumRecipeBiCodecs.itemToItem(::HTCompressingRecipe),
+        RagiumRecipeBiCodecs.itemWithCatalyst(::HTCompressingRecipe),
     )
 
     @JvmField
     val CRUSHING: RecipeSerializer<HTCrushingRecipe> = register(
         RagiumConst.CRUSHING,
-        RagiumRecipeBiCodecs.itemToChanced(::HTCrushingRecipe),
+        RagiumRecipeBiCodecs.itemToExtra(::HTCrushingRecipe),
     )
 
     @JvmField
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = register(
         RagiumConst.CUTTING,
-        RagiumRecipeBiCodecs.itemToChanced(::HTCuttingRecipe),
+        RagiumRecipeBiCodecs.itemToExtra(::HTCuttingRecipe),
     )
 
     @JvmField
     val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = register(
         RagiumConst.ENCHANTING,
-        RagiumRecipeBiCodecs.ENCHANTING,
+        RagiumRecipeBiCodecs.combine(
+            ::HTEnchantingRecipe,
+            VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment").forGetter(HTEnchantingRecipe::holder),
+        ),
     )
 
     @JvmField
     val EXTRACTING: RecipeSerializer<HTExtractingRecipe> = register(
         RagiumConst.EXTRACTING,
-        RagiumRecipeBiCodecs.itemWithCatalystToMulti(::HTExtractingRecipe),
-    )
-
-    @JvmField
-    val FLUID_TRANSFORM: RecipeSerializer<HTRefiningRecipe> = register(
-        RagiumConst.FLUID_TRANSFORM,
-        RagiumRecipeBiCodecs.fluidTransform(::HTRefiningRecipe),
+        RagiumRecipeBiCodecs.itemWithCatalyst(::HTExtractingRecipe),
     )
 
     @JvmField
     val MELTING: RecipeSerializer<HTMeltingRecipe> = register(
         RagiumConst.MELTING,
-        RagiumRecipeBiCodecs.itemToFluid(::HTMeltingRecipe),
+        RagiumRecipeBiCodecs.MELTING,
     )
 
     @JvmField
@@ -132,27 +156,33 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val PLANTING: RecipeSerializer<HTPlantingRecipe> = register(
-        RagiumConst.PLANTING,
-        RagiumRecipeBiCodecs.itemWithFluidToChanced(::HTPlantingRecipe),
+    val MIXING_SIMPLE: RecipeSerializer<HTSimpleMixingRecipe> = register(
+        "${RagiumConst.MIXING}/simple",
+        RagiumRecipeBiCodecs.MIXING_SIMPLE,
     )
 
     @JvmField
-    val PULVERIZING: RecipeSerializer<HTPulverizingRecipe> = register(
-        "pulverizing",
-        RagiumRecipeBiCodecs.itemToItem(::HTPulverizingRecipe),
+    val PLANTING: RecipeSerializer<HTPlantingRecipe> = register(
+        RagiumConst.PLANTING,
+        RagiumRecipeBiCodecs.PLANTING,
+    )
+
+    @JvmField
+    val REFINING: RecipeSerializer<HTRefiningRecipe> = register(
+        RagiumConst.REFINING,
+        RagiumRecipeBiCodecs.REFINING,
+    )
+
+    @JvmField
+    val ROCK_GENERATING: RecipeSerializer<HTRockGeneratingRecipe> = register(
+        RagiumConst.ROCK_GENERATING,
+        RagiumRecipeBiCodecs.ROCK_GENERATING,
     )
 
     @JvmField
     val SIMULATING: RecipeSerializer<HTSimulatingRecipe> = register(
         RagiumConst.SIMULATING,
-        RagiumRecipeBiCodecs.itemWithCatalystToMulti(::HTSimulatingRecipe),
-    )
-
-    @JvmField
-    val WASHING: RecipeSerializer<HTWashingRecipe> = register(
-        RagiumConst.WASHING,
-        RagiumRecipeBiCodecs.itemWithFluidToChanced(::HTWashingRecipe),
+        RagiumRecipeBiCodecs.itemWithCatalyst(::HTSimulatingRecipe),
     )
 
     private class SimpleSerializer<RECIPE : Recipe<*>>(private val codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>) :

@@ -2,56 +2,77 @@ package hiiragi283.ragium.api.serialization.codec
 
 import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
+import com.mojang.serialization.DataResult
+import hiiragi283.ragium.api.function.andThen
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
-import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs
+import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
+import org.apache.commons.lang3.math.Fraction
+import java.util.function.Function
 import java.util.function.Supplier
+import kotlin.enums.enumEntries
 
 object BiCodecs {
+    @JvmStatic
+    fun <N> checkRange(min: N, max: N): (N) -> N where N : Number, N : Comparable<N> =
+        Codec.checkRange(min, max).andThen(DataResult<N>::getOrThrow)::apply
+
     /**
-     * 指定された[BiCodec]を，別の[BiCodec]に変換します。
-     * @param N [Number]を継承したクラス
-     * @param range 値の範囲
-     * @return [range]に範囲を制限された[BiCodec]
+     * 指定された[min]と[max]から[BiCodec]を返します。
+     * @param min 範囲の最小値
+     * @param max 範囲の最大値
+     * @return [min]と[max]を含む範囲の値のみを通す[BiCodec]
      */
-    fun <B : ByteBuf, N> BiCodec<B, N>.ranged(range: ClosedRange<N>): BiCodec<B, N> where N : Number, N : Comparable<N> =
-        this.validate { value: N ->
-            check(value in range) { "Value $value outside of range [$range]" }
-            value
-        }
+    @JvmStatic
+    fun intRange(min: Int, max: Int): BiCodec<ByteBuf, Int> = BiCodec.INT.validate(checkRange(min, max))
+
+    /**
+     * 指定された[min]と[max]から[BiCodec]を返します。
+     * @param min 範囲の最小値
+     * @param max 範囲の最大値
+     * @return [min]と[max]を含む範囲の値のみを通す[BiCodec]
+     */
+    @JvmStatic
+    fun longRange(min: Long, max: Long): BiCodec<ByteBuf, Long> = BiCodec.LONG.validate(checkRange(min, max))
+
+    /**
+     * 指定された[min]と[max]から[BiCodec]を返します。
+     * @param min 範囲の最小値
+     * @param max 範囲の最大値
+     * @return [min]と[max]を含む範囲の値のみを通す[BiCodec]
+     */
+    @JvmStatic
+    fun fractionRange(min: Fraction, max: Fraction): BiCodec<ByteBuf, Fraction> = FRACTION.validate(checkRange(min, max))
 
     /**
      * `0`以上の値を対象とする[Int]の[BiCodec]
      */
     @JvmField
-    val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(0..Int.MAX_VALUE)
+    val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = intRange(0, Int.MAX_VALUE)
 
     /**
      * `0`以上の値を対象とする[Long]の[BiCodec]
      * @see mekanism.api.SerializerHelper.POSITIVE_LONG_CODEC
      */
     @JvmField
-    val NON_NEGATIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(0..Long.MAX_VALUE)
+    val NON_NEGATIVE_LONG: BiCodec<ByteBuf, Long> = longRange(0, Long.MAX_VALUE)
 
     /**
      * `1`以上の値を対象とする[Int]の[BiCodec]
      */
     @JvmField
-    val POSITIVE_INT: BiCodec<ByteBuf, Int> = BiCodec.INT.ranged(1..Int.MAX_VALUE)
+    val POSITIVE_INT: BiCodec<ByteBuf, Int> = intRange(1, Int.MAX_VALUE)
 
     /**
      * `1`以上の値を対象とする[Long]の[BiCodec]
      * @see mekanism.api.SerializerHelper.POSITIVE_NONZERO_LONG_CODEC
      */
     @JvmField
-    val POSITIVE_LONG: BiCodec<ByteBuf, Long> = BiCodec.LONG.ranged(1..Long.MAX_VALUE)
+    val POSITIVE_LONG: BiCodec<ByteBuf, Long> = longRange(1, Long.MAX_VALUE)
 
-    /**
-     * `0f`以上の値を対象とする[Float]の[BiCodec]
-     */
     @JvmField
-    val POSITIVE_FLOAT: BiCodec<ByteBuf, Float> = BiCodec.FLOAT.ranged(0f..Float.MAX_VALUE)
+    val FRACTION: BiCodec<ByteBuf, Fraction> = BiCodec.STRING.flatXmap(Fraction::getFraction, Fraction::toString)
 
     /**
      * 指定された[keyCodec], [valueCodec]に基づいて，[Map]の[BiCodec]を返します。
@@ -92,25 +113,24 @@ object BiCodecs {
     )
 
     @JvmStatic
-    fun <B : ByteBuf, T : Any> withAlternative(primal: BiCodec<in B, T>, secondary: BiCodec<in B, T>): BiCodec<B, T> = BiCodec.of(
-        NeoForgeExtraCodecs.withAlternative(primal.codec, secondary.codec),
-        AlternativeStreamCodec(primal.streamCodec, secondary.streamCodec),
-    )
-
-    @JvmStatic
     inline fun <reified V : Enum<V>> enum(values: Supplier<Array<V>>): BiCodec<ByteBuf, V> =
         NON_NEGATIVE_INT.flatXmap({ value: Int -> values.get()[value] }, Enum<V>::ordinal)
 
-    /**
-     * @see NeoForgeExtraCodecs.AlternativeCodec
-     */
-    @JvmRecord
-    private data class AlternativeStreamCodec<B : Any, V : Any>(val primal: StreamCodec<in B, V>, val secondary: StreamCodec<in B, V>) :
-        StreamCodec<B, V> {
-        override fun decode(buffer: B): V = runCatching { primal.decode(buffer) }.getOrElse { secondary.decode(buffer) }
+    @JvmStatic
+    inline fun <reified V : Enum<V>> stringEnum(factory: Function<V, String>): BiCodec<ByteBuf, V> = BiCodec.STRING.flatXmap(
+        { name: String -> enumEntries<V>().first { factory.apply(it) == name } },
+        factory,
+    )
 
-        override fun encode(buffer: B, value: V) {
-            runCatching { primal.encode(buffer, value) }.onFailure { secondary.encode(buffer, value) }
-        }
-    }
+    @JvmStatic
+    fun <B : ByteBuf, V : Any> lazy(delegate: () -> BiCodec<B, V>): BiCodec<B, V> = BiCodec.of(
+        Codec.lazyInitialized(delegate.andThen(BiCodec<B, V>::codec)),
+        NeoForgeStreamCodecs.lazy(delegate.andThen(BiCodec<B, V>::streamCodec)),
+    )
+
+    /**
+     * 指定された[instance]を常に返す[BiCodec]を返します。
+     */
+    @JvmStatic
+    fun <B : ByteBuf, V : Any> unit(instance: V): BiCodec<B, V> = BiCodec.of(Codec.unit(instance), StreamCodec.unit(instance))
 }

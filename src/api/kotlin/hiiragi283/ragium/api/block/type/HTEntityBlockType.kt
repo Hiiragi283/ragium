@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.block.type
 import com.mojang.datafixers.util.Function3
 import hiiragi283.ragium.api.block.attribute.HTBlockAttribute
 import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
+import hiiragi283.ragium.api.block.attribute.HTFluidBlockAttribute
 import hiiragi283.ragium.api.block.attribute.HTMenuBlockAttribute
 import hiiragi283.ragium.api.block.attribute.HTTierBlockAttribute
 import hiiragi283.ragium.api.collection.AttributeMap
@@ -66,6 +67,10 @@ open class HTEntityBlockType(
          * @param usage 処理当たりの使用量
          */
         fun addEnergy(usage: IntSupplier, capacity: IntSupplier): BUILDER = add(HTEnergyBlockAttribute(usage, capacity))
+
+        fun addFluid(vararg pairs: Pair<HTFluidBlockAttribute.TankType, IntSupplier>): BUILDER = addFluid(mapOf(*pairs))
+
+        fun addFluid(tankMap: Map<HTFluidBlockAttribute.TankType, IntSupplier>): BUILDER = add(HTFluidBlockAttribute(tankMap))
 
         /**
          * ティアを追加します。

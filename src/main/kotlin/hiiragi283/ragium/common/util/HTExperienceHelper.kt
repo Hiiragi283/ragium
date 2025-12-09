@@ -3,7 +3,10 @@ package hiiragi283.ragium.common.util
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.config.RagiumConfig
 import it.unimi.dsi.fastutil.longs.Long2LongArrayMap
+import net.minecraft.core.Holder
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import kotlin.math.max
 
 /**
@@ -17,8 +20,8 @@ object HTExperienceHelper {
     //    Player    //
 
     @JvmStatic
-    fun getPlayerExp(player: Player): Long =
-        getExpForLevel(player.experienceLevel) + (player.experienceProgress * player.xpNeededForNextLevel).toLong()
+    fun getPlayerExp(player: Player): Int =
+        getExpForLevel(player.experienceLevel) + (player.experienceProgress * player.xpNeededForNextLevel).toInt()
 
     @JvmStatic
     fun setPlayerExp(player: Player, amount: Long) {
@@ -64,6 +67,18 @@ object HTExperienceHelper {
             exp1 -= nextLevel
         }
     }
+
+    //    Enchantment    //
+
+    @JvmStatic
+    inline fun getTotalCost(enchantments: ItemEnchantments, transform: (Enchantment, Int) -> Int): Int =
+        enchantments.entrySet().sumOf { (holder: Holder<Enchantment>, level: Int) -> transform(holder.value(), level) }
+
+    @JvmStatic
+    fun getTotalMinCost(enchantments: ItemEnchantments): Int = getTotalCost(enchantments, Enchantment::getMinCost)
+
+    @JvmStatic
+    fun getTotalMaxCost(enchantments: ItemEnchantments): Int = getTotalCost(enchantments, Enchantment::getMaxCost)
 
     //    Interaction    //
 

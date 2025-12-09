@@ -1,5 +1,8 @@
 package hiiragi283.ragium.api
 
+import hiiragi283.ragium.api.registry.vanillaId
+import net.minecraft.client.renderer.LightTexture
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion
 
@@ -12,6 +15,16 @@ object RagiumConst {
     const val LOG_TO_SAP = 500
     const val SAP_TO_MOLTEN = 250
     const val MOLTEN_TO_GEM = 1000
+
+    //    GUI    //
+
+    @JvmField
+    val BLOCK_ATLAS: ResourceLocation = vanillaId("textures/atlas/blocks.png")
+
+    @JvmField
+    val GUI_ATLAS: ResourceLocation = vanillaId("textures/atlas/gui.png")
+
+    const val FULL_BRIGHT: Int = LightTexture.FULL_BRIGHT
 
     //    Item    //
 
@@ -34,6 +47,7 @@ object RagiumConst {
     const val EIO_MACHINES = "enderio_machines"
     const val FARMERS_DELIGHT = "farmersdelight"
     const val FOREGOING = "industrialforegoing"
+    const val HOSTILE_NETWORKS = "hostilenetworks"
     const val IMMERSIVE = "immersiveengineering"
     const val KALEIDO_COOKERY = "kaleidoscope_cookery"
     const val MAGITECH = "magitech"
@@ -48,7 +62,7 @@ object RagiumConst {
     @JvmField
     val BUILTIN_IDS: Set<String> = setOf(MINECRAFT, NEOFORGE, COMMON, RagiumAPI.MOD_ID)
 
-    //    Nbt    //
+    //    Serialization    //
 
     const val ACCESS_CONFIG = "access_config"
     const val ENCHANTMENT = "enchantment"
@@ -66,6 +80,12 @@ object RagiumConst {
     const val CAPACITY = "capacity"
     const val BATTERIES = "batteries"
 
+    const val ID = "id"
+    const val TAG = "tag"
+    const val COUNT = "count"
+    const val COMPONENTS = "components"
+    const val CHANCE = "chance"
+
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 
     //    Recipes    //
@@ -77,12 +97,21 @@ object RagiumConst {
     const val CUTTING = "cutting"
     const val ENCHANTING = "enchanting"
     const val EXTRACTING = "extracting"
-    const val FLUID_TRANSFORM = "fluid_transform"
     const val MELTING = "melting"
     const val MIXING = "mixing"
     const val PLANTING = "planting"
     const val REFINING = "refining"
+    const val ROCK_GENERATING = "rock_generating"
     const val SIMULATING = "simulating"
     const val SOLIDIFYING = "solidifying"
     const val WASHING = "washing"
+
+    const val INGREDIENT = "ingredient"
+
+    const val RESULT = "result"
+    const val RESULTS = "results"
+    const val ITEM_RESULT = "item_result"
+    const val FLUID_RESULT = "fluid_result"
+
+    const val LUBRICANT_CONSUME = 25
 }

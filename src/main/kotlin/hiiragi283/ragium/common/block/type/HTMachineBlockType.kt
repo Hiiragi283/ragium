@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.collection.AttributeMap
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.common.tier.HTMachineTier
-import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.config.HTMachineConfig
 import java.util.function.Supplier
 
 /**
@@ -32,21 +32,10 @@ class HTMachineBlockType(
     class Builder(blockEntityTypeGetter: Supplier<HTDeferredBlockEntityType<*>>, factory: HTEntityBlockTypeFactory<HTMachineBlockType>) :
         HTEntityBlockType.Builder<HTMachineBlockType, Builder>(blockEntityTypeGetter, factory) {
         /**
-         * 発電機として，ティアを追加します。
+         * 機械として，ティアを追加します。
          */
-        fun addGeneratorTier(tier: HTMachineTier): Builder = addTier(tier)
-            .addEnergy(
-                RagiumConfig.COMMON.energyRate[tier]!!,
-                RagiumConfig.COMMON.energyCapacity[tier]!!,
-            )
-
-        /**
-         * 処理機械として，ティアを追加します。
-         */
-        fun addProcessorTier(tier: HTMachineTier): Builder = addTier(tier)
-            .addEnergy(
-                RagiumConfig.COMMON.energyUsage[tier]!!,
-                RagiumConfig.COMMON.energyCapacity[tier]!!,
-            )
+        fun addMachineTier(tier: HTMachineTier, config: HTMachineConfig): Builder = addTier(tier)
+            .addEnergy(config.rate, config.capacity)
+            .addFluid(config.tankMap)
     }
 }

@@ -28,7 +28,7 @@ object RagiumChemicals {
         }
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            this[data.asMaterialKey()] = REGISTER.register(data.molten.getPath(), data.color)
+            this[data.asMaterialKey()] = REGISTER.register(data.molten.getPath(), data.color.rgb)
         }
     }
 

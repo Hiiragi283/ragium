@@ -4,6 +4,7 @@ import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.api.crafting.IngredientWithSize
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles
 import blusunrize.immersiveengineering.common.register.IEBlocks
+import blusunrize.immersiveengineering.common.register.IEItems
 import blusunrize.immersiveengineering.data.recipes.builder.AlloyRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.ArcFurnaceRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.BaseHelpers
@@ -15,11 +16,13 @@ import blusunrize.immersiveengineering.data.recipes.builder.SqueezerRecipeBuilde
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemWithFluidToChancedItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import net.minecraft.tags.ItemTags
@@ -36,19 +39,21 @@ import net.neoforged.neoforge.fluids.FluidStack
 object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.IMMERSIVE) {
     override fun buildRecipeInternal() {
         // Treated Planks
-        HTItemWithFluidToChancedItemRecipeBuilder
-            .washing(
-                itemCreator.fromTagKey(ItemTags.PLANKS),
-                fluidCreator.fromTagKey(IETags.fluidCreosote, 125),
-            ).addResult(resultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!))
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromTagKey(ItemTags.PLANKS))
+            .addIngredient(fluidCreator.fromTagKey(IETags.fluidCreosote, 125))
+            .setResult(resultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!))
             .save(output)
         // Redstone Acid
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE))
             .addIngredient(fluidCreator.water(1000))
             .setResult(resultHelper.fluid(IETags.fluidRedstoneAcid, 1000))
             .save(output)
+        // Hemp Fiber
+        cropAndSeed(IEItems.Misc.HEMP_SEEDS, IEItems.Ingredients.HEMP_FIBER)
 
         alloy()
         crush()
@@ -70,7 +75,6 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL)
 
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
-        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
     }
 
     @JvmStatic
@@ -83,24 +87,44 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
 
     @JvmStatic
     private fun molten() {
-        // Crimson
-        squeezeFromData(RagiumMaterialRecipeData.CRIMSON_SAP)
-        refineFromData(RagiumMaterialRecipeData.CRIMSON_BLOOD)
-        bottleFromData(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
-        // Warped
-        squeezeFromData(RagiumMaterialRecipeData.WARPED_SAP)
-        refineFromData(RagiumMaterialRecipeData.DEW_OF_THE_WARP)
-        bottleFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)
+        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
+            val base: TagKey<Item>? = data.base
+            val sap: HTBasicFluidContent? = data.sap
+            // Base -> Sap
+            if (base != null && sap != null) {
+                SqueezerRecipeBuilder
+                    .builder()
+                    .output(sap.getFluid(), RagiumConst.LOG_TO_SAP)
+                    .input(base)
+                    .setEnergy(6400)
+                    .build(output, sap.getIdWithPrefix("squeezing/"))
+            }
+            // Sap -> Molten
+            val molten: HTBasicFluidContent = data.molten
+            if (sap != null) {
+                RefineryRecipeBuilder
+                    .builder()
+                    .input(sap.getFluidTag(), 1000)
+                    .output(molten.getFluid(), RagiumConst.SAP_TO_MOLTEN)
+                    .build(output, molten.getIdWithPrefix("${RagiumConst.MIXING}/"))
+            }
+            // Molten -> Gem
+            val gemTag: TagKey<Item> = CommonMaterialPrefixes.GEM.itemTagKey(data)
+            BottlingMachineRecipeBuilder
+                .builder()
+                .fluidInput(molten.getFluidTag(), 1000)
+                .input(HTMoldType.GEM)
+                .output(gemTag)
+                .build(output, gemTag.location().withPrefix("bottling/"))
+        }
         // Eldritch
-        mixFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_CRIMSON)
-        mixFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_WARPED)
-        bottleFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
+        mixerFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_CRIMSON)
+        mixerFromData(RagiumMaterialRecipeData.ELDRITCH_FLUX_WARPED)
     }
 
     @JvmStatic
     private fun misc() {
         bottleFromData(FoodMaterialRecipeData.CHOCOLATE_INGOT)
-        bottleFromData(FoodMaterialRecipeData.RAW_MEAT_INGOT)
     }
 
     //    Extension    //
@@ -205,7 +229,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
     }
 
     @JvmStatic
-    private fun mixFromData(data: HTRecipeData) {
+    private fun mixerFromData(data: HTRecipeData) {
         val builder: MixerRecipeBuilder = MixerRecipeBuilder.builder()
         // Inputs
         data.addFluidInput(0, builder::fluidInput)
@@ -216,25 +240,5 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         val fluidOutput: FluidStack = data.getFluidStacks()[0]
         builder.output(fluidOutput.fluid, fluidOutput.amount)
         builder.build(output, data.getModifiedId().withPrefix("${RagiumConst.REFINING}/"))
-    }
-
-    @JvmStatic
-    private fun refineFromData(data: HTRecipeData) {
-        RefineryRecipeBuilder
-            .builder()
-            .input(data.getSizedFluidIngredients()[0])
-            .input(data.getSizedFluidIngredients().getOrNull(1))
-            .output(data.getFluidStacks()[0])
-            .build(output, data.getModifiedId().withPrefix("${RagiumConst.MIXING}/"))
-    }
-
-    @JvmStatic
-    private fun squeezeFromData(data: HTRecipeData, energy: Int = 6400) {
-        SqueezerRecipeBuilder
-            .builder()
-            .output(data.getFluidStacks()[0])
-            .input(data.getSizedItemIngredients()[0])
-            .setEnergy(energy)
-            .build(output, data.getModifiedId().withPrefix("squeezing/"))
     }
 }

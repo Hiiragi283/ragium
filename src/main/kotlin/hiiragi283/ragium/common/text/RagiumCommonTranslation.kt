@@ -13,8 +13,15 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     WARPED_WART("description", "warped_wart"),
     EXP_BERRIES("description", "exp_berries"),
 
+    QUARTZ_GLASS("description", "quartz_glass"),
+    OBSIDIAN_GLASS("description", "obsidian_glass"),
+    CRIMSON_GLASS("description", "crimson_crystal_glass"),
+    WARPED_GLASS("description", "warped_crystal_glass"),
+
     // Blocks - Generators
     THERMAL_GENERATOR("description", "thermal_generator"),
+    CULINARY_GENERATOR("description", "culinary_generator"),
+    MAGMATIC_GENERATOR("description", "magmatic_generator"),
     COMBUSTION_GENERATOR("description", "combustion_generator"),
     SOLAR_PANEL_UNIT("description", "solar_panel_unit"),
     SOLAR_PANEL_CONTROLLER("description", "solar_panel_controller"),
@@ -26,6 +33,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     BLOCK_BREAKER("description", "block_breaker"),
     CUTTING_MACHINE("description", "cutting_machine"),
     COMPRESSOR("description", "compressor"),
+    ELECTRIC_FURNACE("description", "electric_smelter"),
     EXTRACTOR("description", "extractor"),
     PULVERIZER("description", "pulverizer"),
 
@@ -33,15 +41,22 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     MELTER("description", "melter"),
     MIXER("description", "mixer"),
     REFINERY("description", "refinery"),
-    WASHER("description", "washer"),
 
     BREWERY("description", "brewery"),
     MULTI_SMELTER("description", "multi_smelter"),
     PLANTER("description", "planter"),
+
+    ENCHANTER("description", "enchanter"),
+    MOB_CRUSHER("description", "mob_crusher"),
     SIMULATOR("description", "simulator"),
 
     // Blocks - Devices
-    MOB_CAPTURER("description", "mob_capturer"),
+    FLUID_COLLECTOR("description", "water_collector"),
+    ITEM_COLLECTOR("description", "item_collector"),
+
+    DIM_ANCHOR("description", "dimensional_anchor"),
+    ENI("description", "energy_network_interface"),
+
     CEU("description", "creative_energy_unit"),
 
     // Blocks - Storages
@@ -51,15 +66,14 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     DRUM("description", "drum"),
     EXP_DRUM("description", "experience_drum"),
 
+    // Config
+    CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),
+    CONFIG_ENERGY_RATE("config", "energy_rate"),
+
     // Command
     COMMAND_ENERGY_ADD("command", "energy_network.add"),
     COMMAND_ENERGY_GET("command", "energy_network.get"),
     COMMAND_ENERGY_SET("command", "energy_network.set"),
-
-    // Creative Mode Tab
-    CREATIVE_TAB_BLOCKS("itemGroup", "blocks"),
-    CREATIVE_TAB_INGREDIENTS("itemGroup", "ingredients"),
-    CREATIVE_TAB_ITEMS("itemGroup", "items"),
 
     // Error
     NO_DESTINATION("error", "no_destination"),
@@ -68,9 +82,16 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
 
     // Items - Materials
     ELDER_HEART("description", "elder_heart"),
+    IRIDESCENT_POWDER("description", "iridescent_powder"),
 
     // Items - Tools
     BLAST_CHARGE("description", "blast_charge"),
+    STRIKE_CHARGE("description", "strike_charge"),
+    NEUTRAL_CHARGE("description", "neutral_charge"),
+    FISHING_CHARGE("description", "fishing_charge"),
+    TELEPORT_CHARGE("description", "teleport_charge"),
+    CONFUSING_CHARGE("description", "confusion_charge"),
+
     DYNAMIC_LANTERN("description", "dynamic_lantern"),
     ELDRITCH_EGG("description", "eldritch_heart"),
     MAGNET("description", "magnet"),
@@ -81,6 +102,24 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     AMBROSIA("description", "ambrosia"),
     ICE_CREAM("description", "ice_cream"),
     RAGI_CHERRY("description", "ragi_cherry"),
+
+    // Items - Upgrades
+    EFFICIENT_CRUSH_UPGRADE("description", "upgrade", "efficient_crush"),
+    PRIMARY_ONLY_UPGRADE("description", "upgrade", "primary_only"),
+
+    EXP_COLLECTOR_UPGRADE("description", "upgrade", "exp_collector"),
+    FISHING_UPGRADE("description", "upgrade", "fishing"),
+    MOB_CAPTURE_UPGRADE("description", "upgrade", "mob_capture"),
+
+    // Key Mapping
+    KEY_CATEGORY("key", "category"),
+    KEY_OPEN_UNIVERSAL_BUNDLE("key", "open_universal_bundle"),
+
+    // EMI
+    EMI_MACHINE_UPGRADE("emi.category", "machine_upgrade"),
+
+    // Jade
+    JADE_MACHINE_TIER("jade", "machine_tier"),
     ;
 
     override val translationKey: String = Util.makeDescriptionId(type, RagiumAPI.id(path.joinToString(separator = ".")))

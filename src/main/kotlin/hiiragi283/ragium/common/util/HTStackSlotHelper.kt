@@ -1,13 +1,9 @@
 package hiiragi283.ragium.common.util
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.ImmutableStack
-import hiiragi283.ragium.api.stack.getCraftingRemainingItem
-import hiiragi283.ragium.api.stack.hasCraftingRemainingItem
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTAmountView
 import hiiragi283.ragium.api.storage.HTStackSlot
@@ -18,13 +14,15 @@ import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidHandlerItemWrapper
+import net.minecraft.core.HolderLookup
 import net.minecraft.util.Mth
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeInput
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.redstone.Redstone
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
-import java.util.Optional
 import java.util.function.Consumer
 import java.util.function.ToIntFunction
 
@@ -52,6 +50,26 @@ object HTStackSlotHelper {
     }
 
     @JvmStatic
+    fun <STACK : ImmutableStack<*, STACK>> canInsertStack(slot: HTStackSlot<STACK>, stack: STACK, exactMatch: Boolean): Boolean {
+        val remainder: STACK? = slot.insert(stack, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)
+        return when (exactMatch) {
+            true -> remainder == null
+            false -> remainder == null || remainder.amount() < stack.amount()
+        }
+    }
+
+    @JvmStatic
+    fun <STACK : ImmutableStack<*, STACK>, INPUT : RecipeInput> canInsertStack(
+        slot: HTStackSlot<STACK>,
+        input: INPUT,
+        level: Level,
+        transform: (INPUT, HolderLookup.Provider) -> STACK?,
+    ): Boolean {
+        val stack: STACK = transform(input, level.registryAccess()) ?: return true
+        return canInsertStack(slot, stack, true)
+    }
+
+    @JvmStatic
     fun <STACK : ImmutableStack<*, STACK>> shrinkStack(
         slot: HTStackSlot<STACK>,
         ingredient: ToIntFunction<STACK>,
@@ -59,6 +77,29 @@ object HTStackSlotHelper {
     ): Int {
         val stackIn: STACK = slot.getStack() ?: return 0
         return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
+    }
+
+    @JvmStatic
+    fun <STACK : ImmutableStack<*, STACK>> canShrinkStack(slot: HTStackSlot<STACK>, amount: Int, exactMatch: Boolean): Boolean {
+        val extracted: Int = slot.extract(amount, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount() ?: return false
+        return when (exactMatch) {
+            true -> extracted == amount
+            false -> extracted > 0
+        }
+    }
+
+    @JvmStatic
+    fun <STACK : ImmutableStack<*, STACK>> canShrinkStack(
+        slot: HTStackSlot<STACK>,
+        ingredient: ToIntFunction<STACK>,
+        exactMatch: Boolean,
+    ): Boolean {
+        val amount: Int = slot.getStack()?.let(ingredient::applyAsInt) ?: return false
+        val extracted: Int = slot.extract(amount, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)?.amount() ?: return false
+        return when (exactMatch) {
+            true -> extracted == amount
+            false -> extracted > 0
+        }
     }
 
     /**
@@ -95,42 +136,22 @@ object HTStackSlotHelper {
     //    Item    //
 
     @JvmStatic
-    fun shrinkItemStack(
+    inline fun shrinkItemStack(
         slot: HTItemSlot,
-        stackSetter: Consumer<ImmutableItemStack?>,
+        remainderGetter: (ImmutableItemStack) -> ItemStack,
+        stackSetter: (ImmutableItemStack) -> Unit,
         ingredient: ToIntFunction<ImmutableItemStack>,
         action: HTStorageAction,
     ): Int {
         val stackIn: ImmutableItemStack = slot.getStack() ?: return 0
-        if (stackIn.hasCraftingRemainingItem() && stackIn.amount() == 1) {
-            if (action.execute) {
-                stackSetter.accept(stackIn.getCraftingRemainingItem())
-            }
-            return 0
-        } else {
-            return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
+        if (action.execute) {
+            stackIn
+                .let(remainderGetter)
+                .let(ItemStack::toImmutable)
+                ?.let(stackSetter)
         }
+        return slot.extract(ingredient.applyAsInt(stackIn), action, HTStorageAccess.INTERNAL)?.amount() ?: 0
     }
-
-    /**
-     * 指定された[ingredient]から，現在の個数を削除します。
-     * @param ingredient 削除する個数を提供する材料
-     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
-     * @return 実際に削除された個数
-     */
-    @JvmStatic
-    fun shrinkStack(slot: HTItemSlot, ingredient: HTItemIngredient, action: HTStorageAction): Int =
-        shrinkStack(slot, ingredient::getRequiredAmount, action)
-
-    /**
-     * 指定された[ingredient]から，現在の個数を削除します。
-     * @param ingredient 削除する個数を提供する材料
-     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
-     * @return [Optional.isEmpty]の場合は`0`，それ以外は実際に削除された個数
-     */
-    @JvmStatic
-    fun shrinkStack(slot: HTItemSlot, ingredient: Optional<HTItemIngredient>, action: HTStorageAction): Int =
-        ingredient.map { ingredient1 -> shrinkStack(slot, ingredient1, action) }.orElse(0)
 
     @JvmStatic
     fun insertStacks(
@@ -154,26 +175,6 @@ object HTStackSlotHelper {
     }
 
     //    Fluid    //
-
-    /**
-     * 指定された[ingredient]から，現在の数量を削除します。
-     * @param ingredient 削除する数量を提供する材料
-     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
-     * @return 実際に削除された数量
-     */
-    @JvmStatic
-    fun shrinkStack(tank: HTFluidTank, ingredient: HTFluidIngredient, action: HTStorageAction): Int =
-        shrinkStack(tank, ingredient::getRequiredAmount, action)
-
-    /**
-     * 指定された[ingredient]から，現在の数量を削除します。
-     * @param ingredient 削除する数量を提供する材料
-     * @param action [HTStorageAction.EXECUTE]の場合のみ実際に削除を行います。
-     * @return [Optional.isEmpty]の場合は`0`，それ以外は実際に削除された数量
-     */
-    @JvmStatic
-    fun shrinkStack(tank: HTFluidTank, ingredient: Optional<HTFluidIngredient>, action: HTStorageAction): Int =
-        ingredient.map { ingredient1 -> shrinkStack(tank, ingredient1, action) }.orElse(0)
 
     /**
      * @see net.neoforged.neoforge.fluids.FluidUtil.interactWithFluidHandler

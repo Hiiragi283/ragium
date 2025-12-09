@@ -7,6 +7,7 @@ import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntityType
 
 object RagiumModTags {
     //    Blocks    //
@@ -27,11 +28,37 @@ object RagiumModTags {
         @JvmField
         val RESONANT_DEBRIS_REPLACEABLES: TagKey<Block> = create("deepslate_ore_replaceables")
 
-        @JvmField
-        val WIP: TagKey<Block> = create("work_in_progress")
-
         @JvmStatic
         private fun create(path: String): TagKey<Block> = Registries.BLOCK.createTagKey(RagiumAPI.id(path))
+    }
+
+    //    BlockEntityTypes    //
+
+    object BlockEntityTypes {
+        @JvmField
+        val MACHINES: TagKey<BlockEntityType<*>> = create("machines")
+
+        @JvmField
+        val MACHINES_ELECTRIC: TagKey<BlockEntityType<*>> = create("machines", "electric")
+
+        @JvmField
+        val GENERATORS: TagKey<BlockEntityType<*>> = create("machines", "generator")
+
+        @JvmField
+        val PROCESSORS: TagKey<BlockEntityType<*>> = create("machines", "processors")
+
+        @JvmField
+        val DEVICES: TagKey<BlockEntityType<*>> = create("machines", "devices")
+
+        // Specific
+        @JvmField
+        val EFFICIENT_CRUSH_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "efficient_crush")
+
+        @JvmField
+        val EXTRA_OUTPUT_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "extra_output")
+
+        @JvmStatic
+        private fun create(vararg path: String): TagKey<BlockEntityType<*>> = Registries.BLOCK_ENTITY_TYPE.createTagKey(RagiumAPI.id(*path))
     }
 
     //    DamageTypes    //
@@ -51,6 +78,9 @@ object RagiumModTags {
         val CAPTURE_BLACKLIST: TagKey<EntityType<*>> = create("capture_blacklist")
 
         @JvmField
+        val CONFUSION_BLACKLIST: TagKey<EntityType<*>> = create("confusion_blacklist")
+
+        @JvmField
         val GENERATE_RESONANT_DEBRIS: TagKey<EntityType<*>> = create("generate_resonant_debris")
 
         @JvmField
@@ -66,10 +96,10 @@ object RagiumModTags {
 
     object Items {
         @JvmField
-        val BUDDING_AZURE_ACTIVATOR: TagKey<Item> = create("budding_azure_activator")
+        val BYPASS_MENU_VALIDATION: TagKey<Item> = create("bypass_menu_validation")
 
         @JvmField
-        val BYPASS_MENU_VALIDATION: TagKey<Item> = create("bypass_menu_validation")
+        val DISABLE_ACCESSORY_EQUIP: TagKey<Item> = create("disable_accessory_equip")
 
         @JvmField
         val ELDRITCH_PEARL_BINDER: TagKey<Item> = create("eldritch_pearl_binder")
@@ -84,6 +114,9 @@ object RagiumModTags {
         val LED_BLOCKS: TagKey<Item> = create("led_blocks")
 
         @JvmField
+        val MOLDS: TagKey<Item> = create("molds")
+
+        @JvmField
         val PLASTICS: TagKey<Item> = create("plastics")
 
         @JvmField
@@ -91,9 +124,6 @@ object RagiumModTags {
 
         @JvmField
         val RAW_MEAT: TagKey<Item> = create("raw_meat")
-
-        @JvmField
-        val WIP: TagKey<Item> = create("work_in_progress")
 
         // Enchantments
         @JvmField
@@ -111,6 +141,13 @@ object RagiumModTags {
 
         @JvmField
         val ALLOY_SMELTER_FLUXES_ADVANCED: TagKey<Item> = create("alloy_smelter_fluxes", "advanced")
+
+        // Soils
+        @JvmField
+        val SOILS_DIRT: TagKey<Item> = create("soils", "dirt")
+
+        @JvmField
+        val SOILS_AQUATIC: TagKey<Item> = create("soils", "aquatic")
 
         // Tools
         @JvmField

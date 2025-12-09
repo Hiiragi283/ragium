@@ -4,13 +4,14 @@ import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.function.andThen
+import hiiragi283.ragium.api.function.identity
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.util.Ior
@@ -189,7 +190,7 @@ data class HTRecipeData private constructor(
                 .mapLeft(::listOf)
                 .mapRight(::listOf)
                 .unwrap()
-                .map({ it }, { (_, tagKeys: List<TagKey<T>>) -> Either.right(tagKeys) }),
+                .map(identity()) { (_, tagKeys: List<TagKey<T>>) -> Either.right(tagKeys) },
             amount,
         )
     }
@@ -220,24 +221,24 @@ data class HTRecipeData private constructor(
 
         fun fuelOrDust(material: HTMaterialLike, count: Int = 1): Builder = addInput(
             listOf(
-                CommonMaterialPrefixes.DUST.itemTagKey(material),
                 CommonMaterialPrefixes.FUEL.itemTagKey(material),
+                CommonMaterialPrefixes.DUST.itemTagKey(material),
             ),
             count,
         )
 
         fun gemOrDust(material: HTMaterialLike, count: Int = 1): Builder = addInput(
             listOf(
-                CommonMaterialPrefixes.DUST.itemTagKey(material),
                 CommonMaterialPrefixes.GEM.itemTagKey(material),
+                CommonMaterialPrefixes.DUST.itemTagKey(material),
             ),
             count,
         )
 
         fun ingotOrDust(material: HTMaterialLike, count: Int = 1): Builder = addInput(
             listOf(
-                CommonMaterialPrefixes.DUST.itemTagKey(material),
                 CommonMaterialPrefixes.INGOT.itemTagKey(material),
+                CommonMaterialPrefixes.DUST.itemTagKey(material),
             ),
             count,
         )
@@ -246,7 +247,7 @@ data class HTRecipeData private constructor(
             fluidInputs.add(InputEntry.types(listOf(fluid), amount = amount))
         }
 
-        fun addInput(content: HTFluidContent<*, *, *>, amount: Int): Builder = addInput(content.commonTag, amount)
+        fun addInput(holder: HTFluidHolderLike, amount: Int): Builder = addInput(holder.getFluidTag(), amount)
 
         fun addInput(tagKey: TagKey<Fluid>, amount: Int): Builder = apply {
             fluidInputs.add(InputEntry.tagKeys(listOf(tagKey), amount = amount))
@@ -293,7 +294,7 @@ data class HTRecipeData private constructor(
             itemOutputs.add(OutputEntry(entry, count, chance))
         }
 
-        fun addOutput(content: HTFluidContent<*, *, *>, amount: Int): Builder = addOutput(content.get(), content.commonTag, amount)
+        fun addOutput(holder: HTFluidHolderLike, amount: Int): Builder = addOutput(holder.getFluid(), holder.getFluidTag(), amount)
 
         fun addOutput(fluid: Fluid?, tagKey: TagKey<Fluid>?, amount: Int): Builder = apply {
             val entry: Ior<Fluid, TagKey<Fluid>> = if (fluid != null) {

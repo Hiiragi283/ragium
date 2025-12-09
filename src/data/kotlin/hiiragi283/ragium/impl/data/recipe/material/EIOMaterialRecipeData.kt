@@ -11,6 +11,8 @@ import net.minecraft.tags.ItemTags
 import net.neoforged.neoforge.common.Tags
 
 data object EIOMaterialRecipeData {
+    //    Metal    //
+
     @JvmField
     val CONDUCTIVE_ALLOY: HTRecipeData = HTRecipeData.create {
         ingotOrDust(ModMaterialKeys.Alloys.COPPER_ALLOY)
@@ -104,5 +106,23 @@ data object EIOMaterialRecipeData {
         addInput(Tags.Items.ENDER_PEARLS)
 
         addOutput(EIOItems.VIBRANT_ALLOY_INGOT, CommonMaterialPrefixes.INGOT, ModMaterialKeys.Alloys.VIBRANT_ALLOY)
+    }
+
+    //    Gem    //
+
+    @JvmField
+    val PULSATING_CRYSTAL: HTRecipeData = HTRecipeData.create {
+        gemOrDust(VanillaMaterialKeys.DIAMOND)
+        ingotOrDust(ModMaterialKeys.Alloys.PULSATING_ALLOY)
+
+        addOutput(EIOItems.PULSATING_CRYSTAL, CommonMaterialPrefixes.GEM, ModMaterialKeys.Gems.PULSATING_CRYSTAL)
+    }
+
+    @JvmField
+    val VIBRANT_CRYSTAL: HTRecipeData = HTRecipeData.create {
+        gemOrDust(VanillaMaterialKeys.EMERALD)
+        ingotOrDust(ModMaterialKeys.Alloys.VIBRANT_ALLOY)
+
+        addOutput(EIOItems.VIBRANT_CRYSTAL, CommonMaterialPrefixes.GEM, ModMaterialKeys.Gems.VIBRANT_CRYSTAL)
     }
 }

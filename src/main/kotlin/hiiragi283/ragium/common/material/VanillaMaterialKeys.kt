@@ -56,12 +56,6 @@ object VanillaMaterialKeys {
     val GLOWSTONE: HTMaterialKey = HTMaterialKey.of("glowstone")
 
     @JvmStatic
-    val SOUL: HTMaterialKey = HTMaterialKey.of("soul")
-
-    @JvmStatic
-    val BLACKSTONE: HTMaterialKey = HTMaterialKey.of("blackstone")
-
-    @JvmStatic
     val OBSIDIAN: HTMaterialKey = HTMaterialKey.of("obsidian")
 
     @JvmStatic
@@ -108,6 +102,8 @@ object VanillaMaterialKeys {
         this[VanillaToolVariant.AXE, IRON] = Items.IRON_AXE
         this[VanillaToolVariant.HOE, IRON] = Items.IRON_HOE
         this[VanillaToolVariant.SWORD, IRON] = Items.IRON_SWORD
+
+        this[VanillaToolVariant.SHEARS, IRON] = Items.SHEARS
         // Golden
         this[VanillaToolVariant.SHOVEL, GOLD] = Items.GOLDEN_SHOVEL
         this[VanillaToolVariant.PICKAXE, GOLD] = Items.GOLDEN_PICKAXE

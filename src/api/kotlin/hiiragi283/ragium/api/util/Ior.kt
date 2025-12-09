@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.util
 
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.function.identity
 
 sealed class Ior<A, B> {
     fun isLeft(): Boolean = this is Left<A, B>
@@ -53,12 +54,12 @@ sealed class Ior<A, B> {
 
     fun getRight(): B? = fold(
         { null },
-        { it },
+        identity(),
         { _: A, right: B -> right },
     )
 
     fun getLeft(): A? = fold(
-        { it },
+        identity(),
         { null },
         { left: A, _: B -> left },
     )

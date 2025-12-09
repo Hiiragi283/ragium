@@ -2,12 +2,15 @@ package hiiragi283.ragium.client.integration.emi
 
 import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.widget.Bounds
-import hiiragi283.ragium.api.gui.component.HTFluidWidget
+import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.resources.ResourceLocation
 
 object RagiumEmiTextures {
     @JvmField
-    val TANK: EmiTexture = create(HTFluidWidget.TANK_ID, 0, 0, 18, 54)
+    val TANK: EmiTexture = create(RagiumAPI.id("textures", "gui", "tank.png"), 0, 0, 18, 54)
+
+    @JvmField
+    val ENERGY_GAUGE: EmiTexture = create(RagiumAPI.id("textures", "gui", "energy_gauge.png"), 0, 0, 18, 54)
 
     @JvmStatic
     fun create(

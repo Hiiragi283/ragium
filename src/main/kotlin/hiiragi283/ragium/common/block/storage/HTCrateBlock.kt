@@ -1,14 +1,14 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
-import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.HTTypedEntityBlock
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTPlayerHandSlot
 import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.util.HTItemDropHelper
@@ -34,7 +34,7 @@ class HTCrateBlock(tier: HTCrateTier, properties: Properties) : HTTypedEntityBlo
         hitResult: BlockHitResult,
     ): ItemInteractionResult {
         val crate: HTCrateBlockEntity = level.getTypedBlockEntity(pos) ?: return ItemInteractionResult.FAIL
-        val slot: HTItemStackSlot = crate.slot
+        val slot: HTBasicItemSlot = crate.slot
         val handSlot = HTPlayerHandSlot(player, hand)
         // プレイヤーがアイテムを持っている場合
         val stackInHand: ImmutableItemStack? = handSlot.getStack()
@@ -71,7 +71,7 @@ class HTCrateBlock(tier: HTCrateTier, properties: Properties) : HTTypedEntityBlo
     ) {
         super.attack(state, level, pos, player)
         val crate: HTCrateBlockEntity = level.getTypedBlockEntity(pos) ?: return
-        val slot: HTItemStackSlot = crate.slot
+        val slot: HTBasicItemSlot = crate.slot
         val toExtract: Int = if (player.isShiftKeyDown) {
             slot.getStack()?.maxStackSize() ?: return
         } else {

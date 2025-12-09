@@ -4,9 +4,10 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
-import hiiragi283.ragium.api.inventory.HTMenuCallback
+import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
@@ -18,12 +19,13 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.inventory.HTMenuCallback
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.common.inventory.slot.HTFluidSyncSlot
 import hiiragi283.ragium.common.inventory.slot.HTIntSyncSlot
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
-import hiiragi283.ragium.common.storage.fluid.tank.HTFluidStackTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
@@ -48,6 +50,7 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import java.util.UUID
+import java.util.function.Consumer
 
 /**
  * キャパビリティやオーナーを保持する[ExtendedBlockEntity]の拡張クラス
@@ -55,7 +58,7 @@ import java.util.UUID
  */
 abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     ExtendedBlockEntity(
-        (blockHolder.value() as HTBlockWithEntity).getBlockEntityType(),
+        getBlockEntityType(blockHolder),
         pos,
         state,
     ),
@@ -100,6 +103,10 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
                 blockEntity.sendUpdatePacket(serverLevel)
             }
         }
+
+        @JvmStatic
+        fun getBlockEntityType(blockHolder: Holder<Block>): HTDeferredBlockEntityType<*> =
+            (blockHolder.value() as HTBlockWithEntity).getBlockEntityType()
     }
 
     var ticks: Int = 0
@@ -175,7 +182,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         // Fluid Tanks
         if (hasFluidHandler()) {
             for (tank: HTFluidTank in this.getFluidTanks(this.getFluidSideFor())) {
-                if (tank is HTFluidStackTank) {
+                if (tank is HTBasicFluidTank) {
                     menu.track(HTFluidSyncSlot(tank))
                 }
             }
@@ -184,7 +191,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         if (hasEnergyStorage()) {
             val battery: HTEnergyBattery? = this.getEnergyBattery(this.getEnergySideFor())
             if (battery is HTBasicEnergyBattery) {
-                menu.track(HTIntSyncSlot(battery::getAmount, battery::setAmountUnchecked))
+                menu.track(HTIntSyncSlot.create(battery::getAmount, battery::setAmountUnchecked))
             }
         }
     }
@@ -272,7 +279,9 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
 
-    open fun doDropItems(): Boolean = hasItemHandler()
+    open fun collectDrops(consumer: Consumer<ImmutableItemStack>) {
+        getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
+    }
 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(direction)
 }

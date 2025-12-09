@@ -1,18 +1,19 @@
 package hiiragi283.ragium.client.gui.component
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.registry.vanillaId
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.util.Mth
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
+import org.apache.commons.lang3.math.Fraction
 
 @OnlyIn(Dist.CLIENT)
 class HTProgressWidget(
     private val texture: ResourceLocation,
-    private val levelGetter: () -> Float,
+    private val levelGetter: () -> Fraction,
     x: Int,
     y: Int,
     width: Int,
@@ -20,15 +21,15 @@ class HTProgressWidget(
 ) : HTAbstractWidget(x, y, width, height, Component.empty()) {
     companion object {
         @JvmStatic
-        fun arrow(levelGetter: () -> Float, x: Int, y: Int): HTProgressWidget =
+        fun arrow(levelGetter: () -> Fraction, x: Int, y: Int): HTProgressWidget =
             HTProgressWidget(vanillaId("container", "furnace/burn_progress"), levelGetter, x, y, 24, 16)
 
         @JvmStatic
-        fun burn(levelGetter: () -> Float, x: Int, y: Int): HTProgressWidget =
+        fun burn(levelGetter: () -> Fraction, x: Int, y: Int): HTProgressWidget =
             HTProgressWidget(RagiumAPI.id("container", "burn_progress"), levelGetter, x, y, 16, 16)
 
         @JvmStatic
-        fun infuse(levelGetter: () -> Float, x: Int, y: Int): HTProgressWidget =
+        fun infuse(levelGetter: () -> Fraction, x: Int, y: Int): HTProgressWidget =
             HTProgressWidget(RagiumAPI.id("container", "infuse_progress"), levelGetter, x, y, 24, 16)
     }
 
@@ -46,7 +47,7 @@ class HTProgressWidget(
             0,
             x,
             y,
-            Mth.ceil(levelGetter() * width),
+            (levelGetter() * width).toInt(),
             height,
         )
     }

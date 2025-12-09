@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.registry.impl
 
-import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.text.HTHasTranslationKey
@@ -15,11 +15,11 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import kotlin.jvm.optionals.getOrNull
 
 class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
     HTDeferredHolder<RecipeType<*>, RecipeType<RECIPE>>,
-    HTRecipeType.Findable<INPUT, RECIPE>,
+    HTRecipeFinder<INPUT, RECIPE>,
+    HTRecipeType<INPUT, RECIPE>,
     HTHasTranslationKey {
     constructor(key: ResourceKey<RecipeType<*>>) : super(key)
 
@@ -33,12 +33,25 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
         manager: RecipeManager,
         input: INPUT,
         level: Level,
-        lastRecipe: ResourceLocation?,
-    ): RecipeHolder<RECIPE>? = manager.getRecipeFor(get(), input, level, lastRecipe).getOrNull()
-        ?: RagiumPlatform.INSTANCE.getMaterialRecipeManager().getRecipeFor(get(), input, level, lastRecipe)
+        lastRecipe: RecipeHolder<RECIPE>?,
+    ): RecipeHolder<RECIPE>? {
+        // 入力が空の場合は即座に抜ける
+        if (input.isEmpty) return null
+        // キャッシュから判定を行う
+        if (lastRecipe != null && matches(lastRecipe.value, input, level)) {
+            return lastRecipe
+        }
+        // 次にRecipeManagerから行う
+        for (holder: RecipeHolder<RECIPE> in manager.getAllRecipesFor(get())) {
+            if (matches(holder.value, input, level)) {
+                return holder
+            }
+        }
+        return null
+    }
 
-    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = buildList {
-        addAll(manager.getAllRecipesFor(get()))
-        addAll(RagiumPlatform.INSTANCE.getMaterialRecipeManager().getAllRecipes(get()))
-    }.asSequence()
+    override fun getAllHolders(manager: RecipeManager): Sequence<RecipeHolder<out RECIPE>> = manager
+        .getAllRecipesFor(get())
+        .asSequence()
+        .filterNot { holder: RecipeHolder<RECIPE> -> holder.value.isIncomplete }
 }

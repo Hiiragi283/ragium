@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.advancement
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.advancement.HTAdvancementGenerator
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
@@ -10,22 +9,15 @@ import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCriteriaTriggers
-import hiiragi283.ragium.setup.RagiumDelightContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.advancements.critereon.BlockPredicate
 import net.minecraft.advancements.critereon.ConsumeItemTrigger
-import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger
-import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.advancements.critereon.PlayerInteractTrigger
 import net.minecraft.advancements.critereon.PlayerTrigger
 import net.minecraft.core.HolderLookup
-import net.minecraft.world.level.block.Blocks
-import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import java.util.Optional
 
 object RagiumAdvancementGenerator : HTAdvancementGenerator() {
@@ -35,7 +27,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setIcon(RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY))
                 title = RagiumTranslation.RAGIUM.translate()
                 setDescFromKey(RagiumAdvancements.ROOT)
-                backGround = RagiumAPI.id("textures/block/night_metal_block.png")
+                backGround = RagiumAPI.id("textures", "block", "night_metal_block.png")
                 showToast = false
                 showChat = false
             }
@@ -99,7 +91,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 ConsumeItemTrigger.TriggerInstance.usedItem(itemPredicate(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY)),
             )
         }
-        child(RagiumAdvancements.RAGI_CHERRY_TOAST, RagiumAdvancements.RAGI_CHERRY) {
+        /*child(RagiumAdvancements.RAGI_CHERRY_TOAST, RagiumAdvancements.RAGI_CHERRY) {
             display {
                 setIcon(RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK)
                 setTitleFromKey(RagiumAdvancements.RAGI_CHERRY_TOAST)
@@ -108,7 +100,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             }
             hasAnyItem("has_ragi_cherry_toast_block", RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK)
             addConditions(ModLoadedCondition(RagiumConst.FARMERS_DELIGHT))
-        }
+        }*/
         // Advanced
         createSimple(
             RagiumAdvancements.ADV_RAGI_ALLOY,
@@ -158,25 +150,9 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     }
 
     private fun azure() {
-        child(RagiumAdvancements.BUDDING_AZURE, RagiumAdvancements.ROOT) {
-            display {
-                setIcon(RagiumItems.BLUE_KNOWLEDGE)
-                setTitleFromKey(RagiumAdvancements.BUDDING_AZURE)
-                setDescFromKey(RagiumAdvancements.BUDDING_AZURE)
-            }
-            addCriterion(
-                "use_blue_knowledge",
-                ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(
-                    LocationPredicate.Builder
-                        .location()
-                        .setBlock(BlockPredicate.Builder.block().of(Blocks.BUDDING_AMETHYST)),
-                    ItemPredicate.Builder.item().of(RagiumModTags.Items.BUDDING_AZURE_ACTIVATOR),
-                ),
-            )
-        }
         createSimple(
             RagiumAdvancements.AZURE_SHARD,
-            RagiumAdvancements.BUDDING_AZURE,
+            RagiumAdvancements.ALLOY_SMELTER,
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.AZURE,
         )
@@ -193,20 +169,20 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
                 setDescFromKey(RagiumAdvancements.AZURE_GEARS)
                 setGoal()
             }
-            hasAnyItem("has_azure_tool", RagiumItems.TOOLS.columnValues(RagiumMaterialKeys.AZURE_STEEL))
+            hasAnyItem("has_azure_tool", RagiumItems.getToolMap(RagiumMaterialKeys.AZURE_STEEL).values)
         }
 
         createSimple(
-            RagiumAdvancements.SIMULATOR,
+            RagiumAdvancements.MIXER,
             RagiumAdvancements.AZURE_STEEL,
-            RagiumBlocks.SIMULATOR,
+            RagiumBlocks.ADVANCED_MIXER,
         ) { setGoal() }
     }
 
     private fun deep() {
         createSimple(
             RagiumAdvancements.RESONANT_DEBRIS,
-            RagiumAdvancements.SIMULATOR,
+            RagiumAdvancements.AZURE_STEEL,
             RagiumBlocks.RESONANT_DEBRIS,
             RagiumCommonTags.Items.ORES_DEEP_SCRAP,
         )
@@ -239,6 +215,11 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
             CommonMaterialPrefixes.INGOT,
             RagiumMaterialKeys.NIGHT_METAL,
         )
+        createSimple(
+            RagiumAdvancements.SIMULATOR,
+            RagiumAdvancements.NIGHT_METAL,
+            RagiumBlocks.SIMULATOR,
+        ) { setGoal() }
     }
 
     private fun crimson() {
@@ -293,7 +274,7 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
     private fun eldritch() {
         createSimple(
             RagiumAdvancements.ELDRITCH_PEARL,
-            RagiumAdvancements.ALLOY_SMELTER,
+            RagiumAdvancements.MIXER,
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.ELDRITCH_PEARL,
         )
@@ -322,15 +303,14 @@ object RagiumAdvancementGenerator : HTAdvancementGenerator() {
 
     private fun iridescentium() {
         createSimple(
-            RagiumAdvancements.IRIDESCENTIUM,
+            RagiumAdvancements.IRIDESCENT_POWDER,
             RagiumAdvancements.ELDRITCH_PEARL,
-            CommonMaterialPrefixes.INGOT,
-            RagiumMaterialKeys.IRIDESCENTIUM,
+            RagiumItems.IRIDESCENT_POWDER,
         )
         createSimple(
             RagiumAdvancements.ETERNAL_COMPONENT,
-            RagiumAdvancements.IRIDESCENTIUM,
-            RagiumItems.getComponent(HTComponentTier.ETERNAL),
+            RagiumAdvancements.IRIDESCENT_POWDER,
+            RagiumItems.ETERNAL_COMPONENT,
         ) { setChallenge() }
     }
 }

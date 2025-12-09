@@ -1,19 +1,39 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
+import com.enderio.base.api.soul.binding.ingredients.AnySoulBindableIngredient
 import com.enderio.machines.common.blocks.alloy.AlloySmeltingRecipe
 import com.enderio.machines.common.blocks.sag_mill.SagMillingRecipe
+import com.enderio.machines.common.blocks.soul_binder.SoulBindingRecipe
 import com.enderio.machines.common.blocks.vat.FermentingRecipe
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
+import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import java.util.Optional
 
 object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MACHINES) {
     override fun buildRecipeInternal() {
+        // Soul Binding for Imitation Spawner
+        save(
+            RagiumAPI.id("soulbinding/imitation_spawner"),
+            SoulBindingRecipe(
+                RagiumBlocks.IMITATION_SPAWNER.toStack(),
+                AnySoulBindableIngredient.of(RagiumBlocks.IMITATION_SPAWNER),
+                288000,
+                8,
+                Optional.empty(),
+                Optional.empty(),
+                Optional.empty(),
+                false,
+            ),
+        )
+
         alloys()
         sagMill()
         fermenting()
@@ -31,7 +51,6 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL, 5600)
 
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL, 4800)
-        alloyFromData(RagiumMaterialRecipeData.IRIDESCENTIUM, 6400)
     }
 
     @JvmStatic
@@ -54,8 +73,6 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
         // Vanilla
         sagMillFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
         sagMillFromData(VanillaMaterialRecipeData.ECHO_DUST)
-
-        sagMillFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
         // Ragium
         sagMillFromData(RagiumMaterialRecipeData.RAGINITE_ORE)
 

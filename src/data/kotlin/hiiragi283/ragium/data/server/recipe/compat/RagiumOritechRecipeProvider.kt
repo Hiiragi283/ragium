@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
@@ -60,17 +61,19 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .export(output, RagiumMaterialKeys.ELDRITCH_PEARL)
 
         atomicFromData(RagiumMaterialRecipeData.NIGHT_METAL)
-        atomicFromData(RagiumMaterialRecipeData.IRIDESCENTIUM)
     }
 
     @JvmStatic
     private fun cooler() {
         coolerFromData(FoodMaterialRecipeData.CHOCOLATE_INGOT)
-        coolerFromData(FoodMaterialRecipeData.RAW_MEAT_INGOT)
 
-        coolerFromData(RagiumMaterialRecipeData.CRIMSON_CRYSTAL)
-        coolerFromData(RagiumMaterialRecipeData.WARPED_CRYSTAL)
-        coolerFromData(RagiumMaterialRecipeData.ELDRITCH_PEARL)
+        for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
+            CoolerRecipeBuilder
+                .build()
+                .fluidInput(data.molten.getFluidTag())
+                .result(RagiumItems.getGem(data))
+                .export(output, data)
+        }
     }
 
     @JvmStatic
@@ -97,7 +100,7 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
     private fun particle() {
         ParticleCollisionRecipeBuilder
             .build()
-            .input(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN)
+            .input(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO)
             .input(Items.DEEPSLATE)
             .result(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL))
             .time(2500)
@@ -109,7 +112,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         // Vanilla
         pulverizerFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
         pulverizerFromData(VanillaMaterialRecipeData.ECHO_DUST)
-        pulverizerFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
         // Ragium
         pulverizerFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
         pulverizerFromData(RagiumMaterialRecipeData.CRIMSON_ORE)

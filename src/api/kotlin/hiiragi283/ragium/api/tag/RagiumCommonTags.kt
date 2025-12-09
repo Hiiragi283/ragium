@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.material.Fluid
 
 object RagiumCommonTags {
     //    Blocks    //
@@ -22,6 +23,19 @@ object RagiumCommonTags {
         private fun create(prefix: String, value: String): TagKey<Block> = Registries.BLOCK.createCommonTag(prefix, value)
     }
 
+    //    Fluids    //
+
+    object Fluids {
+        @JvmField
+        val BIODIESEL: TagKey<Fluid> = create("biodiesel")
+
+        @JvmField
+        val DIESEL: TagKey<Fluid> = create("diesel")
+
+        @JvmStatic
+        private fun create(path: String): TagKey<Fluid> = Registries.FLUID.createCommonTag(path)
+    }
+
     //    Items    //
 
     object Items {
@@ -29,13 +43,13 @@ object RagiumCommonTags {
         val COAL_COKE: TagKey<Item> = create("coal_coke")
 
         @JvmField
-        val BREAD_SLICES_WHEAT: TagKey<Item> = create("bread_slices/wheat")
+        val CIRCUITS_BASIC: TagKey<Item> = create("circuits", "basic")
 
         @JvmField
-        val FUELS_BIO: TagKey<Item> = create("fuels/bio")
+        val CIRCUITS_ADVANCED: TagKey<Item> = create("circuits", "advanced")
 
         @JvmField
-        val FUELS_BIO_BLOCK: TagKey<Item> = create("fuels/block/bio")
+        val FOODS_DOUGH: TagKey<Item> = create("foods", "dough")
 
         @JvmField
         val ORES_IN_GROUND_END_STONE: TagKey<Item> = create("ores_in_ground", "end_stone")

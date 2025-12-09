@@ -15,7 +15,7 @@ public abstract class ItemMixin {
     private void ragium$isValidRepairItem(ItemStack stack, ItemStack repairCandidate, CallbackInfoReturnable<Boolean> cir) {
         var repairable = stack.get(RagiumDataComponents.REPAIRABLE);
         if (repairable != null) {
-            cir.setReturnValue(repairable.getItems().contains(repairCandidate.getItemHolder()));
+            cir.setReturnValue(repairable.test(repairCandidate));
         }
     }
 }

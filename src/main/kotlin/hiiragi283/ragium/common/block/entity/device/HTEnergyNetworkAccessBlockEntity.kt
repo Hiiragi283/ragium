@@ -1,18 +1,18 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.energy.HTEnergyCache
 import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTEnergyItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTEnergyItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
@@ -34,19 +34,19 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
 
     protected abstract fun createBattery(listener: HTContentListener): HTEnergyBattery
 
-    private lateinit var fillSlot: HTEnergyItemStackSlot
-    private lateinit var drainSlot: HTEnergyItemStackSlot
+    private lateinit var fillSlot: HTEnergyItemSlot
+    private lateinit var drainSlot: HTEnergyItemSlot
 
     final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // extract
         fillSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
-            HTEnergyItemStackSlot.fill(this.battery, listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1)),
+            HTEnergyItemSlot.fill(this.battery, listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1)),
         )
         // insert
         drainSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
-            HTEnergyItemStackSlot.drain(this.battery, listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1)),
+            HTEnergyItemSlot.drain(this.battery, listener, HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(1)),
         )
     }
 
@@ -80,11 +80,11 @@ sealed class HTEnergyNetworkAccessBlockEntity(blockHolder: Holder<Block>, pos: B
 
         override val transferRate: Int = Int.MAX_VALUE
 
-        override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+        override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
             for (direction: Direction in Direction.entries) {
                 energyCache.getBattery(level, pos, direction)?.insert(Int.MAX_VALUE, HTStorageAction.EXECUTE, HTStorageAccess.EXTERNAL)
             }
-            return super.onUpdateServer(level, pos, state)
+            return super.onUpdateMachine(level, pos, state)
         }
     }
 

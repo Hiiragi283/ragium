@@ -1,8 +1,7 @@
 package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
-import hiiragi283.ragium.api.data.registry.HTSolarPower
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
@@ -55,7 +54,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         eventBus.addListener(::registerDataPackRegistries)
         eventBus.addListener(RagiumChunkLoader::registerController)
 
-        RagiumDataComponents.REGISTER.register(eventBus)
+        RagiumDataComponents.init(eventBus)
         RagiumEnchantmentComponents.REGISTER.register(eventBus)
 
         RagiumFluidContents.REGISTER.init(eventBus)
@@ -65,7 +64,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
         RagiumAttachmentTypes.REGISTER.register(eventBus)
         RagiumBlockEntityTypes.init(eventBus)
-        RagiumCreativeTabs.init(eventBus)
+        RagiumCreativeTabs.REGISTER.register(eventBus)
         RagiumCriteriaTriggers.REGISTER.register(eventBus)
         RagiumEntityTypes.init(eventBus)
         RagiumFeatures.REGISTER.register(eventBus)
@@ -80,15 +79,13 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
 
     private fun registerRegistries(event: NewRegistryEvent) {
         event.register(RagiumAPI.EQUIP_ACTION_TYPE_REGISTRY)
-        event.register(RagiumAPI.MATERIAL_RECIPE_TYPE_REGISTRY)
         event.register(RagiumAPI.SLOT_TYPE_REGISTRY)
-        event.register(RagiumAPI.SUB_ENTITY_INGREDIENT_TYPE_REGISTRY)
 
         RagiumAPI.LOGGER.info("Registered new registries!")
     }
 
     private fun registerDataPackRegistries(event: DataPackRegistryEvent.NewRegistry) {
-        event.dataPackRegistry(RagiumAPI.SOLAR_POWER_KEY, HTSolarPower.DIRECT_CODEC, HTSolarPower.DIRECT_CODEC)
+        // event.dataPackRegistry(RagiumAPI.SOLAR_POWER_KEY, HTSolarPower.DIRECT_CODEC, HTSolarPower.DIRECT_CODEC)
 
         RagiumAPI.LOGGER.info("Registered new data pack registries!")
     }
@@ -112,18 +109,13 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-        event.register(RagiumDataMaps.ENCHANT_FUEL)
+        event.register(RagiumDataMapTypes.MOB_HEAD)
 
-        event.register(RagiumDataMaps.MOB_HEAD)
+        event.register(RagiumDataMapTypes.COOLANT)
+        event.register(RagiumDataMapTypes.MAGMATIC_FUEL)
+        event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
 
-        event.register(RagiumDataMaps.THERMAL_FUEL)
-        event.register(RagiumDataMaps.COMBUSTION_FUEL)
-        event.register(RagiumDataMaps.NUCLEAR_FUEL)
-
-        event.register(RagiumDataMaps.ARMOR_EQUIP)
-        event.register(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
-
-        event.register(RagiumDataMaps.MATERIAL_RECIPE)
+        event.register(RagiumDataMapTypes.ARMOR_EQUIP)
 
         RagiumAPI.LOGGER.info("Registered data map types!")
     }

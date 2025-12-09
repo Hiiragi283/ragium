@@ -1,22 +1,21 @@
 package hiiragi283.ragium.client.integration.emi.recipe.processor
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addTank
+import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
-import hiiragi283.ragium.impl.recipe.base.HTFluidTransformRecipeBase
+import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
-class HTRefiningEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTFluidTransformRecipeBase>) :
-    HTEmiHolderRecipe<HTFluidTransformRecipeBase>(category, holder) {
+class HTRefiningEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTRefiningRecipe>) :
+    HTEmiHolderRecipe<HTRefiningRecipe>(category, holder) {
     init {
         addInput(recipe.fluidIngredient)
         addCatalyst(recipe.itemIngredient.getOrNull())
 
-        addOutputs(recipe.itemResult.getOrNull())
-        addOutputs(recipe.fluidResult.getOrNull())
+        addOutputs(recipe.results)
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
@@ -29,7 +28,7 @@ class HTRefiningEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HT
                 getPosition(1),
                 getPosition(0),
             )
-        widgets.addSlot(catalyst(0), getPosition(2.5), getPosition(0)).catalyst(true)
+        widgets.addCatalyst(0, getPosition(2.5), getPosition(0))
         // Output
         widgets.addSlot(output(0), getPosition(3.5), getPosition(2))
         widgets

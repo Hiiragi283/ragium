@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
+import net.minecraft.core.component.DataComponents
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.AxeItem
@@ -12,8 +13,10 @@ import net.minecraft.world.item.DiggerItem
 import net.minecraft.world.item.HoeItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.PickaxeItem
+import net.minecraft.world.item.ShearsItem
 import net.minecraft.world.item.ShovelItem
 import net.minecraft.world.item.SwordItem
+import net.neoforged.neoforge.common.Tags
 
 enum class VanillaToolVariant(private val enPattern: String, private val jaPattern: String, override val tagKeys: Iterable<TagKey<Item>>) :
     HTToolVariant {
@@ -22,6 +25,9 @@ enum class VanillaToolVariant(private val enPattern: String, private val jaPatte
     AXE("%s Axe", "%sの斧", ItemTags.AXES),
     HOE("%s Hoe", "%sのクワ", ItemTags.HOES),
     SWORD("%s Sword", "%sの剣", ItemTags.SWORDS),
+
+    // Misc
+    SHEARS("%s Shears", "%sのハサミ", Tags.Items.TOOLS_SHEAR),
     ;
 
     constructor(enPattern: String, jaPattern: String, tagKey: TagKey<Item>) : this(enPattern, jaPattern, listOf(tagKey))
@@ -46,6 +52,10 @@ enum class VanillaToolVariant(private val enPattern: String, private val jaPatte
 
             SWORD -> register.registerItemWith(name, material, ::SwordItem) {
                 it.attributes(SwordItem.createAttributes(material, material.getSwordDamage(), material.getSwordAttackSpeed()))
+            }
+
+            SHEARS -> register.registerItem(name, ::ShearsItem) {
+                it.durability(material.uses).component(DataComponents.TOOL, ShearsItem.createToolProperties())
             }
         }
 

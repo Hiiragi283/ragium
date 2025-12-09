@@ -1,84 +1,143 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
-import hiiragi283.ragium.api.function.negate
-import hiiragi283.ragium.api.registry.HTFlowingFluidContent
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.function.BlockWithContextFactory
+import hiiragi283.ragium.api.function.partially1
+import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
+import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContentRegister
-import hiiragi283.ragium.api.registry.HTSimpleFluidContent
-import hiiragi283.ragium.common.fluid.HTFluidType
-import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.block.fluid.HTEffectLiquidBlock
+import hiiragi283.ragium.common.block.fluid.HTMagicalLiquidBlock
+import hiiragi283.ragium.common.block.fluid.HTMagmaticLiquidBlock
+import hiiragi283.ragium.common.fluid.HTEndFluidType
+import hiiragi283.ragium.common.fluid.HTExplosiveFluidType
+import hiiragi283.ragium.common.fluid.HTNetherFluidType
+import net.minecraft.core.Holder
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.item.Items
+import net.minecraft.world.effect.MobEffect
+import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.LiquidBlock
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.pathfinder.PathType
+import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.SoundActions
+import net.neoforged.neoforge.fluids.BaseFlowingFluid
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry
 import net.neoforged.neoforge.fluids.FluidType
+import java.util.function.UnaryOperator
 
 object RagiumFluidContents {
     @JvmField
     val REGISTER = HTFluidContentRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
-    fun register(name: String, properties: FluidType.Properties): HTSimpleFluidContent =
-        REGISTER.register(name, properties.descriptionId("block.ragium.$name"))
-
-    @JvmStatic
-    fun <T : FluidType> register(
+    fun registerSimple(
         name: String,
         properties: FluidType.Properties,
-        typeFactory: (FluidType.Properties) -> T,
-    ): HTFlowingFluidContent<T> = REGISTER.register(name, properties.descriptionId("block.ragium.$name"), typeFactory)
+        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
+    ): HTBasicFluidContent = REGISTER.registerSimple(name, properties.descriptionId("block.ragium.$name"), blockProperties)
 
     @JvmStatic
-    private fun liquid(): FluidType.Properties = FluidType.Properties
+    fun <TYPE : FluidType, BLOCK : LiquidBlock> register(
+        name: String,
+        properties: FluidType.Properties,
+        typeFactory: (FluidType.Properties) -> TYPE,
+        blockFactory: BlockWithContextFactory<BaseFlowingFluid.Source, BLOCK>,
+        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
+    ): HTBasicFluidContent =
+        REGISTER.register(name, properties.descriptionId("block.ragium.$name"), typeFactory, blockFactory, blockProperties)
+
+    @JvmStatic
+    fun <TYPE : FluidType> registerEffected(
+        name: String,
+        properties: FluidType.Properties,
+        typeFactory: (FluidType.Properties) -> TYPE,
+        effect: Holder<MobEffect>,
+        amplifier: Int = 0,
+        duration: Int = 5 * 20,
+        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
+    ): HTBasicFluidContent = register(
+        name,
+        properties,
+        typeFactory,
+        ::HTEffectLiquidBlock.partially1(HTMobEffectInstance(effect, duration, amplifier)),
+        blockProperties,
+    )
+
+    @JvmStatic
+    fun registerEffected(
+        name: String,
+        properties: FluidType.Properties,
+        effect: Holder<MobEffect>,
+        amplifier: Int = 0,
+        duration: Int = 5 * 20,
+        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
+    ): HTBasicFluidContent = registerEffected(name, properties, ::FluidType, effect, amplifier, duration, blockProperties)
+
+    @JvmStatic
+    fun <TYPE : FluidType> register(
+        name: String,
+        properties: FluidType.Properties,
+        typeFactory: (FluidType.Properties) -> TYPE,
+        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
+    ): HTBasicFluidContent = REGISTER.register(name, properties.descriptionId("block.ragium.$name"), typeFactory, blockProperties)
+
+    @JvmStatic
+    private fun create(fill: SoundEvent, empty: SoundEvent): FluidType.Properties = FluidType.Properties
         .create()
-        .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL)
-        .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY)
+        .sound(SoundActions.BUCKET_FILL, fill)
+        .sound(SoundActions.BUCKET_EMPTY, empty)
 
     @JvmStatic
-    private fun molten(): FluidType.Properties = FluidType.Properties
-        .create()
-        .sound(SoundActions.BUCKET_FILL, SoundEvents.BUCKET_FILL_LAVA)
-        .sound(SoundActions.BUCKET_EMPTY, SoundEvents.BUCKET_EMPTY_LAVA)
+    private fun liquid(): FluidType.Properties = create(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
 
     @JvmStatic
-    private fun gaseous(): FluidType.Properties = liquid().density(-1000)
+    private fun molten(): FluidType.Properties = create(SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA)
 
-    //    Vanilla    //
-
-    @JvmField
-    val AWKWARD_WATER: HTSimpleFluidContent = register("awkward_water", liquid())
+    //    Foods    //
 
     @JvmField
-    val HONEY: HTSimpleFluidContent = register("honey", liquid())
+    val HONEY: HTBasicFluidContent = registerSimple("honey", create(SoundEvents.HONEY_BLOCK_PLACE, SoundEvents.HONEY_BLOCK_BREAK)) {
+        it.speedFactor(0.4f)
+    }
 
     @JvmField
-    val EXPERIENCE: HTSimpleFluidContent = register("experience", liquid())
+    val MUSHROOM_STEW: HTBasicFluidContent = registerEffected("mushroom_stew", liquid(), MobEffects.SATURATION)
 
     @JvmField
-    val MUSHROOM_STEW: HTSimpleFluidContent = register("mushroom_stew", liquid())
+    val CREAM: HTBasicFluidContent = registerSimple("cream", liquid()) { it.speedFactor(0.8f) }
+
+    @JvmField
+    val CHOCOLATE: HTBasicFluidContent = registerSimple("chocolate", molten()) { it.speedFactor(0.8f) }
+
+    @JvmField
+    val RAGI_CHERRY_JUICE: HTBasicFluidContent = registerSimple("ragi_cherry_juice", liquid())
 
     //    Organic    //
 
-    @JvmField
-    val CHOCOLATE: HTSimpleFluidContent = register("chocolate", liquid())
+    @JvmStatic
+    private fun slimy(): FluidType.Properties = create(SoundEvents.SLIME_BLOCK_PLACE, SoundEvents.SLIME_BLOCK_BREAK)
 
     @JvmField
-    val MEAT: HTSimpleFluidContent = register("meat", liquid())
+    val SLIME: HTBasicFluidContent = registerEffected("slime", slimy(), MobEffects.OOZING) { it.speedFactor(0.4f) }
 
     @JvmField
-    val ORGANIC_MUTAGEN: HTSimpleFluidContent = register("organic_mutagen", liquid())
+    val GELLED_EXPLOSIVE: HTBasicFluidContent = registerSimple("gelled_explosive", slimy())
+
+    @JvmField
+    val CRUDE_BIO: HTBasicFluidContent = registerSimple("crude_bio", slimy())
+
+    @JvmField
+    val BIOFUEL: HTBasicFluidContent = registerSimple("biofuel", liquid())
 
     //    Oil    //
 
     @JvmField
-    val CRUDE_OIL: HTSimpleFluidContent = register(
+    val CRUDE_OIL: HTBasicFluidContent = register(
         "crude_oil",
         molten()
             .canSwim(false)
@@ -86,88 +145,75 @@ object RagiumFluidContents {
             .density(3000)
             .viscosity(6000)
             .motionScale(0.0001),
-        HTFluidType.explosive(2f),
-    )
+        ::HTExplosiveFluidType.partially1(2f),
+    ) { it.speedFactor(0.4f) }
 
     @JvmField
-    val NATURAL_GAS: HTSimpleFluidContent = register("natural_gas", gaseous(), HTFluidType.explosive(4f))
+    val NATURAL_GAS: HTBasicFluidContent =
+        registerEffected("natural_gas", liquid().density(-1000), ::HTExplosiveFluidType.partially1(4f), MobEffects.LEVITATION)
 
     @JvmField
-    val NAPHTHA: HTSimpleFluidContent = register("naphtha", liquid(), HTFluidType.explosive(3f))
+    val NAPHTHA: HTBasicFluidContent = register("naphtha", liquid(), ::HTExplosiveFluidType.partially1(3f))
 
     @JvmField
-    val LUBRICANT: HTSimpleFluidContent = register("lubricant", liquid())
-
-    //    Fuel    //
+    val FUEL: HTBasicFluidContent = register("fuel", liquid(), ::HTExplosiveFluidType.partially1(4f))
 
     @JvmField
-    val FUEL: HTSimpleFluidContent = register("fuel", liquid(), HTFluidType.explosive(4f))
-
-    @JvmField
-    val CRIMSON_FUEL: HTSimpleFluidContent = register("crimson_fuel", liquid(), HTFluidType.explosive(6f))
-
-    @JvmField
-    val GREEN_FUEL: HTSimpleFluidContent = register("green_fuel", liquid())
+    val LUBRICANT: HTBasicFluidContent = registerSimple("lubricant", liquid()) { it.speedFactor(0.8f) }
 
     //    Sap    //
 
     @JvmField
-    val SAP: HTSimpleFluidContent = register("sap", liquid(), HTFluidType.solidify(HTResultHelper.item(Items.SLIME_BALL)))
+    val SAP: HTBasicFluidContent = registerSimple("sap", liquid())
 
     @JvmField
-    val CRIMSON_SAP: HTSimpleFluidContent = register("crimson_sap", liquid())
+    val SPRUCE_RESIN: HTBasicFluidContent = registerSimple("spruce_resin", liquid())
 
     @JvmField
-    val WARPED_SAP: HTSimpleFluidContent = register("warped_sap", liquid())
+    val CRIMSON_SAP: HTBasicFluidContent = register("crimson_sap", liquid(), ::HTNetherFluidType)
+
+    @JvmField
+    val WARPED_SAP: HTBasicFluidContent = register("warped_sap", liquid(), ::HTNetherFluidType)
 
     //    Molten    //
 
     @JvmField
-    val CRIMSON_BLOOD: HTSimpleFluidContent =
-        register(
-            "crimson_blood",
-            molten(),
-            HTFluidType.create {
-                canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
-                dropItem = HTResultHelper.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
-            },
-        )
+    val DESTABILIZED_RAGINITE: HTBasicFluidContent =
+        registerSimple("destabilized_raginite", molten().temperature(1300))
 
     @JvmField
-    val DEW_OF_THE_WARP: HTSimpleFluidContent =
-        register(
-            "dew_of_the_warp",
-            molten(),
-            HTFluidType.create {
-                canVaporize = HTFluidType.IS_ULTRA_WARM.negate()
-                dropItem = HTResultHelper.item(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
-            },
-        )
+    val CRIMSON_BLOOD: HTBasicFluidContent =
+        register("crimson_blood", molten().temperature(2300), ::HTNetherFluidType, ::HTMagmaticLiquidBlock)
 
     @JvmField
-    val ELDRITCH_FLUX: HTSimpleFluidContent = register("eldritch_flux", molten())
+    val DEW_OF_THE_WARP: HTBasicFluidContent =
+        register("dew_of_the_warp", molten().temperature(1300), ::HTNetherFluidType, ::HTMagmaticLiquidBlock)
 
-    //    Chemicals    //
+    @JvmField
+    val ELDRITCH_FLUX: HTBasicFluidContent =
+        register("eldritch_flux", molten().temperature(1300), ::HTEndFluidType, ::HTMagicalLiquidBlock)
 
-    // val NITRIC_ACID: HTSimpleFluidContent = register("nitric_acid", liquid())
+    //    Misc    //
 
-    // val SULFURIC_ACID: HTSimpleFluidContent = register("sulfuric_acid", liquid())
+    @JvmField
+    val EXPERIENCE: HTBasicFluidContent = registerEffected("experience", liquid(), MobEffects.HUNGER, 63)
 
-    // val MIXTURE_ACID: HTSimpleFluidContent = register("mixture_acid", liquid())
+    @JvmField
+    val COOLANT: HTBasicFluidContent = registerSimple("coolant", liquid().temperature(273))
 
     //    Interaction    //
 
     @JvmStatic
-    private fun registerInteraction(content: HTFluidContent<*, *, *>, other: FluidType, getter: (FluidState) -> BlockState) {
+    private fun registerInteraction(content: FluidType, other: FluidType, getter: (FluidState) -> BlockState) {
         FluidInteractionRegistry.addInteraction(
-            content.getType(),
+            content,
             FluidInteractionRegistry.InteractionInformation(other, getter),
         )
     }
 
     @JvmStatic
     private fun registerInteraction(
-        content: HTFluidContent<*, *, *>,
+        content: FluidType,
         other: FluidType,
         toSource: BlockState,
         toFlowing: BlockState,
@@ -183,14 +229,14 @@ object RagiumFluidContents {
     @JvmStatic
     fun registerInteractions() {
         registerInteraction(
-            CRUDE_OIL,
-            HTFluidContent.LAVA.getType(),
+            CRUDE_OIL.getType(),
+            NeoForgeMod.LAVA_TYPE.value(),
             Blocks.AIR.defaultBlockState(),
             Blocks.SOUL_SAND.defaultBlockState(),
         )
 
         registerInteraction(
-            HTFluidContent.WATER,
+            NeoForgeMod.WATER_TYPE.value(),
             ELDRITCH_FLUX.getType(),
             Blocks.AIR.defaultBlockState(),
             RagiumBlocks.ELDRITCH_STONE.get().defaultBlockState(),

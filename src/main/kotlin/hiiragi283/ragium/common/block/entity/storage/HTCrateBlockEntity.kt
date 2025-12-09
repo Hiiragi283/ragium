@@ -8,10 +8,10 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTVariableItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.storage.item.slot.HTVariableItemSlot
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.util.HTItemHelper
+import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
@@ -21,6 +21,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import java.util.function.Consumer
 
 class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
@@ -30,20 +31,20 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
         tier = blockHolder.getAttributeTier()
     }
 
-    lateinit var slot: HTItemStackSlot
+    lateinit var slot: HTBasicItemSlot
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         slot = builder.addSlot(
             HTSlotInfo.BOTH,
-            HTVariableItemStackSlot.create(listener, { stack: ImmutableItemStack? ->
+            HTVariableItemSlot.create(listener, { stack: ImmutableItemStack? ->
                 val capacity: Int = HTItemSlot.getMaxStackSize(stack) * tier.getMultiplier()
-                HTItemHelper.processStorageCapacity(this.getLevel()?.random, enchantment, capacity)
+                HTEnchantmentHelper.processStorageCapacity(this.getLevel()?.random, enchantment, capacity)
             }, 0, 0),
         )
     }
 
-    override fun doDropItems(): Boolean = false
+    override fun collectDrops(consumer: Consumer<ImmutableItemStack>) {}
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(slot)
 

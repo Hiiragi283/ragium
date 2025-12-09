@@ -12,10 +12,8 @@ data class HTItemContainerContext(val hand: Optional<InteractionHand>, val stack
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemContainerContext> = BiCodec.composite(
-            VanillaBiCodecs.HAND.toOptional().fieldOf("hand"),
-            HTItemContainerContext::hand,
-            ImmutableItemStack.CODEC.fieldOf("stack"),
-            HTItemContainerContext::stack,
+            VanillaBiCodecs.HAND.optionalFieldOf("hand").forGetter(HTItemContainerContext::hand),
+            ImmutableItemStack.CODEC.fieldOf("stack").forGetter(HTItemContainerContext::stack),
             ::HTItemContainerContext,
         )
     }

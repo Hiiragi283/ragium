@@ -1,5 +1,8 @@
 package hiiragi283.ragium.setup
 
+import com.enderio.base.api.soul.Soul
+import com.enderio.base.api.soul.binding.ISoulBindable
+import com.enderio.base.common.init.EIOCapabilities
 import com.simibubi.create.content.equipment.sandPaper.SandPaperItem
 import hiiragi283.ragium.RagiumIntegration
 import hiiragi283.ragium.api.RagiumAPI
@@ -7,6 +10,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
+import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
@@ -15,11 +19,11 @@ import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
-import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
+import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -30,20 +34,15 @@ import mekanism.common.registries.MekanismItems
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Rarity
-import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.iterator
 import com.github.ysbbbbbb.kaleidoscopecookery.init.ModItems as KaleidoItems
 import vectorwing.farmersdelight.common.registry.ModItems as DelightItems
 
@@ -58,7 +57,7 @@ object RagiumIntegrationItems {
     fun init(eventBus: IEventBus) {
         REGISTER.register(eventBus)
 
-        eventBus.addListener(::modifyCreativeTabs)
+        eventBus.addListener(::registerItemCapabilities)
         eventBus.addListener(::modifyComponents)
     }
 
@@ -89,9 +88,14 @@ object RagiumIntegrationItems {
         VanillaMaterialKeys.COAL -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_CARBON)
         VanillaMaterialKeys.REDSTONE -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_REDSTONE)
         VanillaMaterialKeys.DIAMOND -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_DIAMOND)
-        VanillaMaterialKeys.OBSIDIAN -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_OBSIDIAN)
         VanillaMaterialKeys.GOLD -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_GOLD)
-        else -> getMaterial(MekanismMaterialPrefixes.ENRICHED, key)
+        else -> {
+            when {
+                ModMaterialKeys.Alloys.REFINED_OBSIDIAN.isOf(key) -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_OBSIDIAN)
+                CommonMaterialKeys.Metals.TIN.isOf(key) -> HTItemHolderLike.fromHolder(MekanismItems.ENRICHED_TIN)
+                else -> getMaterial(MekanismMaterialPrefixes.ENRICHED, key)
+            }
+        }
     }
 
     //    Tools    //
@@ -111,7 +115,6 @@ object RagiumIntegrationItems {
         if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
             listOf(
                 RagiumMaterialKeys.RAGI_CRYSTAL,
-                RagiumMaterialKeys.IRIDESCENTIUM,
             ).forEach { key: HTMaterialKey ->
                 this.put(
                     HTSandPaperToolVariant,
@@ -143,10 +146,10 @@ object RagiumIntegrationItems {
 
     @JvmStatic
     fun getKnife(material: HTMaterialLike): HTItemHolderLike = when (val key: HTMaterialKey = material.asMaterialKey()) {
-        VanillaMaterialKeys.IRON -> DelightItems.IRON_KNIFE.toHolderLike()
-        VanillaMaterialKeys.GOLD -> DelightItems.GOLDEN_KNIFE.toHolderLike()
-        VanillaMaterialKeys.DIAMOND -> DelightItems.DIAMOND_KNIFE.toHolderLike()
-        VanillaMaterialKeys.NETHERITE -> DelightItems.NETHERITE_KNIFE.toHolderLike()
+        VanillaMaterialKeys.IRON -> HTItemHolderLike.fromItem(DelightItems.IRON_KNIFE)
+        VanillaMaterialKeys.GOLD -> HTItemHolderLike.fromItem(DelightItems.GOLDEN_KNIFE)
+        VanillaMaterialKeys.DIAMOND -> HTItemHolderLike.fromItem(DelightItems.DIAMOND_KNIFE)
+        VanillaMaterialKeys.NETHERITE -> HTItemHolderLike.fromItem(DelightItems.NETHERITE_KNIFE)
         else -> getTool(HTKnifeToolVariant, key)
     }
 
@@ -163,71 +166,30 @@ object RagiumIntegrationItems {
 
     //    Event    //
 
+    @Suppress("UnstableApiUsage")
     @JvmStatic
-    private fun modifyCreativeTabs(event: BuildCreativeModeTabContentsEvent) {
-        fun insertAfter(items: List<ItemLike>) {
-            for (i: Int in items.indices) {
-                val item: ItemLike = items[i]
-                val nextItem: ItemLike = items.getOrNull(i + 1) ?: continue
-                event.insertAfter(
-                    ItemStack(item),
-                    ItemStack(nextItem),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS,
-                )
-            }
-        }
+    private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
+        if (RagiumIntegration.isLoaded(RagiumConst.EIO_BASE)) {
+            event.registerItem(
+                EIOCapabilities.SoulBindable.ITEM,
+                { stack: ItemStack, _: Void? ->
+                    object : ISoulBindable {
+                        override fun getBoundSoul(): Soul {
+                            val spawnerMob: HTSpawnerMob = stack.get(RagiumDataComponents.SPAWNER_MOB) ?: return Soul.EMPTY
+                            return Soul(spawnerMob.entityType, CompoundTag())
+                        }
 
-        fun insertAfter(vararg items: ItemLike) {
-            insertAfter(items.toList())
-        }
+                        override fun canBind(): Boolean = true
 
-        val key: ResourceKey<CreativeModeTab> = event.tabKey
-        when {
-            RagiumCreativeTabs.INGREDIENTS.`is`(key) -> {
-                // Mekanism
-                if (RagiumIntegration.isLoaded(RagiumConst.MEKANISM)) {
-                    for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
-                        val (basePrefix: HTPrefixLike, baseMaterial: HTMaterialKey) = essenceType.getBaseEntry()
-                        insertAfter(
-                            RagiumItems.getMaterial(basePrefix, baseMaterial),
-                            getEnriched(essenceType),
-                        )
+                        override fun isSoulValid(soul: Soul): Boolean = true
+
+                        override fun bindSoul(newSoul: Soul) {
+                            stack.set(RagiumDataComponents.SPAWNER_MOB, newSoul.entityType()?.let(::HTSpawnerMob))
+                        }
                     }
-                }
-            }
-            RagiumCreativeTabs.ITEMS.`is`(key) -> {
-                // Create
-                if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
-                    insertAfter(
-                        RagiumItems.getHammer(RagiumMaterialKeys.RAGI_CRYSTAL),
-                        getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL),
-                        getSandPaper(RagiumMaterialKeys.IRIDESCENTIUM),
-                    )
-                }
-                // Delight
-                if (RagiumIntegration.isLoaded(RagiumConst.FARMERS_DELIGHT)) {
-                    for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in TOOLS.row(HTKnifeToolVariant)) {
-                        insertAfter(RagiumItems.getHammer(key), knife)
-                    }
-
-                    insertAfter(
-                        RagiumItems.RAGI_CHERRY_PULP,
-                        RagiumDelightContents.RAGI_CHERRY_PIE,
-                        RagiumDelightContents.RAGI_CHERRY_PIE_SLICE,
-                    )
-
-                    insertAfter(
-                        RagiumItems.RAGI_CHERRY_TOAST,
-                        RagiumDelightContents.RAGI_CHERRY_TOAST_BLOCK,
-                    )
-                }
-                // Kaleido
-                if (RagiumIntegration.isLoaded(RagiumConst.KALEIDO_COOKERY)) {
-                    for ((key: HTMaterialKey, knife: HTDeferredItem<*>) in TOOLS.row(HTKitchenKnifeToolVariant)) {
-                        insertAfter(RagiumItems.getHammer(key), knife)
-                    }
-                }
-            }
+                },
+                RagiumBlocks.IMITATION_SPAWNER,
+            )
         }
     }
 
@@ -237,31 +199,22 @@ object RagiumIntegrationItems {
             event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
         }
 
-        fun setDesc(item: ItemLike, translation: HTTranslation) {
-            modify(item, RagiumDataComponents.DESCRIPTION, translation)
-        }
-
         fun setEnch(item: ItemLike, ench: ResourceKey<Enchantment>, level: Int = 1) {
             modify(item, RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
         }
 
-        for (tool: ItemLike in TOOLS.columnValues(RagiumMaterialKeys.RAGI_CRYSTAL)) {
+        for (tool: ItemLike in TOOLS.column(RagiumMaterialKeys.RAGI_CRYSTAL).values) {
             setEnch(tool, Enchantments.MENDING)
         }
         // Create
         if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
-            event.modify(getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL)) { builder ->
+            event.modify(getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL)) { builder: DataComponentPatch.Builder ->
                 builder.set(DataComponents.MAX_DAMAGE, 8 * 8)
-            }
-            event.modify(getSandPaper(RagiumMaterialKeys.IRIDESCENTIUM)) { builder ->
-                builder.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
-                builder.set(DataComponents.RARITY, Rarity.EPIC)
-                builder.set(DataComponents.UNBREAKABLE, Unbreakable(true))
             }
         }
 
         // Mekanism
-        if (RagiumIntegration.isLoaded(RagiumConst.MEKANISM)) {
+        if (RagiumIntegration.isLoaded(RagiumConst.CREATE)) {
             modify(MekanismItems.YELLOW_CAKE_URANIUM, DataComponents.FOOD, RagiumFoods.YELLOW_CAKE)
         }
     }

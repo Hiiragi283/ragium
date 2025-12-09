@@ -1,8 +1,6 @@
 package hiiragi283.ragium.api.data.recipe.ingredient
 
 import hiiragi283.ragium.api.recipe.ingredient.HTIngredient
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderSet
 import net.minecraft.tags.TagKey
 
 /**
@@ -16,13 +14,6 @@ interface HTIngredientCreator<TYPE : Any, INGREDIENT : HTIngredient<TYPE, *>> {
     fun from(type: TYPE, amount: Int): INGREDIENT
 
     fun from(types: Collection<TYPE>, amount: Int): INGREDIENT
-
-    // Holder
-    fun fromHolder(holder: Holder<TYPE>, amount: Int): INGREDIENT = fromSet(HolderSet.direct(holder), amount)
-
-    fun fromHolders(holders: List<Holder<TYPE>>, amount: Int): INGREDIENT = fromSet(HolderSet.direct(holders), amount)
-
-    fun fromSet(holderSet: HolderSet<TYPE>, amount: Int): INGREDIENT
 
     // TagKey
     fun fromTagKey(tagKey: TagKey<TYPE>, amount: Int): INGREDIENT

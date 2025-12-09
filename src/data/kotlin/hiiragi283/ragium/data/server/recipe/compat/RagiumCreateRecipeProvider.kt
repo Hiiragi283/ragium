@@ -13,20 +13,23 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.function.IdToFunction
 import hiiragi283.ragium.api.material.HTMaterialKey
-import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
+import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemToObjRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.variant.HTOreVariant
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumIntegrationItems
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.TagKey
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.CraftingBookCategory
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CREATE) {
@@ -35,29 +38,21 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
         mixing { createBuilder<MixingRecipe>(AllRecipeTypes.MIXING, it) }
 
         // Sandpaper
-        mapOf(
-            CommonMaterialPrefixes.GEM to RagiumMaterialKeys.RAGI_CRYSTAL,
-            CommonMaterialPrefixes.INGOT to RagiumMaterialKeys.IRIDESCENTIUM,
-        ).forEach { (prefix: HTPrefixLike, key: HTMaterialKey) ->
-            HTShapelessRecipeBuilder
-                .equipment(RagiumIntegrationItems.getSandPaper(key))
-                .addIngredient(Items.PAPER)
-                .addIngredient(prefix, key)
-                .save(output)
-        }
+        HTShapelessRecipeBuilder
+            .create(RagiumIntegrationItems.getSandPaper(RagiumMaterialKeys.RAGI_CRYSTAL))
+            .addIngredient(Items.PAPER)
+            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .setCategory(CraftingBookCategory.EQUIPMENT)
+            .save(output)
         // Cardboard
-        HTMixingRecipeBuilder
-            .create()
+        HTComplexRecipeBuilder
+            .mixing()
             .addIngredient(itemCreator.fromTagKey(AllTags.AllItemTags.PULPIFIABLE.tag, 4))
             .addIngredient(fluidCreator.water(250))
             .setResult(resultHelper.item(AllItems.PULP))
             .save(output)
 
-        HTItemToObjRecipeBuilder
-            .compressing(
-                itemCreator.fromItem(AllItems.PULP),
-                resultHelper.item(AllItems.CARDBOARD),
-            ).save(output)
+        compressingTo(HTMoldType.PLATE, itemCreator.fromItem(AllItems.PULP), resultHelper.item(AllItems.CARDBOARD))
     }
 
     @JvmStatic
@@ -69,29 +64,24 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
 
     @JvmStatic
     private fun crushing(factory: IdToFunction<StandardProcessingRecipe.Builder<*>>) {
-        /**
-         * @see com.simibubi.create.api.data.recipe.CrushingRecipeGen.rawOre
-         */
-        fun fromData(data: HTRecipeData) {
-            val builder: StandardProcessingRecipe.Builder<*> = factory.apply(data.getModifiedId())
-            builder.duration(400)
-            // Input
-            builder.require(data.getIngredients()[0])
-            // Output
-            for ((entry: Ior<Item, TagKey<Item>>, amount: Int, chance: Float) in data.itemOutputs) {
-                val item: Item? = entry.getLeft()
-                if (item != null) {
-                    builder.output(chance, item, amount)
-                }
+        RagiumBlocks.ORES.forEach { (variant: HTOreVariant, key: HTMaterialKey, ore: HTItemHolderLike) ->
+            val basePrefix: HTMaterialPrefix = getDefaultPrefix(key) ?: return@forEach
+            val result: ItemLike = RagiumItems.MATERIALS[basePrefix, key] ?: return@forEach
+            val count: Float = when (key) {
+                RagiumMaterialKeys.RAGINITE -> 6.5f
+                else -> 1.75f
             }
-            builder.build(output)
+
+            factory
+                .apply(ore.getId())
+                .require(ore)
+                .duration(250)
+                .output(result, count.toInt())
+                .output(count - (count.toInt()), result)
+                .output(0.75f, AllItems.EXP_NUGGET.get(), 1)
+                .output(0.125f, variant.baseStone)
+                .build(output)
         }
-
-        fromData(RagiumMaterialRecipeData.RAGINITE_ORE)
-        fromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
-
-        fromData(RagiumMaterialRecipeData.CRIMSON_ORE)
-        fromData(RagiumMaterialRecipeData.WARPED_ORE)
     }
 
     @JvmStatic
@@ -126,6 +116,6 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
         fromData(RagiumMaterialRecipeData.ELDRITCH_FLUX, HeatCondition.SUPERHEATED)
 
         fromData(RagiumMaterialRecipeData.NIGHT_METAL, HeatCondition.HEATED)
-        fromData(RagiumMaterialRecipeData.IRIDESCENTIUM, HeatCondition.SUPERHEATED)
+        fromData(RagiumMaterialRecipeData.IRIDESCENT_POWDER, HeatCondition.SUPERHEATED)
     }
 }

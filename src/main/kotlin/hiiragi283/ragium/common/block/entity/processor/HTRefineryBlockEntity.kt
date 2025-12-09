@@ -1,20 +1,22 @@
 package hiiragi283.ragium.common.block.entity.processor
 
-import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.block.attribute.getFluidAttribute
+import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.input.HTItemWithFluidRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTFluidTransformRecipe
+import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidStackTank
+import hiiragi283.ragium.common.inventory.HTSlotHelper
+import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storage.item.slot.HTItemStackSlot
-import hiiragi283.ragium.common.storage.item.slot.HTOutputItemStackSlot
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
+import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.common.util.HTStackSlotHelper
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
@@ -24,60 +26,59 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTEnergizedProcessorBlockEntity.Cached<HTItemWithFluidRecipeInput, HTFluidTransformRecipe>(
-        RagiumRecipeTypes.FLUID_TRANSFORM,
+    HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTComplexRecipe>(
+        RagiumRecipeTypes.REFINING,
         RagiumBlocks.REFINERY,
         pos,
         state,
     ) {
-    lateinit var catalystSlot: HTItemStackSlot
+    lateinit var catalystSlot: HTBasicItemSlot
         private set
-    lateinit var outputSlot: HTItemStackSlot
+    lateinit var outputSlot: HTBasicItemSlot
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         catalystSlot = builder.addSlot(
             HTSlotInfo.CATALYST,
-            HTItemStackSlot.input(listener, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0)),
+            HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(0)),
         )
         // output
         outputSlot = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTOutputItemStackSlot.create(listener, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2)),
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(2)),
         )
     }
 
-    lateinit var inputTank: HTVariableFluidStackTank
+    lateinit var inputTank: HTBasicFluidTank
         private set
-    lateinit var outputTank: HTVariableFluidStackTank
+    lateinit var outputTank: HTBasicFluidTank
         private set
 
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidStackTank.input(listener, RagiumConfig.COMMON.refineryInputTankCapacity),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank()),
         )
         // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidStackTank.output(listener, RagiumConfig.COMMON.refineryOutputTankCapacity),
+            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
         )
     }
 
     //    Ticking    //
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemWithFluidRecipeInput =
-        HTItemWithFluidRecipeInput(catalystSlot, inputTank)
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0 || outputTank.getNeeded() > 0
+
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput =
+        HTMultiRecipeInput(catalystSlot.getStack(), inputTank.getStack())
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: HTItemWithFluidRecipeInput, recipe: HTFluidTransformRecipe): Boolean {
-        val access: RegistryAccess = level.registryAccess()
-        val bool1: Boolean =
-            outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
-        val bool2: Boolean =
-            outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) == null
+    override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTComplexRecipe): Boolean {
+        val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
+        val bool2: Boolean = HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
         return bool1 && bool2
     }
 
@@ -85,15 +86,15 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTItemWithFluidRecipeInput,
-        recipe: HTFluidTransformRecipe,
+        input: HTMultiRecipeInput,
+        recipe: HTComplexRecipe,
     ) {
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount, HTStorageAction.EXECUTE)
+        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount.partially1(0), HTStorageAction.EXECUTE)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
     }

@@ -1,40 +1,69 @@
 package hiiragi283.ragium.impl.data.recipe
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.data.recipe.HTRecipeBuilder
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.api.util.wrapOptional
+import hiiragi283.ragium.impl.data.recipe.base.HTComplexResultRecipeBuilder
+import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
-import hiiragi283.ragium.impl.recipe.base.HTItemWithCatalystRecipe
-import net.minecraft.resources.ResourceLocation
 import java.util.*
 
 class HTItemWithCatalystRecipeBuilder(
     prefix: String,
     private val factory: Factory<*>,
     val required: HTItemIngredient,
-    val optional: HTItemIngredient?,
-    val itemResult: HTItemResult?,
-    val fluidResult: HTFluidResult?,
-) : HTRecipeBuilder<HTItemWithCatalystRecipeBuilder>(prefix) {
+    val optional: Optional<HTItemIngredient>,
+) : HTComplexResultRecipeBuilder<HTItemWithCatalystRecipeBuilder>(prefix) {
     companion object {
+        @JvmStatic
+        fun compressing(ingredient: HTItemIngredient, catalyst: Optional<HTItemIngredient>): HTItemWithCatalystRecipeBuilder =
+            HTItemWithCatalystRecipeBuilder(
+                RagiumConst.COMPRESSING,
+                ::HTCompressingRecipe,
+                ingredient,
+                catalyst,
+            )
+
+        @JvmStatic
+        fun compressing(
+            ingredient: HTItemIngredient,
+            itemResult: HTItemResult?,
+            catalyst: HTItemIngredient? = null,
+            fluidResult: HTFluidResult? = null,
+        ): HTItemWithCatalystRecipeBuilder {
+            val builder = HTItemWithCatalystRecipeBuilder(
+                RagiumConst.COMPRESSING,
+                ::HTCompressingRecipe,
+                ingredient,
+                catalyst,
+            )
+            builder.setResult(itemResult)
+            builder.setResult(fluidResult)
+            return builder
+        }
+
         @JvmStatic
         fun extracting(
             ingredient: HTItemIngredient,
             itemResult: HTItemResult?,
             catalyst: HTItemIngredient? = null,
             fluidResult: HTFluidResult? = null,
-        ): HTItemWithCatalystRecipeBuilder = HTItemWithCatalystRecipeBuilder(
-            RagiumConst.EXTRACTING,
-            ::HTExtractingRecipe,
-            ingredient,
-            catalyst,
-            itemResult,
-            fluidResult,
-        )
+        ): HTItemWithCatalystRecipeBuilder {
+            val builder = HTItemWithCatalystRecipeBuilder(
+                RagiumConst.EXTRACTING,
+                ::HTExtractingRecipe,
+                ingredient,
+                catalyst,
+            )
+            builder.setResult(itemResult)
+            builder.setResult(fluidResult)
+            return builder
+        }
 
         @JvmStatic
         fun simulating(
@@ -42,27 +71,29 @@ class HTItemWithCatalystRecipeBuilder(
             catalyst: HTItemIngredient,
             itemResult: HTItemResult?,
             fluidResult: HTFluidResult? = null,
-        ): HTItemWithCatalystRecipeBuilder = HTItemWithCatalystRecipeBuilder(
-            RagiumConst.SIMULATING,
-            ::HTSimulatingRecipe,
-            catalyst,
-            ingredient,
-            itemResult,
-            fluidResult,
-        )
+        ): HTItemWithCatalystRecipeBuilder {
+            val builder = HTItemWithCatalystRecipeBuilder(
+                RagiumConst.SIMULATING,
+                ::HTSimulatingRecipe,
+                catalyst,
+                ingredient,
+            )
+            builder.setResult(itemResult)
+            builder.setResult(fluidResult)
+            return builder
+        }
     }
 
-    override fun getPrimalId(): ResourceLocation = fluidResult?.id ?: itemResult?.id ?: error("Either item or fluid result required")
+    constructor(
+        prefix: String,
+        factory: Factory<*>,
+        required: HTItemIngredient,
+        optional: HTItemIngredient?,
+    ) : this(prefix, factory, required, optional.wrapOptional())
 
-    override fun createRecipe(): HTItemWithCatalystRecipe =
-        factory.create(required, optional.wrapOptional(), itemResult.wrapOptional(), fluidResult.wrapOptional())
+    override fun createRecipe(): HTItemWithCatalystRecipe = factory.create(required, optional, toIorResult())
 
     fun interface Factory<RECIPE : HTItemWithCatalystRecipe> {
-        fun create(
-            required: HTItemIngredient,
-            optional: Optional<HTItemIngredient>,
-            itemResult: Optional<HTItemResult>,
-            fluidResult: Optional<HTFluidResult>,
-        ): RECIPE
+        fun create(required: HTItemIngredient, optional: Optional<HTItemIngredient>, results: Ior<HTItemResult, HTFluidResult>): RECIPE
     }
 }

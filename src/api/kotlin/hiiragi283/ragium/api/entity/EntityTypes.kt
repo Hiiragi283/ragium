@@ -6,6 +6,9 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 
+@Suppress("DEPRECATION")
+val Entity.typeHolder: Holder.Reference<EntityType<*>> get() = this.type.builtInRegistryHolder()
+
 fun EntityType<*>.isOf(other: EntityType<*>): Boolean = other == this
 
 fun EntityType<*>.isOf(holder: Holder<EntityType<*>>): Boolean = isOf(holder.value())

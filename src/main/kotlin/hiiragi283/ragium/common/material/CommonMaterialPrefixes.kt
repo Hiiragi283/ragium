@@ -7,9 +7,6 @@ enum class CommonMaterialPrefixes : HTPrefixLike {
     // Block
     ORE,
     GLASS_BLOCK,
-    GLASS_BLOCK_TINTED {
-        override val prefix: HTMaterialPrefix = HTMaterialPrefix("tinted_glass_block", "c:glass_blocks/tinted")
-    },
     STORAGE_BLOCK,
     RAW_STORAGE_BLOCK {
         override val prefix: HTMaterialPrefix = HTMaterialPrefix("raw_storage_block", "c:storage_blocks", "c:storage_blocks/raw_%s")
@@ -28,11 +25,13 @@ enum class CommonMaterialPrefixes : HTPrefixLike {
     ROD,
 
     // Item - Custom
-    CIRCUIT,
     DOUGH,
     FLOUR,
     FUEL,
     JAM,
+    RAW_MATERIAL_DYE {
+        override val prefix: HTMaterialPrefix = HTMaterialPrefix("raw_materials/dye")
+    },
     SCRAP,
     ;
 

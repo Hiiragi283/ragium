@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.key
 
 import com.mojang.blaze3d.platform.InputConstants
 import hiiragi283.ragium.api.text.HTHasTranslationKey
-import hiiragi283.ragium.client.text.RagiumClientTranslation
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import net.minecraft.client.KeyMapping
 import net.neoforged.neoforge.client.settings.IKeyConflictContext
 import net.neoforged.neoforge.client.settings.KeyConflictContext
@@ -16,7 +16,7 @@ class HTKeyMappingBuilder {
     var keyConflictContext: IKeyConflictContext = KeyConflictContext.UNIVERSAL
     var keyModifier: KeyModifier = KeyModifier.NONE
     private lateinit var key: InputConstants.Key
-    var category: String = RagiumClientTranslation.KEY_CATEGORY.translationKey
+    var category: String = RagiumCommonTranslation.KEY_CATEGORY.translationKey
 
     fun description(translationKey: HTHasTranslationKey): HTKeyMappingBuilder = description(translationKey.translationKey)
 

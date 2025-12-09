@@ -1,45 +1,32 @@
 package hiiragi283.ragium.data.server
 
 import com.enderio.base.common.init.EIOBlocks
-import com.enderio.base.common.init.EIOItems
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
-import hiiragi283.ragium.api.data.map.HTSubEntityTypeIngredient
-import hiiragi283.ragium.api.data.map.MapDataMapValueRemover
-import hiiragi283.ragium.api.data.map.RagiumDataMaps
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
-import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.createCommonTag
-import hiiragi283.ragium.common.data.map.HTBlockCrushingMaterialRecipeData
-import hiiragi283.ragium.common.data.map.HTCompressingMaterialRecipeData
-import hiiragi283.ragium.common.data.map.HTCrushingMaterialRecipeData
-import hiiragi283.ragium.common.data.map.HTRawSmeltingMaterialRecipeData
-import hiiragi283.ragium.common.data.map.HTSoulVialEntityIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.EnchantmentTags
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.enchantment.LevelBasedValue
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
@@ -47,6 +34,7 @@ import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
+import plus.dragons.createenchantmentindustry.common.registry.CEIDataMaps
 
 @Suppress("DEPRECATION")
 class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
@@ -58,18 +46,15 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         compostables()
         furnaceFuels()
 
-        enchFactories()
-
         mobHead()
 
-        thermalFuels()
+        coolants()
+        magmaticFuels()
         combustionFuels()
-        nuclearFuels()
 
         armorEquip()
-        subEntityIngredient()
 
-        materialRecipe()
+        createEnchIndustry()
     }
 
     //    Vanilla    //
@@ -86,20 +71,13 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24))
             .add(RagiumItems.COMPRESSED_SAWDUST, FurnaceFuel(200 * 6), false)
             .add(RagiumItems.RAGI_COKE, FurnaceFuel(200 * 16), false)
-            .add(RagiumItems.RESIN, FurnaceFuel(200 * 4), false)
             .add(RagiumItems.TAR, FurnaceFuel(200 * 4), false)
     }
 
     //    Ragium    //
 
-    private fun enchFactories() {
-        builder(RagiumDataMaps.ENCHANT_FUEL)
-            .add(EnchantmentTags.TREASURE, LevelBasedValue.perLevel(3f), false)
-            .add(EnchantmentTags.CURSE, LevelBasedValue.perLevel(-1f), false)
-    }
-
     private fun mobHead() {
-        builder(RagiumDataMaps.MOB_HEAD)
+        builder(RagiumDataMapTypes.MOB_HEAD)
             .add(EntityType.SKELETON, HTMobHead(Items.SKELETON_SKULL))
             .add(EntityType.WITHER_SKELETON, HTMobHead(Items.WITHER_SKELETON_SKULL))
             .add(EntityType.ZOMBIE, HTMobHead(Items.ZOMBIE_HEAD))
@@ -110,150 +88,73 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(EntityType.ENDERMAN, HTMobHead(EIOBlocks.ENDERMAN_HEAD), ModLoadedCondition(RagiumConst.EIO_BASE))
     }
 
-    private fun thermalFuels() {
-        builder(RagiumDataMaps.THERMAL_FUEL)
-            .add("steam", HTFluidFuelData(100))
-            .add(HTFluidContent.LAVA, HTFluidFuelData(10))
-            .add("blaze_blood", HTFluidFuelData(5))
+    private fun coolants() {
+        builder(RagiumDataMapTypes.COOLANT)
+            .add(HTFluidHolderLike.WATER, HTFluidCoolantData(100))
+            .add(RagiumFluidContents.COOLANT, HTFluidCoolantData(25))
+    }
+
+    private fun magmaticFuels() {
+        val lowest = HTFluidFuelData(40)
+        val low = HTFluidFuelData(60)
+        val medium = HTFluidFuelData(120)
+        val high = HTFluidFuelData(180)
+        val highest = HTFluidFuelData(240)
+
+        builder(RagiumDataMapTypes.MAGMATIC_FUEL)
+            // lowest
+            .add("steam", lowest)
+            // low
+            // medium
+            .add(HTFluidHolderLike.LAVA, medium)
+            // high
+            .add(RagiumFluidContents.CRIMSON_BLOOD, high)
+            .add("blaze_blood", high)
+        // highest
     }
 
     private fun combustionFuels() {
-        builder(RagiumDataMaps.COMBUSTION_FUEL)
-            // lowest
-            .add(RagiumFluidContents.CRUDE_OIL, HTFluidFuelData(100))
-            .add("oil", HTFluidFuelData(100))
-            .add("creosote", HTFluidFuelData(100))
-            // low
-            .add(InitFluids.CANOLA_OIL.get(), HTFluidFuelData(50), ModLoadedCondition(RagiumConst.ACTUALLY))
-            // medium
-            .add(RagiumFluidContents.NATURAL_GAS, HTFluidFuelData(20))
-            .add("ethanol", HTFluidFuelData(20))
-            .add("bioethanol", HTFluidFuelData(20))
-            .add("lpg", HTFluidFuelData(20))
-            .add(InitFluids.REFINED_CANOLA_OIL.get(), HTFluidFuelData(20), ModLoadedCondition(RagiumConst.ACTUALLY))
-            // high
-            .add(RagiumFluidContents.FUEL, HTFluidFuelData(10))
-            .add("diesel", HTFluidFuelData(10))
-            .add("biodiesel", HTFluidFuelData(10))
-            .add(InitFluids.CRYSTALLIZED_OIL.get(), HTFluidFuelData(10), ModLoadedCondition(RagiumConst.ACTUALLY))
-            // highest
-            .add(RagiumFluidContents.CRIMSON_FUEL, HTFluidFuelData(5))
-            .add("high_power_biodiesel", HTFluidFuelData(5))
-            .add(InitFluids.EMPOWERED_OIL.get(), HTFluidFuelData(5), ModLoadedCondition(RagiumConst.ACTUALLY))
-    }
+        val lowest = HTFluidFuelData(80)
+        val low = HTFluidFuelData(120)
+        val medium = HTFluidFuelData(240)
+        val high = HTFluidFuelData(360)
+        val highest = HTFluidFuelData(480)
 
-    private fun nuclearFuels() {
-        builder(RagiumDataMaps.NUCLEAR_FUEL)
-            .add(RagiumFluidContents.GREEN_FUEL, HTFluidFuelData(5))
+        val actually = ModLoadedCondition(RagiumConst.ACTUALLY)
+
+        builder(RagiumDataMapTypes.COMBUSTION_FUEL)
+            // lowest
+            .add(RagiumFluidContents.CRUDE_OIL, lowest)
+            .add("oil", lowest)
+            .add("creosote", lowest)
+            // low
+            .add(InitFluids.CANOLA_OIL.get(), low, actually)
+            // medium
+            .add(RagiumFluidContents.NATURAL_GAS, medium)
+            .add("ethanol", medium)
+            .add("bioethanol", medium)
+            .add("lpg", medium)
+            .add(InitFluids.REFINED_CANOLA_OIL.get(), medium, actually)
+            // high
+            .add(RagiumFluidContents.FUEL, high)
+            .add(RagiumFluidContents.BIOFUEL, high)
+            .add(RagiumCommonTags.Fluids.DIESEL, high, false)
+            .add(RagiumCommonTags.Fluids.BIODIESEL, high, false)
+            .add(InitFluids.CRYSTALLIZED_OIL.get(), high, actually)
+            // highest
+            .add("high_power_biodiesel", highest)
+            .add(InitFluids.EMPOWERED_OIL.get(), highest, actually)
     }
 
     private fun armorEquip() {
-        builder(RagiumDataMaps.ARMOR_EQUIP)
+        builder(RagiumDataMapTypes.ARMOR_EQUIP)
             .addHolder(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectEquipAction(MobEffects.NIGHT_VISION, -1))
     }
 
-    private fun subEntityIngredient() {
-        builder(RagiumDataMaps.SUB_ENTITY_INGREDIENT)
-            .addHolder(Items.DRAGON_EGG.toHolderLike(), HTSubEntityTypeIngredient.simple(EntityType.ENDER_DRAGON))
-            .addHolder(Items.SNIFFER_EGG.toHolderLike(), HTSubEntityTypeIngredient.simple(EntityType.SNIFFER))
-            // EIO
-            .add(
-                EIOItems.SOUL_VIAL,
-                HTSoulVialEntityIngredient,
-                false,
-                ModLoadedCondition(RagiumConst.EIO_BASE),
-            )
-    }
+    //    Integration    //
 
-    private fun materialRecipe() {
-        MapDataMapBuilder(builder(RagiumDataMaps.MATERIAL_RECIPE))
-            .getOrCreateMap(RagiumRecipeTypes.ALLOYING) {
-                put(
-                    RagiumAPI.id("raw_to_ingot_with_basic"),
-                    HTRawSmeltingMaterialRecipeData(
-                        CommonMaterialPrefixes.RAW_MATERIAL,
-                        2,
-                        3,
-                        RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC,
-                        1,
-                    ),
-                )
-                put(
-                    RagiumAPI.id("raw_to_ingot_with_advanced"),
-                    HTRawSmeltingMaterialRecipeData(
-                        CommonMaterialPrefixes.RAW_MATERIAL,
-                        1,
-                        2,
-                        RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED,
-                        1,
-                    ),
-                )
-
-                put(
-                    RagiumAPI.id("raw_block_to_ingot_with_basic"),
-                    HTRawSmeltingMaterialRecipeData(
-                        CommonMaterialPrefixes.RAW_STORAGE_BLOCK,
-                        2,
-                        27,
-                        RagiumModTags.Items.ALLOY_SMELTER_FLUXES_BASIC,
-                        6,
-                    ),
-                )
-                put(
-                    RagiumAPI.id("raw_block_to_ingot_with_advanced"),
-                    HTRawSmeltingMaterialRecipeData(
-                        CommonMaterialPrefixes.RAW_STORAGE_BLOCK,
-                        1,
-                        18,
-                        RagiumModTags.Items.ALLOY_SMELTER_FLUXES_ADVANCED,
-                        6,
-                    ),
-                )
-            }.getOrCreateMap(RagiumRecipeTypes.COMPRESSING) {
-                put(
-                    RagiumAPI.id("dust_to_gem"),
-                    HTCompressingMaterialRecipeData.dust(CommonMaterialPrefixes.GEM),
-                )
-                put(
-                    RagiumAPI.id("dust_to_fuel"),
-                    HTCompressingMaterialRecipeData.dust(CommonMaterialPrefixes.FUEL),
-                )
-            }.getOrCreateMap(RagiumRecipeTypes.CRUSHING) {
-                put(
-                    RagiumAPI.id("ingot_to_dust"),
-                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.INGOT, 1, 1),
-                )
-                put(
-                    RagiumAPI.id("gem_to_dust"),
-                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.GEM, 1, 1),
-                )
-                put(
-                    RagiumAPI.id("plate_to_dust"),
-                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.PLATE, 1, 1),
-                )
-                put(
-                    RagiumAPI.id("raw_to_dust"),
-                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.RAW_MATERIAL, 3, 4),
-                )
-                put(
-                    RagiumAPI.id("rod_to_dust"),
-                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.ROD, 2, 1),
-                )
-                put(
-                    RagiumAPI.id("fuel_to_dust"),
-                    HTCrushingMaterialRecipeData.dust(CommonMaterialPrefixes.FUEL, 1, 1),
-                )
-
-                put(
-                    RagiumAPI.id("crop_to_flour"),
-                    HTCrushingMaterialRecipeData(CommonMaterialPrefixes.CROP, 1, CommonMaterialPrefixes.FLOUR, 1),
-                )
-
-                put(
-                    RagiumAPI.id("storage_block_to_dust"),
-                    HTBlockCrushingMaterialRecipeData,
-                )
-            }
+    private fun createEnchIndustry() {
+        builder(CEIDataMaps.FLUID_UNIT_EXPERIENCE).addHolder(RagiumFluidContents.EXPERIENCE, 20)
     }
 
     //    Extensions    //
@@ -269,8 +170,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun <T : Any> Builder<T, Fluid>.add(fluid: Fluid, value: T, vararg conditions: ICondition): Builder<T, Fluid> =
         addHolder(fluid.toHolderLike(), value, *conditions)
 
-    private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent<*, *, *>, value: T): Builder<T, Fluid> =
-        add(content.commonTag, value, false)
+    private fun <T : Any> Builder<T, Fluid>.add(holder: HTFluidHolderLike, value: T): Builder<T, Fluid> =
+        add(holder.getFluidTag(), value, false)
 
     private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> =
         add(Registries.FLUID.createCommonTag(path), value, false)
@@ -281,13 +182,4 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         value: T,
         vararg conditions: ICondition,
     ): Builder<T, EntityType<*>> = addHolder(type.toHolderLike(), value, *conditions)
-
-    private class MapDataMapBuilder<R : Any, V : Any>(
-        private val builder: AdvancedBuilder<Map<ResourceLocation, V>, R, MapDataMapValueRemover<R, V>>,
-    ) {
-        inline fun getOrCreateMap(holder: Holder<R>, builderAction: MutableMap<ResourceLocation, V>.() -> Unit): MapDataMapBuilder<R, V> {
-            builder.add(holder, buildMap(builderAction), false)
-            return this
-        }
-    }
 }

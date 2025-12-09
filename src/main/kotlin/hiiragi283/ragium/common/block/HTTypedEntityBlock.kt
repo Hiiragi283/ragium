@@ -7,12 +7,13 @@ import hiiragi283.ragium.api.block.attribute.HTMenuBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttribute
 import hiiragi283.ragium.api.block.attribute.hasAttribute
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
-import hiiragi283.ragium.api.extension.getTypedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.fluid.HTFluidTank
+import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.util.HTItemDropHelper
+import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -62,10 +63,19 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
     ): ItemInteractionResult {
         val result: ItemInteractionResult = super.useItemOn(stack, state, level, pos, player, hand, hitResult)
         if (stack.isEmpty) return result
+        val blockEntity: HTBlockEntity = level.getTypedBlockEntity(pos) ?: return result
         if (stack.`is`(Tags.Items.TOOLS_WRENCH)) {
-            val blockEntity: HTBlockEntity = level.getTypedBlockEntity(pos) ?: return result
             RagiumMenuTypes.ACCESS_CONFIG.openMenu(player, blockEntity.name, blockEntity, blockEntity::writeExtraContainerData)
             return ItemInteractionResult.sidedSuccess(level.isClientSide)
+        } else if (!player.isShiftKeyDown) {
+            if (!level.isClientSide) {
+                for (tank: HTFluidTank in blockEntity.getFluidTanks(blockEntity.getFluidSideFor()).reversed()) {
+                    if (HTStackSlotHelper.interact(player, hand, stack, tank)) {
+                        player.inventory.setChanged()
+                        return ItemInteractionResult.sidedSuccess(false)
+                    }
+                }
+            }
         }
         return result
     }
@@ -113,13 +123,8 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
     ) {
         if (!state.`is`(newState.block)) {
             level.getTypedBlockEntity<HTBlockEntity>(pos)?.let { blockEntity: HTBlockEntity ->
-                if (blockEntity.doDropItems()) {
-                    blockEntity
-                        .getItemSlots(blockEntity.getItemSideFor())
-                        .mapNotNull(HTItemSlot::getStack)
-                        .forEach { stack: ImmutableItemStack ->
-                            HTItemDropHelper.dropStackAt(level, pos, stack)
-                        }
+                blockEntity.collectDrops { stack: ImmutableItemStack ->
+                    HTItemDropHelper.dropStackAt(level, pos, stack)
                 }
             }
         }

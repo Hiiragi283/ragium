@@ -1,5 +1,8 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.ragium.api.item.HTSubCreativeTabContents
+import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.advancements.CriteriaTriggers
@@ -11,6 +14,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
@@ -19,8 +23,11 @@ import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
+import java.util.function.Consumer
 
-class HTLootTicketItem(properties: Properties) : Item(properties.rarity(Rarity.RARE)) {
+class HTLootTicketItem(properties: Properties) :
+    Item(properties.rarity(Rarity.RARE)),
+    HTSubCreativeTabContents {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
         val stack: ItemStack = player.getItemInHand(usedHand)
         val lootTableKey: ResourceKey<LootTable> = stack
@@ -53,5 +60,13 @@ class HTLootTicketItem(properties: Properties) : Item(properties.rarity(Rarity.R
             )
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
+    }
+
+    override fun addItems(baseItem: HTItemHolderLike, parameters: CreativeModeTab.ItemDisplayParameters, consumer: Consumer<ItemStack>) {
+        for (tickets: HTDefaultLootTickets in HTDefaultLootTickets.entries) {
+            val stack: ItemStack = baseItem.toStack()
+            stack.set(RagiumDataComponents.LOOT_TICKET, tickets.targets)
+            consumer.accept(stack)
+        }
     }
 }

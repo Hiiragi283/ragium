@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.data.advancement
 
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.data.HTDataGenerator
 import hiiragi283.ragium.api.util.wrapOptional
 import net.minecraft.advancements.Advancement
 import net.minecraft.core.HolderLookup
@@ -27,12 +28,12 @@ open class HTAdvancementProvider(
 ) : DataProvider {
     companion object {
         @JvmStatic
-        fun create(vararg subProviders: HTAdvancementGenerator): HTDataGenContext.Factory<HTAdvancementProvider> =
+        fun create(vararg subProviders: HTAdvancementGenerator): HTDataGenerator.Factory<HTAdvancementProvider> =
             create(subProviders.toList())
 
         @JvmStatic
-        fun create(subProviders: List<HTAdvancementGenerator>): HTDataGenContext.Factory<HTAdvancementProvider> =
-            HTDataGenContext.Factory { context: HTDataGenContext ->
+        fun create(subProviders: List<HTAdvancementGenerator>): HTDataGenerator.Factory<HTAdvancementProvider> =
+            HTDataGenerator.Factory { context: HTDataGenContext ->
                 HTAdvancementProvider(context.output, context.registries, context.fileHelper, subProviders)
             }
     }

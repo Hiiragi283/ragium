@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.data.advancement.descKey
 import hiiragi283.ragium.api.data.advancement.titleKey
+import hiiragi283.ragium.api.function.identity
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
@@ -16,6 +17,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
@@ -25,6 +27,7 @@ import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumChemicals
+import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMatterTypes
@@ -40,36 +43,59 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     LanguageProvider(output, RagiumAPI.MOD_ID, type.name.lowercase()) {
     //    Extension    //
 
+    @JvmRecord
+    private data class LangPattern(private val enPattern: String, private val jaPattern: String) : HTLangPatternProvider {
+        override fun translate(type: HTLanguageType, value: String): String = when (type) {
+            HTLanguageType.EN_US -> enPattern
+            HTLanguageType.JA_JP -> jaPattern
+        }.replace("%s", value)
+    }
+
     fun addPatterned() {
-        fromVariantTable(RagiumBlocks.ORES)
+        fromVariantTable(RagiumBlocks.ORES, HTMaterialTranslations::getLangName)
         fromMaterialTable(RagiumBlocks.MATERIALS)
-        fromMapWithRow(HTSimpleLangPattern("%s Coil Block", "%sコイルブロック"), RagiumBlocks.COILS)
-        fromMapWithRow(HTSimpleLangPattern("%s LED Block", "%sのLEDブロック"), RagiumBlocks.LED_BLOCKS)
-        fromMapWithColumn(HTSimpleLangName("Slab", "ハーフブロック"), RagiumBlocks.SLABS)
-        fromMapWithColumn(HTSimpleLangName("Stairs", "階段"), RagiumBlocks.STAIRS)
-        fromMapWithColumn(HTSimpleLangName("Wall", "壁"), RagiumBlocks.WALLS)
+        fromVariantTable(RagiumBlocks.GLASSES, HTMaterialTranslations::getLangName)
+        fromMaterialMap(LangPattern("%s Bars", "%sの格子"), RagiumBlocks.METAL_BARS)
+        fromMaterialMap(LangPattern("%s Coil Block", "%sコイルブロック"), RagiumBlocks.COILS)
+        fromMaterialMap(LangPattern("%s LED Block", "%sのLEDブロック"), RagiumBlocks.LED_BLOCKS)
+        fromLangMap(LangPattern("%s Slab", "%sのハーフブロック"), RagiumBlocks.SLABS)
+        fromLangMap(LangPattern("%s Stairs", "%sの階段"), RagiumBlocks.STAIRS)
+        fromLangMap(LangPattern("%s Wall", "%sの壁"), RagiumBlocks.WALLS)
 
         fromMaterialTable(RagiumItems.MATERIALS)
-        fromMapWithRow(HTSimpleLangPattern("%s Circuit", "%s回路"), RagiumItems.CIRCUITS)
-        fromMapWithRow(HTSimpleLangPattern("%s Coil", "%sコイル"), RagiumItems.COILS)
-        fromMapWithRow(HTSimpleLangPattern("%s Component", "%s構造体"), RagiumItems.COMPONENTS)
+        fromMaterialMap(LangPattern("%s Coil", "%sコイル"), RagiumItems.COILS)
+        fromMaterialMap(LangPattern("%s Component", "%s構造体"), RagiumItems.COMPONENTS)
 
-        fromVariantTable(RagiumItems.ARMORS)
-        fromVariantTable(RagiumItems.TOOLS)
-        fromMapWithRow(HTSimpleLangPattern("%s Upgrade", "%s強化"), RagiumItems.SMITHING_TEMPLATES)
+        fromVariantTable(RagiumItems.ARMORS, HTMaterialTranslations::getLangName)
+        fromVariantTable(RagiumItems.TOOLS, HTMaterialTranslations::getLangName)
+
+        val charge = LangPattern("%s Charge", "%s チャージ")
+        fromLangMap(charge, RagiumItems.CHARGES)
+        fromLangMap(charge, RagiumEntityTypes.CHARGES)
+
+        fromMaterialMap(LangPattern("%s Upgrade", "%s強化"), RagiumItems.SMITHING_TEMPLATES)
         addTemplate(RagiumMaterialKeys.AZURE_STEEL, VanillaMaterialKeys.IRON)
         addTemplate(RagiumMaterialKeys.DEEP_STEEL, VanillaMaterialKeys.DIAMOND)
         addTemplate(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)
 
+        fromLangMap(LangPattern("%s Mold", "%sの鋳型"), RagiumItems.MOLDS)
+
+        fromVariantTable(RagiumItems.MACHINE_UPGRADES, identity())
         // Translation
+        addTranslations(HTBaseTier.entries, identity())
+
         addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
         addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)
+
+        val minecart = LangPattern("Minecart with %s", "%s付きトロッコ")
+        fromLangMap(minecart, RagiumItems.DRUM_MINECARTS)
+        fromLangMap(minecart, RagiumEntityTypes.DRUMS)
 
         translations()
 
         // Integration
         fromMaterialTable(RagiumIntegrationItems.MATERIALS)
-        fromVariantTable(RagiumIntegrationItems.TOOLS)
+        fromVariantTable(RagiumIntegrationItems.TOOLS, HTMaterialTranslations::getLangName)
 
         // Mekanism
         for (essenceType: RagiumEssenceType in RagiumEssenceType.entries) {
@@ -94,6 +120,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         add(RagiumTranslation.TRUE, "True")
         add(RagiumTranslation.FALSE, "False")
 
+        add(RagiumTranslation.EMPTY_ENTRY, "Not Yet Translated")
         // API - GUI
         add(RagiumTranslation.CAPACITY, $$"Capacity: %1$s")
         add(RagiumTranslation.CAPACITY_MB, $$"Capacity: %1$s mB")
@@ -105,31 +132,38 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         add(RagiumTranslation.FRACTION, $$"%1$s / %2$s")
         add(RagiumTranslation.PERCENTAGE, $$"%1$s %")
+        add(RagiumTranslation.TICK, $$"%1$s ticks")
+
+        add(RagiumTranslation.PER_MB, $$"%1$s / mb")
+        add(RagiumTranslation.PER_TICK, $$"%1$s / ticks")
     }
 
     // Collection
-    private fun <T : HTLangPatternProvider> addTranslations(entries: Iterable<T>, blockGetter: (T) -> HTHasTranslationKey) {
+    private fun <T : HTLangName> addTranslations(entries: Iterable<T>, blockGetter: (T) -> HTHasTranslationKey) {
         for (entry: T in entries) {
-            add(blockGetter(entry), entry.translate(type, "%s"))
+            add(blockGetter(entry), entry.getTranslatedName(type))
         }
     }
 
-    private fun fromMapWithRow(provider: HTLangPatternProvider, map: Map<out HTMaterialLike, HTHasTranslationKey>) {
+    private fun fromLangMap(provider: HTLangPatternProvider, map: Map<out HTLangName, HTHasTranslationKey>) {
+        for ((langName: HTLangName, translationKey: HTHasTranslationKey) in map) {
+            add(translationKey, provider.translate(type, langName))
+        }
+    }
+
+    private fun fromMaterialMap(provider: HTLangPatternProvider, map: Map<out HTMaterialLike, HTHasTranslationKey>) {
         for ((material: HTMaterialLike, translationKey: HTHasTranslationKey) in map) {
             val langName: HTLangName = HTMaterialTranslations.getLangName(material) ?: return
             add(translationKey, provider.translate(type, langName))
         }
     }
 
-    private fun fromMapWithColumn(translatedName: HTLangName, map: Map<out HTLangPatternProvider, HTHasTranslationKey>) {
-        for ((provider: HTLangPatternProvider, translationKey: HTHasTranslationKey) in map) {
-            add(translationKey, provider.translate(type, translatedName))
-        }
-    }
-
-    private fun fromVariantTable(table: ImmutableTable<out HTLangPatternProvider, HTMaterialKey, out HTHasTranslationKey>) {
-        table.forEach { (provider: HTLangPatternProvider, key: HTMaterialKey, translationKey: HTHasTranslationKey) ->
-            val langName: HTLangName = HTMaterialTranslations.getLangName(key) ?: return@forEach
+    private fun <C : Any> fromVariantTable(
+        table: ImmutableTable<out HTLangPatternProvider, C, out HTHasTranslationKey>,
+        transform: (C) -> HTLangName?,
+    ) {
+        table.forEach { (provider: HTLangPatternProvider, column: C, translationKey: HTHasTranslationKey) ->
+            val langName: HTLangName = transform(column) ?: return@forEach
             add(translationKey, provider.translate(type, langName))
         }
     }
@@ -166,13 +200,13 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         add(key.toDescriptionKey("enchantment", "desc"), desc)
     }
 
-    fun addFluid(content: HTFluidContent<*, *, *>, value: String) {
-        add(content.getType().descriptionId, value)
+    fun addFluid(content: HTFluidContent<*, *, *, *, *>, value: String) {
+        add(content.type, value)
         addFluidBucket(content, value)
         add(content.commonTag, value)
     }
 
-    protected abstract fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String)
+    protected abstract fun addFluidBucket(content: HTFluidContent<*, *, *, *, *>, value: String)
 
     fun addTemplate(material: HTMaterialLike, before: HTMaterialLike) {
         val translation = HTSmithingTranslation(RagiumAPI.MOD_ID, material)
@@ -198,8 +232,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     //    English    //
 
     abstract class English(output: PackOutput) : HTLanguageProvider(output, HTLanguageType.EN_US) {
-        final override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
-            add(content.getBucket(), "$value Bucket")
+        final override fun addFluidBucket(content: HTFluidContent<*, *, *, *, *>, value: String) {
+            add(content.bucket, "$value Bucket")
         }
 
         final override fun addTemplate(translation: HTSmithingTranslation, material: String, before: String) {
@@ -214,8 +248,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     //    Japanese    //
 
     abstract class Japanese(output: PackOutput) : HTLanguageProvider(output, HTLanguageType.JA_JP) {
-        final override fun addFluidBucket(content: HTFluidContent<*, *, *>, value: String) {
-            add(content.getBucket(), "${value}入りバケツ")
+        final override fun addFluidBucket(content: HTFluidContent<*, *, *, *, *>, value: String) {
+            add(content.bucket, "${value}入りバケツ")
         }
 
         final override fun addTemplate(translation: HTSmithingTranslation, material: String, before: String) {

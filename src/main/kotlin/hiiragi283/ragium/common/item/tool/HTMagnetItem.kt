@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.item.tool
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.extension.getRangedAABB
+import hiiragi283.ragium.api.world.getRangedAABB
 import hiiragi283.ragium.common.item.base.HTActivatableItem
-import hiiragi283.ragium.common.util.HTItemHelper
+import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.ExperienceOrb
@@ -22,7 +22,7 @@ class HTMagnetItem(private val range: DoubleSupplier, properties: Properties) : 
         isSelected: Boolean,
     ) {
         val level: ServerLevel = level as? ServerLevel ?: return
-        val range: Double = HTItemHelper.processCollectorRange(level, stack, range.asDouble)
+        val range: Double = HTEnchantmentHelper.processCollectorRange(level, stack, range.asDouble)
 
         val entitiesInRange: List<Entity> = level.getEntities(
             player,

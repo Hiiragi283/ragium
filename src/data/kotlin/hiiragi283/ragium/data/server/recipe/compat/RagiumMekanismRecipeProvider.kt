@@ -6,16 +6,15 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
-import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTFluidTransformRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumChemicals
@@ -119,15 +118,6 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/ragi_crystal"))
         // Ore -> Crystal
         enrichOreFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE, RagiumMaterialKeys.RAGI_CRYSTAL)
-
-        // Raginite + Apple -> Ragi-Cherry
-        ItemStackChemicalToItemStackRecipeBuilder
-            .metallurgicInfusing(
-                itemHelper.from(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE),
-                chemicalHelper.from(RagiumEssenceType.RAGIUM, 40),
-                RagiumItems.RAGI_CHERRY.toStack(),
-                false,
-            ).build(output, id("metallurgic_infusing/ragi_cherry"))
     }
 
     @JvmStatic
@@ -149,12 +139,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/azure_steel"))
 
         // Ethene + Catalyst -> HDPE
-        HTFluidTransformRecipeBuilder
-            .solidifying(
-                itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
-                fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100),
-                resultHelper.item(MekanismItems.HDPE_PELLET),
-            ).save(output)
+        HTComplexRecipeBuilder
+            .solidifying()
+            .addIngredient(itemCreator.fromItem(RagiumItems.POLYMER_CATALYST))
+            .addIngredient(fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100))
+            .setResult(resultHelper.item(MekanismItems.HDPE_PELLET))
+            .save(output)
     }
 
     @JvmStatic
@@ -171,7 +161,7 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("chemical_infusing/eldritch_flux"))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
-            val molten: HTFluidContent<*, *, *> = data.molten
+            val molten: HTBasicFluidContent = data.molten
             // Fluid <-> Chemical
             RotaryRecipeBuilder
                 .rotary(
@@ -213,16 +203,14 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
         // Night Metal
         ItemStackChemicalToItemStackRecipeBuilder
             .metallurgicInfusing(
-                itemHelper.from(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
-                chemicalHelper.fromHolder(MekanismChemicals.GOLD, 10),
+                itemHelper.from(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GOLD),
+                chemicalHelper.fromHolder(MekanismChemicals.REFINED_OBSIDIAN, 20),
                 RagiumItems.getIngot(RagiumMaterialKeys.NIGHT_METAL).toStack(),
                 false,
             ).build(output, id("metallurgic_infusing/night_metal"))
 
         crushFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
         crushFromData(VanillaMaterialRecipeData.ECHO_DUST)
-
-        crushFromData(VanillaMaterialRecipeData.BLACKSTONE_DUST)
     }
 
     //    Extensions    //

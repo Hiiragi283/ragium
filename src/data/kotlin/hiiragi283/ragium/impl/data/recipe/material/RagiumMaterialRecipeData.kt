@@ -3,15 +3,13 @@ package hiiragi283.ragium.impl.data.recipe.material
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.registry.HTFluidContent
-import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
 data object RagiumMaterialRecipeData {
@@ -85,13 +83,6 @@ data object RagiumMaterialRecipeData {
     //    Deep    //
 
     @JvmField
-    val DEEP_SCRAP: HTRecipeData = HTRecipeData.create {
-        addInput(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
-
-        addOutput(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL), CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 2)
-    }
-
-    @JvmField
     val DEEP_STEEL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(RagiumMaterialKeys.AZURE_STEEL, 4)
         addInput(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, 4)
@@ -104,52 +95,10 @@ data object RagiumMaterialRecipeData {
     @JvmField
     val CRIMSON_ORE: HTRecipeData = createGemOre(RagiumMaterialKeys.CRIMSON_CRYSTAL)
 
-    @JvmField
-    val CRIMSON_SAP: HTRecipeData = HTRecipeData.create {
-        addInput(ItemTags.CRIMSON_STEMS)
-
-        addOutput(RagiumFluidContents.CRIMSON_SAP, RagiumConst.LOG_TO_SAP)
-
-        setSuffix("_from_stem")
-    }
-
-    @JvmField
-    val CRIMSON_BLOOD: HTRecipeData = HTRecipeData.create {
-        addInput(RagiumFluidContents.CRIMSON_SAP, 1000)
-
-        addOutput(RagiumFluidContents.CRIMSON_BLOOD, RagiumConst.SAP_TO_MOLTEN)
-
-        setSuffix("_from_sap")
-    }
-
-    @JvmField
-    val CRIMSON_CRYSTAL: HTRecipeData = createGemCast(RagiumMaterialKeys.CRIMSON_CRYSTAL, RagiumFluidContents.CRIMSON_BLOOD)
-
     //    Warped    //
 
     @JvmField
     val WARPED_ORE: HTRecipeData = createGemOre(RagiumMaterialKeys.WARPED_CRYSTAL)
-
-    @JvmField
-    val WARPED_SAP: HTRecipeData = HTRecipeData.create {
-        addInput(ItemTags.WARPED_STEMS)
-
-        addOutput(RagiumFluidContents.WARPED_SAP, RagiumConst.LOG_TO_SAP)
-
-        setSuffix("_from_stem")
-    }
-
-    @JvmField
-    val DEW_OF_THE_WARP: HTRecipeData = HTRecipeData.create {
-        addInput(RagiumFluidContents.WARPED_SAP, 1000)
-
-        addOutput(RagiumFluidContents.DEW_OF_THE_WARP, RagiumConst.SAP_TO_MOLTEN)
-
-        setSuffix("_from_sap")
-    }
-
-    @JvmField
-    val WARPED_CRYSTAL: HTRecipeData = createGemCast(RagiumMaterialKeys.WARPED_CRYSTAL, RagiumFluidContents.DEW_OF_THE_WARP)
 
     //    Eldritch    //
 
@@ -186,27 +135,27 @@ data object RagiumMaterialRecipeData {
         setSuffix("_warped")
     }
 
-    @JvmField
-    val ELDRITCH_PEARL: HTRecipeData = createGemCast(RagiumMaterialKeys.ELDRITCH_PEARL, RagiumFluidContents.ELDRITCH_FLUX)
-
     //    Other    //
 
     @JvmField
     val NIGHT_METAL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.GOLD)
-        addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4)
-        addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.BLACKSTONE, 4)
+        addInput(Tags.Items.OBSIDIANS)
+        addInput(Items.BLACKSTONE, count = 4)
 
         addOutput(RagiumItems.getIngot(RagiumMaterialKeys.NIGHT_METAL), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
     }
 
     @JvmField
-    val IRIDESCENTIUM: HTRecipeData = HTRecipeData.create {
-        ingotOrDust(RagiumMaterialKeys.NIGHT_METAL, 4)
-        gemOrDust(RagiumMaterialKeys.ELDRITCH_PEARL, 4)
+    val IRIDESCENT_POWDER: HTRecipeData = HTRecipeData.create {
         addInput(Tags.Items.NETHER_STARS)
+        addInput(Items.HEAVY_CORE)
+        addInput(Items.HEART_OF_THE_SEA)
+        addInput(Items.DRAGON_BREATH)
 
-        addOutput(RagiumItems.getIngot(RagiumMaterialKeys.IRIDESCENTIUM), CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.IRIDESCENTIUM)
+        addInput(RagiumFluidContents.DESTABILIZED_RAGINITE, 8000)
+
+        addOutput(RagiumItems.IRIDESCENT_POWDER, null)
     }
 
     @JvmStatic
@@ -215,18 +164,5 @@ data object RagiumMaterialRecipeData {
 
         addOutput(RagiumItems.getGem(material), CommonMaterialPrefixes.GEM, material, 2)
         setSuffix("_from_ore")
-    }
-
-    @JvmStatic
-    private fun createGemCast(material: HTMaterialLike, fluid: HTFluidContent<*, *, *>): HTRecipeData = HTRecipeData.create {
-        addInput(fluid, RagiumConst.MOLTEN_TO_GEM)
-
-        setCatalyst(RagiumItems.getMold(CommonMaterialPrefixes.GEM))
-
-        addOutput(
-            RagiumItems.getGem(material),
-            CommonMaterialPrefixes.GEM,
-            material,
-        )
     }
 }

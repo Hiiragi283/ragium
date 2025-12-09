@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.stack
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -7,6 +8,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
@@ -25,12 +27,9 @@ value class ImmutableItemStack private constructor(private val stack: ItemStack)
         @JvmStatic
         private val ITEM_STACK_CODEC: BiCodec<RegistryFriendlyByteBuf, ItemStack> =
             BiCodec.composite(
-                VanillaBiCodecs.holder(Registries.ITEM).fieldOf("id"),
-                ItemStack::getItemHolder,
-                BiCodecs.POSITIVE_INT.optionalOrElseField("count", 1),
-                ItemStack::getCount,
-                VanillaBiCodecs.COMPONENT_PATCH.optionalFieldOf("components", DataComponentPatch.EMPTY),
-                ItemStack::getComponentsPatch,
+                VanillaBiCodecs.holder(Registries.ITEM).fieldOf(RagiumConst.ID).forGetter(ItemStack::getItemHolder),
+                BiCodecs.POSITIVE_INT.optionalOrElseField(RagiumConst.COUNT, 1).forGetter(ItemStack::getCount),
+                VanillaBiCodecs.COMPONENT_PATCH.forGetter(ItemStack::getComponentsPatch),
                 ::ItemStack,
             )
 
@@ -40,6 +39,9 @@ value class ImmutableItemStack private constructor(private val stack: ItemStack)
 
         @JvmStatic
         fun of(item: ItemLike, count: Int = 1): ImmutableItemStack = ItemStack(item, count).toImmutableOrThrow()
+
+        @JvmStatic
+        fun ofNullable(item: ItemLike, count: Int = 1): ImmutableItemStack? = ItemStack(item, count).toImmutable()
 
         /**
          * [ItemStack]を[ImmutableItemStack]に変換します。
@@ -64,6 +66,18 @@ value class ImmutableItemStack private constructor(private val stack: ItemStack)
     fun isOf(holder: Holder<Item>): Boolean = stack.`is`(holder)
 
     fun isOf(holderSet: HolderSet<Item>): Boolean = stack.`is`(holderSet)
+
+    fun <T : Any> plus(type: DataComponentType<T>, value: T?): ImmutableItemStack {
+        val mutable: ItemStack = unwrap()
+        mutable.set(type, value)
+        return ImmutableItemStack(mutable)
+    }
+
+    fun <T : Any> minus(type: DataComponentType<T>): ImmutableItemStack {
+        val mutable: ItemStack = unwrap()
+        mutable.remove(type)
+        return ImmutableItemStack(mutable)
+    }
 
     @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
     fun <T, C : Any> getCapability(capability: ItemCapability<T, C?>, context: C?): T? = stack.getCapability(capability, context)

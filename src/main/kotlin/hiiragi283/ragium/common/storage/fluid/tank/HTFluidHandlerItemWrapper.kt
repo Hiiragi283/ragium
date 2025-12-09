@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.util.HTContentListener
-import net.neoforged.neoforge.common.extensions.IItemStackExtension
+import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 
 class HTFluidHandlerItemWrapper private constructor(private val handler: IFluidHandlerItem) :
@@ -18,7 +18,7 @@ class HTFluidHandlerItemWrapper private constructor(private val handler: IFluidH
     HTValueSerializable.Empty {
         companion object {
             @JvmStatic
-            fun create(stack: IItemStackExtension): HTFluidHandlerItemWrapper? = HTFluidCapabilities.getCapability(stack)?.let(::create)
+            fun create(stack: ItemStack): HTFluidHandlerItemWrapper? = HTFluidCapabilities.getCapability(stack)?.let(::create)
 
             @JvmStatic
             fun create(stack: ImmutableItemStack?): HTFluidHandlerItemWrapper? = HTFluidCapabilities.getCapability(stack)?.let(::create)

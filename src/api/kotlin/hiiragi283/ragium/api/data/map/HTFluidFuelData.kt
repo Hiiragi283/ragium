@@ -1,18 +1,16 @@
 package hiiragi283.ragium.api.data.map
 
-import com.mojang.serialization.Codec
-import com.mojang.serialization.codecs.RecordCodecBuilder
-import net.minecraft.util.ExtraCodecs
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
+import io.netty.buffer.ByteBuf
 
 @JvmInline
-value class HTFluidFuelData(val amount: Int) {
+value class HTFluidFuelData(val time: Int) {
     companion object {
         @JvmField
-        val CODEC: Codec<HTFluidFuelData> = RecordCodecBuilder.create { instance ->
-            instance
-                .group(
-                    ExtraCodecs.POSITIVE_INT.fieldOf("amount").forGetter(HTFluidFuelData::amount),
-                ).apply(instance, ::HTFluidFuelData)
-        }
+        val CODEC: BiCodec<ByteBuf, HTFluidFuelData> = BiCodec.composite(
+            BiCodecs.POSITIVE_INT.fieldOf("time").forGetter(HTFluidFuelData::time),
+            ::HTFluidFuelData,
+        )
     }
 }

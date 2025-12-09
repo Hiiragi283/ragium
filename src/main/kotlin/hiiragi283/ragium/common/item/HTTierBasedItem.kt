@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack
 /**
  * @see mekanism.common.item.ItemAlloy
  */
-class HTTierBasedItem(provider: HTTierProvider, properties: Properties) :
+open class HTTierBasedItem(provider: HTTierProvider, properties: Properties) :
     Item(properties),
     HTTierProvider by provider {
     override fun getName(stack: ItemStack): Component = translatableText(getDescriptionId(stack)).withStyle(getBaseTier().color)

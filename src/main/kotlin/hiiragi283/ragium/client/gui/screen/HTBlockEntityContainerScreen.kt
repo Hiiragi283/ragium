@@ -1,11 +1,12 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.inventory.HTSlotHelper
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.client.gui.component.HTEnergyWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
 import net.minecraft.network.chat.Component
@@ -13,17 +14,37 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import java.util.function.IntConsumer
 
-open class HTBlockEntityContainerScreen<BE : HTBlockEntity>(
-    texture: ResourceLocation,
-    menu: HTBlockEntityContainerMenu<BE>,
-    inventory: Inventory,
-    title: Component,
-) : HTContainerScreen<HTBlockEntityContainerMenu<BE>>(
+open class HTBlockEntityContainerScreen<BE : HTBlockEntity> : HTContainerScreen<HTBlockEntityContainerMenu<BE>> {
+    companion object {
+        @JvmStatic
+        fun createTexture(texture: String): ResourceLocation = RagiumAPI.id("textures", "gui", "container", "$texture.png")
+
+        @JvmStatic
+        fun <BE : HTBlockEntity> getMenuTexture(menu: HTBlockEntityContainerMenu<BE>): ResourceLocation = HTBlockEntity
+            .getBlockEntityType(menu.context.blockHolder)
+            .id
+            .withPath { "textures/gui/container/$it.png" }
+    }
+
+    constructor(
+        texture: ResourceLocation,
+        menu: HTBlockEntityContainerMenu<BE>,
+        inventory: Inventory,
+        title: Component,
+    ) : super(
         texture,
         menu,
         inventory,
         title,
-    ) {
+    )
+
+    constructor(menu: HTBlockEntityContainerMenu<BE>, inventory: Inventory, title: Component) : super(
+        getMenuTexture(menu),
+        menu,
+        inventory,
+        title,
+    )
+
     val blockEntity: BE get() = menu.context
 
     //    Extensions    //

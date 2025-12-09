@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.common.block.HTCropBlock
+import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -19,6 +20,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.flag.FeatureFlags
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
@@ -54,6 +56,7 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                             when (block) {
                                 is HTDrumBlock -> include(RagiumDataComponents.FLUID_CONTENT)
                                 is HTCrateBlock -> include(RagiumDataComponents.ITEM_CONTENT)
+                                is HTImitationSpawnerBlock -> include(RagiumDataComponents.SPAWNER_MOB)
                             }
                         }
                     } else {
@@ -104,12 +107,12 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
             add(ore.get(), factory)
         }
 
-        add(RagiumBlocks.BUDDING_AZURE.get(), noDrop())
-        add(RagiumBlocks.AZURE_CLUSTER.get()) { block: Block ->
+        add(RagiumBlocks.BUDDING_QUARTZ.get(), noDrop())
+        add(RagiumBlocks.QUARTZ_CLUSTER.get()) { block: Block ->
             createSilkTouchDispatchTable(
                 block,
                 LootItem
-                    .lootTableItem(RagiumItems.getGem(RagiumMaterialKeys.AZURE))
+                    .lootTableItem(Items.QUARTZ)
                     .apply(SetItemCountFunction.setCount(ConstantValue.exactly(4f)))
                     .apply(ApplyBonusCount.addOreBonusCount(fortune))
                     .`when`(MatchTool.toolMatches(ItemPredicate.Builder.item().of(ItemTags.CLUSTER_MAX_HARVESTABLES)))
@@ -117,9 +120,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                         applyExplosionDecay(
                             block,
                             LootItem
-                                .lootTableItem(
-                                    RagiumItems.getGem(RagiumMaterialKeys.AZURE),
-                                ).apply(SetItemCountFunction.setCount(ConstantValue.exactly(2f))),
+                                .lootTableItem(Items.QUARTZ)
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(2f))),
                         ),
                     ),
             )

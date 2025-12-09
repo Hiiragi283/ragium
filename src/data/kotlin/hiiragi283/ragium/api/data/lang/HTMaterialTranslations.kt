@@ -18,18 +18,22 @@ object HTMaterialTranslations {
     @JvmField
     val PREFIX_MAP: Map<HTMaterialPrefix, HTLangPatternProvider> = buildMap {
         fun register(prefix: HTPrefixLike, enPattern: String, jaPattern: String) {
-            this[prefix.asMaterialPrefix()] = HTSimpleLangPattern(enPattern, jaPattern)
+            this[prefix.asMaterialPrefix()] = HTLangPatternProvider { type: HTLanguageType, value: String ->
+                when (type) {
+                    HTLanguageType.EN_US -> enPattern
+                    HTLanguageType.JA_JP -> jaPattern
+                }.replace("%s", value)
+            }
         }
 
         // Block
-        register(CommonMaterialPrefixes.GLASS_BLOCK, "%s Glass", "%sガラス")
-        register(CommonMaterialPrefixes.GLASS_BLOCK_TINTED, "Tinted %s Glass", "遮光%sガラス")
         register(CommonMaterialPrefixes.STORAGE_BLOCK, "Block of %s", "%sブロック")
         register(CommonMaterialPrefixes.RAW_STORAGE_BLOCK, "Block of Raw %s", "%sの原石ブロック")
         // Item
         register(CommonMaterialPrefixes.DUST, "%s Dust", "%sの粉")
-        register(CommonMaterialPrefixes.GEM, "%s", "%s")
+        register(CommonMaterialPrefixes.FOOD, "%s", "%s")
         register(CommonMaterialPrefixes.GEAR, "%s Gear", "%sの歯車")
+        register(CommonMaterialPrefixes.GEM, "%s", "%s")
         register(CommonMaterialPrefixes.INGOT, "%s Ingot", "%sインゴット")
         register(CommonMaterialPrefixes.NUGGET, "%s Nugget", "%sナゲット")
         register(CommonMaterialPrefixes.PLATE, "%s Plate", "%s板")
@@ -57,7 +61,12 @@ object HTMaterialTranslations {
             enName: String,
             jaName: String,
         ) {
-            this[prefix.asMaterialPrefix(), material.asMaterialKey()] = HTSimpleLangName(enName, jaName)
+            this[prefix.asMaterialPrefix(), material.asMaterialKey()] = HTLangName { type ->
+                when (type) {
+                    HTLanguageType.EN_US -> enName
+                    HTLanguageType.JA_JP -> jaName
+                }
+            }
         }
 
         register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "Sawdust", "おがくず")
@@ -69,13 +78,13 @@ object HTMaterialTranslations {
             .getMaterialDefinition(material.asMaterialKey())
             .get<HTLangNameMaterialAttribute>()
 
-    fun translate(type: HTLanguageType, prefix: HTPrefixLike, key: HTMaterialKey): String? {
-        val customName: HTLangName? = MATERIAL_MAP[prefix.asMaterialPrefix(), key]
+    fun translate(type: HTLanguageType, prefix: HTPrefixLike, material: HTMaterialLike): String? {
+        val customName: HTLangName? = MATERIAL_MAP[prefix.asMaterialPrefix(), material.asMaterialKey()]
         if (customName != null) {
             return customName.getTranslatedName(type)
         } else {
             val translation: HTLangPatternProvider = PREFIX_MAP[prefix] ?: return null
-            val translatedName: HTLangName = getLangName(key) ?: return null
+            val translatedName: HTLangName = getLangName(material) ?: return null
             return translation.translate(type, translatedName)
         }
     }

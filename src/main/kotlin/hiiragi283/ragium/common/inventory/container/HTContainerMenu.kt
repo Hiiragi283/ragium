@@ -3,8 +3,6 @@ package hiiragi283.ragium.common.inventory.container
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.inventory.HTContainerItemSlot
-import hiiragi283.ragium.api.inventory.HTSlotHelper
 import hiiragi283.ragium.api.inventory.container.HTSyncableMenu
 import hiiragi283.ragium.api.inventory.slot.HTChangeType
 import hiiragi283.ragium.api.inventory.slot.HTSyncableSlot
@@ -12,6 +10,8 @@ import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.common.inventory.HTContainerItemSlot
+import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerPlayer
@@ -27,7 +27,7 @@ import kotlin.math.min
 /**
  * @see mekanism.common.inventory.container.MekanismContainer
  */
-abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: Int, val inventory: Inventory) :
+abstract class HTContainerMenu(open val menuType: HTDeferredMenuType<*, *>, containerId: Int, val inventory: Inventory) :
     AbstractContainerMenu(menuType.get(), containerId),
     HTSyncableMenu {
     final override fun quickMoveStack(player: Player, index: Int): ItemStack {
@@ -119,8 +119,11 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: 
     }
 
     protected fun addSlots(handler: HTItemHandler) {
-        handler
-            .getItemSlots(handler.getItemSideFor())
+        addSlots(handler.getItemSlots(handler.getItemSideFor()))
+    }
+
+    protected fun addSlots(slots: Iterable<HTItemSlot>) {
+        slots
             .mapNotNull(HTItemSlot::createContainerSlot)
             .forEach(::addSlot)
     }
@@ -147,14 +150,14 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: 
                     // 個数の合計値がスロットの上限以下の場合，スロット内の個数を変えて現在のstackを無効化
                     if (sumCount <= maxCount) {
                         stack.count = 0
-                        stackIn.count = sumCount
+                        updateCount(slot, sumCount)
                         slot.setChanged()
                         flag = true
                     } else {
                         // スロット内の個数がスロットの上限未満の場合，スロット内の個数を最大にして現在のstackを減らす
                         if (stackIn.count < maxCount) {
                             stack.shrink(maxCount - stackIn.count)
-                            stackIn.count = maxCount
+                            updateCount(slot, maxCount)
                             slot.setChanged()
                             flag = true
                         }
@@ -183,6 +186,14 @@ abstract class HTContainerMenu(menuType: HTDeferredMenuType<*, *>, containerId: 
         // 入りきらなかったstackは残る
         // 移動処理が一つでも行えればtrue
         return flag
+    }
+
+    private fun updateCount(slot: Slot, count: Int) {
+        if (slot is HTContainerItemSlot) {
+            slot.updateCount(count)
+        } else {
+            slot.item.count = count
+        }
     }
 
     //    Slot Sync    //

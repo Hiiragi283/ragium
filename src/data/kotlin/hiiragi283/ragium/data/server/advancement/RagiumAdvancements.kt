@@ -44,15 +44,13 @@ object RagiumAdvancements {
 
     //    Azure    //
 
-    val BUDDING_AZURE: HTAdvancementKey = create("budding_azure")
-
     val AZURE_SHARD: HTAdvancementKey = create("azure_shard")
 
     val AZURE_STEEL: HTAdvancementKey = create("azure_steel")
 
     val AZURE_GEARS: HTAdvancementKey = create("azure_gears")
 
-    val SIMULATOR: HTAdvancementKey = create("simulator")
+    val MIXER: HTAdvancementKey = create("mixer")
 
     //    Deep    //
 
@@ -67,6 +65,8 @@ object RagiumAdvancements {
     //    Night Metal    //
 
     val NIGHT_METAL: HTAdvancementKey = create("night_metal")
+
+    val SIMULATOR: HTAdvancementKey = create("simulator")
 
     //    Crimson    //
 
@@ -94,7 +94,7 @@ object RagiumAdvancements {
 
     //    Iridescentium    //
 
-    val IRIDESCENTIUM: HTAdvancementKey = create("iridescentium")
+    val IRIDESCENT_POWDER: HTAdvancementKey = create("iridescent_powder")
 
     val ETERNAL_COMPONENT: HTAdvancementKey = create("eternal_component")
 

@@ -3,10 +3,13 @@ package hiiragi283.ragium.api
 import com.google.gson.JsonObject
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.ragium.api.item.HTDynamicUpgradeItem
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
-import hiiragi283.ragium.api.recipe.HTMaterialRecipeManager
+import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
+import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -14,27 +17,39 @@ import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderGetter
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
-import net.minecraft.core.registries.Registries
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.loading.FMLEnvironment
-import java.util.UUID
 import kotlin.jvm.optionals.getOrNull
 
 interface RagiumPlatform {
     companion object {
         @JvmField
         val INSTANCE: RagiumPlatform = RagiumAPI.getService()
+    }
+
+    /**
+     * [HTMachineUpgrade]の[DataComponentType]を返します。
+     */
+    fun getUpgradeDataType(): DataComponentType<HTMachineUpgrade>
+
+    fun getMachineUpgrade(provider: HolderLookup.Provider?, stack: ItemStack): HTMachineUpgrade? {
+        val item: Item = stack.item
+        if (item is HTDynamicUpgradeItem) {
+            val upgrade: HTMachineUpgrade? = item.getUpgrade(provider, stack)
+            if (upgrade != null) return upgrade
+        }
+        return stack.get(getUpgradeDataType())
     }
 
     //    Material    //
@@ -45,21 +60,19 @@ interface RagiumPlatform {
 
     fun getMaterialDefinition(key: HTMaterialKey): HTMaterialDefinition = getMaterialDefinitions()[key] ?: HTMaterialDefinition.Empty
 
-    fun getPrefix(name: String): HTMaterialPrefix?
+    fun getPrefixMap(): Map<String, HTMaterialPrefix>
+
+    fun getPrefix(name: String): HTMaterialPrefix? = getPrefixMap()[name]
 
     //    Recipe    //
 
-    fun getMaterialRecipeManager(): HTMaterialRecipeManager
+    fun itemCreator(): HTItemIngredientCreator
 
-    fun createItemCreator(provider: HolderLookup.Provider): HTItemIngredientCreator =
-        createItemCreator(provider.lookupOrThrow(Registries.ITEM))
+    fun fluidCreator(): HTFluidIngredientCreator
 
-    fun createItemCreator(getter: HolderGetter<Item>): HTItemIngredientCreator
+    fun getPlantingRecipeSerializer(): RecipeSerializer<HTPlantingRecipe>
 
-    fun createFluidCreator(provider: HolderLookup.Provider): HTFluidIngredientCreator =
-        createFluidCreator(provider.lookupOrThrow(Registries.FLUID))
-
-    fun createFluidCreator(getter: HolderGetter<Fluid>): HTFluidIngredientCreator
+    fun getRockGeneratingRecipeSerializer(): RecipeSerializer<HTRockGeneratingRecipe>
 
     //    Server    //
 
@@ -79,11 +92,6 @@ interface RagiumPlatform {
 
     fun <T : Any> getHolder(provider: HolderLookup.Provider?, key: ResourceKey<T>): Holder<T>? =
         (provider ?: getRegistryAccess())?.holder(key)?.getOrNull()
-
-    fun getPlayer(uuid: UUID?): ServerPlayer? {
-        if (uuid == null) return null
-        return getCurrentServer()?.playerList?.getPlayer(uuid)
-    }
 
     fun getUniversalBundle(server: MinecraftServer, color: DyeColor): HTItemHandler
 

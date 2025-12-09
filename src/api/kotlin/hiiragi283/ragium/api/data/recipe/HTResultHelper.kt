@@ -7,10 +7,10 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.recipe.result.HTRecipeResult
+import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
-import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.toImmutableOrThrow
+import hiiragi283.ragium.api.registry.idOrThrow
+import hiiragi283.ragium.api.registry.toHolderLike
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -21,7 +21,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.fml.ModList
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.function.Supplier
 
 /**
  * 各種[HTRecipeResult]を生成するヘルパー
@@ -35,21 +34,18 @@ data object HTResultHelper {
      * @param count アイテムの量
      */
     @JvmStatic
-    fun item(item: ItemLike, count: Int = 1): HTItemResult = item(ImmutableItemStack.of(item, count))
+    fun item(item: ItemLike, count: Int = 1): HTItemResult = item(item.toHolderLike().getId(), count)
 
     /**
      * 指定した引数から[HTItemResult]を返します。
      * @param stack ベースとなる[ItemStack]
      */
     @JvmStatic
-    fun item(stack: ItemStack): HTItemResult = item(stack.toImmutableOrThrow())
-
-    /**
-     * 指定した引数から[HTItemResult]を返します。
-     * @param stack ベースとなる[ImmutableItemStack]
-     */
-    @JvmStatic
-    fun item(stack: ImmutableItemStack): HTItemResult = item(stack.getId(), stack.amount(), stack.componentsPatch())
+    fun item(stack: ItemStack): HTItemResult = item(
+        stack.itemHolder.idOrThrow,
+        stack.count,
+        stack.componentsPatch,
+    )
 
     /**
      * 指定した引数から[HTItemResult]を返します。
@@ -87,11 +83,11 @@ data object HTResultHelper {
 
     /**
      * 指定した引数から[HTFluidResult]を返します。
-     * @param fluid 液体の[Supplier]
+     * @param fluid 液体の[HTFluidHolderLike]
      * @param amount　液体の量
      */
     @JvmStatic
-    fun fluid(fluid: Supplier<out Fluid>, amount: Int): HTFluidResult = fluid(fluid.get(), amount)
+    fun fluid(fluid: HTFluidHolderLike, amount: Int): HTFluidResult = fluid(fluid.getId(), amount)
 
     /**
      * 指定した引数から[HTFluidResult]を返します。
@@ -99,21 +95,18 @@ data object HTResultHelper {
      * @param amount　液体の量
      */
     @JvmStatic
-    fun fluid(fluid: Fluid, amount: Int): HTFluidResult = fluid(ImmutableFluidStack.of(fluid, amount))
+    fun fluid(fluid: Fluid, amount: Int): HTFluidResult = fluid(fluid.toHolderLike().getId(), amount)
 
     /**
      * 指定した引数から[HTFluidResult]を返します。
      * @param stack ベースとなる[FluidStack]
      */
     @JvmStatic
-    fun fluid(stack: FluidStack): HTFluidResult = fluid(stack.toImmutableOrThrow())
-
-    /**
-     * 指定した引数から[HTFluidResult]を返します。
-     * @param stack ベースとなる[ImmutableFluidStack]
-     */
-    @JvmStatic
-    fun fluid(stack: ImmutableFluidStack): HTFluidResult = fluid(stack.getId(), stack.amount(), stack.componentsPatch())
+    fun fluid(stack: FluidStack): HTFluidResult = fluid(
+        stack.fluidHolder.idOrThrow,
+        stack.amount,
+        stack.componentsPatch,
+    )
 
     /**
      * 指定した引数から[HTFluidResult]を返します。

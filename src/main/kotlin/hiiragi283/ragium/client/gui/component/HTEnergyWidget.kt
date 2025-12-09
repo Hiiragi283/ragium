@@ -23,7 +23,7 @@ class HTEnergyWidget(
     HTAmountView.IntSized {
     override fun renderBackground(guiGraphics: GuiGraphics) {
         guiGraphics.blit(
-            RagiumAPI.id("textures/gui/energy_gauge.png"),
+            RagiumAPI.id("textures", "gui", "energy_gauge.png"),
             x - 1,
             y - 1,
             0f,
@@ -37,7 +37,7 @@ class HTEnergyWidget(
 
     override fun shouldRender(): Boolean = !battery.isEmpty()
 
-    override fun getSprite(): TextureAtlasSprite? = Minecraft.getInstance().guiSprites.getSprite(RagiumAPI.id("container/energy_gauge"))
+    override fun getSprite(): TextureAtlasSprite? = Minecraft.getInstance().guiSprites.getSprite(RagiumAPI.id("container", "energy_gauge"))
 
     override fun getColor(): Int = -1
 

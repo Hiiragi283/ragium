@@ -2,22 +2,26 @@ package hiiragi283.ragium.client.integration.emi.recipe
 
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiRecipeCategory
+import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.SlotWidget
+import dev.emi.emi.api.widget.TextureWidget
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.math.HTBounds
-import hiiragi283.ragium.api.recipe.chance.HTItemResultWithChance
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
-import hiiragi283.ragium.client.integration.emi.HTEmiRecipeCategory
+import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler
 import net.minecraft.client.gui.components.events.GuiEventListener
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
+import java.util.Random
+import java.util.function.Function
 
 /**
  * @see mekanism.client.recipe_viewer.emi.recipe.MekanismEmiRecipe
@@ -58,6 +62,10 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         inputs.add(ingredient ?: EmiStack.EMPTY)
     }
 
+    protected fun addEmptyInput() {
+        inputs.add(EmiStack.EMPTY)
+    }
+
     protected fun addCatalyst(ingredient: HTItemIngredient?) {
         addCatalyst(ingredient?.let(HTItemIngredient::toEmi))
     }
@@ -70,12 +78,13 @@ abstract class HTEmiRecipe<RECIPE : Any>(
         addOutputs(result?.let(::result))
     }
 
-    protected fun addChancedOutputs(result: HTItemResultWithChance?) {
-        addOutputs(result?.base?.let(::result)?.let { stack: EmiStack -> stack.setChance(result.chance) })
-    }
-
     protected fun addOutputs(result: HTFluidResult?) {
         addOutputs(result?.let(::result))
+    }
+
+    protected fun addOutputs(results: Ior<HTItemResult, HTFluidResult>) {
+        addOutputs(results.getLeft())
+        addOutputs(results.getRight())
     }
 
     protected fun addOutputs(stacks: EmiStack?) {
@@ -124,6 +133,13 @@ abstract class HTEmiRecipe<RECIPE : Any>(
 
     fun getPosition(index: Double): Int = (index * 18).toInt()
 
+    fun WidgetHolder.setShapeless(): TextureWidget = addTexture(EmiTexture.SHAPELESS, getPosition(6) + 1, getPosition(0) + 3)
+
+    fun WidgetHolder.addCatalyst(index: Int, x: Int, y: Int): SlotWidget {
+        val catalyst: EmiIngredient = catalyst(index)
+        return addSlot(catalyst, x, y).catalyst(!catalyst.isEmpty)
+    }
+
     fun WidgetHolder.addOutput(
         index: Int,
         x: Int,
@@ -133,5 +149,17 @@ abstract class HTEmiRecipe<RECIPE : Any>(
     ): SlotWidget = when {
         large -> addSlot(output(index), x - 4, y - 4).large(true)
         else -> addSlot(output(index), x, y)
+    }.recipeContext(this@HTEmiRecipe).drawBack(drawBack)
+
+    fun WidgetHolder.addGeneratedOutput(
+        factory: Function<Random, EmiIngredient>,
+        unique: Int,
+        x: Int,
+        y: Int,
+        large: Boolean = false,
+        drawBack: Boolean = true,
+    ): SlotWidget = when {
+        large -> addGeneratedSlot(factory, unique, x - 4, y - 4).large(true)
+        else -> addGeneratedSlot(factory, unique, x, y)
     }.recipeContext(this@HTEmiRecipe).drawBack(drawBack)
 }

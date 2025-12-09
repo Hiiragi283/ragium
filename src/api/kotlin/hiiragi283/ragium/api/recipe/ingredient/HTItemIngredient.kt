@@ -1,133 +1,93 @@
 package hiiragi283.ragium.api.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.ragium.api.serialization.codec.VanillaMapBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
-import net.minecraft.core.HolderSet
-import net.minecraft.core.registries.Registries
+import hiiragi283.ragium.api.util.unwrapEither
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.neoforged.neoforge.common.crafting.ICustomIngredient
+import java.util.function.IntUnaryOperator
 
 /**
  * [ImmutableItemStack]向けの[HTIngredient]の実装クラス
  */
-sealed class HTItemIngredient(protected val count: Int) : HTIngredient<Item, ImmutableItemStack> {
+class HTItemIngredient(private val ingredient: Ingredient, private val count: Int) : HTIngredient<Item, ImmutableItemStack> {
     fun interface CountGetter {
         fun getRequiredCount(stack: ImmutableItemStack): Int
     }
 
     companion object {
+        @JvmStatic
+        private val FLAT_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> =
+            VanillaBiCodecs.INGREDIENT.xmap(::HTItemIngredient, HTItemIngredient::ingredient)
+
+        @JvmStatic
+        private val NESTED_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> = BiCodec.composite(
+            VanillaBiCodecs.INGREDIENT.fieldOf(RagiumConst.ITEMS).forGetter(HTItemIngredient::ingredient),
+            BiCodecs.POSITIVE_INT.fieldOf(RagiumConst.AMOUNT).forGetter(HTItemIngredient::count),
+            ::HTItemIngredient,
+        )
+
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> = BiCodecs
-            .xor(HolderBased.CODEC, IngredientBased.CODEC)
-            .xmap(Either<HolderBased, IngredientBased>::unwrap) { ingredient: HTItemIngredient ->
-                when (ingredient) {
-                    is HolderBased -> Either.left(ingredient)
-                    is IngredientBased -> Either.right(ingredient)
+            .xor(FLAT_CODEC, NESTED_CODEC)
+            .xmap(::unwrapEither) { ingredient: HTItemIngredient ->
+                when (ingredient.count) {
+                    1 -> Either.left(ingredient)
+                    else -> Either.right(ingredient)
                 }
             }
-
-        @JvmStatic
-        fun of(holderSet: HolderSet<Item>, count: Int = 1): HTItemIngredient = HolderBased(holderSet, count)
-
-        @JvmStatic
-        fun of(ingredient: Ingredient, count: Int = 1): HTItemIngredient = IngredientBased(ingredient, count)
     }
+
+    private constructor(ingredient: Ingredient) : this(ingredient, 1)
 
     fun test(stack: ItemStack): Boolean = stack.toImmutable()?.let(this::test) ?: false
 
     fun testOnlyType(stack: ItemStack): Boolean = stack.toImmutable()?.let(this::testOnlyType) ?: false
 
-    final override fun test(stack: ImmutableItemStack): Boolean = testOnlyType(stack) && stack.amount() >= this.count
+    fun copyWithCount(operator: IntUnaryOperator): HTItemIngredient = HTItemIngredient(this.ingredient, operator.applyAsInt(this.count))
 
-    final override fun getRequiredAmount(stack: ImmutableItemStack): Int = if (test(stack)) this.count else 0
+    override fun test(stack: ImmutableItemStack): Boolean = testOnlyType(stack) && stack.amount() >= this.count
 
-    abstract fun copyWithCount(count: Int): HTItemIngredient
+    override fun testOnlyType(stack: ImmutableItemStack): Boolean = ingredient.test(stack.unwrap())
 
-    //    HolderBased    //
+    override fun getRequiredAmount(stack: ImmutableItemStack): Int = if (testOnlyType(stack)) this.count else 0
 
-    private class HolderBased(private val holderSet: HolderSet<Item>, count: Int) : HTItemIngredient(count) {
-        companion object {
-            @JvmStatic
-            private val ENTRY_CODEC: BiCodec<RegistryFriendlyByteBuf, HolderSet<Item>> = VanillaBiCodecs.holderSet(Registries.ITEM)
+    override fun hasNoMatchingStacks(): Boolean = ingredient.items.isEmpty()
 
-            @JvmStatic
-            private val FLAT_CODEC: BiCodec<RegistryFriendlyByteBuf, HolderBased> =
-                ENTRY_CODEC.xmap(::HolderBased, HolderBased::holderSet)
-
-            @JvmStatic
-            private val CODEC_WITH_COUNT: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodec.composite(
-                VanillaBiCodecs.holderSet(Registries.ITEM).fieldOf("items"),
-                HolderBased::holderSet,
-                BiCodecs.POSITIVE_INT.optionalFieldOf("count", 1),
-                HolderBased::count,
-                ::HolderBased,
+    override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> {
+        val custom: ICustomIngredient? = ingredient.customIngredient
+        if (custom != null) {
+            return Either.right(
+                custom.items
+                    .map { it.copyWithCount(count) }
+                    .toList()
+                    .mapNotNull(ItemStack::toImmutable),
             )
-
-            @JvmField
-            val CODEC: BiCodec<RegistryFriendlyByteBuf, HolderBased> = BiCodecs
-                .xor(FLAT_CODEC, CODEC_WITH_COUNT)
-                .xmap(Either<HolderBased, HolderBased>::unwrap) { ingredient: HolderBased ->
-                    when (ingredient.count) {
-                        1 -> Either.left(ingredient)
-                        else -> Either.right(ingredient)
+        } else {
+            val values: Array<Ingredient.Value> = ingredient.values
+            return when (values.size) {
+                0 -> Either.right(listOf())
+                1 -> {
+                    when (val value: Ingredient.Value = values[0]) {
+                        is Ingredient.TagValue -> Either.left(value.tag() to count)
+                        else -> Either.right(toImmutableList(value.items))
                     }
                 }
+                else -> Either.right(toImmutableList(values.flatMap(Ingredient.Value::getItems)))
+            }
         }
-        private constructor(holderSet: HolderSet<Item>) : this(holderSet, 1)
-
-        override fun testOnlyType(stack: ImmutableItemStack): Boolean = stack.isOf(holderSet)
-
-        override fun hasNoMatchingStacks(): Boolean = holderSet.none()
-
-        override fun unwrap(): Either<Pair<HolderSet<Item>, Int>, List<ImmutableItemStack>> = Either.left(holderSet to count)
-
-        override fun copyWithCount(count: Int): HTItemIngredient = HolderBased(holderSet, count)
     }
 
-    //    IngredientBased    //
-
-    private class IngredientBased(private val ingredient: Ingredient, count: Int) : HTItemIngredient(count) {
-        companion object {
-            @JvmStatic
-            private val FLAT_CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = VanillaBiCodecs
-                .ingredient(false)
-                .xmap(::IngredientBased, IngredientBased::ingredient)
-
-            @JvmStatic
-            private val CODEC_WITH_COUNT: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodec.composite(
-                VanillaMapBiCodecs.INGREDIENT,
-                IngredientBased::ingredient,
-                BiCodecs.POSITIVE_INT.optionalFieldOf("count", 1),
-                IngredientBased::count,
-                ::IngredientBased,
-            )
-
-            @JvmField
-            val CODEC: BiCodec<RegistryFriendlyByteBuf, IngredientBased> = BiCodecs
-                .either(FLAT_CODEC, CODEC_WITH_COUNT)
-                .xmap(Either<IngredientBased, IngredientBased>::unwrap) { ingredient: IngredientBased ->
-                    when (ingredient.count) {
-                        1 -> Either.left(ingredient)
-                        else -> Either.right(ingredient)
-                    }
-                }
-        }
-        private constructor(ingredient: Ingredient) : this(ingredient, 1)
-
-        override fun testOnlyType(stack: ImmutableItemStack): Boolean = ingredient.test(stack.unwrap())
-
-        override fun hasNoMatchingStacks(): Boolean = ingredient.isEmpty
-
-        override fun unwrap(): Either<Pair<HolderSet<Item>, Int>, List<ImmutableItemStack>> =
-            Either.right(ingredient.items.mapNotNull(ItemStack::toImmutable))
-
-        override fun copyWithCount(count: Int): HTItemIngredient = IngredientBased(ingredient, count)
-    }
+    private fun toImmutableList(stacks: Collection<ItemStack>): List<ImmutableItemStack> = stacks
+        .map { it.copyWithCount(count) }
+        .mapNotNull(ItemStack::toImmutable)
 }

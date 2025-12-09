@@ -3,15 +3,21 @@ package hiiragi283.ragium.data.client
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.HTDataGenContext
+import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.registry.HTFluidContent
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.api.tier.HTBaseTier
+import hiiragi283.ragium.common.HTChargeType
+import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder
@@ -29,15 +35,15 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             // Ragium
             addAll(RagiumItems.REGISTER.entries)
 
-            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.POTION_DROP)
 
-            remove(RagiumItems.BLAST_CHARGE)
-            remove(RagiumItems.MEDIUM_DRUM_UPGRADE)
-            remove(RagiumItems.LARGE_DRUM_UPGRADE)
-            remove(RagiumItems.HUGE_DRUM_UPGRADE)
+            remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.RAGI_CHERRY_JUICE)
+
+            removeAll(HTChargeType.entries.map(HTChargeType::getItem))
             removeAll(tools)
 
+            removeAll(RagiumItems.MACHINE_UPGRADES.values)
             // Integration
             addAll(RagiumIntegrationItems.REGISTER.entries)
 
@@ -46,27 +52,67 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             .map(HTHolderLike::getId)
             .forEach(::basicItem)
 
-        withExistingParent(RagiumItems.RAGI_ALLOY_COMPOUND.getPath(), vanillaId("item", "generated"))
-            .texture("layer0", "minecraft:item/copper_ingot")
-            .texture("layer1", RagiumItems.RAGI_ALLOY_COMPOUND.itemId)
+        mapOf(RagiumItems.POTION_DROP to "item/ghast_tear").forEach { (item: HTHolderLike, path: String) ->
+            withExistingParent(item.getPath(), vanillaId("item", "generated"))
+                .texture("layer0", vanillaId(path))
+        }
 
-        withExistingParent(RagiumItems.POTION_DROP.getPath(), vanillaId("item", "generated"))
-            .texture("layer0", "minecraft:item/ghast_tear")
+        mapOf(
+            RagiumItems.RAGI_ALLOY_COMPOUND to "item/copper_ingot",
+            RagiumItems.RAGI_CHERRY_JUICE to "item/potion",
+        ).forEach { (item: HTSimpleDeferredItem, path: String) ->
+            withExistingParent(item.getPath(), vanillaId("item", "generated"))
+                .texture("layer0", vanillaId(path))
+                .texture("layer1", item.itemId)
+        }
 
-        for (content: HTFluidContent<*, *, *> in RagiumFluidContents.REGISTER.contents) {
-            withExistingParent(content.getIdWithSuffix("_bucket").path, RagiumConst.NEOFORGE.toId("item", "bucket"))
+        val dripFluids: List<HTBasicFluidContent> = listOf(
+            // Foods
+            RagiumFluidContents.HONEY,
+            RagiumFluidContents.MUSHROOM_STEW,
+            RagiumFluidContents.CREAM,
+            RagiumFluidContents.CHOCOLATE,
+            // Organic
+            RagiumFluidContents.SLIME,
+            RagiumFluidContents.GELLED_EXPLOSIVE,
+            RagiumFluidContents.CRUDE_BIO,
+            // Oil
+            RagiumFluidContents.CRUDE_OIL,
+            RagiumFluidContents.NAPHTHA,
+            RagiumFluidContents.LUBRICANT,
+            // Molten
+            RagiumFluidContents.DESTABILIZED_RAGINITE,
+            RagiumFluidContents.CRIMSON_BLOOD,
+            RagiumFluidContents.DEW_OF_THE_WARP,
+            RagiumFluidContents.ELDRITCH_FLUX,
+        )
+        for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {
+            val parent: ResourceLocation = when (content) {
+                in dripFluids -> "bucket_drip"
+                else -> "bucket"
+            }.let { RagiumConst.NEOFORGE.toId("item", it) }
+
+            withExistingParent(content.bucket.getPath(), parent)
                 .customLoader(DynamicFluidContainerModelBuilder<ItemModelBuilder>::begin)
-                .fluid(content.get())
+                .fluid(content.getFluid())
+                .flipGas(content.getType().isLighterThanAir)
         }
 
         // Tools
         buildList {
             addAll(tools)
-            add(RagiumItems.BLAST_CHARGE)
+            addAll(HTChargeType.entries)
 
             addAll(tools1)
         }.asSequence()
             .map(HTHolderLike::getId)
             .forEach(::handheldItem)
+
+        // Upgrades
+        RagiumItems.MACHINE_UPGRADES.forEach { (variant: HTUpgradeVariant, tier: HTBaseTier, item: HTHolderLike) ->
+            withExistingParent(item.getPath(), vanillaId("item", "generated"))
+                .texture("layer0", RagiumAPI.id("item", "${tier.serializedName}_upgrade_base"))
+                .texture("layer1", RagiumAPI.id("item", variant.variantName()))
+        }
     }
 }

@@ -14,25 +14,12 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapelessRecipe
 import net.minecraft.world.level.ItemLike
 
-class HTShapelessRecipeBuilder(private val category: CraftingBookCategory, stack: ImmutableItemStack) :
+class HTShapelessRecipeBuilder(stack: ImmutableItemStack) :
     HTStackRecipeBuilder<HTShapelessRecipeBuilder>("shapeless", stack),
     HTIngredientRecipeBuilder<HTShapelessRecipeBuilder> {
     companion object {
         @JvmStatic
-        fun building(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
-            HTShapelessRecipeBuilder(CraftingBookCategory.BUILDING, ImmutableItemStack.of(item, count))
-
-        @JvmStatic
-        fun redstone(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
-            HTShapelessRecipeBuilder(CraftingBookCategory.REDSTONE, ImmutableItemStack.of(item, count))
-
-        @JvmStatic
-        fun equipment(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
-            HTShapelessRecipeBuilder(CraftingBookCategory.EQUIPMENT, ImmutableItemStack.of(item, count))
-
-        @JvmStatic
-        fun misc(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder =
-            HTShapelessRecipeBuilder(CraftingBookCategory.MISC, ImmutableItemStack.of(item, count))
+        fun create(item: ItemLike, count: Int = 1): HTShapelessRecipeBuilder = HTShapelessRecipeBuilder(ImmutableItemStack.of(item, count))
     }
 
     private val ingredients: NonNullList<Ingredient> = NonNullList.create()
@@ -57,9 +44,14 @@ class HTShapelessRecipeBuilder(private val category: CraftingBookCategory, stack
     //    RecipeBuilder    //
 
     private var group: String? = null
+    private var category: CraftingBookCategory = CraftingBookCategory.MISC
 
     fun setGroup(group: String?): HTShapelessRecipeBuilder = apply {
         this.group = group
+    }
+
+    fun setCategory(category: CraftingBookCategory): HTShapelessRecipeBuilder = apply {
+        this.category = category
     }
 
     override fun createRecipe(output: ItemStack): ShapelessRecipe = ShapelessRecipe(

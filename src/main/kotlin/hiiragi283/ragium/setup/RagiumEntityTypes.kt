@@ -7,10 +7,18 @@ import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
-import hiiragi283.ragium.common.entity.HTBlastCharge
+import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
+import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
+import hiiragi283.ragium.common.entity.charge.HTBlastCharge
+import hiiragi283.ragium.common.entity.charge.HTConfusingCharge
+import hiiragi283.ragium.common.entity.charge.HTFishingCharge
+import hiiragi283.ragium.common.entity.charge.HTNeutralCharge
+import hiiragi283.ragium.common.entity.charge.HTStrikeCharge
+import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
 import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
 import hiiragi283.ragium.common.tier.HTDrumTier
+import net.minecraft.SharedConstants
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
@@ -30,21 +38,42 @@ object RagiumEntityTypes {
     }
 
     @JvmField
-    val BLAST_CHARGE: HTDeferredEntityType<HTBlastCharge> =
-        REGISTER.registerType("blast_charge", ::HTBlastCharge, MobCategory.MISC) { builder: EntityType.Builder<HTBlastCharge> ->
+    val ELDRITCH_EGG: HTDeferredEntityType<HTThrownCaptureEgg> = registerThrowable("eldritch_egg", ::HTThrownCaptureEgg)
+
+    @JvmField
+    val CHARGES: Map<HTChargeType, HTDeferredEntityType<out HTAbstractCharge>> =
+        HTChargeType.entries.associateWith { chargeType: HTChargeType ->
+            val factory: (EntityType<out HTAbstractCharge>, Level) -> HTAbstractCharge = when (chargeType) {
+                HTChargeType.BLAST -> ::HTBlastCharge
+                HTChargeType.STRIKE -> ::HTStrikeCharge
+                HTChargeType.NEUTRAL -> ::HTNeutralCharge
+                HTChargeType.FISHING -> ::HTFishingCharge
+                HTChargeType.TELEPORT -> ::HTTeleportCharge
+                HTChargeType.CONFUSING -> ::HTConfusingCharge
+            }
+            registerThrowable("${chargeType.serializedName}_charge", factory)
+        }
+
+    @JvmStatic
+    private fun <T : Entity> registerThrowable(name: String, factory: EntityType.EntityFactory<T>): HTDeferredEntityType<T> =
+        REGISTER.registerType(name, factory, MobCategory.MISC) { builder: EntityType.Builder<T> ->
             builder
                 .sized(0.25f, 0.25f)
                 .clientTrackingRange(4)
                 .updateInterval(10)
         }
 
-    @JvmField
-    val ELDRITCH_EGG: HTDeferredEntityType<HTThrownCaptureEgg> =
-        REGISTER.registerType("eldritch_egg", ::HTThrownCaptureEgg, MobCategory.MISC) { builder: EntityType.Builder<HTThrownCaptureEgg> ->
+    //    TNT    //
+
+    @JvmStatic
+    private fun <T : Entity> registerTnt(name: String, factory: EntityType.EntityFactory<T>): HTDeferredEntityType<T> =
+        REGISTER.registerType(name, factory, MobCategory.MISC) { builder: EntityType.Builder<T> ->
             builder
-                .sized(0.25f, 0.25f)
-                .clientTrackingRange(4)
-                .updateInterval(10)
+                .fireImmune()
+                .sized(0.98f, 0.98f)
+                .eyeHeight(0.15f)
+                .clientTrackingRange(10)
+                .updateInterval(SharedConstants.TICKS_PER_SECOND / 2)
         }
 
     //    Minecart    //

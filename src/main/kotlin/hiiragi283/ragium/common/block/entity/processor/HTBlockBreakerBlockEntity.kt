@@ -1,17 +1,17 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.block.attribute.getAttributeFront
-import hiiragi283.ragium.api.inventory.HTContainerItemSlot
-import hiiragi283.ragium.api.inventory.HTSlotHelper
-import hiiragi283.ragium.api.serialization.value.HTValueSerializable
+import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
-import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -19,38 +19,39 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.GameType
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.CommonHooks
-import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.event.EventHooks
 
 class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTEnergizedProcessorBlockEntity<BlockPos, HTBlockBreakerBlockEntity.MiningRecipe>(RagiumBlocks.BLOCK_BREAKER, pos, state) {
-    lateinit var toolSlot: HTItemSlot.Basic
+    HTProcessorBlockEntity<BlockPos, HTBlockBreakerBlockEntity.MiningRecipe>(RagiumBlocks.BLOCK_BREAKER, pos, state) {
+    lateinit var toolSlot: HTBasicItemSlot
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        toolSlot = builder.addSlot(HTSlotInfo.INPUT, PlayerHandSlot())
-    }
-
-    private var fakePlayer: ServerPlayer? = null
-
-    override fun onUpdateLevel(level: Level, pos: BlockPos) {
-        super.onUpdateLevel(level, pos)
-        if (level is ServerLevel) {
-            fakePlayer = FakePlayerFactory.get(level, getOwnerProfile())
-        }
+        toolSlot = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTBasicItemSlot.create(
+                listener,
+                HTSlotHelper.getSlotPosX(2),
+                HTSlotHelper.getSlotPosY(1),
+                canExtract = HTPredicates.manualOnly(),
+                canInsert = HTPredicates.manualOnly(),
+            ),
+        )
     }
 
     //    Ticking    //
+
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = true
 
     override fun createRecipeInput(level: ServerLevel, pos: BlockPos): BlockPos? = blockState.getAttributeFront()?.let(pos::relative)
 
     override fun getMatchedRecipe(input: BlockPos, level: ServerLevel): MiningRecipe? {
         val state: BlockState = level.getBlockState(input)
-        val player: ServerPlayer = this.fakePlayer ?: return null
+        val player: ServerPlayer = getFakePlayer(level)
+        player.setItemInHand(InteractionHand.MAIN_HAND, this.toolSlot.getItemStack())
         val tool: ImmutableItemStack = this.toolSlot.getStack() ?: return null
         return when {
             // 採掘速度が0未満の場合はスキップ
@@ -98,46 +99,6 @@ class HTBlockBreakerBlockEntity(pos: BlockPos, state: BlockState) :
             EventHooks.onPlayerDestroyItem(player, toolStack1, InteractionHand.MAIN_HAND)
         } else {
             toolSlot.insert(toolStack.toImmutable(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        }
-    }
-
-    //    Hand Slot    //
-
-    private inner class PlayerHandSlot :
-        HTItemSlot.Basic(),
-        HTValueSerializable.Empty {
-        private var clientStack: ItemStack = ItemStack.EMPTY
-
-        override fun createContainerSlot(): HTContainerItemSlot = HTContainerItemSlot(
-            this,
-            HTSlotHelper.getSlotPosX(2),
-            HTSlotHelper.getSlotPosY(1),
-            ::setStack,
-            ::isStackValidForInsert,
-            HTContainerItemSlot.Type.INPUT,
-        )
-
-        override fun setStack(stack: ImmutableItemStack?) {
-            val mutable: ItemStack = stack?.unwrap() ?: ItemStack.EMPTY
-            if (fakePlayer != null) {
-                fakePlayer!!.setItemInHand(InteractionHand.MAIN_HAND, mutable)
-            } else {
-                clientStack = mutable
-            }
-        }
-
-        override fun updateAmount(stack: ImmutableItemStack, amount: Int) {
-            (fakePlayer?.getItemInHand(InteractionHand.MAIN_HAND) ?: clientStack).count = amount
-        }
-
-        override fun isValid(stack: ImmutableItemStack): Boolean = true
-
-        override fun getStack(): ImmutableItemStack? = (fakePlayer?.getItemInHand(InteractionHand.MAIN_HAND) ?: clientStack).toImmutable()
-
-        override fun getCapacity(stack: ImmutableItemStack?): Int = 1
-
-        override fun onContentsChanged() {
-            fakePlayer?.inventory?.setChanged()
         }
     }
 
