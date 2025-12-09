@@ -1,6 +1,165 @@
 # Changelog
 
-**Full Changelog**: https://github.com/Hiiragi283/ragium/compare/v0.11.0_neo...v0.12.0
+**Full Changelog**: https://github.com/Hiiragi283/ragium/compare/v0.12.0...v0.13.0
+
+## v0.13.0
+
+- Reworked around Machine Upgrades
+
+- Material
+  - Added: Bio
+  - Added: Butter
+  - Removed: Iridescentium
+  - Removed: Soul
+  - Removed: Obsidian
+- Block
+  - Added: Budding Quartz
+  - Added: Quartz Cluster
+  - Added: Imitation Spawner
+  - Added: Smooth Blackstone
+  - Added: Metal Bars (Azure Steel/Deep Steel/Night Metal)
+  - Added: Glasses (Crimson Crystal/Warped Crystal)
+  - Added: Culinary Generator
+  - Added: Magmatic Generator
+  - Added: Advanced Mixer
+  - Added: Mob Crusher
+  - Added: Fluid Collector
+  - Added: Item Collector
+  - Removed: Budding Azure (replaced with Budding Quartz)
+  - Removed: Azure Cluster (replaced with Quartz Cluster)
+  - Removed: Block of Iridescentium
+  - Removed: Soul Glass (replaced with Warped Crystal Glass)
+  - Removed: Auto Smithing Table/Stonecutter
+  - Removed: Washer
+  - Removed: Water Collector (replaced with Fluid Collector)
+  - Removed: Exp Collector (replaced with Fluid Collector)
+  - Removed: Fisher (replaced with Item Collector)
+  - Removed: Item Buffer (replaced with Item Collector)
+  - Removed: Mob Capturer (replaced with Item Collector)
+- Entity
+  - Added: Strike / Neutralize / Fishing / Teleport / Confusion Charge
+- Fluid
+  - Added: Cream
+  - Added: Ragi-Cherry Juice
+  - Added: Slime
+  - Added: Gelled Explosive
+  - Added: Crude Bio
+  - Added: Biofuel
+  - Added: Spruce Resin
+  - Added: Destabilized Raginite
+  - Added: Coolant
+  - Removed: Awkward Water
+  - Removed: Meat
+  - Removed: Organic Mutagen
+  - Removed: Crimson Fuel
+  - Removed: Green Fuel
+- Item
+  - Added: Rosin
+  - Added: Magma Shard
+  - Added: Iridescent Powder
+  - Added: Azure Steel / Deep Steel / Night Metal Gear
+  - Added: Wood Plate
+  - Added: Cream Bowl
+  - Added: Ragi-Cherry Juice
+  - Added: Ragi-Cherry Pie (imported from integration)
+  - Added: Ragi-Cherry Pie Slice (imported from integration)
+  - Added: Ragi-Cherry Toast (imported from integration)
+  - Added: Blank / Gear / Plate Mold
+  - Added: Basic / Advanced Efficiency Upgrade
+  - Added: Basic / Advanced Energy Capacity Upgrade
+  - Added: Basic / Advanced Speed Upgrade
+  - Added: Efficient Crush Upgrade
+  - Added: Primary Only Upgrade
+  - Added: Exp Collector Upgrade
+  - Added: Fishing Upgrade
+  - Added: Mob Capture Upgrade
+  - Added: Creative Upgrade
+  - Removed: Resin (replaced with Rosin)
+  - Removed: Blackstone / Obsidian Dust (replaced with blocks)
+  - Removed: Cinnabar / Saltpeter Dust
+  - Removed: Ragi-Crystal/Eldritch Pearl Dust (replaced with gems)
+  - Removed: Iridescentium Dust / Ingot (replaced with Iridescent Powder)
+  - Removed: Iridescentium Nugget
+  - Removed: Blue Knowledge
+  - Removed: XX Drum Upgrades
+  - Removed: Elite Circuit (replaced with Ragi-Crystal)
+  - Removed: Ultimate Circuit (replaced with Eldritch Pearl)
+  - Removed: Basic Component
+- World
+  - Added: Quartz Geode in Nether
+
+---
+
+- Recipe: Added recipe type `ragium:rock_generating`
+- Recipe: Added custom ingredient `ragium:potion` based on `HTPotionIngredient`
+- Recipe: Removed recipe type `ragium:washing`
+- Recipe: Removed custom ingredient `ragium:entity_type` base on `HTEntityTypeIngredient`
+
+### Integration
+
+- Refined recipe unification by Almost Unified
+- Redesigned EMI integration internally
+
+### API
+
+---
+
+- Block: Added attribute `HTFluidBlockAttribute` to manage fluid tank capacity
+- Block: Added `HTUpgradableBlockEntity` to handle machine upgrades
+
+---
+
+- Data: Added data map type `COOLANT` `HTFluidCoolantData` to manage coolant usage for Combustion Generator
+
+- Data: Renamed `RagiumDataMaps` with `RagiumDataMapTypes`
+- Data: `HTFluidFuelData` stores `time` instead of `energy`
+
+- Data: Removed data map type `MATERIAL_RECIPE` based on `HTMaterialRecipeData`, migrated to `HTRegisterRuntimeRecipeEvent`
+- Data: Removed data map type `SUB_ENTITY_INGREDIENT` based on `HTSubEntityIngredient`, migrated to `HTSpawnerMob`
+
+---
+
+- Fluid: Added `HTFluidHolderLike` which holds source fluid and its common tag
+
+- Fluid: Redesigned `HTFluidContent` based on `HTFluidHolderLike`
+
+---
+
+- Item: Added `HTSubCreativeTabContents` to add custom stacks to creative mode tabs
+- Item: Added component `ragium:machine_upgrade` based on `HTMachineUpgrade`
+- Item: Added component `machine_upgrade/filter` based on `HTKeyOrTagEntry<BlockEntityType<*>>`
+- Item: Added component `ragium:spawner_mob` based on `HTSpawnerMob`
+
+- Item: Renamed component `ragium:blast_power` with `ragium:charge_power`
+- Item: Replaced usages of `PotionContents` and `MobEffectInstance` with `HTPotionContents` and `HTMobEffectInstace`
+- Item: Replaced component `ragium:damage_resistant` from `HTDamageResistant` into `HTKeyOrTagEntry<DamageType>`
+- Item: Replaced component `ragium:repairable` from `HTRepairable` into `HTItemIngredient`
+
+---
+
+- Material: Added `HTMaterialLike.Translatable` which extends from `HTMaterialLike` and `HTLangName`
+- Material: Added prefix `RAW_MATERIAL_DYE`
+
+- Material: Removed prefix: `GLASS_BLOCK_TINTED`, `CIRCUIT`
+
+---
+
+- Recipe: Added `HTRegisterRuntimeRecipeEvent` to register runtime recipes
+- Recipe: Added `HTRecipe.Fake` to handle converted recipes
+- Recipe: Added `HTRecipe.Modifiable` to create its copy with multipliers input/output counts
+
+- Recipe: Renamed almost all basic interfaces
+- Recipe: Redesigned `HTItemIngredient` and `HTFluidIngredient`
+
+- Recipe: Removed `HTMaterialRecipeManager`
+
+---
+
+- Registry: Added register `HTDeferredCreativeTabRegister` for `CreativeModeTab`
+
+- Registry: Removed `HTSolarPower`
+
+---
 
 ## v0.12.0
 

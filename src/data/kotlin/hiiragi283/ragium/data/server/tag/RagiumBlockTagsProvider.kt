@@ -225,6 +225,9 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         // Stone
         addTags(factory, Tags.Blocks.OBSIDIANS, RagiumCommonTags.Blocks.OBSIDIANS_MYSTERIOUS)
             .add(RagiumBlocks.MYSTERIOUS_OBSIDIAN)
+        factory
+            .apply(RagiumModTags.Blocks.RESONANT_DEBRIS_REPLACEABLES)
+            .add(Blocks.DEEPSLATE.toHolderLike())
         // Crop
         factory.apply(BlockTags.BEE_GROWABLES).add(RagiumBlocks.EXP_BERRIES)
         factory.apply(BlockTags.FALL_DAMAGE_RESETTING).add(RagiumBlocks.EXP_BERRIES)
