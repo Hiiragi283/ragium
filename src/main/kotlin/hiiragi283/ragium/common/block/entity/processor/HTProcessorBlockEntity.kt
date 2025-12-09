@@ -130,6 +130,15 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         recipe: RECIPE,
     )
 
+    //    RecipeBased    //
+
+    abstract class RecipeBased<RECIPE : HTRecipe>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+        HTProcessorBlockEntity<HTRecipeInput, RECIPE>(blockHolder, pos, state) {
+        final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create(::buildRecipeInput)
+
+        protected abstract fun buildRecipeInput(builder: HTRecipeInput.Builder)
+    }
+
     //    Cached    //
 
     /**
@@ -140,7 +149,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
-    ) : HTProcessorBlockEntity<HTRecipeInput, RECIPE>(blockHolder, pos, state) {
+    ) : RecipeBased<RECIPE>(blockHolder, pos, state) {
         constructor(
             finder: HTRecipeFinder<HTRecipeInput, RECIPE>,
             blockHolder: Holder<Block>,

@@ -71,9 +71,9 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0 || outputTank.getNeeded() > 0
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create {
-        items += catalystSlot.getStack()
-        fluids += inputTank.getStack()
+    override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += catalystSlot.getStack()
+        builder.fluids += inputTank.getStack()
     }
 
     // アウトプットに搬出できるか判定する

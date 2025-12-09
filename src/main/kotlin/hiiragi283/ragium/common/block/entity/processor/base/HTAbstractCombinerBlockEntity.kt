@@ -79,10 +79,10 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTC
 
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create {
-        items += leftInputSlot.getStack()
-        items += rightInputSlot.getStack()
-        fluids += inputTank.getStack()
+    final override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += leftInputSlot.getStack()
+        builder.items += rightInputSlot.getStack()
+        builder.fluids += inputTank.getStack()
     }
 
     final override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTCombineRecipe): Boolean =

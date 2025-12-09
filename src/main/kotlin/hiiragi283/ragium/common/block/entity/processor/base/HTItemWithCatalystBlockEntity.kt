@@ -39,9 +39,9 @@ abstract class HTItemWithCatalystBlockEntity(
         outputSlot = upperOutput(builder, listener)
     }
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create {
-        items += inputSlot.getStack()
-        items += catalystSlot.getStack()
+    final override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += inputSlot.getStack()
+        builder.items += catalystSlot.getStack()
     }
 
     override fun completeRecipe(

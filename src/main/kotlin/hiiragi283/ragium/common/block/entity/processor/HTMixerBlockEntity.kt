@@ -47,9 +47,9 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlot = upperOutput(builder, listener)
     }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create {
-        items += inputSlot.getStack()
-        fluids += inputTank.getStack()
+    override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += inputSlot.getStack()
+        builder.fluids += inputTank.getStack()
     }
 
     override fun completeRecipe(

@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.processor
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.function.HTPredicates
-import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -35,6 +34,7 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.SpawnEggItem
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.LootTable
@@ -44,7 +44,7 @@ import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.event.EventHooks
 
 class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTRecipeInput, HTMobCrusherBlockEntity.MobLootRecipe>(RagiumBlocks.MOB_CRUSHER, pos, state) {
+    HTProcessorBlockEntity<SingleRecipeInput, HTMobCrusherBlockEntity.MobLootRecipe>(RagiumBlocks.MOB_CRUSHER, pos, state) {
     lateinit var outputTank: HTBasicFluidTank
         private set
 
@@ -104,14 +104,15 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
         outputSlots.any { slot: HTBasicItemSlot -> slot.getNeeded() > 0 }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.single(inputSlot.getStack())
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? =
+        inputSlot.getStack()?.unwrap()?.let(::SingleRecipeInput)
 
     /**
      * @see net.minecraft.server.commands.LootCommand.dropKillLoot
      */
-    override fun getMatchedRecipe(input: HTRecipeInput, level: ServerLevel): MobLootRecipe? {
-        val stack: ImmutableItemStack = input.item(0) ?: return null
-        val entityType: EntityType<*> = (stack.value() as? SpawnEggItem)?.getType(stack.unwrap()) ?: return null
+    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): MobLootRecipe? {
+        val stack: ItemStack = input.item()
+        val entityType: EntityType<*> = (stack.item as? SpawnEggItem)?.getType(stack) ?: return null
         val fakeEntity: LivingEntity = entityType.create(level) as? LivingEntity ?: return null
 
         val fakePlayer: ServerPlayer = getFakePlayer(level)
@@ -137,7 +138,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getRecipeTime(recipe: MobLootRecipe): Int = super.getRecipeTime(recipe) / 4
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: MobLootRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: MobLootRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         for (stackIn: ImmutableItemStack in recipe.drops) {
             if (HTStackSlotHelper.insertStacks(outputSlots, stackIn, HTStorageAction.SIMULATE) != null) {
@@ -153,7 +154,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTRecipeInput,
+        input: SingleRecipeInput,
         recipe: MobLootRecipe,
     ) {
         val (_, _, drops: List<ImmutableItemStack>) = recipe

@@ -30,10 +30,4 @@ interface HTRecipeResult<STACK : ImmutableStack<*, STACK>> {
      * @return 完成品がない場合は`null`
      */
     fun getStackOrNull(provider: HolderLookup.Provider?): STACK? = getStackResult(provider).result()
-
-    /**
-     * 完成品が存在するか判定します。
-     * @return [getStackResult]が[HTTextResult.failure]の場合は`true`
-     */
-    fun hasNoMatchingStack(): Boolean = getStackResult(null).isFailure
 }

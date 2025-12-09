@@ -17,12 +17,14 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTSingleItemInputBlockEntity<RECIPE : Any>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity<HTRecipeInput, RECIPE>(blockHolder, pos, state) {
+abstract class HTSingleItemInputBlockEntity<RECIPE : HTRecipe>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity.RecipeBased<RECIPE>(blockHolder, pos, state) {
     lateinit var inputSlot: HTBasicItemSlot
         protected set
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.single(inputSlot.getStack())
+    final override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += inputSlot.getStack()
+    }
 
     //    Cached    //
 

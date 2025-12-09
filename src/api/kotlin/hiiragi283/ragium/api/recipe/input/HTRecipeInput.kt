@@ -20,16 +20,11 @@ data class HTRecipeInput private constructor(val items: List<ImmutableItemStack?
         inline fun create(builderAction: Builder.() -> Unit): HTRecipeInput? = Builder().apply(builderAction).build()
 
         @JvmStatic
-        fun single(stack: ImmutableItemStack?): HTRecipeInput? = create {
-            items += stack
-        }
-
-        @JvmStatic
         fun <STACK : ImmutableStack<*, STACK>> getMatchingSlots(
             ingredients: List<HTIngredient<*, STACK>>,
             stacks: List<STACK?>,
         ): IntArray {
-            if (ingredients.isEmpty() || (stacks.isEmpty() || stacks.filterNotNull().isEmpty())) return intArrayOf()
+            if (ingredients.isEmpty() || isEmpty(stacks)) return intArrayOf()
             if (ingredients.size > stacks.size) return intArrayOf()
 
             val stacks1: MutableList<STACK?> = stacks.toMutableList()

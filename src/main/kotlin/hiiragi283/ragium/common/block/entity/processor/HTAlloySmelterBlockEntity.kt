@@ -45,8 +45,8 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create {
-        items.addAll(inputSlots.map(HTBasicItemSlot::getStack))
+    override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items.addAll(inputSlots.map(HTBasicItemSlot::getStack))
     }
 
     override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTShapelessInputsRecipe): Boolean =
