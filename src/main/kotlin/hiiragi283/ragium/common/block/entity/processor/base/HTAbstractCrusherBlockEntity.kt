@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -18,7 +19,6 @@ import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import org.apache.commons.lang3.math.Fraction
@@ -53,13 +53,13 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: SingleRecipeInput,
+        input: HTRecipeInput,
         recipe: HTSingleExtraItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
         completeOutput(level, input, recipe)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
+        inputSlot.extract(recipe.getRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 潤滑油があれば減らす
         if (hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)) {
             inputTank.extract(RagiumConst.LUBRICANT_CONSUME, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
@@ -68,5 +68,5 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
         level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.25f, 1f)
     }
 
-    protected abstract fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe)
+    protected abstract fun completeOutput(level: ServerLevel, input: HTRecipeInput, recipe: HTSingleExtraItemRecipe)
 }

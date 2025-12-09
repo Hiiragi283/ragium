@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
@@ -13,7 +14,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
@@ -39,7 +39,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0 && extraSlot.getNeeded() > 0
 
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTSingleExtraItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
         if (hasUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE)) {
@@ -49,7 +49,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         return bool1 && bool2
     }
 
-    override fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe) {
+    override fun completeOutput(level: ServerLevel, input: HTRecipeInput, recipe: HTSingleExtraItemRecipe) {
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

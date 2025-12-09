@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.getItemStack
-import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
@@ -105,7 +104,8 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
         outputSlots.any { slot: HTBasicItemSlot -> slot.getNeeded() > 0 }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? =
+        inputSlot.getStack()?.unwrap()?.let(::SingleRecipeInput)
 
     /**
      * @see net.minecraft.server.commands.LootCommand.dropKillLoot

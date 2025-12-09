@@ -69,7 +69,7 @@ object RagiumRecipeBiCodecs {
             .codec(Registries.ITEM)
             .fieldOf("seed")
             .forGetter(HTPlantingRecipe::seed),
-        HTItemIngredient.CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
+        HTItemIngredient.UNSIZED_CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
         HTFluidIngredient.CODEC.fieldOf("fluid").forGetter(HTPlantingRecipe::fluid),
         HTItemResult.CODEC.fieldOf("crop").forGetter(HTPlantingRecipe::crop),
         ::HTPlantingRecipe,
@@ -77,7 +77,7 @@ object RagiumRecipeBiCodecs {
 
     @JvmField
     val REFINING: MapBiCodec<RegistryFriendlyByteBuf, HTRefiningRecipe> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.optionalFieldOf("item_ingredient").forGetter(HTRefiningRecipe::itemIngredient),
+        HTItemIngredient.UNSIZED_CODEC.optionalFieldOf("item_ingredient").forGetter(HTRefiningRecipe::itemIngredient),
         HTFluidIngredient.CODEC.fieldOf("fluid_ingredient").forGetter(HTRefiningRecipe::fluidIngredient),
         RESULTS.forGetter(HTRefiningRecipe::results),
         ::HTRefiningRecipe,
@@ -86,19 +86,19 @@ object RagiumRecipeBiCodecs {
     @JvmField
     val ROCK_GENERATING: MapBiCodec<RegistryFriendlyByteBuf, HTRockGeneratingRecipe> = MapBiCodec.composite(
         HTFluidIngredient.CODEC.fieldOf("left").forGetter(HTRockGeneratingRecipe::left),
-        BiCodecs.either(HTItemIngredient.CODEC, HTFluidIngredient.CODEC).fieldOf("right").forGetter(HTRockGeneratingRecipe::right),
-        HTItemIngredient.CODEC.optionalFieldOf("bottom").forGetter(HTRockGeneratingRecipe::bottom),
+        BiCodecs.either(HTItemIngredient.UNSIZED_CODEC, HTFluidIngredient.CODEC).fieldOf("right").forGetter(HTRockGeneratingRecipe::right),
+        HTItemIngredient.UNSIZED_CODEC.optionalFieldOf("bottom").forGetter(HTRockGeneratingRecipe::bottom),
         HTItemResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTRockGeneratingRecipe::result),
         ::HTRockGeneratingRecipe,
     )
 
     @JvmStatic
-    fun <I : Any, R : HTBasicSingleOutputRecipe<*>> singleOutput(
+    fun <I : Any, R : HTBasicSingleOutputRecipe> singleOutput(
         factory: (I, HTItemResult) -> R,
         ingredient: ParameterCodec<in RegistryFriendlyByteBuf, R, I>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         ingredient,
-        HTItemResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTBasicSingleOutputRecipe<*>::result),
+        HTItemResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTBasicSingleOutputRecipe::result),
         factory,
     )
 

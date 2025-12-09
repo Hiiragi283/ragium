@@ -4,7 +4,7 @@ import hiiragi283.ragium.api.block.attribute.getAttributeFront
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -43,12 +43,12 @@ class HTStoneCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Ticking    //
 
-    private val recipeCache: HTRecipeCache<HTMultiRecipeInput, HTRockGeneratingRecipe> = HTFinderRecipeCache(RecipeFinder())
+    private val recipeCache: HTRecipeCache<HTRecipeInput, HTRockGeneratingRecipe> = HTFinderRecipeCache(RecipeFinder())
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // インプットに一致するレシピを探索する
         val front: Direction = state.getAttributeFront() ?: return false
-        val input: HTMultiRecipeInput = createInput(level, pos, front) ?: return false
+        val input: HTRecipeInput = createInput(level, pos, front) ?: return false
         val recipe: HTRockGeneratingRecipe = recipeCache.getFirstRecipe(input, level) ?: return false
         // 実際にアウトプットに搬出する
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
@@ -57,7 +57,7 @@ class HTStoneCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         return true
     }
 
-    private fun createInput(level: ServerLevel, pos: BlockPos, front: Direction): HTMultiRecipeInput? = HTMultiRecipeInput.create {
+    private fun createInput(level: ServerLevel, pos: BlockPos, front: Direction): HTRecipeInput? = HTRecipeInput.create {
         val leftPos: BlockPos = pos.relative(front.counterClockWise)
         val rightPos: BlockPos = pos.relative(front.clockWise)
         // 左側は液体のみ
@@ -79,17 +79,17 @@ class HTStoneCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    RecipeFinder    //
 
-    private class RecipeFinder : HTRecipeFinder<HTMultiRecipeInput, HTRockGeneratingRecipe> {
+    private class RecipeFinder : HTRecipeFinder<HTRecipeInput, HTRockGeneratingRecipe> {
         override fun getRecipeFor(
             manager: RecipeManager,
-            input: HTMultiRecipeInput,
+            input: HTRecipeInput,
             level: Level,
             lastRecipe: RecipeHolder<HTRockGeneratingRecipe>?,
         ): RecipeHolder<HTRockGeneratingRecipe>? {
             // 入力が空の場合は即座に抜ける
             if (input.isEmpty) return null
             // キャッシュから判定を行う
-            if (lastRecipe != null && matches(lastRecipe.value, input, level)) {
+            if (lastRecipe != null && lastRecipe.value.matches(input, level)) {
                 return lastRecipe
             }
             // 次にRecipeManagerから一覧を取得する
@@ -98,14 +98,14 @@ class HTStoneCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             // 触媒ありのレシピから優先して判定を行う
             for (holder: RecipeHolder<HTRockGeneratingRecipe> in allRecipes) {
                 val recipe: HTRockGeneratingRecipe = holder.value()
-                if (recipe.bottom.isPresent && matches(recipe, input, level)) {
+                if (recipe.bottom.isPresent && recipe.matches(input, level)) {
                     return holder
                 }
             }
             // 触媒なしのレシピを判定
             for (holder: RecipeHolder<HTRockGeneratingRecipe> in allRecipes) {
                 val recipe: HTRockGeneratingRecipe = holder.value()
-                if (recipe.bottom.isEmpty && matches(recipe, input, level)) {
+                if (recipe.bottom.isEmpty && recipe.matches(input, level)) {
                     return holder
                 }
             }

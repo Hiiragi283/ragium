@@ -5,15 +5,14 @@ import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
-import net.minecraft.world.item.crafting.SingleRecipeInput
 
 open class HTVanillaCookingRecipe :
     HTVanillaSingleItemRecipe<AbstractCookingRecipe>,
-    HTRecipe.Modifiable<SingleRecipeInput, HTVanillaCookingRecipe> {
+    HTRecipe.Modifiable<HTVanillaCookingRecipe> {
     constructor(
         recipe: AbstractCookingRecipe,
         ingredient: HTItemIngredient,
-        resultFactory: HTVanillaResultFactory<SingleRecipeInput>,
+        resultFactory: HTVanillaResultFactory,
     ) : super(recipe, ingredient, resultFactory)
 
     constructor(recipe: AbstractCookingRecipe) : super(recipe)

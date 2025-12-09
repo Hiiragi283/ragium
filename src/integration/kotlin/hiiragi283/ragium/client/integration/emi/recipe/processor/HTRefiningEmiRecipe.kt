@@ -3,14 +3,14 @@ package hiiragi283.ragium.client.integration.emi.recipe.processor
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addTank
-import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
-class HTRefiningEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTRefiningRecipe>) :
-    HTEmiHolderRecipe<HTRefiningRecipe>(category, holder) {
+class HTRefiningEmiRecipe(holder: RecipeHolder<HTRefiningRecipe>) :
+    HTEmiHolderRecipe<HTRefiningRecipe>(RagiumEmiRecipeCategories.REFINING, holder) {
     init {
         addInput(recipe.fluidIngredient)
         addCatalyst(recipe.itemIngredient.getOrNull())

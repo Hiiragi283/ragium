@@ -241,7 +241,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 .crushing(
                     ore,
                     resultHelper.item(CommonMaterialPrefixes.DUST, primary, 8),
-                    resultHelper.item(CommonMaterialPrefixes.GEM, secondary, 2),
+                    resultHelper.item(CommonMaterialPrefixes.GEM, secondary),
                 ).saveSuffixed(output, "_from_ore")
             // Mixing with Lava
             HTComplexRecipeBuilder

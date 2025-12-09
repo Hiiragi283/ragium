@@ -16,7 +16,7 @@ interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> : Predic
     /**
      * 指定された[stack]が条件を満たしているか判定します。
      */
-    abstract override fun test(stack: STACK): Boolean
+    override fun test(stack: STACK): Boolean = testOnlyType(stack) && stack.amount() >= getRequiredAmount()
 
     /**
      * 指定された[stack]が数量を除いて条件を満たしているか判定します。
@@ -24,15 +24,9 @@ interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> : Predic
     fun testOnlyType(stack: STACK): Boolean
 
     /**
-     * 指定された[stack]から，この[HTIngredient]に合致する数量を返します。
+     * この[HTIngredient]に合致する数量を返します。
      */
-    fun getRequiredAmount(stack: STACK): Int
-
-    /**
-     * 条件に合致する[STACK]があるか判定します。
-     * @return ない場合は`true`, ある場合は`false`
-     */
-    fun hasNoMatchingStacks(): Boolean
+    fun getRequiredAmount(): Int
 
     fun unwrap(): Either<Pair<TagKey<TYPE>, Int>, List<STACK>>
 }

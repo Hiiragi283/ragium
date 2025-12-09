@@ -12,6 +12,7 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -60,6 +61,8 @@ value class ImmutableItemStack private constructor(private val stack: ItemStack)
     fun unwrap(): ItemStack = stack.copy()
 
     fun isOf(item: Item): Boolean = stack.`is`(item)
+
+    fun isOf(key: ResourceKey<Item>): Boolean = stack.itemHolder.`is`(key)
 
     fun isOf(tagKey: TagKey<Item>): Boolean = stack.`is`(tagKey)
 

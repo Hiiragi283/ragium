@@ -59,7 +59,7 @@ abstract class HTItemGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
                 val remainder: ImmutableItemStack? = remainderSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 HTItemDropHelper.dropStackAt(level, pos, remainder)
             },
-            { 1 },
+            1,
             HTStorageAction.EXECUTE,
         )
     }
