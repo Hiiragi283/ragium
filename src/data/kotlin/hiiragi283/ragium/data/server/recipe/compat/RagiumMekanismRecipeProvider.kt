@@ -66,6 +66,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
                     essenceType.asStack(80),
                 ).build(output, id("$prefix/$name/from_enriched"))
             }
+
+            // Ragium Powder -> Chemical
+            factory(
+                itemHelper.from(RagiumItems.RAGIUM_POWDER),
+                RagiumEssenceType.RAGIUM.asStack(320),
+            ).build(output, id("$prefix/ragium/from_powder"))
         }
 
         toChemical(ItemStackToChemicalRecipeBuilder::chemicalConversion, "chemical_conversion")

@@ -153,9 +153,7 @@ object RagiumItems {
     val RAGI_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_coke")
 
     @JvmField
-    val RAGIUM_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragium_powder") {
-        it.requiredFeatures(RagiumAPI.WORK_IN_PROGRESS)
-    }
+    val RAGIUM_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragium_powder")
 
     // Wood
     @JvmField

@@ -11,11 +11,9 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTExpOrbTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -34,31 +32,19 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTFluidCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     HTDeviceBlockEntity.Tickable(RagiumBlocks.FLUID_COLLECTOR, pos, state) {
-    lateinit var tank: HTBasicFluidTank
+    lateinit var outputTank: HTBasicFluidTank
         private set
 
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         // output
-        tank = builder.addSlot(
+        outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
             HTVariableFluidTank.output(listener, RagiumConfig.COMMON.deviceCollectorTankCapacity),
         )
     }
 
-    override fun onRemove(level: Level, pos: BlockPos) {
-        super.onRemove(level, pos)
-        if (RagiumFluidContents.EXPERIENCE.isOf(tank.getStack())) {
-            ExperienceOrb(
-                level,
-                pos.x.toDouble(),
-                pos.y.toDouble(),
-                pos.z.toDouble(),
-                HTExperienceHelper.expAmountFromFluid(tank.getAmount()),
-            ).let(level::addFreshEntity)
-        }
-    }
-
-    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(tank)
+    override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
+        HTStackSlotHelper.calculateRedstoneLevel(outputTank)
 
     //    Ticking    //
 
@@ -80,7 +66,7 @@ class HTFluidCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             .asSequence()
             .filter(ExperienceOrb::isAlive)
             .map(::HTExpOrbTank)
-            .forEach { tank: HTExpOrbTank -> HTStackSlotHelper.moveStack(tank, this.tank) }
+            .forEach { tank: HTExpOrbTank -> HTStackSlotHelper.moveStack(tank, this.outputTank) }
         return true
     }
 
@@ -89,8 +75,8 @@ class HTFluidCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         val amount: Int = calculateWaterAmount(level, pos)
         val stack: ImmutableFluidStack = HTFluidHolderLike.WATER.toImmutableStack(amount) ?: return false
         // 液体を搬入できるかチェック
-        if (!HTStackSlotHelper.canInsertStack(tank, stack, false)) return false
-        tank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        if (!HTStackSlotHelper.canInsertStack(outputTank, stack, false)) return false
+        outputTank.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS)
         return true
     }

@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
@@ -29,6 +30,8 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
+import hiiragi283.ragium.common.util.HTExperienceHelper
+import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -41,6 +44,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
+import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
@@ -248,6 +252,23 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     final override fun getFluidTanks(side: Direction?): List<HTFluidTank> = fluidHandlerManager?.getContainers(side) ?: listOf()
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidHandlerManager?.resolve(direction)
+
+    override fun onRemove(level: Level, pos: BlockPos) {
+        super.onRemove(level, pos)
+        val expFluidAmount: Int = getFluidTanks(getFluidSideFor())
+            .mapNotNull(HTFluidTank::getStack)
+            .filter(RagiumFluidContents.EXPERIENCE::isOf)
+            .sumOf(ImmutableFluidStack::amount)
+        if (expFluidAmount > 0) {
+            ExperienceOrb(
+                level,
+                pos.x.toDouble(),
+                pos.y.toDouble(),
+                pos.z.toDouble(),
+                HTExperienceHelper.expAmountFromFluid(expFluidAmount),
+            ).let(level::addFreshEntity)
+        }
+    }
 
     // Energy
 

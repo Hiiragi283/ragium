@@ -1,7 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -24,14 +22,8 @@ object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
     private val enchLookup: HolderGetter<Enchantment> by lazy { provider.lookupOrThrow(Registries.ENCHANTMENT) }
 
     override fun buildRecipeInternal() {
-        save(
-            RagiumAPI.id(RagiumConst.EXTRACTING, "experience_from_items"),
-            HTExpExtractingRecipe,
-        )
-        save(
-            RagiumAPI.id(RagiumConst.ENCHANTING, "copy_from_book"),
-            HTCopyEnchantingRecipe,
-        )
+        save(HTExpExtractingRecipe.RECIPE_ID, HTExpExtractingRecipe)
+        save(HTCopyEnchantingRecipe.RECIPE_ID, HTCopyEnchantingRecipe)
 
         // Vanilla
         enchanting(

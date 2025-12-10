@@ -12,34 +12,34 @@ import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.item.createItemStack
-import hiiragi283.ragium.api.math.times
-import hiiragi283.ragium.api.math.toFraction
 import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.getHolderDataMap
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
-import hiiragi283.ragium.client.integration.emi.data.HTBiomassRecipeData
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.handler.HTEmiRecipeHandler
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTMachineUpgradeEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.device.HTRockGeneratingEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.generator.HTBiomassEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTCoolantEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
@@ -56,6 +56,10 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
+import hiiragi283.ragium.common.recipe.machine.HTBioExtractingRecipe
+import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
+import hiiragi283.ragium.common.recipe.machine.HTExpExtractingRecipe
+import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.setup.DeferredBEMenu
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -76,15 +80,14 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.component.Unbreakable
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.ComposterBlock
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.datamaps.DataMapType
-import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
-import org.apache.commons.lang3.math.Fraction
 import kotlin.streams.asSequence
 
 @EmiEntrypoint
@@ -295,20 +298,6 @@ class RagiumEmiPlugin : EmiPlugin {
         // Elite
         addDataMapRecipes(
             registry,
-            ITEM_LOOKUP,
-            NeoForgeDataMaps.COMPOSTABLES,
-            { holder: Holder<Item>, compostable: Compostable ->
-                val chance: Fraction = compostable.chance().toFraction()
-                HTBiomassRecipeData(
-                    holder.value().toEmi(),
-                    RagiumFluidContents.CRUDE_BIO.toFluidEmi((1000 * chance).toInt()),
-                )
-            },
-            ::HTBiomassEmiRecipe,
-        )
-
-        addDataMapRecipes(
-            registry,
             FLUID_LOOKUP,
             RagiumDataMapTypes.COOLANT,
             { holder: Holder<Fluid>, data: HTFluidCoolantData ->
@@ -328,7 +317,21 @@ class RagiumEmiPlugin : EmiPlugin {
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, HTSingleExtraItemEmiRecipe::cutting)
         addRegistryRecipes(registry, RagiumRecipeTypes.EXTRACTING, HTItemWithCatalystEmiRecipe::extracting)
 
-        registry.addRecipeSafe(RagiumAPI.id("/${RagiumConst.EXTRACTING}", "experience_from_items"), ::HTExpExtractingEmiRecipe)
+        addItemStackRecipes(
+            registry,
+            "crude_bio",
+            { stack: ItemStack ->
+                val crudeBio: ImmutableFluidStack = HTBioExtractingRecipe.getCrudeBio(ComposterBlock.getValue(stack))
+                    ?: return@addItemStackRecipes null
+                HTExtractingRecipe(
+                    HTItemIngredient(Ingredient.of(stack), 1),
+                    HTItemIngredient(Ingredient.of(Items.COMPOSTER), 1).wrapOptional(),
+                    Ior.Right(HTResultHelper.fluid(crudeBio.getId(), crudeBio.amount())),
+                )
+            },
+            HTItemWithCatalystEmiRecipe::extracting,
+        )
+        registry.addRecipeSafe(HTExpExtractingRecipe.RECIPE_ID.withPrefix("/"), ::HTExpExtractingEmiRecipe)
         // Advanced
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
@@ -340,7 +343,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addRegistryRecipes(registry, RagiumRecipeTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.SIMULATING, HTItemWithCatalystEmiRecipe::simulating)
 
-        registry.addRecipeSafe(RagiumAPI.id("/${RagiumConst.ENCHANTING}", "copy_from_book"), ::HTCopyEnchantingEmiRecipe)
+        registry.addRecipeSafe(HTCopyEnchantingRecipe.RECIPE_ID.withPrefix("/"), ::HTCopyEnchantingEmiRecipe)
 
         // Device
         addRegistryRecipes(registry, RagiumRecipeTypes.ROCK_GENERATING, ::HTRockGeneratingEmiRecipe)

@@ -25,7 +25,7 @@ class HTFluidCollectorScreen(menu: HTBlockEntityContainerMenu<HTFluidCollectorBl
             ),
         )
 
-        fluidWidget = createFluidTank(blockEntity.tank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
+        fluidWidget = createFluidTank(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
     }
 
     override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)

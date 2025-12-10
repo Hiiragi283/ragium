@@ -9,15 +9,30 @@ import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
-class HTItemWithCatalystEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicItemWithCatalystRecipe>) :
-    HTMultiOutputsEmiRecipe<HTBasicItemWithCatalystRecipe>(category, holder) {
+class HTItemWithCatalystEmiRecipe : HTMultiOutputsEmiRecipe<HTBasicItemWithCatalystRecipe> {
+    constructor(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: HTBasicItemWithCatalystRecipe) : super(
+        category,
+        id,
+        recipe,
+    )
+
+    constructor(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicItemWithCatalystRecipe>) : super(
+        category,
+        holder,
+    )
+
     companion object {
         @JvmStatic
         fun compressing(holder: RecipeHolder<HTBasicItemWithCatalystRecipe>): HTItemWithCatalystEmiRecipe =
             HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.COMPRESSING, holder)
+
+        @JvmStatic
+        fun extracting(id: ResourceLocation, recipe: HTBasicItemWithCatalystRecipe): HTItemWithCatalystEmiRecipe =
+            HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.EXTRACTING, id, recipe)
 
         @JvmStatic
         fun extracting(holder: RecipeHolder<HTBasicItemWithCatalystRecipe>): HTItemWithCatalystEmiRecipe =

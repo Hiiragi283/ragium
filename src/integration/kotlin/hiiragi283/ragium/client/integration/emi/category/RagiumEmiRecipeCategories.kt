@@ -12,7 +12,6 @@ import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -50,10 +49,6 @@ object RagiumEmiRecipeCategories {
     val MAGMATIC: HTEmiRecipeCategory = generator(RagiumBlocks.MAGMATIC_GENERATOR)
 
     // Elite
-    @JvmField
-    val BIOMASS: HTEmiRecipeCategory =
-        HTEmiRecipeCategory.create(HTBounds(0, 0, 5 * 18, 1 * 18), RagiumFluidContents.CRUDE_BIO.bucket)
-
     @JvmField
     val COOLANT: HTEmiRecipeCategory = generator(RagiumBlocks.COMBUSTION_GENERATOR)
 
@@ -137,7 +132,6 @@ object RagiumEmiRecipeCategories {
         register(registry, CULINARY)
         register(registry, MAGMATIC)
 
-        register(registry, BIOMASS)
         register(registry, COOLANT)
         register(registry, COMBUSTION)
         // Processor

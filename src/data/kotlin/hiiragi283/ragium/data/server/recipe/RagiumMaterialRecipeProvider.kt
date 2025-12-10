@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
@@ -91,6 +92,20 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         alloyFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL)
+        // Ragium Powder
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 1000))
+            .setResult(resultHelper.item(RagiumItems.RAGIUM_POWDER))
+            .save(output)
+
+        meltAndFreeze(
+            HTMoldType.GEM,
+            RagiumItems.RAGIUM_POWDER,
+            RagiumFluidContents.DESTABILIZED_RAGINITE,
+            100,
+        )
     }
 
     @JvmStatic
@@ -267,21 +282,13 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             CommonMaterialKeys.Metals.OSMIUM to CommonMaterialKeys.Metals.URANIUM,
             CommonMaterialKeys.Metals.URANIUM to CommonMaterialKeys.Metals.OSMIUM,
         ).forEach { (primary: HTMaterialLike, secondary: HTMaterialLike) ->
-            val ore: HTItemIngredient = itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, primary)
             // Crushing
             HTSingleExtraItemRecipeBuilder
                 .crushing(
-                    ore,
+                    itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, primary),
                     resultHelper.item(CommonMaterialPrefixes.DUST, primary, 2),
                     resultHelper.item(CommonMaterialPrefixes.DUST, secondary),
                 ).saveSuffixed(output, "_from_ore")
-            // Mixing with Crimson Blood
-            HTComplexRecipeBuilder
-                .mixing()
-                .addIngredient(ore)
-                .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRIMSON_BLOOD, 250))
-                .setResult(resultHelper.item(CommonMaterialPrefixes.INGOT, primary, 4))
-                .saveSuffixed(output, "_from_ore")
         }
 
         // Gems

@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.recipe.machine
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.item.component.filter
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
@@ -10,12 +12,16 @@ import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.ItemEnchantments
 
 object HTCopyEnchantingRecipe : HTCombineRecipe {
+    @JvmField
+    val RECIPE_ID: ResourceLocation = RagiumAPI.id(RagiumConst.ENCHANTING, "copy_from_book")
+
     override fun getLeftRequiredCount(): Int = 1
 
     override fun getRightRequiredCount(): Int = 0

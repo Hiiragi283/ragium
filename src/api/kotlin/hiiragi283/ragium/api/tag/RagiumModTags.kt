@@ -2,12 +2,14 @@ package hiiragi283.ragium.api.tag
 
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.material.Fluid
 
 object RagiumModTags {
     //    Blocks    //
@@ -92,6 +94,17 @@ object RagiumModTags {
 
     //    Fluids    //
 
+    object Fluids {
+        @JvmStatic
+        private fun create(path: String): TagKey<Fluid> = create(RagiumAPI.id(path))
+
+        @JvmStatic
+        private fun create(prefix: String, suffix: String): TagKey<Fluid> = create(RagiumAPI.id(prefix, suffix))
+
+        @JvmStatic
+        private fun create(id: ResourceLocation): TagKey<Fluid> = Registries.FLUID.createTagKey(id)
+    }
+
     //    Items    //
 
     object Items {
@@ -127,13 +140,13 @@ object RagiumModTags {
 
         // Enchantments
         @JvmField
-        val CAPACITY_ENCHANTABLE: TagKey<Item> = create("enchantable/capacity")
+        val CAPACITY_ENCHANTABLE: TagKey<Item> = create("enchantable", "capacity")
 
         @JvmField
-        val RANGE_ENCHANTABLE: TagKey<Item> = create("enchantable/range")
+        val RANGE_ENCHANTABLE: TagKey<Item> = create("enchantable", "range")
 
         @JvmField
-        val STRIKE_ENCHANTABLE: TagKey<Item> = create("enchantable/strike")
+        val STRIKE_ENCHANTABLE: TagKey<Item> = create("enchantable", "strike")
 
         // Flux
         @JvmField
@@ -157,9 +170,12 @@ object RagiumModTags {
         val TOOLS_HAMMER: TagKey<Item> = create("tools", "hammer")
 
         @JvmStatic
-        private fun create(path: String): TagKey<Item> = Registries.ITEM.createTagKey(RagiumAPI.id(path))
+        private fun create(path: String): TagKey<Item> = create(RagiumAPI.id(path))
 
         @JvmStatic
-        private fun create(prefix: String, suffix: String): TagKey<Item> = create("$prefix/$suffix")
+        private fun create(vararg path: String): TagKey<Item> = create(RagiumAPI.id(*path))
+
+        @JvmStatic
+        private fun create(id: ResourceLocation): TagKey<Item> = Registries.ITEM.createTagKey(id)
     }
 }

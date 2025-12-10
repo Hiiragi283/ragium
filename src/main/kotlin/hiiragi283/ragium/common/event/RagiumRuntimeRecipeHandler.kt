@@ -13,9 +13,11 @@ import hiiragi283.ragium.api.recipe.HTRegisterRuntimeRecipeEvent
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
+import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
@@ -35,6 +37,8 @@ object RagiumRuntimeRecipeHandler {
             compressing(event, key, definition)
             // Crushing
             crushing(event, key, definition)
+            // Mixing
+            mixingMetalOre(event, key, definition)
         }
     }
 
@@ -192,5 +196,22 @@ object RagiumRuntimeRecipeHandler {
                 event.itemCreator.fromTagKey(inputPrefix, key, inputCount),
                 event.resultHelper.item(outputPrefix, key, outputCount),
             ).saveSuffixed(event.output, "_from_${inputPrefix.asPrefixName()}")
+    }
+
+    //    Mixing    //
+
+    @JvmStatic
+    private fun mixingMetalOre(event: HTRegisterRuntimeRecipeEvent, key: HTMaterialKey, definition: HTMaterialDefinition) {
+        val basePrefix: HTMaterialPrefix = definition.getDefaultPrefix() ?: return
+        if (!basePrefix.isOf(CommonMaterialPrefixes.INGOT)) return
+        if (!event.isPresentTag(CommonMaterialPrefixes.ORE, key)) return
+        if (!event.isPresentTag(CommonMaterialPrefixes.INGOT, key)) return
+
+        HTComplexRecipeBuilder
+            .mixing()
+            .addIngredient(event.itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, key))
+            .addIngredient(event.fluidCreator.fromHolder(RagiumFluidContents.CRIMSON_BLOOD, 250))
+            .setResult(event.resultHelper.item(CommonMaterialPrefixes.INGOT, key, 4))
+            .saveSuffixed(event.output, "_from_ore")
     }
 }

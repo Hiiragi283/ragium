@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.recipe.crafting.HTGravitationalUpgradeRecipe
 import hiiragi283.ragium.common.recipe.crafting.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.recipe.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.recipe.crafting.HTUpgradeChargeRecipe
+import hiiragi283.ragium.common.recipe.machine.HTBioExtractingRecipe
 import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
 import hiiragi283.ragium.common.recipe.machine.HTExpExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
@@ -53,7 +54,15 @@ object RagiumRecipeSerializers {
     private fun <RECIPE : Recipe<*>> register(name: String, codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>): RecipeSerializer<RECIPE> =
         register(name, SimpleSerializer(codec))
 
+    @JvmStatic
+    private fun <RECIPE : Recipe<*>> register(name: String, recipe: RECIPE): RecipeSerializer<RECIPE> =
+        register(name, MapBiCodec.unit(recipe))
+
     //    Custom    //
+
+    @JvmField
+    val BIO_EXTRACTING: RecipeSerializer<HTBioExtractingRecipe> =
+        register("bio_extracting", HTBioExtractingRecipe)
 
     @JvmField
     val CLEAR_COMPONENT: RecipeSerializer<HTClearComponentRecipe> =
@@ -61,7 +70,7 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val COPY_ENCHANTING: RecipeSerializer<HTCopyEnchantingRecipe> =
-        register("copy_enchanting", MapBiCodec.unit(HTCopyEnchantingRecipe))
+        register("copy_enchanting", HTCopyEnchantingRecipe)
 
     @JvmField
     val ETERNAL_UPGRADE: RecipeSerializer<HTEternalUpgradeRecipe> =
@@ -69,7 +78,7 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val EXP_EXTRACTING: RecipeSerializer<HTExpExtractingRecipe> =
-        register("exp_extracting", MapBiCodec.unit(HTExpExtractingRecipe))
+        register("exp_extracting", HTExpExtractingRecipe)
 
     @JvmField
     val GRAVITATIONAL_UPGRADE: RecipeSerializer<HTGravitationalUpgradeRecipe> =

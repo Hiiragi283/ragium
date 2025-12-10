@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.recipe.machine
 
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
@@ -9,6 +11,7 @@ import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
@@ -16,6 +19,9 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.Level
 
 data object HTExpExtractingRecipe : HTItemWithCatalystRecipe {
+    @JvmField
+    val RECIPE_ID: ResourceLocation = RagiumAPI.id(RagiumConst.EXTRACTING, "experience_from_items")
+
     override fun assembleFluid(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? = input
         .item(0)
         ?.unwrap()

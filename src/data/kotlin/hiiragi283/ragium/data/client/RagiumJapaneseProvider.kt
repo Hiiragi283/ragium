@@ -231,6 +231,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.POTION_DROP, "ポーションの雫")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.RAGI_COKE, "らぎコークス")
+        add(RagiumItems.RAGIUM_POWDER, "ラギウムパウダー")
         add(RagiumItems.ROSIN, "ロジン")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.WITHER_DOLl, "ウィザー人形")
