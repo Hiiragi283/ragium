@@ -84,7 +84,7 @@ object RagiumRuntimeRecipeHandler {
                     event.resultHelper.item(CommonMaterialPrefixes.INGOT, key, outputCount * outputMultiplier),
                     event.itemCreator.fromTagKey(prefix, key, inputCount),
                     event.itemCreator.fromTagKey(flux, fluxCount),
-                ).saveSuffixed(event.output, "_from_${prefix.asPrefixName()}_with_${flux.location.path}")
+                ).saveSuffixed(event.output, "/${prefix.asPrefixName()}/${flux.location.path}")
         }
     }
 
