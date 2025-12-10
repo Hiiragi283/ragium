@@ -41,8 +41,8 @@ data object RagiumMaterialRecipeData {
 
     @JvmField
     val ADVANCED_RAGI_ALLOY: HTRecipeData = HTRecipeData.create {
-        ingotOrDust(VanillaMaterialKeys.GOLD)
-        addInput(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 4)
+        ingotOrDust(RagiumMaterialKeys.RAGI_ALLOY)
+        addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 2)
 
         addOutput(
             RagiumItems.getIngot(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY),

@@ -105,6 +105,8 @@ class HTShapedRecipeBuilder(stack: ImmutableItemStack) : HTStackRecipeBuilder<HT
 
     fun mosaic4(): HTShapedRecipeBuilder = pattern("AB", "BA")
 
+    fun mosaic9(): HTShapedRecipeBuilder = pattern("ABA", "BAB", "ABA")
+
     //    RecipeBuilder    //
 
     private var group: String? = null
