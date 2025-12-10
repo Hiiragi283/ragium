@@ -11,7 +11,7 @@ import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
-import hiiragi283.ragium.common.entity.charge.HTConfusingCharge
+import hiiragi283.ragium.common.entity.charge.HTConfusionCharge
 import hiiragi283.ragium.common.entity.charge.HTFishingCharge
 import hiiragi283.ragium.common.entity.charge.HTNeutralCharge
 import hiiragi283.ragium.common.entity.charge.HTStrikeCharge
@@ -49,7 +49,7 @@ object RagiumEntityTypes {
                 HTChargeType.NEUTRAL -> ::HTNeutralCharge
                 HTChargeType.FISHING -> ::HTFishingCharge
                 HTChargeType.TELEPORT -> ::HTTeleportCharge
-                HTChargeType.CONFUSING -> ::HTConfusingCharge
+                HTChargeType.CONFUSION -> ::HTConfusionCharge
             }
             registerThrowable("${chargeType.serializedName}_charge", factory)
         }

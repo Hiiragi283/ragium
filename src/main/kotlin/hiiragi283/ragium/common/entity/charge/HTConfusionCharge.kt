@@ -14,13 +14,13 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 
-class HTConfusingCharge : HTAbstractCharge {
+class HTConfusionCharge : HTAbstractCharge {
     constructor(entityType: EntityType<out HTAbstractCharge>, level: Level) : super(entityType, level)
 
-    constructor(level: Level, shooter: LivingEntity) : super(HTChargeType.CONFUSING, level, shooter)
+    constructor(level: Level, shooter: LivingEntity) : super(HTChargeType.CONFUSION, level, shooter)
 
     constructor(level: Level, x: Double, y: Double, z: Double) : super(
-        HTChargeType.CONFUSING,
+        HTChargeType.CONFUSION,
         level,
         x,
         y,
@@ -48,5 +48,5 @@ class HTConfusingCharge : HTAbstractCharge {
         }
     }
 
-    override fun getDefaultItem(): Item = HTChargeType.CONFUSING.asItem()
+    override fun getDefaultItem(): Item = HTChargeType.CONFUSION.asItem()
 }

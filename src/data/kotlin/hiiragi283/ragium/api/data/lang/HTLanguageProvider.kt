@@ -68,7 +68,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromVariantTable(RagiumItems.ARMORS, HTMaterialTranslations::getLangName)
         fromVariantTable(RagiumItems.TOOLS, HTMaterialTranslations::getLangName)
 
-        val charge = LangPattern("%s Charge", "%s チャージ")
+        val charge = LangPattern("%s Charge", "%sチャージ")
         fromLangMap(charge, RagiumItems.CHARGES)
         fromLangMap(charge, RagiumEntityTypes.CHARGES)
 

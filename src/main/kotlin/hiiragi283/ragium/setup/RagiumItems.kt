@@ -135,7 +135,9 @@ object RagiumItems {
         REGISTER.addAlias("cinnabar_dust", "magma_shard")
         REGISTER.addAlias(RagiumAPI.id("saltpeter_dust"), vanillaId("bone_meal"))
 
-        REGISTER.addAlias("resion", "rosin")
+        REGISTER.addAlias("resin", "rosin")
+
+        REGISTER.addAlias("confusing_charge", "confusion_charge")
 
         REGISTER.register(eventBus)
 

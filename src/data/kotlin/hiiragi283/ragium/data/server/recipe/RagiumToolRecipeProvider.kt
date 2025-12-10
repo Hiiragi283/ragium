@@ -293,7 +293,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 HTChargeType.NEUTRAL -> VanillaMaterialKeys.EMERALD
                 HTChargeType.FISHING -> RagiumMaterialKeys.AZURE
                 HTChargeType.TELEPORT -> RagiumMaterialKeys.WARPED_CRYSTAL
-                HTChargeType.CONFUSING -> RagiumMaterialKeys.ELDRITCH_PEARL
+                HTChargeType.CONFUSION -> RagiumMaterialKeys.ELDRITCH_PEARL
             }
             val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
             HTShapedRecipeBuilder
