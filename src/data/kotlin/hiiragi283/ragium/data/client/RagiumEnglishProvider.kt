@@ -493,9 +493,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     //    Addon    //
 
     private fun emi() {
-        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE, "Machine Upgrades")
+        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "Machine Upgrades")
 
-        add(RagiumCommonTranslation.EMI_BREWING, "Brewing")
+        add(RagiumCommonTranslation.EMI_BREWING_TITLE, "Brewing")
+
+        add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "Placed below the block.")
     }
 
     private fun jade() {

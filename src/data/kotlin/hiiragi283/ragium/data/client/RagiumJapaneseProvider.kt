@@ -498,9 +498,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     //    Addon    //
 
     private fun emi() {
-        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE, "機械のアップグレード")
+        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "機械のアップグレード")
 
-        add(RagiumCommonTranslation.EMI_BREWING, "醸造")
+        add(RagiumCommonTranslation.EMI_BREWING_TITLE, "醸造")
+
+        add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "ブロックの下に設置します。")
     }
 
     private fun jade() {

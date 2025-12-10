@@ -25,7 +25,7 @@ object RagiumEmiRecipeCategories {
     val MACHINE_UPGRADE: HTEmiRecipeCategory = HTEmiRecipeCategory.create(
         MACHINE_BOUNDS,
         RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY),
-        RagiumCommonTranslation.EMI_MACHINE_UPGRADE::translate,
+        RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE::translate,
     )
 
     //    Generators    //
@@ -102,7 +102,7 @@ object RagiumEmiRecipeCategories {
     val BREWING: HTEmiRecipeCategory = HTEmiRecipeCategory.create(
         MACHINE_BOUNDS,
         RagiumBlocks.BREWERY,
-        RagiumCommonTranslation.EMI_BREWING::translate,
+        RagiumCommonTranslation.EMI_BREWING_TITLE::translate,
     )
 
     @JvmField

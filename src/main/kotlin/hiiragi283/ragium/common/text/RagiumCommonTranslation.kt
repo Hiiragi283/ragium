@@ -116,9 +116,11 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     KEY_OPEN_UNIVERSAL_BUNDLE("key", "open_universal_bundle"),
 
     // EMI
-    EMI_MACHINE_UPGRADE("emi.category", "machine_upgrade"),
+    EMI_MACHINE_UPGRADE_TITLE("emi.category", "machine_upgrade"),
 
-    EMI_BREWING("emi.category", "brewing"),
+    EMI_BREWING_TITLE("emi.category", "brewing"),
+
+    EMI_BLOCK_CATALYST("description", "block_catalyst"),
 
     // Jade
     JADE_MACHINE_TIER("jade", "machine_tier"),

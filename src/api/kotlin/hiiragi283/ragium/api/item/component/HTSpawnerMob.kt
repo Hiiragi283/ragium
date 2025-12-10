@@ -8,7 +8,8 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.EntityType
 
-data class HTSpawnerMob(val holder: Holder<EntityType<*>>) {
+@JvmInline
+value class HTSpawnerMob(val holder: Holder<EntityType<*>>) {
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTSpawnerMob> = VanillaBiCodecs
