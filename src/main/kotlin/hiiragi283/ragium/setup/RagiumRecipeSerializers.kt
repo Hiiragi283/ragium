@@ -20,17 +20,18 @@ import hiiragi283.ragium.common.recipe.machine.HTBioExtractingRecipe
 import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
 import hiiragi283.ragium.common.recipe.machine.HTExpExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.impl.recipe.HTBlockSimulatingRecipe
 import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTCrushingRecipe
 import hiiragi283.ragium.impl.recipe.HTCuttingRecipe
 import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.impl.recipe.HTEntitySimulatingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
 import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
-import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -189,9 +190,15 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val SIMULATING: RecipeSerializer<HTSimulatingRecipe> = register(
-        RagiumConst.SIMULATING,
-        RagiumRecipeBiCodecs.itemWithCatalyst(::HTSimulatingRecipe),
+    val SIMULATING_BLOCK: RecipeSerializer<HTBlockSimulatingRecipe> = register(
+        RagiumConst.SIMULATING_BLOCK,
+        RagiumRecipeBiCodecs.simulating(Registries.BLOCK, ::HTBlockSimulatingRecipe),
+    )
+
+    @JvmField
+    val SIMULATING_ENTITY: RecipeSerializer<HTEntitySimulatingRecipe> = register(
+        RagiumConst.SIMULATING_ENTITY,
+        RagiumRecipeBiCodecs.simulating(Registries.ENTITY_TYPE, ::HTEntitySimulatingRecipe),
     )
 
     private class SimpleSerializer<RECIPE : Recipe<*>>(private val codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>) :

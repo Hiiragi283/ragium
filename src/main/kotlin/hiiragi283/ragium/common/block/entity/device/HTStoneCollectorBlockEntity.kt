@@ -57,7 +57,7 @@ class HTStoneCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         return true
     }
 
-    private fun createInput(level: ServerLevel, pos: BlockPos, front: Direction): HTRecipeInput? = HTRecipeInput.create {
+    private fun createInput(level: ServerLevel, pos: BlockPos, front: Direction): HTRecipeInput? = HTRecipeInput.create(pos) {
         val leftPos: BlockPos = pos.relative(front.counterClockWise)
         val rightPos: BlockPos = pos.relative(front.clockWise)
         // 左側は液体のみ

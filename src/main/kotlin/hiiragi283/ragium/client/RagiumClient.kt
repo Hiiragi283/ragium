@@ -28,6 +28,7 @@ import hiiragi283.ragium.client.gui.screen.processor.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTMobCrusherScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTProcessorScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTRefineryScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTSimulatorScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTSingleFluidProcessorScreen
 import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
@@ -283,7 +284,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.MOB_CRUSHER, ::HTMobCrusherScreen)
         event.register(RagiumMenuTypes.PROCESSOR, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.REFINERY, ::HTRefineryScreen)
-        event.register(RagiumMenuTypes.SIMULATOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
+        event.register(RagiumMenuTypes.SIMULATOR, ::HTSimulatorScreen)
         event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, ::HTCrusherScreen)
         event.register(RagiumMenuTypes.SMELTER, HTProcessorScreen.createFactory("smelter"))
         event.register(RagiumMenuTypes.TELEPAD, ::HTTelepadScreen)

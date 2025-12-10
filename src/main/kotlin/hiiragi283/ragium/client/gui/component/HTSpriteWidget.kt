@@ -36,7 +36,7 @@ abstract class HTSpriteWidget(
         // Render sprite
         renderSprite(guiGraphics)
         // Render tooltip
-        if (getBounds().contains(mouseX, mouseY)) {
+        if (isHovered(mouseX, mouseY)) {
             guiGraphics.renderComponentTooltip(
                 font,
                 buildList { collectTooltips(this::add, getTooltipFlag()) },

@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
+import hiiragi283.ragium.api.recipe.multi.HTSimulatingRecipe
 import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import net.minecraft.world.item.crafting.Recipe
@@ -53,7 +54,7 @@ object RagiumRecipeTypes {
     val ROCK_GENERATING: HTDeferredRecipeType<HTRecipeInput, HTRockGeneratingRecipe> = create(RagiumConst.ROCK_GENERATING)
 
     @JvmField
-    val SIMULATING: HTDeferredRecipeType<HTRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.SIMULATING)
+    val SIMULATING: HTDeferredRecipeType<HTRecipeInput, HTSimulatingRecipe> = create(RagiumConst.SIMULATING)
 
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(path: String): HTDeferredRecipeType<INPUT, RECIPE> =

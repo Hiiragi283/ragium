@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.ImmutableStack
 import hiiragi283.ragium.api.tag.RagiumModTags
+import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -14,10 +15,14 @@ import java.util.Optional
 
 @ConsistentCopyVisibility
 @JvmRecord
-data class HTRecipeInput private constructor(val items: List<ImmutableItemStack?>, val fluids: List<ImmutableFluidStack?>) : RecipeInput {
+data class HTRecipeInput private constructor(
+    val pos: BlockPos?,
+    val items: List<ImmutableItemStack?>,
+    val fluids: List<ImmutableFluidStack?>,
+) : RecipeInput {
     companion object {
         @JvmStatic
-        inline fun create(builderAction: Builder.() -> Unit): HTRecipeInput? = Builder().apply(builderAction).build()
+        inline fun create(pos: BlockPos?, builderAction: Builder.() -> Unit): HTRecipeInput? = Builder().apply(builderAction).build(pos)
 
         @JvmStatic
         fun <STACK : ImmutableStack<*, STACK>> getMatchingSlots(
@@ -102,7 +107,7 @@ data class HTRecipeInput private constructor(val items: List<ImmutableItemStack?
 
     override fun size(): Int = items.size
 
-    override fun isEmpty(): Boolean = isEmpty(items) && isEmpty(fluids)
+    override fun isEmpty(): Boolean = pos == null && isEmpty(items) && isEmpty(fluids)
 
     //    Builder    //
 
@@ -110,6 +115,6 @@ data class HTRecipeInput private constructor(val items: List<ImmutableItemStack?
         val items: MutableList<ImmutableItemStack?> = mutableListOf()
         val fluids: MutableList<ImmutableFluidStack?> = mutableListOf()
 
-        fun build(): HTRecipeInput? = HTRecipeInput(items, fluids).takeUnless(HTRecipeInput::isEmpty)
+        fun build(pos: BlockPos?): HTRecipeInput? = HTRecipeInput(pos, items, fluids).takeUnless(HTRecipeInput::isEmpty)
     }
 }

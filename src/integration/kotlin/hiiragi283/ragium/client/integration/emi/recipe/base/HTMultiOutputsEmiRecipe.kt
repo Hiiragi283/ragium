@@ -8,12 +8,11 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 
 abstract class HTMultiOutputsEmiRecipe<RECIPE : HTBasicComplexOutputRecipe> : HTEmiHolderRecipe<RECIPE> {
-    constructor(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: RECIPE) : super(category, id, recipe) {
-        initInputs()
-        addOutputs(recipe.results)
-    }
+    constructor(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: RECIPE) : super(category, id, recipe)
 
-    constructor(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) : super(category, holder) {
+    constructor(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) : super(category, holder)
+
+    init {
         initInputs()
         addOutputs(recipe.results)
     }

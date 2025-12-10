@@ -10,8 +10,7 @@ import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.impl.data.recipe.base.HTComplexResultRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
 import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
-import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
-import java.util.*
+import java.util.Optional
 
 class HTItemWithCatalystRecipeBuilder(
     prefix: String,
@@ -20,15 +19,6 @@ class HTItemWithCatalystRecipeBuilder(
     val optional: Optional<HTItemIngredient>,
 ) : HTComplexResultRecipeBuilder<HTItemWithCatalystRecipeBuilder>(prefix) {
     companion object {
-        @JvmStatic
-        fun compressing(ingredient: HTItemIngredient, catalyst: Optional<HTItemIngredient>): HTItemWithCatalystRecipeBuilder =
-            HTItemWithCatalystRecipeBuilder(
-                RagiumConst.COMPRESSING,
-                ::HTCompressingRecipe,
-                ingredient,
-                catalyst,
-            )
-
         @JvmStatic
         fun compressing(
             ingredient: HTItemIngredient,
@@ -59,24 +49,6 @@ class HTItemWithCatalystRecipeBuilder(
                 ::HTExtractingRecipe,
                 ingredient,
                 catalyst,
-            )
-            builder.setResult(itemResult)
-            builder.setResult(fluidResult)
-            return builder
-        }
-
-        @JvmStatic
-        fun simulating(
-            ingredient: HTItemIngredient?,
-            catalyst: HTItemIngredient,
-            itemResult: HTItemResult?,
-            fluidResult: HTFluidResult? = null,
-        ): HTItemWithCatalystRecipeBuilder {
-            val builder = HTItemWithCatalystRecipeBuilder(
-                RagiumConst.SIMULATING,
-                ::HTSimulatingRecipe,
-                catalyst,
-                ingredient,
             )
             builder.setResult(itemResult)
             builder.setResult(fluidResult)

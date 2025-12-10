@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
 import hiiragi283.ragium.api.item.alchemy.HTPotionContents
-import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
@@ -34,8 +33,6 @@ import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
@@ -45,7 +42,6 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.effect.MobEffect
-import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -57,7 +53,6 @@ import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.conditions.NotCondition
 import net.neoforged.neoforge.common.conditions.OrCondition
-import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 
 /**
  * Ragiumがレシピ生成で使用するクラス
@@ -163,14 +158,6 @@ sealed class HTRecipeProvider {
 
     protected fun getDefaultPrefix(material: HTMaterialLike): HTMaterialPrefix? =
         RagiumPlatform.INSTANCE.getMaterialDefinition(material.asMaterialKey()).getDefaultPrefix()
-
-    protected fun spawnerIngredient(entityType: EntityType<*>): Ingredient = DataComponentIngredient
-        .of(
-            false,
-            RagiumDataComponents.SPAWNER_MOB,
-            HTSpawnerMob(entityType),
-            RagiumBlocks.IMITATION_SPAWNER,
-        )
 
     // Recipe Builders
 

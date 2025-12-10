@@ -5,9 +5,6 @@ import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputsEmiRecipe
-import hiiragi283.ragium.impl.recipe.HTCompressingRecipe
-import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
-import hiiragi283.ragium.impl.recipe.HTSimulatingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -37,29 +34,11 @@ class HTItemWithCatalystEmiRecipe : HTMultiOutputsEmiRecipe<HTBasicItemWithCatal
         @JvmStatic
         fun extracting(holder: RecipeHolder<HTBasicItemWithCatalystRecipe>): HTItemWithCatalystEmiRecipe =
             HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.EXTRACTING, holder)
-
-        @JvmStatic
-        fun simulating(holder: RecipeHolder<HTBasicItemWithCatalystRecipe>): HTItemWithCatalystEmiRecipe =
-            HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.SIMULATING, holder)
     }
 
     override fun initInputs() {
-        when (recipe) {
-            is HTCompressingRecipe -> {
-                addInput(recipe.required)
-                addCatalyst(recipe.optional.getOrNull())
-            }
-
-            is HTExtractingRecipe -> {
-                addInput(recipe.required)
-                addCatalyst(recipe.optional.getOrNull())
-            }
-
-            is HTSimulatingRecipe -> {
-                addInput(recipe.optional.getOrNull())
-                addCatalyst(recipe.required)
-            }
-        }
+        addInput(recipe.required)
+        addCatalyst(recipe.optional.getOrNull())
     }
 
     override fun initInputSlots(widgets: WidgetHolder) {

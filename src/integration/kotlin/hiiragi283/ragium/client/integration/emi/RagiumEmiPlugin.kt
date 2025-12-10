@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
-import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
@@ -50,6 +49,7 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRec
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTRefiningEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSimulatingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSingleExtraItemEmiRecipe
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
@@ -114,7 +114,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 .filterElements { item: Item -> item.defaultInstance.has(RagiumDataComponents.MACHINE_UPGRADE_FILTER) }
                 .listElements()
                 .map { holder: Holder<Item> ->
-                    holder.idOrThrow.withPrefix("/machine/upgrade/") to EmiStack.of(holder.value())
+                    holder.idOrThrow.withPrefix("/machine/upgrade/") to holder.toItemEmi()
                 }.asSequence(),
             ::HTMachineUpgradeEmiRecipe,
         )
@@ -192,14 +192,13 @@ class RagiumEmiPlugin : EmiPlugin {
             .filterElements { item: Item -> item.defaultInstance.isDamageableItem }
             .listElements()
             .forEach { holder: Holder<Item> ->
-                val item: Item = holder.value()
                 registry.addCustomRecipe(holder.idOrThrow, "eternal_upgrade") { id1: ResourceLocation ->
                     EmiCraftingRecipe(
                         listOf(
-                            EmiStack.of(item),
+                            holder.toItemEmi(),
                             RagiumItems.ETERNAL_COMPONENT.toEmi(),
                         ),
-                        createItemStack(item, DataComponents.UNBREAKABLE, Unbreakable(true)).toEmi(),
+                        createItemStack(holder.value(), DataComponents.UNBREAKABLE, Unbreakable(true)).toEmi(),
                         id1,
                         true,
                     )
@@ -211,7 +210,7 @@ class RagiumEmiPlugin : EmiPlugin {
             registry.addCustomRecipe(id, "gravitational_upgrade") { id1: ResourceLocation ->
                 EmiCraftingRecipe(
                     listOf(
-                        EmiStack.of(item),
+                        holder.toItemEmi(),
                         RagiumItems.GRAVITATIONAL_UNIT.toEmi(),
                     ),
                     createItemStack(item, RagiumDataComponents.ANTI_GRAVITY, true).toEmi(),
@@ -341,7 +340,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
         // Ultimate
         addRegistryRecipes(registry, RagiumRecipeTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.SIMULATING, HTItemWithCatalystEmiRecipe::simulating)
+        addRegistryRecipes(registry, RagiumRecipeTypes.SIMULATING, ::HTSimulatingEmiRecipe)
 
         registry.addRecipeSafe(HTCopyEnchantingRecipe.RECIPE_ID.withPrefix("/"), ::HTCopyEnchantingEmiRecipe)
 
@@ -356,11 +355,7 @@ class RagiumEmiPlugin : EmiPlugin {
             .filterElements(HTImitationSpawnerBlock::filterEntityType)
             .listElements()
             .forEach { holder: Holder.Reference<EntityType<*>> ->
-                val spawner: EmiStack = createItemStack(
-                    RagiumBlocks.IMITATION_SPAWNER,
-                    RagiumDataComponents.SPAWNER_MOB,
-                    HTSpawnerMob(holder),
-                ).toEmi()
+                val spawner: EmiStack = HTImitationSpawnerBlock.createStack(holder).toEmi()
                 val egg: EmiStack = SpawnEggItem.byId(holder.value())?.toEmi() ?: return@forEach
                 registry.addInteraction(spawner, id = holder.idOrThrow, prefix = "imitation_spawner") {
                     leftInput(RagiumBlocks.IMITATION_SPAWNER.toEmi())

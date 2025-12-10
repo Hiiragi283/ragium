@@ -9,12 +9,16 @@ import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
+import hiiragi283.ragium.api.registry.RegistryKey
+import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodecs
 import hiiragi283.ragium.api.serialization.codec.ParameterCodec
+import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.recipe.HTMeltingRecipe
 import hiiragi283.ragium.impl.recipe.HTMixingRecipe
@@ -22,8 +26,10 @@ import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
 import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicCombineRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
+import hiiragi283.ragium.impl.recipe.base.HTBasicSimulatingRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicSingleExtraItemRecipe
 import hiiragi283.ragium.impl.recipe.base.HTBasicSingleOutputRecipe
+import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 
@@ -131,6 +137,23 @@ object RagiumRecipeBiCodecs {
         HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicSingleExtraItemRecipe::ingredient),
         HTItemResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTBasicSingleExtraItemRecipe::result),
         HTItemResult.CODEC.optionalFieldOf("extra").forGetter(HTBasicSingleExtraItemRecipe::extra),
+        factory::create,
+    )
+
+    @JvmStatic
+    fun <T : Any, R : HTBasicSimulatingRecipe<HolderSet<T>>> simulating(
+        registryKey: RegistryKey<T>,
+        factory: HTSimulatingRecipeBuilder.Factory<HolderSet<T>, R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = simulating(VanillaBiCodecs.holderSet(registryKey), factory)
+
+    @JvmStatic
+    fun <T : Any, R : HTBasicSimulatingRecipe<T>> simulating(
+        catalyst: BiCodec<in RegistryFriendlyByteBuf, T>,
+        factory: HTSimulatingRecipeBuilder.Factory<T, R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.optionalFieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicSimulatingRecipe<T>::ingredient),
+        catalyst.fieldOf(RagiumConst.CATALYST).forGetter(HTBasicSimulatingRecipe<T>::catalyst),
+        RESULTS.forGetter(HTBasicSimulatingRecipe<T>::results),
         factory::create,
     )
 }

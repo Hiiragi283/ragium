@@ -21,6 +21,7 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.client.integration.emi.widget.HTTankWidget
+import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
@@ -37,6 +38,8 @@ fun EmiStack.copyAsCatalyst(): EmiStack = copy().setRemainder(this)
 
 // Mutable Stack
 fun ItemLike.toEmi(amount: Int = 1): EmiStack = EmiStack.of(this, amount.toLong())
+
+fun Holder<out ItemLike>.toItemEmi(amount: Int = 1): EmiStack = this.value().toEmi(amount)
 
 fun ItemStack.toEmi(): EmiStack = EmiStack.of(this)
 

@@ -104,10 +104,13 @@ object RagiumConst {
     const val REFINING = "refining"
     const val ROCK_GENERATING = "rock_generating"
     const val SIMULATING = "simulating"
+    const val SIMULATING_BLOCK = "$SIMULATING/block"
+    const val SIMULATING_ENTITY = "$SIMULATING/entity"
     const val SOLIDIFYING = "solidifying"
-    const val WASHING = "washing"
 
     const val INGREDIENT = "ingredient"
+
+    const val CATALYST = "catalyst"
 
     const val RESULT = "result"
     const val RESULTS = "results"

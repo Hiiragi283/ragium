@@ -3,10 +3,12 @@ package hiiragi283.ragium.common.block.entity.processor
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.math.fraction
+import hiiragi283.ragium.api.math.minus
 import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput.Builder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
@@ -52,7 +54,8 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         val totalTick: Int = usedEnergy
         val maxTicks: Int = requiredEnergy
         if (maxTicks <= 0) return Fraction.ZERO
-        return fraction(totalTick, maxTicks)
+        val rawFraction: Fraction = fraction(totalTick, maxTicks)
+        return rawFraction - rawFraction.properWhole
     }
 
     final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
@@ -134,9 +137,9 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
 
     abstract class RecipeBased<RECIPE : HTRecipe>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
         HTProcessorBlockEntity<HTRecipeInput, RECIPE>(blockHolder, pos, state) {
-        final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create(::buildRecipeInput)
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create(null, ::buildRecipeInput)
 
-        protected abstract fun buildRecipeInput(builder: HTRecipeInput.Builder)
+        protected abstract fun buildRecipeInput(builder: Builder)
     }
 
     //    Cached    //

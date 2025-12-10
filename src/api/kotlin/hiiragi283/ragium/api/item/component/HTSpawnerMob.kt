@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.item.component
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.entity.EntityType
@@ -19,4 +20,6 @@ data class HTSpawnerMob(val holder: Holder<EntityType<*>>) {
     constructor(entityType: EntityType<*>) : this(entityType.builtInRegistryHolder())
 
     val entityType: EntityType<*> get() = holder.value()
+
+    fun isOf(holderSet: HolderSet<EntityType<*>>): Boolean = entityType.`is`(holderSet)
 }

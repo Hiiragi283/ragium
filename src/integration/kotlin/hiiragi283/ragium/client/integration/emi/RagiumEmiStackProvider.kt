@@ -19,7 +19,7 @@ object RagiumEmiStackProvider : EmiStackProvider<Screen> {
             }
             // Get stack from tanks
             for (widget: HTFluidWidget in screen.getFluidWidgets()) {
-                if (widget.getBounds().contains(x, y)) {
+                if (widget.isHovered(x, y)) {
                     return EmiStackInteraction(widget.getStack().toEmi(), null, false)
                 }
             }

@@ -11,10 +11,11 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTRockGeneratingRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
+import net.minecraft.core.HolderSet
 
 object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
     override fun buildRecipeInternal() {
@@ -64,14 +65,15 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
         )
     }
 
+    @Suppress("DEPRECATION")
     @JvmStatic
     private fun certusBudding(budding: BlockDefinition<*>, count: Int) {
-        HTItemWithCatalystRecipeBuilder
-            .simulating(
+        HTSimulatingRecipeBuilder
+            .block(
                 null,
-                itemCreator.fromItem(budding),
-                resultHelper.item(AEItems.CERTUS_QUARTZ_CRYSTAL, count),
-            ).saveSuffixed(output, "_from_${budding.id().path.removeSuffix("_budding_quartz")}")
+                HolderSet.direct(budding.block().builtInRegistryHolder()),
+            ).setResult(resultHelper.item(AEItems.CERTUS_QUARTZ_CRYSTAL, count))
+            .saveSuffixed(output, "_from_${budding.id().path.removeSuffix("_budding_quartz")}")
     }
 
     @JvmStatic

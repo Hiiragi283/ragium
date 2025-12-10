@@ -23,6 +23,25 @@ class HTShapedRecipeBuilder(stack: ImmutableItemStack) : HTStackRecipeBuilder<HT
         @JvmStatic
         fun cross8Mirrored(
             recipeOutput: RecipeOutput,
+            stack: ImmutableItemStack,
+            suffix: String = "",
+            builderAction: HTShapedRecipeBuilder.() -> Unit,
+        ) {
+            HTShapedRecipeBuilder(stack)
+                .pattern("ABA", "BCB", "ABA")
+                .apply(builderAction)
+                .setGroup()
+                .saveSuffixed(recipeOutput, suffix)
+            HTShapedRecipeBuilder(stack)
+                .pattern("BAB", "ACA", "BAB")
+                .apply(builderAction)
+                .setGroup()
+                .saveSuffixed(recipeOutput, "_alt$suffix")
+        }
+
+        @JvmStatic
+        fun cross8Mirrored(
+            recipeOutput: RecipeOutput,
             item: ItemLike,
             count: Int = 1,
             suffix: String = "",
