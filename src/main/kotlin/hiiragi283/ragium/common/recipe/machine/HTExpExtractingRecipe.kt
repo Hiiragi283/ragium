@@ -7,9 +7,9 @@ import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import hiiragi283.ragium.util.HTExperienceHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items

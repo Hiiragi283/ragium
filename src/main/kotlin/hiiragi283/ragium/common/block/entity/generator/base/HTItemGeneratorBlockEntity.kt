@@ -9,8 +9,8 @@ import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
-import hiiragi283.ragium.common.util.HTItemDropHelper
-import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.util.HTItemDropHelper
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel

@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import hiiragi283.ragium.common.network.HTUpdateMenuPacket
-import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.impl.material.RagiumMaterialManager
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
@@ -23,6 +22,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import hiiragi283.ragium.util.RagiumChunkLoader
 import net.minecraft.core.dispenser.ProjectileDispenseBehavior
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ProjectileItem

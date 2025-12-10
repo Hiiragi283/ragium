@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.inventory.HTContainerItemSlot
-import hiiragi283.ragium.common.util.HTEnergyHelper
+import hiiragi283.ragium.util.HTEnergyHelper
 import java.util.function.Predicate
 
 /**

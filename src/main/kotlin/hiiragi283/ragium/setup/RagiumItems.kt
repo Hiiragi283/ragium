@@ -67,12 +67,12 @@ import hiiragi283.ragium.common.text.HTSmithingTranslation
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.util.HTEnchantmentHelper
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey

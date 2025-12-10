@@ -11,10 +11,10 @@ import hiiragi283.ragium.api.text.HTTextResult
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.text.levelText
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.util.HTEnchantmentHelper
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.util.HTEnchantmentHelper
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos

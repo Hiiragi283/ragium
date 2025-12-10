@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
-import hiiragi283.ragium.common.util.HTEnergyHelper
+import hiiragi283.ragium.util.HTEnergyHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel

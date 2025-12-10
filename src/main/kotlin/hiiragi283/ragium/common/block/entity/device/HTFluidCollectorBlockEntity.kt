@@ -11,10 +11,10 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTExpOrbTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder

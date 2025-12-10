@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.util.HTEnchantmentHelper
+import hiiragi283.ragium.util.HTEnchantmentHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.world.level.block.Block

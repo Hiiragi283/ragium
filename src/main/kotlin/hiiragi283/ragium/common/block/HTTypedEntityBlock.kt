@@ -11,8 +11,8 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult

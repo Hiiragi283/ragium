@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.item.HTSubCreativeTabContents
 import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.common.util.HTDefaultLootTickets
-import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.util.HTDefaultLootTickets
+import hiiragi283.ragium.util.HTItemDropHelper
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel

@@ -13,8 +13,8 @@ import hiiragi283.ragium.common.storage.energy.battery.HTEnergyBatteryWrapper
 import hiiragi283.ragium.common.storage.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTEnergyItemSlot
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder

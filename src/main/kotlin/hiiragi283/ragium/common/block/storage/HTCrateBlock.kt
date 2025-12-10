@@ -11,7 +11,7 @@ import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTPlayerHandSlot
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.util.HTItemDropHelper
+import hiiragi283.ragium.util.HTItemDropHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult

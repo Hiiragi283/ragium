@@ -8,8 +8,8 @@ import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import hiiragi283.ragium.util.HTExperienceHelper
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation

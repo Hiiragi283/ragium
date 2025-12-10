@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.entity
 
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTItemDropHelper
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.client.Minecraft
 import net.minecraft.core.particles.ParticleTypes

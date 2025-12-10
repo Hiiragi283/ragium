@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.entity.vehicle
 
 import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult

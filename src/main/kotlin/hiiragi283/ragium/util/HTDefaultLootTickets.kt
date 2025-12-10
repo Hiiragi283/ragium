@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.util
 
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.stack.ImmutableItemStack

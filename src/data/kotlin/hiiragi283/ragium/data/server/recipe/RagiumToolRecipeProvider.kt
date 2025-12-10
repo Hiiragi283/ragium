@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.crafting.HTUpgradeChargeRecipe
-import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
@@ -27,6 +26,7 @@ import hiiragi283.ragium.impl.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTDefaultLootTickets
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory

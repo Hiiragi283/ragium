@@ -30,9 +30,9 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
-import hiiragi283.ragium.common.util.HTExperienceHelper
-import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.util.HTExperienceHelper
+import hiiragi283.ragium.util.HTItemDropHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder

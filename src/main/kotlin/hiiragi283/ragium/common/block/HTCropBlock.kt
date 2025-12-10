@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.ragium.common.util.HTItemDropHelper
+import hiiragi283.ragium.util.HTItemDropHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand

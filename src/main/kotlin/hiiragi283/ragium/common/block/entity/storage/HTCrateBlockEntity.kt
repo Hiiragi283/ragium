@@ -11,9 +11,9 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTVariableItemSlot
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.util.HTEnchantmentHelper
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.util.HTEnchantmentHelper
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentMap

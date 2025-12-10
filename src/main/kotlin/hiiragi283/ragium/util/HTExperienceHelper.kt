@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.util
+package hiiragi283.ragium.util
 
 import com.google.common.primitives.Ints
 import hiiragi283.ragium.config.RagiumConfig
