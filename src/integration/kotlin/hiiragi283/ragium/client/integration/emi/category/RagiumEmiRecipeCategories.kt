@@ -99,8 +99,11 @@ object RagiumEmiRecipeCategories {
 
     // Elite
     @JvmField
-    val BREWING: HTEmiRecipeCategory =
-        machine(RagiumRecipeTypes.BREWING, RagiumBlocks.BREWERY)
+    val BREWING: HTEmiRecipeCategory = HTEmiRecipeCategory.create(
+        MACHINE_BOUNDS,
+        RagiumBlocks.BREWERY,
+        RagiumCommonTranslation.EMI_BREWING::translate,
+    )
 
     @JvmField
     val PLANTING: HTEmiRecipeCategory =

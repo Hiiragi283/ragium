@@ -3,28 +3,22 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.ingredient.HTPotionIngredient
-import hiiragi283.ragium.api.recipe.ingredient.RagiumIngredientTypes
-import hiiragi283.ragium.api.registry.HTDeferredHolder
 import hiiragi283.ragium.api.registry.commonId
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
+import hiiragi283.ragium.common.data.brewing.HTEffectBrewingRecipeData
+import hiiragi283.ragium.common.data.brewing.HTPotionBrewingRecipeData
 import hiiragi283.ragium.common.inventory.slot.payload.HTFluidSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTIntSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTLongSyncPayload
 import hiiragi283.ragium.common.inventory.slot.payload.HTTeleportPosSyncPayload
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ArmorItem
 import net.minecraft.world.item.ArmorMaterial
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType
-import net.neoforged.neoforge.common.crafting.ICustomIngredient
-import net.neoforged.neoforge.common.crafting.IngredientType
-import net.neoforged.neoforge.registries.NeoForgeRegistries
 import net.neoforged.neoforge.registries.RegisterEvent
 
 object RagiumMiscRegister {
@@ -40,7 +34,6 @@ object RagiumMiscRegister {
         event.register(Registries.RECIPE_TYPE) { helper ->
             // Machine
             register(helper, RagiumRecipeTypes.ALLOYING)
-            register(helper, RagiumRecipeTypes.BREWING)
             register(helper, RagiumRecipeTypes.COMPRESSING)
             register(helper, RagiumRecipeTypes.CRUSHING)
             register(helper, RagiumRecipeTypes.CUTTING)
@@ -55,17 +48,12 @@ object RagiumMiscRegister {
         }
 
         // Ingredient Type
-        event.register(NeoForgeRegistries.Keys.INGREDIENT_TYPES) { helper ->
-            fun <T : ICustomIngredient> register(
-                holder: HTDeferredHolder<IngredientType<*>, IngredientType<T>>,
-                codec: MapBiCodec<RegistryFriendlyByteBuf, T>,
-            ) {
-                helper.register(holder.id, codec.toSerializer(::IngredientType))
-            }
 
-            register(RagiumIngredientTypes.POTION, HTPotionIngredient.CODEC)
+        // Brewing Recipe Type
+        event.register(RagiumAPI.BREWING_RECIPE_TYPE_KEY) { helper ->
+            helper.register(RagiumAPI.id("potion"), HTPotionBrewingRecipeData.CODEC)
+            helper.register(RagiumAPI.id("effect"), HTEffectBrewingRecipeData.CODEC)
         }
-
         // Armor Equip Type
         event.register(RagiumAPI.EQUIP_ACTION_TYPE_KEY) { helper ->
             helper.register(RagiumAPI.id("mob_effect"), HTMobEffectEquipAction.CODEC)

@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.serialization.codec
 
 import com.mojang.datafixers.util.Function3
 import com.mojang.datafixers.util.Function4
+import com.mojang.datafixers.util.Function5
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import io.netty.buffer.ByteBuf
@@ -101,6 +102,40 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
         )
 
         @JvmStatic
+        fun <B : ByteBuf, C : Any, T1 : Any, T2 : Any, T3 : Any, T4 : Any, T5 : Any> composite(
+            codec1: ParameterCodec<in B, C, T1>,
+            codec2: ParameterCodec<in B, C, T2>,
+            codec3: ParameterCodec<in B, C, T3>,
+            codec4: ParameterCodec<in B, C, T4>,
+            codec5: ParameterCodec<in B, C, T5>,
+            factory: Function5<T1, T2, T3, T4, T5, C>,
+        ): MapBiCodec<B, C> = of(
+            RecordCodecBuilder.mapCodec { instance ->
+                instance
+                    .group(
+                        codec1.toRecordParam(),
+                        codec2.toRecordParam(),
+                        codec3.toRecordParam(),
+                        codec4.toRecordParam(),
+                        codec5.toRecordParam(),
+                    ).apply(instance, factory)
+            },
+            StreamCodec.composite(
+                codec1.streamCodec,
+                codec1.getter,
+                codec2.streamCodec,
+                codec2.getter,
+                codec3.streamCodec,
+                codec3.getter,
+                codec4.streamCodec,
+                codec4.getter,
+                codec5.streamCodec,
+                codec5.getter,
+                factory,
+            ),
+        )
+
+        @JvmStatic
         fun <B : ByteBuf, V : Any> unit(instance: V): MapBiCodec<B, V> = of(MapCodec.unit(instance), StreamCodec.unit(instance))
     }
 
@@ -130,6 +165,4 @@ data class MapBiCodec<B : ByteBuf, V : Any> private constructor(val codec: MapCo
     fun validate(validator: UnaryOperator<V>): MapBiCodec<B, V> = flatXmap(validator::apply, validator::apply)
 
     fun <C : Any> forGetter(getter: Function<C, V>): ParameterCodec<B, C, V> = ParameterCodec.of(this, getter)
-
-    fun <T : Any> toSerializer(transform: (MapCodec<V>, StreamCodec<B, V>) -> T): T = transform(codec, streamCodec)
 }

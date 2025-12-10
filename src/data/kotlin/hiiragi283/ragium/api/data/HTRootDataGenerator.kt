@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.BooleanSupplier
 
 /**
- * データ生成でよく使うインスタンスを束ねたデータクラス
+ * 基本の[HTDataGenerator]の実装クラス
  */
 @ConsistentCopyVisibility
 @JvmRecord
@@ -48,6 +48,10 @@ data class HTRootDataGenerator private constructor(
         }
     }
 
+    /**
+     * 指定された[id]でデータパックを作成します。
+     * @return 指定された[id]に基づいた[HTDataPackGenerator]
+     */
     fun createDataPackGenerator(id: ResourceLocation): HTDataPackGenerator = HTDataPackGenerator(
         generator.getBuiltinDatapack(doRun.asBoolean, id.namespace, id.path),
         registries,

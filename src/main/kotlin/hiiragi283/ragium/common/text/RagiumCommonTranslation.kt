@@ -118,6 +118,8 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     // EMI
     EMI_MACHINE_UPGRADE("emi.category", "machine_upgrade"),
 
+    EMI_BREWING("emi.category", "brewing"),
+
     // Jade
     JADE_MACHINE_TIER("jade", "machine_tier"),
     ;

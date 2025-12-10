@@ -2,6 +2,7 @@ package hiiragi283.ragium.api
 
 import com.mojang.logging.LogUtils
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.data.HTBrewingRecipeData
 import hiiragi283.ragium.api.data.map.HTEquipAction
 import hiiragi283.ragium.api.inventory.slot.payload.HTSyncablePayload
 import hiiragi283.ragium.api.registry.toId
@@ -63,6 +64,12 @@ object RagiumAPI {
 
     // Builtin
     @JvmField
+    val BREWING_RECIPE_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTBrewingRecipeData>>> = createKey("brewing_recipe_type")
+
+    @JvmField
+    val BREWING_RECIPE_TYPE_REGISTRY: Registry<MapCodec<out HTBrewingRecipeData>> = createRegistry(BREWING_RECIPE_TYPE_KEY)
+
+    @JvmField
     val EQUIP_ACTION_TYPE_KEY: ResourceKey<Registry<MapCodec<out HTEquipAction>>> = createKey("equip_action_type")
 
     @JvmField
@@ -73,6 +80,10 @@ object RagiumAPI {
 
     @JvmField
     val SLOT_TYPE_REGISTRY: Registry<StreamCodec<RegistryFriendlyByteBuf, out HTSyncablePayload>> = createRegistry(SLOT_TYPE_KEY)
+
+    // Dynamic
+    @JvmField
+    val BREWING_RECIPE_KEY: ResourceKey<Registry<HTBrewingRecipeData>> = createKey("brewing_recipe_data")
 
     // Feature Flag
     @JvmField

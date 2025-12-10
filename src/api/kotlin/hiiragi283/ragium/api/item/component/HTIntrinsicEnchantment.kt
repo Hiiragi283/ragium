@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.item.component
 
+import hiiragi283.ragium.api.function.identity
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.serialization.codec.BiCodec
@@ -18,7 +19,6 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.component.TooltipProvider
 import net.minecraft.world.item.enchantment.Enchantment
 import java.util.function.Consumer
-import java.util.function.Function
 
 @JvmRecord
 data class HTIntrinsicEnchantment(val entry: HTKeyOrTagEntry<Enchantment>, val level: Int) : TooltipProvider {
@@ -49,7 +49,7 @@ data class HTIntrinsicEnchantment(val entry: HTKeyOrTagEntry<Enchantment>, val l
             tooltipFlag.hasShiftDown() -> getFullName(context.registries())
                 .fold(
                     { RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT.translate(it) },
-                    Function.identity<Component>()::apply,
+                    identity(),
                 )
             else -> RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION.translateColored(ChatFormatting.YELLOW)
         }.let(tooltipAdder::accept)

@@ -3,7 +3,6 @@ package hiiragi283.ragium.setup
 import com.mojang.serialization.MapCodec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.item.alchemy.HTPotionContents
 import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
@@ -18,7 +17,6 @@ import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.crafting.HTUpgradeChargeRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
-import hiiragi283.ragium.common.recipe.HTBrewingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -108,15 +106,6 @@ object RagiumRecipeSerializers {
                 .listOf(2, 3)
                 .fieldOf("ingredients")
                 .forGetter(HTAlloyingRecipe::ingredients),
-        ),
-    )
-
-    @JvmField
-    val BREWING: RecipeSerializer<HTBrewingRecipe> = register(
-        RagiumConst.BREWING,
-        RagiumRecipeBiCodecs.combine(
-            ::HTBrewingRecipe,
-            HTPotionContents.CODEC.fieldOf("contents").forGetter(HTBrewingRecipe::contents),
         ),
     )
 

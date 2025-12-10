@@ -14,6 +14,7 @@ import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancementGenerator
 import hiiragi283.ragium.data.server.bootstrap.RagiumBiomeModifierProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumBrewingRecipeDataProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumConfiguredProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumPlacedProvider
@@ -53,6 +54,8 @@ object RagiumDatagen {
             add(Registries.PLACED_FEATURE, RagiumPlacedProvider)
 
             add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifierProvider)
+
+            add(RagiumAPI.BREWING_RECIPE_KEY, RagiumBrewingRecipeDataProvider)
 
             add(CreateRegistries.POTATO_PROJECTILE_TYPE, RagiumPotatoProjectileProvider)
         }

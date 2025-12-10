@@ -7,6 +7,9 @@ import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
+/**
+ * データパック向けの[HTDataGenerator]の実装クラス
+ */
 data class HTDataPackGenerator(
     private val generator: DataGenerator.PackGenerator,
     val registries: CompletableFuture<HolderLookup.Provider>,

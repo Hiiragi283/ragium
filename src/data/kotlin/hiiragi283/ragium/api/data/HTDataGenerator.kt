@@ -2,6 +2,11 @@ package hiiragi283.ragium.api.data
 
 import net.minecraft.data.DataProvider
 
+/**
+ * [DataProvider]を登録するインターフェース
+ * @see HTRootDataGenerator
+ * @see HTDataPackGenerator
+ */
 interface HTDataGenerator {
     fun <DATA : DataProvider> addProvider(factory: DataProvider.Factory<DATA>): DATA
 

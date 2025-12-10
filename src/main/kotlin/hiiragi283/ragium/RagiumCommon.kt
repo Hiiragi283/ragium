@@ -1,6 +1,7 @@
 package hiiragi283.ragium
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.HTBrewingRecipeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.network.HTPayloadHandlers
 import hiiragi283.ragium.client.network.HTUpdateAccessConfigPayload
@@ -78,6 +79,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerRegistries(event: NewRegistryEvent) {
+        event.register(RagiumAPI.BREWING_RECIPE_TYPE_REGISTRY)
         event.register(RagiumAPI.EQUIP_ACTION_TYPE_REGISTRY)
         event.register(RagiumAPI.SLOT_TYPE_REGISTRY)
 
@@ -85,7 +87,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
     }
 
     private fun registerDataPackRegistries(event: DataPackRegistryEvent.NewRegistry) {
-        // event.dataPackRegistry(RagiumAPI.SOLAR_POWER_KEY, HTSolarPower.DIRECT_CODEC, HTSolarPower.DIRECT_CODEC)
+        event.dataPackRegistry(RagiumAPI.BREWING_RECIPE_KEY, HTBrewingRecipeData.CODEC, HTBrewingRecipeData.CODEC)
 
         RagiumAPI.LOGGER.info("Registered new data pack registries!")
     }

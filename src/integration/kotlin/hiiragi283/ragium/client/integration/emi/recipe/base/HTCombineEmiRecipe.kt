@@ -1,31 +1,19 @@
 package hiiragi283.ragium.client.integration.emi.recipe.base
 
 import dev.emi.emi.api.render.EmiTexture
-import dev.emi.emi.api.stack.EmiIngredient
-import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addPlus
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
-import hiiragi283.ragium.common.recipe.base.HTBasicCombineRecipe
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTCombineEmiRecipe<RECIPE : HTBasicCombineRecipe>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
-    HTEmiHolderRecipe<RECIPE>(category, holder) {
-    init {
-        val (left: HTItemIngredient, right: HTItemIngredient) = recipe.itemIngredients
-        addInput(left)
-        addInput(right)
-        addInput(getFluidIngredient(recipe))
+abstract class HTCombineEmiRecipe<RECIPE : Recipe<*>> : HTEmiHolderRecipe<RECIPE> {
+    constructor(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: RECIPE) : super(category, id, recipe)
 
-        addOutputs(getResult(recipe))
-    }
-
-    protected abstract fun getFluidIngredient(recipe: RECIPE): EmiIngredient
-
-    protected abstract fun getResult(recipe: RECIPE): EmiStack
+    constructor(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) : super(category, holder)
 
     final override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(getPosition(2.5), getPosition(1))

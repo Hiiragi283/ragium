@@ -347,7 +347,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun recipeType() {
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
-        add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
@@ -495,6 +494,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun emi() {
         add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE, "Machine Upgrades")
+
+        add(RagiumCommonTranslation.EMI_BREWING, "Brewing")
     }
 
     private fun jade() {
