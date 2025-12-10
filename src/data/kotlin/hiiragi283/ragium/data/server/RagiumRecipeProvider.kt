@@ -17,6 +17,7 @@ import hiiragi283.ragium.data.server.recipe.RagiumSimulatingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumToolRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAARecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumAE2RecipeProvider
+import hiiragi283.ragium.data.server.recipe.compat.RagiumCreateEnchRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumCreateRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumDelightRecipeProvider
 import hiiragi283.ragium.data.server.recipe.compat.RagiumEIORecipeProvider
@@ -48,6 +49,7 @@ class RagiumRecipeProvider(context: HTDataGenContext) : RecipeProvider(context.o
 
         RagiumAARecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumAE2RecipeProvider.buildRecipes(recipeOutput, holderLookup)
+        RagiumCreateEnchRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumCreateRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumDelightRecipeProvider.buildRecipes(recipeOutput, holderLookup)
         RagiumEIORecipeProvider.buildRecipes(recipeOutput, holderLookup)

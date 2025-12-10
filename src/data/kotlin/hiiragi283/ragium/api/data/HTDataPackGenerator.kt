@@ -12,8 +12,8 @@ data class HTDataPackGenerator(
     val registries: CompletableFuture<HolderLookup.Provider>,
     val fileHelper: ExistingFileHelper,
 ) : HTDataGenerator {
-    override fun <DATA : DataProvider> addProvider(run: Boolean, factory: DataProvider.Factory<DATA>): DATA = generator.addProvider(factory)
+    override fun <DATA : DataProvider> addProvider(factory: DataProvider.Factory<DATA>): DATA = generator.addProvider(factory)
 
-    override fun <DATA : DataProvider> addProvider(run: Boolean, factory: HTDataGenerator.Factory<DATA>): DATA =
-        addProvider(run) { output: PackOutput -> factory.create(HTDataGenContext(output, registries, fileHelper)) }
+    override fun <DATA : DataProvider> addProvider(factory: HTDataGenerator.Factory<DATA>): DATA =
+        addProvider { output: PackOutput -> factory.create(HTDataGenContext(output, registries, fileHelper)) }
 }

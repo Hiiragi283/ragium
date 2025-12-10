@@ -42,6 +42,7 @@ object RagiumConst {
     const val ARS_NOUVEAU = "ars_nouveau"
     const val COMMON = "c"
     const val CREATE = "create"
+    const val CREATE_ENCH = "create_enchantment_industry"
     const val EIO = "enderio"
     const val EIO_BASE = "enderio_base"
     const val EIO_MACHINES = "enderio_machines"
