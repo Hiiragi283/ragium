@@ -21,7 +21,9 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.variant.HTOreVariant
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
@@ -82,6 +84,26 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
                 .output(0.125f, variant.baseStone)
                 .build(output)
         }
+
+        fun fromData(data: HTRecipeData) {
+            val builder: StandardProcessingRecipe.Builder<*> = factory.apply(data.getModifiedId())
+            // Input
+            builder.require(data.getIngredients()[0])
+            // Outputs
+            for ((stack: ItemStack) in data.getItemStacks()) {
+                builder.output(stack)
+            }
+            builder.build(output)
+        }
+
+        // Vanilla
+        fromData(VanillaMaterialRecipeData.AMETHYST_DUST)
+        fromData(VanillaMaterialRecipeData.ECHO_DUST)
+
+        // Ragium
+        fromData(RagiumMaterialRecipeData.AZURE_DUST)
+
+        fromData(FoodMaterialRecipeData.MINCED_MEAT)
     }
 
     @JvmStatic

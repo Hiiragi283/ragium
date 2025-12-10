@@ -234,6 +234,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
         event.clear(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
         event.clear(RagiumFluidContents.COOLANT, Color(0x009999))
+        event.dull(RagiumFluidContents.CREOSOTE, Color(0x663333))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val color: Color = data.color

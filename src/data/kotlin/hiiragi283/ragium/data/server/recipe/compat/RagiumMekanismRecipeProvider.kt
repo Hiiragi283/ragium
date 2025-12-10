@@ -15,6 +15,7 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumChemicals
@@ -216,7 +217,11 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/night_metal"))
 
         crushFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
+        crushFromData(RagiumMaterialRecipeData.AZURE_DUST)
+
         crushFromData(VanillaMaterialRecipeData.ECHO_DUST)
+
+        crushFromData(FoodMaterialRecipeData.MINCED_MEAT)
     }
 
     //    Extensions    //

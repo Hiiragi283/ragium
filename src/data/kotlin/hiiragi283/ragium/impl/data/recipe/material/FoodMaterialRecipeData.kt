@@ -1,6 +1,7 @@
 package hiiragi283.ragium.impl.data.recipe.material
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -30,6 +31,15 @@ object FoodMaterialRecipeData {
         addInput(RagiumBlocks.SWEET_BERRIES_CAKE)
 
         addOutput(RagiumItems.SWEET_BERRIES_CAKE_SLICE, null, 7)
+    }
+
+    //    Crushing    //
+
+    @JvmField
+    val MINCED_MEAT: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumModTags.Items.RAW_MEAT)
+
+        addOutput(RagiumItems.getDust(FoodMaterialKeys.RAW_MEAT), CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT)
     }
 
     //    Solidifying    //

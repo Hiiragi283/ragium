@@ -129,6 +129,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .addItem(Items.COAL)
         addMaterial(factory, CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL)
             .addItem(Items.CHARCOAL)
+        factory
+            .apply(RagiumCommonTags.Items.COAL_COKE)
+            .add(RagiumItems.getMaterial(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE))
+
         addMaterial(factory, CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE)
             .addTag(RagiumCommonTags.Items.COAL_COKE, HTTagDependType.OPTIONAL)
         // Gems

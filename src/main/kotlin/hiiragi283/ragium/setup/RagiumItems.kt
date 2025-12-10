@@ -138,6 +138,7 @@ object RagiumItems {
         REGISTER.addAlias("resin", "rosin")
 
         REGISTER.addAlias("confusing_charge", "confusion_charge")
+        REGISTER.addAlias("ragi_coke", "coal_coke")
 
         REGISTER.register(eventBus)
 
@@ -150,9 +151,6 @@ object RagiumItems {
     // Raginite
     @JvmField
     val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
-
-    @JvmField
-    val RAGI_COKE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_coke")
 
     @JvmField
     val RAGIUM_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragium_powder")
@@ -297,6 +295,7 @@ object RagiumItems {
         register(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT, "wheat_flour")
         // Fuels
         register(CommonMaterialPrefixes.FUEL, RagiumMaterialKeys.BAMBOO_CHARCOAL, "bamboo_charcoal")
+        register(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE, "coal_coke")
         // Plates
         register(CommonMaterialPrefixes.PLATE, VanillaMaterialKeys.WOOD, "wood_plate")
         register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC, "plastic_plate")

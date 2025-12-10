@@ -73,6 +73,13 @@ data object RagiumMaterialRecipeData {
     }
 
     @JvmField
+    val AZURE_DUST: HTRecipeData = HTRecipeData.create {
+        addInput(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE)
+
+        addOutput(RagiumItems.getDust(RagiumMaterialKeys.AZURE), CommonMaterialPrefixes.DUST, RagiumMaterialKeys.AZURE)
+    }
+
+    @JvmField
     val AZURE_STEEL: HTRecipeData = HTRecipeData.create {
         ingotOrDust(VanillaMaterialKeys.IRON)
         gemOrDust(RagiumMaterialKeys.AZURE, 2)

@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.util.Ior
+import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -76,9 +77,13 @@ object RagiumEIORecipeProvider : HTRecipeProvider.Integration(RagiumConst.EIO_MA
         // Ragium
         sagMillFromData(RagiumMaterialRecipeData.RAGINITE_ORE)
 
+        sagMillFromData(RagiumMaterialRecipeData.AZURE_DUST)
+
         sagMillFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
         sagMillFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
         sagMillFromData(RagiumMaterialRecipeData.WARPED_ORE)
+
+        sagMillFromData(FoodMaterialRecipeData.MINCED_MEAT)
     }
 
     @JvmStatic

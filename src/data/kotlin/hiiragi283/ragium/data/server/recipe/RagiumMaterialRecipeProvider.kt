@@ -74,13 +74,6 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             }
 
         alloyFromData(RagiumMaterialRecipeData.RAGI_ALLOY)
-
-        HTShapedRecipeBuilder
-            .create(RagiumItems.RAGI_COKE)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            .define('B', CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL)
-            .save(output)
         // Advanced Ragi-Alloy
         alloyFromData(RagiumMaterialRecipeData.ADVANCED_RAGI_ALLOY)
         // Ragi-Crystal

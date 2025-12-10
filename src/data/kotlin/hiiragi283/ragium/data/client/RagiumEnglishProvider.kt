@@ -226,6 +226,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.COOLANT, "Coolant")
+        addFluid(RagiumFluidContents.CREOSOTE, "Creosote")
     }
 
     private fun item() {
@@ -239,7 +240,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.MAGMA_SHARD, "Magma Shard")
         add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-        add(RagiumItems.RAGI_COKE, "Ragi-Coke")
         add(RagiumItems.RAGIUM_POWDER, "Ragium Powder")
         add(RagiumItems.ROSIN, "Rosin")
         add(RagiumItems.TAR, "Tar")

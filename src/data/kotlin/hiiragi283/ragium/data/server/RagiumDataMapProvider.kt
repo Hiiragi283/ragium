@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.createCommonTag
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -66,11 +67,11 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun furnaceFuels() {
         builder(NeoForgeDataMaps.FURNACE_FUELS)
-            .add(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24 * 9))
+            .add(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE, FurnaceFuel(200 * 16))
             .add(CommonMaterialPrefixes.FUEL, RagiumMaterialKeys.BAMBOO_CHARCOAL, FurnaceFuel(200 * 6))
             .add(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24))
+            .add(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24 * 9))
             .add(RagiumItems.COMPRESSED_SAWDUST, FurnaceFuel(200 * 6), false)
-            .add(RagiumItems.RAGI_COKE, FurnaceFuel(200 * 16), false)
             .add(RagiumItems.TAR, FurnaceFuel(200 * 4), false)
     }
 
@@ -126,7 +127,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             // lowest
             .add(RagiumFluidContents.CRUDE_OIL, lowest)
             .add("oil", lowest)
-            .add("creosote", lowest)
+            .add(RagiumFluidContents.CREOSOTE, lowest)
             // low
             .add(InitFluids.CANOLA_OIL.get(), low, actually)
             // medium

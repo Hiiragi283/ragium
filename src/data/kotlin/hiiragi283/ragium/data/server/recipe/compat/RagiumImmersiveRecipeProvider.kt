@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -42,7 +43,7 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         HTComplexRecipeBuilder
             .mixing()
             .addIngredient(itemCreator.fromTagKey(ItemTags.PLANKS))
-            .addIngredient(fluidCreator.fromTagKey(IETags.fluidCreosote, 125))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CREOSOTE, 125))
             .setResult(resultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!))
             .save(output)
         // Redstone Acid

@@ -416,11 +416,49 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun refining() {
+        cokes()
         crudeOil()
         plastic()
 
         sap()
         biomass()
+    }
+
+    @JvmStatic
+    private fun cokes() {
+        // Log -> Charcoal + Creosote
+        HTItemWithCatalystRecipeBuilder
+            .compressing(
+                itemCreator.fromTagKey(ItemTags.LOGS_THAT_BURN),
+                resultHelper.item(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL),
+                fluidResult = resultHelper.fluid(RagiumFluidContents.CREOSOTE, 125),
+            ).saveSuffixed(output, "_from_logs")
+        // Compressed Sawdust -> Charcoal + Creosote
+        HTItemWithCatalystRecipeBuilder
+            .compressing(
+                itemCreator.fromItem(RagiumItems.COMPRESSED_SAWDUST),
+                resultHelper.item(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL),
+            ).saveSuffixed(output, "_from_compressed")
+        // Sugar -> Charcoal
+        HTItemWithCatalystRecipeBuilder
+            .compressing(
+                itemCreator.fromItem(Items.SUGAR, 12),
+                resultHelper.item(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL),
+            ).saveSuffixed(output, "_from_sugar")
+
+        // Coal -> Coal Coke + Creosote
+        HTItemWithCatalystRecipeBuilder
+            .compressing(
+                itemCreator.fromTagKey(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL),
+                resultHelper.item(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE),
+                fluidResult = resultHelper.fluid(RagiumFluidContents.CREOSOTE, 250),
+            ).saveSuffixed(output, "_from_coal")
+        // Creosote -> Tar + Fuel
+        distillation(
+            RagiumFluidContents.CREOSOTE to 1000,
+            resultHelper.item(RagiumItems.TAR, 3),
+            resultHelper.fluid(RagiumFluidContents.FUEL, 125) to null,
+        )
     }
 
     @JvmStatic
@@ -456,7 +494,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         HTComplexRecipeBuilder
             .mixing()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000))
+            .addIngredient(fluidCreator.fromHolders(RagiumFluidContents.CREOSOTE, RagiumFluidContents.NAPHTHA, amount = 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000))
             .save(output)
     }

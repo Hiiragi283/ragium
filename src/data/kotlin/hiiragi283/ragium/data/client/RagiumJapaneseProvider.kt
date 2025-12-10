@@ -217,6 +217,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.COOLANT, "冷却液")
+        addFluid(RagiumFluidContents.CREOSOTE, "クレオソート")
     }
 
     private fun item() {
@@ -230,7 +231,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.MAGMA_SHARD, "マグマシャード")
         add(RagiumItems.POTION_DROP, "ポーションの雫")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.RAGI_COKE, "らぎコークス")
         add(RagiumItems.RAGIUM_POWDER, "ラギウムパウダー")
         add(RagiumItems.ROSIN, "ロジン")
         add(RagiumItems.TAR, "タール")

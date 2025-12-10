@@ -201,6 +201,9 @@ object RagiumFluidContents {
     @JvmField
     val COOLANT: HTBasicFluidContent = registerSimple("coolant", liquid().temperature(273))
 
+    @JvmField
+    val CREOSOTE: HTBasicFluidContent = register("creosote", liquid(), ::HTExplosiveFluidType.partially1(2f))
+
     //    Interaction    //
 
     @JvmStatic
