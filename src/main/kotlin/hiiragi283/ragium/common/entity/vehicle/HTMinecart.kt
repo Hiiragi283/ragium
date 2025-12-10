@@ -69,9 +69,10 @@ abstract class HTMinecart<BE : HTBlockEntity> :
                 result.set(DataComponents.CUSTOM_NAME, this.customName)
             }
             this.spawnAtLocation(result)
-            bindBlockEntity().collectDrops { stack: ImmutableItemStack ->
+            bindBlockEntity().collectItemDrops { stack: ImmutableItemStack ->
                 this.spawnAtLocation(stack.unwrap())
             }
+            bindBlockEntity().collectFluidDrops(level(), position())
         }
     }
 

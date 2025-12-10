@@ -31,6 +31,7 @@ import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import hiiragi283.ragium.common.util.HTExperienceHelper
+import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -50,6 +51,7 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
@@ -119,6 +121,29 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     protected open fun onUpdateClient(level: Level, pos: BlockPos, state: BlockState) {}
 
     protected abstract fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
+
+    open fun onBlockRemoved(state: BlockState, level: Level, pos: BlockPos) {
+        // Drop remaining items
+        collectItemDrops { stack: ImmutableItemStack -> HTItemDropHelper.dropStackAt(level, pos, stack) }
+        // Drop remaining fluids
+        collectFluidDrops(level, Vec3.atCenterOf(pos))
+    }
+
+    open fun collectItemDrops(consumer: Consumer<ImmutableItemStack>) {
+        getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
+    }
+
+    open fun collectFluidDrops(level: Level, pos: Vec3) {
+        if (level !is ServerLevel) return
+        val expAmount: Int = getFluidTanks(getFluidSideFor())
+            .mapNotNull(HTFluidTank::getStack)
+            .filter(RagiumFluidContents.EXPERIENCE::isOf)
+            .sumOf(ImmutableFluidStack::amount)
+            .let(HTExperienceHelper::expAmountFromFluid)
+        if (expAmount > 0) {
+            ExperienceOrb.award(level, pos, expAmount)
+        }
+    }
 
     //    Save & Read    //
 
@@ -253,23 +278,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidHandlerManager?.resolve(direction)
 
-    override fun onRemove(level: Level, pos: BlockPos) {
-        super.onRemove(level, pos)
-        val expFluidAmount: Int = getFluidTanks(getFluidSideFor())
-            .mapNotNull(HTFluidTank::getStack)
-            .filter(RagiumFluidContents.EXPERIENCE::isOf)
-            .sumOf(ImmutableFluidStack::amount)
-        if (expFluidAmount > 0) {
-            ExperienceOrb(
-                level,
-                pos.x.toDouble(),
-                pos.y.toDouble(),
-                pos.z.toDouble(),
-                HTExperienceHelper.expAmountFromFluid(expFluidAmount),
-            ).let(level::addFreshEntity)
-        }
-    }
-
     // Energy
 
     /**
@@ -299,10 +307,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     final override fun hasItemHandler(): Boolean = itemHandlerManager?.canHandle() ?: false
 
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
-
-    open fun collectDrops(consumer: Consumer<ImmutableItemStack>) {
-        getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
-    }
 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(direction)
 }

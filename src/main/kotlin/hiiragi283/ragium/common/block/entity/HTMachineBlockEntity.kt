@@ -100,8 +100,8 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         return filter.isOf(getBlockEntityType(this.blockHolder))
     }
 
-    override fun collectDrops(consumer: Consumer<ImmutableItemStack>) {
-        super.collectDrops(consumer)
+    override fun collectItemDrops(consumer: Consumer<ImmutableItemStack>) {
+        super.collectItemDrops(consumer)
         upgradeSlots.mapNotNull(HTBasicItemSlot::getStack).forEach(consumer)
     }
 

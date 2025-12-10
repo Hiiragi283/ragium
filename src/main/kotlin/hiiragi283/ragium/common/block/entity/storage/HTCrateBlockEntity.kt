@@ -44,7 +44,7 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
         )
     }
 
-    override fun collectDrops(consumer: Consumer<ImmutableItemStack>) {}
+    override fun collectItemDrops(consumer: Consumer<ImmutableItemStack>) {}
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(slot)
 

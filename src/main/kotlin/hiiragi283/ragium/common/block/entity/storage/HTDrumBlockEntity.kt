@@ -18,6 +18,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.Vec3
 
 abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
@@ -48,6 +49,8 @@ abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, stat
     }
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(tank)
+
+    override fun collectFluidDrops(level: Level, pos: Vec3) {}
 
     //    Save & Read    //
 
