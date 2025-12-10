@@ -1,5 +1,7 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
+import com.buuz135.replication.api.IMatterType
+import com.buuz135.replication.api.MatterType
 import com.buuz135.replication.calculation.MatterValue
 import com.buuz135.replication.recipe.MatterValueRecipe
 import hiiragi283.ragium.api.RagiumConst
@@ -11,7 +13,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.setup.DefaultMatterTypes
 import hiiragi283.ragium.setup.RagiumMatterTypes
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -29,90 +30,90 @@ object RagiumReplicationRecipeProvider : HTRecipeProvider.Integration(RagiumCons
         register(
             CommonMaterialPrefixes.DUST,
             RagiumMaterialKeys.RAGINITE,
-            RagiumMatterTypes.getType(RagiumEssenceType.RAGIUM).toValue(9.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.RAGIUM) to 9.0,
         )
 
         register(
             CommonMaterialPrefixes.INGOT,
             RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
-            DefaultMatterTypes.PRECIOUS.toValue(9.0),
-            DefaultMatterTypes.METALLIC.toValue(9.0),
-            RagiumMatterTypes.getType(RagiumEssenceType.RAGIUM).toValue(36.0),
+            MatterType.PRECIOUS to 9.0,
+            MatterType.METALLIC to 9.0,
+            RagiumMatterTypes.getType(RagiumEssenceType.RAGIUM) to 36.0,
         )
         // Azure
         register(
             CommonMaterialPrefixes.GEM,
             RagiumEssenceType.AZURE,
-            RagiumMatterTypes.getType(RagiumEssenceType.AZURE).toValue(2.0),
-            DefaultMatterTypes.PRECIOUS.toValue(5.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.AZURE) to 2.0,
+            MatterType.PRECIOUS to 5.0,
         )
 
         register(
             CommonMaterialPrefixes.INGOT,
             RagiumMaterialKeys.AZURE_STEEL,
-            RagiumMatterTypes.getType(RagiumEssenceType.AZURE).toValue(4.0),
-            DefaultMatterTypes.METALLIC.toValue(9.0),
-            DefaultMatterTypes.PRECIOUS.toValue(10.0),
+            RagiumMatterTypes.getType(RagiumEssenceType.AZURE) to 4.0,
+            MatterType.METALLIC to 9.0,
+            MatterType.PRECIOUS to 10.0,
         )
         // Deep
         register(
             RagiumCommonTags.Items.ORES_DEEP_SCRAP,
-            DefaultMatterTypes.PRECIOUS.toValue(18.0),
-            RagiumMatterTypes.getType(RagiumEssenceType.DEEP).toValue(18.0),
+            MatterType.PRECIOUS to 18.0,
+            RagiumMatterTypes.getType(RagiumEssenceType.DEEP) to 18.0,
         )
 
         register(
             CommonMaterialPrefixes.SCRAP,
             RagiumEssenceType.DEEP,
-            DefaultMatterTypes.PRECIOUS.toValue(18.0),
-            RagiumMatterTypes.getType(RagiumEssenceType.DEEP).toValue(18.0),
+            MatterType.PRECIOUS to 18.0,
+            RagiumMatterTypes.getType(RagiumEssenceType.DEEP) to 18.0,
         )
         // Crimson
         register(
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.CRIMSON_CRYSTAL,
-            DefaultMatterTypes.PRECIOUS.toValue(4.0),
-            DefaultMatterTypes.NETHER.toValue(4.0),
+            MatterType.PRECIOUS to 4.0,
+            MatterType.NETHER to 4.0,
         )
         // Warped
         register(
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.WARPED_CRYSTAL,
-            DefaultMatterTypes.PRECIOUS.toValue(4.0),
-            DefaultMatterTypes.ENDER.toValue(4.0),
+            MatterType.PRECIOUS to 4.0,
+            MatterType.ENDER to 4.0,
         )
         // Eldritch
         register(
             CommonMaterialPrefixes.GEM,
             RagiumMaterialKeys.ELDRITCH_PEARL,
-            DefaultMatterTypes.PRECIOUS.toValue(4.0),
-            DefaultMatterTypes.QUANTUM.toValue(9.0),
+            MatterType.PRECIOUS to 4.0,
+            MatterType.QUANTUM to 9.0,
         )
 
         // Foods
         register(
             CommonMaterialPrefixes.DUST,
             FoodMaterialKeys.RAW_MEAT,
-            DefaultMatterTypes.LIVING.toValue(4.0),
-            DefaultMatterTypes.ORGANIC.toValue(4.0),
+            MatterType.LIVING to 4.0,
+            MatterType.ORGANIC to 4.0,
         )
         register(
             CommonMaterialPrefixes.FOOD,
             FoodMaterialKeys.RAGI_CHERRY,
-            DefaultMatterTypes.LIVING.toValue(4.0),
-            DefaultMatterTypes.ORGANIC.toValue(4.0),
-            RagiumMatterTypes.getType(RagiumEssenceType.RAGIUM).toValue(4.0),
+            MatterType.LIVING to 4.0,
+            MatterType.ORGANIC to 4.0,
+            RagiumMatterTypes.getType(RagiumEssenceType.RAGIUM) to 4.0,
         )
     }
 
     @JvmStatic
-    private fun register(prefix: HTPrefixLike, material: HTMaterialLike, vararg instances: MatterValue) {
+    private fun register(prefix: HTPrefixLike, material: HTMaterialLike, vararg instances: Pair<IMatterType, Double>) {
         register(prefix.itemTagKey(material), *instances)
     }
 
     @JvmStatic
-    private fun register(tagKey: TagKey<Item>, vararg instances: MatterValue) {
-        register(tagKey, listOf(*instances))
+    private fun register(tagKey: TagKey<Item>, vararg instances: Pair<IMatterType, Double>) {
+        register(tagKey, instances.map { (type: IMatterType, amount: Double) -> MatterValue(type, amount) })
     }
 
     @JvmStatic

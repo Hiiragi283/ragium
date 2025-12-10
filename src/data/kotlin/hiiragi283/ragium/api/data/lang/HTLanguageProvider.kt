@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.data.lang
 
-import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.ImmutableTable
@@ -12,8 +11,8 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -108,8 +107,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
             add(RagiumChemicals.getChemical(data), value)
         }
         // Replication
-        for ((essence: RagiumEssenceType, matterType: HTDeferredMatterType<IMatterType>) in RagiumMatterTypes.MATTER_TYPES) {
-            add("${RagiumConst.REPLICATION}.matter_type.${matterType.name}", essence.getTranslatedName(type))
+        for ((essence: RagiumEssenceType, matterType: HTHolderLike) in RagiumMatterTypes.MATTER_TYPES) {
+            add("${RagiumConst.REPLICATION}.matter_type.${matterType.getPath()}", essence.getTranslatedName(type))
         }
     }
 
