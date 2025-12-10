@@ -6,12 +6,12 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
+import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
@@ -205,12 +205,12 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.item(Items.NETHER_STAR))
             .save(output)
 
-        HTShapedRecipeBuilder
-            .cross8Mirrored(output, HTImitationSpawnerBlock.createStack(EntityType.WITHER).toImmutableOrThrow()) {
-                define('A', RagiumItems.IRIDESCENT_POWDER)
-                define('B', Items.WITHER_ROSE)
-                define('C', RagiumBlocks.IMITATION_SPAWNER)
-            }
+        HTShapedRecipeBuilder(HTImitationSpawnerBlock.createStack(EntityType.WITHER).toImmutableOrThrow())
+            .cross8()
+            .define('A', RagiumItems.IRIDESCENT_POWDER)
+            .define('B', Items.WITHER_ROSE)
+            .define('C', RagiumBlocks.IMITATION_SPAWNER)
+            .saveSuffixed(output, "/wither")
 
         HTSimulatingRecipeBuilder
             .entity(

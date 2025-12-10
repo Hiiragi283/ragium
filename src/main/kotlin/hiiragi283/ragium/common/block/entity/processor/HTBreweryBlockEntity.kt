@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCombinerBlockEntity
-import hiiragi283.ragium.impl.recipe.HTBrewingRecipe
+import hiiragi283.ragium.common.recipe.HTBrewingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel

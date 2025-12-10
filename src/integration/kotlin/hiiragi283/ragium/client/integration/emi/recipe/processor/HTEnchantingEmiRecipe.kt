@@ -7,7 +7,7 @@ import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategori
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTCombineEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.client.integration.emi.toFluidEmi
-import hiiragi283.ragium.impl.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.item.crafting.RecipeHolder
 

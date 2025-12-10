@@ -5,7 +5,7 @@ import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addTank
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
-import hiiragi283.ragium.impl.recipe.HTRefiningRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 

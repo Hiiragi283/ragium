@@ -9,7 +9,7 @@ import hiiragi283.ragium.client.integration.emi.addPlus
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toFluidEmi
-import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items

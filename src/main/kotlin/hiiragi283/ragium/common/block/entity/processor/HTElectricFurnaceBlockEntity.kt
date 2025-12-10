@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
-import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
+import hiiragi283.ragium.common.recipe.vanilla.HTVanillaCookingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel

@@ -2,12 +2,12 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.common.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
-import hiiragi283.ragium.common.recipe.machine.HTExpExtractingRecipe
-import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
+import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTExpExtractingRecipe
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderGetter

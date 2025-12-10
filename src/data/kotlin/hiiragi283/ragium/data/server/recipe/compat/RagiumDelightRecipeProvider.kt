@@ -9,14 +9,14 @@ import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCookingPotRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.HTCuttingBoardRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems

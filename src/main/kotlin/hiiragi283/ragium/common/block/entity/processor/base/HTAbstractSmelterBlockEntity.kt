@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
-import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
+import hiiragi283.ragium.common.recipe.vanilla.HTVanillaCookingRecipe
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.util.HTStackSlotHelper

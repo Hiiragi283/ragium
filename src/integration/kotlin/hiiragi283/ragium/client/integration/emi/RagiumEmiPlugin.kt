@@ -56,10 +56,10 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
-import hiiragi283.ragium.common.recipe.machine.HTBioExtractingRecipe
-import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
-import hiiragi283.ragium.common.recipe.machine.HTExpExtractingRecipe
-import hiiragi283.ragium.impl.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.HTExtractingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTBioExtractingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTExpExtractingRecipe
 import hiiragi283.ragium.setup.DeferredBEMenu
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents

@@ -5,8 +5,8 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 
 object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALLY) {

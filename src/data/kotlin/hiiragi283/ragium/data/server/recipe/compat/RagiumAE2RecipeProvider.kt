@@ -7,13 +7,13 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTRockGeneratingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTRockGeneratingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.HolderSet
 

@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.integration.emi.recipe.base
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicComplexOutputRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicComplexOutputRecipe
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 

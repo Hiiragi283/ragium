@@ -9,7 +9,7 @@ import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addPlus
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicCombineRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicCombineRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
 abstract class HTCombineEmiRecipe<RECIPE : HTBasicCombineRecipe>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :

@@ -8,9 +8,9 @@ import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.client.integration.emi.toItemEmi
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
-import hiiragi283.ragium.impl.recipe.HTBlockSimulatingRecipe
-import hiiragi283.ragium.impl.recipe.HTEntitySimulatingRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicSimulatingRecipe
+import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
+import hiiragi283.ragium.common.recipe.HTEntitySimulatingRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicSimulatingRecipe
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack

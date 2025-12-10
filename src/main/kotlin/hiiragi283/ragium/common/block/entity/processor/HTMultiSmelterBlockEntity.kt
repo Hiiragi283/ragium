@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
-import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
+import hiiragi283.ragium.common.recipe.vanilla.HTVanillaCookingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup

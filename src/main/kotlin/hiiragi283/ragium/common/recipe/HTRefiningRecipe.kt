@@ -1,0 +1,33 @@
+package hiiragi283.ragium.common.recipe
+
+import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
+import hiiragi283.ragium.api.recipe.result.HTComplexResult
+import hiiragi283.ragium.common.recipe.base.HTBasicComplexRecipe
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.Level
+import java.util.Optional
+
+class HTRefiningRecipe(val itemIngredient: Optional<HTItemIngredient>, val fluidIngredient: HTFluidIngredient, results: HTComplexResult) :
+    HTBasicComplexRecipe(results) {
+    override fun matches(input: HTRecipeInput, level: Level): Boolean {
+        val bool1: Boolean = input.testCatalyst(0, itemIngredient)
+        val bool2: Boolean = input.testFluid(0, fluidIngredient)
+        return bool1 && bool2
+    }
+
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.REFINING
+
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.REFINING.get()
+
+    override fun getRequiredCount(index: Int): Int = 0
+
+    override fun getRequiredAmount(index: Int): Int = when (index) {
+        0 -> fluidIngredient.getRequiredAmount()
+        else -> 0
+    }
+}

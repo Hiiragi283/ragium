@@ -2,11 +2,11 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.common.HTMoldType
+import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags

@@ -5,7 +5,7 @@ import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputsEmiRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicItemWithCatalystRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicItemWithCatalystRecipe
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull

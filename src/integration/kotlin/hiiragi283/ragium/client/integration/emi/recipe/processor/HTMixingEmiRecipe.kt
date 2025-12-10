@@ -4,9 +4,9 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTMultiOutputsEmiRecipe
-import hiiragi283.ragium.impl.recipe.HTMixingRecipe
-import hiiragi283.ragium.impl.recipe.HTSimpleMixingRecipe
-import hiiragi283.ragium.impl.recipe.base.HTBasicComplexRecipe
+import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.HTSimpleMixingRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicComplexRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTMixingEmiRecipe(holder: RecipeHolder<HTBasicComplexRecipe>) :
