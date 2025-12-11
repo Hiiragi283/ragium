@@ -131,7 +131,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             // low
             .add(InitFluids.CANOLA_OIL.get(), low, actually)
             // medium
-            .add(RagiumFluidContents.NATURAL_GAS, medium)
             .add("ethanol", medium)
             .add("bioethanol", medium)
             .add("lpg", medium)

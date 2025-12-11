@@ -20,12 +20,9 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
             .save(output)
         // Solidified Exp -> Liquid Exp
         HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(ActuallyItems.SOLIDIFIED_EXPERIENCE),
-                null,
-                null,
-                resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 8 * 20),
-            ).saveSuffixed(output, "_from_solidified_aa")
+            .extracting(itemCreator.fromItem(ActuallyItems.SOLIDIFIED_EXPERIENCE))
+            .setResult(resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 8 * 20))
+            .saveSuffixed(output, "_from_solidified_aa")
 
         // Crops
         cropAndSeed(ActuallyItems.CANOLA_SEEDS, ActuallyItems.CANOLA)
@@ -39,12 +36,9 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
     private fun canola() {
         // Canola -> Canola Oil
         HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(ActuallyTags.Items.CROPS_CANOLA),
-                null,
-                null,
-                resultHelper.fluid(InitFluids.CANOLA_OIL.get(), 80),
-            ).save(output)
+            .extracting(itemCreator.fromTagKey(ActuallyTags.Items.CROPS_CANOLA))
+            .setResult(resultHelper.fluid(InitFluids.CANOLA_OIL.get(), 80))
+            .save(output)
         // Canola Oil -> Refined
         HTComplexRecipeBuilder
             .refining()

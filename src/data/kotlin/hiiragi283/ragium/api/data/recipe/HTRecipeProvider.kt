@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
@@ -246,12 +245,10 @@ sealed class HTRecipeProvider {
     ) {
         // Extracting
         HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(filled),
-                resultHelper.item(empty),
-                null,
-                resultHelper.fluid(fluid.getFluid(), amount),
-            ).saveSuffixed(output, "_from_${filled.getPath()}")
+            .extracting(itemCreator.fromItem(filled))
+            .setResult(resultHelper.item(empty))
+            .setResult(resultHelper.fluid(fluid.getFluid(), amount))
+            .saveSuffixed(output, "_from_${filled.getPath()}")
         // Mixing
         HTComplexRecipeBuilder
             .mixing()
@@ -349,26 +346,5 @@ sealed class HTRecipeProvider {
                 fluid,
                 resultHelper.item(log, 6),
             ).save(output)
-    }
-
-    // Refining
-    protected fun distillation(
-        input: Pair<HTFluidHolderLike, Int>,
-        itemResult: HTItemResult?,
-        vararg results: Pair<HTFluidResult, HTItemIngredient?>,
-    ) {
-        val (holder: HTFluidHolderLike, amount: Int) = input
-        val suffix = "_from_${holder.getPath()}"
-        val ingredient: HTFluidIngredient = fluidCreator.fromHolder(holder, amount)
-        // Refining
-        for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
-            HTComplexRecipeBuilder
-                .refining()
-                .addIngredient(catalyst)
-                .addIngredient(ingredient)
-                .setResult(itemResult)
-                .setResult(result)
-                .saveSuffixed(output, suffix)
-        }
     }
 }

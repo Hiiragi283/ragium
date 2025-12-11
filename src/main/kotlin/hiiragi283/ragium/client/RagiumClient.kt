@@ -223,13 +223,12 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.clear(RagiumFluidContents.BIOFUEL, Color(0x99cc00))
 
         event.dull(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
-        event.clear(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))
         event.dull(RagiumFluidContents.NAPHTHA, Color(0xff6633))
         event.clear(RagiumFluidContents.FUEL, Color(0xcc3300))
         event.dull(RagiumFluidContents.LUBRICANT, Color(0xff9900))
 
-        event.clear(RagiumFluidContents.SAP, Color(0x996633))
-        event.clear(RagiumFluidContents.SPRUCE_RESIN, Color(0xcc6600))
+        event.dull(RagiumFluidContents.SPRUCE_RESIN, Color(0xcc6600))
+        event.dull(RagiumFluidContents.LATEX, Color(0xcccccc))
 
         event.molten(RagiumFluidContents.DESTABILIZED_RAGINITE, Color(0xff0033))
 

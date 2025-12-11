@@ -78,11 +78,9 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
         // Ragi-Cherry Juice
         HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY),
-                null,
-                fluidResult = resultHelper.fluid(RagiumFluidContents.RAGI_CHERRY_JUICE, 125),
-            ).save(output)
+            .extracting(itemCreator.fromTagKey(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY))
+            .setResult(resultHelper.fluid(RagiumFluidContents.RAGI_CHERRY_JUICE, 125))
+            .save(output)
 
         extractAndInfuse(Items.GLASS_BOTTLE, RagiumItems.RAGI_CHERRY_JUICE, RagiumFluidContents.RAGI_CHERRY_JUICE)
         // Ragi-Cherry Jam
@@ -151,12 +149,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun cream() {
         // Milk -> Cream
-        distillation(
-            HTFluidHolderLike.MILK to 1000,
-            null,
-            resultHelper.fluid(RagiumFluidContents.CREAM, 250) to null,
-        )
-
+        HTComplexRecipeBuilder
+            .refining()
+            .addIngredient(fluidCreator.fromHolder(HTFluidHolderLike.MILK, 1000))
+            .setResult(resultHelper.fluid(RagiumFluidContents.CREAM, 250))
+            .saveSuffixed(output, "_from_milk")
+        
         extractAndInfuse(Items.BOWL, RagiumItems.CREAM_BOWL, RagiumFluidContents.CREAM)
         // Cream -> Butter
         HTComplexRecipeBuilder

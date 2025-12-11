@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -386,7 +387,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .create(upgrade)
             .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .define('A', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
             .apply(action)
             .save(output)
     }
@@ -412,7 +413,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                     "ACA",
                     "ABA",
                 ).define('A', prefix, key)
-                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+                .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
                 .define('C', Tags.Items.CHESTS_WOODEN)
                 .save(output)
         }
@@ -425,7 +426,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "AAA",
                 "ABA",
                 "A A",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            ).define('A', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
             .define('B', Items.HOPPER)
             .save(output)
     }
@@ -449,7 +450,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                     "ACA",
                     "ABA",
                 ).define('A', prefix, key)
-                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+                .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
                 .define('C', Tags.Items.BUCKETS_EMPTY)
                 .save(output)
         }
@@ -463,7 +464,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "ACA",
                 "ABA",
             ).define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
-            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
             .define('C', Tags.Items.BUCKETS_EMPTY)
             .save(output)
 

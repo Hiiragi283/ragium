@@ -299,6 +299,8 @@ object RagiumItems {
         // Plates
         register(CommonMaterialPrefixes.PLATE, VanillaMaterialKeys.WOOD, "wood_plate")
         register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC, "plastic_plate")
+        register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER, "raw_rubber_sheet")
+        register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, "rubber_sheet")
         // Scraps
         register(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, "deep_scrap")
     }

@@ -144,6 +144,16 @@ object RagiumMaterialHandler {
             addName("Plastic", "プラスチック")
             add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
+        event.modify(CommonMaterialKeys.RAW_RUBBER) {
+            addDefaultPrefix(CommonMaterialPrefixes.PLATE)
+            addName("Raw Rubber", "生ゴム")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
+        }
+        event.modify(CommonMaterialKeys.RUBBER) {
+            addDefaultPrefix(CommonMaterialPrefixes.PLATE)
+            addName("Rubber", "ゴム")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
+        }
     }
 
     @JvmStatic

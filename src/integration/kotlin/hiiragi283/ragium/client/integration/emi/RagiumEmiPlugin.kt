@@ -329,7 +329,7 @@ class RagiumEmiPlugin : EmiPlugin {
                 HTExtractingRecipe(
                     HTItemIngredient(Ingredient.of(stack), 1),
                     HTItemIngredient(Ingredient.of(Items.COMPOSTER), 1).wrapOptional(),
-                    Ior.Right(HTResultHelper.fluid(crudeBio.getId(), crudeBio.amount())),
+                    Ior.Right(HTResultHelper.fluid(crudeBio)),
                 )
             },
             HTItemWithCatalystEmiRecipe::extracting,

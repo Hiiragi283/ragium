@@ -58,7 +58,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         RagiumDataComponents.init(eventBus)
         RagiumEnchantmentComponents.REGISTER.register(eventBus)
 
-        RagiumFluidContents.REGISTER.init(eventBus)
+        RagiumFluidContents.init(eventBus)
 
         RagiumBlocks.init(eventBus)
         RagiumItems.init(eventBus)

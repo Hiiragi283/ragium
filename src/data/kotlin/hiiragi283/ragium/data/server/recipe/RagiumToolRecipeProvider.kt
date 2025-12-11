@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -148,9 +149,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .create(RagiumItems.NIGHT_VISION_GOGGLES)
             .pattern(
                 "AAA",
-                "ABA",
+                "BCB",
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
+            .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
     }

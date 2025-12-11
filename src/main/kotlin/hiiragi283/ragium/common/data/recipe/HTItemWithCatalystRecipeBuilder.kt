@@ -38,22 +38,13 @@ class HTItemWithCatalystRecipeBuilder(
         }
 
         @JvmStatic
-        fun extracting(
-            ingredient: HTItemIngredient,
-            itemResult: HTItemResult?,
-            catalyst: HTItemIngredient? = null,
-            fluidResult: HTFluidResult? = null,
-        ): HTItemWithCatalystRecipeBuilder {
-            val builder = HTItemWithCatalystRecipeBuilder(
+        fun extracting(ingredient: HTItemIngredient, catalyst: HTItemIngredient? = null): HTItemWithCatalystRecipeBuilder =
+            HTItemWithCatalystRecipeBuilder(
                 RagiumConst.EXTRACTING,
                 ::HTExtractingRecipe,
                 ingredient,
                 catalyst,
             )
-            builder.setResult(itemResult)
-            builder.setResult(fluidResult)
-            return builder
-        }
     }
 
     constructor(
