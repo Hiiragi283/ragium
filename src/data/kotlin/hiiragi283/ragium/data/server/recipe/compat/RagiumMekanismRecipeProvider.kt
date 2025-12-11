@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.MekanismMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumEssenceType
@@ -146,12 +146,12 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
             ).build(output, id("metallurgic_infusing/azure_steel"))
 
         // Ethene + Catalyst -> HDPE
-        HTComplexRecipeBuilder
-            .solidifying()
-            .addIngredient(itemCreator.fromItem(RagiumItems.POLYMER_CATALYST))
-            .addIngredient(fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 100))
-            .setResult(resultHelper.item(MekanismItems.HDPE_PELLET))
-            .save(output)
+        HTFluidWithCatalystRecipeBuilder
+            .solidifying(
+                fluidCreator.fromTagKey(MekanismTags.Fluids.ETHENE, 125),
+                itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
+                resultHelper.item(MekanismItems.HDPE_PELLET),
+            ).save(output)
     }
 
     @JvmStatic

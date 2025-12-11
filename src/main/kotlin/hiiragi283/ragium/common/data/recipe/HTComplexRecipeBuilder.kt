@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
-import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.common.data.recipe.base.HTComplexResultRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -26,17 +25,10 @@ class HTComplexRecipeBuilder(prefix: String, private val factory: Factory<*>) :
         }
 
         @JvmStatic
-        private fun refining(prefix: String): HTComplexRecipeBuilder = HTComplexRecipeBuilder(
-            prefix,
-        ) { itemIngredients: List<HTItemIngredient>, fluidIngredients: List<HTFluidIngredient>, results: HTComplexResult ->
-            HTRefiningRecipe(itemIngredients.getOrNull(0).wrapOptional(), fluidIngredients[0], results)
-        }
-
-        @JvmStatic
-        fun refining(): HTComplexRecipeBuilder = refining(RagiumConst.REFINING)
-
-        @JvmStatic
-        fun solidifying(): HTComplexRecipeBuilder = refining(RagiumConst.SOLIDIFYING)
+        fun refining(): HTComplexRecipeBuilder =
+            HTComplexRecipeBuilder(RagiumConst.REFINING) { _, fluidIngredients: List<HTFluidIngredient>, results: HTComplexResult ->
+                HTRefiningRecipe(fluidIngredients[0], results)
+            }
     }
 
     private val itemIngredients: MutableList<HTItemIngredient> = mutableListOf()

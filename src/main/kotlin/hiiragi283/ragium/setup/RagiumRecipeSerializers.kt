@@ -27,6 +27,7 @@ import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSimpleMixingRecipe
+import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBioExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTExpExtractingRecipe
@@ -188,6 +189,12 @@ object RagiumRecipeSerializers {
     val SIMULATING_ENTITY: RecipeSerializer<HTEntitySimulatingRecipe> = register(
         RagiumConst.SIMULATING_ENTITY,
         RagiumRecipeBiCodecs.simulating(Registries.ENTITY_TYPE, ::HTEntitySimulatingRecipe),
+    )
+
+    @JvmField
+    val SOLIDIFYING: RecipeSerializer<HTSolidifyingRecipe> = register(
+        RagiumConst.SOLIDIFYING,
+        RagiumRecipeBiCodecs.SOLIDIFYING,
     )
 
     private class SimpleSerializer<RECIPE : Recipe<*>>(private val codec: MapBiCodec<RegistryFriendlyByteBuf, RECIPE>) :

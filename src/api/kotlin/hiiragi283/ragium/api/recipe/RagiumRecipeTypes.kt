@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.multi.HTFluidWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
@@ -51,6 +52,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val SIMULATING: HTDeferredRecipeType<HTRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.SIMULATING)
+
+    @JvmField
+    val SOLIDIFYING: HTDeferredRecipeType<HTRecipeInput, HTFluidWithCatalystRecipe> = create(RagiumConst.SOLIDIFYING)
 
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(path: String): HTDeferredRecipeType<INPUT, RECIPE> =

@@ -20,7 +20,7 @@ import net.neoforged.neoforge.fluids.crafting.TagFluidIngredient
  */
 data class HTFluidIngredient(private val ingredient: FluidIngredient, private val amount: Int) : HTIngredient<Fluid, ImmutableFluidStack> {
     fun interface AmountGetter {
-        fun getRequiredAmount(stack: ImmutableFluidStack): Int
+        fun getRequiredAmount(): Int
     }
 
     companion object {

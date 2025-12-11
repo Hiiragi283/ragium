@@ -20,6 +20,7 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPlantingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
@@ -272,22 +273,22 @@ sealed class HTRecipeProvider {
                 resultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${solid.getPath()}")
         // Solidifying
-        HTComplexRecipeBuilder
-            .solidifying()
-            .addIngredient(itemCreator.fromItem(mold))
-            .addIngredient(fluidCreator.fromHolder(fluid, amount))
-            .setResult(resultHelper.item(solid))
-            .saveSuffixed(output, "_from_${fluid.getPath()}")
+        HTFluidWithCatalystRecipeBuilder
+            .solidifying(
+                fluidCreator.fromHolder(fluid, amount),
+                itemCreator.fromItem(mold),
+                resultHelper.item(solid),
+            ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
     protected fun meltAndFreeze(data: HTRecipeData) {
         // Solidifying
-        HTComplexRecipeBuilder
-            .solidifying()
-            .addIngredient(data.catalyst?.let(itemCreator::fromItem))
-            .addIngredient(data.getFluidIngredients(fluidCreator)[0])
-            .setResult(data.getItemResults()[0].first)
-            .saveModified(output, data.operator)
+        HTFluidWithCatalystRecipeBuilder
+            .solidifying(
+                data.getFluidIngredients(fluidCreator)[0],
+                data.catalyst?.let(itemCreator::fromItem),
+                data.getItemResults()[0].first,
+            ).saveModified(output, data.operator)
         // Melting
         val data1: HTRecipeData = data.swap()
         HTSingleRecipeBuilder

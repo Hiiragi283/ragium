@@ -154,7 +154,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(fluidCreator.fromHolder(HTFluidHolderLike.MILK, 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.CREAM, 250))
             .saveSuffixed(output, "_from_milk")
-        
+
         extractAndInfuse(Items.BOWL, RagiumItems.CREAM_BOWL, RagiumFluidContents.CREAM)
         // Cream -> Butter
         HTComplexRecipeBuilder

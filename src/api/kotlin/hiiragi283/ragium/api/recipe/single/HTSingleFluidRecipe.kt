@@ -9,7 +9,7 @@ import net.minecraft.core.HolderLookup
  * 単一のアイテムから単一の液体を生産するレシピ
  */
 interface HTSingleFluidRecipe :
-    HTSingleItemRecipe,
+    HTSingleItemInputRecipe,
     HTFluidRecipe {
     override fun assembleItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? = null
 }

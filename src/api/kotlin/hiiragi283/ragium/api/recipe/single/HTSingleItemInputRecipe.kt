@@ -10,7 +10,7 @@ import java.util.function.Predicate
 /**
  * 単一のアイテムから単一のアイテムを生成するレシピ
  */
-interface HTSingleItemRecipe :
+interface HTSingleItemInputRecipe :
     HTRecipe,
     Predicate<ImmutableItemStack>,
     HTItemIngredient.CountGetter {

@@ -53,6 +53,7 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSimulatingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSingleExtraItemEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
@@ -339,6 +340,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
         // Elite
         addRecipes(registry, collectBrewingRecipes(), ::HTBrewingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)

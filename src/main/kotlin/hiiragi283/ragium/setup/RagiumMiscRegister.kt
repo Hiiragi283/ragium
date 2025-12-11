@@ -45,6 +45,7 @@ object RagiumMiscRegister {
             register(helper, RagiumRecipeTypes.REFINING)
             register(helper, RagiumRecipeTypes.ROCK_GENERATING)
             register(helper, RagiumRecipeTypes.SIMULATING)
+            register(helper, RagiumRecipeTypes.SOLIDIFYING)
         }
 
         // Ingredient Type

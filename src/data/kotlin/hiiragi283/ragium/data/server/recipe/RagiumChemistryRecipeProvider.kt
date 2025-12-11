@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
@@ -468,12 +469,12 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_crude_oil")
 
         // Naphtha + Catalyst -> 4x Polymer Resin
-        HTComplexRecipeBuilder
-            .solidifying()
-            .addIngredient(itemCreator.fromItem(RagiumItems.POLYMER_CATALYST))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000))
-            .setResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4))
-            .saveSuffixed(output, "_from_naphtha")
+        HTFluidWithCatalystRecipeBuilder
+            .solidifying(
+                fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000),
+                itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
+                resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4),
+            ).saveSuffixed(output, "_from_naphtha")
         // Naphtha -> Fuel + Sulfur
         HTComplexRecipeBuilder
             .refining()
@@ -555,7 +556,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.item(RagiumItems.ROSIN))
             .setResult(resultHelper.fluid(HTFluidHolderLike.WATER, 500))
             .saveSuffixed(output, "_from_spruce_resin")
-        
+
         rubber()
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
@@ -579,12 +580,12 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                     .saveSuffixed(output, "_from_${sap.getPath()}")
             }
             // Molten -> Gem
-            HTComplexRecipeBuilder
-                .solidifying()
-                .addIngredient(itemCreator.fromItem(HTMoldType.GEM))
-                .addIngredient(fluidCreator.fromHolder(molten, 1000))
-                .setResult(resultHelper.item(CommonMaterialPrefixes.GEM, data))
-                .save(output)
+            HTFluidWithCatalystRecipeBuilder
+                .solidifying(
+                    fluidCreator.fromHolder(molten, 1000),
+                    itemCreator.fromItem(HTMoldType.GEM),
+                    resultHelper.item(CommonMaterialPrefixes.GEM, data),
+                ).save(output)
 
             HTSingleRecipeBuilder
                 .melting(
@@ -629,12 +630,12 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumFluidContents.LATEX.bucketTag)
             .saveSuffixed(output, "_from_latex")
 
-        HTComplexRecipeBuilder
-            .solidifying()
-            .addIngredient(itemCreator.fromItem(HTMoldType.PLATE))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.LATEX, 1000))
-            .setResult(resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER, 2))
-            .save(output)
+        HTFluidWithCatalystRecipeBuilder
+            .solidifying(
+                fluidCreator.fromHolder(RagiumFluidContents.LATEX, 1000),
+                itemCreator.fromItem(HTMoldType.PLATE),
+                resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER, 2),
+            ).save(output)
         // Raw Rubber -> Rubber
         HTCookingRecipeBuilder
             .smelting(RagiumItems.getPlate(CommonMaterialKeys.RUBBER))

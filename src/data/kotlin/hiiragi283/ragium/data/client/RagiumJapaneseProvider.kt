@@ -359,6 +359,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.REFINING, "精製")
         add(RagiumRecipeTypes.ROCK_GENERATING, "岩石生成")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
+        add(RagiumRecipeTypes.SOLIDIFYING, "成型")
     }
 
     private fun text() {

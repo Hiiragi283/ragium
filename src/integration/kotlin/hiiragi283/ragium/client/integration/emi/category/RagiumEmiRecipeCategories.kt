@@ -97,6 +97,10 @@ object RagiumEmiRecipeCategories {
     val REFINING: HTEmiRecipeCategory =
         machine(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
+    @JvmField
+    val SOLIDIFYING: HTEmiRecipeCategory =
+        machine(RagiumRecipeTypes.SOLIDIFYING, RagiumBlocks.REFINERY)
+
     // Elite
     @JvmField
     val BREWING: HTEmiRecipeCategory = HTEmiRecipeCategory.create(
@@ -147,6 +151,7 @@ object RagiumEmiRecipeCategories {
         register(registry, MELTING)
         register(registry, MIXING)
         register(registry, REFINING)
+        register(registry, SOLIDIFYING)
 
         register(registry, BREWING)
         register(registry, PLANTING)

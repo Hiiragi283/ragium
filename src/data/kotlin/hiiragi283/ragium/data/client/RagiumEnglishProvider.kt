@@ -357,6 +357,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.REFINING, "Refining")
         add(RagiumRecipeTypes.ROCK_GENERATING, "Rock Generating")
         add(RagiumRecipeTypes.SIMULATING, "Simulating")
+        add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
     }
 
     private fun text() {

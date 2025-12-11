@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe.vanilla
 import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
-import hiiragi283.ragium.api.recipe.single.HTSingleItemRecipe
+import hiiragi283.ragium.api.recipe.single.HTSingleItemInputRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.core.HolderLookup
@@ -16,7 +16,7 @@ open class HTVanillaSingleItemRecipe<RECIPE : Recipe<SingleRecipeInput>>(
     protected val ingredient: HTItemIngredient,
     protected val resultFactory: HTVanillaResultFactory,
 ) : HTRecipe.Fake,
-    HTSingleItemRecipe {
+    HTSingleItemInputRecipe {
     constructor(recipe: RECIPE) : this(
         recipe,
         HTItemIngredient(recipe.ingredients[0], 1),
