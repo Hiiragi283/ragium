@@ -161,7 +161,7 @@ object RagiumRuntimeHandler {
         val result: ItemStack = event.crafting
         if (result.isEmpty) return
         // 中身のアイテムをプレイヤーに渡す
-        result.remove(RagiumDataComponents.ITEM_CONTENT)?.forEach { stack: ImmutableItemStack? ->
+        result.remove(RagiumDataComponents.ITEM)?.forEach { stack: ImmutableItemStack? ->
             HTItemDropHelper.giveStackTo(event.entity, stack)
         }
     }

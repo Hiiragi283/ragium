@@ -239,7 +239,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 setCategory(CraftingBookCategory.EQUIPMENT)
             }
 
-        resetComponent(RagiumItems.TELEPORT_KEY, RagiumDataComponents.FLUID_CONTENT, RagiumDataComponents.TELEPORT_POS)
+        resetComponent(RagiumItems.TELEPORT_KEY, RagiumDataComponents.FLUID, RagiumDataComponents.TELEPORT_POS)
         // Eldritch
         HTShapedRecipeBuilder
             .create(RagiumItems.ELDRITCH_EGG, 4)

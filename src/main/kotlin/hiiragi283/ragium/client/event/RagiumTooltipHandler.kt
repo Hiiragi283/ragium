@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.event
 
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.item.component.HTItemContents
+import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
@@ -73,7 +73,7 @@ object RagiumTooltipHandler {
     @SubscribeEvent
     fun gatherClientComponents(event: RenderTooltipEvent.GatherComponents) {
         val stack: ItemStack = event.itemStack
-        val contents: HTItemContents = stack.get(RagiumDataComponents.ITEM_CONTENT) ?: return
+        val contents: HTAttachedItems = stack.get(RagiumDataComponents.ITEM) ?: return
         contents.indices
             .mapNotNull(contents::get)
             .map(::HTItemTooltipContent)

@@ -1,12 +1,11 @@
 package hiiragi283.ragium.common.block.entity.component
 
 import hiiragi283.ragium.api.function.HTPredicates
-import hiiragi283.ragium.api.item.component.HTItemContents
-import hiiragi283.ragium.api.item.component.HTStackContents
 import hiiragi283.ragium.api.serialization.component.HTComponentInput
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.upgrade.HTSlotUpgradeHandler
 import hiiragi283.ragium.api.util.HTContentListener
@@ -48,7 +47,7 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
     }
 
     override fun applyComponents(input: HTComponentInput) {
-        input.use(RagiumDataComponents.MACHINE_UPGRADES) { contents: HTItemContents ->
+        input.use(RagiumDataComponents.MACHINE_UPGRADES) { contents: HTAttachedItems ->
             for (i: Int in contents.indices) {
                 upgradeSlots.getOrNull(i)?.setStackUnchecked(contents[i])
             }
@@ -60,7 +59,7 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
             RagiumDataComponents.MACHINE_UPGRADES,
             upgradeSlots
                 .map(HTBasicItemSlot::getStack)
-                .let(HTStackContents.Companion::fromNullable),
+                .let(::HTAttachedItems),
         )
     }
     //    HTSlotUpgradeHandler    //

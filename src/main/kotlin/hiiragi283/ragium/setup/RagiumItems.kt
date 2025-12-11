@@ -61,6 +61,7 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.common.storage.attachments.HTComponentHandler
 import hiiragi283.ragium.common.storage.energy.HTComponentEnergyHandler
 import hiiragi283.ragium.common.storage.energy.battery.HTComponentEnergyBattery
 import hiiragi283.ragium.common.storage.fluid.HTComponentFluidHandler
@@ -70,6 +71,7 @@ import hiiragi283.ragium.common.storage.item.slot.HTComponentItemSlot
 import hiiragi283.ragium.common.text.HTSmithingTranslation
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
@@ -760,19 +762,19 @@ object RagiumItems {
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Item
-        for ((_, block: ItemLike) in RagiumBlocks.CRATES) {
+        for ((tier: HTCrateTier, block: ItemLike) in RagiumBlocks.CRATES) {
             registerItem(
                 event,
-                { stack: ItemStack -> listOf(HTComponentItemSlot.create(stack, 1)) },
+                1,
+                { context: HTComponentHandler.ContainerContext -> HTComponentItemSlot.create(context, tier.getMultiplier()) },
                 block,
             )
         }
         registerItem(
             event,
-            { stack: ItemStack ->
-                (0..<9).map { slot: Int ->
-                    HTComponentItemSlot.create(stack, slot, filter = HTPotionBundleContainerMenu::filterPotion)
-                }
+            9,
+            { context: HTComponentHandler.ContainerContext ->
+                HTComponentItemSlot.create(context, 1, filter = HTPotionBundleContainerMenu::filterPotion)
             },
             POTION_BUNDLE,
         )
@@ -780,18 +782,18 @@ object RagiumItems {
         // Fluid
         registerFluid(
             event,
-            { stack: ItemStack ->
-                val capacity: Int = HTUpgradeHelper.getTankCapacity(stack, RagiumConfig.COMMON.tankCapacity.asInt)
-                HTComponentFluidTank.create(stack, 0, capacity)
+            { context: HTComponentHandler.ContainerContext ->
+                val capacity: Int = HTUpgradeHelper.getTankCapacity(context.attachedTo, RagiumConfig.COMMON.tankCapacity.asInt)
+                HTComponentFluidTank.create(context, capacity)
             },
             RagiumBlocks.TANK,
         )
 
         registerFluid(
             event,
-            { stack: ItemStack ->
-                val capacity: Int = HTUpgradeHelper.getTankCapacity(stack, 8000)
-                HTComponentFluidTank.create(stack, 0, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
+            { context: HTComponentHandler.ContainerContext ->
+                val capacity: Int = HTUpgradeHelper.getTankCapacity(context.attachedTo, 8000)
+                HTComponentFluidTank.create(context, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
             },
             TELEPORT_KEY,
         )
@@ -799,8 +801,8 @@ object RagiumItems {
         // Energy
         registerEnergy(
             event,
-            { stack: ItemStack ->
-                HTComponentEnergyBattery.create(stack, HTUpgradeHelper.getEnergyCapacity(stack, 160000))
+            { context: HTComponentHandler.ContainerContext ->
+                HTComponentEnergyBattery.create(context, HTUpgradeHelper.getEnergyCapacity(context.attachedTo, 160000))
             },
             DRILL,
         )
@@ -855,28 +857,41 @@ object RagiumItems {
     }
 
     @JvmStatic
-    fun registerItem(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> List<HTItemSlot>, vararg items: ItemLike) {
+    fun registerItem(
+        event: RegisterCapabilitiesEvent,
+        size: Int,
+        factory: HTComponentHandler.ContainerFactory<HTItemSlot>,
+        vararg items: ItemLike,
+    ) {
         event.registerItem(
             HTItemCapabilities.item,
-            { stack: ItemStack, _: Void? -> HTComponentItemHandler(getter(stack)) },
+            { stack: ItemStack, _: Void? -> HTComponentItemHandler(stack, size, factory) },
             *items,
         )
     }
 
     @JvmStatic
-    fun registerFluid(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> HTFluidTank, vararg items: ItemLike) {
+    fun registerFluid(
+        event: RegisterCapabilitiesEvent,
+        factory: HTComponentHandler.ContainerFactory<HTFluidTank>,
+        vararg items: ItemLike,
+    ) {
         event.registerItem(
             HTFluidCapabilities.item,
-            { stack: ItemStack, _: Void? -> HTComponentFluidHandler(stack, getter(stack)) },
+            { stack: ItemStack, _: Void? -> HTComponentFluidHandler(stack, 1, factory) },
             *items,
         )
     }
 
     @JvmStatic
-    fun registerEnergy(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> HTEnergyBattery, vararg items: ItemLike) {
+    fun registerEnergy(
+        event: RegisterCapabilitiesEvent,
+        factory: HTComponentHandler.ContainerFactory<HTEnergyBattery>,
+        vararg items: ItemLike,
+    ) {
         event.registerItem(
             HTEnergyCapabilities.item,
-            { stack: ItemStack, _: Void? -> HTComponentEnergyHandler(stack, getter(stack)) },
+            { stack: ItemStack, _: Void? -> HTComponentEnergyHandler(stack, 1, factory) },
             *items,
         )
     }

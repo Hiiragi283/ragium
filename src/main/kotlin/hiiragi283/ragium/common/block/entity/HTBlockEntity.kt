@@ -4,9 +4,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
-import hiiragi283.ragium.api.item.component.HTFluidContents
-import hiiragi283.ragium.api.item.component.HTItemContents
-import hiiragi283.ragium.api.item.component.HTStackContents
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.component.HTComponentInput
 import hiiragi283.ragium.api.serialization.value.HTValueInput
@@ -14,6 +11,9 @@ import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
+import hiiragi283.ragium.api.storage.attachments.HTAttachedEnergy
+import hiiragi283.ragium.api.storage.attachments.HTAttachedFluids
+import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
@@ -302,7 +302,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     /**
      * @see mekanism.common.tile.base.TileEntityMekanism.applyFluidTanks
      */
-    fun applyFluidTanks(containers: List<HTFluidTank>, contents: HTFluidContents) {
+    fun applyFluidTanks(containers: List<HTFluidTank>, contents: HTAttachedFluids) {
         for (i: Int in contents.indices) {
             val stack: ImmutableFluidStack? = contents[i]
             (containers.getOrNull(i) as? HTBasicFluidTank)?.setStackUnchecked(stack, true)
@@ -312,10 +312,10 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     /**
      * @see mekanism.common.tile.base.TileEntityMekanism.collectFluidTanks
      */
-    fun collectFluidTanks(containers: List<HTFluidTank>): HTFluidContents? = containers
+    fun collectFluidTanks(containers: List<HTFluidTank>): HTAttachedFluids? = containers
         .map(HTFluidTank::getStack)
-        .let(HTStackContents.Companion::fromNullable)
-        .takeUnless(HTFluidContents::isEmpty)
+        .let(::HTAttachedFluids)
+        .takeUnless(HTAttachedFluids::isEmpty)
 
     // Energy
 
@@ -336,14 +336,20 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     /**
      * @see mekanism.common.tile.base.TileEntityMekanism.applyEnergyContainers
      */
-    fun applyEnergyBattery(containers: List<HTEnergyBattery>, value: Int) {
-        (containers.first() as? HTBasicEnergyBattery)?.setAmountUnchecked(value, true)
+    fun applyEnergyBattery(containers: List<HTEnergyBattery>, contents: HTAttachedEnergy) {
+        for (i: Int in contents.indices) {
+            val amount: Int = contents[i]
+            (containers.getOrNull(i) as? HTBasicEnergyBattery)?.setAmountUnchecked(amount, true)
+        }
     }
 
     /**
      * @see mekanism.common.tile.base.TileEntityMekanism.collectEnergyContainers
      */
-    fun collectEnergyBattery(containers: List<HTEnergyBattery>): Int? = containers.firstOrNull()?.getAmount()
+    fun collectEnergyBattery(containers: List<HTEnergyBattery>): HTAttachedEnergy? = containers
+        .map(HTEnergyBattery::getAmount)
+        .let(::HTAttachedEnergy)
+        .takeUnless(HTAttachedEnergy::isEmpty)
 
     // Item
 
@@ -364,7 +370,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     /**
      * @see mekanism.common.tile.base.TileEntityMekanism.applyInventorySlots
      */
-    fun applyItemSlots(containers: List<HTItemSlot>, contents: HTItemContents) {
+    fun applyItemSlots(containers: List<HTItemSlot>, contents: HTAttachedItems) {
         for (i: Int in contents.indices) {
             val stack: ImmutableItemStack? = contents[i]
             (containers.getOrNull(i) as? HTBasicItemSlot)?.setStackUnchecked(stack, true)
@@ -374,8 +380,8 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     /**
      * @see mekanism.common.tile.base.TileEntityMekanism.collectInventorySlots
      */
-    fun collectItemSlots(containers: List<HTItemSlot>): HTItemContents? = containers
+    fun collectItemSlots(containers: List<HTItemSlot>): HTAttachedItems? = containers
         .map(HTItemSlot::getStack)
-        .let(HTStackContents.Companion::fromNullable)
-        .takeUnless(HTItemContents::isEmpty)
+        .let(::HTAttachedItems)
+        .takeUnless(HTAttachedItems::isEmpty)
 }

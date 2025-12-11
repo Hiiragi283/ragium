@@ -37,7 +37,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         crate()
 
         // Tank
-        resetComponent(RagiumBlocks.TANK, RagiumDataComponents.FLUID_CONTENT)
+        resetComponent(RagiumBlocks.TANK, RagiumDataComponents.FLUID)
         HTShapedRecipeBuilder
             .create(RagiumBlocks.TANK)
             .crossLayered()
@@ -412,7 +412,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun crate() {
         for ((tier: HTCrateTier, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
-            resetComponent(crate, RagiumDataComponents.ITEM_CONTENT)
+            resetComponent(crate, RagiumDataComponents.ITEM)
 
             val key: HTMaterialKey = when (tier) {
                 HTCrateTier.SMALL -> VanillaMaterialKeys.IRON

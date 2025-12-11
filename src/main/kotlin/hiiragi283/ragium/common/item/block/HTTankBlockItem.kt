@@ -3,10 +3,10 @@ package hiiragi283.ragium.common.item.block
 import hiiragi283.ragium.api.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.item.HTDescriptionBlockItem
 import hiiragi283.ragium.api.item.HTSubCreativeTabContents
-import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
@@ -71,7 +71,7 @@ class HTTankBlockItem(block: HTTankBlock, properties: Properties) :
         createItemStack(
             baseItem,
             RagiumDataComponents.MACHINE_UPGRADES,
-            HTItemContents.fromNullable(listOf(RagiumItems.CREATIVE_UPGRADE.toImmutableStack(1))),
+            HTAttachedItems(listOf(RagiumItems.CREATIVE_UPGRADE.toImmutableStack(1))),
         ).let(consumer::accept)
     }
 }

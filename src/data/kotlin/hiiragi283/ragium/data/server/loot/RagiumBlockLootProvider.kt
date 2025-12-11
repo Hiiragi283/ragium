@@ -55,8 +55,8 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                             include(RagiumDataComponents.MACHINE_UPGRADES)
 
                             include(RagiumDataComponents.ENERGY)
-                            include(RagiumDataComponents.FLUID_CONTENT)
-                            include(RagiumDataComponents.ITEM_CONTENT)
+                            include(RagiumDataComponents.FLUID)
+                            include(RagiumDataComponents.ITEM)
                             when (block) {
                                 is HTImitationSpawnerBlock -> include(RagiumDataComponents.SPAWNER_MOB)
                             }
