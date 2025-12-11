@@ -30,7 +30,7 @@ class HTMagmaticGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(
                 listener,
-                blockHolder.getFluidAttribute().getInputTank(),
+                blockHolder.getFluidAttribute().getInputTank(this),
                 RagiumDataMapTypes::getTimeFromMagmatic.andThen { it > 0 },
             ),
         )

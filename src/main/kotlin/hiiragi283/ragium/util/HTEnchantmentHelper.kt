@@ -4,34 +4,14 @@ import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.setup.RagiumEnchantmentComponents
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.util.RandomSource
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import org.apache.commons.lang3.mutable.MutableFloat
 import kotlin.math.max
 
 object HTEnchantmentHelper {
-    @JvmField
-    val DEFAULT_RANDOM: RandomSource = RandomSource.create()
-
-    @JvmStatic
-    fun modifyStorageCapacity(
-        enchantment: Enchantment,
-        random: RandomSource,
-        enchantmentLevel: Int,
-        storageCapacity: MutableFloat,
-    ) {
-        enchantment.modifyUnfilteredValue(
-            RagiumEnchantmentComponents.CAPACITY,
-            random,
-            enchantmentLevel,
-            storageCapacity,
-        )
-    }
-
     @JvmStatic
     fun modifyCollectorRange(
         enchantment: Enchantment,
@@ -52,43 +32,7 @@ object HTEnchantmentHelper {
     @JvmStatic
     fun hasStrike(stack: ItemStack): Boolean = EnchantmentHelper.has(stack, RagiumEnchantmentComponents.STRIKE)
 
-    //    Block Entity    //
-
-    @JvmStatic
-    fun runIterationOnComponent(enchantments: ItemEnchantments, visitor: EnchantmentHelper.EnchantmentVisitor) {
-        for (entry in enchantments.entrySet()) {
-            visitor.accept(entry.key, entry.intValue)
-        }
-    }
-
-    @JvmStatic
-    fun processStorageCapacity(random: RandomSource?, enchantments: ItemEnchantments, capacity: Int): Int {
-        val float = MutableFloat(capacity)
-        runIterationOnComponent(enchantments) { holder: Holder<Enchantment>, level: Int ->
-            modifyStorageCapacity(holder.value(), random ?: DEFAULT_RANDOM, level, float)
-        }
-        return max(0, float.toInt())
-    }
-
     //    ItemStack    //
-
-    @JvmStatic
-    fun processStorageCapacity(random: RandomSource?, stack: ItemStack, capacity: Int): Int {
-        val float = MutableFloat(capacity)
-        EnchantmentHelper.runIterationOnItem(stack) { holder: Holder<Enchantment>, level: Int ->
-            modifyStorageCapacity(holder.value(), random ?: DEFAULT_RANDOM, level, float)
-        }
-        return max(0, float.toInt())
-    }
-
-    @JvmStatic
-    fun processStorageCapacity(random: RandomSource?, stack: ItemStack, capacity: Long): Long {
-        val float = MutableFloat(capacity)
-        EnchantmentHelper.runIterationOnItem(stack) { holder: Holder<Enchantment>, level: Int ->
-            modifyStorageCapacity(holder.value(), random ?: DEFAULT_RANDOM, level, float)
-        }
-        return max(0, float.toLong())
-    }
 
     @JvmStatic
     fun processCollectorRange(serverLevel: ServerLevel, stack: ItemStack, range: Double): Double {

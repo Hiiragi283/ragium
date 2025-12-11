@@ -109,8 +109,8 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
      * 指定された[recipe]から，レシピに必要なエネルギー量を取得します。
      */
     protected fun getRequiredEnergy(recipe: RECIPE): Int {
-        battery.currentEnergyPerTick = machineUpgrade.modifyValue(HTMachineUpgrade.Key.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
-        val time: Int = machineUpgrade.modifyValue(HTMachineUpgrade.Key.SPEED) { getRecipeTime(recipe) / it }
+        battery.currentEnergyPerTick = modifyValue(HTMachineUpgrade.Key.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
+        val time: Int = modifyValue(HTMachineUpgrade.Key.SPEED) { getRecipeTime(recipe) / it }
         return battery.currentEnergyPerTick * time
     }
 

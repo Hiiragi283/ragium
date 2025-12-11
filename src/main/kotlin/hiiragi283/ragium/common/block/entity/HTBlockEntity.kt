@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.item.component.HTFluidContents
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.item.component.HTStackContents
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.serialization.component.HTComponentInput
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
@@ -23,6 +24,7 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.component.HTBlockEntityComponent
 import hiiragi283.ragium.common.inventory.HTMenuCallback
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.common.inventory.slot.HTFluidSyncSlot
@@ -40,6 +42,7 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
@@ -124,6 +127,13 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     //    Save & Read    //
 
+    val components: List<HTBlockEntityComponent> get() = components1
+    private val components1: MutableList<HTBlockEntityComponent> = mutableListOf()
+
+    fun addComponent(component: HTBlockEntityComponent) {
+        components1 += component
+    }
+
     var enchantment: ItemEnchantments
         private set
 
@@ -133,6 +143,10 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     }
 
     protected open fun writeValue(output: HTValueOutput) {
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.serialize(output)
+        }
         // Capability
         for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
@@ -153,6 +167,10 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     }
 
     protected open fun readValue(input: HTValueInput) {
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.deserialize(input)
+        }
         // Capability
         for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
@@ -169,6 +187,12 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.applyComponents(object : HTComponentInput {
+                override fun <T : Any> get(type: DataComponentType<T>): T? = componentInput.get(type)
+            })
+        }
         // Capability
         for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
@@ -181,19 +205,23 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         enchantment = componentInput.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
     }
 
-    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
-        super.collectImplicitComponents(components)
+    override fun collectImplicitComponents(builder: DataComponentMap.Builder) {
+        super.collectImplicitComponents(builder)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.collectComponents(builder)
+        }
         // Capability
         for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
-                type.copyFrom(this, components)
+                type.copyFrom(this, builder)
             }
         }
         // Custom Name
-        components.set(DataComponents.CUSTOM_NAME, this.customName)
+        builder.set(DataComponents.CUSTOM_NAME, this.customName)
         // Enchantments
         if (!enchantment.isEmpty) {
-            components.set(DataComponents.ENCHANTMENTS, enchantment)
+            builder.set(DataComponents.ENCHANTMENTS, enchantment)
         }
     }
 

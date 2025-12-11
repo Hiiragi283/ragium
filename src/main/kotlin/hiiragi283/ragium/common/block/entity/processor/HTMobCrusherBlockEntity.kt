@@ -52,7 +52,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
+            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank(this)),
         )
     }
 

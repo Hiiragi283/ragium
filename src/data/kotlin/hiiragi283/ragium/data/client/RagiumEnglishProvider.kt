@@ -181,7 +181,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     }
 
     private fun enchantment() {
-        addEnchantment(RagiumEnchantments.CAPACITY, "Capacity", "Increase the capacity of item or fluid storages.")
         addEnchantment(RagiumEnchantments.RANGE, "Extra Range", "Increase the range of collecting.")
 
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "Noise Canceling", "Increases damage against sculk mobs such as Warden.")
@@ -333,7 +332,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Items.POLYMER_RESIN, "Polymer Resins")
         add(RagiumModTags.Items.RAW_MEAT, "Raw Meats")
 
-        add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "Capacity Enchantable")
         add(RagiumModTags.Items.RANGE_ENCHANTABLE, "Range Enchantable")
         add(RagiumModTags.Items.STRIKE_ENCHANTABLE, "Strike Enchantable")
 
@@ -375,9 +373,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
+        add(HTMachineUpgrade.Key.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
         add(HTMachineUpgrade.Key.SPEED, $$"- Speed: %1$s")
-
-        add(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE, $$"- Extra Chance: %1$s")
         // API - Constants
         add(RagiumTranslation.ERROR, "Error")
         add(RagiumTranslation.INFINITE, "Infinite")

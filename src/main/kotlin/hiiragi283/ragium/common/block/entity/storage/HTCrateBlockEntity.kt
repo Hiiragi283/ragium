@@ -10,7 +10,6 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTVariableItemSlot
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.util.HTEnchantmentHelper
 import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -34,8 +33,7 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
         slot = builder.addSlot(
             HTSlotInfo.BOTH,
             HTVariableItemSlot.create(listener, { stack: ImmutableItemStack? ->
-                val capacity: Int = HTItemSlot.getMaxStackSize(stack) * tier.getMultiplier()
-                HTEnchantmentHelper.processStorageCapacity(this.getLevel()?.random, enchantment, capacity)
+                HTItemSlot.getMaxStackSize(stack) * tier.getMultiplier()
             }, 0, 0),
         )
     }

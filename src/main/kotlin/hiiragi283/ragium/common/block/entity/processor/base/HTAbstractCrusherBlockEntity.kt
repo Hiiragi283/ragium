@@ -32,15 +32,15 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
     ) {
     final override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.input(
         listener,
-        blockHolder.getFluidAttribute().getInputTank(),
-        canInsert = { machineUpgrade.hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) },
+        blockHolder.getFluidAttribute().getInputTank(this),
+        canInsert = { hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) },
         filter = RagiumFluidContents.LUBRICANT::isOf,
     )
 
     //    Ticking    //
 
     final override fun getRecipeTime(recipe: HTSingleExtraItemRecipe): Int {
-        val bool1: Boolean = machineUpgrade.hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
+        val bool1: Boolean = hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
         val bool2: Boolean = HTStackSlotHelper.canShrinkStack(inputTank, RagiumConst.LUBRICANT_CONSUME, true)
         val modifier: Fraction = when (bool1 && bool2) {
             true -> Fraction.THREE_QUARTERS
@@ -61,7 +61,7 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
         // インプットを減らす
         inputSlot.extract(recipe.getRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 潤滑油があれば減らす
-        if (machineUpgrade.hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)) {
+        if (hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)) {
             inputTank.extract(RagiumConst.LUBRICANT_CONSUME, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         // SEを鳴らす

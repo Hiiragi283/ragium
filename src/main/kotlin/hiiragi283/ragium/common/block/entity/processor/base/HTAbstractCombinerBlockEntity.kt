@@ -47,7 +47,7 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTC
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank(), canInsert = ::filterFluid),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank(this), canInsert = ::filterFluid),
         )
     }
 

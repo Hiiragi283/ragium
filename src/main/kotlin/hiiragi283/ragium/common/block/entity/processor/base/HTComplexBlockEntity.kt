@@ -46,7 +46,7 @@ abstract class HTComplexBlockEntity<RECIPE : HTFluidRecipe> : HTProcessorBlockEn
         // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
+            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank(this)),
         )
     }
 

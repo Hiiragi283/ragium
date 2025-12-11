@@ -1,6 +1,9 @@
 package hiiragi283.ragium.api.block.attribute
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.block.entity.HTBlockEntityWithUpgrade
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import net.minecraft.Util
 import net.minecraft.util.StringRepresentable
@@ -8,15 +11,18 @@ import java.util.function.IntSupplier
 
 @JvmRecord
 data class HTFluidBlockAttribute(private val tankMap: Map<TankType, IntSupplier>) : HTBlockAttribute {
-    private fun getTankCapacity(type: TankType): IntSupplier = tankMap[type] ?: error("Undefined tank capacity for ${type.serializedName}")
+    private fun getTankCapacity(type: TankType, upgrade: HTBlockEntityWithUpgrade): IntSupplier {
+        val baseCapacity: IntSupplier = tankMap[type] ?: error("Undefined tank capacity for ${type.serializedName}")
+        return IntSupplier { upgrade.modifyValue(HTMachineUpgrade.Key.FLUID_CAPACITY) { baseCapacity.asInt * it } }
+    }
 
-    fun getInputTank(): IntSupplier = getTankCapacity(TankType.INPUT)
+    fun getInputTank(upgrade: HTBlockEntityWithUpgrade): IntSupplier = getTankCapacity(TankType.INPUT, upgrade)
 
-    fun getOutputTank(): IntSupplier = getTankCapacity(TankType.OUTPUT)
+    fun getOutputTank(upgrade: HTBlockEntityWithUpgrade): IntSupplier = getTankCapacity(TankType.OUTPUT, upgrade)
 
-    fun getFirstInputTank(): IntSupplier = getTankCapacity(TankType.FIRST_INPUT)
+    fun getFirstInputTank(upgrade: HTBlockEntityWithUpgrade): IntSupplier = getTankCapacity(TankType.FIRST_INPUT, upgrade)
 
-    fun getSecondInputTank(): IntSupplier = getTankCapacity(TankType.SECOND_INPUT)
+    fun getSecondInputTank(upgrade: HTBlockEntityWithUpgrade): IntSupplier = getTankCapacity(TankType.SECOND_INPUT, upgrade)
 
     enum class TankType :
         StringRepresentable,

@@ -2,13 +2,14 @@ package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.ragium.api.block.attribute.getAttributeTier
 import hiiragi283.ragium.api.function.HTPredicates
+import hiiragi283.ragium.api.item.component.HTMachineUpgrade
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.util.HTEnchantmentHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.world.level.block.Block
@@ -24,8 +25,7 @@ class HTTieredDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
 
     override fun createTank(listener: HTContentListener): HTBasicFluidTank = DrumTank(listener)
 
-    private fun getCapacity(): Int =
-        HTEnchantmentHelper.processStorageCapacity(this.getLevel()?.random, enchantment, tier.getDefaultCapacity())
+    private fun getCapacity(): Int = modifyValue(HTMachineUpgrade.Key.FLUID_CAPACITY) { tier.getDefaultCapacity() * it }
 
     //    DrumTank    //
 

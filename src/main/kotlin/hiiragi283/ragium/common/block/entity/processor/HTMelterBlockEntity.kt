@@ -51,7 +51,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.OUTPUT,
             HTVariableFluidTank.output(
                 listener,
-                blockHolder.getFluidAttribute().getOutputTank(),
+                blockHolder.getFluidAttribute().getOutputTank(this),
             ),
         )
     }

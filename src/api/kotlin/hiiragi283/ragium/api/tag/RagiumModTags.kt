@@ -140,9 +140,6 @@ object RagiumModTags {
 
         // Enchantments
         @JvmField
-        val CAPACITY_ENCHANTABLE: TagKey<Item> = create("enchantable", "capacity")
-
-        @JvmField
         val RANGE_ENCHANTABLE: TagKey<Item> = create("enchantable", "range")
 
         @JvmField

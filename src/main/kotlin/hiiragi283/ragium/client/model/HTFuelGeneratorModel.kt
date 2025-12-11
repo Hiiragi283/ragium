@@ -105,7 +105,7 @@ class HTFuelGeneratorModel(modelSet: EntityModelSet) : HTModel(RenderType::entit
             blockEntity.isActive -> blockEntity.ticks + partialTick
             else -> 0f
         }
-        val speed: Float = (blockEntity.machineUpgrade.collectModifier(HTMachineUpgrade.Key.ENERGY_GENERATION) / 4).toFloat()
+        val speed: Float = (blockEntity.collectModifier(HTMachineUpgrade.Key.ENERGY_GENERATION) / 4).toFloat()
         top.y = Mth.sin(time * speed + Mth.HALF_PI) * 4 - 4f
         bellow.y = min(Mth.sin(time * speed + Mth.HALF_PI) * 4, 0f)
 

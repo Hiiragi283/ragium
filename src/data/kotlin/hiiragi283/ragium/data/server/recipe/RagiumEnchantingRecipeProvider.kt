@@ -57,8 +57,6 @@ object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
             Enchantments.WIND_BURST,
         )
         // Ragium
-        enchanting(itemCreator.fromTagKey(Tags.Items.CHESTS_ENDER, 8), RagiumEnchantments.CAPACITY)
-
         enchanting(
             itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL, 16),
             RagiumEnchantments.NOISE_CANCELING,

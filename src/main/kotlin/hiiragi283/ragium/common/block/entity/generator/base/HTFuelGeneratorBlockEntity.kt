@@ -29,8 +29,7 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         // 燃料がある場合，それを消費する
         if (remainingBurnTime > 0) {
             remainingBurnTime--
-            battery.currentEnergyPerTick =
-                machineUpgrade.modifyValue(HTMachineUpgrade.Key.ENERGY_GENERATION) { battery.baseEnergyPerTick * it }
+            battery.currentEnergyPerTick = modifyValue(HTMachineUpgrade.Key.ENERGY_GENERATION) { battery.baseEnergyPerTick * it }
             battery.generate()
             return true
         } else {

@@ -2,11 +2,9 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.block.entity.HTAbstractBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.serialization.component.HTComponentInput
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.Connection
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -65,10 +63,6 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
         super.setRemoved()
         val level: Level = this.level ?: return
         onRemove(level, blockPos)
-    }
-
-    protected fun wrapComponentInput(input: DataComponentInput): HTComponentInput = object : HTComponentInput {
-        override fun <T : Any> get(type: DataComponentType<T>): T? = input.get(type)
     }
 
     //    HTContentListener    //

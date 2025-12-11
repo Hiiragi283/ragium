@@ -81,15 +81,11 @@ sealed interface HTMachineUpgrade {
 
         override fun getBaseTier(): HTBaseTier = tier
 
-        override fun getProperty(key: Key): Fraction? = when (key) {
-            Key.SPEED, Key.ENERGY_CAPACITY, Key.ENERGY_GENERATION, Key.ENERGY_EFFICIENCY -> when (tier) {
-                HTBaseTier.BASIC -> Fraction.ONE
-                HTBaseTier.ADVANCED -> Fraction.getFraction(2, 1)
-                HTBaseTier.ELITE -> Fraction.getFraction(3, 1)
-                HTBaseTier.ULTIMATE -> Fraction.getFraction(4, 1)
-                else -> null
-            }
-
+        override fun getProperty(key: Key): Fraction? = when (tier) {
+            HTBaseTier.BASIC -> Fraction.ONE
+            HTBaseTier.ADVANCED -> Fraction.getFraction(2, 1)
+            HTBaseTier.ELITE -> Fraction.getFraction(3, 1)
+            HTBaseTier.ULTIMATE -> Fraction.getFraction(4, 1)
             else -> null
         }
 
@@ -123,10 +119,8 @@ sealed interface HTMachineUpgrade {
         ENERGY_CAPACITY(Int.MAX_VALUE),
         ENERGY_EFFICIENCY(0),
         ENERGY_GENERATION(Int.MAX_VALUE),
+        FLUID_CAPACITY(Int.MAX_VALUE),
         SPEED(1),
-
-        // Processor
-        SUBPRODUCT_CHANCE(1),
         ;
 
         companion object {

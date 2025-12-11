@@ -32,7 +32,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(
                 listener,
-                blockHolder.getFluidAttribute().getFirstInputTank(),
+                blockHolder.getFluidAttribute().getFirstInputTank(this),
                 canInsert = RagiumDataMapTypes::getCoolantAmount.andThen { it > 0 },
             ),
         )
@@ -40,7 +40,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(
                 listener,
-                blockHolder.getFluidAttribute().getSecondInputTank(),
+                blockHolder.getFluidAttribute().getSecondInputTank(this),
                 canInsert = RagiumDataMapTypes::getTimeFromCombustion.andThen { it > 0 },
             ),
         )

@@ -256,14 +256,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.MAGMA_SHARD)
             .addTag(ItemTags.SOUL_FIRE_BASE_BLOCKS)
         // Enchantments
-        buildList {
-            addAll(RagiumBlocks.CRATES.values)
-            addAll(RagiumBlocks.DRUMS.values)
-        }.forEach(factory.apply(RagiumModTags.Items.CAPACITY_ENCHANTABLE)::add)
-        addTags(factory, Tags.Items.ENCHANTABLES, RagiumModTags.Items.CAPACITY_ENCHANTABLE)
-            .add(RagiumItems.DRILL)
-            .add(RagiumItems.TELEPORT_KEY)
-
         addTags(factory, Tags.Items.ENCHANTABLES, RagiumModTags.Items.RANGE_ENCHANTABLE)
             .add(RagiumItems.ADVANCED_MAGNET)
             .add(RagiumItems.MAGNET)

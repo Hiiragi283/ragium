@@ -172,7 +172,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     }
 
     private fun enchantment() {
-        addEnchantment(RagiumEnchantments.CAPACITY, "容量増加", "アイテムや液体ストレージの容量を拡張します。")
         addEnchantment(RagiumEnchantments.RANGE, "範囲増加", "収集の範囲を拡張します。")
 
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "ノイズキャンセリング", "ウォーデンなどのスカルク系モンスターに対してのダメージを増加させます。")
@@ -335,7 +334,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Items.POLYMER_RESIN, "高分子樹脂")
         add(RagiumModTags.Items.RAW_MEAT, "生肉")
 
-        add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "容量増加をエンチャント可能")
         add(RagiumModTags.Items.RANGE_ENCHANTABLE, "範囲増加をエンチャント可能")
         add(RagiumModTags.Items.STRIKE_ENCHANTABLE, "雷撃をエンチャント可能")
 
@@ -377,9 +375,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
         add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
+        add(HTMachineUpgrade.Key.FLUID_CAPACITY, $$"- 液体容量: %1$s")
         add(HTMachineUpgrade.Key.SPEED, $$"- 処理速度: %1$s")
-
-        add(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE, $$"- 追加のチャンス: %1$s")
         // API - Constants
         add(RagiumTranslation.ERROR, "エラー")
         add(RagiumTranslation.INFINITE, "無限")

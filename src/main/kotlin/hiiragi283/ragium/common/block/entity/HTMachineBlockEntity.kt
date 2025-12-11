@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -22,7 +21,7 @@ import java.util.function.Predicate
  * 機械全般に使用される[HTConfigurableBlockEntity]の拡張クラス
  */
 abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTConfigurableBlockEntity(blockHolder, pos, state) {
+    HTUpgradableBlockEntity(blockHolder, pos, state) {
     companion object {
         // Slot
         @JvmStatic
@@ -56,28 +55,14 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
 
     //    Save & Load    //
 
-    val machineUpgrade = HTMachineUpgradeComponent(blockHolder, pos, this::getLevel, ::setOnlySave)
-
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
         output.putBoolean("is_active", this.isActive)
-        machineUpgrade.serialize(output)
     }
 
     override fun readValue(input: HTValueInput) {
         super.readValue(input)
         this.isActive = input.getBoolean("is_active", false)
-        machineUpgrade.deserialize(input)
-    }
-
-    override fun applyImplicitComponents(componentInput: DataComponentInput) {
-        machineUpgrade.applyComponents(wrapComponentInput(componentInput))
-        super.applyImplicitComponents(componentInput)
-    }
-
-    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
-        super.collectImplicitComponents(components)
-        machineUpgrade.collectComponents(components)
     }
 
     //    Ticking    //

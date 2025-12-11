@@ -24,7 +24,7 @@ class HTSolarPanelControllerBlockEntity(pos: BlockPos, state: BlockState) :
         if (panels == 0) return false
 
         battery.currentEnergyPerTick =
-            machineUpgrade.modifyValue(HTMachineUpgrade.Key.ENERGY_GENERATION) { battery.baseEnergyPerTick * (panels / 4) * it }
+            modifyValue(HTMachineUpgrade.Key.ENERGY_GENERATION) { battery.baseEnergyPerTick * (panels / 4) * it }
         return battery.generate() > 0
     }
 

@@ -58,12 +58,12 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank()),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank(this)),
         )
         // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
+            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank(this)),
         )
     }
 

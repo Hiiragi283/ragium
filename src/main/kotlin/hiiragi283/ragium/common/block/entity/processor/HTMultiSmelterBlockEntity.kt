@@ -48,7 +48,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    private fun getMaxParallel(): Int = when (machineUpgrade.getMaxMachineTier()) {
+    private fun getMaxParallel(): Int = when (getMaxMachineTier()) {
         HTBaseTier.BASIC -> 2
         HTBaseTier.ADVANCED -> 4
         HTBaseTier.ELITE -> 8

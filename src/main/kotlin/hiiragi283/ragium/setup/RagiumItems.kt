@@ -72,7 +72,6 @@ import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.util.HTEnchantmentHelper
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.resources.ResourceKey
@@ -769,8 +768,7 @@ object RagiumItems {
             registerFluid(
                 event,
                 { stack: ItemStack ->
-                    val capacity: Int = HTEnchantmentHelper.processStorageCapacity(null, stack, tier.getDefaultCapacity())
-                    HTComponentFluidTank.create(stack, 0, capacity)
+                    HTComponentFluidTank.create(stack, 0, tier.getDefaultCapacity())
                 },
                 block,
             )
@@ -786,8 +784,7 @@ object RagiumItems {
         registerFluid(
             event,
             { stack: ItemStack ->
-                val capacity: Int = HTEnchantmentHelper.processStorageCapacity(null, stack, 8000)
-                HTComponentFluidTank.create(stack, 0, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
+                HTComponentFluidTank.create(stack, 0, 8000, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
             },
             TELEPORT_KEY,
         )
@@ -796,7 +793,7 @@ object RagiumItems {
         registerEnergy(
             event,
             { stack: ItemStack ->
-                HTComponentEnergyBattery.create(stack, HTEnchantmentHelper.processStorageCapacity(null, stack, 160000))
+                HTComponentEnergyBattery.create(stack, 160000)
             },
             DRILL,
         )

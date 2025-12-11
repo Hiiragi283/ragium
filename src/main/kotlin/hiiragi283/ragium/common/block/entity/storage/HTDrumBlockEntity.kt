@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
+import hiiragi283.ragium.common.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTConfigurableBlockEntity(blockHolder, pos, state) {
+    HTUpgradableBlockEntity(blockHolder, pos, state) {
     lateinit var tank: HTBasicFluidTank
         private set
 
