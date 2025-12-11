@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.item.block
 
 import hiiragi283.ragium.api.block.attribute.getAttributeTier
+import hiiragi283.ragium.api.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.item.HTDescriptionBlockItem
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.storage.HTDrumBlock

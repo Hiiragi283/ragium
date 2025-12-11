@@ -2,10 +2,10 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.block.attribute.HTFluidBlockAttribute
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
@@ -370,11 +370,22 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTFluidBlockAttribute.TankType.FIRST_INPUT, "First Input Tank Capacity")
         add(HTFluidBlockAttribute.TankType.SECOND_INPUT, "Second Input Tank Capacity")
 
-        add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
-        add(HTMachineUpgrade.Key.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
-        add(HTMachineUpgrade.Key.SPEED, $$"- Speed: %1$s")
+        add(RagiumUpgradeKeys.BASE_MULTIPLIER, $$"- Base Multiplier: %1$s")
+        add(RagiumUpgradeKeys.IS_CREATIVE, "- Creative")
+
+        add(RagiumUpgradeKeys.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
+        add(RagiumUpgradeKeys.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
+        add(RagiumUpgradeKeys.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
+
+        add(RagiumUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
+
+        add(RagiumUpgradeKeys.SPEED, $$"- Speed: %1$s")
+        add(RagiumUpgradeKeys.USE_LUBRICANT, "- Use lubricant per operation")
+        add(RagiumUpgradeKeys.DISABLE_EXTRA, "- Extra output disabled")
+
+        add(RagiumUpgradeKeys.EXP_COLLECTING, "- Collect Experience Orb instead of Water")
+        add(RagiumUpgradeKeys.FISHING, "- Do fishing instead of collecting items")
+        add(RagiumUpgradeKeys.MOB_CAPTURE, "- Capture mobs instead of collecting items")
         // API - Constants
         add(RagiumTranslation.ERROR, "Error")
         add(RagiumTranslation.INFINITE, "Infinite")

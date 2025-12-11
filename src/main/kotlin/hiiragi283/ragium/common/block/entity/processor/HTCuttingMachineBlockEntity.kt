@@ -5,11 +5,11 @@ import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
@@ -51,7 +51,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTSingleExtraItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
-        if (hasUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE)) {
+        if (hasUpgrade(RagiumUpgradeKeys.DISABLE_EXTRA)) {
             return bool1
         }
         val bool2: Boolean = HTStackSlotHelper.canInsertStack(extraSlot, input, level, recipe::assembleExtraItem)
@@ -68,7 +68,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        if (!hasUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE)) {
+        if (!hasUpgrade(RagiumUpgradeKeys.DISABLE_EXTRA)) {
             extraSlot.insert(recipe.assembleExtraItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         // インプットを減らす

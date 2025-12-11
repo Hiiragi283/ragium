@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.HTItemSlot
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.world.getRangedAABB
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
@@ -75,8 +76,8 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = when {
-        hasUpgrade(RagiumItems.FISHING_UPGRADE) -> collectFish(level, pos)
-        hasUpgrade(RagiumItems.MOB_CAPTURE_UPGRADE) -> collectMobs(level, pos)
+        hasUpgrade(RagiumUpgradeKeys.FISHING) -> collectFish(level, pos)
+        hasUpgrade(RagiumUpgradeKeys.MOB_CAPTURE) -> collectMobs(level, pos)
         else -> collectItem(level, pos)
     }
 

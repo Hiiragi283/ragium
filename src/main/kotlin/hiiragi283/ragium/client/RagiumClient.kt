@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.client.event.HTClientItemTooltipComponent
 import hiiragi283.ragium.client.event.HTItemTooltipContent
@@ -117,7 +118,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                     getter != null && pos != null -> {
                         val collector: HTFluidCollectorBlockEntity? =
                             getter.getTypedBlockEntity<HTFluidCollectorBlockEntity>(pos)
-                        if (collector != null && collector.hasUpgrade(RagiumItems.EXP_COLLECTOR_UPGRADE)) {
+                        if (collector != null && collector.hasUpgrade(RagiumUpgradeKeys.EXP_COLLECTING)) {
                             0x66ff33
                         } else {
                             BiomeColors.getAverageWaterColor(getter, pos)

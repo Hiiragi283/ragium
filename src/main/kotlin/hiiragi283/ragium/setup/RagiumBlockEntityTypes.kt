@@ -3,13 +3,13 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
+import hiiragi283.ragium.api.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.capability.HTFluidCapabilities
+import hiiragi283.ragium.api.capability.HTItemCapabilities
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.api.storage.HTHandlerProvider
-import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
-import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
-import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity

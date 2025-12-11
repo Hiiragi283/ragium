@@ -4,7 +4,6 @@ import com.google.gson.JsonObject
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
@@ -25,10 +24,8 @@ import hiiragi283.ragium.impl.value.HTJsonValueOutput
 import hiiragi283.ragium.impl.value.HTTagValueInput
 import hiiragi283.ragium.impl.value.HTTagValueOutput
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
@@ -40,8 +37,6 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks
 import java.util.function.Consumer
 
 class RagiumPlatformImpl : RagiumPlatform {
-    override fun getUpgradeDataType(): DataComponentType<HTMachineUpgrade> = RagiumDataComponents.MACHINE_UPGRADE
-
     //    Material    //
 
     override fun getMaterialDefinitions(): Map<HTMaterialKey, HTMaterialDefinition> = RagiumMaterialManager.definitions

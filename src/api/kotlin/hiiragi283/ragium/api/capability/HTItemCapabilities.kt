@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage.capability
+package hiiragi283.ragium.api.capability
 
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableItemStack

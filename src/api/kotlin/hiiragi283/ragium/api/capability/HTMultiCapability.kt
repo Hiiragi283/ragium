@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage.capability
+package hiiragi283.ragium.api.capability
 
 import com.google.common.util.concurrent.Runnables
 import hiiragi283.ragium.api.stack.ImmutableItemStack

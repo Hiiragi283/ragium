@@ -2,10 +2,10 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.block.attribute.HTFluidBlockAttribute
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
@@ -372,11 +372,22 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTFluidBlockAttribute.TankType.FIRST_INPUT, "1番目の搬入タンクの容量")
         add(HTFluidBlockAttribute.TankType.SECOND_INPUT, "2番目の搬入タンクの容量")
 
-        add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
-        add(HTMachineUpgrade.Key.FLUID_CAPACITY, $$"- 液体容量: %1$s")
-        add(HTMachineUpgrade.Key.SPEED, $$"- 処理速度: %1$s")
+        add(RagiumUpgradeKeys.BASE_MULTIPLIER, $$"- 基本倍率: %1$s")
+        add(RagiumUpgradeKeys.IS_CREATIVE, "- クリエイティブ")
+
+        add(RagiumUpgradeKeys.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
+        add(RagiumUpgradeKeys.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
+        add(RagiumUpgradeKeys.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
+
+        add(RagiumUpgradeKeys.FLUID_CAPACITY, $$"- 液体容量: %1$s")
+
+        add(RagiumUpgradeKeys.SPEED, $$"- 処理速度: %1$s")
+        add(RagiumUpgradeKeys.USE_LUBRICANT, "- 処理ごとに潤滑油を消費")
+        add(RagiumUpgradeKeys.DISABLE_EXTRA, "- 追加の生産物を無効化")
+
+        add(RagiumUpgradeKeys.EXP_COLLECTING, "- 水の代わりに経験値オーブを収集")
+        add(RagiumUpgradeKeys.FISHING, "- アイテム収集の代わりに釣りを実行")
+        add(RagiumUpgradeKeys.MOB_CAPTURE, "- アイテム収集の代わりにモブを捕獲")
         // API - Constants
         add(RagiumTranslation.ERROR, "エラー")
         add(RagiumTranslation.INFINITE, "無限")

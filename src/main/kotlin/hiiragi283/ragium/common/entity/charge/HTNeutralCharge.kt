@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.entity.charge
 
 import com.mojang.datafixers.util.Either
+import hiiragi283.ragium.api.capability.HTItemCapabilities
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.util.HTItemDropHelper

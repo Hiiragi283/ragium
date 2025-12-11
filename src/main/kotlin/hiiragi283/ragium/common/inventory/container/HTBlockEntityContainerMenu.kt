@@ -23,7 +23,7 @@ open class HTBlockEntityContainerMenu<BE : HTBlockEntity>(
         // block entity slots
         addSlots(context)
         if (context is HTMachineBlockEntity) {
-            addSlots(context.machineUpgrade.upgradeSlots)
+            addSlots(context.getUpgradeSlots())
         }
         // player inventory
         addPlayerInv(inventory)

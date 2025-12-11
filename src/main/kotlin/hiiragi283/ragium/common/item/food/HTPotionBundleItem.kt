@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.item.food
 
+import hiiragi283.ragium.api.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.storage.item.getItemStack
 import hiiragi283.ragium.setup.RagiumMenuTypes

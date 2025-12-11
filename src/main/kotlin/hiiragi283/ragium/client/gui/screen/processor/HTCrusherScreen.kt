@@ -1,10 +1,10 @@
 package hiiragi283.ragium.client.gui.screen.processor
 
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
@@ -21,6 +21,6 @@ class HTCrusherScreen(
         createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
 
     override fun updateVisibility() {
-        fluidWidget.visible = blockEntity.hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
+        fluidWidget.visible = blockEntity.hasUpgrade(RagiumUpgradeKeys.USE_LUBRICANT)
     }
 }

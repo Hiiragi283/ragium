@@ -1,28 +1,28 @@
 package hiiragi283.ragium.api.block.attribute
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.block.entity.HTBlockEntityWithUpgrade
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.text.HTHasTranslationKey
+import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import net.minecraft.Util
 import net.minecraft.util.StringRepresentable
 import java.util.function.IntSupplier
 
 @JvmRecord
 data class HTFluidBlockAttribute(private val tankMap: Map<TankType, IntSupplier>) : HTBlockAttribute {
-    private fun getTankCapacity(type: TankType, upgrade: HTBlockEntityWithUpgrade): IntSupplier {
+    private fun getTankCapacity(type: TankType, handler: HTUpgradeHandler): IntSupplier {
         val baseCapacity: IntSupplier = tankMap[type] ?: error("Undefined tank capacity for ${type.serializedName}")
-        return IntSupplier { upgrade.modifyValue(HTMachineUpgrade.Key.FLUID_CAPACITY) { baseCapacity.asInt * it } }
+        return IntSupplier { handler.modifyValue(RagiumUpgradeKeys.FLUID_CAPACITY) { baseCapacity.asInt * it } }
     }
 
-    fun getInputTank(upgrade: HTBlockEntityWithUpgrade): IntSupplier = getTankCapacity(TankType.INPUT, upgrade)
+    fun getInputTank(handler: HTUpgradeHandler): IntSupplier = getTankCapacity(TankType.INPUT, handler)
 
-    fun getOutputTank(upgrade: HTBlockEntityWithUpgrade): IntSupplier = getTankCapacity(TankType.OUTPUT, upgrade)
+    fun getOutputTank(handler: HTUpgradeHandler): IntSupplier = getTankCapacity(TankType.OUTPUT, handler)
 
-    fun getFirstInputTank(upgrade: HTBlockEntityWithUpgrade): IntSupplier = getTankCapacity(TankType.FIRST_INPUT, upgrade)
+    fun getFirstInputTank(handler: HTUpgradeHandler): IntSupplier = getTankCapacity(TankType.FIRST_INPUT, handler)
 
-    fun getSecondInputTank(upgrade: HTBlockEntityWithUpgrade): IntSupplier = getTankCapacity(TankType.SECOND_INPUT, upgrade)
+    fun getSecondInputTank(handler: HTUpgradeHandler): IntSupplier = getTankCapacity(TankType.SECOND_INPUT, handler)
 
     enum class TankType :
         StringRepresentable,

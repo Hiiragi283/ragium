@@ -1,12 +1,12 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.capability.HTFluidCapabilities
+import hiiragi283.ragium.api.capability.HTItemCapabilities
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityTypeRegister
 import hiiragi283.ragium.api.storage.HTHandlerProvider
-import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
-import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
-import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.entity.HTThrownCaptureEgg
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge

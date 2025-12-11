@@ -1,15 +1,16 @@
 package hiiragi283.ragium.common.block.entity.processor
 
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.math.minus
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput.Builder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
@@ -109,8 +110,9 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
      * 指定された[recipe]から，レシピに必要なエネルギー量を取得します。
      */
     protected fun getRequiredEnergy(recipe: RECIPE): Int {
-        battery.currentEnergyPerTick = modifyValue(HTMachineUpgrade.Key.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
-        val time: Int = modifyValue(HTMachineUpgrade.Key.SPEED) { getRecipeTime(recipe) / it }
+        if (isCreative()) return 0
+        battery.currentEnergyPerTick = modifyValue(RagiumUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
+        val time: Int = modifyValue(RagiumUpgradeKeys.SPEED) { getRecipeTime(recipe) / (it * getBaseMultiplier()) }
         return battery.currentEnergyPerTick * time
     }
 

@@ -1,12 +1,12 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.item.component.HTComponentUpgrade
 import hiiragi283.ragium.api.item.component.HTFluidContents
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.item.component.HTStackContents
 import hiiragi283.ragium.api.item.component.HTTeleportPos
@@ -44,7 +44,7 @@ object RagiumDataComponents {
     val ANTI_GRAVITY: DataComponentType<Boolean> = REGISTER.registerType("anti_gravity", BiCodec.BOOL)
 
     @JvmField
-    val CHARGE_POWER: DataComponentType<Fraction> = REGISTER.registerType("charge_power", BiCodecs.FRACTION)
+    val CHARGE_POWER: DataComponentType<Fraction> = REGISTER.registerType("charge_power", BiCodecs.NON_NEGATIVE_FRACTION)
 
     @JvmField
     val COLOR: DataComponentType<DyeColor> = REGISTER.registerType("color", VanillaBiCodecs.COLOR)
@@ -84,7 +84,7 @@ object RagiumDataComponents {
     //    Machine    //
 
     @JvmField
-    val MACHINE_UPGRADE: DataComponentType<HTMachineUpgrade> = REGISTER.registerType("machine_upgrade", HTMachineUpgrade.CODEC)
+    val MACHINE_UPGRADE: DataComponentType<HTComponentUpgrade> = REGISTER.registerType("machine_upgrade", HTComponentUpgrade.CODEC)
 
     @JvmField
     val MACHINE_UPGRADES: DataComponentType<HTItemContents> =

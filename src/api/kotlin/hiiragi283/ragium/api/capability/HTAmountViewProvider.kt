@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage.capability
+package hiiragi283.ragium.api.capability
 
 import hiiragi283.ragium.api.storage.HTAmountView
 import java.util.function.BiFunction

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.storage.capability
+package hiiragi283.ragium.api.capability
 
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler

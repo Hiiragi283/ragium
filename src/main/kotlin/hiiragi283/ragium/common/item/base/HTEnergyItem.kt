@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item.base
 
-import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.text.HTTextUtil
 import net.minecraft.network.chat.Component

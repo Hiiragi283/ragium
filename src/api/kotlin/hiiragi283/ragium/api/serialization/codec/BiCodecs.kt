@@ -47,6 +47,7 @@ object BiCodecs {
 
     /**
      * `0`以上の値を対象とする[Int]の[BiCodec]
+     * @see net.minecraft.util.ExtraCodecs.NON_NEGATIVE_INT
      */
     @JvmField
     val NON_NEGATIVE_INT: BiCodec<ByteBuf, Int> = intRange(0, Int.MAX_VALUE)
@@ -60,6 +61,7 @@ object BiCodecs {
 
     /**
      * `1`以上の値を対象とする[Int]の[BiCodec]
+     * @see net.minecraft.util.ExtraCodecs.POSITIVE_INT
      */
     @JvmField
     val POSITIVE_INT: BiCodec<ByteBuf, Int> = intRange(1, Int.MAX_VALUE)
@@ -73,6 +75,15 @@ object BiCodecs {
 
     @JvmField
     val FRACTION: BiCodec<ByteBuf, Fraction> = BiCodec.STRING.flatXmap(Fraction::getFraction, Fraction::toString)
+
+    /**
+     * `0`以上の値を対象とする[Fraction]の[BiCodec]
+     */
+    @JvmField
+    val NON_NEGATIVE_FRACTION: BiCodec<ByteBuf, Fraction> = FRACTION.validate { fraction: Fraction ->
+        check(fraction > Fraction.ZERO) { "Value must be non-negative: $fraction" }
+        fraction
+    }
 
     /**
      * 指定された[keyCodec], [valueCodec]に基づいて，[Map]の[BiCodec]を返します。

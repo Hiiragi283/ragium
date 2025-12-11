@@ -1,6 +1,7 @@
 package hiiragi283.ragium.util
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.ImmutableStack
@@ -10,7 +11,6 @@ import hiiragi283.ragium.api.storage.HTStackSlot
 import hiiragi283.ragium.api.storage.HTStackView
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.common.storage.fluid.tank.HTFluidHandlerItemWrapper
