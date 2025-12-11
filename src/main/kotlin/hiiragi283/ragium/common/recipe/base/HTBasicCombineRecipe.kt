@@ -6,6 +6,8 @@ import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 
 abstract class HTBasicCombineRecipe(val itemIngredients: Pair<HTItemIngredient, HTItemIngredient>) : HTCombineRecipe {
+    constructor(left: HTItemIngredient, right: HTItemIngredient) : this(left to right)
+
     final override fun getLeftRequiredCount(): Int = itemIngredients.first.getRequiredAmount()
 
     final override fun getRightRequiredCount(): Int = itemIngredients.second.getRequiredAmount()

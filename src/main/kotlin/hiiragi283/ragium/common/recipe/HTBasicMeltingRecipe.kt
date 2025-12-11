@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.recipe
 
+import hiiragi283.ragium.api.recipe.fluid.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
-import hiiragi283.ragium.api.recipe.fluid.HTMeltingRecipe
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.setup.RagiumRecipeSerializers

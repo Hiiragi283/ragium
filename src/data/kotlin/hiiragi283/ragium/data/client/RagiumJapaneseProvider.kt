@@ -348,6 +348,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun recipeType() {
         add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.BREWING, "醸造")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CRUSHING, "破砕")
         add(RagiumRecipeTypes.CUTTING, "裁断")
@@ -499,8 +500,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun emi() {
         add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "機械のアップグレード")
-
-        add(RagiumCommonTranslation.EMI_BREWING_TITLE, "醸造")
 
         add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "ブロックの下に設置します。")
     }

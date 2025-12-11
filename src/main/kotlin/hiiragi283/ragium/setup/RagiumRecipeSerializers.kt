@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
+import hiiragi283.ragium.common.recipe.HTBrewingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -107,6 +108,15 @@ object RagiumRecipeSerializers {
                 .listOf(2, 3)
                 .fieldOf("ingredients")
                 .forGetter(HTAlloyingRecipe::ingredients),
+        ),
+    )
+
+    @JvmField
+    val BREWING: RecipeSerializer<HTBrewingRecipe> = register(
+        RagiumConst.BREWING,
+        RagiumRecipeBiCodecs.combine(
+            ::HTBrewingRecipe,
+            VanillaBiCodecs.POTION.fieldOf("contents").forGetter(HTBrewingRecipe::contents),
         ),
     )
 

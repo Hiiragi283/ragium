@@ -12,8 +12,6 @@ import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.data.HTBrewingRecipeData
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
@@ -59,7 +57,6 @@ import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
-import hiiragi283.ragium.common.recipe.HTBrewingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBioExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
@@ -72,7 +69,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
@@ -342,7 +338,7 @@ class RagiumEmiPlugin : EmiPlugin {
         addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
         // Elite
-        addRecipes(registry, collectBrewingRecipes(), ::HTBrewingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.BREWING, ::HTBrewingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
         // Ultimate
         addRegistryRecipes(registry, RagiumRecipeTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
@@ -352,32 +348,6 @@ class RagiumEmiPlugin : EmiPlugin {
 
         // Device
         addRegistryRecipes(registry, RagiumRecipeTypes.ROCK_GENERATING, ::HTRockGeneratingEmiRecipe)
-    }
-
-    private fun collectBrewingRecipes(): Sequence<Pair<ResourceLocation, HTBrewingRecipe>> {
-        val access: RegistryAccess = RagiumPlatform.INSTANCE.getRegistryAccess() ?: return sequenceOf()
-        return access
-            .lookupOrThrow(RagiumAPI.BREWING_RECIPE_KEY)
-            .listElements()
-            .asSequence()
-            .flatMap { holder: Holder<HTBrewingRecipeData> ->
-                val id: ResourceLocation = holder.idOrThrow.withPrefix("/")
-                val recipeData: HTBrewingRecipeData = holder.value()
-                buildList {
-                    // base
-                    this.add(id to HTBrewingRecipe.createBaseRecipe(recipeData))
-                    // long
-                    HTBrewingRecipe
-                        .createLongRecipe(recipeData)
-                        ?.let { id.withSuffix("/long") to it }
-                        ?.let(this::add)
-                    // strong
-                    HTBrewingRecipe
-                        .createStrongRecipe(recipeData)
-                        ?.let { id.withSuffix("/strong") to it }
-                        ?.let(this::add)
-                }
-            }
     }
 
     private fun addInteractions(registry: EmiRegistry) {

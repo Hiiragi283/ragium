@@ -1,18 +1,19 @@
 package hiiragi283.ragium.client.integration.emi.recipe.processor
 
+import dev.emi.emi.api.stack.EmiIngredient
+import dev.emi.emi.api.stack.EmiStack
+import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.base.HTCombineEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.common.recipe.HTBrewingRecipe
-import net.minecraft.resources.ResourceLocation
+import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTBrewingEmiRecipe(id: ResourceLocation, recipe: HTBrewingRecipe) :
-    HTCombineEmiRecipe<HTBrewingRecipe>(RagiumEmiRecipeCategories.BREWING, id, recipe) {
-    init {
-        addInput(recipe.left.toEmi())
-        addInput(recipe.ingredient)
-        addInput(HTBrewingRecipe.FLUID_INGREDIENT)
+class HTBrewingEmiRecipe(holder: RecipeHolder<HTBrewingRecipe>) :
+    HTCombineEmiRecipe<HTBrewingRecipe>(RagiumEmiRecipeCategories.BREWING, holder) {
+    override fun getFluidIngredient(recipe: HTBrewingRecipe): EmiIngredient = HTBrewingRecipe.FLUID_INGREDIENT.toEmi()
 
-        addOutputs(recipe.potionDrop.toEmi())
-    }
+    override fun getResult(recipe: HTBrewingRecipe): EmiStack =
+        HTPotionHelper.createPotion(RagiumItems.POTION_DROP, recipe.contents).toEmi()
 }

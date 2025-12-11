@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
+import hiiragi283.ragium.api.recipe.fluid.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.fluid.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
@@ -11,8 +13,6 @@ import hiiragi283.ragium.api.recipe.multi.HTFluidWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
-import hiiragi283.ragium.api.recipe.fluid.HTMeltingRecipe
-import hiiragi283.ragium.api.recipe.fluid.HTRefiningRecipe
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -20,6 +20,9 @@ import net.minecraft.world.item.crafting.RecipeInput
 object RagiumRecipeTypes {
     @JvmField
     val ALLOYING: HTDeferredRecipeType<HTRecipeInput, HTShapelessInputsRecipe> = create(RagiumConst.ALLOYING)
+
+    @JvmField
+    val BREWING: HTDeferredRecipeType<HTRecipeInput, HTCombineRecipe> = create(RagiumConst.BREWING)
 
     @JvmField
     val COMPRESSING: HTDeferredRecipeType<HTRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.COMPRESSING)

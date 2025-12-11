@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.event
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.data.HTBrewingRecipeData
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.attribute.HTStorageBlockMaterialAttribute
@@ -10,6 +11,8 @@ import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.HTRegisterRuntimeRecipeEvent
+import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
@@ -17,11 +20,19 @@ import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.recipe.HTBrewingRecipe
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.Holder
+import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.alchemy.PotionContents
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeRecipeHandler {
@@ -40,6 +51,9 @@ object RagiumRuntimeRecipeHandler {
             // Mixing
             mixingMetalOre(event, key, definition)
         }
+
+        // Brewing
+        brewing(event)
     }
 
     //    Alloying    //
@@ -87,6 +101,63 @@ object RagiumRuntimeRecipeHandler {
                 ).saveSuffixed(event.output, "/${prefix.asPrefixName()}/${flux.location.path}")
         }
     }
+
+    //    Brewing    //
+
+    @JvmStatic
+    private fun brewing(event: HTRegisterRuntimeRecipeEvent) {
+        event.registryAccess
+            .lookupOrThrow(RagiumAPI.BREWING_RECIPE_KEY)
+            .listElements()
+            .forEach { holder: Holder.Reference<HTBrewingRecipeData> ->
+                val id: ResourceLocation = holder.idOrThrow
+                val recipeData: HTBrewingRecipeData = holder.value()
+                // Base
+                event.save(
+                    id,
+                    HTBrewingRecipe(
+                        event.itemCreator.fromTagKey(Tags.Items.CROPS_NETHER_WART),
+                        recipeData.getIngredient(),
+                        recipeData.getBasePotion(),
+                    ),
+                )
+                // Long
+                val long: PotionContents = recipeData.getLongPotion()
+                if (long.allEffects.any()) {
+                    event.save(
+                        id.withSuffix("/long"),
+                        HTBrewingRecipe(
+                            event.itemCreator.fromTagKey(Tags.Items.DUSTS_REDSTONE),
+                            createDropIngredient(recipeData),
+                            long,
+                        ),
+                    )
+                }
+                // Strong
+                val strong: PotionContents = recipeData.getStrongPotion()
+                if (strong.allEffects.any()) {
+                    event.save(
+                        id.withSuffix("/strong"),
+                        HTBrewingRecipe(
+                            event.itemCreator.fromTagKey(Tags.Items.DUSTS_GLOWSTONE),
+                            createDropIngredient(recipeData),
+                            strong,
+                        ),
+                    )
+                }
+            }
+    }
+
+    @JvmStatic
+    private fun createDropIngredient(recipeData: HTBrewingRecipeData): HTItemIngredient = HTItemIngredient(
+        DataComponentIngredient.of(
+            false,
+            DataComponents.POTION_CONTENTS,
+            recipeData.getBasePotion(),
+            RagiumItems.POTION_DROP,
+        ),
+        1,
+    )
 
     //    Compressing    //
 

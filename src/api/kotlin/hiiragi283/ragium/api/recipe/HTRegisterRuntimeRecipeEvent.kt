@@ -41,7 +41,7 @@ class HTRegisterRuntimeRecipeEvent(
             vararg conditions: ICondition?,
         ) {
             val id1: ResourceLocation = id.withPrefix("runtime/")
-            addRecipe(RecipeHolder(id1, recipe))
+            consumer.accept(RecipeHolder(id1, recipe))
             RagiumAPI.LOGGER.debug("Added runtime recipe {}", id1)
         }
 
@@ -59,7 +59,7 @@ class HTRegisterRuntimeRecipeEvent(
         return holderSet.isPresent && holderSet.get().any()
     }
 
-    fun addRecipe(holder: RecipeHolder<*>) {
-        consumer.accept(holder)
+    fun save(id: ResourceLocation, recipe: Recipe<*>) {
+        output.accept(id, recipe, null)
     }
 }

@@ -346,6 +346,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun recipeType() {
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.BREWING, "Brewing")
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
@@ -494,8 +495,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun emi() {
         add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "Machine Upgrades")
-
-        add(RagiumCommonTranslation.EMI_BREWING_TITLE, "Brewing")
 
         add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "Placed below the block.")
     }
