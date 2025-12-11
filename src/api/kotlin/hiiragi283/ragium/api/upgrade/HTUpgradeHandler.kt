@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.upgrade
 
-import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import org.apache.commons.lang3.math.Fraction

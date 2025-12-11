@@ -23,7 +23,6 @@ import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.text.HTSmithingTranslation
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumChemicals
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -84,11 +83,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addTranslations(HTBaseTier.entries, identity())
 
         addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
-        addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)
-
-        val minecart = LangPattern("Minecart with %s", "%s付きトロッコ")
-        fromLangMap(minecart, RagiumItems.DRUM_MINECARTS)
-        fromLangMap(minecart, RagiumEntityTypes.DRUMS)
 
         translations()
 

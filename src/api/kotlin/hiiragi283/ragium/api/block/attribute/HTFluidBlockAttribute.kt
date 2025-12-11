@@ -1,10 +1,9 @@
 package hiiragi283.ragium.api.block.attribute
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
-import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import net.minecraft.Util
 import net.minecraft.util.StringRepresentable
 import java.util.function.IntSupplier
@@ -13,7 +12,7 @@ import java.util.function.IntSupplier
 data class HTFluidBlockAttribute(private val tankMap: Map<TankType, IntSupplier>) : HTBlockAttribute {
     private fun getTankCapacity(type: TankType, handler: HTUpgradeHandler): IntSupplier {
         val baseCapacity: IntSupplier = tankMap[type] ?: error("Undefined tank capacity for ${type.serializedName}")
-        return IntSupplier { handler.modifyValue(RagiumUpgradeKeys.FLUID_CAPACITY) { baseCapacity.asInt * it } }
+        return IntSupplier { HTUpgradeHelper.getTankCapacity(handler, baseCapacity.asInt) }
     }
 
     fun getInputTank(handler: HTUpgradeHandler): IntSupplier = getTankCapacity(TankType.INPUT, handler)

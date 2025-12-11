@@ -16,8 +16,7 @@ import hiiragi283.ragium.common.entity.charge.HTFishingCharge
 import hiiragi283.ragium.common.entity.charge.HTNeutralCharge
 import hiiragi283.ragium.common.entity.charge.HTStrikeCharge
 import hiiragi283.ragium.common.entity.charge.HTTeleportCharge
-import hiiragi283.ragium.common.entity.vehicle.HTDrumMinecart
-import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.entity.vehicle.HTTankMinecart
 import net.minecraft.SharedConstants
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -32,6 +31,13 @@ object RagiumEntityTypes {
 
     @JvmStatic
     fun init(eventBus: IEventBus) {
+        listOf(
+            "small",
+            "medium",
+            "large",
+            "huge",
+        ).forEach { REGISTER.addAlias("${it}_drum_minecart", "tank_minecart") }
+
         REGISTER.register(eventBus)
 
         eventBus.addListener(::registerEntityCapabilities)
@@ -79,29 +85,18 @@ object RagiumEntityTypes {
     //    Minecart    //
 
     @JvmField
-    val DRUMS: Map<HTDrumTier, HTDeferredEntityType<HTDrumMinecart>> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-        val factory: (EntityType<*>, Level) -> HTDrumMinecart = when (tier) {
-            HTDrumTier.SMALL -> HTDrumMinecart::Small
-            HTDrumTier.MEDIUM -> HTDrumMinecart::Medium
-            HTDrumTier.LARGE -> HTDrumMinecart::Large
-            HTDrumTier.HUGE -> HTDrumMinecart::Huge
-            HTDrumTier.CREATIVE -> HTDrumMinecart::Creative
-        }
-        REGISTER.registerType(
-            tier.entityPath,
-            factory,
-            MobCategory.MISC,
-        ) { builder: EntityType.Builder<HTDrumMinecart> -> builder.sized(0.98f, 0.7f) }
-    }
+    val TANK_MINECART: HTDeferredEntityType<HTTankMinecart> = REGISTER.registerType(
+        "tank_minecart",
+        ::HTTankMinecart,
+        MobCategory.MISC,
+    ) { builder: EntityType.Builder<HTTankMinecart> -> builder.sized(0.98f, 0.7f) }
 
     //    Event    //
 
     // Capabilities
     @JvmStatic
     private fun registerEntityCapabilities(event: RegisterCapabilitiesEvent) {
-        for (type: HTDeferredEntityType<HTDrumMinecart> in DRUMS.values) {
-            registerCapability(event, type)
-        }
+        registerCapability(event, TANK_MINECART)
     }
 
     @JvmStatic

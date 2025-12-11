@@ -235,14 +235,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             models().cubeBottomTop(id.path, id, id.withSuffix("_bottom"), id)
         }*/
 
-        val drums: List<HTDeferredBlock<*, *>> = buildList {
-            addAll(RagiumBlocks.DRUMS.values)
-            add(RagiumBlocks.EXP_DRUM)
-        }
-        for (drum: HTDeferredBlock<*, *> in drums) {
-            val id: ResourceLocation = drum.blockId
-            simpleBlockAndItem(drum, models().cubeColumn(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
-        }
+        altModelBlock(RagiumBlocks.TANK)
 
         // Fluids
         for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {

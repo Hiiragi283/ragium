@@ -58,13 +58,18 @@ open class HTComponentFluidTank(
     override fun getCapacity(stack: ImmutableFluidStack?): Int = capacity
 
     final override fun setStack(stack: ImmutableFluidStack?) {
-        val contents: HTFluidContents? = getContents() // TODO
-        if (contents.isNullOrEmpty()) {
+        var contents: HTFluidContents? = getContents() 
+        if (contents == null) {
             parent.remove(component)
         } else {
             val items: MutableList<Optional<ImmutableFluidStack>> = contents.unwrap()
             items[slot] = stack.wrapOptional()
-            parent.set(component, HTStackContents.fromOptional(items))
+            contents = HTStackContents.fromOptional(items)
+            if (contents.isEmpty()) {
+                parent.remove(component)
+            } else {
+                parent.set(component, contents)
+            }
         }
     }
 

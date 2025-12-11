@@ -63,8 +63,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     CRATE("description", "crate"),
     OPEN_CRATE("description", "open_crate"),
 
-    DRUM("description", "drum"),
-    EXP_DRUM("description", "experience_drum"),
+    TANK("description", "tank"),
 
     // Config
     CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),

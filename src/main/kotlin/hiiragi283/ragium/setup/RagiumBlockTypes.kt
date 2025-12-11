@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.common.block.type.HTMachineBlockType
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.level.block.Block
@@ -298,17 +297,8 @@ object RagiumBlockTypes {
         .build(RagiumCommonTranslation.OPEN_CRATE)
 
     @JvmField
-    val DRUMS: Map<HTDrumTier, HTEntityBlockType> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-        HTEntityBlockType
-            .builder { tier.getBlockEntityType() }
-            .addMenu { RagiumMenuTypes.DRUM }
-            .addTier(tier)
-            .build(RagiumCommonTranslation.DRUM)
-    }
-
-    @JvmField
-    val EXP_DRUM: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.EXP_DRUM }
-        .addMenu { RagiumMenuTypes.DRUM }
-        .build(RagiumCommonTranslation.EXP_DRUM)
+    val TANK: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.TANK }
+        .addMenu { RagiumMenuTypes.TANK }
+        .build(RagiumCommonTranslation.TANK)
 }

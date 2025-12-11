@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.ragium.api.item.HTSubCreativeTabContents
+import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.util.HTDefaultLootTickets
@@ -64,9 +65,7 @@ class HTLootTicketItem(properties: Properties) :
 
     override fun addItems(baseItem: HTItemHolderLike, parameters: CreativeModeTab.ItemDisplayParameters, consumer: Consumer<ItemStack>) {
         for (tickets: HTDefaultLootTickets in HTDefaultLootTickets.entries) {
-            val stack: ItemStack = baseItem.toStack()
-            stack.set(RagiumDataComponents.LOOT_TICKET, tickets.targets)
-            consumer.accept(stack)
+            createItemStack(baseItem, RagiumDataComponents.LOOT_TICKET, tickets.targets).let(consumer::accept)
         }
     }
 }

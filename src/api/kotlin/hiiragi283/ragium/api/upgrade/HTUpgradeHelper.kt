@@ -2,6 +2,7 @@ package hiiragi283.ragium.api.upgrade
 
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.item.component.HTComponentUpgrade
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.ChatFormatting
@@ -53,4 +54,26 @@ data object HTUpgradeHelper {
 
     @JvmStatic
     fun getHandler(stack: ImmutableItemStack): HTUpgradeHandler? = stack.getCapability(RagiumCapabilities.UPGRADABLE_ITEM)
+
+    @JvmStatic
+    fun getTankCapacity(handler: HTUpgradeHandler, base: Int): Int = handler.modifyValue(RagiumUpgradeKeys.FLUID_CAPACITY) {
+        base * it * handler.getBaseMultiplier()
+    }
+
+    @JvmStatic
+    fun getTankCapacity(stack: ItemStack, base: Int): Int {
+        val handler: HTUpgradeHandler = getHandler(stack) ?: return base
+        return getTankCapacity(handler, base)
+    }
+
+    @JvmStatic
+    fun getEnergyCapacity(handler: HTUpgradeHandler, base: Int): Int = handler.modifyValue(RagiumUpgradeKeys.ENERGY_CAPACITY) {
+        base * it * handler.getBaseMultiplier()
+    }
+
+    @JvmStatic
+    fun getEnergyCapacity(stack: ItemStack, base: Int): Int {
+        val handler: HTUpgradeHandler = getHandler(stack) ?: return base
+        return getEnergyCapacity(handler, base)
+    }
 }

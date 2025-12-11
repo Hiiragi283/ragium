@@ -168,7 +168,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         // Storage
         add(RagiumBlocks.OPEN_CRATE, "オープンクレート")
 
-        add(RagiumBlocks.EXP_DRUM, "経験値ドラム")
+        add(RagiumBlocks.TANK, "可変タンク")
     }
 
     private fun enchantment() {
@@ -299,6 +299,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成革")
+        // Vehicles
+        add(RagiumItems.TANK_MINECART, "タンク付きトロッコ")
         // Upgrades
         add(RagiumItems.ETERNAL_COMPONENT, "永久構造体")
 
@@ -462,8 +464,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumCommonTranslation.CRATE, "1種類のアイテムを保管するストレージです。")
         add(RagiumCommonTranslation.OPEN_CRATE, "搬入されたアイテムを真下に落とすストレージです。")
-        add(RagiumCommonTranslation.DRUM, "1種類の液体を保管するストレージです。")
-        add(RagiumCommonTranslation.EXP_DRUM, "液体経験値だけを保管するストレージです。")
+        add(RagiumCommonTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
         add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")

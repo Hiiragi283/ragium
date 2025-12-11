@@ -27,6 +27,7 @@ import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.tier.HTBaseTier
+import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.api.upgrade.HTUpgradeKey
 import hiiragi283.ragium.api.upgrade.HTUpgradeProvider
 import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
@@ -35,10 +36,10 @@ import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
-import hiiragi283.ragium.common.item.HTDrumWithMinecartItem
 import hiiragi283.ragium.common.item.HTIridescentPowderItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionDropItem
+import hiiragi283.ragium.common.item.HTTankMinecartItem
 import hiiragi283.ragium.common.item.HTTierBasedItem
 import hiiragi283.ragium.common.item.base.HTSmithingTemplateItem
 import hiiragi283.ragium.common.item.food.HTAmbrosiaItem
@@ -69,7 +70,7 @@ import hiiragi283.ragium.common.storage.item.slot.HTComponentItemSlot
 import hiiragi283.ragium.common.text.HTSmithingTranslation
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
 import hiiragi283.ragium.common.variant.HTUpgradeVariant
@@ -142,6 +143,13 @@ object RagiumItems {
 
         REGISTER.addAlias("confusing_charge", "confusion_charge")
         REGISTER.addAlias("ragi_coke", "coal_coke")
+
+        listOf(
+            "small",
+            "medium",
+            "large",
+            "huge",
+        ).forEach { REGISTER.addAlias("${it}_drum_minecart", "tank_minecart") }
 
         REGISTER.register(eventBus)
 
@@ -628,9 +636,7 @@ object RagiumItems {
     //    Vehicles    //
 
     @JvmField
-    val DRUM_MINECARTS: Map<HTDrumTier, HTSimpleDeferredItem> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-        REGISTER.registerItemWith(tier.entityPath, tier, ::HTDrumWithMinecartItem)
-    }
+    val TANK_MINECART: HTSimpleDeferredItem = REGISTER.registerItem("tank_minecart", ::HTTankMinecartItem)
 
     //    Upgrades    //
 
@@ -772,27 +778,20 @@ object RagiumItems {
         )
 
         // Fluid
-        for ((tier: HTDrumTier, block: ItemLike) in RagiumBlocks.DRUMS) {
-            registerFluid(
-                event,
-                { stack: ItemStack ->
-                    HTComponentFluidTank.create(stack, 0, tier.getDefaultCapacity())
-                },
-                block,
-            )
-        }
         registerFluid(
             event,
             { stack: ItemStack ->
-                HTComponentFluidTank.create(stack, 0, Int.MAX_VALUE, filter = RagiumFluidContents.EXPERIENCE::isOf)
+                val capacity: Int = HTUpgradeHelper.getTankCapacity(stack, RagiumConfig.COMMON.tankCapacity.asInt)
+                HTComponentFluidTank.create(stack, 0, capacity)
             },
-            RagiumBlocks.EXP_DRUM,
+            RagiumBlocks.TANK,
         )
 
         registerFluid(
             event,
             { stack: ItemStack ->
-                HTComponentFluidTank.create(stack, 0, 8000, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
+                val capacity: Int = HTUpgradeHelper.getTankCapacity(stack, 8000)
+                HTComponentFluidTank.create(stack, 0, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
             },
             TELEPORT_KEY,
         )
@@ -801,7 +800,7 @@ object RagiumItems {
         registerEnergy(
             event,
             { stack: ItemStack ->
-                HTComponentEnergyBattery.create(stack, 160000)
+                HTComponentEnergyBattery.create(stack, HTUpgradeHelper.getEnergyCapacity(stack, 160000))
             },
             DRILL,
         )
@@ -809,31 +808,47 @@ object RagiumItems {
         // Upgrade
         for (item: Item in BuiltInRegistries.ITEM) {
             // Component-Based for all items
-            registerUpgrade(
-                event,
-                { stack: ItemStack ->
-                    HTUpgradeProvider { key: HTUpgradeKey ->
-                        stack.get(RagiumDataComponents.MACHINE_UPGRADE)?.get(key) ?: Fraction.ZERO
+            event.registerItem(
+                RagiumCapabilities.UPGRADE_ITEM,
+                { stack: ItemStack, _: Void? ->
+                    if (stack.has(RagiumDataComponents.MACHINE_UPGRADE)) {
+                        HTUpgradeProvider { key: HTUpgradeKey ->
+                            stack.get(RagiumDataComponents.MACHINE_UPGRADE)?.get(key) ?: Fraction.ZERO
+                        }
+                    } else {
+                        null
                     }
                 },
                 item,
             )
 
-            for ((tier: HTComponentTier, item: ItemLike) in COMPONENTS) {
-                registerUpgrade(
-                    event,
-                    { _ ->
-                        HTUpgradeProvider { key: HTUpgradeKey ->
-                            if (key == RagiumUpgradeKeys.BASE_MULTIPLIER) {
-                                fraction(tier.ordinal + 2)
-                            } else {
-                                Fraction.ZERO
-                            }
+            event.registerItem(
+                RagiumCapabilities.UPGRADABLE_ITEM,
+                { stack: ItemStack, _: Void? ->
+                    if (stack.has(RagiumDataComponents.MACHINE_UPGRADES)) {
+                        HTComponentUpgradeHandler(stack)
+                    } else {
+                        null
+                    }
+                },
+                item,
+            )
+        }
+
+        for ((tier: HTComponentTier, item: ItemLike) in COMPONENTS) {
+            event.registerItem(
+                RagiumCapabilities.UPGRADE_ITEM,
+                { _: ItemStack, _: Void? ->
+                    HTUpgradeProvider { key: HTUpgradeKey ->
+                        if (key == RagiumUpgradeKeys.BASE_MULTIPLIER) {
+                            fraction(tier.ordinal + 2)
+                        } else {
+                            Fraction.ZERO
                         }
-                    },
-                    item,
-                )
-            }
+                    }
+                },
+                item,
+            )
         }
 
         RagiumAPI.LOGGER.info("Registered item capabilities!")
@@ -862,15 +877,6 @@ object RagiumItems {
         event.registerItem(
             HTEnergyCapabilities.item,
             { stack: ItemStack, _: Void? -> HTComponentEnergyHandler(stack, getter(stack)) },
-            *items,
-        )
-    }
-
-    @JvmStatic
-    fun registerUpgrade(event: RegisterCapabilitiesEvent, getter: (ItemStack) -> HTUpgradeProvider, vararg items: ItemLike) {
-        event.registerItem(
-            RagiumCapabilities.UPGRADE_ITEM,
-            { stack: ItemStack, _: Void? -> getter(stack) },
             *items,
         )
     }

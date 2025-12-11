@@ -34,12 +34,12 @@ import hiiragi283.ragium.common.block.glass.HTObsidianGlass
 import hiiragi283.ragium.common.block.glass.HTQuartzGlassBlock
 import hiiragi283.ragium.common.block.glass.HTWarpedGlassBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
-import hiiragi283.ragium.common.block.storage.HTDrumBlock
+import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
-import hiiragi283.ragium.common.item.block.HTDrumBlockItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTImitationSpawnerBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
+import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -48,7 +48,6 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import net.minecraft.world.item.Item
@@ -93,6 +92,13 @@ object RagiumBlocks {
         // Collector
         REGISTER.addAlias("water_collector", "fluid_collector")
         REGISTER.addAlias("exp_collector", "fluid_collector")
+        // Drum
+        listOf(
+            "small",
+            "medium",
+            "large",
+            "huge",
+        ).forEach { REGISTER.addAlias("${it}_drum", "tank") }
 
         REGISTER.addAlias("fisher", "item_collector")
         REGISTER.addAlias("item_buffer", "item_collector")
@@ -626,26 +632,10 @@ object RagiumBlocks {
     )
 
     @JvmField
-    val DRUMS: Map<HTDrumTier, HTDeferredBlock<HTDrumBlock, HTDrumBlockItem>> =
-        HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-            REGISTER.register(
-                tier.path,
-                when (tier) {
-                    HTDrumTier.MEDIUM -> Blocks.GOLD_BLOCK
-                    HTDrumTier.LARGE -> Blocks.DIAMOND_BLOCK
-                    HTDrumTier.HUGE -> Blocks.NETHERITE_BLOCK
-                    else -> Blocks.IRON_BLOCK
-                }.let(::copyOf),
-                { HTDrumBlock(tier.getBlockType(), it) },
-                ::HTDrumBlockItem,
-            )
-        }
-
-    @JvmField
-    val EXP_DRUM: HTDeferredBlock<HTDrumBlock, HTDrumBlockItem> = REGISTER.register(
-        "experience_drum",
-        copyOf(Blocks.IRON_BLOCK),
-        { HTDrumBlock(RagiumBlockTypes.EXP_DRUM, it) },
-        ::HTDrumBlockItem,
+    val TANK: HTDeferredBlock<HTTankBlock, HTTankBlockItem> = REGISTER.register(
+        "tank",
+        copyOf(Blocks.COPPER_BLOCK).noOcclusion(),
+        ::HTTankBlock,
+        ::HTTankBlockItem,
     )
 }

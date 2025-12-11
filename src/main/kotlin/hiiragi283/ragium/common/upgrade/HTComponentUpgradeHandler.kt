@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.upgrade
 
+import hiiragi283.ragium.api.stack.ImmutableComponentStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -10,7 +11,6 @@ class HTComponentUpgradeHandler(private val parent: ItemStack) : HTUpgradeHandle
 
     override fun getUpgrades(): List<ImmutableItemStack> = getComponent().filterNotNull()
 
-    override fun isValidUpgrade(upgrade: ImmutableItemStack, existing: List<ImmutableItemStack>): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun isValidUpgrade(upgrade: ImmutableItemStack, existing: List<ImmutableItemStack>): Boolean =
+        existing.none { stack: ImmutableItemStack -> ImmutableComponentStack.matches(stack, upgrade) }
 }

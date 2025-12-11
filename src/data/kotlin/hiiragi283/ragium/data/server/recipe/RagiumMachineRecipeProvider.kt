@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -36,7 +35,23 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         upgrades()
 
         crate()
-        drums()
+
+        // Tank
+        resetComponent(RagiumBlocks.TANK, RagiumDataComponents.FLUID_CONTENT)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.TANK)
+            .crossLayered()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
+            .define('C', Tags.Items.GLASS_BLOCKS)
+            .define('D', Tags.Items.BUCKETS_EMPTY)
+            .save(output)
+
+        HTShapelessRecipeBuilder
+            .create(RagiumItems.TANK_MINECART)
+            .addIngredient(RagiumBlocks.TANK)
+            .addIngredient(Items.MINECART)
+            .save(output)
     }
 
     //    Generators    //
@@ -429,52 +444,5 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             ).define('A', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
             .define('B', Items.HOPPER)
             .save(output)
-    }
-
-    @JvmStatic
-    private fun drums() {
-        for ((tier: HTDrumTier, drum: HTItemHolderLike) in RagiumBlocks.DRUMS) {
-            resetComponent(drum, RagiumDataComponents.FLUID_CONTENT)
-
-            val key: HTMaterialKey = when (tier) {
-                HTDrumTier.SMALL -> VanillaMaterialKeys.COPPER
-                HTDrumTier.MEDIUM -> VanillaMaterialKeys.GOLD
-                HTDrumTier.LARGE -> VanillaMaterialKeys.DIAMOND
-                else -> continue
-            }
-            val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
-            HTShapedRecipeBuilder
-                .create(drum)
-                .pattern(
-                    "ABA",
-                    "ACA",
-                    "ABA",
-                ).define('A', prefix, key)
-                .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
-                .define('C', Tags.Items.BUCKETS_EMPTY)
-                .save(output)
-        }
-        // Huge
-        createNetheriteUpgrade(HTDrumTier.HUGE.getBlock(), HTDrumTier.LARGE.getBlock()).save(output)
-        // Exp
-        HTShapedRecipeBuilder
-            .create(RagiumBlocks.EXP_DRUM)
-            .pattern(
-                "ABA",
-                "ACA",
-                "ABA",
-            ).define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
-            .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
-            .define('C', Tags.Items.BUCKETS_EMPTY)
-            .save(output)
-
-        // Minecarts
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            HTShapelessRecipeBuilder
-                .create(tier.getMinecartItem())
-                .addIngredient(tier.getBlock())
-                .addIngredient(Items.MINECART)
-                .save(output)
-        }
     }
 }

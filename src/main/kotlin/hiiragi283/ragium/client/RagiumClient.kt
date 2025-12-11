@@ -16,10 +16,10 @@ import hiiragi283.ragium.client.event.HTItemTooltipContent
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockEntityScreenFactory
-import hiiragi283.ragium.client.gui.screen.HTDrumScreen
 import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTGenericScreen
+import hiiragi283.ragium.client.gui.screen.HTTankScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTCombustionGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTGeneratorScreen
@@ -47,7 +47,6 @@ import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -56,7 +55,6 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.client.model.MinecartModel
-import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.MinecartRenderer
@@ -271,7 +269,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.COMBUSTION_GENERATOR, ::HTCombustionGeneratorScreen)
         event.register(RagiumMenuTypes.COMPRESSOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.CUTTING_MACHINE, ::HTProcessorScreen)
-        event.register(RagiumMenuTypes.DRUM, ::HTDrumScreen)
+        event.register(RagiumMenuTypes.TANK, ::HTTankScreen)
         event.register(RagiumMenuTypes.ENCHANTER, HTSingleFluidProcessorScreen.Companion::combine)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.EXTRACTOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
@@ -294,10 +292,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerLayerDefinitions(event: EntityRenderersEvent.RegisterLayerDefinitions) {
         event.registerLayerDefinition(RagiumModelLayers.FUEL_GENERATOR, HTFuelGeneratorModel::createLayer)
-
-        for (location: ModelLayerLocation in RagiumModelLayers.DRUM_MINECARTS.values) {
-            event.registerLayerDefinition(location, MinecartModel<*>::createBodyLayer)
-        }
+        event.registerLayerDefinition(RagiumModelLayers.TANK_MINECART, MinecartModel<*>::createBodyLayer)
 
         RagiumAPI.LOGGER.info("Registered Layer Definitions!")
     }
@@ -331,12 +326,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             event.registerEntityRenderer(type.get(), ::ThrownItemRenderer)
         }
         event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
-
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            val layerDefinition: ModelLayerLocation = RagiumModelLayers.DRUM_MINECARTS[tier] ?: continue
-            event.registerEntityRenderer(
-                tier.getEntityType().get(),
-            ) { context: EntityRendererProvider.Context -> MinecartRenderer(context, layerDefinition) }
+        event.registerEntityRenderer(RagiumEntityTypes.TANK_MINECART.get()) { context: EntityRendererProvider.Context ->
+            MinecartRenderer(context, RagiumModelLayers.TANK_MINECART)
         }
 
         RagiumAPI.LOGGER.info("Registered Entity Renderers!")

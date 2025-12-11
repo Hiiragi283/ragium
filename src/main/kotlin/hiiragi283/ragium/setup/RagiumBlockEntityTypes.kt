@@ -41,12 +41,9 @@ import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTOpenCrateBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTTieredDrumBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -67,6 +64,13 @@ object RagiumBlockEntityTypes {
         REGISTER.addAlias("fisher", "item_collector")
         REGISTER.addAlias("item_buffer", "item_collector")
         REGISTER.addAlias("mob_capturer", "item_collector")
+
+        listOf(
+            "small",
+            "medium",
+            "large",
+            "huge",
+        ).forEach { REGISTER.addAlias("${it}_drum", "tank") }
 
         REGISTER.register(eventBus)
 
@@ -245,13 +249,7 @@ object RagiumBlockEntityTypes {
     val OPEN_CRATE: HTDeferredBlockEntityType<HTOpenCrateBlockEntity> = REGISTER.registerType("open_crate", ::HTOpenCrateBlockEntity)
 
     @JvmField
-    val DRUMS: Map<HTDrumTier, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
-        HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTTieredDrumBlockEntity(tier.getBlock(), pos, state) }
-        }
-
-    @JvmField
-    val EXP_DRUM: HTDeferredBlockEntityType<HTExpDrumBlockEntity> = registerTick("experience_drum", ::HTExpDrumBlockEntity)
+    val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = registerTick("tank", ::HTTankBlockEntity)
 
     //    Event    //
 
@@ -320,10 +318,8 @@ object RagiumBlockEntityTypes {
             registerHandler(event, type.get())
         }
         registerHandler(event, OPEN_CRATE.get())
-        for (type: HTDeferredBlockEntityType<HTDrumBlockEntity> in DRUMS.values) {
-            registerHandler(event, type.get())
-        }
-        registerHandler(event, EXP_DRUM.get())
+
+        registerHandler(event, TANK.get())
 
         RagiumAPI.LOGGER.info("Registered Block Capabilities!")
     }

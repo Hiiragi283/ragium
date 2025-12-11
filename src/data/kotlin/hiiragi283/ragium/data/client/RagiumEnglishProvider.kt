@@ -177,7 +177,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         // Storage
         add(RagiumBlocks.OPEN_CRATE, "Open Crate")
 
-        add(RagiumBlocks.EXP_DRUM, "Experience Drum")
+        add(RagiumBlocks.TANK, "Variable Tank")
     }
 
     private fun enchantment() {
@@ -298,6 +298,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
+        // Vehicles
+        add(RagiumItems.TANK_MINECART, "Tank with Minecart")
         // Upgrades
         add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
 
@@ -460,8 +462,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumCommonTranslation.CRATE, "A storage which stores one type of item.")
         add(RagiumCommonTranslation.OPEN_CRATE, "A storage which drops inserted items below.")
-        add(RagiumCommonTranslation.DRUM, "A storage which stores one type of fluid.")
-        add(RagiumCommonTranslation.EXP_DRUM, "A storage which stores only Experience Liquid.")
+        add(RagiumCommonTranslation.TANK, "A fluid storage which capacity is extendable by upgrade.")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "Energy Rate")

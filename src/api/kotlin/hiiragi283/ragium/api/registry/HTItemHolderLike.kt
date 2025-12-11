@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.registry
 
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -92,11 +92,7 @@ interface HTItemHolderLike :
     }
 
     /**
-     * 指定した[count]と[components]から[ItemStack]を返します。
+     * 指定した[count]から[ImmutableItemStack]を返します。
      */
-    fun toStack(count: Int = 1, components: DataComponentPatch): ItemStack {
-        val stack: ItemStack = toStack(count)
-        stack.applyComponents(components)
-        return stack
-    }
+    fun toImmutableStack(count: Int = 1): ImmutableItemStack? = toStack(count).toImmutable()
 }
