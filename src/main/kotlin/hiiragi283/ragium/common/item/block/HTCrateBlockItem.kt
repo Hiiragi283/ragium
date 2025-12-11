@@ -17,6 +17,10 @@ class HTCrateBlockItem(block: HTCrateBlock, properties: Properties) : HTDescript
     override fun onDestroyed(itemEntity: ItemEntity, damageSource: DamageSource) {
         val stack: ItemStack = itemEntity.item
         val contents: HTItemContents = stack.get(RagiumDataComponents.ITEM_CONTENT) ?: return
-        contents.filterNotNull().map(ImmutableItemStack::unwrap).forEach(itemEntity::spawnAtLocation)
+        contents
+            .asSequence()
+            .filterNotNull()
+            .map(ImmutableItemStack::unwrap)
+            .forEach(itemEntity::spawnAtLocation)
     }
 }

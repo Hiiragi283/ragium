@@ -1,12 +1,14 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.item.component.HTFluidContents
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
+import hiiragi283.ragium.api.item.component.HTStackContents
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.HTKeyOrTagEntry
@@ -16,6 +18,7 @@ import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.text.HTSimpleTranslation
 import hiiragi283.ragium.api.text.HTTranslation
 import net.minecraft.core.component.DataComponentType
@@ -84,6 +87,10 @@ object RagiumDataComponents {
     val MACHINE_UPGRADE: DataComponentType<HTMachineUpgrade> = REGISTER.registerType("machine_upgrade", HTMachineUpgrade.CODEC)
 
     @JvmField
+    val MACHINE_UPGRADES: DataComponentType<HTItemContents> =
+        REGISTER.registerType("machine_upgrades", HTStackContents.codec(ImmutableItemStack.CODEC))
+
+    @JvmField
     val MACHINE_UPGRADE_FILTER: DataComponentType<HTKeyOrTagEntry<BlockEntityType<*>>> =
         REGISTER.registerType("machine_upgrade/filter", HTKeyOrTagHelper.INSTANCE.codec(Registries.BLOCK_ENTITY_TYPE))
 
@@ -93,8 +100,10 @@ object RagiumDataComponents {
     val ENERGY: DataComponentType<Int> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_INT)
 
     @JvmField
-    val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
+    val FLUID_CONTENT: DataComponentType<HTFluidContents> =
+        REGISTER.registerType("fluid_content", HTStackContents.codec(ImmutableFluidStack.CODEC))
 
     @JvmField
-    val ITEM_CONTENT: DataComponentType<HTItemContents> = REGISTER.registerType("item_content", HTItemContents.CODEC)
+    val ITEM_CONTENT: DataComponentType<HTItemContents> =
+        REGISTER.registerType("item_content", HTStackContents.codec(ImmutableItemStack.CODEC))
 }

@@ -49,7 +49,7 @@ class HTFluidCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = when {
-        hasUpgrade(RagiumItems.EXP_COLLECTOR_UPGRADE) -> collectExp(level, pos)
+        machineUpgrade.hasUpgrade(RagiumItems.EXP_COLLECTOR_UPGRADE) -> collectExp(level, pos)
         else -> generateWater(level, pos)
     }
 

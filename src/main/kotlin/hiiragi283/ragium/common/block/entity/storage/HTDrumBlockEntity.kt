@@ -9,16 +9,13 @@ import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.Vec3
 
 abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
@@ -49,22 +46,6 @@ abstract class HTDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, stat
     }
 
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(tank)
-
-    override fun collectFluidDrops(level: Level, pos: Vec3) {}
-
-    //    Save & Read    //
-
-    override fun applyImplicitComponents(componentInput: DataComponentInput) {
-        super.applyImplicitComponents(componentInput)
-        componentInput
-            .get(RagiumDataComponents.FLUID_CONTENT)
-            .let(tank::setStackUnchecked)
-    }
-
-    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
-        super.collectImplicitComponents(components)
-        components.set(RagiumDataComponents.FLUID_CONTENT, tank.getStack())
-    }
 
     //    Ticking    //
 

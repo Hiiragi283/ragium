@@ -4,14 +4,17 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.function.andThen
 import hiiragi283.ragium.api.item.component.HTItemContents
+import hiiragi283.ragium.api.item.component.HTStackContents
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.item.ItemStack
+import java.util.Optional
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 
@@ -56,12 +59,12 @@ open class HTComponentItemSlot(
 
     final override fun setStack(stack: ImmutableItemStack?) {
         val contents: HTItemContents? = getContents() // TODO
-        if (contents == null || contents.isEmpty()) {
+        if (contents.isNullOrEmpty()) {
             parent.remove(component)
         } else {
-            val items: Array<ImmutableItemStack?> = contents.unwrap()
-            items[slot] = stack
-            parent.set(component, HTItemContents.of(items))
+            val items: MutableList<Optional<ImmutableItemStack>> = contents.unwrap()
+            items[slot] = stack.wrapOptional()
+            parent.set(component, HTStackContents.fromOptional(items))
         }
     }
 

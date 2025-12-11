@@ -21,11 +21,13 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.common.Tags
 import java.util.function.UnaryOperator
 
@@ -148,5 +150,17 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
     ) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
         level.getTypedBlockEntity<HTBlockEntity>(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+    }
+
+    override fun getCloneItemStack(
+        state: BlockState,
+        target: HitResult,
+        level: LevelReader,
+        pos: BlockPos,
+        player: Player,
+    ): ItemStack {
+        val stack: ItemStack = super.getCloneItemStack(state, target, level, pos, player)
+        level.getBlockEntity(pos)?.collectComponents()?.let(stack::applyComponents)
+        return stack
     }
 }

@@ -770,7 +770,7 @@ object RagiumItems {
                 event,
                 { stack: ItemStack ->
                     val capacity: Int = HTEnchantmentHelper.processStorageCapacity(null, stack, tier.getDefaultCapacity())
-                    HTComponentFluidTank.create(stack, capacity)
+                    HTComponentFluidTank.create(stack, 0, capacity)
                 },
                 block,
             )
@@ -778,7 +778,7 @@ object RagiumItems {
         registerFluid(
             event,
             { stack: ItemStack ->
-                HTComponentFluidTank.create(stack, Int.MAX_VALUE, filter = RagiumFluidContents.EXPERIENCE::isOf)
+                HTComponentFluidTank.create(stack, 0, Int.MAX_VALUE, filter = RagiumFluidContents.EXPERIENCE::isOf)
             },
             RagiumBlocks.EXP_DRUM,
         )
@@ -787,7 +787,7 @@ object RagiumItems {
             event,
             { stack: ItemStack ->
                 val capacity: Int = HTEnchantmentHelper.processStorageCapacity(null, stack, 8000)
-                HTComponentFluidTank.create(stack, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
+                HTComponentFluidTank.create(stack, 0, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
             },
             TELEPORT_KEY,
         )

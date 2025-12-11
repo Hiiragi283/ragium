@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.ragium.api.block.attribute.getAttributeTier
-import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.HTItemSlot
@@ -11,17 +10,14 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTVariableItemSlot
 import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.util.HTEnchantmentHelper
 import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import java.util.function.Consumer
 
 class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(blockHolder, pos, state) {
@@ -44,21 +40,7 @@ class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: Block
         )
     }
 
-    override fun collectItemDrops(consumer: Consumer<ImmutableItemStack>) {}
-
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStackSlotHelper.calculateRedstoneLevel(slot)
-
-    //    Save & Read    //
-
-    override fun applyImplicitComponents(componentInput: DataComponentInput) {
-        super.applyImplicitComponents(componentInput)
-        componentInput.get(RagiumDataComponents.ITEM_CONTENT)?.getOrNull(0)?.let(slot::setStackUnchecked)
-    }
-
-    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
-        super.collectImplicitComponents(components)
-        components.set(RagiumDataComponents.ITEM_CONTENT, HTItemContents.of(slot.getStack()))
-    }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 }

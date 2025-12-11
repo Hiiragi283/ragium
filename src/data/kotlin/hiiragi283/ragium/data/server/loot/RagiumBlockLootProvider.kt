@@ -6,8 +6,6 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.common.block.HTCropBlock
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
-import hiiragi283.ragium.common.block.storage.HTCrateBlock
-import hiiragi283.ragium.common.block.storage.HTDrumBlock
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -53,9 +51,13 @@ class RagiumBlockLootProvider(provider: HolderLookup.Provider) :
                             include(DataComponents.CUSTOM_NAME)
                             include(DataComponents.ENCHANTMENTS)
                             include(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
+
+                            include(RagiumDataComponents.MACHINE_UPGRADES)
+
+                            include(RagiumDataComponents.ENERGY)
+                            include(RagiumDataComponents.FLUID_CONTENT)
+                            include(RagiumDataComponents.ITEM_CONTENT)
                             when (block) {
-                                is HTDrumBlock -> include(RagiumDataComponents.FLUID_CONTENT)
-                                is HTCrateBlock -> include(RagiumDataComponents.ITEM_CONTENT)
                                 is HTImitationSpawnerBlock -> include(RagiumDataComponents.SPAWNER_MOB)
                             }
                         }

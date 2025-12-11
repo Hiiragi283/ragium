@@ -68,6 +68,8 @@ sealed interface HTMachineUpgrade {
         else -> null
     }
 
+    fun unwrap(): Either<HTBaseTier, Map<Key, Fraction>>
+
     //    Tiered    //
 
     @JvmRecord
@@ -90,6 +92,8 @@ sealed interface HTMachineUpgrade {
 
             else -> null
         }
+
+        override fun unwrap(): Either<HTBaseTier, Map<Key, Fraction>> = Either.left(tier)
     }
 
     //    Properties    //
@@ -106,6 +110,8 @@ sealed interface HTMachineUpgrade {
         override fun getBaseTier(): HTBaseTier? = null
 
         override fun getProperty(key: Key): Fraction? = properties[key]
+
+        override fun unwrap(): Either<HTBaseTier, Map<Key, Fraction>> = Either.right(properties)
     }
 
     //    Key    //

@@ -1,14 +1,18 @@
 package hiiragi283.ragium.common.storage.fluid.tank
 
 import hiiragi283.ragium.api.function.HTPredicates
+import hiiragi283.ragium.api.item.component.HTFluidContents
+import hiiragi283.ragium.api.item.component.HTStackContents
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.item.ItemStack
+import java.util.Optional
 import java.util.function.BiPredicate
 import java.util.function.Predicate
 
@@ -17,6 +21,7 @@ import java.util.function.Predicate
  */
 open class HTComponentFluidTank(
     protected val parent: ItemStack,
+    private val slot: Int,
     private val capacity: Int,
     private val canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
     private val canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
@@ -28,14 +33,17 @@ open class HTComponentFluidTank(
         @JvmStatic
         fun create(
             parent: ItemStack,
+            slot: Int,
             capacity: Int,
             canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
             canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess> = HTPredicates.alwaysTrueBi(),
             filter: Predicate<ImmutableFluidStack> = HTPredicates.alwaysTrue(),
-        ): HTComponentFluidTank = HTComponentFluidTank(parent, capacity, canExtract, canInsert, filter)
+        ): HTComponentFluidTank = HTComponentFluidTank(parent, slot, capacity, canExtract, canInsert, filter)
     }
 
-    protected val component: DataComponentType<ImmutableFluidStack> get() = RagiumDataComponents.FLUID_CONTENT
+    protected val component: DataComponentType<HTFluidContents> get() = RagiumDataComponents.FLUID_CONTENT
+
+    protected fun getContents(): HTFluidContents? = parent.get(component)
 
     final override fun isValid(stack: ImmutableFluidStack): Boolean = this.filter.test(stack)
 
@@ -45,12 +53,19 @@ open class HTComponentFluidTank(
     final override fun canStackExtract(stack: ImmutableFluidStack, access: HTStorageAccess): Boolean =
         super.canStackExtract(stack, access) && this.canExtract.test(stack, access)
 
-    final override fun getStack(): ImmutableFluidStack? = parent.get(component)
+    final override fun getStack(): ImmutableFluidStack? = getContents()?.getOrNull(slot)
 
     override fun getCapacity(stack: ImmutableFluidStack?): Int = capacity
 
     final override fun setStack(stack: ImmutableFluidStack?) {
-        parent.set(component, stack)
+        val contents: HTFluidContents? = getContents() // TODO
+        if (contents.isNullOrEmpty()) {
+            parent.remove(component)
+        } else {
+            val items: MutableList<Optional<ImmutableFluidStack>> = contents.unwrap()
+            items[slot] = stack.wrapOptional()
+            parent.set(component, HTStackContents.fromOptional(items))
+        }
     }
 
     override fun updateAmount(stack: ImmutableFluidStack, amount: Int) {

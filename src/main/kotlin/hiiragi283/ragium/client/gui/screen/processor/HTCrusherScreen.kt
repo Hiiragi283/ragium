@@ -21,6 +21,6 @@ class HTCrusherScreen(
         createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
 
     override fun updateVisibility() {
-        fluidWidget.visible = blockEntity.hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
+        fluidWidget.visible = blockEntity.machineUpgrade.hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
     }
 }

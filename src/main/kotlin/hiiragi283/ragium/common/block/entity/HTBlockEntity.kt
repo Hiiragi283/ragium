@@ -4,6 +4,9 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
+import hiiragi283.ragium.api.item.component.HTFluidContents
+import hiiragi283.ragium.api.item.component.HTItemContents
+import hiiragi283.ragium.api.item.component.HTStackContents
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
@@ -27,12 +30,10 @@ import hiiragi283.ragium.common.inventory.slot.HTIntSyncSlot
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
-import hiiragi283.ragium.setup.RagiumFluidContents
-import hiiragi283.ragium.util.HTExperienceHelper
-import hiiragi283.ragium.util.HTItemDropHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
@@ -45,18 +46,15 @@ import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
-import net.minecraft.world.entity.ExperienceOrb
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import java.util.UUID
-import java.util.function.Consumer
 
 /**
  * キャパビリティやオーナーを保持する[ExtendedBlockEntity]の拡張クラス
@@ -122,28 +120,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     protected abstract fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
 
-    open fun onBlockRemoved(state: BlockState, level: Level, pos: BlockPos) {
-        // Drop remaining items
-        collectItemDrops { stack: ImmutableItemStack -> HTItemDropHelper.dropStackAt(level, pos, stack) }
-        // Drop remaining fluids
-        collectFluidDrops(level, Vec3.atCenterOf(pos))
-    }
-
-    open fun collectItemDrops(consumer: Consumer<ImmutableItemStack>) {
-        getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
-    }
-
-    open fun collectFluidDrops(level: Level, pos: Vec3) {
-        if (level !is ServerLevel) return
-        val expAmount: Int = getFluidTanks(getFluidSideFor())
-            .mapNotNull(HTFluidTank::getStack)
-            .filter(RagiumFluidContents.EXPERIENCE::isOf)
-            .sumOf(ImmutableFluidStack::amount)
-            .let(HTExperienceHelper::expAmountFromFluid)
-        if (expAmount > 0) {
-            ExperienceOrb.award(level, pos, expAmount)
-        }
-    }
+    open fun onBlockRemoved(state: BlockState, level: Level, pos: BlockPos) {}
 
     //    Save & Read    //
 
@@ -157,7 +134,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     protected open fun writeValue(output: HTValueOutput) {
         // Capability
-        for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
+        for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
                 type.saveTo(output, this)
             }
@@ -177,7 +154,7 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     protected open fun readValue(input: HTValueInput) {
         // Capability
-        for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
+        for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
                 type.loadFrom(input, this)
             }
@@ -192,13 +169,29 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
+        // Capability
+        for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
+            if (type.canHandle(this)) {
+                type.copyTo(this, componentInput::get)
+            }
+        }
+        // Custom Name
         this.customName = componentInput.get(DataComponents.CUSTOM_NAME)
+        // Enchantments
         enchantment = componentInput.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
     }
 
     override fun collectImplicitComponents(components: DataComponentMap.Builder) {
         super.collectImplicitComponents(components)
+        // Capability
+        for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
+            if (type.canHandle(this)) {
+                type.copyFrom(this, components)
+            }
+        }
+        // Custom Name
         components.set(DataComponents.CUSTOM_NAME, this.customName)
+        // Enchantments
         if (!enchantment.isEmpty) {
             components.set(DataComponents.ENCHANTMENTS, enchantment)
         }
@@ -278,6 +271,24 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidHandlerManager?.resolve(direction)
 
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.applyFluidTanks
+     */
+    fun applyFluidTanks(containers: List<HTFluidTank>, contents: HTFluidContents) {
+        for (i: Int in contents.indices) {
+            val stack: ImmutableFluidStack? = contents[i]
+            (containers.getOrNull(i) as? HTBasicFluidTank)?.setStackUnchecked(stack, true)
+        }
+    }
+
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.collectFluidTanks
+     */
+    fun collectFluidTanks(containers: List<HTFluidTank>): HTFluidContents? = containers
+        .map(HTFluidTank::getStack)
+        .let(HTStackContents.Companion::fromNullable)
+        .takeUnless(HTFluidContents::isEmpty)
+
     // Energy
 
     /**
@@ -294,6 +305,18 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = energyHandlerManager?.resolve(direction)
 
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.applyEnergyContainers
+     */
+    fun applyEnergyBattery(containers: List<HTEnergyBattery>, value: Int) {
+        (containers.first() as? HTBasicEnergyBattery)?.setAmountUnchecked(value, true)
+    }
+
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.collectEnergyContainers
+     */
+    fun collectEnergyBattery(containers: List<HTEnergyBattery>): Int? = containers.firstOrNull()?.getAmount()
+
     // Item
 
     /**
@@ -309,4 +332,22 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
 
     final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(direction)
+
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.applyInventorySlots
+     */
+    fun applyItemSlots(containers: List<HTItemSlot>, contents: HTItemContents) {
+        for (i: Int in contents.indices) {
+            val stack: ImmutableItemStack? = contents[i]
+            (containers.getOrNull(i) as? HTBasicItemSlot)?.setStackUnchecked(stack, true)
+        }
+    }
+
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.collectInventorySlots
+     */
+    fun collectItemSlots(containers: List<HTItemSlot>): HTItemContents? = containers
+        .map(HTItemSlot::getStack)
+        .let(HTStackContents.Companion::fromNullable)
+        .takeUnless(HTItemContents::isEmpty)
 }

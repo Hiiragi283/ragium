@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.entity.vehicle
 
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.core.Direction
@@ -69,10 +68,6 @@ abstract class HTMinecart<BE : HTBlockEntity> :
                 result.set(DataComponents.CUSTOM_NAME, this.customName)
             }
             this.spawnAtLocation(result)
-            bindBlockEntity().collectItemDrops { stack: ImmutableItemStack ->
-                this.spawnAtLocation(stack.unwrap())
-            }
-            bindBlockEntity().collectFluidDrops(level(), position())
         }
     }
 
