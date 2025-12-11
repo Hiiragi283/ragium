@@ -23,14 +23,21 @@ object RagiumUpgradeKeys {
     val FLUID_CAPACITY: HTUpgradeKey = HTUpgradeKey.get("fluid_capacity")
 
     // Processor
+
+    @JvmField
+    val COMPOSTING: HTUpgradeKey = HTUpgradeKey.get("composting")
+
+    @JvmField
+    val DISABLE_EXTRA: HTUpgradeKey = HTUpgradeKey.get("disable_extra")
+
+    @JvmField
+    val EXP_DRAIN: HTUpgradeKey = HTUpgradeKey.get("exp_drain")
+
     @JvmField
     val SPEED: HTUpgradeKey = HTUpgradeKey.get("speed")
 
     @JvmField
     val USE_LUBRICANT: HTUpgradeKey = HTUpgradeKey.get("use_lubricant")
-
-    @JvmField
-    val DISABLE_EXTRA: HTUpgradeKey = HTUpgradeKey.get("disable_extra")
 
     // Device
     @JvmField

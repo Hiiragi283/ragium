@@ -1,5 +1,9 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.RagiumPlatform
+import hiiragi283.ragium.api.data.recipe.HTResultHelper
+import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
+import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.math.minus
@@ -38,6 +42,10 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
     final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
         battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
     }
+
+    val itemCreator: HTItemIngredientCreator get() = RagiumPlatform.INSTANCE.itemCreator()
+    val fluidCreator: HTFluidIngredientCreator get() = RagiumPlatform.INSTANCE.fluidCreator()
+    val resultHelper: HTResultHelper = HTResultHelper
 
     //    Ticking    //
 

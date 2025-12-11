@@ -6,7 +6,6 @@ import dev.emi.emi.api.recipe.EmiRecipeSorting
 import dev.emi.emi.api.render.EmiRenderable
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.math.HTBounds
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.text.HTHasText
 import hiiragi283.ragium.client.integration.emi.toEmi
@@ -26,44 +25,24 @@ open class HTEmiRecipeCategory(
 ) : EmiRecipeCategory(id, icon, simplified, sorter) {
     companion object {
         @JvmStatic
-        fun <ITEM : HTItemHolderLike> create(
+        fun create(
             bounds: HTBounds,
-            item: ITEM,
             hasText: HTHasText,
+            id: ResourceLocation,
+            vararg workStations: ItemLike,
             sorter: Comparator<EmiRecipe> = EmiRecipeSorting.compareOutputThenInput(),
         ): HTEmiRecipeCategory = HTEmiRecipeCategory(
             bounds,
             hasText,
-            listOf(item.toEmi()),
-            item.getId(),
-            item.toEmi(),
+            workStations.map(ItemLike::toEmi),
+            id,
+            workStations[0].toEmi(),
             sorter = sorter,
         )
-
-        @JvmStatic
-        fun <ITEM> create(
-            bounds: HTBounds,
-            item: ITEM,
-            sorter: Comparator<EmiRecipe> = EmiRecipeSorting.compareOutputThenInput(),
-        ): HTEmiRecipeCategory where ITEM : HTItemHolderLike, ITEM : HTHasText = create(
-            bounds,
-            item,
-            item,
-            sorter = sorter,
-        )
-
-        @JvmStatic
-        fun create(
-            bounds: HTBounds,
-            recipeType: HTDeferredRecipeType<*, *>,
-            workStations: List<EmiStack>,
-            icon: EmiRenderable,
-        ): HTEmiRecipeCategory =
-            HTEmiRecipeCategory(bounds, recipeType, workStations, recipeType.id, icon, icon, EmiRecipeSorting.compareOutputThenInput())
 
         @JvmStatic
         fun create(bounds: HTBounds, recipeType: HTDeferredRecipeType<*, *>, vararg workStations: ItemLike): HTEmiRecipeCategory =
-            create(bounds, recipeType, workStations.map(ItemLike::toEmi), workStations[0].toEmi())
+            create(bounds, recipeType, recipeType.id, *workStations)
     }
 
     override fun getName(): Component = hasText.getText()

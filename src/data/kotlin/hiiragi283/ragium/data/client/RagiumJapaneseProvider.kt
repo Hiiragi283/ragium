@@ -379,9 +379,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumUpgradeKeys.FLUID_CAPACITY, $$"- 液体容量: %1$s")
 
+        add(RagiumUpgradeKeys.COMPOSTING, "- アイテムを未加工バイオに変換")
+        add(RagiumUpgradeKeys.DISABLE_EXTRA, "- 追加の生産物を無効化")
+        add(RagiumUpgradeKeys.EXP_DRAIN, "- エンチャントされたアイテムから液体経験値を抽出")
         add(RagiumUpgradeKeys.SPEED, $$"- 処理速度: %1$s")
         add(RagiumUpgradeKeys.USE_LUBRICANT, "- 処理ごとに潤滑油を消費")
-        add(RagiumUpgradeKeys.DISABLE_EXTRA, "- 追加の生産物を無効化")
 
         add(RagiumUpgradeKeys.EXP_COLLECTING, "- 水の代わりに経験値オーブを収集")
         add(RagiumUpgradeKeys.FISHING, "- アイテム収集の代わりに釣りを実行")
@@ -505,6 +507,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun emi() {
         add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "機械のアップグレード")
+        add(RagiumCommonTranslation.EMI_COMPOSTING_TITLE, "コンポスト")
 
         add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "ブロックの下に設置します。")
     }

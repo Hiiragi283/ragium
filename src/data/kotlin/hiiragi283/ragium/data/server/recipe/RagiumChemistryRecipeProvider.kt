@@ -24,7 +24,6 @@ import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.custom.HTBioExtractingRecipe
 import hiiragi283.ragium.common.variant.HTColoredVariant
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -643,7 +642,6 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun biomass() {
-        save(HTBioExtractingRecipe.RECIPE_ID, HTBioExtractingRecipe)
         // Biomass -> Crude Bio
         HTFluidRecipeBuilder
             .melting(

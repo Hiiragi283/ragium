@@ -351,11 +351,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 HTUpgradeVariant.SPEED -> RagiumMaterialKeys.CRIMSON_CRYSTAL
             }
             HTShapedRecipeBuilder
-                .cross8Mirrored(output, upgrade) {
-                    define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-                    define('B', RagiumModTags.Items.PLASTICS)
-                    define('C', CommonMaterialPrefixes.GEM, gem)
-                }
+                .create(upgrade)
+                .cross8()
+                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+                .define('B', RagiumModTags.Items.PLASTICS)
+                .define('C', CommonMaterialPrefixes.GEM, gem)
         }
 
         for ((variant: HTUpgradeVariant, upgrade: ItemLike) in RagiumItems.MACHINE_UPGRADES.column(HTBaseTier.ADVANCED)) {
@@ -369,10 +369,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
         // Processor
         processorUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) {
-            define('B', RagiumFluidContents.LUBRICANT.bucketTag)
+            define('C', RagiumFluidContents.LUBRICANT.bucketTag)
         }
         processorUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE) {
-            define('B', Tags.Items.BUCKETS_LAVA)
+            define('C', Tags.Items.BUCKETS_LAVA)
         }
 
         // Device
@@ -391,8 +391,9 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     private inline fun processorUpgrade(upgrade: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
         HTShapedRecipeBuilder
             .create(upgrade)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            .cross8()
+            .define('A', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC)
+            .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
             .apply(action)
             .save(output)
     }
@@ -402,7 +403,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         HTShapedRecipeBuilder
             .create(upgrade)
             .hollow4()
-            .define('A', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
             .apply(action)
             .save(output)
     }

@@ -29,9 +29,7 @@ import hiiragi283.ragium.common.recipe.HTExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTBioExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTExpExtractingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
@@ -62,10 +60,6 @@ object RagiumRecipeSerializers {
     //    Custom    //
 
     @JvmField
-    val BIO_EXTRACTING: RecipeSerializer<HTBioExtractingRecipe> =
-        register("bio_extracting", HTBioExtractingRecipe)
-
-    @JvmField
     val CLEAR_COMPONENT: RecipeSerializer<HTClearComponentRecipe> =
         register("clear_component", HTClearComponentRecipe.CODEC)
 
@@ -76,10 +70,6 @@ object RagiumRecipeSerializers {
     @JvmField
     val ETERNAL_UPGRADE: RecipeSerializer<HTEternalUpgradeRecipe> =
         register("eternal_upgrade", SimpleCraftingRecipeSerializer(::HTEternalUpgradeRecipe))
-
-    @JvmField
-    val EXP_EXTRACTING: RecipeSerializer<HTExpExtractingRecipe> =
-        register("exp_extracting", HTExpExtractingRecipe)
 
     @JvmField
     val GRAVITATIONAL_UPGRADE: RecipeSerializer<HTGravitationalUpgradeRecipe> =

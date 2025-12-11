@@ -12,25 +12,21 @@ import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
-import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
 import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.getHolderDataMap
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
-import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.util.Ior
-import hiiragi283.ragium.api.util.wrapOptional
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
@@ -55,12 +51,10 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSolidifyingEm
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
-import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTBioExtractingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTExpExtractingRecipe
 import hiiragi283.ragium.setup.DeferredBEMenu
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -81,10 +75,8 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.component.Unbreakable
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.ComposterBlock
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
@@ -317,21 +309,8 @@ class RagiumEmiPlugin : EmiPlugin {
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, HTSingleExtraItemEmiRecipe::cutting)
         addRegistryRecipes(registry, RagiumRecipeTypes.EXTRACTING, HTItemWithCatalystEmiRecipe::extracting)
 
-        addItemStackRecipes(
-            registry,
-            "crude_bio",
-            { stack: ItemStack ->
-                val crudeBio: ImmutableFluidStack = HTBioExtractingRecipe.getCrudeBio(ComposterBlock.getValue(stack))
-                    ?: return@addItemStackRecipes null
-                HTExtractingRecipe(
-                    HTItemIngredient(Ingredient.of(stack), 1),
-                    HTItemIngredient(Ingredient.of(Items.COMPOSTER), 1).wrapOptional(),
-                    Ior.Right(HTResultHelper.fluid(crudeBio)),
-                )
-            },
-            HTItemWithCatalystEmiRecipe::extracting,
-        )
-        registry.addRecipeSafe(HTExpExtractingRecipe.RECIPE_ID.withPrefix("/"), ::HTExpExtractingEmiRecipe)
+        addItemStackRecipes(registry, "crude_bio", HTExtractorBlockEntity::createComposting, HTItemWithCatalystEmiRecipe::composting)
+        registry.addRecipeSafe(RagiumAPI.id("/${RagiumConst.EXTRACTING}", "experience_from_items"), ::HTExpExtractingEmiRecipe)
         // Advanced
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)

@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
+import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
@@ -22,21 +23,8 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTComplexBlockEntity<RECIPE : HTFluidRecipe> : HTProcessorBlockEntity.Cached<RECIPE> {
-    constructor(
-        recipeCache: HTRecipeCache<HTRecipeInput, RECIPE>,
-        blockHolder: Holder<Block>,
-        pos: BlockPos,
-        state: BlockState,
-    ) : super(recipeCache, blockHolder, pos, state)
-
-    constructor(
-        finder: HTRecipeFinder<HTRecipeInput, RECIPE>,
-        blockHolder: Holder<Block>,
-        pos: BlockPos,
-        state: BlockState,
-    ) : super(finder, blockHolder, pos, state)
-
+abstract class HTComplexBlockEntity<RECIPE : HTFluidRecipe>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity.RecipeBased<RECIPE>(blockHolder, pos, state) {
     lateinit var outputTank: HTBasicFluidTank
         private set
 
@@ -74,5 +62,23 @@ abstract class HTComplexBlockEntity<RECIPE : HTFluidRecipe> : HTProcessorBlockEn
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+    }
+
+    //    Cached    //
+
+    abstract class Cached<RECIPE : HTFluidRecipe>(
+        private val recipeCache: HTRecipeCache<HTRecipeInput, RECIPE>,
+        blockHolder: Holder<Block>,
+        pos: BlockPos,
+        state: BlockState,
+    ) : HTComplexBlockEntity<RECIPE>(blockHolder, pos, state) {
+        constructor(
+            finder: HTRecipeFinder<HTRecipeInput, RECIPE>,
+            blockHolder: Holder<Block>,
+            pos: BlockPos,
+            state: BlockState,
+        ) : this(HTFinderRecipeCache(finder), blockHolder, pos, state)
+
+        final override fun getMatchedRecipe(input: HTRecipeInput, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
     }
 }

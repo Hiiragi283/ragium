@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
-import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -16,12 +15,8 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTItemWithCatalystBlockEntity(
-    finder: HTRecipeFinder<HTRecipeInput, HTItemWithCatalystRecipe>,
-    blockHolder: Holder<Block>,
-    pos: BlockPos,
-    state: BlockState,
-) : HTComplexBlockEntity<HTItemWithCatalystRecipe>(finder, blockHolder, pos, state) {
+abstract class HTItemWithCatalystBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    HTComplexBlockEntity<HTItemWithCatalystRecipe>(blockHolder, pos, state) {
     lateinit var inputSlot: HTBasicItemSlot
         private set
     lateinit var catalystSlot: HTBasicItemSlot

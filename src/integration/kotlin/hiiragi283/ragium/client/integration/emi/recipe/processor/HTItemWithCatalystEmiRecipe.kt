@@ -28,8 +28,8 @@ class HTItemWithCatalystEmiRecipe : HTMultiOutputsEmiRecipe<HTBasicItemWithCatal
             HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.COMPRESSING, holder)
 
         @JvmStatic
-        fun extracting(id: ResourceLocation, recipe: HTBasicItemWithCatalystRecipe): HTItemWithCatalystEmiRecipe =
-            HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.EXTRACTING, id, recipe)
+        fun composting(id: ResourceLocation, recipe: HTBasicItemWithCatalystRecipe): HTItemWithCatalystEmiRecipe =
+            HTItemWithCatalystEmiRecipe(RagiumEmiRecipeCategories.COMPOSTING, id, recipe)
 
         @JvmStatic
         fun extracting(holder: RecipeHolder<HTBasicItemWithCatalystRecipe>): HTItemWithCatalystEmiRecipe =

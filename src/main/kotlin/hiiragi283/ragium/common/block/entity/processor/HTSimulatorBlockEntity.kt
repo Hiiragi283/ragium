@@ -17,7 +17,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTSimulatorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTComplexBlockEntity<HTItemWithCatalystRecipe>(
+    HTComplexBlockEntity.Cached<HTItemWithCatalystRecipe>(
         RagiumRecipeTypes.SIMULATING,
         RagiumBlocks.SIMULATOR,
         pos,

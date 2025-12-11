@@ -7,7 +7,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
-import hiiragi283.ragium.common.recipe.custom.HTExpExtractingRecipe
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderGetter
@@ -22,7 +21,6 @@ object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
     private val enchLookup: HolderGetter<Enchantment> by lazy { provider.lookupOrThrow(Registries.ENCHANTMENT) }
 
     override fun buildRecipeInternal() {
-        save(HTExpExtractingRecipe.RECIPE_ID, HTExpExtractingRecipe)
         save(HTCopyEnchantingRecipe.RECIPE_ID, HTCopyEnchantingRecipe)
 
         // Vanilla

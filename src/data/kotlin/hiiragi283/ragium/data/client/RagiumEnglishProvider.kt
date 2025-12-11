@@ -377,9 +377,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
 
+        add(RagiumUpgradeKeys.COMPOSTING, "- Convert input into Crude Bio")
+        add(RagiumUpgradeKeys.DISABLE_EXTRA, "- Extra output disabled")
+        add(RagiumUpgradeKeys.EXP_DRAIN, "- Extract Liquid Experience from enchanted item")
         add(RagiumUpgradeKeys.SPEED, $$"- Speed: %1$s")
         add(RagiumUpgradeKeys.USE_LUBRICANT, "- Use lubricant per operation")
-        add(RagiumUpgradeKeys.DISABLE_EXTRA, "- Extra output disabled")
 
         add(RagiumUpgradeKeys.EXP_COLLECTING, "- Collect Experience Orb instead of Water")
         add(RagiumUpgradeKeys.FISHING, "- Do fishing instead of collecting items")
@@ -500,6 +502,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun emi() {
         add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "Machine Upgrades")
+        add(RagiumCommonTranslation.EMI_COMPOSTING_TITLE, "Composting")
 
         add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "Placed below the block.")
     }
