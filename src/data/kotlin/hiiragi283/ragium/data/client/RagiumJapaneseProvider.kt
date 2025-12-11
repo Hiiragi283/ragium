@@ -262,7 +262,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.MELON_PIE, "メロンパイ")
 
         add(RagiumItems.RAGI_CHERRY, "らぎチェリー")
-        add(RagiumItems.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
         add(RagiumItems.RAGI_CHERRY_JUICE, "らぎチェリージュース")
         add(RagiumItems.RAGI_CHERRY_JAM, "らぎチェリージャム")
         add(RagiumItems.RAGI_CHERRY_PIE, "らぎチェリーパイ")
@@ -271,6 +270,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.FEVER_CHERRY, "フィーバーチェリー")
 
         add(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
+        add(RagiumItems.CHOCOLATE_BREAD, "チョコレートパン")
         add(RagiumItems.AMBROSIA, "アンブロシア")
 
         // Mold

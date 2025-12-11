@@ -64,7 +64,6 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
 
     @JvmStatic
     private fun cherry() {
-        choppingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PULP)
         choppingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PIE)
     }
 

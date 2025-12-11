@@ -201,15 +201,19 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         // Food
         factory
             .apply(Tags.Items.FOODS)
-            .addTag(CommonMaterialPrefixes.JAM)
-            .addTag(RagiumCommonTags.Items.FOODS_DOUGH)
+            .add(RagiumBlocks.WARPED_WART)
             .add(RagiumItems.AMBROSIA)
             .add(RagiumItems.CANNED_COOKED_MEAT)
+            .add(RagiumItems.CHOCOLATE_BREAD)
             .add(RagiumItems.ICE_CREAM)
             .add(RagiumItems.ICE_CREAM_SODA)
             .add(RagiumItems.MELON_PIE)
+            .add(RagiumItems.RAGI_CHERRY_PIE)
+            .add(RagiumItems.RAGI_CHERRY_PIE_SLICE)
+            .add(RagiumItems.RAGI_CHERRY_TOAST)
             .add(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-            .add(RagiumBlocks.WARPED_WART)
+            .addTag(CommonMaterialPrefixes.JAM)
+            .addTag(RagiumCommonTags.Items.FOODS_DOUGH)
 
         factory.apply(Tags.Items.FOODS_BERRY).add(RagiumBlocks.EXP_BERRIES)
         factory.apply(Tags.Items.FOODS_GOLDEN).add(RagiumItems.FEVER_CHERRY)
@@ -229,9 +233,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE).addItem(Items.APPLE)
 
-        addMaterial(factory, foodsFruit, FoodMaterialKeys.RAGI_CHERRY)
-            .add(RagiumItems.RAGI_CHERRY)
-            .add(RagiumItems.RAGI_CHERRY_PULP)
+        addMaterial(factory, foodsFruit, FoodMaterialKeys.RAGI_CHERRY).add(RagiumItems.RAGI_CHERRY)
 
         addMaterial(factory, CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY).add(RagiumItems.RAGI_CHERRY_JAM)
 

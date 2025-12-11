@@ -271,7 +271,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.MELON_PIE, "Melon Pie")
 
         add(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
-        add(RagiumItems.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
         add(RagiumItems.RAGI_CHERRY_JUICE, "Ragi-Cherry Juice")
         add(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
         add(RagiumItems.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
@@ -280,6 +279,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
         add(RagiumItems.BOTTLED_BEE, "Bottled Bee")
+        add(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
         add(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
         add(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")

@@ -13,13 +13,6 @@ object FoodMaterialRecipeData {
     //    Cutting    //
 
     @JvmField
-    val RAGI_CHERRY_PULP: HTRecipeData = HTRecipeData.create {
-        addInput(RagiumItems.RAGI_CHERRY)
-
-        addOutput(RagiumItems.RAGI_CHERRY_PULP, null, 2)
-    }
-
-    @JvmField
     val RAGI_CHERRY_PIE: HTRecipeData = HTRecipeData.create {
         addInput(RagiumItems.RAGI_CHERRY_PIE)
 

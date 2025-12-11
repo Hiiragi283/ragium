@@ -81,7 +81,6 @@ object RagiumDelightRecipeProvider : HTRecipeProvider.Integration(RagiumConst.FA
 
     @JvmStatic
     private fun cherry() {
-        cuttingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PULP)
         cuttingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PIE)
         // Jam
         HTCookingPotRecipeBuilder

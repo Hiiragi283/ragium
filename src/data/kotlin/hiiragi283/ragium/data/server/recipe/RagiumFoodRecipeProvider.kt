@@ -131,6 +131,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         meltAndFreeze(FoodMaterialRecipeData.CHOCOLATE_INGOT)
+        // Bread
+        HTShapelessRecipeBuilder
+            .create(RagiumItems.CHOCOLATE_BREAD, 3)
+            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE)
+            .addIngredients(Tags.Items.FOODS_BREAD, 3)
+            .save(output)
         // Cake
         HTShapedRecipeBuilder
             .create(RagiumBlocks.SWEET_BERRIES_CAKE)
