@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.upgrade.HTUpgradeKey
 import hiiragi283.ragium.client.integration.jade.provider.base.HTBasicJadeDataProvider
 import hiiragi283.ragium.common.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTMachineUpgradeComponent
-import org.apache.commons.lang3.math.Fraction
 import snownee.jade.api.BlockAccessor
 import snownee.jade.api.ITooltip
 import snownee.jade.api.config.IPluginConfig
@@ -17,9 +16,9 @@ object HTBlockMachinePropertiesProvider : HTBasicJadeDataProvider<BlockAccessor,
 ) {
     override fun streamData(accessor: BlockAccessor): HTComponentUpgrade? = (accessor.blockEntity as? HTUpgradableBlockEntity)
         ?.machineUpgrade
-        ?.let { component: HTMachineUpgradeComponent -> HTUpgradeKey.getAll().associateWith(component::collectMultiplier) }
-        ?.let { map: Map<HTUpgradeKey, Fraction> -> map.filter { (_, value: Fraction) -> value > Fraction.ZERO } }
-        ?.let(HTComponentUpgrade.Companion::create)
+        ?.let { component: HTMachineUpgradeComponent ->
+            HTUpgradeKey.getAll().associateWith { component.collectMultiplier(it, true) }
+        }?.let(HTComponentUpgrade.Companion::create)
 
     override fun appendTooltip(
         tooltip: ITooltip,

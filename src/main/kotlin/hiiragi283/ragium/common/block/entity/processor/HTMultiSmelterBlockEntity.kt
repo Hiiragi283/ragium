@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.stack.maxStackSize
+import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
 import hiiragi283.ragium.common.recipe.vanilla.HTVanillaCookingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -15,6 +16,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
+import org.apache.commons.lang3.math.Fraction
 import kotlin.math.min
 import kotlin.math.pow
 
@@ -49,8 +51,12 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    private fun getMaxParallel(): Int = when {
-        isCreative() -> inputSlot.getStack()?.maxStackSize() ?: -1
-        else -> 2.0.pow((getBaseMultiplier() - 1).toDouble()).toInt()
+    private fun getMaxParallel(): Int {
+        val maxTier: Fraction? = getMaxMultiplier(RagiumUpgradeKeys.BASE_MULTIPLIER)
+        return when {
+            isCreative() -> inputSlot.getStack()?.maxStackSize() ?: -1
+            maxTier != null -> 2.0.pow((maxTier - 1).toDouble()).toInt()
+            else -> 1
+        }
     }
 }

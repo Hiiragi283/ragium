@@ -28,9 +28,9 @@ interface HTUpgradeHandler {
         return false
     }
 
-    fun collectMultiplier(key: HTUpgradeKey, base: Fraction = fraction(1)): Fraction {
+    fun collectMultiplier(key: HTUpgradeKey, ignoreEmpty: Boolean = false): Fraction {
         var isEmpty = true
-        var sum: Fraction = base
+        var sum: Fraction = Fraction.ONE
         for (stack: ImmutableItemStack in getUpgrades()) {
             val fraction: Fraction = HTUpgradeHelper.getUpgrade(stack, key)
             if (fraction > Fraction.ZERO) {
@@ -38,16 +38,16 @@ interface HTUpgradeHandler {
                 isEmpty = false
             }
         }
-        return when (isEmpty) {
-            true -> Fraction.ZERO
-            false -> sum
+        return when {
+            isEmpty && ignoreEmpty -> Fraction.ZERO
+            else -> sum
         }
     }
 
-    fun modifyValue(key: HTUpgradeKey, base: Fraction = fraction(1), operator: UnaryOperator<Fraction>): Int =
-        collectMultiplier(key, base).let(operator::apply).toInt()
+    fun modifyValue(key: HTUpgradeKey, ignoreEmpty: Boolean = false, operator: UnaryOperator<Fraction>): Int =
+        collectMultiplier(key, ignoreEmpty).let(operator::apply).toInt()
 
-    fun getBaseMultiplier(): Fraction = getMaxMultiplier(RagiumUpgradeKeys.BASE_MULTIPLIER) ?: Fraction.ONE
+    fun getBaseMultiplier(): Fraction = collectMultiplier(RagiumUpgradeKeys.BASE_MULTIPLIER)
 
     fun isCreative(): Boolean = hasUpgrade(RagiumUpgradeKeys.IS_CREATIVE)
 }

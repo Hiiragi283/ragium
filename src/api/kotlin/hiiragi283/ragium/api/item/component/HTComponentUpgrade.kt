@@ -25,7 +25,11 @@ value class HTComponentUpgrade private constructor(val map: Map<HTUpgradeKey, Fr
             create(buildMap(builderAction))
 
         @JvmStatic
-        fun create(map: Map<HTUpgradeKey, Fraction>): HTComponentUpgrade = when {
+        fun create(map: Map<HTUpgradeKey, Fraction>): HTComponentUpgrade =
+            createInternal(map.filter { (_, value: Fraction) -> value > Fraction.ZERO })
+
+        @JvmStatic
+        private fun createInternal(map: Map<HTUpgradeKey, Fraction>): HTComponentUpgrade = when {
             map.isEmpty() -> EMPTY
             else -> HTComponentUpgrade(map)
         }

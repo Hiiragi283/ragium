@@ -20,6 +20,7 @@ class HTTieredDrumBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
     private lateinit var tier: HTDrumTier
 
     override fun initializeVariables() {
+        super.initializeVariables()
         tier = blockHolder.getAttributeTier()
     }
 

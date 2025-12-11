@@ -52,11 +52,5 @@ data object HTUpgradeHelper {
     fun getHandler(stack: ItemStack): HTUpgradeHandler? = stack.toImmutable()?.let(::getHandler)
 
     @JvmStatic
-    fun getMultiplier(stack: ItemStack, key: HTUpgradeKey): Fraction = getHandler(stack)?.collectMultiplier(key) ?: Fraction.ZERO
-
-    @JvmStatic
     fun getHandler(stack: ImmutableItemStack): HTUpgradeHandler? = stack.getCapability(RagiumCapabilities.UPGRADABLE_ITEM)
-
-    @JvmStatic
-    fun getMultiplier(stack: ImmutableItemStack, key: HTUpgradeKey): Fraction = getHandler(stack)?.collectMultiplier(key) ?: Fraction.ZERO
 }
