@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe.base
 
-import hiiragi283.ragium.api.recipe.HTFluidRecipe
+import hiiragi283.ragium.api.recipe.fluid.HTFluidRecipe
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.stack.ImmutableFluidStack

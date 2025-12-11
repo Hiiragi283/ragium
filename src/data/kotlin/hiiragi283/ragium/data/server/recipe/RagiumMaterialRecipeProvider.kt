@@ -15,8 +15,8 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.HTMoldType
-import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
@@ -86,8 +86,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
 
         alloyFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL)
         // Ragium Powder
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 1000))
             .setResult(resultHelper.item(RagiumItems.RAGIUM_POWDER))
@@ -252,8 +252,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     resultHelper.item(CommonMaterialPrefixes.GEM, secondary),
                 ).saveSuffixed(output, "_from_ore")
             // Mixing with Lava
-            HTComplexRecipeBuilder
-                .mixing()
+            HTMixingRecipeBuilder
+                .create()
                 .addIngredient(ore)
                 .addIngredient(fluidCreator.lava(500))
                 .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, primary, 12))
@@ -307,8 +307,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     resultHelper.item(CommonMaterialPrefixes.GEM, material, count),
                 ).saveSuffixed(output, "_from_ore")
             // Mixing with Dew of the Warp
-            HTComplexRecipeBuilder
-                .mixing()
+            HTMixingRecipeBuilder
+                .create()
                 .addIngredient(ore)
                 .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.DEW_OF_THE_WARP, 500))
                 .setResult(resultHelper.item(CommonMaterialPrefixes.GEM, material, count * 2))
@@ -328,8 +328,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     resultHelper.item(CommonMaterialPrefixes.SCRAP, key, 2),
                 ).saveSuffixed(output, "_from_ore")
             // Mixing with Eldritch Flux
-            HTComplexRecipeBuilder
-                .mixing()
+            HTMixingRecipeBuilder
+                .create()
                 .addIngredient(ore)
                 .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 500))
                 .setResult(resultHelper.item(CommonMaterialPrefixes.SCRAP, key, 4))

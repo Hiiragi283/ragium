@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
-import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -111,8 +111,8 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).setResult(resultHelper.fluid(HTFluidHolderLike.MILK, 250))
             .saveSuffixed(output, "_from_cow")
         // Heart of the Sea
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(RagiumItems.ELDER_HEART))
             .addIngredient(itemCreator.fromItem(Items.PRISMARINE_SHARD, 64))
             .addIngredient(itemCreator.fromTagKey(Tags.Items.GEMS_PRISMARINE, 64))
@@ -195,8 +195,8 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             ).setResult(resultHelper.item(RagiumItems.WITHER_STAR))
             .save(output)
 
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(RagiumItems.WITHER_STAR))
             .addIngredient(itemCreator.fromItem(Items.GHAST_TEAR, 16))
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 16))

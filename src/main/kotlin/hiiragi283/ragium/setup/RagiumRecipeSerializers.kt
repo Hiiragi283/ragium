@@ -16,6 +16,8 @@ import hiiragi283.ragium.common.crafting.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.crafting.HTUpgradeChargeRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTBasicMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTBasicRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -23,9 +25,7 @@ import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTEntitySimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTExtractingRecipe
-import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBioExtractingRecipe
@@ -144,7 +144,7 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val MELTING: RecipeSerializer<HTMeltingRecipe> = register(
+    val MELTING: RecipeSerializer<HTBasicMeltingRecipe> = register(
         RagiumConst.MELTING,
         RagiumRecipeBiCodecs.MELTING,
     )
@@ -168,7 +168,7 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val REFINING: RecipeSerializer<HTRefiningRecipe> = register(
+    val REFINING: RecipeSerializer<HTBasicRefiningRecipe> = register(
         RagiumConst.REFINING,
         RagiumRecipeBiCodecs.REFINING,
     )

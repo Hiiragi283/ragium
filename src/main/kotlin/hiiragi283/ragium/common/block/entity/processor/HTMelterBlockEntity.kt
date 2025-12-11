@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.processor
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
-import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
+import hiiragi283.ragium.api.recipe.fluid.HTMeltingRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -28,7 +28,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity.Cached<HTSingleFluidRecipe>(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, pos, state) {
+    HTSingleItemInputBlockEntity.Cached<HTMeltingRecipe>(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, pos, state) {
     lateinit var remainderSlot: HTBasicItemSlot
         private set
 
@@ -61,7 +61,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputTank.getNeeded() > 0
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTSingleFluidRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTMeltingRecipe): Boolean =
         HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
 
     override fun completeRecipe(
@@ -69,7 +69,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: HTRecipeInput,
-        recipe: HTSingleFluidRecipe,
+        recipe: HTMeltingRecipe,
     ) {
         // 実際にアウトプットに搬出する
         outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

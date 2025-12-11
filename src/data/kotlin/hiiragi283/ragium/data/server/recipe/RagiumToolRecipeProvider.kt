@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.crafting.HTUpgradeChargeRecipe
-import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSmithingRecipeBuilder
@@ -281,8 +281,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         )
 
         // Glycerol + Mixture Acid + Paper -> Blast Charge
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.PAPER, 4))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.GELLED_EXPLOSIVE, 1000))
             .setResult(resultHelper.item(HTChargeType.BLAST, 4))

@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe.vanilla
 import hiiragi283.ragium.api.recipe.HTRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
-import hiiragi283.ragium.api.recipe.single.HTSingleItemInputRecipe
+import hiiragi283.ragium.api.recipe.HTSingleItemInputRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.core.HolderLookup

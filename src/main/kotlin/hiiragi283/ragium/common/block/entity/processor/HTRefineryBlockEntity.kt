@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.processor
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.fluid.HTRefiningRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -25,7 +25,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTComplexRecipe>(
+    HTProcessorBlockEntity.Cached<HTRefiningRecipe>(
         RagiumRecipeTypes.REFINING,
         RagiumBlocks.REFINERY,
         pos,
@@ -77,7 +77,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTComplexRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTRefiningRecipe): Boolean {
         val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
         val bool2: Boolean = HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
         return bool1 && bool2
@@ -88,14 +88,14 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: HTRecipeInput,
-        recipe: HTComplexRecipe,
+        recipe: HTRefiningRecipe,
     ) {
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
-        inputTank.extract(recipe.getRequiredAmount(0), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        inputTank.extract(recipe.getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
     }

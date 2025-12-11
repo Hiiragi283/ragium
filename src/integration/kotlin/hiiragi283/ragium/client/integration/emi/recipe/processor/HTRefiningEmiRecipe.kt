@@ -5,15 +5,17 @@ import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addTank
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
+import hiiragi283.ragium.common.recipe.HTBasicRefiningRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
+import kotlin.jvm.optionals.getOrNull
 
-class HTRefiningEmiRecipe(holder: RecipeHolder<HTRefiningRecipe>) :
-    HTEmiHolderRecipe<HTRefiningRecipe>(RagiumEmiRecipeCategories.REFINING, holder) {
+class HTRefiningEmiRecipe(holder: RecipeHolder<HTBasicRefiningRecipe>) :
+    HTEmiHolderRecipe<HTBasicRefiningRecipe>(RagiumEmiRecipeCategories.REFINING, holder) {
     init {
         addInput(recipe.ingredient)
 
-        addOutputs(recipe.results)
+        addOutputs(recipe.itemResult.getOrNull())
+        addOutputs(recipe.fluidResult)
     }
 
     override fun addWidgets(widgets: WidgetHolder) {

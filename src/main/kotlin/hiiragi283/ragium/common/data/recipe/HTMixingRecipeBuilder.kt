@@ -7,14 +7,13 @@ import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.common.data.recipe.base.HTComplexResultRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSimpleMixingRecipe
 
-class HTComplexRecipeBuilder(prefix: String, private val factory: Factory<*>) :
-    HTComplexResultRecipeBuilder<HTComplexRecipeBuilder>(prefix) {
+class HTMixingRecipeBuilder(prefix: String, private val factory: Factory<*>) :
+    HTComplexResultRecipeBuilder<HTMixingRecipeBuilder>(prefix) {
     companion object {
         @JvmStatic
-        fun mixing(): HTComplexRecipeBuilder = HTComplexRecipeBuilder(
+        fun create(): HTMixingRecipeBuilder = HTMixingRecipeBuilder(
             RagiumConst.MIXING,
         ) { itemIngredients: List<HTItemIngredient>, fluidIngredients: List<HTFluidIngredient>, results: HTComplexResult ->
             if (itemIngredients.size == 1 && fluidIngredients.size == 1) {
@@ -23,22 +22,16 @@ class HTComplexRecipeBuilder(prefix: String, private val factory: Factory<*>) :
                 HTMixingRecipe(itemIngredients, fluidIngredients, results)
             }
         }
-
-        @JvmStatic
-        fun refining(): HTComplexRecipeBuilder =
-            HTComplexRecipeBuilder(RagiumConst.REFINING) { _, fluidIngredients: List<HTFluidIngredient>, results: HTComplexResult ->
-                HTRefiningRecipe(fluidIngredients[0], results)
-            }
     }
 
     private val itemIngredients: MutableList<HTItemIngredient> = mutableListOf()
     private val fluidIngredients: MutableList<HTFluidIngredient> = mutableListOf()
 
-    fun addIngredient(ingredient: HTItemIngredient?): HTComplexRecipeBuilder = apply {
+    fun addIngredient(ingredient: HTItemIngredient?): HTMixingRecipeBuilder = apply {
         ingredient?.let(itemIngredients::add)
     }
 
-    fun addIngredient(ingredient: HTFluidIngredient): HTComplexRecipeBuilder = apply {
+    fun addIngredient(ingredient: HTFluidIngredient): HTMixingRecipeBuilder = apply {
         fluidIngredients.add(ingredient)
     }
 

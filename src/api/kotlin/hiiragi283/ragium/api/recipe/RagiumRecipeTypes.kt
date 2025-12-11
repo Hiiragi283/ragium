@@ -11,7 +11,8 @@ import hiiragi283.ragium.api.recipe.multi.HTFluidWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
-import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
+import hiiragi283.ragium.api.recipe.fluid.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.fluid.HTRefiningRecipe
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
@@ -36,7 +37,7 @@ object RagiumRecipeTypes {
     val EXTRACTING: HTDeferredRecipeType<HTRecipeInput, HTItemWithCatalystRecipe> = create(RagiumConst.EXTRACTING)
 
     @JvmField
-    val MELTING: HTDeferredRecipeType<HTRecipeInput, HTSingleFluidRecipe> = create(RagiumConst.MELTING)
+    val MELTING: HTDeferredRecipeType<HTRecipeInput, HTMeltingRecipe> = create(RagiumConst.MELTING)
 
     @JvmField
     val MIXING: HTDeferredRecipeType<HTRecipeInput, HTComplexRecipe> = create(RagiumConst.MIXING)
@@ -45,7 +46,7 @@ object RagiumRecipeTypes {
     val PLANTING: HTDeferredRecipeType<HTRecipeInput, HTPlantingRecipe> = create(RagiumConst.PLANTING)
 
     @JvmField
-    val REFINING: HTDeferredRecipeType<HTRecipeInput, HTComplexRecipe> = create(RagiumConst.REFINING)
+    val REFINING: HTDeferredRecipeType<HTRecipeInput, HTRefiningRecipe> = create(RagiumConst.REFINING)
 
     @JvmField
     val ROCK_GENERATING: HTDeferredRecipeType<HTRecipeInput, HTRockGeneratingRecipe> = create(RagiumConst.ROCK_GENERATING)

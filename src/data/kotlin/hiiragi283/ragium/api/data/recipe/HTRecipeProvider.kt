@@ -19,13 +19,13 @@ import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
-import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPlantingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -251,8 +251,8 @@ sealed class HTRecipeProvider {
             .setResult(resultHelper.fluid(fluid.getFluid(), amount))
             .saveSuffixed(output, "_from_${filled.getPath()}")
         // Mixing
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(empty))
             .addIngredient(fluidCreator.fromHolder(fluid, amount))
             .setResult(resultHelper.item(filled))
@@ -267,7 +267,7 @@ sealed class HTRecipeProvider {
         amount: Int,
     ) {
         // Melting
-        HTSingleRecipeBuilder
+        HTFluidRecipeBuilder
             .melting(
                 itemCreator.fromItem(solid),
                 resultHelper.fluid(fluid, amount),
@@ -291,7 +291,7 @@ sealed class HTRecipeProvider {
             ).saveModified(output, data.operator)
         // Melting
         val data1: HTRecipeData = data.swap()
-        HTSingleRecipeBuilder
+        HTFluidRecipeBuilder
             .melting(
                 data1.getItemIngredients(itemCreator)[0],
                 data1.getFluidResults()[0],
@@ -300,7 +300,7 @@ sealed class HTRecipeProvider {
 
     // Mixing
     protected fun mixFromData(data: HTRecipeData) {
-        val builder: HTComplexRecipeBuilder = HTComplexRecipeBuilder.mixing()
+        val builder: HTMixingRecipeBuilder = HTMixingRecipeBuilder.create()
         // Inputs
         data.getItemIngredients(itemCreator).forEach(builder::addIngredient)
         data.getFluidIngredients(fluidCreator).forEach(builder::addIngredient)

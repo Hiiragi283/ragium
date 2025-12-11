@@ -12,8 +12,8 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.HTRegisterRuntimeRecipeEvent
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
-import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -207,8 +207,8 @@ object RagiumRuntimeRecipeHandler {
         if (!event.isPresentTag(CommonMaterialPrefixes.ORE, key)) return
         if (!event.isPresentTag(CommonMaterialPrefixes.INGOT, key)) return
 
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(event.itemCreator.fromTagKey(CommonMaterialPrefixes.ORE, key))
             .addIngredient(event.fluidCreator.fromHolder(RagiumFluidContents.CRIMSON_BLOOD, 250))
             .setResult(event.resultHelper.item(CommonMaterialPrefixes.INGOT, key, 4))

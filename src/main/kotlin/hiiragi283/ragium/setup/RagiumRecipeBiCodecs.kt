@@ -20,9 +20,9 @@ import hiiragi283.ragium.common.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
-import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTBasicMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTBasicRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicCombineRecipe
@@ -42,10 +42,10 @@ object RagiumRecipeBiCodecs {
     )
 
     @JvmField
-    val MELTING: MapBiCodec<RegistryFriendlyByteBuf, HTMeltingRecipe> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTMeltingRecipe::ingredient),
-        HTFluidResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTMeltingRecipe::result),
-        ::HTMeltingRecipe,
+    val MELTING: MapBiCodec<RegistryFriendlyByteBuf, HTBasicMeltingRecipe> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicMeltingRecipe::ingredient),
+        HTFluidResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTBasicMeltingRecipe::result),
+        ::HTBasicMeltingRecipe,
     )
 
     @JvmField
@@ -83,10 +83,11 @@ object RagiumRecipeBiCodecs {
     )
 
     @JvmField
-    val REFINING: MapBiCodec<RegistryFriendlyByteBuf, HTRefiningRecipe> = MapBiCodec.composite(
-        HTFluidIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTRefiningRecipe::ingredient),
-        RESULTS.forGetter(HTRefiningRecipe::results),
-        ::HTRefiningRecipe,
+    val REFINING: MapBiCodec<RegistryFriendlyByteBuf, HTBasicRefiningRecipe> = MapBiCodec.composite(
+        HTFluidIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicRefiningRecipe::ingredient),
+        HTItemResult.CODEC.optionalFieldOf(RagiumConst.ITEM_RESULT).forGetter(HTBasicRefiningRecipe::itemResult),
+        HTFluidResult.CODEC.fieldOf(RagiumConst.FLUID_RESULT).forGetter(HTBasicRefiningRecipe::fluidResult),
+        ::HTBasicRefiningRecipe,
     )
 
     @JvmField

@@ -3,8 +3,8 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.HTDecorationType
-import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
@@ -103,8 +103,8 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.BUILDING)
             .save(output)
         // Sponge Cake
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT, 2))
             .addIngredient(itemCreator.fromTagKey(Tags.Items.EGGS))
             .addIngredient(itemCreator.fromItem(Items.SUGAR))
