@@ -1,9 +1,9 @@
 package hiiragi283.ragium.api.item.component
 
 import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.stack.ImmutableComponentStack
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.api.stack.ImmutableStack
 import net.minecraft.network.RegistryFriendlyByteBuf
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -14,10 +14,10 @@ typealias HTFluidContents = HTStackContents<ImmutableFluidStack>
 /**
  * @see mekanism.common.attachments.containers.item.AttachedItems
  */
-data class HTStackContents<STACK : ImmutableStack<*, STACK>>(val stacks: List<Optional<STACK>>) : AbstractList<STACK?>() {
+data class HTStackContents<STACK : ImmutableComponentStack<*, STACK>>(val stacks: List<Optional<STACK>>) : AbstractList<STACK?>() {
     companion object {
         @JvmStatic
-        fun <STACK : ImmutableStack<*, STACK>> codec(
+        fun <STACK : ImmutableComponentStack<*, STACK>> codec(
             stackCodec: BiCodec<RegistryFriendlyByteBuf, STACK>,
         ): BiCodec<RegistryFriendlyByteBuf, HTStackContents<STACK>> = stackCodec
             .toOptional()
@@ -25,16 +25,16 @@ data class HTStackContents<STACK : ImmutableStack<*, STACK>>(val stacks: List<Op
             .xmap(::HTStackContents, HTStackContents<STACK>::stacks)
 
         @JvmStatic
-        fun <STACK : ImmutableStack<*, STACK>> empty(): HTStackContents<STACK> = HTStackContents(listOf())
+        fun <STACK : ImmutableComponentStack<*, STACK>> empty(): HTStackContents<STACK> = HTStackContents(listOf())
 
         @JvmStatic
-        fun <STACK : ImmutableStack<*, STACK>> fromNullable(stacks: List<STACK?>): HTStackContents<STACK> = when {
+        fun <STACK : ImmutableComponentStack<*, STACK>> fromNullable(stacks: List<STACK?>): HTStackContents<STACK> = when {
             stacks.isEmpty() || stacks.filterNotNull().isEmpty() -> empty()
             else -> HTStackContents(stacks.map(Optional<STACK>::ofNullable))
         }
 
         @JvmStatic
-        fun <STACK : ImmutableStack<*, STACK>> fromOptional(stacks: List<Optional<STACK>>): HTStackContents<STACK> = when {
+        fun <STACK : ImmutableComponentStack<*, STACK>> fromOptional(stacks: List<Optional<STACK>>): HTStackContents<STACK> = when {
             stacks.isEmpty() || stacks.none(Optional<STACK>::isPresent) -> empty()
             else -> HTStackContents(stacks)
         }
@@ -48,4 +48,11 @@ data class HTStackContents<STACK : ImmutableStack<*, STACK>>(val stacks: List<Op
     override fun isEmpty(): Boolean = super.isEmpty() || stacks.all(Optional<STACK>::isEmpty)
 
     fun unwrap(): MutableList<Optional<STACK>> = stacks.toMutableList()
+
+    override fun equals(other: Any?): Boolean = when (other) {
+        !is HTStackContents<STACK> -> false
+        else -> ImmutableComponentStack.listMatches(this, other)
+    }
+
+    override fun hashCode(): Int = ImmutableComponentStack.hashStackList(this)
 }
