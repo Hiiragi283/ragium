@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.RagiumPlatform
-import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialDefinition
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -13,12 +12,10 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.tag.RagiumCommonTags
-import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialKeys
@@ -375,20 +372,5 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         alloyFromData(OritechMaterialRecipeData.BIOSTEEL, true)
         alloyFromData(OritechMaterialRecipeData.DURATIUM, true)
         alloyFromData(OritechMaterialRecipeData.ENERGITE, true)
-    }
-
-    @JvmStatic
-    private fun alloyFromData(data: HTRecipeData, applyCondition: Boolean = false) {
-        HTShapelessInputsRecipeBuilder
-            .alloying(
-                data.getItemResults()[0].first,
-                data.getItemIngredients(itemCreator),
-            ).apply {
-                if (applyCondition) {
-                    for ((entry: Ior<Item, TagKey<Item>>) in data.itemOutputs) {
-                        entry.getRight()?.let(this::tagCondition)
-                    }
-                }
-            }.saveModified(output, data.operator)
     }
 }

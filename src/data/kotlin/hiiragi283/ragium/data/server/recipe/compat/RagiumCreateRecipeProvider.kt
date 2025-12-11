@@ -139,5 +139,7 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
 
         fromData(RagiumMaterialRecipeData.NIGHT_METAL, HeatCondition.HEATED)
         fromData(RagiumMaterialRecipeData.IRIDESCENT_POWDER, HeatCondition.SUPERHEATED)
+
+        fromData(RagiumMaterialRecipeData.BLACK_RUBBER_SHEET, HeatCondition.HEATED)
     }
 }

@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
@@ -24,6 +25,7 @@ import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPlantingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSmithingRecipeBuilder
@@ -35,6 +37,8 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
@@ -179,6 +183,21 @@ sealed class HTRecipeProvider {
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
         .addIngredient(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
+
+    // Alloying
+    fun alloyFromData(data: HTRecipeData, applyCondition: Boolean = false) {
+        HTShapelessInputsRecipeBuilder
+            .alloying(
+                data.getItemResults()[0].first,
+                data.getItemIngredients(itemCreator),
+            ).apply {
+                if (applyCondition) {
+                    for ((entry: Ior<Item, TagKey<Item>>) in data.itemOutputs) {
+                        entry.getRight()?.let(this::tagCondition)
+                    }
+                }
+            }.saveModified(output, data.operator)
+    }
 
     // Compressing
     protected fun compressingTo(

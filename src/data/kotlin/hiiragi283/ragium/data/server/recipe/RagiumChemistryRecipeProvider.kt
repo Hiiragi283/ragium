@@ -629,33 +629,16 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(RagiumFluidContents.LATEX.bucketTag)
             .saveSuffixed(output, "_from_latex")
 
-        HTFluidWithCatalystRecipeBuilder
-            .solidifying(
-                fluidCreator.fromHolder(RagiumFluidContents.LATEX, 1000),
-                itemCreator.fromItem(HTMoldType.PLATE),
-                resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER, 2),
-            ).save(output)
+        meltAndFreeze(RagiumMaterialRecipeData.RAW_RUBBER_SHEET)
         // Raw Rubber -> Rubber
         HTCookingRecipeBuilder
             .smelting(RagiumItems.getPlate(CommonMaterialKeys.RUBBER))
             .addIngredient(RagiumItems.getPlate(CommonMaterialKeys.RAW_RUBBER))
             .saveSuffixed(output, "_from_raw_rubber")
         // Raw Rubber + Sulfur -> Rubber
-        HTShapelessInputsRecipeBuilder
-            .alloying(
-                resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
-            ).save(output)
-
+        alloyFromData(RagiumMaterialRecipeData.RUBBER_SHEET)
         // Latex + Sulfur + Coal -> Rubber
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL))
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.LATEX, 1000))
-            .setResult(resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4))
-            .save(output)
+        mixFromData(RagiumMaterialRecipeData.BLACK_RUBBER_SHEET)
     }
 
     @JvmStatic

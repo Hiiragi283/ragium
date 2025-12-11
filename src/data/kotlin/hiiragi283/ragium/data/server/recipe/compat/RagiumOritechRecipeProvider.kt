@@ -85,6 +85,8 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         foundryFromData(RagiumMaterialRecipeData.AZURE_STEEL)
 
         foundryFromData(RagiumMaterialRecipeData.DEEP_STEEL)
+
+        foundryFromData(RagiumMaterialRecipeData.RUBBER_SHEET)
     }
 
     @JvmStatic

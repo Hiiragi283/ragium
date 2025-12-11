@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.HTMoldType
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -140,6 +142,36 @@ data object RagiumMaterialRecipeData {
         addOutput(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
 
         setSuffix("_warped")
+    }
+
+    //    Rubber    //
+
+    @JvmField
+    val RAW_RUBBER_SHEET: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumFluidContents.LATEX, 1000)
+
+        setCatalyst(HTMoldType.PLATE)
+
+        addOutput(RagiumItems.getPlate(CommonMaterialKeys.RAW_RUBBER), CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER, 2)
+    }
+
+    @JvmField
+    val RUBBER_SHEET: HTRecipeData = HTRecipeData.create {
+        addInput(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER)
+        addInput(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
+
+        addOutput(RagiumItems.getPlate(CommonMaterialKeys.RUBBER), CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2)
+    }
+
+    @JvmField
+    val BLACK_RUBBER_SHEET: HTRecipeData = HTRecipeData.create {
+        addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL)
+        addInput(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
+        addInput(RagiumFluidContents.LATEX, 1000)
+
+        addOutput(RagiumItems.getPlate(CommonMaterialKeys.RUBBER), CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4)
+
+        setSuffix("_with_carbon")
     }
 
     //    Other    //

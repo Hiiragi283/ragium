@@ -76,6 +76,8 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL)
 
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
+
+        alloyFromData(RagiumMaterialRecipeData.RUBBER_SHEET)
     }
 
     @JvmStatic
@@ -125,6 +127,8 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
 
     @JvmStatic
     private fun misc() {
+        bottleFromData(RagiumMaterialRecipeData.RAW_RUBBER_SHEET)
+
         bottleFromData(FoodMaterialRecipeData.CHOCOLATE_INGOT)
     }
 
