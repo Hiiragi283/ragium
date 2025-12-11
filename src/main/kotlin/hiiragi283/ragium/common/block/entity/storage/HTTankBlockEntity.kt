@@ -1,6 +1,9 @@
 package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -23,6 +26,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
+/**
+ * @see mekanism.common.tile.TileEntityFluidTank
+ */
 open class HTTankBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTUpgradableBlockEntity(blockHolder, pos, state) {
     constructor(pos: BlockPos, state: BlockState) : this(RagiumBlocks.TANK, pos, state)
@@ -56,6 +62,18 @@ open class HTTankBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: B
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         HTStackSlotHelper.calculateRedstoneLevel(tank)
 
+    //    Save & Load    //
+
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        output.store(RagiumConst.FLUID, ImmutableFluidStack.CODEC, tank.getStack())
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC).let(tank::setStackUnchecked)
+    }
+
     //    Ticking    //
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean =
@@ -63,6 +81,9 @@ open class HTTankBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: B
 
     //    TankFluidTank    //
 
+    /**
+     * @see mekanism.common.capabilities.fluid.FluidTankFluidTank
+     */
     protected inner class TankFluidTank(listener: HTContentListener) :
         HTBasicFluidTank(
             getCapacity(),

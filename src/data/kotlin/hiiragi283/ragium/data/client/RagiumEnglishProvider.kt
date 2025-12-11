@@ -191,11 +191,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun entity() {
         add(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
-        // add(RagiumEntityTypes.DYNAMITE, "Dynamite")
-        // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
-        // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
-        // add(RagiumEntityTypes.NAPALM_DYNAMITE, "Napalm Dynamite")
-        // add(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
+        add(RagiumEntityTypes.TANK_MINECART, "Minecart with Variable Tank")
     }
 
     private fun fluid() {

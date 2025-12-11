@@ -4,6 +4,7 @@ import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEntityTypes
+import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -40,9 +41,7 @@ class HTTankMinecart :
             InteractionResult.PASS
         }
 
-    override fun getPickResult(): ItemStack {
-        TODO("Not yet implemented")
-    }
+    override fun getPickResult(): ItemStack = RagiumItems.TANK_MINECART.toStack()
 
     override fun getDefaultDisplayBlockState(): BlockState = RagiumBlocks.TANK.get().defaultBlockState()
 

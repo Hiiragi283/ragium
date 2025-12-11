@@ -1,9 +1,13 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.fluid.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -65,6 +69,20 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.OUTPUT,
             HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank(this)),
         )
+    }
+
+    //    Save & Load    //
+
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        output.store("${RagiumConst.FLUID}_input", ImmutableFluidStack.CODEC, inputTank.getStack())
+        output.store("${RagiumConst.FLUID}_output", ImmutableFluidStack.CODEC, outputTank.getStack())
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        input.read("${RagiumConst.FLUID}_input", ImmutableFluidStack.CODEC).let(inputTank::setStackUnchecked)
+        input.read("${RagiumConst.FLUID}_output", ImmutableFluidStack.CODEC).let(outputTank::setStackUnchecked)
     }
 
     //    Ticking    //

@@ -182,11 +182,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun entity() {
         add(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
-        // add(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
-        // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
-        // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
-        // add(RagiumEntityTypes.NAPALM_DYNAMITE, "ナパームダイナマイト")
-        // add(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
+        add(RagiumEntityTypes.TANK_MINECART, "可変タンク付きトロッコ")
     }
 
     private fun fluid() {

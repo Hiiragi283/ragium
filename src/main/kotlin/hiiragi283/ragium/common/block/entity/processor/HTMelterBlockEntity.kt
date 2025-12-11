@@ -1,9 +1,13 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.fluid.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -54,6 +58,18 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
                 blockHolder.getFluidAttribute().getOutputTank(this),
             ),
         )
+    }
+
+    //    Save & Load    //
+
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        output.store(RagiumConst.FLUID, ImmutableFluidStack.CODEC, outputTank.getStack())
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC).let(outputTank::setStackUnchecked)
     }
 
     //    Ticking    //

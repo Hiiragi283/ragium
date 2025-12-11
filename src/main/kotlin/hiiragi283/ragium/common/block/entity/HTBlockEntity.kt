@@ -50,7 +50,6 @@ import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -134,8 +133,21 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         components1 += component
     }
 
-    var enchantment: ItemEnchantments
-        private set
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.serialize(output)
+        }
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.deserialize(input)
+        }
+    }
 
     final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.saveAdditional(tag, registries)
@@ -155,8 +167,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         }
         // Custom Name
         output.store("custom_name", ComponentSerialization.CODEC, this.customName)
-        // Enchantments
-        output.store(RagiumConst.ENCHANTMENT, ItemEnchantments.CODEC, enchantment)
         // Owner
         output.store(RagiumConst.OWNER, UUIDUtil.CODEC, ownerId)
     }
@@ -179,8 +189,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         }
         // Custom Name
         this.customName = input.read("custom_name", ComponentSerialization.CODEC)
-        // Enchantments
-        enchantment = input.read(RagiumConst.ENCHANTMENT, ItemEnchantments.CODEC) ?: ItemEnchantments.EMPTY
         // Owner
         this.ownerId = input.read(RagiumConst.OWNER, UUIDUtil.CODEC)
     }
@@ -201,8 +209,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         }
         // Custom Name
         this.customName = componentInput.get(DataComponents.CUSTOM_NAME)
-        // Enchantments
-        enchantment = componentInput.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
     }
 
     override fun collectImplicitComponents(builder: DataComponentMap.Builder) {
@@ -219,10 +225,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         }
         // Custom Name
         builder.set(DataComponents.CUSTOM_NAME, this.customName)
-        // Enchantments
-        if (!enchantment.isEmpty) {
-            builder.set(DataComponents.ENCHANTMENTS, enchantment)
-        }
     }
 
     /**
@@ -275,7 +277,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     init {
         initializeVariables()
-        enchantment = ItemEnchantments.EMPTY
         fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
         energyHandlerManager = initializeEnergyHandler(::setOnlySave)?.let { HTEnergyStorageManager(it, this) }
         itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }

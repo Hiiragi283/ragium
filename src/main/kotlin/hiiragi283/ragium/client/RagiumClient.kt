@@ -39,6 +39,7 @@ import hiiragi283.ragium.client.renderer.block.HTFuelGeneratorRenderer
 import hiiragi283.ragium.client.renderer.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.client.renderer.block.HTRefineryRenderer
 import hiiragi283.ragium.client.renderer.block.HTSingleFluidMachineRenderer
+import hiiragi283.ragium.client.renderer.block.HTTankRenderer
 import hiiragi283.ragium.client.renderer.item.HTFuelGeneratorItemRenderer
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
@@ -321,6 +322,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         for (tier: HTCrateTier in HTCrateTier.entries) {
             event.registerBlockEntityRenderer(tier.getBlockEntityType().get(), ::HTCrateRenderer)
         }
+
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankRenderer)
         // Entity
         for (type: HTDeferredEntityType<out HTAbstractCharge> in RagiumEntityTypes.CHARGES.values) {
             event.registerEntityRenderer(type.get(), ::ThrownItemRenderer)

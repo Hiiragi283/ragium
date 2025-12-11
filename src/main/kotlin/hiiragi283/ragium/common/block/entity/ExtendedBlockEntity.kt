@@ -1,15 +1,16 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.entity.HTAbstractBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.common.network.HTUpdateBlockEntityPacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.Connection
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.protocol.Packet
-import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
@@ -28,17 +29,18 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     HTAbstractBlockEntity {
     //    Save & Read    //
 
-    final override fun getUpdatePacket(): Packet<ClientGamePacketListener> = ClientboundBlockEntityDataPacket.create(this)
+    final override fun getUpdatePacket(): ClientboundBlockEntityDataPacket = ClientboundBlockEntityDataPacket.create(this)
 
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag = getReducedUpdateTag(registries)
 
-    final override fun handleUpdateTag(tag: CompoundTag, lookupProvider: HolderLookup.Provider) {
-        loadAdditional(tag, lookupProvider)
+    final override fun handleUpdateTag(tag: CompoundTag, provider: HolderLookup.Provider) {
+        super.loadAdditional(tag, provider)
+        handleUpdateTag(RagiumPlatform.INSTANCE.createValueInput(provider, tag))
     }
 
-    final override fun onDataPacket(net: Connection, pkt: ClientboundBlockEntityDataPacket, lookupProvider: HolderLookup.Provider) {
+    final override fun onDataPacket(net: Connection, pkt: ClientboundBlockEntityDataPacket, provider: HolderLookup.Provider) {
         val tag: CompoundTag = pkt.tag
-        if (!tag.isEmpty) handleUpdateTag(tag, lookupProvider)
+        if (!tag.isEmpty) handleUpdateTag(tag, provider)
     }
 
     fun sendUpdatePacket(level: ServerLevel) {
@@ -69,7 +71,6 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
 
     protected fun setOnlySave() {
         setChanged(false)
-        requestModelDataUpdate()
     }
 
     override fun setChanged() {
@@ -88,8 +89,10 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
             level.blockEntityChanged(blockPos)
             lastSaveTime = time
         }
-        if (updateComparator && !level.isClientSide) {
-            markDirtyComparator()
+        if (level.isClientSide) {
+            requestModelDataUpdate()
+        } else {
+            if (updateComparator) markDirtyComparator()
         }
     }
 
@@ -100,7 +103,15 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     /**
      * @see mekanism.common.tile.base.TileEntityUpdateable.getReducedUpdateTag
      */
-    fun getReducedUpdateTag(registries: HolderLookup.Provider): CompoundTag = saveCustomOnly(registries)
+    fun getReducedUpdateTag(provider: HolderLookup.Provider): CompoundTag {
+        val tag: CompoundTag = super.getUpdateTag(provider)
+        initReducedUpdateTag(RagiumPlatform.INSTANCE.createValueOutput(provider, tag))
+        return tag
+    }
+
+    open fun initReducedUpdateTag(output: HTValueOutput) {}
+
+    open fun handleUpdateTag(input: HTValueInput) {}
 
     /**
      * [BlockEntity.setBlockState]の後で呼び出されます。
