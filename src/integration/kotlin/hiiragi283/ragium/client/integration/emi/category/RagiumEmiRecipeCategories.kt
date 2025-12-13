@@ -6,14 +6,15 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.math.HTBounds
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
-import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.text.HTHasText
 import hiiragi283.ragium.client.integration.emi.toEmi
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.ItemLike
 
 object RagiumEmiRecipeCategories {
@@ -21,8 +22,7 @@ object RagiumEmiRecipeCategories {
     val MACHINE_BOUNDS = HTBounds(0, 0, 7 * 18, 3 * 18)
 
     @JvmField
-    val MACHINE_UPGRADE: HTEmiRecipeCategory = HTEmiRecipeCategory.create(
-        MACHINE_BOUNDS,
+    val MACHINE_UPGRADE: HTEmiRecipeCategory = machine(
         RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE::translate,
         RagiumAPI.id("machine_upgrade"),
         RagiumItems.getHammer(RagiumMaterialKeys.RAGI_ALLOY),
@@ -58,8 +58,12 @@ object RagiumEmiRecipeCategories {
     //    Processors    //
 
     @JvmStatic
-    private fun machine(recipeType: HTDeferredRecipeType<*, *>, vararg workStations: ItemLike): HTEmiRecipeCategory =
-        HTEmiRecipeCategory.create(MACHINE_BOUNDS, recipeType, *workStations)
+    private fun machine(hasText: HTHasText, id: ResourceLocation, vararg workStations: ItemLike): HTEmiRecipeCategory =
+        HTEmiRecipeCategory.create(MACHINE_BOUNDS, hasText, id, *workStations)
+
+    @JvmStatic
+    private fun <T> machine(recipeType: T, vararg workStations: ItemLike): HTEmiRecipeCategory where T : HTHasText, T : HTHolderLike =
+        machine(recipeType, recipeType.getId(), *workStations)
 
     // Basic
     @JvmField
@@ -83,8 +87,7 @@ object RagiumEmiRecipeCategories {
         machine(RagiumRecipeTypes.EXTRACTING, RagiumBlocks.EXTRACTOR)
 
     @JvmField
-    val COMPOSTING: HTEmiRecipeCategory = HTEmiRecipeCategory.create(
-        MACHINE_BOUNDS,
+    val COMPOSTING: HTEmiRecipeCategory = machine(
         RagiumCommonTranslation.EMI_COMPOSTING_TITLE::translate,
         RagiumAPI.id("composting"),
         RagiumBlocks.EXTRACTOR,

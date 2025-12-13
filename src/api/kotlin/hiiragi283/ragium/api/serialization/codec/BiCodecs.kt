@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import hiiragi283.ragium.api.function.andThen
+import hiiragi283.ragium.api.math.fraction
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -74,7 +75,16 @@ object BiCodecs {
     val POSITIVE_LONG: BiCodec<ByteBuf, Long> = longRange(1, Long.MAX_VALUE)
 
     @JvmField
-    val FRACTION: BiCodec<ByteBuf, Fraction> = BiCodec.STRING.flatXmap(Fraction::getFraction, Fraction::toString)
+    val FRACTION: BiCodec<ByteBuf, Fraction> = either(BiCodec.STRING, BiCodec.INT).xmap(
+        { either: Either<String, Int> -> either.map(Fraction::getFraction, ::fraction) },
+        { fraction: Fraction ->
+            if (fraction.denominator == 1) {
+                Either.right(fraction.numerator)
+            } else {
+                Either.left(fraction.toString())
+            }
+        },
+    )
 
     /**
      * `0`以上の値を対象とする[Fraction]の[BiCodec]

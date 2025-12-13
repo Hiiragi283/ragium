@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.generator
 
 import hiiragi283.ragium.api.math.times
-import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -22,7 +22,7 @@ class HTSolarPanelControllerBlockEntity(pos: BlockPos, state: BlockState) :
                 checkSolarPanel(level, posIn, stateIn)
             }.size
         if (panels == 0) return false
-        battery.currentEnergyPerTick = modifyValue(RagiumUpgradeKeys.ENERGY_GENERATION) {
+        battery.currentEnergyPerTick = modifyValue(HTUpgradeKeys.ENERGY_GENERATION) {
             battery.baseEnergyPerTick * (panels / 4) * it * getBaseMultiplier()
         }
         return battery.generate() > 0

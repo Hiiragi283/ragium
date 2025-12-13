@@ -5,12 +5,14 @@ import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeGroups
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -370,24 +372,28 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTFluidBlockAttribute.TankType.FIRST_INPUT, "1番目の搬入タンクの容量")
         add(HTFluidBlockAttribute.TankType.SECOND_INPUT, "2番目の搬入タンクの容量")
 
-        add(RagiumUpgradeKeys.BASE_MULTIPLIER, $$"- 基本倍率: %1$s")
-        add(RagiumUpgradeKeys.IS_CREATIVE, "- クリエイティブ")
+        add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- 基本倍率: %1$s")
+        add(HTUpgradeKeys.IS_CREATIVE, "- クリエイティブ")
 
-        add(RagiumUpgradeKeys.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
-        add(RagiumUpgradeKeys.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
-        add(RagiumUpgradeKeys.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
-
-        add(RagiumUpgradeKeys.FLUID_CAPACITY, $$"- 液体容量: %1$s")
+        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
+        add(HTUpgradeKeys.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
+        add(HTUpgradeKeys.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
+        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- 液体容量: %1$s")
+        add(HTUpgradeKeys.SPEED, $$"- 処理速度: %1$s")
 
         add(RagiumUpgradeKeys.COMPOSTING, "- アイテムを未加工バイオに変換")
         add(RagiumUpgradeKeys.DISABLE_EXTRA, "- 追加の生産物を無効化")
         add(RagiumUpgradeKeys.EXP_DRAIN, "- エンチャントされたアイテムから液体経験値を抽出")
-        add(RagiumUpgradeKeys.SPEED, $$"- 処理速度: %1$s")
+        add(RagiumUpgradeKeys.LONG_BREWING, "- ポーション効果の時間を延長")
+        add(RagiumUpgradeKeys.STRONG_BREWING, "- ポーション効果を強化")
         add(RagiumUpgradeKeys.USE_LUBRICANT, "- 処理ごとに潤滑油を消費")
 
         add(RagiumUpgradeKeys.EXP_COLLECTING, "- 水の代わりに経験値オーブを収集")
         add(RagiumUpgradeKeys.FISHING, "- アイテム収集の代わりに釣りを実行")
         add(RagiumUpgradeKeys.MOB_CAPTURE, "- アイテム収集の代わりにモブを捕獲")
+
+        add(RagiumUpgradeGroups.FLUID_COLLECTOR, "液体収集機")
+        add(RagiumUpgradeGroups.ITEM_COLLECTOR, "アイテム収集機")
         // API - Constants
         add(RagiumTranslation.ERROR, "エラー")
         add(RagiumTranslation.INFINITE, "無限")
@@ -409,6 +415,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_GROUP, $$"アップグレードの種類: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")

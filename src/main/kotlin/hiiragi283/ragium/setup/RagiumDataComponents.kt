@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.item.component.HTComponentUpgrade
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
@@ -19,11 +18,11 @@ import hiiragi283.ragium.api.storage.attachments.HTAttachedFluids
 import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.text.HTSimpleTranslation
 import hiiragi283.ragium.api.text.HTTranslation
+import hiiragi283.ragium.api.upgrade.HTUpgradeGroup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import org.apache.commons.lang3.math.Fraction
 
@@ -85,14 +84,10 @@ object RagiumDataComponents {
     //    Machine    //
 
     @JvmField
-    val MACHINE_UPGRADE: DataComponentType<HTComponentUpgrade> = REGISTER.registerType("machine_upgrade", HTComponentUpgrade.CODEC)
-
-    @JvmField
     val MACHINE_UPGRADES: DataComponentType<HTAttachedItems> = REGISTER.registerType("machine_upgrades", HTAttachedItems.CODEC)
 
     @JvmField
-    val MACHINE_UPGRADE_FILTER: DataComponentType<HTKeyOrTagEntry<BlockEntityType<*>>> =
-        REGISTER.registerType("machine_upgrade/filter", HTKeyOrTagHelper.INSTANCE.codec(Registries.BLOCK_ENTITY_TYPE))
+    val UPGRADE_GROUP: DataComponentType<HTUpgradeGroup> = REGISTER.registerType("upgrade_group", HTUpgradeGroup.CODEC)
 
     //    Storage    //
 

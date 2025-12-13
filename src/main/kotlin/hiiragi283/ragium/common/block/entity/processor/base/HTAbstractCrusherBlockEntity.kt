@@ -8,10 +8,10 @@ import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos

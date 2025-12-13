@@ -6,7 +6,6 @@ import dev.emi.emi.api.recipe.EmiRecipeSorting
 import dev.emi.emi.api.render.EmiRenderable
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.math.HTBounds
-import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.api.text.HTHasText
 import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.network.chat.Component
@@ -39,10 +38,6 @@ open class HTEmiRecipeCategory(
             workStations[0].toEmi(),
             sorter = sorter,
         )
-
-        @JvmStatic
-        fun create(bounds: HTBounds, recipeType: HTDeferredRecipeType<*, *>, vararg workStations: ItemLike): HTEmiRecipeCategory =
-            create(bounds, recipeType, recipeType.id, *workStations)
     }
 
     override fun getName(): Component = hasText.getText()

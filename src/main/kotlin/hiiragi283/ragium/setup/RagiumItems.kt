@@ -7,7 +7,8 @@ import hiiragi283.ragium.api.capability.HTItemCapabilities
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.collection.buildTable
-import hiiragi283.ragium.api.item.component.HTComponentUpgrade
+import hiiragi283.ragium.api.data.map.HTUpgradeData
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.material.HTMaterialKey
@@ -15,8 +16,6 @@ import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.math.fraction
-import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
-import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredItem
 import hiiragi283.ragium.api.registry.impl.HTDeferredItemRegister
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
@@ -24,13 +23,13 @@ import hiiragi283.ragium.api.registry.vanillaId
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.tier.HTBaseTier
+import hiiragi283.ragium.api.upgrade.HTUpgradeGroup
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.api.upgrade.HTUpgradeKey
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.api.upgrade.HTUpgradeProvider
-import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.api.variant.HTEquipmentMaterial
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.HTChargeType
@@ -84,7 +83,6 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.tags.TagKey
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
@@ -94,7 +92,6 @@ import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
@@ -661,53 +658,45 @@ object RagiumItems {
     @JvmStatic
     val MACHINE_UPGRADES: ImmutableTable<HTUpgradeVariant, HTBaseTier, HTSimpleDeferredItem> = buildTable {
         fun register(variant: HTUpgradeVariant, tier: HTBaseTier, vararg pairs: Pair<HTUpgradeKey, Fraction>) {
-            this[variant, tier] = REGISTER.registerSimpleItem("${tier.serializedName}_${variant.variantName()}_upgrade") {
-                it
-                    .stacksTo(1)
-                    .component(RagiumDataComponents.MACHINE_UPGRADE, HTComponentUpgrade.create(*pairs))
-                    .component(
-                        RagiumDataComponents.MACHINE_UPGRADE_FILTER,
-                        HTKeyOrTagHelper.INSTANCE.create(RagiumModTags.BlockEntityTypes.MACHINES_ELECTRIC),
-                    )
-            }
+            this[variant, tier] = REGISTER.registerSimpleItem("${tier.serializedName}_${variant.variantName()}_upgrade") { it.stacksTo(1) }
         }
 
         // Efficiency
         register(
             HTUpgradeVariant.EFFICIENCY,
             HTBaseTier.BASIC,
-            RagiumUpgradeKeys.ENERGY_EFFICIENCY to fraction(5, 4),
+            HTUpgradeKeys.ENERGY_EFFICIENCY to fraction(5, 4),
         )
         register(
             HTUpgradeVariant.EFFICIENCY,
             HTBaseTier.ADVANCED,
-            RagiumUpgradeKeys.ENERGY_EFFICIENCY to fraction(3, 2),
+            HTUpgradeKeys.ENERGY_EFFICIENCY to fraction(3, 2),
         )
         // Energy Capacity
         register(
             HTUpgradeVariant.ENERGY_CAPACITY,
             HTBaseTier.BASIC,
-            RagiumUpgradeKeys.ENERGY_CAPACITY to fraction(4),
+            HTUpgradeKeys.ENERGY_CAPACITY to fraction(4),
         )
         register(
             HTUpgradeVariant.ENERGY_CAPACITY,
             HTBaseTier.ADVANCED,
-            RagiumUpgradeKeys.ENERGY_CAPACITY to fraction(8),
+            HTUpgradeKeys.ENERGY_CAPACITY to fraction(8),
         )
         // Speed
         register(
             HTUpgradeVariant.SPEED,
             HTBaseTier.BASIC,
-            RagiumUpgradeKeys.ENERGY_EFFICIENCY to fraction(4, 5),
-            RagiumUpgradeKeys.ENERGY_GENERATION to fraction(5, 4),
-            RagiumUpgradeKeys.SPEED to fraction(5, 4),
+            HTUpgradeKeys.ENERGY_EFFICIENCY to fraction(4, 5),
+            HTUpgradeKeys.ENERGY_GENERATION to fraction(5, 4),
+            HTUpgradeKeys.SPEED to fraction(5, 4),
         )
         register(
             HTUpgradeVariant.SPEED,
             HTBaseTier.ADVANCED,
-            RagiumUpgradeKeys.ENERGY_EFFICIENCY to fraction(2, 3),
-            RagiumUpgradeKeys.ENERGY_GENERATION to fraction(3, 2),
-            RagiumUpgradeKeys.SPEED to fraction(3, 2),
+            HTUpgradeKeys.ENERGY_EFFICIENCY to fraction(2, 3),
+            HTUpgradeKeys.ENERGY_GENERATION to fraction(3, 2),
+            HTUpgradeKeys.SPEED to fraction(3, 2),
         )
     }
 
@@ -717,44 +706,27 @@ object RagiumItems {
 
     // Processor
     @JvmField
-    val EFFICIENT_CRUSH_UPGRADE: HTSimpleDeferredItem =
-        registerUpgrade("efficient_crush", RagiumUpgradeKeys.USE_LUBRICANT, RagiumCommonTranslation.EFFICIENT_CRUSH_UPGRADE)
+    val EFFICIENT_CRUSH_UPGRADE: HTSimpleDeferredItem = registerUpgrade("efficient_crush")
 
     @JvmField
-    val PRIMARY_ONLY_UPGRADE: HTSimpleDeferredItem =
-        registerUpgrade("primary_only", RagiumUpgradeKeys.DISABLE_EXTRA, RagiumCommonTranslation.PRIMARY_ONLY_UPGRADE)
+    val PRIMARY_ONLY_UPGRADE: HTSimpleDeferredItem = registerUpgrade("primary_only")
 
     // Device
     @JvmField
-    val EXP_COLLECTOR_UPGRADE: HTSimpleDeferredItem =
-        registerUpgrade("exp_collector", RagiumUpgradeKeys.EXP_COLLECTING, RagiumCommonTranslation.EXP_COLLECTOR_UPGRADE)
+    val EXP_COLLECTOR_UPGRADE: HTSimpleDeferredItem = registerUpgrade("exp_collector")
 
     @JvmField
-    val FISHING_UPGRADE: HTSimpleDeferredItem =
-        registerUpgrade("fishing", RagiumUpgradeKeys.FISHING, RagiumCommonTranslation.FISHING_UPGRADE)
+    val FISHING_UPGRADE: HTSimpleDeferredItem = registerUpgrade("fishing")
 
     @JvmField
-    val MOB_CAPTURE_UPGRADE: HTSimpleDeferredItem =
-        registerUpgrade("mob_capture", RagiumUpgradeKeys.MOB_CAPTURE, RagiumCommonTranslation.MOB_CAPTURE_UPGRADE)
+    val MOB_CAPTURE_UPGRADE: HTSimpleDeferredItem = registerUpgrade("mob_capture")
 
     @JvmStatic
-    private fun registerUpgrade(name: String, key: HTUpgradeKey, translation: HTTranslation): HTSimpleDeferredItem =
-        REGISTER.registerSimpleItem("${name}_upgrade") {
-            it
-                .stacksTo(1)
-                .description(translation)
-                .component(
-                    RagiumDataComponents.MACHINE_UPGRADE,
-                    HTComponentUpgrade.create(key to fraction(1)),
-                )
-        }
+    private fun registerUpgrade(name: String): HTSimpleDeferredItem = REGISTER.registerSimpleItem("${name}_upgrade") { it.stacksTo(1) }
 
     @JvmField
     val CREATIVE_UPGRADE: HTSimpleDeferredItem = REGISTER.registerItemWith("creative_upgrade", HTBaseTier.CREATIVE, ::HTTierBasedItem) {
-        it.stacksTo(1).component(
-            RagiumDataComponents.MACHINE_UPGRADE,
-            HTComponentUpgrade.create(RagiumUpgradeKeys.IS_CREATIVE to fraction(1)),
-        )
+        it.stacksTo(1)
     }
 
     //    Event    //
@@ -809,16 +781,15 @@ object RagiumItems {
 
         // Upgrade
         for (item: Item in BuiltInRegistries.ITEM) {
-            // Component-Based for all items
+            // Data-Based for all items
             event.registerItem(
                 RagiumCapabilities.UPGRADE_ITEM,
                 { stack: ItemStack, _: Void? ->
-                    if (stack.has(RagiumDataComponents.MACHINE_UPGRADE)) {
-                        HTUpgradeProvider { key: HTUpgradeKey ->
-                            stack.get(RagiumDataComponents.MACHINE_UPGRADE)?.get(key) ?: Fraction.ZERO
-                        }
-                    } else {
-                        null
+                    val upgradeData: HTUpgradeData = RagiumDataMapTypes.getUpgradeData(stack) ?: return@registerItem null
+                    object : HTUpgradeProvider {
+                        override fun getUpgradeData(key: HTUpgradeKey): Fraction = upgradeData[key] ?: Fraction.ZERO
+
+                        override fun getGroup(): HTUpgradeGroup? = upgradeData.groupOrNull
                     }
                 },
                 item,
@@ -831,22 +802,6 @@ object RagiumItems {
                         HTComponentUpgradeHandler(stack)
                     } else {
                         null
-                    }
-                },
-                item,
-            )
-        }
-
-        for ((tier: HTComponentTier, item: ItemLike) in COMPONENTS) {
-            event.registerItem(
-                RagiumCapabilities.UPGRADE_ITEM,
-                { _: ItemStack, _: Void? ->
-                    HTUpgradeProvider { key: HTUpgradeKey ->
-                        if (key == RagiumUpgradeKeys.BASE_MULTIPLIER) {
-                            fraction(tier.ordinal + 2)
-                        } else {
-                            Fraction.ZERO
-                        }
                     }
                 },
                 item,
@@ -906,14 +861,6 @@ object RagiumItems {
             modify(item, RagiumDataComponents.INTRINSIC_ENCHANTMENT, HTIntrinsicEnchantment(ench, level))
         }
 
-        fun setFilter(item: ItemLike, type: HTDeferredBlockEntityType<*>) {
-            modify(item, RagiumDataComponents.MACHINE_UPGRADE_FILTER, HTKeyOrTagHelper.INSTANCE.create(type.key))
-        }
-
-        fun setFilter(item: ItemLike, tagKey: TagKey<BlockEntityType<*>>) {
-            modify(item, RagiumDataComponents.MACHINE_UPGRADE_FILTER, HTKeyOrTagHelper.INSTANCE.create(tagKey))
-        }
-
         // Tools
         for (item: HTDeferredItem<*> in getToolMap(RagiumMaterialKeys.AZURE_STEEL).values) {
             setEnch(item, Enchantments.SILK_TOUCH)
@@ -922,14 +869,6 @@ object RagiumItems {
         setEnch(getTool(VanillaToolVariant.PICKAXE, RagiumMaterialKeys.DEEP_STEEL), Enchantments.FORTUNE, 5)
         setEnch(getTool(VanillaToolVariant.AXE, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.STRIKE)
         setEnch(getTool(VanillaToolVariant.SWORD, RagiumMaterialKeys.DEEP_STEEL), RagiumEnchantments.NOISE_CANCELING, 5)
-
-        // Upgrades
-        setFilter(EFFICIENT_CRUSH_UPGRADE, RagiumModTags.BlockEntityTypes.EFFICIENT_CRUSH_UPGRADABLE)
-        setFilter(PRIMARY_ONLY_UPGRADE, RagiumModTags.BlockEntityTypes.EXTRA_OUTPUT_UPGRADABLE)
-
-        setFilter(EXP_COLLECTOR_UPGRADE, RagiumBlockEntityTypes.FLUID_COLLECTOR)
-        setFilter(FISHING_UPGRADE, RagiumBlockEntityTypes.ITEM_COLLECTOR)
-        setFilter(MOB_CAPTURE_UPGRADE, RagiumBlockEntityTypes.ITEM_COLLECTOR)
 
         RagiumAPI.LOGGER.info("Modified default item components!")
     }

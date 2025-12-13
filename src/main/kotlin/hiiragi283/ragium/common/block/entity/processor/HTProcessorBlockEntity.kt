@@ -14,7 +14,7 @@ import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput.Builder
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
-import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
@@ -119,8 +119,8 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
      */
     protected fun getRequiredEnergy(recipe: RECIPE): Int {
         if (isCreative()) return 0
-        battery.currentEnergyPerTick = modifyValue(RagiumUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
-        val time: Int = modifyValue(RagiumUpgradeKeys.SPEED) { getRecipeTime(recipe) / (it * getBaseMultiplier()) }
+        battery.currentEnergyPerTick = modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
+        val time: Int = modifyValue(HTUpgradeKeys.SPEED) { getRecipeTime(recipe) / (it * getBaseMultiplier()) }
         return battery.currentEnergyPerTick * time
     }
 

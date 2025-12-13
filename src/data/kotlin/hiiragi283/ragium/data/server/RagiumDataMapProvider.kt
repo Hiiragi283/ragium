@@ -7,19 +7,25 @@ import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
+import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.createCommonTag
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeGroups
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -54,6 +60,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         combustionFuels()
 
         armorEquip()
+        upgrade()
 
         createEnchIndustry()
     }
@@ -149,6 +156,52 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun armorEquip() {
         builder(RagiumDataMapTypes.ARMOR_EQUIP)
             .addHolder(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectEquipAction(MobEffects.NIGHT_VISION, -1))
+    }
+
+    private fun upgrade() {
+        val builder: Builder<HTUpgradeData, Item> = builder(RagiumDataMapTypes.UPGRADE)
+        // components
+        for ((tier: HTComponentTier, item: HTSimpleDeferredItem) in RagiumItems.COMPONENTS) {
+            builder
+                .add(
+                    item,
+                    HTUpgradeData.create {
+                        set(HTUpgradeKeys.BASE_MULTIPLIER, tier.ordinal + 2)
+                    },
+                    false,
+                )
+        }
+
+        builder
+            .add(
+                RagiumItems.CREATIVE_UPGRADE,
+                HTUpgradeData.createSimple(HTUpgradeKeys.IS_CREATIVE),
+                false,
+            )
+            // Processor
+            .add(
+                RagiumItems.EFFICIENT_CRUSH_UPGRADE,
+                HTUpgradeData.createSimple(RagiumUpgradeKeys.USE_LUBRICANT),
+                false,
+            ).add(
+                RagiumItems.PRIMARY_ONLY_UPGRADE,
+                HTUpgradeData.createSimple(RagiumUpgradeKeys.DISABLE_EXTRA),
+                false,
+            )
+            // Device
+            .add(
+                RagiumItems.EXP_COLLECTOR_UPGRADE,
+                HTUpgradeData.createSimple(RagiumUpgradeKeys.EXP_COLLECTING, RagiumUpgradeGroups.FLUID_COLLECTOR),
+                false,
+            ).add(
+                RagiumItems.FISHING_UPGRADE,
+                HTUpgradeData.createSimple(RagiumUpgradeKeys.FISHING, RagiumUpgradeGroups.ITEM_COLLECTOR),
+                false,
+            ).add(
+                RagiumItems.MOB_CAPTURE_UPGRADE,
+                HTUpgradeData.createSimple(RagiumUpgradeKeys.MOB_CAPTURE, RagiumUpgradeGroups.ITEM_COLLECTOR),
+                false,
+            )
     }
 
     //    Integration    //

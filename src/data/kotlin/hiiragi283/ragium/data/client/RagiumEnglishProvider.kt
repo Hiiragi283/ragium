@@ -5,12 +5,14 @@ import hiiragi283.ragium.api.data.lang.HTLanguageProvider
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeGroups
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -368,24 +370,28 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTFluidBlockAttribute.TankType.FIRST_INPUT, "First Input Tank Capacity")
         add(HTFluidBlockAttribute.TankType.SECOND_INPUT, "Second Input Tank Capacity")
 
-        add(RagiumUpgradeKeys.BASE_MULTIPLIER, $$"- Base Multiplier: %1$s")
-        add(RagiumUpgradeKeys.IS_CREATIVE, "- Creative")
+        add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- Base Multiplier: %1$s")
+        add(HTUpgradeKeys.IS_CREATIVE, "- Creative")
 
-        add(RagiumUpgradeKeys.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
-        add(RagiumUpgradeKeys.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
-        add(RagiumUpgradeKeys.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
-
-        add(RagiumUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
+        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
+        add(HTUpgradeKeys.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
+        add(HTUpgradeKeys.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
+        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
+        add(HTUpgradeKeys.SPEED, $$"- Speed: %1$s")
 
         add(RagiumUpgradeKeys.COMPOSTING, "- Convert input into Crude Bio")
         add(RagiumUpgradeKeys.DISABLE_EXTRA, "- Extra output disabled")
         add(RagiumUpgradeKeys.EXP_DRAIN, "- Extract Liquid Experience from enchanted item")
-        add(RagiumUpgradeKeys.SPEED, $$"- Speed: %1$s")
+        add(RagiumUpgradeKeys.LONG_BREWING, "- Extend duration of potion effects")
+        add(RagiumUpgradeKeys.STRONG_BREWING, "- Strengthen potion effects")
         add(RagiumUpgradeKeys.USE_LUBRICANT, "- Use lubricant per operation")
 
         add(RagiumUpgradeKeys.EXP_COLLECTING, "- Collect Experience Orb instead of Water")
         add(RagiumUpgradeKeys.FISHING, "- Do fishing instead of collecting items")
         add(RagiumUpgradeKeys.MOB_CAPTURE, "- Capture mobs instead of collecting items")
+
+        add(RagiumUpgradeGroups.FLUID_COLLECTOR, "Fluid Collector")
+        add(RagiumUpgradeGroups.ITEM_COLLECTOR, "Item Collector")
         // API - Constants
         add(RagiumTranslation.ERROR, "Error")
         add(RagiumTranslation.INFINITE, "Infinite")
@@ -407,6 +413,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_GROUP, $$"Upgrade Group: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")

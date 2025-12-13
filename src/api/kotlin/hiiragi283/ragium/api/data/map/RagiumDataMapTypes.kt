@@ -39,29 +39,38 @@ object RagiumDataMapTypes {
     val ARMOR_EQUIP: DataMapType<Item, HTEquipAction> =
         create("armor_equip", Registries.ITEM, HTEquipAction.CODEC)
 
+    @JvmField
+    val UPGRADE: DataMapType<Item, HTUpgradeData> =
+        create("upgrade", Registries.ITEM, HTUpgradeData.CODEC)
+
     //    Extensions    //
 
     /**
-     * 指定した値からエンチャントでドロップするモブの頭を取得します。
+     * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。
      */
     fun getMobHead(entity: Entity): ItemStack = entity.typeHolder.getData(MOB_HEAD)?.toStack() ?: ItemStack.EMPTY
 
     /**
-     * 指定した値から，一度の処理に必要な冷却材の使用量を取得します。
+     * 指定した[stack]から，一度の処理に必要な冷却材の使用量を取得します。
      */
     fun getCoolantAmount(stack: ImmutableFluidStack): Int = stack.getData(COOLANT)?.amount ?: 0
 
     /**
-     * 指定した値から，1000 mbの高温の液体による燃焼時間を取得します。
+     * 指定した[stack]から，1000 mbの高温の液体による燃焼時間を取得します。
      */
     fun getTimeFromMagmatic(stack: ImmutableFluidStack): Int = stack.getData(MAGMATIC_FUEL)?.time ?: 0
 
     /**
-     * 指定した値から，1000 mbの液体燃料による燃焼時間を取得します。
+     * 指定した[stack]から，1000 mbの液体燃料による燃焼時間を取得します。
      */
     fun getTimeFromCombustion(stack: ImmutableFluidStack): Int = stack.getData(COMBUSTION_FUEL)?.time ?: 0
 
     fun getEquipAction(stack: ItemStack): HTEquipAction? = stack.itemHolder.getData(ARMOR_EQUIP)
+
+    /**
+     * 指定した[stack]から，アップグレードのデータを取得します。
+     */
+    fun getUpgradeData(stack: ItemStack): HTUpgradeData? = stack.itemHolder.getData(UPGRADE)
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =

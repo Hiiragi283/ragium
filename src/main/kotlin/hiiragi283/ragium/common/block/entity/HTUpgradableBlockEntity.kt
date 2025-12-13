@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.upgrade.HTSlotUpgradeHandler
 import hiiragi283.ragium.common.block.entity.component.HTMachineUpgradeComponent
@@ -22,4 +23,7 @@ abstract class HTUpgradableBlockEntity(blockHolder: Holder<Block>, pos: BlockPos
         private set
 
     final override fun getUpgradeSlots(): List<HTItemSlot> = machineUpgrade.getUpgradeSlots()
+
+    override fun isValidUpgrade(upgrade: ImmutableItemStack, existing: List<ImmutableItemStack>): Boolean =
+        machineUpgrade.isValidUpgrade(upgrade, existing)
 }

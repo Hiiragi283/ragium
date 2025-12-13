@@ -32,7 +32,7 @@ class RagiumAlmostUnifiedPlugin : AlmostUnifiedPlugin {
 
         override fun unify(helper: UnificationHelper, recipe: RecipeJson) {
             // Outputs
-            val keys: Array<String> = arrayOf(RagiumConst.RESULT, RagiumConst.RESULTS, RagiumConst.ITEM_RESULT)
+            val keys: Array<String> = arrayOf(RagiumConst.RESULT, RagiumConst.RESULTS, RagiumConst.ITEM_RESULT, "extra")
             for (key: String in keys) {
                 val json: JsonElement = recipe.getProperty(key) ?: continue
                 RagiumAPI.LOGGER.debug("Current target key: {} for {}", key, recipe.id)

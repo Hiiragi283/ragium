@@ -2,13 +2,9 @@ package hiiragi283.ragium.api.upgrade
 
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.HTItemSlot
-import net.minecraft.world.item.ItemStack
 
 interface HTSlotUpgradeHandler : HTUpgradeHandler {
     fun getUpgradeSlots(): List<HTItemSlot>
 
     override fun getUpgrades(): List<ImmutableItemStack> = getUpgradeSlots().mapNotNull(HTItemSlot::getStack)
-
-    override fun isValidUpgrade(upgrade: ImmutableItemStack, existing: List<ImmutableItemStack>): Boolean =
-        existing.none { stack: ImmutableItemStack -> ItemStack.isSameItemSameComponents(stack.unwrap(), upgrade.unwrap()) }
 }

@@ -1,5 +1,8 @@
 package hiiragi283.ragium.common.block.entity.component
 
+import hiiragi283.ragium.api.block.attribute.HTUpgradeGroupBlockAttribute
+import hiiragi283.ragium.api.block.attribute.getAttribute
+import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.serialization.component.HTComponentInput
 import hiiragi283.ragium.api.serialization.value.HTValueInput
@@ -8,6 +11,8 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.upgrade.HTSlotUpgradeHandler
+import hiiragi283.ragium.api.upgrade.HTUpgradeGroup
+import hiiragi283.ragium.api.upgrade.HTUpgradeProvider
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.world.sendBlockUpdated
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
@@ -35,6 +40,9 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
             filter = filter,
         )
     }
+    private val group: HTUpgradeGroup? = owner.blockHolder
+        .getAttribute<HTUpgradeGroupBlockAttribute>()
+        ?.group
 
     //    HTBlockEntityComponent    //
 
@@ -65,4 +73,15 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
     //    HTSlotUpgradeHandler    //
 
     override fun getUpgradeSlots(): List<HTItemSlot> = upgradeSlots
+
+    override fun isValidUpgrade(upgrade: ImmutableItemStack, existing: List<ImmutableItemStack>): Boolean {
+        val provider: HTUpgradeProvider = upgrade.getCapability(RagiumCapabilities.UPGRADE_ITEM) ?: return false
+        val group: HTUpgradeGroup = provider.getGroup() ?: return true
+        return when (group) {
+            this.group -> existing.none { stack: ImmutableItemStack ->
+                stack.getCapability(RagiumCapabilities.UPGRADE_ITEM)?.getGroup() == group
+            }
+            else -> false
+        }
+    }
 }
