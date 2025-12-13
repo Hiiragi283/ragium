@@ -34,6 +34,13 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
         manager: RecipeManager,
         input: INPUT,
         level: Level,
-        lastRecipe: RecipeHolder<RECIPE>?,
-    ): RecipeHolder<RECIPE>? = manager.getRecipeFor(get(), input, level, lastRecipe).getOrNull()
+        lastRecipe: Pair<ResourceLocation, RECIPE>?,
+    ): Pair<ResourceLocation, RECIPE>? {
+        val lastHolder: RecipeHolder<RECIPE>? = lastRecipe
+            ?.let { (id: ResourceLocation, recipe: RECIPE) -> RecipeHolder(id, recipe) }
+        return manager
+            .getRecipeFor(get(), input, level, lastHolder)
+            .map { holder: RecipeHolder<RECIPE> -> holder.id to holder.value }
+            .getOrNull()
+    }
 }

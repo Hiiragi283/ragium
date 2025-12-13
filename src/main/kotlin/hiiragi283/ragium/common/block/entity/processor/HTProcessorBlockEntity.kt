@@ -8,7 +8,7 @@ import hiiragi283.ragium.api.math.div
 import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.math.minus
 import hiiragi283.ragium.api.math.times
-import hiiragi283.ragium.api.recipe.HTRecipe
+import hiiragi283.ragium.api.recipe.HTAbstractRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
@@ -145,7 +145,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
 
     //    RecipeBased    //
 
-    abstract class RecipeBased<RECIPE : HTRecipe>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+    abstract class RecipeBased<RECIPE : HTAbstractRecipe>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
         HTProcessorBlockEntity<HTRecipeInput, RECIPE>(blockHolder, pos, state) {
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create(null, ::buildRecipeInput)
 
@@ -157,7 +157,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
     /**
      * レシピのキャッシュを保持する[HTProcessorBlockEntity]の拡張クラス
      */
-    abstract class Cached<RECIPE : HTRecipe>(
+    abstract class Cached<RECIPE : HTAbstractRecipe>(
         private val recipeCache: HTRecipeCache<HTRecipeInput, RECIPE>,
         blockHolder: Holder<Block>,
         pos: BlockPos,

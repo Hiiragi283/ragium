@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.Level
 
@@ -9,7 +8,7 @@ import net.minecraft.world.level.Level
  * @param INPUT レシピの入力となるクラス
  * @param RECIPE レシピのクラス
  */
-fun interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
+fun interface HTRecipeCache<INPUT : RecipeInput, RECIPE : Any> {
     /**
      * 指定された[input], [level]から最初に一致するレシピを返します。
      * @param input レシピの入力

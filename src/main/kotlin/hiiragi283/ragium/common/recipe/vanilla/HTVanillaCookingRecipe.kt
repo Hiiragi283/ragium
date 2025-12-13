@@ -1,14 +1,14 @@
 package hiiragi283.ragium.common.recipe.vanilla
 
 import hiiragi283.ragium.api.function.andThen
-import hiiragi283.ragium.api.recipe.HTRecipe
+import hiiragi283.ragium.api.recipe.HTAbstractRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 
 open class HTVanillaCookingRecipe :
     HTVanillaSingleItemRecipe<AbstractCookingRecipe>,
-    HTRecipe.Modifiable<HTVanillaCookingRecipe> {
+    HTAbstractRecipe.Modifiable<HTVanillaCookingRecipe> {
     constructor(
         recipe: AbstractCookingRecipe,
         ingredient: HTItemIngredient,

@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -84,29 +85,29 @@ class HTStoneCollectorBlockEntity(pos: BlockPos, state: BlockState) :
             manager: RecipeManager,
             input: HTRecipeInput,
             level: Level,
-            lastRecipe: RecipeHolder<HTRockGeneratingRecipe>?,
-        ): RecipeHolder<HTRockGeneratingRecipe>? {
+            lastRecipe: Pair<ResourceLocation, HTRockGeneratingRecipe>?,
+        ): Pair<ResourceLocation, HTRockGeneratingRecipe>? {
             // 入力が空の場合は即座に抜ける
             if (input.isEmpty) return null
             // キャッシュから判定を行う
-            if (lastRecipe != null && lastRecipe.value.matches(input, level)) {
+            if (lastRecipe != null && lastRecipe.second.matches(input, level)) {
                 return lastRecipe
             }
             // 次にRecipeManagerから一覧を取得する
             val allRecipes: List<RecipeHolder<HTRockGeneratingRecipe>> =
-                manager.getAllRecipesFor(RagiumRecipeTypes.ROCK_GENERATING.get())
+                manager.getRecipesFor(RagiumRecipeTypes.ROCK_GENERATING.get(), input, level)
             // 触媒ありのレシピから優先して判定を行う
             for (holder: RecipeHolder<HTRockGeneratingRecipe> in allRecipes) {
                 val recipe: HTRockGeneratingRecipe = holder.value()
-                if (recipe.bottom.isPresent && recipe.matches(input, level)) {
-                    return holder
+                if (recipe.bottom.isPresent) {
+                    return holder.id to holder.value
                 }
             }
             // 触媒なしのレシピを判定
             for (holder: RecipeHolder<HTRockGeneratingRecipe> in allRecipes) {
                 val recipe: HTRockGeneratingRecipe = holder.value()
-                if (recipe.bottom.isEmpty && recipe.matches(input, level)) {
-                    return holder
+                if (recipe.bottom.isEmpty) {
+                    return holder.id to holder.value
                 }
             }
             return null

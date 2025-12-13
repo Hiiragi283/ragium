@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
-import hiiragi283.ragium.api.recipe.HTRecipe
+import hiiragi283.ragium.api.recipe.HTAbstractRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
@@ -17,7 +17,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTSingleItemInputBlockEntity<RECIPE : HTRecipe>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
+abstract class HTSingleItemInputBlockEntity<RECIPE : HTAbstractRecipe>(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.RecipeBased<RECIPE>(blockHolder, pos, state) {
     lateinit var inputSlot: HTBasicItemSlot
         protected set
@@ -28,7 +28,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : HTRecipe>(blockHolder: Hold
 
     //    Cached    //
 
-    abstract class Cached<RECIPE : HTRecipe>(
+    abstract class Cached<RECIPE : HTAbstractRecipe>(
         private val recipeCache: HTRecipeCache<HTRecipeInput, RECIPE>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
@@ -44,7 +44,7 @@ abstract class HTSingleItemInputBlockEntity<RECIPE : HTRecipe>(blockHolder: Hold
         final override fun getMatchedRecipe(input: HTRecipeInput, level: ServerLevel): RECIPE? = recipeCache.getFirstRecipe(input, level)
     }
 
-    abstract class CachedWithTank<RECIPE : HTRecipe> : Cached<RECIPE> {
+    abstract class CachedWithTank<RECIPE : HTAbstractRecipe> : Cached<RECIPE> {
         constructor(
             recipeCache: HTRecipeCache<HTRecipeInput, RECIPE>,
             blockHolder: Holder<Block>,

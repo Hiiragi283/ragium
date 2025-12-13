@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.recipe
 
-import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.level.Level
@@ -11,7 +10,7 @@ import net.minecraft.world.level.Level
  * @param INPUT レシピの入力となるクラス
  * @param RECIPE レシピのクラス
  */
-fun interface HTRecipeFinder<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
+fun interface HTRecipeFinder<INPUT : RecipeInput, RECIPE : Any> {
     /**
      * 指定した引数から最初に一致するレシピを返します。
      * @param manager バニラの[RecipeManager]
@@ -24,6 +23,6 @@ fun interface HTRecipeFinder<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> {
         manager: RecipeManager,
         input: INPUT,
         level: Level,
-        lastRecipe: RecipeHolder<RECIPE>?,
-    ): RecipeHolder<RECIPE>?
+        lastRecipe: Pair<ResourceLocation, RECIPE>?,
+    ): Pair<ResourceLocation, RECIPE>?
 }

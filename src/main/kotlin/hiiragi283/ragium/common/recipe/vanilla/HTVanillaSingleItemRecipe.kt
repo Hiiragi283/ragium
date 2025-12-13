@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.recipe.vanilla
 
-import hiiragi283.ragium.api.recipe.HTRecipe
-import hiiragi283.ragium.api.recipe.HTSingleItemInputRecipe
+import hiiragi283.ragium.api.recipe.HTAbstractSingleItemInputRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
@@ -15,8 +14,7 @@ open class HTVanillaSingleItemRecipe<RECIPE : Recipe<SingleRecipeInput>>(
     protected val recipe: RECIPE,
     protected val ingredient: HTItemIngredient,
     protected val resultFactory: HTVanillaResultFactory,
-) : HTRecipe.Fake,
-    HTSingleItemInputRecipe {
+) : HTAbstractSingleItemInputRecipe {
     constructor(recipe: RECIPE) : this(
         recipe,
         HTItemIngredient(recipe.ingredients[0], 1),

@@ -1,24 +1,21 @@
 package hiiragi283.ragium.api.recipe
 
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.NonNullList
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.RecipeType
 
 /**
  * Ragiumで使用する[Recipe]の拡張インターフェース
  * @see mekanism.api.recipes.MekanismRecipe
  */
-interface HTRecipe : Recipe<HTRecipeInput> {
+interface HTRecipe :
+    Recipe<HTRecipeInput>,
+    HTAbstractRecipe {
     @Deprecated("Not used in Ragium", level = DeprecationLevel.ERROR)
     override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-
-    fun assembleItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack?
 
     @Deprecated(
         "Use `assembleItem(HTRecipeInput, HolderLookup.Provider) `instead",
@@ -38,20 +35,4 @@ interface HTRecipe : Recipe<HTRecipeInput> {
     override fun getIngredients(): NonNullList<Ingredient> = super.getIngredients()
 
     override fun isSpecial(): Boolean = true
-
-    //    Fake    //
-
-    interface Fake : HTRecipe {
-        @Deprecated("Not implemented", level = DeprecationLevel.ERROR)
-        override fun getSerializer(): RecipeSerializer<*> = throw UnsupportedOperationException()
-
-        @Deprecated("Not implemented", level = DeprecationLevel.ERROR)
-        override fun getType(): RecipeType<*> = throw UnsupportedOperationException()
-    }
-
-    //    Modifiable    //
-
-    interface Modifiable<RECIPE : HTRecipe> : HTRecipe {
-        fun copyAndMultiply(multiplier: Int): RECIPE
-    }
 }

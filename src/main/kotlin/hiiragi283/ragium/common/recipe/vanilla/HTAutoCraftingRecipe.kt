@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.recipe.vanilla
 
-import hiiragi283.ragium.api.recipe.HTRecipe
+import hiiragi283.ragium.api.recipe.HTAbstractRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
 import net.minecraft.core.HolderLookup
@@ -11,9 +10,7 @@ import net.minecraft.world.item.crafting.CraftingRecipe
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.Level
 
-class HTAutoCraftingRecipe(override val ingredients: List<HTItemIngredient>, private val factory: HTVanillaResultFactory) :
-    HTShapelessInputsRecipe,
-    HTRecipe.Fake {
+class HTAutoCraftingRecipe(val ingredients: List<HTItemIngredient>, private val factory: HTVanillaResultFactory) : HTAbstractRecipe {
     companion object {
         /**
          * @see net.minecraft.world.level.block.entity.CrafterBlockEntity
