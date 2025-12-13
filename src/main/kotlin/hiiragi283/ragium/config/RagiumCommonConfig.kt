@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.config.HTIntConfigValue
 import hiiragi283.ragium.api.config.HTListConfigValue
 import hiiragi283.ragium.api.config.definePositiveDouble
 import hiiragi283.ragium.api.config.definePositiveInt
-import hiiragi283.ragium.common.tier.HTCrateTier
 import net.neoforged.neoforge.common.ModConfigSpec
 
 class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
@@ -59,7 +58,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
     // Storage
     @JvmField
-    val crateCapacity: Map<HTCrateTier, HTIntConfigValue>
+    val crateCapacity: HTIntConfigValue
 
     @JvmField
     val tankCapacity: HTIntConfigValue
@@ -109,23 +108,8 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Storage
         builder.push("storage")
-        crateCapacity = HTCrateTier.entries.associateWith { tier: HTCrateTier ->
-            val name: String = tier.name.lowercase()
-            builder.push(name)
-            // Capacity
-            val value: HTIntConfigValue = builder.definePositiveInt(
-                "multiplier",
-                when (tier) {
-                    HTCrateTier.SMALL -> 32
-                    HTCrateTier.MEDIUM -> 128
-                    HTCrateTier.LARGE -> 512
-                    HTCrateTier.HUGE -> 2048
-                },
-            )
-            builder.pop()
-            value
-        }
-        tankCapacity = builder.definePositiveInt("tank_capacity", 8000)
+        crateCapacity = builder.definePositiveInt("crate_capacity", 32 * 64)
+        tankCapacity = builder.definePositiveInt("tank_capacity", 16000)
         builder.pop()
         // Block
         builder.push("block")

@@ -16,13 +16,11 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.text.HTSmithingTranslation
-import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumChemicals
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -80,10 +78,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
 
         fromVariantTable(RagiumItems.MACHINE_UPGRADES, identity())
         // Translation
-        addTranslations(HTBaseTier.entries, identity())
-
-        addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
-
         translations()
 
         // Integration
@@ -132,12 +126,6 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
     }
 
     // Collection
-    private fun <T : HTLangName> addTranslations(entries: Iterable<T>, blockGetter: (T) -> HTHasTranslationKey) {
-        for (entry: T in entries) {
-            add(blockGetter(entry), entry.getTranslatedName(type))
-        }
-    }
-
     private fun fromLangMap(provider: HTLangPatternProvider, map: Map<out HTLangName, HTHasTranslationKey>) {
         for ((langName: HTLangName, translationKey: HTHasTranslationKey) in map) {
             add(translationKey, provider.translate(type, langName))

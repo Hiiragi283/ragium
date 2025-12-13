@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.recipe.HTRecipeCache
+import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -21,7 +22,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.BlastingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.item.crafting.SmeltingRecipe
@@ -50,18 +50,18 @@ abstract class HTAbstractSmelterBlockEntity(blockHolder: Holder<Block>, pos: Blo
         outputSlot = singleOutput(builder, listener)
     }
 
-    private val smeltingCache: HTRecipeCache<SingleRecipeInput, SmeltingRecipe> =
-        HTFinderRecipeCache { manager: RecipeManager, input: SingleRecipeInput, level: Level, lastRecipe: RecipeHolder<SmeltingRecipe>? ->
-            manager.getRecipeFor(RecipeType.SMELTING, input, level, lastRecipe).getOrNull()
+    private fun <RECIPE : AbstractCookingRecipe> findRecipe(
+        recipeType: RecipeType<RECIPE>,
+    ): HTRecipeFinder.Vanilla<SingleRecipeInput, RECIPE> =
+        HTRecipeFinder.Vanilla { input: SingleRecipeInput, level: Level, lastRecipe: RecipeHolder<RECIPE>? ->
+            level.recipeManager
+                .getRecipeFor(recipeType, input, level, lastRecipe)
+                .getOrNull()
         }
-    private val blastingCache: HTRecipeCache<SingleRecipeInput, BlastingRecipe> =
-        HTFinderRecipeCache { manager: RecipeManager, input: SingleRecipeInput, level: Level, lastRecipe: RecipeHolder<BlastingRecipe>? ->
-            manager.getRecipeFor(RecipeType.BLASTING, input, level, lastRecipe).getOrNull()
-        }
-    private val smokingCache: HTRecipeCache<SingleRecipeInput, SmokingRecipe> =
-        HTFinderRecipeCache { manager: RecipeManager, input: SingleRecipeInput, level: Level, lastRecipe: RecipeHolder<SmokingRecipe>? ->
-            manager.getRecipeFor(RecipeType.SMOKING, input, level, lastRecipe).getOrNull()
-        }
+
+    private val smeltingCache: HTRecipeCache<SingleRecipeInput, SmeltingRecipe> = HTFinderRecipeCache(findRecipe(RecipeType.SMELTING))
+    private val blastingCache: HTRecipeCache<SingleRecipeInput, BlastingRecipe> = HTFinderRecipeCache(findRecipe(RecipeType.BLASTING))
+    private val smokingCache: HTRecipeCache<SingleRecipeInput, SmokingRecipe> = HTFinderRecipeCache(findRecipe(RecipeType.SMOKING))
 
     protected fun getRecipeCache(): HTRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when (catalystSlot.getStack()?.value()) {
         Items.BLAST_FURNACE -> blastingCache

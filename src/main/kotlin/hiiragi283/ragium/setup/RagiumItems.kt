@@ -70,7 +70,6 @@ import hiiragi283.ragium.common.storage.item.slot.HTComponentItemSlot
 import hiiragi283.ragium.common.text.HTSmithingTranslation
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.HTHammerToolVariant
@@ -734,14 +733,15 @@ object RagiumItems {
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Item
-        for ((tier: HTCrateTier, block: ItemLike) in RagiumBlocks.CRATES) {
-            registerItem(
-                event,
-                1,
-                { context: HTComponentHandler.ContainerContext -> HTComponentItemSlot.create(context, tier.getMultiplier()) },
-                block,
-            )
-        }
+        registerItem(
+            event,
+            1,
+            { context: HTComponentHandler.ContainerContext ->
+                val capacity: Int = HTUpgradeHelper.getItemCapacity(context.attachedTo, RagiumConfig.COMMON.crateCapacity.asInt)
+                HTComponentItemSlot.create(context, capacity)
+            },
+            RagiumBlocks.CRATE,
+        )
         registerItem(
             event,
             9,
@@ -755,7 +755,7 @@ object RagiumItems {
         registerFluid(
             event,
             { context: HTComponentHandler.ContainerContext ->
-                val capacity: Int = HTUpgradeHelper.getTankCapacity(context.attachedTo, RagiumConfig.COMMON.tankCapacity.asInt)
+                val capacity: Int = HTUpgradeHelper.getFluidCapacity(context.attachedTo, RagiumConfig.COMMON.tankCapacity.asInt)
                 HTComponentFluidTank.create(context, capacity)
             },
             RagiumBlocks.TANK,
@@ -764,7 +764,7 @@ object RagiumItems {
         registerFluid(
             event,
             { context: HTComponentHandler.ContainerContext ->
-                val capacity: Int = HTUpgradeHelper.getTankCapacity(context.attachedTo, 8000)
+                val capacity: Int = HTUpgradeHelper.getFluidCapacity(context.attachedTo, 8000)
                 HTComponentFluidTank.create(context, capacity, filter = RagiumFluidContents.DEW_OF_THE_WARP::isOf)
             },
             TELEPORT_KEY,

@@ -12,7 +12,7 @@ import java.util.function.IntSupplier
 data class HTFluidBlockAttribute(private val tankMap: Map<TankType, IntSupplier>) : HTBlockAttribute {
     private fun getTankCapacity(type: TankType, handler: HTUpgradeHandler): IntSupplier {
         val baseCapacity: IntSupplier = tankMap[type] ?: error("Undefined tank capacity for ${type.serializedName}")
-        return IntSupplier { HTUpgradeHelper.getTankCapacity(handler, baseCapacity.asInt) }
+        return IntSupplier { HTUpgradeHelper.getFluidCapacity(handler, baseCapacity.asInt) }
     }
 
     fun getInputTank(handler: HTUpgradeHandler): IntSupplier = getTankCapacity(TankType.INPUT, handler)

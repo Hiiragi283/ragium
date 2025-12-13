@@ -46,7 +46,7 @@ interface HTUpgradeHandler {
     fun modifyValue(key: HTUpgradeKey, ignoreEmpty: Boolean = false, operator: UnaryOperator<Fraction>): Int =
         collectMultiplier(key, ignoreEmpty).let(operator::apply).toInt()
 
-    fun getBaseMultiplier(): Fraction = collectMultiplier(HTUpgradeKeys.BASE_MULTIPLIER)
+    fun getBaseMultiplier(): Fraction = getMaxMultiplier(HTUpgradeKeys.BASE_MULTIPLIER) ?: Fraction.ONE
 
     fun isCreative(): Boolean = hasUpgrade(HTUpgradeKeys.IS_CREATIVE)
 }

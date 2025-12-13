@@ -24,5 +24,8 @@ object HTUpgradeKeys {
     val FLUID_CAPACITY: HTUpgradeKey = HTUpgradeKey.get("fluid_capacity")
 
     @JvmField
+    val ITEM_CAPACITY: HTUpgradeKey = HTUpgradeKey.get("item_capacity")
+
+    @JvmField
     val SPEED: HTUpgradeKey = HTUpgradeKey.get("speed")
 }

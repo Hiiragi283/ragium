@@ -43,11 +43,8 @@ import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTOpenCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
-import hiiragi283.ragium.common.tier.HTCrateTier
-import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
-import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
@@ -70,7 +67,10 @@ object RagiumBlockEntityTypes {
             "medium",
             "large",
             "huge",
-        ).forEach { REGISTER.addAlias("${it}_drum", "tank") }
+        ).forEach {
+            REGISTER.addAlias("${it}_drum", "tank")
+            REGISTER.addAlias("${it}_crate", "crate")
+        }
 
         REGISTER.register(eventBus)
 
@@ -240,10 +240,7 @@ object RagiumBlockEntityTypes {
     //    Storage    //
 
     @JvmField
-    val CRATES: Map<HTCrateTier, HTDeferredBlockEntityType<HTCrateBlockEntity>> =
-        HTCrateTier.entries.associateWith { tier: HTCrateTier ->
-            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTCrateBlockEntity(tier.getBlock(), pos, state) }
-        }
+    val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> = registerTick("crate", ::HTCrateBlockEntity)
 
     @JvmField
     val OPEN_CRATE: HTDeferredBlockEntityType<HTOpenCrateBlockEntity> = REGISTER.registerType("open_crate", ::HTOpenCrateBlockEntity)
@@ -314,9 +311,7 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, CEU.get())
         // Storage
-        for (type: HTDeferredBlockEntityType<HTCrateBlockEntity> in CRATES.values) {
-            registerHandler(event, type.get())
-        }
+        registerHandler(event, CRATE.get())
         registerHandler(event, OPEN_CRATE.get())
 
         registerHandler(event, TANK.get())

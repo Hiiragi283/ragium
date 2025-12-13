@@ -120,6 +120,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
             add(RagiumBlocks.CEU)
             // Storage
+            add(RagiumBlocks.CRATE)
             add(RagiumBlocks.OPEN_CRATE)
 
             add(RagiumBlocks.TANK)
@@ -142,7 +143,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         }
 
         pickaxe.addBlocks(RagiumBlocks.COILS)
-        pickaxe.addBlocks(RagiumBlocks.CRATES)
         pickaxe.addBlocks(RagiumBlocks.DECORATION_MAP)
         pickaxe.addBlocks(RagiumBlocks.GLASSES.values)
         pickaxe.addBlocks(RagiumBlocks.METAL_BARS)

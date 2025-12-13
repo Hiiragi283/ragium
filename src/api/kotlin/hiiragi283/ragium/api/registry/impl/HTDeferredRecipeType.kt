@@ -12,14 +12,13 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import kotlin.jvm.optionals.getOrNull
 
 class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
     HTDeferredHolder<RecipeType<*>, RecipeType<RECIPE>>,
-    HTRecipeFinder<INPUT, RECIPE>,
+    HTRecipeFinder.Vanilla<INPUT, RECIPE>,
     HTHasTranslationKey,
     HTHasText {
     constructor(key: ResourceKey<RecipeType<*>>) : super(key)
@@ -30,17 +29,8 @@ class HTDeferredRecipeType<INPUT : RecipeInput, RECIPE : Recipe<INPUT>> :
 
     override fun getText(): Component = translatableText(translationKey)
 
-    override fun getRecipeFor(
-        manager: RecipeManager,
-        input: INPUT,
-        level: Level,
-        lastRecipe: Pair<ResourceLocation, RECIPE>?,
-    ): Pair<ResourceLocation, RECIPE>? {
-        val lastHolder: RecipeHolder<RECIPE>? = lastRecipe
-            ?.let { (id: ResourceLocation, recipe: RECIPE) -> RecipeHolder(id, recipe) }
-        return manager
-            .getRecipeFor(get(), input, level, lastHolder)
-            .map { holder: RecipeHolder<RECIPE> -> holder.id to holder.value }
+    override fun getVanillaRecipeFor(input: INPUT, level: Level, lastRecipe: RecipeHolder<RECIPE>?): RecipeHolder<RECIPE>? =
+        level.recipeManager
+            .getRecipeFor(get(), input, level, lastRecipe)
             .getOrNull()
-    }
 }

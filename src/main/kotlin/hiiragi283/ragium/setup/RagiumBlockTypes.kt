@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.block.type.HTBlockType
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.common.block.type.HTMachineBlockType
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeGroups
 import hiiragi283.ragium.config.RagiumConfig
@@ -287,12 +286,10 @@ object RagiumBlockTypes {
     //    Storage    //
 
     @JvmField
-    val CRATES: Map<HTCrateTier, HTEntityBlockType> = HTCrateTier.entries.associateWith { tier: HTCrateTier ->
-        HTEntityBlockType
-            .builder { tier.getBlockEntityType() }
-            .addTier(tier)
-            .build(RagiumCommonTranslation.CRATE)
-    }
+    val CRATE: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.CRATE }
+        .addMenu { RagiumMenuTypes.CRATE }
+        .build(RagiumCommonTranslation.CRATE)
 
     @JvmField
     val OPEN_CRATE: HTEntityBlockType = HTEntityBlockType

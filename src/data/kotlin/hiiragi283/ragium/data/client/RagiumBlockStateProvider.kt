@@ -226,15 +226,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         )
 
         // Storages
-        for (crate: HTDeferredBlock<*, *> in RagiumBlocks.CRATES.values) {
-            val id: ResourceLocation = crate.blockId
-            simpleBlockAndItem(crate, models().cubeColumn(id.path, id.withSuffix("_side"), RagiumAPI.id("block", "crate_top")))
-        }
-        /*simpleBlockAndItem(RagiumBlocks.OPEN_CRATE) { block: HTDeferredBlock<*, *> ->
-            val id: ResourceLocation = block.blockId
-            models().cubeBottomTop(id.path, id, id.withSuffix("_bottom"), id)
-        }*/
-
+        cutoutSimpleBlock(RagiumBlocks.CRATE, vanillaId("block", "glass"))
         altModelBlock(RagiumBlocks.TANK)
 
         // Fluids

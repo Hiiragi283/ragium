@@ -40,7 +40,7 @@ open class HTTankBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: B
         tank = builder.addSlot(HTSlotInfo.BOTH, TankFluidTank(listener))
     }
 
-    protected fun getCapacity(): Int = HTUpgradeHelper.getTankCapacity(this, RagiumConfig.COMMON.tankCapacity.asInt)
+    protected fun getCapacity(): Int = HTUpgradeHelper.getFluidCapacity(this, RagiumConfig.COMMON.tankCapacity.asInt)
 
     lateinit var slot: HTBasicItemSlot
         private set
@@ -92,7 +92,7 @@ open class HTTankBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: B
             HTPredicates.alwaysTrue(),
             listener,
         ) {
-        val isCreative: Boolean get() = this@HTTankBlockEntity.isCreative()
+        private val isCreative: Boolean get() = this@HTTankBlockEntity.isCreative()
 
         override fun insert(stack: ImmutableFluidStack?, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? {
             val remainder: ImmutableFluidStack?

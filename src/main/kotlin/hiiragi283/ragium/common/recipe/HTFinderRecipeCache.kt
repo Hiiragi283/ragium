@@ -11,7 +11,7 @@ class HTFinderRecipeCache<INPUT : RecipeInput, RECIPE : Any>(private val finder:
     private var lastRecipe: Pair<ResourceLocation, RECIPE>? = null
 
     override fun getFirstRecipe(input: INPUT, level: Level): RECIPE? = finder
-        .getRecipeFor(level.recipeManager, input, level, lastRecipe)
+        .getRecipeFor(input, level, lastRecipe)
         .also(::lastRecipe::set)
         ?.second
 }

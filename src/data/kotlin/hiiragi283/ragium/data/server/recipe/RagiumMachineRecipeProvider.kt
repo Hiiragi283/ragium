@@ -3,8 +3,6 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tier.HTBaseTier
@@ -15,7 +13,6 @@ import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -33,25 +30,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         processors()
         devices()
         upgrades()
-
-        crate()
-
-        // Tank
-        resetComponent(RagiumBlocks.TANK, RagiumDataComponents.FLUID)
-        HTShapedRecipeBuilder
-            .create(RagiumBlocks.TANK)
-            .crossLayered()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
-            .define('C', Tags.Items.GLASS_BLOCKS)
-            .define('D', Tags.Items.BUCKETS_EMPTY)
-            .save(output)
-
-        HTShapelessRecipeBuilder
-            .create(RagiumItems.TANK_MINECART)
-            .addIngredient(RagiumBlocks.TANK)
-            .addIngredient(Items.MINECART)
-            .save(output)
+        storages()
     }
 
     //    Generators    //
@@ -411,31 +390,18 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
     //    Storage    //
 
     @JvmStatic
-    private fun crate() {
-        for ((tier: HTCrateTier, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
-            resetComponent(crate, RagiumDataComponents.ITEM)
-
-            val key: HTMaterialKey = when (tier) {
-                HTCrateTier.SMALL -> VanillaMaterialKeys.IRON
-                HTCrateTier.MEDIUM -> VanillaMaterialKeys.GOLD
-                HTCrateTier.LARGE -> VanillaMaterialKeys.DIAMOND
-                HTCrateTier.HUGE -> continue
-            }
-            val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
-            HTShapedRecipeBuilder
-                .create(crate)
-                .pattern(
-                    "ABA",
-                    "ACA",
-                    "ABA",
-                ).define('A', prefix, key)
-                .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
-                .define('C', Tags.Items.CHESTS_WOODEN)
-                .save(output)
-        }
-        // Huge
-        createNetheriteUpgrade(HTCrateTier.HUGE.getBlock(), HTCrateTier.LARGE.getBlock()).save(output)
-        // Open
+    private fun storages() {
+        // Crate
+        resetComponent(RagiumBlocks.CRATE, RagiumDataComponents.ITEM)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.CRATE)
+            .crossLayered()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
+            .define('C', Tags.Items.GLASS_BLOCKS)
+            .define('D', Tags.Items.CHESTS)
+            .save(output)
+        // Open Crate
         HTShapedRecipeBuilder
             .create(RagiumBlocks.OPEN_CRATE)
             .pattern(
@@ -444,6 +410,22 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 "A A",
             ).define('A', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
             .define('B', Items.HOPPER)
+            .save(output)
+        // Tank
+        resetComponent(RagiumBlocks.TANK, RagiumDataComponents.FLUID)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.TANK)
+            .crossLayered()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
+            .define('C', Tags.Items.GLASS_BLOCKS)
+            .define('D', Tags.Items.BUCKETS_EMPTY)
+            .save(output)
+
+        HTShapelessRecipeBuilder
+            .create(RagiumItems.TANK_MINECART)
+            .addIngredient(RagiumBlocks.TANK)
+            .addIngredient(Items.MINECART)
             .save(output)
     }
 }

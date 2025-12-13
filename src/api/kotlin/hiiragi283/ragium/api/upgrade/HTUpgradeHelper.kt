@@ -61,14 +61,25 @@ data object HTUpgradeHelper {
     fun getHandler(stack: ImmutableItemStack): HTUpgradeHandler? = stack.getCapability(RagiumCapabilities.UPGRADABLE_ITEM)
 
     @JvmStatic
-    fun getTankCapacity(handler: HTUpgradeHandler, base: Int): Int = handler.modifyValue(HTUpgradeKeys.FLUID_CAPACITY) {
+    fun getItemCapacity(handler: HTUpgradeHandler, base: Int): Int = handler.modifyValue(HTUpgradeKeys.ITEM_CAPACITY) {
         base * it * handler.getBaseMultiplier()
     }
 
     @JvmStatic
-    fun getTankCapacity(stack: ItemStack, base: Int): Int {
+    fun getItemCapacity(stack: ItemStack, base: Int): Int {
         val handler: HTUpgradeHandler = getHandler(stack) ?: return base
-        return getTankCapacity(handler, base)
+        return getItemCapacity(handler, base)
+    }
+
+    @JvmStatic
+    fun getFluidCapacity(handler: HTUpgradeHandler, base: Int): Int = handler.modifyValue(HTUpgradeKeys.FLUID_CAPACITY) {
+        base * it * handler.getBaseMultiplier()
+    }
+
+    @JvmStatic
+    fun getFluidCapacity(stack: ItemStack, base: Int): Int {
+        val handler: HTUpgradeHandler = getHandler(stack) ?: return base
+        return getFluidCapacity(handler, base)
     }
 
     @JvmStatic

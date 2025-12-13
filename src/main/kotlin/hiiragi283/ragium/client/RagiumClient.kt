@@ -46,7 +46,6 @@ import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
-import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -269,8 +268,8 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.BREWERY, HTSingleFluidProcessorScreen.Companion::combine)
         event.register(RagiumMenuTypes.COMBUSTION_GENERATOR, ::HTCombustionGeneratorScreen)
         event.register(RagiumMenuTypes.COMPRESSOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
+        event.register(RagiumMenuTypes.CRATE, ::HTBlockEntityContainerScreen)
         event.register(RagiumMenuTypes.CUTTING_MACHINE, ::HTProcessorScreen)
-        event.register(RagiumMenuTypes.TANK, ::HTTankScreen)
         event.register(RagiumMenuTypes.ENCHANTER, HTSingleFluidProcessorScreen.Companion::combine)
         event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.EXTRACTOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
@@ -286,6 +285,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.SIMULATOR, ::HTSimulatorScreen)
         event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, ::HTCrusherScreen)
         event.register(RagiumMenuTypes.SMELTER, HTProcessorScreen.createFactory("smelter"))
+        event.register(RagiumMenuTypes.TANK, ::HTTankScreen)
         event.register(RagiumMenuTypes.TELEPAD, ::HTTelepadScreen)
 
         RagiumAPI.LOGGER.info("Registered Screens!")
@@ -319,10 +319,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION_GENERATOR.get(), ::HTFuelGeneratorRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.ENCHANTMENT_GENERATOR.get(), ::HTFuelGeneratorRenderer)
 
-        for (tier: HTCrateTier in HTCrateTier.entries) {
-            event.registerBlockEntityRenderer(tier.getBlockEntityType().get(), ::HTCrateRenderer)
-        }
-
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CRATE.get(), ::HTCrateRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankRenderer)
         // Entity
         for (type: HTDeferredEntityType<out HTAbstractCharge> in RagiumEntityTypes.CHARGES.values) {

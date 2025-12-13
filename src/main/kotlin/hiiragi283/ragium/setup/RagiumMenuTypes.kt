@@ -28,6 +28,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -47,6 +48,9 @@ typealias DeferredBEMenu<BE> = HTDeferredMenuType.WithContext<HTBlockEntityConta
 object RagiumMenuTypes {
     @JvmField
     val REGISTER = HTDeferredMenuTypeRegister(RagiumAPI.MOD_ID)
+
+    @JvmField
+    val CRATE: DeferredBEMenu<HTCrateBlockEntity> = registerBE("crate")
 
     @JvmField
     val TANK: DeferredBEMenu<HTTankBlockEntity> = registerBE("tank")

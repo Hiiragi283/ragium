@@ -35,7 +35,6 @@ import hiiragi283.ragium.common.block.glass.HTQuartzGlassBlock
 import hiiragi283.ragium.common.block.glass.HTWarpedGlassBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
-import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTImitationSpawnerBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
@@ -47,7 +46,6 @@ import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.tier.HTCrateTier
 import hiiragi283.ragium.common.variant.HTGlassVariant
 import hiiragi283.ragium.common.variant.HTOreVariant
 import net.minecraft.world.item.Item
@@ -92,13 +90,16 @@ object RagiumBlocks {
         // Collector
         REGISTER.addAlias("water_collector", "fluid_collector")
         REGISTER.addAlias("exp_collector", "fluid_collector")
-        // Drum
+        // Drum, Crate
         listOf(
             "small",
             "medium",
             "large",
             "huge",
-        ).forEach { REGISTER.addAlias("${it}_drum", "tank") }
+        ).forEach {
+            REGISTER.addAlias("${it}_drum", "tank")
+            REGISTER.addAlias("${it}_crate", "crate")
+        }
 
         REGISTER.addAlias("fisher", "item_collector")
         REGISTER.addAlias("item_buffer", "item_collector")
@@ -609,20 +610,12 @@ object RagiumBlocks {
     //    Storages    //
 
     @JvmField
-    val CRATES: Map<HTCrateTier, HTDeferredBlock<HTCrateBlock, HTCrateBlockItem>> =
-        HTCrateTier.entries.associateWith { tier: HTCrateTier ->
-            REGISTER.register(
-                tier.path,
-                when (tier) {
-                    HTCrateTier.SMALL -> Blocks.IRON_BLOCK
-                    HTCrateTier.MEDIUM -> Blocks.GOLD_BLOCK
-                    HTCrateTier.LARGE -> Blocks.DIAMOND_BLOCK
-                    HTCrateTier.HUGE -> Blocks.NETHERITE_BLOCK
-                }.let(::copyOf),
-                { HTCrateBlock(tier, it) },
-                ::HTCrateBlockItem,
-            )
-        }
+    val CRATE: HTDescriptionDeferredBlock<HTCrateBlock> = REGISTER.register(
+        "crate",
+        copyOf(Blocks.COPPER_BLOCK).noOcclusion(),
+        ::HTCrateBlock,
+        ::HTDescriptionBlockItem,
+    )
 
     @JvmField
     val OPEN_CRATE: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
