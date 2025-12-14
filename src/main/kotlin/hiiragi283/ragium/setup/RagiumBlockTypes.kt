@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.common.block.type.HTMachineBlockType
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.common.tier.HTMachineTier
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeGroups
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.level.block.Block
 
@@ -235,7 +234,6 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.FLUID_COLLECTOR }
         .addMenu { RagiumMenuTypes.FLUID_COLLECTOR }
         .addTier(HTMachineTier.BASIC)
-        .addUpgradeGroup(RagiumUpgradeGroups.FLUID_COLLECTOR)
         .build(RagiumCommonTranslation.FLUID_COLLECTOR)
 
     @JvmField
@@ -243,7 +241,6 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.ITEM_COLLECTOR }
         .addMenu { RagiumMenuTypes.ITEM_COLLECTOR }
         .addTier(HTMachineTier.BASIC)
-        .addUpgradeGroup(RagiumUpgradeGroups.ITEM_COLLECTOR)
         .build(RagiumCommonTranslation.ITEM_COLLECTOR)
 
     // Advanced
@@ -300,5 +297,6 @@ object RagiumBlockTypes {
     val TANK: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.TANK }
         .addMenu { RagiumMenuTypes.TANK }
+        .addShape(Block.box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0))
         .build(RagiumCommonTranslation.TANK)
 }

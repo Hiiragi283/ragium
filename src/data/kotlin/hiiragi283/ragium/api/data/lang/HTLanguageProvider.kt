@@ -6,7 +6,6 @@ import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.data.advancement.descKey
 import hiiragi283.ragium.api.data.advancement.titleKey
-import hiiragi283.ragium.api.function.identity
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
@@ -75,8 +74,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addTemplate(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)
 
         fromLangMap(LangPattern("%s Mold", "%sの鋳型"), RagiumItems.MOLDS)
-
-        fromVariantTable(RagiumItems.MACHINE_UPGRADES, identity())
+        fromLangMap(LangPattern("%s Upgrade", "%sアップグレード"), RagiumItems.MACHINE_UPGRADES)
         // Translation
         translations()
 

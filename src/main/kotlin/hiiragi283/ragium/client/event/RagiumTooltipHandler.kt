@@ -2,10 +2,10 @@ package hiiragi283.ragium.client.event
 
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
@@ -37,7 +37,7 @@ object RagiumTooltipHandler {
         if (RagiumConfig.COMMON.showFoodEffect.asBoolean) {
             food(stack, consumer, event.context.tickRate())
         }
-        HTUpgradeHelper.appendTooltips(stack, consumer)
+        RagiumDataMapTypes.getUpgradeData(stack)?.appendTooltips(consumer)
 
         RagiumDataComponents.REGISTER
             .asSequence()

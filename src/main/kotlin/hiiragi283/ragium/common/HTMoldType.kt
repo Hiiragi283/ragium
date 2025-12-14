@@ -6,14 +6,12 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.StringRepresentable
-import net.minecraft.world.item.Item
 
 enum class HTMoldType(private val enPattern: String, private val jaPattern: String) :
     StringRepresentable,
     HTLangName,
-    HTItemHolderLike {
+    HTItemHolderLike.Delegate {
     BLANK("Blank", "空"),
     STORAGE_BLOCK("Block", "ブロック"),
     GEM("Gem", "宝石"),
@@ -37,9 +35,7 @@ enum class HTMoldType(private val enPattern: String, private val jaPattern: Stri
         HTLanguageType.JA_JP -> jaPattern
     }
 
-    override fun getId(): ResourceLocation = RagiumItems.MOLDS[this]!!.id
-
-    override fun asItem(): Item = RagiumItems.MOLDS[this]!!.asItem()
+    override fun getDelegate(): HTItemHolderLike = RagiumItems.MOLDS[this]!!
 
     override fun getSerializedName(): String = name.lowercase()
 }

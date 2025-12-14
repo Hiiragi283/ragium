@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
@@ -47,5 +49,13 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun setEntityId(entityType: EntityType<*>, random: RandomSource) {
         spawnerMob = HTSpawnerMob(entityType)
         setChanged()
+    }
+
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
     }
 }

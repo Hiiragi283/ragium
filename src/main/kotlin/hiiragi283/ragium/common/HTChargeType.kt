@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
-import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
@@ -18,13 +17,11 @@ import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import org.apache.commons.lang3.math.Fraction
@@ -32,7 +29,7 @@ import org.apache.commons.lang3.math.Fraction
 enum class HTChargeType(private val enPattern: String, private val jaPattern: String) :
     StringRepresentable,
     HTLangName,
-    HTItemHolderLike {
+    HTItemHolderLike.Delegate {
     BLAST("Blast", "ブラスト"),
     STRIKE("Strike", "ストライク"),
     NEUTRAL("Neutralize", "ニュートラライズ"),
@@ -50,7 +47,7 @@ enum class HTChargeType(private val enPattern: String, private val jaPattern: St
     }
 
     // Item
-    fun getItem(): HTSimpleDeferredItem = RagiumItems.CHARGES[this]!!
+    override fun getDelegate(): HTItemHolderLike = RagiumItems.CHARGES[this]!!
 
     fun getShootSound(): SoundEvent = when (this) {
         BLAST -> SoundEvents.WITHER_SHOOT
@@ -69,10 +66,6 @@ enum class HTChargeType(private val enPattern: String, private val jaPattern: St
         TELEPORT -> RagiumCommonTranslation.TELEPORT_CHARGE
         CONFUSION -> RagiumCommonTranslation.CONFUSING_CHARGE
     }
-
-    override fun asItem(): Item = getItem().get()
-
-    override fun getId(): ResourceLocation = getItem().id
 
     // Entity
     fun getEntityType(): HTDeferredEntityType<out HTAbstractCharge> = RagiumEntityTypes.CHARGES[this]!!

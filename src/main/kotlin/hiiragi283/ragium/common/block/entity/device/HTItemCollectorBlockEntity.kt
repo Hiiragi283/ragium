@@ -77,7 +77,7 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = when {
         hasUpgrade(RagiumUpgradeKeys.FISHING) -> collectFish(level, pos)
-        hasUpgrade(RagiumUpgradeKeys.MOB_CAPTURE) -> collectMobs(level, pos)
+        hasUpgrade(RagiumUpgradeKeys.CAPTURE_MOB) -> collectMobs(level, pos)
         else -> collectItem(level, pos)
     }
 

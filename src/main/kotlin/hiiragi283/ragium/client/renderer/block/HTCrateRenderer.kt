@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.renderer.block
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.client.renderer.scale
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider

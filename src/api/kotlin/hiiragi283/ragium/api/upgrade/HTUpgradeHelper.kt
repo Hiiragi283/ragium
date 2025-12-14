@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.upgrade
 
 import hiiragi283.ragium.api.capability.RagiumCapabilities
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.toImmutable
-import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
@@ -15,28 +15,7 @@ data object HTUpgradeHelper {
     //    HTUpgradeProvider    //
 
     @JvmStatic
-    fun getUpgradeProvider(stack: ImmutableItemStack): HTUpgradeProvider? = stack.getCapability(RagiumCapabilities.UPGRADE_ITEM)
-
-    @JvmStatic
-    fun getUpgrade(stack: ImmutableItemStack, key: HTUpgradeKey): Fraction = getUpgradeProvider(stack)?.getUpgradeData(key) ?: Fraction.ZERO
-
-    @JvmStatic
-    fun appendTooltips(stack: ItemStack, consumer: Consumer<Component>) {
-        val immutable: ImmutableItemStack = stack.toImmutable() ?: return
-        val provider: HTUpgradeProvider = getUpgradeProvider(immutable) ?: return
-        // Property value
-        for (key: HTUpgradeKey in HTUpgradeKey.getAll()) {
-            val property: Fraction = provider.getUpgradeData(key)
-            if (property <= Fraction.ZERO) continue
-            consumer.accept(key.translateColored(ChatFormatting.GRAY, getPropertyColor(key, property), property))
-        }
-        // Upgrade Group
-        provider
-            .getGroup()
-            ?.let {
-                RagiumTranslation.TOOLTIP_UPGRADE_GROUP.translateColored(ChatFormatting.BLUE, ChatFormatting.GRAY, it)
-            }?.let(consumer::accept)
-    }
+    fun getUpgrade(stack: ImmutableItemStack, key: HTUpgradeKey): Fraction? = RagiumDataMapTypes.getUpgradeData(stack)?.get(key)
 
     @JvmStatic
     fun appendTooltips(propertyMap: HTUpgradePropertyMap, consumer: Consumer<Component>) {
@@ -46,7 +25,7 @@ data object HTUpgradeHelper {
     }
 
     @JvmStatic
-    private fun getPropertyColor(key: HTUpgradeKey, property: Fraction): ChatFormatting = when {
+    fun getPropertyColor(key: HTUpgradeKey, property: Fraction): ChatFormatting = when {
         property > Fraction.ONE -> ChatFormatting.GREEN
         property < Fraction.ONE -> ChatFormatting.RED
         else -> ChatFormatting.WHITE

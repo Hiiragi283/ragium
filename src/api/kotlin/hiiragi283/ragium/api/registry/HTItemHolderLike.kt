@@ -95,4 +95,12 @@ interface HTItemHolderLike :
      * 指定した[count]から[ImmutableItemStack]を返します。
      */
     fun toImmutableStack(count: Int = 1): ImmutableItemStack? = toStack(count).toImmutable()
+
+    fun interface Delegate : HTItemHolderLike {
+        fun getDelegate(): HTItemHolderLike
+
+        override fun asItem(): Item = getDelegate().asItem()
+
+        override fun getId(): ResourceLocation = getDelegate().getId()
+    }
 }

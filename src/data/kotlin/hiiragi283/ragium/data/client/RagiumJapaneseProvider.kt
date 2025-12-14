@@ -11,7 +11,6 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDa
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeGroups
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -302,16 +301,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.TANK_MINECART, "タンク付きトロッコ")
         // Upgrades
         add(RagiumItems.ETERNAL_COMPONENT, "永久構造体")
-
-        add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "効率的粉砕アップグレード")
-
-        add(RagiumItems.PRIMARY_ONLY_UPGRADE, "主産物特化アップグレード")
-
-        add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")
-        add(RagiumItems.FISHING_UPGRADE, "釣りアップグレード")
-        add(RagiumItems.MOB_CAPTURE_UPGRADE, "モブ捕獲アップグレード")
-
-        add(RagiumItems.CREATIVE_UPGRADE, "クリエイティブ用アップグレード")
     }
 
     private fun keyMapping() {
@@ -343,6 +332,16 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumModTags.Items.TOOLS_DRILL, "ドリル")
         add(RagiumModTags.Items.TOOLS_HAMMER, "ハンマー")
+
+        add(RagiumModTags.Items.GENERATOR_UPGRADABLE, "発電機")
+        add(RagiumModTags.Items.PROCESSOR_UPGRADABLE, "加工機械")
+        add(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE, "追加の出力スロットをもつ加工機械")
+        add(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE, "粉砕機または破砕機")
+        add(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE, "エネルギーストレージ")
+        add(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE, "液体ストレージ")
+        add(RagiumModTags.Items.ITEM_CAPACITY_UPGRADABLE, "アイテムストレージ")
+
+        add(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE, "抽出機に対応したアップグレード")
     }
 
     private fun recipeType() {
@@ -376,26 +375,22 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- 基本倍率: %1$s")
         add(HTUpgradeKeys.IS_CREATIVE, "- クリエイティブ")
 
-        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
         add(HTUpgradeKeys.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
         add(HTUpgradeKeys.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
-        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- 液体容量: %1$s")
-        add(HTUpgradeKeys.ITEM_CAPACITY, $$"- アイテム容量: %1$s")
         add(HTUpgradeKeys.SPEED, $$"- 処理速度: %1$s")
 
-        add(RagiumUpgradeKeys.COMPOSTING, "- アイテムを未加工バイオに変換")
-        add(RagiumUpgradeKeys.DISABLE_EXTRA, "- 追加の生産物を無効化")
-        add(RagiumUpgradeKeys.EXP_DRAIN, "- エンチャントされたアイテムから液体経験値を抽出")
-        add(RagiumUpgradeKeys.LONG_BREWING, "- ポーション効果の時間を延長")
-        add(RagiumUpgradeKeys.STRONG_BREWING, "- ポーション効果を強化")
+        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
+        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- 液体容量: %1$s")
+        add(HTUpgradeKeys.ITEM_CAPACITY, $$"- アイテム容量: %1$s")
+
+        add(RagiumUpgradeKeys.COMPOST_BIO, "- アイテムを未加工バイオに変換")
+        add(RagiumUpgradeKeys.VOID_EXTRA, "- 追加の生産物を無効化")
+        add(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, "- エンチャントされたアイテムから液体経験値を抽出")
         add(RagiumUpgradeKeys.USE_LUBRICANT, "- 処理ごとに潤滑油を消費")
 
-        add(RagiumUpgradeKeys.EXP_COLLECTING, "- 水の代わりに経験値オーブを収集")
+        add(RagiumUpgradeKeys.COLLECT_EXP, "- 水の代わりに経験値オーブを収集")
         add(RagiumUpgradeKeys.FISHING, "- アイテム収集の代わりに釣りを実行")
-        add(RagiumUpgradeKeys.MOB_CAPTURE, "- アイテム収集の代わりにモブを捕獲")
-
-        add(RagiumUpgradeGroups.FLUID_COLLECTOR, "液体収集機")
-        add(RagiumUpgradeGroups.ITEM_COLLECTOR, "アイテム収集機")
+        add(RagiumUpgradeKeys.CAPTURE_MOB, "- アイテム収集の代わりにモブを捕獲")
         // API - Constants
         add(RagiumTranslation.ERROR, "エラー")
         add(RagiumTranslation.INFINITE, "無限")
@@ -417,7 +412,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
-        add(RagiumTranslation.TOOLTIP_UPGRADE_GROUP, $$"アップグレードの種類: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_TARGET, $$"アップグレードの対象: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE, $$"競合するアップグレード: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")

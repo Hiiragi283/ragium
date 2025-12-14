@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import com.enderio.base.common.init.EIOBlocks
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
@@ -10,26 +11,32 @@ import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
+import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tag.createCommonTag
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
+import hiiragi283.ragium.common.HTUpgradeType
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeGroups
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
@@ -46,6 +53,9 @@ import plus.dragons.createenchantmentindustry.common.registry.CEIDataMaps
 @Suppress("DEPRECATION")
 class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
     private lateinit var provider: HolderLookup.Provider
+    private val itemCreator: HTItemIngredientCreator = RagiumPlatform.INSTANCE.itemCreator()
+
+    private fun <T : Any> holderSet(tagKey: TagKey<T>): HolderSet<T> = provider.lookupOrThrow(tagKey.registry()).getOrThrow(tagKey)
 
     override fun gather(provider: HolderLookup.Provider) {
         this.provider = provider
@@ -171,37 +181,80 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                     false,
                 )
         }
+        // upgrades
+        val processor = itemCreator.fromTagKey(RagiumModTags.Items.PROCESSOR_UPGRADABLE)
 
-        builder
-            .add(
-                RagiumItems.CREATIVE_UPGRADE,
-                HTUpgradeData.createSimple(HTUpgradeKeys.IS_CREATIVE),
-                false,
-            )
-            // Processor
-            .add(
-                RagiumItems.EFFICIENT_CRUSH_UPGRADE,
-                HTUpgradeData.createSimple(RagiumUpgradeKeys.USE_LUBRICANT),
-                false,
-            ).add(
-                RagiumItems.PRIMARY_ONLY_UPGRADE,
-                HTUpgradeData.createSimple(RagiumUpgradeKeys.DISABLE_EXTRA),
-                false,
-            )
-            // Device
-            .add(
-                RagiumItems.EXP_COLLECTOR_UPGRADE,
-                HTUpgradeData.createSimple(RagiumUpgradeKeys.EXP_COLLECTING, RagiumUpgradeGroups.FLUID_COLLECTOR),
-                false,
-            ).add(
-                RagiumItems.FISHING_UPGRADE,
-                HTUpgradeData.createSimple(RagiumUpgradeKeys.FISHING, RagiumUpgradeGroups.ITEM_COLLECTOR),
-                false,
-            ).add(
-                RagiumItems.MOB_CAPTURE_UPGRADE,
-                HTUpgradeData.createSimple(RagiumUpgradeKeys.MOB_CAPTURE, RagiumUpgradeGroups.ITEM_COLLECTOR),
-                false,
-            )
+        for (type: HTUpgradeType in HTUpgradeType.entries) {
+            val upgradeData: HTUpgradeData = when (type) {
+                // Creative
+                HTUpgradeType.CREATIVE -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.IS_CREATIVE, 1)
+                }
+                // Generator
+                // Processor
+                HTUpgradeType.EFFICIENCY -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_EFFICIENCY, fraction(5, 4))
+                    targetSet(processor)
+                }
+                HTUpgradeType.SPEED -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_EFFICIENCY, fraction(4, 5))
+                    set(HTUpgradeKeys.SPEED, fraction(5, 4))
+                    targetSet(processor)
+                }
+                HTUpgradeType.HIGH_SPEED -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_EFFICIENCY, fraction(2, 5))
+                    set(HTUpgradeKeys.SPEED, fraction(3, 2))
+                    targetSet(processor)
+                }
+                // Processor
+                HTUpgradeType.BIO_COMPOSTING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.COMPOST_BIO, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.EXTRACTOR))
+                    exclusiveSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE))
+                }
+                HTUpgradeType.EXTRA_VOIDING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.VOID_EXTRA, 1)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE))
+                }
+
+                HTUpgradeType.EXP_EXTRACTING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.EXTRACTOR))
+                    exclusiveSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE))
+                }
+                HTUpgradeType.EFFICIENT_CRUSHING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.USE_LUBRICANT, 1)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE))
+                }
+                // Device
+                HTUpgradeType.EXP_COLLECTING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.COLLECT_EXP, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.FLUID_COLLECTOR))
+                }
+                HTUpgradeType.FISHING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.FISHING, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.ITEM_COLLECTOR))
+                }
+                HTUpgradeType.MOB_CAPTURING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.CAPTURE_MOB, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.ITEM_COLLECTOR))
+                }
+                // Storage
+                HTUpgradeType.ENERGY_CAPACITY -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_CAPACITY, 4)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE))
+                }
+                HTUpgradeType.FLUID_CAPACITY -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.FLUID_CAPACITY, 4)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE))
+                }
+                HTUpgradeType.ITEM_CAPACITY -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_CAPACITY, 4)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.ITEM_CAPACITY_UPGRADABLE))
+                }
+            }
+            builder.addHolder(type, upgradeData)
+        }
     }
 
     //    Integration    //

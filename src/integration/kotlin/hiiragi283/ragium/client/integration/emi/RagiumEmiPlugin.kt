@@ -47,6 +47,7 @@ import hiiragi283.ragium.client.integration.emi.recipe.processor.HTRefiningEmiRe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSimulatingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSingleExtraItemEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTSolidifyingEmiRecipe
+import hiiragi283.ragium.common.HTUpgradeType
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTCulinaryGeneratorBlockEntity
@@ -341,7 +342,7 @@ class RagiumEmiPlugin : EmiPlugin {
         // Experience from Collector
         registry.addInteraction(RagiumFluidContents.EXPERIENCE.toFluidEmi(), prefix = "fluid_collector") {
             leftInput(RagiumBlocks.FLUID_COLLECTOR.toEmi())
-            rightInput(RagiumItems.EXP_COLLECTOR_UPGRADE.toEmi(), false)
+            rightInput(HTUpgradeType.EXP_COLLECTING.toEmi(), false)
         }
 
         // Crude Oil + Lava -> Soul Sand

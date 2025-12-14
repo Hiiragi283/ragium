@@ -1,8 +1,7 @@
 package hiiragi283.ragium.common.block.entity.component
 
-import hiiragi283.ragium.api.block.attribute.HTUpgradeGroupBlockAttribute
-import hiiragi283.ragium.api.block.attribute.getAttribute
-import hiiragi283.ragium.api.capability.RagiumCapabilities
+import hiiragi283.ragium.api.data.map.HTUpgradeData
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.function.HTPredicates
 import hiiragi283.ragium.api.serialization.component.HTComponentInput
 import hiiragi283.ragium.api.serialization.value.HTValueInput
@@ -11,8 +10,6 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.upgrade.HTSlotUpgradeHandler
-import hiiragi283.ragium.api.upgrade.HTUpgradeGroup
-import hiiragi283.ragium.api.upgrade.HTUpgradeProvider
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.api.world.sendBlockUpdated
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
@@ -21,6 +18,7 @@ import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.component.DataComponentMap
+import net.minecraft.world.item.ItemStack
 
 class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
     HTBlockEntityComponent,
@@ -35,14 +33,12 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
             HTContentListener(owner::setChanged).andThen { owner.level?.sendBlockUpdated(owner.blockPos) },
             HTSlotHelper.getSlotPosX(8),
             HTSlotHelper.getSlotPosY(i - 0.5),
+            limit = 1,
             canExtract = HTPredicates.manualOnly(),
             canInsert = HTPredicates.manualOnly(),
             filter = filter,
         )
     }
-    private val group: HTUpgradeGroup? = owner.blockHolder
-        .getAttribute<HTUpgradeGroupBlockAttribute>()
-        ?.group
 
     //    HTBlockEntityComponent    //
 
@@ -75,13 +71,12 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
     override fun getUpgradeSlots(): List<HTItemSlot> = upgradeSlots
 
     override fun isValidUpgrade(upgrade: ImmutableItemStack, existing: List<ImmutableItemStack>): Boolean {
-        val provider: HTUpgradeProvider = upgrade.getCapability(RagiumCapabilities.UPGRADE_ITEM) ?: return false
-        val group: HTUpgradeGroup = provider.getGroup() ?: return true
-        return when (group) {
-            this.group -> existing.none { stack: ImmutableItemStack ->
-                stack.getCapability(RagiumCapabilities.UPGRADE_ITEM)?.getGroup() == group
-            }
-            else -> false
-        }
+        val upgradeData: HTUpgradeData = RagiumDataMapTypes.getUpgradeData(upgrade) ?: return false
+        val isTarget: Boolean = owner.blockHolder
+            .value()
+            .let(::ItemStack)
+            .let(upgradeData::isTarget)
+        val isCompatible: Boolean = existing.all { stack: ImmutableItemStack -> HTUpgradeData.areCompatible(upgrade, stack) }
+        return isTarget && isCompatible
     }
 }

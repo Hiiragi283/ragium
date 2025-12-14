@@ -42,7 +42,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTSingleExtraItemRecipe): Boolean {
         // アウトプットに搬出できるか判定する
         val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
-        if (!hasUpgrade(RagiumUpgradeKeys.DISABLE_EXTRA)) {
+        if (!hasUpgrade(RagiumUpgradeKeys.VOID_EXTRA)) {
             return bool1
         }
         val bool2: Boolean = HTStackSlotHelper.canInsertStack(extraSlot, input, level, recipe::assembleExtraItem)
@@ -53,7 +53,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        if (!hasUpgrade(RagiumUpgradeKeys.DISABLE_EXTRA)) {
+        if (!hasUpgrade(RagiumUpgradeKeys.VOID_EXTRA)) {
             extraSlot.insert(recipe.assembleExtraItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
     }

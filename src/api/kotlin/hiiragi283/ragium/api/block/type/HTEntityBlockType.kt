@@ -6,13 +6,11 @@ import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
 import hiiragi283.ragium.api.block.attribute.HTFluidBlockAttribute
 import hiiragi283.ragium.api.block.attribute.HTMenuBlockAttribute
 import hiiragi283.ragium.api.block.attribute.HTTierBlockAttribute
-import hiiragi283.ragium.api.block.attribute.HTUpgradeGroupBlockAttribute
 import hiiragi283.ragium.api.collection.AttributeMap
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredMenuType
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.api.tier.HTTierProvider
-import hiiragi283.ragium.api.upgrade.HTUpgradeGroup
 import net.minecraft.world.level.block.entity.BlockEntity
 import java.util.function.IntSupplier
 import java.util.function.Supplier
@@ -73,8 +71,6 @@ open class HTEntityBlockType(
         fun addFluid(vararg pairs: Pair<HTFluidBlockAttribute.TankType, IntSupplier>): BUILDER = addFluid(mapOf(*pairs))
 
         fun addFluid(tankMap: Map<HTFluidBlockAttribute.TankType, IntSupplier>): BUILDER = add(HTFluidBlockAttribute(tankMap))
-
-        fun addUpgradeGroup(group: HTUpgradeGroup): BUILDER = add(HTUpgradeGroupBlockAttribute(group))
 
         /**
          * ティアを追加します。

@@ -39,7 +39,7 @@ open class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
         HTStackSlotHelper.calculateRedstoneLevel(slot)
 
     //    Ticking    //
-    
+
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
 
     //    CrateItemSlot    //

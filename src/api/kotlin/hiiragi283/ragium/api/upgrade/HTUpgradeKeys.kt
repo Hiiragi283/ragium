@@ -9,23 +9,27 @@ object HTUpgradeKeys {
     @JvmField
     val IS_CREATIVE: HTUpgradeKey = HTUpgradeKey.get("is_creative")
 
-    //    Machine    //
+    //    Generator    //
 
     @JvmField
-    val ENERGY_CAPACITY: HTUpgradeKey = HTUpgradeKey.get("energy_capacity")
+    val ENERGY_GENERATION: HTUpgradeKey = HTUpgradeKey.get("energy_generation")
+
+    //    Processor    //
 
     @JvmField
     val ENERGY_EFFICIENCY: HTUpgradeKey = HTUpgradeKey.get("energy_efficiency")
 
     @JvmField
-    val ENERGY_GENERATION: HTUpgradeKey = HTUpgradeKey.get("energy_generation")
+    val SPEED: HTUpgradeKey = HTUpgradeKey.get("speed")
+
+    //    Storage    //
+
+    @JvmField
+    val ENERGY_CAPACITY: HTUpgradeKey = HTUpgradeKey.get("energy_capacity")
 
     @JvmField
     val FLUID_CAPACITY: HTUpgradeKey = HTUpgradeKey.get("fluid_capacity")
 
     @JvmField
     val ITEM_CAPACITY: HTUpgradeKey = HTUpgradeKey.get("item_capacity")
-
-    @JvmField
-    val SPEED: HTUpgradeKey = HTUpgradeKey.get("speed")
 }

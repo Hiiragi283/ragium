@@ -11,7 +11,6 @@ import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDa
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeGroups
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -301,15 +300,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.TANK_MINECART, "Tank with Minecart")
         // Upgrades
         add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
-
-        add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "Efficient Crush Upgrade")
-        add(RagiumItems.PRIMARY_ONLY_UPGRADE, "Primary Only Upgrade")
-
-        add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
-        add(RagiumItems.FISHING_UPGRADE, "Fishing Upgrade")
-        add(RagiumItems.MOB_CAPTURE_UPGRADE, "Mob Capture Upgrade")
-
-        add(RagiumItems.CREATIVE_UPGRADE, "Creative Upgrade")
     }
 
     private fun keyMapping() {
@@ -341,6 +331,16 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumModTags.Items.TOOLS_DRILL, "Drills")
         add(RagiumModTags.Items.TOOLS_HAMMER, "Hammers")
+
+        add(RagiumModTags.Items.GENERATOR_UPGRADABLE, "Generators")
+        add(RagiumModTags.Items.PROCESSOR_UPGRADABLE, "Processors")
+        add(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE, "Processors with Extra Output")
+        add(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE, "Pulverizer or Crusher")
+        add(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE, "Energy Storage")
+        add(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE, "Fluid Storage")
+        add(RagiumModTags.Items.ITEM_CAPACITY_UPGRADABLE, "Item Storage")
+
+        add(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE, "Upgrades for Extractor")
     }
 
     private fun recipeType() {
@@ -374,26 +374,22 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- Base Multiplier: %1$s")
         add(HTUpgradeKeys.IS_CREATIVE, "- Creative")
 
-        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
         add(HTUpgradeKeys.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
         add(HTUpgradeKeys.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
-        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
-        add(HTUpgradeKeys.ITEM_CAPACITY, $$"- Item Capacity: %1$s")
         add(HTUpgradeKeys.SPEED, $$"- Speed: %1$s")
 
-        add(RagiumUpgradeKeys.COMPOSTING, "- Convert input into Crude Bio")
-        add(RagiumUpgradeKeys.DISABLE_EXTRA, "- Extra output disabled")
-        add(RagiumUpgradeKeys.EXP_DRAIN, "- Extract Liquid Experience from enchanted item")
-        add(RagiumUpgradeKeys.LONG_BREWING, "- Extend duration of potion effects")
-        add(RagiumUpgradeKeys.STRONG_BREWING, "- Strengthen potion effects")
+        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
+        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
+        add(HTUpgradeKeys.ITEM_CAPACITY, $$"- Item Capacity: %1$s")
+
+        add(RagiumUpgradeKeys.COMPOST_BIO, "- Convert input into Crude Bio")
+        add(RagiumUpgradeKeys.VOID_EXTRA, "- Extra output disabled")
+        add(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, "- Extract Liquid Experience from enchanted item")
         add(RagiumUpgradeKeys.USE_LUBRICANT, "- Use lubricant per operation")
 
-        add(RagiumUpgradeKeys.EXP_COLLECTING, "- Collect Experience Orb instead of Water")
+        add(RagiumUpgradeKeys.COLLECT_EXP, "- Collect Experience Orb instead of Water")
         add(RagiumUpgradeKeys.FISHING, "- Do fishing instead of collecting items")
-        add(RagiumUpgradeKeys.MOB_CAPTURE, "- Capture mobs instead of collecting items")
-
-        add(RagiumUpgradeGroups.FLUID_COLLECTOR, "Fluid Collector")
-        add(RagiumUpgradeGroups.ITEM_COLLECTOR, "Item Collector")
+        add(RagiumUpgradeKeys.CAPTURE_MOB, "- Capture mobs instead of collecting items")
         // API - Constants
         add(RagiumTranslation.ERROR, "Error")
         add(RagiumTranslation.INFINITE, "Infinite")
@@ -415,7 +411,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
-        add(RagiumTranslation.TOOLTIP_UPGRADE_GROUP, $$"Upgrade Group: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_TARGET, $$"Upgrade Targets: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE, $$"Conflicting Upgrades: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")

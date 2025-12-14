@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.storage.attachments.HTAttachedFluids
 import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.text.HTSimpleTranslation
 import hiiragi283.ragium.api.text.HTTranslation
-import hiiragi283.ragium.api.upgrade.HTUpgradeGroup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.damagesource.DamageType
@@ -85,9 +84,6 @@ object RagiumDataComponents {
 
     @JvmField
     val MACHINE_UPGRADES: DataComponentType<HTAttachedItems> = REGISTER.registerType("machine_upgrades", HTAttachedItems.CODEC)
-
-    @JvmField
-    val UPGRADE_GROUP: DataComponentType<HTUpgradeGroup> = REGISTER.registerType("upgrade_group", HTUpgradeGroup.CODEC)
 
     //    Storage    //
 

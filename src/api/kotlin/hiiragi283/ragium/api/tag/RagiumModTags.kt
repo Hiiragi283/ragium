@@ -8,7 +8,6 @@ import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.material.Fluid
 
 object RagiumModTags {
@@ -32,35 +31,6 @@ object RagiumModTags {
 
         @JvmStatic
         private fun create(path: String): TagKey<Block> = Registries.BLOCK.createTagKey(RagiumAPI.id(path))
-    }
-
-    //    BlockEntityTypes    //
-
-    object BlockEntityTypes {
-        @JvmField
-        val MACHINES: TagKey<BlockEntityType<*>> = create("machines")
-
-        @JvmField
-        val MACHINES_ELECTRIC: TagKey<BlockEntityType<*>> = create("machines", "electric")
-
-        @JvmField
-        val GENERATORS: TagKey<BlockEntityType<*>> = create("machines", "generator")
-
-        @JvmField
-        val PROCESSORS: TagKey<BlockEntityType<*>> = create("machines", "processors")
-
-        @JvmField
-        val DEVICES: TagKey<BlockEntityType<*>> = create("machines", "devices")
-
-        // Specific
-        @JvmField
-        val EFFICIENT_CRUSH_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "efficient_crush")
-
-        @JvmField
-        val EXTRA_OUTPUT_UPGRADABLE: TagKey<BlockEntityType<*>> = create("upgradable", "extra_output")
-
-        @JvmStatic
-        private fun create(vararg path: String): TagKey<BlockEntityType<*>> = Registries.BLOCK_ENTITY_TYPE.createTagKey(RagiumAPI.id(*path))
     }
 
     //    DamageTypes    //
@@ -165,6 +135,32 @@ object RagiumModTags {
 
         @JvmField
         val TOOLS_HAMMER: TagKey<Item> = create("tools", "hammer")
+
+        // Upgrade Target
+        @JvmField
+        val GENERATOR_UPGRADABLE: TagKey<Item> = create("upgradable", "generator")
+
+        @JvmField
+        val PROCESSOR_UPGRADABLE: TagKey<Item> = create("upgradable", "processor")
+
+        @JvmField
+        val EXTRA_VOIDING_UPGRADABLE: TagKey<Item> = create("upgradable", "extra_voiding")
+
+        @JvmField
+        val EFFICIENT_CRUSHING_UPGRADABLE: TagKey<Item> = create("upgradable", "efficient_crushing")
+
+        @JvmField
+        val ENERGY_CAPACITY_UPGRADABLE: TagKey<Item> = create("upgradable", "energy_capacity")
+
+        @JvmField
+        val FLUID_CAPACITY_UPGRADABLE: TagKey<Item> = create("upgradable", "fluid_capacity")
+
+        @JvmField
+        val ITEM_CAPACITY_UPGRADABLE: TagKey<Item> = create("upgradable", "item_capacity")
+
+        // Upgrade Exclusive
+        @JvmField
+        val EXTRACTOR_EXCLUSIVE: TagKey<Item> = create("exclusive", "extractor")
 
         @JvmStatic
         private fun create(path: String): TagKey<Item> = create(RagiumAPI.id(path))

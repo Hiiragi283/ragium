@@ -6,19 +6,13 @@ object RagiumUpgradeKeys {
     //    Processor    //
 
     @JvmField
-    val COMPOSTING: HTUpgradeKey = HTUpgradeKey.get("composting")
+    val COMPOST_BIO: HTUpgradeKey = HTUpgradeKey.get("compost_bio")
 
     @JvmField
-    val DISABLE_EXTRA: HTUpgradeKey = HTUpgradeKey.get("disable_extra")
+    val VOID_EXTRA: HTUpgradeKey = HTUpgradeKey.get("void_extra")
 
     @JvmField
-    val EXP_DRAIN: HTUpgradeKey = HTUpgradeKey.get("exp_drain")
-
-    @JvmField
-    val LONG_BREWING: HTUpgradeKey = HTUpgradeKey.get("long_brewing")
-
-    @JvmField
-    val STRONG_BREWING: HTUpgradeKey = HTUpgradeKey.get("strong_brewing")
+    val EXTRACT_EXPERIENCE: HTUpgradeKey = HTUpgradeKey.get("extract_experience")
 
     @JvmField
     val USE_LUBRICANT: HTUpgradeKey = HTUpgradeKey.get("use_lubricant")
@@ -26,11 +20,11 @@ object RagiumUpgradeKeys {
     //    Device    //
 
     @JvmField
-    val EXP_COLLECTING: HTUpgradeKey = HTUpgradeKey.get("exp_collecting")
+    val COLLECT_EXP: HTUpgradeKey = HTUpgradeKey.get("collect_exp")
 
     @JvmField
     val FISHING: HTUpgradeKey = HTUpgradeKey.get("fishing")
 
     @JvmField
-    val MOB_CAPTURE: HTUpgradeKey = HTUpgradeKey.get("mob_capture")
+    val CAPTURE_MOB: HTUpgradeKey = HTUpgradeKey.get("capture_mob")
 }

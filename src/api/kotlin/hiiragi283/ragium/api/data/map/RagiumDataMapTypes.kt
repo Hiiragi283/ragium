@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.entity.typeHolder
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -71,6 +72,11 @@ object RagiumDataMapTypes {
      * 指定した[stack]から，アップグレードのデータを取得します。
      */
     fun getUpgradeData(stack: ItemStack): HTUpgradeData? = stack.itemHolder.getData(UPGRADE)
+
+    /**
+     * 指定した[stack]から，アップグレードのデータを取得します。
+     */
+    fun getUpgradeData(stack: ImmutableItemStack): HTUpgradeData? = stack.getData(UPGRADE)
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =

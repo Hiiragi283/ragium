@@ -2,6 +2,10 @@ package hiiragi283.ragium.api.recipe.ingredient
 
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.api.stack.ImmutableStack
+import hiiragi283.ragium.api.tag.getName
+import hiiragi283.ragium.api.text.HTHasText
+import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.ComponentUtils
 import net.minecraft.tags.TagKey
 import java.util.function.Predicate
 
@@ -12,7 +16,9 @@ import java.util.function.Predicate
  * @see HTFluidIngredient
  * @see mekanism.api.recipes.ingredients.InputIngredient
  */
-interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> : Predicate<STACK> {
+interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> :
+    Predicate<STACK>,
+    HTHasText {
     /**
      * 指定された[stack]が条件を満たしているか判定します。
      */
@@ -29,4 +35,9 @@ interface HTIngredient<TYPE : Any, STACK : ImmutableStack<TYPE, STACK>> : Predic
     fun getRequiredAmount(): Int
 
     fun unwrap(): Either<Pair<TagKey<TYPE>, Int>, List<STACK>>
+
+    override fun getText(): Component = unwrap().map(
+        { (tagKey: TagKey<TYPE>, _) -> tagKey.getName() },
+        { stacks: List<STACK> -> ComponentUtils.formatList(stacks, HTHasText::getText) },
+    )
 }

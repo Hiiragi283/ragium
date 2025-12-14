@@ -15,12 +15,11 @@ interface HTUpgradeHandler {
 
     //    Extensions    //
 
-    fun getMaxMultiplier(key: HTUpgradeKey): Fraction? = getUpgrades().maxOfOrNull { HTUpgradeHelper.getUpgrade(it, key) }
+    fun getMaxMultiplier(key: HTUpgradeKey): Fraction? = getUpgrades().mapNotNull { HTUpgradeHelper.getUpgrade(it, key) }.maxOrNull()
 
     fun hasUpgrade(key: HTUpgradeKey): Boolean {
         for (stack: ImmutableItemStack in getUpgrades()) {
-            val fraction: Fraction = HTUpgradeHelper.getUpgrade(stack, key)
-            if (fraction > Fraction.ZERO) {
+            if (HTUpgradeHelper.getUpgrade(stack, key) != null) {
                 return true
             }
         }
@@ -31,11 +30,9 @@ interface HTUpgradeHandler {
         var isEmpty = true
         var sum: Fraction = Fraction.ONE
         for (stack: ImmutableItemStack in getUpgrades()) {
-            val fraction: Fraction = HTUpgradeHelper.getUpgrade(stack, key)
-            if (fraction > Fraction.ZERO) {
-                sum *= fraction
-                isEmpty = false
-            }
+            val fraction: Fraction = HTUpgradeHelper.getUpgrade(stack, key) ?: continue
+            sum *= fraction
+            isEmpty = false
         }
         return when {
             isEmpty && ignoreEmpty -> Fraction.ZERO

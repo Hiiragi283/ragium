@@ -10,9 +10,9 @@ import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
+import hiiragi283.ragium.common.HTUpgradeType
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.setup.RagiumDataComponents
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.CreativeModeTab
@@ -71,7 +71,7 @@ class HTTankBlockItem(block: HTTankBlock, properties: Properties) :
         createItemStack(
             baseItem,
             RagiumDataComponents.MACHINE_UPGRADES,
-            HTAttachedItems(listOf(RagiumItems.CREATIVE_UPGRADE.toImmutableStack(1))),
+            HTAttachedItems(listOf(HTUpgradeType.CREATIVE.toImmutableStack(1))),
         ).let(consumer::accept)
     }
 }

@@ -59,12 +59,12 @@ class HTExtractorBlockEntity(pos: BlockPos, state: BlockState) :
         HTFinderRecipeCache(RagiumRecipeTypes.EXTRACTING)
 
     override fun getMatchedRecipe(input: HTRecipeInput, level: ServerLevel): HTItemWithCatalystRecipe? = when {
-        hasUpgrade(RagiumUpgradeKeys.COMPOSTING) ->
+        hasUpgrade(RagiumUpgradeKeys.COMPOST_BIO) ->
             input
                 .item(0)
                 ?.unwrap()
                 ?.let(::createComposting)
-        hasUpgrade(RagiumUpgradeKeys.EXP_DRAIN) -> expExtracting(input)
+        hasUpgrade(RagiumUpgradeKeys.EXTRACT_EXPERIENCE) -> expExtracting(input)
         else -> recipeCache.getFirstRecipe(input, level)
     }
 

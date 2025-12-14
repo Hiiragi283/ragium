@@ -26,7 +26,7 @@ abstract class HTCropBlock(properties: Properties) : CropBlock(properties) {
         val AGE: IntegerProperty = BeetrootBlock.AGE
 
         @JvmField
-        val SHAPE_BY_AGE: Array<VoxelShape> = arrayOf<VoxelShape>(
+        val SHAPE_BY_AGE: Array<VoxelShape> = arrayOf(
             box(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
             box(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
             box(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),

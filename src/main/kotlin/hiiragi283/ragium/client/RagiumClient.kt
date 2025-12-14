@@ -116,7 +116,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                     getter != null && pos != null -> {
                         val collector: HTFluidCollectorBlockEntity? =
                             getter.getTypedBlockEntity<HTFluidCollectorBlockEntity>(pos)
-                        if (collector != null && collector.hasUpgrade(RagiumUpgradeKeys.EXP_COLLECTING)) {
+                        if (collector != null && collector.hasUpgrade(RagiumUpgradeKeys.COLLECT_EXP)) {
                             0x66ff33
                         } else {
                             BiomeColors.getAverageWaterColor(getter, pos)
