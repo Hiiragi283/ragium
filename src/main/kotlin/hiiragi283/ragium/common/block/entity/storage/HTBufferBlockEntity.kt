@@ -26,7 +26,7 @@ open class HTBufferBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state:
         private set
     lateinit var slots: List<HTBasicItemSlot>
         private set
-    
+
     override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         tanks = arrayOf(0, 1, 2).map { i: Int ->
             builder.addSlot(
@@ -40,7 +40,7 @@ open class HTBufferBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state:
                         }
                     }
                     true
-                })
+                }),
             )
         }
     }

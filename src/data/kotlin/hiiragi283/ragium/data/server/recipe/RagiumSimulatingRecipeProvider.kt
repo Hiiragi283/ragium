@@ -114,10 +114,10 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
         HTMixingRecipeBuilder
             .create()
             .addIngredient(itemCreator.fromItem(RagiumItems.ELDER_HEART))
-            .addIngredient(itemCreator.fromItem(Items.PRISMARINE_SHARD, 64))
-            .addIngredient(itemCreator.fromTagKey(Tags.Items.GEMS_PRISMARINE, 64))
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.LAPIS, 64))
-            .addIngredient(fluidCreator.water(8000))
+            .addIngredient(itemCreator.fromItem(Items.PRISMARINE_SHARD, 16))
+            .addIngredient(itemCreator.fromTagKey(Tags.Items.GEMS_PRISMARINE, 16))
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.LAPIS, 16))
+            .addIngredient(fluidCreator.water(16_000))
             .setResult(resultHelper.item(Items.HEART_OF_THE_SEA))
             .save(output)
         // Dragon Breath
@@ -200,8 +200,8 @@ object RagiumSimulatingRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(itemCreator.fromItem(RagiumItems.WITHER_STAR))
             .addIngredient(itemCreator.fromItem(Items.GHAST_TEAR, 16))
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 16))
-            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ, 64))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 8000))
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ, 16))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 16_000))
             .setResult(resultHelper.item(Items.NETHER_STAR))
             .save(output)
 

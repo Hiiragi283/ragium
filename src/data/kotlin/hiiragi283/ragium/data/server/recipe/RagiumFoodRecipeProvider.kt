@@ -56,7 +56,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, FoodMaterialKeys.CHOCOLATE, 64))
             .addIngredient(itemCreator.fromItem(Items.HONEY_BLOCK, 64))
             .addIngredient(itemCreator.fromItem(RagiumItems.IRIDESCENT_POWDER))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CREAM, 8000))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CREAM, 64_000))
             .setResult(resultHelper.item(RagiumItems.AMBROSIA))
             .save(output)
 

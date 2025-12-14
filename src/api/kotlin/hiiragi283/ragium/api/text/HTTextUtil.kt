@@ -60,11 +60,7 @@ object HTTextUtil {
     //    Tooltips    //
 
     @JvmStatic
-    fun addEnergyTooltip(
-        amount: Int,
-        consumer: Consumer<Component>,
-        isCreative: Boolean,
-    ) {
+    fun addEnergyTooltip(amount: Int, consumer: Consumer<Component>, isCreative: Boolean) {
         // Empty name if amount is not positive
         if (amount <= 0) {
             consumer.accept(RagiumTranslation.EMPTY.translate())

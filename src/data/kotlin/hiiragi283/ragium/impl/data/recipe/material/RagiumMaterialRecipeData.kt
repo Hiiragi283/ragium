@@ -163,17 +163,6 @@ data object RagiumMaterialRecipeData {
         addOutput(RagiumItems.getPlate(CommonMaterialKeys.RUBBER), CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2)
     }
 
-    @JvmField
-    val BLACK_RUBBER_SHEET: HTRecipeData = HTRecipeData.create {
-        addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL)
-        addInput(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
-        addInput(RagiumFluidContents.LATEX, 1000)
-
-        addOutput(RagiumItems.getPlate(CommonMaterialKeys.RUBBER), CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4)
-
-        setSuffix("_with_carbon")
-    }
-
     //    Other    //
 
     @JvmField

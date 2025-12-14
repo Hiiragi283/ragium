@@ -637,7 +637,13 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         // Raw Rubber + Sulfur -> Rubber
         alloyFromData(RagiumMaterialRecipeData.RUBBER_SHEET)
         // Latex + Sulfur + Coal -> Rubber
-        mixFromData(RagiumMaterialRecipeData.BLACK_RUBBER_SHEET)
+        HTMixingRecipeBuilder
+            .create()
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL))
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.LATEX, 1000))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4))
+            .save(output)
     }
 
     @JvmStatic
