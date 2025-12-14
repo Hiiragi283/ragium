@@ -41,7 +41,6 @@ import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTOpenCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -243,9 +242,6 @@ object RagiumBlockEntityTypes {
     val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> = registerTick("crate", ::HTCrateBlockEntity)
 
     @JvmField
-    val OPEN_CRATE: HTDeferredBlockEntityType<HTOpenCrateBlockEntity> = REGISTER.registerType("open_crate", ::HTOpenCrateBlockEntity)
-
-    @JvmField
     val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = registerTick("tank", ::HTTankBlockEntity)
 
     //    Event    //
@@ -312,8 +308,6 @@ object RagiumBlockEntityTypes {
         registerHandler(event, CEU.get())
         // Storage
         registerHandler(event, CRATE.get())
-        registerHandler(event, OPEN_CRATE.get())
-
         registerHandler(event, TANK.get())
 
         RagiumAPI.LOGGER.info("Registered Block Capabilities!")

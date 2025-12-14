@@ -172,6 +172,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         }
 
         val basicCasing: ResourceLocation = RagiumAPI.id("block", "basic_machine_casing")
+        val basicFrame: ResourceLocation = RagiumAPI.id("block", "basic_machine_frame")
         val bricks: ResourceLocation = vanillaId("block", "bricks")
 
         val advancedCasing: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
@@ -226,7 +227,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         )
 
         // Storages
-        cutoutSimpleBlock(RagiumBlocks.CRATE, vanillaId("block", "glass"))
+        cutoutSimpleBlock(RagiumBlocks.CRATE, basicFrame)
         altModelBlock(RagiumBlocks.TANK)
 
         // Fluids

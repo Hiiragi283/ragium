@@ -168,8 +168,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.CEU, "C.E.U.")
         // Storage
         add(RagiumBlocks.CRATE, "可変クレート")
-        add(RagiumBlocks.OPEN_CRATE, "オープンクレート")
-
         add(RagiumBlocks.TANK, "可変タンク")
     }
 
@@ -466,7 +464,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.CEU, "無制限にエネルギーを供給する設備です。")
 
         add(RagiumCommonTranslation.CRATE, "アップグレードでスロット数を拡張可能なアイテムストレージです。")
-        add(RagiumCommonTranslation.OPEN_CRATE, "搬入されたアイテムを真下に落とすストレージです。")
         add(RagiumCommonTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")

@@ -28,7 +28,7 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
     override fun getMatchedRecipe(input: HTRecipeInput, level: ServerLevel): HTVanillaCookingRecipe? {
         val cache: HTRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = getRecipeCache()
-        val singleInput = input.toSingleItem() ?: return null
+        val singleInput: SingleRecipeInput = input.toSingleItem() ?: return null
         val baseRecipe: AbstractCookingRecipe = cache.getFirstRecipe(singleInput, level) ?: return null
         val result: ItemStack = baseRecipe.assemble(singleInput, level.registryAccess())
         if (result.isEmpty) return null

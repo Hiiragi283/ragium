@@ -177,8 +177,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.CEU, "C.E.U.")
         // Storage
         add(RagiumBlocks.CRATE, "Variable Crate")
-        add(RagiumBlocks.OPEN_CRATE, "Open Crate")
-
         add(RagiumBlocks.TANK, "Variable Tank")
     }
 
@@ -465,7 +463,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.CEU, "A device which provides unlimited amount of energy.")
 
         add(RagiumCommonTranslation.CRATE, "A item storage which slot is extendable by upgrade.")
-        add(RagiumCommonTranslation.OPEN_CRATE, "A item storage which drops inserted items below.")
         add(RagiumCommonTranslation.TANK, "A fluid storage which capacity is extendable by upgrade.")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")

@@ -90,6 +90,10 @@ object RagiumBlocks {
         // Collector
         REGISTER.addAlias("water_collector", "fluid_collector")
         REGISTER.addAlias("exp_collector", "fluid_collector")
+
+        REGISTER.addAlias("fisher", "item_collector")
+        REGISTER.addAlias("item_buffer", "item_collector")
+        REGISTER.addAlias("mob_capturer", "item_collector")
         // Drum, Crate
         listOf(
             "small",
@@ -100,10 +104,6 @@ object RagiumBlocks {
             REGISTER.addAlias("${it}_drum", "tank")
             REGISTER.addAlias("${it}_crate", "crate")
         }
-
-        REGISTER.addAlias("fisher", "item_collector")
-        REGISTER.addAlias("item_buffer", "item_collector")
-        REGISTER.addAlias("mob_capturer", "item_collector")
     }
 
     @JvmStatic
@@ -615,13 +615,6 @@ object RagiumBlocks {
         copyOf(Blocks.COPPER_BLOCK).noOcclusion(),
         ::HTCrateBlock,
         ::HTDescriptionBlockItem,
-    )
-
-    @JvmField
-    val OPEN_CRATE: HTBasicDeferredBlock<HTSimpleTypedEntityBlock> = registerSimpleEntity(
-        "open_crate",
-        RagiumBlockTypes.OPEN_CRATE,
-        machine().workInProgress(),
     )
 
     @JvmField

@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.block.entity.storage
 
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
-import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
+import hiiragi283.ragium.api.stack.maxStackSize
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -100,6 +99,11 @@ open class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
         override fun getCapacity(stack: ImmutableItemStack?): Int = when (isCreative) {
             true -> Int.MAX_VALUE
             false -> this@HTCrateBlockEntity.getCapacity()
+        }
+
+        override fun outputRate(access: HTStorageAccess): Int = when {
+            access == HTStorageAccess.MANUAL && isCreative -> getStack()?.maxStackSize() ?: 0
+            else -> super.outputRate(access)
         }
     }
 }

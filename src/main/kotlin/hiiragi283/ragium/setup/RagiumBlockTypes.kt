@@ -289,11 +289,6 @@ object RagiumBlockTypes {
         .build(RagiumCommonTranslation.CRATE)
 
     @JvmField
-    val OPEN_CRATE: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.OPEN_CRATE }
-        .build(RagiumCommonTranslation.OPEN_CRATE)
-
-    @JvmField
     val TANK: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.TANK }
         .addMenu { RagiumMenuTypes.TANK }

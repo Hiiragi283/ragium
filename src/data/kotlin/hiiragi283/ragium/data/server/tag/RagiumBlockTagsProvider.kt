@@ -121,7 +121,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.CEU)
             // Storage
             add(RagiumBlocks.CRATE)
-            add(RagiumBlocks.OPEN_CRATE)
 
             add(RagiumBlocks.TANK)
         }.forEach(pickaxe::add)
