@@ -63,6 +63,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     BATTERY("description", "battery"),
     CRATE("description", "crate"),
     TANK("description", "tank"),
+    BUFFER("description", "buffer"),
 
     // Config
     CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),

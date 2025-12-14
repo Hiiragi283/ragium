@@ -31,8 +31,6 @@ import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.common.Tags
 import java.util.function.UnaryOperator
 
-typealias HTSimpleTypedEntityBlock = HTTypedEntityBlock<HTEntityBlockType>
-
 /**
  * @see mekanism.common.block.prefab.BlockTile
  */

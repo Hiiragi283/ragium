@@ -176,6 +176,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
         add(RagiumBlocks.TANK, "Variable Tank")
+        add(RagiumBlocks.BUFFER, "Universal Buffer")
     }
 
     private fun enchantment() {
@@ -399,8 +400,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.MISSING_SERVER, "Could not find current server")
         add(RagiumTranslation.MISSING_REGISTRY, $$"Missing registry: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"Missing key: %1$s")
-        // API - GUI
-        add(RagiumTranslation.BURN_TIME, $$"Burn Time: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
@@ -463,6 +462,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.BATTERY, "A energy storage which capacity is extendable by upgrade.")
         add(RagiumCommonTranslation.CRATE, "A item storage which capacity is extendable by upgrade.")
         add(RagiumCommonTranslation.TANK, "A fluid storage which capacity is extendable by upgrade.")
+        add(RagiumCommonTranslation.BUFFER, "A combined storage with 9 slots, 3 tanks, and 1 battery.")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "Energy Rate")

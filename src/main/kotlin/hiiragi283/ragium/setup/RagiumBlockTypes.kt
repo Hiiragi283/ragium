@@ -286,4 +286,10 @@ object RagiumBlockTypes {
         .addMenu { RagiumMenuTypes.TANK }
         .addShape(Block.box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0))
         .build(RagiumCommonTranslation.TANK)
+
+    @JvmField
+    val BUFFER: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.BUFFER }
+        // .addMenu { RagiumMenuTypes.BUFFER }
+        .build(RagiumCommonTranslation.BUFFER)
 }

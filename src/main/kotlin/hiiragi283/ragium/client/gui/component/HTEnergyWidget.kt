@@ -37,6 +37,6 @@ open class HTEnergyWidget(protected open val battery: HTEnergyBattery, x: Int, y
     override fun getLevel(): Fraction = battery.getStoredLevel()
 
     override fun collectTooltips(consumer: Consumer<Component>, flag: TooltipFlag) {
-        HTTextUtil.addEnergyTooltip(battery, consumer)
+        HTTextUtil.addEnergyTooltip(battery.getAmount(), consumer, false)
     }
 }

@@ -40,13 +40,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     STORED_FE("gui", "stored", "fe"),
 
     FRACTION("gui", "fraction"),
-    PERCENTAGE("gui", "percentage"),
     TICK("gui", "tick"),
-
-    PER_MB("gui", "per", "mb"),
-    PER_TICK("gui", "per", "tick"),
-
-    BURN_TIME("gui", "burn_tick"),
 
     // Item Description
     TOOLTIP_BLOCK_POS("tooltip", "block_pos"),

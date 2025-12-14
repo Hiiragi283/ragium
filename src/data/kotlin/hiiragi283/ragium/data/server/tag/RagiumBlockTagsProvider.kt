@@ -120,6 +120,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.BATTERY)
             add(RagiumBlocks.CRATE)
             add(RagiumBlocks.TANK)
+
+            add(RagiumBlocks.BUFFER)
         }.forEach(pickaxe::add)
 
         pickaxe

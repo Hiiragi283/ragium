@@ -704,6 +704,14 @@ object RagiumItems {
         registerEnergy(
             event,
             { context: HTComponentHandler.ContainerContext ->
+                val capacity: Int = HTUpgradeHelper.getEnergyCapacity(context.attachedTo, RagiumConfig.COMMON.batteryCapacity.asInt)
+                HTComponentEnergyBattery.create(context, capacity)
+            },
+            RagiumBlocks.BATTERY,
+        )
+        registerEnergy(
+            event,
+            { context: HTComponentHandler.ContainerContext ->
                 HTComponentEnergyBattery.create(context, HTUpgradeHelper.getEnergyCapacity(context.attachedTo, 160000))
             },
             DRILL,

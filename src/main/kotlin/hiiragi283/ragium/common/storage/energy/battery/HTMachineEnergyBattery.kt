@@ -43,9 +43,7 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
 
     var currentEnergyPerTick: Int = this.baseEnergyPerTick
 
-    override fun getCapacity(): Int = HTUpgradeHelper.getEnergyCapacity(blockEntity, getBaseCapacity())
-
-    fun getBaseCapacity(): Int = super.getCapacity()
+    override fun getCapacity(): Int = HTUpgradeHelper.getEnergyCapacity(blockEntity, super.getCapacity())
 
     class Processor(attribute: HTEnergyBlockAttribute, listener: HTContentListener?, blockEntity: HTProcessorBlockEntity<*, *>) :
         HTMachineEnergyBattery<HTProcessorBlockEntity<*, *>>(

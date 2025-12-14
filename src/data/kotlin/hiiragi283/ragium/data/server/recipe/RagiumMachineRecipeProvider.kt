@@ -398,6 +398,20 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             resetComponent(block, component)
         }
 
+        // Buffer
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.BUFFER)
+            .pattern(
+                "ABA",
+                "CDE",
+                "ABA",
+            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            .define('B', RagiumModTags.Items.PLASTICS)
+            .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .define('D', Tags.Items.CHESTS)
+            .define('E', Tags.Items.BUCKETS_EMPTY)
+            .save(output)
+
         // Tank with Minecart
         HTShapelessRecipeBuilder
             .create(RagiumItems.TANK_MINECART)

@@ -40,6 +40,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.world.level.block.Block
@@ -237,6 +238,9 @@ object RagiumBlockEntityTypes {
     @JvmField
     val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = registerTick("tank", ::HTTankBlockEntity)
 
+    @JvmField
+    val BUFFER: HTDeferredBlockEntityType<HTBufferBlockEntity> = registerTick("buffer", ::HTBufferBlockEntity)
+
     //    Event    //
 
     // Supported Blocks
@@ -299,6 +303,8 @@ object RagiumBlockEntityTypes {
         registerHandler(event, BATTERY.get())
         registerHandler(event, CRATE.get())
         registerHandler(event, TANK.get())
+
+        registerHandler(event, BUFFER.get())
 
         RagiumAPI.LOGGER.info("Registered Block Capabilities!")
     }

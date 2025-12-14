@@ -4,7 +4,6 @@ package hiiragi283.ragium.api.text
 
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
@@ -61,8 +60,22 @@ object HTTextUtil {
     //    Tooltips    //
 
     @JvmStatic
-    fun addEnergyTooltip(battery: HTEnergyBattery, consumer: Consumer<Component>) {
-        battery.let(::energyText).let(consumer::accept)
+    fun addEnergyTooltip(
+        amount: Int,
+        consumer: Consumer<Component>,
+        isCreative: Boolean,
+    ) {
+        // Empty name if amount is not positive
+        if (amount <= 0) {
+            consumer.accept(RagiumTranslation.EMPTY.translate())
+            return
+        }
+        // Fluid Name and Amount
+        if (isCreative) {
+            RagiumTranslation.STORED_FE.translate(RagiumTranslation.INFINITE)
+        } else {
+            RagiumTranslation.STORED_FE.translate(amount)
+        }.let(consumer::accept)
     }
 
     @JvmStatic

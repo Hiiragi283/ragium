@@ -167,6 +167,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.BATTERY, "可変バッテリー")
         add(RagiumBlocks.CRATE, "可変クレート")
         add(RagiumBlocks.TANK, "可変タンク")
+        add(RagiumBlocks.BUFFER, "万能バッファ")
     }
 
     private fun enchantment() {
@@ -400,8 +401,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.MISSING_SERVER, "サーバーが見つかりません")
         add(RagiumTranslation.MISSING_REGISTRY, $$"不明なレジストリ: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"不明なキー: %1$s")
-        // API - GUI
-        add(RagiumTranslation.BURN_TIME, $$"燃焼時間: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
@@ -464,6 +463,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.BATTERY, "アップグレードで容量を拡張可能なエネルギーストレージです。")
         add(RagiumCommonTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")
         add(RagiumCommonTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
+        add(RagiumCommonTranslation.BUFFER, "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
         add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")

@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.text.HTTextUtil
+import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -31,6 +32,6 @@ open class HTEnergyItem(properties: Properties) : Item(properties) {
         flag: TooltipFlag,
     ) {
         val battery: HTEnergyBattery = getBattery(stack) ?: return
-        HTTextUtil.addEnergyTooltip(battery, tooltips::add)
+        HTTextUtil.addEnergyTooltip(battery.getAmount(), tooltips::add, HTUpgradeHelper.isCreative(stack))
     }
 }
