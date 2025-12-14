@@ -14,9 +14,9 @@ import hiiragi283.ragium.api.recipe.HTRegisterRuntimeRecipeEvent
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.recipe.HTBrewingRecipe
@@ -92,8 +92,8 @@ object RagiumRuntimeRecipeHandler {
 
         if (!event.isPresentTag(CommonMaterialPrefixes.INGOT, key)) return
         if (event.isPresentTag(prefix, key)) {
-            HTShapelessInputsRecipeBuilder
-                .alloying(
+            HTAlloyingRecipeBuilder
+                .create(
                     event.resultHelper.item(CommonMaterialPrefixes.INGOT, key, outputCount * outputMultiplier),
                     event.itemCreator.fromTagKey(prefix, key, inputCount),
                     event.itemCreator.fromTagKey(flux, fluxCount),

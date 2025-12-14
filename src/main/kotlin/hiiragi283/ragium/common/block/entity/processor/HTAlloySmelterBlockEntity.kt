@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.processor
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
+import hiiragi283.ragium.api.recipe.multi.HTAlloyingRecipe
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -20,7 +20,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTShapelessInputsRecipe>(
+    HTProcessorBlockEntity.Cached<HTAlloyingRecipe>(
         RagiumRecipeTypes.ALLOYING,
         RagiumBlocks.ALLOY_SMELTER,
         pos,
@@ -49,7 +49,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         builder.items.addAll(inputSlots.map(HTBasicItemSlot::getStack))
     }
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTShapelessInputsRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTAlloyingRecipe): Boolean =
         HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
     override fun completeRecipe(
@@ -57,7 +57,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos: BlockPos,
         state: BlockState,
         input: HTRecipeInput,
-        recipe: HTShapelessInputsRecipe,
+        recipe: HTAlloyingRecipe,
     ) {
         // 実際にアウトプットに搬出する
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

@@ -15,7 +15,7 @@ import hiiragi283.ragium.common.crafting.HTGravitationalUpgradeRecipe
 import hiiragi283.ragium.common.crafting.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.crafting.HTUpgradeChargeRecipe
-import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTBasicAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicMeltingRecipe
@@ -90,14 +90,14 @@ object RagiumRecipeSerializers {
     //    Machine    //
 
     @JvmField
-    val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = register(
+    val ALLOYING: RecipeSerializer<HTBasicAlloyingRecipe> = register(
         RagiumConst.ALLOYING,
         RagiumRecipeBiCodecs.singleOutput(
-            ::HTAlloyingRecipe,
+            ::HTBasicAlloyingRecipe,
             HTItemIngredient.CODEC
                 .listOf(2, 3)
                 .fieldOf("ingredients")
-                .forGetter(HTAlloyingRecipe::ingredients),
+                .forGetter(HTBasicAlloyingRecipe::ingredients),
         ),
     )
 

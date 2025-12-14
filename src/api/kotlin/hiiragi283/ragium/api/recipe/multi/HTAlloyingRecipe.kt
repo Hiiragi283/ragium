@@ -8,6 +8,6 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
  *
  * 材料の並びは不定
  */
-interface HTShapelessInputsRecipe : HTRecipe {
+interface HTAlloyingRecipe : HTRecipe {
     val ingredients: List<HTItemIngredient>
 }

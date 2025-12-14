@@ -24,11 +24,11 @@ import hiiragi283.ragium.common.recipe.HTBasicCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicRefiningRecipe
+import hiiragi283.ragium.common.recipe.HTBasicSimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicCombineRecipe
-import hiiragi283.ragium.common.recipe.HTBasicSimulatingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicSingleExtraItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicSingleOutputRecipe
 import net.minecraft.core.HolderSet

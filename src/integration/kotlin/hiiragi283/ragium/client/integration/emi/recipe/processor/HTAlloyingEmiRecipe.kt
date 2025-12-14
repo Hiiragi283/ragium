@@ -5,11 +5,11 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
-import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTBasicAlloyingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTAlloyingEmiRecipe(holder: RecipeHolder<HTAlloyingRecipe>) :
-    HTEmiHolderRecipe<HTAlloyingRecipe>(RagiumEmiRecipeCategories.ALLOYING, holder) {
+class HTAlloyingEmiRecipe(holder: RecipeHolder<HTBasicAlloyingRecipe>) :
+    HTEmiHolderRecipe<HTBasicAlloyingRecipe>(RagiumEmiRecipeCategories.ALLOYING, holder) {
     init {
         recipe.ingredients.forEach(::addInput)
 

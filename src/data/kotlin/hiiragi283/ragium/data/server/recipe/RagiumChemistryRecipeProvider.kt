@@ -9,6 +9,7 @@ import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTExtractingRecipeBuilder
@@ -16,7 +17,6 @@ import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialKeys
@@ -230,8 +230,8 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .setResult(resultHelper.item(Items.ENCHANTED_GOLDEN_APPLE))
             .save(output)
         // Exp Berries
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(RagiumBlocks.EXP_BERRIES),
                 itemCreator.fromTagKey(Tags.Items.FOODS_BERRY),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL, 4),

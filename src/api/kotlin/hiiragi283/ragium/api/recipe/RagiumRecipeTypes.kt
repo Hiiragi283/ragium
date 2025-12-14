@@ -9,19 +9,19 @@ import hiiragi283.ragium.api.recipe.fluid.HTMeltingRecipe
 import hiiragi283.ragium.api.recipe.fluid.HTRefiningRecipe
 import hiiragi283.ragium.api.recipe.fluid.HTSimulatingRecipe
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
+import hiiragi283.ragium.api.recipe.multi.HTAlloyingRecipe
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
 import hiiragi283.ragium.api.recipe.multi.HTCompressingRecipe
 import hiiragi283.ragium.api.recipe.multi.HTFluidWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
-import hiiragi283.ragium.api.recipe.multi.HTShapelessInputsRecipe
 import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 
 object RagiumRecipeTypes {
     @JvmField
-    val ALLOYING: HTDeferredRecipeType<HTRecipeInput, HTShapelessInputsRecipe> = create(RagiumConst.ALLOYING)
+    val ALLOYING: HTDeferredRecipeType<HTRecipeInput, HTAlloyingRecipe> = create(RagiumConst.ALLOYING)
 
     @JvmField
     val BREWING: HTDeferredRecipeType<HTRecipeInput, HTCombineRecipe> = create(RagiumConst.BREWING)

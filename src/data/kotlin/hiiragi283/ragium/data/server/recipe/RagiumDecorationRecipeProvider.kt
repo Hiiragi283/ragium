@@ -3,10 +3,10 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.common.HTDecorationType
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCookingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialKeys
@@ -138,24 +138,23 @@ object RagiumDecorationRecipeProvider : HTRecipeProvider.Direct() {
         RagiumBlocks.GLASSES.forEach { (variant: HTGlassVariant, key: HTMaterialKey, block: ItemLike) ->
             when (variant) {
                 HTGlassVariant.DEFAULT ->
-                    HTShapelessInputsRecipeBuilder
-                        .alloying(
-                            resultHelper.item(block, 2),
-                            when (key) {
-                                VanillaMaterialKeys.QUARTZ -> listOf(
-                                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.QUARTZ),
-                                    itemCreator.fromTagKey(ItemTags.SMELTS_TO_GLASS),
-                                )
-                                VanillaMaterialKeys.OBSIDIAN -> listOf(
-                                    itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL),
-                                    itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
-                                )
-                                else -> listOf(
-                                    itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, key),
-                                    itemCreator.fromTagKey(CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN, 2),
-                                )
-                            },
-                        ).save(output)
+                    HTAlloyingRecipeBuilder(
+                        when (key) {
+                            VanillaMaterialKeys.QUARTZ -> listOf(
+                                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.QUARTZ),
+                                itemCreator.fromTagKey(ItemTags.SMELTS_TO_GLASS),
+                            )
+                            VanillaMaterialKeys.OBSIDIAN -> listOf(
+                                itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL),
+                                itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL),
+                            )
+                            else -> listOf(
+                                itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, key),
+                                itemCreator.fromTagKey(CommonMaterialPrefixes.GLASS_BLOCK, VanillaMaterialKeys.OBSIDIAN, 2),
+                            )
+                        },
+                        resultHelper.item(block, 2),
+                    ).save(output)
 
                 HTGlassVariant.TINTED -> {
                     // Normal -> Tinted

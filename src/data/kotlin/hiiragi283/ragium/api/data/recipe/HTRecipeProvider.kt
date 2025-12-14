@@ -20,13 +20,13 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTExtractingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPlantingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSmithingRecipeBuilder
@@ -187,17 +187,16 @@ sealed class HTRecipeProvider {
 
     // Alloying
     fun alloyFromData(data: HTRecipeData, applyCondition: Boolean = false) {
-        HTShapelessInputsRecipeBuilder
-            .alloying(
-                data.getItemResults()[0].first,
-                data.getItemIngredients(itemCreator),
-            ).apply {
-                if (applyCondition) {
-                    for ((entry: Ior<Item, TagKey<Item>>) in data.itemOutputs) {
-                        entry.getRight()?.let(this::tagCondition)
-                    }
+        HTAlloyingRecipeBuilder(
+            data.getItemIngredients(itemCreator),
+            data.getItemResults()[0].first,
+        ).apply {
+            if (applyCondition) {
+                for ((entry: Ior<Item, TagKey<Item>>) in data.itemOutputs) {
+                    entry.getRight()?.let(this::tagCondition)
                 }
-            }.saveModified(output, data.operator)
+            }
+        }.saveModified(output, data.operator)
     }
 
     // Compressing
