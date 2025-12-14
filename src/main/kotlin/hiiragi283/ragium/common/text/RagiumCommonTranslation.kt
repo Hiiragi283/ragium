@@ -60,6 +60,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     CEU("description", "creative_energy_unit"),
 
     // Blocks - Storages
+    BATTERY("description", "battery"),
     CRATE("description", "crate"),
     TANK("description", "tank"),
 

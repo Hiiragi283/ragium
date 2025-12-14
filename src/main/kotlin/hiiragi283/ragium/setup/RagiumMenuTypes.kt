@@ -7,7 +7,6 @@ import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
@@ -28,6 +27,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTAccessConfigurationMenu
@@ -48,12 +48,6 @@ typealias DeferredBEMenu<BE> = HTDeferredMenuType.WithContext<HTBlockEntityConta
 object RagiumMenuTypes {
     @JvmField
     val REGISTER = HTDeferredMenuTypeRegister(RagiumAPI.MOD_ID)
-
-    @JvmField
-    val CRATE: DeferredBEMenu<HTCrateBlockEntity> = registerBE("crate")
-
-    @JvmField
-    val TANK: DeferredBEMenu<HTTankBlockEntity> = registerBE("tank")
 
     @JvmField
     val ACCESS_CONFIG: HTDeferredMenuType.WithContext<HTAccessConfigurationMenu, HTConfigurableBlockEntity> =
@@ -130,9 +124,6 @@ object RagiumMenuTypes {
     //    Device    //
 
     @JvmField
-    val ENERGY_NETWORK_ACCESS: DeferredBEMenu<HTEnergyNetworkAccessBlockEntity> = registerBE("energy_network_access")
-
-    @JvmField
     val FLUID_COLLECTOR: DeferredBEMenu<HTFluidCollectorBlockEntity> = registerBE("fluid_collector")
 
     @JvmField
@@ -140,6 +131,17 @@ object RagiumMenuTypes {
 
     @JvmField
     val TELEPAD: DeferredBEMenu<HTTelepadBlockentity> = registerBE("telepad")
+
+    //    Storage    //
+
+    @JvmField
+    val BATTERY: DeferredBEMenu<HTBatteryBlockEntity> = registerBE("battery")
+
+    @JvmField
+    val CRATE: DeferredBEMenu<HTCrateBlockEntity> = registerBE("crate")
+
+    @JvmField
+    val TANK: DeferredBEMenu<HTTankBlockEntity> = registerBE("tank")
 
     //    Extensions    //
 

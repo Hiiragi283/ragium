@@ -13,7 +13,6 @@ import hiiragi283.ragium.api.storage.HTHandlerProvider
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTStoneCollectorBlockEntity
@@ -40,6 +39,7 @@ import hiiragi283.ragium.common.block.entity.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.world.level.block.Block
@@ -70,6 +70,9 @@ object RagiumBlockEntityTypes {
             REGISTER.addAlias("${it}_drum", "tank")
             REGISTER.addAlias("${it}_crate", "crate")
         }
+
+        REGISTER.addAlias("energy_network_interface", "battery")
+        REGISTER.addAlias("creative_energy_unit", "battery")
 
         REGISTER.register(eventBus)
 
@@ -216,12 +219,6 @@ object RagiumBlockEntityTypes {
         ::HTDimensionalAnchorBlockEntity,
     )
 
-    @JvmField
-    val ENI: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
-        "energy_network_interface",
-        HTEnergyNetworkAccessBlockEntity::Simple,
-    )
-
     // Ultimate
     @JvmField
     val TELEPAD: HTDeferredBlockEntityType<HTTelepadBlockentity> = REGISTER.registerType(
@@ -229,14 +226,10 @@ object RagiumBlockEntityTypes {
         ::HTTelepadBlockentity,
     )
 
-    // Creative
-    @JvmField
-    val CEU: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
-        "creative_energy_unit",
-        HTEnergyNetworkAccessBlockEntity::Creative,
-    )
-
     //    Storage    //
+
+    @JvmField
+    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity> = registerTick("battery", ::HTBatteryBlockEntity)
 
     @JvmField
     val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> = registerTick("crate", ::HTCrateBlockEntity)
@@ -301,12 +294,9 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, STONE_COLLECTOR.get())
 
-        registerHandler(event, ENI.get())
-
         registerHandler(event, TELEPAD.get())
-
-        registerHandler(event, CEU.get())
         // Storage
+        registerHandler(event, BATTERY.get())
         registerHandler(event, CRATE.get())
         registerHandler(event, TANK.get())
 

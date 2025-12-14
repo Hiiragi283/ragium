@@ -40,6 +40,9 @@ data object HTUpgradeHelper {
     fun getHandler(stack: ImmutableItemStack): HTUpgradeHandler? = stack.getCapability(RagiumCapabilities.UPGRADABLE_ITEM)
 
     @JvmStatic
+    fun isCreative(stack: ItemStack): Boolean = getHandler(stack)?.isCreative() ?: false
+
+    @JvmStatic
     fun getItemCapacity(handler: HTUpgradeHandler, base: Int): Int = handler.modifyValue(HTUpgradeKeys.ITEM_CAPACITY) {
         base * it * handler.getBaseMultiplier()
     }

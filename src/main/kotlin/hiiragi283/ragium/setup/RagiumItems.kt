@@ -648,7 +648,14 @@ object RagiumItems {
     // Machine
     @JvmField
     val MACHINE_UPGRADES: Map<HTUpgradeType, HTSimpleDeferredItem> = HTUpgradeType.entries.associateWith { type: HTUpgradeType ->
-        REGISTER.registerSimpleItem("${type.serializedName}_upgrade")
+        val tier: HTBaseTier = when (type.group) {
+            HTUpgradeType.Group.CREATIVE -> HTBaseTier.CREATIVE
+            HTUpgradeType.Group.GENERATOR -> HTBaseTier.ULTIMATE
+            HTUpgradeType.Group.PROCESSOR -> HTBaseTier.ELITE
+            HTUpgradeType.Group.DEVICE -> HTBaseTier.ADVANCED
+            HTUpgradeType.Group.STORAGE -> HTBaseTier.BASIC
+        }
+        REGISTER.registerItemWith("${type.serializedName}_upgrade", tier, ::HTTierBasedItem)
     }
 
     //    Event    //

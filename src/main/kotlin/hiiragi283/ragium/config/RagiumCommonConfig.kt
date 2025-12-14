@@ -58,6 +58,9 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
 
     // Storage
     @JvmField
+    val batteryCapacity: HTIntConfigValue
+
+    @JvmField
     val crateCapacity: HTIntConfigValue
 
     @JvmField
@@ -108,6 +111,7 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
         // Storage
         builder.push("storage")
+        batteryCapacity = builder.definePositiveInt("battery_capacity", 1_024_000)
         crateCapacity = builder.definePositiveInt("crate_capacity", 32 * 64)
         tankCapacity = builder.definePositiveInt("tank_capacity", 16000)
         builder.pop()

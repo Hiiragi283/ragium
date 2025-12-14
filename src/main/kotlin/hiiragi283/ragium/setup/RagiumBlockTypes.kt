@@ -258,13 +258,7 @@ object RagiumBlockTypes {
         .addTier(HTMachineTier.ELITE)
         .build(RagiumCommonTranslation.DIM_ANCHOR)
 
-    @JvmField
-    val ENI: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.ENI }
-        .addMenu { RagiumMenuTypes.ENERGY_NETWORK_ACCESS }
-        .addTier(HTMachineTier.ELITE)
-        .build(RagiumCommonTranslation.ENI)
-
+    // Ultimate
     @JvmField
     val TELEPAD: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.TELEPAD }
@@ -272,15 +266,13 @@ object RagiumBlockTypes {
         .addTier(HTMachineTier.ULTIMATE)
         .build()
 
-    // Creative
-    @JvmField
-    val CEU: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.CEU }
-        .addMenu { RagiumMenuTypes.ENERGY_NETWORK_ACCESS }
-        .addTier(HTMachineTier.CREATIVE)
-        .build(RagiumCommonTranslation.CEU)
-
     //    Storage    //
+
+    @JvmField
+    val BATTERY: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.BATTERY }
+        .addMenu { RagiumMenuTypes.BATTERY }
+        .build(RagiumCommonTranslation.BATTERY)
 
     @JvmField
     val CRATE: HTEntityBlockType = HTEntityBlockType

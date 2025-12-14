@@ -114,14 +114,11 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.STONE_COLLECTOR)
 
             add(RagiumBlocks.DIM_ANCHOR)
-            add(RagiumBlocks.ENI)
 
             add(RagiumBlocks.TELEPAD)
-
-            add(RagiumBlocks.CEU)
             // Storage
+            add(RagiumBlocks.BATTERY)
             add(RagiumBlocks.CRATE)
-
             add(RagiumBlocks.TANK)
         }.forEach(pickaxe::add)
 

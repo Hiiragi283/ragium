@@ -303,6 +303,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .apply(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE)
             .addTag(RagiumModTags.Items.GENERATOR_UPGRADABLE)
             .addTag(RagiumModTags.Items.PROCESSOR_UPGRADABLE)
+            // Storage
+            .add(RagiumBlocks.BATTERY)
 
         factory
             .apply(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE)

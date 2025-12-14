@@ -170,12 +170,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.STONE_COLLECTOR, "Stone Collector")
 
         add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
-        add(RagiumBlocks.ENI, "E.N.I.")
 
         add(RagiumBlocks.TELEPAD, "Telepad")
-
-        add(RagiumBlocks.CEU, "C.E.U.")
         // Storage
+        add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
         add(RagiumBlocks.TANK, "Variable Tank")
     }
@@ -462,7 +460,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumCommonTranslation.CEU, "A device which provides unlimited amount of energy.")
 
-        add(RagiumCommonTranslation.CRATE, "A item storage which slot is extendable by upgrade.")
+        add(RagiumCommonTranslation.BATTERY, "A energy storage which capacity is extendable by upgrade.")
+        add(RagiumCommonTranslation.CRATE, "A item storage which capacity is extendable by upgrade.")
         add(RagiumCommonTranslation.TANK, "A fluid storage which capacity is extendable by upgrade.")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")

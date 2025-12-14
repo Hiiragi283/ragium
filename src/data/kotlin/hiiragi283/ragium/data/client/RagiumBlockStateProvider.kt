@@ -55,11 +55,8 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             add(RagiumBlocks.ITEM_COLLECTOR)
 
             add(RagiumBlocks.DIM_ANCHOR)
-            add(RagiumBlocks.ENI)
 
             add(RagiumBlocks.TELEPAD)
-
-            add(RagiumBlocks.CEU)
 
             // Decoration
             addAll(RagiumBlocks.DECORATION_MAP.values)

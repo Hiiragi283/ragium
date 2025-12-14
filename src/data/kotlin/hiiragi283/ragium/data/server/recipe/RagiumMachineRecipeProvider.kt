@@ -302,14 +302,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
             .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
-
-        HTShapelessRecipeBuilder
-            .create(RagiumBlocks.ENI)
-            .addIngredient(RagiumBlocks.DEVICE_CASING)
-            .addIngredient(CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
-            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.DIAMOND)
-            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .save(output)
         // Ultimate
         HTShapelessRecipeBuilder
             .create(RagiumBlocks.TELEPAD)
@@ -387,8 +379,10 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun storages() {
-        // Crate, Tank
+        // Battery, Crate, Tank
+        val ragiCrystal: TagKey<Item> = CommonMaterialPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL)
         listOf(
+            Triple(RagiumBlocks.BATTERY, ragiCrystal, RagiumDataComponents.ENERGY),
             Triple(RagiumBlocks.CRATE, Tags.Items.CHESTS, RagiumDataComponents.ITEM),
             Triple(RagiumBlocks.TANK, Tags.Items.BUCKETS_EMPTY, RagiumDataComponents.FLUID),
         ).forEach { (block: HTItemHolderLike, core: TagKey<Item>, component: DataComponentType<*>) ->

@@ -11,7 +11,7 @@ import io.netty.buffer.ByteBuf
 data class HTAttachedEnergy(override val containers: List<Int>) : HTAttachedContainers<Int, HTAttachedEnergy> {
     companion object {
         @JvmField
-        val CODEC: BiCodec<ByteBuf, HTAttachedEnergy> = BiCodecs.POSITIVE_INT
+        val CODEC: BiCodec<ByteBuf, HTAttachedEnergy> = BiCodecs.NON_NEGATIVE_INT
             .listOf()
             .xmap(::HTAttachedEnergy, HTAttachedEnergy::containers)
 

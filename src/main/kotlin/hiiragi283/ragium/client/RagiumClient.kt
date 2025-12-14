@@ -13,9 +13,9 @@ import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.client.event.HTClientItemTooltipComponent
 import hiiragi283.ragium.client.event.HTItemTooltipContent
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
+import hiiragi283.ragium.client.gui.screen.HTBatteryScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockEntityScreenFactory
-import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTGenericScreen
 import hiiragi283.ragium.client.gui.screen.HTTankScreen
@@ -265,13 +265,13 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
         event.register(RagiumMenuTypes.ALLOY_SMELTER, ::HTProcessorScreen)
+        event.register(RagiumMenuTypes.BATTERY, ::HTBatteryScreen)
         event.register(RagiumMenuTypes.BREWERY, HTSingleFluidProcessorScreen.Companion::combine)
         event.register(RagiumMenuTypes.COMBUSTION_GENERATOR, ::HTCombustionGeneratorScreen)
         event.register(RagiumMenuTypes.COMPRESSOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.CRATE, ::HTBlockEntityContainerScreen)
         event.register(RagiumMenuTypes.CUTTING_MACHINE, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.ENCHANTER, HTSingleFluidProcessorScreen.Companion::combine)
-        event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
         event.register(RagiumMenuTypes.EXTRACTOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.ITEM_COLLECTOR, ::HTBlockEntityContainerScreen)

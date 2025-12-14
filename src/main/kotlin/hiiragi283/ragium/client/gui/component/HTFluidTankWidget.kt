@@ -9,7 +9,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-open class HTFluidTankWidget(open val view: HTFluidView, x: Int, y: Int) :
+open class HTFluidTankWidget(protected open val view: HTFluidView, x: Int, y: Int) :
     HTBasicFluidWidget(
         x,
         y,

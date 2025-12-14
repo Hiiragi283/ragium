@@ -33,8 +33,11 @@ import hiiragi283.ragium.common.block.glass.HTGlassBlock
 import hiiragi283.ragium.common.block.glass.HTObsidianGlass
 import hiiragi283.ragium.common.block.glass.HTQuartzGlassBlock
 import hiiragi283.ragium.common.block.glass.HTWarpedGlassBlock
+import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
+import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
+import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTImitationSpawnerBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
@@ -104,6 +107,9 @@ object RagiumBlocks {
             REGISTER.addAlias("${it}_drum", "tank")
             REGISTER.addAlias("${it}_crate", "crate")
         }
+        // ENI, CEU
+        REGISTER.addAlias("energy_network_interface", "battery")
+        REGISTER.addAlias("creative_energy_unit", "battery")
     }
 
     @JvmStatic
@@ -593,28 +599,27 @@ object RagiumBlocks {
     val DIM_ANCHOR: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("dimensional_anchor", RagiumBlockTypes.DIM_ANCHOR, machine())
 
-    @JvmField
-    val ENI: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("energy_network_interface", RagiumBlockTypes.ENI, machine())
-
     // Ultimate
     @JvmField
     val TELEPAD: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
         registerMachineTier("telepad", RagiumBlockTypes.TELEPAD, machine().workInProgress())
 
-    // Creative
-    @JvmField
-    val CEU: HTDeferredBlock<HTSimpleTypedEntityBlock, HTMachineBlockItem> =
-        registerMachineTier("creative_energy_unit", RagiumBlockTypes.CEU, machine())
-
     //    Storages    //
 
     @JvmField
-    val CRATE: HTDescriptionDeferredBlock<HTCrateBlock> = REGISTER.register(
+    val BATTERY: HTDeferredBlock<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
+        "battery",
+        copyOf(Blocks.IRON_BLOCK).noOcclusion(),
+        ::HTBatteryBlock,
+        ::HTBatteryBlockItem,
+    )
+
+    @JvmField
+    val CRATE: HTDeferredBlock<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
         "crate",
         copyOf(Blocks.COPPER_BLOCK).noOcclusion(),
         ::HTCrateBlock,
-        ::HTDescriptionBlockItem,
+        ::HTCrateBlockItem,
     )
 
     @JvmField
