@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
+import hiiragi283.ragium.api.data.map.HTRockGenerationData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.item.alchemy.HTPotionHelper
@@ -30,6 +31,7 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredRecipeType
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
 import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
+import hiiragi283.ragium.client.integration.emi.data.HTRockGenerationEmiData
 import hiiragi283.ragium.client.integration.emi.handler.HTEmiRecipeHandler
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
@@ -78,10 +80,12 @@ import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.datamaps.DataMapType
+import org.apache.commons.lang3.math.Fraction
 import kotlin.streams.asSequence
 
 @EmiEntrypoint
@@ -317,7 +321,20 @@ class RagiumEmiPlugin : EmiPlugin {
         registry.addRecipeSafe(HTCopyEnchantingRecipe.RECIPE_ID.withPrefix("/"), ::HTCopyEnchantingEmiRecipe)
 
         // Device
-        addRegistryRecipes(registry, RagiumRecipeTypes.ROCK_GENERATING, ::HTRockGeneratingEmiRecipe)
+        addDataMapRecipes(
+            registry,
+            EmiPort.getBlockRegistry().asLookup(),
+            RagiumDataMapTypes.ROCK_CHANCE,
+            { holder: Holder<Block>, data: HTRockGenerationData ->
+                val output: EmiStack = holder.value().toEmi()
+                if (output.isEmpty) return@addDataMapRecipes null
+                val (waterChance: Fraction, lavaChance: Fraction) = data
+                val water: EmiStack = HTFluidHolderLike.WATER.toFluidEmi().setChance(waterChance.toFloat())
+                val lava: EmiStack = HTFluidHolderLike.LAVA.toFluidEmi().setChance(lavaChance.toFloat())
+                HTRockGenerationEmiData(water, lava, output)
+            },
+            ::HTRockGeneratingEmiRecipe,
+        )
     }
 
     private fun addInteractions(registry: EmiRegistry) {

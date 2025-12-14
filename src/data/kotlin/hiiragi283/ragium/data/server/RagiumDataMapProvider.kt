@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server
 
+import appeng.core.definitions.AEBlocks
 import com.enderio.base.common.init.EIOBlocks
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import hiiragi283.ragium.api.RagiumConst
@@ -8,6 +9,7 @@ import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
+import hiiragi283.ragium.api.data.map.HTRockGenerationData
 import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
@@ -34,20 +36,20 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
-import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
+import org.apache.commons.lang3.math.Fraction
 import plus.dragons.createenchantmentindustry.common.registry.CEIDataMaps
 
 @Suppress("DEPRECATION")
@@ -55,13 +57,13 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private lateinit var provider: HolderLookup.Provider
     private val itemCreator: HTItemIngredientCreator = RagiumPlatform.INSTANCE.itemCreator()
 
-    private fun <T : Any> holderSet(tagKey: TagKey<T>): HolderSet<T> = provider.lookupOrThrow(tagKey.registry()).getOrThrow(tagKey)
-
     override fun gather(provider: HolderLookup.Provider) {
         this.provider = provider
 
         compostables()
         furnaceFuels()
+
+        rockGeneration()
 
         mobHead()
 
@@ -93,6 +95,19 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     //    Ragium    //
+
+    private fun rockGeneration() {
+        builder(RagiumDataMapTypes.ROCK_CHANCE)
+            .add(Tags.Blocks.COBBLESTONES, HTRockGenerationData(Fraction.ZERO, Fraction.ZERO), false)
+            .add(Tags.Blocks.STONES, HTRockGenerationData(Fraction.ONE, Fraction.ZERO), false)
+            // AE2
+            .add(
+                AEBlocks.SKY_STONE_BLOCK.id(),
+                HTRockGenerationData(Fraction.ZERO, Fraction.ONE_HALF),
+                false,
+                ModLoadedCondition(RagiumConst.AE2),
+            )
+    }
 
     private fun mobHead() {
         builder(RagiumDataMapTypes.MOB_HEAD)

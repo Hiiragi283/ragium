@@ -118,6 +118,7 @@ class RagiumCommon(eventBus: IEventBus, container: ModContainer, dist: Dist) {
         event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
 
         event.register(RagiumDataMapTypes.ARMOR_EQUIP)
+        event.register(RagiumDataMapTypes.ROCK_CHANCE)
         event.register(RagiumDataMapTypes.UPGRADE)
 
         RagiumAPI.LOGGER.info("Registered data map types!")

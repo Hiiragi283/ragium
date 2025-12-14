@@ -4,14 +4,12 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.RegistryKey
 import hiiragi283.ragium.api.serialization.codec.BiCodec
-import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodecs
 import hiiragi283.ragium.api.serialization.codec.ParameterCodec
@@ -104,15 +102,6 @@ object RagiumRecipeBiCodecs {
         HTItemResult.CODEC.optionalFieldOf(RagiumConst.ITEM_RESULT).forGetter(HTBasicRefiningRecipe::itemResult),
         HTFluidResult.CODEC.fieldOf(RagiumConst.FLUID_RESULT).forGetter(HTBasicRefiningRecipe::fluidResult),
         ::HTBasicRefiningRecipe,
-    )
-
-    @JvmField
-    val ROCK_GENERATING: MapBiCodec<RegistryFriendlyByteBuf, HTRockGeneratingRecipe> = MapBiCodec.composite(
-        HTFluidIngredient.CODEC.fieldOf("left").forGetter(HTRockGeneratingRecipe::left),
-        BiCodecs.either(HTItemIngredient.UNSIZED_CODEC, HTFluidIngredient.CODEC).fieldOf("right").forGetter(HTRockGeneratingRecipe::right),
-        HTItemIngredient.UNSIZED_CODEC.optionalFieldOf("bottom").forGetter(HTRockGeneratingRecipe::bottom),
-        HTItemResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTRockGeneratingRecipe::result),
-        ::HTRockGeneratingRecipe,
     )
 
     @JvmField

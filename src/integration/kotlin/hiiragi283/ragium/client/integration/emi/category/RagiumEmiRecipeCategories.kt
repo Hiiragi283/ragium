@@ -131,8 +131,11 @@ object RagiumEmiRecipeCategories {
     //    Device    //
 
     @JvmField
-    val ROCK_GENERATING: HTEmiRecipeCategory =
-        machine(RagiumRecipeTypes.ROCK_GENERATING, RagiumBlocks.STONE_COLLECTOR)
+    val ROCK_GENERATING: HTEmiRecipeCategory = machine(
+        RagiumCommonTranslation.EMI_ROCK_GENERATING::translate,
+        RagiumAPI.id("rock_generating"),
+        RagiumBlocks.STONE_COLLECTOR,
+    )
 
     //    Register    //
 

@@ -5,7 +5,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.extra.HTPlantingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.api.registry.HTDeferredRegister
 import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
@@ -171,12 +170,6 @@ object RagiumRecipeSerializers {
     val REFINING: RecipeSerializer<HTBasicRefiningRecipe> = register(
         RagiumConst.REFINING,
         RagiumRecipeBiCodecs.REFINING,
-    )
-
-    @JvmField
-    val ROCK_GENERATING: RecipeSerializer<HTRockGeneratingRecipe> = register(
-        RagiumConst.ROCK_GENERATING,
-        RagiumRecipeBiCodecs.ROCK_GENERATING,
     )
 
     @JvmField

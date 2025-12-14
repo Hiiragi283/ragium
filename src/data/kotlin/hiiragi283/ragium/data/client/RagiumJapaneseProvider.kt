@@ -353,7 +353,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.REFINING, "精製")
-        add(RagiumRecipeTypes.ROCK_GENERATING, "岩石生成")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
         add(RagiumRecipeTypes.SOLIDIFYING, "成型")
     }
@@ -509,6 +508,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     private fun emi() {
         add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "機械のアップグレード")
         add(RagiumCommonTranslation.EMI_COMPOSTING_TITLE, "コンポスト")
+        add(RagiumCommonTranslation.EMI_ROCK_GENERATING, "岩石生成")
 
         add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "ブロックの下に設置します。")
     }

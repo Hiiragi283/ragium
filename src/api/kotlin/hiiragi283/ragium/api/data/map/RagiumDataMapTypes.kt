@@ -13,6 +13,8 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
@@ -21,6 +23,11 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
  * @see mekanism.api.datamaps.IMekanismDataMapTypes
  */
 object RagiumDataMapTypes {
+    // Block
+    @JvmField
+    val ROCK_CHANCE: DataMapType<Block, HTRockGenerationData> =
+        create("rock_generation", Registries.BLOCK, HTRockGenerationData.CODEC)
+
     // Entity Type
     @JvmField
     val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
@@ -45,6 +52,8 @@ object RagiumDataMapTypes {
         create("upgrade", Registries.ITEM, HTUpgradeData.CODEC)
 
     //    Extensions    //
+
+    fun getRockData(state: BlockState): HTRockGenerationData? = state.blockHolder.getData(ROCK_CHANCE)
 
     /**
      * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。

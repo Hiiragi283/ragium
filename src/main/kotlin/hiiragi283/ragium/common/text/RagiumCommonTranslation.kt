@@ -117,6 +117,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     // EMI
     EMI_MACHINE_UPGRADE_TITLE("emi.category", "machine_upgrade"),
     EMI_COMPOSTING_TITLE("emi.category", "composting"),
+    EMI_ROCK_GENERATING("emi.category", "rock_generating"),
 
     EMI_BLOCK_CATALYST("description", "block_catalyst"),
 

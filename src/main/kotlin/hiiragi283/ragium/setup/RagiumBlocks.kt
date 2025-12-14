@@ -596,7 +596,7 @@ object RagiumBlocks {
     // Advanced
     @JvmField
     val STONE_COLLECTOR: HTDeferredBlock<HTDeviceBlock, HTMachineBlockItem> =
-        registerDevice("stone_collector", RagiumBlockTypes.STONE_COLLECTOR, machine().workInProgress())
+        registerDevice("stone_collector", RagiumBlockTypes.STONE_COLLECTOR, machine())
 
     // Elite
     @JvmField

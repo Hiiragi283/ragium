@@ -352,7 +352,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
         add(RagiumRecipeTypes.REFINING, "Refining")
-        add(RagiumRecipeTypes.ROCK_GENERATING, "Rock Generating")
         add(RagiumRecipeTypes.SIMULATING, "Simulating")
         add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
     }
@@ -505,6 +504,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     private fun emi() {
         add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "Machine Upgrades")
         add(RagiumCommonTranslation.EMI_COMPOSTING_TITLE, "Composting")
+        add(RagiumCommonTranslation.EMI_ROCK_GENERATING, "Rock Generating")
 
         add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "Placed below the block.")
     }
