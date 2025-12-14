@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processor
 
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
+import hiiragi283.ragium.api.function.negate
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
@@ -34,11 +35,19 @@ class HTAdvancedMixerBlockEntity(pos: BlockPos, state: BlockState) :
         // input
         firstInputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getFirstInputTank(this)),
+            HTVariableFluidTank.input(
+                listener, 
+                blockHolder.getFluidAttribute().getFirstInputTank(this),
+                canInsert = secondInputTank::isSameStack.negate()
+            ),
         )
         secondInputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getSecondInputTank(this)),
+            HTVariableFluidTank.input(
+                listener, 
+                blockHolder.getFluidAttribute().getSecondInputTank(this),
+                canInsert = firstInputTank::isSameStack.negate()
+            ),
         )
     }
 

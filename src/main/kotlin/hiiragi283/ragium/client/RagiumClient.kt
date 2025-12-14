@@ -23,6 +23,7 @@ import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTCombustionGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTMagmaticGeneratorScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTAdvancedMixerScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTCrusherScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTMobCrusherScreen
@@ -265,6 +266,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
         event.register(RagiumMenuTypes.ALLOY_SMELTER, ::HTProcessorScreen)
+        event.register(RagiumMenuTypes.ADVANCED_MIXER, ::HTAdvancedMixerScreen)
         event.register(RagiumMenuTypes.BATTERY, ::HTBatteryScreen)
         event.register(RagiumMenuTypes.BREWERY, HTSingleFluidProcessorScreen.Companion::combine)
         event.register(RagiumMenuTypes.COMBUSTION_GENERATOR, ::HTCombustionGeneratorScreen)

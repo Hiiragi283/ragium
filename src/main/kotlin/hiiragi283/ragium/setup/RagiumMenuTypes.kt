@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.block.entity.device.HTTelepadBlockentity
 import hiiragi283.ragium.common.block.entity.generator.HTCombustionGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTMagmaticGeneratorBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.base.HTItemGeneratorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.HTAdvancedMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTCompressorBlockEntity
@@ -80,6 +81,9 @@ object RagiumMenuTypes {
 
     @JvmField
     val ALLOY_SMELTER: DeferredBEMenu<HTAlloySmelterBlockEntity> = registerBE("alloy_smelter")
+
+    @JvmField
+    val ADVANCED_MIXER: DeferredBEMenu<HTAdvancedMixerBlockEntity> = registerBE("advanced_mixer")
 
     @JvmField
     val BREWERY: DeferredBEMenu<HTBreweryBlockEntity> = registerBE("brewery")

@@ -176,6 +176,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.ADVANCED_MIXER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addMachineTier(HTMachineTier.ELITE, RagiumConfig.COMMON.processor.advancedMixer)
+        .addMenu { RagiumMenuTypes.ADVANCED_MIXER }
         .build(RagiumCommonTranslation.MIXER)
 
     @JvmField
