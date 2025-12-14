@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client.gui.screen.processor
 
-import hiiragi283.ragium.api.gui.component.HTFluidWidget
-import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
+import hiiragi283.ragium.client.gui.component.base.HTBasicFluidWidget
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCombinerBlockEntity
@@ -67,7 +66,7 @@ abstract class HTSingleFluidProcessorScreen<BE : HTProcessorBlockEntity<*, *>> :
         )
     }
 
-    lateinit var fluidWidget: HTFluidTankWidget
+    lateinit var fluidWidget: HTBasicFluidWidget
         private set
 
     override fun init() {
@@ -75,16 +74,14 @@ abstract class HTSingleFluidProcessorScreen<BE : HTProcessorBlockEntity<*, *>> :
         fluidWidget = createFluidWidget()
     }
 
-    protected abstract fun createFluidWidget(): HTFluidTankWidget
-
-    final override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
+    protected abstract fun createFluidWidget(): HTBasicFluidWidget
 
     private class Impl<BE : HTProcessorBlockEntity<*, *>>(
-        private val factory: HTSingleFluidProcessorScreen<BE>.() -> HTFluidTankWidget,
+        private val factory: HTSingleFluidProcessorScreen<BE>.() -> HTBasicFluidWidget,
         menu: HTBlockEntityContainerMenu<BE>,
         inventory: Inventory,
         title: Component,
     ) : HTSingleFluidProcessorScreen<BE>(menu, inventory, title) {
-        override fun createFluidWidget(): HTFluidTankWidget = factory()
+        override fun createFluidWidget(): HTBasicFluidWidget = factory()
     }
 }

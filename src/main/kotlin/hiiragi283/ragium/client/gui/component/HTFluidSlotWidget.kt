@@ -9,17 +9,12 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 
 @OnlyIn(Dist.CLIENT)
-open class HTFluidTankWidget(open val view: HTFluidView, x: Int, y: Int) :
-    HTBasicFluidWidget(
-        x,
-        y,
-        16,
-        18 * 3 - 2,
-    ),
+class HTFluidSlotWidget(private val view: HTFluidView, x: Int, y: Int) :
+    HTBasicFluidWidget(x, y, 16, 16),
     HTFluidView by view {
     companion object {
         @JvmStatic
-        private val BACKGROUND: HTBoundsRenderer = HTBoundsRenderer.fromSprite(RagiumAPI.id("textures", "gui", "tank.png"))
+        private val BACKGROUND: HTBoundsRenderer = HTBoundsRenderer.fromSprite(RagiumAPI.id("textures", "gui", "fluid_slot.png"))
     }
 
     override fun renderBackground(guiGraphics: GuiGraphics) {

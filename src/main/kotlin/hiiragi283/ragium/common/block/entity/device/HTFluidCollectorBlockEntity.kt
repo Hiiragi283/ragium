@@ -43,6 +43,10 @@ class HTFluidCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
+    override fun markDirtyComparator() {
+        level?.updateNeighbourForOutputSignal(blockPos, blockState.block)
+    }
+
     override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         HTStackSlotHelper.calculateRedstoneLevel(outputTank)
 

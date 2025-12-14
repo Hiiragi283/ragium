@@ -131,7 +131,7 @@ object HTStackSlotHelper {
 
     @JvmStatic
     fun calculateRedstoneLevel(view: HTAmountView<*>): Int =
-        Mth.lerpDiscrete(view.getStoredLevelAsFloat(), Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
+        Mth.lerpDiscrete(view.getStoredLevel().toFloat(), Redstone.SIGNAL_NONE, Redstone.SIGNAL_MAX)
 
     //    Item    //
 

@@ -1,7 +1,8 @@
-package hiiragi283.ragium.client.gui.component
+package hiiragi283.ragium.client.gui.component.base
 
 import com.mojang.blaze3d.systems.RenderSystem
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
@@ -14,6 +15,8 @@ import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
 import net.neoforged.neoforge.client.ClientTooltipFlag
+import org.apache.commons.lang3.math.Fraction
+import java.util.function.Consumer
 import kotlin.math.min
 
 @OnlyIn(Dist.CLIENT)
@@ -59,7 +62,7 @@ abstract class HTSpriteWidget(
         val minV: Float = sprite.v0
         val maxV: Float = sprite.v1
         val delta: Float = maxV - minV
-        val fillLevel: Float = getLevel() * height
+        val fillLevel: Float = getScaledLevel().toFloat()
 
         RenderSystem.setShaderTexture(0, sprite.atlasLocation())
         RenderSystem.defaultBlendFunc()
@@ -102,7 +105,9 @@ abstract class HTSpriteWidget(
 
     protected abstract fun getColor(): Int
 
-    protected abstract fun getLevel(): Float
+    protected open fun getScaledLevel(): Fraction = getLevel() * height
 
-    protected abstract fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag)
+    protected abstract fun getLevel(): Fraction
+
+    protected abstract fun collectTooltips(consumer: Consumer<Component>, flag: TooltipFlag)
 }

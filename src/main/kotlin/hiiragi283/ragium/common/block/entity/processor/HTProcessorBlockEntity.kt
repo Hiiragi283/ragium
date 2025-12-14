@@ -5,8 +5,7 @@ import hiiragi283.ragium.api.data.recipe.HTResultHelper
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.math.div
-import hiiragi283.ragium.api.math.fraction
-import hiiragi283.ragium.api.math.minus
+import hiiragi283.ragium.api.math.fixedFraction
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.recipe.HTAbstractRecipe
 import hiiragi283.ragium.api.recipe.HTRecipeCache
@@ -59,13 +58,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(blockHolder: Ho
         menu.track(HTIntSyncSlot.create(::requiredEnergy))
     }
 
-    fun getProgress(): Fraction {
-        val totalTick: Int = usedEnergy
-        val maxTicks: Int = requiredEnergy
-        if (maxTicks <= 0) return Fraction.ZERO
-        val rawFraction: Fraction = fraction(totalTick, maxTicks)
-        return rawFraction - rawFraction.properWhole
-    }
+    fun getProgress(): Fraction = fixedFraction(usedEnergy, requiredEnergy)
 
     final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // アウトプットが埋まっていないか判定する

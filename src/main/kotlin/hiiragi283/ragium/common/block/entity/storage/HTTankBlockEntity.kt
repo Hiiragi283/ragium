@@ -25,6 +25,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import org.apache.commons.lang3.math.Fraction
 
 /**
  * @see mekanism.common.tile.TileEntityFluidTank
@@ -59,6 +60,10 @@ open class HTTankBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: B
         )
     }
 
+    override fun markDirtyComparator() {
+        level?.updateNeighbourForOutputSignal(blockPos, blockState.block)
+    }
+
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         HTStackSlotHelper.calculateRedstoneLevel(tank)
 
@@ -71,13 +76,22 @@ open class HTTankBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: B
 
     override fun handleUpdateTag(input: HTValueInput) {
         super.handleUpdateTag(input)
-        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC).let(tank::setStackUnchecked)
+        input.readAndSet(RagiumConst.FLUID, ImmutableFluidStack.CODEC, tank::setStackUnchecked)
     }
 
     //    Ticking    //
 
-    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean =
-        HTStackSlotHelper.moveFluid(slot, slot::setStackUnchecked, tank)
+    var oldScale: Fraction = Fraction.ZERO
+
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+        if (HTStackSlotHelper.moveFluid(slot, slot::setStackUnchecked, tank)) return true
+        val scale: Fraction = tank.getStoredLevel()
+        if (scale != this.oldScale) {
+            this.oldScale = scale
+            return true
+        }
+        return false
+    }
 
     //    TankFluidTank    //
 
@@ -93,6 +107,11 @@ open class HTTankBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: B
             listener,
         ) {
         private val isCreative: Boolean get() = this@HTTankBlockEntity.isCreative()
+
+        override fun getStack(): ImmutableFluidStack? = when (isCreative) {
+            true -> super.getStack()?.copyWithAmount(Int.MAX_VALUE)
+            false -> super.getStack()
+        }
 
         override fun insert(stack: ImmutableFluidStack?, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? {
             val remainder: ImmutableFluidStack?
@@ -110,6 +129,9 @@ open class HTTankBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: B
         override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableFluidStack? =
             super.extract(amount, action.combine(!isCreative), access)
 
-        override fun getCapacity(stack: ImmutableFluidStack?): Int = this@HTTankBlockEntity.getCapacity()
+        override fun getCapacity(stack: ImmutableFluidStack?): Int = when (isCreative) {
+            true -> Int.MAX_VALUE
+            false -> this@HTTankBlockEntity.getCapacity()
+        }
     }
 }

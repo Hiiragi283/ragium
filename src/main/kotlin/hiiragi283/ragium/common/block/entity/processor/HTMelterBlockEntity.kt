@@ -69,7 +69,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun handleUpdateTag(input: HTValueInput) {
         super.handleUpdateTag(input)
-        input.read(RagiumConst.FLUID, ImmutableFluidStack.CODEC).let(outputTank::setStackUnchecked)
+        input.readAndSet(RagiumConst.FLUID, ImmutableFluidStack.CODEC, outputTank::setStackUnchecked)
     }
 
     //    Ticking    //

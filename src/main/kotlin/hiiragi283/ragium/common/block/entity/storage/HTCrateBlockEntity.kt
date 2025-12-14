@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.function.HTPredicates
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
@@ -21,6 +23,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import org.apache.commons.lang3.math.Fraction
 
 open class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
     HTUpgradableBlockEntity(blockHolder, pos, state) {
@@ -35,12 +38,25 @@ open class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
 
     protected fun getCapacity(): Int = HTUpgradeHelper.getItemCapacity(this, RagiumConfig.COMMON.crateCapacity.asInt)
 
+    override fun markDirtyComparator() {
+        level?.updateNeighbourForOutputSignal(blockPos, blockState.block)
+    }
+
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         HTStackSlotHelper.calculateRedstoneLevel(slot)
 
     //    Ticking    //
 
-    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = false
+    private var oldScale: Fraction = Fraction.ZERO
+
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+        val scale: Fraction = slot.getStoredLevel()
+        if (scale != this.oldScale) {
+            this.oldScale = scale
+            return true
+        }
+        return false
+    }
 
     //    CrateItemSlot    //
 
@@ -60,6 +76,11 @@ open class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
         ) {
         private val isCreative: Boolean get() = this@HTCrateBlockEntity.isCreative()
 
+        override fun getStack(): ImmutableItemStack? = when (isCreative) {
+            true -> super.getStack()?.copyWithAmount(Int.MAX_VALUE)
+            false -> super.getStack()
+        }
+
         override fun insert(stack: ImmutableItemStack?, action: HTStorageAction, access: HTStorageAccess): ImmutableItemStack? {
             val remainder: ImmutableItemStack?
             if (isCreative && this.getStack() == null && action.execute && access != HTStorageAccess.EXTERNAL) {
@@ -76,6 +97,9 @@ open class HTCrateBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: 
         override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableItemStack? =
             super.extract(amount, action.combine(!isCreative), access)
 
-        override fun getCapacity(stack: ImmutableItemStack?): Int = this@HTCrateBlockEntity.getCapacity()
+        override fun getCapacity(stack: ImmutableItemStack?): Int = when (isCreative) {
+            true -> Int.MAX_VALUE
+            false -> this@HTCrateBlockEntity.getCapacity()
+        }
     }
 }

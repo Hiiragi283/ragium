@@ -64,9 +64,8 @@ class HTItemIngredient(private val ingredient: Ingredient, private val count: In
         if (custom != null) {
             return Either.right(
                 custom.items
-                    .map { it.copyWithCount(count) }
                     .toList()
-                    .mapNotNull(ItemStack::toImmutable),
+                    .let(::toImmutableList),
             )
         } else {
             val values: Array<Ingredient.Value> = ingredient.values

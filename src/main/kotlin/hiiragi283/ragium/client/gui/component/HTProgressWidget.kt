@@ -3,6 +3,7 @@ package hiiragi283.ragium.client.gui.component
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.registry.vanillaId
+import hiiragi283.ragium.client.gui.component.base.HTAbstractWidget
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation

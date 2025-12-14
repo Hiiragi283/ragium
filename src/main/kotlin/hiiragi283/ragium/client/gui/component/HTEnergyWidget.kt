@@ -4,6 +4,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.storage.HTAmountView
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.text.HTTextUtil
+import hiiragi283.ragium.client.gui.component.base.HTSpriteWidget
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -11,6 +12,8 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
+import org.apache.commons.lang3.math.Fraction
+import java.util.function.Consumer
 import java.util.function.IntConsumer
 
 @OnlyIn(Dist.CLIENT)
@@ -41,17 +44,13 @@ class HTEnergyWidget(
 
     override fun getColor(): Int = -1
 
-    override fun getLevel(): Float = battery.getStoredLevelAsFloat()
+    override fun getLevel(): Fraction = battery.getStoredLevel()
 
-    override fun collectTooltips(consumer: (Component) -> Unit, flag: TooltipFlag) {
+    override fun collectTooltips(consumer: Consumer<Component>, flag: TooltipFlag) {
         HTTextUtil.addEnergyTooltip(battery, consumer)
     }
 
     //    HTEnergyWidget    //
-
-    fun setAmount(amount: Int) {
-        amountSetter.accept(amount)
-    }
 
     override fun getAmount(): Int = battery.getAmount()
 

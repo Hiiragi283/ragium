@@ -2,8 +2,6 @@ package hiiragi283.ragium.api.serialization.value
 
 import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.serialization.codec.BiCodec
-import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
 /**
  * NBTやJSONの読み取り専用のラッパー
@@ -27,9 +25,13 @@ interface HTValueInput {
      */
     fun <T : Any> read(key: String, codec: BiCodec<*, T>): T? = read(key, codec.codec)
 
-    fun <T : Any> readOptional(key: String, codec: Codec<Optional<T>>): T? = read(key, codec)?.getOrNull()
+    fun <T : Any> readAndSet(key: String, codec: Codec<T>, action: (T?) -> Unit) {
+        read(key, codec).let(action)
+    }
 
-    fun <T : Any> readOptional(key: String, codec: BiCodec<*, Optional<T>>): T? = read(key, codec)?.getOrNull()
+    fun <T : Any> readAndSet(key: String, codec: BiCodec<*, T>, action: (T?) -> Unit) {
+        read(key, codec).let(action)
+    }
 
     // Compound
 

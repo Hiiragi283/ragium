@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.item.base
 
 import hiiragi283.ragium.api.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.text.HTTextUtil
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import kotlin.math.roundToInt
 
 /**
  * @see mekanism.common.item.ItemEnergized
@@ -19,7 +19,7 @@ open class HTEnergyItem(properties: Properties) : Item(properties) {
 
     override fun getBarWidth(stack: ItemStack): Int {
         val battery: HTEnergyBattery = getBattery(stack) ?: return 0
-        return (13f * battery.getStoredLevelAsFloat()).roundToInt()
+        return (13 * battery.getStoredLevel()).toInt()
     }
 
     override fun getBarColor(stack: ItemStack): Int = 0xff003f

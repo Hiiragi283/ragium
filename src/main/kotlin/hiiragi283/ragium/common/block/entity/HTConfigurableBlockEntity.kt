@@ -23,6 +23,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import java.util.EnumMap
 
 /**
  * 搬入出の面を制御可能な[HTBlockEntity]の拡張クラス
@@ -42,7 +43,7 @@ abstract class HTConfigurableBlockEntity(blockHolder: Holder<Block>, pos: BlockP
             BiCodecs
                 .mapOf(VanillaBiCodecs.DIRECTION, HTAccessConfig.CODEC)
                 .validate { map: Map<Direction, HTAccessConfig> ->
-                    if (map.isEmpty() || map.all { (_, config) -> config == HTAccessConfig.BOTH }) {
+                    if (map.isEmpty() || map.all { (_, config: HTAccessConfig) -> config == HTAccessConfig.BOTH }) {
                         mapOf()
                     } else {
                         map
@@ -88,7 +89,7 @@ abstract class HTConfigurableBlockEntity(blockHolder: Holder<Block>, pos: BlockP
 
     //    HTAccessConfiguration    //
 
-    private val accessConfigCache: MutableMap<Direction, HTAccessConfig> = hashMapOf()
+    private val accessConfigCache: MutableMap<Direction, HTAccessConfig> = EnumMap(Direction::class.java)
 
     final override fun getAccessConfig(side: Direction): HTAccessConfig =
         accessConfigCache.computeIfAbsent(side) { _: Direction -> HTAccessConfig.BOTH }

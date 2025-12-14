@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client.gui.screen.processor
 
-import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
+import hiiragi283.ragium.client.gui.component.base.HTBasicFluidWidget
 import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -17,7 +17,7 @@ class HTCrusherScreen(
         inventory,
         title,
     ) {
-    override fun createFluidWidget(): HTFluidTankWidget =
+    override fun createFluidWidget(): HTBasicFluidWidget =
         createFluidSlot(blockEntity.inputTank, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2))
 
     override fun updateVisibility() {

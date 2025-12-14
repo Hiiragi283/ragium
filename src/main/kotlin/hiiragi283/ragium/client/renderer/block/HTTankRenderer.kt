@@ -25,7 +25,7 @@ class HTTankRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEnti
 
         poseStack.pushPose()
         poseStack.translate(2.5f / 16f, 0f, 2.5f / 16f)
-        val level: Float = tank.getStoredLevelAsFloat()
+        val level: Float = tank.getStoredLevel().toFloat()
         if (stack.fluidType().isLighterThanAir) {
             poseStack.translate(0f, 1f - (level / 2f), 0f)
         }

@@ -24,7 +24,9 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
         super.loadAdditional(tag, registries)
-        spawnerMob = RagiumPlatform.INSTANCE.createValueInput(registries, tag).read("spawner", HTSpawnerMob.CODEC)
+        RagiumPlatform.INSTANCE
+            .createValueInput(registries, tag)
+            .readAndSet("spawner", HTSpawnerMob.CODEC, ::spawnerMob::set)
     }
 
     override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -53,9 +55,11 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initReducedUpdateTag(output: HTValueOutput) {
         super.initReducedUpdateTag(output)
+        output.store("spawner", HTSpawnerMob.CODEC, spawnerMob)
     }
 
     override fun handleUpdateTag(input: HTValueInput) {
         super.handleUpdateTag(input)
+        input.readAndSet("spawner", HTSpawnerMob.CODEC, ::spawnerMob::set)
     }
 }

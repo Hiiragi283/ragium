@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.gui.component
+package hiiragi283.ragium.client.gui.component.base
 
 import hiiragi283.ragium.api.gui.component.HTWidget
 import hiiragi283.ragium.api.math.HTBounds

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.registry.createKey
 import hiiragi283.ragium.client.gui.component.HTNumberEditBox
@@ -19,8 +18,6 @@ import org.lwjgl.glfw.GLFW
 
 class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, inventory: Inventory, title: Component) :
     HTBlockEntityContainerScreen<HTTelepadBlockentity>(menu, inventory, title) {
-    private lateinit var fluidWidget: HTFluidWidget
-
     private lateinit var editBoxX: HTNumberEditBox.IntRanged
     private lateinit var editBoxY: HTNumberEditBox.IntRanged
     private lateinit var editBoxZ: HTNumberEditBox.IntRanged
@@ -29,7 +26,7 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
     override fun init() {
         super.init()
         // fluid
-        fluidWidget = createFluidTank(blockEntity.tank, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0))
+        createFluidTank(blockEntity.tank, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0))
         // x
         editBoxX = setupNumberBox(0)
         // y
@@ -111,6 +108,4 @@ class HTTelepadScreen(menu: HTBlockEntityContainerMenu<HTTelepadBlockentity>, in
         val dim: ResourceKey<Level> = Registries.DIMENSION.createKey(id)
         this.blockEntity.teleportPos = HTTeleportPos(dim, x, y, z)
     }
-
-    override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
 }

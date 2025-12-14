@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client.gui.screen.processor
 
-import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
+import hiiragi283.ragium.client.gui.component.base.HTBasicFluidWidget
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
@@ -31,6 +31,6 @@ class HTSimulatorScreen(menu: HTBlockEntityContainerMenu<HTSimulatorBlockEntity>
         )
     }
 
-    override fun createFluidWidget(): HTFluidTankWidget =
+    override fun createFluidWidget(): HTBasicFluidWidget =
         createFluidSlot(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(2))
 }

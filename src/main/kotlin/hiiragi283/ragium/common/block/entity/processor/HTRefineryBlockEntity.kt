@@ -81,8 +81,8 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun handleUpdateTag(input: HTValueInput) {
         super.handleUpdateTag(input)
-        input.read("${RagiumConst.FLUID}_input", ImmutableFluidStack.CODEC).let(inputTank::setStackUnchecked)
-        input.read("${RagiumConst.FLUID}_output", ImmutableFluidStack.CODEC).let(outputTank::setStackUnchecked)
+        input.readAndSet("${RagiumConst.FLUID}_input", ImmutableFluidStack.CODEC, inputTank::setStackUnchecked)
+        input.readAndSet("${RagiumConst.FLUID}_output", ImmutableFluidStack.CODEC, outputTank::setStackUnchecked)
     }
 
     //    Ticking    //

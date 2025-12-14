@@ -36,6 +36,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     final override fun handleUpdateTag(tag: CompoundTag, provider: HolderLookup.Provider) {
         super.loadAdditional(tag, provider)
         handleUpdateTag(RagiumPlatform.INSTANCE.createValueInput(provider, tag))
+        requestModelDataUpdate()
     }
 
     final override fun onDataPacket(net: Connection, pkt: ClientboundBlockEntityDataPacket, provider: HolderLookup.Provider) {
@@ -89,11 +90,7 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
             level.blockEntityChanged(blockPos)
             lastSaveTime = time
         }
-        if (level.isClientSide) {
-            requestModelDataUpdate()
-        } else {
-            if (updateComparator) markDirtyComparator()
-        }
+        if (updateComparator && !level.isClientSide) markDirtyComparator()
     }
 
     protected open fun markDirtyComparator() {}

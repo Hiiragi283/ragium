@@ -25,7 +25,7 @@ class HTSingleFluidMachineRenderer(context: BlockEntityRendererProvider.Context)
 
         poseStack.pushPose()
         poseStack.translate(1 / 16f, 1 / 2f, 1 / 16f)
-        val level: Float = tank.getStoredLevelAsFloat()
+        val level: Float = tank.getStoredLevel().toFloat()
         if (stack.fluidType().isLighterThanAir) {
             poseStack.translate(0f, 1f - (level / 2f), 0f)
         }

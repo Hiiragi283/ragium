@@ -70,7 +70,7 @@ object HTTextUtil {
         stack: ImmutableFluidStack?,
         consumer: Consumer<Component>,
         flag: TooltipFlag,
-        inGui: Boolean,
+        isCreative: Boolean,
     ) {
         // Empty name if stack is empty
         if (stack == null) {
@@ -78,8 +78,11 @@ object HTTextUtil {
             return
         }
         // Fluid Name and Amount
-        consumer.accept(RagiumTranslation.STORED_MB.translate(stack, stack.amount()))
-        if (!inGui) return
+        if (isCreative) {
+            RagiumTranslation.STORED.translate(stack, RagiumTranslation.INFINITE)
+        } else {
+            RagiumTranslation.STORED_MB.translate(stack, stack.amount())
+        }.let(consumer::accept)
         // Fluid id if advanced
         if (flag.isAdvanced) {
             consumer.accept(literalText(stack.holder().registeredName).withStyle(ChatFormatting.DARK_GRAY))

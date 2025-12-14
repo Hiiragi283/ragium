@@ -188,9 +188,9 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
             }
         }
         // Custom Name
-        this.customName = input.read("custom_name", ComponentSerialization.CODEC)
+        input.readAndSet("custom_name", ComponentSerialization.CODEC, ::customName::set)
         // Owner
-        this.ownerId = input.read(RagiumConst.OWNER, UUIDUtil.CODEC)
+        input.readAndSet(RagiumConst.OWNER, UUIDUtil.CODEC, ::ownerId::set)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {

@@ -65,19 +65,30 @@ abstract class HTMachineBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, s
         this.isActive = input.getBoolean("is_active", false)
     }
 
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        output.putBoolean("is_active", this.isActive)
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        this.isActive = input.getBoolean("is_active", false)
+    }
+
     //    Ticking    //
 
+    private var lastActive = false
     var isActive: Boolean = false
         protected set
 
     final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         val result: Boolean = onUpdateMachine(level, pos, state)
-        // 以前の結果と異なる場合は強制的に同期させる
+        // 以前の結果と異なる場合は更新する
         if (result != this.isActive) {
-            isActive = result
-            return true
+            this.lastActive = this.isActive
+            this.isActive = result
         }
-        return result
+        return this.lastActive
     }
 
     protected abstract fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
