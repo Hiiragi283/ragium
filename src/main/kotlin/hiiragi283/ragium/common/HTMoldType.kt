@@ -4,8 +4,11 @@ import hiiragi283.ragium.api.data.lang.HTLangName
 import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
+import hiiragi283.ragium.api.serialization.codec.BiCodec
+import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.setup.RagiumItems
+import io.netty.buffer.ByteBuf
 import net.minecraft.util.StringRepresentable
 
 enum class HTMoldType(private val enPattern: String, private val jaPattern: String) :
@@ -19,6 +22,11 @@ enum class HTMoldType(private val enPattern: String, private val jaPattern: Stri
     INGOT("Ingot", "インゴット"),
     PLATE("Plate", "板材"),
     ;
+
+    companion object {
+        @JvmField
+        val CODEC: BiCodec<ByteBuf, HTMoldType> = BiCodecs.stringEnum(HTMoldType::getSerializedName)
+    }
 
     val prefix: HTPrefixLike?
         get() = when (this) {

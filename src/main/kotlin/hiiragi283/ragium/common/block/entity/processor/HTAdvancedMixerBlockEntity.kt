@@ -36,17 +36,17 @@ class HTAdvancedMixerBlockEntity(pos: BlockPos, state: BlockState) :
         firstInputTank = builder.addSlot(
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(
-                listener, 
+                listener,
                 blockHolder.getFluidAttribute().getFirstInputTank(this),
-                canInsert = secondInputTank::isSameStack.negate()
+                canInsert = secondInputTank::isSameStack.negate(),
             ),
         )
         secondInputTank = builder.addSlot(
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(
-                listener, 
+                listener,
                 blockHolder.getFluidAttribute().getSecondInputTank(this),
-                canInsert = firstInputTank::isSameStack.negate()
+                canInsert = firstInputTank::isSameStack.negate(),
             ),
         )
     }

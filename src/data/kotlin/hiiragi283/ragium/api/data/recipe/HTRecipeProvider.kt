@@ -20,9 +20,10 @@ import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
+import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTExtractingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPlantingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
@@ -212,32 +213,36 @@ sealed class HTRecipeProvider {
     }
 
     protected fun compressingTo(mold: HTMoldType, ingredient: HTItemIngredient, result: HTItemResult) {
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
-                ingredient,
-                result,
-                itemCreator.fromItem(mold),
-            ).saveSuffixed(output, "_with_mold")
+        HTCompressingRecipeBuilder(ingredient, mold, result).save(output)
     }
 
-    protected fun crushAndCompress(
-        base: ItemLike,
-        crushed: ItemLike,
-        crushedCount: Int,
-        catalyst: HTItemIngredient? = null,
-    ) {
+    protected fun crushAndCompressBlock(block: ItemLike, crushed: ItemLike, crushedCount: Int) {
         // Crushing
         HTSingleExtraItemRecipeBuilder
             .crushing(
-                itemCreator.fromItem(base),
+                itemCreator.fromItem(block),
                 resultHelper.item(crushed, crushedCount),
-            ).saveSuffixed(output, "_from_base")
+            ).saveSuffixed(output, "_from_block")
         // Compressing
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
+        HTCompressingRecipeBuilder
+            .block(
                 itemCreator.fromItem(crushed, crushedCount),
-                resultHelper.item(base),
-                catalyst,
+                resultHelper.item(block),
+            ).saveSuffixed(output, "_from_crushed")
+    }
+
+    protected fun crushAndCompressRod(rod: ItemLike, crushed: ItemLike, crushedCount: Int) {
+        // Crushing
+        HTSingleExtraItemRecipeBuilder
+            .crushing(
+                itemCreator.fromItem(rod),
+                resultHelper.item(crushed, crushedCount),
+            ).saveSuffixed(output, "_from_rod")
+        // Compressing
+        HTCompressingRecipeBuilder
+            .rod(
+                itemCreator.fromItem(crushed, crushedCount),
+                resultHelper.item(rod),
             ).saveSuffixed(output, "_from_crushed")
     }
 
@@ -264,8 +269,8 @@ sealed class HTRecipeProvider {
         amount: Int = 250,
     ) {
         // Extracting
-        HTItemWithCatalystRecipeBuilder
-            .extracting(itemCreator.fromItem(filled))
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(filled))
             .setResult(resultHelper.item(empty))
             .setResult(resultHelper.fluid(fluid.getFluid(), amount))
             .saveSuffixed(output, "_from_${filled.getPath()}")

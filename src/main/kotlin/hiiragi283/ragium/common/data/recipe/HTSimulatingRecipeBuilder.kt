@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.recipe.fluid.HTSimulatingRecipe
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.multi.HTItemWithCatalystRecipe
 import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.util.Ior
@@ -41,9 +41,9 @@ class HTSimulatingRecipeBuilder<T : Any>(
             )
     }
 
-    override fun createRecipe(): HTItemWithCatalystRecipe = factory.create(ingredient, catalyst, toIorResult())
+    override fun createRecipe(): HTSimulatingRecipe = factory.create(ingredient, catalyst, toIorResult())
 
-    fun interface Factory<T : Any, RECIPE : HTItemWithCatalystRecipe> {
+    fun interface Factory<T : Any, RECIPE : HTSimulatingRecipe> {
         fun create(ingredient: Optional<HTItemIngredient>, catalyst: T, results: Ior<HTItemResult, HTFluidResult>): RECIPE
     }
 }

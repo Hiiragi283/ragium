@@ -5,8 +5,8 @@ import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import de.ellpeck.actuallyadditions.mod.items.ActuallyItems
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.common.data.recipe.HTExtractingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
 
@@ -20,8 +20,8 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
             .setResult(resultHelper.item(ActuallyItems.RICE_SLIMEBALL))
             .save(output)
         // Solidified Exp -> Liquid Exp
-        HTItemWithCatalystRecipeBuilder
-            .extracting(itemCreator.fromItem(ActuallyItems.SOLIDIFIED_EXPERIENCE))
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(ActuallyItems.SOLIDIFIED_EXPERIENCE))
             .setResult(resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 8 * 20))
             .saveSuffixed(output, "_from_solidified_aa")
 
@@ -36,8 +36,8 @@ object RagiumAARecipeProvider : HTRecipeProvider.Integration(RagiumConst.ACTUALL
     @JvmStatic
     private fun canola() {
         // Canola -> Canola Oil
-        HTItemWithCatalystRecipeBuilder
-            .extracting(itemCreator.fromTagKey(ActuallyTags.Items.CROPS_CANOLA))
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(ActuallyTags.Items.CROPS_CANOLA))
             .setResult(resultHelper.fluid(InitFluids.CANOLA_OIL.get(), 80))
             .save(output)
         // Canola Oil -> Refined

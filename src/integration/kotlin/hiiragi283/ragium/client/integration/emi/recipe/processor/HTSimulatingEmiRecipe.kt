@@ -10,7 +10,7 @@ import hiiragi283.ragium.client.integration.emi.toItemEmi
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTEntitySimulatingRecipe
-import hiiragi283.ragium.common.recipe.base.HTBasicSimulatingRecipe
+import hiiragi283.ragium.common.recipe.HTBasicSimulatingRecipe
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder

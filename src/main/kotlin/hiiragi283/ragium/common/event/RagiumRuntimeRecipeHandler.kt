@@ -14,8 +14,7 @@ import hiiragi283.ragium.api.recipe.HTRegisterRuntimeRecipeEvent
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.HTMoldType
-import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
@@ -176,20 +175,18 @@ object RagiumRuntimeRecipeHandler {
     private fun compressingMetal(event: HTRegisterRuntimeRecipeEvent, key: HTMaterialKey) {
         // Gear
         if (event.isPresentTag(CommonMaterialPrefixes.GEAR, key)) {
-            HTItemWithCatalystRecipeBuilder
-                .compressing(
+            HTCompressingRecipeBuilder
+                .gear(
                     event.itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, key),
                     event.resultHelper.item(CommonMaterialPrefixes.GEAR, key),
-                    event.itemCreator.fromItem(HTMoldType.GEAR),
                 ).saveSuffixed(event.output, "_from_ingot")
         }
         // Plate
         if (event.isPresentTag(CommonMaterialPrefixes.PLATE, key)) {
-            HTItemWithCatalystRecipeBuilder
-                .compressing(
+            HTCompressingRecipeBuilder
+                .plate(
                     event.itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, key),
                     event.resultHelper.item(CommonMaterialPrefixes.PLATE, key),
-                    event.itemCreator.fromItem(HTMoldType.PLATE),
                 ).saveSuffixed(event.output, "_from_ingot")
         }
     }
@@ -199,11 +196,10 @@ object RagiumRuntimeRecipeHandler {
         if (!event.isPresentTag(CommonMaterialPrefixes.DUST, key)) return
         if (!event.isPresentTag(outputPrefix, key)) return
 
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
+        HTCompressingRecipeBuilder
+            .gem(
                 event.itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, key),
                 event.resultHelper.item(outputPrefix, key),
-                event.itemCreator.fromItem(HTMoldType.GEM),
             ).saveSuffixed(event.output, "_from_dust")
     }
 

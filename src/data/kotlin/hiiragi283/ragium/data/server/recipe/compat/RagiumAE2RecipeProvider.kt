@@ -45,7 +45,7 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
                 resultHelper.item(AEBlocks.SKY_STONE_BLOCK),
             ).save(output)
 
-        crushAndCompress(AEBlocks.SKY_STONE_BLOCK, AEItems.SKY_DUST, 1)
+        crushAndCompressBlock(AEBlocks.SKY_STONE_BLOCK, AEItems.SKY_DUST, 1)
 
         // Processor
         combineWithRedstone(

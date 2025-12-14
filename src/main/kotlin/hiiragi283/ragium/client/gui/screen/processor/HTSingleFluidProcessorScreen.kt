@@ -1,10 +1,10 @@
 package hiiragi283.ragium.client.gui.screen.processor
 
 import hiiragi283.ragium.client.gui.component.base.HTBasicFluidWidget
+import hiiragi283.ragium.common.block.entity.processor.HTExtractorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCombinerBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.base.HTItemWithCatalystBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import net.minecraft.network.chat.Component
@@ -42,11 +42,11 @@ abstract class HTSingleFluidProcessorScreen<BE : HTProcessorBlockEntity<*, *>> :
         )
 
         @JvmStatic
-        fun <BE : HTItemWithCatalystBlockEntity> itemWithCatalyst(
-            menu: HTBlockEntityContainerMenu<BE>,
+        fun extractor(
+            menu: HTBlockEntityContainerMenu<HTExtractorBlockEntity>,
             inventory: Inventory,
             title: Component,
-        ): HTSingleFluidProcessorScreen<BE> = Impl(
+        ): HTSingleFluidProcessorScreen<HTExtractorBlockEntity> = Impl(
             { createFluidSlot(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(2)) },
             menu,
             inventory,

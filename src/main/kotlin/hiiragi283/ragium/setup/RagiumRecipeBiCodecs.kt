@@ -16,18 +16,19 @@ import hiiragi283.ragium.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.serialization.codec.MapBiCodecs
 import hiiragi283.ragium.api.serialization.codec.ParameterCodec
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.data.recipe.HTCombineRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
+import hiiragi283.ragium.common.recipe.HTBasicCompressingRecipe
+import hiiragi283.ragium.common.recipe.HTBasicExtractingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTBasicRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTSimpleMixingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicCombineRecipe
-import hiiragi283.ragium.common.recipe.base.HTBasicItemWithCatalystRecipe
-import hiiragi283.ragium.common.recipe.base.HTBasicSimulatingRecipe
+import hiiragi283.ragium.common.recipe.HTBasicSimulatingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicSingleExtraItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicSingleOutputRecipe
 import net.minecraft.core.HolderSet
@@ -39,6 +40,21 @@ object RagiumRecipeBiCodecs {
     val RESULTS: MapBiCodec<RegistryFriendlyByteBuf, HTComplexResult> = MapBiCodecs.ior(
         HTItemResult.CODEC.optionalFieldOf(RagiumConst.ITEM_RESULT),
         HTFluidResult.CODEC.optionalFieldOf(RagiumConst.FLUID_RESULT),
+    )
+
+    @JvmField
+    val COMPRESSING: MapBiCodec<RegistryFriendlyByteBuf, HTBasicCompressingRecipe> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicCompressingRecipe::ingredient),
+        HTMoldType.CODEC.fieldOf("mold").forGetter(HTBasicCompressingRecipe::mold),
+        HTItemResult.CODEC.fieldOf(RagiumConst.RESULT).forGetter(HTBasicCompressingRecipe::result),
+        ::HTBasicCompressingRecipe,
+    )
+
+    @JvmField
+    val EXTRACTING: MapBiCodec<RegistryFriendlyByteBuf, HTBasicExtractingRecipe> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf(RagiumConst.INGREDIENT).forGetter(HTBasicExtractingRecipe::ingredient),
+        RESULTS.forGetter(HTBasicExtractingRecipe::results),
+        ::HTBasicExtractingRecipe,
     )
 
     @JvmField
@@ -126,16 +142,6 @@ object RagiumRecipeBiCodecs {
             .pair(HTItemIngredient.CODEC.fieldOf("left"), HTItemIngredient.CODEC.fieldOf("right"))
             .forGetter(HTBasicCombineRecipe::itemIngredients),
         resultCodec,
-        factory::create,
-    )
-
-    @JvmStatic
-    fun <R : HTBasicItemWithCatalystRecipe> itemWithCatalyst(
-        factory: HTItemWithCatalystRecipeBuilder.Factory<R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf("required").forGetter(HTBasicItemWithCatalystRecipe::required),
-        HTItemIngredient.CODEC.optionalFieldOf("optional").forGetter(HTBasicItemWithCatalystRecipe::optional),
-        RESULTS.forGetter(HTBasicItemWithCatalystRecipe::results),
         factory::create,
     )
 

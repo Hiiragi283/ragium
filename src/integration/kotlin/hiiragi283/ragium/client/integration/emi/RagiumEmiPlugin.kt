@@ -38,8 +38,9 @@ import hiiragi283.ragium.client.integration.emi.recipe.generator.HTCoolantEmiRec
 import hiiragi283.ragium.client.integration.emi.recipe.generator.HTFuelGeneratorEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTBrewingEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTCompressingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTEnchantingEmiRecipe
-import hiiragi283.ragium.client.integration.emi.recipe.processor.HTItemWithCatalystEmiRecipe
+import hiiragi283.ragium.client.integration.emi.recipe.processor.HTExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTMixingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.processor.HTPlantingEmiRecipe
@@ -294,12 +295,12 @@ class RagiumEmiPlugin : EmiPlugin {
     private fun addProcessors(registry: EmiRegistry) {
         // Basic
         addRegistryRecipes(registry, RagiumRecipeTypes.ALLOYING, ::HTAlloyingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.COMPRESSING, HTItemWithCatalystEmiRecipe::compressing)
+        addRegistryRecipes(registry, RagiumRecipeTypes.COMPRESSING, ::HTCompressingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, HTSingleExtraItemEmiRecipe::crushing)
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, HTSingleExtraItemEmiRecipe::cutting)
-        addRegistryRecipes(registry, RagiumRecipeTypes.EXTRACTING, HTItemWithCatalystEmiRecipe::extracting)
+        addRegistryRecipes(registry, RagiumRecipeTypes.EXTRACTING, ::HTExtractingEmiRecipe)
 
-        addItemStackRecipes(registry, "crude_bio", HTExtractorBlockEntity::createComposting, HTItemWithCatalystEmiRecipe::composting)
+        addItemStackRecipes(registry, "crude_bio", HTExtractorBlockEntity::createComposting, ::HTExtractingEmiRecipe)
         registry.addRecipeSafe(RagiumAPI.id("/${RagiumConst.EXTRACTING}", "experience_from_items"), ::HTExpExtractingEmiRecipe)
         // Advanced
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)

@@ -4,7 +4,6 @@ import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
-import hiiragi283.ragium.common.recipe.base.HTBasicSimulatingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderSet
 import net.minecraft.world.entity.EntityType

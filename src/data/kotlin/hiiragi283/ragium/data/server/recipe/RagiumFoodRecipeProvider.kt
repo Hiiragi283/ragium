@@ -10,8 +10,8 @@ import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.crafting.HTIceCreamSodaRecipe
 import hiiragi283.ragium.common.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTExtractingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemWithCatalystRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
@@ -78,8 +78,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .save(output)
         // Ragi-Cherry Juice
-        HTItemWithCatalystRecipeBuilder
-            .extracting(itemCreator.fromTagKey(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY))
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY))
             .setResult(resultHelper.fluid(RagiumFluidContents.RAGI_CHERRY_JUICE, 125))
             .save(output)
 
