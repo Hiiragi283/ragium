@@ -1,6 +1,128 @@
 # Changelog
 
-**Full Changelog**: https://github.com/Hiiragi283/ragium/compare/v0.12.0...v0.13.0
+**Full Changelog**: https://github.com/Hiiragi283/ragium/compare/v0.13.0...v0.14.0
+
+## v0.14.0
+
+- **Overhauled the majority of block and item textures**
+- **More rework for Machine Upgrade**
+
+---
+
+- Block
+  - **All blocks now dropped with stored data (items, fluids, energy, ...)**
+  - Added: Variable Battery
+  - Added: Variable Crate
+  - Added: Variable Tank
+  - Added: Integral Buffer [WIP]
+  - Added: Universal Chest
+  - Removed: E.N.I.
+    - Migrated to Variable Battery
+  - Removed: C.E.U.
+    - Migrated to Variable Battery
+  - Removed: XX Crates
+    - Migrated to Variable Crate
+  - Removed: Open Crate
+  - Removed: XX Drums
+    - Migrated to Variable Tank
+  - Removed: Experience Drum
+- Component
+  - Added: `ragium:machine_upgrades`
+  - Removed: `ragium:machine_upgrade`
+  - Removed: `ragium:machine_upgrade/filter`
+- Enchantment
+  - Removed: Capacity
+- Entity
+  - Removed: Minecart with XX Drum
+    - Migrated to Minecart with Tank
+- Fluid
+  - Added: Latex
+  - Added: Creosote
+  - Removed: Natural Gas
+    - Migrated to Naphtha
+  - Removed: Sap
+    - Migrated to Spruce Resin
+- Item
+  - **Redesigned all machine upgrades**
+  - Added: Bio Fertilizer
+  - Added: Coal Coke
+  - Added: Raw Rubber Sheet
+  - Added: Rubber Sheet
+  - Added: Chocolate Bread
+  - Added: Minecart with Tank
+  - Removed: Ragi-Coke
+    - Migrated to Coal Coke
+  - Removed: Minecart with XX Drum
+    - Migrated to Minecart with Tank
+
+### Integration
+
+- Fixed some recipe types (Crushing or Cutting) is not unified incorrectly
+- Removed class `HTDeferredMatterType` and `HTDeferredMatterTypeRegister`
+- Removed object `DefaultMatterTypes`
+
+---
+
+### API
+
+- Block
+  - Added [`HTUpgradableBlockEntity`](src/main/kotlin/hiiragi283/ragium/common/block/entity/HTUpgradableBlockEntity.kt) which supports machine upgrade
+  - Added [`HTBlockEntityComponent`](src/main/kotlin/hiiragi283/ragium/common/block/entity/component/HTBlockEntityComponent.kt)
+    - Added [`HTMachineUpgradeComponent`](src/main/kotlin/hiiragi283/ragium/common/block/entity/component/HTMachineUpgradeComponent.kt)
+- Data
+  - Added data map type `RagiumDataMapTypes.ROCK_CHANCE` for [`HTRockGenerationData`](src/api/kotlin/hiiragi283/ragium/api/data/map/HTRockGenerationData.kt)
+  - Added data map type `RagiumDataMapTypes.UPGRADE` for [`HTUpgradeData`](src/api/kotlin/hiiragi283/ragium/api/data/map/HTUpgradeData.kt)
+- Item
+  - Added [`HTUpgradeType`](src/main/kotlin/hiiragi283/ragium/common/HTUpgradeType.kt)
+  - Removed component class `HTPotionContents`
+  - Removed component class `HTItemContents`
+  - Removed component class `HTMachineUpgrade`
+- Recipe
+  - Added interface [`HTAbstractRecipe`](src/api/kotlin/hiiragi283/ragium/api/recipe/HTAbstractRecipe.kt)
+  - Added interface [`HTAbstractSingleItemInputRecipe`](src/api/kotlin/hiiragi283/ragium/api/recipe/HTAbstractSingleItemInputRecipe.kt)
+  - [`HTRecipe`](src/api/kotlin/hiiragi283/ragium/api/recipe/HTRecipe.kt) only supports [`HTRecipeInput`](src/api/kotlin/hiiragi283/ragium/api/recipe/input/HTRecipeInput.kt) for input class
+  - [`HTRecipeCache`](src/api/kotlin/hiiragi283/ragium/api/recipe/HTRecipeCache.kt) and [`HTRecipeFinder`](src/api/kotlin/hiiragi283/ragium/api/recipe/HTRecipeFinder.kt) supports non-vanilla recipe class
+    - Added interface `HTRecipeFinder.Vanilla` for vanilla-typed recipe class
+  - All classes which implements `RecipeInput` are unified into [`HTRecipeInput`](src/api/kotlin/hiiragi283/ragium/api/recipe/input/HTRecipeInput.kt)
+    - Removed class `HTDoubleRecipeInput`, `HTFluidRecipeInput`, `HTItemWithFluidRecipeInput`, and `HTMultiRecipeInput`
+  - Removed interface `HTRecipeType`
+  - Removed class `HTPotionIngredient`
+  - Removed object `RagiumIngredientTypes`
+- Registry
+  - Added static registry for `MapCodec` of [`HTBrewingRecipeData`](src/api/kotlin/hiiragi283/ragium/api/data/HTBrewingRecipeData.kt)
+  - Added dynamic registry for [`HTBrewingRecipeData`](src/api/kotlin/hiiragi283/ragium/api/data/HTBrewingRecipeData.kt)
+- Serialization
+  - Added interface [`HTComponentSerializable`](src/api/kotlin/hiiragi283/ragium/api/serialization/component/HTComponentSerializable.kt) to save/load data to components
+- Storage
+  - Moved `hiiragi283.ragium.api.storage.capability.*` -> `hiiragi283.ragium.api.capability.*`
+  - Added [`RagiumCapabilities`](src/api/kotlin/hiiragi283/ragium/api/capability/RagiumCapabilities.kt)
+  - Added [`HTAttachedContainers`](src/api/kotlin/hiiragi283/ragium/api/storage/attachments/HTAttachedContainers.kt)
+    - Added [`HTAttachedEnergy`](src/api/kotlin/hiiragi283/ragium/api/storage/attachments/HTAttachedEnergy.kt) to store energy into component
+    - Added [`HTAttachedFluids`](src/api/kotlin/hiiragi283/ragium/api/storage/attachments/HTAttachedFluids.kt) to store fluids into component
+    - Added [`HTAttachedItems`](src/api/kotlin/hiiragi283/ragium/api/storage/attachments/HTAttachedItems.kt) to store items into component
+- Tag
+  - Added item tags
+    - `GENERATOR_UPGRADABLE`: `#ragium:upgradable/generator`
+    - `PROCESSOR_UPGRADABLE`: `#ragium:upgradable/processor`
+    - `EXTRA_VOIDING_UPGRADABLE`: `#ragium:upgradable/extra_voiding`
+    - `EFFICIENT_CRUSHING_UPGRADABLE`: `#ragium:upgradable/efficient_crushing`
+    - `ENERGY_CAPACITY_UPGRADABLE`: `#ragium:upgradable/energy_capacity`
+    - `FLUID_CAPACITY_UPGRADABLE`: `#ragium:upgradable/fluid_capacity`
+    - `ITEM_CAPACITY_UPGRADABLE`: `#ragium:upgradable/fluid_capacity`
+    - `EXTRACTOR_EXCLUSIVE`: `#ragium:exclusive/extractor`
+  - Removed object `RagiumModTags.BlockEntityTypes`
+- Upgrade
+  - Added interface [`HTUpgradeHandler`](src/api/kotlin/hiiragi283/ragium/api/upgrade/HTUpgradeHandler.kt) for handlers to store upgrades
+  - Added object [`HTUpgradeHelper`](src/api/kotlin/hiiragi283/ragium/api/upgrade/HTUpgradeHelper.kt)
+  - Added class [`HTUpgradeKey`](src/api/kotlin/hiiragi283/ragium/api/upgrade/HTUpgradeKey.kt) to represent type of upgrade property
+  - Added object [`HTUpgradeKeys`](src/api/kotlin/hiiragi283/ragium/api/upgrade/HTUpgradeKeys.kt) which holds common upgrade keys
+  - Added class [`HTUpgradePropertyMap`](src/api/kotlin/hiiragi283/ragium/api/upgrade/HTUpgradePropertyMap.kt) to store upgrade values
+  - Removed interface `HTUpgradableBlockEntity`
+  - Removed interface `HTDynamicUpgradeItem`
+- Other
+  - Moved `hiiragi283.ragium.common.util.*` -> `hiiragi283.ragium.util.*`
+
+---
 
 ## v0.13.0
 
@@ -100,9 +222,9 @@
 - Refined recipe unification by Almost Unified
 - Redesigned EMI integration internally
 
-### API
-
 ---
+
+### API
 
 - Block: Added attribute `HTFluidBlockAttribute` to manage fluid tank capacity
 - Block: Added `HTUpgradableBlockEntity` to handle machine upgrades
