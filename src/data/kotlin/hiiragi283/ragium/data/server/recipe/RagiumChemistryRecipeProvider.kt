@@ -652,12 +652,12 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.fluid(RagiumFluidContents.CRUDE_BIO, 125),
             ).save(output)
 
-        // Crude Bio -> Bio Fuel
+        // Crude Bio -> Bio Fertilizer + Bio Fuel
         HTFluidRecipeBuilder
             .refining(
                 fluidCreator.fromHolder(RagiumFluidContents.CRUDE_BIO, 1000),
                 resultHelper.fluid(RagiumFluidContents.BIOFUEL, 750),
-                resultHelper.item(Items.CLAY_BALL),
+                resultHelper.item(RagiumItems.BIO_FERTILIZER),
             ).saveSuffixed(output, "_from_crude_bio")
 
         // Poisonous Potato

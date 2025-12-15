@@ -29,6 +29,7 @@ import hiiragi283.ragium.common.HTChargeType
 import hiiragi283.ragium.common.HTMoldType
 import hiiragi283.ragium.common.HTUpgradeType
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
+import hiiragi283.ragium.common.item.HTFertilizerItem
 import hiiragi283.ragium.common.item.HTIridescentPowderItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTPotionDropItem
@@ -176,6 +177,9 @@ object RagiumItems {
 
     @JvmField
     val MAGMA_SHARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("magma_shard")
+
+    @JvmField
+    val BIO_FERTILIZER: HTSimpleDeferredItem = REGISTER.registerItem("bio_fertilizer", ::HTFertilizerItem)
 
     // Nuclear Fuel
     @JvmField

@@ -52,10 +52,10 @@ class HTStoneCollectorBlockEntity(pos: BlockPos, state: BlockState) :
         val (waterChance: Fraction, lavaChance: Fraction) = RagiumDataMapTypes.getRockData(belowState) ?: return false
         val random: RandomSource = level.random
         if (random.nextFloat() <= waterChance.toFloat()) {
-            level.removeBlock(waterPos, false)
+            level.setBlockAndUpdate(waterPos, Blocks.AIR.defaultBlockState())
         }
         if (random.nextFloat() <= lavaChance.toFloat()) {
-            level.removeBlock(lavaPos, false)
+            level.setBlockAndUpdate(lavaPos, Blocks.AIR.defaultBlockState())
         }
         // 実際にアウトプットに搬出する
         val resultStack: ImmutableItemStack = ImmutableItemStack.ofNullable(belowState.block) ?: return false

@@ -224,6 +224,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun item() {
         // Material
+        add(RagiumItems.BIO_FERTILIZER, "Bio Fertilizer")
         add(RagiumItems.COAL_CHIP, "Coal Chip")
         add(RagiumItems.COAL_CHUNK, "Coal Chunk")
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")

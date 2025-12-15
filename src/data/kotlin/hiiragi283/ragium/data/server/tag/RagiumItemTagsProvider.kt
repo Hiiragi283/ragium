@@ -459,6 +459,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.FEVER_CHERRY)
             .addTag(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
 
+        factory.apply(Tags.Items.FERTILIZERS).add(RagiumItems.BIO_FERTILIZER)
+
         for (item: HTHolderLike in RagiumItems.MOLDS.values) {
             factory.apply(RagiumModTags.Items.MOLDS).add(item)
         }

@@ -25,11 +25,11 @@ class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStor
         // Energy Amount
         val amount: Int = view.getAmount()
         when {
-            amount <= 0 -> RagiumTranslation.EMPTY.translateColored(ChatFormatting.DARK_RED)
             isCreative -> RagiumTranslation.STORED_FE.translateColored(
                 ChatFormatting.GRAY,
                 RagiumTranslation.INFINITE,
             )
+            amount <= 0 -> RagiumTranslation.EMPTY.translateColored(ChatFormatting.DARK_RED)
             else -> RagiumTranslation.STORED_FE.translateColored(
                 ChatFormatting.GRAY,
                 amount,
