@@ -9,15 +9,9 @@ import net.minecraft.world.item.enchantment.Enchantment
 
 class RagiumEnchantmentTagsProvider(context: HTDataGenContext) : HTTagsProvider<Enchantment>(Registries.ENCHANTMENT, context) {
     override fun addTagsInternal(factory: BuilderFactory<Enchantment>) {
-        factory
-            .apply(EnchantmentTags.NON_TREASURE)
-            .add(RagiumEnchantments.CAPACITY)
-            .add(RagiumEnchantments.RANGE)
+        factory.apply(EnchantmentTags.NON_TREASURE).add(RagiumEnchantments.RANGE)
 
-        factory
-            .apply(EnchantmentTags.IN_ENCHANTING_TABLE)
-            .add(RagiumEnchantments.CAPACITY)
-            .add(RagiumEnchantments.RANGE)
+        factory.apply(EnchantmentTags.IN_ENCHANTING_TABLE).add(RagiumEnchantments.RANGE)
 
         factory
             .apply(EnchantmentTags.TREASURE)

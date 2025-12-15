@@ -1,20 +1,20 @@
 package hiiragi283.ragium.common.item.tool
 
+import hiiragi283.ragium.api.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.api.text.HTTextResult
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.text.levelText
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.util.HTEnchantmentHelper
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.util.HTEnchantmentHelper
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos

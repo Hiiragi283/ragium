@@ -10,23 +10,22 @@ import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.variant.HTToolVariant
 import hiiragi283.ragium.common.HTChargeType
-import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
+import hiiragi283.ragium.common.crafting.HTUpgradeChargeRecipe
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSmithingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTStonecuttingRecipeBuilder
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.crafting.HTUpgradeChargeRecipe
-import hiiragi283.ragium.common.util.HTDefaultLootTickets
 import hiiragi283.ragium.common.variant.HTArmorVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTDefaultLootTickets
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -148,9 +147,10 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .create(RagiumItems.NIGHT_VISION_GOGGLES)
             .pattern(
                 "AAA",
-                "ABA",
+                "BCB",
             ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
+            .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
     }
@@ -237,7 +237,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 setCategory(CraftingBookCategory.EQUIPMENT)
             }
 
-        resetComponent(RagiumItems.TELEPORT_KEY, RagiumDataComponents.FLUID_CONTENT, RagiumDataComponents.TELEPORT_POS)
+        resetComponent(RagiumItems.TELEPORT_KEY, RagiumDataComponents.FLUID, RagiumDataComponents.TELEPORT_POS)
         // Eldritch
         HTShapedRecipeBuilder
             .create(RagiumItems.ELDRITCH_EGG, 4)
@@ -247,6 +247,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
+        craftingDyed(RagiumItems.UNIVERSAL_BUNDLE)
         HTShapedRecipeBuilder
             .create(RagiumItems.UNIVERSAL_BUNDLE)
             .pattern(
@@ -258,17 +259,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
-
-        for (variant: HTColorMaterial in HTColorMaterial.entries) {
-            val bundle: ImmutableItemStack = HTUniversalBundleItem.createBundle(variant.dyeColor)
-            HTShapelessRecipeBuilder(bundle)
-                .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
-                .addIngredient(variant.dyeTag)
-                .setCategory(CraftingBookCategory.EQUIPMENT)
-                .savePrefixed(output, "${variant.asMaterialName()}_")
-        }
-
-        resetComponent(RagiumItems.UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR)
     }
 
     @JvmStatic
@@ -279,8 +269,8 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
         )
 
         // Glycerol + Mixture Acid + Paper -> Blast Charge
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.PAPER, 4))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.GELLED_EXPLOSIVE, 1000))
             .setResult(resultHelper.item(HTChargeType.BLAST, 4))
@@ -293,7 +283,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
                 HTChargeType.NEUTRAL -> VanillaMaterialKeys.EMERALD
                 HTChargeType.FISHING -> RagiumMaterialKeys.AZURE
                 HTChargeType.TELEPORT -> RagiumMaterialKeys.WARPED_CRYSTAL
-                HTChargeType.CONFUSING -> RagiumMaterialKeys.ELDRITCH_PEARL
+                HTChargeType.CONFUSION -> RagiumMaterialKeys.ELDRITCH_PEARL
             }
             val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
             HTShapedRecipeBuilder

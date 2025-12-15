@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.item.base.HTEnergyItem
-import hiiragi283.ragium.common.util.HTEnchantmentHelper
+import hiiragi283.ragium.util.HTEnchantmentHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.LivingEntity

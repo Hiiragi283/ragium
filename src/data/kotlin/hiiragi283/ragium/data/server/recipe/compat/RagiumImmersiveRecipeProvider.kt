@@ -1,9 +1,9 @@
 package hiiragi283.ragium.data.server.recipe.compat
 
-import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.api.crafting.IngredientWithSize
 import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles
 import blusunrize.immersiveengineering.common.register.IEBlocks
+import blusunrize.immersiveengineering.common.register.IEFluids
 import blusunrize.immersiveengineering.common.register.IEItems
 import blusunrize.immersiveengineering.data.recipes.builder.AlloyRecipeBuilder
 import blusunrize.immersiveengineering.data.recipes.builder.ArcFurnaceRecipeBuilder
@@ -19,12 +19,13 @@ import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.registry.HTBasicFluidContent
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.HTMoldType
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
+import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -39,18 +40,18 @@ import net.neoforged.neoforge.fluids.FluidStack
 object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.IMMERSIVE) {
     override fun buildRecipeInternal() {
         // Treated Planks
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(ItemTags.PLANKS))
-            .addIngredient(fluidCreator.fromTagKey(IETags.fluidCreosote, 125))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CREOSOTE, 125))
             .setResult(resultHelper.item(IEBlocks.WoodenDecoration.TREATED_WOOD[TreatedWoodStyles.HORIZONTAL]!!))
             .save(output)
         // Redstone Acid
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE))
             .addIngredient(fluidCreator.water(1000))
-            .setResult(resultHelper.fluid(IETags.fluidRedstoneAcid, 1000))
+            .setResult(resultHelper.fluid(IEFluids.REDSTONE_ACID.still, 1000))
             .save(output)
         // Hemp Fiber
         cropAndSeed(IEItems.Misc.HEMP_SEEDS, IEItems.Ingredients.HEMP_FIBER)
@@ -75,6 +76,8 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
         alloyFromData(RagiumMaterialRecipeData.DEEP_STEEL)
 
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
+
+        alloyFromData(RagiumMaterialRecipeData.RUBBER_SHEET)
     }
 
     @JvmStatic
@@ -124,6 +127,8 @@ object RagiumImmersiveRecipeProvider : HTRecipeProvider.Integration(RagiumConst.
 
     @JvmStatic
     private fun misc() {
+        bottleFromData(RagiumMaterialRecipeData.RAW_RUBBER_SHEET)
+
         bottleFromData(FoodMaterialRecipeData.CHOCOLATE_INGOT)
     }
 

@@ -8,30 +8,31 @@ import hiiragi283.ragium.api.block.attribute.getAttribute
 import hiiragi283.ragium.api.block.attribute.hasAttribute
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
 import hiiragi283.ragium.api.world.getTypedBlockEntity
+import hiiragi283.ragium.common.block.entity.ExtendedBlockEntity
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.common.util.HTItemDropHelper
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
+import net.minecraft.network.chat.Component
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.Nameable
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.common.Tags
 import java.util.function.UnaryOperator
-
-typealias HTSimpleTypedEntityBlock = HTTypedEntityBlock<HTEntityBlockType>
 
 /**
  * @see mekanism.common.block.prefab.BlockTile
@@ -90,16 +91,20 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
         player: Player,
         hitResult: BlockHitResult,
     ): InteractionResult {
-        val blockEntity: HTBlockEntity = level.getTypedBlockEntity(pos) ?: return InteractionResult.PASS
+        val blockEntity: ExtendedBlockEntity = level.getTypedBlockEntity(pos) ?: return InteractionResult.PASS
         if (level.isClientSide) {
             return when (this.hasAttribute<HTMenuBlockAttribute<*>>()) {
                 true -> InteractionResult.SUCCESS
                 false -> InteractionResult.PASS
             }
         }
+        val name: Component = when (blockEntity) {
+            is Nameable -> blockEntity.name
+            else -> state.block.name
+        }
         return this
             .getAttribute<HTMenuBlockAttribute<*>>()
-            ?.openMenu(player, blockEntity.name, blockEntity, blockEntity::writeExtraContainerData)
+            ?.openMenu(player, name, blockEntity, blockEntity::writeExtraContainerData)
             ?: InteractionResult.PASS
     }
 
@@ -123,9 +128,7 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
     ) {
         if (!state.`is`(newState.block)) {
             level.getTypedBlockEntity<HTBlockEntity>(pos)?.let { blockEntity: HTBlockEntity ->
-                blockEntity.collectDrops { stack: ImmutableItemStack ->
-                    HTItemDropHelper.dropStackAt(level, pos, stack)
-                }
+                blockEntity.onBlockRemoved(state, level, pos)
             }
         }
         super.onRemove(state, level, pos, newState, movedByPiston)
@@ -139,7 +142,7 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
         param: Int,
     ): Boolean {
         super.triggerEvent(state, level, pos, id, param)
-        return level.getTypedBlockEntity<HTBlockEntity>(pos)?.triggerEvent(id, param) ?: false
+        return level.getTypedBlockEntity<ExtendedBlockEntity>(pos)?.triggerEvent(id, param) ?: false
     }
 
     final override fun neighborChanged(
@@ -151,6 +154,18 @@ open class HTTypedEntityBlock<TYPE : HTEntityBlockType>(type: TYPE, properties: 
         movedByPiston: Boolean,
     ) {
         super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
-        level.getTypedBlockEntity<HTBlockEntity>(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+        level.getTypedBlockEntity<ExtendedBlockEntity>(pos)?.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+    }
+
+    override fun getCloneItemStack(
+        state: BlockState,
+        target: HitResult,
+        level: LevelReader,
+        pos: BlockPos,
+        player: Player,
+    ): ItemStack {
+        val stack: ItemStack = super.getCloneItemStack(state, target, level, pos, player)
+        level.getBlockEntity(pos)?.collectComponents()?.let(stack::applyComponents)
+        return stack
     }
 }

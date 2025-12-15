@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.entity.charge
 
 import com.mojang.datafixers.util.Either
 import hiiragi283.ragium.common.HTChargeType
-import hiiragi283.ragium.common.util.HTItemDropHelper
+import hiiragi283.ragium.util.HTItemDropHelper
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity

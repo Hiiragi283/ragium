@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.material.Fluid
-import net.neoforged.neoforge.common.Tags
 
 class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>(Registries.FLUID, context) {
     override fun addTagsInternal(factory: BuilderFactory<Fluid>) {
@@ -24,8 +23,6 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>
     }
 
     private fun category(factory: BuilderFactory<Fluid>) {
-        factory.apply(Tags.Fluids.GASEOUS).addContent(RagiumFluidContents.NATURAL_GAS)
-
         factory.apply(RagiumCommonTags.Fluids.BIODIESEL).addContent(RagiumFluidContents.BIOFUEL)
 
         factory.apply(RagiumCommonTags.Fluids.DIESEL).addContent(RagiumFluidContents.FUEL)

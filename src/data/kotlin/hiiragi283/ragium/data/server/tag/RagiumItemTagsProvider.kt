@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.variant.HTToolVariant
+import hiiragi283.ragium.common.HTUpgradeType
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
@@ -60,6 +61,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         material(factory)
         food(factory)
+        upgradeTargets(factory)
+        upgradeExclusive(factory)
         categories(factory)
 
         accessories(factory)
@@ -129,6 +132,10 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .addItem(Items.COAL)
         addMaterial(factory, CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL)
             .addItem(Items.CHARCOAL)
+        factory
+            .apply(RagiumCommonTags.Items.COAL_COKE)
+            .add(RagiumItems.getMaterial(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE))
+
         addMaterial(factory, CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE)
             .addTag(RagiumCommonTags.Items.COAL_COKE, HTTagDependType.OPTIONAL)
         // Gems
@@ -197,15 +204,19 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         // Food
         factory
             .apply(Tags.Items.FOODS)
-            .addTag(CommonMaterialPrefixes.JAM)
-            .addTag(RagiumCommonTags.Items.FOODS_DOUGH)
+            .add(RagiumBlocks.WARPED_WART)
             .add(RagiumItems.AMBROSIA)
             .add(RagiumItems.CANNED_COOKED_MEAT)
+            .add(RagiumItems.CHOCOLATE_BREAD)
             .add(RagiumItems.ICE_CREAM)
             .add(RagiumItems.ICE_CREAM_SODA)
             .add(RagiumItems.MELON_PIE)
+            .add(RagiumItems.RAGI_CHERRY_PIE)
+            .add(RagiumItems.RAGI_CHERRY_PIE_SLICE)
+            .add(RagiumItems.RAGI_CHERRY_TOAST)
             .add(RagiumItems.SWEET_BERRIES_CAKE_SLICE)
-            .add(RagiumBlocks.WARPED_WART)
+            .addTag(CommonMaterialPrefixes.JAM)
+            .addTag(RagiumCommonTags.Items.FOODS_DOUGH)
 
         factory.apply(Tags.Items.FOODS_BERRY).add(RagiumBlocks.EXP_BERRIES)
         factory.apply(Tags.Items.FOODS_GOLDEN).add(RagiumItems.FEVER_CHERRY)
@@ -225,15 +236,113 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
 
         addMaterial(factory, CommonMaterialPrefixes.FOOD, FoodMaterialKeys.APPLE).addItem(Items.APPLE)
 
-        addMaterial(factory, foodsFruit, FoodMaterialKeys.RAGI_CHERRY)
-            .add(RagiumItems.RAGI_CHERRY)
-            .add(RagiumItems.RAGI_CHERRY_PULP)
+        addMaterial(factory, foodsFruit, FoodMaterialKeys.RAGI_CHERRY).add(RagiumItems.RAGI_CHERRY)
 
         addMaterial(factory, CommonMaterialPrefixes.JAM, FoodMaterialKeys.RAGI_CHERRY).add(RagiumItems.RAGI_CHERRY_JAM)
 
         factory
             .apply(RagiumCommonTags.Items.FOODS_DOUGH)
             .addTag(CommonMaterialPrefixes.DOUGH)
+    }
+
+    //    Upgrades    //
+
+    private fun upgradeTargets(factory: BuilderFactory<Item>) {
+        // Generator
+        factory
+            .apply(RagiumModTags.Items.GENERATOR_UPGRADABLE)
+            // Basic
+            .add(RagiumBlocks.THERMAL_GENERATOR)
+            // Advanced
+            .add(RagiumBlocks.CULINARY_GENERATOR)
+            .add(RagiumBlocks.MAGMATIC_GENERATOR)
+            // Elite
+            .add(RagiumBlocks.COMBUSTION_GENERATOR)
+            .add(RagiumBlocks.SOLAR_PANEL_CONTROLLER)
+            // Ultimate
+            .add(RagiumBlocks.ENCHANTMENT_GENERATOR)
+            .add(RagiumBlocks.NUCLEAR_REACTOR)
+        // Processor
+        factory
+            .apply(RagiumModTags.Items.PROCESSOR_UPGRADABLE)
+            // Basic
+            .add(RagiumBlocks.ALLOY_SMELTER)
+            .add(RagiumBlocks.BLOCK_BREAKER)
+            .add(RagiumBlocks.COMPRESSOR)
+            .add(RagiumBlocks.CUTTING_MACHINE)
+            .add(RagiumBlocks.ELECTRIC_FURNACE)
+            .add(RagiumBlocks.EXTRACTOR)
+            .add(RagiumBlocks.PULVERIZER)
+            // Advanced
+            .add(RagiumBlocks.CRUSHER)
+            .add(RagiumBlocks.MELTER)
+            .add(RagiumBlocks.MIXER)
+            .add(RagiumBlocks.REFINERY)
+            // Elite
+            .add(RagiumBlocks.BREWERY)
+            .add(RagiumBlocks.ADVANCED_MIXER)
+            .add(RagiumBlocks.MULTI_SMELTER)
+            .add(RagiumBlocks.PLANTER)
+            // Ultimate
+            .add(RagiumBlocks.ENCHANTER)
+            .add(RagiumBlocks.MOB_CRUSHER)
+            .add(RagiumBlocks.SIMULATOR)
+
+        factory
+            .apply(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE)
+            .add(RagiumBlocks.CUTTING_MACHINE)
+            .add(RagiumBlocks.PULVERIZER)
+            .add(RagiumBlocks.CRUSHER)
+
+        factory
+            .apply(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE)
+            .add(RagiumBlocks.PULVERIZER)
+            .add(RagiumBlocks.CRUSHER)
+        // Storage
+        factory
+            .apply(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE)
+            .addTag(RagiumModTags.Items.GENERATOR_UPGRADABLE)
+            .addTag(RagiumModTags.Items.PROCESSOR_UPGRADABLE)
+            // Storage
+            .add(RagiumBlocks.BATTERY)
+            .add(RagiumBlocks.BUFFER)
+
+        factory
+            .apply(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE)
+            // Generator
+            .add(RagiumBlocks.CULINARY_GENERATOR)
+            .add(RagiumBlocks.MAGMATIC_GENERATOR)
+            .add(RagiumBlocks.COMBUSTION_GENERATOR)
+            // Processor
+            .add(RagiumBlocks.COMPRESSOR)
+            .add(RagiumBlocks.EXTRACTOR)
+            .add(RagiumBlocks.PULVERIZER)
+            .add(RagiumBlocks.CRUSHER)
+            .add(RagiumBlocks.MELTER)
+            .add(RagiumBlocks.MIXER)
+            .add(RagiumBlocks.REFINERY)
+            .add(RagiumBlocks.BREWERY)
+            .add(RagiumBlocks.ADVANCED_MIXER)
+            .add(RagiumBlocks.PLANTER)
+            .add(RagiumBlocks.ENCHANTER)
+            .add(RagiumBlocks.MOB_CRUSHER)
+            .add(RagiumBlocks.SIMULATOR)
+            // Device
+            .add(RagiumBlocks.FLUID_COLLECTOR)
+            // Storage
+            .add(RagiumBlocks.TANK)
+            .add(RagiumBlocks.BUFFER)
+
+        factory
+            .apply(RagiumModTags.Items.ITEM_CAPACITY_UPGRADABLE)
+            .add(RagiumBlocks.CRATE)
+    }
+
+    private fun upgradeExclusive(factory: BuilderFactory<Item>) {
+        factory
+            .apply(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE)
+            .add(HTUpgradeType.BIO_COMPOSTING)
+            .add(HTUpgradeType.EXP_EXTRACTING)
     }
 
     //    Categories    //
@@ -252,14 +361,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.MAGMA_SHARD)
             .addTag(ItemTags.SOUL_FIRE_BASE_BLOCKS)
         // Enchantments
-        buildList {
-            addAll(RagiumBlocks.CRATES.values)
-            addAll(RagiumBlocks.DRUMS.values)
-        }.forEach(factory.apply(RagiumModTags.Items.CAPACITY_ENCHANTABLE)::add)
-        addTags(factory, Tags.Items.ENCHANTABLES, RagiumModTags.Items.CAPACITY_ENCHANTABLE)
-            .add(RagiumItems.DRILL)
-            .add(RagiumItems.TELEPORT_KEY)
-
         addTags(factory, Tags.Items.ENCHANTABLES, RagiumModTags.Items.RANGE_ENCHANTABLE)
             .add(RagiumItems.ADVANCED_MAGNET)
             .add(RagiumItems.MAGNET)
@@ -358,6 +459,8 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .add(RagiumItems.FEVER_CHERRY)
             .addTag(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
 
+        factory.apply(Tags.Items.FERTILIZERS).add(RagiumItems.BIO_FERTILIZER)
+
         for (item: HTHolderLike in RagiumItems.MOLDS.values) {
             factory.apply(RagiumModTags.Items.MOLDS).add(item)
         }
@@ -369,9 +472,6 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         factory
             .apply(AccessoriesTags.BACK_TAG)
             .add(RagiumItems.ECHO_STAR)
-        factory
-            .apply(AccessoriesTags.BELT_TAG)
-            .add(RagiumItems.UNIVERSAL_BUNDLE)
         factory
             .apply(AccessoriesTags.CHARM_TAG)
             .add(RagiumItems.ADVANCED_MAGNET)

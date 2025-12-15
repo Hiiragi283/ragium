@@ -1,11 +1,11 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
+import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -34,7 +34,7 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.STRING, 4),
             ).saveSuffixed(output, "_from_web")
 
-        crushAndCompress(Items.MAGMA_BLOCK, Items.MAGMA_CREAM, 4)
+        crushAndCompressBlock(Items.MAGMA_BLOCK, Items.MAGMA_CREAM, 4)
 
         HTSingleExtraItemRecipeBuilder
             .crushing(
@@ -50,11 +50,11 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
             ).saveSuffixed(output, "_from_cane")
 
         // Bone <-> Bone Meal
-        crushAndCompress(Items.BONE, Items.BONE_MEAL, 4)
+        crushAndCompressRod(Items.BONE, Items.BONE_MEAL, 4)
         // Blaze Rod <-> Blaze Powder
-        crushAndCompress(Items.BLAZE_ROD, Items.BLAZE_POWDER, 4)
+        crushAndCompressRod(Items.BLAZE_ROD, Items.BLAZE_POWDER, 4)
         // Breeze Rod <-> Wind Charge
-        crushAndCompress(Items.BREEZE_ROD, Items.WIND_CHARGE, 6)
+        crushAndCompressRod(Items.BREEZE_ROD, Items.WIND_CHARGE, 6)
 
         HTSingleExtraItemRecipeBuilder
             .crushing(
@@ -234,13 +234,13 @@ object RagiumCrushingRecipeProvider : HTRecipeProvider.Direct() {
                 resultHelper.item(Items.PACKED_ICE, 9),
             ).saveSuffixed(output, "_from_blue")
         // Ice -> Packed -> Blue
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
+        HTCompressingRecipeBuilder
+            .block(
                 itemCreator.fromItem(Items.ICE, 4),
                 resultHelper.item(Items.PACKED_ICE),
             ).saveSuffixed(output, "_from_ice")
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
+        HTCompressingRecipeBuilder
+            .block(
                 itemCreator.fromItem(Items.PACKED_ICE, 4),
                 resultHelper.item(Items.BLUE_ICE),
             ).saveSuffixed(output, "_from_packed")

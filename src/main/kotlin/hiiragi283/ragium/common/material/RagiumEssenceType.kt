@@ -8,8 +8,8 @@ import java.awt.Color
 
 enum class RagiumEssenceType(val color: Color, private val enName: String, private val jpName: String) : HTMaterialLike.Translatable {
     RAGIUM(Color(0xff0033), "Ragium", "ラギウム"),
-    AZURE(Color(0x656da1), "Azure Essence", "紺碧エッセンス"),
-    DEEP(Color(0x404d5a), "Deep Essence", "深層エッセンス"),
+    AZURE(Color(0x6666cc), "Azure Essence", "紺碧エッセンス"),
+    DEEP(Color(0x699699), "Deep Essence", "深層エッセンス"),
     ;
 
     fun getBaseEntry(): Pair<HTPrefixLike, HTMaterialKey> = when (this) {

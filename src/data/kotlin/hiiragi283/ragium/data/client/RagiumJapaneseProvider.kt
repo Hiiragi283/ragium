@@ -2,15 +2,16 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.block.attribute.HTFluidBlockAttribute
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -160,19 +161,18 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.STONE_COLLECTOR, "岩石収集機")
 
         add(RagiumBlocks.DIM_ANCHOR, "次元アンカー")
-        add(RagiumBlocks.ENI, "E.N.I.")
 
         add(RagiumBlocks.TELEPAD, "テレパッド")
-
-        add(RagiumBlocks.CEU, "C.E.U.")
         // Storage
-        add(RagiumBlocks.OPEN_CRATE, "オープンクレート")
+        add(RagiumBlocks.BATTERY, "可変バッテリー")
+        add(RagiumBlocks.CRATE, "可変クレート")
+        add(RagiumBlocks.TANK, "可変タンク")
+        add(RagiumBlocks.BUFFER, "統合バッファ")
 
-        add(RagiumBlocks.EXP_DRUM, "経験値ドラム")
+        add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
     }
 
     private fun enchantment() {
-        addEnchantment(RagiumEnchantments.CAPACITY, "容量増加", "アイテムや液体ストレージの容量を拡張します。")
         addEnchantment(RagiumEnchantments.RANGE, "範囲増加", "収集の範囲を拡張します。")
 
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "ノイズキャンセリング", "ウォーデンなどのスカルク系モンスターに対してのダメージを増加させます。")
@@ -183,11 +183,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
     private fun entity() {
         add(RagiumEntityTypes.ELDRITCH_EGG, "異質な卵")
-        // add(RagiumEntityTypes.DYNAMITE, "ダイナマイト")
-        // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "枯葉剤ダイナマイト")
-        // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "整地用ダイナマイト")
-        // add(RagiumEntityTypes.NAPALM_DYNAMITE, "ナパームダイナマイト")
-        // add(RagiumEntityTypes.POISON_DYNAMITE, "毒ガスダイナマイト")
+        add(RagiumEntityTypes.TANK_MINECART, "可変タンク付きトロッコ")
     }
 
     private fun fluid() {
@@ -203,13 +199,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         addFluid(RagiumFluidContents.BIOFUEL, "バイオ燃料")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "原油")
-        addFluid(RagiumFluidContents.NATURAL_GAS, "天然ガス")
         addFluid(RagiumFluidContents.NAPHTHA, "ナフサ")
         addFluid(RagiumFluidContents.FUEL, "燃料")
         addFluid(RagiumFluidContents.LUBRICANT, "潤滑油")
 
-        addFluid(RagiumFluidContents.SAP, "樹液")
         addFluid(RagiumFluidContents.SPRUCE_RESIN, "松脂")
+        addFluid(RagiumFluidContents.LATEX, "ラテックス")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "深紅の樹液")
         addFluid(RagiumFluidContents.WARPED_SAP, "歪んだ樹液")
 
@@ -217,10 +212,12 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addFluid(RagiumFluidContents.EXPERIENCE, "液体経験値")
         addFluid(RagiumFluidContents.COOLANT, "冷却液")
+        addFluid(RagiumFluidContents.CREOSOTE, "クレオソート")
     }
 
     private fun item() {
         // Material
+        add(RagiumItems.BIO_FERTILIZER, "バイオ肥料")
         add(RagiumItems.COAL_CHIP, "石炭チップ")
         add(RagiumItems.COAL_CHUNK, "石炭の塊")
         add(RagiumItems.COMPRESSED_SAWDUST, "圧縮したおがくず")
@@ -230,7 +227,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.MAGMA_SHARD, "マグマシャード")
         add(RagiumItems.POTION_DROP, "ポーションの雫")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.RAGI_COKE, "らぎコークス")
+        add(RagiumItems.RAGIUM_POWDER, "ラギウムパウダー")
         add(RagiumItems.ROSIN, "ロジン")
         add(RagiumItems.TAR, "タール")
         add(RagiumItems.WITHER_DOLl, "ウィザー人形")
@@ -267,7 +264,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.MELON_PIE, "メロンパイ")
 
         add(RagiumItems.RAGI_CHERRY, "らぎチェリー")
-        add(RagiumItems.RAGI_CHERRY_PULP, "らぎチェリーの果肉")
         add(RagiumItems.RAGI_CHERRY_JUICE, "らぎチェリージュース")
         add(RagiumItems.RAGI_CHERRY_JAM, "らぎチェリージャム")
         add(RagiumItems.RAGI_CHERRY_PIE, "らぎチェリーパイ")
@@ -276,6 +272,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.FEVER_CHERRY, "フィーバーチェリー")
 
         add(RagiumItems.BOTTLED_BEE, "瓶詰めのハチ")
+        add(RagiumItems.CHOCOLATE_BREAD, "チョコレートパン")
         add(RagiumItems.AMBROSIA, "アンブロシア")
 
         // Mold
@@ -300,18 +297,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")
         add(RagiumItems.SYNTHETIC_LEATHER, "合成革")
+        // Vehicles
+        add(RagiumItems.TANK_MINECART, "タンク付きトロッコ")
         // Upgrades
         add(RagiumItems.ETERNAL_COMPONENT, "永久構造体")
-
-        add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "効率的粉砕アップグレード")
-
-        add(RagiumItems.PRIMARY_ONLY_UPGRADE, "主産物特化アップグレード")
-
-        add(RagiumItems.EXP_COLLECTOR_UPGRADE, "経験値収集アップグレード")
-        add(RagiumItems.FISHING_UPGRADE, "釣りアップグレード")
-        add(RagiumItems.MOB_CAPTURE_UPGRADE, "モブ捕獲アップグレード")
-
-        add(RagiumItems.CREATIVE_UPGRADE, "クリエイティブ用アップグレード")
     }
 
     private fun keyMapping() {
@@ -335,7 +324,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Items.POLYMER_RESIN, "高分子樹脂")
         add(RagiumModTags.Items.RAW_MEAT, "生肉")
 
-        add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "容量増加をエンチャント可能")
         add(RagiumModTags.Items.RANGE_ENCHANTABLE, "範囲増加をエンチャント可能")
         add(RagiumModTags.Items.STRIKE_ENCHANTABLE, "雷撃をエンチャント可能")
 
@@ -344,6 +332,16 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumModTags.Items.TOOLS_DRILL, "ドリル")
         add(RagiumModTags.Items.TOOLS_HAMMER, "ハンマー")
+
+        add(RagiumModTags.Items.GENERATOR_UPGRADABLE, "発電機")
+        add(RagiumModTags.Items.PROCESSOR_UPGRADABLE, "加工機械")
+        add(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE, "追加の出力スロットをもつ加工機械")
+        add(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE, "粉砕機または破砕機")
+        add(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE, "エネルギーストレージ")
+        add(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE, "液体ストレージ")
+        add(RagiumModTags.Items.ITEM_CAPACITY_UPGRADABLE, "アイテムストレージ")
+
+        add(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE, "抽出機に対応したアップグレード")
     }
 
     private fun recipeType() {
@@ -358,8 +356,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.REFINING, "精製")
-        add(RagiumRecipeTypes.ROCK_GENERATING, "岩石生成")
         add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
+        add(RagiumRecipeTypes.SOLIDIFYING, "成型")
     }
 
     private fun text() {
@@ -373,12 +371,25 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTFluidBlockAttribute.TankType.FIRST_INPUT, "1番目の搬入タンクの容量")
         add(HTFluidBlockAttribute.TankType.SECOND_INPUT, "2番目の搬入タンクの容量")
 
-        add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
-        add(HTMachineUpgrade.Key.SPEED, $$"- 処理速度: %1$s")
+        add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- 基本倍率: %1$s")
+        add(HTUpgradeKeys.IS_CREATIVE, "- クリエイティブ")
 
-        add(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE, $$"- 追加のチャンス: %1$s")
+        add(HTUpgradeKeys.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
+        add(HTUpgradeKeys.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
+        add(HTUpgradeKeys.SPEED, $$"- 処理速度: %1$s")
+
+        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
+        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- 液体容量: %1$s")
+        add(HTUpgradeKeys.ITEM_CAPACITY, $$"- アイテム容量: %1$s")
+
+        add(RagiumUpgradeKeys.COMPOST_BIO, "- アイテムを未加工バイオに変換")
+        add(RagiumUpgradeKeys.VOID_EXTRA, "- 追加の生産物を無効化")
+        add(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, "- エンチャントされたアイテムから液体経験値を抽出")
+        add(RagiumUpgradeKeys.USE_LUBRICANT, "- 処理ごとに潤滑油を消費")
+
+        add(RagiumUpgradeKeys.COLLECT_EXP, "- 水の代わりに経験値オーブを収集")
+        add(RagiumUpgradeKeys.FISHING, "- アイテム収集の代わりに釣りを実行")
+        add(RagiumUpgradeKeys.CAPTURE_MOB, "- アイテム収集の代わりにモブを捕獲")
         // API - Constants
         add(RagiumTranslation.ERROR, "エラー")
         add(RagiumTranslation.INFINITE, "無限")
@@ -392,14 +403,14 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumTranslation.MISSING_SERVER, "サーバーが見つかりません")
         add(RagiumTranslation.MISSING_REGISTRY, $$"不明なレジストリ: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"不明なキー: %1$s")
-        // API - GUI
-        add(RagiumTranslation.BURN_TIME, $$"燃焼時間: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"常に少なくとも%1$sがあります")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_TARGET, $$"アップグレードの対象: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE, $$"競合するアップグレード: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "シフトキーを押して説明を表示")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "シフトキーを押して詳細を表示")
@@ -451,10 +462,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         add(RagiumCommonTranslation.CEU, "無制限にエネルギーを供給する設備です。")
 
-        add(RagiumCommonTranslation.CRATE, "1種類のアイテムを保管するストレージです。")
-        add(RagiumCommonTranslation.OPEN_CRATE, "搬入されたアイテムを真下に落とすストレージです。")
-        add(RagiumCommonTranslation.DRUM, "1種類の液体を保管するストレージです。")
-        add(RagiumCommonTranslation.EXP_DRUM, "液体経験値だけを保管するストレージです。")
+        add(RagiumCommonTranslation.BATTERY, "アップグレードで容量を拡張可能なエネルギーストレージです。")
+        add(RagiumCommonTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")
+        add(RagiumCommonTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
+        add(RagiumCommonTranslation.BUFFER, "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。")
+        add(RagiumCommonTranslation.UNIVERSAL_CHEST, "色ごとに中身を共有するチェストです。")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
         add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
@@ -482,6 +494,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.MAGNET, "範囲内のドロップアイテムを回収します。")
         add(RagiumCommonTranslation.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
         add(RagiumCommonTranslation.TRADER_CATALOG, "行商人からドロップします。右クリックで行商人との取引を行えます。")
+        add(RagiumCommonTranslation.UNIVERSAL_BUNDLE, "色ごとに中身を共有するバンドルです。")
 
         add(RagiumCommonTranslation.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         add(RagiumCommonTranslation.ICE_CREAM, "食べると鎮火します。")
@@ -498,7 +511,11 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
     //    Addon    //
 
     private fun emi() {
-        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE, "機械のアップグレード")
+        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "機械のアップグレード")
+        add(RagiumCommonTranslation.EMI_COMPOSTING_TITLE, "コンポスト")
+        add(RagiumCommonTranslation.EMI_ROCK_GENERATING, "岩石生成")
+
+        add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "ブロックの下に設置します。")
     }
 
     private fun jade() {

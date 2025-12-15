@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.entity.generator.base
 
 import hiiragi283.ragium.api.block.attribute.getAttributeFront
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
-import hiiragi283.ragium.common.util.HTEnergyHelper
+import hiiragi283.ragium.util.HTEnergyHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
@@ -29,7 +29,9 @@ abstract class HTFuelGeneratorBlockEntity(blockHolder: Holder<Block>, pos: Block
         // 燃料がある場合，それを消費する
         if (remainingBurnTime > 0) {
             remainingBurnTime--
-            battery.currentEnergyPerTick = modifyValue(HTMachineUpgrade.Key.ENERGY_GENERATION) { battery.baseEnergyPerTick * it }
+            battery.currentEnergyPerTick = modifyValue(HTUpgradeKeys.ENERGY_GENERATION) {
+                battery.baseEnergyPerTick * it * getBaseMultiplier()
+            }
             battery.generate()
             return true
         } else {

@@ -1,20 +1,24 @@
 package hiiragi283.ragium.common.block.entity.processor
 
-import hiiragi283.ragium.api.function.andThen
+import hiiragi283.ragium.api.math.minus
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.stack.maxStackSize
-import hiiragi283.ragium.api.tier.HTBaseTier
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
-import hiiragi283.ragium.common.recipe.HTVanillaCookingRecipe
+import hiiragi283.ragium.common.recipe.vanilla.HTVanillaCookingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
+import org.apache.commons.lang3.math.Fraction
 import kotlin.math.min
+import kotlin.math.pow
 
 class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTAbstractSmelterBlockEntity(
@@ -22,10 +26,11 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         pos,
         state,
     ) {
-    override fun getMatchedRecipe(input: SingleRecipeInput, level: ServerLevel): HTVanillaCookingRecipe? {
+    override fun getMatchedRecipe(input: HTRecipeInput, level: ServerLevel): HTVanillaCookingRecipe? {
         val cache: HTRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = getRecipeCache()
-        val baseRecipe: AbstractCookingRecipe = cache.getFirstRecipe(input, level) ?: return null
-        val result: ItemStack = baseRecipe.assemble(input, level.registryAccess())
+        val singleInput: SingleRecipeInput = input.toSingleItem() ?: return null
+        val baseRecipe: AbstractCookingRecipe = cache.getFirstRecipe(singleInput, level) ?: return null
+        val result: ItemStack = baseRecipe.assemble(singleInput, level.registryAccess())
         if (result.isEmpty) return null
         val resultMaxSize: Int = result.maxStackSize
 
@@ -40,16 +45,18 @@ class HTMultiSmelterBlockEntity(pos: BlockPos, state: BlockState) :
         return HTVanillaCookingRecipe(
             baseRecipe,
             HTItemIngredient(baseRecipe.ingredients[0], inputCount),
-            baseRecipe::assemble.andThen { it.copyWithCount(outputCount) },
-        )
+        ) { inputIn: HTRecipeInput, provider: HolderLookup.Provider ->
+            val singleInputIn: SingleRecipeInput = inputIn.toSingleItem() ?: return@HTVanillaCookingRecipe ItemStack.EMPTY
+            baseRecipe.assemble(singleInputIn, provider).copyWithCount(outputCount)
+        }
     }
 
-    private fun getMaxParallel(): Int = when (getMaxMachineTier()) {
-        HTBaseTier.BASIC -> 2
-        HTBaseTier.ADVANCED -> 4
-        HTBaseTier.ELITE -> 8
-        HTBaseTier.ULTIMATE -> 16
-        HTBaseTier.CREATIVE -> inputSlot.getStack()?.maxStackSize() ?: -1
-        null -> 1
+    private fun getMaxParallel(): Int {
+        val maxTier: Fraction? = getMaxMultiplier(HTUpgradeKeys.BASE_MULTIPLIER)
+        return when {
+            isCreative() -> inputSlot.getStack()?.maxStackSize() ?: -1
+            maxTier != null -> 2.0.pow((maxTier - 1).toDouble()).toInt()
+            else -> 1
+        }
     }
 }

@@ -36,22 +36,6 @@ object RagiumEnchantmentProvider : RegistrySetBuilder.RegistryBootstrap<Enchantm
 
         register(
             context,
-            RagiumEnchantments.CAPACITY,
-            Enchantment
-                .enchantment(
-                    Enchantment.definition(
-                        itemLookup.getOrThrow(RagiumModTags.Items.CAPACITY_ENCHANTABLE),
-                        2,
-                        3,
-                        Enchantment.dynamicCost(15, 9),
-                        Enchantment.dynamicCost(65, 9),
-                        4,
-                        EquipmentSlotGroup.ANY,
-                    ),
-                ).withSpecialEffect(RagiumEnchantmentComponents.CAPACITY, MultiplyValue(LevelBasedValue.perLevel(2f, 1f))),
-        )
-        register(
-            context,
             RagiumEnchantments.RANGE,
             Enchantment
                 .enchantment(

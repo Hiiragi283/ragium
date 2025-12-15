@@ -48,7 +48,7 @@ abstract class HTEmiRecipe<RECIPE : Any>(
 
     protected fun catalyst(index: Int): EmiIngredient = catalysts.getOrNull(index) ?: EmiStack.EMPTY
 
-    protected fun output(index: Int): EmiStack = outputs.getOrNull(index) ?: EmiStack.EMPTY
+    protected fun output(index: Int): EmiIngredient = renderOutputs.getOrNull(index) ?: EmiStack.EMPTY
 
     protected fun addInput(ingredient: HTItemIngredient?) {
         addInput(ingredient?.let(HTItemIngredient::toEmi))

@@ -4,6 +4,8 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeData
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.HTMoldType
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
@@ -41,8 +43,8 @@ data object RagiumMaterialRecipeData {
 
     @JvmField
     val ADVANCED_RAGI_ALLOY: HTRecipeData = HTRecipeData.create {
-        ingotOrDust(VanillaMaterialKeys.GOLD)
-        addInput(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 4)
+        ingotOrDust(RagiumMaterialKeys.RAGI_ALLOY)
+        addInput(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 2)
 
         addOutput(
             RagiumItems.getIngot(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY),
@@ -70,6 +72,13 @@ data object RagiumMaterialRecipeData {
         gemOrDust(VanillaMaterialKeys.LAPIS)
 
         addOutput(RagiumItems.getGem(RagiumMaterialKeys.AZURE), CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE, 2)
+    }
+
+    @JvmField
+    val AZURE_DUST: HTRecipeData = HTRecipeData.create {
+        addInput(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.AZURE)
+
+        addOutput(RagiumItems.getDust(RagiumMaterialKeys.AZURE), CommonMaterialPrefixes.DUST, RagiumMaterialKeys.AZURE)
     }
 
     @JvmField
@@ -135,6 +144,25 @@ data object RagiumMaterialRecipeData {
         setSuffix("_warped")
     }
 
+    //    Rubber    //
+
+    @JvmField
+    val RAW_RUBBER_SHEET: HTRecipeData = HTRecipeData.create {
+        addInput(RagiumFluidContents.LATEX, 1000)
+
+        setCatalyst(HTMoldType.PLATE)
+
+        addOutput(RagiumItems.getPlate(CommonMaterialKeys.RAW_RUBBER), CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER, 2)
+    }
+
+    @JvmField
+    val RUBBER_SHEET: HTRecipeData = HTRecipeData.create {
+        addInput(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER)
+        addInput(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
+
+        addOutput(RagiumItems.getPlate(CommonMaterialKeys.RUBBER), CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2)
+    }
+
     //    Other    //
 
     @JvmField
@@ -153,7 +181,7 @@ data object RagiumMaterialRecipeData {
         addInput(Items.HEART_OF_THE_SEA)
         addInput(Items.DRAGON_BREATH)
 
-        addInput(RagiumFluidContents.DESTABILIZED_RAGINITE, 8000)
+        addInput(RagiumFluidContents.DESTABILIZED_RAGINITE, 1000)
 
         addOutput(RagiumItems.IRIDESCENT_POWDER, null)
     }

@@ -3,12 +3,12 @@ package hiiragi283.ragium.common.item.block
 import hiiragi283.ragium.api.item.HTBlockItem
 import hiiragi283.ragium.api.item.HTSubCreativeTabContents
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
+import hiiragi283.ragium.api.item.createItemStack
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder
-import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.EntityType
@@ -43,14 +43,11 @@ class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Pr
             .filterElements(HTImitationSpawnerBlock::filterEntityType)
             .listElements()
             .forEach { holder: Holder<EntityType<*>> ->
-                consumer.accept(
-                    baseItem.toStack(
-                        components = DataComponentPatch
-                            .builder()
-                            .set(RagiumDataComponents.SPAWNER_MOB, HTSpawnerMob(holder))
-                            .build(),
-                    ),
-                )
+                createItemStack(
+                    baseItem,
+                    RagiumDataComponents.SPAWNER_MOB,
+                    HTSpawnerMob(holder),
+                ).let(consumer::accept)
             }
     }
 }

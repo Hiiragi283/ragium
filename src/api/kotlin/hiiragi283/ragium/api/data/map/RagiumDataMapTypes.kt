@@ -5,6 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.entity.typeHolder
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -12,6 +13,8 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
@@ -20,6 +23,11 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
  * @see mekanism.api.datamaps.IMekanismDataMapTypes
  */
 object RagiumDataMapTypes {
+    // Block
+    @JvmField
+    val ROCK_CHANCE: DataMapType<Block, HTRockGenerationData> =
+        create("rock_generation", Registries.BLOCK, HTRockGenerationData.CODEC)
+
     // Entity Type
     @JvmField
     val MOB_HEAD: DataMapType<EntityType<*>, HTMobHead> = create("mob_head", Registries.ENTITY_TYPE, HTMobHead.CODEC)
@@ -39,29 +47,45 @@ object RagiumDataMapTypes {
     val ARMOR_EQUIP: DataMapType<Item, HTEquipAction> =
         create("armor_equip", Registries.ITEM, HTEquipAction.CODEC)
 
+    @JvmField
+    val UPGRADE: DataMapType<Item, HTUpgradeData> =
+        create("upgrade", Registries.ITEM, HTUpgradeData.CODEC)
+
     //    Extensions    //
 
+    fun getRockData(state: BlockState): HTRockGenerationData? = state.blockHolder.getData(ROCK_CHANCE)
+
     /**
-     * 指定した値からエンチャントでドロップするモブの頭を取得します。
+     * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。
      */
     fun getMobHead(entity: Entity): ItemStack = entity.typeHolder.getData(MOB_HEAD)?.toStack() ?: ItemStack.EMPTY
 
     /**
-     * 指定した値から，一度の処理に必要な冷却材の使用量を取得します。
+     * 指定した[stack]から，一度の処理に必要な冷却材の使用量を取得します。
      */
     fun getCoolantAmount(stack: ImmutableFluidStack): Int = stack.getData(COOLANT)?.amount ?: 0
 
     /**
-     * 指定した値から，1000 mbの高温の液体による燃焼時間を取得します。
+     * 指定した[stack]から，1000 mbの高温の液体による燃焼時間を取得します。
      */
     fun getTimeFromMagmatic(stack: ImmutableFluidStack): Int = stack.getData(MAGMATIC_FUEL)?.time ?: 0
 
     /**
-     * 指定した値から，1000 mbの液体燃料による燃焼時間を取得します。
+     * 指定した[stack]から，1000 mbの液体燃料による燃焼時間を取得します。
      */
     fun getTimeFromCombustion(stack: ImmutableFluidStack): Int = stack.getData(COMBUSTION_FUEL)?.time ?: 0
 
     fun getEquipAction(stack: ItemStack): HTEquipAction? = stack.itemHolder.getData(ARMOR_EQUIP)
+
+    /**
+     * 指定した[stack]から，アップグレードのデータを取得します。
+     */
+    fun getUpgradeData(stack: ItemStack): HTUpgradeData? = stack.itemHolder.getData(UPGRADE)
+
+    /**
+     * 指定した[stack]から，アップグレードのデータを取得します。
+     */
+    fun getUpgradeData(stack: ImmutableItemStack): HTUpgradeData? = stack.getData(UPGRADE)
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =

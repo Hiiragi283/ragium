@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.gui.screen
 
-import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.client.gui.component.HTProgressWidget
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
@@ -13,8 +12,6 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(Dist.CLIENT)
 class HTFluidCollectorScreen(menu: HTBlockEntityContainerMenu<HTFluidCollectorBlockEntity>, inventory: Inventory, title: Component) :
     HTBlockEntityContainerScreen<HTFluidCollectorBlockEntity>(menu, inventory, title) {
-    private lateinit var fluidWidget: HTFluidWidget
-
     override fun init() {
         super.init()
         addRenderableOnly(
@@ -25,8 +22,6 @@ class HTFluidCollectorScreen(menu: HTBlockEntityContainerMenu<HTFluidCollectorBl
             ),
         )
 
-        fluidWidget = createFluidTank(blockEntity.tank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
+        createFluidTank(blockEntity.outputTank, HTSlotHelper.getSlotPosX(5.5), HTSlotHelper.getSlotPosY(0))
     }
-
-    override fun getFluidWidgets(): List<HTFluidWidget> = listOf(fluidWidget)
 }

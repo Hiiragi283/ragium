@@ -115,7 +115,7 @@ class RagiumIntegration(eventBus: IEventBus, dist: Dist) {
 
     private fun registerRailgun() {
         for (chargeType: HTChargeType in HTChargeType.entries) {
-            registerRailgun(chargeType.getItem(), HTThrowableRailgunProjectile(chargeType::createCharge))
+            registerRailgun(chargeType, HTThrowableRailgunProjectile(chargeType::createCharge))
         }
         registerRailgun(RagiumItems.ELDRITCH_EGG, HTThrowableRailgunProjectile(::HTThrownCaptureEgg))
         RagiumAPI.LOGGER.info("Registered Railgun Projectiles!")

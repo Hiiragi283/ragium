@@ -12,9 +12,9 @@ import java.awt.Color
 
 enum class RagiumMoltenCrystalData(val color: Color, private val enName: String, private val jaName: String) :
     HTMaterialLike.Translatable {
-    CRIMSON(Color(0x660000), "Crimson Blood", "深紅の血液"),
-    WARPED(Color(0x006666), "Dew of the Warp", "歪みの雫"),
-    ELDRITCH(Color(0x660066), "Eldritch Flux", "異質な流動体"),
+    CRIMSON(Color(0x990000), "Crimson Blood", "深紅の血液"),
+    WARPED(Color(0x009999), "Dew of the Warp", "歪みの雫"),
+    ELDRITCH(Color(0x990099), "Eldritch Flux", "異質な流動体"),
     ;
 
     val base: TagKey<Item>?

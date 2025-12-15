@@ -11,8 +11,8 @@ import hiiragi283.ragium.common.block.entity.generator.base.HTFuelGeneratorBlock
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -30,7 +30,7 @@ class HTMagmaticGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(
                 listener,
-                blockHolder.getFluidAttribute().getInputTank(),
+                blockHolder.getFluidAttribute().getInputTank(this),
                 RagiumDataMapTypes::getTimeFromMagmatic.andThen { it > 0 },
             ),
         )

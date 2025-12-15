@@ -4,11 +4,11 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.entity.isOf
 import hiiragi283.ragium.api.stack.ImmutableItemStack
-import hiiragi283.ragium.common.util.HTItemDropHelper
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTItemDropHelper
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
@@ -161,7 +161,7 @@ object RagiumRuntimeHandler {
         val result: ItemStack = event.crafting
         if (result.isEmpty) return
         // 中身のアイテムをプレイヤーに渡す
-        result.remove(RagiumDataComponents.ITEM_CONTENT)?.forEach { stack: ImmutableItemStack? ->
+        result.remove(RagiumDataComponents.ITEM)?.forEach { stack: ImmutableItemStack? ->
             HTItemDropHelper.giveStackTo(event.entity, stack)
         }
     }

@@ -5,59 +5,53 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.recipe.ingredient.HTFluidIngredientCreator
 import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
-import hiiragi283.ragium.api.item.alchemy.HTMobEffectInstance
-import hiiragi283.ragium.api.item.alchemy.HTPotionContents
-import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.getDefaultPrefix
 import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.api.recipe.ingredient.HTPotionIngredient
-import hiiragi283.ragium.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.HTMoldType
+import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTExtractingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTPlantingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.crafting.HTClearComponentRecipe
-import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTPlantingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSmithingRecipeBuilder
-import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.effect.MobEffect
-import net.minecraft.world.entity.EntityType
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.level.ItemLike
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.conditions.NotCondition
 import net.neoforged.neoforge.common.conditions.OrCondition
-import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 
 /**
  * Ragiumがレシピ生成で使用するクラス
@@ -145,7 +139,7 @@ sealed class HTRecipeProvider {
             val namespace: String = id.namespace
             return if (namespace in RagiumConst.BUILTIN_IDS) {
                 val path: List<String> = id.path.split("/", limit = 2)
-                return RagiumAPI.id(path[0], modid, path[1])
+                RagiumAPI.id(path[0], modid, path[1])
             } else {
                 val path: List<String> = id.path.split("/", limit = 2)
                 RagiumAPI.id(path[0], namespace, path[1])
@@ -163,14 +157,6 @@ sealed class HTRecipeProvider {
 
     protected fun getDefaultPrefix(material: HTMaterialLike): HTMaterialPrefix? =
         RagiumPlatform.INSTANCE.getMaterialDefinition(material.asMaterialKey()).getDefaultPrefix()
-
-    protected fun spawnerIngredient(entityType: EntityType<*>): Ingredient = DataComponentIngredient
-        .of(
-            false,
-            RagiumDataComponents.SPAWNER_MOB,
-            HTSpawnerMob(entityType),
-            RagiumBlocks.IMITATION_SPAWNER,
-        )
 
     // Recipe Builders
 
@@ -202,89 +188,29 @@ sealed class HTRecipeProvider {
         .addIngredient(input)
         .addIngredient(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
 
-    // Brewing
-    // Potion
-    protected fun brewing(right: HTItemIngredient, potion: Holder<Potion>) {
-        HTCombineRecipeBuilder
-            .brewing(
-                itemCreator.fromTagKey(Tags.Items.CROPS_NETHER_WART),
-                right,
-                potion,
-            ).save(output)
-    }
+    protected fun craftingDyed(base: HTItemHolderLike) {
+        resetComponent(base, RagiumDataComponents.COLOR)
 
-    protected fun brewing(
-        right: HTItemIngredient,
-        base: Holder<Potion>,
-        long: Holder<Potion>?,
-        strong: Holder<Potion>?,
-    ) {
-        // Base
-        brewing(right, base)
-        val drop: HTItemIngredient =
-            itemCreator.from(HTPotionIngredient.of(HTPotionContents(base), RagiumItems.POTION_DROP))
-        // Long
-        if (long != null) {
-            HTCombineRecipeBuilder
-                .brewing(
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-                    drop,
-                    long,
-                ).save(output)
-        }
-        // Strong
-        if (strong != null) {
-            HTCombineRecipeBuilder
-                .brewing(
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
-                    drop,
-                    strong,
-                ).save(output)
+        for (variant: HTColorMaterial in HTColorMaterial.entries) {
+            HTShapelessRecipeBuilder(ImmutableItemStack.of(base).plus(RagiumDataComponents.COLOR, variant.dyeColor))
+                .addIngredient(base)
+                .addIngredient(variant.dyeTag)
+                .savePrefixed(output, "${variant.asMaterialName()}_")
         }
     }
 
-    // HTMobEffectInstance
-    private fun brewing(
-        right: HTItemIngredient,
-        left: HTItemIngredient = itemCreator.fromTagKey(Tags.Items.CROPS_NETHER_WART),
-        builderAction: MutableList<HTMobEffectInstance>.() -> Unit,
-    ): HTCombineRecipeBuilder<HTPotionContents> = HTCombineRecipeBuilder
-        .brewing(
-            left,
-            right,
-            builderAction,
-        )
-
-    protected fun benefitBrewing(right: HTItemIngredient, effect: Holder<MobEffect>) {
-        longAndStrongBrewing(right, effect, 3600, 9600, 1800)
-    }
-
-    protected fun harmfulBrewing(right: HTItemIngredient, effect: Holder<MobEffect>) {
-        longAndStrongBrewing(right, effect, 900, 1800, 432)
-    }
-
-    private fun longAndStrongBrewing(
-        right: HTItemIngredient,
-        effect: Holder<MobEffect>,
-        baseTime: Int,
-        longTime: Int,
-        strongTime: Int,
-    ) {
-        val instance = HTMobEffectInstance(effect, baseTime)
-        val drop: HTItemIngredient =
-            itemCreator.from(HTPotionIngredient.of(HTPotionContents(instance), RagiumItems.POTION_DROP))
-        // Base
-        brewing(right) { add(instance) }.save(output)
-        // Long
-        brewing(
-            itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
-            drop,
-        ) { add(HTMobEffectInstance(effect, longTime)) }.savePrefixed(output, "long_")
-        // Strong
-        brewing(
-            itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE),
-            drop,
-        ) { add(HTMobEffectInstance(effect, strongTime, 1)) }.savePrefixed(output, "strong_")
+    // Alloying
+    fun alloyFromData(data: HTRecipeData, applyCondition: Boolean = false) {
+        HTAlloyingRecipeBuilder(
+            data.getItemIngredients(itemCreator),
+            data.getItemResults()[0].first,
+        ).apply {
+            if (applyCondition) {
+                for ((entry: Ior<Item, TagKey<Item>>) in data.itemOutputs) {
+                    entry.getRight()?.let(this::tagCondition)
+                }
+            }
+        }.saveModified(output, data.operator)
     }
 
     // Compressing
@@ -300,32 +226,36 @@ sealed class HTRecipeProvider {
     }
 
     protected fun compressingTo(mold: HTMoldType, ingredient: HTItemIngredient, result: HTItemResult) {
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
-                ingredient,
-                result,
-                itemCreator.fromItem(mold),
-            ).saveSuffixed(output, "_with_mold")
+        HTCompressingRecipeBuilder(ingredient, mold, result).save(output)
     }
 
-    protected fun crushAndCompress(
-        base: ItemLike,
-        crushed: ItemLike,
-        crushedCount: Int,
-        catalyst: HTItemIngredient? = null,
-    ) {
+    protected fun crushAndCompressBlock(block: ItemLike, crushed: ItemLike, crushedCount: Int) {
         // Crushing
         HTSingleExtraItemRecipeBuilder
             .crushing(
-                itemCreator.fromItem(base),
+                itemCreator.fromItem(block),
                 resultHelper.item(crushed, crushedCount),
-            ).saveSuffixed(output, "_from_base")
+            ).saveSuffixed(output, "_from_block")
         // Compressing
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
+        HTCompressingRecipeBuilder
+            .block(
                 itemCreator.fromItem(crushed, crushedCount),
-                resultHelper.item(base),
-                catalyst,
+                resultHelper.item(block),
+            ).saveSuffixed(output, "_from_crushed")
+    }
+
+    protected fun crushAndCompressRod(rod: ItemLike, crushed: ItemLike, crushedCount: Int) {
+        // Crushing
+        HTSingleExtraItemRecipeBuilder
+            .crushing(
+                itemCreator.fromItem(rod),
+                resultHelper.item(crushed, crushedCount),
+            ).saveSuffixed(output, "_from_rod")
+        // Compressing
+        HTCompressingRecipeBuilder
+            .rod(
+                itemCreator.fromItem(crushed, crushedCount),
+                resultHelper.item(rod),
             ).saveSuffixed(output, "_from_crushed")
     }
 
@@ -352,16 +282,14 @@ sealed class HTRecipeProvider {
         amount: Int = 250,
     ) {
         // Extracting
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(filled),
-                resultHelper.item(empty),
-                null,
-                resultHelper.fluid(fluid.getFluid(), amount),
-            ).saveSuffixed(output, "_from_${filled.getPath()}")
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(filled))
+            .setResult(resultHelper.item(empty))
+            .setResult(resultHelper.fluid(fluid.getFluid(), amount))
+            .saveSuffixed(output, "_from_${filled.getPath()}")
         // Mixing
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(empty))
             .addIngredient(fluidCreator.fromHolder(fluid, amount))
             .setResult(resultHelper.item(filled))
@@ -376,31 +304,31 @@ sealed class HTRecipeProvider {
         amount: Int,
     ) {
         // Melting
-        HTSingleRecipeBuilder
+        HTFluidRecipeBuilder
             .melting(
                 itemCreator.fromItem(solid),
                 resultHelper.fluid(fluid, amount),
             ).saveSuffixed(output, "_from_${solid.getPath()}")
         // Solidifying
-        HTComplexRecipeBuilder
-            .solidifying()
-            .addIngredient(itemCreator.fromItem(mold))
-            .addIngredient(fluidCreator.fromHolder(fluid, amount))
-            .setResult(resultHelper.item(solid))
-            .saveSuffixed(output, "_from_${fluid.getPath()}")
+        HTFluidWithCatalystRecipeBuilder
+            .solidifying(
+                fluidCreator.fromHolder(fluid, amount),
+                itemCreator.fromItem(mold),
+                resultHelper.item(solid),
+            ).saveSuffixed(output, "_from_${fluid.getPath()}")
     }
 
     protected fun meltAndFreeze(data: HTRecipeData) {
         // Solidifying
-        HTComplexRecipeBuilder
-            .solidifying()
-            .addIngredient(data.catalyst?.let(itemCreator::fromItem))
-            .addIngredient(data.getFluidIngredients(fluidCreator)[0])
-            .setResult(data.getItemResults()[0].first)
-            .saveModified(output, data.operator)
+        HTFluidWithCatalystRecipeBuilder
+            .solidifying(
+                data.getFluidIngredients(fluidCreator)[0],
+                data.catalyst?.let(itemCreator::fromItem),
+                data.getItemResults()[0].first,
+            ).saveModified(output, data.operator)
         // Melting
         val data1: HTRecipeData = data.swap()
-        HTSingleRecipeBuilder
+        HTFluidRecipeBuilder
             .melting(
                 data1.getItemIngredients(itemCreator)[0],
                 data1.getFluidResults()[0],
@@ -409,7 +337,7 @@ sealed class HTRecipeProvider {
 
     // Mixing
     protected fun mixFromData(data: HTRecipeData) {
-        val builder: HTComplexRecipeBuilder = HTComplexRecipeBuilder.mixing()
+        val builder: HTMixingRecipeBuilder = HTMixingRecipeBuilder.create()
         // Inputs
         data.getItemIngredients(itemCreator).forEach(builder::addIngredient)
         data.getFluidIngredients(fluidCreator).forEach(builder::addIngredient)
@@ -456,26 +384,5 @@ sealed class HTRecipeProvider {
                 fluid,
                 resultHelper.item(log, 6),
             ).save(output)
-    }
-
-    // Refining
-    protected fun distillation(
-        input: Pair<HTFluidHolderLike, Int>,
-        itemResult: HTItemResult?,
-        vararg results: Pair<HTFluidResult, HTItemIngredient?>,
-    ) {
-        val (holder: HTFluidHolderLike, amount: Int) = input
-        val suffix = "_from_${holder.getPath()}"
-        val ingredient: HTFluidIngredient = fluidCreator.fromHolder(holder, amount)
-        // Refining
-        for ((result: HTFluidResult, catalyst: HTItemIngredient?) in results) {
-            HTComplexRecipeBuilder
-                .refining()
-                .addIngredient(catalyst)
-                .addIngredient(ingredient)
-                .setResult(itemResult)
-                .setResult(result)
-                .saveSuffixed(output, suffix)
-        }
     }
 }

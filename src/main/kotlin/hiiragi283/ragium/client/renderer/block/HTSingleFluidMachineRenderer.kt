@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.getTintColor
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.client.renderer.scale
 import hiiragi283.ragium.client.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
@@ -25,13 +24,12 @@ class HTSingleFluidMachineRenderer(context: BlockEntityRendererProvider.Context)
         val sprite: TextureAtlasSprite = HTSpriteRenderHelper.getFluidSprite(stack) ?: return
 
         poseStack.pushPose()
-        poseStack.translate(0.05f, 0.5f, 0.05f)
-        val level: Float = tank.getStoredLevelAsFloat()
+        poseStack.translate(1 / 16f, 1 / 2f, 1 / 16f)
+        val level: Float = tank.getStoredLevel().toFloat()
         if (stack.fluidType().isLighterThanAir) {
             poseStack.translate(0f, 1f - (level / 2f), 0f)
         }
-        poseStack.scale(1f, level / 2f, 1f)
-        poseStack.scale(0.9f)
+        poseStack.scale(15 / 16f, level / 2f, 15 / 16f)
         HTSpriteRenderHelper.drawFluidBox(
             poseStack,
             bufferSource,

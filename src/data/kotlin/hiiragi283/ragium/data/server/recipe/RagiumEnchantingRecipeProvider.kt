@@ -1,15 +1,12 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.ragium.common.data.recipe.HTCombineRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
-import hiiragi283.ragium.common.recipe.machine.HTExpExtractingRecipe
-import hiiragi283.ragium.impl.data.recipe.HTCombineRecipeBuilder
+import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumEnchantments
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderGetter
@@ -24,14 +21,7 @@ object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
     private val enchLookup: HolderGetter<Enchantment> by lazy { provider.lookupOrThrow(Registries.ENCHANTMENT) }
 
     override fun buildRecipeInternal() {
-        save(
-            RagiumAPI.id(RagiumConst.EXTRACTING, "experience_from_items"),
-            HTExpExtractingRecipe,
-        )
-        save(
-            RagiumAPI.id(RagiumConst.ENCHANTING, "copy_from_book"),
-            HTCopyEnchantingRecipe,
-        )
+        save(HTCopyEnchantingRecipe.RECIPE_ID, HTCopyEnchantingRecipe)
 
         // Vanilla
         enchanting(
@@ -65,8 +55,6 @@ object RagiumEnchantingRecipeProvider : HTRecipeProvider.Direct() {
             Enchantments.WIND_BURST,
         )
         // Ragium
-        enchanting(itemCreator.fromTagKey(Tags.Items.CHESTS_ENDER, 8), RagiumEnchantments.CAPACITY)
-
         enchanting(
             itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL, 16),
             RagiumEnchantments.NOISE_CANCELING,

@@ -1,10 +1,9 @@
 package hiiragi283.ragium.common.block.entity.processor.base
 
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
-import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.HTRecipeCache
 import hiiragi283.ragium.api.recipe.HTRecipeFinder
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.recipe.multi.HTCombineRecipe
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -19,23 +18,23 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
-import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTCombineRecipe> {
+abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTCombineRecipe> {
     constructor(
-        recipeCache: HTRecipeCache<HTMultiRecipeInput, HTCombineRecipe>,
+        recipeCache: HTRecipeCache<HTRecipeInput, HTCombineRecipe>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
     ) : super(recipeCache, blockHolder, pos, state)
 
     constructor(
-        finder: HTRecipeFinder<HTMultiRecipeInput, HTCombineRecipe>,
+        finder: HTRecipeFinder<HTRecipeInput, HTCombineRecipe>,
         blockHolder: Holder<Block>,
         pos: BlockPos,
         state: BlockState,
@@ -48,7 +47,7 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTM
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank(), canInsert = ::filterFluid),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank(this), canInsert = ::filterFluid),
         )
     }
 
@@ -80,27 +79,27 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTM
 
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput? = HTMultiRecipeInput.create {
-        items += leftInputSlot.getStack()
-        items += rightInputSlot.getStack()
-        fluids += inputTank.getStack()
+    final override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += leftInputSlot.getStack()
+        builder.items += rightInputSlot.getStack()
+        builder.fluids += inputTank.getStack()
     }
 
-    final override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTCombineRecipe): Boolean =
+    final override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTCombineRecipe): Boolean =
         HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
 
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTMultiRecipeInput,
+        input: HTRecipeInput,
         recipe: HTCombineRecipe,
     ) {
         // 実際にアウトプットに搬出する
         outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 実際にインプットを減らす
-        HTStackSlotHelper.shrinkStack(leftInputSlot, recipe::getLeftRequiredCount, HTStorageAction.EXECUTE)
-        HTStackSlotHelper.shrinkStack(rightInputSlot, recipe::getRightRequiredCount, HTStorageAction.EXECUTE)
-        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount.partially1(input), HTStorageAction.EXECUTE)
+        leftInputSlot.extract(recipe.getLeftRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        rightInputSlot.extract(recipe.getRightRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        inputTank.extract(recipe.getRequiredAmount(input), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
     }
 }

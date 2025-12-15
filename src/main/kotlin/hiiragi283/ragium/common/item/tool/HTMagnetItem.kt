@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.item.tool
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.world.getRangedAABB
 import hiiragi283.ragium.common.item.base.HTActivatableItem
-import hiiragi283.ragium.common.util.HTEnchantmentHelper
+import hiiragi283.ragium.util.HTEnchantmentHelper
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.ExperienceOrb

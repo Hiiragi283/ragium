@@ -14,6 +14,9 @@ interface HTFluidIngredientCreator : HTIngredientCreator<Fluid, HTFluidIngredien
 
     fun fromHolder(content: HTFluidHolderLike, amount: Int): HTFluidIngredient = fromTagKey(content.getFluidTag(), amount)
 
+    fun fromHolders(vararg contents: HTFluidHolderLike, amount: Int): HTFluidIngredient =
+        fromTagKeys(contents.map(HTFluidHolderLike::getFluidTag), amount)
+
     fun water(amount: Int): HTFluidIngredient = fromHolder(HTFluidHolderLike.WATER, amount)
 
     fun lava(amount: Int): HTFluidIngredient = fromHolder(HTFluidHolderLike.LAVA, amount)

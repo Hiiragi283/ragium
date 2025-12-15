@@ -6,16 +6,16 @@ import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
+import hiiragi283.ragium.common.crafting.HTEternalUpgradeRecipe
+import hiiragi283.ragium.common.crafting.HTGravitationalUpgradeRecipe
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.crafting.HTEternalUpgradeRecipe
-import hiiragi283.ragium.common.recipe.crafting.HTGravitationalUpgradeRecipe
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTStonecuttingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
@@ -73,8 +73,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun circuits() {
         // Circuit Boards
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(RagiumItems.CIRCUIT_BOARD, 4),
                 itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.QUARTZ),
@@ -102,8 +102,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', RagiumItems.CIRCUIT_BOARD)
             .saveSuffixed(output, "_with_plastic")
 
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(RagiumItems.BASIC_CIRCUIT, 4),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.COPPER, 2),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE),
@@ -128,8 +128,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
                 define('C', RagiumItems.CIRCUIT_BOARD)
             }
 
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(RagiumItems.ADVANCED_CIRCUIT, 2),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.GOLD, 2),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.AZURE),
@@ -212,23 +212,23 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.REDSTONE)
             .save(output)
 
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(RagiumItems.REDSTONE_BOARD, 4),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
                 itemCreator.fromItem(Items.SMOOTH_STONE_SLAB),
             ).save(output)
         // Repeater
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(Items.REPEATER, 2),
                 itemCreator.fromItem(Items.REDSTONE_TORCH),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
                 itemCreator.fromItem(RagiumItems.REDSTONE_BOARD),
             ).save(output)
         // Comparator
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(Items.COMPARATOR, 2),
                 itemCreator.fromItem(Items.REDSTONE_TORCH),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, VanillaMaterialKeys.QUARTZ),
@@ -239,8 +239,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun diode() {
         // LED
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(RagiumItems.LED, 4),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.COPPER),
                 itemCreator.fromItem(RagiumItems.LUMINOUS_PASTE),
@@ -265,8 +265,8 @@ object RagiumEngineeringRecipeProvider : HTRecipeProvider.Direct() {
         }
 
         // Solar Panel
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(RagiumItems.SOLAR_PANEL),
                 itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS),
                 itemCreator.fromItem(RagiumItems.LUMINOUS_PASTE, 2),

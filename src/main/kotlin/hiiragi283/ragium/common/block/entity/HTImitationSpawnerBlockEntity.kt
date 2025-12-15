@@ -1,13 +1,12 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.Spawner
@@ -20,16 +19,14 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Save & Load    //
 
-    override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.loadAdditional(tag, registries)
-        spawnerMob = RagiumPlatform.INSTANCE.createValueInput(registries, tag).read("spawner", HTSpawnerMob.CODEC)
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        output.store("spawner", HTSpawnerMob.CODEC, spawnerMob)
     }
 
-    override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.saveAdditional(tag, registries)
-        RagiumPlatform.INSTANCE
-            .createValueOutput(registries, tag)
-            .store("spawner", HTSpawnerMob.CODEC, spawnerMob)
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        input.readAndSet("spawner", HTSpawnerMob.CODEC, ::spawnerMob::set)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
@@ -47,5 +44,15 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun setEntityId(entityType: EntityType<*>, random: RandomSource) {
         spawnerMob = HTSpawnerMob(entityType)
         setChanged()
+    }
+
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        output.store("spawner", HTSpawnerMob.CODEC, spawnerMob)
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        input.readAndSet("spawner", HTSpawnerMob.CODEC, ::spawnerMob::set)
     }
 }

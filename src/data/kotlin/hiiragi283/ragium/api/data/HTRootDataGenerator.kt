@@ -11,45 +11,56 @@ import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import java.util.concurrent.CompletableFuture
+import java.util.function.BooleanSupplier
 
 /**
- * データ生成でよく使うインスタンスを束ねたデータクラス
+ * 基本の[HTDataGenerator]の実装クラス
  */
+@ConsistentCopyVisibility
 @JvmRecord
-data class HTRootDataGenerator(
+data class HTRootDataGenerator private constructor(
     private val generator: DataGenerator,
+    private val doRun: BooleanSupplier,
     val registries: CompletableFuture<HolderLookup.Provider>,
     val fileHelper: ExistingFileHelper,
 ) : HTDataGenerator {
     companion object {
         @JvmStatic
-        fun withDataPack(event: GatherDataEvent, builderAction: RegistrySetBuilder.() -> Unit): HTRootDataGenerator {
+        fun withDataPack(
+            event: GatherDataEvent,
+            builderAction: RegistrySetBuilder.() -> Unit,
+        ): Pair<HTRootDataGenerator, HTRootDataGenerator> {
             val generator: DataGenerator = event.generator
             val registries: CompletableFuture<HolderLookup.Provider> = generator
-                .addProvider(
-                    event.includeServer(),
-                    { output: PackOutput ->
-                        DatapackBuiltinEntriesProvider(
-                            output,
-                            event.lookupProvider,
-                            RegistrySetBuilder().apply(builderAction),
-                            RagiumConst.BUILTIN_IDS,
-                        )
-                    },
-                ).registryProvider
-            return HTRootDataGenerator(generator, registries, event.existingFileHelper)
+                .addProvider(event.includeServer()) { output: PackOutput ->
+                    DatapackBuiltinEntriesProvider(
+                        output,
+                        event.lookupProvider,
+                        RegistrySetBuilder().apply(builderAction),
+                        RagiumConst.BUILTIN_IDS,
+                    )
+                }.registryProvider
+            val fileHelper: ExistingFileHelper = event.existingFileHelper
+            return Pair(
+                HTRootDataGenerator(generator, event::includeServer, registries, fileHelper),
+                HTRootDataGenerator(generator, event::includeClient, registries, fileHelper),
+            )
         }
     }
 
-    fun createDataPackGenerator(toRun: Boolean, id: ResourceLocation): HTDataPackGenerator = HTDataPackGenerator(
-        generator.getBuiltinDatapack(toRun, id.namespace, id.path),
+    /**
+     * 指定された[id]でデータパックを作成します。
+     * @return 指定された[id]に基づいた[HTDataPackGenerator]
+     */
+    fun createDataPackGenerator(id: ResourceLocation): HTDataPackGenerator = HTDataPackGenerator(
+        generator.getBuiltinDatapack(doRun.asBoolean, id.namespace, id.path),
         registries,
         fileHelper,
     )
 
-    override fun <DATA : DataProvider> addProvider(run: Boolean, factory: DataProvider.Factory<DATA>): DATA =
-        generator.addProvider(run, factory)
+    override fun <DATA : DataProvider> addProvider(factory: DataProvider.Factory<DATA>): DATA =
+        generator.addProvider(doRun.asBoolean, factory)
 
-    override fun <DATA : DataProvider> addProvider(run: Boolean, factory: HTDataGenerator.Factory<DATA>): DATA =
-        addProvider(run) { output: PackOutput -> factory.create(HTDataGenContext(output, registries, fileHelper)) }
+    override fun <DATA : DataProvider> addProvider(factory: HTDataGenerator.Factory<DATA>): DATA =
+        addProvider { output: PackOutput -> factory.create(HTDataGenContext(output, registries, fileHelper)) }
 }

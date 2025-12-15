@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item.tool
 
-import hiiragi283.ragium.common.util.HTItemDropHelper
+import hiiragi283.ragium.util.HTItemDropHelper
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item

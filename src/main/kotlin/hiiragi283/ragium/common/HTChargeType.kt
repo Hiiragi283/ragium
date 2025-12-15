@@ -5,11 +5,10 @@ import hiiragi283.ragium.api.data.lang.HTLanguageType
 import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredEntityType
-import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.text.HTTranslation
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.entity.charge.HTBlastCharge
-import hiiragi283.ragium.common.entity.charge.HTConfusingCharge
+import hiiragi283.ragium.common.entity.charge.HTConfusionCharge
 import hiiragi283.ragium.common.entity.charge.HTFishingCharge
 import hiiragi283.ragium.common.entity.charge.HTNeutralCharge
 import hiiragi283.ragium.common.entity.charge.HTStrikeCharge
@@ -18,13 +17,11 @@ import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumEntityTypes
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import org.apache.commons.lang3.math.Fraction
@@ -32,13 +29,13 @@ import org.apache.commons.lang3.math.Fraction
 enum class HTChargeType(private val enPattern: String, private val jaPattern: String) :
     StringRepresentable,
     HTLangName,
-    HTItemHolderLike {
+    HTItemHolderLike.Delegate {
     BLAST("Blast", "ブラスト"),
     STRIKE("Strike", "ストライク"),
     NEUTRAL("Neutralize", "ニュートラライズ"),
     FISHING("Fishing", "フィッシング"),
     TELEPORT("Teleport", "テレポート"),
-    CONFUSING("Confusion", "コンフュージョン"),
+    CONFUSION("Confusion", "コンフュージョン"),
     ;
 
     companion object {
@@ -50,7 +47,7 @@ enum class HTChargeType(private val enPattern: String, private val jaPattern: St
     }
 
     // Item
-    fun getItem(): HTSimpleDeferredItem = RagiumItems.CHARGES[this]!!
+    override fun getDelegate(): HTItemHolderLike = RagiumItems.CHARGES[this]!!
 
     fun getShootSound(): SoundEvent = when (this) {
         BLAST -> SoundEvents.WITHER_SHOOT
@@ -58,7 +55,7 @@ enum class HTChargeType(private val enPattern: String, private val jaPattern: St
         NEUTRAL -> SoundEvents.BUNDLE_DROP_CONTENTS
         FISHING -> SoundEvents.FISHING_BOBBER_THROW
         TELEPORT -> SoundEvents.ENDER_PEARL_THROW
-        CONFUSING -> SoundEvents.ELDER_GUARDIAN_CURSE
+        CONFUSION -> SoundEvents.ELDER_GUARDIAN_CURSE
     }
 
     fun getTranslation(): HTTranslation = when (this) {
@@ -67,12 +64,8 @@ enum class HTChargeType(private val enPattern: String, private val jaPattern: St
         NEUTRAL -> RagiumCommonTranslation.NEUTRAL_CHARGE
         FISHING -> RagiumCommonTranslation.FISHING_CHARGE
         TELEPORT -> RagiumCommonTranslation.TELEPORT_CHARGE
-        CONFUSING -> RagiumCommonTranslation.CONFUSING_CHARGE
+        CONFUSION -> RagiumCommonTranslation.CONFUSING_CHARGE
     }
-
-    override fun asItem(): Item = getItem().get()
-
-    override fun getId(): ResourceLocation = getItem().id
 
     // Entity
     fun getEntityType(): HTDeferredEntityType<out HTAbstractCharge> = RagiumEntityTypes.CHARGES[this]!!
@@ -83,7 +76,7 @@ enum class HTChargeType(private val enPattern: String, private val jaPattern: St
         NEUTRAL -> HTNeutralCharge(level, shooter)
         FISHING -> HTFishingCharge(level, shooter)
         TELEPORT -> HTTeleportCharge(level, shooter)
-        CONFUSING -> HTConfusingCharge(level, shooter)
+        CONFUSION -> HTConfusionCharge(level, shooter)
     }
 
     fun createCharge(
@@ -97,7 +90,7 @@ enum class HTChargeType(private val enPattern: String, private val jaPattern: St
         NEUTRAL -> HTNeutralCharge(level, x, y, z)
         BLAST -> HTBlastCharge(level, x, y, z)
         TELEPORT -> HTTeleportCharge(level, x, y, z)
-        CONFUSING -> HTConfusingCharge(level, x, y, z)
+        CONFUSION -> HTConfusionCharge(level, x, y, z)
     }
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {

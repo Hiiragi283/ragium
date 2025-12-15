@@ -2,15 +2,16 @@ package hiiragi283.ragium.data.client
 
 import hiiragi283.ragium.api.block.attribute.HTFluidBlockAttribute
 import hiiragi283.ragium.api.data.lang.HTLanguageProvider
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.api.util.access.HTAccessConfig
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockConfigurationDataProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockMachinePropertiesProvider
 import hiiragi283.ragium.client.integration.jade.provider.HTBlockOwnerProvider
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancements
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumEnchantments
@@ -169,19 +170,18 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.STONE_COLLECTOR, "Stone Collector")
 
         add(RagiumBlocks.DIM_ANCHOR, "Dimensional Anchor")
-        add(RagiumBlocks.ENI, "E.N.I.")
 
         add(RagiumBlocks.TELEPAD, "Telepad")
-
-        add(RagiumBlocks.CEU, "C.E.U.")
         // Storage
-        add(RagiumBlocks.OPEN_CRATE, "Open Crate")
+        add(RagiumBlocks.BATTERY, "Variable Battery")
+        add(RagiumBlocks.CRATE, "Variable Crate")
+        add(RagiumBlocks.TANK, "Variable Tank")
+        add(RagiumBlocks.BUFFER, "Integrated Buffer")
 
-        add(RagiumBlocks.EXP_DRUM, "Experience Drum")
+        add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
     }
 
     private fun enchantment() {
-        addEnchantment(RagiumEnchantments.CAPACITY, "Capacity", "Increase the capacity of item or fluid storages.")
         addEnchantment(RagiumEnchantments.RANGE, "Extra Range", "Increase the range of collecting.")
 
         addEnchantment(RagiumEnchantments.NOISE_CANCELING, "Noise Canceling", "Increases damage against sculk mobs such as Warden.")
@@ -192,11 +192,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
     private fun entity() {
         add(RagiumEntityTypes.ELDRITCH_EGG, "Thrown Eldritch Egg")
-        // add(RagiumEntityTypes.DYNAMITE, "Dynamite")
-        // add(RagiumEntityTypes.DEFOLIANT_DYNAMITE, "Defoliant Dynamite")
-        // add(RagiumEntityTypes.FLATTEN_DYNAMITE, "Flatten Dynamite")
-        // add(RagiumEntityTypes.NAPALM_DYNAMITE, "Napalm Dynamite")
-        // add(RagiumEntityTypes.POISON_DYNAMITE, "Poison Dynamite")
+        add(RagiumEntityTypes.TANK_MINECART, "Minecart with Variable Tank")
     }
 
     private fun fluid() {
@@ -212,13 +208,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         addFluid(RagiumFluidContents.BIOFUEL, "Biofuel")
 
         addFluid(RagiumFluidContents.CRUDE_OIL, "Crude Oil")
-        addFluid(RagiumFluidContents.NATURAL_GAS, "Natural Gas")
         addFluid(RagiumFluidContents.NAPHTHA, "Naphtha")
         addFluid(RagiumFluidContents.FUEL, "Fuel")
         addFluid(RagiumFluidContents.LUBRICANT, "Lubricant")
 
-        addFluid(RagiumFluidContents.SAP, "Sap")
         addFluid(RagiumFluidContents.SPRUCE_RESIN, "Spruce Resin")
+        addFluid(RagiumFluidContents.LATEX, "Latex")
         addFluid(RagiumFluidContents.CRIMSON_SAP, "Crimson Sap")
         addFluid(RagiumFluidContents.WARPED_SAP, "Warped Sap")
 
@@ -226,10 +221,12 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         addFluid(RagiumFluidContents.EXPERIENCE, "Experience Liquid")
         addFluid(RagiumFluidContents.COOLANT, "Coolant")
+        addFluid(RagiumFluidContents.CREOSOTE, "Creosote")
     }
 
     private fun item() {
         // Material
+        add(RagiumItems.BIO_FERTILIZER, "Bio Fertilizer")
         add(RagiumItems.COAL_CHIP, "Coal Chip")
         add(RagiumItems.COAL_CHUNK, "Coal Chunk")
         add(RagiumItems.COMPRESSED_SAWDUST, "Compressed Sawdust")
@@ -239,7 +236,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.MAGMA_SHARD, "Magma Shard")
         add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-        add(RagiumItems.RAGI_COKE, "Ragi-Coke")
+        add(RagiumItems.RAGIUM_POWDER, "Ragium Powder")
         add(RagiumItems.ROSIN, "Rosin")
         add(RagiumItems.TAR, "Tar")
         add(RagiumItems.WITHER_DOLl, "Wither Doll")
@@ -276,7 +273,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.MELON_PIE, "Melon Pie")
 
         add(RagiumItems.RAGI_CHERRY, "Ragi-Cherry")
-        add(RagiumItems.RAGI_CHERRY_PULP, "Ragi-Cherry Pulp")
         add(RagiumItems.RAGI_CHERRY_JUICE, "Ragi-Cherry Juice")
         add(RagiumItems.RAGI_CHERRY_JAM, "Ragi-Cherry Jam")
         add(RagiumItems.RAGI_CHERRY_PIE, "Ragi-Cherry Pie")
@@ -285,6 +281,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.FEVER_CHERRY, "Fever Cherry")
 
         add(RagiumItems.BOTTLED_BEE, "Bottled Bee")
+        add(RagiumItems.CHOCOLATE_BREAD, "Chocolate Bread")
         add(RagiumItems.AMBROSIA, "Ambrosia")
         // Parts
         add(RagiumItems.ADVANCED_CIRCUIT, "Advanced Circuit")
@@ -299,17 +296,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumItems.SOLAR_PANEL, "Solar Panel")
         add(RagiumItems.SYNTHETIC_FIBER, "Synthetic Fiber")
         add(RagiumItems.SYNTHETIC_LEATHER, "Synthetic Leather")
+        // Vehicles
+        add(RagiumItems.TANK_MINECART, "Tank with Minecart")
         // Upgrades
         add(RagiumItems.ETERNAL_COMPONENT, "Eternal Component")
-
-        add(RagiumItems.EFFICIENT_CRUSH_UPGRADE, "Efficient Crush Upgrade")
-        add(RagiumItems.PRIMARY_ONLY_UPGRADE, "Primary Only Upgrade")
-
-        add(RagiumItems.EXP_COLLECTOR_UPGRADE, "Exp Collector Upgrade")
-        add(RagiumItems.FISHING_UPGRADE, "Fishing Upgrade")
-        add(RagiumItems.MOB_CAPTURE_UPGRADE, "Mob Capture Upgrade")
-
-        add(RagiumItems.CREATIVE_UPGRADE, "Creative Upgrade")
     }
 
     private fun keyMapping() {
@@ -333,7 +323,6 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Items.POLYMER_RESIN, "Polymer Resins")
         add(RagiumModTags.Items.RAW_MEAT, "Raw Meats")
 
-        add(RagiumModTags.Items.CAPACITY_ENCHANTABLE, "Capacity Enchantable")
         add(RagiumModTags.Items.RANGE_ENCHANTABLE, "Range Enchantable")
         add(RagiumModTags.Items.STRIKE_ENCHANTABLE, "Strike Enchantable")
 
@@ -342,6 +331,16 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumModTags.Items.TOOLS_DRILL, "Drills")
         add(RagiumModTags.Items.TOOLS_HAMMER, "Hammers")
+
+        add(RagiumModTags.Items.GENERATOR_UPGRADABLE, "Generators")
+        add(RagiumModTags.Items.PROCESSOR_UPGRADABLE, "Processors")
+        add(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE, "Processors with Extra Output")
+        add(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE, "Pulverizer or Crusher")
+        add(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE, "Energy Storage")
+        add(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE, "Fluid Storage")
+        add(RagiumModTags.Items.ITEM_CAPACITY_UPGRADABLE, "Item Storage")
+
+        add(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE, "Upgrades for Extractor")
     }
 
     private fun recipeType() {
@@ -356,8 +355,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
         add(RagiumRecipeTypes.REFINING, "Refining")
-        add(RagiumRecipeTypes.ROCK_GENERATING, "Rock Generating")
         add(RagiumRecipeTypes.SIMULATING, "Simulating")
+        add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
     }
 
     private fun text() {
@@ -371,12 +370,25 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTFluidBlockAttribute.TankType.FIRST_INPUT, "First Input Tank Capacity")
         add(HTFluidBlockAttribute.TankType.SECOND_INPUT, "Second Input Tank Capacity")
 
-        add(HTMachineUpgrade.Key.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
-        add(HTMachineUpgrade.Key.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
-        add(HTMachineUpgrade.Key.SPEED, $$"- Speed: %1$s")
+        add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- Base Multiplier: %1$s")
+        add(HTUpgradeKeys.IS_CREATIVE, "- Creative")
 
-        add(HTMachineUpgrade.Key.SUBPRODUCT_CHANCE, $$"- Extra Chance: %1$s")
+        add(HTUpgradeKeys.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
+        add(HTUpgradeKeys.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
+        add(HTUpgradeKeys.SPEED, $$"- Speed: %1$s")
+
+        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
+        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
+        add(HTUpgradeKeys.ITEM_CAPACITY, $$"- Item Capacity: %1$s")
+
+        add(RagiumUpgradeKeys.COMPOST_BIO, "- Convert input into Crude Bio")
+        add(RagiumUpgradeKeys.VOID_EXTRA, "- Extra output disabled")
+        add(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, "- Extract Liquid Experience from enchanted item")
+        add(RagiumUpgradeKeys.USE_LUBRICANT, "- Use lubricant per operation")
+
+        add(RagiumUpgradeKeys.COLLECT_EXP, "- Collect Experience Orb instead of Water")
+        add(RagiumUpgradeKeys.FISHING, "- Do fishing instead of collecting items")
+        add(RagiumUpgradeKeys.CAPTURE_MOB, "- Capture mobs instead of collecting items")
         // API - Constants
         add(RagiumTranslation.ERROR, "Error")
         add(RagiumTranslation.INFINITE, "Infinite")
@@ -390,14 +402,14 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumTranslation.MISSING_SERVER, "Could not find current server")
         add(RagiumTranslation.MISSING_REGISTRY, $$"Missing registry: %1$s")
         add(RagiumTranslation.MISSING_KEY, $$"Missing key: %1$s")
-        // API - GUI
-        add(RagiumTranslation.BURN_TIME, $$"Burn Time: %1$s ticks")
         // API - Item
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_INTRINSIC_ENCHANTMENT, $$"Always has at least %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_TARGET, $$"Upgrade Targets: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE, $$"Conflicting Upgrades: %1$s")
 
         add(RagiumTranslation.TOOLTIP_SHOW_DESCRIPTION, "Press Shift to show description")
         add(RagiumTranslation.TOOLTIP_SHOW_DETAILS, "Press Ctrl to show details")
@@ -449,10 +461,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
 
         add(RagiumCommonTranslation.CEU, "A device which provides unlimited amount of energy.")
 
-        add(RagiumCommonTranslation.CRATE, "A storage which stores one type of item.")
-        add(RagiumCommonTranslation.OPEN_CRATE, "A storage which drops inserted items below.")
-        add(RagiumCommonTranslation.DRUM, "A storage which stores one type of fluid.")
-        add(RagiumCommonTranslation.EXP_DRUM, "A storage which stores only Experience Liquid.")
+        add(RagiumCommonTranslation.BATTERY, "A energy storage which capacity is extendable by upgrade.")
+        add(RagiumCommonTranslation.CRATE, "A item storage which capacity is extendable by upgrade.")
+        add(RagiumCommonTranslation.TANK, "A fluid storage which capacity is extendable by upgrade.")
+        add(RagiumCommonTranslation.BUFFER, "A combined storage with 9 slots, 3 tanks, and 1 battery.")
+        add(RagiumCommonTranslation.UNIVERSAL_CHEST, "A chest which shares its containment with the same color.")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
@@ -480,6 +493,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.MAGNET, "Collect dropped items in the effective range")
         add(RagiumCommonTranslation.SLOT_COVER, "Ignored by recipes when placed in machine slot.")
         add(RagiumCommonTranslation.TRADER_CATALOG, "Dropped from Wandering Trader. Right-click to trade with merchant.")
+        add(RagiumCommonTranslation.UNIVERSAL_BUNDLE, "A bundle which shares its containment with the same color.")
 
         add(RagiumCommonTranslation.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         add(RagiumCommonTranslation.ICE_CREAM, "Extinguish fire when eaten.")
@@ -493,7 +507,11 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
     //    Addon    //
 
     private fun emi() {
-        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE, "Machine Upgrades")
+        add(RagiumCommonTranslation.EMI_MACHINE_UPGRADE_TITLE, "Machine Upgrades")
+        add(RagiumCommonTranslation.EMI_COMPOSTING_TITLE, "Composting")
+        add(RagiumCommonTranslation.EMI_ROCK_GENERATING, "Rock Generating")
+
+        add(RagiumCommonTranslation.EMI_BLOCK_CATALYST, "Placed below the block.")
     }
 
     private fun jade() {

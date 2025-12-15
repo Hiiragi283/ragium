@@ -114,15 +114,16 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.STONE_COLLECTOR)
 
             add(RagiumBlocks.DIM_ANCHOR)
-            add(RagiumBlocks.ENI)
 
             add(RagiumBlocks.TELEPAD)
-
-            add(RagiumBlocks.CEU)
             // Storage
-            add(RagiumBlocks.OPEN_CRATE)
+            add(RagiumBlocks.BATTERY)
+            add(RagiumBlocks.CRATE)
+            add(RagiumBlocks.TANK)
 
-            add(RagiumBlocks.EXP_DRUM)
+            add(RagiumBlocks.BUFFER)
+
+            add(RagiumBlocks.UNIVERSAL_CHEST)
         }.forEach(pickaxe::add)
 
         pickaxe
@@ -142,9 +143,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
         }
 
         pickaxe.addBlocks(RagiumBlocks.COILS)
-        pickaxe.addBlocks(RagiumBlocks.CRATES)
         pickaxe.addBlocks(RagiumBlocks.DECORATION_MAP)
-        pickaxe.addBlocks(RagiumBlocks.DRUMS)
         pickaxe.addBlocks(RagiumBlocks.GLASSES.values)
         pickaxe.addBlocks(RagiumBlocks.METAL_BARS)
         pickaxe.addBlocks(RagiumBlocks.ORES.values)

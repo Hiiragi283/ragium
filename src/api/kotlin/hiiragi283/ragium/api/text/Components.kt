@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.text
 
-import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.resources.ResourceKey
@@ -52,10 +51,3 @@ fun levelText(key: ResourceKey<Level>): MutableComponent {
     val location: ResourceLocation = key.location()
     return translatableText(location.toLanguageKey(ILevelExtension.TRANSLATION_PREFIX), location.toString())
 }
-
-private fun energyText(amount: Int, capacity: Int): MutableComponent = RagiumTranslation.FRACTION.translate(
-    RagiumTranslation.STORED_FE.translate(amount),
-    RagiumTranslation.STORED_FE.translate(capacity),
-)
-
-fun energyText(battery: HTEnergyBattery): MutableComponent = energyText(battery.getAmount(), battery.getCapacity())

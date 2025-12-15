@@ -4,6 +4,7 @@ import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import com.mojang.serialization.DataResult
 import com.mojang.serialization.MapCodec
+import hiiragi283.ragium.api.function.identity
 import io.netty.buffer.ByteBuf
 import java.util.function.Function
 import kotlin.collections.List
@@ -11,17 +12,16 @@ import kotlin.collections.List
 //    Codec    //
 
 fun <A : Any> Codec<A>.listOrElement(): Codec<List<A>> = Codec.either(this.listOf(), this).xmap(
-    { either: Either<List<A>, A> -> either.map(Function.identity(), ::listOf) },
+    { either: Either<List<A>, A> -> either.map(identity(), ::listOf) },
     { list: List<A> -> if (list.size == 1) Either.right(list[0]) else Either.left(list) },
 )
 
 fun <A : Any> Codec<A>.listOrElement(min: Int, max: Int): Codec<List<A>> = Codec.either(this.listOf(min, max), this).xmap(
-    { either: Either<List<A>, A> -> either.map(Function.identity(), ::listOf) },
+    { either: Either<List<A>, A> -> either.map(identity(), ::listOf) },
     { list: List<A> -> if (list.size == 1) Either.right(list[0]) else Either.left(list) },
 )
 
-fun <E : Any, MAP : MapCodec<out E>> Codec<MAP>.dispatchSelf(type: Function<E, MAP>): Codec<E> =
-    this.dispatch(type, Function.identity<MAP>())
+fun <E : Any, MAP : MapCodec<out E>> Codec<MAP>.dispatchSelf(type: Function<E, MAP>): Codec<E> = this.dispatch(type, identity())
 
 //    BiCodec    //
 

@@ -1,8 +1,13 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.single.HTSingleFluidRecipe
+import hiiragi283.ragium.api.recipe.fluid.HTMeltingRecipe
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.stack.getCraftingRemainingItem
 import hiiragi283.ragium.api.storage.HTStorageAccess
@@ -17,18 +22,17 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
-import hiiragi283.ragium.common.util.HTItemDropHelper
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.HTItemDropHelper
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity.Cached<HTSingleFluidRecipe>(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, pos, state) {
+    HTSingleItemInputBlockEntity.Cached<HTMeltingRecipe>(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, pos, state) {
     lateinit var remainderSlot: HTBasicItemSlot
         private set
 
@@ -51,9 +55,21 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.OUTPUT,
             HTVariableFluidTank.output(
                 listener,
-                blockHolder.getFluidAttribute().getOutputTank(),
+                blockHolder.getFluidAttribute().getOutputTank(this),
             ),
         )
+    }
+
+    //    Save & Load    //
+
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        output.store(RagiumConst.FLUID, ImmutableFluidStack.CODEC, outputTank.getStack())
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        input.readAndSet(RagiumConst.FLUID, ImmutableFluidStack.CODEC, outputTank::setStackUnchecked)
     }
 
     //    Ticking    //
@@ -61,15 +77,15 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputTank.getNeeded() > 0
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleFluidRecipe): Boolean =
+    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTMeltingRecipe): Boolean =
         HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
 
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: SingleRecipeInput,
-        recipe: HTSingleFluidRecipe,
+        input: HTRecipeInput,
+        recipe: HTMeltingRecipe,
     ) {
         // 実際にアウトプットに搬出する
         outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
@@ -81,7 +97,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
                 val remainder: ImmutableItemStack? = remainderSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 HTItemDropHelper.dropStackAt(level, pos, remainder)
             },
-            recipe::getRequiredCount,
+            recipe.getRequiredCount(),
             HTStorageAction.EXECUTE,
         )
         // SEを鳴らす

@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.storage
 
+import hiiragi283.ragium.api.math.fixedFraction
 import hiiragi283.ragium.api.stack.ImmutableStack
+import org.apache.commons.lang3.math.Fraction
 import kotlin.math.max
 
 /**
@@ -27,23 +29,9 @@ interface HTStackView<STACK : ImmutableStack<*, STACK>> : HTAmountView.IntSized 
 
     /**
      * このスロットの占有率を返します。
-     * @return [Double]値での占有率
+     * @return [Fraction]値での占有率
      */
-    fun getStoredLevelAsDouble(stack: STACK?): Double {
-        val capacity: Int = getCapacity(stack)
-        if (capacity <= 0) return 0.0
-        return getAmount() / capacity.toDouble()
-    }
-
-    /**
-     * このスロットの占有率を返します。
-     * @return [Float]値での占有率
-     */
-    fun getStoredLevelAsFloat(stack: STACK?): Float {
-        val capacity: Int = getCapacity(stack)
-        if (capacity <= 0) return 0f
-        return getAmount() / capacity.toFloat()
-    }
+    fun getStoredLevel(stack: STACK?): Fraction = fixedFraction(getAmount(), getCapacity(stack))
 
     override fun getAmount(): Int = getStack()?.amount() ?: 0
 

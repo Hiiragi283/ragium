@@ -3,10 +3,9 @@ package hiiragi283.ragium.common.storage.energy.battery
 import hiiragi283.ragium.api.block.attribute.HTEnergyBlockAttribute
 import hiiragi283.ragium.api.block.attribute.getAttributeOrThrow
 import hiiragi283.ragium.api.function.HTPredicates
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
-import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTGeneratorBlockEntity
@@ -44,9 +43,7 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
 
     var currentEnergyPerTick: Int = this.baseEnergyPerTick
 
-    override fun getCapacity(): Int = blockEntity.modifyValue(HTMachineUpgrade.Key.ENERGY_CAPACITY) { getBaseCapacity() * it }
-
-    fun getBaseCapacity(): Int = super.getCapacity()
+    override fun getCapacity(): Int = HTUpgradeHelper.getEnergyCapacity(blockEntity, super.getCapacity())
 
     class Processor(attribute: HTEnergyBlockAttribute, listener: HTContentListener?, blockEntity: HTProcessorBlockEntity<*, *>) :
         HTMachineEnergyBattery<HTProcessorBlockEntity<*, *>>(

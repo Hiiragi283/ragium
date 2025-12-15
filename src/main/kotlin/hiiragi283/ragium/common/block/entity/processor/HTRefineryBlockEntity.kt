@@ -1,10 +1,13 @@
 package hiiragi283.ragium.common.block.entity.processor
 
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.attribute.getFluidAttribute
-import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
-import hiiragi283.ragium.api.recipe.input.HTMultiRecipeInput
-import hiiragi283.ragium.api.recipe.multi.HTComplexRecipe
+import hiiragi283.ragium.api.recipe.fluid.HTRefiningRecipe
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
+import hiiragi283.ragium.api.serialization.value.HTValueInput
+import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
@@ -16,8 +19,8 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
@@ -26,7 +29,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTMultiRecipeInput, HTComplexRecipe>(
+    HTProcessorBlockEntity.Cached<HTRefiningRecipe>(
         RagiumRecipeTypes.REFINING,
         RagiumBlocks.REFINERY,
         pos,
@@ -59,24 +62,40 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         // input
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank()),
+            HTVariableFluidTank.input(listener, blockHolder.getFluidAttribute().getInputTank(this)),
         )
         // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
+            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank(this)),
         )
+    }
+
+    //    Save & Load    //
+
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        output.store("${RagiumConst.FLUID}_input", ImmutableFluidStack.CODEC, inputTank.getStack())
+        output.store("${RagiumConst.FLUID}_output", ImmutableFluidStack.CODEC, outputTank.getStack())
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        input.readAndSet("${RagiumConst.FLUID}_input", ImmutableFluidStack.CODEC, inputTank::setStackUnchecked)
+        input.readAndSet("${RagiumConst.FLUID}_output", ImmutableFluidStack.CODEC, outputTank::setStackUnchecked)
     }
 
     //    Ticking    //
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0 || outputTank.getNeeded() > 0
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTMultiRecipeInput =
-        HTMultiRecipeInput(catalystSlot.getStack(), inputTank.getStack())
+    override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += catalystSlot.getStack()
+        builder.fluids += inputTank.getStack()
+    }
 
     // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: HTMultiRecipeInput, recipe: HTComplexRecipe): Boolean {
+    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTRefiningRecipe): Boolean {
         val bool1: Boolean = HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
         val bool2: Boolean = HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
         return bool1 && bool2
@@ -86,15 +105,15 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: HTMultiRecipeInput,
-        recipe: HTComplexRecipe,
+        input: HTRecipeInput,
+        recipe: HTRefiningRecipe,
     ) {
         // 実際にアウトプットに搬出する
         val access: RegistryAccess = level.registryAccess()
         outputSlot.insert(recipe.assembleItem(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputTank, recipe::getRequiredAmount.partially1(0), HTStorageAction.EXECUTE)
+        inputTank.extract(recipe.getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1f, 0.5f)
     }

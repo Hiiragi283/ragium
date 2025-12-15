@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.FluidState
 import net.minecraft.world.level.pathfinder.PathType
+import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.common.NeoForgeMod
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.BaseFlowingFluid
@@ -33,6 +34,14 @@ import java.util.function.UnaryOperator
 object RagiumFluidContents {
     @JvmField
     val REGISTER = HTFluidContentRegister(RagiumAPI.MOD_ID)
+
+    @JvmStatic
+    fun init(eventBus: IEventBus) {
+        REGISTER.addAlias("sap", "spruce_resin")
+        REGISTER.addAlias("natural_gas", "naphtha")
+
+        REGISTER.init(eventBus)
+    }
 
     @JvmStatic
     fun registerSimple(
@@ -149,10 +158,6 @@ object RagiumFluidContents {
     ) { it.speedFactor(0.4f) }
 
     @JvmField
-    val NATURAL_GAS: HTBasicFluidContent =
-        registerEffected("natural_gas", liquid().density(-1000), ::HTExplosiveFluidType.partially1(4f), MobEffects.LEVITATION)
-
-    @JvmField
     val NAPHTHA: HTBasicFluidContent = register("naphtha", liquid(), ::HTExplosiveFluidType.partially1(3f))
 
     @JvmField
@@ -164,10 +169,10 @@ object RagiumFluidContents {
     //    Sap    //
 
     @JvmField
-    val SAP: HTBasicFluidContent = registerSimple("sap", liquid())
+    val SPRUCE_RESIN: HTBasicFluidContent = registerSimple("spruce_resin", liquid())
 
     @JvmField
-    val SPRUCE_RESIN: HTBasicFluidContent = registerSimple("spruce_resin", liquid())
+    val LATEX: HTBasicFluidContent = registerSimple("latex", liquid())
 
     @JvmField
     val CRIMSON_SAP: HTBasicFluidContent = register("crimson_sap", liquid(), ::HTNetherFluidType)
@@ -200,6 +205,9 @@ object RagiumFluidContents {
 
     @JvmField
     val COOLANT: HTBasicFluidContent = registerSimple("coolant", liquid().temperature(273))
+
+    @JvmField
+    val CREOSOTE: HTBasicFluidContent = register("creosote", liquid(), ::HTExplosiveFluidType.partially1(2f))
 
     //    Interaction    //
 

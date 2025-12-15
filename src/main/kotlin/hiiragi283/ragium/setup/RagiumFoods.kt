@@ -56,12 +56,6 @@ object RagiumFoods {
     }
 
     @JvmStatic
-    val RAGI_CHERRY_PULP: FoodProperties = HTFoodBuilder.copyOf(RAGI_CHERRY) {
-        nutrition = 1
-        saturation = FoodConstants.FOOD_SATURATION_POOR
-    }
-
-    @JvmStatic
     val RAGI_CHERRY_JAM: FoodProperties = HTFoodBuilder.create {
         nutrition = 3
         saturation = FoodConstants.FOOD_SATURATION_NORMAL

@@ -1,23 +1,23 @@
 package hiiragi283.ragium.client.integration.emi.recipe.device
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.recipe.multi.HTRockGeneratingRecipe
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addPlus
-import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
-import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
-import net.minecraft.world.item.crafting.RecipeHolder
-import kotlin.jvm.optionals.getOrNull
+import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
+import hiiragi283.ragium.client.integration.emi.data.HTRockGenerationEmiData
+import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
+import hiiragi283.ragium.common.text.RagiumCommonTranslation
+import net.minecraft.ChatFormatting
+import net.minecraft.resources.ResourceLocation
 
-class HTRockGeneratingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTRockGeneratingRecipe>) :
-    HTEmiHolderRecipe<HTRockGeneratingRecipe>(category, holder) {
+class HTRockGeneratingEmiRecipe(id: ResourceLocation, recipe: HTRockGenerationEmiData) :
+    HTEmiRecipe<HTRockGenerationEmiData>(RagiumEmiRecipeCategories.ROCK_GENERATING, id, recipe) {
     init {
-        addInput(recipe.left)
-        recipe.right.map(::addInput, ::addInput)
+        addInput(recipe.water)
+        addInput(recipe.lava)
+        addCatalyst(recipe.output)
 
-        addCatalyst(recipe.bottom.getOrNull())
-
-        addOutputs(recipe.result)
+        addOutputs(recipe.output)
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
@@ -25,10 +25,12 @@ class HTRockGeneratingEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHol
         widgets.addPlus(getPosition(1), getPosition(0))
 
         // inputs
-        widgets.addSlot(input(0), getPosition(0), getPosition(0)).catalyst(true)
-        widgets.addSlot(input(1), getPosition(2), getPosition(0)).catalyst(true)
+        widgets.addSlot(input(0), getPosition(0), getPosition(0))
+        widgets.addSlot(input(1), getPosition(2), getPosition(0))
 
-        widgets.addCatalyst(0, getPosition(1), getPosition(2))
+        widgets
+            .addCatalyst(0, getPosition(1), getPosition(2))
+            .appendTooltip(RagiumCommonTranslation.EMI_BLOCK_CATALYST.translate(ChatFormatting.AQUA))
         // output
         widgets.addOutput(0, getPosition(4.5), getPosition(1), true)
     }

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.ragium.common.block.entity.ExtendedBlockEntity
-import hiiragi283.ragium.common.util.RagiumChunkLoader
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
+import hiiragi283.ragium.util.RagiumChunkLoader
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos

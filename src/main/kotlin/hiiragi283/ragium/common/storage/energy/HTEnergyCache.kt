@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.storage.energy
 
-import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

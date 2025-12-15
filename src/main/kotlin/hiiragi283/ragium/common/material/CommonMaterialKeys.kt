@@ -92,4 +92,10 @@ object CommonMaterialKeys {
     // Plates
     @JvmStatic
     val PLASTIC: HTMaterialKey = HTMaterialKey.of("plastic")
+
+    @JvmStatic
+    val RAW_RUBBER: HTMaterialKey = HTMaterialKey.of("raw_rubber")
+
+    @JvmStatic
+    val RUBBER: HTMaterialKey = HTMaterialKey.of("rubber")
 }

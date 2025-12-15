@@ -21,7 +21,7 @@ delight = "1.21.1-1.2.9"
 emi = "1.1.22+1.21.1"
 ender-io = "8.0.6-alpha"
 fusion = "1.2.11b-neoforge-mc1.21"
-hostile = "1.21.1-6.3.0"
+#hostile = "1.21.1-6.3.0"
 immersive = "1.21.1-12.4.2-194"
 jade = "15.10.3+neoforge"
 kc = "1.1.1-neoforge+mc1.21.1"
@@ -29,7 +29,7 @@ kc = "1.1.1-neoforge+mc1.21.1"
 mek = "1.21.1-10.7.17.83"
 oritech = "0.19.6"
 pneuma = "8.2.13+mc1.21.1"
-replica = "1.21-1.2.3"
+replica = "1.21-1.2.6"
 
 arch = "13.0.8"
 #ars = "5.10.5.1219"
@@ -58,7 +58,7 @@ curious = { group = "top.theillusivec4.curios", name = "curios-neoforge", versio
 delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "delight" }
 emi = { group = "dev.emi", name = "emi-neoforge", version.ref = "emi" }
 fusion = { group = "maven.modrinth", name = "fusion-connected-textures", version.ref = "fusion" }
-hostile = { group = "dev.shadowsoffire", name = "HostileNeuralNetworks", version.ref = "hostile" }
+#hostile = { group = "dev.shadowsoffire", name = "HostileNeuralNetworks", version.ref = "hostile" }
 immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 kc = { group = "maven.modrinth", name = "kaleidoscope-cookery", version.ref = "kc" }
@@ -89,7 +89,6 @@ mods-impl = [
     "almost",
     "delight",
     "emi",
-    "hostile",
     "immersive",
     "jade",
     "kc",

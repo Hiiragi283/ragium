@@ -7,13 +7,16 @@ import net.minecraft.data.PackOutput
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
+/**
+ * データパック向けの[HTDataGenerator]の実装クラス
+ */
 data class HTDataPackGenerator(
     private val generator: DataGenerator.PackGenerator,
     val registries: CompletableFuture<HolderLookup.Provider>,
     val fileHelper: ExistingFileHelper,
 ) : HTDataGenerator {
-    override fun <DATA : DataProvider> addProvider(run: Boolean, factory: DataProvider.Factory<DATA>): DATA = generator.addProvider(factory)
+    override fun <DATA : DataProvider> addProvider(factory: DataProvider.Factory<DATA>): DATA = generator.addProvider(factory)
 
-    override fun <DATA : DataProvider> addProvider(run: Boolean, factory: HTDataGenerator.Factory<DATA>): DATA =
-        addProvider(run) { output: PackOutput -> factory.create(HTDataGenContext(output, registries, fileHelper)) }
+    override fun <DATA : DataProvider> addProvider(factory: HTDataGenerator.Factory<DATA>): DATA =
+        addProvider { output: PackOutput -> factory.create(HTDataGenContext(output, registries, fileHelper)) }
 }

@@ -20,7 +20,7 @@ import net.neoforged.neoforge.fluids.crafting.TagFluidIngredient
  */
 data class HTFluidIngredient(private val ingredient: FluidIngredient, private val amount: Int) : HTIngredient<Fluid, ImmutableFluidStack> {
     fun interface AmountGetter {
-        fun getRequiredAmount(stack: ImmutableFluidStack): Int
+        fun getRequiredAmount(): Int
     }
 
     companion object {
@@ -38,13 +38,9 @@ data class HTFluidIngredient(private val ingredient: FluidIngredient, private va
 
     fun copyWithAmount(amount: Int): HTFluidIngredient = HTFluidIngredient(ingredient, amount)
 
-    override fun test(stack: ImmutableFluidStack): Boolean = testOnlyType(stack) && stack.amount() >= this.amount
-
     override fun testOnlyType(stack: ImmutableFluidStack): Boolean = ingredient.test(stack.unwrap())
 
-    override fun getRequiredAmount(stack: ImmutableFluidStack): Int = if (testOnlyType(stack)) this.amount else 0
-
-    override fun hasNoMatchingStacks(): Boolean = ingredient.hasNoFluids()
+    override fun getRequiredAmount(): Int = this.amount
 
     override fun unwrap(): Either<Pair<TagKey<Fluid>, Int>, List<ImmutableFluidStack>> = when (ingredient) {
         is TagFluidIngredient -> Either.left(ingredient.tag() to amount)

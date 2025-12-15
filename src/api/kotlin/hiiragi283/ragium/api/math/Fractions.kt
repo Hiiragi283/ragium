@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api.math
 
 import org.apache.commons.lang3.math.Fraction
+import kotlin.math.min
 
 fun fraction(value: Double): Fraction = Fraction.getFraction(value)
 
@@ -16,6 +17,12 @@ operator fun Fraction.div(other: Fraction): Fraction = this.divideBy(other)
 
 // Int
 fun fraction(numerator: Int, denominator: Int): Fraction = Fraction.getFraction(numerator, denominator)
+
+fun fixedFraction(amount: Int, capacity: Int): Fraction {
+    if (capacity <= 0) return Fraction.ZERO
+    val fixedAmount: Int = min(amount, capacity)
+    return fraction(fixedAmount, capacity)
+}
 
 fun fraction(numerator: Int): Fraction = fraction(numerator, 1)
 
@@ -36,6 +43,13 @@ operator fun Int.minus(other: Fraction): Fraction = this.toFraction(1).subtract(
 operator fun Int.times(other: Fraction): Fraction = this.toFraction(1).multiplyBy(other)
 
 operator fun Int.div(other: Fraction): Fraction = this.toFraction(1).divideBy(other)
+
+// Long
+fun fixedFraction(amount: Long, capacity: Long): Fraction {
+    if (capacity <= 0) return Fraction.ZERO
+    val fixedAmount: Long = min(amount, capacity)
+    return fraction(fixedAmount / capacity.toDouble())
+}
 
 // Float
 fun fraction(value: Float): Fraction = fraction(value.toDouble())

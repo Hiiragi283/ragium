@@ -8,18 +8,19 @@ import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTDecorationType
 import hiiragi283.ragium.common.HTMoldType
+import hiiragi283.ragium.common.crafting.HTIceCreamSodaRecipe
+import hiiragi283.ragium.common.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTExtractingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.common.recipe.crafting.HTIceCreamSodaRecipe
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -32,8 +33,8 @@ import net.neoforged.neoforge.common.Tags
 object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
         // Mushroom Stew
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.MUSHROOMS, 2))
             .addIngredient(fluidCreator.milk(250))
             .setResult(resultHelper.fluid(RagiumFluidContents.MUSHROOM_STEW, 250))
@@ -50,12 +51,12 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         // Ambrosia
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, FoodMaterialKeys.CHOCOLATE, 64))
             .addIngredient(itemCreator.fromItem(Items.HONEY_BLOCK, 64))
             .addIngredient(itemCreator.fromItem(RagiumItems.IRIDESCENT_POWDER))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CREAM, 8000))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CREAM, 64_000))
             .setResult(resultHelper.item(RagiumItems.AMBROSIA))
             .save(output)
 
@@ -77,12 +78,10 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .define('B', CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             .save(output)
         // Ragi-Cherry Juice
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY),
-                null,
-                fluidResult = resultHelper.fluid(RagiumFluidContents.RAGI_CHERRY_JUICE, 125),
-            ).save(output)
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.RAGI_CHERRY))
+            .setResult(resultHelper.fluid(RagiumFluidContents.RAGI_CHERRY_JUICE, 125))
+            .save(output)
 
         extractAndInfuse(Items.GLASS_BOTTLE, RagiumItems.RAGI_CHERRY_JUICE, RagiumFluidContents.RAGI_CHERRY_JUICE)
         // Ragi-Cherry Jam
@@ -124,14 +123,20 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun chocolate() {
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.CROPS_COCOA_BEAN))
             .addIngredient(fluidCreator.milk(250))
             .setResult(resultHelper.fluid(RagiumFluidContents.CHOCOLATE, 250))
             .save(output)
 
         meltAndFreeze(FoodMaterialRecipeData.CHOCOLATE_INGOT)
+        // Bread
+        HTShapelessRecipeBuilder
+            .create(RagiumItems.CHOCOLATE_BREAD, 3)
+            .addIngredient(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.CHOCOLATE)
+            .addIngredients(Tags.Items.FOODS_BREAD, 3)
+            .save(output)
         // Cake
         HTShapedRecipeBuilder
             .create(RagiumBlocks.SWEET_BERRIES_CAKE)
@@ -151,16 +156,16 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun cream() {
         // Milk -> Cream
-        distillation(
-            HTFluidHolderLike.MILK to 1000,
-            null,
-            resultHelper.fluid(RagiumFluidContents.CREAM, 250) to null,
-        )
+        HTFluidRecipeBuilder
+            .refining(
+                fluidCreator.fromHolder(HTFluidHolderLike.MILK, 1000),
+                resultHelper.fluid(RagiumFluidContents.CREAM, 250),
+            ).saveSuffixed(output, "_from_milk")
 
         extractAndInfuse(Items.BOWL, RagiumItems.CREAM_BOWL, RagiumFluidContents.CREAM)
         // Cream -> Butter
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALT))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CREAM, 250))
             .setResult(resultHelper.item(CommonMaterialPrefixes.FOOD, FoodMaterialKeys.BUTTER))
@@ -180,8 +185,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_with_sponge")
 
         // Ice Cream
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.SNOWBALL))
             .addIngredient(fluidCreator.milk(250))
             .setResult(resultHelper.item(RagiumItems.ICE_CREAM))
@@ -242,8 +247,8 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(Tags.Items.BUCKETS_WATER)
             .save(output)
 
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.FLOUR, FoodMaterialKeys.WHEAT))
             .addIngredient(fluidCreator.water(250))
             .setResult(resultHelper.item(dough))

@@ -42,6 +42,7 @@ object RagiumConst {
     const val ARS_NOUVEAU = "ars_nouveau"
     const val COMMON = "c"
     const val CREATE = "create"
+    const val CREATE_ENCH = "create_enchantment_industry"
     const val EIO = "enderio"
     const val EIO_BASE = "enderio_base"
     const val EIO_MACHINES = "enderio_machines"
@@ -65,7 +66,6 @@ object RagiumConst {
     //    Serialization    //
 
     const val ACCESS_CONFIG = "access_config"
-    const val ENCHANTMENT = "enchantment"
     const val OWNER = "owner"
 
     const val ITEM = "item"
@@ -84,7 +84,6 @@ object RagiumConst {
     const val TAG = "tag"
     const val COUNT = "count"
     const val COMPONENTS = "components"
-    const val CHANCE = "chance"
 
     const val PREVENT_ITEM_MAGNET = "PreventRemoteMovement"
 
@@ -103,10 +102,13 @@ object RagiumConst {
     const val REFINING = "refining"
     const val ROCK_GENERATING = "rock_generating"
     const val SIMULATING = "simulating"
+    const val SIMULATING_BLOCK = "$SIMULATING/block"
+    const val SIMULATING_ENTITY = "$SIMULATING/entity"
     const val SOLIDIFYING = "solidifying"
-    const val WASHING = "washing"
 
     const val INGREDIENT = "ingredient"
+
+    const val CATALYST = "catalyst"
 
     const val RESULT = "result"
     const val RESULTS = "results"

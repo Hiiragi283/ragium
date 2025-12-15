@@ -3,17 +3,16 @@ package hiiragi283.ragium.setup
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTBlockEntityFactory
+import hiiragi283.ragium.api.capability.HTEnergyCapabilities
+import hiiragi283.ragium.api.capability.HTFluidCapabilities
+import hiiragi283.ragium.api.capability.HTItemCapabilities
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.registry.impl.HTDeferredOnlyBlock
 import hiiragi283.ragium.api.storage.HTHandlerProvider
-import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
-import hiiragi283.ragium.api.storage.capability.HTFluidCapabilities
-import hiiragi283.ragium.api.storage.capability.HTItemCapabilities
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTDimensionalAnchorBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTEnergyNetworkAccessBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTItemCollectorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTStoneCollectorBlockEntity
@@ -40,17 +39,14 @@ import hiiragi283.ragium.common.block.entity.processor.HTMultiSmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTPulverizerBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTDrumBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTExpDrumBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTOpenCrateBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTTieredDrumBlockEntity
-import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
-import net.minecraft.core.BlockPos
+import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
-import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
@@ -67,6 +63,19 @@ object RagiumBlockEntityTypes {
         REGISTER.addAlias("fisher", "item_collector")
         REGISTER.addAlias("item_buffer", "item_collector")
         REGISTER.addAlias("mob_capturer", "item_collector")
+
+        listOf(
+            "small",
+            "medium",
+            "large",
+            "huge",
+        ).forEach {
+            REGISTER.addAlias("${it}_drum", "tank")
+            REGISTER.addAlias("${it}_crate", "crate")
+        }
+
+        REGISTER.addAlias("energy_network_interface", "battery")
+        REGISTER.addAlias("creative_energy_unit", "battery")
 
         REGISTER.register(eventBus)
 
@@ -213,12 +222,6 @@ object RagiumBlockEntityTypes {
         ::HTDimensionalAnchorBlockEntity,
     )
 
-    @JvmField
-    val ENI: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
-        "energy_network_interface",
-        HTEnergyNetworkAccessBlockEntity::Simple,
-    )
-
     // Ultimate
     @JvmField
     val TELEPAD: HTDeferredBlockEntityType<HTTelepadBlockentity> = REGISTER.registerType(
@@ -226,32 +229,23 @@ object RagiumBlockEntityTypes {
         ::HTTelepadBlockentity,
     )
 
-    // Creative
-    @JvmField
-    val CEU: HTDeferredBlockEntityType<HTEnergyNetworkAccessBlockEntity> = registerTick(
-        "creative_energy_unit",
-        HTEnergyNetworkAccessBlockEntity::Creative,
-    )
-
     //    Storage    //
 
     @JvmField
-    val CRATES: Map<HTCrateTier, HTDeferredBlockEntityType<HTCrateBlockEntity>> =
-        HTCrateTier.entries.associateWith { tier: HTCrateTier ->
-            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTCrateBlockEntity(tier.getBlock(), pos, state) }
-        }
+    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity> = registerTick("battery", ::HTBatteryBlockEntity)
 
     @JvmField
-    val OPEN_CRATE: HTDeferredBlockEntityType<HTOpenCrateBlockEntity> = REGISTER.registerType("open_crate", ::HTOpenCrateBlockEntity)
+    val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> = registerTick("crate", ::HTCrateBlockEntity)
 
     @JvmField
-    val DRUMS: Map<HTDrumTier, HTDeferredBlockEntityType<HTDrumBlockEntity>> =
-        HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-            registerTick(tier.path) { pos: BlockPos, state: BlockState -> HTTieredDrumBlockEntity(tier.getBlock(), pos, state) }
-        }
+    val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = registerTick("tank", ::HTTankBlockEntity)
 
     @JvmField
-    val EXP_DRUM: HTDeferredBlockEntityType<HTExpDrumBlockEntity> = registerTick("experience_drum", ::HTExpDrumBlockEntity)
+    val BUFFER: HTDeferredBlockEntityType<HTBufferBlockEntity> = registerTick("buffer", ::HTBufferBlockEntity)
+
+    @JvmField
+    val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> =
+        REGISTER.registerType("universal_chest", ::HTUniversalChestBlockEntity)
 
     //    Event    //
 
@@ -310,26 +304,24 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, STONE_COLLECTOR.get())
 
-        registerHandler(event, ENI.get())
-
         registerHandler(event, TELEPAD.get())
-
-        registerHandler(event, CEU.get())
         // Storage
-        for (type: HTDeferredBlockEntityType<HTCrateBlockEntity> in CRATES.values) {
-            registerHandler(event, type.get())
-        }
-        registerHandler(event, OPEN_CRATE.get())
-        for (type: HTDeferredBlockEntityType<HTDrumBlockEntity> in DRUMS.values) {
-            registerHandler(event, type.get())
-        }
-        registerHandler(event, EXP_DRUM.get())
+        registerHandler(event, BATTERY.get())
+        registerHandler(event, CRATE.get())
+        registerHandler(event, TANK.get())
+
+        registerHandler(event, BUFFER.get())
+
+        registerHandler(event, UNIVERSAL_CHEST.get())
 
         RagiumAPI.LOGGER.info("Registered Block Capabilities!")
     }
 
     @JvmStatic
-    private fun registerHandler(event: RegisterCapabilitiesEvent, type: BlockEntityType<out HTBlockEntity>) {
+    private fun <BE> registerHandler(
+        event: RegisterCapabilitiesEvent,
+        type: BlockEntityType<BE>,
+    ) where BE : BlockEntity, BE : HTHandlerProvider {
         event.registerBlockEntity(HTItemCapabilities.block, type, HTHandlerProvider::getItemHandler)
         event.registerBlockEntity(HTFluidCapabilities.block, type, HTHandlerProvider::getFluidHandler)
         event.registerBlockEntity(HTEnergyCapabilities.block, type, HTHandlerProvider::getEnergyStorage)

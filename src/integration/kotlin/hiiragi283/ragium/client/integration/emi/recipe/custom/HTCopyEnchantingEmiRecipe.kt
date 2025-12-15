@@ -6,17 +6,17 @@ import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.addPlus
-import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiRecipe
 import hiiragi283.ragium.client.integration.emi.toFluidEmi
-import hiiragi283.ragium.common.recipe.machine.HTCopyEnchantingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTCopyEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTCopyEnchantingEmiRecipe(category: HTEmiRecipeCategory, id: ResourceLocation) :
-    HTEmiRecipe<HTCopyEnchantingRecipe>(category, id, HTCopyEnchantingRecipe) {
+class HTCopyEnchantingEmiRecipe(id: ResourceLocation) :
+    HTEmiRecipe<HTCopyEnchantingRecipe>(RagiumEmiRecipeCategories.ENCHANTING, id, HTCopyEnchantingRecipe) {
     companion object {
         @JvmStatic
         private val UNIQUE_ID: Int = EmiUtil.RANDOM.nextInt()

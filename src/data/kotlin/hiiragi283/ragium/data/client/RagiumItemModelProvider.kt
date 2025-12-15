@@ -11,9 +11,7 @@ import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.itemId
 import hiiragi283.ragium.api.registry.toId
 import hiiragi283.ragium.api.registry.vanillaId
-import hiiragi283.ragium.api.tier.HTBaseTier
-import hiiragi283.ragium.common.HTChargeType
-import hiiragi283.ragium.common.variant.HTUpgradeVariant
+import hiiragi283.ragium.common.HTUpgradeType
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import hiiragi283.ragium.setup.RagiumItems
@@ -40,7 +38,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
             remove(RagiumItems.RAGI_CHERRY_JUICE)
 
-            removeAll(HTChargeType.entries.map(HTChargeType::getItem))
+            removeAll(RagiumItems.CHARGES.values)
             removeAll(tools)
 
             removeAll(RagiumItems.MACHINE_UPGRADES.values)
@@ -53,17 +51,14 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             .forEach(::basicItem)
 
         mapOf(RagiumItems.POTION_DROP to "item/ghast_tear").forEach { (item: HTHolderLike, path: String) ->
-            withExistingParent(item.getPath(), vanillaId("item", "generated"))
-                .texture("layer0", vanillaId(path))
+            basicItemAlt(item, vanillaId(path))
         }
 
         mapOf(
             RagiumItems.RAGI_ALLOY_COMPOUND to "item/copper_ingot",
             RagiumItems.RAGI_CHERRY_JUICE to "item/potion",
         ).forEach { (item: HTSimpleDeferredItem, path: String) ->
-            withExistingParent(item.getPath(), vanillaId("item", "generated"))
-                .texture("layer0", vanillaId(path))
-                .texture("layer1", item.itemId)
+            layered(item, vanillaId(path), item.itemId)
         }
 
         val dripFluids: List<HTBasicFluidContent> = listOf(
@@ -101,7 +96,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
         // Tools
         buildList {
             addAll(tools)
-            addAll(HTChargeType.entries)
+            addAll(RagiumItems.CHARGES.values)
 
             addAll(tools1)
         }.asSequence()
@@ -109,10 +104,26 @@ class RagiumItemModelProvider(context: HTDataGenContext) : ItemModelProvider(con
             .forEach(::handheldItem)
 
         // Upgrades
-        RagiumItems.MACHINE_UPGRADES.forEach { (variant: HTUpgradeVariant, tier: HTBaseTier, item: HTHolderLike) ->
-            withExistingParent(item.getPath(), vanillaId("item", "generated"))
-                .texture("layer0", RagiumAPI.id("item", "${tier.serializedName}_upgrade_base"))
-                .texture("layer1", RagiumAPI.id("item", variant.variantName()))
+        for ((type: HTUpgradeType, item: HTHolderLike) in RagiumItems.MACHINE_UPGRADES) {
+            val base: ResourceLocation = when (type.group) {
+                HTUpgradeType.Group.CREATIVE -> {
+                    basicItem(type.getId())
+                    continue
+                }
+                else -> RagiumAPI.id("item", "upgrade", "${type.group.serializedName}_base")
+            }
+            layered(item, base, RagiumAPI.id("item", "upgrade", type.serializedName))
         }
     }
+
+    //    Extensions    //
+
+    private fun basicItemAlt(item: HTHolderLike, layer0: ResourceLocation): ItemModelBuilder =
+        withExistingParent(item.getPath(), vanillaId("item", "generated"))
+            .texture("layer0", layer0)
+
+    private fun layered(item: HTHolderLike, layer0: ResourceLocation, layer1: ResourceLocation): ItemModelBuilder =
+        withExistingParent(item.getPath(), vanillaId("item", "generated"))
+            .texture("layer0", layer0)
+            .texture("layer1", layer1)
 }

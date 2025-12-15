@@ -11,6 +11,8 @@ import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTKeyOrTagHelper
 import hiiragi283.ragium.api.registry.idOrThrow
 import hiiragi283.ragium.api.registry.toHolderLike
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -102,10 +104,17 @@ data object HTResultHelper {
      * @param stack ベースとなる[FluidStack]
      */
     @JvmStatic
-    fun fluid(stack: FluidStack): HTFluidResult = fluid(
-        stack.fluidHolder.idOrThrow,
-        stack.amount,
-        stack.componentsPatch,
+    fun fluid(stack: FluidStack): HTFluidResult = fluid(stack.toImmutableOrThrow())
+
+    /**
+     * 指定した引数から[HTFluidResult]を返します。
+     * @param stack ベースとなる[FluidStack]
+     */
+    @JvmStatic
+    fun fluid(stack: ImmutableFluidStack): HTFluidResult = fluid(
+        stack.getId(),
+        stack.amount(),
+        stack.componentsPatch(),
     )
 
     /**

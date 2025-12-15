@@ -24,7 +24,7 @@ interface HTEnergyBattery :
 
         override fun insert(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int {
             if (amount <= 0 || !canInsert(access)) return 0
-            val needed: Int = min(getInsertRate(access), getNeeded())
+            val needed: Int = min(inputRate(access), getNeeded())
             if (needed <= 0) return 0
             val toAdd: Int = min(amount, needed)
             if (action.execute) {
@@ -36,7 +36,7 @@ interface HTEnergyBattery :
 
         override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int {
             if (isEmpty() || amount <= 0 || !canExtract(access)) return 0
-            val toRemove: Int = min(min(getExtractRate(access), getAmount()), amount)
+            val toRemove: Int = min(min(outputRate(access), getAmount()), amount)
             if (toRemove > 0 && action.execute) {
                 setAmount(getAmount() - toRemove)
                 onContentsChanged()
@@ -48,9 +48,9 @@ interface HTEnergyBattery :
 
         protected open fun canExtract(access: HTStorageAccess): Boolean = true
 
-        protected open fun getInsertRate(access: HTStorageAccess): Int = Int.MAX_VALUE
+        protected open fun inputRate(access: HTStorageAccess): Int = Int.MAX_VALUE
 
-        protected open fun getExtractRate(access: HTStorageAccess): Int = Int.MAX_VALUE
+        protected open fun outputRate(access: HTStorageAccess): Int = Int.MAX_VALUE
 
         override fun toString(): String = "HTEnergyBattery(amount=${getAmount()}, capacity=${getCapacity()})"
     }

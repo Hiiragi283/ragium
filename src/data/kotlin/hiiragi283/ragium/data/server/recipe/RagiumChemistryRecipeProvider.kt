@@ -9,6 +9,16 @@ import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.common.HTMoldType
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTCookingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTExtractingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidWithCatalystRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.HTColorMaterial
@@ -16,14 +26,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTColoredVariant
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleExtraItemRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
@@ -34,10 +36,8 @@ import net.minecraft.world.item.DyeItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
-import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.DifferenceIngredient
 
 object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     override fun buildRecipeInternal() {
@@ -51,69 +51,59 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun extracting() {
         // Vanilla
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(Tags.Items.GRAVELS),
-                resultHelper.item(Items.FLINT),
-            ).saveSuffixed(output, "_from_gravel")
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(Tags.Items.GRAVELS))
+            .setResult(resultHelper.item(Items.FLINT))
+            .saveSuffixed(output, "_from_gravel")
 
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(Tags.Items.SANDSTONE_RED_BLOCKS),
-                resultHelper.item(Items.REDSTONE),
-            ).saveSuffixed(output, "_from_red_sandstone")
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(Tags.Items.SANDSTONE_RED_BLOCKS))
+            .setResult(resultHelper.item(Items.REDSTONE))
+            .saveSuffixed(output, "_from_red_sandstone")
 
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(Items.BROWN_MUSHROOM_BLOCK),
-                resultHelper.item(Items.BROWN_MUSHROOM, 3),
-            ).saveSuffixed(output, "_from_block")
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(Items.BROWN_MUSHROOM_BLOCK))
+            .setResult(resultHelper.item(Items.BROWN_MUSHROOM, 3))
+            .saveSuffixed(output, "_from_block")
 
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(Items.RED_MUSHROOM_BLOCK),
-                resultHelper.item(Items.RED_MUSHROOM, 3),
-            ).saveSuffixed(output, "_from_block")
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(Items.RED_MUSHROOM_BLOCK))
+            .setResult(resultHelper.item(Items.RED_MUSHROOM, 3))
+            .saveSuffixed(output, "_from_block")
         // Ragium
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(Items.MAGMA_CREAM, 3),
-                resultHelper.item(RagiumItems.MAGMA_SHARD),
-            ).save(output)
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(Items.MAGMA_CREAM, 3))
+            .setResult(resultHelper.item(RagiumItems.MAGMA_SHARD))
+            .save(output)
 
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(Items.DRIED_KELP),
-                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALT),
-            ).tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALT)
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(Items.DRIED_KELP))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALT))
+            .tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALT)
             .saveSuffixed(output, "_from_kelp")
 
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
-                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER),
-            ).tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER)
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER))
+            .tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER)
             .saveSuffixed(output, "_from_sandstone")
 
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(Items.WIND_CHARGE),
-                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER),
-            ).tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER)
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(Items.WIND_CHARGE))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER))
+            .tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALTPETER)
             .saveSuffixed(output, "_from_breeze")
 
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(Tags.Items.GUNPOWDERS),
-                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
-            ).tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(Tags.Items.GUNPOWDERS))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR))
+            .tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
             .saveSuffixed(output, "_from_gunpowder")
 
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(Items.BLAZE_POWDER),
-                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
-            ).tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(Items.BLAZE_POWDER))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR))
+            .tagCondition(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
             .saveSuffixed(output, "_from_blaze")
 
         dyes()
@@ -123,24 +113,21 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun dyes() {
         // Charcoal -> Brown
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.CHARCOAL),
-                resultHelper.item(Items.BROWN_DYE),
-            ).saveSuffixed(output, "_from_charcoal")
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.CHARCOAL))
+            .setResult(resultHelper.item(Items.BROWN_DYE))
+            .saveSuffixed(output, "_from_charcoal")
         // Coal -> Black
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL),
-                resultHelper.item(Items.BLACK_DYE),
-            ).saveSuffixed(output, "_from_coal")
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL))
+            .setResult(resultHelper.item(Items.BLACK_DYE))
+            .saveSuffixed(output, "_from_coal")
 
         for (material: HTColorMaterial in HTColorMaterial.entries) {
-            HTItemWithCatalystRecipeBuilder
-                .extracting(
-                    itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_MATERIAL_DYE, material),
-                    resultHelper.item(DyeItem.byColor(material.dyeColor), 2),
-                ).saveSuffixed(output, "_from_${material.asMaterialName()}")
+            HTExtractingRecipeBuilder
+                .create(itemCreator.fromTagKey(CommonMaterialPrefixes.RAW_MATERIAL_DYE, material))
+                .setResult(resultHelper.item(DyeItem.byColor(material.dyeColor), 2))
+                .saveSuffixed(output, "_from_${material.asMaterialName()}")
         }
     }
 
@@ -149,8 +136,8 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun mixing() {
         // Water + Lava -> Obsidian
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(fluidCreator.water(1000))
             .addIngredient(fluidCreator.lava(1000))
             .setResult(resultHelper.item(Items.OBSIDIAN))
@@ -177,22 +164,22 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun water() {
         // Water Bottle
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.GLASS_BOTTLE))
             .addIngredient(fluidCreator.water(250))
             .setResult(resultHelper.item(HTPotionHelper.createPotion(Items.POTION, Potions.WATER)))
             .save(output, RagiumAPI.id("water_bottle"))
         // Dirt -> Mud
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.DIRT, 8))
             .addIngredient(fluidCreator.water(1000))
             .setResult(resultHelper.item(Items.MUD, 8))
             .saveSuffixed(output, "_from_dirt")
         // Silt -> Clay
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(RagiumBlocks.SILT, 8))
             .addIngredient(fluidCreator.water(1000))
             .setResult(resultHelper.item(Items.CLAY, 8))
@@ -206,8 +193,8 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             1000,
         )
         // Water + Wind Charge + Packed Ice -> Coolant
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.WIND_CHARGE, 3))
             .addIngredient(itemCreator.fromItem(Items.PACKED_ICE))
             .addIngredient(fluidCreator.water(1000))
@@ -216,8 +203,8 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
         // Concretes
         for (color: HTColorMaterial in HTColorMaterial.entries) {
-            HTComplexRecipeBuilder
-                .mixing()
+            HTMixingRecipeBuilder
+                .create()
                 .addIngredient(itemCreator.fromItem(HTColorMaterial.getColoredItem(HTColoredVariant.CONCRETE_POWDER, color), 8))
                 .addIngredient(fluidCreator.water(1000))
                 .setResult(resultHelper.item(HTColorMaterial.getColoredItem(HTColoredVariant.CONCRETE, color), 8))
@@ -230,52 +217,49 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         // Exp Bottle
         extractAndInfuse(Items.GLASS_BOTTLE, Items.EXPERIENCE_BOTTLE.toHolderLike(), RagiumFluidContents.EXPERIENCE)
         // Exp Berries -> Liquid Exp
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(RagiumBlocks.EXP_BERRIES),
-                null,
-                null,
-                resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 50),
-            ).saveSuffixed(output, "_from_berries")
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(RagiumBlocks.EXP_BERRIES))
+            .setResult(resultHelper.fluid(RagiumFluidContents.EXPERIENCE, 50))
+            .saveSuffixed(output, "_from_berries")
 
         // Golden Apple
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.GOLDEN_APPLE))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 8000))
             .setResult(resultHelper.item(Items.ENCHANTED_GOLDEN_APPLE))
             .save(output)
         // Exp Berries
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 resultHelper.item(RagiumBlocks.EXP_BERRIES),
                 itemCreator.fromTagKey(Tags.Items.FOODS_BERRY),
                 itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL, 4),
             ).save(output)
         // Blaze Powder
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR, 2))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 250))
             .setResult(resultHelper.item(Items.BLAZE_POWDER))
             .save(output)
         // Wind Charge
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.SNOWBALL, 2))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 250))
             .setResult(resultHelper.item(Items.WIND_CHARGE))
             .save(output)
         // Ghast Tear
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.CHISELED_QUARTZ_BLOCK))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 1000))
             .setResult(resultHelper.item(Items.GHAST_TEAR))
             .save(output)
         // Phantom Membrane
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.LEATHERS))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.EXPERIENCE, 250))
             .setResult(resultHelper.item(Items.PHANTOM_MEMBRANE))
@@ -285,29 +269,29 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun crimson() {
         // Crimson Nylium
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.NETHERRACKS))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRIMSON_BLOOD, 250))
             .setResult(resultHelper.item(Items.CRIMSON_NYLIUM))
             .save(output)
         // Crimson Fungus
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.RED_MUSHROOM))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRIMSON_BLOOD, 250))
             .setResult(resultHelper.item(Items.CRIMSON_FUNGUS))
             .save(output)
         // Nether Wart
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.CROPS_BEETROOT))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRIMSON_BLOOD, 250))
             .setResult(resultHelper.item(Items.NETHER_WART))
             .save(output)
         // Crimson Soil
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.SOUL_SOIL))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRIMSON_BLOOD, 2000))
             .setResult(resultHelper.item(RagiumBlocks.CRIMSON_SOIL))
@@ -317,22 +301,22 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun warped() {
         // Warped Nylium
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.NETHERRACKS))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.DEW_OF_THE_WARP, 250))
             .setResult(resultHelper.item(Items.WARPED_NYLIUM))
             .save(output)
         // Warped Fungus
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.RED_MUSHROOM))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.DEW_OF_THE_WARP, 250))
             .setResult(resultHelper.item(Items.WARPED_FUNGUS))
             .save(output)
         // Warped Wart
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.CROPS_BEETROOT))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.DEW_OF_THE_WARP, 1000))
             .setResult(resultHelper.item(RagiumBlocks.WARPED_WART))
@@ -342,37 +326,37 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun eldritch() {
         // Budding Amethyst
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 4000))
             .setResult(resultHelper.item(Items.BUDDING_AMETHYST))
             .save(output)
         // Budding Quartz
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 4000))
             .setResult(resultHelper.item(RagiumBlocks.BUDDING_QUARTZ))
             .save(output)
 
         // Ominous Bottle
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.GLASS_BOTTLE))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 1000))
             .setResult(resultHelper.item(Items.OMINOUS_BOTTLE))
             .save(output)
         // Ominous Trial Key
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.TRIAL_KEY))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 4000))
             .setResult(resultHelper.item(Items.OMINOUS_TRIAL_KEY))
             .save(output)
         // Crying Obsidian
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.OBSIDIANS_NORMAL))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 4000))
             .setResult(resultHelper.item(Items.CRYING_OBSIDIAN))
@@ -396,15 +380,15 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             250 * 9,
         )
         // Gunpowder + Slime -> Gelled Explosive
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.GUNPOWDERS))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.SLIME, 250))
             .setResult(resultHelper.fluid(RagiumFluidContents.GELLED_EXPLOSIVE, 250))
             .save(output)
         // Gelled Explosive -> TNT
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.SANDS, 4))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.GELLED_EXPLOSIVE, 1000))
             .setResult(resultHelper.item(Items.TNT, 8))
@@ -415,6 +399,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun refining() {
+        cokes()
         crudeOil()
         plastic()
 
@@ -423,39 +408,81 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
+    private fun cokes() {
+        // Log -> Charcoal + Creosote
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(ItemTags.LOGS_THAT_BURN))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL))
+            .setResult(resultHelper.fluid(RagiumFluidContents.CREOSOTE, 125))
+            .saveSuffixed(output, "_from_logs")
+        // Compressed Sawdust -> Charcoal + Creosote
+        HTCompressingRecipeBuilder
+            .block(
+                itemCreator.fromItem(RagiumItems.COMPRESSED_SAWDUST),
+                resultHelper.item(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL),
+            ).saveSuffixed(output, "_from_compressed")
+        // Sugar -> Charcoal
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(Items.SUGAR, 12))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL))
+            .saveSuffixed(output, "_from_sugar")
+
+        // Coal -> Coal Coke + Creosote
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(CommonMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE))
+            .setResult(resultHelper.fluid(RagiumFluidContents.CREOSOTE, 250))
+            .saveSuffixed(output, "_from_coal")
+        // Creosote -> Tar + Lubricant
+        HTFluidRecipeBuilder
+            .refining(
+                fluidCreator.fromHolder(RagiumFluidContents.CREOSOTE, 1000),
+                resultHelper.fluid(RagiumFluidContents.LUBRICANT, 250),
+                resultHelper.item(RagiumItems.TAR, 3),
+            ).saveSuffixed(output, "_from_creosote")
+    }
+
+    @JvmStatic
     private fun crudeOil() {
         // Coal -> Crude Oil
-        HTSingleRecipeBuilder
+        HTFluidRecipeBuilder
             .melting(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL),
                 resultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 125),
             ).saveSuffixed(output, "_from_coal")
         // Soul XX -> Crude Oil
-        HTSingleRecipeBuilder
+        HTFluidRecipeBuilder
             .melting(
                 itemCreator.fromTagKey(ItemTags.SOUL_FIRE_BASE_BLOCKS),
                 resultHelper.fluid(RagiumFluidContents.CRUDE_OIL, 500),
             ).saveSuffixed(output, "_from_soul")
 
-        // Crude Oil -> Natural Gas + Naphtha + Tar
-        distillation(
-            RagiumFluidContents.CRUDE_OIL to 1000,
-            resultHelper.item(RagiumItems.TAR),
-            resultHelper.fluid(RagiumFluidContents.NAPHTHA, 375) to null,
-            resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 375) to itemCreator.fromTagKey(RagiumModTags.Items.PLASTICS),
-        )
-
+        // Crude Oil -> Naphtha + Tar
+        HTFluidRecipeBuilder
+            .refining(
+                fluidCreator.fromHolder(RagiumFluidContents.CRUDE_OIL, 1000),
+                resultHelper.fluid(RagiumFluidContents.NAPHTHA, 750),
+                resultHelper.item(RagiumItems.TAR),
+            ).saveSuffixed(output, "_from_crude_oil")
+        // Naphtha + Catalyst -> 4x Polymer Resin
+        HTFluidWithCatalystRecipeBuilder
+            .solidifying(
+                fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000),
+                itemCreator.fromItem(RagiumItems.POLYMER_CATALYST),
+                resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4),
+            ).saveSuffixed(output, "_from_naphtha")
         // Naphtha -> Fuel + Sulfur
-        distillation(
-            RagiumFluidContents.NAPHTHA to 1000,
-            resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
-            resultHelper.fluid(RagiumFluidContents.FUEL, 375) to null,
-        )
+        HTFluidRecipeBuilder
+            .refining(
+                fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000),
+                resultHelper.fluid(RagiumFluidContents.FUEL, 750),
+                resultHelper.item(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR),
+            ).saveSuffixed(output, "_from_naphtha")
         // Naphtha + Raginite -> Lubricant
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NAPHTHA, 1000))
+            .addIngredient(fluidCreator.fromHolders(RagiumFluidContents.CREOSOTE, RagiumFluidContents.NAPHTHA, amount = 1000))
             .setResult(resultHelper.fluid(RagiumFluidContents.LUBRICANT, 1000))
             .save(output)
     }
@@ -463,34 +490,26 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     @JvmStatic
     private fun plastic() {
         // Slime + Salt -> Polymer Resin
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SALT))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.SLIME, 125))
             .setResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN))
             .saveSuffixed(output, "_from_slime")
         // Crude Oil + Clay -> Polymer Resin
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(Items.CLAY_BALL))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRUDE_OIL, 125))
             .setResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN))
             .saveSuffixed(output, "_from_crude_oil")
-        // Natural Gas + Catalyst -> 4x Polymer Resin
-        HTComplexRecipeBuilder
-            .solidifying()
-            .addIngredient(itemCreator.fromItem(RagiumItems.POLYMER_CATALYST))
-            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.NATURAL_GAS, 125))
-            .setResult(resultHelper.item(RagiumModTags.Items.POLYMER_RESIN, 4))
-            .saveSuffixed(output, "_from_lpg")
 
         // Plastic Plate
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
+        HTCompressingRecipeBuilder
+            .plate(
                 itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN),
                 resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC),
-                itemCreator.fromItem(HTMoldType.PLATE),
-            ).saveSuffixed(output, "_with_mold")
+            ).saveSuffixed(output, "_from_resin")
         // Synthetic Fiber / Leather
         mapOf(
             RagiumItems.SYNTHETIC_FIBER to Tags.Items.STRINGS,
@@ -519,81 +538,63 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun sap() {
-        // XX Log (excluded Spruce) -> Wood Dust + Sap
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.from(
-                    DifferenceIngredient.of(Ingredient.of(ItemTags.LOGS_THAT_BURN), Ingredient.of(ItemTags.SPRUCE_LOGS)),
-                ),
-                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4),
-                null,
-                resultHelper.fluid(RagiumFluidContents.SAP, 125),
-            ).saveSuffixed(output, "_from_log")
-        // Sap -> Natural Gas
-        distillation(
-            RagiumFluidContents.SAP to 1000,
-            null,
-            resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 250) to null,
-        )
-
         // Spruce Log -> Spruce Resin
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromTagKey(ItemTags.SPRUCE_LOGS),
-                resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4),
-                null,
-                resultHelper.fluid(RagiumFluidContents.SPRUCE_RESIN, 250),
-            ).saveSuffixed(output, "_from_log")
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKey(ItemTags.SPRUCE_LOGS))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4))
+            .setResult(resultHelper.fluid(RagiumFluidContents.SPRUCE_RESIN, 250))
+            .saveSuffixed(output, "_from_log")
         // Resin -> Rosin
-        distillation(
-            RagiumFluidContents.SPRUCE_RESIN to 1000,
-            resultHelper.item(RagiumItems.ROSIN),
-            resultHelper.fluid(RagiumFluidContents.NATURAL_GAS, 250) to null,
-        )
+        HTFluidRecipeBuilder
+            .refining(
+                fluidCreator.fromHolder(RagiumFluidContents.SPRUCE_RESIN, 1000),
+                resultHelper.fluid(HTFluidHolderLike.WATER, 500),
+                resultHelper.item(RagiumItems.ROSIN),
+            ).saveSuffixed(output, "_from_spruce_resin")
+
+        rubber()
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val base: TagKey<Item>? = data.base
             val sap: HTBasicFluidContent? = data.sap
             // Base -> Sap
             if (base != null && sap != null) {
-                HTItemWithCatalystRecipeBuilder
-                    .extracting(
-                        itemCreator.fromTagKey(base),
-                        resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4),
-                        null,
-                        resultHelper.fluid(sap, RagiumConst.LOG_TO_SAP),
-                    ).save(output)
+                HTExtractingRecipeBuilder
+                    .create(itemCreator.fromTagKey(base))
+                    .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4))
+                    .setResult(resultHelper.fluid(sap, RagiumConst.LOG_TO_SAP))
+                    .save(output)
             }
             // Sap -> Molten
             val molten: HTBasicFluidContent = data.molten
             if (sap != null) {
-                distillation(
-                    sap to 1000,
-                    null,
-                    resultHelper.fluid(molten, RagiumConst.SAP_TO_MOLTEN) to null,
-                )
+                HTFluidRecipeBuilder
+                    .refining(
+                        fluidCreator.fromHolder(sap, 1000),
+                        resultHelper.fluid(molten, RagiumConst.SAP_TO_MOLTEN),
+                    ).saveSuffixed(output, "_from_${sap.getPath()}")
             }
             // Molten -> Gem
-            HTComplexRecipeBuilder
-                .solidifying()
-                .addIngredient(itemCreator.fromItem(HTMoldType.GEM))
-                .addIngredient(fluidCreator.fromHolder(molten, 1000))
-                .setResult(resultHelper.item(CommonMaterialPrefixes.GEM, data))
-                .save(output)
+            HTFluidWithCatalystRecipeBuilder
+                .solidifying(
+                    fluidCreator.fromHolder(molten, 1000),
+                    itemCreator.fromItem(HTMoldType.GEM),
+                    resultHelper.item(CommonMaterialPrefixes.GEM, data),
+                ).save(output)
 
-            HTSingleRecipeBuilder
+            HTFluidRecipeBuilder
                 .melting(
                     itemCreator.fromTagKey(CommonMaterialPrefixes.GEM, data),
                     resultHelper.fluid(molten, 1000),
                 ).saveSuffixed(output, "_from_gem")
         }
 
-        // Crimson Crystal
+        // Crimson Crystal -> Blaze Powder
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, 3)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL)
             .save(output)
-        // Warped Crystal
+        // Warped Crystal -> Ender Pearl
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, 3)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
@@ -604,37 +605,76 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
     }
 
     @JvmStatic
+    private fun rubber() {
+        // Dandelion -> Latex
+        HTShapedRecipeBuilder
+            .create(RagiumFluidContents.LATEX.bucket)
+            .hollow8()
+            .define('A', Items.DANDELION)
+            .define('B', Tags.Items.BUCKETS_EMPTY)
+            .saveSuffixed(output, "_with_dandelion")
+        // Acacia / Jungle Log -> Latex
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromTagKeys(listOf(ItemTags.ACACIA_LOGS, ItemTags.JUNGLE_LOGS)))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, 4))
+            .setResult(resultHelper.fluid(RagiumFluidContents.LATEX, 250))
+            .saveSuffixed(output, "_from_log")
+        // Latex -> Raw Rubber
+        HTCookingRecipeBuilder
+            .smelting(RagiumItems.getPlate(CommonMaterialKeys.RAW_RUBBER))
+            .addIngredient(RagiumFluidContents.LATEX.bucketTag)
+            .saveSuffixed(output, "_from_latex")
+
+        meltAndFreeze(RagiumMaterialRecipeData.RAW_RUBBER_SHEET)
+        // Raw Rubber -> Rubber
+        HTCookingRecipeBuilder
+            .smelting(RagiumItems.getPlate(CommonMaterialKeys.RUBBER))
+            .addIngredient(RagiumItems.getPlate(CommonMaterialKeys.RAW_RUBBER))
+            .saveSuffixed(output, "_from_raw_rubber")
+        // Raw Rubber + Sulfur -> Rubber
+        alloyFromData(RagiumMaterialRecipeData.RUBBER_SHEET)
+        // Latex + Sulfur + Coal -> Rubber
+        HTMixingRecipeBuilder
+            .create()
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL))
+            .addIngredient(itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR))
+            .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.LATEX, 1000))
+            .setResult(resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4))
+            .save(output)
+    }
+
+    @JvmStatic
     private fun biomass() {
         // Biomass -> Crude Bio
-        HTSingleRecipeBuilder
+        HTFluidRecipeBuilder
             .melting(
                 itemCreator.fromTagKey(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.BIO),
                 resultHelper.fluid(RagiumFluidContents.CRUDE_BIO, 125),
             ).save(output)
 
-        // Crude Bio -> Bio Fuel
-        distillation(
-            RagiumFluidContents.CRUDE_BIO to 1000,
-            resultHelper.item(Items.CLAY_BALL),
-            resultHelper.fluid(RagiumFluidContents.BIOFUEL, 375) to null,
-        )
+        // Crude Bio -> Bio Fertilizer + Bio Fuel
+        HTFluidRecipeBuilder
+            .refining(
+                fluidCreator.fromHolder(RagiumFluidContents.CRUDE_BIO, 1000),
+                resultHelper.fluid(RagiumFluidContents.BIOFUEL, 750),
+                resultHelper.item(RagiumItems.BIO_FERTILIZER),
+            ).saveSuffixed(output, "_from_crude_bio")
 
         // Poisonous Potato
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromTagKey(Tags.Items.CROPS_POTATO))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.CRUDE_BIO, 250))
             .setResult(resultHelper.item(Items.POISONOUS_POTATO))
             .save(output)
         // Potato Sprouts
-        HTItemWithCatalystRecipeBuilder
-            .extracting(
-                itemCreator.fromItem(Items.POISONOUS_POTATO),
-                resultHelper.item(RagiumItems.POTATO_SPROUTS),
-            ).save(output)
+        HTExtractingRecipeBuilder
+            .create(itemCreator.fromItem(Items.POISONOUS_POTATO))
+            .setResult(resultHelper.item(RagiumItems.POTATO_SPROUTS))
+            .save(output)
         // Green Cake
-        HTItemWithCatalystRecipeBuilder
-            .compressing(
+        HTCompressingRecipeBuilder
+            .block(
                 itemCreator.fromItem(RagiumItems.POTATO_SPROUTS, 16),
                 resultHelper.item(RagiumItems.GREEN_CAKE),
             ).save(output)

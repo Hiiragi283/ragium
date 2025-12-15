@@ -1,6 +1,8 @@
 package hiiragi283.ragium.api.storage
 
 import com.google.common.primitives.Ints
+import hiiragi283.ragium.api.math.fixedFraction
+import org.apache.commons.lang3.math.Fraction
 import kotlin.math.max
 
 /**
@@ -24,15 +26,9 @@ sealed interface HTAmountView<N> where N : Number, N : Comparable<N> {
 
     /**
      * このビューの占有率を返します。
-     * @return [Double]値での占有率
+     * @return [Fraction]値での占有率
      */
-    fun getStoredLevelAsDouble(): Double
-
-    /**
-     * このビューの占有率を返します。
-     * @return [Float]値での占有率
-     */
-    fun getStoredLevelAsFloat(): Float
+    fun getStoredLevel(): Fraction
 
     /**
      * [Int]値を扱う[HTAmountView]の拡張インターフェース
@@ -40,9 +36,7 @@ sealed interface HTAmountView<N> where N : Number, N : Comparable<N> {
     interface IntSized : HTAmountView<Int> {
         override fun getNeeded(): Int = max(0, getCapacity() - getAmount())
 
-        override fun getStoredLevelAsDouble(): Double = getAmount() / getCapacity().toDouble()
-
-        override fun getStoredLevelAsFloat(): Float = getAmount() / getCapacity().toFloat()
+        override fun getStoredLevel(): Fraction = fixedFraction(getAmount(), getCapacity())
     }
 
     /**
@@ -55,8 +49,6 @@ sealed interface HTAmountView<N> where N : Number, N : Comparable<N> {
 
         override fun getNeeded(): Long = max(0, getCapacity() - getAmount())
 
-        override fun getStoredLevelAsDouble(): Double = getAmount() / getCapacity().toDouble()
-
-        override fun getStoredLevelAsFloat(): Float = getAmount() / getCapacity().toFloat()
+        override fun getStoredLevel(): Fraction = fixedFraction(getAmount(), getCapacity())
     }
 }

@@ -85,6 +85,8 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         foundryFromData(RagiumMaterialRecipeData.AZURE_STEEL)
 
         foundryFromData(RagiumMaterialRecipeData.DEEP_STEEL)
+
+        foundryFromData(RagiumMaterialRecipeData.RUBBER_SHEET)
     }
 
     @JvmStatic
@@ -113,6 +115,8 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         pulverizerFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
         pulverizerFromData(VanillaMaterialRecipeData.ECHO_DUST)
         // Ragium
+        pulverizerFromData(RagiumMaterialRecipeData.AZURE_DUST)
+
         pulverizerFromData(RagiumMaterialRecipeData.RAGI_CRYSTAL_ORE)
         pulverizerFromData(RagiumMaterialRecipeData.CRIMSON_ORE)
         pulverizerFromData(RagiumMaterialRecipeData.WARPED_ORE)

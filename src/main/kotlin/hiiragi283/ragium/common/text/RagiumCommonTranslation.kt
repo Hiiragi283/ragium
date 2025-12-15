@@ -60,11 +60,11 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     CEU("description", "creative_energy_unit"),
 
     // Blocks - Storages
+    BATTERY("description", "battery"),
     CRATE("description", "crate"),
-    OPEN_CRATE("description", "open_crate"),
-
-    DRUM("description", "drum"),
-    EXP_DRUM("description", "experience_drum"),
+    TANK("description", "tank"),
+    BUFFER("description", "buffer"),
+    UNIVERSAL_CHEST("description", "universal_chest"),
 
     // Config
     CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),
@@ -97,6 +97,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     MAGNET("description", "magnet"),
     SLOT_COVER("description", "slot_cover"),
     TRADER_CATALOG("description", "trader_catalog"),
+    UNIVERSAL_BUNDLE("description", "universal_bundle"),
 
     // Items - Foods
     AMBROSIA("description", "ambrosia"),
@@ -116,7 +117,11 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     KEY_OPEN_UNIVERSAL_BUNDLE("key", "open_universal_bundle"),
 
     // EMI
-    EMI_MACHINE_UPGRADE("emi.category", "machine_upgrade"),
+    EMI_MACHINE_UPGRADE_TITLE("emi.category", "machine_upgrade"),
+    EMI_COMPOSTING_TITLE("emi.category", "composting"),
+    EMI_ROCK_GENERATING("emi.category", "rock_generating"),
+
+    EMI_BLOCK_CATALYST("description", "block_catalyst"),
 
     // Jade
     JADE_MACHINE_TIER("jade", "machine_tier"),

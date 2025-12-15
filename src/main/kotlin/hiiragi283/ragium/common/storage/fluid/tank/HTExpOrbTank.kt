@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.storage.fluid.tank
 import hiiragi283.ragium.api.serialization.value.HTValueSerializable
 import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.storage.fluid.HTFluidTank
-import hiiragi283.ragium.common.util.HTExperienceHelper
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.util.HTExperienceHelper
 import net.minecraft.world.entity.ExperienceOrb
 
 class HTExpOrbTank(private val orb: ExperienceOrb) :

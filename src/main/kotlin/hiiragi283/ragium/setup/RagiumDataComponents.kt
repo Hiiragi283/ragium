@@ -2,10 +2,8 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTIntrinsicEnchantment
-import hiiragi283.ragium.api.item.component.HTItemContents
 import hiiragi283.ragium.api.item.component.HTItemSoundEvent
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
-import hiiragi283.ragium.api.item.component.HTMachineUpgrade
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.api.item.component.HTTeleportPos
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
@@ -15,14 +13,15 @@ import hiiragi283.ragium.api.registry.impl.HTDeferredDataComponentRegister
 import hiiragi283.ragium.api.serialization.codec.BiCodec
 import hiiragi283.ragium.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.ragium.api.stack.ImmutableFluidStack
+import hiiragi283.ragium.api.storage.attachments.HTAttachedEnergy
+import hiiragi283.ragium.api.storage.attachments.HTAttachedFluids
+import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.text.HTSimpleTranslation
 import hiiragi283.ragium.api.text.HTTranslation
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.damagesource.DamageType
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import org.apache.commons.lang3.math.Fraction
 
@@ -34,6 +33,9 @@ object RagiumDataComponents {
     fun init(eventBus: IEventBus) {
         REGISTER.addAlias("blast_power", "charge_power")
 
+        REGISTER.addAlias("fluid_content", "fluid")
+        REGISTER.addAlias("item_content", "item")
+
         REGISTER.register(eventBus)
     }
 
@@ -41,7 +43,7 @@ object RagiumDataComponents {
     val ANTI_GRAVITY: DataComponentType<Boolean> = REGISTER.registerType("anti_gravity", BiCodec.BOOL)
 
     @JvmField
-    val CHARGE_POWER: DataComponentType<Fraction> = REGISTER.registerType("charge_power", BiCodecs.FRACTION)
+    val CHARGE_POWER: DataComponentType<Fraction> = REGISTER.registerType("charge_power", BiCodecs.NON_NEGATIVE_FRACTION)
 
     @JvmField
     val COLOR: DataComponentType<DyeColor> = REGISTER.registerType("color", VanillaBiCodecs.COLOR)
@@ -81,20 +83,16 @@ object RagiumDataComponents {
     //    Machine    //
 
     @JvmField
-    val MACHINE_UPGRADE: DataComponentType<HTMachineUpgrade> = REGISTER.registerType("machine_upgrade", HTMachineUpgrade.CODEC)
-
-    @JvmField
-    val MACHINE_UPGRADE_FILTER: DataComponentType<HTKeyOrTagEntry<BlockEntityType<*>>> =
-        REGISTER.registerType("machine_upgrade/filter", HTKeyOrTagHelper.INSTANCE.codec(Registries.BLOCK_ENTITY_TYPE))
+    val MACHINE_UPGRADES: DataComponentType<HTAttachedItems> = REGISTER.registerType("machine_upgrades", HTAttachedItems.CODEC)
 
     //    Storage    //
 
     @JvmField
-    val ENERGY: DataComponentType<Int> = REGISTER.registerType("energy", BiCodecs.NON_NEGATIVE_INT)
+    val ENERGY: DataComponentType<HTAttachedEnergy> = REGISTER.registerType("energy", HTAttachedEnergy.CODEC)
 
     @JvmField
-    val FLUID_CONTENT: DataComponentType<ImmutableFluidStack> = REGISTER.registerType("fluid_content", ImmutableFluidStack.CODEC)
+    val FLUID: DataComponentType<HTAttachedFluids> = REGISTER.registerType("fluid", HTAttachedFluids.CODEC)
 
     @JvmField
-    val ITEM_CONTENT: DataComponentType<HTItemContents> = REGISTER.registerType("item_content", HTItemContents.CODEC)
+    val ITEM: DataComponentType<HTAttachedItems> = REGISTER.registerType("item", HTAttachedItems.CODEC)
 }

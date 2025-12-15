@@ -13,21 +13,23 @@ import hiiragi283.ragium.api.world.getTypedBlockEntity
 import hiiragi283.ragium.client.event.HTClientItemTooltipComponent
 import hiiragi283.ragium.client.event.HTItemTooltipContent
 import hiiragi283.ragium.client.gui.screen.HTAccessConfigurationScreen
+import hiiragi283.ragium.client.gui.screen.HTBatteryScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockEntityContainerScreen
 import hiiragi283.ragium.client.gui.screen.HTBlockEntityScreenFactory
-import hiiragi283.ragium.client.gui.screen.HTDrumScreen
-import hiiragi283.ragium.client.gui.screen.HTEnergyNetworkAccessScreen
 import hiiragi283.ragium.client.gui.screen.HTFluidCollectorScreen
 import hiiragi283.ragium.client.gui.screen.HTGenericScreen
+import hiiragi283.ragium.client.gui.screen.HTTankScreen
 import hiiragi283.ragium.client.gui.screen.HTTelepadScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTCombustionGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTGeneratorScreen
 import hiiragi283.ragium.client.gui.screen.generator.HTMagmaticGeneratorScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTAdvancedMixerScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTCrusherScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTMixerScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTMobCrusherScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTProcessorScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTRefineryScreen
+import hiiragi283.ragium.client.gui.screen.processor.HTSimulatorScreen
 import hiiragi283.ragium.client.gui.screen.processor.HTSingleFluidProcessorScreen
 import hiiragi283.ragium.client.key.RagiumKeyMappings
 import hiiragi283.ragium.client.model.HTFuelGeneratorModel
@@ -37,15 +39,16 @@ import hiiragi283.ragium.client.renderer.block.HTFuelGeneratorRenderer
 import hiiragi283.ragium.client.renderer.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.client.renderer.block.HTRefineryRenderer
 import hiiragi283.ragium.client.renderer.block.HTSingleFluidMachineRenderer
+import hiiragi283.ragium.client.renderer.block.HTTankRenderer
 import hiiragi283.ragium.client.renderer.item.HTFuelGeneratorItemRenderer
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
-import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -54,13 +57,13 @@ import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.client.model.MinecartModel
-import net.minecraft.client.model.geom.ModelLayerLocation
 import net.minecraft.client.renderer.BiomeColors
 import net.minecraft.client.renderer.entity.EntityRendererProvider
 import net.minecraft.client.renderer.entity.MinecartRenderer
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.BlockAndTintGetter
@@ -116,7 +119,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                     getter != null && pos != null -> {
                         val collector: HTFluidCollectorBlockEntity? =
                             getter.getTypedBlockEntity<HTFluidCollectorBlockEntity>(pos)
-                        if (collector != null && collector.hasUpgrade(RagiumItems.EXP_COLLECTOR_UPGRADE)) {
+                        if (collector != null && collector.hasUpgrade(RagiumUpgradeKeys.COLLECT_EXP)) {
                             0x66ff33
                         } else {
                             BiomeColors.getAverageWaterColor(getter, pos)
@@ -126,6 +129,23 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                 }
             },
             RagiumBlocks.FLUID_COLLECTOR.get(),
+        )
+        // Universal Chest
+        event.register(
+            { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+                when {
+                    tint != 0 -> -1
+                    getter != null && pos != null -> {
+                        val color: DyeColor = getter
+                            .getTypedBlockEntity<HTUniversalChestBlockEntity>(pos)
+                            ?.color
+                            ?: DyeColor.WHITE
+                        color.textureDiffuseColor
+                    }
+                    else -> -1
+                }
+            },
+            RagiumBlocks.UNIVERSAL_CHEST.get(),
         )
         // LED Blocks
         for ((color: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
@@ -177,7 +197,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         for (bucket: HTDeferredItem<*> in RagiumFluidContents.REGISTER.itemEntries) {
             event.register(DynamicFluidContainerModel.Colors(), bucket)
         }
-        // Backpack
+        // Colored items
         event.register(
             { stack: ItemStack, tint: Int ->
                 when {
@@ -185,6 +205,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                     else -> stack.get(RagiumDataComponents.COLOR)?.textureDiffuseColor ?: -1
                 }
             },
+            RagiumBlocks.UNIVERSAL_CHEST,
             RagiumItems.UNIVERSAL_BUNDLE,
         )
         // Potion Drop
@@ -222,18 +243,18 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.clear(RagiumFluidContents.BIOFUEL, Color(0x99cc00))
 
         event.dull(RagiumFluidContents.CRUDE_OIL, Color(0x333333))
-        event.clear(RagiumFluidContents.NATURAL_GAS, Color(0xcccccc))
         event.dull(RagiumFluidContents.NAPHTHA, Color(0xff6633))
         event.clear(RagiumFluidContents.FUEL, Color(0xcc3300))
         event.dull(RagiumFluidContents.LUBRICANT, Color(0xff9900))
 
-        event.clear(RagiumFluidContents.SAP, Color(0x996633))
-        event.clear(RagiumFluidContents.SPRUCE_RESIN, Color(0xcc6600))
+        event.dull(RagiumFluidContents.SPRUCE_RESIN, Color(0xcc6600))
+        event.dull(RagiumFluidContents.LATEX, Color(0xcccccc))
 
         event.molten(RagiumFluidContents.DESTABILIZED_RAGINITE, Color(0xff0033))
 
         event.clear(RagiumFluidContents.EXPERIENCE, Color(0x66ff33))
         event.clear(RagiumFluidContents.COOLANT, Color(0x009999))
+        event.dull(RagiumFluidContents.CREOSOTE, Color(0x663333))
 
         for (data: RagiumMoltenCrystalData in RagiumMoltenCrystalData.entries) {
             val color: Color = data.color
@@ -265,14 +286,15 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.UNIVERSAL_BUNDLE.get(), ::HTGenericScreen)
 
         event.register(RagiumMenuTypes.ALLOY_SMELTER, ::HTProcessorScreen)
+        event.register(RagiumMenuTypes.ADVANCED_MIXER, ::HTAdvancedMixerScreen)
+        event.register(RagiumMenuTypes.BATTERY, ::HTBatteryScreen)
         event.register(RagiumMenuTypes.BREWERY, HTSingleFluidProcessorScreen.Companion::combine)
         event.register(RagiumMenuTypes.COMBUSTION_GENERATOR, ::HTCombustionGeneratorScreen)
-        event.register(RagiumMenuTypes.COMPRESSOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
+        event.register(RagiumMenuTypes.COMPRESSOR, ::HTProcessorScreen)
+        event.register(RagiumMenuTypes.CRATE, ::HTBlockEntityContainerScreen)
         event.register(RagiumMenuTypes.CUTTING_MACHINE, ::HTProcessorScreen)
-        event.register(RagiumMenuTypes.DRUM, ::HTDrumScreen)
         event.register(RagiumMenuTypes.ENCHANTER, HTSingleFluidProcessorScreen.Companion::combine)
-        event.register(RagiumMenuTypes.ENERGY_NETWORK_ACCESS, ::HTEnergyNetworkAccessScreen)
-        event.register(RagiumMenuTypes.EXTRACTOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
+        event.register(RagiumMenuTypes.EXTRACTOR, HTSingleFluidProcessorScreen.Companion::extractor)
         event.register(RagiumMenuTypes.FLUID_COLLECTOR, ::HTFluidCollectorScreen)
         event.register(RagiumMenuTypes.ITEM_COLLECTOR, ::HTBlockEntityContainerScreen)
         event.register(RagiumMenuTypes.ITEM_GENERATOR, HTGeneratorScreen.createFactory("item_generator"))
@@ -282,9 +304,10 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.register(RagiumMenuTypes.MOB_CRUSHER, ::HTMobCrusherScreen)
         event.register(RagiumMenuTypes.PROCESSOR, ::HTProcessorScreen)
         event.register(RagiumMenuTypes.REFINERY, ::HTRefineryScreen)
-        event.register(RagiumMenuTypes.SIMULATOR, HTSingleFluidProcessorScreen.Companion::itemWithCatalyst)
+        event.register(RagiumMenuTypes.SIMULATOR, ::HTSimulatorScreen)
         event.register(RagiumMenuTypes.SINGLE_ITEM_WITH_FLUID, ::HTCrusherScreen)
         event.register(RagiumMenuTypes.SMELTER, HTProcessorScreen.createFactory("smelter"))
+        event.register(RagiumMenuTypes.TANK, ::HTTankScreen)
         event.register(RagiumMenuTypes.TELEPAD, ::HTTelepadScreen)
 
         RagiumAPI.LOGGER.info("Registered Screens!")
@@ -292,10 +315,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
 
     private fun registerLayerDefinitions(event: EntityRenderersEvent.RegisterLayerDefinitions) {
         event.registerLayerDefinition(RagiumModelLayers.FUEL_GENERATOR, HTFuelGeneratorModel::createLayer)
-
-        for (location: ModelLayerLocation in RagiumModelLayers.DRUM_MINECARTS.values) {
-            event.registerLayerDefinition(location, MinecartModel<*>::createBodyLayer)
-        }
+        event.registerLayerDefinition(RagiumModelLayers.TANK_MINECART, MinecartModel<*>::createBodyLayer)
 
         RagiumAPI.LOGGER.info("Registered Layer Definitions!")
     }
@@ -321,20 +341,15 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.COMBUSTION_GENERATOR.get(), ::HTFuelGeneratorRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.ENCHANTMENT_GENERATOR.get(), ::HTFuelGeneratorRenderer)
 
-        for (tier: HTCrateTier in HTCrateTier.entries) {
-            event.registerBlockEntityRenderer(tier.getBlockEntityType().get(), ::HTCrateRenderer)
-        }
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CRATE.get(), ::HTCrateRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankRenderer)
         // Entity
         for (type: HTDeferredEntityType<out HTAbstractCharge> in RagiumEntityTypes.CHARGES.values) {
             event.registerEntityRenderer(type.get(), ::ThrownItemRenderer)
         }
         event.registerEntityRenderer(RagiumEntityTypes.ELDRITCH_EGG.get(), ::ThrownItemRenderer)
-
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            val layerDefinition: ModelLayerLocation = RagiumModelLayers.DRUM_MINECARTS[tier] ?: continue
-            event.registerEntityRenderer(
-                tier.getEntityType().get(),
-            ) { context: EntityRendererProvider.Context -> MinecartRenderer(context, layerDefinition) }
+        event.registerEntityRenderer(RagiumEntityTypes.TANK_MINECART.get()) { context: EntityRendererProvider.Context ->
+            MinecartRenderer(context, RagiumModelLayers.TANK_MINECART)
         }
 
         RagiumAPI.LOGGER.info("Registered Entity Renderers!")

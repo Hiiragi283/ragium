@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import hiiragi283.ragium.api.math.fraction
+import hiiragi283.ragium.api.math.fixedFraction
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
@@ -40,10 +40,6 @@ abstract class HTDeviceBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, st
 
         protected open fun getTickRate(): Int = 20
 
-        fun getProgress(): Fraction {
-            val totalTick: Int = ticks
-            val maxTicks = 20
-            return fraction(totalTick, maxTicks)
-        }
+        fun getProgress(): Fraction = fixedFraction(ticks, 20)
     }
 }

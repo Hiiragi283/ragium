@@ -1,30 +1,25 @@
 package hiiragi283.ragium.api.data.lang
 
-import com.buuz135.replication.api.IMatterType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.collection.ImmutableTable
 import hiiragi283.ragium.api.data.advancement.HTAdvancementKey
 import hiiragi283.ragium.api.data.advancement.descKey
 import hiiragi283.ragium.api.data.advancement.titleKey
-import hiiragi283.ragium.api.function.identity
 import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.HTFluidContent
+import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlock
-import hiiragi283.ragium.api.registry.impl.HTDeferredMatterType
 import hiiragi283.ragium.api.registry.toDescriptionKey
 import hiiragi283.ragium.api.text.HTHasTranslationKey
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.tier.HTBaseTier
 import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.text.HTSmithingTranslation
-import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumChemicals
 import hiiragi283.ragium.setup.RagiumEntityTypes
@@ -69,7 +64,7 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         fromVariantTable(RagiumItems.ARMORS, HTMaterialTranslations::getLangName)
         fromVariantTable(RagiumItems.TOOLS, HTMaterialTranslations::getLangName)
 
-        val charge = LangPattern("%s Charge", "%s チャージ")
+        val charge = LangPattern("%s Charge", "%sチャージ")
         fromLangMap(charge, RagiumItems.CHARGES)
         fromLangMap(charge, RagiumEntityTypes.CHARGES)
 
@@ -79,18 +74,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         addTemplate(RagiumMaterialKeys.NIGHT_METAL, VanillaMaterialKeys.GOLD)
 
         fromLangMap(LangPattern("%s Mold", "%sの鋳型"), RagiumItems.MOLDS)
-
-        fromVariantTable(RagiumItems.MACHINE_UPGRADES, identity())
+        fromLangMap(LangPattern("%s Upgrade", "%sアップグレード"), RagiumItems.MACHINE_UPGRADES)
         // Translation
-        addTranslations(HTBaseTier.entries, identity())
-
-        addTranslations(HTCrateTier.entries, HTCrateTier::getBlock)
-        addTranslations(HTDrumTier.entries, HTDrumTier::getBlock)
-
-        val minecart = LangPattern("Minecart with %s", "%s付きトロッコ")
-        fromLangMap(minecart, RagiumItems.DRUM_MINECARTS)
-        fromLangMap(minecart, RagiumEntityTypes.DRUMS)
-
         translations()
 
         // Integration
@@ -108,8 +93,8 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
             add(RagiumChemicals.getChemical(data), value)
         }
         // Replication
-        for ((essence: RagiumEssenceType, matterType: HTDeferredMatterType<IMatterType>) in RagiumMatterTypes.MATTER_TYPES) {
-            add("${RagiumConst.REPLICATION}.matter_type.${matterType.name}", essence.getTranslatedName(type))
+        for ((essence: RagiumEssenceType, matterType: HTHolderLike) in RagiumMatterTypes.MATTER_TYPES) {
+            add("${RagiumConst.REPLICATION}.matter_type.${matterType.getPath()}", essence.getTranslatedName(type))
         }
     }
 
@@ -131,20 +116,10 @@ abstract class HTLanguageProvider(output: PackOutput, val type: HTLanguageType) 
         add(RagiumTranslation.STORED_FE, $$"%1$s FE")
 
         add(RagiumTranslation.FRACTION, $$"%1$s / %2$s")
-        add(RagiumTranslation.PERCENTAGE, $$"%1$s %")
         add(RagiumTranslation.TICK, $$"%1$s ticks")
-
-        add(RagiumTranslation.PER_MB, $$"%1$s / mb")
-        add(RagiumTranslation.PER_TICK, $$"%1$s / ticks")
     }
 
     // Collection
-    private fun <T : HTLangName> addTranslations(entries: Iterable<T>, blockGetter: (T) -> HTHasTranslationKey) {
-        for (entry: T in entries) {
-            add(blockGetter(entry), entry.getTranslatedName(type))
-        }
-    }
-
     private fun fromLangMap(provider: HTLangPatternProvider, map: Map<out HTLangName, HTHasTranslationKey>) {
         for ((langName: HTLangName, translationKey: HTHasTranslationKey) in map) {
             add(translationKey, provider.translate(type, langName))

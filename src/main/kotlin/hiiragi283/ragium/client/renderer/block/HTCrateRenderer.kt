@@ -1,17 +1,15 @@
 package hiiragi283.ragium.client.renderer.block
 
 import com.mojang.blaze3d.vertex.PoseStack
-import hiiragi283.ragium.api.block.attribute.HTDirectionalBlockAttribute
-import hiiragi283.ragium.api.block.attribute.getAttribute
-import hiiragi283.ragium.client.renderer.translate
+import com.mojang.math.Axis
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.entity.ItemRenderer
-import net.minecraft.core.Direction
+import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.state.BlockState
 
 class HTCrateRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEntityRenderer<HTCrateBlockEntity>(context) {
     private val itemRenderer: ItemRenderer = context.itemRenderer
@@ -25,15 +23,15 @@ class HTCrateRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEnt
         packedOverlay: Int,
     ) {
         val level: Level = blockEntity.level ?: return
-        val state: BlockState = level.getBlockState(blockEntity.blockPos)
-        val attribute: HTDirectionalBlockAttribute = state.getAttribute<HTDirectionalBlockAttribute>() ?: return
-        val front: Direction = attribute.getDirection(state)
+        val stack: ImmutableItemStack = blockEntity.slot.getStack() ?: return
+
+        val ticks: Float = blockEntity.ticks + partialTick
         poseStack.pushPose()
-        poseStack.translate(0.5f)
-        poseStack.mulPose(front.rotation)
-        poseStack.translate(front.stepX, front.stepY, front.stepZ)
+        val x: Float = Mth.sin(ticks / 10f) * 0.1f
+        poseStack.translate(8 / 16f, x + 0.5f, 8 / 16f)
+        poseStack.mulPose(Axis.YP.rotation(ticks / 20f))
         itemRenderer.renderStatic(
-            blockEntity.getStackInSlot(0, blockEntity.getItemSideFor()),
+            stack.unwrap(),
             ItemDisplayContext.FIXED,
             packedLight,
             packedOverlay,

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.item
 
 import hiiragi283.ragium.api.text.translatableText
-import hiiragi283.ragium.api.tier.HTTierProvider
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.item.BlockItem
@@ -15,13 +15,13 @@ open class HTBlockItem<BLOCK : Block>(block: BLOCK, properties: Properties) : Bl
     @Suppress("UNCHECKED_CAST")
     override fun getBlock(): BLOCK = super.getBlock() as BLOCK
 
-    open fun getTier(): HTTierProvider? = null
+    protected open fun getNameColor(stack: ItemStack): ChatFormatting? = null
 
     override fun getName(stack: ItemStack): Component {
         var name: MutableComponent = translatableText(getDescriptionId(stack))
-        val tier: HTTierProvider? = getTier()
-        if (tier != null) {
-            name = name.withStyle(tier.getBaseTier().color)
+        val color: ChatFormatting? = getNameColor(stack)
+        if (color != null) {
+            name = name.withStyle(color)
         }
         return name
     }

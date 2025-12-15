@@ -2,9 +2,9 @@ package hiiragi283.ragium.data
 
 import com.simibubi.create.api.registry.CreateRegistries
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.HTRootDataGenerator
 import hiiragi283.ragium.api.data.advancement.HTAdvancementProvider
+import hiiragi283.ragium.api.function.partially1
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishProvider
@@ -14,6 +14,7 @@ import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancementGenerator
 import hiiragi283.ragium.data.server.bootstrap.RagiumBiomeModifierProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumBrewingRecipeDataProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumConfiguredProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumEnchantmentProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumPlacedProvider
@@ -22,7 +23,6 @@ import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumCustomLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumGlobalLootProvider
 import hiiragi283.ragium.data.server.loot.RagiumLootTableProvider
-import hiiragi283.ragium.data.server.tag.RagiumBlockEntityTypeTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumDamageTypeTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumEnchantmentTagsProvider
@@ -47,12 +47,14 @@ import java.util.concurrent.CompletableFuture
 object RagiumDatagen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent) {
-        val generator: HTRootDataGenerator = HTRootDataGenerator.withDataPack(event) {
+        val (server: HTRootDataGenerator, client: HTRootDataGenerator) = HTRootDataGenerator.withDataPack(event) {
             add(Registries.ENCHANTMENT, RagiumEnchantmentProvider)
             add(Registries.CONFIGURED_FEATURE, RagiumConfiguredProvider)
             add(Registries.PLACED_FEATURE, RagiumPlacedProvider)
 
             add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, RagiumBiomeModifierProvider)
+
+            add(RagiumAPI.BREWING_RECIPE_KEY, RagiumBrewingRecipeDataProvider)
 
             add(CreateRegistries.POTATO_PROJECTILE_TYPE, RagiumPotatoProjectileProvider)
         }
@@ -60,34 +62,31 @@ object RagiumDatagen {
         RagiumMaterialManager.gatherAttributes()
 
         // server
-        generator.addProvider(
-            event.includeServer(),
+        server.addProvider(
             RagiumLootTableProvider.create(
                 ::RagiumBlockLootProvider to LootContextParamSets.BLOCK,
                 RagiumCustomLootProvider::Block to LootContextParamSets.BLOCK,
                 RagiumCustomLootProvider::Entity to LootContextParamSets.ENTITY,
             ),
         )
-        generator.addProvider(event.includeServer(), ::RagiumGlobalLootProvider)
+        server.addProvider(::RagiumGlobalLootProvider)
 
-        generator.addProvider(event.includeServer(), HTAdvancementProvider.create(RagiumAdvancementGenerator))
+        server.addProvider(HTAdvancementProvider.create(RagiumAdvancementGenerator))
 
-        generator.addProvider(event.includeServer(), ::RagiumRecipeProvider)
+        server.addProvider(::RagiumRecipeProvider)
 
-        generator.addProvider(event.includeServer(), ::RagiumBlockEntityTypeTagsProvider)
-        generator.addProvider(event.includeServer(), ::RagiumDamageTypeTagsProvider)
-        generator.addProvider(event.includeServer(), ::RagiumEnchantmentTagsProvider)
-        generator.addProvider(event.includeServer(), ::RagiumEntityTypeTagsProvider)
-        generator.addProvider(event.includeServer(), ::RagiumFluidTagsProvider)
-        val blockContents: CompletableFuture<TagsProvider.TagLookup<Block>> =
-            generator.addProvider(event.includeServer(), ::RagiumBlockTagsProvider).contentsGetter()
-        generator.addProvider(event.includeServer()) { context: HTDataGenContext -> RagiumItemTagsProvider(blockContents, context) }
+        server.addProvider(::RagiumDamageTypeTagsProvider)
+        server.addProvider(::RagiumEnchantmentTagsProvider)
+        server.addProvider(::RagiumEntityTypeTagsProvider)
+        server.addProvider(::RagiumFluidTagsProvider)
+        val blockContents: CompletableFuture<TagsProvider.TagLookup<Block>> = server.addProvider(::RagiumBlockTagsProvider).contentsGetter()
+        server.addProvider(::RagiumItemTagsProvider.partially1(blockContents))
 
-        generator.addProvider(event.includeServer(), ::RagiumDataMapProvider)
+        server.addProvider(::RagiumDataMapProvider)
 
-        generator
-            .createDataPackGenerator(event.includeServer(), RagiumAPI.id("work_in_progress"))
-            .addProvider(event.includeServer()) { output: PackOutput ->
+        server
+            .createDataPackGenerator(RagiumAPI.id("work_in_progress"))
+            .addProvider { output: PackOutput ->
                 PackMetadataGenerator.forFeaturePack(
                     output,
                     RagiumTranslation.DATAPACK_WIP.translate(),
@@ -97,11 +96,11 @@ object RagiumDatagen {
 
         RagiumAPI.LOGGER.info("Gathered server resources!")
         // client
-        generator.addProvider(event.includeClient(), ::RagiumEnglishProvider)
-        generator.addProvider(event.includeClient(), ::RagiumJapaneseProvider)
+        client.addProvider(::RagiumEnglishProvider)
+        client.addProvider(::RagiumJapaneseProvider)
 
-        generator.addProvider(event.includeClient(), ::RagiumBlockStateProvider)
-        generator.addProvider(event.includeClient(), ::RagiumItemModelProvider)
+        client.addProvider(::RagiumBlockStateProvider)
+        client.addProvider(::RagiumItemModelProvider)
 
         RagiumAPI.LOGGER.info("Gathered client resources!")
     }

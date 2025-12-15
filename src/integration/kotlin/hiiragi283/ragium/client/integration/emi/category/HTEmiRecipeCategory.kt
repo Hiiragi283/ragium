@@ -6,11 +6,11 @@ import dev.emi.emi.api.recipe.EmiRecipeSorting
 import dev.emi.emi.api.render.EmiRenderable
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.ragium.api.math.HTBounds
-import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.text.HTHasText
 import hiiragi283.ragium.client.integration.emi.toEmi
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.ItemLike
 import java.util.Comparator
 
 open class HTEmiRecipeCategory(
@@ -24,29 +24,18 @@ open class HTEmiRecipeCategory(
 ) : EmiRecipeCategory(id, icon, simplified, sorter) {
     companion object {
         @JvmStatic
-        fun <ITEM : HTItemHolderLike> create(
+        fun create(
             bounds: HTBounds,
-            item: ITEM,
             hasText: HTHasText,
+            id: ResourceLocation,
+            vararg workStations: ItemLike,
             sorter: Comparator<EmiRecipe> = EmiRecipeSorting.compareOutputThenInput(),
         ): HTEmiRecipeCategory = HTEmiRecipeCategory(
             bounds,
             hasText,
-            listOf(item.toEmi()),
-            item.getId(),
-            item.toEmi(),
-            sorter = sorter,
-        )
-
-        @JvmStatic
-        fun <ITEM> create(
-            bounds: HTBounds,
-            item: ITEM,
-            sorter: Comparator<EmiRecipe> = EmiRecipeSorting.compareOutputThenInput(),
-        ): HTEmiRecipeCategory where ITEM : HTItemHolderLike, ITEM : HTHasText = create(
-            bounds,
-            item,
-            item,
+            workStations.map(ItemLike::toEmi),
+            id,
+            workStations[0].toEmi(),
             sorter = sorter,
         )
     }

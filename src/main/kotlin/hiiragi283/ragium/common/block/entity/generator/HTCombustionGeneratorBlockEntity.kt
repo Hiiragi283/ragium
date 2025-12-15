@@ -11,8 +11,8 @@ import hiiragi283.ragium.common.block.entity.generator.base.HTFuelGeneratorBlock
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
 import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -32,7 +32,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(
                 listener,
-                blockHolder.getFluidAttribute().getFirstInputTank(),
+                blockHolder.getFluidAttribute().getFirstInputTank(this),
                 canInsert = RagiumDataMapTypes::getCoolantAmount.andThen { it > 0 },
             ),
         )
@@ -40,7 +40,7 @@ class HTCombustionGeneratorBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(
                 listener,
-                blockHolder.getFluidAttribute().getSecondInputTank(),
+                blockHolder.getFluidAttribute().getSecondInputTank(this),
                 canInsert = RagiumDataMapTypes::getTimeFromCombustion.andThen { it > 0 },
             ),
         )

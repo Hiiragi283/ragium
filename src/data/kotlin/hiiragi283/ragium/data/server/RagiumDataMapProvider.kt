@@ -1,24 +1,38 @@
 package hiiragi283.ragium.data.server
 
+import appeng.core.definitions.AEBlocks
 import com.enderio.base.common.init.EIOBlocks
 import de.ellpeck.actuallyadditions.mod.fluids.InitFluids
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.data.HTDataGenContext
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
+import hiiragi283.ragium.api.data.map.HTRockGenerationData
+import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.map.equip.HTMobEffectEquipAction
+import hiiragi283.ragium.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.ragium.api.material.HTMaterialLike
 import hiiragi283.ragium.api.material.prefix.HTPrefixLike
+import hiiragi283.ragium.api.math.fraction
 import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTHolderLike
+import hiiragi283.ragium.api.registry.impl.HTSimpleDeferredItem
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
+import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.tag.createCommonTag
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
+import hiiragi283.ragium.common.HTUpgradeType
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.tier.HTComponentTier
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -28,23 +42,28 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.conditions.ModLoadedCondition
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
+import org.apache.commons.lang3.math.Fraction
 import plus.dragons.createenchantmentindustry.common.registry.CEIDataMaps
 
 @Suppress("DEPRECATION")
 class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
     private lateinit var provider: HolderLookup.Provider
+    private val itemCreator: HTItemIngredientCreator = RagiumPlatform.INSTANCE.itemCreator()
 
     override fun gather(provider: HolderLookup.Provider) {
         this.provider = provider
 
         compostables()
         furnaceFuels()
+
+        rockGeneration()
 
         mobHead()
 
@@ -53,6 +72,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         combustionFuels()
 
         armorEquip()
+        upgrade()
 
         createEnchIndustry()
     }
@@ -66,15 +86,28 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun furnaceFuels() {
         builder(NeoForgeDataMaps.FURNACE_FUELS)
-            .add(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24 * 9))
+            .add(CommonMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE, FurnaceFuel(200 * 16))
             .add(CommonMaterialPrefixes.FUEL, RagiumMaterialKeys.BAMBOO_CHARCOAL, FurnaceFuel(200 * 6))
             .add(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24))
+            .add(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL, FurnaceFuel(200 * 24 * 9))
             .add(RagiumItems.COMPRESSED_SAWDUST, FurnaceFuel(200 * 6), false)
-            .add(RagiumItems.RAGI_COKE, FurnaceFuel(200 * 16), false)
             .add(RagiumItems.TAR, FurnaceFuel(200 * 4), false)
     }
 
     //    Ragium    //
+
+    private fun rockGeneration() {
+        builder(RagiumDataMapTypes.ROCK_CHANCE)
+            .add(Tags.Blocks.COBBLESTONES, HTRockGenerationData(Fraction.ZERO, Fraction.ZERO), false)
+            .add(Tags.Blocks.STONES, HTRockGenerationData(Fraction.ONE, Fraction.ZERO), false)
+            // AE2
+            .add(
+                AEBlocks.SKY_STONE_BLOCK.id(),
+                HTRockGenerationData(Fraction.ZERO, Fraction.ONE_HALF),
+                false,
+                ModLoadedCondition(RagiumConst.AE2),
+            )
+    }
 
     private fun mobHead() {
         builder(RagiumDataMapTypes.MOB_HEAD)
@@ -126,11 +159,10 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             // lowest
             .add(RagiumFluidContents.CRUDE_OIL, lowest)
             .add("oil", lowest)
-            .add("creosote", lowest)
+            .add(RagiumFluidContents.CREOSOTE, lowest)
             // low
             .add(InitFluids.CANOLA_OIL.get(), low, actually)
             // medium
-            .add(RagiumFluidContents.NATURAL_GAS, medium)
             .add("ethanol", medium)
             .add("bioethanol", medium)
             .add("lpg", medium)
@@ -149,6 +181,95 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun armorEquip() {
         builder(RagiumDataMapTypes.ARMOR_EQUIP)
             .addHolder(RagiumItems.NIGHT_VISION_GOGGLES, HTMobEffectEquipAction(MobEffects.NIGHT_VISION, -1))
+    }
+
+    private fun upgrade() {
+        val builder: Builder<HTUpgradeData, Item> = builder(RagiumDataMapTypes.UPGRADE)
+        // components
+        for ((tier: HTComponentTier, item: HTSimpleDeferredItem) in RagiumItems.COMPONENTS) {
+            builder
+                .add(
+                    item,
+                    HTUpgradeData.create {
+                        set(HTUpgradeKeys.BASE_MULTIPLIER, tier.ordinal + 2)
+                    },
+                    false,
+                )
+        }
+        // upgrades
+        val processor = itemCreator.fromTagKey(RagiumModTags.Items.PROCESSOR_UPGRADABLE)
+
+        for (type: HTUpgradeType in HTUpgradeType.entries) {
+            val upgradeData: HTUpgradeData = when (type) {
+                // Creative
+                HTUpgradeType.CREATIVE -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.IS_CREATIVE, 1)
+                }
+                // Generator
+                // Processor
+                HTUpgradeType.EFFICIENCY -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_EFFICIENCY, fraction(5, 4))
+                    targetSet(processor)
+                }
+                HTUpgradeType.SPEED -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_EFFICIENCY, fraction(4, 5))
+                    set(HTUpgradeKeys.SPEED, fraction(5, 4))
+                    targetSet(processor)
+                }
+                HTUpgradeType.HIGH_SPEED -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_EFFICIENCY, fraction(2, 5))
+                    set(HTUpgradeKeys.SPEED, fraction(3, 2))
+                    targetSet(processor)
+                }
+                // Processor
+                HTUpgradeType.BIO_COMPOSTING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.COMPOST_BIO, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.EXTRACTOR))
+                    exclusiveSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE))
+                }
+                HTUpgradeType.EXTRA_VOIDING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.VOID_EXTRA, 1)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE))
+                }
+
+                HTUpgradeType.EXP_EXTRACTING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.EXTRACTOR))
+                    exclusiveSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE))
+                }
+                HTUpgradeType.EFFICIENT_CRUSHING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.USE_LUBRICANT, 1)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE))
+                }
+                // Device
+                HTUpgradeType.EXP_COLLECTING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.COLLECT_EXP, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.FLUID_COLLECTOR))
+                }
+                HTUpgradeType.FISHING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.FISHING, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.ITEM_COLLECTOR))
+                }
+                HTUpgradeType.MOB_CAPTURING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.CAPTURE_MOB, 1)
+                    targetSet(itemCreator.fromItem(RagiumBlocks.ITEM_COLLECTOR))
+                }
+                // Storage
+                HTUpgradeType.ENERGY_CAPACITY -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_CAPACITY, 4)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE))
+                }
+                HTUpgradeType.FLUID_CAPACITY -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.FLUID_CAPACITY, 4)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE))
+                }
+                HTUpgradeType.ITEM_CAPACITY -> HTUpgradeData.create {
+                    set(HTUpgradeKeys.ENERGY_CAPACITY, 4)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.ITEM_CAPACITY_UPGRADABLE))
+                }
+            }
+            builder.addHolder(type, upgradeData)
+        }
     }
 
     //    Integration    //

@@ -55,11 +55,8 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
             add(RagiumBlocks.ITEM_COLLECTOR)
 
             add(RagiumBlocks.DIM_ANCHOR)
-            add(RagiumBlocks.ENI)
 
             add(RagiumBlocks.TELEPAD)
-
-            add(RagiumBlocks.CEU)
 
             // Decoration
             addAll(RagiumBlocks.DECORATION_MAP.values)
@@ -172,6 +169,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         }
 
         val basicCasing: ResourceLocation = RagiumAPI.id("block", "basic_machine_casing")
+        val basicFrame: ResourceLocation = RagiumAPI.id("block", "basic_machine_frame")
         val bricks: ResourceLocation = vanillaId("block", "bricks")
 
         val advancedCasing: ResourceLocation = RagiumAPI.id("block", "advanced_machine_casing")
@@ -226,23 +224,13 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         )
 
         // Storages
-        for (crate: HTDeferredBlock<*, *> in RagiumBlocks.CRATES.values) {
-            val id: ResourceLocation = crate.blockId
-            simpleBlockAndItem(crate, models().cubeColumn(id.path, id.withSuffix("_side"), RagiumAPI.id("block", "crate_top")))
-        }
-        /*simpleBlockAndItem(RagiumBlocks.OPEN_CRATE) { block: HTDeferredBlock<*, *> ->
-            val id: ResourceLocation = block.blockId
-            models().cubeBottomTop(id.path, id, id.withSuffix("_bottom"), id)
-        }*/
-
-        val drums: List<HTDeferredBlock<*, *>> = buildList {
-            addAll(RagiumBlocks.DRUMS.values)
-            add(RagiumBlocks.EXP_DRUM)
-        }
-        for (drum: HTDeferredBlock<*, *> in drums) {
-            val id: ResourceLocation = drum.blockId
-            simpleBlockAndItem(drum, models().cubeColumn(id.path, id.withSuffix("_side"), id.withSuffix("_top")))
-        }
+        cutoutSimpleBlock(RagiumBlocks.CRATE, basicFrame)
+        altModelBlock(RagiumBlocks.TANK)
+        layeredBlock(
+            RagiumBlocks.UNIVERSAL_CHEST,
+            vanillaId("block", "white_concrete"),
+            RagiumBlocks.UNIVERSAL_CHEST.blockId,
+        )
 
         // Fluids
         for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {

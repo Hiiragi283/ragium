@@ -144,6 +144,16 @@ object RagiumMaterialHandler {
             addName("Plastic", "プラスチック")
             add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
+        event.modify(CommonMaterialKeys.RAW_RUBBER) {
+            addDefaultPrefix(CommonMaterialPrefixes.PLATE)
+            addName("Raw Rubber", "生ゴム")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
+        }
+        event.modify(CommonMaterialKeys.RUBBER) {
+            addDefaultPrefix(CommonMaterialPrefixes.PLATE)
+            addName("Rubber", "ゴム")
+            add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
+        }
     }
 
     @JvmStatic
@@ -222,12 +232,12 @@ object RagiumMaterialHandler {
         }
 
         event.modify(FoodMaterialKeys.RAW_MEAT) {
-            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+            addDefaultPrefix(CommonMaterialPrefixes.FOOD)
             addName("Raw Meat", "生肉")
             add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }
         event.modify(FoodMaterialKeys.COOKED_MEAT) {
-            addDefaultPrefix(CommonMaterialPrefixes.INGOT)
+            addDefaultPrefix(CommonMaterialPrefixes.FOOD)
             addName("Cooked Meat", "焼肉")
             add(HTStorageBlockMaterialAttribute.THREE_BY_THREE)
         }

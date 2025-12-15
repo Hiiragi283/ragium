@@ -1,27 +1,26 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
-import hiiragi283.ragium.api.material.HTMaterialKey
 import hiiragi283.ragium.api.material.HTMaterialLike
-import hiiragi283.ragium.api.material.prefix.HTMaterialPrefix
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.tag.RagiumCommonTags
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.api.tier.HTBaseTier
+import hiiragi283.ragium.common.HTUpgradeType
+import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
+import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.tier.HTComponentTier
-import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
-import hiiragi283.ragium.common.variant.HTUpgradeVariant
 import hiiragi283.ragium.common.variant.VanillaToolVariant
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.minecraft.world.level.ItemLike
@@ -33,9 +32,7 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
         processors()
         devices()
         upgrades()
-
-        crate()
-        drums()
+        storages()
     }
 
     //    Generators    //
@@ -305,14 +302,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
             .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .save(output)
-
-        HTShapelessRecipeBuilder
-            .create(RagiumBlocks.ENI)
-            .addIngredient(RagiumBlocks.DEVICE_CASING)
-            .addIngredient(CommonMaterialPrefixes.GEAR, RagiumMaterialKeys.AZURE_STEEL)
-            .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.DIAMOND)
-            .addIngredient(CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .save(output)
         // Ultimate
         HTShapelessRecipeBuilder
             .create(RagiumBlocks.TELEPAD)
@@ -327,153 +316,114 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
     @JvmStatic
     private fun upgrades() {
-        // Machine
-        for ((variant: HTUpgradeVariant, upgrade: ItemLike) in RagiumItems.MACHINE_UPGRADES.column(HTBaseTier.BASIC)) {
-            val gem: HTMaterialKey = when (variant) {
-                HTUpgradeVariant.EFFICIENCY -> RagiumMaterialKeys.WARPED_CRYSTAL
-                HTUpgradeVariant.ENERGY_CAPACITY -> RagiumMaterialKeys.RAGI_CRYSTAL
-                HTUpgradeVariant.SPEED -> RagiumMaterialKeys.CRIMSON_CRYSTAL
-            }
-            HTShapedRecipeBuilder
-                .cross8Mirrored(output, upgrade) {
-                    define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
-                    define('B', RagiumModTags.Items.PLASTICS)
-                    define('C', CommonMaterialPrefixes.GEM, gem)
-                }
-        }
-
-        for ((variant: HTUpgradeVariant, upgrade: ItemLike) in RagiumItems.MACHINE_UPGRADES.column(HTBaseTier.ADVANCED)) {
-            HTShapedRecipeBuilder
-                .create(upgrade)
-                .hollow4()
-                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
-                .define('B', RagiumItems.getUpgrade(variant, HTBaseTier.BASIC))
-                .save(output)
-        }
-
-        // Processor
-        processorUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) {
-            define('B', RagiumFluidContents.LUBRICANT.bucketTag)
-        }
-        processorUpgrade(RagiumItems.PRIMARY_ONLY_UPGRADE) {
-            define('B', Tags.Items.BUCKETS_LAVA)
-        }
-
-        // Device
-        deviceUpgrade(RagiumItems.EXP_COLLECTOR_UPGRADE) {
-            define('B', Items.EXPERIENCE_BOTTLE)
-        }
-        deviceUpgrade(RagiumItems.FISHING_UPGRADE) {
-            define('B', Tags.Items.TOOLS_FISHING_ROD)
-        }
-        deviceUpgrade(RagiumItems.MOB_CAPTURE_UPGRADE) {
-            define('B', RagiumItems.ELDRITCH_EGG)
+        for (type: HTUpgradeType in HTUpgradeType.entries) {
+            val builder: HTShapedRecipeBuilder = when (type.group) {
+                HTUpgradeType.Group.CREATIVE -> continue
+                HTUpgradeType.Group.GENERATOR -> ::generator
+                HTUpgradeType.Group.PROCESSOR -> ::processor
+                HTUpgradeType.Group.DEVICE -> ::device
+                HTUpgradeType.Group.STORAGE -> ::storage
+            }(type)
+            when (type) {
+                HTUpgradeType.CREATIVE -> continue
+                // Processor
+                HTUpgradeType.EFFICIENCY -> builder.define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.WARPED_CRYSTAL)
+                HTUpgradeType.SPEED -> builder.define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.CRIMSON_CRYSTAL)
+                HTUpgradeType.HIGH_SPEED -> builder.define('C', HTUpgradeType.SPEED)
+                // Processor
+                HTUpgradeType.BIO_COMPOSTING -> builder.define('C', Items.COMPOSTER)
+                HTUpgradeType.EXTRA_VOIDING -> builder.define('C', Tags.Items.BUCKETS_LAVA)
+                HTUpgradeType.EXP_EXTRACTING -> builder.define('C', Items.GRINDSTONE)
+                HTUpgradeType.EFFICIENT_CRUSHING -> builder.define('C', RagiumFluidContents.LUBRICANT.bucketTag)
+                // Device
+                HTUpgradeType.EXP_COLLECTING -> builder.define('C', Items.EXPERIENCE_BOTTLE)
+                HTUpgradeType.FISHING -> builder.define('C', Tags.Items.TOOLS_FISHING_ROD)
+                HTUpgradeType.MOB_CAPTURING -> builder.define('C', RagiumItems.ELDRITCH_EGG)
+                // Storage
+                HTUpgradeType.ENERGY_CAPACITY -> builder.define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+                HTUpgradeType.FLUID_CAPACITY -> builder.define('C', Tags.Items.BUCKETS_EMPTY)
+                HTUpgradeType.ITEM_CAPACITY -> builder.define('C', Tags.Items.CHESTS)
+            }.save(output)
         }
     }
 
     @JvmStatic
-    private inline fun processorUpgrade(upgrade: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
-        HTShapedRecipeBuilder
-            .create(upgrade)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-            .apply(action)
-            .save(output)
-    }
+    private fun generator(upgrade: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
+        .create(upgrade)
+        .cross8()
+        .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.DEEP_STEEL)
+        .define('B', RagiumModTags.Items.PLASTICS)
 
     @JvmStatic
-    private inline fun deviceUpgrade(upgrade: ItemLike, action: HTShapedRecipeBuilder.() -> Unit) {
-        HTShapedRecipeBuilder
-            .create(upgrade)
-            .hollow4()
-            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-            .apply(action)
-            .save(output)
-    }
+    private fun processor(upgrade: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
+        .create(upgrade)
+        .cross8()
+        .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.AZURE_STEEL)
+        .define('B', RagiumModTags.Items.PLASTICS)
+
+    @JvmStatic
+    private fun device(upgrade: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
+        .create(upgrade)
+        .cross8()
+        .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+        .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
+
+    @JvmStatic
+    private fun storage(upgrade: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
+        .create(upgrade)
+        .cross8()
+        .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+        .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
 
     //    Storage    //
 
     @JvmStatic
-    private fun crate() {
-        for ((tier: HTCrateTier, crate: HTItemHolderLike) in RagiumBlocks.CRATES) {
-            resetComponent(crate, RagiumDataComponents.ITEM_CONTENT)
-
-            val key: HTMaterialKey = when (tier) {
-                HTCrateTier.SMALL -> VanillaMaterialKeys.IRON
-                HTCrateTier.MEDIUM -> VanillaMaterialKeys.GOLD
-                HTCrateTier.LARGE -> VanillaMaterialKeys.DIAMOND
-                HTCrateTier.HUGE -> continue
-            }
-            val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
+    private fun storages() {
+        // Battery, Crate, Tank
+        val ragiCrystal: TagKey<Item> = CommonMaterialPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL)
+        listOf(
+            Triple(RagiumBlocks.BATTERY, ragiCrystal, RagiumDataComponents.ENERGY),
+            Triple(RagiumBlocks.CRATE, Tags.Items.CHESTS, RagiumDataComponents.ITEM),
+            Triple(RagiumBlocks.TANK, Tags.Items.BUCKETS_EMPTY, RagiumDataComponents.FLUID),
+        ).forEach { (block: HTItemHolderLike, core: TagKey<Item>, component: DataComponentType<*>) ->
             HTShapedRecipeBuilder
-                .create(crate)
-                .pattern(
-                    "ABA",
-                    "ACA",
-                    "ABA",
-                ).define('A', prefix, key)
-                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-                .define('C', Tags.Items.CHESTS_WOODEN)
+                .create(block)
+                .crossLayered()
+                .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+                .define('B', CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
+                .define('C', Tags.Items.GLASS_BLOCKS)
+                .define('D', core)
                 .save(output)
-        }
-        // Huge
-        createNetheriteUpgrade(HTCrateTier.HUGE.getBlock(), HTCrateTier.LARGE.getBlock()).save(output)
-        // Open
-        HTShapedRecipeBuilder
-            .create(RagiumBlocks.OPEN_CRATE)
-            .pattern(
-                "AAA",
-                "ABA",
-                "A A",
-            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-            .define('B', Items.HOPPER)
-            .save(output)
-    }
 
-    @JvmStatic
-    private fun drums() {
-        for ((tier: HTDrumTier, drum: HTItemHolderLike) in RagiumBlocks.DRUMS) {
-            resetComponent(drum, RagiumDataComponents.FLUID_CONTENT)
-
-            val key: HTMaterialKey = when (tier) {
-                HTDrumTier.SMALL -> VanillaMaterialKeys.COPPER
-                HTDrumTier.MEDIUM -> VanillaMaterialKeys.GOLD
-                HTDrumTier.LARGE -> VanillaMaterialKeys.DIAMOND
-                else -> continue
-            }
-            val prefix: HTMaterialPrefix = getDefaultPrefix(key) ?: continue
-            HTShapedRecipeBuilder
-                .create(drum)
-                .pattern(
-                    "ABA",
-                    "ACA",
-                    "ABA",
-                ).define('A', prefix, key)
-                .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-                .define('C', Tags.Items.BUCKETS_EMPTY)
-                .save(output)
+            resetComponent(block, component)
         }
-        // Huge
-        createNetheriteUpgrade(HTDrumTier.HUGE.getBlock(), HTDrumTier.LARGE.getBlock()).save(output)
-        // Exp
+        // Buffer
         HTShapedRecipeBuilder
-            .create(RagiumBlocks.EXP_DRUM)
+            .create(RagiumBlocks.BUFFER)
             .pattern(
                 "ABA",
-                "ACA",
+                "CDE",
                 "ABA",
-            ).define('A', CommonMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
-            .define('B', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
-            .define('C', Tags.Items.BUCKETS_EMPTY)
+            ).define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            .define('B', RagiumModTags.Items.PLASTICS)
+            .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .define('D', Tags.Items.CHESTS)
+            .define('E', Tags.Items.BUCKETS_EMPTY)
+            .save(output)
+        // Universal Chest
+        craftingDyed(RagiumBlocks.UNIVERSAL_CHEST)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.UNIVERSAL_CHEST)
+            .hollow8()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             .save(output)
 
-        // Minecarts
-        for (tier: HTDrumTier in HTDrumTier.entries) {
-            HTShapelessRecipeBuilder
-                .create(tier.getMinecartItem())
-                .addIngredient(tier.getBlock())
-                .addIngredient(Items.MINECART)
-                .save(output)
-        }
+        // Tank with Minecart
+        HTShapelessRecipeBuilder
+            .create(RagiumItems.TANK_MINECART)
+            .addIngredient(RagiumBlocks.TANK)
+            .addIngredient(Items.MINECART)
+            .save(output)
     }
 }

@@ -5,8 +5,6 @@ import hiiragi283.ragium.api.block.type.HTBlockType
 import hiiragi283.ragium.api.block.type.HTEntityBlockType
 import hiiragi283.ragium.common.block.type.HTMachineBlockType
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
-import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
 import hiiragi283.ragium.common.tier.HTMachineTier
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.level.block.Block
@@ -178,6 +176,7 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.ADVANCED_MIXER }
         .add(HTDirectionalBlockAttribute.HORIZONTAL)
         .addMachineTier(HTMachineTier.ELITE, RagiumConfig.COMMON.processor.advancedMixer)
+        .addMenu { RagiumMenuTypes.ADVANCED_MIXER }
         .build(RagiumCommonTranslation.MIXER)
 
     @JvmField
@@ -260,13 +259,7 @@ object RagiumBlockTypes {
         .addTier(HTMachineTier.ELITE)
         .build(RagiumCommonTranslation.DIM_ANCHOR)
 
-    @JvmField
-    val ENI: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.ENI }
-        .addMenu { RagiumMenuTypes.ENERGY_NETWORK_ACCESS }
-        .addTier(HTMachineTier.ELITE)
-        .build(RagiumCommonTranslation.ENI)
-
+    // Ultimate
     @JvmField
     val TELEPAD: HTEntityBlockType = HTEntityBlockType
         .builder { RagiumBlockEntityTypes.TELEPAD }
@@ -274,41 +267,36 @@ object RagiumBlockTypes {
         .addTier(HTMachineTier.ULTIMATE)
         .build()
 
-    // Creative
-    @JvmField
-    val CEU: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.CEU }
-        .addMenu { RagiumMenuTypes.ENERGY_NETWORK_ACCESS }
-        .addTier(HTMachineTier.CREATIVE)
-        .build(RagiumCommonTranslation.CEU)
-
     //    Storage    //
 
     @JvmField
-    val CRATES: Map<HTCrateTier, HTEntityBlockType> = HTCrateTier.entries.associateWith { tier: HTCrateTier ->
-        HTEntityBlockType
-            .builder { tier.getBlockEntityType() }
-            .addTier(tier)
-            .build(RagiumCommonTranslation.CRATE)
-    }
+    val BATTERY: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.BATTERY }
+        .addMenu { RagiumMenuTypes.BATTERY }
+        .build(RagiumCommonTranslation.BATTERY)
 
     @JvmField
-    val OPEN_CRATE: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.OPEN_CRATE }
-        .build(RagiumCommonTranslation.OPEN_CRATE)
+    val CRATE: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.CRATE }
+        .addMenu { RagiumMenuTypes.CRATE }
+        .build(RagiumCommonTranslation.CRATE)
 
     @JvmField
-    val DRUMS: Map<HTDrumTier, HTEntityBlockType> = HTDrumTier.entries.associateWith { tier: HTDrumTier ->
-        HTEntityBlockType
-            .builder { tier.getBlockEntityType() }
-            .addMenu { RagiumMenuTypes.DRUM }
-            .addTier(tier)
-            .build(RagiumCommonTranslation.DRUM)
-    }
+    val TANK: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.TANK }
+        .addMenu { RagiumMenuTypes.TANK }
+        .addShape(Block.box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0))
+        .build(RagiumCommonTranslation.TANK)
 
     @JvmField
-    val EXP_DRUM: HTEntityBlockType = HTEntityBlockType
-        .builder { RagiumBlockEntityTypes.EXP_DRUM }
-        .addMenu { RagiumMenuTypes.DRUM }
-        .build(RagiumCommonTranslation.EXP_DRUM)
+    val BUFFER: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.BUFFER }
+        // .addMenu { RagiumMenuTypes.BUFFER }
+        .build(RagiumCommonTranslation.BUFFER)
+
+    @JvmField
+    val UNIVERSAL_CHEST: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.UNIVERSAL_CHEST }
+        .addMenu { RagiumMenuTypes.UNIVERSAL_BUNDLE }
+        .build(RagiumCommonTranslation.UNIVERSAL_CHEST)
 }

@@ -1,14 +1,18 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
+import hiiragi283.ragium.api.serialization.component.HTComponentInput
 import hiiragi283.ragium.api.serialization.value.HTValueInput
 import hiiragi283.ragium.api.serialization.value.HTValueOutput
+import hiiragi283.ragium.api.stack.ImmutableFluidStack
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTHandlerProvider
+import hiiragi283.ragium.api.storage.attachments.HTAttachedEnergy
+import hiiragi283.ragium.api.storage.attachments.HTAttachedFluids
+import hiiragi283.ragium.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.energy.HTEnergyHandler
 import hiiragi283.ragium.api.storage.fluid.HTFluidHandler
@@ -19,6 +23,7 @@ import hiiragi283.ragium.api.storage.holder.HTItemSlotHolder
 import hiiragi283.ragium.api.storage.item.HTItemHandler
 import hiiragi283.ragium.api.storage.item.HTItemSlot
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.component.HTBlockEntityComponent
 import hiiragi283.ragium.common.inventory.HTMenuCallback
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.common.inventory.slot.HTFluidSyncSlot
@@ -26,23 +31,22 @@ import hiiragi283.ragium.common.inventory.slot.HTIntSyncSlot
 import hiiragi283.ragium.common.storage.HTCapabilityCodec
 import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.resolver.HTEnergyStorageManager
 import hiiragi283.ragium.common.storage.resolver.HTFluidHandlerManager
 import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Nameable
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
@@ -50,7 +54,6 @@ import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import java.util.UUID
-import java.util.function.Consumer
 
 /**
  * キャパビリティやオーナーを保持する[ExtendedBlockEntity]の拡張クラス
@@ -116,63 +119,101 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     protected abstract fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
 
+    open fun onBlockRemoved(state: BlockState, level: Level, pos: BlockPos) {}
+
     //    Save & Read    //
 
-    var enchantment: ItemEnchantments
-        private set
+    val components: List<HTBlockEntityComponent> get() = components1
+    private val components1: MutableList<HTBlockEntityComponent> = mutableListOf()
 
-    final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.saveAdditional(tag, registries)
-        RagiumPlatform.INSTANCE.createValueOutput(registries, tag).let(::writeValue)
+    fun addComponent(component: HTBlockEntityComponent) {
+        components1 += component
     }
 
-    protected open fun writeValue(output: HTValueOutput) {
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.serialize(output)
+        }
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.deserialize(input)
+        }
+    }
+
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.serialize(output)
+        }
         // Capability
-        for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
+        for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
                 type.saveTo(output, this)
             }
         }
         // Custom Name
         output.store("custom_name", ComponentSerialization.CODEC, this.customName)
-        // Enchantments
-        output.store(RagiumConst.ENCHANTMENT, ItemEnchantments.CODEC, enchantment)
         // Owner
         output.store(RagiumConst.OWNER, UUIDUtil.CODEC, ownerId)
     }
 
-    final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.loadAdditional(tag, registries)
-        RagiumPlatform.INSTANCE.createValueInput(registries, tag).let(::readValue)
-    }
-
-    protected open fun readValue(input: HTValueInput) {
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.deserialize(input)
+        }
         // Capability
-        for (type: HTCapabilityCodec<*> in HTCapabilityCodec.TYPES) {
+        for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
             if (type.canHandle(this)) {
                 type.loadFrom(input, this)
             }
         }
         // Custom Name
-        this.customName = input.read("custom_name", ComponentSerialization.CODEC)
-        // Enchantments
-        enchantment = input.read(RagiumConst.ENCHANTMENT, ItemEnchantments.CODEC) ?: ItemEnchantments.EMPTY
+        input.readAndSet("custom_name", ComponentSerialization.CODEC, ::customName::set)
         // Owner
-        this.ownerId = input.read(RagiumConst.OWNER, UUIDUtil.CODEC)
+        input.readAndSet(RagiumConst.OWNER, UUIDUtil.CODEC, ::ownerId::set)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.applyComponents(object : HTComponentInput {
+                override fun <T : Any> get(type: DataComponentType<T>): T? = componentInput.get(type)
+            })
+        }
+        // Capability
+        for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
+            if (type.canHandle(this)) {
+                type.copyTo(this, componentInput::get)
+            }
+        }
+        // Custom Name
         this.customName = componentInput.get(DataComponents.CUSTOM_NAME)
-        enchantment = componentInput.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
     }
 
-    override fun collectImplicitComponents(components: DataComponentMap.Builder) {
-        super.collectImplicitComponents(components)
-        components.set(DataComponents.CUSTOM_NAME, this.customName)
-        if (!enchantment.isEmpty) {
-            components.set(DataComponents.ENCHANTMENTS, enchantment)
+    override fun collectImplicitComponents(builder: DataComponentMap.Builder) {
+        super.collectImplicitComponents(builder)
+        // Components
+        for (component: HTBlockEntityComponent in components) {
+            component.collectComponents(builder)
         }
+        // Capability
+        for (type: HTCapabilityCodec<*, *> in HTCapabilityCodec.TYPES) {
+            if (type.canHandle(this)) {
+                type.copyFrom(this, builder)
+            }
+        }
+        // Custom Name
+        builder.set(DataComponents.CUSTOM_NAME, this.customName)
     }
 
     /**
@@ -225,7 +266,6 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     init {
         initializeVariables()
-        enchantment = ItemEnchantments.EMPTY
         fluidHandlerManager = initializeFluidHandler(::setOnlySave)?.let { HTFluidHandlerManager(it, this) }
         energyHandlerManager = initializeEnergyHandler(::setOnlySave)?.let { HTEnergyStorageManager(it, this) }
         itemHandlerManager = initializeItemHandler(::setOnlySave)?.let { HTItemHandlerManager(it, this) }
@@ -249,6 +289,24 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getFluidHandler(direction: Direction?): IFluidHandler? = fluidHandlerManager?.resolve(direction)
 
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.applyFluidTanks
+     */
+    fun applyFluidTanks(containers: List<HTFluidTank>, contents: HTAttachedFluids) {
+        for (i: Int in contents.indices) {
+            val stack: ImmutableFluidStack? = contents[i]
+            (containers.getOrNull(i) as? HTBasicFluidTank)?.setStackUnchecked(stack, true)
+        }
+    }
+
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.collectFluidTanks
+     */
+    fun collectFluidTanks(containers: List<HTFluidTank>): HTAttachedFluids? = containers
+        .map(HTFluidTank::getStack)
+        .let(::HTAttachedFluids)
+        .takeUnless(HTAttachedFluids::isEmpty)
+
     // Energy
 
     /**
@@ -265,6 +323,24 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = energyHandlerManager?.resolve(direction)
 
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.applyEnergyContainers
+     */
+    fun applyEnergyBattery(containers: List<HTEnergyBattery>, contents: HTAttachedEnergy) {
+        for (i: Int in contents.indices) {
+            val amount: Int = contents[i]
+            (containers.getOrNull(i) as? HTBasicEnergyBattery)?.setAmountUnchecked(amount, true)
+        }
+    }
+
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.collectEnergyContainers
+     */
+    fun collectEnergyBattery(containers: List<HTEnergyBattery>): HTAttachedEnergy? = containers
+        .map(HTEnergyBattery::getAmount)
+        .let(::HTAttachedEnergy)
+        .takeUnless(HTAttachedEnergy::isEmpty)
+
     // Item
 
     /**
@@ -279,9 +355,23 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
 
     final override fun getItemSlots(side: Direction?): List<HTItemSlot> = itemHandlerManager?.getContainers(side) ?: listOf()
 
-    open fun collectDrops(consumer: Consumer<ImmutableItemStack>) {
-        getItemSlots(getItemSideFor()).mapNotNull(HTItemSlot::getStack).forEach(consumer)
+    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(direction)
+
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.applyInventorySlots
+     */
+    fun applyItemSlots(containers: List<HTItemSlot>, contents: HTAttachedItems) {
+        for (i: Int in contents.indices) {
+            val stack: ImmutableItemStack? = contents[i]
+            (containers.getOrNull(i) as? HTBasicItemSlot)?.setStackUnchecked(stack, true)
+        }
     }
 
-    final override fun getItemHandler(direction: Direction?): IItemHandler? = itemHandlerManager?.resolve(direction)
+    /**
+     * @see mekanism.common.tile.base.TileEntityMekanism.collectInventorySlots
+     */
+    fun collectItemSlots(containers: List<HTItemSlot>): HTAttachedItems? = containers
+        .map(HTItemSlot::getStack)
+        .let(::HTAttachedItems)
+        .takeUnless(HTAttachedItems::isEmpty)
 }

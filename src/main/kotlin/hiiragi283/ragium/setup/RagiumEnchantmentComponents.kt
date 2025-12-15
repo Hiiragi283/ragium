@@ -25,9 +25,6 @@ object RagiumEnchantmentComponents {
     )
 
     @JvmField
-    val CAPACITY: DataComponentType<EnchantmentValueEffect> = REGISTER.registerType("capacity", EnchantmentValueEffect.CODEC, null)
-
-    @JvmField
     val RANGE: DataComponentType<List<ConditionalEffect<EnchantmentValueEffect>>> =
         registerConditional("range", EnchantmentValueEffect.CODEC)
 

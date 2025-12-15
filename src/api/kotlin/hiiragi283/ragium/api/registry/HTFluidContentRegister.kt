@@ -41,6 +41,17 @@ class HTFluidContentRegister(modId: String) {
     private val contentCache: MutableList<HTFluidContent<*, *, *, *, *>> = mutableListOf()
     val contents: List<HTFluidContent<*, *, *, *, *>> get() = contentCache
 
+    fun addAlias(from: String, to: String) {
+        typeRegister.addAlias(from, to)
+
+        fluidRegister.addAlias(from, to)
+        fluidRegister.addAlias("flowing_$from", "flowing_$to")
+
+        blockRegister.addAlias(from, to)
+
+        itemRegister.addAlias("${from}_bucket", "${to}_bucket")
+    }
+
     fun init(eventBus: IEventBus) {
         fluidRegister.register(eventBus)
         typeRegister.register(eventBus)

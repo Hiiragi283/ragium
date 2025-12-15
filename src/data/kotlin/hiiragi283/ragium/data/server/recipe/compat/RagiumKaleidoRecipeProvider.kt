@@ -9,11 +9,11 @@ import hiiragi283.ragium.api.material.prefix.HTPrefixLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.stack.toImmutableOrThrow
 import hiiragi283.ragium.api.tag.RagiumModTags
+import hiiragi283.ragium.common.data.recipe.HTPlantingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.impl.data.recipe.HTChoppingBoardRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTPlantingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumIntegrationItems
 import net.minecraft.world.item.ItemStack
@@ -64,7 +64,6 @@ object RagiumKaleidoRecipeProvider : HTRecipeProvider.Integration(RagiumConst.KA
 
     @JvmStatic
     private fun cherry() {
-        choppingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PULP)
         choppingFromData(FoodMaterialRecipeData.RAGI_CHERRY_PIE)
     }
 

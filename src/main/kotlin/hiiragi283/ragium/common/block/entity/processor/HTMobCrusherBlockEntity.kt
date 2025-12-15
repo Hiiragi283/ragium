@@ -11,7 +11,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.storage.item.getItemStack
-import hiiragi283.ragium.api.storage.item.toRecipeInput
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
@@ -20,10 +19,10 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
-import hiiragi283.ragium.common.util.HTExperienceHelper
-import hiiragi283.ragium.common.util.HTStackSlotHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluidContents
+import hiiragi283.ragium.util.HTExperienceHelper
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -53,7 +52,7 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
         // output
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank()),
+            HTVariableFluidTank.output(listener, blockHolder.getFluidAttribute().getOutputTank(this)),
         )
     }
 
@@ -105,7 +104,8 @@ class HTMobCrusherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
         outputSlots.any { slot: HTBasicItemSlot -> slot.getNeeded() > 0 }
 
-    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = inputSlot.toRecipeInput()
+    override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? =
+        inputSlot.getStack()?.unwrap()?.let(::SingleRecipeInput)
 
     /**
      * @see net.minecraft.server.commands.LootCommand.dropKillLoot

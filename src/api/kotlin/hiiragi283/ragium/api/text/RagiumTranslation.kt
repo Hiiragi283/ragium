@@ -40,13 +40,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     STORED_FE("gui", "stored", "fe"),
 
     FRACTION("gui", "fraction"),
-    PERCENTAGE("gui", "percentage"),
     TICK("gui", "tick"),
-
-    PER_MB("gui", "per", "mb"),
-    PER_TICK("gui", "per", "tick"),
-
-    BURN_TIME("gui", "burn_tick"),
 
     // Item Description
     TOOLTIP_BLOCK_POS("tooltip", "block_pos"),
@@ -54,6 +48,8 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     TOOLTIP_DIMENSION("tooltip", "dimension"),
     TOOLTIP_INTRINSIC_ENCHANTMENT("tooltip", "intrinsic_enchantment"),
     TOOLTIP_LOOT_TABLE_ID("tooltip", "loot_table_id"),
+    TOOLTIP_UPGRADE_TARGET("tooltip", "upgrade", "target"),
+    TOOLTIP_UPGRADE_EXCLUSIVE("tooltip", "upgrade", "exclusive"),
 
     TOOLTIP_SHOW_DESCRIPTION("tooltip", "show_description"),
     TOOLTIP_SHOW_DETAILS("tooltip", "show_details"),

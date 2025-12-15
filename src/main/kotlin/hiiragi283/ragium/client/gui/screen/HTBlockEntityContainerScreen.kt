@@ -1,18 +1,23 @@
 package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.gui.component.HTFluidWidget
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.storage.fluid.HTFluidView
 import hiiragi283.ragium.client.gui.component.HTEnergyWidget
+import hiiragi283.ragium.client.gui.component.HTFakeSlotWidget
+import hiiragi283.ragium.client.gui.component.HTFluidSlotWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
+import hiiragi283.ragium.client.gui.component.base.HTBasicFluidWidget
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
-import hiiragi283.ragium.common.storage.energy.battery.HTBasicEnergyBattery
+import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
-import java.util.function.IntConsumer
+import net.minecraft.world.item.ItemStack
+import java.util.function.Supplier
 
 open class HTBlockEntityContainerScreen<BE : HTBlockEntity> : HTContainerScreen<HTBlockEntityContainerMenu<BE>> {
     companion object {
@@ -49,27 +54,37 @@ open class HTBlockEntityContainerScreen<BE : HTBlockEntity> : HTContainerScreen<
 
     //    Extensions    //
 
-    fun createFluidTank(view: HTFluidView, x: Int, y: Int): HTFluidTankWidget =
-        HTFluidTankWidget.createTank(view, startX + x, startY + y).apply(::addRenderableWidget)
+    private val fluidWidgets: MutableList<HTFluidWidget> = mutableListOf()
 
-    fun createFluidSlot(view: HTFluidView, x: Int, y: Int): HTFluidTankWidget =
-        HTFluidTankWidget.createSlot(view, startX + x, startY + y).apply(::addRenderableWidget)
+    protected fun <WIDGET> addFluidWidget(widget: WIDGET): WIDGET where WIDGET : AbstractWidget, WIDGET : HTFluidWidget {
+        fluidWidgets.add(widget)
+        addRenderableWidget(widget)
+        return widget
+    }
+
+    override fun clearWidgets() {
+        super.clearWidgets()
+        fluidWidgets.clear()
+    }
+
+    final override fun getFluidWidgets(): List<HTFluidWidget> = fluidWidgets
+
+    fun createFakeSlot(getter: Supplier<ItemStack>, x: Int, y: Int): HTFakeSlotWidget =
+        HTFakeSlotWidget(getter, startX + x, startY + y).apply(::addRenderableWidget)
+
+    fun createFluidTank(view: HTFluidView, x: Int, y: Int): HTBasicFluidWidget =
+        HTFluidTankWidget(view, startX + x, startY + y).apply(::addFluidWidget)
+
+    fun createFluidSlot(view: HTFluidView, x: Int, y: Int): HTBasicFluidWidget =
+        HTFluidSlotWidget(view, startX + x, startY + y).apply(::addFluidWidget)
 
     fun createEnergyWidget(
         battery: HTEnergyBattery,
-        amountSetter: IntConsumer,
         x: Int = HTSlotHelper.getSlotPosX(0),
         y: Int = HTSlotHelper.getSlotPosY(0),
     ): HTEnergyWidget = HTEnergyWidget(
         battery,
-        amountSetter,
         startX + x,
         startY + y,
     ).apply(::addRenderableWidget)
-
-    fun createEnergyWidget(
-        battery: HTBasicEnergyBattery,
-        x: Int = HTSlotHelper.getSlotPosX(0),
-        y: Int = HTSlotHelper.getSlotPosY(0),
-    ): HTEnergyWidget = createEnergyWidget(battery, battery::setAmountUnchecked, x, y)
 }

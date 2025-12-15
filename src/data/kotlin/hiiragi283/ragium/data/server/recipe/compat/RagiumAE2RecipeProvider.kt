@@ -7,14 +7,14 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.recipe.HTRecipeProvider
 import hiiragi283.ragium.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.result.HTItemResult
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSimulatingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
 import hiiragi283.ragium.common.material.ModMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTItemWithCatalystRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTRockGeneratingRecipeBuilder
-import hiiragi283.ragium.impl.data.recipe.HTShapelessInputsRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluidContents
+import net.minecraft.core.HolderSet
 
 object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
     override fun buildRecipeInternal() {
@@ -24,8 +24,8 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
         certusBudding(AEBlocks.CHIPPED_BUDDING_QUARTZ, 2)
         certusBudding(AEBlocks.DAMAGED_BUDDING_QUARTZ, 1)
 
-        HTComplexRecipeBuilder
-            .mixing()
+        HTMixingRecipeBuilder
+            .create()
             .addIngredient(itemCreator.fromItem(AEBlocks.QUARTZ_BLOCK))
             .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 8000))
             .setResult(resultHelper.item(AEBlocks.FLAWLESS_BUDDING_QUARTZ))
@@ -36,15 +36,8 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
             itemCreator.fromItem(AEItems.CERTUS_QUARTZ_CRYSTAL_CHARGED),
             itemCreator.multiPrefixes(VanillaMaterialKeys.QUARTZ, CommonMaterialPrefixes.DUST, CommonMaterialPrefixes.GEM),
         )
-        // Sky Stone
-        HTRockGeneratingRecipeBuilder
-            .create(
-                fluidCreator.lava(1000),
-                itemCreator.fromTagKey(CommonMaterialPrefixes.STORAGE_BLOCK, ModMaterialKeys.Gems.CERTUS_QUARTZ),
-                resultHelper.item(AEBlocks.SKY_STONE_BLOCK),
-            ).save(output)
 
-        crushAndCompress(AEBlocks.SKY_STONE_BLOCK, AEItems.SKY_DUST, 1)
+        crushAndCompressBlock(AEBlocks.SKY_STONE_BLOCK, AEItems.SKY_DUST, 1)
 
         // Processor
         combineWithRedstone(
@@ -64,20 +57,21 @@ object RagiumAE2RecipeProvider : HTRecipeProvider.Integration(RagiumConst.AE2) {
         )
     }
 
+    @Suppress("DEPRECATION")
     @JvmStatic
     private fun certusBudding(budding: BlockDefinition<*>, count: Int) {
-        HTItemWithCatalystRecipeBuilder
-            .simulating(
+        HTSimulatingRecipeBuilder
+            .block(
                 null,
-                itemCreator.fromItem(budding),
-                resultHelper.item(AEItems.CERTUS_QUARTZ_CRYSTAL, count),
-            ).saveSuffixed(output, "_from_${budding.id().path.removeSuffix("_budding_quartz")}")
+                HolderSet.direct(budding.block().builtInRegistryHolder()),
+            ).setResult(resultHelper.item(AEItems.CERTUS_QUARTZ_CRYSTAL, count))
+            .saveSuffixed(output, "_from_${budding.id().path.removeSuffix("_budding_quartz")}")
     }
 
     @JvmStatic
     private fun combineWithRedstone(result: HTItemResult, left: HTItemIngredient, right: HTItemIngredient) {
-        HTShapelessInputsRecipeBuilder
-            .alloying(
+        HTAlloyingRecipeBuilder
+            .create(
                 result,
                 left,
                 itemCreator.fromTagKey(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),

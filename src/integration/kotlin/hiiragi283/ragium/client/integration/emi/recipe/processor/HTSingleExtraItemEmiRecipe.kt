@@ -3,15 +3,26 @@ package hiiragi283.ragium.client.integration.emi.recipe.processor
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.client.integration.emi.addArrow
 import hiiragi283.ragium.client.integration.emi.category.HTEmiRecipeCategory
+import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.integration.emi.recipe.HTEmiHolderRecipe
 import hiiragi283.ragium.client.integration.emi.toEmi
-import hiiragi283.ragium.impl.recipe.base.HTBasicSingleExtraItemRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicSingleExtraItemRecipe
 import hiiragi283.ragium.setup.RagiumFluidContents
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
 class HTSingleExtraItemEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTBasicSingleExtraItemRecipe>) :
     HTEmiHolderRecipe<HTBasicSingleExtraItemRecipe>(category, holder) {
+    companion object {
+        @JvmStatic
+        fun crushing(holder: RecipeHolder<HTBasicSingleExtraItemRecipe>): HTSingleExtraItemEmiRecipe =
+            HTSingleExtraItemEmiRecipe(RagiumEmiRecipeCategories.CRUSHING, holder)
+
+        @JvmStatic
+        fun cutting(holder: RecipeHolder<HTBasicSingleExtraItemRecipe>): HTSingleExtraItemEmiRecipe =
+            HTSingleExtraItemEmiRecipe(RagiumEmiRecipeCategories.CUTTING, holder)
+    }
+
     init {
         addInput(recipe.ingredient)
 

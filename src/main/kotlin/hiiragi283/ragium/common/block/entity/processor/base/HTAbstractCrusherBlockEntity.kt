@@ -5,20 +5,20 @@ import hiiragi283.ragium.api.block.attribute.getFluidAttribute
 import hiiragi283.ragium.api.math.times
 import hiiragi283.ragium.api.recipe.RagiumRecipeTypes
 import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
+import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
-import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumFluidContents
-import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import org.apache.commons.lang3.math.Fraction
@@ -32,15 +32,15 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
     ) {
     final override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.input(
         listener,
-        blockHolder.getFluidAttribute().getInputTank(),
-        canInsert = { hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE) },
+        blockHolder.getFluidAttribute().getInputTank(this),
+        canInsert = { hasUpgrade(RagiumUpgradeKeys.USE_LUBRICANT) },
         filter = RagiumFluidContents.LUBRICANT::isOf,
     )
 
     //    Ticking    //
 
     final override fun getRecipeTime(recipe: HTSingleExtraItemRecipe): Int {
-        val bool1: Boolean = hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)
+        val bool1: Boolean = hasUpgrade(RagiumUpgradeKeys.USE_LUBRICANT)
         val bool2: Boolean = HTStackSlotHelper.canShrinkStack(inputTank, RagiumConst.LUBRICANT_CONSUME, true)
         val modifier: Fraction = when (bool1 && bool2) {
             true -> Fraction.THREE_QUARTERS
@@ -53,20 +53,20 @@ abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: Blo
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
-        input: SingleRecipeInput,
+        input: HTRecipeInput,
         recipe: HTSingleExtraItemRecipe,
     ) {
         // 実際にアウトプットに搬出する
         completeOutput(level, input, recipe)
         // インプットを減らす
-        HTStackSlotHelper.shrinkStack(inputSlot, recipe::getRequiredCount, HTStorageAction.EXECUTE)
+        inputSlot.extract(recipe.getRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // 潤滑油があれば減らす
-        if (hasUpgrade(RagiumItems.EFFICIENT_CRUSH_UPGRADE)) {
+        if (hasUpgrade(RagiumUpgradeKeys.USE_LUBRICANT) && !isCreative()) {
             inputTank.extract(RagiumConst.LUBRICANT_CONSUME, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         }
         // SEを鳴らす
         level.playSound(null, pos, SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS, 0.25f, 1f)
     }
 
-    protected abstract fun completeOutput(level: ServerLevel, input: SingleRecipeInput, recipe: HTSingleExtraItemRecipe)
+    protected abstract fun completeOutput(level: ServerLevel, input: HTRecipeInput, recipe: HTSingleExtraItemRecipe)
 }

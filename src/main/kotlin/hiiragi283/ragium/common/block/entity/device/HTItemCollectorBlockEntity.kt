@@ -15,11 +15,12 @@ import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTItemEntitySlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
-import hiiragi283.ragium.common.util.HTItemDropHelper
-import hiiragi283.ragium.common.util.HTStackSlotHelper
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.util.HTItemDropHelper
+import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -75,8 +76,8 @@ class HTItemCollectorBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun actionServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = when {
-        hasUpgrade(RagiumItems.FISHING_UPGRADE) -> collectFish(level, pos)
-        hasUpgrade(RagiumItems.MOB_CAPTURE_UPGRADE) -> collectMobs(level, pos)
+        hasUpgrade(RagiumUpgradeKeys.FISHING) -> collectFish(level, pos)
+        hasUpgrade(RagiumUpgradeKeys.CAPTURE_MOB) -> collectMobs(level, pos)
         else -> collectItem(level, pos)
     }
 

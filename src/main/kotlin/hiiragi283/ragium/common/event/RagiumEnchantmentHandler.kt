@@ -3,10 +3,10 @@ package hiiragi283.ragium.common.event
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.tag.RagiumModTags
-import hiiragi283.ragium.common.util.HTEnchantmentHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCriteriaTriggers
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.util.HTEnchantmentHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageSource

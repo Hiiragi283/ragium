@@ -21,12 +21,12 @@ import java.util.function.IntUnaryOperator
  */
 class HTItemIngredient(private val ingredient: Ingredient, private val count: Int) : HTIngredient<Item, ImmutableItemStack> {
     fun interface CountGetter {
-        fun getRequiredCount(stack: ImmutableItemStack): Int
+        fun getRequiredCount(): Int
     }
 
     companion object {
-        @JvmStatic
-        private val FLAT_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> =
+        @JvmField
+        val UNSIZED_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> =
             VanillaBiCodecs.INGREDIENT.xmap(::HTItemIngredient, HTItemIngredient::ingredient)
 
         @JvmStatic
@@ -38,7 +38,7 @@ class HTItemIngredient(private val ingredient: Ingredient, private val count: In
 
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemIngredient> = BiCodecs
-            .xor(FLAT_CODEC, NESTED_CODEC)
+            .xor(UNSIZED_CODEC, NESTED_CODEC)
             .xmap(::unwrapEither) { ingredient: HTItemIngredient ->
                 when (ingredient.count) {
                     1 -> Either.left(ingredient)
@@ -55,22 +55,17 @@ class HTItemIngredient(private val ingredient: Ingredient, private val count: In
 
     fun copyWithCount(operator: IntUnaryOperator): HTItemIngredient = HTItemIngredient(this.ingredient, operator.applyAsInt(this.count))
 
-    override fun test(stack: ImmutableItemStack): Boolean = testOnlyType(stack) && stack.amount() >= this.count
-
     override fun testOnlyType(stack: ImmutableItemStack): Boolean = ingredient.test(stack.unwrap())
 
-    override fun getRequiredAmount(stack: ImmutableItemStack): Int = if (testOnlyType(stack)) this.count else 0
-
-    override fun hasNoMatchingStacks(): Boolean = ingredient.items.isEmpty()
+    override fun getRequiredAmount(): Int = this.count
 
     override fun unwrap(): Either<Pair<TagKey<Item>, Int>, List<ImmutableItemStack>> {
         val custom: ICustomIngredient? = ingredient.customIngredient
         if (custom != null) {
             return Either.right(
                 custom.items
-                    .map { it.copyWithCount(count) }
                     .toList()
-                    .mapNotNull(ItemStack::toImmutable),
+                    .let(::toImmutableList),
             )
         } else {
             val values: Array<Ingredient.Value> = ingredient.values

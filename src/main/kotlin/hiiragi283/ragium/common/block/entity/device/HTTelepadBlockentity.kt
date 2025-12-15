@@ -70,7 +70,7 @@ class HTTelepadBlockentity(pos: BlockPos, state: BlockState) : HTDeviceBlockEnti
 
     override fun readValue(input: HTValueInput) {
         super.readValue(input)
-        teleportPos = input.read("teleport_pos", HTTeleportPos.CODEC)
+        input.readAndSet("teleport_pos", HTTeleportPos.CODEC, ::teleportPos::set)
     }
 
     /*override fun onRightClicked(context: HTBlockInteractContext): InteractionResult = when {

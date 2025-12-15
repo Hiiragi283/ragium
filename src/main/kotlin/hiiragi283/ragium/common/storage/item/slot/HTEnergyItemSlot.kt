@@ -1,15 +1,15 @@
 package hiiragi283.ragium.common.storage.item.slot
 
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.function.negate
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.capability.HTEnergyCapabilities
 import hiiragi283.ragium.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.api.util.HTContentListener
 import hiiragi283.ragium.common.inventory.HTContainerItemSlot
-import hiiragi283.ragium.common.util.HTEnergyHelper
+import hiiragi283.ragium.util.HTEnergyHelper
 import java.util.function.Predicate
 
 /**

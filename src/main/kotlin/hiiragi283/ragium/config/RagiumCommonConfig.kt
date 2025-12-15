@@ -9,11 +9,35 @@ import hiiragi283.ragium.api.config.HTIntConfigValue
 import hiiragi283.ragium.api.config.HTListConfigValue
 import hiiragi283.ragium.api.config.definePositiveDouble
 import hiiragi283.ragium.api.config.definePositiveInt
-import hiiragi283.ragium.common.tier.HTCrateTier
-import hiiragi283.ragium.common.tier.HTDrumTier
 import net.neoforged.neoforge.common.ModConfigSpec
 
 class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
+    @JvmField
+    val disableMilkCure: HTBoolConfigValue = HTBoolConfigValue(builder.define("disableMilkCure", false))
+
+    @JvmField
+    val expConversionRatio: HTIntConfigValue = builder.definePositiveInt("expConversionRatio", 20)
+
+    @JvmField
+    val showFoodEffect: HTBoolConfigValue = HTBoolConfigValue(builder.define("showFoodEffect", true))
+
+    @JvmField
+    val tagOutputPriority: HTListConfigValue<String> =
+        builder
+            .worldRestart()
+            .defineList(
+                "tagOutputModIds",
+                listOf(
+                    RagiumAPI.MOD_ID,
+                    RagiumConst.MINECRAFT,
+                    "alltheores",
+                    RagiumConst.MEKANISM,
+                    RagiumConst.IMMERSIVE,
+                ),
+                { "" },
+                { obj: Any -> obj is String },
+            ).let(::HTListConfigValue)
+
     // Generator
     @JvmField
     val generator: Generator
@@ -32,16 +56,15 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     @JvmField
     val milkCollectorMultiplier: HTIntConfigValue
 
-    // Crate
+    // Storage
     @JvmField
-    val crateCapacity: Map<HTCrateTier, HTIntConfigValue>
-
-    // Drum
-    @JvmField
-    val drumCapacity: Map<HTDrumTier, HTIntConfigValue>
+    val batteryCapacity: HTIntConfigValue
 
     @JvmField
-    val expConversionRatio: HTIntConfigValue
+    val crateCapacity: HTIntConfigValue
+
+    @JvmField
+    val tankCapacity: HTIntConfigValue
 
     // Block
     @JvmField
@@ -63,19 +86,8 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
     @JvmField
     val teleportKeyCost: HTIntConfigValue
 
-    // Recipe
-    @JvmField
-    val tagOutputPriority: HTListConfigValue<String>
-
-    // Tooltip
-    @JvmField
-    val showFoodEffect: HTBoolConfigValue
-
-    // World
-    @JvmField
-    val disableMilkCure: HTBoolConfigValue
-
     init {
+
         builder.push("generator")
         builder.comment("Configurations for Generator Machines")
         generator = Generator(builder)
@@ -97,45 +109,11 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         builder.pop()
 
         builder.pop()
-        // Crate
-        builder.push("crate")
-        crateCapacity = HTCrateTier.entries.associateWith { tier: HTCrateTier ->
-            val name: String = tier.name.lowercase()
-            builder.push(name)
-            // Capacity
-            val value: HTIntConfigValue = builder.definePositiveInt(
-                "multiplier",
-                when (tier) {
-                    HTCrateTier.SMALL -> 32
-                    HTCrateTier.MEDIUM -> 128
-                    HTCrateTier.LARGE -> 512
-                    HTCrateTier.HUGE -> 2048
-                },
-            )
-            builder.pop()
-            value
-        }
-        builder.pop()
-        // Drum
-        builder.push("drum")
-        drumCapacity = HTDrumTier.entries.associateWith { variant: HTDrumTier ->
-            val name: String = variant.name.lowercase()
-            builder.push(name)
-            // Capacity
-            val value: HTIntConfigValue = builder.definePositiveInt(
-                "capacity",
-                when (variant) {
-                    HTDrumTier.SMALL -> 16_000
-                    HTDrumTier.MEDIUM -> 32_000
-                    HTDrumTier.LARGE -> 64_000
-                    HTDrumTier.HUGE -> 256_000
-                    HTDrumTier.CREATIVE -> 1_000
-                },
-            )
-            builder.pop()
-            value
-        }
-        expConversionRatio = builder.definePositiveInt("expConversionRatio", 20)
+        // Storage
+        builder.push("storage")
+        batteryCapacity = builder.definePositiveInt("battery_capacity", 1_024_000)
+        crateCapacity = builder.definePositiveInt("crate_capacity", 32 * 64)
+        tankCapacity = builder.definePositiveInt("tank_capacity", 16000)
         builder.pop()
         // Block
         builder.push("block")
@@ -148,32 +126,6 @@ class RagiumCommonConfig(builder: ModConfigSpec.Builder) {
         advancedMagnetRange = builder.definePositiveDouble("advancedMagnetRange", 8.0, 0, Int.MAX_VALUE)
         expBerriesValue = builder.definePositiveInt("expBerriesValue", 8)
         teleportKeyCost = builder.definePositiveInt("teleportKeyCost", 10)
-        builder.pop()
-        // Recipe
-        builder.push("recipe")
-        tagOutputPriority =
-            builder
-                .worldRestart()
-                .defineList(
-                    "tagOutputModIds",
-                    listOf(
-                        RagiumAPI.MOD_ID,
-                        RagiumConst.MINECRAFT,
-                        "alltheores",
-                        RagiumConst.MEKANISM,
-                        RagiumConst.IMMERSIVE,
-                    ),
-                    { "" },
-                    { obj: Any -> obj is String },
-                ).let(::HTListConfigValue)
-        builder.pop()
-        // Tooltip
-        builder.push("world")
-        showFoodEffect = HTBoolConfigValue(builder.define("showFoodEffect", true))
-        builder.pop()
-        // World
-        builder.push("world")
-        disableMilkCure = HTBoolConfigValue(builder.define("disableMilkCure", false))
         builder.pop()
     }
 
