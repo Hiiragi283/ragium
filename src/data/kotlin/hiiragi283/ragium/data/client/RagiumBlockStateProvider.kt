@@ -226,6 +226,11 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : BlockStateProvider(c
         // Storages
         cutoutSimpleBlock(RagiumBlocks.CRATE, basicFrame)
         altModelBlock(RagiumBlocks.TANK)
+        layeredBlock(
+            RagiumBlocks.UNIVERSAL_CHEST,
+            vanillaId("block", "white_concrete"),
+            RagiumBlocks.UNIVERSAL_CHEST.blockId,
+        )
 
         // Fluids
         for (content: HTFluidContent<*, *, *, *, *> in RagiumFluidContents.REGISTER.contents) {

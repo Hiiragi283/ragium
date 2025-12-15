@@ -64,6 +64,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     CRATE("description", "crate"),
     TANK("description", "tank"),
     BUFFER("description", "buffer"),
+    UNIVERSAL_CHEST("description", "universal_chest"),
 
     // Config
     CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),
@@ -96,6 +97,7 @@ enum class RagiumCommonTranslation(type: String, vararg path: String) : HTTransl
     MAGNET("description", "magnet"),
     SLOT_COVER("description", "slot_cover"),
     TRADER_CATALOG("description", "trader_catalog"),
+    UNIVERSAL_BUNDLE("description", "universal_bundle"),
 
     // Items - Foods
     AMBROSIA("description", "ambrosia"),

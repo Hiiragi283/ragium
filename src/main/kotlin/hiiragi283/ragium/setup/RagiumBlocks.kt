@@ -37,6 +37,7 @@ import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTBufferBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
+import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
 import hiiragi283.ragium.common.block.type.HTMachineBlockType
 import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
 import hiiragi283.ragium.common.item.block.HTBufferBlockItem
@@ -45,6 +46,7 @@ import hiiragi283.ragium.common.item.block.HTExpBerriesItem
 import hiiragi283.ragium.common.item.block.HTImitationSpawnerBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
+import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
 import hiiragi283.ragium.common.item.block.HTWarpedWartItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
@@ -613,7 +615,7 @@ object RagiumBlocks {
     @JvmField
     val BATTERY: HTDeferredBlock<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
         "battery",
-        copyOf(Blocks.IRON_BLOCK).noOcclusion(),
+        machine().noOcclusion(),
         ::HTBatteryBlock,
         ::HTBatteryBlockItem,
     )
@@ -621,7 +623,7 @@ object RagiumBlocks {
     @JvmField
     val CRATE: HTDeferredBlock<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
         "crate",
-        copyOf(Blocks.COPPER_BLOCK).noOcclusion(),
+        machine().noOcclusion(),
         ::HTCrateBlock,
         ::HTCrateBlockItem,
     )
@@ -629,7 +631,7 @@ object RagiumBlocks {
     @JvmField
     val TANK: HTDeferredBlock<HTTankBlock, HTTankBlockItem> = REGISTER.register(
         "tank",
-        copyOf(Blocks.COPPER_BLOCK).noOcclusion(),
+        machine().noOcclusion(),
         ::HTTankBlock,
         ::HTTankBlockItem,
     )
@@ -637,8 +639,16 @@ object RagiumBlocks {
     @JvmField
     val BUFFER: HTDeferredBlock<HTBufferBlock, HTBufferBlockItem> = REGISTER.register(
         "buffer",
-        copyOf(Blocks.COPPER_BLOCK).noOcclusion().workInProgress(),
+        machine().noOcclusion().workInProgress(),
         ::HTBufferBlock,
         ::HTBufferBlockItem,
+    )
+
+    @JvmField
+    val UNIVERSAL_CHEST: HTDeferredBlock<HTUniversalChestBlock, HTUniversalChestBlockItem> = REGISTER.register(
+        "universal_chest",
+        machine(),
+        ::HTUniversalChestBlock,
+        ::HTUniversalChestBlockItem,
     )
 }

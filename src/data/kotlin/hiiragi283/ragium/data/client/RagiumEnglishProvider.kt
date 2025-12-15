@@ -176,7 +176,9 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
         add(RagiumBlocks.TANK, "Variable Tank")
-        add(RagiumBlocks.BUFFER, "Universal Buffer")
+        add(RagiumBlocks.BUFFER, "Integrated Buffer")
+
+        add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
     }
 
     private fun enchantment() {
@@ -463,6 +465,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.CRATE, "A item storage which capacity is extendable by upgrade.")
         add(RagiumCommonTranslation.TANK, "A fluid storage which capacity is extendable by upgrade.")
         add(RagiumCommonTranslation.BUFFER, "A combined storage with 9 slots, 3 tanks, and 1 battery.")
+        add(RagiumCommonTranslation.UNIVERSAL_CHEST, "A chest which shares its containment with the same color.")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
@@ -490,6 +493,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.MAGNET, "Collect dropped items in the effective range")
         add(RagiumCommonTranslation.SLOT_COVER, "Ignored by recipes when placed in machine slot.")
         add(RagiumCommonTranslation.TRADER_CATALOG, "Dropped from Wandering Trader. Right-click to trade with merchant.")
+        add(RagiumCommonTranslation.UNIVERSAL_BUNDLE, "A bundle which shares its containment with the same color.")
 
         add(RagiumCommonTranslation.AMBROSIA, "ALWAYS EDIBLE and NOT CONSUMED!")
         add(RagiumCommonTranslation.ICE_CREAM, "Extinguish fire when eaten.")

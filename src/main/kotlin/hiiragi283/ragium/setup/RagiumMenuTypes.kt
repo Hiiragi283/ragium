@@ -34,8 +34,9 @@ import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTAccessConfigurationMenu
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTGenericContainerMenu
-import hiiragi283.ragium.common.inventory.container.HTGenericContainerRows
 import hiiragi283.ragium.common.inventory.container.HTPotionBundleContainerMenu
+import hiiragi283.ragium.common.storage.item.HTSimpleItemHandler
+import hiiragi283.ragium.common.storage.item.HTUniversalBundleManager
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
@@ -62,9 +63,10 @@ object RagiumMenuTypes {
 
     @JvmField
     val UNIVERSAL_BUNDLE: HTDeferredMenuType.WithContext<HTGenericContainerMenu, HTItemHandler> =
-        REGISTER.registerType("universal_bundle", HTGenericContainerMenu::threeRow) {
-            HTGenericContainerRows.createHandler(3)
-        }
+        REGISTER.registerType(
+            "universal_bundle",
+            HTGenericContainerMenu::threeRow,
+        ) { HTSimpleItemHandler(HTUniversalBundleManager.createSlots()) }
 
     //    Generator    //
 

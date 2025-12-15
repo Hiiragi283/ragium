@@ -16,10 +16,8 @@ import hiiragi283.ragium.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTStonecuttingRecipeBuilder
-import hiiragi283.ragium.common.item.tool.HTUniversalBundleItem
 import hiiragi283.ragium.common.material.CommonMaterialKeys
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
-import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTArmorVariant
@@ -249,6 +247,7 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
 
+        craftingDyed(RagiumItems.UNIVERSAL_BUNDLE)
         HTShapedRecipeBuilder
             .create(RagiumItems.UNIVERSAL_BUNDLE)
             .pattern(
@@ -260,17 +259,6 @@ object RagiumToolRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
-
-        for (variant: HTColorMaterial in HTColorMaterial.entries) {
-            val bundle: ImmutableItemStack = HTUniversalBundleItem.createBundle(variant.dyeColor)
-            HTShapelessRecipeBuilder(bundle)
-                .addIngredient(RagiumItems.UNIVERSAL_BUNDLE)
-                .addIngredient(variant.dyeTag)
-                .setCategory(CraftingBookCategory.EQUIPMENT)
-                .savePrefixed(output, "${variant.asMaterialName()}_")
-        }
-
-        resetComponent(RagiumItems.UNIVERSAL_BUNDLE, RagiumDataComponents.COLOR)
     }
 
     @JvmStatic

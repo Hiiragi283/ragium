@@ -29,6 +29,16 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     HTAbstractBlockEntity {
     //    Save & Read    //
 
+    final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.saveAdditional(tag, registries)
+        RagiumPlatform.INSTANCE.createValueOutput(registries, tag).let(::writeValue)
+    }
+
+    final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+        super.loadAdditional(tag, registries)
+        RagiumPlatform.INSTANCE.createValueInput(registries, tag).let(::readValue)
+    }
+
     final override fun getUpdatePacket(): ClientboundBlockEntityDataPacket = ClientboundBlockEntityDataPacket.create(this)
 
     final override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag = getReducedUpdateTag(registries)
@@ -96,6 +106,10 @@ abstract class ExtendedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Bloc
     protected open fun markDirtyComparator() {}
 
     //    Extensions    //
+
+    protected open fun writeValue(output: HTValueOutput) {}
+
+    protected open fun readValue(input: HTValueInput) {}
 
     /**
      * @see mekanism.common.tile.base.TileEntityUpdateable.getReducedUpdateTag

@@ -43,6 +43,7 @@ import hiiragi283.ragium.client.renderer.block.HTTankRenderer
 import hiiragi283.ragium.client.renderer.item.HTFuelGeneratorItemRenderer
 import hiiragi283.ragium.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFluidCollectorBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.common.entity.charge.HTAbstractCharge
 import hiiragi283.ragium.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.ragium.common.material.HTColorMaterial
@@ -62,6 +63,7 @@ import net.minecraft.client.renderer.entity.MinecartRenderer
 import net.minecraft.client.renderer.entity.ThrownItemRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.BlockAndTintGetter
@@ -128,6 +130,23 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
             },
             RagiumBlocks.FLUID_COLLECTOR.get(),
         )
+        // Universal Chest
+        event.register(
+            { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+                when {
+                    tint != 0 -> -1
+                    getter != null && pos != null -> {
+                        val color: DyeColor = getter
+                            .getTypedBlockEntity<HTUniversalChestBlockEntity>(pos)
+                            ?.color
+                            ?: DyeColor.WHITE
+                        color.textureDiffuseColor
+                    }
+                    else -> -1
+                }
+            },
+            RagiumBlocks.UNIVERSAL_CHEST.get(),
+        )
         // LED Blocks
         for ((color: HTColorMaterial, block: HTSimpleDeferredBlock) in RagiumBlocks.LED_BLOCKS) {
             event.register(
@@ -178,7 +197,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
         for (bucket: HTDeferredItem<*> in RagiumFluidContents.REGISTER.itemEntries) {
             event.register(DynamicFluidContainerModel.Colors(), bucket)
         }
-        // Backpack
+        // Colored items
         event.register(
             { stack: ItemStack, tint: Int ->
                 when {
@@ -186,6 +205,7 @@ class RagiumClient(eventBus: IEventBus, container: ModContainer) {
                     else -> stack.get(RagiumDataComponents.COLOR)?.textureDiffuseColor ?: -1
                 }
             },
+            RagiumBlocks.UNIVERSAL_CHEST,
             RagiumItems.UNIVERSAL_BUNDLE,
         )
         // Potion Drop

@@ -421,7 +421,7 @@ object RagiumItems {
 
     @JvmField
     val UNIVERSAL_BUNDLE: HTSimpleDeferredItem = REGISTER.registerItem("universal_bundle", ::HTUniversalBundleItem) {
-        it.component(RagiumDataComponents.COLOR, DyeColor.WHITE)
+        it.component(RagiumDataComponents.COLOR, DyeColor.WHITE).description(RagiumCommonTranslation.UNIVERSAL_BUNDLE)
     }
 
     // Other

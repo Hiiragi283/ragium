@@ -43,7 +43,9 @@ import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBufferBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
@@ -241,6 +243,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val BUFFER: HTDeferredBlockEntityType<HTBufferBlockEntity> = registerTick("buffer", ::HTBufferBlockEntity)
 
+    @JvmField
+    val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> =
+        REGISTER.registerType("universal_chest", ::HTUniversalChestBlockEntity)
+
     //    Event    //
 
     // Supported Blocks
@@ -306,11 +312,16 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, BUFFER.get())
 
+        registerHandler(event, UNIVERSAL_CHEST.get())
+
         RagiumAPI.LOGGER.info("Registered Block Capabilities!")
     }
 
     @JvmStatic
-    private fun registerHandler(event: RegisterCapabilitiesEvent, type: BlockEntityType<out HTBlockEntity>) {
+    private fun <BE> registerHandler(
+        event: RegisterCapabilitiesEvent,
+        type: BlockEntityType<BE>,
+    ) where BE : BlockEntity, BE : HTHandlerProvider {
         event.registerBlockEntity(HTItemCapabilities.block, type, HTHandlerProvider::getItemHandler)
         event.registerBlockEntity(HTFluidCapabilities.block, type, HTHandlerProvider::getFluidHandler)
         event.registerBlockEntity(HTEnergyCapabilities.block, type, HTHandlerProvider::getEnergyStorage)

@@ -122,6 +122,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             add(RagiumBlocks.TANK)
 
             add(RagiumBlocks.BUFFER)
+
+            add(RagiumBlocks.UNIVERSAL_CHEST)
         }.forEach(pickaxe::add)
 
         pickaxe

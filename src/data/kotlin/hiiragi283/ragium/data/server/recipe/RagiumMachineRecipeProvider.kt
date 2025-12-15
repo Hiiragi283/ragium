@@ -397,7 +397,6 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
 
             resetComponent(block, component)
         }
-
         // Buffer
         HTShapedRecipeBuilder
             .create(RagiumBlocks.BUFFER)
@@ -410,6 +409,14 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
             .define('C', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .define('D', Tags.Items.CHESTS)
             .define('E', Tags.Items.BUCKETS_EMPTY)
+            .save(output)
+        // Universal Chest
+        craftingDyed(RagiumBlocks.UNIVERSAL_CHEST)
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.UNIVERSAL_CHEST)
+            .hollow8()
+            .define('A', CommonMaterialPrefixes.INGOT, RagiumMaterialKeys.NIGHT_METAL)
+            .define('B', CommonMaterialPrefixes.GEM, RagiumMaterialKeys.ELDRITCH_PEARL)
             .save(output)
 
         // Tank with Minecart

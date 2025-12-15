@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.RagiumPlatform
 import hiiragi283.ragium.api.block.HTBlockWithEntity
 import hiiragi283.ragium.api.block.entity.HTOwnedBlockEntity
 import hiiragi283.ragium.api.registry.impl.HTDeferredBlockEntityType
@@ -39,12 +38,10 @@ import hiiragi283.ragium.common.storage.resolver.HTItemHandlerManager
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.server.level.ServerLevel
@@ -149,12 +146,8 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         }
     }
 
-    final override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.saveAdditional(tag, registries)
-        RagiumPlatform.INSTANCE.createValueOutput(registries, tag).let(::writeValue)
-    }
-
-    protected open fun writeValue(output: HTValueOutput) {
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
         // Components
         for (component: HTBlockEntityComponent in components) {
             component.serialize(output)
@@ -171,12 +164,8 @@ abstract class HTBlockEntity(val blockHolder: Holder<Block>, pos: BlockPos, stat
         output.store(RagiumConst.OWNER, UUIDUtil.CODEC, ownerId)
     }
 
-    final override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-        super.loadAdditional(tag, registries)
-        RagiumPlatform.INSTANCE.createValueInput(registries, tag).let(::readValue)
-    }
-
-    protected open fun readValue(input: HTValueInput) {
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
         // Components
         for (component: HTBlockEntityComponent in components) {
             component.deserialize(input)

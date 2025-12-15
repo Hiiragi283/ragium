@@ -167,7 +167,9 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumBlocks.BATTERY, "可変バッテリー")
         add(RagiumBlocks.CRATE, "可変クレート")
         add(RagiumBlocks.TANK, "可変タンク")
-        add(RagiumBlocks.BUFFER, "万能バッファ")
+        add(RagiumBlocks.BUFFER, "統合バッファ")
+
+        add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
     }
 
     private fun enchantment() {
@@ -464,6 +466,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")
         add(RagiumCommonTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
         add(RagiumCommonTranslation.BUFFER, "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。")
+        add(RagiumCommonTranslation.UNIVERSAL_CHEST, "色ごとに中身を共有するチェストです。")
 
         add(RagiumCommonTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
         add(RagiumCommonTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
@@ -491,6 +494,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.MAGNET, "範囲内のドロップアイテムを回収します。")
         add(RagiumCommonTranslation.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
         add(RagiumCommonTranslation.TRADER_CATALOG, "行商人からドロップします。右クリックで行商人との取引を行えます。")
+        add(RagiumCommonTranslation.UNIVERSAL_BUNDLE, "色ごとに中身を共有するバンドルです。")
 
         add(RagiumCommonTranslation.AMBROSIA, "いつでも食べられる上，いくら食べてもなくなりません！")
         add(RagiumCommonTranslation.ICE_CREAM, "食べると鎮火します。")

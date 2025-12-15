@@ -16,6 +16,7 @@ import hiiragi283.ragium.api.registry.HTFluidHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.registry.toHolderLike
 import hiiragi283.ragium.api.registry.toId
+import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.tag.RagiumModTags
 import hiiragi283.ragium.api.util.Ior
 import hiiragi283.ragium.common.HTMoldType
@@ -31,7 +32,9 @@ import hiiragi283.ragium.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleExtraItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSmithingRecipeBuilder
 import hiiragi283.ragium.common.material.CommonMaterialPrefixes
+import hiiragi283.ragium.common.material.HTColorMaterial
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
+import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.core.HolderLookup
@@ -184,6 +187,17 @@ sealed class HTRecipeProvider {
         .addIngredient(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE)
         .addIngredient(input)
         .addIngredient(CommonMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE)
+
+    protected fun craftingDyed(base: HTItemHolderLike) {
+        resetComponent(base, RagiumDataComponents.COLOR)
+
+        for (variant: HTColorMaterial in HTColorMaterial.entries) {
+            HTShapelessRecipeBuilder(ImmutableItemStack.of(base).plus(RagiumDataComponents.COLOR, variant.dyeColor))
+                .addIngredient(base)
+                .addIngredient(variant.dyeTag)
+                .savePrefixed(output, "${variant.asMaterialName()}_")
+        }
+    }
 
     // Alloying
     fun alloyFromData(data: HTRecipeData, applyCondition: Boolean = false) {

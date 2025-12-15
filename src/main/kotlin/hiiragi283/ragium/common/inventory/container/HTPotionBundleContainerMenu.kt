@@ -3,6 +3,8 @@ package hiiragi283.ragium.common.inventory.container
 import hiiragi283.ragium.api.inventory.container.HTItemContainerContext
 import hiiragi283.ragium.api.stack.ImmutableItemStack
 import hiiragi283.ragium.api.storage.item.HTItemHandler
+import hiiragi283.ragium.common.storage.item.HTSimpleItemHandler
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.item.Items
@@ -26,9 +28,7 @@ class HTPotionBundleContainerMenu(
         fun filterPotion(stack: ImmutableItemStack): Boolean = stack.isOf(Items.POTION)
     }
 
-    override fun createHandler(rows: Int): HTItemHandler = HTGenericContainerRows.createHandler(
+    override fun createHandler(rows: Int): HTItemHandler = HTSimpleItemHandler.create(
         rows,
-        canInsert = ::filterPotion,
-        filter = ::filterPotion,
-    )
+    ) { x: Int, y: Int -> HTBasicItemSlot.create(null, x, y, filter = ::filterPotion) }
 }

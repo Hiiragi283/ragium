@@ -293,4 +293,10 @@ object RagiumBlockTypes {
         .builder { RagiumBlockEntityTypes.BUFFER }
         // .addMenu { RagiumMenuTypes.BUFFER }
         .build(RagiumCommonTranslation.BUFFER)
+
+    @JvmField
+    val UNIVERSAL_CHEST: HTEntityBlockType = HTEntityBlockType
+        .builder { RagiumBlockEntityTypes.UNIVERSAL_CHEST }
+        .addMenu { RagiumMenuTypes.UNIVERSAL_BUNDLE }
+        .build(RagiumCommonTranslation.UNIVERSAL_CHEST)
 }
