@@ -33,6 +33,7 @@ import hiiragi283.ragium.client.integration.emi.category.RagiumEmiRecipeCategori
 import hiiragi283.ragium.client.integration.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.integration.emi.data.HTRockGenerationEmiData
 import hiiragi283.ragium.client.integration.emi.handler.HTEmiRecipeHandler
+import hiiragi283.ragium.client.integration.emi.handler.RagiumEmiExclusionArea
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTCopyEnchantingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.custom.HTExpExtractingEmiRecipe
 import hiiragi283.ragium.client.integration.emi.recipe.device.HTRockGeneratingEmiRecipe
@@ -114,6 +115,7 @@ class RagiumEmiPlugin : EmiPlugin {
 
         // Functions
         registry.addGenericStackProvider(RagiumEmiStackProvider)
+        registry.addGenericExclusionArea(RagiumEmiExclusionArea)
 
         val potion: Comparison = Comparison.compareData { stack: EmiStack -> stack.get(DataComponents.POTION_CONTENTS) }
         registry.setDefaultComparison(RagiumItems.ICE_CREAM_SODA.get(), potion)

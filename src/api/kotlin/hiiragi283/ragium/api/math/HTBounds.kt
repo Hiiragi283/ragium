@@ -56,4 +56,12 @@ data class HTBounds(
      * 指定した[x], [y]がこの範囲に含まれているかどうか判定します。
      */
     fun contains(x: Int, y: Int): Boolean = x in widthRange && y in heightRange
+
+    operator fun contains(provider: HTBoundsProvider): Boolean = contains(provider.getBounds())
+
+    operator fun contains(bounds: HTBounds): Boolean {
+        val bool1: Boolean = bounds.left in this.widthRange && bounds.right in this.widthRange
+        val bool2: Boolean = bounds.top in this.heightRange && bounds.bottom in this.heightRange
+        return bool1 && bool2
+    }
 }

@@ -2,6 +2,8 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.ragium.api.gui.component.HTBackgroundRenderable
 import hiiragi283.ragium.api.gui.component.HTFluidWidget
+import hiiragi283.ragium.api.math.HTBounds
+import hiiragi283.ragium.api.math.HTBoundsProvider
 import hiiragi283.ragium.common.inventory.container.HTContainerMenu
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Renderable
@@ -18,7 +20,8 @@ abstract class HTContainerScreen<MENU : HTContainerMenu>(
     menu: MENU,
     inventory: Inventory,
     title: Component,
-) : AbstractContainerScreen<MENU>(menu, inventory, title) {
+) : AbstractContainerScreen<MENU>(menu, inventory, title),
+    HTBoundsProvider {
     override fun render(
         guiGraphics: GuiGraphics,
         mouseX: Int,
@@ -48,6 +51,10 @@ abstract class HTContainerScreen<MENU : HTContainerMenu>(
     }
 
     open fun getFluidWidgets(): List<HTFluidWidget> = listOf()
+
+    //    HTBoundsProvider    //
+
+    final override fun getBounds(): HTBounds = HTBounds(this.leftPos, this.topPos, this.imageWidth, this.imageHeight)
 
     //    Extensions    //
 
