@@ -72,7 +72,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
 
         addAdvancement(RagiumAdvancements.ECHO_STAR, "ソニック・ザ・ブーム", "残響の星を手に入れる")
         // Night Metal
-        addAdvancement(RagiumAdvancements.NIGHT_METAL, "ナイト・オブ・ナイツ", "夜金インゴットを手に入れる")
+        addAdvancement(RagiumAdvancements.NIGHT_METAL, "ナイト・オブ・メタル", "夜金インゴットを手に入れる")
         addAdvancement(RagiumAdvancements.SIMULATOR, "1 + 2 + 3 = 1 * 2 * 3", "シミュレーション室を手に入れる")
         // Crimson
         addAdvancement(RagiumAdvancements.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
@@ -292,7 +292,6 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumItems.LED, "発光ダイオード")
         add(RagiumItems.LUMINOUS_PASTE, "蛍光ペースト")
         add(RagiumItems.POLYMER_CATALYST, "重合触媒")
-        add(RagiumItems.POLYMER_RESIN, "高分子樹脂")
         add(RagiumItems.REDSTONE_BOARD, "レッドストーン基板")
         add(RagiumItems.SOLAR_PANEL, "太陽光パネル")
         add(RagiumItems.SYNTHETIC_FIBER, "合成繊維")

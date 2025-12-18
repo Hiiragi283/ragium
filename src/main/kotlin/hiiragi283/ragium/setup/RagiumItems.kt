@@ -142,6 +142,9 @@ object RagiumItems {
             "huge",
         ).forEach { REGISTER.addAlias("${it}_drum_minecart", "tank_minecart") }
 
+        REGISTER.addAlias("raw_rubber_plate", "raw_rubber")
+        REGISTER.addAlias("polymer_resin", "raw_plastic")
+
         REGISTER.register(eventBus)
 
         eventBus.addListener(::registerItemCapabilities)
@@ -257,6 +260,12 @@ object RagiumItems {
             RagiumMaterialKeys.ELDRITCH_PEARL,
         ).forEach { register(CommonMaterialPrefixes.GEM, it, it.name) }
 
+        // Raws
+        arrayOf(
+            RagiumMaterialKeys.NIGHT_METAL,
+            CommonMaterialKeys.PLASTIC,
+            CommonMaterialKeys.RUBBER,
+        ).forEach { register(CommonMaterialPrefixes.RAW_MATERIAL, it, "raw_${it.asMaterialName()}") }
         // Ingots
         arrayOf(
             RagiumMaterialKeys.RAGI_ALLOY,
@@ -304,7 +313,6 @@ object RagiumItems {
         // Plates
         register(CommonMaterialPrefixes.PLATE, VanillaMaterialKeys.WOOD, "wood_plate")
         register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC, "plastic_plate")
-        register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER, "raw_rubber_sheet")
         register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, "rubber_sheet")
         // Scraps
         register(CommonMaterialPrefixes.SCRAP, RagiumMaterialKeys.DEEP_STEEL, "deep_scrap")
@@ -335,6 +343,9 @@ object RagiumItems {
 
     @JvmStatic
     fun getPlate(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.PLATE, material)
+
+    @JvmStatic
+    fun getRaw(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.RAW_MATERIAL, material)
 
     @JvmStatic
     fun getScrap(material: HTMaterialLike): HTSimpleDeferredItem = getMaterial(CommonMaterialPrefixes.SCRAP, material)
@@ -607,9 +618,6 @@ object RagiumItems {
     val REDSTONE_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("redstone_board")
 
     // Plastics
-    @JvmField
-    val POLYMER_RESIN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("polymer_resin")
-
     @JvmField
     val SYNTHETIC_FIBER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("synthetic_fiber")
 

@@ -27,16 +27,10 @@ interface HTUpgradeHandler {
     }
 
     fun collectMultiplier(key: HTUpgradeKey, ignoreEmpty: Boolean = false): Fraction {
-        var isEmpty = true
-        var sum: Fraction = Fraction.ONE
-        for (stack: ImmutableItemStack in getUpgrades()) {
-            val fraction: Fraction = HTUpgradeHelper.getUpgrade(stack, key) ?: continue
-            sum *= fraction
-            isEmpty = false
-        }
-        return when {
-            isEmpty && ignoreEmpty -> Fraction.ZERO
-            else -> sum
+        if (!hasUpgrade(key) && ignoreEmpty) return Fraction.ZERO
+        return getUpgrades().fold(Fraction.ONE) { sum: Fraction, stack: ImmutableItemStack ->
+            val fraction: Fraction = HTUpgradeHelper.getUpgrade(stack, key) ?: return@fold sum
+            sum * fraction
         }
     }
 

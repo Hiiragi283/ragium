@@ -423,7 +423,7 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
         // Plastics
         factory
             .apply(RagiumModTags.Items.POLYMER_RESIN)
-            .add(RagiumItems.POLYMER_RESIN)
+            .addTag(CommonMaterialPrefixes.RAW_MATERIAL, CommonMaterialKeys.PLASTIC)
             .addItem(ItemContent.POLYMER_RESIN, HTTagDependType.OPTIONAL)
 
         factory.apply(RagiumCommonTags.Items.PLASTIC).add(RagiumItems.getPlate(CommonMaterialKeys.PLASTIC))

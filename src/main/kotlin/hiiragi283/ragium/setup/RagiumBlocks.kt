@@ -264,6 +264,7 @@ object RagiumBlocks {
             FoodMaterialKeys.COOKED_MEAT to copyOf(Blocks.PACKED_MUD).sound(SoundType.HONEY_BLOCK),
             // Misc
             CommonMaterialKeys.PLASTIC to copyOf(Blocks.TUFF, MapColor.NONE),
+            CommonMaterialKeys.RUBBER to copyOf(Blocks.TUFF, MapColor.COLOR_BLACK),
         ).forEach { (key: HTMaterialKey, properties: BlockBehaviour.Properties) ->
             this[CommonMaterialPrefixes.STORAGE_BLOCK.asMaterialPrefix(), key] =
                 REGISTER.registerSimple("${key.name}_block", properties)

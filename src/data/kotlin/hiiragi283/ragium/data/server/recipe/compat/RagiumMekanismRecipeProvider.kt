@@ -15,7 +15,6 @@ import hiiragi283.ragium.common.material.RagiumEssenceType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMoltenCrystalData
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
-import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumChemicals
@@ -35,9 +34,9 @@ import mekanism.api.recipes.ingredients.ItemStackIngredient
 import mekanism.api.recipes.ingredients.creator.IChemicalStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IFluidStackIngredientCreator
 import mekanism.api.recipes.ingredients.creator.IItemStackIngredientCreator
-import mekanism.common.registries.MekanismChemicals
 import mekanism.common.registries.MekanismItems
 import mekanism.common.tags.MekanismTags
+import net.minecraft.world.item.Items
 
 object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.MEKANISM) {
     override fun buildRecipeInternal() {
@@ -208,20 +207,17 @@ object RagiumMekanismRecipeProvider : HTRecipeProvider.Integration(RagiumConst.M
     @JvmStatic
     private fun misc() {
         // Night Metal
-        ItemStackChemicalToItemStackRecipeBuilder
-            .metallurgicInfusing(
-                itemHelper.from(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.GOLD),
-                chemicalHelper.fromHolder(MekanismChemicals.REFINED_OBSIDIAN, 20),
-                RagiumItems.getIngot(RagiumMaterialKeys.NIGHT_METAL).toStack(),
-                false,
-            ).build(output, id("metallurgic_infusing/night_metal"))
+        CombinerRecipeBuilder
+            .combining(
+                itemHelper.from(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN, 4),
+                itemHelper.from(Items.GILDED_BLACKSTONE),
+                RagiumItems.getRaw(RagiumMaterialKeys.NIGHT_METAL).toStack(),
+            ).build(output, id("combining/raw_night_metal"))
 
         crushFromData(VanillaMaterialRecipeData.AMETHYST_DUST)
         crushFromData(RagiumMaterialRecipeData.AZURE_DUST)
 
         crushFromData(VanillaMaterialRecipeData.ECHO_DUST)
-
-        crushFromData(FoodMaterialRecipeData.MINCED_MEAT)
     }
 
     //    Extensions    //

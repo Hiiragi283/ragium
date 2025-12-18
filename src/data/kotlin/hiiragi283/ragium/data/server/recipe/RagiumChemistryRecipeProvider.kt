@@ -508,7 +508,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         HTCompressingRecipeBuilder
             .plate(
                 itemCreator.fromTagKey(RagiumModTags.Items.POLYMER_RESIN),
-                resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC),
+                resultHelper.item(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.PLASTIC, 2),
             ).saveSuffixed(output, "_from_resin")
         // Synthetic Fiber / Leather
         mapOf(
@@ -623,18 +623,12 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
             .saveSuffixed(output, "_from_log")
         // Latex -> Raw Rubber
         HTCookingRecipeBuilder
-            .smelting(RagiumItems.getPlate(CommonMaterialKeys.RAW_RUBBER))
+            .smelting(RagiumItems.getRaw(CommonMaterialKeys.RUBBER))
             .addIngredient(RagiumFluidContents.LATEX.bucketTag)
             .setExp(0.1f)
             .saveSuffixed(output, "_from_latex")
 
-        meltAndFreeze(RagiumMaterialRecipeData.RAW_RUBBER_SHEET)
-        // Raw Rubber -> Rubber
-        HTCookingRecipeBuilder
-            .smelting(RagiumItems.getPlate(CommonMaterialKeys.RUBBER))
-            .addIngredient(RagiumItems.getPlate(CommonMaterialKeys.RAW_RUBBER))
-            .setExp(0.1f)
-            .saveSuffixed(output, "_from_raw_rubber")
+        meltAndFreeze(RagiumMaterialRecipeData.RAW_RUBBER)
         // Raw Rubber + Sulfur -> Rubber
         alloyFromData(RagiumMaterialRecipeData.RUBBER_SHEET)
         // Latex + Sulfur + Coal -> Rubber

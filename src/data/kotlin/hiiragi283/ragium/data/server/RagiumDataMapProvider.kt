@@ -231,7 +231,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                     set(RagiumUpgradeKeys.VOID_EXTRA, 1)
                     targetSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE))
                 }
-
                 HTUpgradeType.EXP_EXTRACTING -> HTUpgradeData.create {
                     set(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, 1)
                     targetSet(itemCreator.fromItem(RagiumBlocks.EXTRACTOR))

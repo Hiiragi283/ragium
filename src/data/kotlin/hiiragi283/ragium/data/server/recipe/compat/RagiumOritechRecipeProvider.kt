@@ -59,8 +59,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
             .result(RagiumItems.getGem(RagiumMaterialKeys.ELDRITCH_PEARL))
             .time(20)
             .export(output, RagiumMaterialKeys.ELDRITCH_PEARL)
-
-        atomicFromData(RagiumMaterialRecipeData.NIGHT_METAL)
     }
 
     @JvmStatic
@@ -87,6 +85,8 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
         foundryFromData(RagiumMaterialRecipeData.DEEP_STEEL)
 
         foundryFromData(RagiumMaterialRecipeData.RUBBER_SHEET)
+
+        foundryFromData(RagiumMaterialRecipeData.NIGHT_METAL_ALT)
     }
 
     @JvmStatic
@@ -131,11 +131,6 @@ object RagiumOritechRecipeProvider : HTRecipeProvider.Integration(RagiumConst.OR
 
     fun OritechRecipeBuilder.export(output: RecipeOutput, material: HTMaterialLike) {
         export(output, material.asMaterialName())
-    }
-
-    @JvmStatic
-    private fun atomicFromData(data: HTRecipeData) {
-        builderFromData(data, AtomicForgeRecipeBuilder.build())
     }
 
     @JvmStatic

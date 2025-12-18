@@ -36,7 +36,6 @@ import hiiragi283.ragium.common.material.FoodMaterialKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.common.variant.HTOreVariant
-import hiiragi283.ragium.impl.data.recipe.material.FoodMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.RagiumMaterialRecipeData
 import hiiragi283.ragium.impl.data.recipe.material.VanillaMaterialRecipeData
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -168,8 +167,6 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
 
         // Ragium
         fromData(RagiumMaterialRecipeData.AZURE_DUST)
-
-        fromData(FoodMaterialRecipeData.MINCED_MEAT)
     }
 
     @JvmStatic
@@ -204,14 +201,15 @@ object RagiumCreateRecipeProvider : HTRecipeProvider.Integration(RagiumConst.CRE
         fromData(RagiumMaterialRecipeData.ELDRITCH_FLUX, HeatCondition.SUPERHEATED)
 
         fromData(RagiumMaterialRecipeData.NIGHT_METAL, HeatCondition.HEATED)
+        fromData(RagiumMaterialRecipeData.NIGHT_METAL_ALT, HeatCondition.HEATED)
         fromData(RagiumMaterialRecipeData.IRIDESCENT_POWDER, HeatCondition.SUPERHEATED)
 
         factory
             .apply(RagiumAPI.id("rubber_sheet"))
             .require(CommonMaterialPrefixes.DUST, CommonMaterialKeys.Gems.SULFUR)
             .require(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.COAL)
-            .require(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER)
-            .require(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER)
+            .require(CommonMaterialPrefixes.RAW_MATERIAL, CommonMaterialKeys.RUBBER)
+            .require(CommonMaterialPrefixes.RAW_MATERIAL, CommonMaterialKeys.RUBBER)
             .output(RagiumItems.getPlate(CommonMaterialKeys.RUBBER), 4)
             .requiresHeat(HeatCondition.HEATED)
             .build(output)

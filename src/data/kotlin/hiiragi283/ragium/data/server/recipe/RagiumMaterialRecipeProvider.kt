@@ -157,6 +157,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
             .save(output)
 
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
+        alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL_ALT)
         // Iridescentium
         mixFromData(RagiumMaterialRecipeData.IRIDESCENT_POWDER)
         // Other
@@ -354,6 +355,20 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                     addIngredient(dust)
                     setExp(0.5f)
                     saveSuffixed(output, "_from_dust")
+                }
+        }
+
+        mapOf(
+            RagiumMaterialKeys.NIGHT_METAL to 1f,
+            CommonMaterialKeys.PLASTIC to 0.1f,
+            CommonMaterialKeys.RUBBER to 0.1f,
+        ).forEach { (material: HTMaterialKey, exp: Float) ->
+            val basePrefix: HTMaterialPrefix = getDefaultPrefix(material) ?: return@forEach
+            HTCookingRecipeBuilder
+                .smeltingAndBlasting(RagiumItems.getMaterial(basePrefix, material)) {
+                    addIngredient(CommonMaterialPrefixes.RAW_MATERIAL, material)
+                    setExp(exp)
+                    saveSuffixed(output, "_from_raw")
                 }
         }
     }

@@ -70,11 +70,11 @@ object HTMaterialTranslations {
             }
         }
 
-        register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "Sawdust", "おがくず")
         register(CommonMaterialPrefixes.DUST, FoodMaterialKeys.RAW_MEAT, "Minced Meat", "ひき肉")
-
-        register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RAW_RUBBER, "Raw Rubber Sheet", "生ゴムシート")
+        register(CommonMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, "Sawdust", "おがくず")
         register(CommonMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, "Rubber Sheet", "ゴムシート")
+        register(CommonMaterialPrefixes.RAW_MATERIAL, CommonMaterialKeys.PLASTIC, "Polymer Resin", "高分子樹脂")
+        register(CommonMaterialPrefixes.RAW_MATERIAL, CommonMaterialKeys.RUBBER, "Raw Rubber", "生ゴム")
     }
 
     fun getLangName(material: HTMaterialLike): HTLangName? = (material as? HTLangName)
