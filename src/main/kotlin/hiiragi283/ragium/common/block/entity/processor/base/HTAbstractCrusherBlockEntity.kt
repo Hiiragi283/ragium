@@ -8,9 +8,13 @@ import hiiragi283.ragium.api.recipe.extra.HTSingleExtraItemRecipe
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
+import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
+import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumFluidContents
 import hiiragi283.ragium.util.HTStackSlotHelper
@@ -24,20 +28,36 @@ import net.minecraft.world.level.block.state.BlockState
 import org.apache.commons.lang3.math.Fraction
 
 abstract class HTAbstractCrusherBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity.CachedWithTank<HTSingleExtraItemRecipe>(
+    HTProcessorBlockEntity.Cached<HTSingleExtraItemRecipe>(
         RagiumRecipeTypes.CRUSHING,
         blockHolder,
         pos,
         state,
     ) {
-    final override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.input(
-        listener,
-        blockHolder.getFluidAttribute().getInputTank(this),
-        canInsert = { hasUpgrade(RagiumUpgradeKeys.USE_LUBRICANT) },
-        filter = RagiumFluidContents.LUBRICANT::isOf,
-    )
+    lateinit var inputTank: HTBasicFluidTank
+        private set
+
+    final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        // input
+        inputTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidTank.input(
+                listener,
+                blockHolder.getFluidAttribute().getInputTank(this),
+                canInsert = { hasUpgrade(RagiumUpgradeKeys.USE_LUBRICANT) },
+                filter = RagiumFluidContents.LUBRICANT::isOf,
+            ),
+        )
+    }
+
+    lateinit var inputSlot: HTBasicItemSlot
+        protected set
 
     //    Ticking    //
+
+    final override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += inputSlot.getStack()
+    }
 
     final override fun getRecipeTime(recipe: HTSingleExtraItemRecipe): Int {
         val bool1: Boolean = hasUpgrade(RagiumUpgradeKeys.USE_LUBRICANT)

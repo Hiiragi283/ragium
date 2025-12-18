@@ -298,6 +298,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .apply(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE)
             .add(RagiumBlocks.PULVERIZER)
             .add(RagiumBlocks.CRUSHER)
+
+        factory
+            .apply(RagiumModTags.Items.SMELTING_UPGRADABLE)
+            .add(RagiumBlocks.ELECTRIC_FURNACE)
+            .add(RagiumBlocks.MULTI_SMELTER)
         // Storage
         factory
             .apply(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE)
@@ -343,6 +348,11 @@ class RagiumItemTagsProvider(private val blockTags: CompletableFuture<TagLookup<
             .apply(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE)
             .add(HTUpgradeType.BIO_COMPOSTING)
             .add(HTUpgradeType.EXP_EXTRACTING)
+
+        factory
+            .apply(RagiumModTags.Items.SMELTER_EXCLUSIVE)
+            .add(HTUpgradeType.BLASTING)
+            .add(HTUpgradeType.SMOKING)
     }
 
     //    Categories    //

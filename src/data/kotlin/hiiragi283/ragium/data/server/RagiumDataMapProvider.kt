@@ -227,18 +227,28 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                     targetSet(itemCreator.fromItem(RagiumBlocks.EXTRACTOR))
                     exclusiveSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE))
                 }
-                HTUpgradeType.EXTRA_VOIDING -> HTUpgradeData.create {
-                    set(RagiumUpgradeKeys.VOID_EXTRA, 1)
-                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE))
+                HTUpgradeType.BLASTING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.BLASTING, 1)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.SMELTING_UPGRADABLE))
+                    exclusiveSet(itemCreator.fromTagKey(RagiumModTags.Items.SMELTER_EXCLUSIVE))
+                }
+                HTUpgradeType.EFFICIENT_CRUSHING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.USE_LUBRICANT, 1)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE))
                 }
                 HTUpgradeType.EXP_EXTRACTING -> HTUpgradeData.create {
                     set(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, 1)
                     targetSet(itemCreator.fromItem(RagiumBlocks.EXTRACTOR))
                     exclusiveSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE))
                 }
-                HTUpgradeType.EFFICIENT_CRUSHING -> HTUpgradeData.create {
-                    set(RagiumUpgradeKeys.USE_LUBRICANT, 1)
-                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.EFFICIENT_CRUSHING_UPGRADABLE))
+                HTUpgradeType.EXTRA_VOIDING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.VOID_EXTRA, 1)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.EXTRA_VOIDING_UPGRADABLE))
+                }
+                HTUpgradeType.SMOKING -> HTUpgradeData.create {
+                    set(RagiumUpgradeKeys.SMOKING, 1)
+                    targetSet(itemCreator.fromTagKey(RagiumModTags.Items.SMELTING_UPGRADABLE))
+                    exclusiveSet(itemCreator.fromTagKey(RagiumModTags.Items.SMELTER_EXCLUSIVE))
                 }
                 // Device
                 HTUpgradeType.EXP_COLLECTING -> HTUpgradeData.create {

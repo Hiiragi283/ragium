@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
@@ -18,14 +17,13 @@ import hiiragi283.ragium.common.storage.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.common.storage.item.slot.HTOutputItemSlot
-import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTCombineRecipe> {
+abstract class HTAbstractCombinerBlockEntity : HTSingleItemOutputBlockEntity.Cached<HTCombineRecipe> {
     constructor(
         recipeCache: HTRecipeCache<HTRecipeInput, HTCombineRecipe>,
         blockHolder: Holder<Block>,
@@ -57,8 +55,6 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTC
         private set
     lateinit var rightInputSlot: HTBasicItemSlot
         private set
-    lateinit var outputSlot: HTBasicItemSlot
-        private set
 
     final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // inputs
@@ -85,9 +81,6 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTC
         builder.fluids += inputTank.getStack()
     }
 
-    final override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTCombineRecipe): Boolean =
-        HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
-
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
@@ -95,8 +88,7 @@ abstract class HTAbstractCombinerBlockEntity : HTProcessorBlockEntity.Cached<HTC
         input: HTRecipeInput,
         recipe: HTCombineRecipe,
     ) {
-        // 実際にアウトプットに搬出する
-        outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        super.completeRecipe(level, pos, state, input, recipe)
         // 実際にインプットを減らす
         leftInputSlot.extract(recipe.getLeftRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         rightInputSlot.extract(recipe.getRightRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)

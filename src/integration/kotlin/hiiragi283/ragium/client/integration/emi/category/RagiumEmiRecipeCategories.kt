@@ -10,6 +10,7 @@ import hiiragi283.ragium.api.registry.HTHolderLike
 import hiiragi283.ragium.api.registry.HTItemHolderLike
 import hiiragi283.ragium.api.text.HTHasText
 import hiiragi283.ragium.client.integration.emi.toEmi
+import hiiragi283.ragium.common.HTUpgradeType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.text.RagiumCommonTranslation
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -167,10 +168,10 @@ object RagiumEmiRecipeCategories {
         register(registry, BREWING)
         register(registry, PLANTING)
         for (block: ItemLike in listOf(RagiumBlocks.ELECTRIC_FURNACE, RagiumBlocks.MULTI_SMELTER)) {
-            registry.addWorkstation(VanillaEmiRecipeCategories.BLASTING, block.toEmi())
             registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, block.toEmi())
-            registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, block.toEmi())
         }
+        registry.addWorkstation(VanillaEmiRecipeCategories.BLASTING, HTUpgradeType.BLASTING.toEmi())
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMOKING, HTUpgradeType.SMOKING.toEmi())
 
         register(registry, ENCHANTING)
         register(registry, SIMULATING)

@@ -5,20 +5,17 @@ import hiiragi283.ragium.api.recipe.HTRecipeFinder
 import hiiragi283.ragium.api.recipe.input.HTRecipeInput
 import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
-import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.recipe.HTFinderRecipeCache
 import hiiragi283.ragium.common.recipe.vanilla.HTVanillaCookingRecipe
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
-import hiiragi283.ragium.util.HTStackSlotHelper
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.AbstractCookingRecipe
 import net.minecraft.world.item.crafting.BlastingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -32,20 +29,13 @@ import net.minecraft.world.level.block.state.BlockState
 import kotlin.jvm.optionals.getOrNull
 
 abstract class HTAbstractSmelterBlockEntity(blockHolder: Holder<Block>, pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity<HTVanillaCookingRecipe>(blockHolder, pos, state) {
-    lateinit var catalystSlot: HTBasicItemSlot
-        private set
-    lateinit var outputSlot: HTBasicItemSlot
-        private set
+    HTSingleItemOutputBlockEntity<HTVanillaCookingRecipe>(blockHolder, pos, state) {
+    lateinit var inputSlot: HTBasicItemSlot
+        protected set
 
     final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = singleInput(builder, listener)
-        // catalyst
-        catalystSlot = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTBasicItemSlot.input(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
-        )
         // output
         outputSlot = singleOutput(builder, listener)
     }
@@ -63,18 +53,19 @@ abstract class HTAbstractSmelterBlockEntity(blockHolder: Holder<Block>, pos: Blo
     private val blastingCache: HTRecipeCache<SingleRecipeInput, BlastingRecipe> = HTFinderRecipeCache(findRecipe(RecipeType.BLASTING))
     private val smokingCache: HTRecipeCache<SingleRecipeInput, SmokingRecipe> = HTFinderRecipeCache(findRecipe(RecipeType.SMOKING))
 
-    protected fun getRecipeCache(): HTRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when (catalystSlot.getStack()?.value()) {
-        Items.BLAST_FURNACE -> blastingCache
-        Items.SMOKER -> smokingCache
+    protected fun getRecipeCache(): HTRecipeCache<SingleRecipeInput, out AbstractCookingRecipe> = when {
+        hasUpgrade(RagiumUpgradeKeys.BLASTING) -> blastingCache
+        hasUpgrade(RagiumUpgradeKeys.SMOKING) -> smokingCache
         else -> smeltingCache
     }
 
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0
 
-    final override fun getRecipeTime(recipe: HTVanillaCookingRecipe): Int = recipe.cookingTime
+    final override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += inputSlot.getStack()
+    }
 
-    final override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTVanillaCookingRecipe): Boolean =
-        HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
+    final override fun getRecipeTime(recipe: HTVanillaCookingRecipe): Int = recipe.cookingTime
 
     final override fun completeRecipe(
         level: ServerLevel,
@@ -83,8 +74,7 @@ abstract class HTAbstractSmelterBlockEntity(blockHolder: Holder<Block>, pos: Blo
         input: HTRecipeInput,
         recipe: HTVanillaCookingRecipe,
     ) {
-        // 実際にアウトプットに搬出する
-        outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        super.completeRecipe(level, pos, state, input, recipe)
         // インプットを減らす
         inputSlot.extract(recipe.getRequiredCount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす

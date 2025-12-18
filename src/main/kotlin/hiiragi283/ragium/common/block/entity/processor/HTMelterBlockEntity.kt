@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
-import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.fluid.tank.HTBasicFluidTank
 import hiiragi283.ragium.common.storage.fluid.tank.HTVariableFluidTank
@@ -32,20 +31,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemInputBlockEntity.Cached<HTMeltingRecipe>(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, pos, state) {
-    lateinit var remainderSlot: HTBasicItemSlot
-        private set
-
-    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        // input
-        inputSlot = singleInput(builder, listener)
-        // output
-        remainderSlot = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
-        )
-    }
-
+    HTProcessorBlockEntity.Cached<HTMeltingRecipe>(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, pos, state) {
     lateinit var outputTank: HTBasicFluidTank
         private set
 
@@ -57,6 +43,21 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
                 listener,
                 blockHolder.getFluidAttribute().getOutputTank(this),
             ),
+        )
+    }
+
+    lateinit var inputSlot: HTBasicItemSlot
+        private set
+    lateinit var remainderSlot: HTBasicItemSlot
+        private set
+
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        // input
+        inputSlot = singleInput(builder, listener)
+        // output
+        remainderSlot = builder.addSlot(
+            HTSlotInfo.OUTPUT,
+            HTOutputItemSlot.create(listener, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(2)),
         )
     }
 
@@ -75,6 +76,10 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     //    Ticking    //
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputTank.getNeeded() > 0
+
+    override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+        builder.items += inputSlot.getStack()
+    }
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTMeltingRecipe): Boolean =

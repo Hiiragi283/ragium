@@ -158,9 +158,15 @@ object RagiumModTags {
         @JvmField
         val ITEM_CAPACITY_UPGRADABLE: TagKey<Item> = create("upgradable", "item_capacity")
 
+        @JvmField
+        val SMELTING_UPGRADABLE: TagKey<Item> = create("upgradable", "smelting")
+
         // Upgrade Exclusive
         @JvmField
         val EXTRACTOR_EXCLUSIVE: TagKey<Item> = create("exclusive", "extractor")
+
+        @JvmField
+        val SMELTER_EXCLUSIVE: TagKey<Item> = create("exclusive", "smelter")
 
         @JvmStatic
         private fun create(path: String): TagKey<Item> = create(RagiumAPI.id(path))

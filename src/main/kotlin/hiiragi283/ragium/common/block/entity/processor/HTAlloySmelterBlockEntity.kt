@@ -8,11 +8,11 @@ import hiiragi283.ragium.api.storage.HTStorageAccess
 import hiiragi283.ragium.api.storage.HTStorageAction
 import hiiragi283.ragium.api.storage.holder.HTSlotInfo
 import hiiragi283.ragium.api.util.HTContentListener
+import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemOutputBlockEntity
 import hiiragi283.ragium.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storage.item.slot.HTBasicItemSlot
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.util.HTStackSlotHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -20,15 +20,13 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTAlloyingRecipe>(
+    HTSingleItemOutputBlockEntity.Cached<HTAlloyingRecipe>(
         RagiumRecipeTypes.ALLOYING,
         RagiumBlocks.ALLOY_SMELTER,
         pos,
         state,
     ) {
     lateinit var inputSlots: List<HTBasicItemSlot>
-        private set
-    lateinit var outputSlot: HTBasicItemSlot
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -49,9 +47,6 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         builder.items.addAll(inputSlots.map(HTBasicItemSlot::getStack))
     }
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTAlloyingRecipe): Boolean =
-        HTStackSlotHelper.canInsertStack(outputSlot, input, level, recipe::assembleItem)
-
     override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
@@ -59,8 +54,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         input: HTRecipeInput,
         recipe: HTAlloyingRecipe,
     ) {
-        // 実際にアウトプットに搬出する
-        outputSlot.insert(recipe.assembleItem(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        super.completeRecipe(level, pos, state, input, recipe)
         // 実際にインプットを減らす
         val ingredients: List<HTItemIngredient> = recipe.ingredients
         HTRecipeInput.getMatchingSlots(ingredients, input.items).forEachIndexed { index: Int, slot: Int ->

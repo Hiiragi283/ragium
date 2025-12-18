@@ -338,8 +338,10 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE, "Energy Storage")
         add(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE, "Fluid Storage")
         add(RagiumModTags.Items.ITEM_CAPACITY_UPGRADABLE, "Item Storage")
+        add(RagiumModTags.Items.SMELTING_UPGRADABLE, "Electric / Multi Smelter")
 
         add(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE, "Upgrades for Extractor")
+        add(RagiumModTags.Items.SMELTER_EXCLUSIVE, "Upgrades for Smelters")
     }
 
     private fun recipeType() {
@@ -380,6 +382,8 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(HTUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
         add(HTUpgradeKeys.ITEM_CAPACITY, $$"- Item Capacity: %1$s")
 
+        add(RagiumUpgradeKeys.BLASTING, "- Only process Blasting Recipes")
+        add(RagiumUpgradeKeys.SMOKING, "- Only process Smoking Recipes")
         add(RagiumUpgradeKeys.COMPOST_BIO, "- Convert input into Crude Bio")
         add(RagiumUpgradeKeys.VOID_EXTRA, "- Extra output disabled")
         add(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, "- Extract Liquid Experience from enchanted item")
@@ -446,7 +450,7 @@ class RagiumEnglishProvider(output: PackOutput) : HTLanguageProvider.English(out
         add(RagiumCommonTranslation.REFINERY, "A machine which transform fluid into another.")
 
         add(RagiumCommonTranslation.BREWERY, "A machine which brews potion from item and fluid.")
-        add(RagiumCommonTranslation.MULTI_SMELTER, "A machine which smelts items simultaneously.")
+        add(RagiumCommonTranslation.MULTI_SMELTER, "A machine which smelts items simultaneously by machine tier.")
         add(RagiumCommonTranslation.PLANTER, "A machine which grows plant from seeds or sapling.")
 
         add(RagiumCommonTranslation.ENCHANTER, "A machine which creates enchanted books from items.")

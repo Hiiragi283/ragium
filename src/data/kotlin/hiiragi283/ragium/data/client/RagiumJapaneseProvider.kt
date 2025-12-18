@@ -339,8 +339,10 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumModTags.Items.ENERGY_CAPACITY_UPGRADABLE, "エネルギーストレージ")
         add(RagiumModTags.Items.FLUID_CAPACITY_UPGRADABLE, "液体ストレージ")
         add(RagiumModTags.Items.ITEM_CAPACITY_UPGRADABLE, "アイテムストレージ")
+        add(RagiumModTags.Items.SMELTING_UPGRADABLE, "電動かまどまたは並列製錬炉")
 
         add(RagiumModTags.Items.EXTRACTOR_EXCLUSIVE, "抽出機に対応したアップグレード")
+        add(RagiumModTags.Items.SMELTER_EXCLUSIVE, "製錬機械に対応したアップグレード")
     }
 
     private fun recipeType() {
@@ -381,6 +383,8 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(HTUpgradeKeys.FLUID_CAPACITY, $$"- 液体容量: %1$s")
         add(HTUpgradeKeys.ITEM_CAPACITY, $$"- アイテム容量: %1$s")
 
+        add(RagiumUpgradeKeys.BLASTING, "- 溶鉱炉レシピのみを処理")
+        add(RagiumUpgradeKeys.SMOKING, "- 燻製器レシピのみを処理")
         add(RagiumUpgradeKeys.COMPOST_BIO, "- アイテムを未加工バイオに変換")
         add(RagiumUpgradeKeys.VOID_EXTRA, "- 追加の生産物を無効化")
         add(RagiumUpgradeKeys.EXTRACT_EXPERIENCE, "- エンチャントされたアイテムから液体経験値を抽出")
@@ -447,7 +451,7 @@ class RagiumJapaneseProvider(output: PackOutput) : HTLanguageProvider.Japanese(o
         add(RagiumCommonTranslation.REFINERY, "液体を別の液体に変換する機械です。")
 
         add(RagiumCommonTranslation.BREWERY, "アイテムと液体からポーションを醸造する機械です。")
-        add(RagiumCommonTranslation.MULTI_SMELTER, "複数のアイテムをまとめて精錬する機械です。")
+        add(RagiumCommonTranslation.MULTI_SMELTER, "アップグレードのティアに応じて並列して精錬する機械です。")
         add(RagiumCommonTranslation.PLANTER, "種子や苗木から植物を成長さる機械です。")
 
         add(RagiumCommonTranslation.ENCHANTER, "アイテムからエンチャント本を作成する機械です。")

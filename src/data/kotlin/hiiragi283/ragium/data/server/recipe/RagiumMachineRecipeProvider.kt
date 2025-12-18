@@ -332,9 +332,11 @@ object RagiumMachineRecipeProvider : HTRecipeProvider.Direct() {
                 HTUpgradeType.HIGH_SPEED -> builder.define('C', HTUpgradeType.SPEED)
                 // Processor
                 HTUpgradeType.BIO_COMPOSTING -> builder.define('C', Items.COMPOSTER)
-                HTUpgradeType.EXTRA_VOIDING -> builder.define('C', Tags.Items.BUCKETS_LAVA)
-                HTUpgradeType.EXP_EXTRACTING -> builder.define('C', Items.GRINDSTONE)
+                HTUpgradeType.BLASTING -> builder.define('C', Items.BLAST_FURNACE)
                 HTUpgradeType.EFFICIENT_CRUSHING -> builder.define('C', RagiumFluidContents.LUBRICANT.bucketTag)
+                HTUpgradeType.EXP_EXTRACTING -> builder.define('C', Items.GRINDSTONE)
+                HTUpgradeType.EXTRA_VOIDING -> builder.define('C', Tags.Items.BUCKETS_LAVA)
+                HTUpgradeType.SMOKING -> builder.define('C', Items.SMOKER)
                 // Device
                 HTUpgradeType.EXP_COLLECTING -> builder.define('C', Items.EXPERIENCE_BOTTLE)
                 HTUpgradeType.FISHING -> builder.define('C', Tags.Items.TOOLS_FISHING_ROD)

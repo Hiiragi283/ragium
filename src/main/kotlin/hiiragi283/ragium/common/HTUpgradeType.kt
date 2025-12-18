@@ -22,9 +22,11 @@ enum class HTUpgradeType(val group: Group, private val enName: String, private v
 
     // Specific Processor
     BIO_COMPOSTING(Group.PROCESSOR, "Bio Composting", "有機コンポスト"),
-    EXTRA_VOIDING(Group.PROCESSOR, "Extra Voiding", "副産物廃棄"),
-    EXP_EXTRACTING(Group.PROCESSOR, "Exp Extracting", "経験値抽出"),
+    BLASTING(Group.PROCESSOR, "Blasting", "溶鉱炉"),
     EFFICIENT_CRUSHING(Group.PROCESSOR, "Efficient Crushing", "効率的粉砕"),
+    EXP_EXTRACTING(Group.PROCESSOR, "Exp Extracting", "経験値抽出"),
+    EXTRA_VOIDING(Group.PROCESSOR, "Extra Voiding", "副産物廃棄"),
+    SMOKING(Group.PROCESSOR, "Smoking", "燻製器"),
 
     // Device
     EXP_COLLECTING(Group.DEVICE, "Exp Collecting", "経験値収集"),

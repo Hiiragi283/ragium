@@ -26,8 +26,8 @@ import hiiragi283.ragium.common.block.entity.processor.HTMobCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.HTSimulatorBlockEntity
+import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processor.base.HTAbstractSmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.processor.base.HTSingleItemInputBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
@@ -121,8 +121,7 @@ object RagiumMenuTypes {
     val SIMULATOR: DeferredBEMenu<HTSimulatorBlockEntity> = registerBE("simulator")
 
     @JvmField
-    val SINGLE_ITEM_WITH_FLUID: DeferredBEMenu<HTSingleItemInputBlockEntity.CachedWithTank<*>> =
-        registerBE("single_item_with_fluid")
+    val SINGLE_ITEM_WITH_FLUID: DeferredBEMenu<HTAbstractCrusherBlockEntity> = registerBE("single_item_with_fluid")
 
     @JvmField
     val SMELTER: DeferredBEMenu<HTAbstractSmelterBlockEntity> = registerBE("smelter")

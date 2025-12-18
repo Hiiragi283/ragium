@@ -6,6 +6,12 @@ object RagiumUpgradeKeys {
     //    Processor    //
 
     @JvmField
+    val BLASTING: HTUpgradeKey = HTUpgradeKey.get("blasting")
+
+    @JvmField
+    val SMOKING: HTUpgradeKey = HTUpgradeKey.get("smoking")
+
+    @JvmField
     val COMPOST_BIO: HTUpgradeKey = HTUpgradeKey.get("compost_bio")
 
     @JvmField
