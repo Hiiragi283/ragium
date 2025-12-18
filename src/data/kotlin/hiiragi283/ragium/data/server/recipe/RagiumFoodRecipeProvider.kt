@@ -256,6 +256,7 @@ object RagiumFoodRecipeProvider : HTRecipeProvider.Direct() {
         // Bread from dough
         HTCookingRecipeBuilder.smeltingAndSmoking(Items.BREAD) {
             addIngredient(dough)
+            setExp(0.35f)
             saveSuffixed(output, "_from_dough")
         }
     }

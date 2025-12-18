@@ -593,11 +593,13 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         HTCookingRecipeBuilder
             .blasting(Items.BLAZE_POWDER, 3)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.CRIMSON_CRYSTAL)
+            .setExp(0.5f)
             .save(output)
         // Warped Crystal -> Ender Pearl
         HTCookingRecipeBuilder
             .blasting(Items.ENDER_PEARL, 3)
             .addIngredient(CommonMaterialPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.WARPED_CRYSTAL)
+            .setExp(0.5f)
             .save(output)
 
         // Eldritch Pearl
@@ -623,6 +625,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         HTCookingRecipeBuilder
             .smelting(RagiumItems.getPlate(CommonMaterialKeys.RAW_RUBBER))
             .addIngredient(RagiumFluidContents.LATEX.bucketTag)
+            .setExp(0.1f)
             .saveSuffixed(output, "_from_latex")
 
         meltAndFreeze(RagiumMaterialRecipeData.RAW_RUBBER_SHEET)
@@ -630,6 +633,7 @@ object RagiumChemistryRecipeProvider : HTRecipeProvider.Direct() {
         HTCookingRecipeBuilder
             .smelting(RagiumItems.getPlate(CommonMaterialKeys.RUBBER))
             .addIngredient(RagiumItems.getPlate(CommonMaterialKeys.RAW_RUBBER))
+            .setExp(0.1f)
             .saveSuffixed(output, "_from_raw_rubber")
         // Raw Rubber + Sulfur -> Rubber
         alloyFromData(RagiumMaterialRecipeData.RUBBER_SHEET)

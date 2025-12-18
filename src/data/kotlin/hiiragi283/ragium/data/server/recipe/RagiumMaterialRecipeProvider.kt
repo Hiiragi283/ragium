@@ -50,6 +50,8 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         blockAndNugget()
         gear()
         oreToRaw()
+
+        smelting()
         alloying()
     }
 
@@ -111,6 +113,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         HTCookingRecipeBuilder
             .smeltingAndBlasting(RagiumItems.getScrap(RagiumMaterialKeys.DEEP_STEEL)) {
                 addIngredient(RagiumCommonTags.Items.ORES_DEEP_SCRAP)
+                setExp(2f)
                 save(output)
             }
 
@@ -150,7 +153,7 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
         HTCookingRecipeBuilder
             .blasting(Items.BLACKSTONE)
             .addIngredient(RagiumBlocks.SOOTY_COBBLESTONE)
-            .setTime(400)
+            .setExp(0.1f)
             .save(output)
 
         alloyFromData(RagiumMaterialRecipeData.NIGHT_METAL)
@@ -331,6 +334,27 @@ object RagiumMaterialRecipeProvider : HTRecipeProvider.Direct() {
                 .addIngredient(fluidCreator.fromHolder(RagiumFluidContents.ELDRITCH_FLUX, 500))
                 .setResult(resultHelper.item(CommonMaterialPrefixes.SCRAP, key, 4))
                 .saveSuffixed(output, "_from_ore")
+        }
+    }
+
+    @JvmStatic
+    private fun smelting() {
+        mapOf(
+            Items.COPPER_INGOT to VanillaMaterialKeys.COPPER,
+            Items.IRON_INGOT to VanillaMaterialKeys.IRON,
+            Items.GOLD_INGOT to VanillaMaterialKeys.GOLD,
+            Items.LAPIS_LAZULI to VanillaMaterialKeys.LAPIS,
+            Items.AMETHYST_SHARD to VanillaMaterialKeys.AMETHYST,
+            Items.ECHO_SHARD to VanillaMaterialKeys.ECHO,
+            RagiumItems.getGem(RagiumMaterialKeys.AZURE) to RagiumMaterialKeys.AZURE,
+        ).forEach { (result: ItemLike, key: HTMaterialKey) ->
+            val dust: ItemLike = RagiumItems.getDust(key)
+            HTCookingRecipeBuilder
+                .smeltingAndBlasting(result) {
+                    addIngredient(dust)
+                    setExp(0.5f)
+                    saveSuffixed(output, "_from_dust")
+                }
         }
     }
 

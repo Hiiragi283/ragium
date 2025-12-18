@@ -15,15 +15,14 @@ import kotlin.math.max
 class HTCookingRecipeBuilder(
     prefix: String,
     private val factory: AbstractCookingRecipe.Factory<*>,
-    private val timeOperator: IntUnaryOperator,
     stack: ImmutableItemStack,
+    private val timeOperator: IntUnaryOperator = IntUnaryOperator.identity(),
 ) : HTStackRecipeBuilder.Single<HTCookingRecipeBuilder>(prefix, stack) {
     companion object {
         @JvmStatic
         fun smelting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder = HTCookingRecipeBuilder(
             "smelting",
             ::SmeltingRecipe,
-            IntUnaryOperator.identity(),
             ImmutableItemStack.of(item, count),
         )
 
@@ -31,7 +30,6 @@ class HTCookingRecipeBuilder(
         fun blasting(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder = HTCookingRecipeBuilder(
             "blasting",
             ::BlastingRecipe,
-            { it / 2 },
             ImmutableItemStack.of(item, count),
         )
 
@@ -39,20 +37,19 @@ class HTCookingRecipeBuilder(
         fun smoking(item: ItemLike, count: Int = 1): HTCookingRecipeBuilder = HTCookingRecipeBuilder(
             "smoking",
             ::SmokingRecipe,
-            { it / 2 },
             ImmutableItemStack.of(item, count),
         )
 
         @JvmStatic
         fun smeltingAndBlasting(item: ItemLike, count: Int = 1, builderAction: HTCookingRecipeBuilder.() -> Unit) {
             smelting(item, count).apply(builderAction)
-            blasting(item, count).apply(builderAction)
+            HTCookingRecipeBuilder("blasting", ::BlastingRecipe, ImmutableItemStack.of(item, count)) { it / 2 }.apply(builderAction)
         }
 
         @JvmStatic
         fun smeltingAndSmoking(item: ItemLike, count: Int = 1, builderAction: HTCookingRecipeBuilder.() -> Unit) {
             smelting(item, count).apply(builderAction)
-            smoking(item, count).apply(builderAction)
+            HTCookingRecipeBuilder("smoking", ::SmokingRecipe, ImmutableItemStack.of(item, count)) { it / 2 }.apply(builderAction)
         }
     }
 
