@@ -29,7 +29,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         }
 
         // Block
-
+        add(RagiumBlocks.BATTERY, "可変バッテリー")
+        add(RagiumBlocks.CRATE, "可変クレート")
         add(RagiumBlocks.TANK, "可変タンク")
 
         // Fluid
@@ -69,6 +70,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumTranslation.BUFFER, "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。")
         add(RagiumTranslation.UNIVERSAL_CHEST, "色ごとに中身を共有するチェストです。")
 
+        add(RagiumTranslation.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
+        add(RagiumTranslation.TRADER_CATALOG, "行商人からドロップします。右クリックで行商人との取引を行えます。")
+        
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")

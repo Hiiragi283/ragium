@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragi_alloy"
+    },
+    "B": {
+      "tag": "c:plates/rubber"
+    },
+    "C": {
+      "tag": "c:glass_blocks"
+    },
+    "D": {
+      "tag": "c:gems/ragi_crystal"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:battery"
+  }
+}

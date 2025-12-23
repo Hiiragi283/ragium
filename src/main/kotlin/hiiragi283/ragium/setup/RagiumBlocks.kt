@@ -10,7 +10,11 @@ import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.common.registry.HTSimpleDeferredBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.block.storage.HTBatteryBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
+import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
+import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.material.RagiumMaterial
 import net.minecraft.world.level.block.Block
@@ -55,6 +59,22 @@ object RagiumBlocks {
     }.let(::HTMaterialTable)
 
     //    Storages    //
+
+    @JvmField
+    val BATTERY: HTDeferredBlock<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
+        "battery",
+        machine().noOcclusion(),
+        ::HTBatteryBlock,
+        ::HTBatteryBlockItem,
+    )
+
+    @JvmField
+    val CRATE: HTDeferredBlock<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
+        "crate",
+        machine().noOcclusion(),
+        ::HTCrateBlock,
+        ::HTCrateBlockItem,
+    )
 
     @JvmField
     val TANK: HTDeferredBlock<HTTankBlock, HTTankBlockItem> = REGISTER.register(

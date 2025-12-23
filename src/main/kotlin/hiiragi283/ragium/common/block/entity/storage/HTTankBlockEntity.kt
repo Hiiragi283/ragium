@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.block.entity.HTUpgradableBlockEntity
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -38,7 +39,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         tank = builder.addSlot(HTSlotInfo.BOTH, TankFluidTank(listener))
     }
 
-    protected fun getCapacity(): Int = HTUpgradeHelper.getFluidCapacity(this, 8000) // TODO
+    protected fun getCapacity(): Int = HTUpgradeHelper.getFluidCapacity(this, RagiumConfig.COMMON.tankCapacity.asInt)
 
     lateinit var slot: HTBasicItemSlot
         private set

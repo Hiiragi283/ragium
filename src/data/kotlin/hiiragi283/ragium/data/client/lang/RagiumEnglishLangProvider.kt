@@ -32,7 +32,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         }
 
         // Block
-
+        add(RagiumBlocks.BATTERY, "Variable Battery")
+        add(RagiumBlocks.CRATE, "Variable Crate")
         add(RagiumBlocks.TANK, "Variable Tank")
 
         // Fluid
@@ -70,6 +71,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumTranslation.TANK, "A fluid storage which capacity is extendable by upgrade.")
         add(RagiumTranslation.BUFFER, "A combined storage with 9 slots, 3 tanks, and 1 battery.")
         add(RagiumTranslation.UNIVERSAL_CHEST, "A chest which shares its containment with the same color.")
+
+        add(RagiumTranslation.SLOT_COVER, "Ignored by recipes when placed in machine slot.")
+        add(RagiumTranslation.TRADER_CATALOG, "Dropped from Wandering Trader. Right-click to trade with merchant.")
 
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")

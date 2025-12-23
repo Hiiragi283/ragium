@@ -1,0 +1,5 @@
+{
+  "type": "ragium:clear_component",
+  "ingredient": "ragium:crate",
+  "targets": "hiiragi_core:item"
+}

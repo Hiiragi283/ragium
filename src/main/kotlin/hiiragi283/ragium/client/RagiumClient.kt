@@ -15,8 +15,11 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
+import net.neoforged.neoforge.client.gui.ConfigurationScreen
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
 import org.slf4j.Logger
+import thedarkcolour.kotlinforforge.neoforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 import java.awt.Color
 
@@ -30,6 +33,11 @@ object RagiumClient {
 
         eventBus.addListener(::registerItemColors)
         eventBus.addListener(::registerClientExtensions)
+
+        LOADING_CONTEXT.activeContainer.registerExtensionPoint(
+            IConfigScreenFactory::class.java,
+            IConfigScreenFactory(::ConfigurationScreen),
+        )
 
         LOGGER.info("Hiiragi-Core loaded on client side!")
     }

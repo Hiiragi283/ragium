@@ -11,6 +11,8 @@ import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -44,6 +46,12 @@ object RagiumBlockEntityTypes {
     //    Storage    //
 
     @JvmField
+    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity> = registerTick("battery", ::HTBatteryBlockEntity)
+
+    @JvmField
+    val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> = registerTick("crate", ::HTCrateBlockEntity)
+
+    @JvmField
     val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = registerTick("tank", ::HTTankBlockEntity)
 
     //    Event    //
@@ -64,6 +72,8 @@ object RagiumBlockEntityTypes {
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         // Storage
+        registerHandler(event, BATTERY.get())
+        registerHandler(event, CRATE.get())
         registerHandler(event, TANK.get())
 
         LOGGER.info("Registered Block Capabilities!")

@@ -7,12 +7,19 @@ import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTStonecuttingRecipeBuilder
 import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.registry.HTDeferredBlock
+import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.item.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.component.DataComponentType
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
 import net.neoforged.neoforge.common.Tags
@@ -35,6 +42,33 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             .addIngredient(HCMaterialPrefixes.GEM, HCMaterial.Gems.EMERALD)
             .setCategory(CraftingBookCategory.EQUIPMENT)
             .save(output)
+
+        storages()
+    }
+
+    @JvmStatic
+    private fun storages() {
+        // Battery, Crate, Tank
+        val ragiCrystal: TagKey<Item> = HCMaterialPrefixes.GEM.itemTagKey(RagiumMaterial.RAGI_CRYSTAL)
+        listOf(
+            Triple(RagiumBlocks.BATTERY, ragiCrystal, HCDataComponents.ENERGY),
+            Triple(RagiumBlocks.CRATE, Tags.Items.CHESTS, HCDataComponents.ITEM),
+            Triple(RagiumBlocks.TANK, Tags.Items.BUCKETS_EMPTY, HCDataComponents.FLUID),
+        ).forEach { (block: HTDeferredBlock<*, *>, core: TagKey<Item>, component: DataComponentType<*>) ->
+            HTShapedRecipeBuilder
+                .create(block)
+                .crossLayered()
+                .define('A', HCMaterialPrefixes.INGOT, RagiumMaterial.RAGI_ALLOY)
+                .define('B', HCMaterialPrefixes.PLATE, HCMaterial.Plates.RUBBER)
+                .define('C', Tags.Items.GLASS_BLOCKS)
+                .define('D', core)
+                .save(output)
+
+            save(
+                block.getId().withPrefix("shapeless/clear/"),
+                HTClearComponentRecipe("", CraftingBookCategory.MISC, block, listOf(component)),
+            )
+        }
     }
 
     @JvmStatic

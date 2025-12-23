@@ -11,7 +11,7 @@ import net.minecraft.world.level.ItemLike
 
 object RagiumEmiRecipeCategories {
     @JvmField
-    val MACHINE_BOUNDS = HTBounds(0, 0, 8 * 18, 3 * 18)
+    val MACHINE_BOUNDS = HTBounds(0, 0, 7 * 18, 3 * 18)
 
     @JvmStatic
     private fun create(hasText: HTHasText, id: ResourceLocation, vararg workStations: ItemLike): HTEmiRecipeCategory =
