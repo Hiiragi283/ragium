@@ -27,4 +27,4 @@ run-data
 repo
 sources
 
-generated
+.cache

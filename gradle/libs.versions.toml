@@ -21,7 +21,7 @@ delight = "1.21.1-1.2.9"
 emi = "1.1.22+1.21.1"
 ender-io = "8.0.6-alpha"
 fusion = "1.2.11b-neoforge-mc1.21"
-hiiragi-core = "0.2.1"
+hiiragi-core = "0.2.2-SNAPSHOT"
 #hostile = "1.21.1-6.3.0"
 immersive = "1.21.1-12.4.2-194"
 jade = "15.10.3+neoforge"
@@ -87,38 +87,19 @@ registrate = { group = "com.tterrag.registrate", name = "Registrate", version.re
 [bundles]
 
 mods-impl = [
-    "ae2",
     "almost",
-    "delight",
     "emi",
     "hiiragi-core",
-    "immersive",
     "jade",
-    "kc",
-    "pneuma",
-    "replica",
-    # non-direct dependencies
-    "arch",
-    "guide",
-    "owo",
-    "placebo",
-    # create dependencies
-    "flywheel",
-    "registrate",
 ]
 
-mods-transitive = [
-    "aa",
-    "accessories",
-    "create",
-    "create-ench",
-    "create-dragon",
-]
+mods-transitive = []
 
-mods-compile = []
+mods-compile = [
+    
+]
 
 mods-runtime = [
-    "curious",
     "fusion",
 ]
 

@@ -16,7 +16,6 @@ group = "hiiragi283.ragium"
 base.archivesName = modId
 
 val apiModule: SourceSet = sourceSets.create("api")
-val integrationModule: SourceSet = sourceSets.create("integration")
 val dataModule: SourceSet = sourceSets.create("data")
 
 sourceSets {
@@ -27,19 +26,12 @@ sourceSets {
             srcDir("src/generated/resources")
         }
     }
-    getByName("integration") {
+    getByName("data") {
         val main: SourceSet by main
         compileClasspath += main.compileClasspath
         compileClasspath += main.output
         runtimeClasspath += main.runtimeClasspath
         runtimeClasspath += main.output
-    }
-    getByName("data") {
-        val integration: SourceSet = integrationModule
-        compileClasspath += integration.compileClasspath
-        compileClasspath += integration.output
-        runtimeClasspath += integration.runtimeClasspath
-        runtimeClasspath += integration.output
     }
 }
 
@@ -51,8 +43,7 @@ configurations.apply {
     runtimeClasspath.get().extendsFrom(create("localRuntime"))
 
     getByName("apiCompileClasspath").extendsFrom(getByName("compileClasspath"))
-    getByName("compileClasspath").extendsFrom(getByName("integrationCompileClasspath"))
-    getByName("integrationCompileClasspath").extendsFrom(getByName("dataCompileClasspath"))
+    getByName("compileClasspath").extendsFrom(getByName("dataCompileClasspath"))
 }
 
 repositories {
@@ -160,6 +151,7 @@ neoForge {
                 file("src/main/resources").absolutePath,
                 "--existing-mod",
                 "farmersdelight",
+                "hiiragi_core",
             )
         }
 
@@ -186,7 +178,6 @@ neoForge {
         create(modId) {
             sourceSet(sourceSets.main.get())
             sourceSet(apiModule)
-            sourceSet(integrationModule)
             sourceSet(dataModule)
         }
     }
@@ -222,21 +213,7 @@ dependencies {
     compileOnly(libs.bundles.mods.compile)
     runtimeOnly(libs.bundles.mods.runtime)
 
-    implementation(libs.immersive.get().toString() + ":datagen")
     implementation(libs.mek.get().toString() + ":all")
-
-    listOf(
-        "endercore",
-        "enderio-base",
-        "enderio-machines",
-    ).forEach { name: String ->
-        implementation("com.enderio:$name:${libs.versions.ender.io.get()}")
-    }
-
-    implementation(libs.oritech) {
-        exclude(group = "curse.maven")
-        exclude(group = "io.wispforest")
-    }
 
     implementation(libs.enchdesc) {
         exclude(group = "mezz.jei")
@@ -245,7 +222,7 @@ dependencies {
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
-val generateModMetadata = tasks.register("generateModMetadata", ProcessResources::class.java) {
+val generateModMetadata: TaskProvider<ProcessResources> = tasks.register("generateModMetadata", ProcessResources::class.java) {
     val mcVersion: String = libs.versions.minecraft.get()
     val neoVersion: String = libs.versions.neo.version
         .get()
@@ -318,7 +295,6 @@ tasks {
             rename { "${it}_ragium" }
         }
         from(apiModule.output)
-        from(integrationModule.output)
         from(dataModule.output)
         exclude("**/ragium/data/**")
         exclude("**/unused/**")

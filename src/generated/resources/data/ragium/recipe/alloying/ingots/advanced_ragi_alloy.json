@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    [
+      "#c:dusts/ragi_alloy",
+      "#c:ingots/ragi_alloy"
+    ],
+    {
+      "amount": 2,
+      "items": "#c:dusts/glowstone"
+    }
+  ],
+  "result": {
+    "id": "ragium:advanced_ragi_alloy_ingot",
+    "tag": "c:ingots/advanced_ragi_alloy"
+  }
+}
