@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "hiiragi283.ragium.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [],
+  "mixins": [
+    "ItemMixin",
+    "ItemStackMixin",
+    "RecipeManagerAccessor",
+    "ReloadableServerResourcesMixin"
+  ],
+  "minVersion": "0.8"
+}

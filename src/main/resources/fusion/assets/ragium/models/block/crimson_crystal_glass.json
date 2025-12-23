@@ -1,0 +1,12 @@
+{
+  "loader": "fusion:model",
+  "type": "connecting",
+  "render_type": "cutout",
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "ragium:block/crimson_crystal_glass"
+  },
+  "connections": {
+    "type": "is_same_block"
+  }
+}
