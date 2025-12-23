@@ -1,14 +1,14 @@
 package hiiragi283.ragium.common.material
 
-import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.data.lang.HTLanguageType
 import hiiragi283.core.api.data.texture.HTColorPalette
 import hiiragi283.core.api.material.HTAbstractMaterial
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
+import hiiragi283.core.api.material.prefix.HTPrefixTemplateMap
+import hiiragi283.core.common.data.texture.HCMaterialPrefixMaps
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.common.data.texture.RagiumMaterialPalette
-import net.minecraft.resources.ResourceLocation
 
 /**
  * @see hiiragi283.core.common.material.HCMaterial
@@ -19,7 +19,7 @@ enum class RagiumMaterial(private val usName: String, private val jpName: String
     RAGINITE("Raginite", "ラギナイト", RagiumMaterialPalette.RAGINITE),
 
     // Gem
-    RAGI_CRYSTAL("Ragi-Crystal", "ラギクリスタル", RagiumMaterialPalette.RAGI_CRYSTAL),
+    RAGI_CRYSTAL("Ragi-Crystal", "ラギクリスタル", RagiumMaterialPalette.RAGINITE),
 
     // Alloy
     RAGI_ALLOY("Ragi-Alloy", "ラギ合金", RagiumMaterialPalette.RAGINITE),
@@ -48,17 +48,11 @@ enum class RagiumMaterial(private val usName: String, private val jpName: String
         )
     }
 
-    override fun getTemplateId(prefix: HTMaterialPrefix): ResourceLocation? {
-        val name: String = when (prefix) {
-            HCMaterialPrefixes.STORAGE_BLOCK -> "block_${basePrefix.name}"
-            HCMaterialPrefixes.DUST -> when (this) {
-                RAGINITE -> "dust_dull"
-                else -> prefix.name
-            }
-            HCMaterialPrefixes.GEM -> null
-            else -> prefix.name
-        } ?: return null
-        return HiiragiCoreAPI.id("template", name)
+    override fun getItemPrefixMap(): HTPrefixTemplateMap = when (this) {
+        RAGINITE -> HCMaterialPrefixMaps.DUST_DULL
+        RAGI_CRYSTAL -> HCMaterialPrefixMaps.GEM_DIAMOND
+        RAGI_ALLOY -> HCMaterialPrefixMaps.METAL
+        ADVANCED_RAGI_ALLOY -> HCMaterialPrefixMaps.METAL
     }
 
     override fun asMaterialKey(): HTMaterialKey = HTMaterialKey.of(this.name.lowercase())

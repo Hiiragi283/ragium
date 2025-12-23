@@ -19,24 +19,12 @@ object RagiumMaterialPalette {
     @JvmStatic
     val ADVANCED_RAGI_ALLOY: HTColorPalette = HTColorPalette(
         arrayOf(
-            Color(0xfff0aa),
-            Color(0xffbd55),
-            Color(0xff6600),
-            Color(0xbf2400),
-            Color(0x800004),
-            Color(0x40000f),
-        ),
-    )
-
-    @JvmStatic
-    val RAGI_CRYSTAL: HTColorPalette = HTColorPalette(
-        arrayOf(
-            Color(0xffd4b9),
-            Color(0xff8b72),
-            Color(0xff2c34),
-            Color(0xe5003a),
-            Color(0x990047),
-            Color(0x4c0034),
+            Color(0xffefaa),
+            Color(0xffcd55),
+            Color(0xff9900),
+            Color(0xbf5e00),
+            Color(0x803100),
+            Color(0x401200),
         ),
     )
 }
