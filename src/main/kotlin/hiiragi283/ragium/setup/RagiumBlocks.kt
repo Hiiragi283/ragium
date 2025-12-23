@@ -6,9 +6,12 @@ import hiiragi283.core.api.material.HTMaterialTable
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.common.registry.HTSimpleDeferredBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.block.storage.HTTankBlock
+import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.material.RagiumMaterial
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
@@ -51,8 +54,26 @@ object RagiumBlocks {
         }
     }.let(::HTMaterialTable)
 
+    //    Storages    //
+
+    @JvmField
+    val TANK: HTDeferredBlock<HTTankBlock, HTTankBlockItem> = REGISTER.register(
+        "tank",
+        machine().noOcclusion(),
+        ::HTTankBlock,
+        ::HTTankBlockItem,
+    )
+
     //    Extensions    //
 
     @JvmStatic
     private fun copyOf(block: Block): BlockBehaviour.Properties = BlockBehaviour.Properties.ofFullCopy(block)
+
+    @JvmStatic
+    fun machine(): BlockBehaviour.Properties = BlockBehaviour.Properties
+        .of()
+        .mapColor(MapColor.COLOR_BLACK)
+        .requiresCorrectToolForDrops()
+        .sound(SoundType.COPPER)
+        .strength(3.5f, 16f)
 }

@@ -13,7 +13,7 @@ import java.util.function.BiConsumer
 
 class RagiumTextureProvider(context: HTDataGenContext) : HTTextureProvider(context) {
     override fun gather(output: BiConsumer<ResourceLocation, NativeImage>) {
-        material(output, RagiumAPI.MOD_ID, "block", RagiumMaterial.entries) { RagiumBlocks.MATERIALS.column(it).keys }
+        material(output, RagiumAPI.MOD_ID, HTConst.BLOCK, RagiumMaterial.entries) { RagiumBlocks.MATERIALS.column(it).keys }
         material(output, RagiumAPI.MOD_ID, HTConst.ITEM, RagiumMaterial.entries) { RagiumItems.MATERIALS.column(it).keys }
     }
 }

@@ -1,0 +1,81 @@
+package hiiragi283.ragium.setup
+
+import com.mojang.logging.LogUtils
+import hiiragi283.core.api.capability.HTEnergyCapabilities
+import hiiragi283.core.api.capability.HTFluidCapabilities
+import hiiragi283.core.api.capability.HTItemCapabilities
+import hiiragi283.core.api.storage.HTHandlerProvider
+import hiiragi283.core.common.block.HTBlockWithEntity
+import hiiragi283.core.common.block.entity.HTBlockEntity
+import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import hiiragi283.core.common.registry.HTDeferredOnlyBlock
+import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
+import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.neoforged.bus.api.IEventBus
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
+import org.slf4j.Logger
+
+object RagiumBlockEntityTypes {
+    @JvmField
+    val LOGGER: Logger = LogUtils.getLogger()
+
+    @JvmField
+    val REGISTER = HTDeferredBlockEntityTypeRegister(RagiumAPI.MOD_ID)
+
+    @JvmStatic
+    fun register(eventBus: IEventBus) {
+        eventBus.addListener(::addSupportedBlocks)
+        eventBus.addListener(::registerBlockCapabilities)
+
+        REGISTER.register(eventBus)
+    }
+
+    @JvmStatic
+    private fun <BE : HTBlockEntity> registerTick(
+        name: String,
+        factory: BlockEntityType.BlockEntitySupplier<BE>,
+    ): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickClient, HTBlockEntity::tickServer)
+
+    //    Storage    //
+
+    @JvmField
+    val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = registerTick("tank", ::HTTankBlockEntity)
+
+    //    Event    //
+
+    // Supported Blocks
+    @JvmStatic
+    private fun addSupportedBlocks(event: BlockEntityTypeAddBlocksEvent) {
+        for (holder: HTDeferredOnlyBlock<*> in RagiumBlocks.REGISTER.asBlockSequence()) {
+            val block: Block = holder.get()
+            if (block is HTBlockWithEntity) {
+                event.modify(block.getBlockEntityType().get(), block)
+            }
+        }
+        LOGGER.info("Added supported blocks to BlockEntityType!")
+    }
+
+    // Capabilities
+    @JvmStatic
+    private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
+        // Storage
+        registerHandler(event, TANK.get())
+
+        LOGGER.info("Registered Block Capabilities!")
+    }
+
+    @JvmStatic
+    private fun <BE> registerHandler(
+        event: RegisterCapabilitiesEvent,
+        type: BlockEntityType<BE>,
+    ) where BE : BlockEntity, BE : HTHandlerProvider {
+        event.registerBlockEntity(HTItemCapabilities.block, type, HTHandlerProvider::getItemHandler)
+        event.registerBlockEntity(HTFluidCapabilities.block, type, HTHandlerProvider::getFluidHandler)
+        event.registerBlockEntity(HTEnergyCapabilities.block, type, HTHandlerProvider::getEnergyStorage)
+    }
+}

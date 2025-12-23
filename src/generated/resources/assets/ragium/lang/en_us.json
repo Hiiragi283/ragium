@@ -14,7 +14,13 @@
   "block.ragium.ragi_crystal_block": "Block of Ragi-Crystal",
   "block.ragium.raginite_block": "Block of Raginite",
   "block.ragium.slime": "Slime",
+  "block.ragium.tank": "Variable Tank",
   "constants.ragium.mod_name": "Ragium",
+  "description.ragium.battery": "A energy storage which capacity is extendable by upgrade.",
+  "description.ragium.buffer": "A combined storage with 9 slots, 3 tanks, and 1 battery.",
+  "description.ragium.crate": "A item storage which capacity is extendable by upgrade.",
+  "description.ragium.tank": "A fluid storage which capacity is extendable by upgrade.",
+  "description.ragium.universal_chest": "A chest which shares its containment with the same color.",
   "item.ragium.advanced_ragi_alloy_dust": "Advanced Ragi-Alloy Dust",
   "item.ragium.advanced_ragi_alloy_gear": "Advanced Ragi-Alloy Gear",
   "item.ragium.advanced_ragi_alloy_ingot": "Advanced Ragi-Alloy Ingot",
@@ -64,5 +70,9 @@
   "tag.fluid.c.gelled_explosive": "Gelled Explosive",
   "tag.fluid.c.lubricant": "Lubricant",
   "tag.fluid.c.naphtha": "Naphtha",
-  "tag.fluid.c.slime": "Slime"
+  "tag.fluid.c.slime": "Slime",
+  "tooltip.ragium.blast_power": "Power: %1$s",
+  "tooltip.ragium.block_pos": "Position: [%1$s, %2$s, %3$s]",
+  "tooltip.ragium.dimension": "Dimension: %1$s",
+  "tooltip.ragium.loot_table_id": "Loot Table: %1$s"
 }

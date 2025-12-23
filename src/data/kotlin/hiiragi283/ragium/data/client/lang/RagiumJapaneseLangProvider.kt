@@ -28,6 +28,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
             }
         }
 
+        // Block
+
+        add(RagiumBlocks.TANK, "可変タンク")
+
         // Fluid
         addFluid(RagiumFluids.SLIME, "スライム")
         addFluid(RagiumFluids.GELLED_EXPLOSIVE, "ゲル状爆薬")
@@ -58,5 +62,16 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")
+
+        add(RagiumTranslation.BATTERY, "アップグレードで容量を拡張可能なエネルギーストレージです。")
+        add(RagiumTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")
+        add(RagiumTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
+        add(RagiumTranslation.BUFFER, "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。")
+        add(RagiumTranslation.UNIVERSAL_CHEST, "色ごとに中身を共有するチェストです。")
+
+        add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
+        add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
+        add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
+        add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
     }
 }

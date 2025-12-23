@@ -1,0 +1,12 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    "#c:raw_materials/rubber",
+    "#c:dusts/sulfur"
+  ],
+  "result": {
+    "count": 2,
+    "id": "hiiragi_core:rubber_plate",
+    "tag": "c:plates/rubber"
+  }
+}

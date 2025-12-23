@@ -7,6 +7,19 @@ import net.minecraft.Util
 enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation {
     // Constants
     RAGIUM("constants", "mod_name"),
+
+    // Blocks - Storages
+    BATTERY("description", "battery"),
+    CRATE("description", "crate"),
+    TANK("description", "tank"),
+    BUFFER("description", "buffer"),
+    UNIVERSAL_CHEST("description", "universal_chest"),
+
+    // Tooltips
+    TOOLTIP_BLOCK_POS("tooltip", "block_pos"),
+    TOOLTIP_CHARGE_POWER("tooltip", "blast_power"),
+    TOOLTIP_DIMENSION("tooltip", "dimension"),
+    TOOLTIP_LOOT_TABLE_ID("tooltip", "loot_table_id"),
     ;
 
     override val translationKey: String = Util.makeDescriptionId(type, RagiumAPI.id(path.joinToString(separator = ".")))

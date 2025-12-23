@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.client.model
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTBlockStateProvider
 import hiiragi283.core.api.material.HTMaterialKey
@@ -14,12 +15,16 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
     override fun registerStatesAndModels() {
         registerMaterials()
 
+        // Storages
+        altModelBlock(RagiumBlocks.TANK)
+
+        // Fluid
         RagiumFluids.REGISTER.entries.forEach(::liquidBlock)
     }
 
     private fun registerMaterials() {
         RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, material: HTMaterialKey, block: HTSimpleDeferredBlock) ->
-            val textureId: ResourceLocation = RagiumAPI.id("block", prefix.name, material.name)
+            val textureId: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix.name, material.name)
             existTexture(block, textureId, ::altTextureBlock)
         }
     }

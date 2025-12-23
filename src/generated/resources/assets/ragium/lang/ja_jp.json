@@ -14,7 +14,13 @@
   "block.ragium.ragi_crystal_block": "ラギクリスタルブロック",
   "block.ragium.raginite_block": "ラギナイトブロック",
   "block.ragium.slime": "スライム",
+  "block.ragium.tank": "可変タンク",
   "constants.ragium.mod_name": "ラギウム",
+  "description.ragium.battery": "アップグレードで容量を拡張可能なエネルギーストレージです。",
+  "description.ragium.buffer": "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。",
+  "description.ragium.crate": "アップグレードで容量を拡張可能なアイテムストレージです。",
+  "description.ragium.tank": "アップグレードで容量を拡張可能な液体ストレージです。",
+  "description.ragium.universal_chest": "色ごとに中身を共有するチェストです。",
   "item.ragium.advanced_ragi_alloy_dust": "発展ラギ合金の粉",
   "item.ragium.advanced_ragi_alloy_gear": "発展ラギ合金の歯車",
   "item.ragium.advanced_ragi_alloy_ingot": "発展ラギ合金インゴット",
@@ -64,5 +70,9 @@
   "tag.fluid.c.gelled_explosive": "ゲル状爆薬",
   "tag.fluid.c.lubricant": "潤滑油",
   "tag.fluid.c.naphtha": "ナフサ",
-  "tag.fluid.c.slime": "スライム"
+  "tag.fluid.c.slime": "スライム",
+  "tooltip.ragium.blast_power": "威力: %1$s",
+  "tooltip.ragium.block_pos": "座標: [%1$s, %2$s, %3$s]",
+  "tooltip.ragium.dimension": "次元: %1$s",
+  "tooltip.ragium.loot_table_id": "ルートテーブル: %1$s"
 }

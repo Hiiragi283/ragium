@@ -4,9 +4,13 @@ import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.util.HTItemDropHelper
+import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
+import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
@@ -18,6 +22,7 @@ import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.LootTable
@@ -60,6 +65,21 @@ class HTLootTicketItem(properties: Properties) :
             )
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
+    }
+
+    override fun appendHoverText(
+        stack: ItemStack,
+        context: TooltipContext,
+        tooltips: MutableList<Component>,
+        flag: TooltipFlag,
+    ) {
+        super.appendHoverText(stack, context, tooltips, flag)
+        val keys: List<ResourceKey<LootTable>> = stack.get(RagiumDataComponents.LOOT_TICKET)?.lootTables ?: return
+        keys
+            .map(ResourceKey<LootTable>::location)
+            .map(ResourceLocation::toString)
+            .map { RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.translateColored(ChatFormatting.YELLOW, ChatFormatting.WHITE, it) }
+            .forEach(tooltips::add)
     }
 
     override fun addItems(baseItem: HTItemHolderLike<*>, parameters: CreativeModeTab.ItemDisplayParameters, consumer: Consumer<ItemStack>) {
