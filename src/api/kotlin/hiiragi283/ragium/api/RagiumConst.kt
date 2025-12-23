@@ -1,6 +1,10 @@
 package hiiragi283.ragium.api
 
 object RagiumConst {
+    //    NBT    //
+
+    const val SLOT_INFO = "slot_info"
+
     //    Recipes    //
 
     const val ALLOYING = "alloying"

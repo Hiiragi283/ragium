@@ -1,10 +1,8 @@
 package hiiragi283.ragium.common.storge.holder
 
 import com.mojang.logging.LogUtils
+import hiiragi283.core.api.collection.ImmutableMultiMap
 import hiiragi283.core.api.storage.holder.HTCapabilityHolder
-import hiiragi283.core.api.storage.holder.HTSlotInfo
-import hiiragi283.ragium.api.access.HTAccessConfig
-import hiiragi283.ragium.api.access.HTAccessConfigGetter
 import net.minecraft.core.Direction
 import org.slf4j.Logger
 import kotlin.collections.plusAssign
@@ -13,10 +11,9 @@ import kotlin.collections.plusAssign
  * @see mekanism.common.capabilities.holder.ConfigHolder
  */
 abstract class HTSlottedCapabilityHolder<SLOT : Any>(
-    configGetter: HTAccessConfigGetter?,
+    configGetter: HTSlotInfoProvider?,
     private val slots: List<SLOT>,
-    private val inputSlots: List<SLOT>,
-    private val outputSlots: List<SLOT>,
+    private val slotMap: ImmutableMultiMap<HTSlotInfo, SLOT>,
 ) : HTConfigCapabilityHolder(configGetter) {
     companion object {
         @JvmField
@@ -25,38 +22,33 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
 
     protected fun getSlots(side: Direction?): List<SLOT> = when {
         side == null || this.configGetter == null -> slots
-        else -> configGetter.getAccessConfig(side).let(::getSlots)
+        else -> configGetter.getSlotInfo(side).let(::getSlots)
     }
 
-    private fun getSlots(config: HTAccessConfig): List<SLOT> = when (config) {
-        HTAccessConfig.INPUT_ONLY -> inputSlots
-        HTAccessConfig.OUTPUT_ONLY -> outputSlots
-        HTAccessConfig.BOTH -> buildList {
-            addAll(inputSlots)
-            addAll(outputSlots)
-        }
-        HTAccessConfig.DISABLED -> listOf()
-    }
+    private fun getSlots(info: HTSlotInfo): List<SLOT> = slotMap[info].toList()
 
     abstract class Builder<SLOT : Any, HOLDER : HTCapabilityHolder>(
-        protected val configGetter: HTAccessConfigGetter?,
-        private val factory: (HTAccessConfigGetter?, List<SLOT>, List<SLOT>, List<SLOT>) -> HOLDER,
+        protected val configGetter: HTSlotInfoProvider?,
+        private val factory: (HTSlotInfoProvider?, List<SLOT>, ImmutableMultiMap<HTSlotInfo, SLOT>) -> HOLDER,
     ) {
         private var hasBuilt = false
         private val slots: MutableList<SLOT> = mutableListOf()
-        private val inputSlots: MutableList<SLOT> = mutableListOf()
-        private val outputSlots: MutableList<SLOT> = mutableListOf()
+        private val slotMap: ImmutableMultiMap.Builder<HTSlotInfo, SLOT> = ImmutableMultiMap.Builder()
 
-        fun <T : SLOT> addSlot(config: HTSlotInfo, slot: T): T {
+        fun <T : SLOT> addSlot(info: HTSlotInfo, slot: T): T {
             check(!hasBuilt) { "Builder has already built" }
             slots += slot
-            if (config == HTSlotInfo.INPUT || config == HTSlotInfo.BOTH) {
-                inputSlots += slot
+            when (info) {
+                HTSlotInfo.NONE -> return slot
+                HTSlotInfo.BOTH -> {
+                    slotMap.put(info, slot)
+                }
+                else -> {
+                    slotMap.put(info, slot)
+                    slotMap.put(HTSlotInfo.BOTH, slot)
+                }
             }
-            if (config == HTSlotInfo.OUTPUT || config == HTSlotInfo.BOTH) {
-                outputSlots += slot
-            }
-            LOGGER.debug("Added slot {} for config {}", slot, config)
+            LOGGER.debug("Added slot {} for config {}", slot, info)
             return slot
         }
 
@@ -64,7 +56,7 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
             hasBuilt = true
             return when {
                 slots.isEmpty() -> null
-                else -> factory(configGetter, slots, inputSlots, outputSlots)
+                else -> factory(configGetter, slots, slotMap.build())
             }
         }
     }

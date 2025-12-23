@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.serialization.codec.HTRecipeBiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
@@ -44,9 +45,12 @@ object RagiumRecipeSerializers {
             HTItemIngredient.CODEC
                 .listOf(2, 3)
                 .fieldOf(HTConst.INGREDIENT)
-                .forGetter(HTAlloyingRecipe::ingredients),
+                .forGetter { recipe: HTAlloyingRecipe ->
+                    listOfNotNull(recipe.firstIngredient, recipe.secondIngredient, recipe.thirdIngredient)
+                },
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAlloyingRecipe::result),
-            HTItemResult.CODEC.optionalFieldOf("extra").forGetter(HTAlloyingRecipe::extra),
+            HTRecipeBiCodecs.TIME.forGetter(HTAlloyingRecipe::time),
+            HTRecipeBiCodecs.EXP.forGetter(HTAlloyingRecipe::exp),
             ::HTAlloyingRecipe,
         ),
     )

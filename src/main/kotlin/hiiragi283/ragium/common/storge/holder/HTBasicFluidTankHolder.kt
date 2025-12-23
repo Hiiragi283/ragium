@@ -1,24 +1,23 @@
 package hiiragi283.ragium.common.storge.holder
 
+import hiiragi283.core.api.collection.ImmutableMultiMap
 import hiiragi283.core.api.storage.fluid.HTFluidTank
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
-import hiiragi283.ragium.api.access.HTAccessConfigGetter
 import net.minecraft.core.Direction
 
 class HTBasicFluidTankHolder private constructor(
-    configGetter: HTAccessConfigGetter?,
+    configGetter: HTSlotInfoProvider?,
     slots: List<HTFluidTank>,
-    inputSlots: List<HTFluidTank>,
-    outputSlots: List<HTFluidTank>,
-) : HTSlottedCapabilityHolder<HTFluidTank>(configGetter, slots, inputSlots, outputSlots),
+    slotMap: ImmutableMultiMap<HTSlotInfo, HTFluidTank>,
+) : HTSlottedCapabilityHolder<HTFluidTank>(configGetter, slots, slotMap),
     HTFluidTankHolder {
     companion object {
         @JvmStatic
-        fun builder(configGetter: HTAccessConfigGetter?): Builder = Builder(configGetter)
+        fun builder(configGetter: HTSlotInfoProvider?): Builder = Builder(configGetter)
     }
 
     override fun getFluidTank(side: Direction?): List<HTFluidTank> = getSlots(side)
 
-    class Builder(configGetter: HTAccessConfigGetter?) :
+    class Builder(configGetter: HTSlotInfoProvider?) :
         HTSlottedCapabilityHolder.Builder<HTFluidTank, HTFluidTankHolder>(configGetter, ::HTBasicFluidTankHolder)
 }
