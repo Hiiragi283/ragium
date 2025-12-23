@@ -6,13 +6,17 @@ import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTItemModelProvider
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
+import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.HTSimpleFluidContent
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
 import kotlin.collections.addAll
+import kotlin.collections.contains
 import kotlin.collections.forEach
 
 class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(RagiumAPI.MOD_ID, context) {
@@ -30,6 +34,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
 
         registerMaterials()
+        registerBuckets()
 
         existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { texId: ResourceLocation ->
             layeredItem(
@@ -50,6 +55,24 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             } else {
                 existTexture(item, textureId, ::layeredItem)
             }
+        }
+    }
+
+    private fun registerBuckets() {
+        val dripFluids: List<HTSimpleFluidContent> = buildList {
+            // Organic
+            add(RagiumFluids.SLIME)
+            add(RagiumFluids.GELLED_EXPLOSIVE)
+            add(RagiumFluids.CRUDE_BIO)
+            // Oil
+            add(RagiumFluids.CRUDE_OIL)
+            add(RagiumFluids.LUBRICANT)
+            // Misc
+            add(RagiumFluids.DESTABILIZED_RAGINITE)
+            add(RagiumFluids.CREOSOTE)
+        }
+        for (content: HTFluidContent<*, *, *> in RagiumFluids.REGISTER.entries) {
+            bucketItem(content, content in dripFluids)
         }
     }
 }

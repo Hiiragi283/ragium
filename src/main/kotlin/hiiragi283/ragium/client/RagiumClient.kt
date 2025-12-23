@@ -1,12 +1,20 @@
 package hiiragi283.ragium.client
 
 import com.mojang.logging.LogUtils
+import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.setup.RagiumFluids
+import net.minecraft.world.level.ItemLike
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
+import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
 import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
+import java.awt.Color
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 object RagiumClient {
@@ -16,6 +24,49 @@ object RagiumClient {
     init {
         val eventBus: IEventBus = MOD_BUS
 
+        eventBus.addListener(::registerItemColors)
+        eventBus.addListener(::registerClientExtensions)
+
         LOGGER.info("Hiiragi-Core loaded on client side!")
+    }
+
+    @JvmStatic
+    private fun registerItemColors(event: RegisterColorHandlersEvent.Item) {
+        val bucketColor = DynamicFluidContainerModel.Colors()
+        for (item: ItemLike in RagiumFluids.REGISTER.asItemSequence()) {
+            event.register(bucketColor, item)
+        }
+        LOGGER.info("Registered item colors!")
+    }
+
+    @JvmStatic
+    private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
+        event.dull(RagiumFluids.SLIME, Color(0x66cc66))
+        event.molten(RagiumFluids.GELLED_EXPLOSIVE, Color(0x339933))
+        event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
+        event.clear(RagiumFluids.BIOFUEL, Color(0x99cc00))
+
+        event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
+        event.dull(RagiumFluids.NAPHTHA, Color(0xff6633))
+        event.clear(RagiumFluids.FUEL, Color(0xcc3300))
+        event.dull(RagiumFluids.LUBRICANT, Color(0xff9900))
+        event.molten(RagiumFluids.DESTABILIZED_RAGINITE, Color(0xff0033))
+
+        event.clear(RagiumFluids.COOLANT, Color(0x009999))
+        event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
+    }
+
+    //    Extensions    //
+
+    private fun RegisterClientExtensionsEvent.clear(content: HTFluidContent<*, *, *>, color: Color) {
+        this.registerFluidType(HTSimpleFluidExtensions.clear(color), content.getFluidType())
+    }
+
+    private fun RegisterClientExtensionsEvent.dull(content: HTFluidContent<*, *, *>, color: Color) {
+        this.registerFluidType(HTSimpleFluidExtensions.dull(color), content.getFluidType())
+    }
+
+    private fun RegisterClientExtensionsEvent.molten(content: HTFluidContent<*, *, *>, color: Color) {
+        this.registerFluidType(HTSimpleFluidExtensions.molten(color), content.getFluidType())
     }
 }

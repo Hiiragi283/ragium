@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.data.PackOutput
@@ -29,6 +30,21 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
                 add(item, name)
             }
         }
+
+        // Fluid
+        addFluid(RagiumFluids.SLIME, "Slime")
+        addFluid(RagiumFluids.GELLED_EXPLOSIVE, "Gelled Explosive")
+        addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
+        addFluid(RagiumFluids.BIOFUEL, "Biofuel")
+
+        addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
+        addFluid(RagiumFluids.NAPHTHA, "Naphtha")
+        addFluid(RagiumFluids.FUEL, "Fuel")
+        addFluid(RagiumFluids.LUBRICANT, "Lubricant")
+
+        addFluid(RagiumFluids.DESTABILIZED_RAGINITE, "Destabilized Raginite")
+        addFluid(RagiumFluids.COOLANT, "Coolant")
+        addFluid(RagiumFluids.CREOSOTE, "Creosote")
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")

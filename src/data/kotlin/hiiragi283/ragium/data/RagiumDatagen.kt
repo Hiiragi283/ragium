@@ -10,6 +10,7 @@ import hiiragi283.ragium.data.client.model.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.model.RagiumItemModelProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
+import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumItemTagsProvider
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.world.level.block.Block
@@ -26,6 +27,7 @@ object RagiumDatagen {
         // Server
         server.addProvider(::RagiumRecipeProvider)
 
+        server.addProvider(::RagiumFluidTagsProvider)
         val blockTags: CompletableFuture<TagsProvider.TagLookup<Block>> =
             server.addProvider(::RagiumBlockTagsProvider).contentsGetter()
         server.addProvider(::RagiumItemTagsProvider.partially1(blockTags))

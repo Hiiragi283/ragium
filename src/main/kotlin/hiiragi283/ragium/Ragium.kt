@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
+import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -20,6 +22,9 @@ object Ragium {
     init {
         val eventBus: IEventBus = MOD_BUS
 
+        RagiumDataComponents.REGISTER.register(eventBus)
+
+        RagiumFluids.register(eventBus)
         RagiumBlocks.register(eventBus)
         RagiumItems.register(eventBus)
 

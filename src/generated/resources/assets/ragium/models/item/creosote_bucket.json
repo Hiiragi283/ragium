@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket_drip",
+  "fluid": "ragium:creosote",
+  "loader": "neoforge:fluid_container"
+}
