@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
+      "tag": "c:chests/wooden"
+    },
+    {
+      "item": "minecraft:kelp"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:loot_ticket": [
+        "minecraft:chests/shipwreck_map",
+        "minecraft:chests/shipwreck_supply",
+        "minecraft:chests/shipwreck_treasure"
+      ]
+    },
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

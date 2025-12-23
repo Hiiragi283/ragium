@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "tag": "c:gems/ragi_crystal"
+    },
+    "B": {
+      "tag": "c:dyes/red"
+    },
+    "C": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

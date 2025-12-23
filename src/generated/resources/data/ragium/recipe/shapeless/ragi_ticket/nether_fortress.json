@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
+      "item": "minecraft:nether_bricks"
+    },
+    {
+      "tag": "c:crops/nether_wart"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:loot_ticket": "minecraft:chests/nether_bridge"
+    },
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

@@ -5,6 +5,10 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumFluids
+import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.ItemLike
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
@@ -32,10 +36,22 @@ object RagiumClient {
 
     @JvmStatic
     private fun registerItemColors(event: RegisterColorHandlersEvent.Item) {
+        // Buckets
         val bucketColor = DynamicFluidContainerModel.Colors()
         for (item: ItemLike in RagiumFluids.REGISTER.asItemSequence()) {
             event.register(bucketColor, item)
         }
+        // Potion Drop
+        event.register(
+            { stack: ItemStack, tint: Int ->
+                if (tint == 0) {
+                    stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).color
+                } else {
+                    -1
+                }
+            },
+            RagiumItems.POTION_DROP,
+        )
         LOGGER.info("Registered item colors!")
     }
 

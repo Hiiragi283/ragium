@@ -43,6 +43,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
                 texId.withPrefix("item/"),
             )
         }
+        layeredItem(RagiumItems.POTION_DROP, vanillaId(HTConst.ITEM, "ghast_tear"))
     }
 
     private fun registerMaterials() {

@@ -50,6 +50,11 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.RAGIUM_POWDER, "Ragium Powder")
 
+        add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
+        add(RagiumItems.POTION_DROP, "Potion Drop")
+        add(RagiumItems.SLOT_COVER, "Slot Cover")
+        add(RagiumItems.TRADER_CATALOG, "Trader's Catalog")
+
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
 
