@@ -1,20 +1,34 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.core.api.data.HTDataGenContext
-import hiiragi283.core.api.data.tag.HTTagsProvider
+import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
+import java.util.concurrent.CompletableFuture
 
-class RagiumItemTagsProvider(context: HTDataGenContext) : HTTagsProvider<Item>(RagiumAPI.MOD_ID, Registries.ITEM, context) {
+class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
+    HTItemTagsProvider(RagiumAPI.MOD_ID, blockTags, context) {
     override fun addTagsInternal(factory: BuilderFactory<Item>) {
+        copyTags()
+
         material(factory)
+    }
+
+    //    Copy    //
+
+    private fun copyTags() {
+        // Material
+        RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, _) ->
+            copy(prefix, key)
+        }
     }
 
     //    Material    //

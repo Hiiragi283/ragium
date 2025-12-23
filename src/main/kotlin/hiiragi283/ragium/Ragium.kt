@@ -2,9 +2,11 @@ package hiiragi283.ragium
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumCreativeTabs
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import org.slf4j.Logger
@@ -18,10 +20,12 @@ object Ragium {
     init {
         val eventBus: IEventBus = MOD_BUS
 
+        RagiumBlocks.register(eventBus)
         RagiumItems.register(eventBus)
 
         RagiumCreativeTabs.REGISTER.register(eventBus)
         RagiumRecipeSerializers.REGISTER.register(eventBus)
+        RagiumRecipeTypes.REGISTER.register(eventBus)
 
         LOGGER.info("Ragium loaded!")
     }

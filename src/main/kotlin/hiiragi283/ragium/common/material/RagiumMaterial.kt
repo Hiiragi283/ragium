@@ -1,11 +1,10 @@
 package hiiragi283.ragium.common.material
 
 import hiiragi283.core.api.HiiragiCoreAPI
-import hiiragi283.core.api.data.lang.HTLangName
 import hiiragi283.core.api.data.lang.HTLanguageType
 import hiiragi283.core.api.data.texture.HTColorPalette
+import hiiragi283.core.api.material.HTAbstractMaterial
 import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.common.data.texture.RagiumMaterialPalette
@@ -14,9 +13,8 @@ import net.minecraft.resources.ResourceLocation
 /**
  * @see hiiragi283.core.common.material.HCMaterial
  */
-enum class RagiumMaterial(private val usName: String, private val jpName: String, val colorPalette: HTColorPalette) :
-    HTMaterialLike,
-    HTLangName {
+enum class RagiumMaterial(private val usName: String, private val jpName: String, override val colorPalette: HTColorPalette) :
+    HTAbstractMaterial {
     // Mineral
     RAGINITE("Raginite", "ラギナイト", RagiumMaterialPalette.RAGINITE),
 
@@ -28,14 +26,14 @@ enum class RagiumMaterial(private val usName: String, private val jpName: String
     ADVANCED_RAGI_ALLOY("Advanced Ragi-Alloy", "発展ラギ合金", RagiumMaterialPalette.ADVANCED_RAGI_ALLOY),
     ;
 
-    val basePrefix: HTMaterialPrefix
+    override val basePrefix: HTMaterialPrefix
         get() = when (this) {
             RAGINITE -> HCMaterialPrefixes.DUST
             RAGI_CRYSTAL -> HCMaterialPrefixes.GEM
             else -> HCMaterialPrefixes.INGOT
         }
 
-    fun getItemPrefixesToGenerate(): Set<HTMaterialPrefix> = when (this) {
+    override fun getItemPrefixesToGenerate(): Set<HTMaterialPrefix> = when (this) {
         RAGINITE -> setOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.TINY_DUST)
         RAGI_CRYSTAL -> setOf(HCMaterialPrefixes.GEM, HCMaterialPrefixes.DUST, HCMaterialPrefixes.TINY_DUST)
         else -> setOf(
@@ -50,7 +48,7 @@ enum class RagiumMaterial(private val usName: String, private val jpName: String
         )
     }
 
-    fun getTemplateId(prefix: HTMaterialPrefix): ResourceLocation? {
+    override fun getTemplateId(prefix: HTMaterialPrefix): ResourceLocation? {
         val name: String = when (prefix) {
             HCMaterialPrefixes.STORAGE_BLOCK -> "block_${basePrefix.name}"
             HCMaterialPrefixes.DUST -> when (this) {

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 10,
+  "experience": 0.1,
+  "ingredient": {
+    "item": "ragium:tiny_ragi_alloy_dust"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:ragi_alloy_nugget"
+  }
+}
