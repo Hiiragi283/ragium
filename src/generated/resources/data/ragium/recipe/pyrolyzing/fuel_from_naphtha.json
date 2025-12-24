@@ -1,0 +1,16 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:fuel",
+    "tag": "c:fuel"
+  },
+  "ingredient": {
+    "amount": 750,
+    "fluids": "#c:naphtha"
+  },
+  "item_result": {
+    "id": "hiiragi_core:sulfur_dust",
+    "tag": "c:dusts/sulfur"
+  }
+}

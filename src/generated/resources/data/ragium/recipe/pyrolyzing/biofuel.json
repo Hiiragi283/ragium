@@ -1,0 +1,12 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 750,
+    "id": "ragium:biofuel",
+    "tag": "c:biofuel"
+  },
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:crude_bio"
+  }
+}

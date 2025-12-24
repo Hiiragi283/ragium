@@ -68,6 +68,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.DRYING, "Drying")
         add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
 
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")

@@ -22,10 +22,16 @@ object RagiumConst {
     const val MELTING = "melting"
     const val MIXING = "mixing"
     const val PLANTING = "planting"
+    const val PYROLYZING = "pyrolyzing"
     const val REFINING = "refining"
     const val ROCK_GENERATING = "rock_generating"
     const val SIMULATING = "simulating"
     const val SIMULATING_BLOCK = "$SIMULATING/block"
     const val SIMULATING_ENTITY = "$SIMULATING/entity"
     const val SOLIDIFYING = "solidifying"
+
+    const val ITEM_INGREDIENT = "item_ingredient"
+    const val FLUID_INGREDIENT = "fluid_ingredient"
+    
+    const val EXTRA_RESULT = "extra_result"
 }

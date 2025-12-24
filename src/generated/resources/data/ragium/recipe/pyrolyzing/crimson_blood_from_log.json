@@ -1,0 +1,13 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "hiiragi_core:crimson_blood",
+    "tag": "c:crimson_blood"
+  },
+  "ingredient": {
+    "amount": 8,
+    "items": "#minecraft:crimson_stems"
+  },
+  "time": 600
+}

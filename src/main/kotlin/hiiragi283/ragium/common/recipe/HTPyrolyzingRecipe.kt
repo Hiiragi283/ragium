@@ -10,13 +10,13 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import org.apache.commons.lang3.math.Fraction
 
-class HTDryingRecipe(
+class HTPyrolyzingRecipe(
     ingredient: Either<HTItemIngredient, HTFluidIngredient>,
     result: HTComplexResult,
     time: Int,
     exp: Fraction,
 ) : HTComplexRecipe(ingredient, result, time, exp) {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.DRYING
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PYROLYZING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.DRYING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.PYROLYZING.get()
 }

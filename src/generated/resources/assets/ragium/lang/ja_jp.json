@@ -82,6 +82,7 @@
   "recipe_type.ragium.alloying": "合金",
   "recipe_type.ragium.drying": "乾燥",
   "recipe_type.ragium.melting": "溶融",
+  "recipe_type.ragium.pyrolyzing": "熱分解",
   "tag.fluid.c.biofuel": "バイオ燃料",
   "tag.fluid.c.coolant": "冷却液",
   "tag.fluid.c.creosote": "クレオソート",

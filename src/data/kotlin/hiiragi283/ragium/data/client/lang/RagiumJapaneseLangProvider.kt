@@ -66,6 +66,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.DRYING, "乾燥")
         add(RagiumRecipeTypes.MELTING, "溶融")
+        add(RagiumRecipeTypes.PYROLYZING, "熱分解")
 
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")

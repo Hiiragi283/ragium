@@ -16,11 +16,11 @@ class HTMachineBlock(private val translation: HTTranslation, type: HTDeferredBlo
         @JvmField
         val IS_ACTIVE: BooleanProperty = BooleanProperty.create("is_active")
     }
-    
+
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block?, BlockState?>) {
         super.createBlockStateDefinition(builder)
         builder.add(IS_ACTIVE)
     }
-    
+
     override fun getDescription(): HTTranslation = translation
 }

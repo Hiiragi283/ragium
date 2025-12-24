@@ -1,0 +1,13 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "hiiragi_core:dew_of_the_warp",
+    "tag": "c:dew_of_the_warp"
+  },
+  "ingredient": {
+    "amount": 8,
+    "items": "#minecraft:warped_stems"
+  },
+  "time": 600
+}
