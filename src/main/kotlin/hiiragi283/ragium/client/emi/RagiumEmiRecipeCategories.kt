@@ -4,6 +4,7 @@ import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.math.HTBounds
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.text.HTHasText
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
@@ -30,5 +31,5 @@ object RagiumEmiRecipeCategories {
     val DRYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.DRYING, Items.SCAFFOLDING)
 
     @JvmField
-    val MELTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.MELTING, Items.CAULDRON)
+    val MELTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 }

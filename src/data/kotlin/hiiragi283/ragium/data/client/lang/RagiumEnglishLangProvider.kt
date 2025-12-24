@@ -32,6 +32,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         }
 
         // Block
+        add(RagiumBlocks.MELTER, "Melter")
+
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
         add(RagiumBlocks.TANK, "Variable Tank")
@@ -69,6 +71,21 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")
+
+        add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
+        add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
+        add(RagiumTranslation.CONFIG_FLUID_FIRST_INPUT, "First Input Tank Capacity")
+        add(RagiumTranslation.CONFIG_FLUID_SECOND_INPUT, "Second Input Tank Capacity")
+        add(RagiumTranslation.CONFIG_FLUID_FIRST_OUTPUT, "First Output Tank Capacity")
+        add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "Second Output Tank Capacity")
+        add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "Third Output Tank Capacity")
+
+        add(RagiumTranslation.GUI_SLOT_BOTH, "Both")
+        add(RagiumTranslation.GUI_SLOT_INPUT, "Input")
+        add(RagiumTranslation.GUI_SLOT_OUTPUT, "Output")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "Extra Input")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "Extra Output")
+        add(RagiumTranslation.GUI_SLOT_NONE, "None")
 
         add(RagiumTranslation.BATTERY, "A energy storage which capacity is extendable by upgrade.")
         add(RagiumTranslation.CRATE, "A item storage which capacity is extendable by upgrade.")

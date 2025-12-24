@@ -1,6 +1,6 @@
 {
   "type": "ragium:melting",
-  "ingredient": "minecraft:snow",
+  "ingredient": "minecraft:snow_block",
   "result": {
     "amount": 1000,
     "id": "minecraft:water",

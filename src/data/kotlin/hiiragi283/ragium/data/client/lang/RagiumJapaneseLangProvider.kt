@@ -29,6 +29,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         }
 
         // Block
+        add(RagiumBlocks.MELTER, "溶融炉")
+
         add(RagiumBlocks.BATTERY, "可変バッテリー")
         add(RagiumBlocks.CRATE, "可変クレート")
         add(RagiumBlocks.TANK, "可変タンク")
@@ -67,6 +69,21 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")
+
+        add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
+        add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
+        add(RagiumTranslation.CONFIG_FLUID_FIRST_INPUT, "1番目の入力タンクの容量")
+        add(RagiumTranslation.CONFIG_FLUID_SECOND_INPUT, "2番目の入力タンクの容量")
+        add(RagiumTranslation.CONFIG_FLUID_FIRST_OUTPUT, "1番目の出力タンクの容量")
+        add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "2番目の出力タンクの容量")
+        add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "3番目の出力タンクの容量")
+
+        add(RagiumTranslation.GUI_SLOT_BOTH, "双方")
+        add(RagiumTranslation.GUI_SLOT_INPUT, "入力")
+        add(RagiumTranslation.GUI_SLOT_OUTPUT, "出力")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "追加の入力")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "追加の出力")
+        add(RagiumTranslation.GUI_SLOT_NONE, "なし")
 
         add(RagiumTranslation.BATTERY, "アップグレードで容量を拡張可能なエネルギーストレージです。")
         add(RagiumTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")

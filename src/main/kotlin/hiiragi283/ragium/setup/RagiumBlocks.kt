@@ -1,22 +1,28 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.collection.buildTable
+import hiiragi283.core.api.function.partially2
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.HTMaterialTable
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.material.prefix.HTPrefixLike
+import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.HTDeferredBlock
+import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.registry.HTSimpleDeferredBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
+import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.common.text.RagiumTranslation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -58,6 +64,12 @@ object RagiumBlocks {
         }
     }.let(::HTMaterialTable)
 
+    //    Processors    //
+
+    @JvmField
+    val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
+
     //    Storages    //
 
     @JvmField
@@ -96,4 +108,16 @@ object RagiumBlocks {
         .requiresCorrectToolForDrops()
         .sound(SoundType.COPPER)
         .strength(3.5f, 16f)
+
+    @JvmStatic
+    private fun registerMachine(
+        type: HTDeferredBlockEntityType<*>,
+        translation: HTTranslation,
+        properties: BlockBehaviour.Properties = machine(),
+    ): HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> = REGISTER.register(
+        type.getPath(),
+        properties,
+        ::HTMachineBlock.partially2(translation, type),
+        ::HTMachineBlockItem,
+    )
 }

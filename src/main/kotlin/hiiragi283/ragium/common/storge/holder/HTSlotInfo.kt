@@ -2,13 +2,13 @@ package hiiragi283.ragium.common.storge.holder
 
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
-import hiiragi283.core.api.text.HTTranslation
-import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.core.api.text.HTHasText
+import hiiragi283.ragium.common.text.RagiumTranslation
 import io.netty.buffer.ByteBuf
 import net.minecraft.ChatFormatting
-import net.minecraft.Util
+import net.minecraft.network.chat.Component
 
-enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: ChatFormatting) : HTTranslation {
+enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: ChatFormatting) : HTHasText {
     BOTH(true, true, ChatFormatting.DARK_PURPLE),
     INPUT(true, false, ChatFormatting.DARK_RED),
     OUTPUT(false, true, ChatFormatting.DARK_BLUE),
@@ -22,5 +22,12 @@ enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color
         val CODEC: BiCodec<ByteBuf, HTSlotInfo> = BiCodecs.enum()
     }
 
-    override val translationKey: String = Util.makeDescriptionId("description", RagiumAPI.id("access.${name.lowercase()}"))
+    override fun getText(): Component = when (this) {
+        BOTH -> RagiumTranslation.GUI_SLOT_BOTH
+        INPUT -> RagiumTranslation.GUI_SLOT_INPUT
+        OUTPUT -> RagiumTranslation.GUI_SLOT_OUTPUT
+        EXTRA_INPUT -> RagiumTranslation.GUI_SLOT_EXTRA_INPUT
+        EXTRA_OUTPUT -> RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT
+        NONE -> RagiumTranslation.GUI_SLOT_NONE
+    }.translateColored(color)
 }

@@ -11,6 +11,8 @@ import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
@@ -43,6 +45,11 @@ object RagiumBlockEntityTypes {
         factory: BlockEntityType.BlockEntitySupplier<BE>,
     ): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickClient, HTBlockEntity::tickServer)
 
+    //    Processor    //
+
+    @JvmField
+    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
+
     //    Storage    //
 
     @JvmField
@@ -71,6 +78,9 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
+        // Processor
+        registerHandler(event, MELTER.get())
+
         // Storage
         registerHandler(event, BATTERY.get())
         registerHandler(event, CRATE.get())

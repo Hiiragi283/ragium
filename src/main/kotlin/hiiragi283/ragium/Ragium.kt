@@ -29,10 +29,10 @@ object Ragium {
         RagiumDataComponents.REGISTER.register(eventBus)
 
         RagiumFluids.register(eventBus)
+        RagiumBlockEntityTypes.register(eventBus)
         RagiumBlocks.register(eventBus)
         RagiumItems.register(eventBus)
 
-        RagiumBlockEntityTypes.register(eventBus)
         RagiumCreativeTabs.REGISTER.register(eventBus)
         RagiumRecipeSerializers.REGISTER.register(eventBus)
         RagiumRecipeTypes.REGISTER.register(eventBus)

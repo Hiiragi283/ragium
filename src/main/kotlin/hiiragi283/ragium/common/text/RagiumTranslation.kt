@@ -2,11 +2,51 @@ package hiiragi283.ragium.common.text
 
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.Util
 
 enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation {
     // Constants
     RAGIUM("constants", "mod_name"),
+
+    // Config
+    CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),
+    CONFIG_ENERGY_RATE("config", "energy_rate"),
+    CONFIG_FLUID_FIRST_INPUT("config", "fluid", "first_input"),
+    CONFIG_FLUID_SECOND_INPUT("config", "fluid", "second_input"),
+    CONFIG_FLUID_FIRST_OUTPUT("config", "fluid", "first_output"),
+    CONFIG_FLUID_SECOND_OUTPUT("config", "fluid", "second_output"),
+    CONFIG_FLUID_THIRD_OUTPUT("config", "fluid", "third_output"),
+
+    // GUI
+    GUI_SLOT_BOTH("gui", "slot", "both"),
+    GUI_SLOT_INPUT("gui", "slot", "input"),
+    GUI_SLOT_OUTPUT("gui", "slot", "output"),
+    GUI_SLOT_EXTRA_INPUT("gui", "slot", "extra_input"),
+    GUI_SLOT_EXTRA_OUTPUT("gui", "slot", "extra_output"),
+    GUI_SLOT_NONE("gui", "slot", "none"),
+
+    // Blocks - Processors
+    ALLOY_SMELTER("description", "alloy_smelter"),
+    BLOCK_BREAKER("description", "block_breaker"),
+    CUTTING_MACHINE("description", "cutting_machine"),
+    COMPRESSOR("description", "compressor"),
+    ELECTRIC_FURNACE("description", "electric_smelter"),
+    EXTRACTOR("description", "extractor"),
+    PULVERIZER("description", "pulverizer"),
+
+    CRUSHER("description", "crusher"),
+    MELTER("description", RagiumConst.MELTER),
+    MIXER("description", "mixer"),
+    REFINERY("description", "refinery"),
+
+    BREWERY("description", "brewery"),
+    MULTI_SMELTER("description", "multi_smelter"),
+    PLANTER("description", "planter"),
+
+    ENCHANTER("description", "enchanter"),
+    MOB_CRUSHER("description", "mob_crusher"),
+    SIMULATOR("description", "simulator"),
 
     // Blocks - Storages
     BATTERY("description", "battery"),
