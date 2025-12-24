@@ -27,7 +27,7 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 ),
                 itemCreator.fromItem(Items.CALCITE),
             ).save(output)
-        
+
         // Amethyst + Lapis -> Azure Shard
         HTAlloyingRecipeBuilder
             .create(
@@ -78,7 +78,7 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Ambrosia
         HTAlloyingRecipeBuilder
             .create(
-                resultHelper.item(item = HCItems.AMBROSIA),
+                resultHelper.item(HCItems.AMBROSIA),
                 itemCreator.fromItem(HCItems.IRIDESCENT_POWDER),
                 itemCreator.fromItem(Items.HONEY_BLOCK, 64),
                 itemCreator.fromItem(Items.ENCHANTED_GOLDEN_APPLE, 16),

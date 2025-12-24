@@ -69,14 +69,14 @@ object RagiumPyrolyzingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Creosote -> Tar + Lubricant
         HTComplexRecipeBuilder
             .pyrolyzing(fluidCreator.fromTagKey(RagiumFluids.CREOSOTE, 1000))
-            .setResult(resultHelper.item(item = HCItems.TAR))
+            .setResult(resultHelper.item(HCItems.TAR))
             .setResult(resultHelper.fluid(RagiumFluids.LUBRICANT, 500))
             .saveSuffixed(output, "_from_creosote")
 
         // Crude Oil -> Tar + Naphtha
         HTComplexRecipeBuilder
             .pyrolyzing(fluidCreator.fromTagKey(RagiumFluids.CRUDE_OIL, 1000))
-            .setResult(resultHelper.item(item = HCItems.TAR))
+            .setResult(resultHelper.item(HCItems.TAR))
             .setResult(resultHelper.fluid(RagiumFluids.NAPHTHA, 750))
             .saveSuffixed(output, "_from_oil")
         // Naphtha -> Sulfur + Fuel

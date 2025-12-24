@@ -1,0 +1,15 @@
+{
+  "type": "ragium:crushing",
+  "exp": "3/10",
+  "extra_result": {
+    "count": 3,
+    "id": "hiiragi_core:tiny_sulfur_dust",
+    "tag": "c:tiny_dusts/sulfur"
+  },
+  "ingredient": "#c:ores/coal",
+  "result": {
+    "count": 2,
+    "id": "minecraft:coal",
+    "tag": "c:fuels/coal"
+  }
+}

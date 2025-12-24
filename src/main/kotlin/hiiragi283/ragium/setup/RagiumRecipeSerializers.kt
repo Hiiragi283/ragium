@@ -18,9 +18,12 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTExtraProcessingRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTComplexRecipe
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
+import hiiragi283.ragium.common.recipe.HTExtraProcessingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -83,6 +86,20 @@ object RagiumRecipeSerializers {
             factory::create,
         )
 
+    @JvmStatic
+    private fun <R : HTExtraProcessingRecipe> extra(
+        factory: HTExtraProcessingRecipeBuilder.Factory<R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        HTItemIngredient.CODEC
+            .fieldOf(HTConst.INGREDIENT)
+            .forGetter(HTExtraProcessingRecipe::ingredient),
+        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTExtraProcessingRecipe::result),
+        HTItemResult.CODEC.optionalFieldOf(RagiumConst.EXTRA_RESULT).forGetter(HTExtraProcessingRecipe::extra),
+        HTRecipeBiCodecs.TIME.forGetter(HTExtraProcessingRecipe::time),
+        HTRecipeBiCodecs.EXP.forGetter(HTExtraProcessingRecipe::exp),
+        factory::create,
+    )
+
     @JvmField
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = REGISTER.registerSerializer(
         RagiumConst.ALLOYING,
@@ -99,6 +116,13 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
+    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, extra(::HTCrushingRecipe))
+
+    @JvmField
+    val DRYING: RecipeSerializer<HTDryingRecipe> =
+        REGISTER.registerSerializer(RagiumConst.DRYING, complex(::HTDryingRecipe))
+
+    @JvmField
     val MELTING: RecipeSerializer<HTMeltingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MELTING,
         processing(
@@ -107,10 +131,6 @@ object RagiumRecipeSerializers {
             ::HTMeltingRecipe,
         ),
     )
-
-    @JvmField
-    val DRYING: RecipeSerializer<HTDryingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.DRYING, complex(::HTDryingRecipe))
 
     @JvmField
     val PYROLYZING: RecipeSerializer<HTPyrolyzingRecipe> =

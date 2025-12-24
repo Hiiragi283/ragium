@@ -1,0 +1,14 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    [
+      "#c:dusts/coal_coke",
+      "#c:gems/coal_coke"
+    ],
+    "minecraft:calcite"
+  ],
+  "result": {
+    "id": "hiiragi_core:carbide",
+    "tag": "c:fuels/carbide"
+  }
+}

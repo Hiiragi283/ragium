@@ -87,7 +87,6 @@ registrate = { group = "com.tterrag.registrate", name = "Registrate", version.re
 [bundles]
 
 mods-impl = [
-    "almost",
     "emi",
     "hiiragi-core",
     "jade",
@@ -99,9 +98,7 @@ mods-compile = [
     
 ]
 
-mods-runtime = [
-    "fusion",
-]
+mods-runtime = []
 
 [plugins]
 

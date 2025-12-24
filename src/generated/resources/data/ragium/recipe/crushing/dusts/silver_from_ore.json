@@ -1,0 +1,14 @@
+{
+  "type": "ragium:crushing",
+  "exp": "7/10",
+  "extra_result": {
+    "count": 3,
+    "tag": "c:tiny_dusts/lead"
+  },
+  "ingredient": "#c:ores/silver",
+  "result": {
+    "count": 2,
+    "id": "hiiragi_core:silver_dust",
+    "tag": "c:dusts/silver"
+  }
+}

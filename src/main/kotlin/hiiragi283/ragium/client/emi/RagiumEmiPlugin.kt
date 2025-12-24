@@ -9,6 +9,7 @@ import hiiragi283.core.api.integration.emi.HTEmiPlugin
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTComplexEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTExtraProcessingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -22,6 +23,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         listOf(
             // Processor
             RagiumEmiRecipeCategories.ALLOYING,
+            RagiumEmiRecipeCategories.CRUSHING,
             RagiumEmiRecipeCategories.DRYING,
             RagiumEmiRecipeCategories.MELTING,
             RagiumEmiRecipeCategories.PYROLYZING,
@@ -29,6 +31,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         // Recipes
         addRegistryRecipes(registry, RagiumRecipeTypes.ALLOYING, ::HTAlloyingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, HTExtraProcessingEmiRecipe.Companion::crushing)
         addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, HTComplexEmiRecipe.Companion::drying)
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, HTComplexEmiRecipe.Companion::pyrolyzing)

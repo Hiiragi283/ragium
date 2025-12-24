@@ -1,0 +1,15 @@
+{
+  "type": "ragium:crushing",
+  "exp": "7/10",
+  "extra_result": {
+    "count": 3,
+    "id": "hiiragi_core:tiny_sulfur_dust",
+    "tag": "c:tiny_dusts/sulfur"
+  },
+  "ingredient": "#c:ores/quartz",
+  "result": {
+    "count": 6,
+    "id": "hiiragi_core:quartz_dust",
+    "tag": "c:dusts/quartz"
+  }
+}
