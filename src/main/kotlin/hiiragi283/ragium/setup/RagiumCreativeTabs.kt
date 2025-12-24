@@ -23,5 +23,7 @@ object RagiumCreativeTabs {
         HTDeferredCreativeTabRegister.addToDisplay(parameters, output, RagiumItems.REGISTER.asSequence())
         // Blocks
         HTDeferredCreativeTabRegister.addToDisplay(parameters, output, RagiumBlocks.REGISTER.asItemSequence())
+        // Fluids
+        HTDeferredCreativeTabRegister.addToDisplay(parameters, output, RagiumFluids.REGISTER.asItemSequence())
     }
 }

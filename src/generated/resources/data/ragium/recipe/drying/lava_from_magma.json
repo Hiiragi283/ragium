@@ -2,8 +2,8 @@
   "type": "ragium:drying",
   "fluid_result": {
     "amount": 125,
-    "id": "minecraft:water",
-    "tag": "c:water"
+    "id": "minecraft:lava",
+    "tag": "c:lava"
   },
   "ingredient": "minecraft:magma_block",
   "item_result": {

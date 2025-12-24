@@ -1,30 +1,31 @@
 package hiiragi283.ragium.common.data.texture
 
+import hiiragi283.core.api.data.texture.HTArrayColorPalette
 import hiiragi283.core.api.data.texture.HTColorPalette
 import java.awt.Color
 
 object RagiumMaterialPalette {
     @JvmStatic
-    val RAGINITE: HTColorPalette = HTColorPalette(
+    val RAGINITE: HTColorPalette = HTArrayColorPalette(
         arrayOf(
-            Color(0xffc0bb),
-            Color(0xff777c),
-            Color(0xff3351),
-            Color(0xe5003a),
-            Color(0x990037),
-            Color(0x4d0024),
+            Color(0xffbbbd),
+            Color(0xff778a),
+            Color(0xff3366),
+            Color(0xe50052),
+            Color(0x990047),
+            Color(0x4d002c),
         ),
     )
 
     @JvmStatic
-    val ADVANCED_RAGI_ALLOY: HTColorPalette = HTColorPalette(
+    val ADVANCED_RAGI_ALLOY: HTColorPalette = HTArrayColorPalette(
         arrayOf(
-            Color(0xffefaa),
-            Color(0xffcd55),
-            Color(0xff9900),
-            Color(0xbf5e00),
-            Color(0x803100),
-            Color(0x401200),
+            Color(0xffdbbb),
+            Color(0xffa877),
+            Color(0xff6633),
+            Color(0xe52100),
+            Color(0x990500),
+            Color(0x4d0005),
         ),
     )
 }

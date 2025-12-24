@@ -24,7 +24,7 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         HTDryingRecipeBuilder
             .createItem(itemCreator.fromItem(Items.MAGMA_BLOCK))
             .setResult(resultHelper.item(Items.NETHERRACK))
-            .setResult(resultHelper.fluid(HTFluidWithTag.WATER, 125))
+            .setResult(resultHelper.fluid(HTFluidWithTag.LAVA, 125))
             .saveSuffixed(output, "_from_magma")
         // Crying Obsidian -> Obsidian + ???
         HTDryingRecipeBuilder
@@ -57,5 +57,16 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
             .createItem(itemCreator.fromItem(Items.SLIME_BALL))
             .setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.RAW_MATERIAL, HCMaterial.Plates.RUBBER))
             .saveSuffixed(output, "_from_slime")
+        // Latex -> Raw Rubber
+        HTDryingRecipeBuilder
+            .createFluid(fluidCreator.fromTagKey(HCFluids.LATEX, 1000))
+            .setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.RAW_MATERIAL, HCMaterial.Plates.RUBBER, 2))
+            .saveSuffixed(output, "_from_latex")
+        // Salt Water -> Water + Salt
+        HTDryingRecipeBuilder
+            .createFluid(fluidCreator.fromTagKey(RagiumFluids.SALT_WATER, 1000))
+            .setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Minerals.SALT))
+            .setResult(resultHelper.fluid(HTFluidWithTag.WATER, 750))
+            .saveSuffixed(output, "_from_salt_water")
     }
 }
