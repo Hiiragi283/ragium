@@ -12,6 +12,7 @@ object RagiumConst {
     const val COMPRESSING = "compressing"
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
+    const val DRYING = "drying"
     const val ENCHANTING = "enchanting"
     const val EXTRACTING = "extracting"
     const val MELTING = "melting"

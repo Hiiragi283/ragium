@@ -14,7 +14,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     TANK("description", "tank"),
     BUFFER("description", "buffer"),
     UNIVERSAL_CHEST("description", "universal_chest"),
-    
+
     // Items - Utilities
     SLOT_COVER("description", "slot_cover"),
     TRADER_CATALOG("description", "trader_catalog"),

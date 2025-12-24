@@ -1,12 +1,16 @@
 package hiiragi283.ragium.client
 
 import com.mojang.logging.LogUtils
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.client.Minecraft
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.ItemLike
@@ -14,10 +18,12 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
+import net.neoforged.neoforge.common.extensions.IFluidExtension
 import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.neoforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
@@ -65,6 +71,8 @@ object RagiumClient {
 
     @JvmStatic
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
+        event.clear(RagiumFluids.SALT_WATER, Color(0x336699))
+        
         event.dull(RagiumFluids.SLIME, Color(0x66cc66))
         event.molten(RagiumFluids.GELLED_EXPLOSIVE, Color(0x339933))
         event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))

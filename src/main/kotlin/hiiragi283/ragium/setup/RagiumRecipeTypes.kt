@@ -6,6 +6,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTDryingRecipe
 
 object RagiumRecipeTypes {
     @JvmField
@@ -13,4 +14,7 @@ object RagiumRecipeTypes {
 
     @JvmField
     val ALLOYING: HTDeferredRecipeType<HTRecipeInput, HTAlloyingRecipe> = REGISTER.registerType(RagiumConst.ALLOYING)
+
+    @JvmField
+    val DRYING: HTDeferredRecipeType<HTRecipeInput, HTDryingRecipe> = REGISTER.registerType(RagiumConst.DRYING)
 }

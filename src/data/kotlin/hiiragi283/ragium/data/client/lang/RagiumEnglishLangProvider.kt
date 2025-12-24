@@ -37,6 +37,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.TANK, "Variable Tank")
 
         // Fluid
+        addFluid(RagiumFluids.SALT_WATER, "Salt Water")
+        
         addFluid(RagiumFluids.SLIME, "Slime")
         addFluid(RagiumFluids.GELLED_EXPLOSIVE, "Gelled Explosive")
         addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
@@ -62,6 +64,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.DRYING, "Drying")
 
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")

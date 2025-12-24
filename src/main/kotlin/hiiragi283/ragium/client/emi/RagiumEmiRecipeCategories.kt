@@ -25,4 +25,7 @@ object RagiumEmiRecipeCategories {
 
     @JvmField
     val ALLOYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.ALLOYING, Items.BLAST_FURNACE)
+
+    @JvmField
+    val DRYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.DRYING, Items.SCAFFOLDING)
 }

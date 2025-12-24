@@ -34,6 +34,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.TANK, "可変タンク")
 
         // Fluid
+        addFluid(RagiumFluids.SALT_WATER, "塩水")
+        
         addFluid(RagiumFluids.SLIME, "スライム")
         addFluid(RagiumFluids.GELLED_EXPLOSIVE, "ゲル状爆薬")
         addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオ")
@@ -60,6 +62,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.DRYING, "乾燥")
 
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")
@@ -72,7 +75,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         add(RagiumTranslation.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
         add(RagiumTranslation.TRADER_CATALOG, "行商人からドロップします。右クリックで行商人との取引を行えます。")
-        
+
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")

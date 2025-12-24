@@ -19,8 +19,7 @@ class HTAlloyingEmiRecipe(holder: RecipeHolder<HTAlloyingRecipe>) :
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addArrow(getPosition(3), getPosition(1))
-        widgets.setShapeless()
+        widgets.addArrow(getPosition(3), getPosition(1), recipe.time)
 
         // Input
         widgets.addSlot(input(0), getPosition(1), getPosition(0))
