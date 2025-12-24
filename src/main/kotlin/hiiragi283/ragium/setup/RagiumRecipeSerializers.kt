@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTComplexResult
@@ -10,6 +11,7 @@ import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.HTRecipeBiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
+import hiiragi283.core.api.serialization.codec.ParameterCodec
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -17,11 +19,13 @@ import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
+import org.apache.commons.lang3.math.Fraction
 
 object RagiumRecipeSerializers {
     @JvmField
@@ -52,10 +56,23 @@ object RagiumRecipeSerializers {
             HTFluidResult.CODEC.optionalFieldOf(HTConst.FLUID_RESULT),
         )
 
+    @JvmStatic
+    private fun <T1 : Any, T2 : Any, RECIPE : HTProcessingRecipe> processing(
+        codec1: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T1>,
+        codec2: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T2>,
+        factory: (T1, T2, Int, Fraction) -> RECIPE,
+    ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
+        codec1,
+        codec2,
+        HTRecipeBiCodecs.TIME.forGetter(HTProcessingRecipe::time),
+        HTRecipeBiCodecs.EXP.forGetter(HTProcessingRecipe::exp),
+        factory,
+    )
+
     @JvmField
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = REGISTER.registerSerializer(
         RagiumConst.ALLOYING,
-        MapBiCodec.composite(
+        processing(
             HTItemIngredient.CODEC
                 .listOf(2, 3)
                 .fieldOf(HTConst.INGREDIENT)
@@ -63,29 +80,29 @@ object RagiumRecipeSerializers {
                     listOfNotNull(recipe.firstIngredient, recipe.secondIngredient, recipe.thirdIngredient)
                 },
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAlloyingRecipe::result),
-            HTRecipeBiCodecs.TIME.forGetter(HTAlloyingRecipe::time),
-            HTRecipeBiCodecs.EXP.forGetter(HTAlloyingRecipe::exp),
             ::HTAlloyingRecipe,
+        ),
+    )
+
+    @JvmField
+    val MELTING: RecipeSerializer<HTMeltingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.MELTING,
+        processing(
+            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTMeltingRecipe::ingredient),
+            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTMeltingRecipe::result),
+            ::HTMeltingRecipe,
         ),
     )
 
     @JvmField
     val DRYING: RecipeSerializer<HTDryingRecipe> = REGISTER.registerSerializer(
         RagiumConst.DRYING,
-        MapBiCodec.composite(
+        processing(
             BiCodecs
-                .either(
-                    HTItemIngredient.CODEC,
-                    HTFluidIngredient.CODEC,
-                ).fieldOf(HTConst.INGREDIENT)
+                .either(HTItemIngredient.CODEC, HTFluidIngredient.CODEC)
+                .fieldOf(HTConst.INGREDIENT)
                 .forGetter(HTDryingRecipe::ingredient),
-            MapBiCodecs
-                .ior(
-                    HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT),
-                    HTFluidResult.CODEC.optionalFieldOf(HTConst.FLUID_RESULT),
-                ).forGetter(HTDryingRecipe::result),
-            HTRecipeBiCodecs.TIME.forGetter(HTDryingRecipe::time),
-            HTRecipeBiCodecs.EXP.forGetter(HTDryingRecipe::exp),
+            COMPLEX_RESULT.forGetter(HTDryingRecipe::result),
             ::HTDryingRecipe,
         ),
     )

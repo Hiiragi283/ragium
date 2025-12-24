@@ -10,11 +10,11 @@ import hiiragi283.core.api.recipe.HTProcessingRecipe
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTProcessingEmiRecipe<RECIPE: HTProcessingRecipe> : HTEmiHolderRecipe<RECIPE> {
+abstract class HTProcessingEmiRecipe<RECIPE : HTProcessingRecipe> : HTEmiHolderRecipe<RECIPE> {
     constructor(category: EmiRecipeCategory, holder: RecipeHolder<RECIPE>, bounds: HTBounds) : super(
         category,
         holder,
-        bounds
+        bounds,
     )
 
     constructor(
@@ -31,6 +31,6 @@ abstract class HTProcessingEmiRecipe<RECIPE: HTProcessingRecipe> : HTEmiHolderRe
     override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(getArrowX(), getPosition(1), recipe.time)
     }
-    
+
     protected open fun getArrowX(): Int = getPosition(2.5)
 }

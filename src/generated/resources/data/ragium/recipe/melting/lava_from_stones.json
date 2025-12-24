@@ -1,0 +1,14 @@
+{
+  "type": "ragium:melting",
+  "ingredient": [
+    "#c:cobblestones",
+    "#c:stones",
+    "#c:netherracks"
+  ],
+  "result": {
+    "amount": 125,
+    "id": "minecraft:lava",
+    "tag": "c:lava"
+  },
+  "time": 600
+}

@@ -28,4 +28,16 @@ object RagiumMaterialPalette {
             Color(0x4d0005),
         ),
     )
+
+    @JvmStatic
+    val URAGINITE: HTColorPalette = HTArrayColorPalette(
+        arrayOf(
+            Color(0xdeecc6),
+            Color(0xadd98c),
+            Color(0x6bc653),
+            Color(0x339933),
+            Color(0x226631),
+            Color(0x113320),
+        ),
+    )
 }

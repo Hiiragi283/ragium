@@ -9,6 +9,7 @@ import hiiragi283.core.api.integration.emi.HTEmiPlugin
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTDryingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -22,11 +23,13 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             // Processor
             RagiumEmiRecipeCategories.ALLOYING,
             RagiumEmiRecipeCategories.DRYING,
+            RagiumEmiRecipeCategories.MELTING,
         ).forEach(::addCategory.partially1(registry))
 
         // Recipes
         addRegistryRecipes(registry, RagiumRecipeTypes.ALLOYING, ::HTAlloyingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, ::HTDryingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)
 
         // Misc
         registry.setDefaultComparison(

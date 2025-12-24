@@ -18,20 +18,21 @@ class HTAlloyingEmiRecipe(holder: RecipeHolder<HTAlloyingRecipe>) :
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
-
-        // Input
-        widgets.addSlot(input(0), getPosition(1), getPosition(0))
-        widgets.addSlot(input(1), getPosition(0.5), getPosition(1))
-        widgets.addSlot(input(2), getPosition(1.5), getPosition(1))
+        widgets.addTexture(EmiTexture.EMPTY_FLAME, getPosition(1) + 2, getPosition(2) + 2)
         widgets.addAnimatedTexture(
-            EmiTexture.EMPTY_FLAME,
+            EmiTexture.FULL_FLAME,
             getPosition(1) + 2,
             getPosition(2) + 2,
             1000 * recipe.time / 20,
             false,
             true,
-            true
+            true,
         )
+
+        // Input
+        widgets.addSlot(input(0), getPosition(1), getPosition(0))
+        widgets.addSlot(input(1), getPosition(0.5), getPosition(1))
+        widgets.addSlot(input(2), getPosition(1.5), getPosition(1))
 
         // Output
         widgets.addOutput(0, getPosition(5), getPosition(1), true)

@@ -20,12 +20,6 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
             .setResult(resultHelper.item(Items.CLAY))
             .setResult(resultHelper.fluid(HTFluidWithTag.WATER, 250))
             .saveSuffixed(output, "_from_mud")
-        // Magma -> Lava + Netherrack
-        HTDryingRecipeBuilder
-            .createItem(itemCreator.fromItem(Items.MAGMA_BLOCK))
-            .setResult(resultHelper.item(Items.NETHERRACK))
-            .setResult(resultHelper.fluid(HTFluidWithTag.LAVA, 125))
-            .saveSuffixed(output, "_from_magma")
         // Crying Obsidian -> Obsidian + ???
         HTDryingRecipeBuilder
             .createItem(itemCreator.fromTagKey(Tags.Items.OBSIDIANS_CRYING))

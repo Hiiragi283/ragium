@@ -1,0 +1,9 @@
+{
+  "type": "ragium:melting",
+  "ingredient": "minecraft:ice",
+  "result": {
+    "amount": 1000,
+    "id": "minecraft:water",
+    "tag": "c:water"
+  }
+}

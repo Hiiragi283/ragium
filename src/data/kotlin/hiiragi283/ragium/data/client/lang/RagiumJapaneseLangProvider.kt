@@ -35,7 +35,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Fluid
         addFluid(RagiumFluids.SALT_WATER, "塩水")
-        
+
         addFluid(RagiumFluids.SLIME, "スライム")
         addFluid(RagiumFluids.GELLED_EXPLOSIVE, "ゲル状爆薬")
         addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオ")
@@ -63,6 +63,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.DRYING, "乾燥")
+        add(RagiumRecipeTypes.MELTING, "溶融")
 
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")

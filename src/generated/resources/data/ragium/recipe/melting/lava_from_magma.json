@@ -1,0 +1,9 @@
+{
+  "type": "ragium:melting",
+  "ingredient": "minecraft:magma_block",
+  "result": {
+    "amount": 125,
+    "id": "minecraft:lava",
+    "tag": "c:lava"
+  }
+}
