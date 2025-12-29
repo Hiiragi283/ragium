@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.stack.ImmutableItemStack
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTStonecuttingRecipeBuilder
@@ -153,8 +152,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
 
     @JvmStatic
     private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, builderAction: HTShapelessRecipeBuilder.() -> Unit) {
-        val ticket: ImmutableItemStack = HTDefaultLootTickets.getLootTicket(lootTicket)
-        HTShapelessRecipeBuilder(ticket)
+        HTShapelessRecipeBuilder(HTDefaultLootTickets.getLootTicket(lootTicket))
             .addIngredient(RagiumItems.LOOT_TICKET)
             .apply(builderAction)
             .setCategory(CraftingBookCategory.EQUIPMENT)

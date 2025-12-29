@@ -2,14 +2,17 @@ package hiiragi283.ragium.common.block.entity.processing
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.function.andThen
 import hiiragi283.core.api.recipe.input.HTRecipeInput
+import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.api.stack.ImmutableFluidStack
-import hiiragi283.core.api.stack.ImmutableItemStack
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
+import hiiragi283.core.api.storage.fluid.getFluidStack
+import hiiragi283.core.api.storage.fluid.insert
+import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.api.storage.item.insert
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.common.storage.item.HTOutputItemSlot
@@ -31,6 +34,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.fluids.FluidStack
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Cached<HTMeltingRecipe>(RagiumRecipeTypes.MELTING, RagiumBlockEntityTypes.MELTER, pos, state) {
@@ -54,19 +58,19 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         // input
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.create(listener))
         // output
-        remainderSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTOutputItemSlot.create(listener))
+        remainderSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTOutputItemSlot(listener))
     }
 
     //    Save & Load    //
 
     override fun initReducedUpdateTag(output: HTValueOutput) {
         super.initReducedUpdateTag(output)
-        output.store(HTConst.FLUID, ImmutableFluidStack.CODEC, outputTank.getStack())
+        output.store(HTConst.FLUID, VanillaBiCodecs.FLUID_STACK, outputTank.getFluidStack())
     }
 
     override fun handleUpdateTag(input: HTValueInput) {
         super.handleUpdateTag(input)
-        input.readAndSet(HTConst.FLUID, ImmutableFluidStack.CODEC, outputTank::setStackUnchecked)
+        (input.read(HTConst.FLUID, VanillaBiCodecs.FLUID_STACK) ?: FluidStack.EMPTY).let(outputTank::setStack)
     }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.melter
@@ -78,12 +82,12 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun getRecipeTime(recipe: HTMeltingRecipe): Int = recipe.time
 
     override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
-        builder.items += inputSlot.getStack()
+        builder.items += inputSlot.getItemStack()
     }
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTMeltingRecipe): Boolean =
-        HTStackSlotHelper.canInsertStack(outputTank, input, level, recipe::assembleFluid)
+        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -97,9 +101,9 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         // インプットを減らす, 返却物がある場合は移動
         HTStackSlotHelper.shrinkItemStack(
             inputSlot,
-            ImmutableItemStack::unwrap.andThen(ItemStack::getCraftingRemainingItem),
-            { stack: ImmutableItemStack ->
-                val remainder: ImmutableItemStack? = remainderSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+            { resource: HTItemResourceType -> resource.toStack().craftingRemainingItem },
+            { stack: ItemStack ->
+                val remainder: ItemStack = remainderSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
                 HTItemDropHelper.dropStackAt(level, pos, remainder)
             },
             recipe.ingredient.getRequiredAmount(),

@@ -4,10 +4,11 @@ import hiiragi283.core.api.block.entity.HTBlockEntityComponent
 import hiiragi283.core.api.serialization.component.HTComponentInput
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.api.stack.ImmutableItemStack
 import hiiragi283.core.api.storage.HTStoragePredicates
 import hiiragi283.core.api.storage.attachments.HTAttachedItems
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.HTItemSlot
+import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.world.sendBlockUpdated
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.core.common.storage.HTCapabilityCodec
@@ -27,7 +28,7 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
     }
 
     private val upgradeSlots: List<HTBasicItemSlot> = (0..3).map { i: Int ->
-        val filter: (ImmutableItemStack) -> Boolean = { isValidUpgrade(it, getUpgrades()) }
+        val filter: (HTItemResourceType) -> Boolean = { isValidUpgrade(it, getUpgrades()) }
         HTBasicItemSlot.create(
             {
                 owner.setChanged()
@@ -53,7 +54,7 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
     override fun applyComponents(input: HTComponentInput) {
         input.use(RagiumDataComponents.MACHINE_UPGRADES) { contents: HTAttachedItems ->
             for (i: Int in contents.indices) {
-                upgradeSlots.getOrNull(i)?.setStackUnchecked(contents[i])
+                upgradeSlots.getOrNull(i)?.setStack(contents[i])
             }
         }
     }
@@ -62,7 +63,7 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
         builder.set(
             RagiumDataComponents.MACHINE_UPGRADES,
             upgradeSlots
-                .map(HTBasicItemSlot::getStack)
+                .map(HTBasicItemSlot::getItemStack)
                 .let(::HTAttachedItems),
         )
     }
@@ -70,13 +71,13 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
 
     override fun getUpgradeSlots(): List<HTItemSlot> = upgradeSlots
 
-    override fun isValidUpgrade(upgrade: ImmutableItemStack, existing: List<ImmutableItemStack>): Boolean {
+    override fun isValidUpgrade(upgrade: HTItemResourceType, existing: List<HTItemResourceType>): Boolean {
         val upgradeData: HTUpgradeData = RagiumDataMapTypes.getUpgradeData(upgrade) ?: return false
         val isTarget: Boolean = owner.blockState
             .block
             .let(::ItemStack)
             .let(upgradeData::isTarget)
-        val isCompatible: Boolean = existing.all { stack: ImmutableItemStack -> HTUpgradeData.areCompatible(upgrade, stack) }
+        val isCompatible: Boolean = existing.all { resource: HTItemResourceType -> HTUpgradeData.areCompatible(upgrade, resource) }
         return isTarget && isCompatible
     }
 }

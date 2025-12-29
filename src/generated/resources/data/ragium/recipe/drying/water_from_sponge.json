@@ -1,7 +1,6 @@
 {
   "type": "ragium:drying",
   "fluid_result": {
-    "amount": 1000,
     "id": "minecraft:water",
     "tag": "c:water"
   },

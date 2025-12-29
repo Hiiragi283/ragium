@@ -1,10 +1,13 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.core.api.stack.ImmutableItemStack
+import hiiragi283.core.api.item.createItemStack
+import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.storage.item.toResource
 import hiiragi283.ragium.api.item.HTLootTicketTargets
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
 
@@ -42,12 +45,13 @@ enum class HTDefaultLootTickets(val targets: HTLootTicketTargets) {
 
     companion object {
         @JvmStatic
-        private val ticketCache: MutableMap<HTDefaultLootTickets, ImmutableItemStack> = hashMapOf()
+        private val ticketCache: MutableMap<HTDefaultLootTickets, HTItemResourceType> = hashMapOf()
 
         @JvmStatic
-        fun getLootTicket(lootTicket: HTDefaultLootTickets): ImmutableItemStack = ticketCache.computeIfAbsent(lootTicket) {
-            ImmutableItemStack.of(RagiumItems.LOOT_TICKET).plus(RagiumDataComponents.LOOT_TICKET, it.targets)
-        }
+        fun getLootTicket(lootTicket: HTDefaultLootTickets, count: Int = 1): ItemStack = ticketCache
+            .computeIfAbsent(lootTicket) {
+                createItemStack(RagiumItems.LOOT_TICKET, RagiumDataComponents.LOOT_TICKET, it.targets).toResource()!!
+            }.toStack(count)
     }
 
     constructor(vararg lootTables: ResourceKey<LootTable>) : this(HTLootTicketTargets.create(*lootTables))

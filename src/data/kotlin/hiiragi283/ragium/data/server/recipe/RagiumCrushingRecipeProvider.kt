@@ -153,22 +153,22 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTExtraProcessingRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.GRAVELS, 3),
-                resultHelper.item(Items.SAND, 2),
-            ).setExtra(resultHelper.item(Items.FLINT))
+                itemResult.create(Items.SAND, 2),
+            ).setExtra(itemResult.create(Items.FLINT))
             .saveSuffixed(output, "_from_gravel")
 
         // Sandstone -> Sand + Saltpeter
         HTExtraProcessingRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
-                resultHelper.item(Items.SAND, 2),
+                itemResult.create(Items.SAND, 2),
             ).setExtra(RagiumMaterialResultHelper.item(HCMaterialPrefixes.TINY_DUST, HCMaterial.Minerals.SALTPETER, 3))
             .saveSuffixed(output, "_from_sandstone")
 
         HTExtraProcessingRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.SANDSTONE_RED_BLOCKS),
-                resultHelper.item(Items.RED_SAND, 2),
+                itemResult.create(Items.RED_SAND, 2),
             ).setExtra(RagiumMaterialResultHelper.item(HCMaterialPrefixes.TINY_DUST, HCMaterial.Minerals.SALTPETER, 3))
             .saveSuffixed(output, "_from_sandstone")
     }

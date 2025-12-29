@@ -17,33 +17,33 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         // Mud -> Clay + Water
         HTComplexRecipeBuilder
             .drying(itemCreator.fromItem(Items.MUD))
-            .setResult(resultHelper.item(Items.CLAY))
-            .setResult(resultHelper.fluid(HTFluidWithTag.WATER, 250))
+            .setResult(itemResult.create(Items.CLAY))
+            .setResult(fluidResult.create(HTFluidWithTag.WATER, 250))
             .saveSuffixed(output, "_from_mud")
         // Crying Obsidian -> Obsidian + ???
         HTComplexRecipeBuilder
             .drying(itemCreator.fromTagKey(Tags.Items.OBSIDIANS_CRYING))
-            .setResult(resultHelper.item(Items.OBSIDIAN))
-            .setResult(resultHelper.fluid(HCFluids.ELDRITCH_FLUX, 125))
+            .setResult(itemResult.create(Items.OBSIDIAN))
+            .setResult(fluidResult.create(HCFluids.ELDRITCH_FLUX, 125))
             .setTime(20 * 20)
             .saveSuffixed(output, "_from_crying")
         // Sapling -> Dead Bush
         HTComplexRecipeBuilder
             .drying(itemCreator.fromTagKey(ItemTags.SAPLINGS))
-            .setResult(resultHelper.item(Items.DEAD_BUSH))
-            .setResult(resultHelper.fluid(HTFluidWithTag.WATER, 125))
+            .setResult(itemResult.create(Items.DEAD_BUSH))
+            .setResult(fluidResult.create(HTFluidWithTag.WATER, 125))
             .saveSuffixed(output, "_from_sapling")
         // Wet Sponge -> Sponge + Water
         HTComplexRecipeBuilder
             .drying(itemCreator.fromItem(Items.WET_SPONGE))
-            .setResult(resultHelper.item(Items.SPONGE))
-            .setResult(resultHelper.fluid(HTFluidWithTag.WATER, 1000))
+            .setResult(itemResult.create(Items.SPONGE))
+            .setResult(fluidResult.create(HTFluidWithTag.WATER, 1000))
             .saveSuffixed(output, "_from_sponge")
         // Kelp -> Dried Kelp + Salt Water
         HTComplexRecipeBuilder
             .drying(itemCreator.fromItem(Items.KELP))
-            .setResult(resultHelper.item(Items.DRIED_KELP))
-            .setResult(resultHelper.fluid(RagiumFluids.SALT_WATER, 250))
+            .setResult(itemResult.create(Items.DRIED_KELP))
+            .setResult(fluidResult.create(RagiumFluids.SALT_WATER, 250))
             .saveSuffixed(output, "_from_kelp")
 
         // Slime -> Raw Rubber
@@ -60,7 +60,7 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         HTComplexRecipeBuilder
             .drying(fluidCreator.fromTagKey(RagiumFluids.SALT_WATER, 1000))
             .setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Minerals.SALT))
-            .setResult(resultHelper.fluid(HTFluidWithTag.WATER, 750))
+            .setResult(fluidResult.create(HTFluidWithTag.WATER, 750))
             .saveSuffixed(output, "_from_salt_water")
     }
 }

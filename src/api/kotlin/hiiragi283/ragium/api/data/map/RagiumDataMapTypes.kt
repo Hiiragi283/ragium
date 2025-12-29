@@ -3,8 +3,8 @@ package hiiragi283.ragium.api.data.map
 import com.mojang.serialization.Codec
 import hiiragi283.core.api.item.toStack
 import hiiragi283.core.api.serialization.codec.BiCodec
-import hiiragi283.core.api.stack.ImmutableFluidStack
-import hiiragi283.core.api.stack.ImmutableItemStack
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
@@ -61,19 +61,19 @@ object RagiumDataMapTypes {
         ?.toStack() ?: ItemStack.EMPTY
 
     /**
-     * 指定した[stack]から，一度の処理に必要な冷却材の使用量を取得します。
+     * 指定した[resource]から，一度の処理に必要な冷却材の使用量を取得します。
      */
-    fun getCoolantAmount(stack: ImmutableFluidStack): Int = stack.getData(COOLANT)?.amount ?: 0
+    fun getCoolantAmount(resource: HTFluidResourceType): Int = resource.getData(COOLANT)?.amount ?: 0
 
     /**
-     * 指定した[stack]から，1000 mbの高温の液体による燃焼時間を取得します。
+     * 指定した[resource]から，1000 mbの高温の液体による燃焼時間を取得します。
      */
-    fun getTimeFromMagmatic(stack: ImmutableFluidStack): Int = stack.getData(MAGMATIC_FUEL)?.time ?: 0
+    fun getTimeFromMagmatic(resource: HTFluidResourceType): Int = resource.getData(MAGMATIC_FUEL)?.time ?: 0
 
     /**
-     * 指定した[stack]から，1000 mbの液体燃料による燃焼時間を取得します。
+     * 指定した[resource]から，1000 mbの液体燃料による燃焼時間を取得します。
      */
-    fun getTimeFromCombustion(stack: ImmutableFluidStack): Int = stack.getData(COMBUSTION_FUEL)?.time ?: 0
+    fun getTimeFromCombustion(resource: HTFluidResourceType): Int = resource.getData(COMBUSTION_FUEL)?.time ?: 0
 
     /**
      * 指定した[stack]から，アップグレードのデータを取得します。
@@ -81,9 +81,9 @@ object RagiumDataMapTypes {
     fun getUpgradeData(stack: ItemStack): HTUpgradeData? = stack.itemHolder.getData(UPGRADE)
 
     /**
-     * 指定した[stack]から，アップグレードのデータを取得します。
+     * 指定した[resource]から，アップグレードのデータを取得します。
      */
-    fun getUpgradeData(stack: ImmutableItemStack): HTUpgradeData? = stack.getData(UPGRADE)
+    fun getUpgradeData(resource: HTItemResourceType): HTUpgradeData? = resource.getData(UPGRADE)
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =

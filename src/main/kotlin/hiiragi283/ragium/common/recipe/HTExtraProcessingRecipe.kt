@@ -5,12 +5,11 @@ import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTRecipeInput
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import org.apache.commons.lang3.math.Fraction
 import java.util.Optional
-import kotlin.jvm.optionals.getOrNull
 
 abstract class HTExtraProcessingRecipe(
     val ingredient: HTItemIngredient,
@@ -22,9 +21,8 @@ abstract class HTExtraProcessingRecipe(
     HTExtraOutputRecipe {
     final override fun matches(input: HTRecipeInput, level: Level): Boolean = input.testItem(0, ingredient)
 
-    final override fun assembleItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
-        result.getStackOrNull(provider)
+    final override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
 
-    final override fun assembleExtra(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
-        extra.flatMap { it.getOptionalResult(provider) }.getOrNull()
+    final override fun assembleExtra(input: HTRecipeInput, provider: HolderLookup.Provider): ItemStack =
+        extra.map { it.getStackOrEmpty(provider) }.orElse(ItemStack.EMPTY)
 }

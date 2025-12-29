@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.crafting
 
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.recipe.input.ImmutableRecipeInput
-import hiiragi283.core.api.stack.ImmutableItemStack
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
@@ -18,11 +17,11 @@ class HTPotionDropRecipe(category: CraftingBookCategory) : HTCustomRecipe(catego
     override fun matches(input: ImmutableRecipeInput, level: Level): Boolean {
         var drops = 0
         var bottles = 0
-        for (stack: ImmutableItemStack? in input) {
-            if (stack == null) continue
-            if (stack.isOf(RagiumItems.POTION_DROP)) {
+        for (stack: ItemStack in input) {
+            if (stack.isEmpty) continue
+            if (stack.`is`(RagiumItems.POTION_DROP)) {
                 drops++
-            } else if (stack.isOf(Items.GLASS_BOTTLE)) {
+            } else if (stack.`is`(Items.GLASS_BOTTLE)) {
                 bottles++
             }
         }
@@ -31,8 +30,8 @@ class HTPotionDropRecipe(category: CraftingBookCategory) : HTCustomRecipe(catego
 
     override fun assemble(input: ImmutableRecipeInput, registries: HolderLookup.Provider): ItemStack {
         var potion: PotionContents = PotionContents.EMPTY
-        for (stack: ImmutableItemStack? in input) {
-            if (stack == null) continue
+        for (stack: ItemStack in input) {
+            if (stack.isEmpty) continue
             val contents: PotionContents = stack.get(DataComponents.POTION_CONTENTS) ?: continue
             if (!HTPotionHelper.isEmpty(contents)) {
                 potion = contents

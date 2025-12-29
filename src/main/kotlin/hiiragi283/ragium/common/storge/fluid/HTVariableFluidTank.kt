@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.storge.fluid
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.stack.ImmutableFluidStack
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStoragePredicates
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import java.util.function.BiPredicate
 import java.util.function.IntSupplier
@@ -14,9 +14,9 @@ import java.util.function.Predicate
  */
 class HTVariableFluidTank(
     private val capacitySupplier: IntSupplier,
-    canExtract: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
-    canInsert: BiPredicate<ImmutableFluidStack, HTStorageAccess>,
-    filter: Predicate<ImmutableFluidStack>,
+    canExtract: BiPredicate<HTFluidResourceType, HTStorageAccess>,
+    canInsert: BiPredicate<HTFluidResourceType, HTStorageAccess>,
+    filter: Predicate<HTFluidResourceType>,
     listener: HTContentListener?,
 ) : HTBasicFluidTank(capacitySupplier.asInt, canExtract, canInsert, filter, listener) {
     companion object {
@@ -33,12 +33,12 @@ class HTVariableFluidTank(
         fun input(
             listener: HTContentListener?,
             capacity: IntSupplier,
-            canInsert: Predicate<ImmutableFluidStack> = HTStoragePredicates.alwaysTrue(),
-            filter: Predicate<ImmutableFluidStack> = canInsert,
+            canInsert: Predicate<HTFluidResourceType> = HTStoragePredicates.alwaysTrue(),
+            filter: Predicate<HTFluidResourceType> = canInsert,
         ): HTBasicFluidTank = HTVariableFluidTank(
             capacity,
             HTStoragePredicates.notExternal(),
-            { stack: ImmutableFluidStack, _ -> canInsert.test(stack) },
+            { stack: HTFluidResourceType, _ -> canInsert.test(stack) },
             filter,
             listener,
         )
@@ -53,5 +53,5 @@ class HTVariableFluidTank(
         )
     }
 
-    override fun getCapacity(stack: ImmutableFluidStack?): Int = capacitySupplier.asInt
+    override fun getCapacity(resource: HTFluidResourceType?): Int = capacitySupplier.asInt
 }

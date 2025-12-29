@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.stack.ImmutableItemStack
-import hiiragi283.core.api.stack.maxStackSize
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.HTStoragePredicates
+import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.util.HTStackSlotHelper
@@ -64,39 +64,45 @@ open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos,
             getCapacity(),
             HTStoragePredicates.alwaysTrueBi(),
             HTStoragePredicates.alwaysTrueBi(),
-            { stack: ImmutableItemStack -> stack.unwrap().canFitInsideContainerItems() },
+            { resource: HTItemResourceType -> resource.toStack().canFitInsideContainerItems() },
             listener,
         ) {
         private val isCreative: Boolean get() = this@HTCrateBlockEntity.isCreative()
 
-        override fun getStack(): ImmutableItemStack? = when (isCreative) {
-            true -> super.getStack()?.copyWithAmount(Int.MAX_VALUE)
-            false -> super.getStack()
-        }
-
-        override fun insert(stack: ImmutableItemStack?, action: HTStorageAction, access: HTStorageAccess): ImmutableItemStack? {
-            val remainder: ImmutableItemStack?
-            if (isCreative && this.getStack() == null && action.execute() && access != HTStorageAccess.EXTERNAL) {
-                remainder = super.insert(stack, HTStorageAction.SIMULATE, access)
-                if (remainder == null) {
-                    setStackUnchecked(stack?.copyWithAmount(getCapacity()))
+        override fun insert(
+            resource: HTItemResourceType?,
+            amount: Int,
+            action: HTStorageAction,
+            access: HTStorageAccess,
+        ): Int {
+            val remainder: Int
+            if (isCreative && this.getResource() == null && action.execute() && access != HTStorageAccess.EXTERNAL) {
+                remainder = super.insert(resource, amount, HTStorageAction.SIMULATE, access)
+                if (remainder == 0) {
+                    setResource(resource)
+                    setAmount(getCapacity())
                 }
             } else {
-                remainder = super.insert(stack, action.combine(!isCreative), access)
+                remainder = super.insert(resource, amount, action.combine(!isCreative), access)
             }
             return remainder
         }
 
-        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): ImmutableItemStack? =
+        override fun extract(amount: Int, action: HTStorageAction, access: HTStorageAccess): Int =
             super.extract(amount, action.combine(!isCreative), access)
 
-        override fun getCapacity(stack: ImmutableItemStack?): Int = when (isCreative) {
+        override fun getCapacity(resource: HTItemResourceType?): Int = when (isCreative) {
             true -> Int.MAX_VALUE
             false -> this@HTCrateBlockEntity.getCapacity()
         }
 
+        override fun getAmount(): Int = when (isCreative) {
+            true -> Int.MAX_VALUE
+            false -> super.getAmount()
+        }
+
         override fun outputRate(access: HTStorageAccess): Int = when {
-            access == HTStorageAccess.MANUAL && isCreative -> getStack()?.maxStackSize() ?: 0
+            access == HTStorageAccess.MANUAL && isCreative -> getItemStack().maxStackSize
             else -> super.outputRate(access)
         }
     }

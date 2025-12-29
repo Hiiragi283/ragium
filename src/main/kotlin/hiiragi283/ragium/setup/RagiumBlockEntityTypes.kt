@@ -43,7 +43,7 @@ object RagiumBlockEntityTypes {
     private fun <BE : HTBlockEntity> registerTick(
         name: String,
         factory: BlockEntityType.BlockEntitySupplier<BE>,
-    ): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickClient, HTBlockEntity::tickServer)
+    ): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
 
     //    Processor    //
 

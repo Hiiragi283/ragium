@@ -1,8 +1,7 @@
 package hiiragi283.ragium.api.upgrade
 
 import hiiragi283.core.api.math.times
-import hiiragi283.core.api.stack.ImmutableItemStack
-import hiiragi283.core.api.stack.toImmutable
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import net.minecraft.ChatFormatting
@@ -15,7 +14,7 @@ data object HTUpgradeHelper {
     //    HTUpgradeProvider    //
 
     @JvmStatic
-    fun getUpgrade(stack: ImmutableItemStack, key: HTUpgradeKey): Fraction? = RagiumDataMapTypes.getUpgradeData(stack)?.get(key)
+    fun getUpgrade(resource: HTItemResourceType, key: HTUpgradeKey): Fraction? = RagiumDataMapTypes.getUpgradeData(resource)?.get(key)
 
     @JvmStatic
     fun appendTooltips(propertyMap: HTUpgradePropertyMap, consumer: Consumer<Component>) {
@@ -34,10 +33,7 @@ data object HTUpgradeHelper {
     //    HTUpgradableHandler    //
 
     @JvmStatic
-    fun getHandler(stack: ItemStack): HTUpgradeHandler? = stack.toImmutable()?.let(::getHandler)
-
-    @JvmStatic
-    fun getHandler(stack: ImmutableItemStack): HTUpgradeHandler? = stack.getCapability(RagiumCapabilities.UPGRADABLE_ITEM)
+    fun getHandler(stack: ItemStack): HTUpgradeHandler? = stack.getCapability(RagiumCapabilities.UPGRADABLE_ITEM)
 
     @JvmStatic
     fun isCreative(stack: ItemStack): Boolean = getHandler(stack)?.isCreative() ?: false

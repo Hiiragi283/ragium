@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.math.div
 import hiiragi283.core.api.math.fixedFraction
 import hiiragi283.core.api.math.times
-import hiiragi283.core.api.recipe.HTAbstractRecipe
+import hiiragi283.core.api.recipe.HTRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.recipe.input.HTRecipeInput
@@ -126,7 +126,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(type: HTDeferre
 
     //    RecipeBased    //
 
-    abstract class RecipeBased<RECIPE : HTAbstractRecipe>(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+    abstract class RecipeBased<RECIPE : HTRecipe>(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTProcessorBlockEntity<HTRecipeInput, RECIPE>(type, pos, state) {
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create(null, ::buildRecipeInput)
 
@@ -138,7 +138,7 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(type: HTDeferre
     /**
      * レシピのキャッシュを保持する[HTProcessorBlockEntity]の拡張クラス
      */
-    abstract class Cached<RECIPE : HTAbstractRecipe>(
+    abstract class Cached<RECIPE : HTRecipe>(
         private val recipeCache: HTRecipeCache<HTRecipeInput, RECIPE>,
         type: HTDeferredBlockEntityType<*>,
         pos: BlockPos,

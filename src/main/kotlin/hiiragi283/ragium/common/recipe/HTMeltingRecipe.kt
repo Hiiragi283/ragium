@@ -5,14 +5,14 @@ import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
-import hiiragi283.core.api.stack.ImmutableFluidStack
-import hiiragi283.core.api.stack.ImmutableItemStack
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.HolderLookup
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.fluids.FluidStack
 import org.apache.commons.lang3.math.Fraction
 
 class HTMeltingRecipe(
@@ -24,12 +24,11 @@ class HTMeltingRecipe(
     HTFluidOutputRecipe {
     override fun matches(input: HTRecipeInput, level: Level): Boolean = input.testItem(0, ingredient)
 
+    override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
+
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MELTING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MELTING.get()
 
-    override fun assembleItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? = null
-
-    override fun assembleFluid(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? =
-        result.getStackOrNull(provider)
+    override fun assembleFluid(input: HTRecipeInput, provider: HolderLookup.Provider): FluidStack = result.getStackOrEmpty(provider)
 }

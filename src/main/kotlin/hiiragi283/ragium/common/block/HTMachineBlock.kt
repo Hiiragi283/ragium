@@ -4,6 +4,7 @@ import hiiragi283.core.api.block.HTBlockWithDescription
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import net.minecraft.core.Direction
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
@@ -15,6 +16,10 @@ class HTMachineBlock(private val translation: HTTranslation, type: HTDeferredBlo
     companion object {
         @JvmField
         val IS_ACTIVE: BooleanProperty = BooleanProperty.create("is_active")
+    }
+
+    init {
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(IS_ACTIVE, false))
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block?, BlockState?>) {

@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.core.api.serialization.value.HTValueInput
-import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
+import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumFluidConfigType
 import net.minecraft.core.BlockPos
@@ -20,42 +19,21 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         return IntSupplier { HTUpgradeHelper.getFluidCapacity(this, baseCapacity.asInt) }
     }
 
-    //    Save & Load    //
-
-    override fun writeValue(output: HTValueOutput) {
-        super.writeValue(output)
-        output.putBoolean("is_active", this.isActive)
-    }
-
-    override fun readValue(input: HTValueInput) {
-        super.readValue(input)
-        this.isActive = input.getBoolean("is_active", false)
-    }
-
-    override fun initReducedUpdateTag(output: HTValueOutput) {
-        super.initReducedUpdateTag(output)
-        output.putBoolean("is_active", this.isActive)
-    }
-
-    override fun handleUpdateTag(input: HTValueInput) {
-        super.handleUpdateTag(input)
-        this.isActive = input.getBoolean("is_active", false)
-    }
-
     //    Ticking    //
 
-    private var lastActive = false
-    var isActive: Boolean = false
-        protected set
-
     final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+        val lastActive: Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElse(false)
         val result: Boolean = onUpdateMachine(level, pos, state)
         // 以前の結果と異なる場合は更新する
-        if (result != this.isActive) {
-            this.lastActive = this.isActive
-            this.isActive = result
+        if (result != lastActive) {
+            val newState: BlockState = when {
+                state.hasProperty(HTMachineBlock.IS_ACTIVE) -> state.setValue(HTMachineBlock.IS_ACTIVE, result)
+                else -> state
+            }
+            level.setBlockAndUpdate(pos, newState)
+            setChanged()
         }
-        return this.lastActive
+        return result
     }
 
     protected abstract fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean

@@ -1,7 +1,6 @@
 {
   "type": "ragium:pyrolyzing",
   "fluid_result": {
-    "amount": 1000,
     "id": "hiiragi_core:crimson_blood",
     "tag": "c:crimson_blood"
   },

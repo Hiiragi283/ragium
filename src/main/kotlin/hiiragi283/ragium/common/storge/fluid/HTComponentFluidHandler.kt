@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.storge.fluid
 
-import hiiragi283.core.api.stack.ImmutableFluidStack
 import hiiragi283.core.api.storage.attachments.HTAttachedFluids
 import hiiragi283.core.api.storage.fluid.HTFluidHandler
 import hiiragi283.core.api.storage.fluid.HTFluidTank
@@ -16,7 +15,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
  * @see mekanism.common.attachments.containers.fluid.ComponentBackedFluidHandler
  */
 class HTComponentFluidHandler(attachedTo: ItemStack, size: Int, containerFactory: ContainerFactory<HTFluidTank>) :
-    HTComponentHandler<ImmutableFluidStack?, HTFluidTank, HTAttachedFluids>(attachedTo, size, containerFactory),
+    HTComponentHandler<FluidStack, HTFluidTank, HTAttachedFluids>(attachedTo, size, containerFactory),
     HTFluidHandler,
     IFluidHandlerItem {
     override fun capabilityCodec(): HTCapabilityCodec<HTFluidTank, HTAttachedFluids> = HTCapabilityCodec.FLUID
@@ -27,7 +26,7 @@ class HTComponentFluidHandler(attachedTo: ItemStack, size: Int, containerFactory
 
     override fun getTanks(side: Direction?): Int = size
 
-    override fun getFluidInTank(tank: Int, side: Direction?): FluidStack = getContents(tank)?.unwrap() ?: FluidStack.EMPTY
+    override fun getFluidInTank(tank: Int, side: Direction?): FluidStack = getContents(tank) ?: FluidStack.EMPTY
 
     override fun getContainer(): ItemStack = attachedTo
 }

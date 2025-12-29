@@ -19,21 +19,21 @@ object RagiumMeltingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromItem(Items.SNOWBALL),
-                resultHelper.fluid(HTFluidWithTag.WATER, 250),
+                fluidResult.create(HTFluidWithTag.WATER, 250),
             ).setTime(5)
             .saveSuffixed(output, "_from_snowball")
 
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromItem(Items.SNOW_BLOCK),
-                resultHelper.fluid(HTFluidWithTag.WATER, 1000),
+                fluidResult.create(HTFluidWithTag.WATER, 1000),
             ).setTime(20)
             .saveSuffixed(output, "_from_snow_block")
         // Ice -> Water
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromItem(Items.ICE),
-                resultHelper.fluid(HTFluidWithTag.WATER, 1000),
+                fluidResult.create(HTFluidWithTag.WATER, 1000),
             ).setTime(20 * 10)
             .saveSuffixed(output, "_from_ice")
     }
@@ -44,14 +44,14 @@ object RagiumMeltingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromTagKeys(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES, Tags.Items.NETHERRACKS)),
-                resultHelper.fluid(HTFluidWithTag.LAVA, 125),
+                fluidResult.create(HTFluidWithTag.LAVA, 125),
             ).setTime(20 * 30)
             .saveSuffixed(output, "_from_stones")
         // Magma Block -> Lava
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromItem(Items.MAGMA_BLOCK),
-                resultHelper.fluid(HTFluidWithTag.LAVA, 125),
+                fluidResult.create(HTFluidWithTag.LAVA, 125),
             ).saveSuffixed(output, "_from_magma")
     }
 }

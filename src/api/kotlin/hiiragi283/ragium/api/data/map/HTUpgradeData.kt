@@ -3,7 +3,7 @@ package hiiragi283.ragium.api.data.map
 import hiiragi283.core.api.math.fraction
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.serialization.codec.BiCodec
-import hiiragi283.core.api.stack.ImmutableItemStack
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.api.upgrade.HTUpgradeKey
@@ -41,11 +41,11 @@ data class HTUpgradeData private constructor(
          * @see net.minecraft.world.item.enchantment.Enchantment.areCompatible
          */
         @JvmStatic
-        fun areCompatible(first: ImmutableItemStack, second: ImmutableItemStack): Boolean {
+        fun areCompatible(first: HTItemResourceType, second: HTItemResourceType): Boolean {
             val firstData: HTUpgradeData = RagiumDataMapTypes.getUpgradeData(first) ?: return false
             val secondData: HTUpgradeData = RagiumDataMapTypes.getUpgradeData(second) ?: return false
-            val bool1: Boolean = !firstData.exclusiveSet.map { it.test(second) }.orElse(false)
-            val bool2: Boolean = !secondData.exclusiveSet.map { it.test(first) }.orElse(false)
+            val bool1: Boolean = !firstData.exclusiveSet.map { it.testOnlyType(second) }.orElse(false)
+            val bool2: Boolean = !secondData.exclusiveSet.map { it.testOnlyType(first) }.orElse(false)
             return bool1 && bool2
         }
 

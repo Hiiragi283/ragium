@@ -7,10 +7,10 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTRecipeInput
 import hiiragi283.core.api.recipe.result.HTComplexResult
-import hiiragi283.core.api.stack.ImmutableFluidStack
-import hiiragi283.core.api.stack.ImmutableItemStack
 import net.minecraft.core.HolderLookup
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.fluids.FluidStack
 import org.apache.commons.lang3.math.Fraction
 
 abstract class HTComplexRecipe(
@@ -23,9 +23,9 @@ abstract class HTComplexRecipe(
     final override fun matches(input: HTRecipeInput, level: Level): Boolean =
         ingredient.map({ input.testItem(0, it) }, { input.testFluid(0, it) })
 
-    final override fun assembleItem(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableItemStack? =
-        result.getLeft()?.getStackOrNull(provider)
+    final override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack =
+        result.getLeft()?.getStackOrEmpty(registries) ?: ItemStack.EMPTY
 
-    final override fun assembleFluid(input: HTRecipeInput, provider: HolderLookup.Provider): ImmutableFluidStack? =
-        result.getRight()?.getStackOrNull(provider)
+    final override fun assembleFluid(input: HTRecipeInput, provider: HolderLookup.Provider): FluidStack =
+        result.getRight()?.getStackOrEmpty(provider) ?: FluidStack.EMPTY
 }

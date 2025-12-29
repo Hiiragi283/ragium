@@ -3,7 +3,7 @@
   "ingredient": [
     [
       "#c:dusts/coal_coke",
-      "#c:gems/coal_coke"
+      "#c:fuels/coal_coke"
     ],
     "minecraft:calcite"
   ],

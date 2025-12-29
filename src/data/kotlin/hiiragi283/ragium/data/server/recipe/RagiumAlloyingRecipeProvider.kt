@@ -22,7 +22,7 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             .create(
                 RagiumMaterialResultHelper.item(HCMaterialPrefixes.FUEL, HCMaterial.Fuels.CARBIDE),
                 itemCreator.fromTagKeys(
-                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.GEM),
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.FUEL),
                     listOf(HCMaterial.Fuels.COAL_COKE),
                 ),
                 itemCreator.fromItem(Items.CALCITE),
@@ -78,7 +78,7 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Ambrosia
         HTAlloyingRecipeBuilder
             .create(
-                resultHelper.item(HCItems.AMBROSIA),
+                itemResult.create(HCItems.AMBROSIA),
                 itemCreator.fromItem(HCItems.IRIDESCENT_POWDER),
                 itemCreator.fromItem(Items.HONEY_BLOCK, 64),
                 itemCreator.fromItem(Items.ENCHANTED_GOLDEN_APPLE, 16),

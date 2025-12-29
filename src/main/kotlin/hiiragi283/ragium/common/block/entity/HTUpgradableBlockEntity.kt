@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.core.api.stack.ImmutableItemStack
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.HTItemSlot
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTSlotUpgradeHandler
@@ -23,6 +23,6 @@ abstract class HTUpgradableBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
 
     final override fun getUpgradeSlots(): List<HTItemSlot> = machineUpgrade.getUpgradeSlots()
 
-    override fun isValidUpgrade(upgrade: ImmutableItemStack, existing: List<ImmutableItemStack>): Boolean =
+    override fun isValidUpgrade(upgrade: HTItemResourceType, existing: List<HTItemResourceType>): Boolean =
         machineUpgrade.isValidUpgrade(upgrade, existing)
 }

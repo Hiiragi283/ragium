@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.upgrade
 
 import hiiragi283.core.api.math.times
-import hiiragi283.core.api.stack.ImmutableItemStack
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import org.apache.commons.lang3.math.Fraction
 import java.util.function.UnaryOperator
 
@@ -9,17 +9,17 @@ import java.util.function.UnaryOperator
  * アップグレードを保持するインターフェース
  */
 interface HTUpgradeHandler {
-    fun getUpgrades(): List<ImmutableItemStack>
+    fun getUpgrades(): List<HTItemResourceType>
 
-    fun isValidUpgrade(upgrade: ImmutableItemStack, existing: List<ImmutableItemStack>): Boolean
+    fun isValidUpgrade(upgrade: HTItemResourceType, existing: List<HTItemResourceType>): Boolean
 
     //    Extensions    //
 
     fun getMaxMultiplier(key: HTUpgradeKey): Fraction? = getUpgrades().mapNotNull { HTUpgradeHelper.getUpgrade(it, key) }.maxOrNull()
 
     fun hasUpgrade(key: HTUpgradeKey): Boolean {
-        for (stack: ImmutableItemStack in getUpgrades()) {
-            if (HTUpgradeHelper.getUpgrade(stack, key) != null) {
+        for (resource: HTItemResourceType in getUpgrades()) {
+            if (HTUpgradeHelper.getUpgrade(resource, key) != null) {
                 return true
             }
         }
@@ -28,8 +28,8 @@ interface HTUpgradeHandler {
 
     fun collectMultiplier(key: HTUpgradeKey, ignoreEmpty: Boolean = false): Fraction {
         if (!hasUpgrade(key) && ignoreEmpty) return Fraction.ZERO
-        return getUpgrades().fold(Fraction.ONE) { sum: Fraction, stack: ImmutableItemStack ->
-            val fraction: Fraction = HTUpgradeHelper.getUpgrade(stack, key) ?: return@fold sum
+        return getUpgrades().fold(Fraction.ONE) { sum: Fraction, resource: HTItemResourceType ->
+            val fraction: Fraction = HTUpgradeHelper.getUpgrade(resource, key) ?: return@fold sum
             sum * fraction
         }
     }
