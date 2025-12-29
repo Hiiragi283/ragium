@@ -63,18 +63,13 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(type: HTDeferre
         if (usedEnergy < requiredEnergy) {
             usedEnergy += battery.consume()
         }
-        return when {
-            usedEnergy < requiredEnergy -> false
-            // アウトプットに完成品を搬出できるか判定する
-            canProgressRecipe(level, input, recipe) -> {
-                usedEnergy -= requiredEnergy
-                // レシピを実行する
-                completeRecipe(level, pos, state, input, recipe)
-                true
-            }
-
-            else -> false
+        // アウトプットに完成品を搬出できるか判定する
+        if (usedEnergy >= requiredEnergy && canProgressRecipe(level, input, recipe)) {
+            usedEnergy -= requiredEnergy
+            // レシピを実行する
+            completeRecipe(level, pos, state, input, recipe)
         }
+        return true
     }
 
     /**
