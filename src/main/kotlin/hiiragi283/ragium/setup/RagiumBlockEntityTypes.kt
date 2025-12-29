@@ -12,7 +12,9 @@ import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
@@ -48,7 +50,13 @@ object RagiumBlockEntityTypes {
     //    Processor    //
 
     @JvmField
+    val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> = registerTick(RagiumConst.DRYER, ::HTDryerBlockEntity)
+
+    @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
+
+    @JvmField
+    val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> = registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
 
     //    Storage    //
 
@@ -79,7 +87,9 @@ object RagiumBlockEntityTypes {
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         // Processor
+        registerHandler(event, DRYER.get())
         registerHandler(event, MELTER.get())
+        registerHandler(event, PYROLYZER.get())
 
         // Storage
         registerHandler(event, BATTERY.get())

@@ -33,11 +33,12 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     COMPRESSOR("description", "compressor"),
     ELECTRIC_FURNACE("description", "electric_smelter"),
     EXTRACTOR("description", "extractor"),
-    PULVERIZER("description", "pulverizer"),
-
     CRUSHER("description", "crusher"),
+    
+    DRYER("description", RagiumConst.DRYER),
     MELTER("description", RagiumConst.MELTER),
     MIXER("description", "mixer"),
+    PYROLYZER("description", RagiumConst.PYROLYZER),
     REFINERY("description", "refinery"),
 
     BREWERY("description", "brewery"),

@@ -66,9 +66,18 @@ object RagiumBlocks {
 
     //    Processors    //
 
+    // Advanced
+    @JvmField
+    val DRYER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.DRYER, RagiumTranslation.DRYER)
+
     @JvmField
     val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
+
+    @JvmField
+    val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
     //    Storages    //
 

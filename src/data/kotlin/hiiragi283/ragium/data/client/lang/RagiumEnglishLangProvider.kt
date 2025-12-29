@@ -32,7 +32,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         }
 
         // Block
+        add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.MELTER, "Melter")
+        add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
 
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
@@ -88,6 +90,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "Extra Input")
         add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "Extra Output")
         add(RagiumTranslation.GUI_SLOT_NONE, "None")
+
+        add(RagiumTranslation.DRYER, "A machine which converts ingredients into others by drying.")
+        add(RagiumTranslation.MELTER, "A machine which melts item into fluid.")
+        add(RagiumTranslation.PYROLYZER, "A machine which converts ingredients into others by heating.")
 
         add(RagiumTranslation.BATTERY, "A energy storage which capacity is extendable by upgrade.")
         add(RagiumTranslation.CRATE, "A item storage which capacity is extendable by upgrade.")

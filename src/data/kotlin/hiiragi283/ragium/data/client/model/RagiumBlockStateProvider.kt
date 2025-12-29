@@ -26,7 +26,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
     val advancedFrame: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, "advanced_machine_frame")
 
     val blackstone: ResourceLocation = vanillaId("block", "polished_blackstone_bricks")
-    
+
     override fun registerStatesAndModels() {
         registerMaterials()
 

@@ -15,7 +15,6 @@ import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.storage.item.insert
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.common.storage.item.HTOutputItemSlot
 import hiiragi283.core.util.HTItemDropHelper
 import hiiragi283.core.util.HTStackSlotHelper
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
@@ -31,7 +30,6 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
@@ -58,7 +56,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         // input
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.create(listener))
         // output
-        remainderSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTOutputItemSlot(listener))
+        remainderSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
     //    Save & Load    //
@@ -73,9 +71,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         (input.read(HTConst.FLUID, VanillaBiCodecs.FLUID_STACK) ?: FluidStack.EMPTY).let(outputTank::setStack)
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.melter
-
-    //    Ticking    //
+    //    Processing    //
 
     override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputTank.getNeeded() > 0
 
@@ -110,6 +106,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             HTStorageAction.EXECUTE,
         )
         // SEを鳴らす
-        level.playSound(null, pos, SoundEvents.WITCH_DRINK, SoundSource.BLOCKS, 1f, 0.5f)
+        playSound(SoundEvents.BUCKET_EMPTY_LAVA)
     }
+
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.melter
 }

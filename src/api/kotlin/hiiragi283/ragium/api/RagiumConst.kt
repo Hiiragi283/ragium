@@ -3,7 +3,9 @@ package hiiragi283.ragium.api
 object RagiumConst {
     //    Blocks    //
 
+    const val DRYER = "dryer"
     const val MELTER = "melter"
+    const val PYROLYZER = "pyrolyzer"
 
     //    NBT    //
 

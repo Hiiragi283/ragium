@@ -31,11 +31,11 @@ object RagiumEmiRecipeCategories {
     val CRUSHING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CRUSHING, Items.GRINDSTONE)
 
     @JvmField
-    val DRYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.DRYING, Items.SCAFFOLDING)
+    val DRYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.DRYING, RagiumBlocks.DRYER)
 
     @JvmField
     val MELTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val PYROLYZING: HTEmiRecipeCategory = create(RagiumRecipeTypes.PYROLYZING, Items.SMOKER)
+    val PYROLYZING: HTEmiRecipeCategory = create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 }

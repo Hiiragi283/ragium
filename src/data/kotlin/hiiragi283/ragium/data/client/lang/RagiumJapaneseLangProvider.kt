@@ -29,7 +29,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         }
 
         // Block
+        add(RagiumBlocks.DRYER, "乾燥機")
         add(RagiumBlocks.MELTER, "溶融炉")
+        add(RagiumBlocks.PYROLYZER, "熱分解室")
 
         add(RagiumBlocks.BATTERY, "可変バッテリー")
         add(RagiumBlocks.CRATE, "可変クレート")
@@ -87,6 +89,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "追加の出力")
         add(RagiumTranslation.GUI_SLOT_NONE, "なし")
 
+        add(RagiumTranslation.DRYER, "乾燥によって材料を変換する機械です。")
+        add(RagiumTranslation.MELTER, "アイテムを融かして液体にする機械です。")
+        add(RagiumTranslation.PYROLYZER, "熱によって材料を変換する機械です。")
+        
         add(RagiumTranslation.BATTERY, "アップグレードで容量を拡張可能なエネルギーストレージです。")
         add(RagiumTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")
         add(RagiumTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
