@@ -74,7 +74,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     // アウトプットに搬出できるか判定する
     override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTMeltingRecipe): Boolean =
-        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty
+        outputTank.insert(recipe.getResultFluid(level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty
 
     override fun completeRecipe(
         level: ServerLevel,
@@ -84,7 +84,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         recipe: HTMeltingRecipe,
     ) {
         // 実際にアウトプットに搬出する
-        outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        outputTank.insert(recipe.getResultFluid(level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
         inputSlot.extract(recipe.ingredient.getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす

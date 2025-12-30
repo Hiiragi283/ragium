@@ -22,7 +22,7 @@ class HTRefiningEmiRecipe(holder: RecipeHolder<HTRefiningRecipe>) :
 
         // Input
         widgets
-            .addTank(input(0), getPosition(0.5), getPosition(1))
+            .addTank(input(0), getPosition(0.5), getPosition(0))
         // Output
         widgets
             .addTank(output(0), getPosition(5), getPosition(0))
@@ -30,7 +30,7 @@ class HTRefiningEmiRecipe(holder: RecipeHolder<HTRefiningRecipe>) :
         widgets
             .addTank(output(1), getPosition(6.5), getPosition(0))
             .recipeContext(this)
-        widgets.addOutput(2, getPosition(3.4), getPosition(0), drawBack = false)
+        widgets.addOutput(2, getPosition(3.4), getPosition(1), drawBack = false)
     }
 
     override fun getArrowX(): Int = getPosition(2)

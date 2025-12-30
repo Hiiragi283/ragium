@@ -7,7 +7,6 @@ import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.HTStoragePredicates
 import hiiragi283.core.api.storage.attachments.HTAttachedItems
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.HTItemSlot
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.world.sendBlockUpdated
 import hiiragi283.core.common.block.entity.HTBlockEntity
@@ -69,7 +68,7 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
     }
     //    HTSlotUpgradeHandler    //
 
-    override fun getUpgradeSlots(): List<HTItemSlot> = upgradeSlots
+    override fun getUpgradeSlots(): List<HTBasicItemSlot> = upgradeSlots
 
     override fun isValidUpgrade(upgrade: HTItemResourceType, existing: List<HTItemResourceType>): Boolean {
         val upgradeData: HTUpgradeData = RagiumDataMapTypes.getUpgradeData(upgrade) ?: return false

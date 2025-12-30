@@ -4,11 +4,16 @@ object RagiumConst {
     //    Blocks    //
 
     const val ALLOY_SMELTER = "alloy_smelter"
-
+    const val BREWERY = "brewery"
+    const val CRUSHER = "crusher"
+    const val CUTTING_MACHINE = "cutting_machine"
     const val DRYER = "dryer"
+    const val ENCHANTER = "enchanter"
     const val MELTER = "melter"
+    const val PLANTER = "planter"
     const val PYROLYZER = "pyrolyzer"
     const val REFINERY = "refinery"
+    const val SOLIDIFIER = "solidifier"
 
     //    Serialization    //
 
@@ -20,14 +25,11 @@ object RagiumConst {
 
     const val ALLOYING = "alloying"
     const val BREWING = "brewing"
-    const val COMPRESSING = "compressing"
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
     const val DRYING = "drying"
     const val ENCHANTING = "enchanting"
-    const val EXTRACTING = "extracting"
     const val MELTING = "melting"
-    const val MIXING = "mixing"
     const val PLANTING = "planting"
     const val PYROLYZING = "pyrolyzing"
     const val REFINING = "refining"

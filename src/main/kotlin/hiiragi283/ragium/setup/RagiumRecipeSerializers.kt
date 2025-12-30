@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTComplexResult
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
@@ -17,13 +18,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
+import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTExtraProcessingRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTChancedRecipe
 import hiiragi283.ragium.common.recipe.HTComplexRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
-import hiiragi283.ragium.common.recipe.HTExtraProcessingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -103,16 +104,17 @@ object RagiumRecipeSerializers {
         )
 
     @JvmStatic
-    private fun <R : HTExtraProcessingRecipe> extra(
-        factory: HTExtraProcessingRecipeBuilder.Factory<R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC
-            .fieldOf(HTConst.INGREDIENT)
-            .forGetter(HTExtraProcessingRecipe::ingredient),
-        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTExtraProcessingRecipe::result),
-        HTItemResult.CODEC.optionalFieldOf(RagiumConst.EXTRA_RESULT).forGetter(HTExtraProcessingRecipe::extra),
-        HTRecipeBiCodecs.TIME.forGetter(HTExtraProcessingRecipe::time),
-        HTRecipeBiCodecs.EXP.forGetter(HTExtraProcessingRecipe::exp),
+    private fun <R : HTChancedRecipe> chanced(
+        factory: HTChancedRecipeBuilder.Factory<R>,
+        min: Int,
+        max: Int,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = processing(
+        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTChancedRecipe::ingredient),
+        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTChancedRecipe::result),
+        HTChancedItemResult.CODEC
+            .listOrElement(min, max)
+            .optionalFieldOf(RagiumConst.EXTRA_RESULT, listOf())
+            .forGetter(HTChancedRecipe::extraResults),
         factory::create,
     )
 
@@ -132,7 +134,7 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, extra(::HTCrushingRecipe))
+    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, chanced(::HTCrushingRecipe, 0, 3))
 
     @JvmField
     val DRYING: RecipeSerializer<HTDryingRecipe> =

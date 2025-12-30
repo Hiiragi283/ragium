@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.fluids.FluidStack
 import org.apache.commons.lang3.math.Fraction
 
 class HTRefiningRecipe(
@@ -21,6 +22,10 @@ class HTRefiningRecipe(
     time: Int,
     exp: Fraction,
 ) : HTProcessingRecipe(time, exp) {
+    fun getResultFluid(provider: HolderLookup.Provider): FluidStack = result.getStackOrEmpty(provider)
+
+    fun getExtraFluid(provider: HolderLookup.Provider): FluidStack = extraResult.getRight()?.getStackOrEmpty(provider) ?: FluidStack.EMPTY
+
     override fun matches(input: HTRecipeInput, level: Level): Boolean = input.testFluid(0, ingredient)
 
     override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack =

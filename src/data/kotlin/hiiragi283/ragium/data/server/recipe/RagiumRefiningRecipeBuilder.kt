@@ -15,10 +15,10 @@ object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         HTRefiningRecipeBuilder
             .create(
                 fluidCreator.fromTagKey(RagiumFluids.CREOSOTE, 1000),
-                fluidResult.create(RagiumFluids.LUBRICANT, 500)
+                fluidResult.create(RagiumFluids.LUBRICANT, 500),
             ).setResult(itemResult.create(HCItems.TAR))
             .saveSuffixed(output, "_from_creosote")
-        
+
         // Crude Oil -> Naphtha + Tar
         HTRefiningRecipeBuilder
             .create(

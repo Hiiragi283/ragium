@@ -5,7 +5,9 @@ import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.client.gui.component.HTArrowProgressWidget
 import hiiragi283.core.client.gui.component.HTBurnProgressWidget
 import hiiragi283.core.client.gui.screen.HTBlockEntityContainerScreen
+import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.core.common.inventory.container.HTBlockEntityContainerMenu
+import hiiragi283.ragium.client.gui.component.HTEnergyBatteryWidget
 import hiiragi283.ragium.client.gui.component.HTFluidTankWidget
 import hiiragi283.ragium.common.block.entity.processing.HTProcessorBlockEntity
 import net.minecraft.network.chat.Component
@@ -27,9 +29,14 @@ abstract class HTProcessorScreen<BE : HTProcessorBlockEntity<*, *>, MENU : HTBlo
         title,
     )
 
+    override fun init() {
+        super.init()
+        addWidget(HTSlotHelper.getSlotPosX(0.5), HTSlotHelper.getSlotPosY(0), ::HTEnergyBatteryWidget.partially1(blockEntity.battery))
+    }
+
     //    Extensions    //
 
-    protected fun addFluidTank(x: Int, y: Int, view: HTFluidView): HTFluidTankWidget =
+    protected fun addFluidTank(x: Int, view: HTFluidView, y: Int = HTSlotHelper.getSlotPosY(0)): HTFluidTankWidget =
         addFluidWidget(x, y, ::HTFluidTankWidget.partially1(view))
 
     protected fun addProgress(x: Int, y: Int): HTArrowProgressWidget =

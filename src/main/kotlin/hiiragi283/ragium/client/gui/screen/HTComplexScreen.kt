@@ -10,8 +10,8 @@ class HTComplexScreen(menu: HTComplexContainerMenu, inventory: Inventory, title:
     HTProcessorScreen<HTAbstractComplexBlockEntity<*>, HTComplexContainerMenu>(menu, inventory, title) {
     override fun init() {
         super.init()
-        addFluidTank(HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(0), blockEntity.inputTank)
-        addFluidTank(HTSlotHelper.getSlotPosX(8), HTSlotHelper.getSlotPosY(0), blockEntity.outputTank)
+        addFluidTank(HTSlotHelper.getSlotPosX(1.5), blockEntity.inputTank)
+        addFluidTank(HTSlotHelper.getSlotPosX(8), blockEntity.outputTank)
 
         addBurning(HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(1.5))
         addProgress(HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(1))

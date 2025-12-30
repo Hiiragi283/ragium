@@ -18,12 +18,11 @@ abstract class HTComplexRecipe(
     time: Int,
     exp: Fraction,
 ) : HTProcessingRecipe(time, exp) {
+    fun getResultFluid(provider: HolderLookup.Provider): FluidStack = result.getRight()?.getStackOrEmpty(provider) ?: FluidStack.EMPTY
+
     final override fun matches(input: HTRecipeInput, level: Level): Boolean =
         ingredient.map({ input.testItem(0, it) }, { input.testFluid(0, it) })
 
     final override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack =
         result.getLeft()?.getStackOrEmpty(registries) ?: ItemStack.EMPTY
-
-    final override fun assembleFluid(input: HTRecipeInput, provider: HolderLookup.Provider): FluidStack =
-        result.getRight()?.getStackOrEmpty(provider) ?: FluidStack.EMPTY
 }

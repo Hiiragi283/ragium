@@ -67,7 +67,7 @@ abstract class HTAbstractComplexBlockEntity<RECIPE : HTComplexRecipe>(
         val access: RegistryAccess = level.registryAccess()
         val bool1: Boolean = outputTank
             .insert(
-                recipe.assembleFluid(input, access),
+                recipe.getResultFluid(access),
                 HTStorageAction.SIMULATE,
                 HTStorageAccess.INTERNAL,
             ).isEmpty
@@ -89,7 +89,7 @@ abstract class HTAbstractComplexBlockEntity<RECIPE : HTComplexRecipe>(
     ) {
         val access: RegistryAccess = level.registryAccess()
         // 実際にアウトプットに搬出する
-        outputTank.insert(recipe.assembleFluid(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        outputTank.insert(recipe.getResultFluid(access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         outputSlot.insert(recipe.assemble(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
         recipe.ingredient.map(

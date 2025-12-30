@@ -10,7 +10,7 @@ class HTMelterScreen(menu: HTMelterContainerMenu, inventory: Inventory, title: C
     HTProcessorScreen<HTMelterBlockEntity, HTMelterContainerMenu>(menu, inventory, title) {
     override fun init() {
         super.init()
-        addFluidTank(HTSlotHelper.getSlotPosX(6), HTSlotHelper.getSlotPosY(0), blockEntity.outputTank)
+        addFluidTank(HTSlotHelper.getSlotPosX(6), blockEntity.outputTank)
 
         addBurning(HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1.5))
         addProgress(HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(1))
