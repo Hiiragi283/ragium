@@ -3,11 +3,14 @@ package hiiragi283.ragium.common.block.entity.processing
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.math.div
 import hiiragi283.core.api.math.fixedFraction
+import hiiragi283.core.api.math.minus
 import hiiragi283.core.api.math.times
 import hiiragi283.core.api.recipe.HTRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.recipe.input.HTRecipeInput
+import hiiragi283.core.common.inventory.container.HTContainerMenu
+import hiiragi283.core.common.inventory.slot.HTIntSyncSlot
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
@@ -39,14 +42,22 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(type: HTDeferre
     protected var requiredEnergy: Int = 0
     protected var usedEnergy: Int = 0
 
-    /*override fun addMenuTrackers(menu: HTContainerMenu) {
+    override fun addMenuTrackers(menu: HTContainerMenu) {
         super.addMenuTrackers(menu)
         // Progress
         menu.track(HTIntSyncSlot.create(::usedEnergy))
         menu.track(HTIntSyncSlot.create(::requiredEnergy))
-    }*/
+    }
 
-    fun getProgress(): Fraction = fixedFraction(usedEnergy, requiredEnergy)
+    fun getProgress(): Fraction = when (isActive()) {
+        true -> fixedFraction(usedEnergy, requiredEnergy)
+        false -> Fraction.ZERO
+    }
+
+    fun getReversedProgress(): Fraction = when (isActive()) {
+        true -> 1 - getProgress()
+        false -> Fraction.ZERO
+    }
 
     final override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // アウトプットが埋まっていないか判定する

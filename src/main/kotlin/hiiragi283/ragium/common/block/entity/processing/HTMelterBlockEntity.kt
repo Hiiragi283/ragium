@@ -10,13 +10,9 @@ import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.fluid.insert
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.api.storage.item.insert
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.util.HTItemDropHelper
-import hiiragi283.core.util.HTStackSlotHelper
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -30,7 +26,6 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 
@@ -49,14 +44,10 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     lateinit var inputSlot: HTBasicItemSlot
         private set
-    lateinit var remainderSlot: HTBasicItemSlot
-        private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         // input
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.create(listener))
-        // output
-        remainderSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
     //    Save & Load    //
@@ -94,17 +85,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     ) {
         // 実際にアウトプットに搬出する
         outputTank.insert(recipe.assembleFluid(input, level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        // インプットを減らす, 返却物がある場合は移動
-        HTStackSlotHelper.shrinkItemStack(
-            inputSlot,
-            { resource: HTItemResourceType -> resource.toStack().craftingRemainingItem },
-            { stack: ItemStack ->
-                val remainder: ItemStack = remainderSlot.insert(stack, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-                HTItemDropHelper.dropStackAt(level, pos, remainder)
-            },
-            recipe.ingredient.getRequiredAmount(),
-            HTStorageAction.EXECUTE,
-        )
+        // インプットを減らす
+        inputSlot.extract(recipe.ingredient.getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす
         playSound(SoundEvents.BUCKET_EMPTY_LAVA)
     }

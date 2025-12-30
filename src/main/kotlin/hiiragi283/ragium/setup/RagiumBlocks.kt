@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.collection.buildTable
-import hiiragi283.core.api.function.partially2
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.HTMaterialTable
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
@@ -10,6 +9,7 @@ import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import hiiragi283.core.common.registry.HTDeferredMenuType
 import hiiragi283.core.common.registry.HTSimpleDeferredBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
 import hiiragi283.ragium.api.RagiumAPI
@@ -73,7 +73,7 @@ object RagiumBlocks {
 
     @JvmField
     val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
+        registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER, RagiumMenuTypes.MELTER)
 
     @JvmField
     val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
@@ -122,11 +122,18 @@ object RagiumBlocks {
     private fun registerMachine(
         type: HTDeferredBlockEntityType<*>,
         translation: HTTranslation,
+        menuType: HTDeferredMenuType.WithContext<*, *>? = null,
         properties: BlockBehaviour.Properties = machine(),
     ): HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> = REGISTER.register(
         type.getPath(),
         properties,
-        ::HTMachineBlock.partially2(translation, type),
+        { properties: BlockBehaviour.Properties ->
+            object : HTMachineBlock(type, properties) {
+                override fun getDescription(): HTTranslation = translation
+
+                override fun getMenuType(): HTDeferredMenuType.WithContext<*, *>? = menuType
+            }
+        },
         ::HTMachineBlockItem,
     )
 }

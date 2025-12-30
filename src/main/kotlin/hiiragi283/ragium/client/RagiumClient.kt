@@ -4,8 +4,10 @@ import com.mojang.logging.LogUtils
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
@@ -14,6 +16,7 @@ import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
@@ -33,6 +36,7 @@ object RagiumClient {
 
         eventBus.addListener(::registerItemColors)
         eventBus.addListener(::registerClientExtensions)
+        eventBus.addListener(::registerScreens)
 
         LOADING_CONTEXT.activeContainer.registerExtensionPoint(
             IConfigScreenFactory::class.java,
@@ -80,6 +84,12 @@ object RagiumClient {
 
         event.clear(RagiumFluids.COOLANT, Color(0x009999))
         event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
+    }
+
+    private fun registerScreens(event: RegisterMenuScreensEvent) {
+        event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
+
+        LOGGER.info("Registered screens!")
     }
 
     //    Extensions    //

@@ -19,10 +19,14 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         return IntSupplier { HTUpgradeHelper.getFluidCapacity(this, baseCapacity.asInt) }
     }
 
+    fun isActive(): Boolean = isActive(this.blockState)
+
+    fun isActive(state: BlockState): Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElse(false)
+
     //    Ticking    //
 
     final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        val lastActive: Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElse(false)
+        val lastActive: Boolean = isActive(state)
         val result: Boolean = onUpdateMachine(level, pos, state)
         // 以前の結果と異なる場合は更新する
         if (result != lastActive) {

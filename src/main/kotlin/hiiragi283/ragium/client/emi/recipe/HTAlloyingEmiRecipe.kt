@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.emi.recipe
 
-import dev.emi.emi.api.render.EmiTexture
 import dev.emi.emi.api.widget.WidgetHolder
+import hiiragi283.core.api.integration.emi.addBurning
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -18,16 +18,7 @@ class HTAlloyingEmiRecipe(holder: RecipeHolder<HTAlloyingRecipe>) :
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
-        widgets.addTexture(EmiTexture.EMPTY_FLAME, getPosition(1) + 2, getPosition(2) + 2)
-        widgets.addAnimatedTexture(
-            EmiTexture.FULL_FLAME,
-            getPosition(1) + 2,
-            getPosition(2) + 2,
-            1000 * recipe.time / 20,
-            false,
-            true,
-            true,
-        )
+        widgets.addBurning(getPosition(1), getPosition(2), recipe.time)
 
         // Input
         widgets.addSlot(input(0), getPosition(1), getPosition(0))
