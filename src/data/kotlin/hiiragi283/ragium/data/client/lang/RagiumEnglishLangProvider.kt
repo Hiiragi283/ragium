@@ -46,6 +46,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         addFluid(RagiumFluids.SLIME, "Slime")
         addFluid(RagiumFluids.GELLED_EXPLOSIVE, "Gelled Explosive")
         addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
+        addFluid(RagiumFluids.ETHANOL, "Ethanol")
         addFluid(RagiumFluids.BIOFUEL, "Biofuel")
 
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")

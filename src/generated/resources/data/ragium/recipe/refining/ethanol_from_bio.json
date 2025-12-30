@@ -9,7 +9,7 @@
   },
   "result": {
     "amount": 750,
-    "id": "ragium:biofuel",
-    "tag": "c:biofuel"
+    "id": "ragium:ethanol",
+    "tag": "c:ethanol"
   }
 }

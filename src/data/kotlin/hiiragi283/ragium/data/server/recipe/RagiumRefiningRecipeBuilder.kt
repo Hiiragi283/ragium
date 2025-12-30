@@ -34,12 +34,13 @@ object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             ).setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Minerals.SULFUR))
             .saveSuffixed(output, "_from_naphtha")
 
-        // Crude Bio -> Biomass + Bio Fuel
+        // Crude Bio -> Ethanol
         HTRefiningRecipeBuilder
             .create(
                 fluidCreator.fromTagKey(RagiumFluids.CRUDE_BIO, 1000),
-                fluidResult.create(RagiumFluids.BIOFUEL, 750),
+                fluidResult.create(RagiumFluids.ETHANOL, 750),
             ).setResult(itemResult.create(Items.BONE_MEAL))
-            .save(output)
+            .saveSuffixed(output, "_from_bio")
+        // Ethanol + Sulfuric Acid -> Biofuel
     }
 }

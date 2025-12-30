@@ -48,6 +48,9 @@ object RagiumFluids {
     val CRUDE_BIO: HTSimpleFluidContent = REGISTER.registerSimple("crude_bio", slimy())
 
     @JvmField
+    val ETHANOL: HTSimpleFluidContent = REGISTER.registerSimple("ethanol", liquid())
+
+    @JvmField
     val BIOFUEL: HTSimpleFluidContent = REGISTER.registerSimple("biofuel", liquid())
 
     //    Oil    //
