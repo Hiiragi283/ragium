@@ -37,6 +37,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, HTComplexEmiRecipe.Companion::pyrolyzing)
 
         // Misc
+
         registry.setDefaultComparison(
             RagiumItems.LOOT_TICKET.get(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TICKET) },

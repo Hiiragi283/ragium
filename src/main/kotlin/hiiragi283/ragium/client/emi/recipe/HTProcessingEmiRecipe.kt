@@ -32,5 +32,5 @@ abstract class HTProcessingEmiRecipe<RECIPE : HTProcessingRecipe> : HTEmiHolderR
         widgets.addArrow(getArrowX(), getPosition(1), recipe.time)
     }
 
-    protected open fun getArrowX(): Int = getPosition(2.5)
+    protected open fun getArrowX(): Int = getPosition(3.5)
 }

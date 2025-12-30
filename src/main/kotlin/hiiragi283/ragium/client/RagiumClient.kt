@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.client.gui.screen.HTComplexScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
@@ -87,6 +88,7 @@ object RagiumClient {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
+        event.register(RagiumMenuTypes.COMPLEX.get(), ::HTComplexScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
 
         LOGGER.info("Registered screens!")

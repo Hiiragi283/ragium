@@ -3,6 +3,7 @@ package hiiragi283.ragium.client.emi.recipe
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.integration.emi.addBurning
+import hiiragi283.core.api.integration.emi.addTank
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.common.recipe.HTComplexRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
@@ -31,14 +32,14 @@ class HTComplexEmiRecipe<RECIPE : HTComplexRecipe>(category: HTEmiRecipeCategory
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
-        widgets.addBurning(getPosition(1), getPosition(1), recipe.time)
+        widgets.addBurning(getPosition(2), getPosition(1.5), recipe.time)
 
         // Input
-        widgets.addSlot(input(0), getPosition(1), getPosition(0))
-        widgets.addSlot(input(1), getPosition(1), getPosition(2))
+        widgets.addSlot(input(0), getPosition(2), getPosition(0.5))
+        widgets.addTank(input(1), getPosition(0.5), getPosition(0))
 
         // Output
-        widgets.addOutput(0, getPosition(4.5), getPosition(0) + 4, true)
-        widgets.addOutput(1, getPosition(4.5), getPosition(2))
+        widgets.addOutput(0, getPosition(5.5), getPosition(1) + 4, true)
+        widgets.addTank(output(1), getPosition(7), getPosition(0)).recipeContext(this)
     }
 }

@@ -28,6 +28,4 @@ class HTAlloyingEmiRecipe(holder: RecipeHolder<HTAlloyingRecipe>) :
         // Output
         widgets.addOutput(0, getPosition(5), getPosition(1), true)
     }
-
-    override fun getArrowX(): Int = getPosition(3)
 }

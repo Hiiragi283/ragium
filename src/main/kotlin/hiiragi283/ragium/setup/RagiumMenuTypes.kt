@@ -8,7 +8,9 @@ import hiiragi283.core.common.registry.HTDeferredMenuType
 import hiiragi283.core.common.registry.register.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.block.entity.processing.HTAbstractComplexBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
+import hiiragi283.ragium.common.inventory.container.HTComplexContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTMelterContainerMenu
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
@@ -22,6 +24,10 @@ object RagiumMenuTypes {
     val REGISTER = HTDeferredMenuTypeRegister(RagiumAPI.MOD_ID)
 
     //    Processor    //
+
+    @JvmField
+    val COMPLEX: HTDeferredMenuType.WithContext<HTComplexContainerMenu, HTAbstractComplexBlockEntity<*>> =
+        registerBE("complex", ::HTComplexContainerMenu)
 
     @JvmField
     val MELTER: HTDeferredMenuType.WithContext<HTMelterContainerMenu, HTMelterBlockEntity> =

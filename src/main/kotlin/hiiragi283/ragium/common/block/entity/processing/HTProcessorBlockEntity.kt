@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.processing
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.math.div
 import hiiragi283.core.api.math.fixedFraction
-import hiiragi283.core.api.math.minus
 import hiiragi283.core.api.math.times
 import hiiragi283.core.api.recipe.HTRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
@@ -51,11 +50,6 @@ abstract class HTProcessorBlockEntity<INPUT : Any, RECIPE : Any>(type: HTDeferre
 
     fun getProgress(): Fraction = when (isActive()) {
         true -> fixedFraction(usedEnergy, requiredEnergy)
-        false -> Fraction.ZERO
-    }
-
-    fun getReversedProgress(): Fraction = when (isActive()) {
-        true -> 1 - getProgress()
         false -> Fraction.ZERO
     }
 

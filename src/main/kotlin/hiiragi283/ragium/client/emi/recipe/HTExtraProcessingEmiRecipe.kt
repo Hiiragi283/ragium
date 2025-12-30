@@ -29,11 +29,11 @@ class HTExtraProcessingEmiRecipe<RECIPE : HTExtraProcessingRecipe>(category: HTE
         super.addWidgets(widgets)
 
         // Input
-        widgets.addSlot(input(0), getPosition(1), getPosition(0))
-        widgets.addSlot(RagiumFluids.LUBRICANT.toFluidEmi(), getPosition(1), getPosition(2))
+        widgets.addSlot(input(0), getPosition(2), getPosition(0))
+        widgets.addSlot(RagiumFluids.LUBRICANT.toFluidEmi(), getPosition(2), getPosition(2))
 
         // Output
-        widgets.addOutput(0, getPosition(4.5), getPosition(0) + 4, true)
-        widgets.addOutput(1, getPosition(4.5), getPosition(2))
+        widgets.addOutput(0, getPosition(5.5), getPosition(0) + 4, true)
+        widgets.addOutput(1, getPosition(5.5), getPosition(2))
     }
 }
