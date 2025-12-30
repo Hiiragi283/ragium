@@ -26,6 +26,7 @@ import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTExtraProcessingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
@@ -70,6 +71,21 @@ object RagiumRecipeSerializers {
     ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
         codec1,
         codec2,
+        HTRecipeBiCodecs.TIME.forGetter(HTProcessingRecipe::time),
+        HTRecipeBiCodecs.EXP.forGetter(HTProcessingRecipe::exp),
+        factory,
+    )
+
+    @JvmStatic
+    private fun <T1 : Any, T2 : Any, T3 : Any, RECIPE : HTProcessingRecipe> processing(
+        codec1: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T1>,
+        codec2: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T2>,
+        codec3: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T3>,
+        factory: (T1, T2, T3, Int, Fraction) -> RECIPE,
+    ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
+        codec1,
+        codec2,
+        codec3,
         HTRecipeBiCodecs.TIME.forGetter(HTProcessingRecipe::time),
         HTRecipeBiCodecs.EXP.forGetter(HTProcessingRecipe::exp),
         factory,
@@ -135,4 +151,15 @@ object RagiumRecipeSerializers {
     @JvmField
     val PYROLYZING: RecipeSerializer<HTPyrolyzingRecipe> =
         REGISTER.registerSerializer(RagiumConst.PYROLYZING, complex(::HTPyrolyzingRecipe))
+
+    @JvmField
+    val REFINING: RecipeSerializer<HTRefiningRecipe> = REGISTER.registerSerializer(
+        RagiumConst.REFINING,
+        processing(
+            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTRefiningRecipe::ingredient),
+            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTRefiningRecipe::result),
+            COMPLEX_RESULT.forGetter(HTRefiningRecipe::extraResult),
+            ::HTRefiningRecipe,
+        ),
+    )
 }

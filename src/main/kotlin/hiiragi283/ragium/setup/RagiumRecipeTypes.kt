@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 
 object RagiumRecipeTypes {
     @JvmField
@@ -29,4 +30,7 @@ object RagiumRecipeTypes {
 
     @JvmField
     val PYROLYZING: HTDeferredRecipeType<HTRecipeInput, HTPyrolyzingRecipe> = REGISTER.registerType(RagiumConst.PYROLYZING)
+
+    @JvmField
+    val REFINING: HTDeferredRecipeType<HTRecipeInput, HTRefiningRecipe> = REGISTER.registerType(RagiumConst.REFINING)
 }

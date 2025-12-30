@@ -89,6 +89,7 @@
   "recipe_type.ragium.drying": "Drying",
   "recipe_type.ragium.melting": "Melting",
   "recipe_type.ragium.pyrolyzing": "Pyrolyzing",
+  "recipe_type.ragium.refining": "Refining",
   "tag.fluid.c.biofuel": "Biofuel",
   "tag.fluid.c.coolant": "Coolant",
   "tag.fluid.c.creosote": "Creosote",

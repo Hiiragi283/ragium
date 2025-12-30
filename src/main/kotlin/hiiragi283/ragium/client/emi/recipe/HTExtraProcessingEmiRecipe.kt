@@ -10,12 +10,15 @@ import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.crafting.RecipeHolder
 import kotlin.jvm.optionals.getOrNull
 
-class HTExtraProcessingEmiRecipe<RECIPE : HTExtraProcessingRecipe>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
-    HTProcessingEmiRecipe<RECIPE>(category, holder) {
+class HTExtraProcessingEmiRecipe<RECIPE : HTExtraProcessingRecipe>(
+    backgroundTex: String,
+    category: HTEmiRecipeCategory,
+    holder: RecipeHolder<RECIPE>,
+) : HTProcessingEmiRecipe<RECIPE>(backgroundTex, category, holder) {
     companion object {
         @JvmStatic
         fun crushing(holder: RecipeHolder<HTCrushingRecipe>): HTExtraProcessingEmiRecipe<HTCrushingRecipe> =
-            HTExtraProcessingEmiRecipe(RagiumEmiRecipeCategories.CRUSHING, holder)
+            HTExtraProcessingEmiRecipe("crusher", RagiumEmiRecipeCategories.CRUSHING, holder)
     }
 
     init {
@@ -29,11 +32,11 @@ class HTExtraProcessingEmiRecipe<RECIPE : HTExtraProcessingRecipe>(category: HTE
         super.addWidgets(widgets)
 
         // Input
-        widgets.addSlot(input(0), getPosition(2), getPosition(0))
-        widgets.addSlot(RagiumFluids.LUBRICANT.toFluidEmi(), getPosition(2), getPosition(2))
+        widgets.addInput(0, getPosition(2), getPosition(0))
+        widgets.addSlot(RagiumFluids.LUBRICANT.toFluidEmi(), getPosition(2), getPosition(2)).drawBack(false)
 
         // Output
-        widgets.addOutput(0, getPosition(5.5), getPosition(0) + 4, true)
+        widgets.addOutput(0, getPosition(5.5), getPosition(0), true)
         widgets.addOutput(1, getPosition(5.5), getPosition(2))
     }
 }

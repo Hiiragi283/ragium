@@ -38,4 +38,7 @@ object RagiumEmiRecipeCategories {
 
     @JvmField
     val PYROLYZING: HTEmiRecipeCategory = create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
+
+    @JvmField
+    val REFINING: HTEmiRecipeCategory = create(RagiumRecipeTypes.REFINING, Items.BUCKET)
 }

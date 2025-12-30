@@ -60,36 +60,5 @@ object RagiumPyrolyzingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
             .setResult(fluidResult.create(HCFluids.DEW_OF_THE_WARP, 1000))
             .setTime(20 * 30)
             .saveSuffixed(output, "_from_log")
-
-        refining()
-    }
-
-    @JvmStatic
-    private fun refining() {
-        // Creosote -> Tar + Lubricant
-        HTComplexRecipeBuilder
-            .pyrolyzing(fluidCreator.fromTagKey(RagiumFluids.CREOSOTE, 1000))
-            .setResult(itemResult.create(HCItems.TAR))
-            .setResult(fluidResult.create(RagiumFluids.LUBRICANT, 500))
-            .saveSuffixed(output, "_from_creosote")
-
-        // Crude Oil -> Tar + Naphtha
-        HTComplexRecipeBuilder
-            .pyrolyzing(fluidCreator.fromTagKey(RagiumFluids.CRUDE_OIL, 1000))
-            .setResult(itemResult.create(HCItems.TAR))
-            .setResult(fluidResult.create(RagiumFluids.NAPHTHA, 750))
-            .saveSuffixed(output, "_from_oil")
-        // Naphtha -> Sulfur + Fuel
-        HTComplexRecipeBuilder
-            .pyrolyzing(fluidCreator.fromTagKey(RagiumFluids.NAPHTHA, 750))
-            .setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Minerals.SULFUR))
-            .setResult(fluidResult.create(RagiumFluids.FUEL, 500))
-            .saveSuffixed(output, "_from_naphtha")
-
-        // Crude Bio -> Biomass + Bio Fuel
-        HTComplexRecipeBuilder
-            .pyrolyzing(fluidCreator.fromTagKey(RagiumFluids.CRUDE_BIO, 1000))
-            .setResult(fluidResult.create(RagiumFluids.BIOFUEL, 750))
-            .save(output)
     }
 }

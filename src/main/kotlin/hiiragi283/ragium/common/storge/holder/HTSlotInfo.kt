@@ -10,10 +10,10 @@ import net.minecraft.network.chat.Component
 
 enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: ChatFormatting) : HTHasText {
     BOTH(true, true, ChatFormatting.DARK_PURPLE),
-    INPUT(true, false, ChatFormatting.DARK_RED),
-    OUTPUT(false, true, ChatFormatting.DARK_BLUE),
-    EXTRA_INPUT(true, false, ChatFormatting.RED),
-    EXTRA_OUTPUT(false, true, ChatFormatting.BLUE),
+    INPUT(true, false, ChatFormatting.RED),
+    OUTPUT(false, true, ChatFormatting.AQUA),
+    EXTRA_INPUT(true, false, ChatFormatting.GOLD),
+    EXTRA_OUTPUT(false, true, ChatFormatting.GREEN),
     NONE(false, false, ChatFormatting.GRAY),
     ;
 

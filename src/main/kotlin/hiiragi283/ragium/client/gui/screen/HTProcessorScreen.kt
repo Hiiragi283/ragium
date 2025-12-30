@@ -36,5 +36,5 @@ abstract class HTProcessorScreen<BE : HTProcessorBlockEntity<*, *>, MENU : HTBlo
         addWidget(x, y, ::HTArrowProgressWidget.partially1(blockEntity::getProgress))
 
     protected fun addBurning(x: Int, y: Int): HTBurnProgressWidget =
-        addWidget(x + 2, y + 2, ::HTBurnProgressWidget.partially1(blockEntity::getProgress))
+        addWidget(x, y + 2, ::HTBurnProgressWidget.partially1(blockEntity::getProgress))
 }

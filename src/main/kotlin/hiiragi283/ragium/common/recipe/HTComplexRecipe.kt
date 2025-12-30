@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
 import com.mojang.datafixers.util.Either
-import hiiragi283.core.api.recipe.HTFluidOutputRecipe
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -18,8 +17,7 @@ abstract class HTComplexRecipe(
     val result: HTComplexResult,
     time: Int,
     exp: Fraction,
-) : HTProcessingRecipe(time, exp),
-    HTFluidOutputRecipe {
+) : HTProcessingRecipe(time, exp) {
     final override fun matches(input: HTRecipeInput, level: Level): Boolean =
         ingredient.map({ input.testItem(0, it) }, { input.testFluid(0, it) })
 

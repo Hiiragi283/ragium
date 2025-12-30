@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:crude_bio"
+  },
+  "item_result": {
+    "id": "minecraft:bone_meal"
+  },
+  "result": {
+    "amount": 750,
+    "id": "ragium:biofuel",
+    "tag": "c:biofuel"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:creosote"
+  },
+  "item_result": {
+    "id": "hiiragi_core:tar"
+  },
+  "result": {
+    "amount": 500,
+    "id": "ragium:lubricant",
+    "tag": "c:lubricant"
+  }
+}

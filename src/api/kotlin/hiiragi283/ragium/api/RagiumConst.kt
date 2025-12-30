@@ -3,9 +3,12 @@ package hiiragi283.ragium.api
 object RagiumConst {
     //    Blocks    //
 
+    const val ALLOY_SMELTER = "alloy_smelter"
+
     const val DRYER = "dryer"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
+    const val REFINERY = "refinery"
 
     //    Serialization    //
 
