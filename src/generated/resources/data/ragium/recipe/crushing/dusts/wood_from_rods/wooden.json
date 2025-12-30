@@ -1,0 +1,11 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "amount": 2,
+    "items": "#c:rods/wooden"
+  },
+  "result": {
+    "id": "hiiragi_core:wood_dust",
+    "tag": "c:dusts/wood"
+  }
+}

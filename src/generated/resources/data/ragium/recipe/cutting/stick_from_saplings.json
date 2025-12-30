@@ -1,0 +1,7 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#minecraft:saplings",
+  "result": {
+    "id": "minecraft:stick"
+  }
+}

@@ -12,8 +12,9 @@ import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.core.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTChancedEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTComplexEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.common.inventory.container.HTMachineContainerMenu
@@ -29,9 +30,11 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
     override fun register(registry: EmiRegistry) {
         // Category
         listOf(
-            // Processor
+            // Processor - Basic
             RagiumEmiRecipeCategories.ALLOYING,
             RagiumEmiRecipeCategories.CRUSHING,
+            RagiumEmiRecipeCategories.CUTTING,
+            // Processor - Advanced
             RagiumEmiRecipeCategories.DRYING,
             RagiumEmiRecipeCategories.MELTING,
             RagiumEmiRecipeCategories.PYROLYZING,
@@ -40,7 +43,8 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         // Recipes
         addRegistryRecipes(registry, RagiumRecipeTypes.ALLOYING, ::HTAlloyingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, HTChancedEmiRecipe.Companion::crushing)
+        addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, ::HTCrushingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, HTComplexEmiRecipe.Companion::drying)
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)

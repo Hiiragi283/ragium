@@ -31,6 +31,9 @@ object RagiumEmiRecipeCategories {
     val CRUSHING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CRUSHING, Items.GRINDSTONE)
 
     @JvmField
+    val CUTTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CUTTING, Items.STONECUTTER)
+
+    @JvmField
     val DRYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.DRYING, RagiumBlocks.DRYER)
 
     @JvmField

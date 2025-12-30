@@ -6,22 +6,16 @@ import hiiragi283.core.api.integration.emi.addTank
 import hiiragi283.core.api.integration.emi.toEmi
 import hiiragi283.core.api.integration.emi.toFluidEmi
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.common.recipe.HTChancedRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.crafting.RecipeHolder
 import org.apache.commons.lang3.math.Fraction
 
-class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(backgroundTex: String, category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
-    HTProcessingEmiRecipe<RECIPE>(backgroundTex, category, holder) {
-    companion object {
-        @JvmStatic
-        fun crushing(holder: RecipeHolder<HTCrushingRecipe>): HTChancedEmiRecipe<HTCrushingRecipe> =
-            HTChancedEmiRecipe(RagiumConst.CRUSHER, RagiumEmiRecipeCategories.CRUSHING, holder)
-    }
-
+abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(
+    backgroundTex: String,
+    category: HTEmiRecipeCategory,
+    holder: RecipeHolder<RECIPE>,
+) : HTProcessingEmiRecipe<RECIPE>(backgroundTex, category, holder) {
     init {
         addInput(recipe.ingredient)
 
@@ -31,7 +25,7 @@ class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(backgroundTex: String, catego
         }
     }
 
-    override fun addWidgets(widgets: WidgetHolder) {
+    final override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
 
         // Input
@@ -39,9 +33,8 @@ class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(backgroundTex: String, catego
         widgets.addInput(0, getPosition(2), getPosition(0.5))
 
         // Output
-        widgets.addOutput(0, getPosition(5.5), getPosition(0.5))
-        widgets.addOutput(1, getPosition(6.5), getPosition(0.5))
-        widgets.addOutput(2, getPosition(5.5), getPosition(1.5))
-        widgets.addOutput(3, getPosition(6.5), getPosition(1.5))
+        addOutputSlots(widgets)
     }
+
+    protected abstract fun addOutputSlots(widgets: WidgetHolder)
 }

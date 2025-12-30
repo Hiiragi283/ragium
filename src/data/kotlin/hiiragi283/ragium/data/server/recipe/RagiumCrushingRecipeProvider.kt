@@ -6,6 +6,9 @@ import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
+import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -13,6 +16,7 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     override fun buildRecipeInternal() {
         ores()
         stones()
+        planks()
     }
 
     @JvmStatic
@@ -171,5 +175,32 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 itemResult.create(Items.RED_SAND, 2),
             ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.TINY_DUST, HCMaterial.Minerals.SALTPETER, 3))
             .saveSuffixed(output, "_from_sandstone")
+    }
+
+    @JvmStatic
+    private fun planks() {
+        // Wood Dust
+        fun wood(tagKey: TagKey<Item>, input: Int, output: Int) {
+            HTChancedRecipeBuilder
+                .crushing(
+                    itemCreator.fromTagKey(tagKey, input),
+                    RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Wood, output),
+                ).saveSuffixed(RagiumCrushingRecipeProvider.output, "_from_${tagKey.location().path}")
+        }
+
+        wood(ItemTags.BOATS, 1, 5)
+        wood(ItemTags.LOGS_THAT_BURN, 1, 6)
+        wood(ItemTags.PLANKS, 1, 1)
+        wood(ItemTags.WOODEN_BUTTONS, 1, 1)
+        wood(ItemTags.WOODEN_DOORS, 1, 2)
+        wood(ItemTags.WOODEN_PRESSURE_PLATES, 1, 2)
+        wood(ItemTags.WOODEN_SLABS, 2, 1)
+        wood(ItemTags.WOODEN_STAIRS, 4, 3)
+        wood(ItemTags.WOODEN_TRAPDOORS, 1, 3)
+        wood(Tags.Items.BARRELS_WOODEN, 1, 7)
+        wood(Tags.Items.CHESTS_WOODEN, 1, 8)
+        wood(Tags.Items.FENCE_GATES_WOODEN, 1, 4)
+        wood(Tags.Items.FENCES_WOODEN, 1, 5)
+        wood(Tags.Items.RODS_WOODEN, 2, 1)
     }
 }

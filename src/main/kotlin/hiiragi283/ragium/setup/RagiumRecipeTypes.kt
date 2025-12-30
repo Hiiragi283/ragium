@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
@@ -21,6 +22,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val CRUSHING: HTDeferredRecipeType<HTRecipeInput, HTCrushingRecipe> = REGISTER.registerType(RagiumConst.CRUSHING)
+
+    @JvmField
+    val CUTTING: HTDeferredRecipeType<HTRecipeInput, HTCuttingRecipe> = REGISTER.registerType(RagiumConst.CUTTING)
 
     @JvmField
     val DRYING: HTDeferredRecipeType<HTRecipeInput, HTDryingRecipe> = REGISTER.registerType(RagiumConst.DRYING)

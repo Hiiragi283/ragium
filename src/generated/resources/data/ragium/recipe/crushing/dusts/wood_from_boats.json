@@ -1,0 +1,9 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": "#minecraft:boats",
+  "result": {
+    "count": 5,
+    "id": "hiiragi_core:wood_dust",
+    "tag": "c:dusts/wood"
+  }
+}

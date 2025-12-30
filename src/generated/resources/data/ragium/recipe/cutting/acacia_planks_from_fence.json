@@ -1,0 +1,10 @@
+{
+  "type": "ragium:cutting",
+  "extra_result": {
+    "id": "minecraft:stick"
+  },
+  "ingredient": "minecraft:acacia_fence",
+  "result": {
+    "id": "minecraft:acacia_planks"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "ragium:cutting",
+  "extra_result": {
+    "id": "minecraft:stick"
+  },
+  "ingredient": "minecraft:dark_oak_fence",
+  "result": {
+    "id": "minecraft:dark_oak_planks"
+  }
+}

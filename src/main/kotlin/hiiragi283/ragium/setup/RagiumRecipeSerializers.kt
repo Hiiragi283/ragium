@@ -24,6 +24,7 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTChancedRecipe
 import hiiragi283.ragium.common.recipe.HTComplexRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
@@ -135,6 +136,9 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, chanced(::HTCrushingRecipe, 0, 3))
+
+    @JvmField
+    val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, chanced(::HTCuttingRecipe, 0, 1))
 
     @JvmField
     val DRYING: RecipeSerializer<HTDryingRecipe> =

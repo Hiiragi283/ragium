@@ -8,6 +8,7 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTChancedRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import net.minecraft.resources.ResourceLocation
 import org.apache.commons.lang3.math.Fraction
 
@@ -21,6 +22,10 @@ class HTChancedRecipeBuilder(
         @JvmStatic
         fun crushing(ingredient: HTItemIngredient, result: HTItemResult): HTChancedRecipeBuilder =
             HTChancedRecipeBuilder(RagiumConst.CRUSHING, ::HTCrushingRecipe, ingredient, result)
+
+        @JvmStatic
+        fun cutting(ingredient: HTItemIngredient, result: HTItemResult): HTChancedRecipeBuilder =
+            HTChancedRecipeBuilder(RagiumConst.CUTTING, ::HTCuttingRecipe, ingredient, result)
     }
 
     private var extraResults: MutableList<HTChancedItemResult> = mutableListOf()

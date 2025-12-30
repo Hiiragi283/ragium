@@ -1,0 +1,10 @@
+{
+  "type": "ragium:cutting",
+  "extra_result": {
+    "id": "minecraft:stick"
+  },
+  "ingredient": "minecraft:warped_fence",
+  "result": {
+    "id": "minecraft:warped_planks"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#minecraft:warped_stems",
+  "result": {
+    "count": 6,
+    "id": "minecraft:warped_planks"
+  }
+}

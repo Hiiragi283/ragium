@@ -1,0 +1,10 @@
+{
+  "type": "ragium:cutting",
+  "extra_result": {
+    "id": "minecraft:stick"
+  },
+  "ingredient": "minecraft:crimson_fence",
+  "result": {
+    "id": "minecraft:crimson_planks"
+  }
+}
