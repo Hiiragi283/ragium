@@ -92,7 +92,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumTranslation.DRYER, "乾燥によって材料を変換する機械です。")
         add(RagiumTranslation.MELTER, "アイテムを融かして液体にする機械です。")
         add(RagiumTranslation.PYROLYZER, "熱によって材料を変換する機械です。")
-        
+
         add(RagiumTranslation.BATTERY, "アップグレードで容量を拡張可能なエネルギーストレージです。")
         add(RagiumTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")
         add(RagiumTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")

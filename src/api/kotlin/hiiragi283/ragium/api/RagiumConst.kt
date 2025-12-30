@@ -7,7 +7,9 @@ object RagiumConst {
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
 
-    //    NBT    //
+    //    Serialization    //
+
+    const val MACHINE = "machine"
 
     const val SLOT_INFO = "slot_info"
 

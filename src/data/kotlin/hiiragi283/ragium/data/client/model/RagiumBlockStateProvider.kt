@@ -11,6 +11,7 @@ import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
 import hiiragi283.core.common.registry.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -22,16 +23,15 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
 
 class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider(RagiumAPI.MOD_ID, context) {
-    val advancedCasing: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, "advanced_machine_casing")
-    val advancedFrame: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, "advanced_machine_frame")
-
-    val blackstone: ResourceLocation = vanillaId("block", "polished_blackstone_bricks")
+    val basic = "basic"
+    val advanced = "advanced"
 
     override fun registerStatesAndModels() {
         registerMaterials()
 
         // Processors
-        machineBlock(RagiumBlocks.MELTER, advancedCasing, blackstone)
+        machineBlock(RagiumBlocks.MELTER, advanced)
+        machineBlock(RagiumBlocks.PYROLYZER, advanced)
 
         // Storages
         altModelBlock(RagiumBlocks.TANK)
@@ -51,11 +51,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
 
     private fun machineBlock(
         block: HTHolderLike<Block, *>,
-        top: ResourceLocation,
-        bottom: ResourceLocation,
-        front: ResourceLocation = block.blockId.withSuffix("_front"),
+        tier: String,
+        front: ResourceLocation = block.getId().withPath { "${HTConst.BLOCK}/${RagiumConst.MACHINE}/${it}_front" },
     ) {
-        val (inactive: BlockModelBuilder, active: BlockModelBuilder) = machineModel(block, top, bottom, front)
+        val (inactive: BlockModelBuilder, active: BlockModelBuilder) = machineModel(block, tier, front)
         machineBlock(block, inactive, active)
     }
 
@@ -77,21 +76,27 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
 
     private fun machineModel(
         block: HTHolderLike<Block, *>,
-        top: ResourceLocation,
-        bottom: ResourceLocation,
-        front: ResourceLocation = block.blockId.withSuffix("_front"),
+        tier: String,
+        front: ResourceLocation,
     ): Pair<BlockModelBuilder, BlockModelBuilder> {
         val path: String = block.blockId.path
+        val modelId: ResourceLocation = vanillaId(HTConst.BLOCK, "orientable_with_bottom")
+
+        val top: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, RagiumConst.MACHINE, "top_$tier")
+        val side: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, RagiumConst.MACHINE, "side_$tier")
+        val bottom: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, RagiumConst.MACHINE, "bottom")
         // inactive
         val inactive: BlockModelBuilder = models()
-            .withExistingParent(path, RagiumAPI.id(HTConst.BLOCK, "machine_base"))
+            .withExistingParent(path, modelId)
             .texture("top", top)
+            .texture("side", side)
             .texture("bottom", bottom)
             .texture("front", front)
         // active
         val active: BlockModelBuilder = models()
-            .withExistingParent("${path}_active", RagiumAPI.id(HTConst.BLOCK, "machine_base"))
+            .withExistingParent("${path}_active", modelId)
             .texture("top", top)
+            .texture("side", side)
             .texture("bottom", bottom)
             .texture("front", front.withSuffix("_active"))
         return inactive to active

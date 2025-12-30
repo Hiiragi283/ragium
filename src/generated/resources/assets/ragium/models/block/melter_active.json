@@ -1,8 +1,9 @@
 {
-  "parent": "ragium:block/machine_base",
+  "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
-    "bottom": "minecraft:block/polished_blackstone_bricks",
-    "front": "ragium:block/melter_front_active",
-    "top": "ragium:block/advanced_machine_casing"
+    "bottom": "ragium:block/machine/bottom",
+    "front": "ragium:block/machine/melter_front_active",
+    "side": "ragium:block/machine/side_advanced",
+    "top": "ragium:block/machine/top_advanced"
   }
 }

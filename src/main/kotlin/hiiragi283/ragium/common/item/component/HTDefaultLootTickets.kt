@@ -1,9 +1,9 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.item.component
 
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.toResource
-import hiiragi283.ragium.api.item.HTLootTicketTargets
+import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceKey

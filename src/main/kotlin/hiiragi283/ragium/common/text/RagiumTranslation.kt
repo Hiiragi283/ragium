@@ -34,7 +34,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     ELECTRIC_FURNACE("description", "electric_smelter"),
     EXTRACTOR("description", "extractor"),
     CRUSHER("description", "crusher"),
-    
+
     DRYER("description", RagiumConst.DRYER),
     MELTER("description", RagiumConst.MELTER),
     MIXER("description", "mixer"),

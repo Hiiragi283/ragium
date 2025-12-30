@@ -22,29 +22,29 @@ emi = "1.1.22+1.21.1"
 ender-io = "8.0.6-alpha"
 fusion = "1.2.11b-neoforge-mc1.21"
 hiiragi-core = "0.3.1-SNAPSHOT"
-#hostile = "1.21.1-6.3.0"
+hostile = "1.21.1-6.3.0"
 immersive = "1.21.1-12.4.2-194"
 jade = "15.10.3+neoforge"
 kc = "1.1.1-neoforge+mc1.21.1"
-#magitech = "0.12.1"
+magitech = "0.12.1"
 mek = "1.21.1-10.7.17.83"
 oritech = "0.19.6"
 pneuma = "8.2.13+mc1.21.1"
 replica = "1.21-1.2.6"
 
 arch = "13.0.8"
-#ars = "5.10.5.1219"
+ars = "5.10.5.1219"
 create-ench = "2.2.5b"
 create-dragon = "1.8.5"
-#dire = "6369120"
+dire = "6369120"
 enchdesc = "21.1.9"
 flywheel = "1.0.6-beta-37"
 guide = "21.1.15"
 owo = "0.12.15.1-beta.6+1.21"
-#patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
+patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
 placebo = "1.21.1-9.9.0"
 registrate = "MC1.21-1.3.0+67"
-#rs2 = "2.0.0-beta.10"
+rs2 = "2.0.0-beta.10"
 
 [libraries]
 
@@ -60,33 +60,34 @@ delight = { group = "maven.modrinth", name = "farmers-delight", version.ref = "d
 emi = { group = "dev.emi", name = "emi-neoforge", version.ref = "emi" }
 fusion = { group = "maven.modrinth", name = "fusion-connected-textures", version.ref = "fusion" }
 hiiragi-core = { group = "io.github.hiiragi283", name = "hiiragi-core", version.ref = "hiiragi-core" }
-#hostile = { group = "dev.shadowsoffire", name = "HostileNeuralNetworks", version.ref = "hostile" }
+hostile = { group = "dev.shadowsoffire", name = "HostileNeuralNetworks", version.ref = "hostile" }
 immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 kc = { group = "maven.modrinth", name = "kaleidoscope-cookery", version.ref = "kc" }
-#magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
+magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 oritech = { group = "rearth.oritech", name = "oritech-neoforge-1.21.1", version.ref = "oritech" }
 pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
 replica = { group = "maven.modrinth", name = "replication", version.ref = "replica" }
 
 arch = { group = "dev.architectury", name = "architectury-neoforge", version.ref = "arch" }
-#ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
+ars = { group = "com.hollingsworth.ars_nouveau", name = "ars_nouveau-1.21.1", version.ref = "ars" }
 create-ench = { group = "maven.modrinth", name = "create-enchantment-industry", version.ref = "create-ench" }
 create-dragon = { group = "maven.modrinth", name = "create-dragons-plus", version.ref = "create-dragon" }
-#dire = { group = "curse.maven", name = "just-dire-things-1002348", version.ref = "dire" }
+dire = { group = "curse.maven", name = "just-dire-things-1002348", version.ref = "dire" }
 enchdesc = { group = "net.darkhax.enchdesc", name = "enchdesc-neoforge-1.21.1", version.ref = "enchdesc" }
 flywheel = { group = "dev.engine-room.flywheel", name = "flywheel-neoforge-1.21.1", version.ref = "flywheel" }
 guide = { group = "org.appliedenergistics", name = "guideme", version.ref = "guide" }
 owo = { group = "io.wispforest", name = "owo-lib-neoforge", version.ref = "owo" }
-#patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
+patchouli-gen = { group = "xyz.brassgoggledcoders", name = "PatchouliProvider", version.ref = "patchouli-gen" }
 placebo = { group = "dev.shadowsoffire", name = "Placebo", version.ref = "placebo" }
 registrate = { group = "com.tterrag.registrate", name = "Registrate", version.ref = "registrate" }
-#rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforge", version.ref = "rs2" }
+rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforge", version.ref = "rs2" }
 
 [bundles]
 
 mods-impl = [
+    "ae2",
     "emi",
     "hiiragi-core",
     "jade",

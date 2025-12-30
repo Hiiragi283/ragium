@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.item
+package hiiragi283.ragium.api.item.component
 
 import hiiragi283.core.api.collection.randomOrNull
 import hiiragi283.core.api.serialization.codec.BiCodec

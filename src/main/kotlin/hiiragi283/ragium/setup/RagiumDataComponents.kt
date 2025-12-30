@@ -8,7 +8,7 @@ import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.registry.register.HTDeferredDataComponentRegister
 import hiiragi283.core.common.text.HTSimpleTranslation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.item.HTLootTicketTargets
+import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.DyeColor
