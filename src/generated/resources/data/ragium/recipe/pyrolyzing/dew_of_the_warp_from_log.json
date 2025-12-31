@@ -8,5 +8,9 @@
     "amount": 8,
     "items": "#minecraft:warped_stems"
   },
+  "item_result": {
+    "id": "hiiragi_core:sulfur_dust",
+    "tag": "c:dusts/sulfur"
+  },
   "time": 600
 }

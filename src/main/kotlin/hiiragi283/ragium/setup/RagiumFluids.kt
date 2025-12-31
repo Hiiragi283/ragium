@@ -30,9 +30,6 @@ object RagiumFluids {
 
     //    Natural    //
 
-    @JvmField
-    val SALT_WATER: HTSimpleFluidContent = REGISTER.registerSimple("salt_water", liquid())
-
     //    Organic    //
 
     @JvmStatic

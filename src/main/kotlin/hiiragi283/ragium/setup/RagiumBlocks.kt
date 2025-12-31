@@ -69,7 +69,7 @@ object RagiumBlocks {
     // Advanced
     @JvmField
     val DRYER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.DRYER, RagiumTranslation.DRYER, RagiumMenuTypes.COMPLEX)
+        registerMachine(RagiumBlockEntityTypes.DRYER, RagiumTranslation.DRYER, RagiumMenuTypes.DRYER)
 
     @JvmField
     val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
@@ -77,7 +77,7 @@ object RagiumBlocks {
 
     @JvmField
     val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER, RagiumMenuTypes.COMPLEX)
+        registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER, RagiumMenuTypes.PYROLYZER)
 
     //    Storages    //
 

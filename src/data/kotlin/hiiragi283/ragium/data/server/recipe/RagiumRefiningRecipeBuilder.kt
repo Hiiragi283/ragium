@@ -41,6 +41,6 @@ object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
                 fluidResult.create(RagiumFluids.ETHANOL, 750),
             ).setResult(itemResult.create(Items.BONE_MEAL))
             .saveSuffixed(output, "_from_bio")
-        // Ethanol + Sulfuric Acid -> Biofuel
+        // Ethanol + Plant Oil -> Biofuel
     }
 }

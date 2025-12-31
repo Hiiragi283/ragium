@@ -1,11 +1,9 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.item.toStack
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
-import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.HolderLookup
@@ -27,8 +25,6 @@ class HTMeltingRecipe(
     override fun matches(input: HTRecipeInput, level: Level): Boolean = input.testItem(0, ingredient)
 
     override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
-
-    override fun getToastSymbol(): ItemStack = RagiumBlocks.MELTER.toStack()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MELTING
 

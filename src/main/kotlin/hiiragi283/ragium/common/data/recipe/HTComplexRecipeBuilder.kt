@@ -9,40 +9,27 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTComplexRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
-import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import net.minecraft.resources.ResourceLocation
 import org.apache.commons.lang3.math.Fraction
 
-class HTComplexRecipeBuilder(
+class HTComplexRecipeBuilder<INGREDIENT : Any>(
     prefix: String,
-    private val factory: Factory<*>,
-    private val ingredient: Either<HTItemIngredient, HTFluidIngredient>,
-) : HTAbstractComplexRecipeBuilder<HTComplexRecipeBuilder>(prefix) {
+    private val factory: Factory<INGREDIENT, *>,
+    private val ingredient: INGREDIENT,
+) : HTAbstractComplexRecipeBuilder<HTComplexRecipeBuilder<INGREDIENT>>(prefix) {
     companion object {
         @JvmStatic
-        fun drying(ingredient: HTItemIngredient): HTComplexRecipeBuilder =
+        fun drying(ingredient: HTItemIngredient): HTComplexRecipeBuilder<Either<HTItemIngredient, HTFluidIngredient>> =
             HTComplexRecipeBuilder(RagiumConst.DRYING, ::HTDryingRecipe, Either.left(ingredient))
-
-        @JvmStatic
-        fun drying(ingredient: HTFluidIngredient): HTComplexRecipeBuilder =
-            HTComplexRecipeBuilder(RagiumConst.DRYING, ::HTDryingRecipe, Either.right(ingredient))
-
-        @JvmStatic
-        fun pyrolyzing(ingredient: HTItemIngredient): HTComplexRecipeBuilder =
-            HTComplexRecipeBuilder(RagiumConst.PYROLYZING, ::HTPyrolyzingRecipe, Either.left(ingredient))
-
-        @JvmStatic
-        fun pyrolyzing(ingredient: HTFluidIngredient): HTComplexRecipeBuilder =
-            HTComplexRecipeBuilder(RagiumConst.PYROLYZING, ::HTPyrolyzingRecipe, Either.right(ingredient))
     }
 
     override fun getPrimalId(): ResourceLocation = toIorResult().map(HTItemResult::getId, HTFluidResult::getId)
 
     override fun createRecipe(): HTComplexRecipe = factory.create(ingredient, toIorResult(), time, exp)
 
-    fun interface Factory<RECIPE : HTComplexRecipe> {
+    fun interface Factory<INGREDIENT : Any, RECIPE : HTComplexRecipe> {
         fun create(
-            ingredient: Either<HTItemIngredient, HTFluidIngredient>,
+            ingredient: INGREDIENT,
             result: HTComplexResult,
             time: Int,
             exp: Fraction,

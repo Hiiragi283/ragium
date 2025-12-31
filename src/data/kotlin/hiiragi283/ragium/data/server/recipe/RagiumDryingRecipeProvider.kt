@@ -7,7 +7,6 @@ import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
@@ -43,7 +42,6 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         HTComplexRecipeBuilder
             .drying(itemCreator.fromItem(Items.KELP))
             .setResult(itemResult.create(Items.DRIED_KELP))
-            .setResult(fluidResult.create(RagiumFluids.SALT_WATER, 250))
             .saveSuffixed(output, "_from_kelp")
 
         // Slime -> Raw Rubber
@@ -51,16 +49,5 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
             .drying(itemCreator.fromItem(Items.SLIME_BALL))
             .setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.RAW_MATERIAL, HCMaterial.Plates.RUBBER))
             .saveSuffixed(output, "_from_slime")
-        // Latex -> Raw Rubber
-        HTComplexRecipeBuilder
-            .drying(fluidCreator.fromTagKey(HCFluids.LATEX, 1000))
-            .setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.RAW_MATERIAL, HCMaterial.Plates.RUBBER, 2))
-            .saveSuffixed(output, "_from_latex")
-        // Salt Water -> Water + Salt
-        HTComplexRecipeBuilder
-            .drying(fluidCreator.fromTagKey(RagiumFluids.SALT_WATER, 1000))
-            .setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Minerals.SALT))
-            .setResult(fluidResult.create(HTFluidWithTag.WATER, 750))
-            .saveSuffixed(output, "_from_salt_water")
     }
 }

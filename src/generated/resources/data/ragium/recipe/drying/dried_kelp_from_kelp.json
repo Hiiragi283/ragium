@@ -1,10 +1,5 @@
 {
   "type": "ragium:drying",
-  "fluid_result": {
-    "amount": 250,
-    "id": "ragium:salt_water",
-    "tag": "c:salt_water"
-  },
   "ingredient": "minecraft:kelp",
   "item_result": {
     "id": "minecraft:dried_kelp"

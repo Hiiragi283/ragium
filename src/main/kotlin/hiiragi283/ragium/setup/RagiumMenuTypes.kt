@@ -8,10 +8,12 @@ import hiiragi283.core.common.registry.HTDeferredMenuType
 import hiiragi283.core.common.registry.register.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.block.entity.processing.HTAbstractComplexBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.inventory.container.HTComplexContainerMenu
 import hiiragi283.ragium.common.inventory.container.HTMelterContainerMenu
+import hiiragi283.ragium.common.inventory.container.HTPyrolyzerContainerMenu
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
@@ -26,12 +28,16 @@ object RagiumMenuTypes {
     //    Processor    //
 
     @JvmField
-    val COMPLEX: HTDeferredMenuType.WithContext<HTComplexContainerMenu, HTAbstractComplexBlockEntity<*>> =
-        registerBE("complex", ::HTComplexContainerMenu)
+    val DRYER: HTDeferredMenuType.WithContext<HTComplexContainerMenu<HTDryerBlockEntity>, HTDryerBlockEntity> =
+        registerBE(RagiumConst.DRYER, HTComplexContainerMenu.Companion::dryer)
 
     @JvmField
     val MELTER: HTDeferredMenuType.WithContext<HTMelterContainerMenu, HTMelterBlockEntity> =
         registerBE(RagiumConst.MELTER, ::HTMelterContainerMenu)
+
+    @JvmField
+    val PYROLYZER: HTDeferredMenuType.WithContext<HTPyrolyzerContainerMenu, HTPyrolyzerBlockEntity> =
+        registerBE(RagiumConst.PYROLYZER, ::HTPyrolyzerContainerMenu)
 
     //    Extensions    //
 

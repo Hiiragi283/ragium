@@ -7,6 +7,7 @@ import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -20,6 +21,8 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         copyTags()
 
         material(factory)
+        
+        misc(factory)
     }
 
     //    Copy    //
@@ -40,5 +43,11 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
                 factory.apply(ItemTags.BEACON_PAYMENT_ITEMS).addTag(prefix, key)
             }
         }
+    }
+
+    //    Misc    //
+    
+    private fun misc(factory: BuilderFactory<Item>) {
+        RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
     }
 }

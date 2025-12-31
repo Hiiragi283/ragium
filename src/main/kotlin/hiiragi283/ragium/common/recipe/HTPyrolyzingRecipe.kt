@@ -1,25 +1,32 @@
 package hiiragi283.ragium.common.recipe
 
-import com.mojang.datafixers.util.Either
-import hiiragi283.core.api.item.toStack
-import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.result.HTComplexResult
-import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.core.api.recipe.input.HTRecipeInput
+import hiiragi283.core.api.recipe.result.HTFluidResult
+import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.Level
+import net.neoforged.neoforge.fluids.FluidStack
 import org.apache.commons.lang3.math.Fraction
 
 class HTPyrolyzingRecipe(
-    ingredient: Either<HTItemIngredient, HTFluidIngredient>,
-    result: HTComplexResult,
+    val ingredient: HTItemIngredient,
+    val itemResult: HTItemResult,
+    val fluidResult: HTFluidResult,
     time: Int,
     exp: Fraction,
-) : HTComplexRecipe(ingredient, result, time, exp) {
-    override fun getToastSymbol(): ItemStack = RagiumBlocks.PYROLYZER.toStack()
+) : HTProcessingRecipe(time, exp) {
+    fun getResultFluid(provider: HolderLookup.Provider): FluidStack = fluidResult.getStackOrEmpty(provider)
+
+    override fun matches(input: HTRecipeInput, level: Level): Boolean = input.testItem(0, ingredient)
+
+    override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = itemResult.getStackOrEmpty(registries)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PYROLYZING
 

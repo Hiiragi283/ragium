@@ -4,8 +4,9 @@ import com.mojang.logging.LogUtils
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.client.gui.screen.HTComplexScreen
+import hiiragi283.ragium.client.gui.screen.HTDryerScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
+import hiiragi283.ragium.client.gui.screen.HTPyrolyzerScreen
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
@@ -70,8 +71,6 @@ object RagiumClient {
 
     @JvmStatic
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
-        event.clear(RagiumFluids.SALT_WATER, Color(0x336699))
-
         event.dull(RagiumFluids.SLIME, Color(0x66cc66))
         event.molten(RagiumFluids.GELLED_EXPLOSIVE, Color(0x339933))
         event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
@@ -89,8 +88,9 @@ object RagiumClient {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
-        event.register(RagiumMenuTypes.COMPLEX.get(), ::HTComplexScreen)
+        event.register(RagiumMenuTypes.DRYER.get(), ::HTDryerScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
+        event.register(RagiumMenuTypes.PYROLYZER.get(), ::HTPyrolyzerScreen)
 
         LOGGER.info("Registered screens!")
     }

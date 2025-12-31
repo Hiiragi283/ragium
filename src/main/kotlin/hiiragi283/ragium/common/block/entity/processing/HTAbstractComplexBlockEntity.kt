@@ -5,7 +5,6 @@ import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.recipe.input.HTRecipeInput
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
-import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.fluid.insert
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.storage.item.insert
@@ -29,14 +28,10 @@ abstract class HTAbstractComplexBlockEntity<RECIPE : HTComplexRecipe>(
     pos: BlockPos,
     state: BlockState,
 ) : HTProcessorBlockEntity.Cached<RECIPE>(finder, type, pos, state) {
-    lateinit var inputTank: HTBasicFluidTank
-        private set
     lateinit var outputTank: HTBasicFluidTank
         private set
 
-    final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
-        inputTank =
-            builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)))
+    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         outputTank =
             builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)))
     }
@@ -46,16 +41,15 @@ abstract class HTAbstractComplexBlockEntity<RECIPE : HTComplexRecipe>(
     lateinit var outputSlot: HTBasicItemSlot
         private set
 
-    final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
     //    Processing    //
 
-    final override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
+    override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
         builder.items += inputSlot.getItemStack()
-        builder.fluids += inputTank.getFluidStack()
     }
 
     final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
@@ -80,7 +74,7 @@ abstract class HTAbstractComplexBlockEntity<RECIPE : HTComplexRecipe>(
         return bool1 && bool2
     }
 
-    final override fun completeRecipe(
+    override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
         state: BlockState,
@@ -91,14 +85,5 @@ abstract class HTAbstractComplexBlockEntity<RECIPE : HTComplexRecipe>(
         // 実際にアウトプットに搬出する
         outputTank.insert(recipe.getResultFluid(access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         outputSlot.insert(recipe.assemble(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        // インプットを減らす
-        recipe.ingredient.map(
-            { inputSlot.extract(it.getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL) },
-            { inputTank.extract(it.getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL) },
-        )
-        // SEを鳴らす
-        playSound()
     }
-
-    protected abstract fun playSound()
 }

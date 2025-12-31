@@ -12,10 +12,11 @@ import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.core.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTComplexEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTDryingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMeltingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.common.inventory.container.HTMachineContainerMenu
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -46,9 +47,9 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, ::HTCrushingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, HTComplexEmiRecipe.Companion::drying)
+        addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, ::HTDryingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, HTComplexEmiRecipe.Companion::pyrolyzing)
+        addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, ::HTPyrolyzingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
 
         // Misc
@@ -60,7 +61,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
                         Bounds(
                             HTSlotHelper.getSlotPosX(9),
                             HTSlotHelper.getSlotPosY(0.5),
-                            18,
+                            18 * 2,
                             18 * 4,
                         ),
                     )

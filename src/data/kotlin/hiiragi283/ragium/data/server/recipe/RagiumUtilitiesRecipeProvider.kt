@@ -9,8 +9,10 @@ import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
+import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -25,6 +27,19 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
+        // Molds
+        HTShapedRecipeBuilder
+            .create(HTMoldType.BLANK)
+            .storage4()
+            .define('A', HCMaterialPrefixes.PLATE, HCMaterial.Metals.NIGHT_METAL)
+            .save(output)
+
+        for (moldType: HTMoldType in HTMoldType.entries) {
+            HTStonecuttingRecipeBuilder
+                .create(moldType)
+                .addIngredient(RagiumTags.Items.MOLDS)
+                .save(output)
+        }
         // Loot Ticket
         lootTickets()
         // Potion Drop -> Potion

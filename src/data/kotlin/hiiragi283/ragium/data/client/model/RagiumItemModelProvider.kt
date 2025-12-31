@@ -12,6 +12,7 @@ import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
@@ -29,12 +30,16 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             addAll(RagiumItems.REGISTER.asSequence())
 
             removeAll(RagiumItems.MATERIALS.values)
+            removeAll(RagiumItems.MOLDS.values)
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.POTION_DROP)
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
 
         registerMaterials()
-        registerBuckets()
+        for ((moldType: HTMoldType, item: HTIdLike) in RagiumItems.MOLDS) {
+            existTexture(item, RagiumAPI.id(HTConst.ITEM, "mold", moldType.serializedName), ::layeredItem)
+        }
 
         existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { texId: ResourceLocation ->
             layeredItem(
@@ -44,6 +49,8 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             )
         }
         layeredItem(RagiumItems.POTION_DROP, vanillaId(HTConst.ITEM, "ghast_tear"))
+
+        registerBuckets()
     }
 
     private fun registerMaterials() {

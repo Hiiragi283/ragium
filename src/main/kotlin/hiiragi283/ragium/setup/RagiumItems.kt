@@ -14,6 +14,7 @@ import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.item.HTLootTicketItem
+import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.HTPotionDropItem
 import hiiragi283.ragium.common.item.HTTraderCatalogItem
 import hiiragi283.ragium.common.material.RagiumMaterial
@@ -64,6 +65,16 @@ object RagiumItems {
 
     @JvmField
     val RAGIUM_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragium_powder")
+
+    @JvmField
+    val SEED_OIL_DROP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("seed_oil_drop")
+
+    //    Molds    //
+
+    @JvmField
+    val MOLDS: Map<HTMoldType, HTSimpleDeferredItem> = HTMoldType.entries.associateWith { moldType: HTMoldType ->
+        REGISTER.registerSimpleItem("${moldType.serializedName}_mold")
+    }
 
     //    Utilities    //
 
