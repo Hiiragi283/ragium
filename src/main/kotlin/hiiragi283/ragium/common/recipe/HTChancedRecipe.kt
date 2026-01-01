@@ -6,7 +6,7 @@ import hiiragi283.core.api.recipe.input.HTRecipeInput
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.toResource
+import hiiragi283.core.api.storage.item.toResourcePair
 import net.minecraft.core.HolderLookup
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.ItemStack
@@ -26,13 +26,13 @@ abstract class HTChancedRecipe(
     fun getResultItems(provider: HolderLookup.Provider, random: RandomSource): List<ItemStack> {
         val map: MutableMap<HTItemResourceType, Int> = mutableMapOf()
 
-        val stack: ItemStack = result.getStackOrEmpty(provider)
-        stack.toResource()?.let { map[it] = stack.count }
+        result.getStackOrEmpty(provider).toResourcePair()?.let { (resource: HTItemResourceType, count: Int) ->
+            map.put(resource, count)
+        }
 
         for (chanced: HTChancedItemResult in extraResults) {
-            val stackIn: ItemStack = chanced.getStackOrEmpty(provider, random)
-            val resourceIn: HTItemResourceType = stackIn.toResource() ?: continue
-            map.compute(resourceIn) { _, old: Int? -> (old ?: 0) + stackIn.count }
+            val (resource: HTItemResourceType, count: Int) = chanced.getStackOrEmpty(provider, random).toResourcePair() ?: continue
+            map.compute(resource) { _, old: Int? -> (old ?: 0) + count }
         }
 
         return map.map { (resource: HTItemResourceType, count: Int) -> resource.toStack(count) }

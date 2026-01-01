@@ -21,7 +21,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         copyTags()
 
         material(factory)
-        
+
         misc(factory)
     }
 
@@ -46,7 +46,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
     }
 
     //    Misc    //
-    
+
     private fun misc(factory: BuilderFactory<Item>) {
         RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
     }

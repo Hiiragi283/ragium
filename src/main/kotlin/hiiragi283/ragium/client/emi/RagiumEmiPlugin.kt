@@ -12,12 +12,13 @@ import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.core.common.inventory.container.HTContainerMenu
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTComplexEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTDryingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.common.inventory.container.HTMachineContainerMenu
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -38,8 +39,10 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             // Processor - Advanced
             RagiumEmiRecipeCategories.DRYING,
             RagiumEmiRecipeCategories.MELTING,
+            RagiumEmiRecipeCategories.MIXING,
             RagiumEmiRecipeCategories.PYROLYZING,
             RagiumEmiRecipeCategories.REFINING,
+            RagiumEmiRecipeCategories.SOLIDIFYING,
         ).forEach(::addCategory.partially1(registry))
 
         // Recipes
@@ -47,10 +50,12 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, ::HTCrushingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, ::HTDryingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, HTComplexEmiRecipe.Companion::drying)
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, HTComplexEmiRecipe.Companion::mixing)
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, ::HTPyrolyzingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
 
         // Misc
         registry.addGenericExclusionArea { screen: Screen, consumer: Consumer<Bounds> ->

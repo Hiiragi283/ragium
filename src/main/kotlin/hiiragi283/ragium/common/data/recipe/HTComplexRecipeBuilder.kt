@@ -9,6 +9,7 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTComplexRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
+import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import net.minecraft.resources.ResourceLocation
 import org.apache.commons.lang3.math.Fraction
 
@@ -19,8 +20,12 @@ class HTComplexRecipeBuilder<INGREDIENT : Any>(
 ) : HTAbstractComplexRecipeBuilder<HTComplexRecipeBuilder<INGREDIENT>>(prefix) {
     companion object {
         @JvmStatic
-        fun drying(ingredient: HTItemIngredient): HTComplexRecipeBuilder<Either<HTItemIngredient, HTFluidIngredient>> =
+        fun drying(ingredient: HTItemIngredient): HTComplexRecipeBuilder<*> =
             HTComplexRecipeBuilder(RagiumConst.DRYING, ::HTDryingRecipe, Either.left(ingredient))
+
+        @JvmStatic
+        fun mixing(item: HTItemIngredient, fluid: HTFluidIngredient): HTComplexRecipeBuilder<*> =
+            HTComplexRecipeBuilder(RagiumConst.MIXING, ::HTMixingRecipe, item to fluid)
     }
 
     override fun getPrimalId(): ResourceLocation = toIorResult().map(HTItemResult::getId, HTFluidResult::getId)

@@ -11,14 +11,6 @@ import net.minecraft.world.item.Items
 
 object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        // Creosote -> Tar + Lubricant
-        HTRefiningRecipeBuilder
-            .create(
-                fluidCreator.fromTagKey(RagiumFluids.CREOSOTE, 1000),
-                fluidResult.create(RagiumFluids.LUBRICANT, 500),
-            ).setResult(itemResult.create(HCItems.TAR))
-            .saveSuffixed(output, "_from_creosote")
-
         // Crude Oil -> Naphtha + Tar
         HTRefiningRecipeBuilder
             .create(
@@ -41,6 +33,5 @@ object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
                 fluidResult.create(RagiumFluids.ETHANOL, 750),
             ).setResult(itemResult.create(Items.BONE_MEAL))
             .saveSuffixed(output, "_from_bio")
-        // Ethanol + Plant Oil -> Biofuel
     }
 }

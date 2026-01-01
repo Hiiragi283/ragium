@@ -19,13 +19,15 @@ class HTPyrolyzingEmiRecipe(holder: RecipeHolder<HTPyrolyzingRecipe>) :
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
-        widgets.addBurning(getPosition(2), getPosition(1.5), recipe.time)
+        widgets.addBurning(getPosition(1), getPosition(1.5), recipe.time)
 
         // Input
-        widgets.addInput(0, getPosition(2), getPosition(0.5))
+        widgets.addInput(0, getPosition(1), getPosition(0.5))
 
         // Output
-        widgets.addOutput(0, getPosition(5.5), getPosition(1), true)
+        widgets.addOutput(0, getPosition(4.5), getPosition(0.5))
         widgets.addTank(output(1), getPosition(7), getPosition(0)).recipeContext(this)
     }
+
+    override fun getArrowX(): Int = getPosition(2.5)
 }

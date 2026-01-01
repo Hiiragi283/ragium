@@ -1,0 +1,13 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:creosote"
+  },
+  "fluid_result": {
+    "amount": 750,
+    "id": "ragium:lubricant",
+    "tag": "c:lubricant"
+  },
+  "item_ingredient": "#c:dusts/raginite"
+}

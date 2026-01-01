@@ -8,13 +8,12 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
 object RagiumTags {
-    
     //    Items    //
-    
+
     object Items {
         @JvmField
         val MOLDS: TagKey<Item> = mod("molds")
-        
+
         @JvmStatic
         private fun common(path: String): TagKey<Item> = Registries.ITEM.createTagKey(HTConst.COMMON.toId(path))
 

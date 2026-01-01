@@ -1,15 +1,13 @@
 {
-  "type": "ragium:refining",
-  "ingredient": {
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
     "amount": 1000,
     "fluids": "#c:creosote"
   },
-  "item_result": {
-    "id": "hiiragi_core:tar"
-  },
-  "result": {
+  "fluid_result": {
     "amount": 500,
     "id": "ragium:lubricant",
     "tag": "c:lubricant"
-  }
+  },
+  "item_ingredient": "#c:dusts/redstone"
 }

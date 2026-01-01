@@ -9,7 +9,7 @@ import net.minecraft.world.entity.player.Inventory
 class HTMelterContainerMenu(containerId: Int, inventory: Inventory, context: HTMelterBlockEntity) :
     HTMachineContainerMenu<HTMelterBlockEntity>(RagiumMenuTypes.MELTER, containerId, inventory, context) {
     override fun initSlots() {
-        addSlot(HTContainerItemSlot.input(context.inputSlot, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0.5)))
+        addSlot(HTContainerItemSlot.input(context.inputSlot, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0.5)))
 
         addUpgradeSlots()
     }

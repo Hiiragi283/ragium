@@ -6,9 +6,9 @@ import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.fluid.insert
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.api.storage.item.insert
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.util.HTStackSlotHelper
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -37,12 +37,12 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
     lateinit var inputSlot: HTBasicItemSlot
         private set
-    lateinit var outputSlot: HTBasicItemSlot
+    lateinit var outputSlots: List<HTBasicItemSlot>
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
-        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
+        outputSlots = List(4) { builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener)) }
     }
 
     //    Processing    //
@@ -51,25 +51,22 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
         builder.items += inputSlot.getItemStack()
     }
 
-    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputSlot.getNeeded() > 0 || outputTank.getNeeded() > 0
+    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
+        outputSlots.any { it.getNeeded() > 0 } || outputTank.getNeeded() > 0
 
     override fun getRecipeTime(recipe: HTPyrolyzingRecipe): Int = recipe.time
 
     override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTPyrolyzingRecipe): Boolean {
         val access: RegistryAccess = level.registryAccess()
-        val bool1: Boolean = outputTank
-            .insert(
-                recipe.getResultFluid(access),
-                HTStorageAction.SIMULATE,
-                HTStorageAccess.INTERNAL,
-            ).isEmpty
-        val bool2: Boolean = outputSlot
-            .insert(
-                recipe.assemble(input, access),
-                HTStorageAction.SIMULATE,
-                HTStorageAccess.INTERNAL,
-            ).isEmpty
-        return bool1 && bool2
+        val bool1: Boolean = outputTank.insert(recipe.getResultFluid(access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty
+
+        val remainder: Int = HTStackSlotHelper.insertStacks(
+            outputSlots,
+            recipe.assemble(input, access),
+            HTStorageAction.SIMULATE,
+            HTStorageAccess.INTERNAL,
+        )
+        return bool1 && remainder == 0
     }
 
     override fun completeRecipe(
@@ -82,7 +79,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
         val access: RegistryAccess = level.registryAccess()
         // 実際にアウトプットに搬出する
         outputTank.insert(recipe.getResultFluid(access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        outputSlot.insert(recipe.assemble(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        HTStackSlotHelper.insertStacks(outputSlots, recipe.assemble(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // インプットを減らす
         inputSlot.extract(recipe.ingredient.getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         // SEを鳴らす

@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.client.lang
 
 import hiiragi283.core.api.data.lang.HTLangProvider
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -55,8 +56,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.DRYING, "乾燥")
         add(RagiumRecipeTypes.MELTING, "溶融")
+        add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
         add(RagiumRecipeTypes.REFINING, "精製")
+        add(RagiumRecipeTypes.SOLIDIFYING, "成型")
+
+        // Tag
+        add(RagiumTags.Items.MOLDS, "鋳型")
 
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")

@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.client.lang
 
 import hiiragi283.core.api.data.lang.HTLangProvider
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -54,8 +55,13 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.DRYING, "Drying")
         add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
         add(RagiumRecipeTypes.REFINING, "Refining")
+        add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
+
+        // Tag
+        add(RagiumTags.Items.MOLDS, "Molds")
 
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")

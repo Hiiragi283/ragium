@@ -27,6 +27,7 @@ import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
@@ -162,6 +163,19 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
+    val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.MIXING,
+        complex(
+            MapBiCodecs
+                .pair(
+                    HTItemIngredient.CODEC.fieldOf(RagiumConst.ITEM_INGREDIENT),
+                    HTFluidIngredient.CODEC.fieldOf(RagiumConst.FLUID_INGREDIENT),
+                ).forGetter(HTMixingRecipe::ingredient),
+            ::HTMixingRecipe,
+        ),
+    )
+
+    @JvmField
     val PYROLYZING: RecipeSerializer<HTPyrolyzingRecipe> = REGISTER.registerSerializer(
         RagiumConst.PYROLYZING,
         processing(
@@ -188,7 +202,7 @@ object RagiumRecipeSerializers {
         RagiumConst.SOLIDIFYING,
         processing(
             HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSolidifyingRecipe::ingredient),
-            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSolidifyingRecipe::catalyst),
+            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTSolidifyingRecipe::catalyst),
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSolidifyingRecipe::result),
             ::HTSolidifyingRecipe,
         ),

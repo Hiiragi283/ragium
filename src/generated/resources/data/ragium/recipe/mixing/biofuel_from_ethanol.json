@@ -1,0 +1,13 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 750,
+    "fluids": "#c:ethanol"
+  },
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:biofuel",
+    "tag": "c:biofuel"
+  },
+  "item_ingredient": "ragium:seed_oil_drop"
+}
