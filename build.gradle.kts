@@ -150,7 +150,6 @@ neoForge {
                 "--existing",
                 file("src/main/resources").absolutePath,
                 "--existing-mod",
-                "farmersdelight",
                 "hiiragi_core",
             )
         }

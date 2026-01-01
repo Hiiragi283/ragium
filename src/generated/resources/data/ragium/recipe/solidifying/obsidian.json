@@ -2,7 +2,6 @@
   "type": "ragium:solidifying",
   "catalyst": "ragium:block_mold",
   "ingredient": {
-    "amount": 1000,
     "fluids": "#c:lava"
   },
   "result": {

@@ -17,10 +17,12 @@ import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
+import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
 import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
+import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.common.text.RagiumTranslation
 import net.minecraft.world.level.block.Block
@@ -103,6 +105,14 @@ object RagiumBlocks {
         machine().noOcclusion(),
         ::HTTankBlock,
         ::HTTankBlockItem,
+    )
+
+    @JvmField
+    val UNIVERSAL_CHEST: HTDeferredBlock<HTUniversalChestBlock, HTUniversalChestBlockItem> = REGISTER.register(
+        "universal_chest",
+        machine(),
+        ::HTUniversalChestBlock,
+        ::HTUniversalChestBlockItem,
     )
 
     //    Extensions    //

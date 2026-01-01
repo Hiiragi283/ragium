@@ -22,6 +22,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.BATTERY, "可変バッテリー")
         add(RagiumBlocks.CRATE, "可変クレート")
         add(RagiumBlocks.TANK, "可変タンク")
+        add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
 
         // Fluid
         addFluid(RagiumFluids.SLIME, "スライム")

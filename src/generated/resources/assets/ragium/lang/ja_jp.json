@@ -21,6 +21,7 @@
   "block.ragium.raginite_block": "ラギナイトブロック",
   "block.ragium.slime": "スライム",
   "block.ragium.tank": "可変タンク",
+  "block.ragium.universal_chest": "共有チェスト",
   "config.ragium.energy_capacity": "エネルギー容量",
   "config.ragium.energy_rate": "エネルギー使用速度",
   "config.ragium.fluid.first_input": "1番目の入力タンクの容量",

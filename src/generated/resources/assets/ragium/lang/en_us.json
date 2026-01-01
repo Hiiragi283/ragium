@@ -21,6 +21,7 @@
   "block.ragium.raginite_block": "Block of Raginite",
   "block.ragium.slime": "Slime",
   "block.ragium.tank": "Variable Tank",
+  "block.ragium.universal_chest": "Universal Chest",
   "config.ragium.energy_capacity": "Energy Capacity",
   "config.ragium.energy_rate": "Energy Rate",
   "config.ragium.fluid.first_input": "First Input Tank Capacity",

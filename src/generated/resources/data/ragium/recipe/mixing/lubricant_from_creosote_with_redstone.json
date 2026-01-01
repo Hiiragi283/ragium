@@ -1,7 +1,6 @@
 {
   "type": "ragium:mixing",
   "fluid_ingredient": {
-    "amount": 1000,
     "fluids": "#c:creosote"
   },
   "fluid_result": {

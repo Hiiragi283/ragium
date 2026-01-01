@@ -9,6 +9,7 @@
     "ragium:ragi_alloy_block",
     "ragium:ragi_crystal_block",
     "ragium:raginite_block",
-    "ragium:tank"
+    "ragium:tank",
+    "ragium:universal_chest"
   ]
 }

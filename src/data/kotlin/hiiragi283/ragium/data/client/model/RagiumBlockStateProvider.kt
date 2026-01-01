@@ -37,6 +37,12 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         // Storages
         altModelBlock(RagiumBlocks.TANK)
 
+        layeredBlock(
+            RagiumBlocks.UNIVERSAL_CHEST,
+            vanillaId("block", "white_concrete"),
+            RagiumBlocks.UNIVERSAL_CHEST.blockId,
+        )
+
         // Fluid
         RagiumFluids.REGISTER.entries.forEach(::liquidBlock)
     }

@@ -1,7 +1,6 @@
 {
   "type": "ragium:refining",
   "ingredient": {
-    "amount": 1000,
     "fluids": "#c:crude_oil"
   },
   "item_result": {

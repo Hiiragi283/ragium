@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -69,6 +70,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = registerTick("tank", ::HTTankBlockEntity)
 
+    @JvmField
+    val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> =
+        REGISTER.registerType("universal_chest", ::HTUniversalChestBlockEntity)
+
     //    Event    //
 
     // Supported Blocks
@@ -95,6 +100,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, BATTERY.get())
         registerHandler(event, CRATE.get())
         registerHandler(event, TANK.get())
+        registerHandler(event, UNIVERSAL_CHEST.get())
 
         LOGGER.info("Registered Block Capabilities!")
     }

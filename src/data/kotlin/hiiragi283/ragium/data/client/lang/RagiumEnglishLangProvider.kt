@@ -22,6 +22,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
         add(RagiumBlocks.TANK, "Variable Tank")
+        add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
 
         // Fluid
         addFluid(RagiumFluids.SLIME, "Slime")

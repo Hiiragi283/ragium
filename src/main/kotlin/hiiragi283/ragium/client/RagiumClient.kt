@@ -2,18 +2,26 @@ package hiiragi283.ragium.client
 
 import com.mojang.logging.LogUtils
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.screen.HTDryerScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTPyrolyzerScreen
+import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
+import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
+import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
@@ -49,6 +57,29 @@ object RagiumClient {
     }
 
     @JvmStatic
+    private fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
+        // Universal Chest
+        event.register(
+            { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
+                when {
+                    tint != 0 -> -1
+                    getter != null && pos != null -> {
+                        val color: DyeColor = getter
+                            .getTypedBlockEntity<HTUniversalChestBlockEntity>(pos)
+                            ?.color
+                            ?: DyeColor.WHITE
+                        color.textureDiffuseColor
+                    }
+                    else -> -1
+                }
+            },
+            RagiumBlocks.UNIVERSAL_CHEST.get(),
+        )
+
+        LOGGER.info("Registered block colors!")
+    }
+
+    @JvmStatic
     private fun registerItemColors(event: RegisterColorHandlersEvent.Item) {
         // Buckets
         val bucketColor = DynamicFluidContainerModel.Colors()
@@ -65,6 +96,17 @@ object RagiumClient {
                 }
             },
             RagiumItems.POTION_DROP,
+        )
+        // Colored items
+        event.register(
+            { stack: ItemStack, tint: Int ->
+                when {
+                    tint != 0 -> -1
+                    else -> stack.get(RagiumDataComponents.COLOR)?.textureDiffuseColor ?: -1
+                }
+            },
+            RagiumBlocks.UNIVERSAL_CHEST,
+            // RagiumItems.UNIVERSAL_BUNDLE,
         )
         LOGGER.info("Registered item colors!")
     }
