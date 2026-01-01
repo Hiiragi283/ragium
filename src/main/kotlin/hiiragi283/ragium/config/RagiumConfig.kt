@@ -49,6 +49,13 @@ object RagiumConfig {
 
         class Processor(builder: ModConfigSpec.Builder) {
             @JvmField
+            val crusher: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.PYROLYZER,
+                RagiumFluidConfigType.FIRST_INPUT,
+            )
+
+            @JvmField
             val dryer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.PYROLYZER,
@@ -68,7 +75,11 @@ object RagiumConfig {
             )
 
             @JvmField
-            val pyrolyzer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.PYROLYZER, RagiumFluidConfigType.FIRST_OUTPUT)
+            val pyrolyzer: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.PYROLYZER,
+                RagiumFluidConfigType.FIRST_OUTPUT,
+            )
         }
     }
 }

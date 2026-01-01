@@ -39,7 +39,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     abstract class RecipeBased(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTProcessorBlockEntity(type, pos, state) {
-        protected lateinit var recipeComponent: HTRecipeComponent<*>
+        protected lateinit var recipeComponent: HTRecipeComponent<*, *>
             private set
 
         override fun initializeVariables() {
@@ -47,7 +47,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
             recipeComponent = createRecipeComponent()
         }
 
-        protected abstract fun createRecipeComponent(): HTRecipeComponent<*>
+        protected abstract fun createRecipeComponent(): HTRecipeComponent<*, *>
 
         //    Ticking    //
 

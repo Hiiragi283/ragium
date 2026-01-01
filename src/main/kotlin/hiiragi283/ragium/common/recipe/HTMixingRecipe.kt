@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.input.HTRecipeInput
+import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTComplexResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -17,8 +17,8 @@ class HTMixingRecipe(
     time: Int,
     exp: Fraction,
 ) : HTComplexRecipe(result, time, exp) {
-    override fun matches(input: HTRecipeInput, level: Level): Boolean =
-        input.testItem(0, getItemIngredient()) && input.testFluid(0, getFluidIngredient())
+    override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean =
+        getItemIngredient().test(input.item) && getFluidIngredient().test(input.fluid)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 

@@ -15,6 +15,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         RagiumCommonTranslation.addTranslations(this)
 
         // Block
+        add(RagiumBlocks.CRUSHER, "Crusher")
+
         add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.MIXER, "Mixer")

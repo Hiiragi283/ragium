@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.block.entity.component
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
 import hiiragi283.core.api.recipe.HTRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
-import hiiragi283.core.api.recipe.input.HTRecipeInput
 import hiiragi283.core.api.serialization.component.HTComponentSerializable
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
@@ -11,9 +10,10 @@ import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.crafting.RecipeInput
 
-abstract class HTRecipeComponent<RECIPE : HTRecipe>(protected open val owner: HTBlockEntity) :
-    HTRecipeHandler<HTRecipeInput, RECIPE>(),
+abstract class HTRecipeComponent<INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>>(protected open val owner: HTBlockEntity) :
+    HTRecipeHandler<INPUT, RECIPE>(),
     HTBlockEntityComponent,
     HTComponentSerializable.Empty {
     //    HTRecipeHandler    //
@@ -21,7 +21,7 @@ abstract class HTRecipeComponent<RECIPE : HTRecipe>(protected open val owner: HT
     final override fun completeRecipe(
         level: ServerLevel,
         pos: BlockPos,
-        input: HTRecipeInput,
+        input: INPUT,
         recipe: RECIPE,
     ) {
         // 実際にアウトプットに搬出する
@@ -35,14 +35,14 @@ abstract class HTRecipeComponent<RECIPE : HTRecipe>(protected open val owner: HT
     protected abstract fun insertOutput(
         level: ServerLevel,
         pos: BlockPos,
-        input: HTRecipeInput,
+        input: INPUT,
         recipe: RECIPE,
     )
 
     protected abstract fun extractInput(
         level: ServerLevel,
         pos: BlockPos,
-        input: HTRecipeInput,
+        input: INPUT,
         recipe: RECIPE,
     )
 

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processing
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.recipe.input.HTRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
@@ -24,6 +23,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
@@ -52,12 +52,12 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<HTPyrolyzingRecipe> =
-        object : HTProcessingRecipeComponent.Cached<HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
+    override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe> =
+        object : HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
             override fun insertOutput(
                 level: ServerLevel,
                 pos: BlockPos,
-                input: HTRecipeInput,
+                input: SingleRecipeInput,
                 recipe: HTPyrolyzingRecipe,
             ) {
                 val access: RegistryAccess = level.registryAccess()
@@ -68,7 +68,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
             override fun extractInput(
                 level: ServerLevel,
                 pos: BlockPos,
-                input: HTRecipeInput,
+                input: SingleRecipeInput,
                 recipe: HTPyrolyzingRecipe,
             ) {
                 inputHandler.consume(recipe.ingredient.getRequiredAmount())
@@ -78,10 +78,10 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
                 playSound(SoundEvents.BLAZE_AMBIENT, volume = 0.5f)
             }
 
-            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? =
-                HTRecipeInput.create(null) { items += inputHandler.getItemStack() }
+            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput =
+                SingleRecipeInput(inputHandler.getItemStack())
 
-            override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTPyrolyzingRecipe): Boolean {
+            override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTPyrolyzingRecipe): Boolean {
                 val access: RegistryAccess = level.registryAccess()
                 val bool1: Boolean = itemOutputHandler.canInsert(recipe.getResultItem(access))
                 val bool2: Boolean = fluidOutputHandler.canInsert(recipe.getResultFluid(access))

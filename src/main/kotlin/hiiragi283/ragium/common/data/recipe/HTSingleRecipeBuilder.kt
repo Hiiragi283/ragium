@@ -31,9 +31,9 @@ class HTSingleRecipeBuilder<ING : Any, RES : HTRecipeResult<*>>(
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): HTProcessingRecipe = factory.create(ingredient, result, time, exp)
+    override fun createRecipe(): HTProcessingRecipe<*> = factory.create(ingredient, result, time, exp)
 
-    fun interface Factory<ING : Any, RES : HTRecipeResult<*>, RECIPE : HTProcessingRecipe> {
+    fun interface Factory<ING : Any, RES : HTRecipeResult<*>, RECIPE : HTProcessingRecipe<*>> {
         fun create(
             ingredient: ING,
             result: RES,

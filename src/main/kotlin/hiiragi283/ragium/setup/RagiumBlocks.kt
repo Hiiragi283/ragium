@@ -70,6 +70,11 @@ object RagiumBlocks {
 
     //    Processors    //
 
+    // Basic
+    @JvmField
+    val CRUSHER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER, RagiumMenuTypes.CRUSHER)
+
     // Advanced
     @JvmField
     val DRYER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =

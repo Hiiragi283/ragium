@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTProcessingEmiRecipe<RECIPE : HTProcessingRecipe> : HTEmiHolderRecipe<RECIPE> {
+abstract class HTProcessingEmiRecipe<RECIPE : HTProcessingRecipe<*>> : HTEmiHolderRecipe<RECIPE> {
     private val backgroundTex: String
 
     constructor(

@@ -10,7 +10,8 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTComplexBlockEntity(RagiumBlockEntityTypes.MIXER, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*> = RecipeComponent(RagiumRecipeTypes.MIXING, SoundEvents.BUCKET_FILL_AXOLOTL)
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> =
+        RecipeComponent(RagiumRecipeTypes.MIXING, SoundEvents.BUCKET_FILL_AXOLOTL)
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.mixer
 }

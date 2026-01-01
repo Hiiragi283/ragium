@@ -6,6 +6,7 @@ import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.screen.HTComplexScreen
+import hiiragi283.ragium.client.gui.screen.HTCrusherScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTPyrolyzerScreen
 import hiiragi283.ragium.client.gui.screen.HTUniversalChestScreen
@@ -132,6 +133,7 @@ object RagiumClient {
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
+        event.register(RagiumMenuTypes.CRUSHER.get(), ::HTCrusherScreen)
         event.register(RagiumMenuTypes.DRYER.get(), ::HTComplexScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
         event.register(RagiumMenuTypes.MIXER.get(), ::HTComplexScreen)

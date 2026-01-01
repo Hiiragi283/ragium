@@ -68,20 +68,20 @@ object RagiumRecipeSerializers {
         )
 
     @JvmStatic
-    private fun <T1 : Any, T2 : Any, RECIPE : HTProcessingRecipe> processing(
+    private fun <T1 : Any, T2 : Any, RECIPE : HTProcessingRecipe<*>> processing(
         codec1: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T1>,
         codec2: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T2>,
         factory: (T1, T2, Int, Fraction) -> RECIPE,
     ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
         codec1,
         codec2,
-        HTRecipeBiCodecs.TIME.forGetter(HTProcessingRecipe::time),
-        HTRecipeBiCodecs.EXP.forGetter(HTProcessingRecipe::exp),
+        HTRecipeBiCodecs.TIME.forGetter(HTProcessingRecipe<*>::time),
+        HTRecipeBiCodecs.EXP.forGetter(HTProcessingRecipe<*>::exp),
         factory,
     )
 
     @JvmStatic
-    private fun <T1 : Any, T2 : Any, T3 : Any, RECIPE : HTProcessingRecipe> processing(
+    private fun <T1 : Any, T2 : Any, T3 : Any, RECIPE : HTProcessingRecipe<*>> processing(
         codec1: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T1>,
         codec2: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T2>,
         codec3: ParameterCodec<in RegistryFriendlyByteBuf, RECIPE, T3>,
@@ -90,8 +90,8 @@ object RagiumRecipeSerializers {
         codec1,
         codec2,
         codec3,
-        HTRecipeBiCodecs.TIME.forGetter(HTProcessingRecipe::time),
-        HTRecipeBiCodecs.EXP.forGetter(HTProcessingRecipe::exp),
+        HTRecipeBiCodecs.TIME.forGetter(HTProcessingRecipe<*>::time),
+        HTRecipeBiCodecs.EXP.forGetter(HTProcessingRecipe<*>::exp),
         factory,
     )
 

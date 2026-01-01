@@ -29,7 +29,7 @@ object RagiumEmiRecipeCategories {
     val ALLOYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.ALLOYING, Items.BLAST_FURNACE)
 
     @JvmField
-    val CRUSHING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CRUSHING, Items.GRINDSTONE)
+    val CRUSHING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
 
     @JvmField
     val CUTTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CUTTING, Items.STONECUTTER)

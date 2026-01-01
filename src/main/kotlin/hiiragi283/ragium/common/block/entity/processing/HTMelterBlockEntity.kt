@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.processing
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.recipe.input.HTRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
@@ -22,6 +21,7 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
@@ -50,12 +50,12 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<HTMeltingRecipe> =
-        object : HTProcessingRecipeComponent.Cached<HTMeltingRecipe>(RagiumRecipeTypes.MELTING, this) {
+    override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTMeltingRecipe> =
+        object : HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTMeltingRecipe>(RagiumRecipeTypes.MELTING, this) {
             override fun insertOutput(
                 level: ServerLevel,
                 pos: BlockPos,
-                input: HTRecipeInput,
+                input: SingleRecipeInput,
                 recipe: HTMeltingRecipe,
             ) {
                 outputHandler.insert(recipe.getResultFluid(level.registryAccess()))
@@ -64,7 +64,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
             override fun extractInput(
                 level: ServerLevel,
                 pos: BlockPos,
-                input: HTRecipeInput,
+                input: SingleRecipeInput,
                 recipe: HTMeltingRecipe,
             ) {
                 inputHandler.consume(recipe.ingredient.getRequiredAmount())
@@ -74,10 +74,10 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
                 playSound(SoundEvents.BUCKET_EMPTY_LAVA)
             }
 
-            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? =
-                HTRecipeInput.create(null) { items += inputHandler.getItemStack() }
+            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput =
+                SingleRecipeInput(inputHandler.getItemStack())
 
-            override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTMeltingRecipe): Boolean =
+            override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTMeltingRecipe): Boolean =
                 outputHandler.canInsert(recipe.getResultFluid(level.registryAccess()))
         }
 

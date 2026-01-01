@@ -9,8 +9,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTDryerBlockEntity(pos: BlockPos, state: BlockState) : HTComplexBlockEntity(RagiumBlockEntityTypes.DRYER, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.DRYING, SoundEvents.SPONGE_ABSORB)
+class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTChancedBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state) {
+    override fun getOutputSlotSize(): Int = 4
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.dryer
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.CRUSHING, SoundEvents.GRINDSTONE_USE)
+
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.crusher
 }
