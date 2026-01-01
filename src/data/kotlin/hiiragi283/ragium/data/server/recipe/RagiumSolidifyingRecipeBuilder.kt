@@ -41,5 +41,19 @@ object RagiumSolidifyingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD
                 itemCreator.fromItem(HTMoldType.BALL),
                 RagiumMaterialResultHelper.item(HCMaterialPrefixes.RAW_MATERIAL, HCMaterial.Plates.RUBBER, 2),
             ).save(output)
+        // Glass -> Glass Block
+        HTSingleRecipeBuilder
+            .solidifying(
+                fluidCreator.fromTagKey(HCFluids.MOLTEN_GLASS, 1000),
+                itemCreator.fromItem(HTMoldType.BLOCK),
+                itemResult.create(Items.GLASS),
+            ).save(output)
+        // Glass -> Glass Pane
+        HTSingleRecipeBuilder
+            .solidifying(
+                fluidCreator.fromTagKey(HCFluids.MOLTEN_GLASS, 375),
+                itemCreator.fromItem(HTMoldType.BLANK),
+                itemResult.create(Items.GLASS_PANE),
+            ).save(output)
     }
 }

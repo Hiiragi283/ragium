@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "ragium:block/machine/bottom",
+    "front": "ragium:block/machine/crusher_front_active",
+    "side": "ragium:block/machine/side_basic",
+    "top": "ragium:block/machine/top_basic"
+  }
+}

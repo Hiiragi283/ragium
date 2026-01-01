@@ -1,8 +1,8 @@
 {
   "type": "ragium:melting",
-  "ingredient": "minecraft:magma_block",
+  "ingredient": "#c:netherracks",
   "result": {
-    "amount": 250,
+    "amount": 125,
     "id": "minecraft:lava",
     "tag": "c:lava"
   }

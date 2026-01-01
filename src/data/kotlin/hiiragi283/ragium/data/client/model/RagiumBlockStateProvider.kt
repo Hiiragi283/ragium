@@ -30,11 +30,12 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         registerMaterials()
 
         // Processors
-        machineBlock(RagiumBlocks.ALLOY_SMELTER, basic)
+        frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, basic)
+        frontMachineBlock(RagiumBlocks.CRUSHER, basic)
 
-        machineBlock(RagiumBlocks.DRYER, advanced)
-        machineBlock(RagiumBlocks.MELTER, advanced)
-        machineBlock(RagiumBlocks.PYROLYZER, advanced)
+        frontMachineBlock(RagiumBlocks.DRYER, advanced)
+        frontMachineBlock(RagiumBlocks.MELTER, advanced)
+        frontMachineBlock(RagiumBlocks.PYROLYZER, advanced)
 
         // Storages
         altModelBlock(RagiumBlocks.TANK)
@@ -58,15 +59,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
 
     //    Extensions    //
 
-    private fun machineBlock(
-        block: HTHolderLike<Block, *>,
-        tier: String,
-        front: ResourceLocation = block.getId().withPath { "${HTConst.BLOCK}/${RagiumConst.MACHINE}/${it}_front" },
-    ) {
-        val (inactive: BlockModelBuilder, active: BlockModelBuilder) = machineModel(block, tier, front)
-        machineBlock(block, inactive, active)
-    }
-
     private fun machineBlock(block: HTHolderLike<Block, *>, inactive: ModelFile, active: ModelFile) {
         getVariantBuilder(block.get())
             .forAllStates { state: BlockState ->
@@ -83,7 +75,19 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         itemModels().simpleBlockItem(block.getId())
     }
 
-    private fun machineModel(
+    private fun frontMachineBlock(
+        block: HTHolderLike<Block, *>,
+        tier: String,
+        front: ResourceLocation = block.getId().withPath { "${HTConst.BLOCK}/${RagiumConst.MACHINE}/${it}_front" },
+    ) {
+        val (inactive: BlockModelBuilder, active: BlockModelBuilder) = frontMachineModel(block, tier, front)
+        machineBlock(block, inactive, active)
+    }
+
+    /**
+     * @see net.minecraft.data.models.model.ModelTemplates.CUBE_ORIENTABLE_TOP_BOTTOM
+     */
+    private fun frontMachineModel(
         block: HTHolderLike<Block, *>,
         tier: String,
         front: ResourceLocation,

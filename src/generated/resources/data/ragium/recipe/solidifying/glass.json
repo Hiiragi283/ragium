@@ -1,0 +1,10 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:block_mold",
+  "ingredient": {
+    "fluids": "#c:molten_glass"
+  },
+  "result": {
+    "id": "minecraft:glass"
+  }
+}

@@ -15,7 +15,9 @@ abstract class HTProcessingRecipeComponent<INPUT : RecipeInput, RECIPE : HTProce
 ) : HTRecipeComponent<INPUT, RECIPE>(owner) {
     private val battery: HTMachineEnergyBattery.Processor get() = owner.battery
 
-    final override fun getMaxProgress(recipe: RECIPE): Int = owner.updateAndGetProgress(recipe.time)
+    final override fun getMaxProgress(recipe: RECIPE): Int = getTime(recipe).let(owner::updateAndGetProgress)
+
+    open fun getTime(recipe: RECIPE): Int = recipe.time
 
     final override fun getProgress(level: ServerLevel, pos: BlockPos): Int = battery.consume()
 

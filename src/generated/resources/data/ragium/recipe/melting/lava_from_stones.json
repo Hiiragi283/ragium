@@ -2,8 +2,7 @@
   "type": "ragium:melting",
   "ingredient": [
     "#c:cobblestones",
-    "#c:stones",
-    "#c:netherracks"
+    "#c:stones"
   ],
   "result": {
     "amount": 125,
