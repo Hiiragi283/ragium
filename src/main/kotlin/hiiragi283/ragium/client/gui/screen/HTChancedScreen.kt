@@ -16,6 +16,6 @@ class HTChancedScreen<BE : HTChancedBlockEntity, MENU : HTBlockEntityContainerMe
         addFluidTank(HTSlotHelper.getSlotPosX(1.5), blockEntity.inputTank)
 
         // addBurning(HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1.5))
-        addProgress(HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(1))
+        addProgress(HTSlotHelper.getSlotPosX(4.5), HTSlotHelper.getSlotPosY(1))
     }
 }

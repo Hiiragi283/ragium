@@ -62,16 +62,7 @@ object RagiumCuttingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
                             itemCreator.fromItem(it),
                             itemResult.create(base, 2),
                         ).addResult(itemResult.create(Items.STICK), fraction(1, 3))
-                        .saveSuffixed(output, "_from_wall")
-                }
-                // Wall Sigh
-                factory(BlockFamily.Variant.WALL_SIGN)?.let {
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            itemCreator.fromItem(it),
-                            itemResult.create(base, 4),
-                        ).addResult(itemResult.create(Items.CHAIN), fraction(1, 3))
-                        .saveSuffixed(output, "_from_wall_sigh")
+                        .saveSuffixed(output, "_from_sign")
                 }
                 // Slab
                 factory(BlockFamily.Variant.SLAB)?.let {

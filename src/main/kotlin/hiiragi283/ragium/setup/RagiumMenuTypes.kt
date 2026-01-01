@@ -9,12 +9,14 @@ import hiiragi283.core.common.registry.HTDeferredMenuType
 import hiiragi283.core.common.registry.register.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.block.entity.processing.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
+import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
 import hiiragi283.ragium.common.inventory.HTComplexMenu
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.inventory.HTCuttingMachineMenu
@@ -34,6 +36,10 @@ object RagiumMenuTypes {
     val REGISTER = HTDeferredMenuTypeRegister(RagiumAPI.MOD_ID)
 
     //    Processor    //
+
+    @JvmField
+    val ALLOY_SMELTER: HTDeferredMenuType.WithContext<HTAlloySmelterMenu, HTAlloySmelterBlockEntity> =
+        registerBE(RagiumConst.ALLOY_SMELTER, ::HTAlloySmelterMenu)
 
     @JvmField
     val CRUSHER: HTDeferredMenuType.WithContext<HTCrusherMenu, HTCrusherBlockEntity> =

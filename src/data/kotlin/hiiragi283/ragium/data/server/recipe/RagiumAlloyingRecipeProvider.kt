@@ -50,7 +50,7 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                     listOf(HCMaterial.Metals.IRON),
                 ),
                 itemCreator.fromTagKeys(
-                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.GEM),
                     listOf(HCMaterial.Gems.AZURE),
                     2,
                 ),

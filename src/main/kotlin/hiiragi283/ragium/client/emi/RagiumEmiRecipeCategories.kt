@@ -26,7 +26,7 @@ object RagiumEmiRecipeCategories {
     //    Processor    //
 
     @JvmField
-    val ALLOYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.ALLOYING, Items.BLAST_FURNACE)
+    val ALLOYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
     val CRUSHING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)

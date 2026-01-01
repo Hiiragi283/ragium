@@ -12,6 +12,7 @@ import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.block.entity.processing.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
@@ -52,6 +53,12 @@ object RagiumBlockEntityTypes {
     ): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
 
     //    Processor    //
+
+    @JvmField
+    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = registerTick(
+        RagiumConst.ALLOY_SMELTER,
+        ::HTAlloySmelterBlockEntity,
+    )
 
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick(RagiumConst.CRUSHER, ::HTCrusherBlockEntity)
@@ -107,6 +114,7 @@ object RagiumBlockEntityTypes {
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         // Processor
+        registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, CRUSHER.get())
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, DRYER.get())

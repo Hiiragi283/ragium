@@ -30,6 +30,8 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         registerMaterials()
 
         // Processors
+        machineBlock(RagiumBlocks.ALLOY_SMELTER, basic)
+
         machineBlock(RagiumBlocks.DRYER, advanced)
         machineBlock(RagiumBlocks.MELTER, advanced)
         machineBlock(RagiumBlocks.PYROLYZER, advanced)
