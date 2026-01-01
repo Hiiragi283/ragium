@@ -16,6 +16,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Block
         add(RagiumBlocks.CRUSHER, "Crusher")
+        add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
 
         add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.MELTER, "Melter")

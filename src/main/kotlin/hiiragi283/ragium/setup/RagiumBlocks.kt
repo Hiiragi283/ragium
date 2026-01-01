@@ -75,6 +75,10 @@ object RagiumBlocks {
     val CRUSHER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER, RagiumMenuTypes.CRUSHER)
 
+    @JvmField
+    val CUTTING_MACHINE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE, RagiumTranslation.CUTTING_MACHINE, RagiumMenuTypes.CUTTING_MACHINE)
+
     // Advanced
     @JvmField
     val DRYER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =

@@ -10,13 +10,16 @@ import hiiragi283.core.common.registry.register.HTDeferredMenuTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.processing.HTCrusherBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.inventory.HTComplexMenu
+import hiiragi283.ragium.common.inventory.HTCrusherMenu
+import hiiragi283.ragium.common.inventory.HTCuttingMachineMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
-import hiiragi283.ragium.common.inventory.HTMultiItemOutputMenu
+import hiiragi283.ragium.common.inventory.HTPyrolyzerMenu
 import hiiragi283.ragium.common.inventory.HTUniversalChestMenu
 import hiiragi283.ragium.common.item.tool.HTUniversalChestManager
 import net.minecraft.client.Minecraft
@@ -33,8 +36,12 @@ object RagiumMenuTypes {
     //    Processor    //
 
     @JvmField
-    val CRUSHER: HTDeferredMenuType.WithContext<HTMultiItemOutputMenu<HTCrusherBlockEntity>, HTCrusherBlockEntity> =
-        registerBE(RagiumConst.CRUSHER, HTMultiItemOutputMenu.Companion::crusher)
+    val CRUSHER: HTDeferredMenuType.WithContext<HTCrusherMenu, HTCrusherBlockEntity> =
+        registerBE(RagiumConst.CRUSHER, ::HTCrusherMenu)
+
+    @JvmField
+    val CUTTING_MACHINE: HTDeferredMenuType.WithContext<HTCuttingMachineMenu, HTCuttingMachineBlockEntity> =
+        registerBE(RagiumConst.CUTTING_MACHINE, ::HTCuttingMachineMenu)
 
     @JvmField
     val DRYER: HTDeferredMenuType.WithContext<HTComplexMenu<HTDryerBlockEntity>, HTDryerBlockEntity> =
@@ -49,8 +56,8 @@ object RagiumMenuTypes {
         registerBE(RagiumConst.MIXER, HTComplexMenu.Companion::mixer)
 
     @JvmField
-    val PYROLYZER: HTDeferredMenuType.WithContext<HTMultiItemOutputMenu<HTPyrolyzerBlockEntity>, HTPyrolyzerBlockEntity> =
-        registerBE(RagiumConst.PYROLYZER, HTMultiItemOutputMenu.Companion::pyrolyzer)
+    val PYROLYZER: HTDeferredMenuType.WithContext<HTPyrolyzerMenu, HTPyrolyzerBlockEntity> =
+        registerBE(RagiumConst.PYROLYZER, ::HTPyrolyzerMenu)
 
     //    Storages    //
 

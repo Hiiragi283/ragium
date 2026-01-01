@@ -35,6 +35,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             yieldAll(RagiumBlocks.MATERIALS.row(HCMaterialPrefixes.STORAGE_BLOCK).values)
 
             yield(RagiumBlocks.CRUSHER)
+            yield(RagiumBlocks.CUTTING_MACHINE)
 
             yield(RagiumBlocks.DRYER)
             yield(RagiumBlocks.MELTER)

@@ -51,14 +51,21 @@ object RagiumConfig {
             @JvmField
             val crusher: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
-                RagiumConst.PYROLYZER,
+                RagiumConst.CRUSHER,
+                RagiumFluidConfigType.FIRST_INPUT,
+            )
+
+            @JvmField
+            val cuttingMachine: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.CUTTING_MACHINE,
                 RagiumFluidConfigType.FIRST_INPUT,
             )
 
             @JvmField
             val dryer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
-                RagiumConst.PYROLYZER,
+                RagiumConst.DRYER,
                 RagiumFluidConfigType.FIRST_INPUT,
                 RagiumFluidConfigType.FIRST_OUTPUT,
             )
@@ -69,7 +76,7 @@ object RagiumConfig {
             @JvmField
             val mixer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
-                RagiumConst.PYROLYZER,
+                RagiumConst.MIXER,
                 RagiumFluidConfigType.FIRST_INPUT,
                 RagiumFluidConfigType.FIRST_OUTPUT,
             )

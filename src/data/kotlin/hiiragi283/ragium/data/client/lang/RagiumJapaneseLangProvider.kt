@@ -16,6 +16,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Block
         add(RagiumBlocks.CRUSHER, "粉砕機")
+        add(RagiumBlocks.CUTTING_MACHINE, "切断機")
 
         add(RagiumBlocks.DRYER, "乾燥機")
         add(RagiumBlocks.MELTER, "溶融炉")

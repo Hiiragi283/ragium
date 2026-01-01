@@ -32,7 +32,7 @@ object RagiumEmiRecipeCategories {
     val CRUSHING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
 
     @JvmField
-    val CUTTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CUTTING, Items.STONECUTTER)
+    val CUTTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
     val DRYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.DRYING, RagiumBlocks.DRYER)
