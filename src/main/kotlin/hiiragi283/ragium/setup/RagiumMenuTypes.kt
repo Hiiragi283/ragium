@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.inventory.container.type.HTContainerFactory
+import hiiragi283.core.api.storage.item.HTItemHandler
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.core.common.inventory.container.HTBlockEntityContainerMenu
@@ -11,9 +12,11 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
-import hiiragi283.ragium.common.inventory.container.HTComplexContainerMenu
-import hiiragi283.ragium.common.inventory.container.HTMelterContainerMenu
-import hiiragi283.ragium.common.inventory.container.HTPyrolyzerContainerMenu
+import hiiragi283.ragium.common.inventory.HTComplexMenu
+import hiiragi283.ragium.common.inventory.HTMelterMenu
+import hiiragi283.ragium.common.inventory.HTPyrolyzerMenu
+import hiiragi283.ragium.common.inventory.HTUniversalChestMenu
+import hiiragi283.ragium.common.item.tool.HTUniversalChestManager
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
@@ -28,16 +31,24 @@ object RagiumMenuTypes {
     //    Processor    //
 
     @JvmField
-    val DRYER: HTDeferredMenuType.WithContext<HTComplexContainerMenu<HTDryerBlockEntity>, HTDryerBlockEntity> =
-        registerBE(RagiumConst.DRYER, HTComplexContainerMenu.Companion::dryer)
+    val DRYER: HTDeferredMenuType.WithContext<HTComplexMenu<HTDryerBlockEntity>, HTDryerBlockEntity> =
+        registerBE(RagiumConst.DRYER, HTComplexMenu.Companion::dryer)
 
     @JvmField
-    val MELTER: HTDeferredMenuType.WithContext<HTMelterContainerMenu, HTMelterBlockEntity> =
-        registerBE(RagiumConst.MELTER, ::HTMelterContainerMenu)
+    val MELTER: HTDeferredMenuType.WithContext<HTMelterMenu, HTMelterBlockEntity> =
+        registerBE(RagiumConst.MELTER, ::HTMelterMenu)
 
     @JvmField
-    val PYROLYZER: HTDeferredMenuType.WithContext<HTPyrolyzerContainerMenu, HTPyrolyzerBlockEntity> =
-        registerBE(RagiumConst.PYROLYZER, ::HTPyrolyzerContainerMenu)
+    val PYROLYZER: HTDeferredMenuType.WithContext<HTPyrolyzerMenu, HTPyrolyzerBlockEntity> =
+        registerBE(RagiumConst.PYROLYZER, ::HTPyrolyzerMenu)
+
+    //    Storages    //
+
+    @JvmField
+    val UNIVERSAL_CHEST: HTDeferredMenuType.WithContext<HTUniversalChestMenu, HTItemHandler> =
+        REGISTER.registerType(RagiumConst.UNIVERSAL_CHEST, ::HTUniversalChestMenu) {
+            HTItemHandler { HTUniversalChestManager.createSlots() }
+        }
 
     //    Extensions    //
 

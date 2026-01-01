@@ -8,6 +8,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.screen.HTDryerScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTPyrolyzerScreen
+import hiiragi283.ragium.client.gui.screen.HTUniversalChestScreen
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -44,6 +45,7 @@ object RagiumClient {
     init {
         val eventBus: IEventBus = MOD_BUS
 
+        eventBus.addListener(::registerBlockColors)
         eventBus.addListener(::registerItemColors)
         eventBus.addListener(::registerClientExtensions)
         eventBus.addListener(::registerScreens)
@@ -133,6 +135,8 @@ object RagiumClient {
         event.register(RagiumMenuTypes.DRYER.get(), ::HTDryerScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
         event.register(RagiumMenuTypes.PYROLYZER.get(), ::HTPyrolyzerScreen)
+
+        event.register(RagiumMenuTypes.UNIVERSAL_CHEST.get(), ::HTUniversalChestScreen)
 
         LOGGER.info("Registered screens!")
     }

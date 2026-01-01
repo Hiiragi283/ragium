@@ -21,6 +21,9 @@ class HTUniversalChestManager private constructor(private val map: MutableMap<Dy
         @JvmStatic
         fun getHandler(server: MinecraftServer, color: DyeColor): HTItemHandler =
             server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_CHEST).getHandler(color)
+
+        @JvmStatic
+        fun createSlots(): List<HTBasicItemSlot> = List(27) { HTBasicItemSlot.create(null) }
     }
 
     constructor() : this(mutableMapOf())
@@ -46,7 +49,7 @@ class HTUniversalChestManager private constructor(private val map: MutableMap<Dy
     private class ChestHandler(val slots: List<HTItemSlot>) :
         HTItemHandler,
         HTMenuCallback {
-        constructor() : this(List(27) { HTBasicItemSlot.create(null) })
+        constructor() : this(createSlots())
 
         override fun getItemSlots(side: Direction?): List<HTItemSlot> = slots
 

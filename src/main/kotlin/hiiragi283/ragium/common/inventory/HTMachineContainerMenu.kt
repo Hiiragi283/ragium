@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.inventory.container
+package hiiragi283.ragium.common.inventory
 
 import hiiragi283.core.common.inventory.HTContainerItemSlot
 import hiiragi283.core.common.inventory.HTSlotHelper

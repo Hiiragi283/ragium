@@ -19,7 +19,7 @@ import hiiragi283.ragium.client.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
-import hiiragi283.ragium.common.inventory.container.HTMachineContainerMenu
+import hiiragi283.ragium.common.inventory.HTMachineContainerMenu
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes

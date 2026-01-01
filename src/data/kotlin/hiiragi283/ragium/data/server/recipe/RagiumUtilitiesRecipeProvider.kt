@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTStonecuttingRecipeBuilder
@@ -16,10 +17,12 @@ import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -82,6 +85,20 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 block.getId().withPrefix("shapeless/clear/"),
                 HTClearComponentRecipe("", CraftingBookCategory.MISC, block, listOf(component)),
             )
+        }
+        // Universal Chest
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.UNIVERSAL_CHEST)
+            .hollow8()
+            .define('A', HCMaterialPrefixes.INGOT, HCMaterial.Metals.NIGHT_METAL)
+            .define('B', HCMaterialPrefixes.GEM, HCMaterial.Gems.WARPED_CRYSTAL)
+            .save(output)
+        
+        for (color: DyeColor in DyeColor.entries) {
+            HTShapelessRecipeBuilder(createItemStack(RagiumBlocks.UNIVERSAL_CHEST, RagiumDataComponents.COLOR, color))
+                .addIngredient(RagiumBlocks.UNIVERSAL_CHEST)
+                .addIngredient(color.tag)
+                .savePrefixed(output, "${color.serializedName}_")
         }
     }
 

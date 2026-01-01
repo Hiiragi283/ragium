@@ -2,12 +2,12 @@ package hiiragi283.ragium.client.gui.screen
 
 import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
-import hiiragi283.ragium.common.inventory.container.HTComplexContainerMenu
+import hiiragi283.ragium.common.inventory.HTComplexMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
-class HTDryerScreen(menu: HTComplexContainerMenu<HTDryerBlockEntity>, inventory: Inventory, title: Component) :
-    HTProcessorScreen<HTDryerBlockEntity, HTComplexContainerMenu<HTDryerBlockEntity>>(menu, inventory, title) {
+class HTDryerScreen(menu: HTComplexMenu<HTDryerBlockEntity>, inventory: Inventory, title: Component) :
+    HTProcessorScreen<HTDryerBlockEntity, HTComplexMenu<HTDryerBlockEntity>>(menu, inventory, title) {
     override fun init() {
         super.init()
         addFluidTank(HTSlotHelper.getSlotPosX(1.5), blockEntity.inputTank)

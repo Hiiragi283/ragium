@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:universal_chest"
+    },
+    {
+      "tag": "c:dyes/lime"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:color": "lime"
+    },
+    "count": 1,
+    "id": "ragium:universal_chest"
+  }
+}

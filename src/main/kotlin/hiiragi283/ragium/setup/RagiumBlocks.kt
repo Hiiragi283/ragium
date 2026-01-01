@@ -13,6 +13,7 @@ import hiiragi283.core.common.registry.HTDeferredMenuType
 import hiiragi283.core.common.registry.HTSimpleDeferredBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
@@ -25,6 +26,7 @@ import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.common.text.RagiumTranslation
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -109,11 +111,11 @@ object RagiumBlocks {
 
     @JvmField
     val UNIVERSAL_CHEST: HTDeferredBlock<HTUniversalChestBlock, HTUniversalChestBlockItem> = REGISTER.register(
-        "universal_chest",
+        RagiumConst.UNIVERSAL_CHEST,
         machine(),
         ::HTUniversalChestBlock,
-        ::HTUniversalChestBlockItem,
-    )
+        ::HTUniversalChestBlockItem
+    ) { it.component(RagiumDataComponents.COLOR, DyeColor.WHITE) }
 
     //    Extensions    //
 

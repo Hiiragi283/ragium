@@ -72,7 +72,7 @@ object RagiumBlockEntityTypes {
 
     @JvmField
     val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> =
-        REGISTER.registerType("universal_chest", ::HTUniversalChestBlockEntity)
+        REGISTER.registerType(RagiumConst.UNIVERSAL_CHEST, ::HTUniversalChestBlockEntity)
 
     //    Event    //
 

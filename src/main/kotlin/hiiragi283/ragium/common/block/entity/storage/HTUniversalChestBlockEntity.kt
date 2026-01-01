@@ -62,7 +62,7 @@ class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getItemHandler(direction: Direction?): HTItemHandler? {
         val server: MinecraftServer = HiiragiCoreAPI.getActiveServer() ?: return null
-        return HTUniversalChestManager.Companion.getHandler(server, color)
+        return HTUniversalChestManager.getHandler(server, color)
     }
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler? = null

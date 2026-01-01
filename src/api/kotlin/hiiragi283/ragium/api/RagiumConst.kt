@@ -16,6 +16,8 @@ object RagiumConst {
     const val REFINERY = "refinery"
     const val SOLIDIFIER = "solidifier"
 
+    const val UNIVERSAL_CHEST = "universal_chest"
+
     //    Serialization    //
 
     const val MACHINE = "machine"

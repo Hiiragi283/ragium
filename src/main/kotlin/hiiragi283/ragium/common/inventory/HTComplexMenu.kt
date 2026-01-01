@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.inventory.container
+package hiiragi283.ragium.common.inventory
 
 import hiiragi283.core.common.inventory.HTContainerItemSlot
 import hiiragi283.core.common.inventory.HTSlotHelper
@@ -8,7 +8,7 @@ import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 
-class HTComplexContainerMenu<BE : HTAbstractComplexBlockEntity<*>>(
+class HTComplexMenu<BE : HTAbstractComplexBlockEntity<*>>(
     menuType: HTDeferredMenuType.WithContext<*, BE>,
     containerId: Int,
     inventory: Inventory,
@@ -16,8 +16,8 @@ class HTComplexContainerMenu<BE : HTAbstractComplexBlockEntity<*>>(
 ) : HTMachineContainerMenu<BE>(menuType, containerId, inventory, context) {
     companion object {
         @JvmStatic
-        fun dryer(containerId: Int, inventory: Inventory, context: HTDryerBlockEntity): HTComplexContainerMenu<HTDryerBlockEntity> =
-            HTComplexContainerMenu(RagiumMenuTypes.DRYER, containerId, inventory, context)
+        fun dryer(containerId: Int, inventory: Inventory, context: HTDryerBlockEntity): HTComplexMenu<HTDryerBlockEntity> =
+            HTComplexMenu(RagiumMenuTypes.DRYER, containerId, inventory, context)
     }
 
     override fun initSlots() {
