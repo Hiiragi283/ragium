@@ -93,7 +93,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             .define('A', HCMaterialPrefixes.INGOT, HCMaterial.Metals.NIGHT_METAL)
             .define('B', HCMaterialPrefixes.GEM, HCMaterial.Gems.WARPED_CRYSTAL)
             .save(output)
-        
+
         for (color: DyeColor in DyeColor.entries) {
             HTShapelessRecipeBuilder(createItemStack(RagiumBlocks.UNIVERSAL_CHEST, RagiumDataComponents.COLOR, color))
                 .addIngredient(RagiumBlocks.UNIVERSAL_CHEST)

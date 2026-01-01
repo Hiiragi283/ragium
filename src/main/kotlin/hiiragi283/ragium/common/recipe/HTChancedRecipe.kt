@@ -40,5 +40,5 @@ abstract class HTChancedRecipe(
 
     final override fun matches(input: HTRecipeInput, level: Level): Boolean = input.testItem(0, ingredient)
 
-    final override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
+    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
 }

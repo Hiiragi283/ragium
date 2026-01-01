@@ -6,7 +6,7 @@ import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.block.entity.component.HTMachineSlotComponent
+import hiiragi283.ragium.common.block.entity.component.HTSlotInfoComponent
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -15,7 +15,6 @@ import hiiragi283.ragium.common.storge.holder.HTSlotInfoProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.state.BlockState
-import java.util.EnumMap
 
 /**
  * 搬入出の面を制御可能な[HTBlockEntity]の拡張クラス
@@ -56,13 +55,11 @@ abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos
 
     override fun initializeVariables() {
         super.initializeVariables()
-        machineSlot = HTMachineSlotComponent(this)
+        machineSlot = HTSlotInfoComponent(this)
     }
 
-    lateinit var machineSlot: HTMachineSlotComponent
+    lateinit var machineSlot: HTSlotInfoComponent
         private set
-
-    private val accessConfigCache: MutableMap<Direction, HTSlotInfo> = EnumMap(Direction::class.java)
 
     final override fun getSlotInfo(side: Direction): HTSlotInfo = machineSlot.getSlotInfo(side)
 }

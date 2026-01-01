@@ -24,6 +24,9 @@ object RagiumConst {
 
     const val SLOT_INFO = "slot_info"
 
+    const val PROGRESS = "progress"
+    const val MAX_PROGRESS = "max_progress"
+
     //    Recipes    //
 
     const val ALLOYING = "alloying"

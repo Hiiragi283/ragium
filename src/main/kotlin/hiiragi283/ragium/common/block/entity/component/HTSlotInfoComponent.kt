@@ -21,7 +21,7 @@ import java.util.*
 /**
  * @see mekanism.common.tile.component.TileComponentConfig
  */
-class HTMachineSlotComponent(owner: HTBlockEntity) :
+class HTSlotInfoComponent(owner: HTBlockEntity) :
     HTBlockEntityComponent,
     HTSlotInfoProvider {
     companion object {

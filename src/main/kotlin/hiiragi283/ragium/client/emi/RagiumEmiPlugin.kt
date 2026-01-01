@@ -65,7 +65,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
                     consumer.accept(
                         Bounds(
                             HTSlotHelper.getSlotPosX(9),
-                            HTSlotHelper.getSlotPosY(0.5),
+                            HTSlotHelper.getSlotPosY(-0.5),
                             18 * 2,
                             18 * 4,
                         ),

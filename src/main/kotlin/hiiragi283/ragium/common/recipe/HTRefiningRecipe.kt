@@ -28,7 +28,7 @@ class HTRefiningRecipe(
 
     override fun matches(input: HTRecipeInput, level: Level): Boolean = input.testFluid(0, ingredient)
 
-    override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack =
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack =
         extraResult.getLeft()?.getStackOrEmpty(registries) ?: ItemStack.EMPTY
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.REFINING

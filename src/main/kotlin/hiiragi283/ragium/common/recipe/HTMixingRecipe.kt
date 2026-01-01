@@ -18,9 +18,13 @@ class HTMixingRecipe(
     exp: Fraction,
 ) : HTComplexRecipe(result, time, exp) {
     override fun matches(input: HTRecipeInput, level: Level): Boolean =
-        input.testItem(0, ingredient.first) && input.testFluid(0, ingredient.second)
+        input.testItem(0, getItemIngredient()) && input.testFluid(0, getFluidIngredient())
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING.get()
+
+    override fun getItemIngredient(): HTItemIngredient = ingredient.first
+
+    override fun getFluidIngredient(): HTFluidIngredient = ingredient.second
 }

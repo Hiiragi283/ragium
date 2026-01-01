@@ -114,7 +114,7 @@ object RagiumBlocks {
         RagiumConst.UNIVERSAL_CHEST,
         machine(),
         ::HTUniversalChestBlock,
-        ::HTUniversalChestBlockItem
+        ::HTUniversalChestBlockItem,
     ) { it.component(RagiumDataComponents.COLOR, DyeColor.WHITE) }
 
     //    Extensions    //

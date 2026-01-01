@@ -1,18 +1,14 @@
 package hiiragi283.ragium.common.block.entity.processing
 
-import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.input.HTRecipeInput
-import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.core.api.serialization.value.HTValueInput
-import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.api.storage.HTStorageAccess
-import hiiragi283.core.api.storage.HTStorageAction
-import hiiragi283.core.api.storage.fluid.getFluidStack
-import hiiragi283.core.api.storage.fluid.insert
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -27,10 +23,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.fluids.FluidStack
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTMeltingRecipe>(RagiumRecipeTypes.MELTING, RagiumBlockEntityTypes.MELTER, pos, state) {
+    HTProcessorBlockEntity.RecipeBased(RagiumBlockEntityTypes.MELTER, pos, state) {
     lateinit var outputTank: HTBasicFluidTank
         private set
 
@@ -50,46 +45,41 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.create(listener))
     }
 
-    //    Save & Load    //
-
-    override fun initReducedUpdateTag(output: HTValueOutput) {
-        super.initReducedUpdateTag(output)
-        output.store(HTConst.FLUID, VanillaBiCodecs.FLUID_STACK, outputTank.getFluidStack())
-    }
-
-    override fun handleUpdateTag(input: HTValueInput) {
-        super.handleUpdateTag(input)
-        (input.read(HTConst.FLUID, VanillaBiCodecs.FLUID_STACK) ?: FluidStack.EMPTY).let(outputTank::setStack)
-    }
+    private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+    private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
     //    Processing    //
 
-    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean = outputTank.getNeeded() > 0
+    override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<HTMeltingRecipe> =
+        object : HTProcessingRecipeComponent.Cached<HTMeltingRecipe>(RagiumRecipeTypes.MELTING, this) {
+            override fun insertOutput(
+                level: ServerLevel,
+                pos: BlockPos,
+                input: HTRecipeInput,
+                recipe: HTMeltingRecipe,
+            ) {
+                outputHandler.insert(recipe.getResultFluid(level.registryAccess()))
+            }
 
-    override fun getRecipeTime(recipe: HTMeltingRecipe): Int = recipe.time
+            override fun extractInput(
+                level: ServerLevel,
+                pos: BlockPos,
+                input: HTRecipeInput,
+                recipe: HTMeltingRecipe,
+            ) {
+                inputHandler.consume(recipe.ingredient.getRequiredAmount())
+            }
 
-    override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
-        builder.items += inputSlot.getItemStack()
-    }
+            override fun applyEffect() {
+                playSound(SoundEvents.BUCKET_EMPTY_LAVA)
+            }
 
-    // アウトプットに搬出できるか判定する
-    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTMeltingRecipe): Boolean =
-        outputTank.insert(recipe.getResultFluid(level.registryAccess()), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty
+            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? =
+                HTRecipeInput.create(null) { items += inputHandler.getItemStack() }
 
-    override fun completeRecipe(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        input: HTRecipeInput,
-        recipe: HTMeltingRecipe,
-    ) {
-        // 実際にアウトプットに搬出する
-        outputTank.insert(recipe.getResultFluid(level.registryAccess()), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        // インプットを減らす
-        inputSlot.extract(recipe.ingredient.getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        // SEを鳴らす
-        playSound(SoundEvents.BUCKET_EMPTY_LAVA)
-    }
+            override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTMeltingRecipe): Boolean =
+                outputHandler.canInsert(recipe.getResultFluid(level.registryAccess()))
+        }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.melter
 }

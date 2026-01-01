@@ -24,7 +24,7 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
 ) : HTBasicEnergyBattery(capacity, canExtract, canInsert, listener) {
     companion object {
         @JvmStatic
-        fun input(listener: HTContentListener?, blockEntity: HTProcessorBlockEntity<*, *>): Processor =
+        fun input(listener: HTContentListener?, blockEntity: HTProcessorBlockEntity): Processor =
             Processor(blockEntity.getConfig(), listener, blockEntity)
 
         /*fun <BE : HTGeneratorBlockEntity> output(listener: HTContentListener?, blockEntity: BE): Generator {
@@ -37,8 +37,8 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
 
     override fun getCapacity(): Int = HTUpgradeHelper.getEnergyCapacity(blockEntity, super.getCapacity())
 
-    class Processor(config: HTMachineConfig, listener: HTContentListener?, blockEntity: HTProcessorBlockEntity<*, *>) :
-        HTMachineEnergyBattery<HTProcessorBlockEntity<*, *>>(
+    class Processor(config: HTMachineConfig, listener: HTContentListener?, blockEntity: HTProcessorBlockEntity) :
+        HTMachineEnergyBattery<HTProcessorBlockEntity>(
             config.getCapacity(),
             config.getUsage(),
             blockEntity,

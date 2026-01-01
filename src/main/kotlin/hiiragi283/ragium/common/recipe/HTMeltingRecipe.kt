@@ -24,7 +24,7 @@ class HTMeltingRecipe(
 
     override fun matches(input: HTRecipeInput, level: Level): Boolean = input.testItem(0, ingredient)
 
-    override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MELTING
 

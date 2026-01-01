@@ -2,13 +2,14 @@ package hiiragi283.ragium.common.block.entity.processing
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.input.HTRecipeInput
-import hiiragi283.core.api.storage.HTStorageAccess
-import hiiragi283.core.api.storage.HTStorageAction
-import hiiragi283.core.api.storage.fluid.insert
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.util.HTStackSlotHelper
+import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -26,7 +27,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Cached<HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, RagiumBlockEntityTypes.PYROLYZER, pos, state) {
+    HTProcessorBlockEntity.RecipeBased(RagiumBlockEntityTypes.PYROLYZER, pos, state) {
     lateinit var outputTank: HTBasicFluidTank
         private set
 
@@ -45,46 +46,48 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
         outputSlots = List(4) { builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener)) }
     }
 
+    private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+    private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
+    private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+
     //    Processing    //
 
-    override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
-        builder.items += inputSlot.getItemStack()
-    }
+    override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<HTPyrolyzingRecipe> =
+        object : HTProcessingRecipeComponent.Cached<HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
+            override fun insertOutput(
+                level: ServerLevel,
+                pos: BlockPos,
+                input: HTRecipeInput,
+                recipe: HTPyrolyzingRecipe,
+            ) {
+                val access: RegistryAccess = level.registryAccess()
+                itemOutputHandler.insert(recipe.getResultItem(access))
+                fluidOutputHandler.insert(recipe.getResultFluid(access))
+            }
 
-    override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
-        outputSlots.any { it.getNeeded() > 0 } || outputTank.getNeeded() > 0
+            override fun extractInput(
+                level: ServerLevel,
+                pos: BlockPos,
+                input: HTRecipeInput,
+                recipe: HTPyrolyzingRecipe,
+            ) {
+                inputHandler.consume(recipe.ingredient.getRequiredAmount())
+            }
 
-    override fun getRecipeTime(recipe: HTPyrolyzingRecipe): Int = recipe.time
+            override fun applyEffect() {
+                playSound(SoundEvents.BLAZE_AMBIENT, volume = 0.5f)
+            }
 
-    override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTPyrolyzingRecipe): Boolean {
-        val access: RegistryAccess = level.registryAccess()
-        val bool1: Boolean = outputTank.insert(recipe.getResultFluid(access), HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL).isEmpty
+            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? =
+                HTRecipeInput.create(null) { items += inputHandler.getItemStack() }
 
-        val remainder: Int = HTStackSlotHelper.insertStacks(
-            outputSlots,
-            recipe.assemble(input, access),
-            HTStorageAction.SIMULATE,
-            HTStorageAccess.INTERNAL,
-        )
-        return bool1 && remainder == 0
-    }
-
-    override fun completeRecipe(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        input: HTRecipeInput,
-        recipe: HTPyrolyzingRecipe,
-    ) {
-        val access: RegistryAccess = level.registryAccess()
-        // 実際にアウトプットに搬出する
-        outputTank.insert(recipe.getResultFluid(access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        HTStackSlotHelper.insertStacks(outputSlots, recipe.assemble(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        // インプットを減らす
-        inputSlot.extract(recipe.ingredient.getRequiredAmount(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        // SEを鳴らす
-        playSound(SoundEvents.BLAZE_AMBIENT)
-    }
+            override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: HTPyrolyzingRecipe): Boolean {
+                val access: RegistryAccess = level.registryAccess()
+                val bool1: Boolean = itemOutputHandler.canInsert(recipe.getResultItem(access))
+                val bool2: Boolean = fluidOutputHandler.canInsert(recipe.getResultFluid(access))
+                return bool1 && bool2
+            }
+        }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.pyrolyzer
 }

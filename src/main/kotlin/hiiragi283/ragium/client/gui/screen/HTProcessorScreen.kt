@@ -14,7 +14,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
-abstract class HTProcessorScreen<BE : HTProcessorBlockEntity<*, *>, MENU : HTBlockEntityContainerMenu<BE>> :
+abstract class HTProcessorScreen<BE : HTProcessorBlockEntity, MENU : HTBlockEntityContainerMenu<BE>> :
     HTBlockEntityContainerScreen<BE, MENU> {
     constructor(texture: ResourceLocation, menu: MENU, inventory: Inventory, title: Component) : super(
         texture,

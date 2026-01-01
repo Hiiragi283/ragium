@@ -3,14 +3,17 @@ package hiiragi283.ragium.common.block.entity.processing
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.recipe.input.HTRecipeInput
-import hiiragi283.core.api.storage.HTStorageAccess
-import hiiragi283.core.api.storage.HTStorageAction
-import hiiragi283.core.api.storage.fluid.insert
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.fluid.getFluidStack
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.api.storage.item.insert
+import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
 import hiiragi283.ragium.common.recipe.HTComplexRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -20,18 +23,19 @@ import hiiragi283.ragium.config.RagiumFluidConfigType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTAbstractComplexBlockEntity<RECIPE : HTComplexRecipe>(
-    finder: HTRecipeFinder<HTRecipeInput, RECIPE>,
-    type: HTDeferredBlockEntityType<*>,
-    pos: BlockPos,
-    state: BlockState,
-) : HTProcessorBlockEntity.Cached<RECIPE>(finder, type, pos, state) {
+abstract class HTAbstractComplexBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity.RecipeBased(type, pos, state) {
+    lateinit var inputTank: HTBasicFluidTank
+        private set
     lateinit var outputTank: HTBasicFluidTank
         private set
 
-    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+    final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        inputTank =
+            builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)))
         outputTank =
             builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)))
     }
@@ -41,49 +45,56 @@ abstract class HTAbstractComplexBlockEntity<RECIPE : HTComplexRecipe>(
     lateinit var outputSlot: HTBasicItemSlot
         private set
 
-    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
+    private val itemInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+    private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
+
+    private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+    private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+
     //    Processing    //
 
-    override fun buildRecipeInput(builder: HTRecipeInput.Builder) {
-        builder.items += inputSlot.getItemStack()
-    }
+    inner class RecipeComponent<RECIPE : HTComplexRecipe>(finder: HTRecipeFinder<HTRecipeInput, RECIPE>, private val sound: SoundEvent) :
+        HTProcessingRecipeComponent.Cached<RECIPE>(finder, this) {
+        override fun insertOutput(
+            level: ServerLevel,
+            pos: BlockPos,
+            input: HTRecipeInput,
+            recipe: RECIPE,
+        ) {
+            val access: RegistryAccess = level.registryAccess()
+            itemOutputHandler.insert(recipe.getResultItem(access))
+            fluidOutputHandler.insert(recipe.getResultFluid(access))
+        }
 
-    final override fun shouldCheckRecipe(level: ServerLevel, pos: BlockPos): Boolean =
-        outputSlot.getNeeded() > 0 || outputTank.getNeeded() > 0
+        override fun extractInput(
+            level: ServerLevel,
+            pos: BlockPos,
+            input: HTRecipeInput,
+            recipe: RECIPE,
+        ) {
+            itemInputHandler.consume(recipe.getItemIngredient())
+            fluidInputHandler.consume(recipe.getFluidIngredient())
+        }
 
-    override fun getRecipeTime(recipe: RECIPE): Int = recipe.time
+        override fun applyEffect() {
+            playSound(sound)
+        }
 
-    final override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: RECIPE): Boolean {
-        val access: RegistryAccess = level.registryAccess()
-        val bool1: Boolean = outputTank
-            .insert(
-                recipe.getResultFluid(access),
-                HTStorageAction.SIMULATE,
-                HTStorageAccess.INTERNAL,
-            ).isEmpty
-        val bool2: Boolean = outputSlot
-            .insert(
-                recipe.assemble(input, access),
-                HTStorageAction.SIMULATE,
-                HTStorageAccess.INTERNAL,
-            ).isEmpty
-        return bool1 && bool2
-    }
+        override fun canProgressRecipe(level: ServerLevel, input: HTRecipeInput, recipe: RECIPE): Boolean {
+            val access: RegistryAccess = level.registryAccess()
+            val bool1: Boolean = itemOutputHandler.canInsert(recipe.getResultItem(access))
+            val bool2: Boolean = fluidOutputHandler.canInsert(recipe.getResultFluid(access))
+            return bool1 && bool2
+        }
 
-    override fun completeRecipe(
-        level: ServerLevel,
-        pos: BlockPos,
-        state: BlockState,
-        input: HTRecipeInput,
-        recipe: RECIPE,
-    ) {
-        val access: RegistryAccess = level.registryAccess()
-        // 実際にアウトプットに搬出する
-        outputTank.insert(recipe.getResultFluid(access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
-        outputSlot.insert(recipe.assemble(input, access), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTRecipeInput? = HTRecipeInput.create(null) {
+            items += itemInputHandler.getItemStack()
+            fluids += fluidInputHandler.getFluidStack()
+        }
     }
 }

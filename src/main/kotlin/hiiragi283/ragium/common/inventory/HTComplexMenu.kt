@@ -8,7 +8,7 @@ import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 
-class HTComplexMenu<BE : HTAbstractComplexBlockEntity<*>>(
+class HTComplexMenu<BE : HTAbstractComplexBlockEntity>(
     menuType: HTDeferredMenuType.WithContext<*, BE>,
     containerId: Int,
     inventory: Inventory,

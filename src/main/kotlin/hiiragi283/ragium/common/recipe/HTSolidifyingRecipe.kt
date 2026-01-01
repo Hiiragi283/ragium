@@ -26,7 +26,7 @@ class HTSolidifyingRecipe(
 
     override fun matches(input: HTRecipeInput, level: Level): Boolean = input.testFluid(0, ingredient) && input.testCatalyst(0, catalyst)
 
-    override fun assemble(input: HTRecipeInput, registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.SOLIDIFYING
 

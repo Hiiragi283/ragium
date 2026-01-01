@@ -11,6 +11,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import org.apache.commons.lang3.math.Fraction
+import kotlin.jvm.optionals.getOrNull
 
 class HTDryingRecipe(
     val ingredient: Either<HTItemIngredient, HTFluidIngredient>,
@@ -24,4 +25,8 @@ class HTDryingRecipe(
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.DRYING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.DRYING.get()
+
+    override fun getItemIngredient(): HTItemIngredient? = ingredient.left().getOrNull()
+
+    override fun getFluidIngredient(): HTFluidIngredient? = ingredient.right().getOrNull()
 }
