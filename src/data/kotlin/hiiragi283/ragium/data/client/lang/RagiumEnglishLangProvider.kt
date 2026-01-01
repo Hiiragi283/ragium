@@ -17,6 +17,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         // Block
         add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.MELTER, "Melter")
+        add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
 
         add(RagiumBlocks.BATTERY, "Variable Battery")

@@ -145,7 +145,7 @@ object RagiumRecipeSerializers {
         RagiumConst.DRYING,
         complex(
             BiCodecs
-                .either(HTItemIngredient.CODEC, HTFluidIngredient.CODEC)
+                .either(HTItemIngredient.CODEC, HTFluidIngredient.CODEC, true)
                 .fieldOf(HTConst.INGREDIENT)
                 .forGetter(HTDryingRecipe::ingredient),
             ::HTDryingRecipe,

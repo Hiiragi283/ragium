@@ -41,7 +41,7 @@ object RagiumEmiRecipeCategories {
     val MELTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val MIXING: HTEmiRecipeCategory = create(RagiumRecipeTypes.MIXING, RagiumBlocks.MELTER)
+    val MIXING: HTEmiRecipeCategory = create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
     val PYROLYZING: HTEmiRecipeCategory = create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)

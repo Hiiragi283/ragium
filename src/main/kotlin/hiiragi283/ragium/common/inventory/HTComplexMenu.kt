@@ -3,12 +3,13 @@ package hiiragi283.ragium.common.inventory
 import hiiragi283.core.common.inventory.HTContainerItemSlot
 import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.core.common.registry.HTDeferredMenuType
-import hiiragi283.ragium.common.block.entity.processing.HTAbstractComplexBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTComplexBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTMixerBlockEntity
 import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 
-class HTComplexMenu<BE : HTAbstractComplexBlockEntity>(
+class HTComplexMenu<BE : HTComplexBlockEntity>(
     menuType: HTDeferredMenuType.WithContext<*, BE>,
     containerId: Int,
     inventory: Inventory,
@@ -18,6 +19,10 @@ class HTComplexMenu<BE : HTAbstractComplexBlockEntity>(
         @JvmStatic
         fun dryer(containerId: Int, inventory: Inventory, context: HTDryerBlockEntity): HTComplexMenu<HTDryerBlockEntity> =
             HTComplexMenu(RagiumMenuTypes.DRYER, containerId, inventory, context)
+
+        @JvmStatic
+        fun mixer(containerId: Int, inventory: Inventory, context: HTMixerBlockEntity): HTComplexMenu<HTMixerBlockEntity> =
+            HTComplexMenu(RagiumMenuTypes.MIXER, containerId, inventory, context)
     }
 
     override fun initSlots() {

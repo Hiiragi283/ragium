@@ -9,8 +9,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTDryerBlockEntity(pos: BlockPos, state: BlockState) : HTComplexBlockEntity(RagiumBlockEntityTypes.DRYER, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*> = RecipeComponent(RagiumRecipeTypes.DRYING, SoundEvents.SPONGE_ABSORB)
+class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTComplexBlockEntity(RagiumBlockEntityTypes.MIXER, pos, state) {
+    override fun createRecipeComponent(): HTRecipeComponent<*> = RecipeComponent(RagiumRecipeTypes.MIXING, SoundEvents.BUCKET_FILL_AXOLOTL)
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.dryer
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.mixer
 }

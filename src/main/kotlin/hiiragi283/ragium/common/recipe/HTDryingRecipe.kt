@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
-import com.mojang.datafixers.util.Either
+import hiiragi283.core.api.monad.Either
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTRecipeInput
@@ -11,7 +11,6 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import org.apache.commons.lang3.math.Fraction
-import kotlin.jvm.optionals.getOrNull
 
 class HTDryingRecipe(
     val ingredient: Either<HTItemIngredient, HTFluidIngredient>,
@@ -26,7 +25,7 @@ class HTDryingRecipe(
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.DRYING.get()
 
-    override fun getItemIngredient(): HTItemIngredient? = ingredient.left().getOrNull()
+    override fun getItemIngredient(): HTItemIngredient? = ingredient.getLeft()
 
-    override fun getFluidIngredient(): HTFluidIngredient? = ingredient.right().getOrNull()
+    override fun getFluidIngredient(): HTFluidIngredient? = ingredient.getRight()
 }

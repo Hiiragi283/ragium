@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.inventory.HTComplexMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
@@ -37,6 +38,10 @@ object RagiumMenuTypes {
     @JvmField
     val MELTER: HTDeferredMenuType.WithContext<HTMelterMenu, HTMelterBlockEntity> =
         registerBE(RagiumConst.MELTER, ::HTMelterMenu)
+
+    @JvmField
+    val MIXER: HTDeferredMenuType.WithContext<HTComplexMenu<HTMixerBlockEntity>, HTMixerBlockEntity> =
+        registerBE(RagiumConst.MIXER, HTComplexMenu.Companion::mixer)
 
     @JvmField
     val PYROLYZER: HTDeferredMenuType.WithContext<HTPyrolyzerMenu, HTPyrolyzerBlockEntity> =

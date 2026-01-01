@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
@@ -57,6 +58,9 @@ object RagiumBlockEntityTypes {
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
 
     @JvmField
+    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> = registerTick(RagiumConst.MIXER, ::HTMixerBlockEntity)
+
+    @JvmField
     val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> = registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
 
     //    Storage    //
@@ -94,6 +98,7 @@ object RagiumBlockEntityTypes {
         // Processor
         registerHandler(event, DRYER.get())
         registerHandler(event, MELTER.get())
+        registerHandler(event, MIXER.get())
         registerHandler(event, PYROLYZER.get())
 
         // Storage

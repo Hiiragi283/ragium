@@ -26,7 +26,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTAbstractComplexBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTComplexBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.RecipeBased(type, pos, state) {
     lateinit var inputTank: HTBasicFluidTank
         private set

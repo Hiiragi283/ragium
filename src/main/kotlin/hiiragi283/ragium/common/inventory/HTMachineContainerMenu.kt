@@ -18,7 +18,7 @@ abstract class HTMachineContainerMenu<BE : HTMachineBlockEntity>(
         context.machineUpgrade
             .getUpgradeSlots()
             .forEachIndexed { index: Int, slot: HTBasicItemSlot ->
-                addSlot(HTContainerItemSlot.both(slot, HTSlotHelper.getSlotPosX(9.5), HTSlotHelper.getSlotPosY(0.5 + index)))
+                addSlot(HTContainerItemSlot.both(slot, HTSlotHelper.getSlotPosX(9.5), HTSlotHelper.getSlotPosY(-0.5 + index)))
             }
     }
 }

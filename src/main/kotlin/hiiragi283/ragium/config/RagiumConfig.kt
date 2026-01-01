@@ -60,12 +60,15 @@ object RagiumConfig {
             val melter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.MELTER, RagiumFluidConfigType.FIRST_OUTPUT)
 
             @JvmField
-            val pyrolyzer: HTMachineConfig = HTMachineConfig.createSimple(
+            val mixer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.PYROLYZER,
                 RagiumFluidConfigType.FIRST_INPUT,
                 RagiumFluidConfigType.FIRST_OUTPUT,
             )
+
+            @JvmField
+            val pyrolyzer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.PYROLYZER, RagiumFluidConfigType.FIRST_OUTPUT)
         }
     }
 }

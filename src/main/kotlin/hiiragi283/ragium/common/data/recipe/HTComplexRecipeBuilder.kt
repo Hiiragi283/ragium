@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.data.recipe
 
-import com.mojang.datafixers.util.Either
+import hiiragi283.core.api.monad.Either
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTComplexResult
@@ -21,7 +21,7 @@ class HTComplexRecipeBuilder<INGREDIENT : Any>(
     companion object {
         @JvmStatic
         fun drying(ingredient: HTItemIngredient): HTComplexRecipeBuilder<*> =
-            HTComplexRecipeBuilder(RagiumConst.DRYING, ::HTDryingRecipe, Either.left(ingredient))
+            HTComplexRecipeBuilder(RagiumConst.DRYING, ::HTDryingRecipe, Either.Left(ingredient))
 
         @JvmStatic
         fun mixing(item: HTItemIngredient, fluid: HTFluidIngredient): HTComplexRecipeBuilder<*> =

@@ -80,6 +80,10 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER, RagiumMenuTypes.MELTER)
 
     @JvmField
+    val MIXER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER, RagiumMenuTypes.MIXER)
+
+    @JvmField
     val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER, RagiumMenuTypes.PYROLYZER)
 
