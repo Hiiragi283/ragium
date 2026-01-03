@@ -76,7 +76,7 @@ object RagiumFluids {
     //    Misc    //
 
     @JvmField
-    val DESTABILIZED_RAGINITE: HTSimpleFluidContent = REGISTER.registerSimple("destabilized_raginite", molten().temperature(1300))
+    val MOLTEN_RAGINITE: HTSimpleFluidContent = REGISTER.registerSimple("molten_raginite", molten().temperature(1300))
 
     @JvmField
     val COOLANT: HTSimpleFluidContent = REGISTER.registerSimple("coolant", liquid().temperature(273))

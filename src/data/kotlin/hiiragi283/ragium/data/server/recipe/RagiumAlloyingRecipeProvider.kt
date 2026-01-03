@@ -107,15 +107,5 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 ),
                 itemCreator.fromTagKey(HCMaterialPrefixes.DUST, HCMaterial.Minerals.GLOWSTONE, 2),
             ).save(output)
-        // Raginite + Diamond -> Ragi-Crystal
-        HTAlloyingRecipeBuilder
-            .create(
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.GEM, RagiumMaterial.RAGI_CRYSTAL),
-                itemCreator.fromTagKeys(
-                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.GEM),
-                    listOf(HCMaterial.Gems.DIAMOND),
-                ),
-                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, RagiumMaterial.RAGINITE, 6),
-            ).save(output)
     }
 }

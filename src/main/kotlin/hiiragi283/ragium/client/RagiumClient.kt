@@ -127,7 +127,7 @@ object RagiumClient {
         event.dull(RagiumFluids.NAPHTHA, Color(0xff6633))
         event.clear(RagiumFluids.FUEL, Color(0xcc3300))
         event.dull(RagiumFluids.LUBRICANT, Color(0xff9900))
-        event.molten(RagiumFluids.DESTABILIZED_RAGINITE, Color(0xff0033))
+        event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
 
         event.clear(RagiumFluids.COOLANT, Color(0x009999))
         event.dull(RagiumFluids.CREOSOTE, Color(0x663333))

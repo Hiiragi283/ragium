@@ -76,7 +76,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.LUBRICANT)
             // Misc
-            add(RagiumFluids.DESTABILIZED_RAGINITE)
+            add(RagiumFluids.MOLTEN_RAGINITE)
             add(RagiumFluids.CREOSOTE)
         }
         for (content: HTFluidContent<*, *, *> in RagiumFluids.REGISTER.entries) {

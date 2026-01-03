@@ -20,6 +20,14 @@ object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
             ).setResult(itemResult.create(Items.MUD))
             .save(output)
 
+        // Diamond + Raginite -> Ragi-Crystal
+        HTComplexRecipeBuilder
+            .mixing(
+                itemCreator.fromTagKey(HCMaterialPrefixes.GEM, HCMaterial.Gems.DIAMOND),
+                fluidCreator.fromTagKey(RagiumFluids.MOLTEN_RAGINITE, 100 * 8),
+            ).setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.GEM, RagiumMaterial.RAGI_CRYSTAL))
+            .save(output)
+
         // Creosote + Redstone -> Lubricant
         HTComplexRecipeBuilder
             .mixing(

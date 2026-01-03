@@ -1,0 +1,9 @@
+{
+  "type": "ragium:melting",
+  "ingredient": "#c:storage_blocks/raginite",
+  "result": {
+    "amount": 900,
+    "id": "ragium:molten_raginite",
+    "tag": "c:molten_raginite"
+  }
+}

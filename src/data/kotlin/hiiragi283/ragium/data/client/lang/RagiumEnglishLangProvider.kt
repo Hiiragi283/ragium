@@ -41,7 +41,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         addFluid(RagiumFluids.FUEL, "Fuel")
         addFluid(RagiumFluids.LUBRICANT, "Lubricant")
 
-        addFluid(RagiumFluids.DESTABILIZED_RAGINITE, "Destabilized Raginite")
+        addFluid(RagiumFluids.MOLTEN_RAGINITE, "Destabilized Raginite")
         addFluid(RagiumFluids.COOLANT, "Coolant")
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
 

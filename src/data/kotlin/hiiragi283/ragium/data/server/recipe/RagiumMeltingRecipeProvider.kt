@@ -2,9 +2,12 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.registry.HTFluidWithTag
+import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
+import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -64,5 +67,18 @@ object RagiumMeltingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
                 itemCreator.fromTagKey(Tags.Items.GLASS_PANES),
                 fluidResult.create(HCFluids.MOLTEN_GLASS, 375),
             ).saveSuffixed(output, "_from_pane")
+
+        // Raginite
+        HTSingleRecipeBuilder
+            .melting(
+                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, RagiumMaterial.RAGINITE),
+                fluidResult.create(RagiumFluids.MOLTEN_RAGINITE, 100),
+            ).saveSuffixed(output, "_from_dust")
+
+        HTSingleRecipeBuilder
+            .melting(
+                itemCreator.fromTagKey(HCMaterialPrefixes.STORAGE_BLOCK, RagiumMaterial.RAGINITE),
+                fluidResult.create(RagiumFluids.MOLTEN_RAGINITE, 100 * 9),
+            ).saveSuffixed(output, "_from_block")
     }
 }

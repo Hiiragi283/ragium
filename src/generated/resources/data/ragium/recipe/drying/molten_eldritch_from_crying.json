@@ -2,8 +2,8 @@
   "type": "ragium:drying",
   "fluid_result": {
     "amount": 125,
-    "id": "hiiragi_core:eldritch_flux",
-    "tag": "c:eldritch_flux"
+    "id": "hiiragi_core:molten_eldritch",
+    "tag": "c:molten_eldritch"
   },
   "ingredient": "#c:obsidians/crying",
   "item_result": {

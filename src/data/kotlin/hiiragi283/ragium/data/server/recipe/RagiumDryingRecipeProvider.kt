@@ -23,7 +23,7 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         HTComplexRecipeBuilder
             .drying(itemCreator.fromTagKey(Tags.Items.OBSIDIANS_CRYING))
             .setResult(itemResult.create(Items.OBSIDIAN))
-            .setResult(fluidResult.create(HCFluids.ELDRITCH_FLUX, 125))
+            .setResult(fluidResult.create(HCFluids.MOLTEN_ELDRITCH, 125))
             .setTime(20 * 20)
             .saveSuffixed(output, "_from_crying")
         // Sapling -> Dead Bush
