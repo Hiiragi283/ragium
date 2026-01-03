@@ -43,6 +43,21 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 .addIngredient(RagiumTags.Items.MOLDS)
                 .save(output)
         }
+
+        // Location Ticket
+        HTShapedRecipeBuilder
+            .create(RagiumItems.LOCATION_TICKET, 8)
+            .hollow8()
+            .define('A', Items.PAPER)
+            .define('B', Tags.Items.ENDER_PEARLS)
+            .saveSuffixed(output, "_with_ender")
+
+        HTShapedRecipeBuilder
+            .create(RagiumItems.LOCATION_TICKET, 8)
+            .hollow8()
+            .define('A', Items.PAPER)
+            .define('B', HCMaterialPrefixes.GEM, HCMaterial.Gems.WARPED_CRYSTAL)
+            .saveSuffixed(output, "_with_warped")
         // Loot Ticket
         lootTickets()
         // Potion Drop -> Potion
@@ -86,6 +101,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 HTClearComponentRecipe("", CraftingBookCategory.MISC, block, listOf(component)),
             )
         }
+        // Resonant Interface
         // Universal Chest
         HTShapedRecipeBuilder
             .create(RagiumBlocks.UNIVERSAL_CHEST)

@@ -21,12 +21,11 @@ object RagiumConst {
     //    Serialization    //
 
     const val DEVICE = "device"
+    const val LOCATION = "location"
     const val MACHINE = "machine"
-
-    const val SLOT_INFO = "slot_info"
-
-    const val PROGRESS = "progress"
     const val MAX_PROGRESS = "max_progress"
+    const val PROGRESS = "progress"
+    const val SLOT_INFO = "slot_info"
 
     //    Recipes    //
 

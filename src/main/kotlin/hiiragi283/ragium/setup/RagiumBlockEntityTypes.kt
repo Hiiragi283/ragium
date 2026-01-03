@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.block.entity.processing.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTResonantInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import net.minecraft.world.level.block.Block
@@ -97,6 +98,10 @@ object RagiumBlockEntityTypes {
     val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = registerTick("tank", ::HTTankBlockEntity)
 
     @JvmField
+    val RESONANT_INTERFACE: HTDeferredBlockEntityType<HTResonantInterfaceBlockEntity> =
+        REGISTER.registerType("resonant_interface", ::HTResonantInterfaceBlockEntity)
+
+    @JvmField
     val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> =
         REGISTER.registerType(RagiumConst.UNIVERSAL_CHEST, ::HTUniversalChestBlockEntity)
 
@@ -131,6 +136,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, BATTERY.get())
         registerHandler(event, CRATE.get())
         registerHandler(event, TANK.get())
+        registerHandler(event, RESONANT_INTERFACE.get())
         registerHandler(event, UNIVERSAL_CHEST.get())
 
         LOGGER.info("Registered Block Capabilities!")

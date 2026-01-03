@@ -9,6 +9,7 @@ import hiiragi283.core.common.registry.register.HTDeferredDataComponentRegister
 import hiiragi283.core.common.text.HTSimpleTranslation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
+import net.minecraft.core.GlobalPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.DyeColor
@@ -29,6 +30,9 @@ object RagiumDataComponents {
 
     @JvmField
     val DESCRIPTION: DataComponentType<HTTranslation> = REGISTER.registerType("description", HTSimpleTranslation.CODEC)
+
+    @JvmField
+    val LOCATION: DataComponentType<GlobalPos> = REGISTER.registerType("location", VanillaBiCodecs.GLOBAL_POS)
 
     @JvmField
     val LOOT_TICKET: DataComponentType<HTLootTicketTargets> = REGISTER.registerType("loot_ticket", HTLootTicketTargets.CODEC)

@@ -29,6 +29,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
         add(RagiumBlocks.TANK, "Variable Tank")
+        add(RagiumBlocks.RESONANT_INTERFACE, "Resonant Interface")
         add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
 
         // Fluid
@@ -53,6 +54,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumItems.RAGIUM_POWDER, "Ragium Powder")
         add(RagiumItems.SEED_OIL_DROP, "Drop of Seed Oil")
 
+        add(RagiumItems.LOCATION_TICKET, "Location Ticket")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
         add(RagiumItems.POTION_DROP, "Potion Drop")
         add(RagiumItems.SLOT_COVER, "Slot Cover")

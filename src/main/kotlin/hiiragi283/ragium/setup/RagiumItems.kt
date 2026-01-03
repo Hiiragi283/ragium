@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.HTPotionDropItem
 import hiiragi283.ragium.common.item.HTTraderCatalogItem
+import hiiragi283.ragium.common.item.tool.HTLocationTicketItem
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.common.storge.attachment.HTComponentHandler
 import hiiragi283.ragium.common.storge.energy.HTComponentEnergyBattery
@@ -77,6 +78,9 @@ object RagiumItems {
     }
 
     //    Utilities    //
+
+    @JvmField
+    val LOCATION_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
 
     @JvmField
     val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)

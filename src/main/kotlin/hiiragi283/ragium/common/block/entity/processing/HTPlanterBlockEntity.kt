@@ -108,7 +108,10 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
             override fun getProgress(level: ServerLevel, pos: BlockPos): Int {
                 val blockLight: Int = level.getBrightness(LightLayer.BLOCK, pos.above())
                 val skyLight: Int = level.getBrightness(LightLayer.SKY, pos.above())
-                return minOf(blockLight, skyLight)
+                return when {
+                    level.canSeeSky(pos.above()) -> skyLight
+                    else -> minOf(blockLight, skyLight)
+                }
             }
 
             override fun canProgressRecipe(level: ServerLevel, input: HTPlantingRecipe.Input, recipe: HTPlantingRecipe): Boolean =

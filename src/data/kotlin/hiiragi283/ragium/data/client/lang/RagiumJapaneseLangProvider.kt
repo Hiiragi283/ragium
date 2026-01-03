@@ -29,6 +29,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.BATTERY, "可変バッテリー")
         add(RagiumBlocks.CRATE, "可変クレート")
         add(RagiumBlocks.TANK, "可変タンク")
+        add(RagiumBlocks.RESONANT_INTERFACE, "共振インターフェース")
         add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
 
         // Fluid
@@ -54,6 +55,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumItems.RAGIUM_POWDER, "ラギウムパウダー")
         add(RagiumItems.SEED_OIL_DROP, "種油のしずく")
 
+        add(RagiumItems.LOCATION_TICKET, "座標チケット")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
         add(RagiumItems.POTION_DROP, "ポーションの雫")
         add(RagiumItems.SLOT_COVER, "スロットカバー")

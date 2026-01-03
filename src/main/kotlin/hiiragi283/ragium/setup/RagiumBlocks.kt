@@ -17,11 +17,13 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTResonantInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
 import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
+import hiiragi283.ragium.common.item.block.HTResonantInterfaceBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
 import hiiragi283.ragium.common.material.RagiumMaterial
@@ -131,6 +133,14 @@ object RagiumBlocks {
         machine().noOcclusion(),
         ::HTTankBlock,
         ::HTTankBlockItem,
+    )
+
+    @JvmField
+    val RESONANT_INTERFACE: HTDeferredBlock<HTResonantInterfaceBlock, HTResonantInterfaceBlockItem> = REGISTER.register(
+        "resonant_interface",
+        machine(),
+        ::HTResonantInterfaceBlock,
+        ::HTResonantInterfaceBlockItem,
     )
 
     @JvmField
