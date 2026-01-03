@@ -23,6 +23,10 @@ object RagiumConfig {
         @JvmField
         val processor: Processor
 
+        // Device
+        @JvmField
+        val device: Device
+
         // Storage
         @JvmField
         val batteryCapacity: ModConfigSpec.IntValue
@@ -37,6 +41,11 @@ object RagiumConfig {
             builder.push("processor")
             builder.comment("Configurations for Processor Machines")
             processor = Processor(builder)
+            builder.pop()
+
+            builder.push("device")
+            builder.comment("Configurations for Device Machines")
+            device = Device(builder)
             builder.pop()
 
             // Storage
@@ -90,6 +99,11 @@ object RagiumConfig {
                 RagiumConst.PYROLYZER,
                 RagiumFluidConfigType.FIRST_OUTPUT,
             )
+        }
+
+        class Device(builder: ModConfigSpec.Builder) {
+            @JvmField
+            val planter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.PLANTER, RagiumFluidConfigType.FIRST_INPUT)
         }
     }
 }

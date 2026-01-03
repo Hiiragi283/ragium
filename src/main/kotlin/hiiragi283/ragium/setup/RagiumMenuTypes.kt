@@ -15,12 +15,14 @@ import hiiragi283.ragium.common.block.entity.processing.HTCuttingMachineBlockEnt
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
 import hiiragi283.ragium.common.inventory.HTComplexMenu
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
 import hiiragi283.ragium.common.inventory.HTCuttingMachineMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
+import hiiragi283.ragium.common.inventory.HTPlanterMenu
 import hiiragi283.ragium.common.inventory.HTPyrolyzerMenu
 import hiiragi283.ragium.common.inventory.HTUniversalChestMenu
 import hiiragi283.ragium.common.item.tool.HTUniversalChestManager
@@ -60,6 +62,10 @@ object RagiumMenuTypes {
     @JvmField
     val MIXER: HTDeferredMenuType.WithContext<HTComplexMenu<HTMixerBlockEntity>, HTMixerBlockEntity> =
         registerBE(RagiumConst.MIXER, HTComplexMenu.Companion::mixer)
+
+    @JvmField
+    val PLANTER: HTDeferredMenuType.WithContext<HTPlanterMenu, HTPlanterBlockEntity> =
+        registerBE(RagiumConst.PLANTER, ::HTPlanterMenu)
 
     @JvmField
     val PYROLYZER: HTDeferredMenuType.WithContext<HTPyrolyzerMenu, HTPyrolyzerBlockEntity> =

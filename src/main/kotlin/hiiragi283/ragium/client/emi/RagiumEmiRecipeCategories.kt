@@ -70,7 +70,7 @@ object RagiumEmiRecipeCategories {
     val MIXING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
-    val PLANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PLANTING, Items.FLOWER_POT)
+    val PLANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     @JvmField
     val PYROLYZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)

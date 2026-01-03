@@ -25,5 +25,5 @@ value class HTMobHead(private val head: Holder<Item>) :
 
     constructor(item: ItemLike) : this(item.builtInRegistryHolder())
 
-    override fun get(): Item = getHolder().value()
+    override fun get(): Item = head.value()
 }

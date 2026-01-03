@@ -30,12 +30,15 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         registerMaterials()
 
         // Processors
-        frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, basic)
-        frontMachineBlock(RagiumBlocks.CRUSHER, basic)
+        frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.CRUSHER, RagiumConst.MACHINE, basic)
 
-        frontMachineBlock(RagiumBlocks.DRYER, advanced)
-        frontMachineBlock(RagiumBlocks.MELTER, advanced)
-        frontMachineBlock(RagiumBlocks.PYROLYZER, advanced)
+        frontMachineBlock(RagiumBlocks.DRYER, RagiumConst.MACHINE, advanced)
+        frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, advanced)
+        frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, advanced)
+
+        // Device
+        // frontMachineBlock(RagiumBlocks.PLANTER, RagiumConst.DEVICE, basic)
 
         // Storages
         altModelBlock(RagiumBlocks.TANK)
@@ -77,10 +80,11 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
 
     private fun frontMachineBlock(
         block: HTHolderLike<Block, *>,
+        prefix: String,
         tier: String,
         front: ResourceLocation = block.getId().withPath { "${HTConst.BLOCK}/${RagiumConst.MACHINE}/${it}_front" },
     ) {
-        val (inactive: BlockModelBuilder, active: BlockModelBuilder) = frontMachineModel(block, tier, front)
+        val (inactive: BlockModelBuilder, active: BlockModelBuilder) = frontMachineModel(block, prefix, tier, front)
         machineBlock(block, inactive, active)
     }
 
@@ -89,15 +93,16 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
      */
     private fun frontMachineModel(
         block: HTHolderLike<Block, *>,
+        prefix: String,
         tier: String,
         front: ResourceLocation,
     ): Pair<BlockModelBuilder, BlockModelBuilder> {
         val path: String = block.blockId.path
         val modelId: ResourceLocation = vanillaId(HTConst.BLOCK, "orientable_with_bottom")
 
-        val top: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, RagiumConst.MACHINE, "top_$tier")
-        val side: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, RagiumConst.MACHINE, "side_$tier")
-        val bottom: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, RagiumConst.MACHINE, "bottom")
+        val top: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix, "top_$tier")
+        val side: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix, "side_$tier")
+        val bottom: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix, "bottom")
         // inactive
         val inactive: BlockModelBuilder = models()
             .withExistingParent(path, modelId)

@@ -20,6 +20,7 @@ object RagiumConst {
 
     //    Serialization    //
 
+    const val DEVICE = "device"
     const val MACHINE = "machine"
 
     const val SLOT_INFO = "slot_info"

@@ -100,6 +100,13 @@ object RagiumBlocks {
     val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER, RagiumMenuTypes.PYROLYZER)
 
+    //    Device    //
+
+    // Basic
+    @JvmField
+    val PLANTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER, RagiumMenuTypes.PLANTER)
+
     //    Storages    //
 
     @JvmField

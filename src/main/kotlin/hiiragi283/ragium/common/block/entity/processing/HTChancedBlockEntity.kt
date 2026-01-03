@@ -35,7 +35,7 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             HTVariableFluidTank.input(
                 listener,
                 getTankCapacity(RagiumFluidConfigType.FIRST_INPUT),
-                filter = RagiumFluids.LUBRICANT::isOf,
+                canInsert = RagiumFluids.LUBRICANT::isOf,
             ),
         )
     }

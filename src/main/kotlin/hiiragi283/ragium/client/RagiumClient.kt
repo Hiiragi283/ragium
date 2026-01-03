@@ -9,6 +9,7 @@ import hiiragi283.ragium.client.gui.screen.HTAlloySmelterScreen
 import hiiragi283.ragium.client.gui.screen.HTChancedScreen
 import hiiragi283.ragium.client.gui.screen.HTComplexScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
+import hiiragi283.ragium.client.gui.screen.HTPlanterScreen
 import hiiragi283.ragium.client.gui.screen.HTPyrolyzerScreen
 import hiiragi283.ragium.client.gui.screen.HTUniversalChestScreen
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
@@ -141,6 +142,7 @@ object RagiumClient {
         event.register(RagiumMenuTypes.DRYER.get(), ::HTComplexScreen)
         event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
         event.register(RagiumMenuTypes.MIXER.get(), ::HTComplexScreen)
+        event.register(RagiumMenuTypes.PLANTER.get(), ::HTPlanterScreen)
         event.register(RagiumMenuTypes.PYROLYZER.get(), ::HTPyrolyzerScreen)
 
         event.register(RagiumMenuTypes.UNIVERSAL_CHEST.get(), ::HTUniversalChestScreen)

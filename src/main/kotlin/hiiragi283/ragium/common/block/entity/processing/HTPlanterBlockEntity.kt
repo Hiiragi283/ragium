@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.processing
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.math.div
+import hiiragi283.core.api.math.times
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.getFluidStack
@@ -11,6 +13,7 @@ import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -18,13 +21,16 @@ import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.LightLayer
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.lighting.LightEngine
 
 class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.PLANTER, pos, state) {
     lateinit var inputTank: HTBasicFluidTank
@@ -96,15 +102,18 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
             override fun getMatchedRecipe(input: HTPlantingRecipe.Input, level: ServerLevel): HTPlantingRecipe? =
                 cache.getFirstRecipe(input, level)
 
-            override fun getMaxProgress(recipe: HTPlantingRecipe): Int = recipe.time
+            override fun getMaxProgress(recipe: HTPlantingRecipe): Int = 
+                modifyValue(HTUpgradeKeys.SPEED) { recipe.time * LightEngine.MAX_LEVEL / (it * getBaseMultiplier()) }
 
-            override fun getProgress(level: ServerLevel, pos: BlockPos): Int = 1
+            override fun getProgress(level: ServerLevel, pos: BlockPos): Int {
+                val blockLight: Int = level.getBrightness(LightLayer.BLOCK, pos.above())
+                val skyLight: Int = level.getBrightness(LightLayer.SKY, pos.above())
+                return minOf(blockLight, skyLight)
+            }
 
             override fun canProgressRecipe(level: ServerLevel, input: HTPlantingRecipe.Input, recipe: HTPlantingRecipe): Boolean =
                 cropOutputHandler.canInsert(recipe.getResultItem(level.registryAccess()))
         }
 
-    override fun getConfig(): HTMachineConfig {
-        TODO("Not yet implemented")
-    }
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.device.planter
 }
