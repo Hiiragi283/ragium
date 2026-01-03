@@ -1,0 +1,11 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 3,
+    "id": "minecraft:glow_berries"
+  },
+  "seed": {
+    "id": "minecraft:glow_berries"
+  },
+  "soil": "minecraft:farmland"
+}

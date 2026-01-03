@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
 class HTPyrolyzerScreen(menu: HTPyrolyzerMenu, inventory: Inventory, title: Component) :
-    HTProcessorScreen<HTPyrolyzerBlockEntity, HTPyrolyzerMenu>(menu, inventory, title) {
+    HTProcessorScreen.Energized<HTPyrolyzerBlockEntity, HTPyrolyzerMenu>(menu, inventory, title) {
     override fun init() {
         super.init()
         addFluidTank(HTSlotHelper.getSlotPosX(8), blockEntity.outputTank)

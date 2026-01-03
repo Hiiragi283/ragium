@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
+import org.apache.commons.lang3.math.Fraction
 
 /**
  * Ragiumで使用する[DataMapType]へのアクセス
@@ -42,6 +43,9 @@ object RagiumDataMapTypes {
     @JvmField
     val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
 
+    @JvmField
+    val PLANTER: DataMapType<Fluid, HTPlanterFluidData> = create("planter", Registries.FLUID, HTPlanterFluidData.CODEC)
+
     // Item
     @JvmField
     val UPGRADE: DataMapType<Item, HTUpgradeData> =
@@ -66,14 +70,16 @@ object RagiumDataMapTypes {
     fun getCoolantAmount(resource: HTFluidResourceType): Int = resource.getData(COOLANT)?.amount ?: 0
 
     /**
-     * 指定した[resource]から，1000 mbの高温の液体による燃焼時間を取得します。
+     * 指定した[resource]から，100 mbの高温の液体による燃焼時間を取得します。
      */
     fun getTimeFromMagmatic(resource: HTFluidResourceType): Int = resource.getData(MAGMATIC_FUEL)?.time ?: 0
 
     /**
-     * 指定した[resource]から，1000 mbの液体燃料による燃焼時間を取得します。
+     * 指定した[resource]から，100 mbの液体燃料による燃焼時間を取得します。
      */
     fun getTimeFromCombustion(resource: HTFluidResourceType): Int = resource.getData(COMBUSTION_FUEL)?.time ?: 0
+
+    fun getPlanterMultiplier(resource: HTFluidResourceType): Fraction = resource.getData(PLANTER)?.multiplier ?: Fraction.ZERO
 
     /**
      * 指定した[stack]から，アップグレードのデータを取得します。

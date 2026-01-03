@@ -8,9 +8,18 @@ import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.world.item.Items
 
 object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
+        // Dirt + Water -> Mud
+        HTComplexRecipeBuilder
+            .mixing(
+                itemCreator.fromItem(Items.DIRT),
+                fluidCreator.water(250),
+            ).setResult(itemResult.create(Items.MUD))
+            .save(output)
+
         // Creosote + Redstone -> Lubricant
         HTComplexRecipeBuilder
             .mixing(

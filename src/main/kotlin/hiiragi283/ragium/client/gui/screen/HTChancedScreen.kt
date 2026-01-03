@@ -10,7 +10,7 @@ class HTChancedScreen<BE : HTChancedBlockEntity, MENU : HTBlockEntityContainerMe
     menu: MENU,
     inventory: Inventory,
     title: Component,
-) : HTProcessorScreen<BE, MENU>(menu, inventory, title) {
+) : HTProcessorScreen.Energized<BE, MENU>(menu, inventory, title) {
     override fun init() {
         super.init()
         addFluidTank(HTSlotHelper.getSlotPosX(1.5), blockEntity.inputTank)

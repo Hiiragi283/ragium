@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 
 abstract class HTProcessingRecipeComponent<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(
-    override val owner: HTProcessorBlockEntity,
+    override val owner: HTProcessorBlockEntity.Energized,
 ) : HTRecipeComponent<INPUT, RECIPE>(owner) {
     private val battery: HTMachineEnergyBattery.Processor get() = owner.battery
 
@@ -23,11 +23,11 @@ abstract class HTProcessingRecipeComponent<INPUT : RecipeInput, RECIPE : HTProce
 
     abstract class Cached<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(
         private val cache: HTRecipeCache<INPUT, RECIPE>,
-        owner: HTProcessorBlockEntity,
+        owner: HTProcessorBlockEntity.Energized,
     ) : HTProcessingRecipeComponent<INPUT, RECIPE>(owner) {
         constructor(
             finder: HTRecipeFinder<INPUT, RECIPE>,
-            owner: HTProcessorBlockEntity,
+            owner: HTProcessorBlockEntity.Energized,
         ) : this(HTFinderRecipeCache(finder), owner)
 
         final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = cache.getFirstRecipe(input, level)

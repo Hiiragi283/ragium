@@ -1,0 +1,11 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 6,
+    "id": "minecraft:mangrove_log"
+  },
+  "seed": {
+    "id": "minecraft:mangrove_propagule"
+  },
+  "soil": "#minecraft:dirt"
+}

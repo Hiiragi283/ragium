@@ -1,0 +1,11 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 6,
+    "id": "minecraft:jungle_log"
+  },
+  "seed": {
+    "id": "minecraft:jungle_sapling"
+  },
+  "soil": "#minecraft:dirt"
+}

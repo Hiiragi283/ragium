@@ -21,7 +21,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.RecipeBased(RagiumBlockEntityTypes.ALLOY_SMELTER, pos, state) {
+    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ALLOY_SMELTER, pos, state) {
     lateinit var topInputSlot: HTBasicItemSlot
         private set
     lateinit var leftInputSlot: HTBasicItemSlot

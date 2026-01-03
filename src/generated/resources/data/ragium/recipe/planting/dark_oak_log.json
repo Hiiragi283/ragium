@@ -1,0 +1,11 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 6,
+    "id": "minecraft:dark_oak_log"
+  },
+  "seed": {
+    "id": "minecraft:dark_oak_sapling"
+  },
+  "soil": "#minecraft:dirt"
+}

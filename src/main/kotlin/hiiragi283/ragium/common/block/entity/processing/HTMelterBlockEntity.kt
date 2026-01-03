@@ -25,7 +25,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.RecipeBased(RagiumBlockEntityTypes.MELTER, pos, state) {
+    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER, pos, state) {
     lateinit var outputTank: HTBasicFluidTank
         private set
 

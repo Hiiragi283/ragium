@@ -1,0 +1,14 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 6,
+    "id": "minecraft:kelp"
+  },
+  "seed": {
+    "id": "minecraft:kelp"
+  },
+  "soil": [
+    "#c:gravels",
+    "#c:sands"
+  ]
+}

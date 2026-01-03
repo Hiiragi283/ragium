@@ -1,0 +1,11 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 3,
+    "id": "minecraft:fire_coral_fan"
+  },
+  "seed": {
+    "id": "minecraft:fire_coral_fan"
+  },
+  "soil": "minecraft:fire_coral_block"
+}

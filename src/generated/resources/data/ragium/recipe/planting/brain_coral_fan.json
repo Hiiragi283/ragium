@@ -1,0 +1,11 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 3,
+    "id": "minecraft:brain_coral_fan"
+  },
+  "seed": {
+    "id": "minecraft:brain_coral_fan"
+  },
+  "soil": "minecraft:brain_coral_block"
+}

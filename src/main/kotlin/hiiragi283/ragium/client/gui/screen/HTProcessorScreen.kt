@@ -29,11 +29,6 @@ abstract class HTProcessorScreen<BE : HTProcessorBlockEntity, MENU : HTBlockEnti
         title,
     )
 
-    override fun init() {
-        super.init()
-        addWidget(HTSlotHelper.getSlotPosX(0.5), HTSlotHelper.getSlotPosY(0), ::HTEnergyBatteryWidget.partially1(blockEntity.battery))
-    }
-
     //    Extensions    //
 
     protected fun addFluidTank(x: Int, view: HTFluidView, y: Int = HTSlotHelper.getSlotPosY(0)): HTFluidTankWidget =
@@ -44,4 +39,17 @@ abstract class HTProcessorScreen<BE : HTProcessorBlockEntity, MENU : HTBlockEnti
 
     protected fun addBurning(x: Int, y: Int): HTBurnProgressWidget =
         addWidget(x, y + 2, ::HTBurnProgressWidget.partially1(blockEntity::getProgress))
+
+    //    Energized    //
+
+    abstract class Energized<BE : HTProcessorBlockEntity.Energized, MENU : HTBlockEntityContainerMenu<BE>>(
+        menu: MENU,
+        inventory: Inventory,
+        title: Component,
+    ) : HTProcessorScreen<BE, MENU>(menu, inventory, title) {
+        override fun init() {
+            super.init()
+            addWidget(HTSlotHelper.getSlotPosX(0.5), HTSlotHelper.getSlotPosY(0), ::HTEnergyBatteryWidget.partially1(blockEntity.battery))
+        }
+    }
 }

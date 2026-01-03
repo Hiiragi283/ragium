@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
 class HTMelterScreen(menu: HTMelterMenu, inventory: Inventory, title: Component) :
-    HTProcessorScreen<HTMelterBlockEntity, HTMelterMenu>(menu, inventory, title) {
+    HTProcessorScreen.Energized<HTMelterBlockEntity, HTMelterMenu>(menu, inventory, title) {
     override fun init() {
         super.init()
         addFluidTank(HTSlotHelper.getSlotPosX(6.5), blockEntity.outputTank)

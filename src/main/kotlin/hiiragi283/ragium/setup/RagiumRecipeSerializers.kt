@@ -13,6 +13,7 @@ import hiiragi283.core.api.serialization.codec.HTRecipeBiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.ParameterCodec
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -28,6 +29,7 @@ import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
@@ -172,6 +174,19 @@ object RagiumRecipeSerializers {
                     HTFluidIngredient.CODEC.fieldOf(RagiumConst.FLUID_INGREDIENT),
                 ).forGetter(HTMixingRecipe::ingredient),
             ::HTMixingRecipe,
+        ),
+    )
+
+    @JvmField
+    val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.PLANTING,
+        MapBiCodec.composite(
+            HTItemResourceType.CODEC.fieldOf("seed").forGetter(HTPlantingRecipe::seed),
+            HTItemIngredient.UNSIZED_CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
+            HTItemResult.CODEC.fieldOf("crop").forGetter(HTPlantingRecipe::crop),
+            HTRecipeBiCodecs.TIME.forGetter(HTPlantingRecipe::time),
+            HTRecipeBiCodecs.EXP.forGetter(HTPlantingRecipe::exp),
+            ::HTPlantingRecipe,
         ),
     )
 

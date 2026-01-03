@@ -19,47 +19,45 @@ import org.apache.commons.lang3.math.Fraction
 
 abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state) {
-    lateinit var battery: HTMachineEnergyBattery.Processor
-        protected set
+    protected lateinit var recipeComponent: HTRecipeComponent<*, *>
+        private set
 
-    final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
-        battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
+    override fun initializeVariables() {
+        super.initializeVariables()
+        recipeComponent = createRecipeComponent()
     }
 
-    abstract fun getProgress(): Fraction
+    protected abstract fun createRecipeComponent(): HTRecipeComponent<*, *>
 
-    fun updateAndGetProgress(time: Int): Int {
-        if (isCreative()) return 0
-        battery.currentEnergyPerTick = modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
-        val time: Int = modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
-        return battery.currentEnergyPerTick * time
+    //    Ticking    //
+
+    override fun addMenuTrackers(menu: HTContainerMenu) {
+        super.addMenuTrackers(menu)
+        // Progress
+        menu.track(HTIntSyncSlot.create(recipeComponent::progress))
+        menu.track(HTIntSyncSlot.create(recipeComponent::maxProgress))
     }
 
-    //    RecipeBased    //
+    fun getProgress(): Fraction = recipeComponent.getProgress(isActive())
 
-    abstract class RecipeBased(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeComponent.tick(level, pos)
+
+    //    Energized    //
+
+    abstract class Energized(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTProcessorBlockEntity(type, pos, state) {
-        protected lateinit var recipeComponent: HTRecipeComponent<*, *>
-            private set
+        lateinit var battery: HTMachineEnergyBattery.Processor
+            protected set
 
-        override fun initializeVariables() {
-            super.initializeVariables()
-            recipeComponent = createRecipeComponent()
+        final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
+            battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
         }
 
-        protected abstract fun createRecipeComponent(): HTRecipeComponent<*, *>
-
-        //    Ticking    //
-
-        override fun addMenuTrackers(menu: HTContainerMenu) {
-            super.addMenuTrackers(menu)
-            // Progress
-            menu.track(HTIntSyncSlot.create(recipeComponent::progress))
-            menu.track(HTIntSyncSlot.create(recipeComponent::maxProgress))
+        fun updateAndGetProgress(time: Int): Int {
+            if (isCreative()) return 0
+            battery.currentEnergyPerTick = modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
+            val time: Int = modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
+            return battery.currentEnergyPerTick * time
         }
-
-        final override fun getProgress(): Fraction = recipeComponent.getProgress(isActive())
-
-        override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeComponent.tick(level, pos)
     }
 }

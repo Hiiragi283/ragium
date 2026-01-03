@@ -27,7 +27,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.RecipeBased(RagiumBlockEntityTypes.PYROLYZER, pos, state) {
+    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.PYROLYZER, pos, state) {
     lateinit var outputTank: HTBasicFluidTank
         private set
 

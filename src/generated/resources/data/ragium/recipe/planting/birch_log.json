@@ -1,0 +1,11 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 6,
+    "id": "minecraft:birch_log"
+  },
+  "seed": {
+    "id": "minecraft:birch_sapling"
+  },
+  "soil": "#minecraft:dirt"
+}

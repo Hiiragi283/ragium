@@ -1,0 +1,11 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 3,
+    "id": "minecraft:beetroot"
+  },
+  "seed": {
+    "id": "minecraft:beetroot_seeds"
+  },
+  "soil": "minecraft:farmland"
+}

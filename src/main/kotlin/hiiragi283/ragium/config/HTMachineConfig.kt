@@ -64,5 +64,15 @@ class HTMachineConfig(
                 energyRate(builder, rate),
             ).apply { builder.pop() }
         }
+
+        @JvmStatic
+        fun createDevice(builder: ModConfigSpec.Builder, name: String, vararg types: RagiumFluidConfigType): HTMachineConfig {
+            builder.translation("block.${RagiumAPI.MOD_ID}.$name").push(name)
+            return HTMachineConfig(
+                types.associateWith { type: RagiumFluidConfigType -> tankCapacity(builder, type, 8000) },
+                { 0 },
+                { 0 },
+            ).apply { builder.pop() }
+        }
     }
 }

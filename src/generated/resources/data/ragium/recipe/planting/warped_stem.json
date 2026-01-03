@@ -1,0 +1,11 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 6,
+    "id": "minecraft:warped_stem"
+  },
+  "seed": {
+    "id": "minecraft:warped_fungus"
+  },
+  "soil": "minecraft:warped_nylium"
+}

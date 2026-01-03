@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
 class HTComplexScreen<BE : HTComplexBlockEntity>(menu: HTComplexMenu<BE>, inventory: Inventory, title: Component) :
-    HTProcessorScreen<BE, HTComplexMenu<BE>>(menu, inventory, title) {
+    HTProcessorScreen.Energized<BE, HTComplexMenu<BE>>(menu, inventory, title) {
     override fun init() {
         super.init()
         addFluidTank(HTSlotHelper.getSlotPosX(1.5), blockEntity.inputTank)

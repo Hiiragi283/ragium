@@ -44,6 +44,9 @@ object RagiumEmiRecipeCategories {
     val MIXING: HTEmiRecipeCategory = create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
+    val PLANTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.PLANTING, Items.FLOWER_POT)
+
+    @JvmField
     val PYROLYZING: HTEmiRecipeCategory = create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     @JvmField

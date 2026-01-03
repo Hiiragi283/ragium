@@ -25,7 +25,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.RecipeBased(type, pos, state) {
+    HTProcessorBlockEntity.Energized(type, pos, state) {
     lateinit var inputTank: HTBasicFluidTank
         private set
 

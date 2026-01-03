@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
 class HTAlloySmelterScreen(menu: HTAlloySmelterMenu, inventory: Inventory, title: Component) :
-    HTProcessorScreen<HTAlloySmelterBlockEntity, HTAlloySmelterMenu>(menu, inventory, title) {
+    HTProcessorScreen.Energized<HTAlloySmelterBlockEntity, HTAlloySmelterMenu>(menu, inventory, title) {
     override fun init() {
         super.init()
 
