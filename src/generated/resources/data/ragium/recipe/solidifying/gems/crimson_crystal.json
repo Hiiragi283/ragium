@@ -1,0 +1,12 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:gem_mold",
+  "ingredient": {
+    "amount": 90,
+    "fluids": "#c:molten_crimson_crystal"
+  },
+  "result": {
+    "id": "hiiragi_core:crimson_crystal",
+    "tag": "c:gems/crimson_crystal"
+  }
+}

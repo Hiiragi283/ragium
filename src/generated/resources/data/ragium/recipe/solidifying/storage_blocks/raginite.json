@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:block_mold",
+  "ingredient": {
+    "amount": 900,
+    "fluids": "#c:molten_raginite"
+  },
+  "result": {
+    "tag": "c:storage_blocks/raginite"
+  }
+}

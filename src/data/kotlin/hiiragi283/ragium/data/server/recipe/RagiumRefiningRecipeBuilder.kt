@@ -7,7 +7,6 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
-import net.minecraft.world.item.Items
 
 object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
@@ -26,12 +25,12 @@ object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             ).setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Minerals.SULFUR))
             .saveSuffixed(output, "_from_naphtha")
 
-        // Crude Bio -> Ethanol
+        // Crude Bio -> Ethanol + Fertilizer
         HTRefiningRecipeBuilder
             .create(
                 fluidCreator.fromTagKey(RagiumFluids.CRUDE_BIO, 1000),
                 fluidResult.create(RagiumFluids.ETHANOL, 750),
-            ).setResult(itemResult.create(Items.BONE_MEAL))
+            ).setResult(fluidResult.create(RagiumFluids.FERTILIZER, 250))
             .saveSuffixed(output, "_from_bio")
     }
 }

@@ -2,11 +2,11 @@ package hiiragi283.ragium.client.emi.recipe
 
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
-import hiiragi283.core.api.integration.emi.addTank
 import hiiragi283.core.api.integration.emi.toEmi
 import hiiragi283.core.api.integration.emi.toFluidEmi
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.common.recipe.HTChancedRecipe
+import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.crafting.RecipeHolder
 import org.apache.commons.lang3.math.Fraction
@@ -29,7 +29,12 @@ abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(
         super.addWidgets(widgets)
 
         // Input
-        widgets.addTank(RagiumFluids.LUBRICANT.toFluidEmi(1000), getPosition(0.5), getPosition(0)).catalyst(true)
+        widgets
+            .addTank(
+                RagiumFluids.LUBRICANT.toFluidEmi(),
+                getPosition(0.5),
+                getCapacity(RagiumFluidConfigType.FIRST_INPUT),
+            ).catalyst(true)
         widgets.addInput(0, getPosition(2), getPosition(0.5))
 
         // Output

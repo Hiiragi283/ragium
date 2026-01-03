@@ -13,6 +13,6 @@ class HTPyrolyzerScreen(menu: HTPyrolyzerMenu, inventory: Inventory, title: Comp
         addFluidTank(HTSlotHelper.getSlotPosX(8), blockEntity.outputTank)
 
         addBurning(HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1.5))
-        addProgress(HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(1))
+        addProgress(HTSlotHelper.getSlotPosX(3.5), HTSlotHelper.getSlotPosY(1))
     }
 }

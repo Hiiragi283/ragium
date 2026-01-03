@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:block_mold",
+  "ingredient": {
+    "amount": 810,
+    "fluids": "#c:molten_crimson_crystal"
+  },
+  "result": {
+    "tag": "c:storage_blocks/crimson_crystal"
+  }
+}

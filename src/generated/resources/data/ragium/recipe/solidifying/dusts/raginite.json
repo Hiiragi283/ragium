@@ -1,0 +1,12 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:blank_mold",
+  "ingredient": {
+    "amount": 100,
+    "fluids": "#c:molten_raginite"
+  },
+  "result": {
+    "id": "ragium:raginite_dust",
+    "tag": "c:dusts/raginite"
+  }
+}

@@ -122,6 +122,7 @@ object RagiumClient {
         event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
         event.dull(RagiumFluids.ETHANOL, Color(0xccffcc))
         event.clear(RagiumFluids.BIOFUEL, Color(0x99cc00))
+        event.clear(RagiumFluids.FERTILIZER, Color(0x339933))
 
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
         event.dull(RagiumFluids.NAPHTHA, Color(0xff6633))

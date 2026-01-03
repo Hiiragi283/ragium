@@ -1,10 +1,12 @@
 {
   "type": "ragium:refining",
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:fertilizer",
+    "tag": "c:fertilizer"
+  },
   "ingredient": {
     "fluids": "#c:crude_bio"
-  },
-  "item_result": {
-    "id": "minecraft:bone_meal"
   },
   "result": {
     "amount": 750,

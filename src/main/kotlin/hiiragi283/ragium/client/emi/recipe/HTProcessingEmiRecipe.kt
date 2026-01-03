@@ -6,6 +6,8 @@ import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.integration.emi.addArrow
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.RagiumFluidConfigType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 
@@ -43,4 +45,8 @@ abstract class HTProcessingEmiRecipe<RECIPE : HTProcessingRecipe<*>> : HTEmiHold
     }
 
     protected open fun getArrowX(): Int = getPosition(3.5)
+
+    protected open fun getConfig(): HTMachineConfig? = null
+
+    protected fun getCapacity(type: RagiumFluidConfigType): Int = getConfig()?.tankMap?.get(type)?.asInt ?: 8000
 }

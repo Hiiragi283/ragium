@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": [
+    "#c:gems/crimson_crystal",
+    "#c:dusts/crimson_crystal"
+  ],
+  "result": {
+    "amount": 90,
+    "id": "hiiragi_core:molten_crimson_crystal",
+    "tag": "c:molten_crimson_crystal"
+  }
+}
