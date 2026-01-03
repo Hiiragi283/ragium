@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smoking",
+  "category": "misc",
+  "cookingtime": 300,
+  "experience": 0.7,
+  "ingredient": {
+    "item": "ragium:meat_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:cooked_meat_block"
+  }
+}

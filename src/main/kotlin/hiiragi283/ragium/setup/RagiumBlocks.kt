@@ -1,12 +1,14 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.collection.buildTable
+import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.HTMaterialTable
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.registry.HTBasicDeferredBlock
 import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.registry.HTDeferredMenuType
@@ -15,6 +17,7 @@ import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.HTMachineBlock
+import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTResonantInterfaceBlock
@@ -28,8 +31,10 @@ import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.common.text.RagiumTranslation
+import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -69,6 +74,20 @@ object RagiumBlocks {
             register(prefix, material, properties)
         }
     }.let(::HTMaterialTable)
+
+    @JvmField
+    val MEAT_BLOCK: HTBasicDeferredBlock<HTMeatBlock> = REGISTER.registerSimple(
+        "meat_block",
+        copyOf(Blocks.MUD).mapColor(MapColor.COLOR_RED),
+        ::HTMeatBlock.partially1(Foods.BEEF),
+    )
+
+    @JvmField
+    val COOKED_MEAT_BLOCK: HTBasicDeferredBlock<HTMeatBlock> = REGISTER.registerSimple(
+        "cooked_meat_block",
+        copyOf(Blocks.PACKED_MUD).mapColor(MapColor.COLOR_RED),
+        ::HTMeatBlock.partially1(Foods.COOKED_BEEF),
+    )
 
     //    Processors    //
 

@@ -9,7 +9,9 @@ import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumFoodMaterials
 import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
@@ -37,11 +39,32 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     private fun meat() {
+        // Meat + Bone -> Bone with Meat
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.MEAT_BLOCK)
+            .hollow8()
+            .define('A', HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT)
+            .define('B', Tags.Items.BONES)
+            .save(output)
+
+        HTShapedRecipeBuilder
+            .create(RagiumBlocks.COOKED_MEAT_BLOCK)
+            .hollow8()
+            .define('A', HCMaterialPrefixes.INGOT, RagiumFoodMaterials.COOKED_MEAT)
+            .define('B', Tags.Items.BONES)
+            .save(output)
+
+        HTCookingRecipeBuilder.smeltingAndSmoking(RagiumBlocks.COOKED_MEAT_BLOCK) {
+            addIngredient(RagiumBlocks.MEAT_BLOCK)
+            setTime(20 * 30)
+            setExp(0.7f)
+            saveSuffixed(output, "_from_raw")
+        }
         // Meat Dust/Ingot -> Cooked Meat Ingot
         HTCookingRecipeBuilder.smeltingAndSmoking(RagiumItems.COOKED_MEAT_INGOT) {
             addIngredient(RagiumFoodMaterials.MEAT, HCMaterialPrefixes.INGOT, HCMaterialPrefixes.DUST)
             setExp(0.35f)
-            saveSuffixed(output, "_from_meat")
+            saveSuffixed(output, "_from_raw")
         }
     }
 }

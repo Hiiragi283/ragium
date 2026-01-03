@@ -30,6 +30,12 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
     //    Mineable    //
 
     private fun mineable(factory: BuilderFactory<Block>) {
+        val hoe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_HOE)
+        sequence {
+            yield(RagiumBlocks.MEAT_BLOCK)
+            yield(RagiumBlocks.COOKED_MEAT_BLOCK)
+        }.forEach(hoe::add)
+
         val pickaxe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_PICKAXE)
         sequence {
             yieldAll(RagiumBlocks.MATERIALS.row(HCMaterialPrefixes.STORAGE_BLOCK).values)
