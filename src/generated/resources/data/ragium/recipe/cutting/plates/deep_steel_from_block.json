@@ -1,0 +1,9 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:storage_blocks/deep_steel",
+  "result": {
+    "count": 9,
+    "id": "hiiragi_core:deep_steel_plate",
+    "tag": "c:plates/deep_steel"
+  }
+}

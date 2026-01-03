@@ -1,0 +1,8 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:ingots/copper",
+  "result": {
+    "id": "hiiragi_core:copper_rod",
+    "tag": "c:rods/copper"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:storage_blocks/night_metal",
+  "result": {
+    "count": 9,
+    "id": "hiiragi_core:night_metal_plate",
+    "tag": "c:plates/night_metal"
+  }
+}

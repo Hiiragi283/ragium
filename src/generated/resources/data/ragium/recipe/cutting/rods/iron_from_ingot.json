@@ -1,0 +1,8 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:ingots/iron",
+  "result": {
+    "id": "hiiragi_core:iron_rod",
+    "tag": "c:rods/iron"
+  }
+}

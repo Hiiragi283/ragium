@@ -1,0 +1,9 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:storage_blocks/silver",
+  "result": {
+    "count": 9,
+    "id": "hiiragi_core:silver_plate",
+    "tag": "c:plates/silver"
+  }
+}

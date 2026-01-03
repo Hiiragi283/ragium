@@ -1,0 +1,8 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:ingots/azure_steel",
+  "result": {
+    "id": "hiiragi_core:azure_steel_rod",
+    "tag": "c:rods/azure_steel"
+  }
+}

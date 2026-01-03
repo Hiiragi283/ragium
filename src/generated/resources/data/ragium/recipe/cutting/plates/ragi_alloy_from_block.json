@@ -1,0 +1,9 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:storage_blocks/ragi_alloy",
+  "result": {
+    "count": 9,
+    "id": "ragium:ragi_alloy_plate",
+    "tag": "c:plates/ragi_alloy"
+  }
+}

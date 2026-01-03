@@ -1,0 +1,9 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:storage_blocks/stone",
+  "result": {
+    "count": 9,
+    "id": "hiiragi_core:stone_plate",
+    "tag": "c:plates/stone"
+  }
+}

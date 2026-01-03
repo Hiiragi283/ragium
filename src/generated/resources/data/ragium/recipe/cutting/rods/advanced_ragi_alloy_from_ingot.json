@@ -1,0 +1,8 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:ingots/advanced_ragi_alloy",
+  "result": {
+    "id": "ragium:advanced_ragi_alloy_rod",
+    "tag": "c:rods/advanced_ragi_alloy"
+  }
+}

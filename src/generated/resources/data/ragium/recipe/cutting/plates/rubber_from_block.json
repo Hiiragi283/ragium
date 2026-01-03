@@ -1,0 +1,9 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:storage_blocks/rubber",
+  "result": {
+    "count": 9,
+    "id": "hiiragi_core:rubber_plate",
+    "tag": "c:plates/rubber"
+  }
+}

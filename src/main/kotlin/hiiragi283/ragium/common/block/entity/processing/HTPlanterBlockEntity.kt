@@ -102,7 +102,7 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
             override fun getMatchedRecipe(input: HTPlantingRecipe.Input, level: ServerLevel): HTPlantingRecipe? =
                 cache.getFirstRecipe(input, level)
 
-            override fun getMaxProgress(recipe: HTPlantingRecipe): Int = 
+            override fun getMaxProgress(recipe: HTPlantingRecipe): Int =
                 modifyValue(HTUpgradeKeys.SPEED) { recipe.time * LightEngine.MAX_LEVEL / (it * getBaseMultiplier()) }
 
             override fun getProgress(level: ServerLevel, pos: BlockPos): Int {

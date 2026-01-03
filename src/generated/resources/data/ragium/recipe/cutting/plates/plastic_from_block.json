@@ -1,0 +1,9 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:storage_blocks/plastic",
+  "result": {
+    "count": 9,
+    "id": "hiiragi_core:plastic_plate",
+    "tag": "c:plates/plastic"
+  }
+}

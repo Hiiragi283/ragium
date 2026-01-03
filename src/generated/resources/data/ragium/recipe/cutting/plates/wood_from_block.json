@@ -1,0 +1,9 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": "#c:storage_blocks/wood",
+  "result": {
+    "count": 9,
+    "id": "hiiragi_core:wood_plate",
+    "tag": "c:plates/wood"
+  }
+}
