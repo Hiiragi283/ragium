@@ -26,9 +26,11 @@ import hiiragi283.ragium.common.storge.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storge.fluid.HTComponentFluidTank
 import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
+import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
@@ -81,6 +83,44 @@ object RagiumItems {
 
     @JvmField
     val COOKED_MEAT_INGOT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cooked_meat_ingot") { it.food(Foods.COOKED_BEEF) }
+
+    @JvmStatic
+    private fun registerCan(name: String, nutrition: Int, saturation: Float): HTSimpleDeferredItem =
+        REGISTER.registerSimpleItem("${name}_can") {
+            it.food(
+                FoodProperties
+                    .Builder()
+                    .nutrition(nutrition)
+                    .saturationModifier(saturation)
+                    .fast()
+                    .usingConvertsTo(Items.IRON_NUGGET)
+                    .build(),
+            )
+        }
+
+    /**
+     * @see Foods.COOKED_COD
+     */
+    @JvmField
+    val FISH_CAN: HTSimpleDeferredItem = registerCan("fish", 5, 0.6f)
+
+    /**
+     * @see Foods.APPLE
+     */
+    @JvmField
+    val FRUIT_CAN: HTSimpleDeferredItem = registerCan("fruit", 4, 0.3f)
+
+    /**
+     * @see Foods.COOKED_BEEF
+     */
+    @JvmField
+    val MEAT_CAN: HTSimpleDeferredItem = registerCan("meat", 8, 0.8f)
+
+    /**
+     * @see Foods.BEETROOT_SOUP
+     */
+    @JvmField
+    val SOUP_CAN: HTSimpleDeferredItem = registerCan("soup", 6, 0.6f)
 
     //    Molds    //
 

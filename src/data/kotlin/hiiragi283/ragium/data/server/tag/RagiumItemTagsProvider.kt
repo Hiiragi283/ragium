@@ -13,6 +13,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
@@ -23,7 +24,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         copyTags()
 
         material(factory)
-
         misc(factory)
     }
 
@@ -54,6 +54,16 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
     //    Misc    //
 
     private fun misc(factory: BuilderFactory<Item>) {
+        // Foods
+        factory
+            .apply(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)
+            .add(RagiumBlocks.MEAT_BLOCK)
+            .add(RagiumBlocks.COOKED_MEAT_BLOCK)
+        addTags(factory, Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
+            .add(RagiumItems.FISH_CAN)
+            .add(RagiumItems.FRUIT_CAN)
+            .add(RagiumItems.MEAT_CAN)
+            .add(RagiumItems.SOUP_CAN)
         factory
             .apply(Tags.Items.FOODS_RAW_MEAT)
             .add(RagiumItems.MEAT_DUST)
@@ -62,6 +72,16 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(Tags.Items.FOODS_COOKED_MEAT)
             .add(RagiumItems.COOKED_MEAT_INGOT)
 
+        factory
+            .apply(RagiumTags.Items.FOODS_MEAT)
+            .addTag(Tags.Items.FOODS_RAW_MEAT)
+            .addItem(Items.ROTTEN_FLESH)
+
+        factory
+            .apply(RagiumTags.Items.FOODS_COOKED_MEAT)
+            .add(RagiumItems.COOKED_MEAT_INGOT)
+            .addItem(Items.COOKED_BEEF)
+        // Others
         RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
     }
 }

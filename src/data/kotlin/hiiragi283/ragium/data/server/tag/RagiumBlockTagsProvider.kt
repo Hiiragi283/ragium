@@ -17,6 +17,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
     override fun addTagsInternal(factory: BuilderFactory<Block>) {
         material(factory)
         mineable(factory)
+        misc(factory)
     }
 
     //    Material    //
@@ -57,5 +58,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             yield(RagiumBlocks.RESONANT_INTERFACE)
             yield(RagiumBlocks.UNIVERSAL_CHEST)
         }.forEach(pickaxe::add)
+    }
+
+    //    Misc    //
+
+    private fun misc(factory: BuilderFactory<Block>) {
     }
 }

@@ -12,12 +12,21 @@ object RagiumTags {
 
     object Items {
         @JvmField
+        val FOODS_CAN: TagKey<Item> = common("foods", "can")
+
+        @JvmField
+        val FOODS_MEAT: TagKey<Item> = mod("foods", "meat")
+
+        @JvmField
+        val FOODS_COOKED_MEAT: TagKey<Item> = mod("foods", "cooked_meat")
+
+        @JvmField
         val MOLDS: TagKey<Item> = mod("molds")
 
         @JvmStatic
-        private fun common(path: String): TagKey<Item> = Registries.ITEM.createTagKey(HTConst.COMMON.toId(path))
+        private fun common(vararg path: String): TagKey<Item> = Registries.ITEM.createTagKey(HTConst.COMMON.toId(*path))
 
         @JvmStatic
-        private fun mod(path: String): TagKey<Item> = Registries.ITEM.createTagKey(RagiumAPI.id(path))
+        private fun mod(vararg path: String): TagKey<Item> = Registries.ITEM.createTagKey(RagiumAPI.id(*path))
     }
 }

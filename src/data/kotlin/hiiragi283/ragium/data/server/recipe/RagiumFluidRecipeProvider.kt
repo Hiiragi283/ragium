@@ -11,6 +11,7 @@ import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumFoodMaterials
@@ -79,7 +80,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             ).save(output)
         // Meat
         meltAndSolidify(
-            itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
+            itemCreator.fromTagKey(RagiumTags.Items.FOODS_MEAT),
             itemResult.create(HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT),
             HCFluids.MEAT,
             100,

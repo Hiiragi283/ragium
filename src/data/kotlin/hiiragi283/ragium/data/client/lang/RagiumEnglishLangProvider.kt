@@ -61,6 +61,11 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumItems.MEAT_INGOT, "Meat Ingot")
         add(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
 
+        add(RagiumItems.FISH_CAN, "Fish Can")
+        add(RagiumItems.FRUIT_CAN, "Fruit Can")
+        add(RagiumItems.MEAT_CAN, "Meat Can")
+        add(RagiumItems.SOUP_CAN, "Soup Can")
+
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
         add(RagiumItems.POTION_DROP, "Potion Drop")
@@ -80,6 +85,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
 
         // Tag
+        add(RagiumTags.Items.FOODS_CAN, "Canned Foods")
+        add(RagiumTags.Items.FOODS_MEAT, "Meats")
+        add(RagiumTags.Items.FOODS_COOKED_MEAT, "Cooked Meats")
         add(RagiumTags.Items.MOLDS, "Molds")
 
         // Text

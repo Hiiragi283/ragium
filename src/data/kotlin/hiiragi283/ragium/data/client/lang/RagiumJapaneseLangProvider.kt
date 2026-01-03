@@ -62,6 +62,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumItems.MEAT_INGOT, "肉インゴット")
         add(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
 
+        add(RagiumItems.FISH_CAN, "魚の缶詰")
+        add(RagiumItems.FRUIT_CAN, "フルーツの缶詰")
+        add(RagiumItems.MEAT_CAN, "肉の缶詰")
+        add(RagiumItems.SOUP_CAN, "スープの缶詰")
+
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
         add(RagiumItems.POTION_DROP, "ポーションの雫")
@@ -81,6 +86,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumRecipeTypes.SOLIDIFYING, "成型")
 
         // Tag
+        add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")
+        add(RagiumTags.Items.FOODS_MEAT, "肉")
+        add(RagiumTags.Items.FOODS_COOKED_MEAT, "焼肉")
         add(RagiumTags.Items.MOLDS, "鋳型")
 
         // Text
