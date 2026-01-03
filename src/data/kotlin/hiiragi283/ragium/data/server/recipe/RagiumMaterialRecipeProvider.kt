@@ -7,11 +7,18 @@ import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.material.RagiumFoodMaterials
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumItems
 
 object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
+        raginite()
+        meat()
+    }
+
+    @JvmStatic
+    private fun raginite() {
         // Raginite + Copper -> Ragi-Alloy Compound
         HTShapedRecipeBuilder
             .create(RagiumItems.RAGI_ALLOY_COMPOUND)
@@ -26,5 +33,15 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 setExp(0.7f)
                 saveSuffixed(output, "_from_compound")
             }
+    }
+
+    @JvmStatic
+    private fun meat() {
+        // Meat Dust/Ingot -> Cooked Meat Ingot
+        HTCookingRecipeBuilder.smeltingAndSmoking(RagiumItems.COOKED_MEAT_INGOT) {
+            addIngredient(RagiumFoodMaterials.MEAT, HCMaterialPrefixes.INGOT, HCMaterialPrefixes.DUST)
+            setExp(0.35f)
+            saveSuffixed(output, "_from_meat")
+        }
     }
 }

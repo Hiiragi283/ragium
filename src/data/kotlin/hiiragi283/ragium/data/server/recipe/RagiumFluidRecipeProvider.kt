@@ -13,12 +13,13 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.common.material.RagiumFoodMaterials
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
-object RagiumFluidRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
+object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         // Water
         HTSingleRecipeBuilder
@@ -76,6 +77,15 @@ object RagiumFluidRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
                 itemCreator.fromItem(HTMoldType.BALL),
                 RagiumMaterialResultHelper.item(HCMaterialPrefixes.RAW_MATERIAL, HCMaterial.Plates.RUBBER, 2),
             ).save(output)
+        // Meat
+        meltAndSolidify(
+            itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
+            itemResult.create(HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT),
+            HCFluids.MEAT,
+            100,
+            HTMoldType.INGOT,
+            "raw",
+        )
         // Glass
         meltAndSolidify(
             itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),

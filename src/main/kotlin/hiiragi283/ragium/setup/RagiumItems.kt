@@ -26,6 +26,7 @@ import hiiragi283.ragium.common.storge.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storge.fluid.HTComponentFluidTank
 import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
+import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
@@ -69,6 +70,17 @@ object RagiumItems {
 
     @JvmField
     val SEED_OIL_DROP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("seed_oil_drop")
+
+    //    Foods    //
+
+    @JvmField
+    val MEAT_DUST: HTSimpleDeferredItem = REGISTER.registerSimpleItem("meat_dust")
+
+    @JvmField
+    val MEAT_INGOT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("meat_ingot") { it.food(Foods.BEEF) }
+
+    @JvmField
+    val COOKED_MEAT_INGOT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cooked_meat_ingot") { it.food(Foods.COOKED_BEEF) }
 
     //    Molds    //
 

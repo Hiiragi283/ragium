@@ -30,6 +30,7 @@ import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.client.gui.screen.HTProcessorScreen
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -113,6 +114,10 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             }
         }
 
+        registry.setDefaultComparison(
+            RagiumBlocks.UNIVERSAL_CHEST.asItem(),
+            Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.COLOR) },
+        )
         registry.setDefaultComparison(
             RagiumItems.LOOT_TICKET.get(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TICKET) },

@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:ingot_mold",
+  "ingredient": {
+    "amount": 100,
+    "fluids": "#c:meat"
+  },
+  "result": {
+    "tag": "c:ingots/meat"
+  }
+}

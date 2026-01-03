@@ -8,11 +8,13 @@ import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.common.material.RagiumFoodMaterials
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
@@ -43,11 +45,23 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
                 factory.apply(ItemTags.BEACON_PAYMENT_ITEMS).addTag(prefix, key)
             }
         }
+
+        addMaterial(factory, HCMaterialPrefixes.DUST, RagiumFoodMaterials.MEAT).add(RagiumItems.MEAT_DUST)
+        addMaterial(factory, HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT).add(RagiumItems.MEAT_INGOT)
+        addMaterial(factory, HCMaterialPrefixes.INGOT, RagiumFoodMaterials.COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
     }
 
     //    Misc    //
 
     private fun misc(factory: BuilderFactory<Item>) {
+        factory
+            .apply(Tags.Items.FOODS_RAW_MEAT)
+            .add(RagiumItems.MEAT_DUST)
+            .add(RagiumItems.MEAT_INGOT)
+        factory
+            .apply(Tags.Items.FOODS_COOKED_MEAT)
+            .add(RagiumItems.COOKED_MEAT_INGOT)
+
         RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
     }
 }

@@ -54,6 +54,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumItems.RAGIUM_POWDER, "Ragium Powder")
         add(RagiumItems.SEED_OIL_DROP, "Drop of Seed Oil")
 
+        add(RagiumItems.MEAT_DUST, "Minced Meat")
+        add(RagiumItems.MEAT_INGOT, "Meat Ingot")
+        add(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
+
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
         add(RagiumItems.POTION_DROP, "Potion Drop")

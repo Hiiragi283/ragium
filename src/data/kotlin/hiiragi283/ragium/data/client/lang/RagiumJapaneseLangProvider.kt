@@ -55,6 +55,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumItems.RAGIUM_POWDER, "ラギウムパウダー")
         add(RagiumItems.SEED_OIL_DROP, "種油のしずく")
 
+        add(RagiumItems.MEAT_DUST, "ひき肉")
+        add(RagiumItems.MEAT_INGOT, "肉インゴット")
+        add(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
+
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
         add(RagiumItems.POTION_DROP, "ポーションの雫")

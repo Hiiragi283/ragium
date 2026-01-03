@@ -14,7 +14,7 @@ import hiiragi283.ragium.data.server.recipe.RagiumAlloyingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCuttingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDryingRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeBuilder
+import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMixingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumPlantingRecipeBuilder
@@ -42,7 +42,7 @@ class RagiumRecipeProvider(context: HTDataGenContext) : HTRecipeProvider(context
         consumer.accept(RagiumCrushingRecipeProvider)
         consumer.accept(RagiumCuttingRecipeProvider)
         consumer.accept(RagiumDryingRecipeProvider)
-        consumer.accept(RagiumFluidRecipeBuilder)
+        consumer.accept(RagiumFluidRecipeProvider)
         consumer.accept(RagiumMixingRecipeProvider)
         consumer.accept(RagiumPlantingRecipeBuilder)
         consumer.accept(RagiumPyrolyzingRecipeProvider)
