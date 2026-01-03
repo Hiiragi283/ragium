@@ -1,18 +1,29 @@
 package hiiragi283.ragium.client.emi
 
+import dev.emi.emi.EmiPort
 import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiRegistry
+import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.Bounds
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.integration.emi.HTEmiPlugin
+import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
+import hiiragi283.core.api.integration.emi.toEmi
+import hiiragi283.core.api.registry.HTHolderLike
+import hiiragi283.core.api.registry.getHolderDataMap
+import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.map.HTFluidFuelData
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.client.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTComplexEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTFuelGeneratorEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMeltingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
@@ -23,14 +34,41 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.client.gui.screens.Screen
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.material.Fluid
+import net.minecraft.world.level.material.Fluids
+import net.neoforged.neoforge.registries.datamaps.DataMapType
 import java.util.function.Consumer
+import kotlin.streams.asSequence
 
 @EmiEntrypoint
 class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
+    companion object {
+        @JvmStatic
+        private val ITEM_LOOKUP: HolderLookup.RegistryLookup<Item> by lazy(EmiPort.getItemRegistry()::asLookup)
+
+        @JvmStatic
+        private val FLUID_LOOKUP: HolderLookup.RegistryLookup<Fluid> by lazy {
+            EmiPort.getFluidRegistry().asLookup().filterElements { fluid: Fluid ->
+                fluid != Fluids.EMPTY && fluid.isSource(fluid.defaultFluidState())
+            }
+        }
+    }
+
     override fun register(registry: EmiRegistry) {
         // Category
         listOf(
+            // Generator
+            RagiumEmiRecipeCategories.THERMAL,
+            RagiumEmiRecipeCategories.CULINARY,
+            RagiumEmiRecipeCategories.MAGMATIC,
+            RagiumEmiRecipeCategories.COOLANT,
+            RagiumEmiRecipeCategories.COMBUSTION,
             // Processor - Basic
             RagiumEmiRecipeCategories.ALLOYING,
             RagiumEmiRecipeCategories.CRUSHING,
@@ -60,6 +98,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
 
+        addGenerators(registry)
         // Misc
         registry.addGenericExclusionArea { screen: Screen, consumer: Consumer<Bounds> ->
             if (screen is HTProcessorScreen<*, *>) {
@@ -81,5 +120,80 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         val potion: Comparison = Comparison.compareData { stack: EmiStack -> stack.get(DataComponents.POTION_CONTENTS) }
         registry.setDefaultComparison(RagiumItems.POTION_DROP.get(), potion)
+    }
+
+    private fun addGenerators(registry: EmiRegistry) {
+        fun addFuelRecipes(category: HTEmiRecipeCategory, dataMapType: DataMapType<Fluid, HTFluidFuelData>) {
+            addDataMapRecipes(
+                registry,
+                FLUID_LOOKUP,
+                dataMapType,
+                { holder: HTHolderLike<Fluid, Fluid>, data: HTFluidFuelData ->
+                    val stack: EmiStack = holder.get().toEmi(100).takeUnless(EmiStack::isEmpty) ?: return@addDataMapRecipes null
+                    HTEmiFluidFuelData(stack, data.time)
+                },
+                ::HTFuelGeneratorEmiRecipe.partially1(category),
+            )
+        }
+
+        addItemStackRecipes(
+            registry,
+            "thermal",
+            { stack: ItemStack ->
+                val burnTime: Int = stack.getBurnTime(null)
+                if (burnTime <= 0) return@addItemStackRecipes null
+                val stack1: EmiStack = stack.toEmi()
+                stack1.remainder = stack.craftingRemainingItem.toEmi()
+                HTEmiFluidFuelData(stack1, burnTime)
+            },
+            ::HTFuelGeneratorEmiRecipe.partially1(RagiumEmiRecipeCategories.THERMAL),
+        )
+
+        addFuelRecipes(RagiumEmiRecipeCategories.MAGMATIC, RagiumDataMapTypes.MAGMATIC_FUEL)
+
+        addFuelRecipes(RagiumEmiRecipeCategories.COMBUSTION, RagiumDataMapTypes.COMBUSTION_FUEL)
+    }
+
+    private fun <RECIPE : Any, EMI_RECIPE : EmiRecipe> addItemStackRecipes(
+        registry: EmiRegistry,
+        prefix: String,
+        recipeFactory: (ItemStack) -> RECIPE?,
+        factory: Factory<RECIPE, EMI_RECIPE>,
+    ) {
+        addRecipes(
+            registry,
+            ITEM_LOOKUP
+                .listElements()
+                .asSequence()
+                .map(Holder<Item>::toLike)
+                .mapNotNull { holder: HTHolderLike<Item, Item> ->
+                    val item: Item = holder.get()
+                    val stack: ItemStack = item.defaultInstance
+                    val recipe: RECIPE = recipeFactory(stack) ?: return@mapNotNull null
+                    holder.getId().withPrefix("/$prefix/") to recipe
+                },
+            factory,
+        )
+    }
+
+    private fun <R : Any, T : Any, RECIPE : Any, EMI_RECIPE : EmiRecipe> addDataMapRecipes(
+        registry: EmiRegistry,
+        lookup: HolderLookup.RegistryLookup<R>,
+        dataMapType: DataMapType<R, T>,
+        recipeFactory: (HTHolderLike<R, R>, T) -> RECIPE?,
+        factory: Factory<RECIPE, EMI_RECIPE>,
+    ) {
+        addRecipes(
+            registry,
+            lookup
+                .getHolderDataMap(dataMapType)
+                .mapNotNull { (holder: HTHolderLike<R, R>, value: T) ->
+                    val recipe: RECIPE = recipeFactory(holder, value) ?: return@mapNotNull null
+                    val typeId: ResourceLocation = dataMapType.id()
+                    val id: ResourceLocation = holder.getId().withPrefix("/${typeId.namespace}/${typeId.path}/")
+                    id to recipe
+                }.asSequence(),
+            factory,
+        )
     }
 }

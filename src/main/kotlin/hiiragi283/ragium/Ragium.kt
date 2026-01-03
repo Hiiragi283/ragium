@@ -2,6 +2,7 @@ package hiiragi283.ragium
 
 import com.mojang.logging.LogUtils
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -16,6 +17,7 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.neoforge.forge.LOADING_CONTEXT
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
@@ -27,6 +29,8 @@ object Ragium {
 
     init {
         val eventBus: IEventBus = MOD_BUS
+
+        eventBus.addListener(::registerDataMapTypes)
 
         RagiumDataComponents.REGISTER.register(eventBus)
 
@@ -44,5 +48,20 @@ object Ragium {
         LOADING_CONTEXT.activeContainer.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 
         LOGGER.info("Ragium loaded!")
+    }
+
+    @JvmStatic
+    private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
+        event.register(RagiumDataMapTypes.MOB_HEAD)
+
+        event.register(RagiumDataMapTypes.COOLANT)
+        event.register(RagiumDataMapTypes.MAGMATIC_FUEL)
+        event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
+        event.register(RagiumDataMapTypes.FERTILIZER)
+
+        event.register(RagiumDataMapTypes.ROCK_CHANCE)
+        event.register(RagiumDataMapTypes.UPGRADE)
+
+        LOGGER.info("Registered data map types!")
     }
 }

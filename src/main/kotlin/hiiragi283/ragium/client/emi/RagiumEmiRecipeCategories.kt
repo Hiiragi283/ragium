@@ -2,6 +2,8 @@ package hiiragi283.ragium.client.emi
 
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.math.HTBounds
+import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.registry.toHolderLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.text.HTHasText
 import hiiragi283.ragium.common.item.HTMoldType
@@ -12,46 +14,70 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 
 object RagiumEmiRecipeCategories {
+    //    Generator    //
+
     @JvmField
-    val MACHINE_BOUNDS = HTBounds(0, 0, 8 * 18, 3 * 18)
+    val GENERATOR_BOUNDS = HTBounds(0, 0, 7 * 18, 1 * 18)
 
     @JvmStatic
-    private fun create(hasText: HTHasText, id: ResourceLocation, vararg workStations: ItemLike): HTEmiRecipeCategory =
-        HTEmiRecipeCategory.create(MACHINE_BOUNDS, hasText, id, *workStations)
+    private fun generator(item: HTItemHolderLike<*>): HTEmiRecipeCategory =
+        HTEmiRecipeCategory.create(GENERATOR_BOUNDS, item, item.getId(), item)
 
-    @JvmStatic
-    private fun <T> create(recipeType: T, vararg workStations: ItemLike): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike =
-        create(recipeType, recipeType.getId(), *workStations)
+    @JvmField
+    val THERMAL: HTEmiRecipeCategory = generator(Items.COAL.toHolderLike())
+
+    @JvmField
+    val CULINARY: HTEmiRecipeCategory = generator(Items.GOLDEN_APPLE.toHolderLike())
+
+    @JvmField
+    val MAGMATIC: HTEmiRecipeCategory = generator(Items.LAVA_BUCKET.toHolderLike())
+
+    @JvmField
+    val COOLANT: HTEmiRecipeCategory = generator(Items.ICE.toHolderLike())
+
+    @JvmField
+    val COMBUSTION: HTEmiRecipeCategory = generator(Items.BLAZE_POWDER.toHolderLike())
 
     //    Processor    //
 
     @JvmField
-    val ALLOYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
+    val PROCESSOR_BOUNDS = HTBounds(0, 0, 8 * 18, 3 * 18)
+
+    @JvmStatic
+    private fun processor(hasText: HTHasText, id: ResourceLocation, vararg workStations: ItemLike): HTEmiRecipeCategory =
+        HTEmiRecipeCategory.create(PROCESSOR_BOUNDS, hasText, id, *workStations)
+
+    @JvmStatic
+    private fun <T> processor(recipeType: T, vararg workStations: ItemLike): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike =
+        processor(recipeType, recipeType.getId(), *workStations)
 
     @JvmField
-    val CRUSHING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
+    val ALLOYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val CUTTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
+    val CRUSHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
 
     @JvmField
-    val DRYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.DRYING, RagiumBlocks.DRYER)
+    val CUTTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
-    val MELTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
+    val DRYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.DRYING, RagiumBlocks.DRYER)
 
     @JvmField
-    val MIXING: HTEmiRecipeCategory = create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
+    val MELTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val PLANTING: HTEmiRecipeCategory = create(RagiumRecipeTypes.PLANTING, Items.FLOWER_POT)
+    val MIXING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
-    val PYROLYZING: HTEmiRecipeCategory = create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
+    val PLANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PLANTING, Items.FLOWER_POT)
 
     @JvmField
-    val REFINING: HTEmiRecipeCategory = create(RagiumRecipeTypes.REFINING, Items.BUCKET)
+    val PYROLYZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     @JvmField
-    val SOLIDIFYING: HTEmiRecipeCategory = create(RagiumRecipeTypes.SOLIDIFYING, HTMoldType.BLANK)
+    val REFINING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.REFINING, Items.BUCKET)
+
+    @JvmField
+    val SOLIDIFYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SOLIDIFYING, HTMoldType.BLANK)
 }

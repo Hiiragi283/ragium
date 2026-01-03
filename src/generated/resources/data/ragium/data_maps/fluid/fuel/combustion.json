@@ -1,0 +1,40 @@
+{
+  "values": {
+    "#c:biodiesel": {
+      "time": 360
+    },
+    "#c:bioethanol": {
+      "time": 240
+    },
+    "#c:biofuel": {
+      "time": 360
+    },
+    "#c:creosote": {
+      "time": 80
+    },
+    "#c:crude_bio": {
+      "time": 120
+    },
+    "#c:crude_oil": {
+      "time": 120
+    },
+    "#c:diesel": {
+      "time": 360
+    },
+    "#c:ethanol": {
+      "time": 240
+    },
+    "#c:fuel": {
+      "time": 360
+    },
+    "#c:high_power_biodiesel": {
+      "time": 480
+    },
+    "#c:lpg": {
+      "time": 240
+    },
+    "#c:oil": {
+      "time": 120
+    }
+  }
+}

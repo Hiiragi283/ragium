@@ -1,0 +1,16 @@
+{
+  "values": {
+    "#c:blaze_blood": {
+      "time": 180
+    },
+    "#c:lava": {
+      "time": 120
+    },
+    "#c:molten_crimson_crystal": {
+      "time": 180
+    },
+    "#c:steam": {
+      "time": 40
+    }
+  }
+}

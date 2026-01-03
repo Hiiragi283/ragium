@@ -44,7 +44,7 @@ class HTPlantingRecipe(
         val bool1: Boolean = seedIngredient.testOnlyType(input.seed)
         val bool2: Boolean = soil.testOnlyType(input.soil)
         val (resource: HTFluidResourceType, amount: Int) = input.fluid.toResourcePair() ?: return false
-        val bool3: Boolean = RagiumDataMapTypes.getPlanterMultiplier(resource) > Fraction.ZERO && amount >= FLUID_AMOUNT
+        val bool3: Boolean = RagiumDataMapTypes.getFluidFertilizer(resource) != null && amount >= FLUID_AMOUNT
         return bool1 && bool2 && bool3
     }
 

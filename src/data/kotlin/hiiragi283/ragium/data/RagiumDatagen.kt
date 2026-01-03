@@ -8,6 +8,7 @@ import hiiragi283.ragium.data.client.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.client.lang.RagiumJapaneseLangProvider
 import hiiragi283.ragium.data.client.model.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.model.RagiumItemModelProvider
+import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
@@ -31,6 +32,8 @@ object RagiumDatagen {
         val blockTags: CompletableFuture<TagsProvider.TagLookup<Block>> =
             server.addProvider(::RagiumBlockTagsProvider).contentsGetter()
         server.addProvider(::RagiumItemTagsProvider.partially1(blockTags))
+
+        server.addProvider(::RagiumDataMapProvider)
         // Client
         client.addProvider(::RagiumEnglishLangProvider)
         client.addProvider(::RagiumJapaneseLangProvider)

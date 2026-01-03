@@ -44,7 +44,7 @@ object RagiumDataMapTypes {
     val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
 
     @JvmField
-    val PLANTER: DataMapType<Fluid, HTPlanterFluidData> = create("planter", Registries.FLUID, HTPlanterFluidData.CODEC)
+    val FERTILIZER: DataMapType<Fluid, HTFluidFertilizerData> = create("fertilizer", Registries.FLUID, HTFluidFertilizerData.CODEC)
 
     // Item
     @JvmField
@@ -79,7 +79,7 @@ object RagiumDataMapTypes {
      */
     fun getTimeFromCombustion(resource: HTFluidResourceType): Int = resource.getData(COMBUSTION_FUEL)?.time ?: 0
 
-    fun getPlanterMultiplier(resource: HTFluidResourceType): Fraction = resource.getData(PLANTER)?.multiplier ?: Fraction.ZERO
+    fun getFluidFertilizer(resource: HTFluidResourceType): Fraction? = resource.getData(FERTILIZER)?.multiplier
 
     /**
      * 指定した[stack]から，アップグレードのデータを取得します。

@@ -1,0 +1,10 @@
+{
+  "values": {
+    "#c:coolant": {
+      "amount": 25
+    },
+    "#c:water": {
+      "amount": 100
+    }
+  }
+}
