@@ -3,6 +3,7 @@ package hiiragi283.ragium.client.emi.recipe
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
+import hiiragi283.ragium.client.emi.RagiumEmiTextures
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
@@ -19,6 +20,14 @@ class HTPlantingEmiRecipe(holder: RecipeHolder<HTPlantingRecipe>) :
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
+        RagiumEmiTextures.addWidget(
+            widgets,
+            "sun",
+            getPosition(2),
+            getPosition(1),
+            recipe.time,
+            endToStart = true,
+        )
 
         // Input
         widgets.addInput(0, getPosition(2), getPosition(0))

@@ -31,7 +31,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     override fun gather(provider: HolderLookup.Provider) {
         this.provider = provider
-        
+
         furnaceFuels()
 
         mobHead()
@@ -48,7 +48,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         builder(NeoForgeDataMaps.FURNACE_FUELS)
             .add(RagiumItems.TAR, FurnaceFuel(20 * 10 * 4), false)
     }
-    
+
     //    Ragium    //
 
     private fun mobHead() {

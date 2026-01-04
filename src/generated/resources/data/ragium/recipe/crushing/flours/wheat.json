@@ -1,0 +1,8 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": "#c:crops/wheat",
+  "result": {
+    "id": "hiiragi_core:wheat_flour",
+    "tag": "c:flours/wheat"
+  }
+}

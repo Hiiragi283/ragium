@@ -9,6 +9,7 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.minecraft.resources.ResourceLocation
 import org.apache.commons.lang3.math.Fraction
@@ -23,6 +24,10 @@ class HTSingleRecipeBuilder<ING : Any, RES : HTRecipeResult<*>>(
         @JvmStatic
         fun melting(ingredient: HTItemIngredient, result: HTFluidResult): HTSingleRecipeBuilder<*, *> =
             HTSingleRecipeBuilder(RagiumConst.MELTING, ::HTMeltingRecipe, ingredient, result)
+
+        @JvmStatic
+        fun pressing(ingredient: HTItemIngredient, catalyst: HTItemIngredient, result: HTItemResult): HTSingleRecipeBuilder<*, *> =
+            HTSingleRecipeBuilder(RagiumConst.PRESSING, ::HTPressingRecipe, ingredient to catalyst, result)
 
         @JvmStatic
         fun solidifying(ingredient: HTFluidIngredient, catalyst: HTItemIngredient, result: HTItemResult): HTSingleRecipeBuilder<*, *> =

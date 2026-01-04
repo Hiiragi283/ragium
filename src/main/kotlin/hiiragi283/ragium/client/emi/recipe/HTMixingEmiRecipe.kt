@@ -4,22 +4,23 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.emi.RagiumEmiTextures
-import hiiragi283.ragium.common.recipe.HTCuttingRecipe
+import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTCuttingEmiRecipe(holder: RecipeHolder<HTCuttingRecipe>) :
-    HTChancedEmiRecipe<HTCuttingRecipe>(RagiumConst.CUTTING_MACHINE, RagiumEmiRecipeCategories.CUTTING, holder) {
-    override fun addOutputSlots(widgets: WidgetHolder) {
+class HTMixingEmiRecipe(holder: RecipeHolder<HTMixingRecipe>) :
+    HTComplexEmiRecipe<HTMixingRecipe>(RagiumConst.MIXER, RagiumEmiRecipeCategories.MIXING, holder) {
+    override fun addSubProgress(widgets: WidgetHolder) {
         RagiumEmiTextures.addWidget(
             widgets,
-            "saw",
+            "mix",
             getPosition(2),
             getPosition(1.5),
             recipe.time,
             endToStart = true,
         )
-
-        widgets.addOutput(0, getPosition(5.5), getPosition(0.5), true)
-        widgets.addOutput(1, getPosition(5.5), getPosition(2))
     }
+
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.mixer
 }

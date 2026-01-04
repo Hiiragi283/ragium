@@ -22,6 +22,7 @@ enum class HTMoldType(private val enPattern: String, private val jaPattern: Stri
     GEAR("Gear", "歯車"),
     GEM("Gem", "宝石"),
     INGOT("Ingot", "インゴット"),
+    NUGGET("Nugget", "ナゲット"),
     PLATE("Plate", "板材"),
     ROD("Rod", "棒材"),
     ;

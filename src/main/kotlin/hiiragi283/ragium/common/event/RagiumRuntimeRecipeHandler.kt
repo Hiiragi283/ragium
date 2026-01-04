@@ -7,6 +7,8 @@ import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
+import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumMaterial
 import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
@@ -29,6 +31,12 @@ object RagiumRuntimeRecipeHandler {
 
         blockToPlate(event)
         ingotToRod(event)
+
+        ingotToPrefix(event, HCMaterialPrefixes.STORAGE_BLOCK, HTMoldType.BLOCK, 9, 1)
+        ingotToPrefix(event, HCMaterialPrefixes.GEAR, HTMoldType.GEAR, 4, 1)
+        ingotToPrefix(event, HCMaterialPrefixes.NUGGET, HTMoldType.NUGGET, 1, 9)
+        ingotToPrefix(event, HCMaterialPrefixes.PLATE, HTMoldType.PLATE, 1, 1)
+        ingotToPrefix(event, HCMaterialPrefixes.ROD, HTMoldType.ROD, 1, 2)
     }
 
     @JvmStatic
@@ -81,6 +89,29 @@ object RagiumRuntimeRecipeHandler {
                 .cutting(
                     event.itemCreator.fromTagKey(HCMaterialPrefixes.INGOT, material),
                     event.itemResult.create(rod, 2),
+                ).saveSuffixed(event.output, "_from_ingot")
+        }
+    }
+
+    //    Pressing    //
+
+    @JvmStatic
+    private fun ingotToPrefix(
+        event: HTRegisterRuntimeRecipeEvent,
+        prefix: HTPrefixLike,
+        moldType: HTMoldType,
+        inputCount: Int,
+        outputCount: Int,
+    ) {
+        for (material: HTAbstractMaterial in getAllMaterials()) {
+            if (!event.isPresentTag(HCMaterialPrefixes.INGOT, material)) continue
+            val result: Item = event.getFirstHolder(prefix, material)?.value() ?: continue
+
+            HTSingleRecipeBuilder
+                .pressing(
+                    event.itemCreator.fromTagKey(HCMaterialPrefixes.INGOT, material, inputCount),
+                    event.itemCreator.fromItem(moldType),
+                    event.itemResult.create(result, outputCount),
                 ).saveSuffixed(event.output, "_from_ingot")
         }
     }

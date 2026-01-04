@@ -29,6 +29,7 @@ import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
@@ -174,6 +175,17 @@ object RagiumRecipeSerializers {
             HTRecipeBiCodecs.TIME.forGetter(HTPlantingRecipe::time),
             HTRecipeBiCodecs.EXP.forGetter(HTPlantingRecipe::exp),
             ::HTPlantingRecipe,
+        ),
+    )
+
+    @JvmField
+    val PRESSING: RecipeSerializer<HTPressingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.PRESSING,
+        processing(
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTPressingRecipe::ingredient),
+            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTPressingRecipe::catalyst),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTPressingRecipe::result),
+            ::HTPressingRecipe,
         ),
     )
 

@@ -73,6 +73,9 @@ object RagiumEmiRecipeCategories {
     val PLANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     @JvmField
+    val PRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PRESSING, Items.PISTON)
+
+    @JvmField
     val PYROLYZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     @JvmField
