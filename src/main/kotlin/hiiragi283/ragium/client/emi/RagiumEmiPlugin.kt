@@ -3,14 +3,17 @@ package hiiragi283.ragium.client.emi
 import dev.emi.emi.EmiPort
 import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiRegistry
+import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.Bounds
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.integration.emi.HTEmiPlugin
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.integration.emi.toEmi
+import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.registry.getHolderDataMap
 import hiiragi283.core.api.registry.toLike
@@ -41,26 +44,15 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.material.Fluid
-import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import java.util.function.Consumer
 import kotlin.streams.asSequence
 
 @EmiEntrypoint
 class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
-    companion object {
-        @JvmStatic
-        private val ITEM_LOOKUP: HolderLookup.RegistryLookup<Item> by lazy(EmiPort.getItemRegistry()::asLookup)
-
-        @JvmStatic
-        private val FLUID_LOOKUP: HolderLookup.RegistryLookup<Fluid> by lazy {
-            EmiPort.getFluidRegistry().asLookup().filterElements { fluid: Fluid ->
-                fluid != Fluids.EMPTY && fluid.isSource(fluid.defaultFluidState())
-            }
-        }
-    }
-
     override fun register(registry: EmiRegistry) {
         // Category
         listOf(
@@ -86,6 +78,9 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         ).forEach(::addCategory.partially1(registry))
 
         // Recipes
+        addCustomRecipes(registry)
+        addGenerators(registry)
+
         addRegistryRecipes(registry, RagiumRecipeTypes.ALLOYING, ::HTAlloyingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, ::HTCrushingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
@@ -98,8 +93,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
-
-        addGenerators(registry)
         // Misc
         registry.addGenericExclusionArea { screen: Screen, consumer: Consumer<Bounds> ->
             if (screen is HTProcessorScreen<*, *>) {
@@ -125,6 +118,32 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         val potion: Comparison = Comparison.compareData { stack: EmiStack -> stack.get(DataComponents.POTION_CONTENTS) }
         registry.setDefaultComparison(RagiumItems.POTION_DROP.get(), potion)
+    }
+
+    private fun addCustomRecipes(registry: EmiRegistry) {
+        // Potion Drop
+        EmiPort
+            .getPotionRegistry()
+            .holders()
+            .forEach { potion: Holder<Potion> ->
+                addRecipeSafe(
+                    registry,
+                    potion.toLike().getId().withPrefix("/${HTConst.SHAPELESS}/${RagiumAPI.MOD_ID}/potion"),
+                ) { id: ResourceLocation ->
+                    EmiCraftingRecipe(
+                        listOf(
+                            HTPotionHelper.createPotion(RagiumItems.POTION_DROP, potion).toEmi(),
+                            Items.GLASS_BOTTLE.toEmi(),
+                            Items.GLASS_BOTTLE.toEmi(),
+                            Items.GLASS_BOTTLE.toEmi(),
+                            Items.GLASS_BOTTLE.toEmi(),
+                        ),
+                        HTPotionHelper.createPotion(Items.POTION, potion, 4).toEmi(),
+                        id,
+                        true,
+                    )
+                }
+            }
     }
 
     private fun addGenerators(registry: EmiRegistry) {

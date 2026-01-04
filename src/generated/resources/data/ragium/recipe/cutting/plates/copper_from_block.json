@@ -1,9 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#c:storage_blocks/copper",
-  "result": {
-    "count": 9,
-    "id": "hiiragi_core:copper_plate",
-    "tag": "c:plates/copper"
-  }
-}

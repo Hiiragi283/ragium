@@ -11,6 +11,7 @@ import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
+import net.neoforged.neoforge.common.Tags
 
 object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
@@ -20,6 +21,15 @@ object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
                 itemCreator.fromItem(Items.DIRT),
                 fluidCreator.water(250),
             ).setResult(itemResult.create(Items.MUD))
+            .setTime(20 * 5)
+            .save(output)
+        // Gravel + Water -> Flint
+        HTComplexRecipeBuilder
+            .mixing(
+                itemCreator.fromTagKey(Tags.Items.GRAVELS),
+                fluidCreator.water(250),
+            ).setResult(itemResult.create(Items.FLINT))
+            .setTime(20 * 5)
             .save(output)
 
         // Diamond + Raginite -> Ragi-Crystal

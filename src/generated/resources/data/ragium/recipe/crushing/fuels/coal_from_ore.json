@@ -2,9 +2,9 @@
   "type": "ragium:crushing",
   "exp": "3/10",
   "extra_result": {
-    "count": 3,
-    "id": "hiiragi_core:tiny_sulfur_dust",
-    "tag": "c:tiny_dusts/sulfur"
+    "chance": "1/4",
+    "id": "hiiragi_core:sulfur_dust",
+    "tag": "c:dusts/sulfur"
   },
   "ingredient": "#c:ores/coal",
   "result": {

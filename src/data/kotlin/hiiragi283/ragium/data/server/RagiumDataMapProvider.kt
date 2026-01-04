@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.setup.RagiumFluids
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
@@ -22,12 +23,16 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.data.DataMapProvider
+import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 
 class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
     private lateinit var provider: HolderLookup.Provider
 
     override fun gather(provider: HolderLookup.Provider) {
         this.provider = provider
+        
+        furnaceFuels()
 
         mobHead()
 
@@ -37,6 +42,13 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         fertilizer()
     }
 
+    //    Vanilla    //
+
+    private fun furnaceFuels() {
+        builder(NeoForgeDataMaps.FURNACE_FUELS)
+            .add(RagiumItems.TAR, FurnaceFuel(20 * 10 * 4), false)
+    }
+    
     //    Ragium    //
 
     private fun mobHead() {

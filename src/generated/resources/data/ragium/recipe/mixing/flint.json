@@ -4,9 +4,9 @@
     "amount": 250,
     "fluids": "#c:water"
   },
-  "item_ingredient": "minecraft:dirt",
+  "item_ingredient": "#c:gravels",
   "item_result": {
-    "id": "minecraft:mud"
+    "id": "minecraft:flint"
   },
   "time": 100
 }

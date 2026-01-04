@@ -34,12 +34,11 @@ enum class RagiumMaterial(private val usName: String, private val jpName: String
         }
 
     override fun getItemPrefixesToGenerate(): Set<HTMaterialPrefix> = when (this) {
-        RAGINITE -> setOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.TINY_DUST)
-        RAGI_CRYSTAL -> setOf(HCMaterialPrefixes.GEM, HCMaterialPrefixes.DUST, HCMaterialPrefixes.TINY_DUST)
+        RAGINITE -> setOf(HCMaterialPrefixes.DUST)
+        RAGI_CRYSTAL -> setOf(HCMaterialPrefixes.GEM, HCMaterialPrefixes.DUST)
         else -> setOf(
             HCMaterialPrefixes.INGOT,
             HCMaterialPrefixes.DUST,
-            HCMaterialPrefixes.TINY_DUST,
             HCMaterialPrefixes.GEAR,
             HCMaterialPrefixes.NUGGET,
             HCMaterialPrefixes.PLATE,

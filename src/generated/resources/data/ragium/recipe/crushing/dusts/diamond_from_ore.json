@@ -2,9 +2,9 @@
   "type": "ragium:crushing",
   "exp": 1,
   "extra_result": {
-    "count": 3,
-    "id": "hiiragi_core:tiny_coal_dust",
-    "tag": "c:tiny_dusts/coal"
+    "chance": "1/4",
+    "id": "hiiragi_core:coal_dust",
+    "tag": "c:dusts/coal"
   },
   "ingredient": "#c:ores/diamond",
   "result": {

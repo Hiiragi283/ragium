@@ -66,7 +66,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumItems.SOUP_CAN)
         factory
             .apply(Tags.Items.FOODS_RAW_MEAT)
-            .add(RagiumItems.MEAT_DUST)
             .add(RagiumItems.MEAT_INGOT)
         factory
             .apply(Tags.Items.FOODS_COOKED_MEAT)
@@ -74,8 +73,9 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
 
         factory
             .apply(RagiumTags.Items.FOODS_MEAT)
-            .addTag(Tags.Items.FOODS_RAW_MEAT)
+            .add(RagiumItems.MEAT_DUST)
             .addItem(Items.ROTTEN_FLESH)
+            .addTag(Tags.Items.FOODS_RAW_MEAT)
 
         factory
             .apply(RagiumTags.Items.FOODS_COOKED_MEAT)

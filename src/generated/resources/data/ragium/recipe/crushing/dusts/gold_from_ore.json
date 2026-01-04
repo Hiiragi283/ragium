@@ -2,9 +2,9 @@
   "type": "ragium:crushing",
   "exp": "7/10",
   "extra_result": {
-    "count": 3,
-    "id": "hiiragi_core:tiny_copper_dust",
-    "tag": "c:tiny_dusts/copper"
+    "chance": "1/4",
+    "id": "hiiragi_core:copper_dust",
+    "tag": "c:dusts/copper"
   },
   "ingredient": "#c:ores/gold",
   "result": {

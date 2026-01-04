@@ -1,14 +1,8 @@
 {
   "type": "ragium:crushing",
-  "extra_result": {
-    "id": "minecraft:flint"
-  },
-  "ingredient": {
-    "amount": 3,
-    "items": "#c:gravels"
-  },
+  "ingredient": "#c:gravels",
   "result": {
-    "count": 2,
     "id": "minecraft:sand"
-  }
+  },
+  "time": 100
 }

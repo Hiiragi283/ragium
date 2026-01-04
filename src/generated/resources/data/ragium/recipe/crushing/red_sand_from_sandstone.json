@@ -1,9 +1,9 @@
 {
   "type": "ragium:crushing",
   "extra_result": {
-    "count": 3,
-    "id": "hiiragi_core:tiny_saltpeter_dust",
-    "tag": "c:tiny_dusts/saltpeter"
+    "chance": "1/4",
+    "id": "hiiragi_core:saltpeter_dust",
+    "tag": "c:dusts/saltpeter"
   },
   "ingredient": "#c:sandstone/red_blocks",
   "result": {

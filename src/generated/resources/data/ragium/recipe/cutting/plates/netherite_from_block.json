@@ -1,9 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#c:storage_blocks/netherite",
-  "result": {
-    "count": 9,
-    "id": "hiiragi_core:netherite_plate",
-    "tag": "c:plates/netherite"
-  }
-}

@@ -1,14 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.material.HTAbstractMaterial
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.math.fraction
-import hiiragi283.core.common.material.HCMaterial
-import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
-import hiiragi283.ragium.common.material.RagiumMaterial
 import net.minecraft.data.BlockFamilies
 import net.minecraft.data.BlockFamily
 import net.minecraft.tags.ItemTags
@@ -22,8 +17,6 @@ import kotlin.jvm.optionals.getOrNull
 object RagiumCuttingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         wooden()
-
-        material()
     }
 
     @JvmStatic
@@ -132,28 +125,5 @@ object RagiumCuttingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
                 itemCreator.fromTagKey(ItemTags.SAPLINGS),
                 itemResult.create(Items.STICK),
             ).saveSuffixed(output, "_from_saplings")
-    }
-
-    @JvmStatic
-    private fun material() {
-        for (material: HTAbstractMaterial in HCMaterial.entries.plus(RagiumMaterial.entries)) {
-            val prefixSet: Set<HTMaterialPrefix> = material.getItemPrefixesToGenerate()
-            // Ingot -> Rod
-            if (material.basePrefix == HCMaterialPrefixes.INGOT && HCMaterialPrefixes.ROD in prefixSet) {
-                HTChancedRecipeBuilder
-                    .cutting(
-                        itemCreator.fromTagKey(HCMaterialPrefixes.INGOT, material),
-                        RagiumMaterialResultHelper.item(HCMaterialPrefixes.ROD, material),
-                    ).saveSuffixed(output, "_from_ingot")
-            }
-            // Block -> 9x Plate
-            if (HCMaterialPrefixes.PLATE in prefixSet) {
-                HTChancedRecipeBuilder
-                    .cutting(
-                        itemCreator.fromTagKey(HCMaterialPrefixes.STORAGE_BLOCK, material),
-                        RagiumMaterialResultHelper.item(HCMaterialPrefixes.PLATE, material, 9),
-                    ).saveSuffixed(output, "_from_block")
-            }
-        }
     }
 }

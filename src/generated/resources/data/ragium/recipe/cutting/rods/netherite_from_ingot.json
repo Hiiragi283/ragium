@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#c:ingots/netherite",
-  "result": {
-    "id": "hiiragi_core:netherite_rod",
-    "tag": "c:rods/netherite"
-  }
-}

@@ -2,8 +2,8 @@
   "type": "ragium:crushing",
   "exp": "7/10",
   "extra_result": {
-    "count": 3,
-    "tag": "c:tiny_dusts/lead"
+    "chance": "1/4",
+    "tag": "c:dusts/lead"
   },
   "ingredient": "#c:ores/silver",
   "result": {

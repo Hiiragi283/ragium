@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#c:ingots/gold",
-  "result": {
-    "id": "hiiragi_core:gold_rod",
-    "tag": "c:rods/gold"
-  }
-}
