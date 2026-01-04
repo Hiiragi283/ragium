@@ -4,7 +4,7 @@
     "fluids": "#c:crude_oil"
   },
   "item_result": {
-    "id": "hiiragi_core:tar"
+    "id": "ragium:tar"
   },
   "result": {
     "amount": 750,

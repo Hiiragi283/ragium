@@ -1,8 +1,10 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterial
@@ -50,5 +52,13 @@ object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
                 fluidCreator.fromTagKey(RagiumFluids.ETHANOL, 750),
             ).setResult(fluidResult.create(RagiumFluids.BIOFUEL, 500))
             .saveSuffixed(output, "_from_ethanol")
+
+        // Water + Wheat Flour -> Wheat Dough
+        HTComplexRecipeBuilder
+            .mixing(
+                itemCreator.fromTagKey(HiiragiCoreTags.Items.FLOURS_WHEAT),
+                fluidCreator.water(250),
+            ).setResult(itemResult.create(HCItems.WHEAT_DOUGH, HiiragiCoreTags.Items.DOUGHS_WHEAT))
+            .save(output)
     }
 }

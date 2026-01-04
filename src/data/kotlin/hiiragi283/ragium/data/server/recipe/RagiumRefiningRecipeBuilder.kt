@@ -3,10 +3,10 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
-import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
+import hiiragi283.ragium.setup.RagiumItems
 
 object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
@@ -15,7 +15,7 @@ object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             .create(
                 fluidCreator.fromTagKey(RagiumFluids.CRUDE_OIL, 1000),
                 fluidResult.create(RagiumFluids.NAPHTHA, 750),
-            ).setResult(itemResult.create(HCItems.TAR))
+            ).setResult(itemResult.create(RagiumItems.TAR))
             .saveSuffixed(output, "_from_oil")
         // Naphtha -> Sulfur + Fuel
         HTRefiningRecipeBuilder

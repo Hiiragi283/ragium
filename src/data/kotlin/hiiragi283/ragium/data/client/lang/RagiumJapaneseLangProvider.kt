@@ -55,8 +55,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.RAGIUM_POWDER, "ラギウムパウダー")
         add(RagiumItems.SEED_OIL_DROP, "種油のしずく")
+        add(RagiumItems.TAR, "タール")
 
         add(RagiumItems.MEAT_DUST, "ひき肉")
         add(RagiumItems.MEAT_INGOT, "肉インゴット")
@@ -70,8 +70,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
         add(RagiumItems.POTION_DROP, "ポーションの雫")
-        add(RagiumItems.SLOT_COVER, "スロットカバー")
-        add(RagiumItems.TRADER_CATALOG, "行商人のカタログ")
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
@@ -118,9 +116,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
         add(RagiumTranslation.BUFFER, "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。")
         add(RagiumTranslation.UNIVERSAL_CHEST, "色ごとに中身を共有するチェストです。")
-
-        add(RagiumTranslation.SLOT_COVER, "機械のスロットに入れることでレシピ判定から無視されます。")
-        add(RagiumTranslation.TRADER_CATALOG, "行商人からドロップします。右クリックで行商人との取引を行えます。")
 
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")

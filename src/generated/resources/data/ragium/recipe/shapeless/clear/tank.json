@@ -1,5 +1,5 @@
 {
-  "type": "ragium:clear_component",
+  "type": "hiiragi_core:clear_component",
   "ingredient": "ragium:tank",
   "targets": "hiiragi_core:fluid"
 }

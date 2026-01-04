@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
+import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTStonecuttingRecipeBuilder
@@ -11,7 +12,6 @@ import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumTags
-import hiiragi283.ragium.common.crafting.HTClearComponentRecipe
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
@@ -62,18 +62,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         lootTickets()
         // Potion Drop -> Potion
         save(id("shapeless/potion_from_drop"), HTPotionDropRecipe(CraftingBookCategory.MISC))
-        // Slot Cover
-        HTStonecuttingRecipeBuilder
-            .create(RagiumItems.SLOT_COVER, 3)
-            .addIngredient(Items.SMOOTH_STONE_SLAB)
-            .save(output)
-        // Trader Catalog
-        HTShapelessRecipeBuilder
-            .create(RagiumItems.TRADER_CATALOG)
-            .addIngredient(Items.BOOK)
-            .addIngredient(HCMaterialPrefixes.GEM, HCMaterial.Gems.EMERALD)
-            .setCategory(CraftingBookCategory.EQUIPMENT)
-            .save(output)
 
         storages()
     }
@@ -87,6 +75,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             Triple(RagiumBlocks.CRATE, Tags.Items.CHESTS, HCDataComponents.ITEM),
             Triple(RagiumBlocks.TANK, Tags.Items.BUCKETS_EMPTY, HCDataComponents.FLUID),
         ).forEach { (block: HTDeferredBlock<*, *>, core: TagKey<Item>, component: DataComponentType<*>) ->
+            // Shaped
             HTShapedRecipeBuilder
                 .create(block)
                 .crossLayered()
@@ -95,11 +84,10 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 .define('C', Tags.Items.GLASS_BLOCKS)
                 .define('D', core)
                 .save(output)
-
-            save(
-                block.getId().withPrefix("shapeless/clear/"),
-                HTClearComponentRecipe("", CraftingBookCategory.MISC, block, listOf(component)),
-            )
+            // Clear Component
+            HTClearComponentRecipeBuilder(block.itemHolder)
+                .setTargets(component)
+                .save(output)
         }
         // Resonant Interface
         // Universal Chest

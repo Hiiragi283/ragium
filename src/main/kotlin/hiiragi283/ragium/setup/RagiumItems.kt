@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.HTPotionDropItem
-import hiiragi283.ragium.common.item.HTTraderCatalogItem
 import hiiragi283.ragium.common.item.tool.HTLocationTicketItem
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.common.storge.attachment.HTComponentHandler
@@ -24,7 +23,6 @@ import hiiragi283.ragium.common.storge.energy.HTComponentEnergyBattery
 import hiiragi283.ragium.common.storge.energy.HTComponentEnergyHandler
 import hiiragi283.ragium.common.storge.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storge.fluid.HTComponentFluidTank
-import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
@@ -68,10 +66,10 @@ object RagiumItems {
     val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
     @JvmField
-    val RAGIUM_POWDER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragium_powder")
+    val SEED_OIL_DROP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("seed_oil_drop")
 
     @JvmField
-    val SEED_OIL_DROP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("seed_oil_drop")
+    val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     //    Foods    //
 
@@ -139,16 +137,6 @@ object RagiumItems {
 
     @JvmField
     val POTION_DROP: HTSimpleDeferredItem = REGISTER.registerItem("potion_drop", ::HTPotionDropItem)
-
-    @JvmField
-    val SLOT_COVER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("slot_cover") {
-        it.description(RagiumTranslation.SLOT_COVER)
-    }
-
-    @JvmField
-    val TRADER_CATALOG: HTSimpleDeferredItem = REGISTER.registerItem("trader_catalog", ::HTTraderCatalogItem) {
-        it.description(RagiumTranslation.TRADER_CATALOG)
-    }
 
     //    Event    //
 

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "#c:flours/wheat",
+  "item_result": {
+    "id": "hiiragi_core:wheat_dough",
+    "tag": "c:doughs/wheat"
+  }
+}
