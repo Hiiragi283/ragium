@@ -143,6 +143,7 @@
   "recipe_type.ragium.pressing": "Pressing",
   "recipe_type.ragium.pyrolyzing": "Pyrolyzing",
   "recipe_type.ragium.refining": "Refining",
+  "recipe_type.ragium.simulating": "Simulating",
   "recipe_type.ragium.solidifying": "Solidifying",
   "tag.fluid.c.biofuel": "Biofuel",
   "tag.fluid.c.coolant": "Coolant",

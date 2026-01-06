@@ -2,11 +2,11 @@ package hiiragi283.ragium.client.emi.recipe
 
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
-import hiiragi283.ragium.common.recipe.base.HTComplexRecipe
+import hiiragi283.ragium.common.recipe.base.HTComplexResultRecipe
 import hiiragi283.ragium.config.RagiumFluidConfigType
 import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTComplexEmiRecipe<RECIPE : HTComplexRecipe>(
+abstract class HTComplexEmiRecipe<RECIPE : HTComplexResultRecipe.Simple>(
     backgroundTex: String,
     category: HTEmiRecipeCategory,
     holder: RecipeHolder<RECIPE>,
@@ -21,11 +21,9 @@ abstract class HTComplexEmiRecipe<RECIPE : HTComplexRecipe>(
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         addSubProgress(widgets)
-
         // Input
         widgets.addInput(0, getPosition(2), getPosition(0.5))
         widgets.addTank(input(1), getPosition(0.5), getCapacity(RagiumFluidConfigType.FIRST_INPUT))
-
         // Output
         widgets.addOutput(0, getPosition(5.5), getPosition(1), true)
         widgets.addTank(output(1), getPosition(7), getCapacity(RagiumFluidConfigType.FIRST_OUTPUT)).recipeContext(this)

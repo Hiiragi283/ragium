@@ -1,0 +1,9 @@
+{
+  "type": "ragium:simulating/entity",
+  "catalyst": "minecraft:cow",
+  "fluid_result": {
+    "amount": 250,
+    "id": "minecraft:milk",
+    "tag": "c:milk"
+  }
+}

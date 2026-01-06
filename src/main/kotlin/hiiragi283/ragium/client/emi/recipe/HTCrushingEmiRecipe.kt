@@ -18,7 +18,7 @@ class HTCrushingEmiRecipe(holder: RecipeHolder<HTCrushingRecipe>) :
             recipe.time,
             endToStart = true,
         )
-
+        // Output
         widgets.addOutput(0, getPosition(5.5), getPosition(0.5))
         widgets.addOutput(1, getPosition(6.5), getPosition(0.5))
         widgets.addOutput(2, getPosition(5.5), getPosition(1.5))

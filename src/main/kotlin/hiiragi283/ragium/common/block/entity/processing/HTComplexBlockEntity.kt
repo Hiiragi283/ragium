@@ -14,7 +14,7 @@ import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
-import hiiragi283.ragium.common.recipe.base.HTComplexRecipe
+import hiiragi283.ragium.common.recipe.base.HTComplexResultRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -58,7 +58,7 @@ abstract class HTComplexBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Processing    //
 
-    inner class RecipeComponent<RECIPE : HTComplexRecipe>(
+    inner class RecipeComponent<RECIPE : HTComplexResultRecipe.Simple>(
         finder: HTRecipeFinder<HTItemAndFluidRecipeInput, RECIPE>,
         private val sound: SoundEvent,
     ) : HTProcessingRecipeComponent.Cached<HTItemAndFluidRecipeInput, RECIPE>(finder, this) {

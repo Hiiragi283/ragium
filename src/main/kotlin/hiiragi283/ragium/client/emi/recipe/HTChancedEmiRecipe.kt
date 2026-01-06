@@ -27,7 +27,6 @@ abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(
 
     final override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
-
         // Input
         widgets
             .addTank(
@@ -36,7 +35,6 @@ abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(
                 getCapacity(RagiumFluidConfigType.FIRST_INPUT),
             ).catalyst(true)
         widgets.addInput(0, getPosition(2), getPosition(0.5))
-
         // Output
         addOutputSlots(widgets)
     }

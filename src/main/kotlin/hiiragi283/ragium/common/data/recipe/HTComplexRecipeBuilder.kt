@@ -9,7 +9,7 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.base.HTComplexRecipe
+import hiiragi283.ragium.common.recipe.base.HTComplexResultRecipe
 import net.minecraft.resources.ResourceLocation
 import org.apache.commons.lang3.math.Fraction
 
@@ -34,9 +34,9 @@ class HTComplexRecipeBuilder<INGREDIENT : Any>(
 
     override fun getPrimalId(): ResourceLocation = toIorResult().map(HTItemResult::getId, HTFluidResult::getId)
 
-    override fun createRecipe(): HTComplexRecipe = factory.create(ingredient, toIorResult(), time, exp)
+    override fun createRecipe(): HTComplexResultRecipe.Simple = factory.create(ingredient, toIorResult(), time, exp)
 
-    fun interface Factory<INGREDIENT : Any, RECIPE : HTComplexRecipe> {
+    fun interface Factory<INGREDIENT : Any, RECIPE : HTComplexResultRecipe.Simple> {
         fun create(
             ingredient: INGREDIENT,
             result: HTComplexResult,

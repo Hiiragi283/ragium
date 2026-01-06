@@ -20,12 +20,10 @@ class HTAlloyingEmiRecipe(holder: RecipeHolder<HTAlloyingRecipe>) :
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         widgets.addBurning(getPosition(1.5), getPosition(1), recipe.time)
-
         // Input
         widgets.addInput(0, getPosition(1.5), getPosition(0))
         widgets.addInput(1, getPosition(1), getPosition(2))
         widgets.addInput(2, getPosition(2), getPosition(2))
-
         // Output
         widgets.addOutput(0, getPosition(5.5), getPosition(1), large = true)
     }

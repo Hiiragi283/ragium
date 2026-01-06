@@ -82,5 +82,8 @@ object RagiumEmiRecipeCategories {
     val REFINING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.REFINING, Items.BUCKET)
 
     @JvmField
+    val SIMULATING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SIMULATING, Items.DRAGON_EGG)
+
+    @JvmField
     val SOLIDIFYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SOLIDIFYING, HTMoldType.BLANK)
 }

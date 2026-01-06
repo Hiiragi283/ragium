@@ -20,7 +20,6 @@ class HTMeltingEmiRecipe(holder: RecipeHolder<HTMeltingRecipe>) :
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
-
         // Input
         widgets.addInput(0, getPosition(2), getPosition(0.5))
         widgets.addBurning(getPosition(2), getPosition(1.5), recipe.time)

@@ -1,0 +1,8 @@
+{
+  "type": "ragium:simulating/entity",
+  "catalyst": "minecraft:chicken",
+  "ingredient": "#c:seeds",
+  "item_result": {
+    "id": "minecraft:egg"
+  }
+}

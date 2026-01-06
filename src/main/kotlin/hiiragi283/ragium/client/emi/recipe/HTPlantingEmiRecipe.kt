@@ -28,12 +28,10 @@ class HTPlantingEmiRecipe(holder: RecipeHolder<HTPlantingRecipe>) :
             recipe.time,
             endToStart = true,
         )
-
         // Input
         widgets.addInput(0, getPosition(2), getPosition(0))
-
+        // Catalyst
         widgets.addCatalyst(0, getPosition(2), getPosition(2))
-
         // Output
         widgets.addOutput(0, getPosition(5.5), getPosition(0.5), true)
         widgets.addOutput(1, getPosition(5.5), getPosition(2))

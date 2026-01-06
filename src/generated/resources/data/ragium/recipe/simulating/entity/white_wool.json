@@ -1,0 +1,7 @@
+{
+  "type": "ragium:simulating/entity",
+  "catalyst": "minecraft:sheep",
+  "item_result": {
+    "id": "minecraft:white_wool"
+  }
+}

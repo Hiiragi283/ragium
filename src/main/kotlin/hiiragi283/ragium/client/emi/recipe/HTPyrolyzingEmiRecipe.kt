@@ -22,10 +22,8 @@ class HTPyrolyzingEmiRecipe(holder: RecipeHolder<HTPyrolyzingRecipe>) :
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
         widgets.addBurning(getPosition(1), getPosition(1.5), recipe.time)
-
         // Input
         widgets.addInput(0, getPosition(1), getPosition(0.5))
-
         // Output
         widgets.addOutput(0, getPosition(4.5), getPosition(0.5))
         widgets.addTank(output(1), getPosition(7), getCapacity(RagiumFluidConfigType.FIRST_OUTPUT)).recipeContext(this)

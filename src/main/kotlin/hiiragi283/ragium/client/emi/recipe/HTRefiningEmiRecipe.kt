@@ -19,7 +19,6 @@ class HTRefiningEmiRecipe(holder: RecipeHolder<HTRefiningRecipe>) :
 
     override fun addWidgets(widgets: WidgetHolder) {
         super.addWidgets(widgets)
-
         // Input
         widgets
             .addTank(input(0), getPosition(0.5), getCapacity(RagiumFluidConfigType.FIRST_INPUT))

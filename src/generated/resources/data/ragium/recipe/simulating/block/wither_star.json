@@ -1,0 +1,8 @@
+{
+  "type": "ragium:simulating/block",
+  "catalyst": "#c:storage_blocks/night_metal",
+  "ingredient": "hiiragi_core:wither_doll",
+  "item_result": {
+    "id": "hiiragi_core:wither_star"
+  }
+}

@@ -18,7 +18,7 @@ class HTCuttingEmiRecipe(holder: RecipeHolder<HTCuttingRecipe>) :
             recipe.time,
             endToStart = true,
         )
-
+        // Output
         widgets.addOutput(0, getPosition(5.5), getPosition(0.5), true)
         widgets.addOutput(1, getPosition(5.5), getPosition(2))
     }

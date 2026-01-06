@@ -5,7 +5,7 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTComplexResult
-import hiiragi283.ragium.common.recipe.base.HTComplexRecipe
+import hiiragi283.ragium.common.recipe.base.HTComplexResultRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -18,7 +18,7 @@ class HTDryingRecipe(
     result: HTComplexResult,
     time: Int,
     exp: Fraction,
-) : HTComplexRecipe(result, time, exp) {
+) : HTComplexResultRecipe.Simple(result, time, exp) {
     override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean =
         ingredient.map({ it.test(input.item) }, { it.test(input.fluid) })
 

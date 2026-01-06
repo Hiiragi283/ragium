@@ -28,7 +28,6 @@ class HTSolidifyingEmiRecipe(holder: RecipeHolder<HTSolidifyingRecipe>) :
             recipe.time,
             endToStart = true,
         )
-
         // Input
         widgets.addTank(input(0), getPosition(0.5), getCapacity(RagiumFluidConfigType.FIRST_INPUT))
         widgets.addCatalyst(0, getPosition(2), getPosition(0.5))

@@ -1,0 +1,7 @@
+{
+  "type": "ragium:simulating/entity",
+  "catalyst": "minecraft:armadillo",
+  "item_result": {
+    "id": "minecraft:armadillo_scute"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "type": "ragium:simulating/entity",
+  "catalyst": "minecraft:mooshroom",
+  "fluid_result": {
+    "amount": 500,
+    "id": "hiiragi_core:mushroom_stew",
+    "tag": "c:mushroom_stew"
+  }
+}

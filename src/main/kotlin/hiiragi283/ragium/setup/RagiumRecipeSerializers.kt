@@ -13,6 +13,7 @@ import hiiragi283.core.api.serialization.codec.HTRecipeBiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.ParameterCodec
+import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
@@ -21,9 +22,11 @@ import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
+import hiiragi283.ragium.common.recipe.HTEntitySimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -32,7 +35,8 @@ import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
-import hiiragi283.ragium.common.recipe.base.HTComplexRecipe
+import hiiragi283.ragium.common.recipe.base.HTComplexResultRecipe
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
@@ -86,12 +90,12 @@ object RagiumRecipeSerializers {
     )
 
     @JvmStatic
-    private fun <I : Any, R : HTComplexRecipe> complex(
+    private fun <I : Any, R : HTComplexResultRecipe.Simple> complex(
         codec: ParameterCodec<in RegistryFriendlyByteBuf, R, I>,
         factory: HTComplexRecipeBuilder.Factory<I, R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = processing(
         codec,
-        COMPLEX_RESULT.forGetter(HTComplexRecipe::result),
+        COMPLEX_RESULT.forGetter(HTComplexResultRecipe.Simple::result),
         factory::create,
     )
 
@@ -208,6 +212,28 @@ object RagiumRecipeSerializers {
             HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTRefiningRecipe::result),
             COMPLEX_RESULT.forGetter(HTRefiningRecipe::extraResult),
             ::HTRefiningRecipe,
+        ),
+    )
+
+    @JvmField
+    val SIMULATING_BLOCK: RecipeSerializer<HTBlockSimulatingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.SIMULATING_BLOCK,
+        processing(
+            HTItemIngredient.CODEC.optionalFieldOf(HTConst.INGREDIENT).forGetter(HTBlockSimulatingRecipe::ingredient),
+            VanillaBiCodecs.holderSet(Registries.BLOCK).fieldOf(HTConst.CATALYST).forGetter(HTBlockSimulatingRecipe::catalyst),
+            COMPLEX_RESULT.forGetter(HTBlockSimulatingRecipe::result),
+            ::HTBlockSimulatingRecipe,
+        ),
+    )
+
+    @JvmField
+    val SIMULATING_ENTITY: RecipeSerializer<HTEntitySimulatingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.SIMULATING_ENTITY,
+        processing(
+            HTItemIngredient.CODEC.optionalFieldOf(HTConst.INGREDIENT).forGetter(HTEntitySimulatingRecipe::ingredient),
+            VanillaBiCodecs.holderSet(Registries.ENTITY_TYPE).fieldOf(HTConst.CATALYST).forGetter(HTEntitySimulatingRecipe::catalyst),
+            COMPLEX_RESULT.forGetter(HTEntitySimulatingRecipe::result),
+            ::HTEntitySimulatingRecipe,
         ),
     )
 

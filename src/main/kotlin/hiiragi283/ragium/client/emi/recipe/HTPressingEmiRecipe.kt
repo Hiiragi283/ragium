@@ -27,12 +27,10 @@ class HTPressingEmiRecipe(holder: RecipeHolder<HTPressingRecipe>) :
             recipe.time,
             endToStart = false,
         )
-
         // Input
         widgets.addInput(0, getPosition(1), getPosition(0))
-
+        // Catalyst
         widgets.addCatalyst(0, getPosition(1), getPosition(2))
-
         // Output
         widgets.addOutput(0, getPosition(4.5), getPosition(0.5))
     }

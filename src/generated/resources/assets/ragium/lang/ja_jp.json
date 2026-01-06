@@ -143,6 +143,7 @@
   "recipe_type.ragium.pressing": "プレス加工",
   "recipe_type.ragium.pyrolyzing": "熱分解",
   "recipe_type.ragium.refining": "精製",
+  "recipe_type.ragium.simulating": "シミュレーション",
   "recipe_type.ragium.solidifying": "成型",
   "tag.fluid.c.biofuel": "バイオ燃料",
   "tag.fluid.c.coolant": "冷却液",
