@@ -9,6 +9,7 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumFoodMaterials
+import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -132,6 +133,22 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ).setExp(1f)
             .saveSuffixed(output, "_from_ore")
         // Deep Steel
+
+        // Raginite
+        HTChancedRecipeBuilder
+            .crushing(
+                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, RagiumMaterial.RAGINITE),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, RagiumMaterial.RAGINITE, 8),
+            ).setExp(0.5f)
+            .saveSuffixed(output, "_from_ore")
+        // Ragi-Crystal
+        HTChancedRecipeBuilder
+            .crushing(
+                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, RagiumMaterial.RAGI_CRYSTAL),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, RagiumMaterial.RAGI_CRYSTAL, 2),
+            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, RagiumMaterial.RAGINITE), 0.25f)
+            .setExp(1f)
+            .saveSuffixed(output, "_from_ore")
     }
 
     @JvmStatic

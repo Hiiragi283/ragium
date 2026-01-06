@@ -39,7 +39,6 @@ import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
 import net.neoforged.bus.api.IEventBus
-import java.util.function.UnaryOperator
 
 /**
  * @see hiiragi283.core.setup.HCBlocks
@@ -61,17 +60,27 @@ object RagiumBlocks {
             this[prefix.asMaterialPrefix(), material.asMaterialKey()] = REGISTER.registerSimple(prefix.createPath(material), properties)
         }
 
+        // Ore
+        val ore: BlockBehaviour.Properties =
+            properties(3f).mapColor(MapColor.STONE).requiresCorrectToolForDrops()
+        val deepOre: BlockBehaviour.Properties =
+            properties(4.5f, 3f).mapColor(MapColor.DEEPSLATE).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()
+
+        register(HCMaterialPrefixes.ORE, RagiumMaterial.RAGINITE, ore)
+        register(HCMaterialPrefixes.ORE_DEEPSLATE, RagiumMaterial.RAGINITE, deepOre)
+
+        register(HCMaterialPrefixes.ORE, RagiumMaterial.RAGI_CRYSTAL, ore)
+        register(HCMaterialPrefixes.ORE_DEEPSLATE, RagiumMaterial.RAGI_CRYSTAL, deepOre)
+
+        // Storage Block
         for (material: RagiumMaterial in RagiumMaterial.entries) {
-            // Storage Block
-            val operator: UnaryOperator<BlockBehaviour.Properties> = when (material) {
-                RagiumMaterial.RAGINITE -> UnaryOperator { it.mapColor(MapColor.COLOR_RED) }
-                RagiumMaterial.RAGI_CRYSTAL -> UnaryOperator { it.mapColor(MapColor.COLOR_RED).sound(SoundType.AMETHYST) }
-                RagiumMaterial.RAGI_ALLOY -> UnaryOperator { it.mapColor(MapColor.COLOR_RED).sound(SoundType.COPPER) }
-                RagiumMaterial.ADVANCED_RAGI_ALLOY -> UnaryOperator { it.mapColor(MapColor.COLOR_RED).sound(SoundType.COPPER) }
-            }
-            val properties: BlockBehaviour.Properties = operator.apply(BlockBehaviour.Properties.of().strength(5f, 9f))
-            val prefix: HTMaterialPrefix = HCMaterialPrefixes.STORAGE_BLOCK
-            register(prefix, material, properties)
+            val properties: BlockBehaviour.Properties = when (material) {
+                RagiumMaterial.RAGINITE -> properties(5f, 9f).mapColor(MapColor.COLOR_RED)
+                RagiumMaterial.RAGI_CRYSTAL -> properties(5f, 9f).mapColor(MapColor.COLOR_RED).sound(SoundType.AMETHYST)
+                RagiumMaterial.RAGI_ALLOY -> properties(5f, 9f).mapColor(MapColor.COLOR_RED).sound(SoundType.COPPER)
+                RagiumMaterial.ADVANCED_RAGI_ALLOY -> properties(5f, 9f).mapColor(MapColor.COLOR_RED).sound(SoundType.METAL)
+            }.requiresCorrectToolForDrops()
+            register(HCMaterialPrefixes.STORAGE_BLOCK, material, properties)
         }
     }.let(::HTMaterialTable)
 
@@ -176,12 +185,14 @@ object RagiumBlocks {
     private fun copyOf(block: Block): BlockBehaviour.Properties = BlockBehaviour.Properties.ofFullCopy(block)
 
     @JvmStatic
-    fun machine(): BlockBehaviour.Properties = BlockBehaviour.Properties
-        .of()
+    private fun properties(hardness: Float, resistance: Float = hardness): BlockBehaviour.Properties =
+        BlockBehaviour.Properties.of().strength(hardness, resistance)
+
+    @JvmStatic
+    fun machine(): BlockBehaviour.Properties = properties(3.5f, 16f)
         .mapColor(MapColor.COLOR_BLACK)
         .requiresCorrectToolForDrops()
         .sound(SoundType.COPPER)
-        .strength(3.5f, 16f)
 
     @JvmStatic
     private fun registerMachine(
