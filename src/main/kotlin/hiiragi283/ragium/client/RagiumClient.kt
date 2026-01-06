@@ -11,6 +11,7 @@ import hiiragi283.ragium.client.gui.screen.HTComplexScreen
 import hiiragi283.ragium.client.gui.screen.HTMelterScreen
 import hiiragi283.ragium.client.gui.screen.HTPlanterScreen
 import hiiragi283.ragium.client.gui.screen.HTPyrolyzerScreen
+import hiiragi283.ragium.client.gui.screen.HTTankScreen
 import hiiragi283.ragium.client.gui.screen.HTUniversalChestScreen
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -145,6 +146,7 @@ object RagiumClient {
         event.register(RagiumMenuTypes.PLANTER.get(), ::HTPlanterScreen)
         event.register(RagiumMenuTypes.PYROLYZER.get(), ::HTPyrolyzerScreen)
 
+        event.register(RagiumMenuTypes.TANK.get(), ::HTTankScreen)
         event.register(RagiumMenuTypes.UNIVERSAL_CHEST.get(), ::HTUniversalChestScreen)
 
         LOGGER.info("Registered screens!")

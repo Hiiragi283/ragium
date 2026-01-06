@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item
+package hiiragi283.ragium.common.upgrade
 
 import hiiragi283.core.api.data.lang.HTLangName
 import hiiragi283.core.api.data.lang.HTLanguageType
@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 
-enum class HTUpgradeType(val group: Group, private val enName: String, private val jpName: String) :
+enum class RagiumUpgradeType(val group: Group, private val enName: String, private val jpName: String) :
     StringRepresentable,
     HTLangName,
     HTItemHolderLike<Item> {

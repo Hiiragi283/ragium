@@ -7,7 +7,7 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 
 class HTPlanterMenu(containerId: Int, inventory: Inventory, context: HTPlanterBlockEntity) :
-    HTMachineContainerMenu<HTPlanterBlockEntity>(RagiumMenuTypes.PLANTER, containerId, inventory, context) {
+    HTUpgradableContainerMenu<HTPlanterBlockEntity>(RagiumMenuTypes.PLANTER, containerId, inventory, context) {
     override fun initSlots() {
         addSlot(HTContainerItemSlot.input(context.plantSlot, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0)))
         addSlot(HTContainerItemSlot.both(context.soilSlot, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(2)))

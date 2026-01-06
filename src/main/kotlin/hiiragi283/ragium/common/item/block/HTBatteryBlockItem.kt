@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.item.block
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.capability.HTEnergyCapabilities
 import hiiragi283.core.api.storage.amount.HTAmountSlot
 import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
-import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
@@ -26,25 +26,25 @@ class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStor
         val amount: Int = view.getAmount()
         when {
             isCreative -> HTCommonTranslation.STORED_FE.translateColored(
-                ChatFormatting.GRAY,
+                HTDefaultColor.GRAY,
                 HTCommonTranslation.INFINITE,
             )
-            amount <= 0 -> HTCommonTranslation.EMPTY.translateColored(ChatFormatting.DARK_RED)
+            amount <= 0 -> HTCommonTranslation.EMPTY.translateColored(HTDefaultColor.RED)
             else -> HTCommonTranslation.STORED_FE.translateColored(
-                ChatFormatting.GRAY,
+                HTDefaultColor.GRAY,
                 amount,
             )
         }.let(tooltips::add)
         // Energy Capacity
         when (isCreative) {
             true -> HTCommonTranslation.CAPACITY.translateColored(
-                ChatFormatting.BLUE,
-                ChatFormatting.GRAY,
+                HTDefaultColor.BLUE,
+                HTDefaultColor.GRAY,
                 HTCommonTranslation.INFINITE,
             )
             false -> HTCommonTranslation.CAPACITY_FE.translateColored(
-                ChatFormatting.BLUE,
-                ChatFormatting.GRAY,
+                HTDefaultColor.BLUE,
+                HTDefaultColor.GRAY,
                 view.getCapacity(),
             )
         }.let(tooltips::add)

@@ -1,10 +1,10 @@
 package hiiragi283.ragium.api.upgrade
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.math.times
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
-import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import org.apache.commons.lang3.math.Fraction
@@ -19,15 +19,15 @@ data object HTUpgradeHelper {
     @JvmStatic
     fun appendTooltips(propertyMap: HTUpgradePropertyMap, consumer: Consumer<Component>) {
         propertyMap.forEach { (key: HTUpgradeKey, property: Fraction) ->
-            consumer.accept(key.translateColored(ChatFormatting.GRAY, getPropertyColor(key, property), property))
+            consumer.accept(key.translateColored(HTDefaultColor.GRAY, getPropertyColor(key, property), property))
         }
     }
 
     @JvmStatic
-    fun getPropertyColor(key: HTUpgradeKey, property: Fraction): ChatFormatting = when {
-        property > Fraction.ONE -> ChatFormatting.GREEN
-        property < Fraction.ONE -> ChatFormatting.RED
-        else -> ChatFormatting.WHITE
+    fun getPropertyColor(key: HTUpgradeKey, property: Fraction): HTDefaultColor = when {
+        property > Fraction.ONE -> HTDefaultColor.GREEN
+        property < Fraction.ONE -> HTDefaultColor.RED
+        else -> HTDefaultColor.WHITE
     }
 
     //    HTUpgradableHandler    //

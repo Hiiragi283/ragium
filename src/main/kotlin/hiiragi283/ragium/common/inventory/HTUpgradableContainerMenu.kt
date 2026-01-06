@@ -5,10 +5,10 @@ import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.core.common.inventory.container.HTBlockEntityContainerMenu
 import hiiragi283.core.common.registry.HTDeferredMenuType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.HTUpgradableBlockEntity
 import net.minecraft.world.entity.player.Inventory
 
-abstract class HTMachineContainerMenu<BE : HTMachineBlockEntity>(
+abstract class HTUpgradableContainerMenu<BE : HTUpgradableBlockEntity>(
     menuType: HTDeferredMenuType.WithContext<*, BE>,
     containerId: Int,
     inventory: Inventory,

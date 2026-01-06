@@ -13,7 +13,7 @@ import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTMoldType
-import hiiragi283.ragium.common.item.HTUpgradeType
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
@@ -77,9 +77,9 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
     }
 
     private fun registerUpgrades() {
-        for ((type: HTUpgradeType, item: HTIdLike) in RagiumItems.UPGRADES) {
+        for ((type: RagiumUpgradeType, item: HTIdLike) in RagiumItems.UPGRADES) {
             val base: ResourceLocation = when (type.group) {
-                HTUpgradeType.Group.CREATIVE -> {
+                RagiumUpgradeType.Group.CREATIVE -> {
                     existTexture(type::getId, ::basicItem)
                     continue
                 }

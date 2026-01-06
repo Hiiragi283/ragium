@@ -17,6 +17,7 @@ import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.registry.getHolderDataMap
 import hiiragi283.core.api.registry.toLike
+import hiiragi283.core.client.gui.screen.HTBlockEntityContainerScreen
 import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
@@ -34,7 +35,7 @@ import hiiragi283.ragium.client.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
-import hiiragi283.ragium.client.gui.screen.HTProcessorScreen
+import hiiragi283.ragium.common.inventory.HTUpgradableContainerMenu
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -99,15 +100,17 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
         // Misc
         registry.addGenericExclusionArea { screen: Screen, consumer: Consumer<Bounds> ->
-            if (screen is HTProcessorScreen<*, *>) {
-                consumer.accept(
-                    Bounds(
-                        screen.startX + HTSlotHelper.getSlotPosX(9),
-                        screen.startY + HTSlotHelper.getSlotPosY(-0.5),
-                        18 * 2,
-                        18 * 4,
-                    ),
-                )
+            if (screen is HTBlockEntityContainerScreen<*, *>) {
+                if (screen.menu is HTUpgradableContainerMenu<*>) {
+                    consumer.accept(
+                        Bounds(
+                            screen.startX + HTSlotHelper.getSlotPosX(9),
+                            screen.startY + HTSlotHelper.getSlotPosY(-0.5),
+                            18 * 2,
+                            18 * 4,
+                        ),
+                    )
+                }
             }
         }
 

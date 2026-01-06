@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
@@ -7,7 +8,6 @@ import hiiragi283.core.util.HTItemDropHelper
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
-import net.minecraft.ChatFormatting
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
@@ -79,7 +79,7 @@ class HTLootTicketItem(properties: Properties) :
         keys
             .map(ResourceKey<LootTable>::location)
             .map(ResourceLocation::toString)
-            .map { RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.translateColored(ChatFormatting.YELLOW, ChatFormatting.WHITE, it) }
+            .map { RagiumTranslation.TOOLTIP_LOOT_TABLE_ID.translateColored(HTDefaultColor.YELLOW, HTDefaultColor.WHITE, it) }
             .forEach(tooltips::add)
     }
 

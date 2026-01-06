@@ -7,7 +7,7 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 
 class HTCuttingMachineMenu(containerId: Int, inventory: Inventory, context: HTCuttingMachineBlockEntity) :
-    HTMachineContainerMenu<HTCuttingMachineBlockEntity>(RagiumMenuTypes.CUTTING_MACHINE, containerId, inventory, context) {
+    HTUpgradableContainerMenu<HTCuttingMachineBlockEntity>(RagiumMenuTypes.CUTTING_MACHINE, containerId, inventory, context) {
     override fun initSlots() {
         addSlot(HTContainerItemSlot.input(context.inputSlot, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0.5)))
 

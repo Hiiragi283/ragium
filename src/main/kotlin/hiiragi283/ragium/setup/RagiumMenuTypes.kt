@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.inventory.HTAlloySmelterMenu
 import hiiragi283.ragium.common.inventory.HTComplexMenu
 import hiiragi283.ragium.common.inventory.HTCrusherMenu
@@ -24,6 +25,7 @@ import hiiragi283.ragium.common.inventory.HTCuttingMachineMenu
 import hiiragi283.ragium.common.inventory.HTMelterMenu
 import hiiragi283.ragium.common.inventory.HTPlanterMenu
 import hiiragi283.ragium.common.inventory.HTPyrolyzerMenu
+import hiiragi283.ragium.common.inventory.HTTankMenu
 import hiiragi283.ragium.common.inventory.HTUniversalChestMenu
 import hiiragi283.ragium.common.item.HTUniversalChestManager
 import net.minecraft.client.Minecraft
@@ -72,6 +74,9 @@ object RagiumMenuTypes {
         registerBE(RagiumConst.PYROLYZER, ::HTPyrolyzerMenu)
 
     //    Storages    //
+
+    @JvmField
+    val TANK: HTDeferredMenuType.WithContext<HTTankMenu, HTTankBlockEntity> = registerBE("tank", ::HTTankMenu)
 
     @JvmField
     val UNIVERSAL_CHEST: HTDeferredMenuType.WithContext<HTUniversalChestMenu, HTItemHandler> =

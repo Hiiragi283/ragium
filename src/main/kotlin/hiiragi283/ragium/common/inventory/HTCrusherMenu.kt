@@ -8,7 +8,7 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 
 class HTCrusherMenu(containerId: Int, inventory: Inventory, context: HTCrusherBlockEntity) :
-    HTMachineContainerMenu<HTCrusherBlockEntity>(RagiumMenuTypes.CRUSHER, containerId, inventory, context) {
+    HTUpgradableContainerMenu<HTCrusherBlockEntity>(RagiumMenuTypes.CRUSHER, containerId, inventory, context) {
     override fun initSlots() {
         addSlot(HTContainerItemSlot.input(context.inputSlot, HTSlotHelper.getSlotPosX(3), HTSlotHelper.getSlotPosY(0.5)))
 

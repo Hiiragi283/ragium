@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.map
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.math.fraction
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.serialization.codec.BiCodec
@@ -8,7 +9,6 @@ import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.api.upgrade.HTUpgradeKey
 import hiiragi283.ragium.api.upgrade.HTUpgradePropertyMap
-import net.minecraft.ChatFormatting
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
@@ -58,17 +58,17 @@ data class HTUpgradeData private constructor(
     fun appendTooltips(consumer: Consumer<Component>) {
         // Properties
         for ((key: HTUpgradeKey, property: Fraction) in propertyMap) {
-            consumer.accept(key.translateColored(ChatFormatting.GRAY, HTUpgradeHelper.getPropertyColor(key, property), property))
+            consumer.accept(key.translateColored(HTDefaultColor.GRAY, HTUpgradeHelper.getPropertyColor(key, property), property))
         }
         // Target Set
         targetSet
             .map(HTItemIngredient::getText)
-            .map { HTCommonTranslation.TOOLTIP_UPGRADE_TARGET.translateColored(ChatFormatting.BLUE, ChatFormatting.GRAY, it) }
+            .map { HTCommonTranslation.TOOLTIP_UPGRADE_TARGET.translateColored(HTDefaultColor.BLUE, HTDefaultColor.GRAY, it) }
             .ifPresent(consumer)
         // Exclusive Set
         exclusiveSet
             .map(HTItemIngredient::getText)
-            .map { HTCommonTranslation.TOOLTIP_UPGRADE_EXCLUSIVE.translateColored(ChatFormatting.RED, ChatFormatting.GRAY, it) }
+            .map { HTCommonTranslation.TOOLTIP_UPGRADE_EXCLUSIVE.translateColored(HTDefaultColor.RED, HTDefaultColor.GRAY, it) }
             .ifPresent(consumer)
     }
 

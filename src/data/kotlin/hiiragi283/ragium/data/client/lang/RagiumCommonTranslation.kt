@@ -7,8 +7,8 @@ import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.text.HTHasTranslationKey
 import hiiragi283.core.common.data.lang.HTMaterialTranslationHelper
 import hiiragi283.ragium.common.item.HTMoldType
-import hiiragi283.ragium.common.item.HTUpgradeType
 import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 
@@ -36,7 +36,7 @@ object RagiumCommonTranslation {
             provider.add(item, LangPattern("%s Mold", "%sの鋳型").translate(langType, moldType))
         }
         // Upgrade
-        for ((upgradeType: HTUpgradeType, item: HTHasTranslationKey) in RagiumItems.UPGRADES) {
+        for ((upgradeType: RagiumUpgradeType, item: HTHasTranslationKey) in RagiumItems.UPGRADES) {
             provider.add(item, LangPattern("%s Upgrade", "%sアップグレード").translate(langType, upgradeType))
         }
     }

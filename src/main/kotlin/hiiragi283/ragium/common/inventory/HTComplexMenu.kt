@@ -14,7 +14,7 @@ class HTComplexMenu<BE : HTComplexBlockEntity>(
     containerId: Int,
     inventory: Inventory,
     context: BE,
-) : HTMachineContainerMenu<BE>(menuType, containerId, inventory, context) {
+) : HTUpgradableContainerMenu<BE>(menuType, containerId, inventory, context) {
     companion object {
         @JvmStatic
         fun dryer(containerId: Int, inventory: Inventory, context: HTDryerBlockEntity): HTComplexMenu<HTDryerBlockEntity> =

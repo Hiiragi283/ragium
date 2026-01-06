@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.capability.HTEnergyCapabilities
 import hiiragi283.core.api.capability.HTFluidCapabilities
 import hiiragi283.core.api.collection.buildTable
@@ -12,21 +13,23 @@ import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.HTPotionDropItem
 import hiiragi283.ragium.common.item.HTUpgradeItem
-import hiiragi283.ragium.common.item.HTUpgradeType
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.common.storge.attachment.HTComponentHandler
 import hiiragi283.ragium.common.storge.energy.HTComponentEnergyBattery
 import hiiragi283.ragium.common.storge.energy.HTComponentEnergyHandler
 import hiiragi283.ragium.common.storge.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storge.fluid.HTComponentFluidTank
+import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.config.RagiumConfig
-import net.minecraft.ChatFormatting
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
@@ -144,13 +147,13 @@ object RagiumItems {
     //   Upgrades    //
 
     @JvmField
-    val UPGRADES: Map<HTUpgradeType, HTSimpleDeferredItem> = HTUpgradeType.entries.associateWith { type: HTUpgradeType ->
-        val color: ChatFormatting = when (type.group) {
-            HTUpgradeType.Group.CREATIVE -> ChatFormatting.RED
-            HTUpgradeType.Group.GENERATOR -> ChatFormatting.LIGHT_PURPLE
-            HTUpgradeType.Group.PROCESSOR -> ChatFormatting.AQUA
-            HTUpgradeType.Group.DEVICE -> ChatFormatting.YELLOW
-            HTUpgradeType.Group.STORAGE -> ChatFormatting.GREEN
+    val UPGRADES: Map<RagiumUpgradeType, HTSimpleDeferredItem> = RagiumUpgradeType.entries.associateWith { type: RagiumUpgradeType ->
+        val color: HTDefaultColor = when (type.group) {
+            RagiumUpgradeType.Group.CREATIVE -> HTDefaultColor.RED
+            RagiumUpgradeType.Group.GENERATOR -> HTDefaultColor.PURPLE
+            RagiumUpgradeType.Group.PROCESSOR -> HTDefaultColor.LIGHT_BLUE
+            RagiumUpgradeType.Group.DEVICE -> HTDefaultColor.YELLOW
+            RagiumUpgradeType.Group.STORAGE -> HTDefaultColor.GREEN
         }
         REGISTER.registerItemWith("${type.serializedName}_upgrade", color, ::HTUpgradeItem)
     }
@@ -178,6 +181,22 @@ object RagiumItems {
             },
             RagiumBlocks.BATTERY,
         )
+
+        // Upgrade
+        for (item: Item in BuiltInRegistries.ITEM) {
+            // Data-Based for all items
+            event.registerItem(
+                RagiumCapabilities.UPGRADABLE_ITEM,
+                { stack: ItemStack, _: Void? ->
+                    if (stack.has(RagiumDataComponents.MACHINE_UPGRADES)) {
+                        HTComponentUpgradeHandler(stack)
+                    } else {
+                        null
+                    }
+                },
+                item,
+            )
+        }
 
         LOGGER.info("Registered Item Capabilities!")
     }

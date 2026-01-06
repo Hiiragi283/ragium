@@ -8,7 +8,7 @@ import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.world.entity.player.Inventory
 
 class HTPyrolyzerMenu(containerId: Int, inventory: Inventory, context: HTPyrolyzerBlockEntity) :
-    HTMachineContainerMenu<HTPyrolyzerBlockEntity>(RagiumMenuTypes.PYROLYZER, containerId, inventory, context) {
+    HTUpgradableContainerMenu<HTPyrolyzerBlockEntity>(RagiumMenuTypes.PYROLYZER, containerId, inventory, context) {
     override fun initSlots() {
         addSlot(HTContainerItemSlot.input(context.inputSlot, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(0.5)))
 

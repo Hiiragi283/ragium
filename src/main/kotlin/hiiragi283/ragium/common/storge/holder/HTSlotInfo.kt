@@ -1,20 +1,20 @@
 package hiiragi283.ragium.common.storge.holder
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.text.HTHasText
 import hiiragi283.ragium.common.text.RagiumTranslation
 import io.netty.buffer.ByteBuf
-import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 
-enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: ChatFormatting) : HTHasText {
-    BOTH(true, true, ChatFormatting.DARK_PURPLE),
-    INPUT(true, false, ChatFormatting.RED),
-    OUTPUT(false, true, ChatFormatting.AQUA),
-    EXTRA_INPUT(true, false, ChatFormatting.GOLD),
-    EXTRA_OUTPUT(false, true, ChatFormatting.GREEN),
-    NONE(false, false, ChatFormatting.GRAY),
+enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: HTDefaultColor) : HTHasText {
+    BOTH(true, true, HTDefaultColor.PURPLE),
+    INPUT(true, false, HTDefaultColor.RED),
+    OUTPUT(false, true, HTDefaultColor.LIGHT_BLUE),
+    EXTRA_INPUT(true, false, HTDefaultColor.YELLOW),
+    EXTRA_OUTPUT(false, true, HTDefaultColor.GREEN),
+    NONE(false, false, HTDefaultColor.GRAY),
     ;
 
     companion object {

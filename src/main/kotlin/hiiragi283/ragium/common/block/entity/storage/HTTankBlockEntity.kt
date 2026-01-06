@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.capability.HTFluidCapabilities
+import hiiragi283.core.api.capability.tankRange
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
@@ -10,6 +12,7 @@ import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.HTStoragePredicates
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.getFluidStack
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -26,6 +29,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem
 import org.apache.commons.lang3.math.Fraction
 
 /**
@@ -44,19 +48,35 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     protected fun getCapacity(): Int = HTUpgradeHelper.getFluidCapacity(this, RagiumConfig.COMMON.tankCapacity.asInt)
 
-    lateinit var slot: HTBasicItemSlot
+    lateinit var emptySlot: HTBasicItemSlot
+        private set
+    lateinit var fillSlot: HTBasicItemSlot
+        private set
+    lateinit var outputSlot: HTBasicItemSlot
         private set
 
     override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        // input
-        slot = builder.addSlot(
-            HTSlotInfo.NONE,
-            HTBasicItemSlot.create(
+        emptySlot = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTBasicItemSlot.input(
                 listener,
-                canExtract = HTStoragePredicates.manualOnly(),
-                canInsert = HTStoragePredicates.manualOnly(),
+                canInsert = HTFluidCapabilities::hasCapability,
             ),
         )
+        fillSlot = builder.addSlot(
+            HTSlotInfo.EXTRA_INPUT,
+            HTBasicItemSlot.input(
+                listener,
+                canInsert = { resource: HTItemResourceType ->
+                    val handler: IFluidHandlerItem = HTFluidCapabilities.getCapability(resource) ?: return@input false
+                    for (i: Int in handler.tankRange) {
+                        if (!handler.getFluidInTank(i).isEmpty) return@input false
+                    }
+                    true
+                },
+            ),
+        )
+        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
     override fun markDirtyComparator() {
@@ -83,7 +103,11 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     var oldScale: Fraction = Fraction.ZERO
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        if (HTStackSlotHelper.moveFluid(slot, slot::setStack, tank)) return true
+        // スロットから液体を搬入する
+        if (HTStackSlotHelper.moveFluid(emptySlot, outputSlot::setStack, tank)) return true
+        // スロットに液体を搬出する
+        
+        // 液体量の変化があれば更新させる
         val scale: Fraction = tank.getStoredLevel()
         if (scale != this.oldScale) {
             this.oldScale = scale

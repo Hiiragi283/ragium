@@ -3,7 +3,9 @@ package hiiragi283.ragium.data.client.lang
 import hiiragi283.core.api.data.lang.HTLangProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.text.RagiumTranslation
+import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
@@ -132,5 +134,21 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
+        // Upgrade
+        add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- Base Multiplier: %1$s")
+        add(HTUpgradeKeys.IS_CREATIVE, "- Creative")
+
+        add(HTUpgradeKeys.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
+        add(HTUpgradeKeys.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
+        add(HTUpgradeKeys.SPEED, $$"- Speed: %1$s")
+
+        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
+        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
+        add(HTUpgradeKeys.ITEM_CAPACITY, $$"- Item Capacity: %1$s")
+
+        add(RagiumUpgradeKeys.BLASTING, "- Only process Blasting Recipes")
+        add(RagiumUpgradeKeys.SMOKING, "- Only process Smoking Recipes")
+        add(RagiumUpgradeKeys.VOID_EXTRA, "- Extra output disabled")
+        add(RagiumUpgradeKeys.USE_LUBRICANT, "- Use lubricant per operation")
     }
 }
