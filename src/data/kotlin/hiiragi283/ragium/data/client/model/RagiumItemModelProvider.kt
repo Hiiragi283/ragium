@@ -13,6 +13,7 @@ import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.common.item.HTUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
@@ -30,25 +31,34 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             addAll(RagiumItems.REGISTER.asSequence())
 
             removeAll(RagiumItems.MATERIALS.values)
-            removeAll(RagiumItems.MOLDS.values)
-
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+
+            remove(RagiumItems.BLANK_DISC)
             remove(RagiumItems.POTION_DROP)
+
+            removeAll(RagiumItems.MOLDS.values)
+            removeAll(RagiumItems.UPGRADES.values)
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
 
         registerMaterials()
-        for ((moldType: HTMoldType, item: HTIdLike) in RagiumItems.MOLDS) {
-            existTexture(item, RagiumAPI.id(HTConst.ITEM, "mold", moldType.serializedName), ::layeredItem)
-        }
-
-        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { texId: ResourceLocation ->
+        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { itemId: ResourceLocation ->
             layeredItem(
                 RagiumItems.RAGI_ALLOY_COMPOUND,
                 vanillaId(HTConst.ITEM, "copper_ingot"),
-                texId.withPrefix("item/"),
+                itemId.withPrefix("item/"),
             )
         }
+
+        existTexture(RagiumItems.BLANK_DISC) { itemId: ResourceLocation ->
+            withExistingParent(itemId.path, vanillaId(HTConst.ITEM, "template_music_disc"))
+                .texture("layer0", itemId.withPrefix("item/"))
+        }
         layeredItem(RagiumItems.POTION_DROP, vanillaId(HTConst.ITEM, "ghast_tear"))
+
+        for ((moldType: HTMoldType, item: HTIdLike) in RagiumItems.MOLDS) {
+            existTexture(item, RagiumAPI.id(HTConst.ITEM, "mold", moldType.serializedName), ::layeredItem)
+        }
+        registerUpgrades()
 
         registerBuckets()
     }
@@ -62,6 +72,22 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
                 }
             } else {
                 existTexture(item, textureId, ::layeredItem)
+            }
+        }
+    }
+
+    private fun registerUpgrades() {
+        for ((type: HTUpgradeType, item: HTIdLike) in RagiumItems.UPGRADES) {
+            val base: ResourceLocation = when (type.group) {
+                HTUpgradeType.Group.CREATIVE -> {
+                    existTexture(type::getId, ::basicItem)
+                    continue
+                }
+                else -> RagiumAPI.id("item", "upgrade", "${type.group.serializedName}_base")
+            }
+            val textureId: ResourceLocation = RagiumAPI.id("item", "upgrade", type.serializedName)
+            existTexture(item, textureId) { itemIn: HTIdLike, texId: ResourceLocation ->
+                layeredItem(itemIn, base, texId)
             }
         }
     }

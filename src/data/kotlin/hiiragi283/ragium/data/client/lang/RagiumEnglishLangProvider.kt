@@ -65,6 +65,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumItems.MEAT_CAN, "Meat Can")
         add(RagiumItems.SOUP_CAN, "Soup Can")
 
+        add(RagiumItems.BLANK_DISC, "Blank Disc")
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
         add(RagiumItems.POTION_DROP, "Potion Drop")
@@ -86,6 +87,19 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")
         add(RagiumTags.Items.MOLDS, "Molds")
 
+        add(RagiumTags.Items.GENERATOR_UPGRADABLE, "Generators")
+        add(RagiumTags.Items.PROCESSOR_UPGRADABLE, "Processors")
+        add(RagiumTags.Items.MACHINE_UPGRADABLE, "Machines")
+        add(RagiumTags.Items.DEVICE_UPGRADABLE, "Devices")
+        add(RagiumTags.Items.EXTRA_VOIDING_UPGRADABLE, "Processors with Extra Output")
+        add(RagiumTags.Items.EFFICIENT_CRUSHING_UPGRADABLE, "Pulverizer or Crusher")
+        add(RagiumTags.Items.ENERGY_CAPACITY_UPGRADABLE, "Energy Storage")
+        add(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE, "Fluid Storage")
+        add(RagiumTags.Items.ITEM_CAPACITY_UPGRADABLE, "Item Storage")
+        add(RagiumTags.Items.SMELTING_UPGRADABLE, "Electric / Multi Smelter")
+
+        add(RagiumTags.Items.EXTRACTOR_EXCLUSIVE, "Upgrades for Extractor")
+        add(RagiumTags.Items.SMELTER_EXCLUSIVE, "Upgrades for Smelters")
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")
 

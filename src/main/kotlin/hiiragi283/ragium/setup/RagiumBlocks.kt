@@ -98,7 +98,7 @@ object RagiumBlocks {
         ::HTMeatBlock.partially1(Foods.COOKED_BEEF),
     )
 
-    //    Processors    //
+    //    Machine    //
 
     // Basic
     @JvmField

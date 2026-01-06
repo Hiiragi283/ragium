@@ -54,7 +54,7 @@ object RagiumBlockEntityTypes {
         factory: BlockEntityType.BlockEntitySupplier<BE>,
     ): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
 
-    //    Processor    //
+    //    Machine    //
 
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = registerTick(
@@ -122,15 +122,17 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        // Processor
+        // Machine
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, CRUSHER.get())
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, DRYER.get())
         registerHandler(event, MELTER.get())
         registerHandler(event, MIXER.get())
-        registerHandler(event, PLANTER.get())
         registerHandler(event, PYROLYZER.get())
+
+        // Device
+        registerHandler(event, PLANTER.get())
 
         // Storage
         registerHandler(event, BATTERY.get())

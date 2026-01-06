@@ -4,7 +4,7 @@ import hiiragi283.core.common.registry.HTDeferredAttachmentType
 import hiiragi283.core.common.registry.register.HTDeferredAttachmentRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.item.tool.HTUniversalChestManager
+import hiiragi283.ragium.common.item.HTUniversalChestManager
 
 internal object RagiumAttachmentTypes {
     @JvmField

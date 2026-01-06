@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item.tool
+package hiiragi283.ragium.common.item
 
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput

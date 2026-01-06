@@ -39,12 +39,12 @@ object RagiumConfig {
 
         init {
             builder.push("processor")
-            builder.comment("Configurations for Processor Machines")
+            builder.comment("Configurations for Processors")
             processor = Processor(builder)
             builder.pop()
 
             builder.push("device")
-            builder.comment("Configurations for Device Machines")
+            builder.comment("Configurations for Devices")
             device = Device(builder)
             builder.pop()
 

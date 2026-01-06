@@ -29,7 +29,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
     override fun registerStatesAndModels() {
         registerMaterials()
 
-        // Processors
+        // Machine
         frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CRUSHER, RagiumConst.MACHINE, basic)
 
@@ -40,7 +40,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         // Device
         // frontMachineBlock(RagiumBlocks.PLANTER, RagiumConst.DEVICE, basic)
 
-        // Storages
+        // Storage
         altModelBlock(RagiumBlocks.TANK)
 
         layeredBlock(

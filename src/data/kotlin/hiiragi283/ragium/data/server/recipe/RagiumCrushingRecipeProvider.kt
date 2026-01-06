@@ -222,13 +222,7 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
                 itemResult.create(RagiumItems.MEAT_DUST, HCMaterialPrefixes.DUST, RagiumFoodMaterials.MEAT),
-            ).saveSuffixed(output, "_from_raw")
-
-        HTChancedRecipeBuilder
-            .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT),
-                itemResult.create(RagiumItems.MEAT_DUST, HCMaterialPrefixes.DUST, RagiumFoodMaterials.MEAT),
-            ).saveSuffixed(output, "_from_ingot")
+            ).save(output)
 
         // Pulped Fish
         HTChancedRecipeBuilder

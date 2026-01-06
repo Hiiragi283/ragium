@@ -64,12 +64,12 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.MAGMATIC,
             RagiumEmiRecipeCategories.COOLANT,
             RagiumEmiRecipeCategories.COMBUSTION,
-            // Processor - Basic
+            // Machine - Basic
             RagiumEmiRecipeCategories.ALLOYING,
             RagiumEmiRecipeCategories.CRUSHING,
             RagiumEmiRecipeCategories.CUTTING,
             RagiumEmiRecipeCategories.PRESSING,
-            // Processor - Advanced
+            // Machine - Advanced
             RagiumEmiRecipeCategories.DRYING,
             RagiumEmiRecipeCategories.MELTING,
             RagiumEmiRecipeCategories.MIXING,
@@ -102,8 +102,8 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             if (screen is HTProcessorScreen<*, *>) {
                 consumer.accept(
                     Bounds(
-                        HTSlotHelper.getSlotPosX(9),
-                        HTSlotHelper.getSlotPosY(-0.5),
+                        screen.startX + HTSlotHelper.getSlotPosX(9),
+                        screen.startY + HTSlotHelper.getSlotPosY(-0.5),
                         18 * 2,
                         18 * 4,
                     ),

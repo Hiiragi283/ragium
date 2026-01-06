@@ -1,0 +1,73 @@
+{
+  "values": {
+    "ragium:blasting_upgrade": {
+      "exclusive_set": "#ragium:exclusive/smelter",
+      "properties": {
+        "blasting": 1
+      },
+      "target_set": "#ragium:upgradable/smelting"
+    },
+    "ragium:creative_upgrade": {
+      "properties": {
+        "is_creative": 1
+      }
+    },
+    "ragium:efficiency_upgrade": {
+      "properties": {
+        "energy_efficiency": "5/4"
+      },
+      "target_set": "#ragium:upgradable/processor"
+    },
+    "ragium:efficient_crushing_upgrade": {
+      "properties": {
+        "use_lubricant": 1
+      },
+      "target_set": "#ragium:upgradable/efficient_crushing"
+    },
+    "ragium:energy_capacity_upgrade": {
+      "properties": {
+        "energy_capacity": 4
+      },
+      "target_set": "#ragium:upgradable/energy_capacity"
+    },
+    "ragium:extra_voiding_upgrade": {
+      "properties": {
+        "void_extra": 1
+      },
+      "target_set": "#ragium:upgradable/extra_voiding"
+    },
+    "ragium:fluid_capacity_upgrade": {
+      "properties": {
+        "fluid_capacity": 4
+      },
+      "target_set": "#ragium:upgradable/fluid_capacity"
+    },
+    "ragium:high_speed_upgrade": {
+      "properties": {
+        "energy_efficiency": "2/5",
+        "speed": "3/2"
+      },
+      "target_set": "#ragium:upgradable/processor"
+    },
+    "ragium:item_capacity_upgrade": {
+      "properties": {
+        "energy_capacity": 4
+      },
+      "target_set": "#ragium:upgradable/item_capacity"
+    },
+    "ragium:smoking_upgrade": {
+      "exclusive_set": "#ragium:exclusive/smelter",
+      "properties": {
+        "smoking": 1
+      },
+      "target_set": "#ragium:upgradable/smelting"
+    },
+    "ragium:speed_upgrade": {
+      "properties": {
+        "energy_efficiency": "4/5",
+        "speed": "5/4"
+      },
+      "target_set": "#ragium:upgradable/processor"
+    }
+  }
+}

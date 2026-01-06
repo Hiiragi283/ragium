@@ -25,7 +25,7 @@ import hiiragi283.ragium.common.inventory.HTMelterMenu
 import hiiragi283.ragium.common.inventory.HTPlanterMenu
 import hiiragi283.ragium.common.inventory.HTPyrolyzerMenu
 import hiiragi283.ragium.common.inventory.HTUniversalChestMenu
-import hiiragi283.ragium.common.item.tool.HTUniversalChestManager
+import hiiragi283.ragium.common.item.HTUniversalChestManager
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.network.FriendlyByteBuf
@@ -37,7 +37,7 @@ object RagiumMenuTypes {
     @JvmField
     val REGISTER = HTDeferredMenuTypeRegister(RagiumAPI.MOD_ID)
 
-    //    Processor    //
+    //    Machine    //
 
     @JvmField
     val ALLOY_SMELTER: HTDeferredMenuType.WithContext<HTAlloySmelterMenu, HTAlloySmelterBlockEntity> =

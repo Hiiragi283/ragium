@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.item.tool
+package hiiragi283.ragium.common.item
 
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.text.toText

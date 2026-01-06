@@ -26,28 +26,23 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     GUI_SLOT_EXTRA_OUTPUT("gui", "slot", "extra_output"),
     GUI_SLOT_NONE("gui", "slot", "none"),
 
-    // Blocks - Processors
+    // Blocks - Machine
     ALLOY_SMELTER("description", "alloy_smelter"),
-    BLOCK_BREAKER("description", "block_breaker"),
+    BREWERY("description", "brewery"),
+    CRUSHER("description", "crusher"),
     CUTTING_MACHINE("description", "cutting_machine"),
-    COMPRESSOR("description", "compressor"),
+    DRYER("description", RagiumConst.DRYER),
     ELECTRIC_FURNACE("description", "electric_smelter"),
     EXTRACTOR("description", "extractor"),
-    CRUSHER("description", "crusher"),
-
-    DRYER("description", RagiumConst.DRYER),
     MELTER("description", RagiumConst.MELTER),
     MIXER("description", "mixer"),
+    MULTI_SMELTER("description", "multi_smelter"),
     PYROLYZER("description", RagiumConst.PYROLYZER),
     REFINERY("description", "refinery"),
 
-    BREWERY("description", "brewery"),
-    MULTI_SMELTER("description", "multi_smelter"),
+    // Blocks - Device
     PLANTER("description", "planter"),
-
     ENCHANTER("description", "enchanter"),
-    MOB_CRUSHER("description", "mob_crusher"),
-    SIMULATOR("description", "simulator"),
 
     // Blocks - Storages
     BATTERY("description", "battery"),

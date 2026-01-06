@@ -13,6 +13,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
@@ -71,5 +72,69 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumItems.COOKED_MEAT_INGOT)
         // Others
         RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
+
+        upgradeTargets(factory)
+    }
+
+    private fun upgradeTargets(factory: BuilderFactory<Item>) {
+        // Group
+        factory
+            .apply(RagiumTags.Items.GENERATOR_UPGRADABLE)
+            .addItem(Items.BARRIER) // TODO
+        factory
+            .apply(RagiumTags.Items.PROCESSOR_UPGRADABLE)
+            .addTag(RagiumTags.Items.MACHINE_UPGRADABLE)
+            .addTag(RagiumTags.Items.DEVICE_UPGRADABLE)
+        factory
+            .apply(RagiumTags.Items.MACHINE_UPGRADABLE)
+            // Basic
+            .add(RagiumBlocks.ALLOY_SMELTER)
+            .add(RagiumBlocks.CRUSHER)
+            .add(RagiumBlocks.CUTTING_MACHINE)
+            // Advanced
+            .add(RagiumBlocks.DRYER)
+            .add(RagiumBlocks.MELTER)
+            .add(RagiumBlocks.MIXER)
+            .add(RagiumBlocks.PYROLYZER)
+        factory
+            .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
+            // Basic
+            .add(RagiumBlocks.PLANTER)
+
+        // Specific
+        factory
+            .apply(RagiumTags.Items.EXTRA_VOIDING_UPGRADABLE)
+            .add(RagiumBlocks.CUTTING_MACHINE)
+            .add(RagiumBlocks.CRUSHER)
+        factory
+            .apply(RagiumTags.Items.EFFICIENT_CRUSHING_UPGRADABLE)
+            .add(RagiumBlocks.CRUSHER)
+        factory
+            .apply(RagiumTags.Items.SMELTING_UPGRADABLE)
+
+        // Storage
+        factory
+            .apply(RagiumTags.Items.ENERGY_CAPACITY_UPGRADABLE)
+            .addTag(RagiumTags.Items.GENERATOR_UPGRADABLE)
+            .addTag(RagiumTags.Items.MACHINE_UPGRADABLE)
+            // Storage
+            .add(RagiumBlocks.BATTERY)
+        factory
+            .apply(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE)
+            // Generator
+            // Machine
+            .add(RagiumBlocks.CRUSHER)
+            .add(RagiumBlocks.CUTTING_MACHINE)
+            .add(RagiumBlocks.DRYER)
+            .add(RagiumBlocks.MELTER)
+            .add(RagiumBlocks.MIXER)
+            .add(RagiumBlocks.PYROLYZER)
+            // Device
+            .add(RagiumBlocks.PLANTER)
+            // Storage
+            .add(RagiumBlocks.TANK)
+        factory
+            .apply(RagiumTags.Items.ITEM_CAPACITY_UPGRADABLE)
+            .add(RagiumBlocks.CRATE)
     }
 }

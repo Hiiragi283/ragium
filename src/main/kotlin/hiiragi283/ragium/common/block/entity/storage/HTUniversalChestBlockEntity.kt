@@ -8,7 +8,7 @@ import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.api.storage.item.HTItemHandler
 import hiiragi283.core.api.storage.item.HTItemSlot
 import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
-import hiiragi283.ragium.common.item.tool.HTUniversalChestManager
+import hiiragi283.ragium.common.item.HTUniversalChestManager
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos

@@ -7,6 +7,7 @@ import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.text.HTHasTranslationKey
 import hiiragi283.core.common.data.lang.HTMaterialTranslationHelper
 import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.common.item.HTUpgradeType
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -32,15 +33,19 @@ object RagiumCommonTranslation {
 
         // Mold
         for ((moldType: HTMoldType, item: HTHasTranslationKey) in RagiumItems.MOLDS) {
-            provider.add(
-                item,
-                HTLangPatternProvider { type: HTLanguageType, value: String ->
-                    when (type) {
-                        HTLanguageType.EN_US -> "$value Mold"
-                        HTLanguageType.JA_JP -> "${value}の鋳型"
-                    }
-                }.translate(langType, moldType),
-            )
+            provider.add(item, LangPattern("%s Mold", "%sの鋳型").translate(langType, moldType))
         }
+        // Upgrade
+        for ((upgradeType: HTUpgradeType, item: HTHasTranslationKey) in RagiumItems.UPGRADES) {
+            provider.add(item, LangPattern("%s Upgrade", "%sアップグレード").translate(langType, upgradeType))
+        }
+    }
+
+    @JvmRecord
+    private data class LangPattern(private val enPattern: String, private val jaPattern: String) : HTLangPatternProvider {
+        override fun translate(type: HTLanguageType, value: String): String = when (type) {
+            HTLanguageType.EN_US -> enPattern
+            HTLanguageType.JA_JP -> jaPattern
+        }.replace("%s", value)
     }
 }

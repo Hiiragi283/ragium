@@ -1,0 +1,12 @@
+{
+  "values": [
+    "ragium:crusher",
+    "ragium:cutting_machine",
+    "ragium:dryer",
+    "ragium:melter",
+    "ragium:mixer",
+    "ragium:planter",
+    "ragium:pyrolyzer",
+    "ragium:tank"
+  ]
+}

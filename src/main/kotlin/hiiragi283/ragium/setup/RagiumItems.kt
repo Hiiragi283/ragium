@@ -13,10 +13,12 @@ import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
+import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.HTPotionDropItem
-import hiiragi283.ragium.common.item.tool.HTLocationTicketItem
+import hiiragi283.ragium.common.item.HTUpgradeItem
+import hiiragi283.ragium.common.item.HTUpgradeType
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.common.storge.attachment.HTComponentHandler
 import hiiragi283.ragium.common.storge.energy.HTComponentEnergyBattery
@@ -24,6 +26,7 @@ import hiiragi283.ragium.common.storge.energy.HTComponentEnergyHandler
 import hiiragi283.ragium.common.storge.fluid.HTComponentFluidHandler
 import hiiragi283.ragium.common.storge.fluid.HTComponentFluidTank
 import hiiragi283.ragium.config.RagiumConfig
+import net.minecraft.ChatFormatting
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
@@ -127,6 +130,9 @@ object RagiumItems {
     //    Utilities    //
 
     @JvmField
+    val BLANK_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_disc")
+
+    @JvmField
     val LOCATION_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
 
     @JvmField
@@ -134,6 +140,20 @@ object RagiumItems {
 
     @JvmField
     val POTION_DROP: HTSimpleDeferredItem = REGISTER.registerItem("potion_drop", ::HTPotionDropItem)
+
+    //   Upgrades    //
+
+    @JvmField
+    val UPGRADES: Map<HTUpgradeType, HTSimpleDeferredItem> = HTUpgradeType.entries.associateWith { type: HTUpgradeType ->
+        val color: ChatFormatting = when (type.group) {
+            HTUpgradeType.Group.CREATIVE -> ChatFormatting.RED
+            HTUpgradeType.Group.GENERATOR -> ChatFormatting.LIGHT_PURPLE
+            HTUpgradeType.Group.PROCESSOR -> ChatFormatting.AQUA
+            HTUpgradeType.Group.DEVICE -> ChatFormatting.YELLOW
+            HTUpgradeType.Group.STORAGE -> ChatFormatting.GREEN
+        }
+        REGISTER.registerItemWith("${type.serializedName}_upgrade", color, ::HTUpgradeItem)
+    }
 
     //    Event    //
 
