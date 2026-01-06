@@ -7,7 +7,6 @@ import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.common.material.RagiumFoodMaterials
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -75,7 +74,7 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         mapOf(
             RagiumItems.FISH_CAN to Tags.Items.FOODS_COOKED_FISH,
             RagiumItems.FRUIT_CAN to Tags.Items.FOODS_FRUIT,
-            RagiumItems.MEAT_CAN to RagiumTags.Items.FOODS_COOKED_MEAT,
+            RagiumItems.MEAT_CAN to Tags.Items.FOODS_COOKED_MEAT,
             RagiumItems.SOUP_CAN to Tags.Items.FOODS_SOUP,
         ).forEach { (can: ItemLike, food: TagKey<Item>) ->
             HTShapedRecipeBuilder

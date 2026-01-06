@@ -1,8 +1,8 @@
 {
   "type": "ragium:melting",
-  "ingredient": "#c:foods/raw_meat",
+  "ingredient": "minecraft:rotten_flesh",
   "result": {
-    "amount": 180,
+    "amount": 90,
     "id": "hiiragi_core:meat",
     "tag": "c:meat"
   }

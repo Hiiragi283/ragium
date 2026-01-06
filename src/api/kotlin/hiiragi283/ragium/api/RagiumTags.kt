@@ -15,12 +15,6 @@ object RagiumTags {
         val FOODS_CAN: TagKey<Item> = common("foods", "can")
 
         @JvmField
-        val FOODS_MEAT: TagKey<Item> = mod("foods", "meat")
-
-        @JvmField
-        val FOODS_COOKED_MEAT: TagKey<Item> = mod("foods", "cooked_meat")
-
-        @JvmField
         val MOLDS: TagKey<Item> = mod("molds")
 
         @JvmStatic

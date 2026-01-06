@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumFluids
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -58,7 +57,7 @@ object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         // Ethanol + Seed Oil -> Biofuel
         HTComplexRecipeBuilder
             .mixing(
-                itemCreator.fromItem(RagiumItems.SEED_OIL_DROP),
+                itemCreator.fromTagKey(HiiragiCoreTags.Items.ORGANIC_OILS),
                 fluidCreator.fromTagKey(RagiumFluids.ETHANOL, 750),
             ).setResult(fluidResult.create(RagiumFluids.BIOFUEL, 500))
             .saveSuffixed(output, "_from_ethanol")

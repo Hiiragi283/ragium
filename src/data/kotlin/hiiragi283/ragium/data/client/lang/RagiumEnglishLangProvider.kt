@@ -54,7 +54,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-        add(RagiumItems.SEED_OIL_DROP, "Drop of Seed Oil")
         add(RagiumItems.TAR, "Tar")
 
         add(RagiumItems.MEAT_DUST, "Minced Meat")
@@ -85,8 +84,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")
-        add(RagiumTags.Items.FOODS_MEAT, "Meats")
-        add(RagiumTags.Items.FOODS_COOKED_MEAT, "Cooked Meats")
         add(RagiumTags.Items.MOLDS, "Molds")
 
         // Text

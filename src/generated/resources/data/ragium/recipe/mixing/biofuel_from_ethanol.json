@@ -9,5 +9,5 @@
     "id": "ragium:biofuel",
     "tag": "c:biofuel"
   },
-  "item_ingredient": "ragium:seed_oil_drop"
+  "item_ingredient": "#hiiragi_core:organic_oils"
 }

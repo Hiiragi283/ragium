@@ -11,12 +11,12 @@ import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumFoodMaterials
 import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.setup.RagiumFluids
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -79,14 +79,24 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
                 RagiumMaterialResultHelper.item(HCMaterialPrefixes.RAW_MATERIAL, HCMaterial.Plates.RUBBER, 2),
             ).save(output)
         // Meat
-        meltAndSolidify(
-            itemCreator.fromTagKey(RagiumTags.Items.FOODS_MEAT),
-            itemResult.create(HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT),
-            HCFluids.MEAT,
-            100,
-            HTMoldType.INGOT,
-            "raw",
-        )
+        HTSingleRecipeBuilder
+            .melting(
+                itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
+                fluidResult.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT * 2),
+            ).saveSuffixed(output, "_from_raw")
+
+        HTSingleRecipeBuilder
+            .melting(
+                itemCreator.fromItem(Items.ROTTEN_FLESH),
+                fluidResult.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT),
+            ).saveSuffixed(output, "_from_rotten")
+
+        HTSingleRecipeBuilder
+            .solidifying(
+                fluidCreator.fromTagKey(HCFluids.MEAT, HTConst.INGOT_AMOUNT),
+                itemCreator.fromItem(HTMoldType.INGOT),
+                itemResult.create(RagiumItems.MEAT_INGOT, HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT),
+            ).save(output)
         // Glass
         meltAndSolidify(
             itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),

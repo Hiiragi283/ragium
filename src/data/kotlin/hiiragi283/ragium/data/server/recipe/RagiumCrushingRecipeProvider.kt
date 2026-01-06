@@ -19,22 +19,10 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        // Wheat Flour
-        HTChancedRecipeBuilder
-            .crushing(
-                itemCreator.fromTagKey(Tags.Items.CROPS_WHEAT),
-                itemResult.create(HCItems.WHEAT_FLOUR, HiiragiCoreTags.Items.FLOURS_WHEAT),
-            ).save(output)
-        // Minced Meat
-        HTChancedRecipeBuilder
-            .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT),
-                itemResult.create(RagiumItems.MEAT_DUST, HCMaterialPrefixes.DUST, RagiumFoodMaterials.MEAT),
-            ).save(output)
-
         ores()
         stones()
         planks()
+        foods()
     }
 
     @JvmStatic
@@ -219,5 +207,40 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         wood(Tags.Items.FENCE_GATES_WOODEN, 1, 4)
         wood(Tags.Items.FENCES_WOODEN, 1, 5)
         wood(Tags.Items.RODS_WOODEN, 2, 1)
+    }
+
+    @JvmStatic
+    private fun foods() {
+        // Wheat Flour
+        HTChancedRecipeBuilder
+            .crushing(
+                itemCreator.fromTagKey(Tags.Items.CROPS_WHEAT),
+                itemResult.create(HCItems.WHEAT_FLOUR, HiiragiCoreTags.Items.FLOURS_WHEAT),
+            ).save(output)
+        // Minced Meat
+        HTChancedRecipeBuilder
+            .crushing(
+                itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
+                itemResult.create(RagiumItems.MEAT_DUST, HCMaterialPrefixes.DUST, RagiumFoodMaterials.MEAT),
+            ).saveSuffixed(output, "_from_raw")
+
+        HTChancedRecipeBuilder
+            .crushing(
+                itemCreator.fromTagKey(HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT),
+                itemResult.create(RagiumItems.MEAT_DUST, HCMaterialPrefixes.DUST, RagiumFoodMaterials.MEAT),
+            ).saveSuffixed(output, "_from_ingot")
+
+        // Pulped Fish
+        HTChancedRecipeBuilder
+            .crushing(
+                itemCreator.fromTagKey(Tags.Items.FOODS_RAW_FISH),
+                itemResult.create(HCItems.PULPED_FISH),
+            ).save(output)
+        // Pulped Seed
+        HTChancedRecipeBuilder
+            .crushing(
+                itemCreator.fromTagKey(Tags.Items.SEEDS),
+                itemResult.create(HCItems.PULPED_SEED),
+            ).save(output)
     }
 }

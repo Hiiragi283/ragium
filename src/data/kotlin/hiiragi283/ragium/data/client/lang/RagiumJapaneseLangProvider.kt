@@ -55,7 +55,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.SEED_OIL_DROP, "種油のしずく")
         add(RagiumItems.TAR, "タール")
 
         add(RagiumItems.MEAT_DUST, "ひき肉")
@@ -86,8 +85,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")
-        add(RagiumTags.Items.FOODS_MEAT, "肉")
-        add(RagiumTags.Items.FOODS_COOKED_MEAT, "焼肉")
         add(RagiumTags.Items.MOLDS, "鋳型")
 
         // Text

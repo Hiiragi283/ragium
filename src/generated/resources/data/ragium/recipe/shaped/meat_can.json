@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "ragium:foods/cooked_meat"
+      "tag": "c:foods/cooked_meat"
     },
     "B": {
       "tag": "c:plates/iron"

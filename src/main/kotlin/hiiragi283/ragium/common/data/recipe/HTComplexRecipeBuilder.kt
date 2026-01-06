@@ -24,6 +24,10 @@ class HTComplexRecipeBuilder<INGREDIENT : Any>(
             HTComplexRecipeBuilder(RagiumConst.DRYING, ::HTDryingRecipe, Either.Left(ingredient))
 
         @JvmStatic
+        fun drying(ingredient: HTFluidIngredient): HTComplexRecipeBuilder<*> =
+            HTComplexRecipeBuilder(RagiumConst.DRYING, ::HTDryingRecipe, Either.Right(ingredient))
+
+        @JvmStatic
         fun mixing(item: HTItemIngredient, fluid: HTFluidIngredient): HTComplexRecipeBuilder<*> =
             HTComplexRecipeBuilder(RagiumConst.MIXING, ::HTMixingRecipe, item to fluid)
     }

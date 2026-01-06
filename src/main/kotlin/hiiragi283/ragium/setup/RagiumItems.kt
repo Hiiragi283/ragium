@@ -66,9 +66,6 @@ object RagiumItems {
     val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
     @JvmField
-    val SEED_OIL_DROP: HTSimpleDeferredItem = REGISTER.registerSimpleItem("seed_oil_drop")
-
-    @JvmField
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     //    Foods    //
