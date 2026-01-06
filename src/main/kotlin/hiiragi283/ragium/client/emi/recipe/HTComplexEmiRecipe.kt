@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.emi.recipe
 
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
-import hiiragi283.ragium.common.recipe.HTComplexRecipe
+import hiiragi283.ragium.common.recipe.base.HTComplexRecipe
 import hiiragi283.ragium.config.RagiumFluidConfigType
 import net.minecraft.world.item.crafting.RecipeHolder
 

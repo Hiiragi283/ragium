@@ -4,9 +4,11 @@ import hiiragi283.core.api.block.HTBlockWithDescription
 import hiiragi283.core.api.item.HTDescriptionBlockItem
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
+import hiiragi283.core.api.item.toStack
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
+import hiiragi283.ragium.common.item.HTUpgradeType
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.world.item.CreativeModeTab
@@ -34,7 +36,7 @@ abstract class HTStorageBlockItem<BLOCK>(block: BLOCK, properties: Properties) :
         createItemStack(
             baseItem,
             RagiumDataComponents.MACHINE_UPGRADES,
-            HTAttachedItems(listOf()), // TODO
+            HTAttachedItems(listOf(HTUpgradeType.CREATIVE.toStack())),
         ).let(consumer::accept)
     }
 }

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.recipe
+package hiiragi283.ragium.common.recipe.base
 
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient

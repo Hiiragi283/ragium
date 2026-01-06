@@ -12,11 +12,13 @@ import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
+import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
 import thedarkcolour.kotlinforforge.neoforge.forge.LOADING_CONTEXT
@@ -30,6 +32,8 @@ object Ragium {
     init {
         val eventBus: IEventBus = MOD_BUS
 
+        eventBus.addListener(::registerRegistries)
+        eventBus.addListener(RagiumMiscRegister::register)
         eventBus.addListener(::registerDataMapTypes)
 
         RagiumDataComponents.REGISTER.register(eventBus)
@@ -48,6 +52,10 @@ object Ragium {
         LOADING_CONTEXT.activeContainer.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 
         LOGGER.info("Ragium loaded!")
+    }
+
+    private fun registerRegistries(event: NewRegistryEvent) {
+        LOGGER.info("Registered new registries!")
     }
 
     @JvmStatic
