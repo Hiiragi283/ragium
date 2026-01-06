@@ -12,6 +12,7 @@ import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTCuttingMachineBlockEntity
@@ -53,6 +54,10 @@ object RagiumBlockEntityTypes {
         name: String,
         factory: BlockEntityType.BlockEntitySupplier<BE>,
     ): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
+
+    @JvmField
+    val IMITATION_SPAWNER: HTDeferredBlockEntityType<HTImitationSpawnerBlockEntity> =
+        REGISTER.registerType("imitation_spawner", ::HTImitationSpawnerBlockEntity)
 
     //    Machine    //
 

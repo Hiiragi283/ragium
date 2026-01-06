@@ -16,6 +16,7 @@ import hiiragi283.core.common.registry.HTSimpleDeferredBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
@@ -25,6 +26,7 @@ import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
 import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
+import hiiragi283.ragium.common.item.block.HTImitationSpawnerBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTResonantInterfaceBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
@@ -178,6 +180,17 @@ object RagiumBlocks {
         ::HTUniversalChestBlock,
         ::HTUniversalChestBlockItem,
     ) { it.component(RagiumDataComponents.COLOR, DyeColor.WHITE) }
+
+    //    Utilities    //
+
+    @JvmField
+    val IMITATION_SPAWNER: HTDeferredBlock<HTImitationSpawnerBlock, HTImitationSpawnerBlockItem> =
+        REGISTER.register(
+            "imitation_spawner",
+            copyOf(Blocks.SPAWNER),
+            ::HTImitationSpawnerBlock,
+            ::HTImitationSpawnerBlockItem,
+        )
 
     //    Extensions    //
 

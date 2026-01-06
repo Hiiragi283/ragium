@@ -37,6 +37,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.RESONANT_INTERFACE, "共振インターフェース")
         add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
 
+        add(RagiumBlocks.IMITATION_SPAWNER, "スポナーの模造品")
         // Fluid
         addFluid(RagiumFluids.SLIME, "スライム")
         addFluid(RagiumFluids.GELLED_EXPLOSIVE, "ゲル状爆薬")

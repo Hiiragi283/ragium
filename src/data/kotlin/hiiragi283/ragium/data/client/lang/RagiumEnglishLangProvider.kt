@@ -37,6 +37,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.RESONANT_INTERFACE, "Resonant Interface")
         add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
 
+        add(RagiumBlocks.IMITATION_SPAWNER, "Imitation Spawner")
         // Fluid
         addFluid(RagiumFluids.SLIME, "Slime")
         addFluid(RagiumFluids.GELLED_EXPLOSIVE, "Gelled Explosive")

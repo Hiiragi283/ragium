@@ -57,6 +57,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             yield(RagiumBlocks.TANK)
             yield(RagiumBlocks.RESONANT_INTERFACE)
             yield(RagiumBlocks.UNIVERSAL_CHEST)
+
+            yield(RagiumBlocks.IMITATION_SPAWNER)
         }.forEach(pickaxe::add)
     }
 

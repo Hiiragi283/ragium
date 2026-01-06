@@ -106,7 +106,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         // スロットから液体を搬入する
         if (HTStackSlotHelper.moveFluid(emptySlot, outputSlot::setStack, tank)) return true
         // スロットに液体を搬出する
-        
+
         // 液体量の変化があれば更新させる
         val scale: Fraction = tank.getStoredLevel()
         if (scale != this.oldScale) {

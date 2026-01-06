@@ -49,6 +49,9 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
             RagiumBlocks.UNIVERSAL_CHEST.blockId,
         )
 
+        // Utilities
+        cutoutSimpleBlock(RagiumBlocks.IMITATION_SPAWNER)
+
         // Fluid
         RagiumFluids.REGISTER.entries.forEach(::liquidBlock)
     }

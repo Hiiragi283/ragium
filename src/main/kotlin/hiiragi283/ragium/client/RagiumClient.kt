@@ -13,7 +13,10 @@ import hiiragi283.ragium.client.gui.screen.HTPlanterScreen
 import hiiragi283.ragium.client.gui.screen.HTPyrolyzerScreen
 import hiiragi283.ragium.client.gui.screen.HTTankScreen
 import hiiragi283.ragium.client.gui.screen.HTUniversalChestScreen
+import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
+import hiiragi283.ragium.client.render.block.HTTankRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
+import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
@@ -30,6 +33,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
+import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
@@ -53,6 +57,7 @@ object RagiumClient {
         eventBus.addListener(::registerItemColors)
         eventBus.addListener(::registerClientExtensions)
         eventBus.addListener(::registerScreens)
+        eventBus.addListener(::registerEntityRenderer)
 
         LOADING_CONTEXT.activeContainer.registerExtensionPoint(
             IConfigScreenFactory::class.java,
@@ -150,6 +155,13 @@ object RagiumClient {
         event.register(RagiumMenuTypes.UNIVERSAL_CHEST.get(), ::HTUniversalChestScreen)
 
         LOGGER.info("Registered screens!")
+    }
+
+    private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+        // Block Entity
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankRenderer)
+
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.IMITATION_SPAWNER.get(), ::HTImitationSpawnerRenderer)
     }
 
     //    Extensions    //

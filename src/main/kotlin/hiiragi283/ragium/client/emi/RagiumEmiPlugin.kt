@@ -5,6 +5,7 @@ import dev.emi.emi.api.EmiEntrypoint
 import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
+import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
 import dev.emi.emi.api.widget.Bounds
@@ -35,6 +36,7 @@ import hiiragi283.ragium.client.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
+import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.inventory.HTUpgradableContainerMenu
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -44,10 +46,13 @@ import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -84,6 +89,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         // Recipes
         addCustomRecipes(registry)
         addGenerators(registry)
+        addInteractions(registry)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.ALLOYING, ::HTAlloyingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, ::HTCrushingEmiRecipe)
@@ -118,6 +124,11 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumBlocks.UNIVERSAL_CHEST.asItem(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.COLOR) },
         )
+        registry.setDefaultComparison(
+            RagiumBlocks.IMITATION_SPAWNER.asItem(),
+            Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.SPAWNER_MOB) },
+        )
+
         registry.setDefaultComparison(
             RagiumItems.LOOT_TICKET.get(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TICKET) },
@@ -184,6 +195,29 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         addFuelRecipes(RagiumEmiRecipeCategories.COMBUSTION, RagiumDataMapTypes.COMBUSTION_FUEL)
     }
+
+    private fun addInteractions(registry: EmiRegistry) {
+        // Imitation Spawner
+        BuiltInRegistries.ENTITY_TYPE
+            .asLookup()
+            .filterElements(HTImitationSpawnerBlock::filterEntityType)
+            .listElements()
+            .forEach { holder: Holder.Reference<EntityType<*>> ->
+                val spawner: EmiStack = HTImitationSpawnerBlock.createStack(holder).toEmi()
+                val egg: EmiStack = SpawnEggItem.byId(holder.value())?.toEmi() ?: return@forEach
+                addRecipeSafe(registry, RagiumAPI.id("/world", "imitation_spawner", spawner.id.toDebugFileName())) { id: ResourceLocation ->
+                    EmiWorldInteractionRecipe
+                        .builder()
+                        .id(id)
+                        .leftInput(RagiumBlocks.IMITATION_SPAWNER.toEmi())
+                        .rightInput(egg, false)
+                        .output(spawner)
+                        .build()
+                }
+            }
+    }
+
+    //    Extensions    //
 
     private fun <RECIPE : Any, EMI_RECIPE : EmiRecipe> addItemStackRecipes(
         registry: EmiRegistry,

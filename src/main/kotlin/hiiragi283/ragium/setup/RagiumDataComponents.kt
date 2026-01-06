@@ -9,6 +9,7 @@ import hiiragi283.core.common.registry.register.HTDeferredDataComponentRegister
 import hiiragi283.core.common.text.HTSimpleTranslation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
+import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import net.minecraft.core.GlobalPos
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
@@ -39,4 +40,7 @@ object RagiumDataComponents {
 
     @JvmField
     val MACHINE_UPGRADES: DataComponentType<HTAttachedItems> = REGISTER.registerType("machine_upgrades", HTAttachedItems.CODEC)
+
+    @JvmField
+    val SPAWNER_MOB: DataComponentType<HTSpawnerMob> = REGISTER.registerType("spawner_mob", HTSpawnerMob.CODEC)
 }
