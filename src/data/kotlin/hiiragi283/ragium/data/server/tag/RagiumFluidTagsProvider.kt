@@ -12,7 +12,7 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>
     override fun addTagsInternal(factory: BuilderFactory<Fluid>) {
         for (content: HTFluidContent<*, *, *> in RagiumFluids.REGISTER.entries) {
             factory
-                .apply(content.getFluidTag())
+                .apply(content.fluidTag)
                 .add(content.stillHolder)
                 .add(content.flowingHolder)
         }

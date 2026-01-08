@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.registry.HTFluidWithTag
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
@@ -82,7 +81,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
             .entity(
                 null,
                 entity(EntityType.COW),
-            ).setResult(fluidResult.create(HTFluidWithTag.MILK, 250))
+            ).setResult(fluidResult.milk(250))
             .saveSuffixed(output, "_from_cow")
         // Heart of the Sea
         // Dragon Breath
@@ -98,7 +97,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
             .entity(
                 null,
                 entity(EntityType.GOAT),
-            ).setResult(fluidResult.create(HTFluidWithTag.MILK, 500))
+            ).setResult(fluidResult.milk(500))
             .saveSuffixed(output, "_from_goat")
         // Poppy
         HTSimulatingRecipeBuilder

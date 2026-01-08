@@ -2,11 +2,8 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.registry.HTFluidWithTag
-import hiiragi283.core.api.registry.HTSimpleFluidContent
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -15,7 +12,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
@@ -24,14 +23,14 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromItem(Items.SNOW_BLOCK),
-                fluidResult.create(HTFluidWithTag.WATER, 1000),
+                fluidResult.water(1000),
             ).setTime(20 * 5)
             .saveSuffixed(output, "_from_snow_block")
 
         meltAndSolidify(
             itemCreator.fromItem(Items.SNOWBALL),
             itemResult.create(Items.SNOWBALL),
-            HTFluidWithTag.WATER,
+            Tags.Fluids.WATER,
             250,
             HTMoldType.BALL,
             "snowball",
@@ -40,7 +39,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         meltAndSolidify(
             itemCreator.fromItem(Items.ICE),
             itemResult.create(Items.ICE),
-            HTFluidWithTag.WATER,
+            Tags.Fluids.WATER,
             1000,
             HTMoldType.BLOCK,
             "ice",
@@ -49,18 +48,18 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromTagKeys(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES)),
-                fluidResult.create(HTFluidWithTag.LAVA, 125),
+                fluidResult.lava(125),
             ).setTime(20 * 30)
             .saveSuffixed(output, "_from_stones")
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromTagKey(Tags.Items.NETHERRACKS),
-                fluidResult.create(HTFluidWithTag.LAVA, 125),
+                fluidResult.lava(125),
             ).saveSuffixed(output, "_from_netherrack")
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromItem(Items.MAGMA_BLOCK),
-                fluidResult.create(HTFluidWithTag.LAVA, 250),
+                fluidResult.lava(250),
             ).saveSuffixed(output, "_from_magma")
 
         HTSingleRecipeBuilder
@@ -96,7 +95,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
                 RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT),
             ).save(output)
         // Glass
-        val glass: HTSimpleFluidContent = HCFluids.MATERIALS.getOrThrow(HCMaterialPrefixes.MOLTEN, VanillaMaterialKeys.GLASS)
+        val glass: TagKey<Fluid> = HCMaterialPrefixes.MOLTEN.fluidTagKey(VanillaMaterialKeys.GLASS)
 
         meltAndSolidify(
             itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
@@ -120,7 +119,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     private fun meltAndSolidify(
         input: HTItemIngredient,
         result: HTItemResult,
-        fluid: HTFluidWithTag<*>,
+        fluid: TagKey<Fluid>,
         amount: Int,
         mold: HTMoldType,
         suffix: String,

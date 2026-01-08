@@ -8,7 +8,7 @@ import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.math.fraction
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.registry.HTFluidWithTag
+import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.tag.createCommonTag
@@ -33,6 +33,7 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.data.DataMapProvider
 import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
@@ -78,7 +79,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun coolants() {
         builder(RagiumDataMapTypes.COOLANT)
-            .add(HTFluidWithTag.WATER, HTFluidCoolantData(100))
+            .add(Tags.Fluids.WATER, HTFluidCoolantData(100), false)
             .add(RagiumFluids.COOLANT, HTFluidCoolantData(25))
     }
 
@@ -94,7 +95,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add("steam", lowest)
             // low
             // medium
-            .add(HTFluidWithTag.LAVA, medium)
+            .add(Tags.Fluids.LAVA, medium, false)
             // high
             .add(HCFluids.MATERIALS.getOrThrow(HCMaterialPrefixes.MOLTEN, HCMaterialKeys.CRIMSON_CRYSTAL), high)
             .add("blaze_blood", high)
@@ -130,7 +131,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun fertilizer() {
         builder(RagiumDataMapTypes.FERTILIZER)
-            .add(HTFluidWithTag.WATER, HTFluidFertilizerData(1f))
+            .add(Tags.Fluids.WATER, HTFluidFertilizerData(1f), false)
             .add(RagiumFluids.FERTILIZER, HTFluidFertilizerData(1.5f))
     }
 
@@ -211,8 +212,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         add(prefix.itemTagKey(key), value, false)
 
     // Fluid
-    private fun <T : Any> Builder<T, Fluid>.add(holder: HTFluidWithTag<*>, value: T): Builder<T, Fluid> =
-        add(holder.getFluidTag(), value, false)
+    private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent<*, *, *>, value: T): Builder<T, Fluid> =
+        add(content.fluidTag, value, false)
 
     private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> =
         add(Registries.FLUID.createCommonTag(path), value, false)
