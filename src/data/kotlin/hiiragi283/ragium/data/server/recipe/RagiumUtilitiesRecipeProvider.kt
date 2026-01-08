@@ -28,6 +28,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
@@ -65,7 +66,86 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         // Potion Drop -> Potion
         save(id("shapeless/potion_from_drop"), HTPotionDropRecipe(CraftingBookCategory.MISC))
 
+        machines()
+        devices()
         storages()
+    }
+
+    @JvmStatic
+    private fun machines() {
+        // Basic
+        fun basic(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
+            .create(block)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HCMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('C', HCMaterialPrefixes.GEAR, VanillaMaterialKeys.COPPER)
+            .define('D', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
+
+        basic(RagiumBlocks.ALLOY_SMELTER)
+            .define('B', Items.FURNACE)
+            .save(output)
+        basic(RagiumBlocks.CRUSHER)
+            .define('B', HCMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
+            .save(output)
+        basic(RagiumBlocks.CUTTING_MACHINE)
+            .define('B', Items.IRON_AXE)
+            .save(output)
+
+        // Advanced
+        fun advanced(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
+            .create(block)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HCMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            .define('C', HCMaterialPrefixes.GEAR, VanillaMaterialKeys.GOLD)
+            .define('D', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
+
+        advanced(RagiumBlocks.DRYER)
+            .define('B', ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            .save(output)
+        advanced(RagiumBlocks.MELTER)
+            .define('B', Items.BLAST_FURNACE)
+            .save(output)
+        advanced(RagiumBlocks.MIXER)
+            .define('B', Items.CAULDRON)
+            .save(output)
+        advanced(RagiumBlocks.PYROLYZER)
+            .define('B', Items.NETHER_BRICKS)
+            .save(output)
+    }
+
+    @JvmStatic
+    private fun devices() {
+        // Basic
+        fun basic(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
+            .create(block)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HCMaterialPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL)
+            .define('C', HCMaterialPrefixes.GEAR, VanillaMaterialKeys.IRON)
+            .define('D', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
+
+        basic(RagiumBlocks.PLANTER)
+            .define('B', Tags.Items.GLASS_BLOCKS)
+            .save(output)
+
+        // Advanced
+        fun advanced(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
+            .create(block)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', HCMaterialPrefixes.INGOT, HCMaterialKeys.DEEP_STEEL)
+            .define('C', HCMaterialPrefixes.GEAR, VanillaMaterialKeys.NETHERITE)
+            .define('D', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
     }
 
     @JvmStatic

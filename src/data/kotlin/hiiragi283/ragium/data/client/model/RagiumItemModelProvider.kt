@@ -102,7 +102,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.LUBRICANT)
             // Misc
-            add(RagiumFluids.MOLTEN_RAGINITE)
+            addAll(RagiumFluids.MATERIALS.values)
             add(RagiumFluids.CREOSOTE)
         }
         for (content: HTFluidContent<*, *, *> in RagiumFluids.REGISTER.entries) {

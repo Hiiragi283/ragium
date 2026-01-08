@@ -1,9 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#c:dusts/raginite",
-  "result": {
-    "amount": 100,
-    "id": "ragium:molten_raginite",
-    "tag": "c:molten_raginite"
-  }
-}

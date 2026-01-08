@@ -2,20 +2,19 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.material.prefix.HTPrefixLike
+import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTFluidWithTag
+import hiiragi283.core.api.registry.HTSimpleFluidContent
 import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -97,10 +96,12 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
                 RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT),
             ).save(output)
         // Glass
+        val glass: HTSimpleFluidContent = HCFluids.MATERIALS.getOrThrow(HCMaterialPrefixes.MOLTEN, VanillaMaterialKeys.GLASS)
+
         meltAndSolidify(
             itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
             itemResult.create(Items.GLASS),
-            HCFluids.MOLTEN_GLASS,
+            glass,
             1000,
             HTMoldType.BLOCK,
             "block",
@@ -108,110 +109,11 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         meltAndSolidify(
             itemCreator.fromTagKey(Tags.Items.GLASS_PANES),
             itemResult.create(Items.GLASS_PANE),
-            HCFluids.MOLTEN_GLASS,
+            glass,
             375,
             HTMoldType.BLANK,
             "pane",
         )
-        // Crimson Crystal
-        HTSingleRecipeBuilder
-            .melting(
-                itemCreator.fromTagKeys(
-                    listOf(HCMaterialPrefixes.GEM, HCMaterialPrefixes.DUST),
-                    listOf(HCMaterialKeys.CRIMSON_CRYSTAL),
-                ),
-                fluidResult.create(HCFluids.MOLTEN_CRIMSON_CRYSTAL, HTConst.INGOT_AMOUNT),
-            ).save(output)
-        HTSingleRecipeBuilder
-            .solidifying(
-                fluidCreator.fromTagKey(HCFluids.MOLTEN_CRIMSON_CRYSTAL, HTConst.INGOT_AMOUNT),
-                itemCreator.fromItem(HTMoldType.GEM),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.GEM, HCMaterialKeys.CRIMSON_CRYSTAL),
-            ).save(output)
-
-        meltAndSolidify(
-            HCMaterialPrefixes.STORAGE_BLOCK,
-            HCMaterialKeys.CRIMSON_CRYSTAL,
-            HCFluids.MOLTEN_CRIMSON_CRYSTAL,
-            HTConst.INGOT_AMOUNT * 9,
-            HTMoldType.BLOCK,
-            "block",
-        )
-        // Warped Crystal
-        HTSingleRecipeBuilder
-            .melting(
-                itemCreator.fromTagKeys(
-                    listOf(HCMaterialPrefixes.GEM, HCMaterialPrefixes.DUST),
-                    listOf(HCMaterialKeys.WARPED_CRYSTAL),
-                ),
-                fluidResult.create(HCFluids.MOLTEN_WARPED_CRYSTAL, HTConst.INGOT_AMOUNT),
-            ).save(output)
-        HTSingleRecipeBuilder
-            .solidifying(
-                fluidCreator.fromTagKey(HCFluids.MOLTEN_WARPED_CRYSTAL, HTConst.INGOT_AMOUNT),
-                itemCreator.fromItem(HTMoldType.GEM),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL),
-            ).save(output)
-
-        meltAndSolidify(
-            HCMaterialPrefixes.STORAGE_BLOCK,
-            HCMaterialKeys.WARPED_CRYSTAL,
-            HCFluids.MOLTEN_WARPED_CRYSTAL,
-            HTConst.INGOT_AMOUNT * 9,
-            HTMoldType.BLOCK,
-            "block",
-        )
-
-        // Raginite
-        meltAndSolidify(
-            HCMaterialPrefixes.DUST,
-            RagiumMaterialKeys.RAGINITE,
-            RagiumFluids.MOLTEN_RAGINITE,
-            100,
-            HTMoldType.BLANK,
-            "dust",
-        )
-        meltAndSolidify(
-            HCMaterialPrefixes.STORAGE_BLOCK,
-            RagiumMaterialKeys.RAGINITE,
-            RagiumFluids.MOLTEN_RAGINITE,
-            100 * 9,
-            HTMoldType.BLOCK,
-            "block",
-        )
-    }
-
-    @JvmStatic
-    private fun meltAndSolidify(
-        prefix: HTPrefixLike,
-        material: HTMaterialLike,
-        fluid: HTFluidWithTag<*>,
-        amount: Int,
-        mold: HTMoldType,
-        suffix: String,
-    ) {
-        meltAndSolidify(
-            prefix,
-            material,
-            RagiumMaterialResultHelper.item(prefix, material),
-            fluid,
-            amount,
-            mold,
-            suffix,
-        )
-    }
-
-    @JvmStatic
-    private fun meltAndSolidify(
-        prefix: HTPrefixLike,
-        material: HTMaterialLike,
-        result: HTItemResult,
-        fluid: HTFluidWithTag<*>,
-        amount: Int,
-        mold: HTMoldType,
-        suffix: String,
-    ) {
-        meltAndSolidify(itemCreator.fromTagKey(prefix, material), result, fluid, amount, mold, suffix)
     }
 
     @JvmStatic

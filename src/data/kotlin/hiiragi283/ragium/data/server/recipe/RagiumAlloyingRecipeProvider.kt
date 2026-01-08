@@ -23,12 +23,13 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Netherite
         HTAlloyingRecipeBuilder
             .create(
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE, 2),
                 itemCreator.fromTagKeys(
                     listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.GOLD),
+                    4,
                 ),
-                itemCreator.fromTagKey(HCMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE),
+                itemCreator.fromTagKey(HCMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 4),
             ).save(output)
 
         // Steel from Coal

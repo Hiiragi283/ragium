@@ -1,9 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#c:storage_blocks/warped_crystal",
-  "result": {
-    "amount": 810,
-    "id": "hiiragi_core:molten_warped_crystal",
-    "tag": "c:molten_warped_crystal"
-  }
-}

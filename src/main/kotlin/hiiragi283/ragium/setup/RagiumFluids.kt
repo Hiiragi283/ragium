@@ -1,12 +1,18 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.core.api.collection.buildTable
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.item.alchemy.HTMobEffectInstance
+import hiiragi283.core.api.material.HTMaterialKey
+import hiiragi283.core.api.material.HTMaterialTable
+import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.registry.HTSimpleFluidContent
 import hiiragi283.core.common.block.HTEffectLiquidBlock
 import hiiragi283.core.common.fluid.HTExplosiveFluidType
+import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.register.HTFluidContentRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.core.Holder
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
@@ -79,13 +85,25 @@ object RagiumFluids {
     //    Misc    //
 
     @JvmField
-    val MOLTEN_RAGINITE: HTSimpleFluidContent = REGISTER.registerSimple("molten_raginite", molten().temperature(1300))
-
-    @JvmField
     val COOLANT: HTSimpleFluidContent = REGISTER.registerSimple("coolant", liquid().temperature(273))
 
     @JvmField
     val CREOSOTE: HTSimpleFluidContent = REGISTER.register("creosote", liquid(), ::HTExplosiveFluidType.partially1(2f))
+
+    //    Material    //
+
+    @JvmStatic
+    val MATERIALS: HTMaterialTable<HTMaterialPrefix, HTSimpleFluidContent> = buildTable {
+        fun register(key: HTMaterialKey, properties: FluidType.Properties, typeFactory: (FluidType.Properties) -> FluidType = ::FluidType) {
+            this[HCMaterialPrefixes.MOLTEN, key] = REGISTER.register("molten_${key.name}", properties, typeFactory)
+        }
+
+        // Ragium
+        register(RagiumMaterialKeys.RAGINITE, molten().temperature(1300))
+
+        register(RagiumMaterialKeys.RAGI_ALLOY, molten().temperature(1100))
+        register(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY, molten().temperature(1300))
+    }.let(::HTMaterialTable)
 
     //    Extensions    //
 
