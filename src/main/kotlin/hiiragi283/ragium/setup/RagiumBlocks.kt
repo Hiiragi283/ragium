@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.collection.buildTable
 import hiiragi283.core.api.function.partially1
+import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.HTMaterialTable
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
@@ -31,7 +32,7 @@ import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTResonantInterfaceBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
-import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.text.RagiumTranslation
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.DyeColor
@@ -68,21 +69,21 @@ object RagiumBlocks {
         val deepOre: BlockBehaviour.Properties =
             properties(4.5f, 3f).mapColor(MapColor.DEEPSLATE).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()
 
-        register(HCMaterialPrefixes.ORE, RagiumMaterial.RAGINITE, ore)
-        register(HCMaterialPrefixes.ORE_DEEPSLATE, RagiumMaterial.RAGINITE, deepOre)
+        register(HCMaterialPrefixes.ORE, RagiumMaterialKeys.RAGINITE, ore)
+        register(HCMaterialPrefixes.ORE_DEEPSLATE, RagiumMaterialKeys.RAGINITE, deepOre)
 
-        register(HCMaterialPrefixes.ORE, RagiumMaterial.RAGI_CRYSTAL, ore)
-        register(HCMaterialPrefixes.ORE_DEEPSLATE, RagiumMaterial.RAGI_CRYSTAL, deepOre)
+        register(HCMaterialPrefixes.ORE, RagiumMaterialKeys.RAGI_CRYSTAL, ore)
+        register(HCMaterialPrefixes.ORE_DEEPSLATE, RagiumMaterialKeys.RAGI_CRYSTAL, deepOre)
 
         // Storage Block
-        for (material: RagiumMaterial in RagiumMaterial.entries) {
-            val properties: BlockBehaviour.Properties = when (material) {
-                RagiumMaterial.RAGINITE -> properties(5f, 9f).mapColor(MapColor.COLOR_RED)
-                RagiumMaterial.RAGI_CRYSTAL -> properties(5f, 9f).mapColor(MapColor.COLOR_RED).sound(SoundType.AMETHYST)
-                RagiumMaterial.RAGI_ALLOY -> properties(5f, 9f).mapColor(MapColor.COLOR_RED).sound(SoundType.COPPER)
-                RagiumMaterial.ADVANCED_RAGI_ALLOY -> properties(5f, 9f).mapColor(MapColor.COLOR_RED).sound(SoundType.METAL)
-            }.requiresCorrectToolForDrops()
-            register(HCMaterialPrefixes.STORAGE_BLOCK, material, properties)
+        val redProp: () -> BlockBehaviour.Properties = { properties(5f, 9f).mapColor(MapColor.COLOR_RED) }
+        arrayOf(
+            RagiumMaterialKeys.RAGINITE to redProp(),
+            RagiumMaterialKeys.RAGI_CRYSTAL to redProp().sound(SoundType.AMETHYST),
+            RagiumMaterialKeys.RAGI_ALLOY to redProp().sound(SoundType.COPPER),
+            RagiumMaterialKeys.ADVANCED_RAGI_ALLOY to redProp().sound(SoundType.METAL),
+        ).forEach { (key: HTMaterialKey, properties: BlockBehaviour.Properties) ->
+            register(HCMaterialPrefixes.STORAGE_BLOCK, key, properties)
         }
     }.let(::HTMaterialTable)
 

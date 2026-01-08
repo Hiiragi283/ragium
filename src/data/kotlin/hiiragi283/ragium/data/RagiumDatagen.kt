@@ -2,6 +2,7 @@ package hiiragi283.ragium.data
 
 import hiiragi283.core.api.data.HTRootDataGenerator
 import hiiragi283.core.api.function.partially1
+import hiiragi283.core.common.material.HTMaterialManagerImpl
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.client.RagiumTextureProvider
 import hiiragi283.ragium.data.client.lang.RagiumEnglishLangProvider
@@ -24,6 +25,8 @@ import java.util.concurrent.CompletableFuture
 object RagiumDatagen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent) {
+        HTMaterialManagerImpl.gatherAttributes(true)
+
         val (server: HTRootDataGenerator, client: HTRootDataGenerator) = HTRootDataGenerator.withDataPack(event)
         // Server
         server.addProvider(::RagiumRecipeProvider)

@@ -4,7 +4,7 @@ import hiiragi283.core.api.data.loot.HTBlockLootTableProvider
 import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.HTSimpleDeferredBlock
-import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
@@ -15,19 +15,19 @@ class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTa
         RagiumBlocks.REGISTER.asBlockSequence().forEach(::dropSelf)
 
         // Ores
-        for ((_, ore: HTSimpleDeferredBlock) in RagiumBlocks.MATERIALS.column(RagiumMaterial.RAGINITE)) {
+        for ((_, ore: HTSimpleDeferredBlock) in RagiumBlocks.MATERIALS.column(RagiumMaterialKeys.RAGINITE)) {
             add(ore) {
                 createOreDrops(
-                    RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.DUST, RagiumMaterial.RAGINITE),
+                    RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE),
                     UniformGenerator.between(4f, 5f),
                     it,
                 )
             }
         }
-        for ((prefix, ore: HTSimpleDeferredBlock) in RagiumBlocks.MATERIALS.column(RagiumMaterial.RAGI_CRYSTAL)) {
+        for ((prefix, ore: HTSimpleDeferredBlock) in RagiumBlocks.MATERIALS.column(RagiumMaterialKeys.RAGI_CRYSTAL)) {
             add(ore) {
                 createOreDrops(
-                    RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.GEM, RagiumMaterial.RAGI_CRYSTAL),
+                    RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL),
                     null,
                     it,
                 )

@@ -3,11 +3,13 @@ package hiiragi283.ragium.data.client.lang
 import hiiragi283.core.api.data.lang.HTLangPatternProvider
 import hiiragi283.core.api.data.lang.HTLangProvider
 import hiiragi283.core.api.data.lang.HTLanguageType
+import hiiragi283.core.api.material.HTMaterialDefinition
+import hiiragi283.core.api.material.HTMaterialKey
+import hiiragi283.core.api.material.HTMaterialManager
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.text.HTHasTranslationKey
 import hiiragi283.core.common.data.lang.HTMaterialTranslationHelper
 import hiiragi283.ragium.common.item.HTMoldType
-import hiiragi283.ragium.common.material.RagiumMaterial
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -18,15 +20,17 @@ object RagiumCommonTranslation {
         val langType: HTLanguageType = provider.langType
 
         // Material
-        for (material: RagiumMaterial in RagiumMaterial.entries) {
+        for ((key: HTMaterialKey, definition: HTMaterialDefinition) in HTMaterialManager.INSTANCE.entries) {
             // Block
-            for ((prefix: HTMaterialPrefix, block: HTHasTranslationKey) in RagiumBlocks.MATERIALS.column(material)) {
-                val name: String = HTMaterialTranslationHelper.translate(langType, prefix, material) ?: continue
+            for ((prefix: HTMaterialPrefix, block: HTHasTranslationKey) in RagiumBlocks.MATERIALS.column(key)) {
+                val name: String = HTMaterialTranslationHelper.translate(langType, prefix, key, definition) { _, _ -> null }
+                    ?: continue
                 provider.add(block, name)
             }
             // Item
-            for ((prefix: HTMaterialPrefix, item: HTHasTranslationKey) in RagiumItems.MATERIALS.column(material)) {
-                val name: String = HTMaterialTranslationHelper.translate(langType, prefix, material) ?: continue
+            for ((prefix: HTMaterialPrefix, item: HTHasTranslationKey) in RagiumItems.MATERIALS.column(key)) {
+                val name: String = HTMaterialTranslationHelper.translate(langType, prefix, key, definition) { _, _ -> null }
+                    ?: continue
                 provider.add(item, name)
             }
         }

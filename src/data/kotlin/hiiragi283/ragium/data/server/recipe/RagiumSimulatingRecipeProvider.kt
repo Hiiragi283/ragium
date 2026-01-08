@@ -4,8 +4,9 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.registry.HTFluidWithTag
-import hiiragi283.core.common.material.HCMaterial
+import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -41,7 +42,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Echo Shard
         HTSimulatingRecipeBuilder
             .block(
-                itemCreator.fromTagKey(HCMaterialPrefixes.GEM, HCMaterial.Gems.AMETHYST),
+                itemCreator.fromTagKey(HCMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST),
                 block(Blocks.SCULK_SHRIEKER),
             ).setResult(itemResult.create(Items.ECHO_SHARD))
             .save(output)
@@ -143,7 +144,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         HTSimulatingRecipeBuilder
             .block(
                 itemCreator.fromItem(HCItems.WITHER_DOLL),
-                block(HCMaterialPrefixes.STORAGE_BLOCK, HCMaterial.Metals.NIGHT_METAL),
+                block(HCMaterialPrefixes.STORAGE_BLOCK, HCMaterialKeys.NIGHT_METAL),
             ).setResult(itemResult.create(HCItems.WITHER_STAR))
             .save(output)
     }

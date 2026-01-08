@@ -2,12 +2,12 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.core.common.material.HCMaterial
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
-import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
@@ -34,22 +34,22 @@ object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         // Diamond + Raginite -> Ragi-Crystal
         HTComplexRecipeBuilder
             .mixing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.GEM, HCMaterial.Gems.DIAMOND),
+                itemCreator.fromTagKey(HCMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
                 fluidCreator.fromTagKey(RagiumFluids.MOLTEN_RAGINITE, 100 * 8),
-            ).setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.GEM, RagiumMaterial.RAGI_CRYSTAL))
+            ).setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL))
             .save(output)
 
         // Creosote + Redstone -> Lubricant
         HTComplexRecipeBuilder
             .mixing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, HCMaterial.Minerals.REDSTONE),
+                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
                 fluidCreator.fromTagKey(RagiumFluids.CREOSOTE, 1000),
             ).setResult(fluidResult.create(RagiumFluids.LUBRICANT, 500))
             .saveSuffixed(output, "_from_creosote_with_redstone")
         // Creosote + Raginite -> Lubricant
         HTComplexRecipeBuilder
             .mixing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, RagiumMaterial.RAGINITE),
+                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE),
                 fluidCreator.fromTagKey(RagiumFluids.CREOSOTE, 1000),
             ).setResult(fluidResult.create(RagiumFluids.LUBRICANT, 750))
             .saveSuffixed(output, "_from_creosote_with_raginite")

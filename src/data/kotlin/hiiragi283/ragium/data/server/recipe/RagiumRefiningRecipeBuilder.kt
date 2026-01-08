@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.common.material.HCMaterial
+import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
@@ -22,7 +22,7 @@ object RagiumRefiningRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             .create(
                 fluidCreator.fromTagKey(RagiumFluids.NAPHTHA, 750),
                 fluidResult.create(RagiumFluids.FUEL, 500),
-            ).setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Minerals.SULFUR))
+            ).setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.SULFUR))
             .saveSuffixed(output, "_from_naphtha")
 
         // Crude Bio -> Ethanol + Fertilizer

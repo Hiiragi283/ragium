@@ -2,8 +2,9 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.common.material.HCMaterial
+import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -17,7 +18,7 @@ object RagiumPyrolyzingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         HTPyrolyzingRecipeBuilder
             .create(
                 itemCreator.fromTagKey(ItemTags.LOGS_THAT_BURN, 8),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.FUEL, HCMaterial.Fuels.CHARCOAL, 8),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8),
                 fluidResult.create(RagiumFluids.CREOSOTE, 1000),
             ).setTime(20 * 30)
             .saveSuffixed(output, "_from_log")
@@ -25,31 +26,31 @@ object RagiumPyrolyzingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         HTPyrolyzingRecipeBuilder
             .create(
                 itemCreator.fromItem(HCItems.COMPRESSED_SAWDUST, 8),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.FUEL, HCMaterial.Fuels.CHARCOAL, 8),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8),
                 fluidResult.create(RagiumFluids.CREOSOTE, 1000),
             ).saveSuffixed(output, "_from_sawdust")
 
         // Coal -> Coke + Creosote
         HTPyrolyzingRecipeBuilder
             .create(
-                itemCreator.fromTagKey(HCMaterialPrefixes.FUEL, HCMaterial.Fuels.COAL, 8),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.FUEL, HCMaterial.Fuels.COAL_COKE, 8),
+                itemCreator.fromTagKey(HCMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL, 8),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.FUEL, CommonMaterialKeys.COAL_COKE, 8),
                 fluidResult.create(RagiumFluids.CREOSOTE, 2000),
             ).setTime(20 * 30)
             .saveSuffixed(output, "_from_coal")
 
         HTPyrolyzingRecipeBuilder
             .create(
-                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, HCMaterial.Fuels.COAL, 8),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Fuels.COAL_COKE, 8),
+                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, VanillaMaterialKeys.COAL, 8),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.COAL_COKE, 8),
                 fluidResult.create(RagiumFluids.CREOSOTE, 2000),
             ).setTime(20 * 30)
             .saveSuffixed(output, "_from_coal_dust")
 
         HTPyrolyzingRecipeBuilder
             .create(
-                itemCreator.fromTagKey(HCMaterialPrefixes.STORAGE_BLOCK, HCMaterial.Fuels.COAL),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.STORAGE_BLOCK, HCMaterial.Fuels.COAL_COKE),
+                itemCreator.fromTagKey(HCMaterialPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.COAL),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.STORAGE_BLOCK, CommonMaterialKeys.COAL_COKE),
                 fluidResult.create(RagiumFluids.CREOSOTE, 2000),
             ).setTime(20 * 30)
             .saveSuffixed(output, "_from_coal_block")
@@ -58,7 +59,7 @@ object RagiumPyrolyzingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         HTPyrolyzingRecipeBuilder
             .create(
                 itemCreator.fromTagKey(ItemTags.CRIMSON_STEMS, 8),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Minerals.SULFUR),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.SULFUR),
                 fluidResult.create(HCFluids.MOLTEN_CRIMSON_CRYSTAL, HTConst.INGOT_AMOUNT),
             ).setTime(20 * 30)
             .saveSuffixed(output, "_from_log")
@@ -66,7 +67,7 @@ object RagiumPyrolyzingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         HTPyrolyzingRecipeBuilder
             .create(
                 itemCreator.fromTagKey(ItemTags.WARPED_STEMS, 8),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, HCMaterial.Minerals.SULFUR),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.SULFUR),
                 fluidResult.create(HCFluids.MOLTEN_WARPED_CRYSTAL, HTConst.INGOT_AMOUNT),
             ).setTime(20 * 30)
             .saveSuffixed(output, "_from_log")

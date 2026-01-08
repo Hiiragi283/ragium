@@ -8,7 +8,7 @@ import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumTags
-import hiiragi283.ragium.common.material.RagiumFoodMaterials
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -46,9 +46,9 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             }
         }
 
-        addMaterial(factory, HCMaterialPrefixes.DUST, RagiumFoodMaterials.MEAT).add(RagiumItems.MEAT_DUST)
-        addMaterial(factory, HCMaterialPrefixes.INGOT, RagiumFoodMaterials.MEAT).add(RagiumItems.MEAT_INGOT)
-        addMaterial(factory, HCMaterialPrefixes.INGOT, RagiumFoodMaterials.COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
+        addMaterial(factory, HCMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT).add(RagiumItems.MEAT_DUST)
+        addMaterial(factory, HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT).add(RagiumItems.MEAT_INGOT)
+        addMaterial(factory, HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
     }
 
     //    Misc    //

@@ -5,11 +5,14 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.capability.HTEnergyCapabilities
 import hiiragi283.core.api.capability.HTFluidCapabilities
 import hiiragi283.core.api.collection.buildTable
+import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.HTMaterialTable
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
+import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.storage.energy.HTEnergyBattery
 import hiiragi283.core.api.storage.fluid.HTFluidTank
 import hiiragi283.core.api.text.HTTranslation
+import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.ragium.api.RagiumAPI
@@ -20,7 +23,7 @@ import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.HTPotionDropItem
 import hiiragi283.ragium.common.item.HTUpgradeItem
-import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.storge.attachment.HTComponentHandler
 import hiiragi283.ragium.common.storge.energy.HTComponentEnergyBattery
 import hiiragi283.ragium.common.storge.energy.HTComponentEnergyHandler
@@ -61,10 +64,32 @@ object RagiumItems {
 
     @JvmStatic
     val MATERIALS: HTMaterialTable<HTMaterialPrefix, HTSimpleDeferredItem> = buildTable {
-        for (material: RagiumMaterial in RagiumMaterial.entries) {
-            for (prefix: HTMaterialPrefix in material.getItemPrefixesToGenerate()) {
-                this[prefix, material.asMaterialKey()] = REGISTER.registerSimpleItem(prefix.createPath(material))
-            }
+        fun register(prefix: HTPrefixLike, key: HTMaterialKey, path: String = prefix.createPath(key)) {
+            this[prefix.asMaterialPrefix(), key] = REGISTER.registerSimpleItem(path)
+        }
+
+        // Dusts
+        arrayOf(
+            RagiumMaterialKeys.RAGINITE,
+            RagiumMaterialKeys.RAGI_CRYSTAL,
+            RagiumMaterialKeys.RAGI_ALLOY,
+            RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
+        ).forEach { register(HCMaterialPrefixes.DUST, it) }
+        // Gems
+        arrayOf(
+            RagiumMaterialKeys.RAGI_CRYSTAL,
+        ).forEach { register(HCMaterialPrefixes.GEM, it) }
+        // Ingots, Nuggets, Gears, Plates, Rods, Wires
+        arrayOf(
+            HCMaterialPrefixes.INGOT,
+            HCMaterialPrefixes.NUGGET,
+            HCMaterialPrefixes.GEAR,
+            HCMaterialPrefixes.PLATE,
+            HCMaterialPrefixes.ROD,
+            HCMaterialPrefixes.WIRE,
+        ).forEach {
+            register(it, RagiumMaterialKeys.RAGI_ALLOY)
+            register(it, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
         }
     }.let(::HTMaterialTable)
 

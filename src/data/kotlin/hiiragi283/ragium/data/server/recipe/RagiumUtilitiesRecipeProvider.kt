@@ -6,8 +6,10 @@ import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTStonecuttingRecipeBuilder
-import hiiragi283.core.common.material.HCMaterial
+import hiiragi283.core.common.material.CommonMaterialKeys
+import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
@@ -15,7 +17,7 @@ import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
-import hiiragi283.ragium.common.material.RagiumMaterial
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -34,7 +36,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder
             .create(HTMoldType.BLANK)
             .storage4()
-            .define('A', HCMaterialPrefixes.PLATE, HCMaterial.Metals.NIGHT_METAL)
+            .define('A', HCMaterialPrefixes.PLATE, HCMaterialKeys.NIGHT_METAL)
             .save(output)
 
         for (moldType: HTMoldType in HTMoldType.entries) {
@@ -56,7 +58,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             .create(RagiumItems.LOCATION_TICKET, 8)
             .hollow8()
             .define('A', Items.PAPER)
-            .define('B', HCMaterialPrefixes.GEM, HCMaterial.Gems.WARPED_CRYSTAL)
+            .define('B', HCMaterialPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL)
             .saveSuffixed(output, "_with_warped")
         // Loot Ticket
         lootTickets()
@@ -69,7 +71,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     @JvmStatic
     private fun storages() {
         // Battery, Crate, Tank
-        val ragiCrystal: TagKey<Item> = HCMaterialPrefixes.GEM.itemTagKey(RagiumMaterial.RAGI_CRYSTAL)
+        val ragiCrystal: TagKey<Item> = HCMaterialPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL)
         listOf(
             Triple(RagiumBlocks.BATTERY, ragiCrystal, HCDataComponents.ENERGY),
             Triple(RagiumBlocks.CRATE, Tags.Items.CHESTS, HCDataComponents.ITEM),
@@ -79,8 +81,8 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             HTShapedRecipeBuilder
                 .create(block)
                 .crossLayered()
-                .define('A', HCMaterialPrefixes.INGOT, RagiumMaterial.RAGI_ALLOY)
-                .define('B', HCMaterialPrefixes.PLATE, HCMaterial.Plates.RUBBER)
+                .define('A', HCMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+                .define('B', HCMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
                 .define('C', Tags.Items.GLASS_BLOCKS)
                 .define('D', core)
                 .save(output)
@@ -94,8 +96,8 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder
             .create(RagiumBlocks.UNIVERSAL_CHEST)
             .hollow8()
-            .define('A', HCMaterialPrefixes.INGOT, HCMaterial.Metals.NIGHT_METAL)
-            .define('B', HCMaterialPrefixes.GEM, HCMaterial.Gems.WARPED_CRYSTAL)
+            .define('A', HCMaterialPrefixes.INGOT, HCMaterialKeys.NIGHT_METAL)
+            .define('B', HCMaterialPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL)
             .save(output)
 
         for (color: DyeColor in DyeColor.entries) {
@@ -111,7 +113,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder
             .create(RagiumItems.LOOT_TICKET)
             .cross8()
-            .define('A', HCMaterialPrefixes.GEM, RagiumMaterial.RAGI_CRYSTAL)
+            .define('A', HCMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .define('B', Tags.Items.DYES_RED)
             .define('C', Items.PAPER)
             .setCategory(CraftingBookCategory.EQUIPMENT)
@@ -141,7 +143,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         // Desert Pyramid
         addLootTicket(HTDefaultLootTickets.DESERT_PYRAMID) {
             addIngredient(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
-            addIngredient(HCMaterialPrefixes.INGOT, HCMaterial.Metals.GOLD)
+            addIngredient(HCMaterialPrefixes.INGOT, VanillaMaterialKeys.GOLD)
         }
         // Jungle Temple
         addLootTicket(HTDefaultLootTickets.TEMPLE) {
@@ -156,7 +158,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         // Mansion
         addLootTicket(HTDefaultLootTickets.MANSION) {
             addIngredient(Items.DARK_OAK_PLANKS)
-            addIngredient(HCMaterialPrefixes.GEM, HCMaterial.Gems.EMERALD)
+            addIngredient(HCMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
         }
 
         // Buried Treasure
@@ -172,12 +174,12 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         // Bastion Remnant
         addLootTicket(HTDefaultLootTickets.BASTION_REMNANT) {
             addIngredient(Items.BLACKSTONE)
-            addIngredient(HCMaterialPrefixes.INGOT, HCMaterial.Metals.GOLD)
+            addIngredient(HCMaterialPrefixes.INGOT, VanillaMaterialKeys.GOLD)
         }
         // Ancient City
         addLootTicket(HTDefaultLootTickets.ANCIENT_CITY) {
             addIngredient(Items.DEEPSLATE_TILES)
-            addIngredient(HCMaterialPrefixes.GEM, HCMaterial.Gems.ECHO)
+            addIngredient(HCMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO)
         }
         // Ruined Portal
         addLootTicket(HTDefaultLootTickets.RUINED_PORTAL) {
