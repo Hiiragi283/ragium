@@ -9,7 +9,6 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -213,7 +212,7 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTChancedRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
-                itemResult.create(RagiumItems.MEAT_DUST, HCMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT),
             ).save(output)
 
         // Pulped Fish

@@ -42,6 +42,7 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import org.slf4j.Logger
+import java.util.function.UnaryOperator
 
 /**
  * @see hiiragi283.core.setup.HCItems
@@ -64,8 +65,13 @@ object RagiumItems {
 
     @JvmStatic
     val MATERIALS: HTMaterialTable<HTMaterialPrefix, HTSimpleDeferredItem> = buildTable {
-        fun register(prefix: HTPrefixLike, key: HTMaterialKey, path: String = prefix.createPath(key)) {
-            this[prefix.asMaterialPrefix(), key] = REGISTER.registerSimpleItem(path)
+        fun register(
+            prefix: HTPrefixLike,
+            key: HTMaterialKey,
+            path: String = prefix.createPath(key),
+            operator: UnaryOperator<Item.Properties> = UnaryOperator.identity(),
+        ) {
+            this[prefix.asMaterialPrefix(), key] = REGISTER.registerSimpleItem(path, operator)
         }
 
         // Dusts
@@ -91,6 +97,11 @@ object RagiumItems {
             register(it, RagiumMaterialKeys.RAGI_ALLOY)
             register(it, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
         }
+
+        // Foods
+        register(HCMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT)
+        register(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT) { it.food(Foods.BEEF) }
+        register(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT) { it.food(Foods.COOKED_BEEF) }
     }.let(::HTMaterialTable)
 
     @JvmField
@@ -100,15 +111,6 @@ object RagiumItems {
     val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
 
     //    Foods    //
-
-    @JvmField
-    val MEAT_DUST: HTSimpleDeferredItem = REGISTER.registerSimpleItem("meat_dust")
-
-    @JvmField
-    val MEAT_INGOT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("meat_ingot") { it.food(Foods.BEEF) }
-
-    @JvmField
-    val COOKED_MEAT_INGOT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cooked_meat_ingot") { it.food(Foods.COOKED_BEEF) }
 
     @JvmStatic
     private fun registerCan(name: String, nutrition: Int, saturation: Float): HTSimpleDeferredItem =

@@ -59,10 +59,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.TAR, "Tar")
 
-        add(RagiumItems.MEAT_DUST, "Minced Meat")
-        add(RagiumItems.MEAT_INGOT, "Meat Ingot")
-        add(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
-
         add(RagiumItems.FISH_CAN, "Fish Can")
         add(RagiumItems.FRUIT_CAN, "Fruit Can")
         add(RagiumItems.MEAT_CAN, "Meat Can")

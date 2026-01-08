@@ -62,12 +62,6 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             setExp(0.7f)
             saveSuffixed(output, "_from_raw")
         }
-        // Meat Dust/Ingot -> Cooked Meat Ingot
-        HTCookingRecipeBuilder.smeltingAndSmoking(RagiumItems.COOKED_MEAT_INGOT) {
-            addIngredient(RagiumMaterialKeys.MEAT, HCMaterialPrefixes.INGOT, HCMaterialPrefixes.DUST)
-            setExp(0.35f)
-            saveSuffixed(output, "_from_raw")
-        }
 
         // Food Cans
         mapOf(

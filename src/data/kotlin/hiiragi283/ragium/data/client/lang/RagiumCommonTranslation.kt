@@ -6,10 +6,13 @@ import hiiragi283.core.api.data.lang.HTLanguageType
 import hiiragi283.core.api.material.HTMaterialDefinition
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.HTMaterialManager
+import hiiragi283.core.api.material.attribute.HTLangNameMaterialAttribute
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.text.HTHasTranslationKey
 import hiiragi283.core.common.data.lang.HTMaterialTranslationHelper
+import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -29,8 +32,20 @@ object RagiumCommonTranslation {
             }
             // Item
             for ((prefix: HTMaterialPrefix, item: HTHasTranslationKey) in RagiumItems.MATERIALS.column(key)) {
-                val name: String = HTMaterialTranslationHelper.translate(langType, prefix, key, definition) { _, _ -> null }
-                    ?: continue
+                val name: String =
+                    HTMaterialTranslationHelper.translate(
+                        langType,
+                        prefix,
+                        key,
+                        definition,
+                    ) { prefixIn: HTMaterialPrefix, keyIn: HTMaterialKey ->
+                        if (prefixIn == HCMaterialPrefixes.DUST && keyIn == RagiumMaterialKeys.MEAT) {
+                            HTLangNameMaterialAttribute("Minced Meat", "ひき肉")
+                        } else {
+                            null
+                        }
+                    }
+                        ?: continue
                 provider.add(item, name)
             }
         }

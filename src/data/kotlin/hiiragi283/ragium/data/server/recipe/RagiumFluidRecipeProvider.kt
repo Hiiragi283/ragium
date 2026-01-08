@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -95,7 +94,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             .solidifying(
                 fluidCreator.fromTagKey(HCFluids.MEAT, HTConst.INGOT_AMOUNT),
                 itemCreator.fromItem(HTMoldType.INGOT),
-                itemResult.create(RagiumItems.MEAT_INGOT, HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT),
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT),
             ).save(output)
         // Glass
         meltAndSolidify(

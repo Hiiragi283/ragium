@@ -4,6 +4,7 @@ import hiiragi283.core.api.event.HTMaterialDefinitionEvent
 import hiiragi283.core.api.material.addColor
 import hiiragi283.core.api.material.addDefaultPrefix
 import hiiragi283.core.api.material.addName
+import hiiragi283.core.api.material.attribute.HTSmeltingMaterialAttribute
 import hiiragi283.core.common.data.texture.HCTextureTemplates
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
@@ -50,6 +51,21 @@ object RagiumMaterialEventHandler {
                 addName("Advanced Ragi-Alloy", "発展ラギ合金")
                 addColor(RagiumMaterialPalette.ADVANCED_RAGI_ALLOY)
                 add(HCTextureTemplates.METAL)
+            }
+        }
+        // Others
+        event.modify(RagiumMaterialKeys.MEAT) {
+            addDefaultPrefix(HCMaterialPrefixes.INGOT)
+            add(HTSmeltingMaterialAttribute.withSmoking(RagiumMaterialKeys.COOKED_MEAT))
+            if (isDataGen) {
+                addName("Meat", "肉")
+            }
+        }
+        event.modify(RagiumMaterialKeys.COOKED_MEAT) {
+            addDefaultPrefix(HCMaterialPrefixes.INGOT)
+            add(HTSmeltingMaterialAttribute.disable())
+            if (isDataGen) {
+                addName("Cooked Meat", "焼肉")
             }
         }
     }

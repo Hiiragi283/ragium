@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.tag
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.material.HTMaterialKey
+import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.common.material.HCMaterialPrefixes
@@ -45,10 +46,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
                 factory.apply(ItemTags.BEACON_PAYMENT_ITEMS).addTag(prefix, key)
             }
         }
-
-        addMaterial(factory, HCMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT).add(RagiumItems.MEAT_DUST)
-        addMaterial(factory, HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT).add(RagiumItems.MEAT_INGOT)
-        addMaterial(factory, HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
     }
 
     //    Misc    //
@@ -66,10 +63,10 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumItems.SOUP_CAN)
         factory
             .apply(Tags.Items.FOODS_RAW_MEAT)
-            .add(RagiumItems.MEAT_INGOT)
+            .add(RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT))
         factory
             .apply(Tags.Items.FOODS_COOKED_MEAT)
-            .add(RagiumItems.COOKED_MEAT_INGOT)
+            .add(RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
         // Others
         RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
 

@@ -3,14 +3,9 @@
   "category": "misc",
   "cookingtime": 100,
   "experience": 0.35,
-  "ingredient": [
-    {
-      "tag": "c:ingots/meat"
-    },
-    {
-      "tag": "c:dusts/meat"
-    }
-  ],
+  "ingredient": {
+    "item": "ragium:meat_dust"
+  },
   "result": {
     "count": 1,
     "id": "ragium:cooked_meat_ingot"
