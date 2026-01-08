@@ -1,10 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.registry.HTFluidWithTag
-import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
@@ -13,6 +10,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTSimulatingRecipeBuilder
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
+import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
@@ -24,8 +22,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     private fun block(vararg blocks: Block): HolderSet<Block> = HolderSet.direct(Block::builtInRegistryHolder, *blocks)
 
     @JvmStatic
-    private fun block(prefix: HTPrefixLike, material: HTMaterialLike): HolderSet<Block> =
-        provider.lookupOrThrow(Registries.BLOCK).getOrThrow(prefix.createTagKey(Registries.BLOCK, material))
+    private fun block(tagKey: TagKey<Block>): HolderSet<Block> = provider.lookupOrThrow(Registries.BLOCK).getOrThrow(tagKey)
 
     @JvmStatic
     private fun entity(vararg entityTypes: EntityType<*>): HolderSet<EntityType<*>> =
@@ -144,7 +141,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         HTSimulatingRecipeBuilder
             .block(
                 itemCreator.fromItem(HCItems.WITHER_DOLL),
-                block(HCMaterialPrefixes.STORAGE_BLOCK, HCMaterialKeys.NIGHT_METAL),
+                block(Tags.Blocks.OBSIDIANS_CRYING),
             ).setResult(itemResult.create(HCItems.WITHER_STAR))
             .save(output)
     }

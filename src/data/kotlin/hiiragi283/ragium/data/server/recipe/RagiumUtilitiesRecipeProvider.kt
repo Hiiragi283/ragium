@@ -36,7 +36,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder
             .create(HTMoldType.BLANK)
             .storage4()
-            .define('A', HCMaterialPrefixes.PLATE, HCMaterialKeys.NIGHT_METAL)
+            .define('A', HCMaterialPrefixes.PLATE, CommonMaterialKeys.STEEL)
             .save(output)
 
         for (moldType: HTMoldType in HTMoldType.entries) {
@@ -96,7 +96,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder
             .create(RagiumBlocks.UNIVERSAL_CHEST)
             .hollow8()
-            .define('A', HCMaterialPrefixes.INGOT, HCMaterialKeys.NIGHT_METAL)
+            .define('A', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
             .define('B', HCMaterialPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL)
             .save(output)
 

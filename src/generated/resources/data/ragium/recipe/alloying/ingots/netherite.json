@@ -1,0 +1,14 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    [
+      "#c:dusts/gold",
+      "#c:ingots/gold"
+    ],
+    "#c:scraps/netherite"
+  ],
+  "result": {
+    "id": "minecraft:netherite_ingot",
+    "tag": "c:ingots/netherite"
+  }
+}

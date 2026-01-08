@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/electrum"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredient": [
+    [
+      "#c:dusts/gold",
+      "#c:ingots/gold"
+    ],
+    [
+      "#c:dusts/silver",
+      "#c:ingots/silver"
+    ]
+  ],
+  "result": {
+    "count": 2,
+    "tag": "c:ingots/electrum"
+  }
+}

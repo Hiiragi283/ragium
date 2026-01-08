@@ -13,8 +13,123 @@ import net.minecraft.world.item.Items
 
 object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
+        common()
         hiiragiCore()
         ragium()
+    }
+
+    @JvmStatic
+    private fun common() {
+        // Netherite
+        HTAlloyingRecipeBuilder
+            .create(
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, VanillaMaterialKeys.NETHERITE),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(VanillaMaterialKeys.GOLD),
+                ),
+                itemCreator.fromTagKey(HCMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE),
+            ).save(output)
+
+        // Steel from Coal
+        HTAlloyingRecipeBuilder
+            .create(
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(VanillaMaterialKeys.IRON),
+                ),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.FUEL),
+                    listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL),
+                    2,
+                ),
+            ).saveSuffixed(output, "_from_coal")
+        // Steel from Coke
+        HTAlloyingRecipeBuilder
+            .create(
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(VanillaMaterialKeys.IRON),
+                ),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.FUEL),
+                    listOf(CommonMaterialKeys.COAL_COKE),
+                ),
+            ).saveSuffixed(output, "_from_coke")
+        // Invar
+        HTAlloyingRecipeBuilder
+            .create(
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, CommonMaterialKeys.INVAR, 3),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(VanillaMaterialKeys.IRON),
+                    2,
+                ),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(CommonMaterialKeys.NICKEL),
+                ),
+            ).tagCondition(HCMaterialPrefixes.INGOT, CommonMaterialKeys.INVAR)
+            .save(output)
+        // Electrum
+        HTAlloyingRecipeBuilder
+            .create(
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, CommonMaterialKeys.ELECTRUM, 2),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(VanillaMaterialKeys.GOLD),
+                ),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(CommonMaterialKeys.SILVER),
+                ),
+            ).tagCondition(HCMaterialPrefixes.INGOT, CommonMaterialKeys.ELECTRUM)
+            .save(output)
+        // Bronze
+        HTAlloyingRecipeBuilder
+            .create(
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, CommonMaterialKeys.BRONZE, 4),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(VanillaMaterialKeys.COPPER),
+                    3,
+                ),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(CommonMaterialKeys.TIN),
+                ),
+            ).tagCondition(HCMaterialPrefixes.INGOT, CommonMaterialKeys.BRONZE)
+            .save(output)
+        // Brass
+        HTAlloyingRecipeBuilder
+            .create(
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, CommonMaterialKeys.BRASS, 2),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(VanillaMaterialKeys.COPPER),
+                ),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(CommonMaterialKeys.ZINC),
+                ),
+            ).tagCondition(HCMaterialPrefixes.INGOT, CommonMaterialKeys.BRASS)
+            .save(output)
+        // Constantan
+        HTAlloyingRecipeBuilder
+            .create(
+                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, CommonMaterialKeys.CONSTANTAN, 2),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(VanillaMaterialKeys.COPPER),
+                ),
+                itemCreator.fromTagKeys(
+                    listOf(HCMaterialPrefixes.DUST, HCMaterialPrefixes.INGOT),
+                    listOf(CommonMaterialKeys.NICKEL),
+                ),
+            ).tagCondition(HCMaterialPrefixes.INGOT, CommonMaterialKeys.CONSTANTAN)
+            .save(output)
     }
 
     @JvmStatic

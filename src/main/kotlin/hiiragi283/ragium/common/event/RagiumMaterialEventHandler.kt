@@ -6,6 +6,7 @@ import hiiragi283.core.api.material.addDefaultPrefix
 import hiiragi283.core.api.material.addName
 import hiiragi283.core.api.material.attribute.HTSmeltingMaterialAttribute
 import hiiragi283.core.common.data.texture.HCTextureTemplates
+import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.texture.RagiumMaterialPalette
@@ -24,6 +25,7 @@ object RagiumMaterialEventHandler {
             if (isDataGen) {
                 addName("Raginite", "ラギナイト")
                 addColor(RagiumMaterialPalette.RAGINITE)
+                add(HTSmeltingMaterialAttribute.disable())
                 add(HCTextureTemplates.DUST_DULL)
             }
         }
@@ -56,16 +58,16 @@ object RagiumMaterialEventHandler {
         // Others
         event.modify(RagiumMaterialKeys.MEAT) {
             addDefaultPrefix(HCMaterialPrefixes.INGOT)
-            add(HTSmeltingMaterialAttribute.withSmoking(RagiumMaterialKeys.COOKED_MEAT))
             if (isDataGen) {
                 addName("Meat", "肉")
+                add(HTSmeltingMaterialAttribute.withSmoking(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
             }
         }
         event.modify(RagiumMaterialKeys.COOKED_MEAT) {
             addDefaultPrefix(HCMaterialPrefixes.INGOT)
-            add(HTSmeltingMaterialAttribute.disable())
             if (isDataGen) {
                 addName("Cooked Meat", "焼肉")
+                add(HTSmeltingMaterialAttribute.smeltingOnly(HCMaterialPrefixes.DUST, CommonMaterialKeys.ASH))
             }
         }
     }

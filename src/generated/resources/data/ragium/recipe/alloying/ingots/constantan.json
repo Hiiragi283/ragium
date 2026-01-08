@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/constantan"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredient": [
+    [
+      "#c:dusts/copper",
+      "#c:ingots/copper"
+    ],
+    [
+      "#c:dusts/nickel",
+      "#c:ingots/nickel"
+    ]
+  ],
+  "result": {
+    "count": 2,
+    "tag": "c:ingots/constantan"
+  }
+}
