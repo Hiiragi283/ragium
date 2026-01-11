@@ -32,11 +32,11 @@ enum class HTMoldType(private val enPattern: String, private val jaPattern: Stri
         val CODEC: BiCodec<ByteBuf, HTMoldType> = BiCodecs.stringEnum(HTMoldType::getSerializedName)
     }
 
-    override fun getId(): ResourceLocation = getHolder().id
+    override fun getId(): ResourceLocation = getItemHolder().id
 
-    override fun getHolder(): HTSimpleDeferredItem = RagiumItems.MOLDS[this]!!
+    override fun asItem(): Item = getItemHolder().asItem()
 
-    override fun get(): Item = getHolder().get()
+    override fun getItemHolder(): HTSimpleDeferredItem = RagiumItems.MOLDS[this]!!
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {
         HTLanguageType.EN_US -> enPattern

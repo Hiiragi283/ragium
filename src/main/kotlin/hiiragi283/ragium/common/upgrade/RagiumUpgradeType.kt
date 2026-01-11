@@ -37,11 +37,11 @@ enum class RagiumUpgradeType(val group: Group, private val enName: String, priva
     ITEM_CAPACITY(Group.STORAGE, "Item Capacity", "アイテム容量"),
     ;
 
-    override fun getId(): ResourceLocation = getHolder().id
+    override fun getId(): ResourceLocation = getItemHolder().id
 
-    override fun getHolder(): HTSimpleDeferredItem = RagiumItems.UPGRADES[this]!!
+    override fun asItem(): Item = getItemHolder().asItem()
 
-    override fun get(): Item = getHolder().get()
+    override fun getItemHolder(): HTSimpleDeferredItem = RagiumItems.UPGRADES[this]!!
 
     override fun getTranslatedName(type: HTLanguageType): String = when (type) {
         HTLanguageType.EN_US -> enName

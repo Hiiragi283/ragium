@@ -2,8 +2,8 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import net.minecraft.tags.ItemTags
@@ -22,7 +22,7 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         HTComplexRecipeBuilder
             .drying(itemCreator.fromTagKey(Tags.Items.OBSIDIANS_CRYING))
             .setResult(itemResult.create(Items.OBSIDIAN))
-            .setResult(RagiumMaterialResultHelper.fluid(HCMaterialPrefixes.MOLTEN, HCMaterialKeys.ELDRITCH, 125))
+            .setResult(fluidResult.create(HCFluids.MOLTEN_ELDRITCH, 125))
             .setTime(20 * 20)
             .saveSuffixed(output, "_from_crying")
         // Sapling -> Dead Bush

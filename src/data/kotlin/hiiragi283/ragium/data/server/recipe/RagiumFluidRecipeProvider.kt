@@ -4,17 +4,15 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.VanillaFluidContents
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
-import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
@@ -30,7 +28,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         meltAndSolidify(
             itemCreator.fromItem(Items.SNOWBALL),
             itemResult.create(Items.SNOWBALL),
-            Tags.Fluids.WATER,
+            VanillaFluidContents.WATER,
             250,
             HTMoldType.BALL,
             "snowball",
@@ -39,7 +37,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         meltAndSolidify(
             itemCreator.fromItem(Items.ICE),
             itemResult.create(Items.ICE),
-            Tags.Fluids.WATER,
+            VanillaFluidContents.WATER,
             1000,
             HTMoldType.BLOCK,
             "ice",
@@ -87,20 +85,11 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
                 itemCreator.fromItem(Items.ROTTEN_FLESH),
                 fluidResult.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT),
             ).saveSuffixed(output, "_from_rotten")
-
-        HTSingleRecipeBuilder
-            .solidifying(
-                fluidCreator.fromTagKey(HCFluids.MEAT, HTConst.INGOT_AMOUNT),
-                itemCreator.fromItem(HTMoldType.INGOT),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT),
-            ).save(output)
         // Glass
-        val glass: TagKey<Fluid> = HCMaterialPrefixes.MOLTEN.fluidTagKey(VanillaMaterialKeys.GLASS)
-
         meltAndSolidify(
             itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
             itemResult.create(Items.GLASS),
-            glass,
+            HCFluids.MOLTEN_GLASS,
             1000,
             HTMoldType.BLOCK,
             "block",
@@ -108,7 +97,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         meltAndSolidify(
             itemCreator.fromTagKey(Tags.Items.GLASS_PANES),
             itemResult.create(Items.GLASS_PANE),
-            glass,
+            HCFluids.MOLTEN_GLASS,
             375,
             HTMoldType.BLANK,
             "pane",
@@ -119,7 +108,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     private fun meltAndSolidify(
         input: HTItemIngredient,
         result: HTItemResult,
-        fluid: TagKey<Fluid>,
+        fluid: HTFluidContent<*, *, *>,
         amount: Int,
         mold: HTMoldType,
         suffix: String,

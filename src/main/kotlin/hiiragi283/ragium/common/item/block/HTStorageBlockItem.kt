@@ -5,7 +5,6 @@ import hiiragi283.core.api.block.HTBlockWithDescription
 import hiiragi283.core.api.item.HTDescriptionBlockItem
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
-import hiiragi283.core.api.item.toStack
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.storage.attachments.HTAttachedItems
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
@@ -36,7 +35,7 @@ abstract class HTStorageBlockItem<BLOCK>(block: BLOCK, properties: Properties) :
         createItemStack(
             baseItem,
             RagiumDataComponents.MACHINE_UPGRADES,
-            HTAttachedItems(listOf(RagiumUpgradeType.CREATIVE.toStack())),
+            HTAttachedItems(listOf(createItemStack(RagiumUpgradeType.CREATIVE))),
         ).let(consumer::accept)
     }
 }

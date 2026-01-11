@@ -35,7 +35,7 @@ object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         HTComplexRecipeBuilder
             .mixing(
                 itemCreator.fromTagKey(HCMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
-                fluidCreator.fromTagKey(HCMaterialPrefixes.MOLTEN, RagiumMaterialKeys.RAGINITE, 100 * 8),
+                fluidCreator.fromTagKey(RagiumFluids.MOLTEN_RAGINITE, 100 * 8),
             ).setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL))
             .save(output)
 

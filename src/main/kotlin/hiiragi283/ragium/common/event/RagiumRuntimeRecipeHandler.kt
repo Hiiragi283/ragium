@@ -2,19 +2,20 @@ package hiiragi283.ragium.common.event
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
-import hiiragi283.core.api.material.HTMaterialDefinition
 import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.getDefaultPrefix
-import hiiragi283.core.api.material.getStorageAttribute
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.material.prefix.HTPrefixLike
+import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
+import hiiragi283.core.api.material.property.getDefaultPart
+import hiiragi283.core.api.material.property.getStorageBlock
+import hiiragi283.core.api.property.HTPropertyMap
+import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
@@ -22,7 +23,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 object RagiumRuntimeRecipeHandler {
     @SubscribeEvent
     fun registerRuntimeRecipe(event: HTRegisterRuntimeRecipeEvent) {
-        crushPrefixToDust(event, HCMaterialPrefixes.STORAGE_BLOCK, 1) { it.getStorageAttribute().baseCount }
+        crushPrefixToDust(event, HCMaterialPrefixes.STORAGE_BLOCK, 1) { it.getStorageBlock().baseCount }
         crushPrefixToDust(event, HCMaterialPrefixes.STORAGE_BLOCK_RAW, 1) { 12 }
 
         crushPrefixToDust(event, HCMaterialPrefixes.FUEL, 1)
@@ -39,13 +40,13 @@ object RagiumRuntimeRecipeHandler {
         cutBlockToPlate(event)
         cutBaseToRod(event)
 
-        pressBaseToPrefix(event, HCMaterialPrefixes.STORAGE_BLOCK, HTMoldType.BLOCK, { it.getStorageAttribute().baseCount }, 1)
+        pressBaseToPrefix(event, HCMaterialPrefixes.STORAGE_BLOCK, HTMoldType.BLOCK, { it.getStorageBlock().baseCount }, 1)
         pressBaseToPrefix(event, HCMaterialPrefixes.GEAR, HTMoldType.GEAR, { 4 }, 1)
         pressBaseToPrefix(event, HCMaterialPrefixes.NUGGET, HTMoldType.NUGGET, { 1 }, 9)
         pressBaseToPrefix(event, HCMaterialPrefixes.PLATE, HTMoldType.PLATE, { 1 }, 1)
 
         meltAndSolidify(event, HCMaterialPrefixes.STORAGE_BLOCK, HTMoldType.BLOCK) {
-            HTConst.INGOT_AMOUNT * it.getStorageAttribute().baseCount
+            HTConst.INGOT_AMOUNT * it.getStorageBlock().baseCount
         }
         meltAndSolidify(event, HCMaterialPrefixes.DUST, null)
         meltAndSolidify(event, HCMaterialPrefixes.FUEL, HTMoldType.GEM)
@@ -65,13 +66,13 @@ object RagiumRuntimeRecipeHandler {
         event: HTRegisterRuntimeRecipeEvent,
         prefix: HTPrefixLike,
         inputCount: Int,
-        outputCountGetter: (HTMaterialDefinition) -> Int? = { 1 },
+        outputCountGetter: (HTPropertyMap) -> Int? = { 1 },
     ) {
-        for ((key: HTMaterialKey, definition: HTMaterialDefinition) in event.materialManager.entries) {
-            val outputCount: Int = outputCountGetter(definition) ?: continue
+        for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            val outputCount: Int = outputCountGetter(propertyMap) ?: continue
 
-            if (!event.isPresentItemTag(prefix, key)) continue
-            val dust: Item = event.getFirstItemHolder(HCMaterialPrefixes.DUST, key)?.value() ?: continue
+            if (!event.isPresentTag(prefix, key)) continue
+            val dust: Item = event.getFirstHolder(HCMaterialPrefixes.DUST, key)?.value() ?: continue
 
             HTChancedRecipeBuilder
                 .crushing(
@@ -85,26 +86,26 @@ object RagiumRuntimeRecipeHandler {
 
     @JvmStatic
     private fun cutBlockToPlate(event: HTRegisterRuntimeRecipeEvent) {
-        for ((key: HTMaterialKey, definition: HTMaterialDefinition) in event.materialManager.entries) {
-            if (!event.isPresentItemTag(HCMaterialPrefixes.STORAGE_BLOCK, key)) continue
-            val plate: Item = event.getFirstItemHolder(HCMaterialPrefixes.PLATE, key)?.value() ?: continue
+        for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            if (!event.isPresentTag(HCMaterialPrefixes.STORAGE_BLOCK, key)) continue
+            val plate: Item = event.getFirstHolder(HCMaterialPrefixes.PLATE, key)?.value() ?: continue
 
             HTChancedRecipeBuilder
                 .cutting(
                     event.itemCreator.fromTagKey(HCMaterialPrefixes.STORAGE_BLOCK, key),
-                    event.itemResult.create(plate, definition.getStorageAttribute().baseCount),
+                    event.itemResult.create(plate, propertyMap.getStorageBlock().baseCount),
                 ).saveSuffixed(event.output, "_from_block")
         }
     }
 
     @JvmStatic
     private fun cutBaseToRod(event: HTRegisterRuntimeRecipeEvent) {
-        for ((key: HTMaterialKey, definition: HTMaterialDefinition) in event.materialManager.entries) {
-            val basePrefix: HTMaterialPrefix = definition.getDefaultPrefix() ?: continue
+        for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            val basePrefix: HTMaterialPrefix = propertyMap.getDefaultPart() ?: continue
             if (basePrefix == HCMaterialPrefixes.ROD) continue
-            if (!event.isPresentItemTag(basePrefix, key)) continue
+            if (!event.isPresentTag(basePrefix, key)) continue
 
-            val rod: Item = event.getFirstItemHolder(HCMaterialPrefixes.ROD, key)?.value() ?: continue
+            val rod: Item = event.getFirstHolder(HCMaterialPrefixes.ROD, key)?.value() ?: continue
 
             HTChancedRecipeBuilder
                 .cutting(
@@ -121,16 +122,16 @@ object RagiumRuntimeRecipeHandler {
         event: HTRegisterRuntimeRecipeEvent,
         prefix: HTPrefixLike,
         moldType: HTMoldType,
-        inputCountGetter: (HTMaterialDefinition) -> Int?,
+        inputCountGetter: (HTPropertyMap) -> Int?,
         outputCount: Int,
     ) {
-        for ((key: HTMaterialKey, definition: HTMaterialDefinition) in event.materialManager.entries) {
-            val basePrefix: HTMaterialPrefix = definition.getDefaultPrefix() ?: continue
+        for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            val basePrefix: HTMaterialPrefix = propertyMap.getDefaultPart() ?: continue
             if (basePrefix == prefix) continue
-            val inputCount: Int = inputCountGetter(definition) ?: continue
+            val inputCount: Int = inputCountGetter(propertyMap) ?: continue
 
-            if (!event.isPresentItemTag(basePrefix, key)) continue
-            val result: Item = event.getFirstItemHolder(prefix, key)?.value() ?: continue
+            if (!event.isPresentTag(basePrefix, key)) continue
+            val result: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
 
             HTSingleRecipeBuilder
                 .pressing(
@@ -148,13 +149,13 @@ object RagiumRuntimeRecipeHandler {
         event: HTRegisterRuntimeRecipeEvent,
         prefix: HTPrefixLike,
         moldType: HTMoldType?,
-        fluidAmountGetter: (HTMaterialDefinition) -> Int? = { HTConst.INGOT_AMOUNT },
+        fluidAmountGetter: (HTPropertyMap) -> Int = { HTConst.INGOT_AMOUNT },
     ) {
-        for ((key: HTMaterialKey, definition: HTMaterialDefinition) in event.materialManager.entries) {
-            val fluidAmount: Int = fluidAmountGetter(definition) ?: continue
+        for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            val fluidAmount: Int = fluidAmountGetter(propertyMap)
 
-            if (!event.isPresentItemTag(prefix, key)) continue
-            val molten: Fluid = event.getFirstFluidHolder(HCMaterialPrefixes.MOLTEN, key)?.value() ?: continue
+            if (!event.isPresentTag(prefix, key)) continue
+            val molten: HTFluidContent<*, *, *> = propertyMap[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: continue
             // Melt
             HTSingleRecipeBuilder
                 .melting(
@@ -163,10 +164,10 @@ object RagiumRuntimeRecipeHandler {
                 ).saveSuffixed(event.output, "_from_${prefix.asPrefixName()}")
             // Solidify
             if (moldType == null) return
-            val item: Item = event.getFirstItemHolder(prefix, key)?.value() ?: continue
+            val item: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
             HTSingleRecipeBuilder
                 .solidifying(
-                    event.fluidCreator.fromTagKey(HCMaterialPrefixes.MOLTEN, key, fluidAmount),
+                    event.fluidCreator.fromTagKey(molten, fluidAmount), 
                     event.itemCreator.fromItem(moldType),
                     event.itemResult.create(item),
                 ).saveSuffixed(event.output, "_from_molten")

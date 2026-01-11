@@ -7,10 +7,10 @@ import hiiragi283.core.api.data.model.HTItemModelProvider
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTSimpleFluidContent
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.registry.register.HTSimpleFluidContent
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
@@ -102,7 +102,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.LUBRICANT)
             // Misc
-            addAll(RagiumFluids.MATERIALS.values)
+            add(RagiumFluids.MOLTEN_RAGINITE)
             add(RagiumFluids.CREOSOTE)
         }
         for (content: HTFluidContent<*, *, *> in RagiumFluids.REGISTER.entries) {

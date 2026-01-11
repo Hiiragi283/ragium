@@ -2,7 +2,6 @@ package hiiragi283.ragium.api.data.map
 
 import hiiragi283.core.api.item.builtInRegistryHolder
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.resource.HTKeyLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import net.minecraft.core.Holder
@@ -12,18 +11,18 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 
 @JvmInline
-value class HTMobHead(private val head: Holder<Item>) :
-    HTItemHolderLike<Item>,
-    HTKeyLike.HolderDelegate<Item> {
+value class HTMobHead(private val head: Holder<Item>) : HTItemHolderLike<Item> {
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTMobHead> = BiCodec.composite(
-            VanillaBiCodecs.holder(Registries.ITEM).fieldOf("head").forGetter(HTMobHead::getHolder),
+            VanillaBiCodecs.holder(Registries.ITEM).fieldOf("head").forGetter(HTMobHead::getItemHolder),
             ::HTMobHead,
         )
     }
 
     constructor(item: ItemLike) : this(item.builtInRegistryHolder())
 
-    override fun get(): Item = head.value()
+    override fun getItemHolder(): Holder<Item> = head
+
+    override fun asItem(): Item = head.value()
 }

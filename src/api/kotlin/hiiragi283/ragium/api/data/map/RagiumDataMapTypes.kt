@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.map
 
 import com.mojang.serialization.Codec
-import hiiragi283.core.api.item.toStack
+import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
@@ -59,10 +59,8 @@ object RagiumDataMapTypes {
      * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。
      */
     @Suppress("DEPRECATION")
-    fun getMobHead(entity: Entity): ItemStack = entity.type
-        .builtInRegistryHolder()
-        .getData(MOB_HEAD)
-        ?.toStack() ?: ItemStack.EMPTY
+    fun getMobHead(entity: Entity): ItemStack =
+        entity.type.builtInRegistryHolder().getData(MOB_HEAD).let(::createItemStack)
 
     /**
      * 指定した[resource]から，一度の処理に必要な冷却材の使用量を取得します。

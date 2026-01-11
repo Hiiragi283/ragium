@@ -2,6 +2,7 @@
   "type": "ragium:melting",
   "ingredient": "minecraft:ice",
   "result": {
+    "id": "minecraft:water",
     "tag": "c:water"
   }
 }

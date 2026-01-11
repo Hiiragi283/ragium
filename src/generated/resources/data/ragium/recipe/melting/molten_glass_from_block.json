@@ -2,6 +2,7 @@
   "type": "ragium:melting",
   "ingredient": "#c:glass_blocks",
   "result": {
+    "id": "hiiragi_core:molten_glass",
     "tag": "c:molten_glass"
   }
 }

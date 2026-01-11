@@ -26,6 +26,7 @@ hostile = "1.21.1-6.3.0"
 immersive = "1.21.1-12.4.2-194"
 jade = "15.10.3+neoforge"
 kc = "1.1.1-neoforge+mc1.21.1"
+ldlib = "2.1.7"
 magitech = "0.12.1"
 mek = "1.21.1-10.7.17.83"
 oritech = "0.19.6"
@@ -64,6 +65,7 @@ hostile = { group = "dev.shadowsoffire", name = "HostileNeuralNetworks", version
 immersive = { group = "blusunrize.immersiveengineering", name = "ImmersiveEngineering", version.ref = "immersive" }
 jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 kc = { group = "maven.modrinth", name = "kaleidoscope-cookery", version.ref = "kc" }
+ldlib = { group = "com.lowdragmc.ldlib2", name = "ldlib2-neoforge-1.21.1", version.ref = "ldlib" }
 magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 oritech = { group = "rearth.oritech", name = "oritech-neoforge-1.21.1", version.ref = "oritech" }
@@ -93,7 +95,9 @@ mods-impl = [
     "jade",
 ]
 
-mods-transitive = []
+mods-transitive = [
+    "ldlib"
+]
 
 mods-compile = [
     

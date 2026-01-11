@@ -1,73 +1,85 @@
 package hiiragi283.ragium.common.event
 
-import hiiragi283.core.api.event.HTMaterialDefinitionEvent
-import hiiragi283.core.api.material.addColor
-import hiiragi283.core.api.material.addDefaultPrefix
-import hiiragi283.core.api.material.addName
-import hiiragi283.core.api.material.attribute.HTSmeltingMaterialAttribute
+import hiiragi283.core.api.event.HTMaterialPropertyEvent
+import hiiragi283.core.api.material.property.HTFluidMaterialProperty
+import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
+import hiiragi283.core.api.material.property.HTSmeltingMaterialProperty
+import hiiragi283.core.api.material.property.addColor
+import hiiragi283.core.api.material.property.addDefaultPart
+import hiiragi283.core.api.material.property.addName
+import hiiragi283.core.api.material.property.addTemplate
 import hiiragi283.core.common.data.texture.HCTextureTemplates
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.texture.RagiumMaterialPalette
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.setup.RagiumFluids
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumMaterialEventHandler {
     @SubscribeEvent
-    fun gatherAttributes(event: HTMaterialDefinitionEvent) {
+    fun gatherAttributes(event: HTMaterialPropertyEvent) {
         val isDataGen: Boolean = event.isDataGen
         // Minerals
         event.modify(RagiumMaterialKeys.RAGINITE) {
-            addDefaultPrefix(HCMaterialPrefixes.DUST)
+            addDefaultPart(HCMaterialPrefixes.DUST)
+            put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(RagiumFluids.MOLTEN_RAGINITE))
             if (isDataGen) {
                 addName("Raginite", "ラギナイト")
                 addColor(RagiumMaterialPalette.RAGINITE)
-                add(HTSmeltingMaterialAttribute.disable())
-                add(HCTextureTemplates.DUST_DULL)
+                addTemplate(HCTextureTemplates.DUST_DULL)
             }
         }
         // Gems
         event.modify(RagiumMaterialKeys.RAGI_CRYSTAL) {
-            addDefaultPrefix(HCMaterialPrefixes.GEM)
+            addDefaultPart(HCMaterialPrefixes.GEM)
             if (isDataGen) {
                 addName("Ragi-Crystal", "ラギクリスタル")
                 addColor(RagiumMaterialPalette.RAGINITE)
-                add(HCTextureTemplates.GEM_DIAMOND)
+                addTemplate(HCTextureTemplates.GEM_DIAMOND)
             }
         }
         // Alloys
         event.modify(RagiumMaterialKeys.RAGI_ALLOY) {
-            addDefaultPrefix(HCMaterialPrefixes.INGOT)
+            addDefaultPart(HCMaterialPrefixes.INGOT)
             if (isDataGen) {
                 addName("Ragi-Alloy", "ラギ合金")
                 addColor(RagiumMaterialPalette.RAGINITE)
-                add(HCTextureTemplates.METAL)
+                addTemplate(HCTextureTemplates.METAL)
             }
         }
         event.modify(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) {
-            addDefaultPrefix(HCMaterialPrefixes.INGOT)
+            addDefaultPart(HCMaterialPrefixes.INGOT)
             if (isDataGen) {
                 addName("Advanced Ragi-Alloy", "発展ラギ合金")
                 addColor(RagiumMaterialPalette.ADVANCED_RAGI_ALLOY)
-                add(HCTextureTemplates.METAL)
+                addTemplate(HCTextureTemplates.METAL)
             }
         }
         // Others
         event.modify(RagiumMaterialKeys.MEAT) {
-            addDefaultPrefix(HCMaterialPrefixes.INGOT)
+            addDefaultPart(HCMaterialPrefixes.INGOT)
+            put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(HCFluids.MEAT))
             if (isDataGen) {
                 addName("Meat", "肉")
-                add(HTSmeltingMaterialAttribute.withSmoking(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
+                put(
+                    HTMaterialPropertyKeys.SMELTING,
+                    HTSmeltingMaterialProperty.withSmoking(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT),
+                )
             }
         }
         event.modify(RagiumMaterialKeys.COOKED_MEAT) {
-            addDefaultPrefix(HCMaterialPrefixes.INGOT)
+            addDefaultPart(HCMaterialPrefixes.INGOT)
             if (isDataGen) {
                 addName("Cooked Meat", "焼肉")
-                add(HTSmeltingMaterialAttribute.smeltingOnly(HCMaterialPrefixes.DUST, CommonMaterialKeys.ASH))
+                put(
+                    HTMaterialPropertyKeys.SMELTING,
+                    HTSmeltingMaterialProperty.smeltingOnly(HCMaterialPrefixes.DUST, CommonMaterialKeys.ASH),
+                )
             }
         }
     }

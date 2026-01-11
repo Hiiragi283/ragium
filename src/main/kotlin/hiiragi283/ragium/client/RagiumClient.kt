@@ -1,12 +1,9 @@
 package hiiragi283.ragium.client
 
 import com.mojang.logging.LogUtils
-import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTSimpleFluidContent
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
-import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.screen.HTAlloySmelterScreen
 import hiiragi283.ragium.client.gui.screen.HTChancedScreen
@@ -19,7 +16,6 @@ import hiiragi283.ragium.client.gui.screen.HTUniversalChestScreen
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.client.render.block.HTTankRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -140,17 +136,9 @@ object RagiumClient {
         event.clear(RagiumFluids.FUEL, Color(0xcc3300))
         event.dull(RagiumFluids.LUBRICANT, Color(0xff9900))
 
+        event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
         event.clear(RagiumFluids.COOLANT, Color(0x009999))
         event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
-
-        fun molten(key: HTMaterialKey, color: Color) {
-            val content: HTSimpleFluidContent = RagiumFluids.MATERIALS[HCMaterialPrefixes.MOLTEN, key] ?: return
-            event.molten(content, color)
-        }
-
-        molten(RagiumMaterialKeys.RAGINITE, Color(0xff3366))
-        molten(RagiumMaterialKeys.RAGI_ALLOY, Color(0xff3366))
-        molten(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY, Color(0xff6633))
     }
 
     private fun registerScreens(event: RegisterMenuScreensEvent) {
