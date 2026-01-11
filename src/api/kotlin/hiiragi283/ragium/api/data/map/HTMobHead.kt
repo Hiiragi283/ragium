@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.data.map
 
-import hiiragi283.core.api.item.builtInRegistryHolder
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
@@ -20,7 +19,8 @@ value class HTMobHead(private val head: Holder<Item>) : HTItemHolderLike<Item> {
         )
     }
 
-    constructor(item: ItemLike) : this(item.builtInRegistryHolder())
+    @Suppress("DEPRECATION")
+    constructor(item: ItemLike) : this(item.asItem().builtInRegistryHolder())
 
     override fun getItemHolder(): Holder<Item> = head
 

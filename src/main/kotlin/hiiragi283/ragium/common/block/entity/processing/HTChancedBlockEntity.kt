@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.processing
 
-import hiiragi283.core.api.HTContentListener
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
@@ -26,34 +28,35 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    lateinit var inputTank: HTBasicFluidTank
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val inputTank: HTBasicFluidTank = HTVariableFluidTank.input(
+        getTankCapacity(RagiumFluidConfigType.FIRST_INPUT),
+        canInsert = RagiumFluids.LUBRICANT::isOf,
+    )
 
-    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
-        inputTank = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(
-                listener,
-                getTankCapacity(RagiumFluidConfigType.FIRST_INPUT),
-                canInsert = RagiumFluids.LUBRICANT::isOf,
-            ),
-        )
+    final override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
+        builder.addSlot(HTSlotInfo.INPUT, inputTank)
     }
 
-    lateinit var inputSlot: HTBasicItemSlot
-        private set
-    lateinit var outputSlots: List<HTBasicItemSlot>
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val inputSlot: HTBasicItemSlot = HTBasicItemSlot.input()
 
-    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
-        outputSlots = List(getOutputSlotSize()) { builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener)) }
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val outputSlots: List<HTBasicItemSlot> = List(getOutputSlotSize()) { HTBasicItemSlot.output() }
+
+    final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
+        builder.addSlot(HTSlotInfo.INPUT, inputSlot)
+        for (slot: HTBasicItemSlot in outputSlots) {
+            builder.addSlot(HTSlotInfo.OUTPUT, slot)
+        }
     }
 
     protected abstract fun getOutputSlotSize(): Int
 
-    private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
-    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
+    final override fun setupElements(root: UIElement) {}
 
     //    Processing    //
 
@@ -61,6 +64,9 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         finder: HTRecipeFinder<SingleRecipeInput, RECIPE>,
         private val sound: SoundEvent,
     ) : HTProcessingRecipeComponent.Cached<SingleRecipeInput, RECIPE>(finder, this) {
+        private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
+
         override fun insertOutput(
             level: ServerLevel,
             pos: BlockPos,

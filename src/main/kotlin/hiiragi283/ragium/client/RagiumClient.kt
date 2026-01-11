@@ -5,14 +5,6 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.client.gui.screen.HTAlloySmelterScreen
-import hiiragi283.ragium.client.gui.screen.HTChancedScreen
-import hiiragi283.ragium.client.gui.screen.HTComplexScreen
-import hiiragi283.ragium.client.gui.screen.HTMelterScreen
-import hiiragi283.ragium.client.gui.screen.HTPlanterScreen
-import hiiragi283.ragium.client.gui.screen.HTPyrolyzerScreen
-import hiiragi283.ragium.client.gui.screen.HTTankScreen
-import hiiragi283.ragium.client.gui.screen.HTUniversalChestScreen
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.client.render.block.HTTankRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
@@ -21,7 +13,6 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumMenuTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.DyeColor
@@ -35,7 +26,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.ConfigurationScreen
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory
@@ -56,7 +46,6 @@ object RagiumClient {
         eventBus.addListener(::registerBlockColors)
         eventBus.addListener(::registerItemColors)
         eventBus.addListener(::registerClientExtensions)
-        eventBus.addListener(::registerScreens)
         eventBus.addListener(::registerEntityRenderer)
 
         LOADING_CONTEXT.activeContainer.registerExtensionPoint(
@@ -139,22 +128,6 @@ object RagiumClient {
         event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
         event.clear(RagiumFluids.COOLANT, Color(0x009999))
         event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
-    }
-
-    private fun registerScreens(event: RegisterMenuScreensEvent) {
-        event.register(RagiumMenuTypes.ALLOY_SMELTER.get(), ::HTAlloySmelterScreen)
-        event.register(RagiumMenuTypes.CRUSHER.get(), ::HTChancedScreen)
-        event.register(RagiumMenuTypes.CUTTING_MACHINE.get(), ::HTChancedScreen)
-        event.register(RagiumMenuTypes.DRYER.get(), ::HTComplexScreen)
-        event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
-        event.register(RagiumMenuTypes.MIXER.get(), ::HTComplexScreen)
-        event.register(RagiumMenuTypes.PLANTER.get(), ::HTPlanterScreen)
-        event.register(RagiumMenuTypes.PYROLYZER.get(), ::HTPyrolyzerScreen)
-
-        event.register(RagiumMenuTypes.TANK.get(), ::HTTankScreen)
-        event.register(RagiumMenuTypes.UNIVERSAL_CHEST.get(), ::HTUniversalChestScreen)
-
-        LOGGER.info("Registered screens!")
     }
 
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {

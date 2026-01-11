@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.storge.energy
 
-import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.HTStoragePredicates
@@ -20,12 +19,10 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
     val blockEntity: BE,
     canExtract: Predicate<HTStorageAccess>,
     canInsert: Predicate<HTStorageAccess>,
-    listener: HTContentListener?,
-) : HTBasicEnergyBattery(capacity, canExtract, canInsert, listener) {
+) : HTBasicEnergyBattery(capacity, canExtract, canInsert) {
     companion object {
         @JvmStatic
-        fun input(listener: HTContentListener?, blockEntity: HTProcessorBlockEntity): Processor =
-            Processor(blockEntity.getConfig(), listener, blockEntity)
+        fun input(blockEntity: HTProcessorBlockEntity): Processor = Processor(blockEntity.getConfig(), blockEntity)
 
         /*fun <BE : HTGeneratorBlockEntity> output(listener: HTContentListener?, blockEntity: BE): Generator {
             val attribute: HTEnergyBlockAttribute = validateAttribute(blockEntity)
@@ -37,14 +34,13 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
 
     override fun getCapacity(): Int = HTUpgradeHelper.getEnergyCapacity(blockEntity, super.getCapacity())
 
-    class Processor(config: HTMachineConfig, listener: HTContentListener?, blockEntity: HTProcessorBlockEntity) :
+    class Processor(config: HTMachineConfig, blockEntity: HTProcessorBlockEntity) :
         HTMachineEnergyBattery<HTProcessorBlockEntity>(
             config.getCapacity(),
             config.getUsage(),
             blockEntity,
             HTStorageAccess.NOT_EXTERNAL,
             HTStoragePredicates.alwaysTrue(),
-            listener,
         ) {
         fun consume(): Int {
             val extracted: Int = this.extract(currentEnergyPerTick, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL)

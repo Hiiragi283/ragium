@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.processing
 
-import hiiragi283.core.api.HTContentListener
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
@@ -28,27 +30,34 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.PYROLYZER, pos, state) {
-    lateinit var outputTank: HTBasicFluidTank
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    val outputTank: HTBasicFluidTank = HTVariableFluidTank.output(getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT))
 
-    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
-        outputTank =
-            builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)))
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
+        builder.addSlot(HTSlotInfo.OUTPUT, outputTank)
     }
 
-    lateinit var inputSlot: HTBasicItemSlot
-        private set
-    lateinit var outputSlots: List<HTBasicItemSlot>
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    val inputSlot: HTBasicItemSlot = HTBasicItemSlot.input()
 
-    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
-        outputSlots = List(4) { builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener)) }
+    @DescSynced
+    @Persisted(subPersisted = true)
+    val outputSlots: List<HTBasicItemSlot> = List(4) { (HTBasicItemSlot.output()) }
+
+    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
+        builder.addSlot(HTSlotInfo.INPUT, inputSlot)
+        for (slot: HTBasicItemSlot in outputSlots) {
+            builder.addSlot(HTSlotInfo.OUTPUT, slot)
+        }
     }
 
     private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
     private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
     private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+
+    override fun setupElements(root: UIElement) {}
 
     //    Processing    //
 

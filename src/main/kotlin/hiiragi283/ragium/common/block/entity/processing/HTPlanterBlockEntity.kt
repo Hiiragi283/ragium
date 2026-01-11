@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.processing
 
-import hiiragi283.core.api.HTContentListener
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.math.div
 import hiiragi283.core.api.math.times
 import hiiragi283.core.api.recipe.HTRecipeCache
@@ -33,30 +35,36 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.lighting.LightEngine
 
 class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.PLANTER, pos, state) {
-    lateinit var inputTank: HTBasicFluidTank
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val inputTank: HTBasicFluidTank =
+        HTVariableFluidTank.input(getTankCapacity(RagiumFluidConfigType.FIRST_INPUT))
 
-    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
-        inputTank = builder.addSlot(
-            HTSlotInfo.EXTRA_INPUT,
-            HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)),
-        )
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
+        builder.addSlot(HTSlotInfo.EXTRA_INPUT, inputTank)
     }
 
-    lateinit var plantSlot: HTBasicItemSlot
-        private set
-    lateinit var soilSlot: HTBasicItemSlot
-        private set
-    lateinit var cropSlot: HTBasicItemSlot
-        private set
-    lateinit var seedSlot: HTBasicItemSlot
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val plantSlot: HTBasicItemSlot = HTBasicItemSlot.input(limit = 1)
 
-    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        plantSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener, limit = 1))
-        soilSlot = builder.addSlot(HTSlotInfo.NONE, HTBasicItemSlot.input(listener, limit = 1))
-        cropSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
-        seedSlot = builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, HTBasicItemSlot.output(listener))
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val soilSlot: HTBasicItemSlot = HTBasicItemSlot.input(limit = 1)
+
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val cropSlot: HTBasicItemSlot = HTBasicItemSlot.output()
+
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val seedSlot: HTBasicItemSlot = HTBasicItemSlot.output()
+
+    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
+        builder.addSlot(HTSlotInfo.INPUT, plantSlot)
+        builder.addSlot(HTSlotInfo.NONE, soilSlot)
+        builder.addSlot(HTSlotInfo.OUTPUT, cropSlot)
+        builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, seedSlot)
     }
 
     private val plantInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(plantSlot) }
@@ -65,6 +73,8 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
 
     private val cropOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(cropSlot) }
     private val seedOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(seedSlot) }
+
+    override fun setupElements(root: UIElement) {}
 
     //    Processing    //
 

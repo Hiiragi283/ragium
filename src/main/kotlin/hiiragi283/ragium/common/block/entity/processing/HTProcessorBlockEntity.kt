@@ -1,10 +1,7 @@
 package hiiragi283.ragium.common.block.entity.processing
 
-import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.math.div
 import hiiragi283.core.api.math.times
-import hiiragi283.core.common.inventory.container.HTContainerMenu
-import hiiragi283.core.common.inventory.slot.HTIntSyncSlot
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
@@ -19,24 +16,9 @@ import org.apache.commons.lang3.math.Fraction
 
 abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state) {
-    protected lateinit var recipeComponent: HTRecipeComponent<*, *>
-        private set
-
-    override fun initializeVariables() {
-        super.initializeVariables()
-        recipeComponent = createRecipeComponent()
-    }
+    protected val recipeComponent: HTRecipeComponent<*, *> = createRecipeComponent()
 
     protected abstract fun createRecipeComponent(): HTRecipeComponent<*, *>
-
-    //    Ticking    //
-
-    override fun addMenuTrackers(menu: HTContainerMenu) {
-        super.addMenuTrackers(menu)
-        // Progress
-        menu.track(HTIntSyncSlot.create(recipeComponent::progress))
-        menu.track(HTIntSyncSlot.create(recipeComponent::maxProgress))
-    }
 
     fun getProgress(): Fraction = recipeComponent.getProgress(isActive())
 
@@ -49,8 +31,8 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         lateinit var battery: HTMachineEnergyBattery.Processor
             protected set
 
-        final override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
-            battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
+        final override fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder) {
+            battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(this))
         }
 
         fun updateAndGetProgress(time: Int): Int {

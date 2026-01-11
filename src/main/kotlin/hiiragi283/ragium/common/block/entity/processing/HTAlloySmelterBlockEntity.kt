@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.processing
 
-import hiiragi283.core.api.HTContentListener
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.recipe.input.HTListItemRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
@@ -22,45 +24,42 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ALLOY_SMELTER, pos, state) {
-    lateinit var topInputSlot: HTBasicItemSlot
-        private set
-    lateinit var leftInputSlot: HTBasicItemSlot
-        private set
-    lateinit var rightInputSlot: HTBasicItemSlot
-        private set
-    lateinit var outputSlot: HTBasicItemSlot
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val topInputSlot: HTBasicItemSlot = HTBasicItemSlot.input(filter = { resource: HTItemResourceType ->
+        resource != leftInputSlot.getResource() && resource != rightInputSlot.getResource()
+    })
 
-    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        topInputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTBasicItemSlot.input(listener, filter = { resource: HTItemResourceType ->
-                resource != leftInputSlot.getResource() &&
-                    resource != rightInputSlot.getResource()
-            }),
-        )
-        leftInputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTBasicItemSlot.input(listener, filter = { resource: HTItemResourceType ->
-                resource != rightInputSlot.getResource() &&
-                    resource != topInputSlot.getResource()
-            }),
-        )
-        rightInputSlot = builder.addSlot(
-            HTSlotInfo.INPUT,
-            HTBasicItemSlot.input(listener, filter = { resource: HTItemResourceType ->
-                resource != topInputSlot.getResource() &&
-                    resource != leftInputSlot.getResource()
-            }),
-        )
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val leftInputSlot: HTBasicItemSlot = HTBasicItemSlot.input(filter = { resource: HTItemResourceType ->
+        resource != rightInputSlot.getResource() && resource != topInputSlot.getResource()
+    })
 
-        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val rightInputSlot: HTBasicItemSlot = HTBasicItemSlot.input(filter = { resource: HTItemResourceType ->
+        resource != topInputSlot.getResource() && resource != leftInputSlot.getResource()
+    })
+
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val outputSlot: HTBasicItemSlot = HTBasicItemSlot.output()
+
+    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
+        builder.addSlot(HTSlotInfo.INPUT, topInputSlot)
+        builder.addSlot(HTSlotInfo.INPUT, leftInputSlot)
+        builder.addSlot(HTSlotInfo.INPUT, rightInputSlot)
+
+        builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
     }
 
     private val inputHandlers: List<HTSlotInputHandler<HTItemResourceType>> by lazy {
         listOf(topInputSlot, leftInputSlot, rightInputSlot).map(::HTSlotInputHandler)
     }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+
+    override fun setupElements(root: UIElement) {}
 
     //    Processing    //
 

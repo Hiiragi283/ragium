@@ -2,43 +2,31 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.capability.HTEnergyCapabilities
-import hiiragi283.core.api.capability.HTFluidCapabilities
 import hiiragi283.core.api.collection.buildTable
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.HTMaterialTable
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.material.prefix.HTPrefixLike
-import hiiragi283.core.api.storage.energy.HTEnergyBattery
-import hiiragi283.core.api.storage.fluid.HTFluidTank
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
-import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.HTPotionDropItem
 import hiiragi283.ragium.common.item.HTUpgradeItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.storge.attachment.HTComponentHandler
-import hiiragi283.ragium.common.storge.energy.HTComponentEnergyBattery
-import hiiragi283.ragium.common.storge.energy.HTComponentEnergyHandler
-import hiiragi283.ragium.common.storge.fluid.HTComponentFluidHandler
-import hiiragi283.ragium.common.storge.fluid.HTComponentFluidTank
 import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
-import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import org.slf4j.Logger
@@ -190,7 +178,7 @@ object RagiumItems {
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Fluid
-        registerFluid(
+        /*registerFluid(
             event,
             { context: HTComponentHandler.ContainerContext ->
                 val capacity: Int = HTUpgradeHelper.getFluidCapacity(context.attachedTo, RagiumConfig.COMMON.tankCapacity.asInt)
@@ -207,7 +195,7 @@ object RagiumItems {
                 HTComponentEnergyBattery.create(context, capacity)
             },
             RagiumBlocks.BATTERY,
-        )
+        )*/
 
         // Upgrade
         for (item: Item in BuiltInRegistries.ITEM) {
@@ -228,8 +216,7 @@ object RagiumItems {
         LOGGER.info("Registered Item Capabilities!")
     }
 
-    @JvmStatic
-    fun registerFluid(
+    /*fun registerFluid(
         event: RegisterCapabilitiesEvent,
         factory: HTComponentHandler.ContainerFactory<HTFluidTank>,
         vararg items: ItemLike,
@@ -237,7 +224,7 @@ object RagiumItems {
         event.registerItem(
             HTFluidCapabilities.item,
             { stack: ItemStack, _: Void? -> HTComponentFluidHandler(stack, 1, factory) },
-            *items,
+     *items,
         )
     }
 
@@ -250,9 +237,9 @@ object RagiumItems {
         event.registerItem(
             HTEnergyCapabilities.item,
             { stack: ItemStack, _: Void? -> HTComponentEnergyHandler(stack, 1, factory) },
-            *items,
+     *items,
         )
-    }
+    }*/
 
     //    Extensions    //
 

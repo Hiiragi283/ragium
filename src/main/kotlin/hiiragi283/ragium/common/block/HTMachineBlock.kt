@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block
 
 import hiiragi283.core.api.block.HTBlockWithDescription
+import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import net.minecraft.core.Direction
@@ -9,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 
-abstract class HTMachineBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) :
+open class HTMachineBlock(private val translation: HTTranslation, type: HTDeferredBlockEntityType<*>, properties: Properties) :
     HTHorizontalEntityBlock(type, properties),
     HTBlockWithDescription {
     companion object {
@@ -25,4 +26,6 @@ abstract class HTMachineBlock(type: HTDeferredBlockEntityType<*>, properties: Pr
         super.createBlockStateDefinition(builder)
         builder.add(IS_ACTIVE)
     }
+
+    override fun getDescription(): HTTranslation = translation
 }

@@ -1,20 +1,21 @@
 package hiiragi283.ragium.common.block.entity.component
 
 import com.mojang.logging.LogUtils
-import hiiragi283.core.api.block.entity.HTBlockEntityComponent
+import hiiragi283.core.api.HTDataSerializable
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.core.api.serialization.component.HTComponentInput
-import hiiragi283.core.api.serialization.value.HTValueInput
-import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.common.storge.holder.HTSlotInfoProvider
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
-import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.NbtOps
+import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
 import org.slf4j.Logger
 import java.util.*
 
@@ -22,7 +23,7 @@ import java.util.*
  * @see mekanism.common.tile.component.TileComponentConfig
  */
 class HTSlotInfoComponent(owner: HTBlockEntity) :
-    HTBlockEntityComponent,
+    HTDataSerializable,
     HTSlotInfoProvider {
     companion object {
         @JvmField
@@ -40,27 +41,24 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
             }
     }
 
-    init {
-        owner.addComponent(this)
-    }
-
     private val slotInfoCache: MutableMap<Direction, HTSlotInfo> = EnumMap(Direction::class.java)
 
-    //    HTBlockEntityComponent    //
+    //    HTDataSerializable    //
 
-    override fun serialize(output: HTValueOutput) {
-        if (!slotInfoCache.isEmpty()) {
-            output.store(RagiumConst.SLOT_INFO, CONFIG_CODEC, slotInfoCache)
-        }
+    override fun serializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
+        if (slotInfoCache.isEmpty()) return
+        val ops: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
+        CONFIG_CODEC
+            .encode(ops, slotInfoCache)
+            .ifSuccess { nbt.put(RagiumConst.SLOT_INFO, it) }
     }
 
-    override fun deserialize(input: HTValueInput) {
-        input.read(RagiumConst.SLOT_INFO, CONFIG_CODEC)?.let(slotInfoCache::putAll)
+    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
+        val ops: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
+        CONFIG_CODEC
+            .decode(ops, nbt.getCompound(RagiumConst.SLOT_INFO))
+            .ifSuccess(slotInfoCache::putAll)
     }
-
-    override fun applyComponents(input: HTComponentInput) {}
-
-    override fun collectComponents(builder: DataComponentMap.Builder) {}
 
     //    HTSlotInfoProvider    //
 

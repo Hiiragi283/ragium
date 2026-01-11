@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.processing
 
-import hiiragi283.core.api.HTContentListener
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
@@ -28,33 +30,33 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTComplexBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    lateinit var inputTank: HTBasicFluidTank
-        private set
-    lateinit var outputTank: HTBasicFluidTank
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val inputTank: HTBasicFluidTank = HTVariableFluidTank.input(getTankCapacity(RagiumFluidConfigType.FIRST_INPUT))
 
-    final override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
-        inputTank =
-            builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)))
-        outputTank =
-            builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)))
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val outputTank: HTBasicFluidTank = HTVariableFluidTank.output(getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT))
+
+    final override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
+        builder.addSlot(HTSlotInfo.INPUT, inputTank)
+        builder.addSlot(HTSlotInfo.OUTPUT, outputTank)
     }
 
-    lateinit var inputSlot: HTBasicItemSlot
-        private set
-    lateinit var outputSlot: HTBasicItemSlot
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val inputSlot: HTBasicItemSlot = HTBasicItemSlot.input()
 
-    final override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
-        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val outputSlot: HTBasicItemSlot = HTBasicItemSlot.output()
+
+    final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
+        builder.addSlot(HTSlotInfo.INPUT, inputSlot)
+        builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
     }
 
-    private val itemInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
-    private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
-
-    private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
-    private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+    final override fun setupElements(root: UIElement) {}
 
     //    Processing    //
 
@@ -62,6 +64,12 @@ abstract class HTComplexBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         finder: HTRecipeFinder<HTItemAndFluidRecipeInput, RECIPE>,
         private val sound: SoundEvent,
     ) : HTProcessingRecipeComponent.Cached<HTItemAndFluidRecipeInput, RECIPE>(finder, this) {
+        private val itemInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+        private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
+
+        private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+        private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+
         override fun insertOutput(
             level: ServerLevel,
             pos: BlockPos,

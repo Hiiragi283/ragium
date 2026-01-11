@@ -1,8 +1,11 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.core.api.serialization.value.HTValueInput
-import hiiragi283.core.api.serialization.value.HTValueOutput
+import com.lowdragmc.lowdraglib2.gui.factory.BlockUIMenuType
+import com.lowdragmc.lowdraglib2.gui.ui.ModularUI
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
+import hiiragi283.core.util.HTModularUIHelper
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -16,19 +19,11 @@ import net.minecraft.world.level.block.state.BlockState
 class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
     HTExtendedBlockEntity(RagiumBlockEntityTypes.IMITATION_SPAWNER, pos, state),
     Spawner {
+    @DescSynced
+    @Persisted
     var spawnerMob: HTSpawnerMob? = null
 
     //    Save & Load    //
-
-    override fun writeValue(output: HTValueOutput) {
-        super.writeValue(output)
-        output.store("spawner", HTSpawnerMob.CODEC, spawnerMob)
-    }
-
-    override fun readValue(input: HTValueInput) {
-        super.readValue(input)
-        input.readAndSet("spawner", HTSpawnerMob.CODEC, ::spawnerMob::set)
-    }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
@@ -40,20 +35,15 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
         components.set(RagiumDataComponents.SPAWNER_MOB, spawnerMob)
     }
 
+    //    UI    //
+
+    override fun createUI(holder: BlockUIMenuType.BlockUIHolder): ModularUI =
+        HTModularUIHelper.createUIWithInv(holder.player, blockState.block.name) {}
+
     //    Spawner    //
 
     override fun setEntityId(entityType: EntityType<*>, random: RandomSource) {
         spawnerMob = HTSpawnerMob(entityType)
         setChanged()
-    }
-
-    override fun initReducedUpdateTag(output: HTValueOutput) {
-        super.initReducedUpdateTag(output)
-        output.store("spawner", HTSpawnerMob.CODEC, spawnerMob)
-    }
-
-    override fun handleUpdateTag(input: HTValueInput) {
-        super.handleUpdateTag(input)
-        input.readAndSet("spawner", HTSpawnerMob.CODEC, ::spawnerMob::set)
     }
 }

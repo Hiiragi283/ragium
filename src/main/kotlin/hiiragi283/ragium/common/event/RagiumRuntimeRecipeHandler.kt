@@ -167,7 +167,7 @@ object RagiumRuntimeRecipeHandler {
             val item: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
             HTSingleRecipeBuilder
                 .solidifying(
-                    event.fluidCreator.fromTagKey(molten, fluidAmount), 
+                    event.fluidCreator.fromTagKey(molten, fluidAmount),
                     event.itemCreator.fromItem(moldType),
                     event.itemResult.create(item),
                 ).saveSuffixed(event.output, "_from_molten")

@@ -8,7 +8,6 @@ import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
-import dev.emi.emi.api.widget.Bounds
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.integration.emi.HTEmiPlugin
@@ -18,8 +17,6 @@ import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.registry.getHolderDataMap
 import hiiragi283.core.api.registry.toLike
-import hiiragi283.core.client.gui.screen.HTBlockEntityContainerScreen
-import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
@@ -38,12 +35,10 @@ import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSimulatingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
-import hiiragi283.ragium.common.inventory.HTUpgradableContainerMenu
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
@@ -57,7 +52,6 @@ import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
-import java.util.function.Consumer
 import kotlin.streams.asSequence
 
 @EmiEntrypoint
@@ -110,21 +104,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
         // Misc
-        registry.addGenericExclusionArea { screen: Screen, consumer: Consumer<Bounds> ->
-            if (screen is HTBlockEntityContainerScreen<*, *>) {
-                if (screen.menu is HTUpgradableContainerMenu<*>) {
-                    consumer.accept(
-                        Bounds(
-                            screen.startX + HTSlotHelper.getSlotPosX(9),
-                            screen.startY + HTSlotHelper.getSlotPosY(-0.5),
-                            18 * 2,
-                            18 * 4,
-                        ),
-                    )
-                }
-            }
-        }
-
         registry.setDefaultComparison(
             RagiumBlocks.UNIVERSAL_CHEST.asItem(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.COLOR) },

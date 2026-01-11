@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
-import hiiragi283.core.api.HTContentListener
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
@@ -27,39 +28,35 @@ abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos
         state,
     ),
     HTSlotInfoProvider {
-    final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
+    final override fun createFluidHandler(): HTFluidTankHolder? {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
-        initializeFluidTanks(builder, listener)
+        createFluidTanks(builder)
         return builder.build()
     }
 
-    protected open fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}
+    protected open fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {}
 
-    final override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
+    final override fun createEnergyHandler(): HTEnergyBatteryHolder? {
         val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
-        initializeEnergyBattery(builder, listener)
+        createEnergyBattery(builder)
         return builder.build()
     }
 
-    protected open fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {}
+    protected open fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder) {}
 
-    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+    final override fun createItemHandler(): HTItemSlotHolder? {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
-        initializeItemSlots(builder, listener)
+        createItemSlots(builder)
         return builder.build()
     }
 
-    protected open fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {}
+    protected open fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {}
 
     //    HTSlotInfoProvider    //
 
-    override fun initializeVariables() {
-        super.initializeVariables()
-        machineSlot = HTSlotInfoComponent(this)
-    }
-
-    lateinit var machineSlot: HTSlotInfoComponent
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    val machineSlot: HTSlotInfoComponent = HTSlotInfoComponent(this)
 
     final override fun getSlotInfo(side: Direction): HTSlotInfo = machineSlot.getSlotInfo(side)
 }

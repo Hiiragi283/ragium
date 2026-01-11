@@ -59,8 +59,10 @@ object RagiumDataMapTypes {
      * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。
      */
     @Suppress("DEPRECATION")
-    fun getMobHead(entity: Entity): ItemStack =
-        entity.type.builtInRegistryHolder().getData(MOB_HEAD).let(::createItemStack)
+    fun getMobHead(entity: Entity): ItemStack = entity.type
+        .builtInRegistryHolder()
+        .getData(MOB_HEAD)
+        .let(::createItemStack)
 
     /**
      * 指定した[resource]から，一度の処理に必要な冷却材の使用量を取得します。

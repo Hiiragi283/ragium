@@ -1,21 +1,19 @@
 package hiiragi283.ragium.common.block.entity.component
 
-import hiiragi283.core.api.block.entity.HTBlockEntityComponent
+import hiiragi283.core.api.HTDataSerializable
 import hiiragi283.core.api.recipe.HTRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
-import hiiragi283.core.api.serialization.component.HTComponentSerializable
-import hiiragi283.core.api.serialization.value.HTValueInput
-import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 
 abstract class HTRecipeComponent<INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>>(protected open val owner: HTBlockEntity) :
     HTRecipeHandler<INPUT, RECIPE>(),
-    HTBlockEntityComponent,
-    HTComponentSerializable.Empty {
+    HTDataSerializable {
     //    HTRecipeHandler    //
 
     final override fun completeRecipe(
@@ -48,15 +46,15 @@ abstract class HTRecipeComponent<INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>>(
 
     protected abstract fun applyEffect()
 
-    //    HTBlockEntityComponent    //
+    //    HTDataSerializable    //
 
-    override fun serialize(output: HTValueOutput) {
-        output.putInt(RagiumConst.PROGRESS, progress)
-        output.putInt(RagiumConst.MAX_PROGRESS, maxProgress)
+    override fun serializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
+        nbt.putInt(RagiumConst.PROGRESS, progress)
+        nbt.putInt(RagiumConst.MAX_PROGRESS, maxProgress)
     }
 
-    override fun deserialize(input: HTValueInput) {
-        input.getInt(RagiumConst.PROGRESS)?.let(::progress::set)
-        input.getInt(RagiumConst.MAX_PROGRESS)?.let(::maxProgress::set)
+    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
+        nbt.getInt(RagiumConst.PROGRESS).let(::progress::set)
+        nbt.getInt(RagiumConst.MAX_PROGRESS).let(::maxProgress::set)
     }
 }

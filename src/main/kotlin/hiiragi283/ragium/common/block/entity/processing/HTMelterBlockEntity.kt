@@ -1,8 +1,12 @@
 package hiiragi283.ragium.common.block.entity.processing
 
-import hiiragi283.core.api.HTContentListener
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement
+import com.lowdragmc.lowdraglib2.gui.ui.style.LayoutStyle
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.common.gui.slot.toSlot
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
@@ -23,30 +27,42 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
+import org.appliedenergistics.yoga.YogaEdge
+import org.appliedenergistics.yoga.YogaFlexDirection
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER, pos, state) {
-    lateinit var outputTank: HTBasicFluidTank
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    val outputTank: HTBasicFluidTank = HTVariableFluidTank.output(getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT))
 
-    override fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
-        // output
-        outputTank = builder.addSlot(
-            HTSlotInfo.OUTPUT,
-            HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)),
-        )
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
+        builder.addSlot(HTSlotInfo.OUTPUT, outputTank)
     }
 
-    lateinit var inputSlot: HTBasicItemSlot
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    val inputSlot: HTBasicItemSlot = HTBasicItemSlot.create()
 
-    override fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        // input
-        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.create(listener))
+    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
+        builder.addSlot(HTSlotInfo.INPUT, inputSlot)
     }
 
     private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
     private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+
+    override fun setupElements(root: UIElement) {
+        root.addChild(
+            UIElement()
+                .layout { style: LayoutStyle -> style.setFlexDirection(YogaFlexDirection.ROW) }
+                .addChild(
+                    inputSlot.toSlot().layout { style: LayoutStyle ->
+                        style.setMargin(YogaEdge.TOP, 9f)
+                        style.setMargin(YogaEdge.LEFT, 18 * 3f)
+                    },
+                ).addChild(createFluidTank(0).layout { style: LayoutStyle -> style.setMargin(YogaEdge.LEFT, 18 * 2f) }),
+        )
+    }
 
     //    Processing    //
 

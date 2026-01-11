@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.block.entity
 
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.HTItemSlot
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -13,13 +15,9 @@ abstract class HTUpgradableBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
     HTSlotUpgradeHandler {
     //    HTSlotUpgradeHandler    //
 
-    override fun initializeVariables() {
-        super.initializeVariables()
-        this.machineUpgrade = HTMachineUpgradeComponent(this)
-    }
-
-    lateinit var machineUpgrade: HTMachineUpgradeComponent
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    val machineUpgrade: HTMachineUpgradeComponent = HTMachineUpgradeComponent(this)
 
     final override fun getUpgradeSlots(): List<HTItemSlot> = machineUpgrade.getUpgradeSlots()
 

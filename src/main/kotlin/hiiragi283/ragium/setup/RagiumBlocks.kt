@@ -2,6 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.collection.buildTable
 import hiiragi283.core.api.function.partially1
+import hiiragi283.core.api.function.partially2
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.HTMaterialTable
@@ -12,7 +13,6 @@ import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.HTBasicDeferredBlock
 import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.registry.HTDeferredMenuType
 import hiiragi283.core.common.registry.HTSimpleDeferredBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
 import hiiragi283.ragium.api.RagiumAPI
@@ -106,39 +106,39 @@ object RagiumBlocks {
     // Basic
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER, RagiumMenuTypes.ALLOY_SMELTER)
+        registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
 
     @JvmField
     val CRUSHER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER, RagiumMenuTypes.CRUSHER)
+        registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER)
 
     @JvmField
     val CUTTING_MACHINE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE, RagiumTranslation.CUTTING_MACHINE, RagiumMenuTypes.CUTTING_MACHINE)
+        registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE, RagiumTranslation.CUTTING_MACHINE)
 
     // Advanced
     @JvmField
     val DRYER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.DRYER, RagiumTranslation.DRYER, RagiumMenuTypes.DRYER)
+        registerMachine(RagiumBlockEntityTypes.DRYER, RagiumTranslation.DRYER)
 
     @JvmField
     val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER, RagiumMenuTypes.MELTER)
+        registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
 
     @JvmField
     val MIXER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER, RagiumMenuTypes.MIXER)
+        registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
 
     @JvmField
     val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER, RagiumMenuTypes.PYROLYZER)
+        registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
     //    Device    //
 
     // Basic
     @JvmField
     val PLANTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER, RagiumMenuTypes.PLANTER)
+        registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
 
     //    Storages    //
 
@@ -212,18 +212,11 @@ object RagiumBlocks {
     private fun registerMachine(
         type: HTDeferredBlockEntityType<*>,
         translation: HTTranslation,
-        menuType: HTDeferredMenuType.WithContext<*, *>? = null,
         properties: BlockBehaviour.Properties = machine(),
     ): HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> = REGISTER.register(
         type.getPath(),
         properties,
-        { properties: BlockBehaviour.Properties ->
-            object : HTMachineBlock(type, properties) {
-                override fun getDescription(): HTTranslation = translation
-
-                override fun getMenuType(): HTDeferredMenuType.WithContext<*, *>? = menuType
-            }
-        },
+        ::HTMachineBlock.partially2(translation, type),
         ::HTMachineBlockItem,
     )
 }

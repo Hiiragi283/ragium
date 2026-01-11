@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.storage
 
-import hiiragi283.core.api.HTContentListener
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement
+import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
+import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.HTStoragePredicates
@@ -14,20 +16,19 @@ import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import org.apache.commons.lang3.math.Fraction
 
 open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTUpgradableBlockEntity(type, pos, state) {
     constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.BATTERY, pos, state)
 
-    lateinit var battery: HTBasicEnergyBattery
-        private set
+    @DescSynced
+    @Persisted(subPersisted = true)
+    val battery: HTBasicEnergyBattery = BatteryEnergyBattery()
 
-    override fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
-        battery = builder.addSlot(HTSlotInfo.BOTH, BatteryEnergyBattery(listener))
+    override fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder) {
+        builder.addSlot(HTSlotInfo.BOTH, battery)
     }
 
     protected fun getCapacity(): Int = HTUpgradeHelper.getEnergyCapacity(this, RagiumConfig.COMMON.batteryCapacity.asInt)
@@ -39,27 +40,15 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         HTStackSlotHelper.calculateRedstoneLevel(battery)
 
-    //    Ticking    //
-
-    private var oldScale: Fraction = Fraction.ZERO
-
-    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
-        val scale: Fraction = battery.getStoredLevel()
-        if (scale != this.oldScale) {
-            this.oldScale = scale
-            return true
-        }
-        return false
-    }
+    final override fun setupElements(root: UIElement) {}
 
     //    BatteryEnergyBattery    //
 
-    protected inner class BatteryEnergyBattery(listener: HTContentListener) :
+    protected inner class BatteryEnergyBattery :
         HTBasicEnergyBattery(
             getCapacity(),
             HTStoragePredicates.alwaysTrue(),
             HTStoragePredicates.alwaysTrue(),
-            listener,
         ) {
         private val isCreative: Boolean get() = this@HTBatteryBlockEntity.isCreative()
 

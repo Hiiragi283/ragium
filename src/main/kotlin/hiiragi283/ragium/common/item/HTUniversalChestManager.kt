@@ -1,64 +1,35 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.core.api.serialization.value.HTValueInput
-import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.api.serialization.value.HTValueSerializable
-import hiiragi283.core.api.storage.item.HTItemHandler
-import hiiragi283.core.api.storage.item.HTItemSlot
-import hiiragi283.core.common.inventory.HTMenuCallback
-import hiiragi283.core.common.storage.HTCapabilityCodec
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.api.HTDataSerializable
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
-import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.MinecraftServer
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.sounds.SoundSource
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.DyeColor
+import net.neoforged.neoforge.items.ItemStackHandler
 
-class HTUniversalChestManager private constructor(private val map: MutableMap<DyeColor, HTItemHandler>) : HTValueSerializable {
+class HTUniversalChestManager private constructor(private val map: MutableMap<DyeColor, ItemStackHandler>) : HTDataSerializable {
     companion object {
         @JvmStatic
-        fun getHandler(server: MinecraftServer, color: DyeColor): HTItemHandler =
+        fun getHandler(server: MinecraftServer, color: DyeColor): ItemStackHandler =
             server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_CHEST).getHandler(color)
-
-        @JvmStatic
-        fun createSlots(): List<HTBasicItemSlot> = List(27) { HTBasicItemSlot.create(null) }
     }
 
     constructor() : this(mutableMapOf())
 
-    fun getHandler(color: DyeColor): HTItemHandler = map.computeIfAbsent(color) { ChestHandler() }
+    fun getHandler(color: DyeColor): ItemStackHandler = map.computeIfAbsent(color) { ItemStackHandler(27) }
 
-    override fun serialize(output: HTValueOutput) {
+    override fun serializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
         for (color: DyeColor in DyeColor.entries) {
-            val outputIn: HTValueOutput = output.child(color.serializedName)
-            val handler: HTItemHandler = getHandler(color)
-            HTCapabilityCodec.ITEM.saveTo(outputIn, handler.getItemSlots(handler.getItemSideFor()))
+            nbt.put(color.serializedName, getHandler(color).serializeNBT(provider))
         }
     }
 
-    override fun deserialize(input: HTValueInput) {
+    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
         for (color: DyeColor in DyeColor.entries) {
-            val inputIn: HTValueInput = input.child(color.serializedName) ?: continue
-            val handler: HTItemHandler = getHandler(color)
-            HTCapabilityCodec.ITEM.loadFrom(inputIn, handler.getItemSlots(handler.getItemSideFor()))
-        }
-    }
-
-    private class ChestHandler(val slots: List<HTItemSlot>) :
-        HTItemHandler,
-        HTMenuCallback {
-        constructor() : this(createSlots())
-
-        override fun getItemSlots(side: Direction?): List<HTItemSlot> = slots
-
-        override fun openMenu(player: Player) {
-            player.level().playSound(null, player.blockPosition(), SoundEvents.WOOL_PLACE, SoundSource.PLAYERS)
-        }
-
-        override fun closeMenu(player: Player) {
-            player.level().playSound(null, player.blockPosition(), SoundEvents.WOOL_BREAK, SoundSource.PLAYERS)
+            val tagIn: CompoundTag = nbt.getCompound(color.serializedName)
+            if (tagIn.isEmpty) continue
+            getHandler(color).deserializeNBT(provider, tagIn)
         }
     }
 }
