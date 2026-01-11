@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#minecraft:dark_oak_logs",
-  "result": {
-    "count": 6,
-    "id": "minecraft:dark_oak_planks"
-  }
-}

@@ -11,19 +11,18 @@ import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.common.storge.holder.HTSlotInfoProvider
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import org.slf4j.Logger
 import java.util.*
+import java.util.function.BiConsumer
+import java.util.function.Function
 
 /**
  * @see mekanism.common.tile.component.TileComponentConfig
  */
 class HTSlotInfoComponent(owner: HTBlockEntity) :
-    HTDataSerializable,
+    HTDataSerializable.CodecBased,
     HTSlotInfoProvider {
     companion object {
         @JvmField
@@ -45,18 +44,16 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
 
     //    HTDataSerializable    //
 
-    override fun serializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
+    override fun serialize(ops: RegistryOps<Tag>, consumer: BiConsumer<String, Tag>) {
         if (slotInfoCache.isEmpty()) return
-        val ops: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
         CONFIG_CODEC
             .encode(ops, slotInfoCache)
-            .ifSuccess { nbt.put(RagiumConst.SLOT_INFO, it) }
+            .ifSuccess { consumer.accept(RagiumConst.SLOT_INFO, it) }
     }
 
-    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        val ops: RegistryOps<Tag> = provider.createSerializationContext(NbtOps.INSTANCE)
+    override fun deserialize(ops: RegistryOps<Tag>, function: Function<String, Tag>) {
         CONFIG_CODEC
-            .decode(ops, nbt.getCompound(RagiumConst.SLOT_INFO))
+            .decode(ops, function.apply(RagiumConst.SLOT_INFO))
             .ifSuccess(slotInfoCache::putAll)
     }
 

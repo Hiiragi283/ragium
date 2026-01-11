@@ -1,8 +1,10 @@
 package hiiragi283.ragium
 
 import com.mojang.logging.LogUtils
+import com.mojang.serialization.Codec
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -17,6 +19,7 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
+import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 import org.slf4j.Logger
@@ -32,6 +35,7 @@ object Ragium {
         val eventBus: IEventBus = MOD_BUS
 
         eventBus.addListener(::registerRegistries)
+        eventBus.addListener(::registerDataPackRegistries)
         eventBus.addListener(RagiumMiscRegister::register)
         eventBus.addListener(::registerDataMapTypes)
 
@@ -54,6 +58,13 @@ object Ragium {
 
     private fun registerRegistries(event: NewRegistryEvent) {
         LOGGER.info("Registered new registries!")
+    }
+
+    private fun registerDataPackRegistries(event: DataPackRegistryEvent.NewRegistry) {
+        val woodDefinition: Codec<HTWoodDefinition> = HTWoodDefinition.CODEC.codec
+        event.dataPackRegistry(RagiumAPI.WOOD_DEFINITION_KEY, woodDefinition, woodDefinition)
+
+        LOGGER.info("Registered new data pack registries!")
     }
 
     @JvmStatic

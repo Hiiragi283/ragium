@@ -11,6 +11,7 @@ import hiiragi283.ragium.data.client.model.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.model.RagiumItemModelProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumWoodDefinition
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumItemTagsProvider
@@ -27,7 +28,9 @@ object RagiumDatagen {
     fun gatherData(event: GatherDataEvent) {
         HTMaterialManagerImpl.gatherAttributes(true)
 
-        val (server: HTRootDataGenerator, client: HTRootDataGenerator) = HTRootDataGenerator.withDataPack(event)
+        val (server: HTRootDataGenerator, client: HTRootDataGenerator) = HTRootDataGenerator.withDataPack(event) {
+            add(RagiumAPI.WOOD_DEFINITION_KEY, RagiumWoodDefinition)
+        }
         // Server
         server.addProvider(::RagiumRecipeProvider)
 

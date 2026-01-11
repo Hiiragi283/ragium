@@ -45,7 +45,7 @@ class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    UI    //
 
-    override fun createUI(holder: BlockUIMenuType.BlockUIHolder): ModularUI =
+    fun createUI(holder: BlockUIMenuType.BlockUIHolder): ModularUI =
         HTModularUIHelper.createUIWithInv(holder.player, blockState.block.name) {
             val rows: List<UIElement> = List(3) {
                 UIElement()

@@ -1,7 +1,5 @@
 package hiiragi283.ragium.common.block.entity.storage
 
-import com.lowdragmc.lowdraglib2.gui.factory.BlockUIMenuType
-import com.lowdragmc.lowdraglib2.gui.ui.ModularUI
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import com.lowdragmc.lowdraglib2.syncdata.annotation.UpdateListener
@@ -12,7 +10,6 @@ import hiiragi283.core.api.render.area.HTAreaDefinition
 import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.client.render.area.HTAreaRendererManager
 import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
-import hiiragi283.core.util.HTModularUIHelper
 import hiiragi283.ragium.api.block.entity.HTTargetedBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -42,9 +39,6 @@ class HTResonantInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
         super.onRemove(level, pos)
         HTAreaRendererManager.removeArea(this)
     }
-
-    override fun createUI(holder: BlockUIMenuType.BlockUIHolder): ModularUI =
-        HTModularUIHelper.createUIWithInv(holder.player, blockState.block.name) {}
 
     //    HTAreaDefinition    //
 

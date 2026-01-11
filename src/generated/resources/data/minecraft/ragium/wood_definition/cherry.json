@@ -1,0 +1,20 @@
+{
+  "log_tag": "#minecraft:cherry_logs",
+  "variants": {
+    "boat": "minecraft:cherry_boat",
+    "button": "minecraft:cherry_button",
+    "chest_boat": "minecraft:cherry_chest_boat",
+    "door": "minecraft:cherry_door",
+    "fence": "minecraft:cherry_fence",
+    "fence_gate": "minecraft:cherry_fence_gate",
+    "hanging_sign": "minecraft:cherry_hanging_sign",
+    "log": "minecraft:cherry_log",
+    "planks": "minecraft:cherry_planks",
+    "pressure_plate": "minecraft:cherry_pressure_plate",
+    "sign": "minecraft:cherry_sign",
+    "slab": "minecraft:cherry_slab",
+    "stairs": "minecraft:cherry_stairs",
+    "trapdoor": "minecraft:cherry_trapdoor",
+    "wood": "minecraft:cherry_wood"
+  }
+}

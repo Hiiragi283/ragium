@@ -13,14 +13,18 @@ import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.upgrade.HTSlotUpgradeHandler
 import hiiragi283.ragium.setup.RagiumDataComponents
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
-import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
 import net.minecraft.world.item.ItemStack
+import java.util.Optional
+import java.util.function.BiConsumer
+import java.util.function.Function
+import kotlin.jvm.optionals.getOrNull
 
 class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
     HTComponentSerializable,
-    HTDataSerializable,
+    HTDataSerializable.CodecBased,
     HTSlotUpgradeHandler {
     private val upgradeSlots: List<HTBasicItemSlot> = (0..3).map { i: Int ->
         val filter: (HTItemResourceType) -> Boolean = { isValidUpgrade(it, getUpgrades()) }
@@ -53,10 +57,25 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
 
     //    HTDataSerializable    //
 
-    override fun serializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
+    override fun serialize(ops: RegistryOps<Tag>, consumer: BiConsumer<String, Tag>) {
+        HTItemResourceType.CODEC
+            .toOptional()
+            .listOf()
+            .encode(ops, upgradeSlots.map { Optional.ofNullable(it.getResource()) })
+            .ifSuccess { consumer.accept("upgrades", it) }
     }
 
-    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
+    override fun deserialize(ops: RegistryOps<Tag>, function: Function<String, Tag>) {
+        HTItemResourceType.CODEC
+            .toOptional()
+            .listOf()
+            .decode(ops, function.apply("upgrades"))
+            .ifSuccess { resources: List<Optional<HTItemResourceType>> ->
+                for (i: Int in resources.indices) {
+                    val resource: Optional<HTItemResourceType> = resources[i]
+                    upgradeSlots[i].setResource(resource.getOrNull())
+                }
+            }
     }
 
     //    HTSlotUpgradeHandler    //

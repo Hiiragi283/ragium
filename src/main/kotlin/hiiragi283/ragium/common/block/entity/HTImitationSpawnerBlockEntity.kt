@@ -1,11 +1,8 @@
 package hiiragi283.ragium.common.block.entity
 
-import com.lowdragmc.lowdraglib2.gui.factory.BlockUIMenuType
-import com.lowdragmc.lowdraglib2.gui.ui.ModularUI
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
-import hiiragi283.core.util.HTModularUIHelper
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -34,11 +31,6 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
         super.collectImplicitComponents(components)
         components.set(RagiumDataComponents.SPAWNER_MOB, spawnerMob)
     }
-
-    //    UI    //
-
-    override fun createUI(holder: BlockUIMenuType.BlockUIHolder): ModularUI =
-        HTModularUIHelper.createUIWithInv(holder.player, blockState.block.name) {}
 
     //    Spawner    //
 

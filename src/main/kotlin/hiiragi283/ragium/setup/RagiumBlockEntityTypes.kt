@@ -6,7 +6,6 @@ import hiiragi283.core.api.capability.HTFluidCapabilities
 import hiiragi283.core.api.capability.HTItemCapabilities
 import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.common.block.HTBlockWithEntity
-import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
@@ -49,12 +48,6 @@ object RagiumBlockEntityTypes {
         REGISTER.register(eventBus)
     }
 
-    @JvmStatic
-    private fun <BE : HTBlockEntity> registerTick(
-        name: String,
-        factory: BlockEntityType.BlockEntitySupplier<BE>,
-    ): HTDeferredBlockEntityType<BE> = REGISTER.registerType(name, factory, HTBlockEntity::tickServer, HTBlockEntity::tickClient)
-
     @JvmField
     val IMITATION_SPAWNER: HTDeferredBlockEntityType<HTImitationSpawnerBlockEntity> =
         REGISTER.registerType("imitation_spawner", ::HTImitationSpawnerBlockEntity)
@@ -62,45 +55,50 @@ object RagiumBlockEntityTypes {
     //    Machine    //
 
     @JvmField
-    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = registerTick(
-        RagiumConst.ALLOY_SMELTER,
-        ::HTAlloySmelterBlockEntity,
-    )
+    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
 
     @JvmField
-    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = registerTick(RagiumConst.CRUSHER, ::HTCrusherBlockEntity)
+    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
+        REGISTER.registerTick(RagiumConst.CRUSHER, ::HTCrusherBlockEntity)
 
     @JvmField
-    val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> = registerTick(
-        RagiumConst.CUTTING_MACHINE,
-        ::HTCuttingMachineBlockEntity,
-    )
+    val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> =
+        REGISTER.registerTick(RagiumConst.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
 
     @JvmField
-    val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> = registerTick(RagiumConst.DRYER, ::HTDryerBlockEntity)
+    val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> =
+        REGISTER.registerTick(RagiumConst.DRYER, ::HTDryerBlockEntity)
 
     @JvmField
-    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
+    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
 
     @JvmField
-    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> = registerTick(RagiumConst.MIXER, ::HTMixerBlockEntity)
+    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
+        REGISTER.registerTick(RagiumConst.MIXER, ::HTMixerBlockEntity)
 
     @JvmField
-    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> = registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
+    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
 
     @JvmField
-    val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> = registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
+    val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> =
+        REGISTER.registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
 
     //    Storage    //
 
     @JvmField
-    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity> = registerTick("battery", ::HTBatteryBlockEntity)
+    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity> =
+        REGISTER.registerTick("battery", ::HTBatteryBlockEntity)
 
     @JvmField
-    val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> = registerTick("crate", ::HTCrateBlockEntity)
+    val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> =
+        REGISTER.registerTick("crate", ::HTCrateBlockEntity)
 
     @JvmField
-    val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = registerTick("tank", ::HTTankBlockEntity)
+    val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> =
+        REGISTER.registerTick("tank", ::HTTankBlockEntity)
 
     @JvmField
     val RESONANT_INTERFACE: HTDeferredBlockEntityType<HTResonantInterfaceBlockEntity> =

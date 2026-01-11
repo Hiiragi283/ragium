@@ -5,7 +5,7 @@ import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
-import hiiragi283.core.common.block.entity.HTBlockEntity
+import hiiragi283.core.common.block.entity.HTModularBlockEntity
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.component.HTSlotInfoComponent
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
@@ -18,11 +18,11 @@ import net.minecraft.core.Direction
 import net.minecraft.world.level.block.state.BlockState
 
 /**
- * 搬入出の面を制御可能な[HTBlockEntity]の拡張クラス
+ * 搬入出の面を制御可能な[HTModularBlockEntity]の拡張クラス
  * @see mekanism.common.tile.prefab.TileEntityConfigurableMachine
  */
 abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTBlockEntity(
+    HTModularBlockEntity(
         type,
         pos,
         state,

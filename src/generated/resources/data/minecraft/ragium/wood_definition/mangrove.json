@@ -1,0 +1,20 @@
+{
+  "log_tag": "#minecraft:mangrove_logs",
+  "variants": {
+    "boat": "minecraft:mangrove_boat",
+    "button": "minecraft:mangrove_button",
+    "chest_boat": "minecraft:mangrove_chest_boat",
+    "door": "minecraft:mangrove_door",
+    "fence": "minecraft:mangrove_fence",
+    "fence_gate": "minecraft:mangrove_fence_gate",
+    "hanging_sign": "minecraft:mangrove_hanging_sign",
+    "log": "minecraft:mangrove_log",
+    "planks": "minecraft:mangrove_planks",
+    "pressure_plate": "minecraft:mangrove_pressure_plate",
+    "sign": "minecraft:mangrove_sign",
+    "slab": "minecraft:mangrove_slab",
+    "stairs": "minecraft:mangrove_stairs",
+    "trapdoor": "minecraft:mangrove_trapdoor",
+    "wood": "minecraft:mangrove_wood"
+  }
+}

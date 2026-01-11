@@ -1,6 +1,7 @@
 package hiiragi283.ragium.api
 
 import hiiragi283.core.api.resource.toId
+import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
@@ -24,4 +25,7 @@ object RagiumAPI {
     private fun <T : Any> createRegistry(key: ResourceKey<Registry<T>>): Registry<T> = RegistryBuilder<T>(key)
         .sync(true)
         .create()
+
+    @JvmField
+    val WOOD_DEFINITION_KEY: ResourceKey<Registry<HTWoodDefinition>> = createKey("wood_definition")
 }

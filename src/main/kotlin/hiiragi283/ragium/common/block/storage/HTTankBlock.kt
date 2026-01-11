@@ -4,6 +4,7 @@ import hiiragi283.core.api.block.HTBlockWithDescription
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.common.block.HTBasicEntityBlock
+import hiiragi283.core.common.block.HTBlockWithModularUI
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -22,7 +23,8 @@ import net.neoforged.neoforge.fluids.FluidUtil
 
 class HTTankBlock(properties: Properties) :
     HTBasicEntityBlock(RagiumBlockEntityTypes.TANK, properties),
-    HTBlockWithDescription {
+    HTBlockWithDescription,
+    HTBlockWithModularUI {
     companion object {
         @JvmField
         val SHAPE: VoxelShape = box(2.0, 0.0, 2.0, 14.0, 16.0, 14.0)

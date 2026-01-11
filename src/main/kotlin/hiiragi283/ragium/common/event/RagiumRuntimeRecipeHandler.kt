@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.event
 
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.core.api.data.recipe.result.HTItemResultCreator
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
@@ -8,16 +10,24 @@ import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.material.property.getStorageBlock
+import hiiragi283.core.api.math.fraction
 import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.HTHolderLike
+import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import kotlin.streams.asSequence
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeRecipeHandler {
@@ -39,6 +49,7 @@ object RagiumRuntimeRecipeHandler {
 
         cutBlockToPlate(event)
         cutBaseToRod(event)
+        cutWoodFromDefinition(event)
 
         pressBaseToPrefix(event, HCMaterialPrefixes.STORAGE_BLOCK, HTMoldType.BLOCK, { it.getStorageBlock().baseCount }, 1)
         pressBaseToPrefix(event, HCMaterialPrefixes.GEAR, HTMoldType.GEAR, { 4 }, 1)
@@ -113,6 +124,116 @@ object RagiumRuntimeRecipeHandler {
                     event.itemResult.create(rod, 2),
                 ).saveSuffixed(event.output, "_from_${basePrefix.name}")
         }
+    }
+
+    @JvmStatic
+    private fun cutWoodFromDefinition(event: HTRegisterRuntimeRecipeEvent) {
+        val itemCreator: HTItemIngredientCreator = event.itemCreator
+        val itemResult: HTItemResultCreator = event.itemResult
+        val output: RecipeOutput = event.output
+
+        event.registryAccess
+            .lookupOrThrow(RagiumAPI.WOOD_DEFINITION_KEY)
+            .listElements()
+            .asSequence()
+            .map { it.toLike() }
+            .forEach { holder: HTHolderLike.HolderDelegate<HTWoodDefinition, HTWoodDefinition> ->
+                val definition: HTWoodDefinition = holder.get()
+                val planks: ItemLike = definition[HTWoodDefinition.Variant.PLANKS] ?: return@forEach
+                // Log -> 6x Planks
+                HTChancedRecipeBuilder
+                    .cutting(
+                        itemCreator.fromTagKey(definition.logTag),
+                        itemResult.create(planks, 6),
+                    ).saveSuffixed(output, "_from_log")
+                // Boat
+                definition[HTWoodDefinition.Variant.BOAT]?.let { boat ->
+                    HTChancedRecipeBuilder
+                        .cutting(
+                            itemCreator.fromItem(boat),
+                            itemResult.create(planks, 5),
+                        ).saveSuffixed(output, "_from_boat")
+                    // Chest Boat
+                    definition[HTWoodDefinition.Variant.CHEST_BOAT]?.let {
+                        HTChancedRecipeBuilder
+                            .cutting(
+                                itemCreator.fromItem(it),
+                                itemResult.create(boat),
+                            ).addResult(itemResult.create(Items.CHEST))
+                            .save(output)
+                    }
+                }
+                // Button
+                // Fence
+                definition[HTWoodDefinition.Variant.FENCE]?.let {
+                    HTChancedRecipeBuilder
+                        .cutting(
+                            itemCreator.fromItem(it),
+                            itemResult.create(planks),
+                        ).addResult(itemResult.create(Items.STICK))
+                        .saveSuffixed(output, "_from_fence")
+                }
+                // Fence Gate
+                definition[HTWoodDefinition.Variant.FENCE_GATE]?.let {
+                    HTChancedRecipeBuilder
+                        .cutting(
+                            itemCreator.fromItem(it),
+                            itemResult.create(planks, 2),
+                        ).addResult(itemResult.create(Items.STICK, 4))
+                        .saveSuffixed(output, "_from_fence_gate")
+                }
+                // Pressure Plate
+                definition[HTWoodDefinition.Variant.PRESSURE_PLATE]?.let {
+                    HTChancedRecipeBuilder
+                        .cutting(
+                            itemCreator.fromItem(it),
+                            itemResult.create(planks, 2),
+                        ).saveSuffixed(output, "_from_pressure_plate")
+                }
+                // Sign
+                definition[HTWoodDefinition.Variant.SIGN]?.let {
+                    HTChancedRecipeBuilder
+                        .cutting(
+                            itemCreator.fromItem(it),
+                            itemResult.create(planks, 2),
+                        ).addResult(itemResult.create(Items.STICK), fraction(1, 3))
+                        .saveSuffixed(output, "_from_sign")
+                }
+                // Hanging Sign
+                definition[HTWoodDefinition.Variant.HANGING_SIGN]?.let {
+                    HTChancedRecipeBuilder
+                        .cutting(
+                            itemCreator.fromItem(it),
+                            itemResult.create(planks, 4),
+                        ).addResult(itemResult.create(Items.CHAIN), fraction(1, 3))
+                        .saveSuffixed(output, "_from_hanging_sign")
+                }
+                // Slab
+                definition[HTWoodDefinition.Variant.SLAB]?.let {
+                    HTChancedRecipeBuilder
+                        .cutting(
+                            itemCreator.fromItem(planks),
+                            itemResult.create(it, 2),
+                        ).save(output)
+                }
+                // Stairs
+                // Door
+                definition[HTWoodDefinition.Variant.DOOR]?.let {
+                    HTChancedRecipeBuilder
+                        .cutting(
+                            itemCreator.fromItem(it),
+                            itemResult.create(planks, 2),
+                        ).saveSuffixed(output, "_from_door")
+                }
+                // Trapdoor
+                definition[HTWoodDefinition.Variant.TRAPDOOR]?.let {
+                    HTChancedRecipeBuilder
+                        .cutting(
+                            itemCreator.fromItem(it),
+                            itemResult.create(planks, 3),
+                        ).saveSuffixed(output, "_from_trapdoor")
+                }
+            }
     }
 
     //    Pressing    //
