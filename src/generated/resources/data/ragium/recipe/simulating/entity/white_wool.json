@@ -3,5 +3,6 @@
   "catalyst": "minecraft:sheep",
   "item_result": {
     "id": "minecraft:white_wool"
-  }
+  },
+  "time": 200
 }

@@ -4,5 +4,6 @@
   "ingredient": "#c:seeds",
   "item_result": {
     "id": "minecraft:egg"
-  }
+  },
+  "time": 200
 }

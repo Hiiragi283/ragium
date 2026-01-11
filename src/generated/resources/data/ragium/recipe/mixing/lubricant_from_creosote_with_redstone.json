@@ -8,5 +8,6 @@
     "id": "ragium:lubricant",
     "tag": "c:lubricant"
   },
-  "item_ingredient": "#c:dusts/redstone"
+  "item_ingredient": "#c:dusts/redstone",
+  "time": 200
 }

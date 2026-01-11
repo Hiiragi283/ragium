@@ -12,5 +12,6 @@
     "amount": 500,
     "id": "ragium:fuel",
     "tag": "c:fuel"
-  }
+  },
+  "time": 200
 }

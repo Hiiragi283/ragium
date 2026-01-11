@@ -10,5 +10,6 @@
     "count": 8,
     "id": "minecraft:redstone",
     "tag": "c:dusts/redstone"
-  }
+  },
+  "time": 100
 }

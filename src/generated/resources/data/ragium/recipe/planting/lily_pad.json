@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:lily_pad"
   },
-  "soil": "#c:buckets/water"
+  "soil": "#c:buckets/water",
+  "time": 200
 }

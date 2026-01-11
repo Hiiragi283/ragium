@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:potato"
   },
-  "soil": "minecraft:farmland"
+  "soil": "minecraft:farmland",
+  "time": 200
 }

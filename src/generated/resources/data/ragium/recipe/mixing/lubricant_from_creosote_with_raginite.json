@@ -8,5 +8,6 @@
     "id": "ragium:lubricant",
     "tag": "c:lubricant"
   },
-  "item_ingredient": "#c:dusts/raginite"
+  "item_ingredient": "#c:dusts/raginite",
+  "time": 200
 }

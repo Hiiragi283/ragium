@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:jungle_sapling"
   },
-  "soil": "#minecraft:dirt"
+  "soil": "#minecraft:dirt",
+  "time": 200
 }

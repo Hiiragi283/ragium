@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:crimson_fungus"
   },
-  "soil": "minecraft:crimson_nylium"
+  "soil": "minecraft:crimson_nylium",
+  "time": 200
 }

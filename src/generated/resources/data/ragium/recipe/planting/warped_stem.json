@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:warped_fungus"
   },
-  "soil": "minecraft:warped_nylium"
+  "soil": "minecraft:warped_nylium",
+  "time": 200
 }

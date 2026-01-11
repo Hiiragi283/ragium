@@ -9,5 +9,6 @@
     "id": "ragium:biofuel",
     "tag": "c:biofuel"
   },
-  "item_ingredient": "#hiiragi_core:organic_oils"
+  "item_ingredient": "#hiiragi_core:organic_oils",
+  "time": 200
 }

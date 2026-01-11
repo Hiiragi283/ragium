@@ -11,5 +11,6 @@
     "count": 2,
     "id": "minecraft:coal",
     "tag": "c:fuels/coal"
-  }
+  },
+  "time": 100
 }

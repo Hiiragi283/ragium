@@ -12,5 +12,6 @@
     "count": 8,
     "id": "minecraft:charcoal",
     "tag": "c:fuels/charcoal"
-  }
+  },
+  "time": 200
 }

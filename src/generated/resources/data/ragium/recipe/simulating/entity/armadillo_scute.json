@@ -3,5 +3,6 @@
   "catalyst": "minecraft:armadillo",
   "item_result": {
     "id": "minecraft:armadillo_scute"
-  }
+  },
+  "time": 200
 }

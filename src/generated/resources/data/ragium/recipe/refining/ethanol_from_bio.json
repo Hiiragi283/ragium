@@ -12,5 +12,6 @@
     "amount": 750,
     "id": "ragium:ethanol",
     "tag": "c:ethanol"
-  }
+  },
+  "time": 200
 }

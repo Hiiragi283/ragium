@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:horn_coral"
   },
-  "soil": "minecraft:horn_coral_block"
+  "soil": "minecraft:horn_coral_block",
+  "time": 200
 }

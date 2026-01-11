@@ -4,5 +4,6 @@
   "ingredient": "#c:gems/amethyst",
   "item_result": {
     "id": "minecraft:echo_shard"
-  }
+  },
+  "time": 200
 }

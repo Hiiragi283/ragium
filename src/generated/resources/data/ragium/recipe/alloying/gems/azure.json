@@ -14,5 +14,6 @@
     "count": 2,
     "id": "hiiragi_core:azure_shard",
     "tag": "c:gems/azure"
-  }
+  },
+  "time": 200
 }

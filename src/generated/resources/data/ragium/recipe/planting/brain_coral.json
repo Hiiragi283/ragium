@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:brain_coral"
   },
-  "soil": "minecraft:brain_coral_block"
+  "soil": "minecraft:brain_coral_block",
+  "time": 200
 }

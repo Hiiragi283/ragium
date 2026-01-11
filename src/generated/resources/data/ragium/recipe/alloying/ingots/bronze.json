@@ -25,5 +25,6 @@
   "result": {
     "count": 4,
     "tag": "c:ingots/bronze"
-  }
+  },
+  "time": 200
 }

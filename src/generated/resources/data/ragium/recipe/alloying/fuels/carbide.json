@@ -10,5 +10,6 @@
   "result": {
     "id": "hiiragi_core:carbide",
     "tag": "c:fuels/carbide"
-  }
+  },
+  "time": 200
 }

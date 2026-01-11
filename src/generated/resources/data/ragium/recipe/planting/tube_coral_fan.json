@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:tube_coral_fan"
   },
-  "soil": "minecraft:tube_coral_block"
+  "soil": "minecraft:tube_coral_block",
+  "time": 200
 }

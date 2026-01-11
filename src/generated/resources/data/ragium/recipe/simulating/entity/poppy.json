@@ -4,5 +4,6 @@
   "ingredient": "#c:fertilizers",
   "item_result": {
     "id": "minecraft:poppy"
-  }
+  },
+  "time": 200
 }

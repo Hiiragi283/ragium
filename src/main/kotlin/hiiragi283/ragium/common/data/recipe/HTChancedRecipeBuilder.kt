@@ -39,6 +39,8 @@ class HTChancedRecipeBuilder(
         extraResults += result
     }
 
+    override fun getDefaultTime(): Int = 100
+
     override fun getPrimalId(): ResourceLocation = result.getId()
 
     override fun createRecipe(): HTChancedRecipe = factory.create(

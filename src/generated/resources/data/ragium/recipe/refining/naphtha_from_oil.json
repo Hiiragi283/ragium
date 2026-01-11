@@ -10,5 +10,6 @@
     "amount": 750,
     "id": "ragium:naphtha",
     "tag": "c:naphtha"
-  }
+  },
+  "time": 200
 }

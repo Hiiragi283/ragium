@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:red_mushroom"
   },
-  "soil": "minecraft:mycelium"
+  "soil": "minecraft:mycelium",
+  "time": 200
 }

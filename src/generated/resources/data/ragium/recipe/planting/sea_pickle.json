@@ -10,5 +10,6 @@
   "soil": [
     "#c:gravels",
     "#c:sands"
-  ]
+  ],
+  "time": 200
 }

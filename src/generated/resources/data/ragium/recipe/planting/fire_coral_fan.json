@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:fire_coral_fan"
   },
-  "soil": "minecraft:fire_coral_block"
+  "soil": "minecraft:fire_coral_block",
+  "time": 200
 }

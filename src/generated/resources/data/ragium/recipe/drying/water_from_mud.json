@@ -8,5 +8,6 @@
   "ingredient": "minecraft:mud",
   "item_result": {
     "id": "minecraft:clay"
-  }
+  },
+  "time": 200
 }

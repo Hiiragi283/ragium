@@ -149,8 +149,7 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.GRAVELS),
                 itemResult.create(Items.SAND),
-            ).setTime(20 * 5)
-            .saveSuffixed(output, "_from_gravel")
+            ).saveSuffixed(output, "_from_gravel")
         // Sandstone -> Sand + Saltpeter
         HTChancedRecipeBuilder
             .crushing(

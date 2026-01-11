@@ -4,5 +4,6 @@
   "ingredient": "minecraft:glass_bottle",
   "item_result": {
     "id": "minecraft:dragon_breath"
-  }
+  },
+  "time": 200
 }

@@ -25,5 +25,6 @@
   "result": {
     "count": 3,
     "tag": "c:ingots/invar"
-  }
+  },
+  "time": 200
 }

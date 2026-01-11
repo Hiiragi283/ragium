@@ -3,5 +3,6 @@
   "ingredient": "minecraft:kelp",
   "item_result": {
     "id": "minecraft:dried_kelp"
-  }
+  },
+  "time": 200
 }

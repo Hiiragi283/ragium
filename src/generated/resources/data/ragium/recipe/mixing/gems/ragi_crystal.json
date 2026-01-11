@@ -8,5 +8,6 @@
   "item_result": {
     "id": "ragium:ragi_crystal",
     "tag": "c:gems/ragi_crystal"
-  }
+  },
+  "time": 200
 }

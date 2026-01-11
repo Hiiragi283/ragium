@@ -17,5 +17,6 @@
     "count": 2,
     "id": "minecraft:netherite_ingot",
     "tag": "c:ingots/netherite"
-  }
+  },
+  "time": 200
 }

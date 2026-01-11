@@ -19,6 +19,8 @@ class HTPyrolyzingRecipeBuilder(
             HTPyrolyzingRecipeBuilder(ingredient, itemResult, fluidResult)
     }
 
+    override fun getDefaultTime(): Int = 20 * 30
+
     override fun getPrimalId(): ResourceLocation = fluidResult.getId()
 
     override fun createRecipe(): HTPyrolyzingRecipe = HTPyrolyzingRecipe(ingredient, itemResult, fluidResult, time, exp)

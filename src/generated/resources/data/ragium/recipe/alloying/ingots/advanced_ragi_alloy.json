@@ -13,5 +13,6 @@
   "result": {
     "id": "ragium:advanced_ragi_alloy_ingot",
     "tag": "c:ingots/advanced_ragi_alloy"
-  }
+  },
+  "time": 200
 }

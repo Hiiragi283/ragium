@@ -5,5 +5,6 @@
     "amount": 375,
     "id": "hiiragi_core:molten_glass",
     "tag": "c:molten_glass"
-  }
+  },
+  "time": 200
 }

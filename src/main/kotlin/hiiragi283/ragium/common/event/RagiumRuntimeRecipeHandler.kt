@@ -105,7 +105,8 @@ object RagiumRuntimeRecipeHandler {
                 .cutting(
                     event.itemCreator.fromTagKey(HCMaterialPrefixes.STORAGE_BLOCK, key),
                     event.itemResult.create(plate, propertyMap.getStorageBlock().baseCount),
-                ).saveSuffixed(event.output, "_from_block")
+                ).modifyTime { it * 3 }
+                .saveSuffixed(event.output, "_from_block")
         }
     }
 

@@ -16,5 +16,6 @@
   "result": {
     "id": "hiiragi_core:azure_steel_ingot",
     "tag": "c:ingots/azure_steel"
-  }
+  },
+  "time": 200
 }

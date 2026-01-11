@@ -7,5 +7,6 @@
   "seed": {
     "id": "minecraft:nether_wart"
   },
-  "soil": "minecraft:soul_sand"
+  "soil": "minecraft:soul_sand",
+  "time": 200
 }

@@ -8,5 +8,6 @@
   "item_result": {
     "id": "hiiragi_core:wheat_dough",
     "tag": "c:doughs/wheat"
-  }
+  },
+  "time": 200
 }

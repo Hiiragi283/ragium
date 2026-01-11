@@ -6,5 +6,6 @@
   "seed": {
     "id": "minecraft:pumpkin_seeds"
   },
-  "soil": "minecraft:farmland"
+  "soil": "minecraft:farmland",
+  "time": 200
 }

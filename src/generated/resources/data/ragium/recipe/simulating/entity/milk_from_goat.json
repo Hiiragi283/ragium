@@ -5,5 +5,6 @@
     "amount": 500,
     "id": "minecraft:milk",
     "tag": "c:milk"
-  }
+  },
+  "time": 200
 }
