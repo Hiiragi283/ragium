@@ -40,7 +40,7 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         HTStackSlotHelper.calculateRedstoneLevel(battery)
 
-    final override fun setupElements(root: UIElement) {}
+    override fun setupMainTab(root: UIElement) {}
 
     //    BatteryEnergyBattery    //
 

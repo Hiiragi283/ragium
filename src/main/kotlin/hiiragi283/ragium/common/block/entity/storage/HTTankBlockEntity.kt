@@ -85,7 +85,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         // スロットに液体を搬出する
     }
 
-    override fun setupElements(root: UIElement) {}
+    override fun setupMainTab(root: UIElement) {}
 
     //    TankFluidTank    //
 

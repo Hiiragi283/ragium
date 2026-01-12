@@ -42,7 +42,7 @@ open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos,
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         HTStackSlotHelper.calculateRedstoneLevel(slot)
 
-    final override fun setupElements(root: UIElement) {}
+    override fun setupMainTab(root: UIElement) {}
 
     //    CrateItemSlot    //
 

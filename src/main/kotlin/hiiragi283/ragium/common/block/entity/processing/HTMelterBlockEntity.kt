@@ -1,9 +1,10 @@
 package hiiragi283.ragium.common.block.entity.processing
 
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
-import com.lowdragmc.lowdraglib2.gui.ui.style.LayoutStyle
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
+import hiiragi283.core.api.gui.element.addRowChild
+import hiiragi283.core.api.gui.element.alineCenter
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.slot.toSlot
@@ -28,7 +29,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
-import org.appliedenergistics.yoga.YogaFlexDirection
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MELTER, pos, state) {
@@ -51,15 +51,14 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
     private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
-    override fun setupElements(root: UIElement) {
-        root.addChild(
-            UIElement()
-                .layout { style: LayoutStyle -> style.setFlexDirection(YogaFlexDirection.ROW) }
-                .addChild(inputSlot.toSlot().layout { style: LayoutStyle -> style.marginLeft(18 * 2f) })
-                .addChild(HTModularUIHelper.rightArrowIcon())
-                .addChild(createFluidSlot(0).layout { style: LayoutStyle -> style.marginLeft(18f) }),
-        )
-        super.setupElements(root)
+    override fun setupMainTab(root: UIElement) {
+        root.addRowChild {
+            alineCenter()
+            addChild(inputSlot.toSlot())
+            addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(10f) })
+            addChild(createFluidSlot(0))
+        }
+        super.setupMainTab(root)
     }
 
     //    Processing    //

@@ -37,7 +37,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     //    UI    //
 
-    override fun setupElements(root: UIElement) {
+    override fun setupMainTab(root: UIElement) {
         root.addChild(
             ProgressBar()
                 .label { label: Label ->
@@ -71,8 +71,8 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
         //    UI    //
 
-        override fun setupElements(root: UIElement) {
-            super.setupElements(root)
+        override fun setupMainTab(root: UIElement) {
+            super.setupMainTab(root)
             root.addChild(
                 ProgressBar()
                     .label { label: Label ->

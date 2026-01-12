@@ -74,7 +74,9 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
     private val cropOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(cropSlot) }
     private val seedOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(seedSlot) }
 
-    override fun setupElements(root: UIElement) {}
+    override fun setupMainTab(root: UIElement) {
+        super.setupMainTab(root)
+    }
 
     //    Processing    //
 

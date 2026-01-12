@@ -3,9 +3,9 @@ package hiiragi283.ragium.common.item
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.gui.ui.elements.ItemSlot
-import com.lowdragmc.lowdraglib2.gui.ui.style.LayoutStyle
 import hiiragi283.core.api.HTDataSerializable
 import hiiragi283.core.api.capability.slotRange
+import hiiragi283.core.api.gui.element.addChildren
 import hiiragi283.core.util.HTModularUIHelper
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.core.HolderLookup
@@ -26,18 +26,15 @@ class HTUniversalChestManager private constructor(private val map: MutableMap<Dy
 
         @JvmStatic
         fun createUI(player: Player, title: Component, handler: IItemHandlerModifiable?): ModularUI =
-            HTModularUIHelper.createUIWithInv(player, title) {
-                val rows: List<UIElement> = List(3) {
-                    UIElement()
-                        .layout { style: LayoutStyle -> style.setFlexDirection(YogaFlexDirection.ROW) }
-                }
+            HTModularUIHelper.createVanillaUI(player, title) {
+                val rows: List<UIElement> = List(3) { UIElement().layout { it.setFlexDirection(YogaFlexDirection.ROW) } }
 
                 if (handler != null) {
                     for (i: Int in handler.slotRange) {
                         rows[i / 9].addChild(ItemSlot().bind(handler, i))
                     }
                 }
-                addChildren(*rows.toTypedArray())
+                addChildren(rows)
             }
     }
 
