@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.text.HTHasText
-import hiiragi283.ragium.common.text.RagiumTranslation
+import hiiragi283.ragium.api.text.RagiumTranslation
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.chat.Component
 

@@ -56,7 +56,9 @@ abstract class HTComplexBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
     }
 
-    final override fun setupElements(root: UIElement) {}
+    final override fun setupElements(root: UIElement) {
+        super.setupElements(root)
+    }
 
     //    Processing    //
 

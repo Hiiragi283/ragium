@@ -6,9 +6,9 @@ import hiiragi283.core.api.block.HTBlockWithDescription
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.common.block.HTBasicEntityBlock
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.common.item.HTUniversalChestManager
-import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level

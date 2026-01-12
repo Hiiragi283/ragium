@@ -57,7 +57,9 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
     private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
-    override fun setupElements(root: UIElement) {}
+    override fun setupElements(root: UIElement) {
+        super.setupElements(root)
+    }
 
     //    Processing    //
 

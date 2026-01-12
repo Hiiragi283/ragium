@@ -1,9 +1,9 @@
-package hiiragi283.ragium.common.text
+package hiiragi283.ragium.api.text
 
+import hiiragi283.core.api.resource.toDescriptionKey
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import net.minecraft.Util
 
 enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation {
     // Constants
@@ -58,7 +58,9 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     TOOLTIP_CHARGE_POWER("tooltip", "blast_power"),
     TOOLTIP_DIMENSION("tooltip", "dimension"),
     TOOLTIP_LOOT_TABLE_ID("tooltip", "loot_table_id"),
+    TOOLTIP_UPGRADE_EXCLUSIVE("tooltip", "upgrade", "exclusive"),
+    TOOLTIP_UPGRADE_TARGET("tooltip", "upgrade", "target"),
     ;
 
-    override val translationKey: String = Util.makeDescriptionId(type, RagiumAPI.id(path.joinToString(separator = ".")))
+    override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toDescriptionKey(type)
 }

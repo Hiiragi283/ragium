@@ -11,6 +11,7 @@ import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.util.HTModularUIHelper
 import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -27,7 +28,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
-import org.appliedenergistics.yoga.YogaEdge
 import org.appliedenergistics.yoga.YogaFlexDirection
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
@@ -55,13 +55,11 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         root.addChild(
             UIElement()
                 .layout { style: LayoutStyle -> style.setFlexDirection(YogaFlexDirection.ROW) }
-                .addChild(
-                    inputSlot.toSlot().layout { style: LayoutStyle ->
-                        style.setMargin(YogaEdge.TOP, 9f)
-                        style.setMargin(YogaEdge.LEFT, 18 * 3f)
-                    },
-                ).addChild(createFluidTank(0).layout { style: LayoutStyle -> style.setMargin(YogaEdge.LEFT, 18 * 2f) }),
+                .addChild(inputSlot.toSlot().layout { style: LayoutStyle -> style.marginLeft(18 * 2f) })
+                .addChild(HTModularUIHelper.rightArrowIcon())
+                .addChild(createFluidSlot(0).layout { style: LayoutStyle -> style.marginLeft(18f) }),
         )
+        super.setupElements(root)
     }
 
     //    Processing    //

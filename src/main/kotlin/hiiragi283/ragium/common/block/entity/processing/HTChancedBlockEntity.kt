@@ -56,7 +56,9 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     protected abstract fun getOutputSlotSize(): Int
 
-    final override fun setupElements(root: UIElement) {}
+    final override fun setupElements(root: UIElement) {
+        super.setupElements(root)
+    }
 
     //    Processing    //
 

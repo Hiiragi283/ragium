@@ -59,7 +59,9 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun setupElements(root: UIElement) {}
+    override fun setupElements(root: UIElement) {
+        super.setupElements(root)
+    }
 
     //    Processing    //
 

@@ -35,11 +35,11 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
         private val slots: MutableList<SLOT> = mutableListOf()
         private val slotMap: ImmutableMultiMap.Builder<HTSlotInfo, SLOT> = ImmutableMultiMap.Builder()
 
-        fun <T : SLOT> addSlot(info: HTSlotInfo, slot: T): T {
+        fun addSlot(info: HTSlotInfo, slot: SLOT) {
             check(!hasBuilt) { "Builder has already built" }
             slots += slot
             when (info) {
-                HTSlotInfo.NONE -> return slot
+                HTSlotInfo.NONE -> return
                 HTSlotInfo.BOTH -> {
                     slotMap.put(info, slot)
                 }
@@ -49,7 +49,6 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
                 }
             }
             LOGGER.debug("Added slot {} for config {}", slot, info)
-            return slot
         }
 
         fun build(): HOLDER? {

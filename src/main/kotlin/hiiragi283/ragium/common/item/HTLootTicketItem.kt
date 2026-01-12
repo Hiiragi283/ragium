@@ -5,8 +5,8 @@ import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.util.HTItemDropHelper
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
-import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.network.chat.Component

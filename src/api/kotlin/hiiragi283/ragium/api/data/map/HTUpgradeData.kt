@@ -5,7 +5,7 @@ import hiiragi283.core.api.math.fraction
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.text.HTCommonTranslation
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.api.upgrade.HTUpgradeKey
 import hiiragi283.ragium.api.upgrade.HTUpgradePropertyMap
@@ -63,12 +63,12 @@ data class HTUpgradeData private constructor(
         // Target Set
         targetSet
             .map(HTItemIngredient::getText)
-            .map { HTCommonTranslation.TOOLTIP_UPGRADE_TARGET.translateColored(HTDefaultColor.BLUE, HTDefaultColor.GRAY, it) }
+            .map { RagiumTranslation.TOOLTIP_UPGRADE_TARGET.translateColored(HTDefaultColor.BLUE, HTDefaultColor.GRAY, it) }
             .ifPresent(consumer)
         // Exclusive Set
         exclusiveSet
             .map(HTItemIngredient::getText)
-            .map { HTCommonTranslation.TOOLTIP_UPGRADE_EXCLUSIVE.translateColored(HTDefaultColor.RED, HTDefaultColor.GRAY, it) }
+            .map { RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE.translateColored(HTDefaultColor.RED, HTDefaultColor.GRAY, it) }
             .ifPresent(consumer)
     }
 

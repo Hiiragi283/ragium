@@ -1,7 +1,7 @@
 package hiiragi283.ragium.config
 
 import hiiragi283.core.api.text.HTHasTranslationKey
-import hiiragi283.ragium.common.text.RagiumTranslation
+import hiiragi283.ragium.api.text.RagiumTranslation
 import net.minecraft.util.StringRepresentable
 
 enum class RagiumFluidConfigType :

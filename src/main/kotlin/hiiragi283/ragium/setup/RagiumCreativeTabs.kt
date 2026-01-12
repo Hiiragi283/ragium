@@ -5,8 +5,8 @@ import hiiragi283.core.api.registry.HTDeferredHolder
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.register.HTDeferredCreativeTabRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.text.RagiumTranslation
 import net.minecraft.world.item.CreativeModeTab
 
 /**
