@@ -1,43 +1,37 @@
 package hiiragi283.ragium.client.emi.recipe
 
-import dev.emi.emi.api.widget.WidgetHolder
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement
+import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.gui.element.HTFluidSlotElement
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
-import hiiragi283.core.api.integration.emi.toEmi
-import hiiragi283.core.api.integration.emi.toFluidEmi
-import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.integration.emi.HTHolderModularEmiRecipe
+import hiiragi283.core.api.integration.emi.slot.HTListFluidTank
+import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
+import hiiragi283.ragium.common.gui.RagiumModularUIHelper
+import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
-import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.crafting.RecipeHolder
-import org.apache.commons.lang3.math.Fraction
 
-abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(
-    backgroundTex: String,
-    category: HTEmiRecipeCategory,
-    holder: RecipeHolder<RECIPE>,
-) : HTProcessingEmiRecipe<RECIPE>(backgroundTex, category, holder) {
-    init {
-        addInput(recipe.ingredient)
+class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
+    HTHolderModularEmiRecipe<RECIPE>({ recipe: RECIPE, root: UIElement ->
+        RagiumModularUIHelper.chanced(
+            root,
+            HTFluidSlotElement(HTListFluidTank(RagiumFluids.LUBRICANT.fluidTag, HTConst.DEFAULT_FLUID_AMOUNT)),
+            inputSlot(recipe.ingredient),
+            outputSlot(recipe.result),
+            recipe.extraResults.map(::outputSlot),
+        )
+        root.addChild(RagiumModularUIHelper.fakeProgress(recipe.time))
+    }, category, holder) {
+    companion object {
+        @JvmStatic
+        fun crushing(holder: RecipeHolder<HTCrushingRecipe>): HTChancedEmiRecipe<HTCrushingRecipe> =
+            HTChancedEmiRecipe(RagiumEmiRecipeCategories.CRUSHING, holder)
 
-        addOutputs(recipe.result)
-        for ((result: HTItemResult, chance: Fraction) in recipe.extraResults) {
-            addOutputs(result.toEmi().setChance(chance.toFloat()))
-        }
+        @JvmStatic
+        fun cutting(holder: RecipeHolder<HTCuttingRecipe>): HTChancedEmiRecipe<HTCuttingRecipe> =
+            HTChancedEmiRecipe(RagiumEmiRecipeCategories.CUTTING, holder)
     }
-
-    final override fun addWidgets(widgets: WidgetHolder) {
-        super.addWidgets(widgets)
-        // Input
-        widgets
-            .addTank(
-                RagiumFluids.LUBRICANT.toFluidEmi(),
-                getPosition(0.5),
-                getCapacity(RagiumFluidConfigType.FIRST_INPUT),
-            ).catalyst(true)
-        widgets.addInput(0, getPosition(2), getPosition(0.5))
-        // Output
-        addOutputSlots(widgets)
-    }
-
-    protected abstract fun addOutputSlots(widgets: WidgetHolder)
 }

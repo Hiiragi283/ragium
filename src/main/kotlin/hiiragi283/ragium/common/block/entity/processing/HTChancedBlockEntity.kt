@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.processing
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
+import hiiragi283.core.api.gui.element.HTItemSlotElement
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
@@ -12,6 +13,7 @@ import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
+import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -57,6 +59,13 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected abstract fun getOutputSlotSize(): Int
 
     final override fun setupMainTab(root: UIElement) {
+        RagiumModularUIHelper.chanced(
+            root,
+            createFluidSlot(0),
+            HTItemSlotElement(inputSlot),
+            HTItemSlotElement(outputSlots[0]),
+            outputSlots.drop(1).map(::HTItemSlotElement),
+        )
         super.setupMainTab(root)
     }
 

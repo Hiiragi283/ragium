@@ -64,12 +64,12 @@
   "gui.ragium.machine.upgrade.speed": "- 処理速度: %1$s",
   "gui.ragium.machine.upgrade.use_lubricant": "- 処理ごとに潤滑油を消費",
   "gui.ragium.machine.upgrade.void_extra": "- 追加の生産物を無効化",
-  "gui.ragium.slot.both": "双方",
-  "gui.ragium.slot.extra_input": "追加の入力",
-  "gui.ragium.slot.extra_output": "追加の出力",
-  "gui.ragium.slot.input": "入力",
-  "gui.ragium.slot.none": "なし",
-  "gui.ragium.slot.output": "出力",
+  "gui.ragium.slot.both": "%s: 双方",
+  "gui.ragium.slot.extra_input": "%s: 追加の入力",
+  "gui.ragium.slot.extra_output": "%s: 追加の出力",
+  "gui.ragium.slot.input": "%s: 入力",
+  "gui.ragium.slot.none": "%s: なし",
+  "gui.ragium.slot.output": "%s: 出力",
   "item.ragium.advanced_ragi_alloy_dust": "発展ラギ合金の粉",
   "item.ragium.advanced_ragi_alloy_gear": "発展ラギ合金の歯車",
   "item.ragium.advanced_ragi_alloy_ingot": "発展ラギ合金インゴット",
@@ -175,5 +175,7 @@
   "tooltip.ragium.blast_power": "威力: %1$s",
   "tooltip.ragium.block_pos": "座標: [%1$s, %2$s, %3$s]",
   "tooltip.ragium.dimension": "次元: %1$s",
-  "tooltip.ragium.loot_table_id": "ルートテーブル: %1$s"
+  "tooltip.ragium.loot_table_id": "ルートテーブル: %1$s",
+  "tooltip.ragium.upgrade.exclusive": "競合するアップグレード: %1$s",
+  "tooltip.ragium.upgrade.target": "アップグレードの対象: %1$s"
 }

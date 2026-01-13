@@ -60,4 +60,8 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
     //    HTSlotInfoProvider    //
 
     override fun getSlotInfo(side: Direction): HTSlotInfo = slotInfoCache.computeIfAbsent(side) { HTSlotInfo.BOTH }
+
+    fun setSlotInfo(side: Direction, info: HTSlotInfo) {
+        slotInfoCache[side] = info
+    }
 }

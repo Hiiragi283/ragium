@@ -3,17 +3,15 @@ package hiiragi283.ragium.common.block.entity.processing
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
-import hiiragi283.core.api.gui.element.addRowChild
-import hiiragi283.core.api.gui.element.alineCenter
+import hiiragi283.core.api.gui.element.HTItemSlotElement
 import hiiragi283.core.api.recipe.input.HTListItemRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.common.gui.slot.toSlot
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.util.HTModularUIHelper
 import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
+import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
@@ -64,15 +62,13 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
     override fun setupMainTab(root: UIElement) {
-        root.addRowChild {
-            alineCenter()
-            addChild(topInputSlot.toSlot())
-            addChild(HTModularUIHelper.plusIcon().layout { it.marginHorizontalPercent(5f) })
-            addChild(leftInputSlot.toSlot())
-            addChild(rightInputSlot.toSlot())
-            addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(5f) })
-            addChild(outputSlot.toSlot())
-        }
+        RagiumModularUIHelper.alloySmelter(
+            root,
+            HTItemSlotElement(topInputSlot),
+            HTItemSlotElement(leftInputSlot),
+            HTItemSlotElement(rightInputSlot),
+            HTItemSlotElement(outputSlot),
+        )
         super.setupMainTab(root)
     }
 

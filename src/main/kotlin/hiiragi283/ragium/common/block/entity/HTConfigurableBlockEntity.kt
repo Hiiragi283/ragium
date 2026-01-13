@@ -1,7 +1,16 @@
 package hiiragi283.ragium.common.block.entity
 
+import com.lowdragmc.lowdraglib2.gui.factory.BlockUIMenuType
+import com.lowdragmc.lowdraglib2.gui.ui.ModularUI
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement
+import com.lowdragmc.lowdraglib2.gui.ui.elements.Selector
+import com.lowdragmc.lowdraglib2.gui.ui.elements.Tab
+import com.lowdragmc.lowdraglib2.gui.ui.elements.TabView
+import com.lowdragmc.lowdraglib2.gui.ui.utils.UIElementProvider
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
+import hiiragi283.core.api.function.partially1
+import hiiragi283.core.api.gui.HTModularUIHelper
 import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
@@ -16,6 +25,7 @@ import hiiragi283.ragium.common.storge.holder.HTSlotInfoProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.state.BlockState
+import java.util.function.BiConsumer
 
 /**
  * 搬入出の面を制御可能な[HTModularBlockEntity]の拡張クラス
@@ -51,6 +61,41 @@ abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos
     }
 
     protected open fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {}
+
+    //    UI    //
+
+    final override fun createUI(holder: BlockUIMenuType.BlockUIHolder): ModularUI = HTModularUIHelper.createVanillaUI(
+        UIElement().addChild(
+            TabView().apply {
+                // Main
+                addTab(
+                    Tab().setText("Main"),
+                    HTModularUIHelper.createRootWithInv(name, ::setupMainTab),
+                )
+                // Sub
+                setupTab(::addTab)
+            },
+        ),
+        holder.player,
+    )
+
+    protected abstract fun setupMainTab(root: UIElement)
+
+    protected open fun setupTab(consumer: BiConsumer<Tab, UIElement>) {
+        // Slot Info
+        val element: UIElement = UIElement().addClass("panel_bg")
+
+        for (direction: Direction in Direction.entries) {
+            Selector<HTSlotInfo>()
+                .setSelected(getSlotInfo(direction), false)
+                .setCandidates(HTSlotInfo.entries)
+                .setCandidateUIProvider(UIElementProvider.text { it.getText(direction) })
+                .setOnValueChanged(machineSlot::setSlotInfo.partially1(direction))
+                .let(element::addChild)
+        }
+
+        consumer.accept(Tab().setText("Slot Info"), element)
+    }
 
     //    HTSlotInfoProvider    //
 

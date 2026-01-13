@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.emi
 
+import dev.emi.emi.api.widget.Bounds
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
-import hiiragi283.core.api.math.HTBounds
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.toHolderLike
 import hiiragi283.core.api.resource.HTIdLike
@@ -17,7 +17,7 @@ object RagiumEmiRecipeCategories {
     //    Generator    //
 
     @JvmField
-    val GENERATOR_BOUNDS = HTBounds(0, 0, 7 * 18, 1 * 18)
+    val GENERATOR_BOUNDS = Bounds(0, 0, 7 * 18, 1 * 18)
 
     @JvmStatic
     private fun generator(item: HTItemHolderLike<*>): HTEmiRecipeCategory =
@@ -40,16 +40,30 @@ object RagiumEmiRecipeCategories {
 
     //    Processor    //
 
-    @JvmField
-    val PROCESSOR_BOUNDS = HTBounds(0, 0, 8 * 18, 3 * 18)
-
     @JvmStatic
     private fun processor(hasText: HTHasText, id: ResourceLocation, vararg workStations: ItemLike): HTEmiRecipeCategory =
-        HTEmiRecipeCategory.create(PROCESSOR_BOUNDS, hasText, id, *workStations)
+        processor(hasText, id, 18 * 8, 18 * 2, *workStations)
 
     @JvmStatic
     private fun <T> processor(recipeType: T, vararg workStations: ItemLike): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike =
         processor(recipeType, recipeType.getId(), *workStations)
+
+    @JvmStatic
+    private fun processor(
+        hasText: HTHasText,
+        id: ResourceLocation,
+        width: Int,
+        height: Int,
+        vararg workStations: ItemLike,
+    ): HTEmiRecipeCategory = HTEmiRecipeCategory.create(Bounds(0, 0, width, height), hasText, id, *workStations)
+
+    @JvmStatic
+    private fun <T> processor(
+        recipeType: T,
+        width: Int,
+        height: Int,
+        vararg workStations: ItemLike,
+    ): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike = processor(recipeType, recipeType.getId(), width, height, *workStations)
 
     @JvmField
     val ALLOYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)

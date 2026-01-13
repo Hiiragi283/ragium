@@ -111,12 +111,12 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "Second Output Tank Capacity")
         add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "Third Output Tank Capacity")
 
-        add(RagiumTranslation.GUI_SLOT_BOTH, "Both")
-        add(RagiumTranslation.GUI_SLOT_INPUT, "Input")
-        add(RagiumTranslation.GUI_SLOT_OUTPUT, "Output")
-        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "Extra Input")
-        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "Extra Output")
-        add(RagiumTranslation.GUI_SLOT_NONE, "None")
+        add(RagiumTranslation.GUI_SLOT_BOTH, "%s: Both")
+        add(RagiumTranslation.GUI_SLOT_INPUT, "%s: Input")
+        add(RagiumTranslation.GUI_SLOT_OUTPUT, "%s: Output")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "%s: Extra Input")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "%s: Extra Output")
+        add(RagiumTranslation.GUI_SLOT_NONE, "%s: None")
 
         add(RagiumTranslation.DRYER, "A machine which converts ingredients into others by drying.")
         add(RagiumTranslation.MELTER, "A machine which melts item into fluid.")

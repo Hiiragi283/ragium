@@ -111,12 +111,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "2番目の出力タンクの容量")
         add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "3番目の出力タンクの容量")
 
-        add(RagiumTranslation.GUI_SLOT_BOTH, "双方")
-        add(RagiumTranslation.GUI_SLOT_INPUT, "入力")
-        add(RagiumTranslation.GUI_SLOT_OUTPUT, "出力")
-        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "追加の入力")
-        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "追加の出力")
-        add(RagiumTranslation.GUI_SLOT_NONE, "なし")
+        add(RagiumTranslation.GUI_SLOT_BOTH, "%s: 双方")
+        add(RagiumTranslation.GUI_SLOT_INPUT, "%s: 入力")
+        add(RagiumTranslation.GUI_SLOT_OUTPUT, "%s: 出力")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "%s: 追加の入力")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "%s: 追加の出力")
+        add(RagiumTranslation.GUI_SLOT_NONE, "%s: なし")
 
         add(RagiumTranslation.DRYER, "乾燥によって材料を変換する機械です。")
         add(RagiumTranslation.MELTER, "アイテムを融かして液体にする機械です。")

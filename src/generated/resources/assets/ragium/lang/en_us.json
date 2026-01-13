@@ -64,12 +64,12 @@
   "gui.ragium.machine.upgrade.speed": "- Speed: %1$s",
   "gui.ragium.machine.upgrade.use_lubricant": "- Use lubricant per operation",
   "gui.ragium.machine.upgrade.void_extra": "- Extra output disabled",
-  "gui.ragium.slot.both": "Both",
-  "gui.ragium.slot.extra_input": "Extra Input",
-  "gui.ragium.slot.extra_output": "Extra Output",
-  "gui.ragium.slot.input": "Input",
-  "gui.ragium.slot.none": "None",
-  "gui.ragium.slot.output": "Output",
+  "gui.ragium.slot.both": "%s: Both",
+  "gui.ragium.slot.extra_input": "%s: Extra Input",
+  "gui.ragium.slot.extra_output": "%s: Extra Output",
+  "gui.ragium.slot.input": "%s: Input",
+  "gui.ragium.slot.none": "%s: None",
+  "gui.ragium.slot.output": "%s: Output",
   "item.ragium.advanced_ragi_alloy_dust": "Advanced Ragi-Alloy Dust",
   "item.ragium.advanced_ragi_alloy_gear": "Advanced Ragi-Alloy Gear",
   "item.ragium.advanced_ragi_alloy_ingot": "Advanced Ragi-Alloy Ingot",
@@ -175,5 +175,7 @@
   "tooltip.ragium.blast_power": "Power: %1$s",
   "tooltip.ragium.block_pos": "Position: [%1$s, %2$s, %3$s]",
   "tooltip.ragium.dimension": "Dimension: %1$s",
-  "tooltip.ragium.loot_table_id": "Loot Table: %1$s"
+  "tooltip.ragium.loot_table_id": "Loot Table: %1$s",
+  "tooltip.ragium.upgrade.exclusive": "Conflicting Upgrades: %1$s",
+  "tooltip.ragium.upgrade.target": "Upgrade Targets: %1$s"
 }

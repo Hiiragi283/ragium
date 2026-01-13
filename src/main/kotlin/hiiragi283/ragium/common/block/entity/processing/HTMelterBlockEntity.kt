@@ -3,17 +3,15 @@ package hiiragi283.ragium.common.block.entity.processing
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
-import hiiragi283.core.api.gui.element.addRowChild
-import hiiragi283.core.api.gui.element.alineCenter
+import hiiragi283.core.api.gui.element.HTItemSlotElement
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.common.gui.slot.toSlot
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.util.HTModularUIHelper
 import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
+import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -52,12 +50,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
     override fun setupMainTab(root: UIElement) {
-        root.addRowChild {
-            alineCenter()
-            addChild(inputSlot.toSlot())
-            addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(10f) })
-            addChild(createFluidSlot(0))
-        }
+        RagiumModularUIHelper.melter(root, HTItemSlotElement(inputSlot), createFluidSlot(0))
         super.setupMainTab(root)
     }
 

@@ -5,8 +5,8 @@ import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.gui.ui.elements.ItemSlot
 import hiiragi283.core.api.HTDataSerializable
 import hiiragi283.core.api.capability.slotRange
+import hiiragi283.core.api.gui.HTModularUIHelper
 import hiiragi283.core.api.gui.element.addChildren
-import hiiragi283.core.util.HTModularUIHelper
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -34,7 +34,8 @@ class HTUniversalChestManager private constructor(private val map: MutableMap<Dy
                         rows[i / 9].addChild(ItemSlot().bind(handler, i))
                     }
                 }
-                addChildren(rows)
+
+                addChild(UIElement().addChildren(rows))
             }
     }
 

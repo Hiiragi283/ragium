@@ -3,11 +3,11 @@ package hiiragi283.ragium.common.item.block
 import com.lowdragmc.lowdraglib2.gui.factory.HeldItemUIMenuType
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI
 import hiiragi283.core.api.HiiragiCoreAPI
+import hiiragi283.core.api.gui.HTModularUIHelper
 import hiiragi283.core.api.item.HTDescriptionBlockItem
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.util.HTModularUIHelper
 import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
 import hiiragi283.ragium.common.item.HTUniversalChestManager
 import hiiragi283.ragium.setup.RagiumDataComponents
