@@ -3,13 +3,13 @@ package hiiragi283.ragium.common.block.entity.processing
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
-import hiiragi283.core.api.math.div
-import hiiragi283.core.api.math.times
+import hiiragi283.core.api.div
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.api.times
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.data.map
 
-import hiiragi283.core.api.math.toFraction
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
+import hiiragi283.core.api.toFraction
 import io.netty.buffer.ByteBuf
 import org.apache.commons.lang3.math.Fraction
 

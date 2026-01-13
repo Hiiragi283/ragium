@@ -7,10 +7,10 @@ import com.lowdragmc.lowdraglib2.gui.ui.elements.Label
 import com.lowdragmc.lowdraglib2.gui.ui.elements.ProgressBar
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
+import hiiragi283.core.api.div
 import hiiragi283.core.api.function.andThen
-import hiiragi283.core.api.math.div
-import hiiragi283.core.api.math.times
 import hiiragi283.core.api.text.HTCommonTranslation
+import hiiragi283.core.api.times
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity

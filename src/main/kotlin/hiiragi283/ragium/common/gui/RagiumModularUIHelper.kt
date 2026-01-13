@@ -42,7 +42,6 @@ object RagiumModularUIHelper {
         root: UIElement,
         lubricant: UIElement,
         input: UIElement,
-        output: UIElement,
         extraOutputs: Iterable<UIElement>,
     ) {
         root.addRowChild {
@@ -50,11 +49,7 @@ object RagiumModularUIHelper {
             addChild(lubricant)
             addChild(input)
             addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(5f) })
-            addChild(output)
-            if (extraOutputs.any()) {
-                addChild(HTModularUIHelper.plusIcon())
-                extraOutputs.forEach(this::addChild)
-            }
+            extraOutputs.forEach(this::addChild)
         }
     }
 

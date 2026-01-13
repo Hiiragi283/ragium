@@ -3,13 +3,11 @@ package hiiragi283.ragium.common.block.entity
 import com.lowdragmc.lowdraglib2.gui.factory.BlockUIMenuType
 import com.lowdragmc.lowdraglib2.gui.ui.ModularUI
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
-import com.lowdragmc.lowdraglib2.gui.ui.elements.Selector
+import com.lowdragmc.lowdraglib2.gui.ui.elements.Button
 import com.lowdragmc.lowdraglib2.gui.ui.elements.Tab
 import com.lowdragmc.lowdraglib2.gui.ui.elements.TabView
-import com.lowdragmc.lowdraglib2.gui.ui.utils.UIElementProvider
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
-import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.gui.HTModularUIHelper
 import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
@@ -81,19 +79,23 @@ abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos
 
     protected abstract fun setupMainTab(root: UIElement)
 
+    /**
+     * @see com.lowdragmc.lowdraglib2.test.ui.TestSync.createUI
+     */
     protected open fun setupTab(consumer: BiConsumer<Tab, UIElement>) {
         // Slot Info
         val element: UIElement = UIElement().addClass("panel_bg")
-
         for (direction: Direction in Direction.entries) {
-            Selector<HTSlotInfo>()
-                .setSelected(getSlotInfo(direction), false)
-                .setCandidates(HTSlotInfo.entries)
-                .setCandidateUIProvider(UIElementProvider.text { it.getText(direction) })
-                .setOnValueChanged(machineSlot::setSlotInfo.partially1(direction))
-                .let(element::addChild)
+            val button: Button = Button().setText(machineSlot.getSlotInfoText(direction))
+            button
+                .setOnServerClick {
+                    machineSlot.cycleSlotInfo(direction)
+                }.setOnClick {
+                    machineSlot.cycleSlotInfo(direction)
+                    button.setText(machineSlot.getSlotInfoText(direction))
+                }
+            element.addChild(button)
         }
-
         consumer.accept(Tab().setText("Slot Info"), element)
     }
 

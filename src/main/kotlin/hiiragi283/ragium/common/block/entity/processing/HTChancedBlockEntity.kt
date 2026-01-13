@@ -63,8 +63,7 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             root,
             createFluidSlot(0),
             HTItemSlotElement(inputSlot),
-            HTItemSlotElement(outputSlots[0]),
-            outputSlots.drop(1).map(::HTItemSlotElement),
+            outputSlots.map(::HTItemSlotElement),
         )
         super.setupMainTab(root)
     }

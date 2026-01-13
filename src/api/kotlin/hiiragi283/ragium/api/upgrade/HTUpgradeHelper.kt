@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.upgrade
 
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.math.times
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.times
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import net.minecraft.network.chat.Component

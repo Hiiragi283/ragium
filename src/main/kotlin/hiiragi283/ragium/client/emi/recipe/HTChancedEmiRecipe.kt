@@ -20,8 +20,10 @@ class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(category: HTEmiRecipeCategory
             root,
             HTFluidSlotElement(HTListFluidTank(RagiumFluids.LUBRICANT.fluidTag, HTConst.DEFAULT_FLUID_AMOUNT)),
             inputSlot(recipe.ingredient),
-            outputSlot(recipe.result),
-            recipe.extraResults.map(::outputSlot),
+            buildList {
+                add(outputSlot(recipe.result))
+                addAll(recipe.extraResults.map(::outputSlot))
+            },
         )
         root.addChild(RagiumModularUIHelper.fakeProgress(recipe.time))
     }, category, holder) {

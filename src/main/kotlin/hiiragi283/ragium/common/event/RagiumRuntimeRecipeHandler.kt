@@ -4,13 +4,13 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.core.api.data.recipe.result.HTItemResultCreator
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
+import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.material.property.getStorageBlock
-import hiiragi283.core.api.math.fraction
 import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTHolderLike

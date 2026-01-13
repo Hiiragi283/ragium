@@ -13,10 +13,10 @@ class HTComponentUpgradeHandler(private val attachedTo: ItemStack) : HTUpgradeHa
 
     override fun getUpgrades(): List<HTItemResourceType> = getComponent().mapNotNull(ItemStack::toResource)
 
-    override fun isValidUpgrade(upgrade: HTItemResourceType, existing: List<HTItemResourceType>): Boolean {
+    override fun isValidUpgrade(upgrade: HTItemResourceType): Boolean {
         val upgradeData: HTUpgradeData = RagiumDataMapTypes.getUpgradeData(upgrade) ?: return false
         val isTarget: Boolean = upgradeData.isTarget(attachedTo)
-        val isCompatible: Boolean = existing.all { resource: HTItemResourceType -> HTUpgradeData.areCompatible(upgrade, resource) }
+        val isCompatible: Boolean = getUpgrades().all { resource: HTItemResourceType -> HTUpgradeData.areCompatible(upgrade, resource) }
         return isTarget && isCompatible
     }
 }

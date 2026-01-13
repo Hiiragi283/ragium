@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.upgrade
 
-import hiiragi283.core.api.math.times
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.times
 import org.apache.commons.lang3.math.Fraction
 import java.util.function.UnaryOperator
 
@@ -11,7 +11,7 @@ import java.util.function.UnaryOperator
 interface HTUpgradeHandler {
     fun getUpgrades(): List<HTItemResourceType>
 
-    fun isValidUpgrade(upgrade: HTItemResourceType, existing: List<HTItemResourceType>): Boolean
+    fun isValidUpgrade(upgrade: HTItemResourceType): Boolean
 
     //    Extensions    //
 

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.data.map
 
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.math.fraction
+import hiiragi283.core.api.fraction
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.storage.item.HTItemResourceType

@@ -50,8 +50,8 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
         builder.addSlot(HTSlotInfo.INPUT, topInputSlot)
-        builder.addSlot(HTSlotInfo.INPUT, leftInputSlot)
-        builder.addSlot(HTSlotInfo.INPUT, rightInputSlot)
+        builder.addSlot(HTSlotInfo.EXTRA_INPUT, leftInputSlot)
+        builder.addSlot(HTSlotInfo.EXTRA_INPUT, rightInputSlot)
 
         builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
     }

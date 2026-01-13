@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
-import hiiragi283.core.api.math.toFraction
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.toFraction
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe

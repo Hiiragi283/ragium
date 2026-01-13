@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.component
 
 import com.mojang.logging.LogUtils
 import hiiragi283.core.api.HTDataSerializable
+import hiiragi283.core.api.nextEntry
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
@@ -61,7 +62,9 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
 
     override fun getSlotInfo(side: Direction): HTSlotInfo = slotInfoCache.computeIfAbsent(side) { HTSlotInfo.BOTH }
 
-    fun setSlotInfo(side: Direction, info: HTSlotInfo) {
-        slotInfoCache[side] = info
+    fun cycleSlotInfo(side: Direction) {
+        val newSlot: HTSlotInfo = getSlotInfo(side).nextEntry()
+        val oldSlot: HTSlotInfo? = slotInfoCache.put(side, newSlot)
+        LOGGER.debug("Updated slot info for {} from {} to {}", side, oldSlot, newSlot)
     }
 }
