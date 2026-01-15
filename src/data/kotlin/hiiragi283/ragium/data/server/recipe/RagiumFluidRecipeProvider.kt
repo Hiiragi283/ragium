@@ -1,17 +1,17 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.VanillaFluidContents
-import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -71,19 +71,19 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             .solidifying(
                 fluidCreator.fromTagKey(HCFluids.LATEX, 1000),
                 itemCreator.fromItem(HTMoldType.BALL),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.RAW_MATERIAL, CommonMaterialKeys.RUBBER, 2),
+                itemResult.create(HCItems.RAW_RUBBER, 2),
             ).save(output)
         // Meat
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
-                fluidResult.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT * 2),
+                createFluidResult(RagiumMaterialKeys.MEAT, HTMaterialPropertyKeys.MOLTEN_FLUID) { it * 2 },
             ).saveSuffixed(output, "_from_raw")
 
         HTSingleRecipeBuilder
             .melting(
                 itemCreator.fromItem(Items.ROTTEN_FLESH),
-                fluidResult.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT),
+                createFluidResult(RagiumMaterialKeys.MEAT, HTMaterialPropertyKeys.MOLTEN_FLUID),
             ).saveSuffixed(output, "_from_rotten")
         // Glass
         meltAndSolidify(

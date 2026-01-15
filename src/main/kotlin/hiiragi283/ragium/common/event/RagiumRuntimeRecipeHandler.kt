@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.event
 
-import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.core.api.data.recipe.result.HTItemResultCreator
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
@@ -9,6 +8,7 @@ import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
+import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.material.property.getStorageBlock
 import hiiragi283.core.api.property.HTPropertyMap
@@ -18,6 +18,7 @@ import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
+import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
@@ -57,17 +58,17 @@ object RagiumRuntimeRecipeHandler {
         pressBaseToPrefix(event, HCMaterialPrefixes.PLATE, HTMoldType.PLATE, { 1 }, 1)
 
         meltAndSolidify(event, HCMaterialPrefixes.STORAGE_BLOCK, HTMoldType.BLOCK) {
-            HTConst.INGOT_AMOUNT * it.getStorageBlock().baseCount
+            it.getDefaultFluidAmount() * it.getStorageBlock().baseCount
         }
         meltAndSolidify(event, HCMaterialPrefixes.DUST, null)
         meltAndSolidify(event, HCMaterialPrefixes.FUEL, HTMoldType.GEM)
-        meltAndSolidify(event, HCMaterialPrefixes.GEAR, HTMoldType.GEAR) { HTConst.INGOT_AMOUNT * 4 }
+        meltAndSolidify(event, HCMaterialPrefixes.GEAR, HTMoldType.GEAR) { it.getDefaultFluidAmount() * 4 }
         meltAndSolidify(event, HCMaterialPrefixes.GEM, HTMoldType.GEM)
         meltAndSolidify(event, HCMaterialPrefixes.INGOT, HTMoldType.INGOT)
-        meltAndSolidify(event, HCMaterialPrefixes.NUGGET, HTMoldType.NUGGET) { HTConst.INGOT_AMOUNT / 9 }
+        meltAndSolidify(event, HCMaterialPrefixes.NUGGET, HTMoldType.NUGGET) { it.getDefaultFluidAmount() / 9 }
         meltAndSolidify(event, HCMaterialPrefixes.PEARL, HTMoldType.GEM)
         meltAndSolidify(event, HCMaterialPrefixes.PLATE, HTMoldType.PLATE)
-        meltAndSolidify(event, HCMaterialPrefixes.ROD, HTMoldType.ROD) { HTConst.INGOT_AMOUNT / 2 }
+        meltAndSolidify(event, HCMaterialPrefixes.ROD, HTMoldType.ROD) { it.getDefaultFluidAmount() / 2 }
     }
 
     //    Crushing    //
@@ -98,6 +99,7 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun cutBlockToPlate(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
             if (!event.isPresentTag(HCMaterialPrefixes.STORAGE_BLOCK, key)) continue
             val plate: Item = event.getFirstHolder(HCMaterialPrefixes.PLATE, key)?.value() ?: continue
 
@@ -113,6 +115,7 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun cutBaseToRod(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
             val basePrefix: HTMaterialPrefix = propertyMap.getDefaultPart() ?: continue
             if (basePrefix == HCMaterialPrefixes.ROD) continue
             if (!event.isPresentTag(basePrefix, key)) continue
@@ -248,6 +251,7 @@ object RagiumRuntimeRecipeHandler {
         outputCount: Int,
     ) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
             val basePrefix: HTMaterialPrefix = propertyMap.getDefaultPart() ?: continue
             if (basePrefix == prefix) continue
             val inputCount: Int = inputCountGetter(propertyMap) ?: continue
@@ -271,9 +275,10 @@ object RagiumRuntimeRecipeHandler {
         event: HTRegisterRuntimeRecipeEvent,
         prefix: HTPrefixLike,
         moldType: HTMoldType?,
-        fluidAmountGetter: (HTPropertyMap) -> Int = { HTConst.INGOT_AMOUNT },
+        fluidAmountGetter: (HTPropertyMap) -> Int = HTPropertyMap::getDefaultFluidAmount,
     ) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
             val fluidAmount: Int = fluidAmountGetter(propertyMap)
 
             if (!event.isPresentTag(prefix, key)) continue
@@ -285,7 +290,7 @@ object RagiumRuntimeRecipeHandler {
                     event.fluidResult.create(molten, fluidAmount),
                 ).saveSuffixed(event.output, "_from_${prefix.asPrefixName()}")
             // Solidify
-            if (moldType == null) return
+            if (moldType == null) continue
             val item: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
             HTSingleRecipeBuilder
                 .solidifying(

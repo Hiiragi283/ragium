@@ -178,14 +178,14 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTAlloyingRecipeBuilder
             .create(
                 RagiumMaterialResultHelper.item(HCMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2),
-                itemCreator.fromTagKey(HCMaterialPrefixes.RAW_MATERIAL, CommonMaterialKeys.RUBBER),
+                itemCreator.fromItem(HCItems.RAW_RUBBER),
                 itemCreator.fromTagKey(HCMaterialPrefixes.DUST, CommonMaterialKeys.SULFUR),
             ).saveSuffixed(output, "_with_sulfur")
 
         HTAlloyingRecipeBuilder
             .create(
                 RagiumMaterialResultHelper.item(HCMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4),
-                itemCreator.fromTagKey(HCMaterialPrefixes.RAW_MATERIAL, CommonMaterialKeys.RUBBER),
+                itemCreator.fromItem(HCItems.RAW_RUBBER),
                 itemCreator.fromTagKey(HCMaterialPrefixes.DUST, CommonMaterialKeys.SULFUR),
                 itemCreator.fromTagKeys(
                     listOf(HCMaterialPrefixes.DUST),

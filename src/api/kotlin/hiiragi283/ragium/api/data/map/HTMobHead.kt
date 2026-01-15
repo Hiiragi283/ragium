@@ -10,7 +10,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.level.ItemLike
 
 @JvmInline
-value class HTMobHead(private val head: Holder<Item>) : HTItemHolderLike<Item> {
+value class HTMobHead(private val head: Holder<Item>) : HTItemHolderLike.Delegated<Item> {
     companion object {
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTMobHead> = BiCodec.composite(

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "ragium:item/wire/advanced_ragi_alloy",
-    "layer1": "hiiragi_core:item/wire_overlay"
-  }
-}

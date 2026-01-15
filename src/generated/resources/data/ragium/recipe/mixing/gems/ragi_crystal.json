@@ -6,7 +6,7 @@
   },
   "item_ingredient": "#c:gems/diamond",
   "item_result": {
-    "id": "ragium:ragi_crystal",
+    "id": "ragium:ragi_crystal_gem",
     "tag": "c:gems/ragi_crystal"
   },
   "time": 200

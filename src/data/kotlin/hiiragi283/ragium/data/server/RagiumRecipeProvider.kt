@@ -28,8 +28,7 @@ class RagiumRecipeProvider(context: HTDataGenContext) : HTRecipeProvider(context
         consumer.accept(
             HTMaterialRecipeProvider(
                 RagiumAPI.MOD_ID,
-                RagiumBlocks.MATERIALS,
-                RagiumItems.MATERIALS,
+                RagiumBlocks.MATERIALS::get,
                 RagiumItems.MATERIALS::get,
             ),
         )

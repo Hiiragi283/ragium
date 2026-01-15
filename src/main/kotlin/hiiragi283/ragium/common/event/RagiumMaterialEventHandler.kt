@@ -3,17 +3,18 @@ package hiiragi283.ragium.common.event
 import hiiragi283.core.api.event.HTMaterialPropertyEvent
 import hiiragi283.core.api.material.property.HTFluidMaterialProperty
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
+import hiiragi283.core.api.material.property.HTMaterialTextureSet
 import hiiragi283.core.api.material.property.HTSmeltingMaterialProperty
-import hiiragi283.core.api.material.property.addColor
 import hiiragi283.core.api.material.property.addDefaultPart
 import hiiragi283.core.api.material.property.addName
-import hiiragi283.core.api.material.property.addTemplate
-import hiiragi283.core.common.data.texture.HCTextureTemplates
+import hiiragi283.core.api.material.property.addTextureSet
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.texture.RagiumMaterialPalette
+import hiiragi283.ragium.api.material.property.HTFormingRecipeFlag
+import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.neoforged.bus.api.SubscribeEvent
@@ -30,8 +31,7 @@ object RagiumMaterialEventHandler {
             put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(RagiumFluids.MOLTEN_RAGINITE))
             if (isDataGen) {
                 addName("Raginite", "ラギナイト")
-                addColor(RagiumMaterialPalette.RAGINITE)
-                addTemplate(HCTextureTemplates.DUST_DULL)
+                addTextureSet("mineral")
             }
         }
         // Gems
@@ -39,8 +39,8 @@ object RagiumMaterialEventHandler {
             addDefaultPart(HCMaterialPrefixes.GEM)
             if (isDataGen) {
                 addName("Ragi-Crystal", "ラギクリスタル")
-                addColor(RagiumMaterialPalette.RAGINITE)
-                addTemplate(HCTextureTemplates.GEM_DIAMOND)
+                addTextureSet("diamond", HTMaterialTextureSet.SHINE)
+                put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
             }
         }
         // Alloys
@@ -48,16 +48,14 @@ object RagiumMaterialEventHandler {
             addDefaultPart(HCMaterialPrefixes.INGOT)
             if (isDataGen) {
                 addName("Ragi-Alloy", "ラギ合金")
-                addColor(RagiumMaterialPalette.RAGINITE)
-                addTemplate(HCTextureTemplates.METAL)
+                addTextureSet("dull")
+                put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
             }
         }
         event.modify(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) {
             addDefaultPart(HCMaterialPrefixes.INGOT)
             if (isDataGen) {
                 addName("Advanced Ragi-Alloy", "発展ラギ合金")
-                addColor(RagiumMaterialPalette.ADVANCED_RAGI_ALLOY)
-                addTemplate(HCTextureTemplates.METAL)
             }
         }
         // Others
@@ -81,6 +79,18 @@ object RagiumMaterialEventHandler {
                     HTSmeltingMaterialProperty.smeltingOnly(HCMaterialPrefixes.DUST, CommonMaterialKeys.ASH),
                 )
             }
+        }
+
+        // Existing
+        event.modify(VanillaMaterialKeys.GLASS) {
+            put(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG, HTFormingRecipeFlag.solidifyOnly())
+        }
+
+        event.modify(CommonMaterialKeys.PLASTIC) {
+            put(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG, HTFormingRecipeFlag.solidifyOnly())
+        }
+        event.modify(CommonMaterialKeys.RUBBER) {
+            put(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG, HTFormingRecipeFlag.solidifyOnly())
         }
     }
 }

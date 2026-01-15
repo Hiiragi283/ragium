@@ -1,7 +1,7 @@
 {
   "type": "ragium:alloying",
   "ingredient": [
-    "#c:raw_materials/rubber",
+    "hiiragi_core:raw_rubber",
     "#c:dusts/sulfur"
   ],
   "result": {

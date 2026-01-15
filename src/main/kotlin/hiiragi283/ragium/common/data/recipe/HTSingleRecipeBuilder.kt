@@ -27,7 +27,7 @@ class HTSingleRecipeBuilder<ING : Any, RES : HTRecipeResult<*>>(
 
         @JvmStatic
         fun pressing(ingredient: HTItemIngredient, catalyst: HTItemIngredient, result: HTItemResult): HTSingleRecipeBuilder<*, *> =
-            HTSingleRecipeBuilder(RagiumConst.PRESSING, ::HTPressingRecipe, ingredient to catalyst, result)
+            HTSingleRecipeBuilder(RagiumConst.PRESSING, ::HTPressingRecipe, ingredient to catalyst, result).setTime(100)
 
         @JvmStatic
         fun solidifying(ingredient: HTFluidIngredient, catalyst: HTItemIngredient, result: HTItemResult): HTSingleRecipeBuilder<*, *> =
