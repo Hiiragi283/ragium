@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
+import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
@@ -9,6 +10,7 @@ import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -56,11 +58,8 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)
             .add(RagiumBlocks.MEAT_BLOCK)
             .add(RagiumBlocks.COOKED_MEAT_BLOCK)
-        addTags(factory, Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
-            .add(RagiumItems.FISH_CAN)
-            .add(RagiumItems.FRUIT_CAN)
-            .add(RagiumItems.MEAT_CAN)
-            .add(RagiumItems.SOUP_CAN)
+        val foodsCan: HTTagBuilder<Item> = addTags(factory, Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
+        HTFoodCanType.entries.forEach(foodsCan::add)
         factory
             .apply(Tags.Items.FOODS_RAW_MEAT)
             .add(RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT))

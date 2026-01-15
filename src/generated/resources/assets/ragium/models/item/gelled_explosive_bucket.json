@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket_drip",
-  "fluid": "ragium:gelled_explosive",
-  "loader": "neoforge:fluid_container"
-}

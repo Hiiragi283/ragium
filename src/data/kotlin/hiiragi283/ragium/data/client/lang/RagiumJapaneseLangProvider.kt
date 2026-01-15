@@ -39,8 +39,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         add(RagiumBlocks.IMITATION_SPAWNER, "スポナーの模造品")
         // Fluid
-        addFluid(RagiumFluids.SLIME, "スライム")
-        addFluid(RagiumFluids.GELLED_EXPLOSIVE, "ゲル状爆薬")
         addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオ")
         addFluid(RagiumFluids.ETHANOL, "エタノール")
         addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
@@ -59,10 +57,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.TAR, "タール")
 
-        add(RagiumItems.FISH_CAN, "魚の缶詰")
-        add(RagiumItems.FRUIT_CAN, "フルーツの缶詰")
-        add(RagiumItems.MEAT_CAN, "肉の缶詰")
-        add(RagiumItems.SOUP_CAN, "スープの缶詰")
+        add(RagiumItems.EMPTY_CAN, "空の缶詰")
 
         add(RagiumItems.BLANK_DISC, "空のレコード")
         add(RagiumItems.LOCATION_TICKET, "座標チケット")

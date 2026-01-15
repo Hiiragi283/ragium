@@ -15,6 +15,7 @@ import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.text.HTHasTranslationKey
 import hiiragi283.core.common.data.lang.HTMaterialTranslationHelper
 import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
@@ -61,6 +62,10 @@ object RagiumCommonTranslation {
             }
         }
 
+        // Food Can
+        for ((canType: HTFoodCanType, item: HTHasTranslationKey) in RagiumItems.FOOD_CANS) {
+            provider.add(item, LangPattern("%s Paste Can", "%sのペースト缶詰").translate(langType, canType))
+        }
         // Mold
         for ((moldType: HTMoldType, item: HTHasTranslationKey) in RagiumItems.MOLDS) {
             provider.add(item, LangPattern("%s Mold", "%sの鋳型").translate(langType, moldType))

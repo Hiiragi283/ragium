@@ -113,8 +113,6 @@ object RagiumClient {
 
     @JvmStatic
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
-        event.dull(RagiumFluids.SLIME, Color(0x66cc66))
-        event.molten(RagiumFluids.GELLED_EXPLOSIVE, Color(0x339933))
         event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
         event.dull(RagiumFluids.ETHANOL, Color(0xccffcc))
         event.clear(RagiumFluids.BIOFUEL, Color(0x99cc00))

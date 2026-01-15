@@ -11,7 +11,6 @@ import net.minecraft.core.Holder
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.effect.MobEffect
-import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.bus.api.IEventBus
@@ -34,12 +33,6 @@ object RagiumFluids {
 
     @JvmStatic
     private fun slimy(): FluidType.Properties = create(SoundEvents.SLIME_BLOCK_PLACE, SoundEvents.SLIME_BLOCK_BREAK)
-
-    @JvmField
-    val SLIME: HTSimpleFluidContent = registerEffected("slime", slimy(), MobEffects.OOZING) { it.speedFactor(0.4f) }
-
-    @JvmField
-    val GELLED_EXPLOSIVE: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("gelled_explosive", slimy())
 
     @JvmField
     val CRUDE_BIO: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("crude_bio", slimy())

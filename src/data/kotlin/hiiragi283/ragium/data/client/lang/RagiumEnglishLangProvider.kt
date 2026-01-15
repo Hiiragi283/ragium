@@ -39,8 +39,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         add(RagiumBlocks.IMITATION_SPAWNER, "Imitation Spawner")
         // Fluid
-        addFluid(RagiumFluids.SLIME, "Slime")
-        addFluid(RagiumFluids.GELLED_EXPLOSIVE, "Gelled Explosive")
         addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
         addFluid(RagiumFluids.ETHANOL, "Ethanol")
         addFluid(RagiumFluids.BIOFUEL, "Biofuel")
@@ -59,10 +57,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.TAR, "Tar")
 
-        add(RagiumItems.FISH_CAN, "Fish Can")
-        add(RagiumItems.FRUIT_CAN, "Fruit Can")
-        add(RagiumItems.MEAT_CAN, "Meat Can")
-        add(RagiumItems.SOUP_CAN, "Soup Can")
+        add(RagiumItems.EMPTY_CAN, "Empty Can")
 
         add(RagiumItems.BLANK_DISC, "Blank Disc")
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")

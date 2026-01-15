@@ -13,6 +13,7 @@ import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
+import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTMoldType
@@ -26,7 +27,6 @@ import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import org.slf4j.Logger
@@ -100,43 +100,37 @@ object RagiumItems {
 
     //    Foods    //
 
-    @JvmStatic
-    private fun registerCan(name: String, nutrition: Int, saturation: Float): HTSimpleDeferredItem =
-        REGISTER.registerSimpleItem("${name}_can") {
+    @JvmField
+    val EMPTY_CAN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("empty_can")
+
+    @JvmField
+    val FOOD_CANS: Map<HTFoodCanType, HTSimpleDeferredItem> = HTFoodCanType.entries.associateWith { canType ->
+        val nutrition: Int = when (canType) {
+            HTFoodCanType.FISH -> 5
+            HTFoodCanType.FRUIT -> 4
+            HTFoodCanType.MEAT -> 8
+            HTFoodCanType.SOUP -> 6
+            HTFoodCanType.VEGETABLE -> 5
+        }
+        val saturation: Float = when (canType) {
+            HTFoodCanType.FISH -> 0.6f
+            HTFoodCanType.FRUIT -> 0.3f
+            HTFoodCanType.MEAT -> 0.8f
+            HTFoodCanType.SOUP -> 0.6f
+            HTFoodCanType.VEGETABLE -> 0.6f
+        }
+        REGISTER.registerSimpleItem("${canType.serializedName}_can") {
             it.food(
                 FoodProperties
                     .Builder()
                     .nutrition(nutrition)
                     .saturationModifier(saturation)
                     .fast()
-                    .usingConvertsTo(Items.IRON_NUGGET)
+                    .usingConvertsTo(EMPTY_CAN)
                     .build(),
             )
         }
-
-    /**
-     * @see Foods.COOKED_COD
-     */
-    @JvmField
-    val FISH_CAN: HTSimpleDeferredItem = registerCan("fish", 5, 0.6f)
-
-    /**
-     * @see Foods.APPLE
-     */
-    @JvmField
-    val FRUIT_CAN: HTSimpleDeferredItem = registerCan("fruit", 4, 0.3f)
-
-    /**
-     * @see Foods.COOKED_BEEF
-     */
-    @JvmField
-    val MEAT_CAN: HTSimpleDeferredItem = registerCan("meat", 8, 0.8f)
-
-    /**
-     * @see Foods.BEETROOT_SOUP
-     */
-    @JvmField
-    val SOUP_CAN: HTSimpleDeferredItem = registerCan("soup", 6, 0.6f)
+    }
 
     //    Molds    //
 

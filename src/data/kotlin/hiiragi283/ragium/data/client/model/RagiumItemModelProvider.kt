@@ -12,6 +12,7 @@ import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.register.HTSimpleFluidContent
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
@@ -33,13 +34,15 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             removeAll(RagiumItems.MATERIALS.values)
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
+            removeAll(RagiumItems.FOOD_CANS.values)
+
+            removeAll(RagiumItems.MOLDS.values)
             remove(RagiumItems.BLANK_DISC)
             remove(RagiumItems.POTION_DROP)
 
-            removeAll(RagiumItems.MOLDS.values)
             removeAll(RagiumItems.UPGRADES.values)
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
-
+        // Materials
         registerMaterials()
         existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { itemId: ResourceLocation ->
             layeredItem(
@@ -48,7 +51,11 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
                 itemId.withPrefix("item/"),
             )
         }
-
+        // Foods
+        for ((canType: HTFoodCanType, item: HTIdLike) in RagiumItems.FOOD_CANS) {
+            existTexture(item, RagiumAPI.id(HTConst.ITEM, "food_can", canType.serializedName), ::layeredItem)
+        }
+        // Utilities
         existTexture(RagiumItems.BLANK_DISC) { itemId: ResourceLocation ->
             withExistingParent(itemId.path, vanillaId(HTConst.ITEM, "template_music_disc"))
                 .texture("layer0", itemId.withPrefix("item/"))
@@ -58,8 +65,9 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         for ((moldType: HTMoldType, item: HTIdLike) in RagiumItems.MOLDS) {
             existTexture(item, RagiumAPI.id(HTConst.ITEM, "mold", moldType.serializedName), ::layeredItem)
         }
+        // Upgrades
         registerUpgrades()
-
+        // Buckets
         registerBuckets()
     }
 
@@ -95,8 +103,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
     private fun registerBuckets() {
         val dripFluids: List<HTSimpleFluidContent> = buildList {
             // Organic
-            add(RagiumFluids.SLIME)
-            add(RagiumFluids.GELLED_EXPLOSIVE)
             add(RagiumFluids.CRUDE_BIO)
             // Oil
             add(RagiumFluids.CRUDE_OIL)
