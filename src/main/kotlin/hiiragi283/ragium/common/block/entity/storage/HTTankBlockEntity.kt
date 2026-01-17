@@ -54,7 +54,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             .addChild(
                 UIElement()
                     .alineCenter()
-                    .addChild(createFluidSlot(0))
+                    .addChild(createFluidSlot(0)),
             )
     }
 
