@@ -31,7 +31,7 @@ object RagiumMaterialEventHandler {
             put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(RagiumFluids.MOLTEN_RAGINITE))
             if (isDataGen) {
                 addName("Raginite", "ラギナイト")
-                addTextureSet("mineral")
+                addTextureSet("mineral", HTMaterialTextureSet.DULL)
             }
         }
         // Gems
@@ -48,7 +48,6 @@ object RagiumMaterialEventHandler {
             addDefaultPart(HCMaterialPrefixes.INGOT)
             if (isDataGen) {
                 addName("Ragi-Alloy", "ラギ合金")
-                addTextureSet("dull")
                 put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
             }
         }
