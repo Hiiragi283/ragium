@@ -56,11 +56,6 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
     }
 
-    private val inputHandlers: List<HTSlotInputHandler<HTItemResourceType>> by lazy {
-        listOf(topInputSlot, leftInputSlot, rightInputSlot).map(::HTSlotInputHandler)
-    }
-    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
-
     override fun setupMainTab(root: UIElement) {
         RagiumModularUIHelper.alloySmelter(
             root,
@@ -79,6 +74,10 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
             RagiumRecipeTypes.ALLOYING,
             this,
         ) {
+            private val inputHandlers: List<HTSlotInputHandler<HTItemResourceType>> =
+                listOf(topInputSlot, leftInputSlot, rightInputSlot).map(::HTSlotInputHandler)
+            private val outputHandler: HTItemOutputHandler = HTItemOutputHandler.single(outputSlot)
+
             override fun insertOutput(
                 level: ServerLevel,
                 pos: BlockPos,

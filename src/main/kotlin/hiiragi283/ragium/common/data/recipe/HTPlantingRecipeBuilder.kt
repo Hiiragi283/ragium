@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.data.recipe
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.storage.item.HTItemResourceFactory
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -14,7 +15,7 @@ class HTPlantingRecipeBuilder(private val seed: HTItemResourceType, private val 
     companion object {
         @JvmStatic
         fun create(seed: ItemLike, soil: HTItemIngredient, crop: HTItemResult): HTPlantingRecipeBuilder =
-            create(HTItemResourceType.of(seed), soil, crop)
+            create(HTItemResourceFactory.fromTypeOrThrow(seed.asItem()), soil, crop)
 
         @JvmStatic
         fun create(seed: HTItemResourceType, soil: HTItemIngredient, crop: HTItemResult): HTPlantingRecipeBuilder =

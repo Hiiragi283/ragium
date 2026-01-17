@@ -12,11 +12,12 @@ object RagiumConst {
     const val FORMING_PRESS = "forming_press"
     const val MELTER = "melter"
     const val MIXER = "mixer"
-    const val PLANTER = "planter"
     const val PYROLYZER = "pyrolyzer"
     const val REFINERY = "refinery"
     const val SIMULATOR = "simulator"
     const val SOLIDIFIER = "solidifier"
+
+    const val PLANTER = "planter"
 
     const val UNIVERSAL_CHEST = "universal_chest"
 

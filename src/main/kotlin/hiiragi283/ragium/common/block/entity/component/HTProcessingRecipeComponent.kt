@@ -11,8 +11,8 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 
 abstract class HTProcessingRecipeComponent<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(
-    override val owner: HTProcessorBlockEntity.Energized,
-) : HTRecipeComponent<INPUT, RECIPE>(owner) {
+    protected val owner: HTProcessorBlockEntity.Energized,
+) : HTRecipeComponent<INPUT, RECIPE>() {
     private val battery: HTMachineEnergyBattery.Processor get() = owner.battery
 
     final override fun getMaxProgress(recipe: RECIPE): Int = getTime(recipe).let(owner::updateAndGetProgress)

@@ -8,11 +8,17 @@ import hiiragi283.core.api.material.HTMaterialTable
 import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.text.HTTranslation
+import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
+import hiiragi283.core.common.storage.component.HTComponentHandler
+import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
+import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
+import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
@@ -22,6 +28,7 @@ import hiiragi283.ragium.common.item.HTUpgradeItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
@@ -172,24 +179,24 @@ object RagiumItems {
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Fluid
-        /*registerFluid(
+        HTFluidCapabilities.registerItem(
             event,
             { context: HTComponentHandler.ContainerContext ->
                 val capacity: Int = HTUpgradeHelper.getFluidCapacity(context.attachedTo, RagiumConfig.COMMON.tankCapacity.asInt)
-                HTComponentFluidTank.create(context, capacity)
+                HTComponentFluidTank.create(capacity, context)
             },
             RagiumBlocks.TANK,
         )
 
         // Energy
-        registerEnergy(
+        HTEnergyCapabilities.registerItem(
             event,
             { context: HTComponentHandler.ContainerContext ->
                 val capacity: Int = HTUpgradeHelper.getEnergyCapacity(context.attachedTo, RagiumConfig.COMMON.batteryCapacity.asInt)
                 HTComponentEnergyBattery.create(context, capacity)
             },
             RagiumBlocks.BATTERY,
-        )*/
+        )
 
         // Upgrade
         for (item: Item in BuiltInRegistries.ITEM) {
@@ -209,31 +216,6 @@ object RagiumItems {
 
         LOGGER.info("Registered Item Capabilities!")
     }
-
-    /*fun registerFluid(
-        event: RegisterCapabilitiesEvent,
-        factory: HTComponentHandler.ContainerFactory<HTFluidTank>,
-        vararg items: ItemLike,
-    ) {
-        event.registerItem(
-            HTFluidCapabilities.item,
-            { stack: ItemStack, _: Void? -> HTComponentFluidHandler(stack, 1, factory) },
-     *items,
-        )
-    }
-
-    @JvmStatic
-    fun registerEnergy(
-        event: RegisterCapabilitiesEvent,
-        factory: HTComponentHandler.ContainerFactory<HTEnergyBattery>,
-        vararg items: ItemLike,
-    ) {
-        event.registerItem(
-            HTEnergyCapabilities.item,
-            { stack: ItemStack, _: Void? -> HTComponentEnergyHandler(stack, 1, factory) },
-     *items,
-        )
-    }*/
 
     //    Extensions    //
 

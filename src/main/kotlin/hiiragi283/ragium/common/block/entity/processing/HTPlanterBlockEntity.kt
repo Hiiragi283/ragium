@@ -81,7 +81,7 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
     //    Processing    //
 
     override fun createRecipeComponent(): HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe> =
-        object : HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe>(this) {
+        object : HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe>() {
             private val cache: HTRecipeCache<HTPlantingRecipe.Input, HTPlantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.PLANTING)
 
             override fun insertOutput(

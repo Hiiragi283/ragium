@@ -1,17 +1,14 @@
 package hiiragi283.ragium.common.block.entity.component
 
 import hiiragi283.core.api.HTDataSerializable
-import hiiragi283.core.api.recipe.HTRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
-import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.RecipeInput
 
-abstract class HTRecipeComponent<INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>>(protected open val owner: HTBlockEntity) :
+abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any> :
     HTRecipeHandler<INPUT, RECIPE>(),
     HTDataSerializable {
     //    HTRecipeHandler    //

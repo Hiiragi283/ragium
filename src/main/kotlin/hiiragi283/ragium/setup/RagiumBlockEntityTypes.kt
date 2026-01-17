@@ -1,11 +1,11 @@
 package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
-import hiiragi283.core.api.capability.HTEnergyCapabilities
-import hiiragi283.core.api.capability.HTFluidCapabilities
-import hiiragi283.core.api.capability.HTItemCapabilities
-import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.common.block.HTBlockWithEntity
+import hiiragi283.core.common.block.entity.HTBlockEntity
+import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.common.capability.HTFluidCapabilities
+import hiiragi283.core.common.capability.HTItemCapabilities
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
@@ -26,7 +26,6 @@ import hiiragi283.ragium.common.block.entity.storage.HTResonantInterfaceBlockEnt
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
@@ -54,6 +53,7 @@ object RagiumBlockEntityTypes {
 
     //    Machine    //
 
+    // Basic
     @JvmField
     val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> =
         REGISTER.registerTick(RagiumConst.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
@@ -66,6 +66,7 @@ object RagiumBlockEntityTypes {
     val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> =
         REGISTER.registerTick(RagiumConst.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
 
+    // Advanced
     @JvmField
     val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> =
         REGISTER.registerTick(RagiumConst.DRYER, ::HTDryerBlockEntity)
@@ -79,12 +80,15 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.MIXER, ::HTMixerBlockEntity)
 
     @JvmField
-    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
-
-    @JvmField
     val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> =
         REGISTER.registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
+
+    //    Device    //
+
+    // Basic
+    @JvmField
+    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
 
     //    Storage    //
 
@@ -141,19 +145,20 @@ object RagiumBlockEntityTypes {
         registerHandler(event, BATTERY.get())
         registerHandler(event, CRATE.get())
         registerHandler(event, TANK.get())
-        registerHandler(event, RESONANT_INTERFACE.get())
-        registerHandler(event, UNIVERSAL_CHEST.get())
+
+        HTItemCapabilities.registerBlockEntity(event, UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)
+
+        HTItemCapabilities.registerBlockEntity(event, RESONANT_INTERFACE.get(), HTResonantInterfaceBlockEntity::getItemHandler)
+        HTItemCapabilities.registerBlockEntity(event, RESONANT_INTERFACE.get(), HTResonantInterfaceBlockEntity::getItemHandler)
+        HTItemCapabilities.registerBlockEntity(event, RESONANT_INTERFACE.get(), HTResonantInterfaceBlockEntity::getItemHandler)
 
         LOGGER.info("Registered Block Capabilities!")
     }
 
     @JvmStatic
-    private fun <BE> registerHandler(
-        event: RegisterCapabilitiesEvent,
-        type: BlockEntityType<BE>,
-    ) where BE : BlockEntity, BE : HTHandlerProvider {
-        event.registerBlockEntity(HTItemCapabilities.block, type, HTHandlerProvider::getItemHandler)
-        event.registerBlockEntity(HTFluidCapabilities.block, type, HTHandlerProvider::getFluidHandler)
-        event.registerBlockEntity(HTEnergyCapabilities.block, type, HTHandlerProvider::getEnergyStorage)
+    private fun <BE : HTBlockEntity> registerHandler(event: RegisterCapabilitiesEvent, type: BlockEntityType<BE>) {
+        HTItemCapabilities.registerBlockEntity(event, type, HTBlockEntity::getItemHandler)
+        HTFluidCapabilities.registerBlockEntity(event, type, HTBlockEntity::getFluidHandler)
+        HTEnergyCapabilities.registerBlockEntity(event, type, HTBlockEntity::getEnergyStorage)
     }
 }

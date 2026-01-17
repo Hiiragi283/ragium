@@ -3,13 +3,13 @@ package hiiragi283.ragium.common.block.entity.storage
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import com.lowdragmc.lowdraglib2.syncdata.annotation.UpdateListener
-import hiiragi283.core.api.capability.HTEnergyCapabilities
-import hiiragi283.core.api.capability.HTFluidCapabilities
-import hiiragi283.core.api.capability.HTItemCapabilities
 import hiiragi283.core.api.render.area.HTAreaDefinition
 import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.client.render.area.HTAreaRendererManager
 import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
+import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.common.capability.HTFluidCapabilities
+import hiiragi283.core.common.capability.HTItemCapabilities
 import hiiragi283.ragium.api.block.entity.HTTargetedBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos

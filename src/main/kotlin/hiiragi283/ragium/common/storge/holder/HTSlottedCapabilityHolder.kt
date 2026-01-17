@@ -42,6 +42,8 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
                 HTSlotInfo.NONE -> return
                 HTSlotInfo.BOTH -> {
                     slotMap.put(info, slot)
+                    slotMap.put(HTSlotInfo.INPUT, slot)
+                    slotMap.put(HTSlotInfo.OUTPUT, slot)
                 }
                 else -> {
                     slotMap.put(info, slot)
