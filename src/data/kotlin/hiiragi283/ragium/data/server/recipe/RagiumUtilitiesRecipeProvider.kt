@@ -2,13 +2,13 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
+import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTStonecuttingRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
-import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.setup.HCDataComponents
@@ -37,7 +37,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder
             .create(HTMoldType.BLANK)
             .storage4()
-            .define('A', HCMaterialPrefixes.PLATE, CommonMaterialKeys.STEEL)
+            .define('A', CommonTagPrefixes.PLATE, CommonMaterialKeys.STEEL)
             .save(output)
 
         for (moldType: HTMoldType in HTMoldType.entries) {
@@ -59,7 +59,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             .create(RagiumItems.LOCATION_TICKET, 8)
             .hollow8()
             .define('A', Items.PAPER)
-            .define('B', HCMaterialPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL)
+            .define('B', CommonTagPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL)
             .saveSuffixed(output, "_with_warped")
         // Loot Ticket
         lootTickets()
@@ -80,15 +80,15 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 "AAA",
                 "BCB",
                 "DDD",
-            ).define('A', HCMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .define('C', HCMaterialPrefixes.GEAR, VanillaMaterialKeys.COPPER)
-            .define('D', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
+            ).define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.COPPER)
+            .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
 
         basic(RagiumBlocks.ALLOY_SMELTER)
             .define('B', Items.FURNACE)
             .save(output)
         basic(RagiumBlocks.CRUSHER)
-            .define('B', HCMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
+            .define('B', CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
             .save(output)
         basic(RagiumBlocks.CUTTING_MACHINE)
             .define('B', Items.IRON_AXE)
@@ -101,9 +101,9 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 "AAA",
                 "BCB",
                 "DDD",
-            ).define('A', HCMaterialPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-            .define('C', HCMaterialPrefixes.GEAR, VanillaMaterialKeys.GOLD)
-            .define('D', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
+            ).define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.GOLD)
+            .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
 
         advanced(RagiumBlocks.DRYER)
             .define('B', ItemTags.SOUL_FIRE_BASE_BLOCKS)
@@ -128,9 +128,9 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 "AAA",
                 "BCB",
                 "DDD",
-            ).define('A', HCMaterialPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL)
-            .define('C', HCMaterialPrefixes.GEAR, VanillaMaterialKeys.IRON)
-            .define('D', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
+            ).define('A', CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL)
+            .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.IRON)
+            .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
 
         basic(RagiumBlocks.PLANTER)
             .define('B', Tags.Items.GLASS_BLOCKS)
@@ -143,15 +143,15 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 "AAA",
                 "BCB",
                 "DDD",
-            ).define('A', HCMaterialPrefixes.INGOT, HCMaterialKeys.DEEP_STEEL)
-            .define('C', HCMaterialPrefixes.GEAR, VanillaMaterialKeys.NETHERITE)
-            .define('D', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
+            ).define('A', CommonTagPrefixes.INGOT, HCMaterialKeys.DEEP_STEEL)
+            .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.NETHERITE)
+            .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
     }
 
     @JvmStatic
     private fun storages() {
         // Battery, Crate, Tank
-        val ragiCrystal: TagKey<Item> = HCMaterialPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL)
+        val ragiCrystal: TagKey<Item> = CommonTagPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL)
         listOf(
             Triple(RagiumBlocks.BATTERY, ragiCrystal, HCDataComponents.ENERGY),
             Triple(RagiumBlocks.CRATE, Tags.Items.CHESTS, HCDataComponents.ITEM),
@@ -161,8 +161,8 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             HTShapedRecipeBuilder
                 .create(block)
                 .crossLayered()
-                .define('A', HCMaterialPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-                .define('B', HCMaterialPrefixes.PLATE, CommonMaterialKeys.RUBBER)
+                .define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+                .define('B', CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER)
                 .define('C', Tags.Items.GLASS_BLOCKS)
                 .define('D', core)
                 .save(output)
@@ -176,8 +176,8 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder
             .create(RagiumBlocks.UNIVERSAL_CHEST)
             .hollow8()
-            .define('A', HCMaterialPrefixes.INGOT, CommonMaterialKeys.STEEL)
-            .define('B', HCMaterialPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL)
+            .define('A', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+            .define('B', CommonTagPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL)
             .save(output)
 
         for (color: DyeColor in DyeColor.entries) {
@@ -193,7 +193,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder
             .create(RagiumItems.LOOT_TICKET)
             .cross8()
-            .define('A', HCMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            .define('A', CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             .define('B', Tags.Items.DYES_RED)
             .define('C', Items.PAPER)
             .setCategory(CraftingBookCategory.EQUIPMENT)
@@ -223,7 +223,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         // Desert Pyramid
         addLootTicket(HTDefaultLootTickets.DESERT_PYRAMID) {
             addIngredient(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
-            addIngredient(HCMaterialPrefixes.INGOT, VanillaMaterialKeys.GOLD)
+            addIngredient(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD)
         }
         // Jungle Temple
         addLootTicket(HTDefaultLootTickets.TEMPLE) {
@@ -238,7 +238,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         // Mansion
         addLootTicket(HTDefaultLootTickets.MANSION) {
             addIngredient(Items.DARK_OAK_PLANKS)
-            addIngredient(HCMaterialPrefixes.GEM, VanillaMaterialKeys.EMERALD)
+            addIngredient(CommonTagPrefixes.GEM, VanillaMaterialKeys.EMERALD)
         }
 
         // Buried Treasure
@@ -254,12 +254,12 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         // Bastion Remnant
         addLootTicket(HTDefaultLootTickets.BASTION_REMNANT) {
             addIngredient(Items.BLACKSTONE)
-            addIngredient(HCMaterialPrefixes.INGOT, VanillaMaterialKeys.GOLD)
+            addIngredient(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD)
         }
         // Ancient City
         addLootTicket(HTDefaultLootTickets.ANCIENT_CITY) {
             addIngredient(Items.DEEPSLATE_TILES)
-            addIngredient(HCMaterialPrefixes.GEM, VanillaMaterialKeys.ECHO)
+            addIngredient(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO)
         }
         // Ruined Portal
         addLootTicket(HTDefaultLootTickets.RUINED_PORTAL) {

@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.server
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.material.get
 import hiiragi283.core.common.data.recipe.HTMaterialRecipeProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.server.recipe.RagiumAlloyingRecipeProvider
@@ -19,19 +18,11 @@ import hiiragi283.ragium.data.server.recipe.RagiumPyrolyzingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumRefiningRecipeBuilder
 import hiiragi283.ragium.data.server.recipe.RagiumSimulatingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumUtilitiesRecipeProvider
-import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumItems
 import java.util.function.Consumer
 
 class RagiumRecipeProvider(context: HTDataGenContext) : HTRecipeProvider(context) {
     override fun collectProviders(consumer: Consumer<HTSubRecipeProvider>) {
-        consumer.accept(
-            HTMaterialRecipeProvider(
-                RagiumAPI.MOD_ID,
-                RagiumBlocks.MATERIALS::get,
-                RagiumItems.MATERIALS::get,
-            ),
-        )
+        consumer.accept(HTMaterialRecipeProvider(RagiumAPI.MOD_ID))
 
         consumer.accept(RagiumAlloyingRecipeProvider)
         consumer.accept(RagiumCrushingRecipeProvider)

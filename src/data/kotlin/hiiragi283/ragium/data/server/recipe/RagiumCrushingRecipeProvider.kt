@@ -1,9 +1,10 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
+import hiiragi283.core.common.data.recipe.HTMaterialResultHelper
 import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -28,18 +29,18 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Coal
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, VanillaMaterialKeys.COAL),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.FUEL, VanillaMaterialKeys.COAL, 2),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.SULFUR), 0.25f)
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, VanillaMaterialKeys.COAL),
+                HTMaterialResultHelper.item(CommonTagPrefixes.FUEL, VanillaMaterialKeys.COAL, 2),
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR), 0.25f)
             .setExp(0.3f)
             .saveSuffixed(output, "_from_ore")
 
         // Redstone
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, VanillaMaterialKeys.REDSTONE),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE, 8),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.CINNABAR))
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, VanillaMaterialKeys.REDSTONE),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE, 8),
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, CommonMaterialKeys.CINNABAR))
             .setExp(0.5f)
             .saveSuffixed(output, "_from_ore")
         // Cinnabar
@@ -49,58 +50,58 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Lapis
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, VanillaMaterialKeys.LAPIS),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.LAPIS, 12),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.SALTPETER))
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, VanillaMaterialKeys.LAPIS),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.LAPIS, 12),
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER))
             .setExp(0.7f)
             .saveSuffixed(output, "_from_ore")
         // Quartz
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, VanillaMaterialKeys.QUARTZ),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.QUARTZ, 6),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.SULFUR), 0.25f)
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, VanillaMaterialKeys.QUARTZ),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.QUARTZ, 6),
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR), 0.25f)
             .setExp(0.7f)
             .saveSuffixed(output, "_from_ore")
         // Amethyst
         // Diamond
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, VanillaMaterialKeys.DIAMOND),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.DIAMOND, 2),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.COAL), 0.25f)
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, VanillaMaterialKeys.DIAMOND),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.DIAMOND, 2),
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL), 0.25f)
             .setExp(1f)
             .saveSuffixed(output, "_from_ore")
         // Emerald
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, VanillaMaterialKeys.EMERALD),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.EMERALD, 2),
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, VanillaMaterialKeys.EMERALD),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.EMERALD, 2),
             ).setExp(1f)
             .saveSuffixed(output, "_from_ore")
 
         // Copper
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, VanillaMaterialKeys.COPPER),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.COPPER, 3),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.GOLD), 0.25f)
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, VanillaMaterialKeys.COPPER),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.COPPER, 3),
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.GOLD), 0.25f)
             .setExp(0.3f)
             .saveSuffixed(output, "_from_ore")
         // Iron
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, VanillaMaterialKeys.IRON),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.IRON, 2),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.TIN), 0.25f)
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, VanillaMaterialKeys.IRON),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.IRON, 2),
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, CommonMaterialKeys.TIN), 0.25f)
             .setExp(0.5f)
             .saveSuffixed(output, "_from_ore")
         // Gold
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, VanillaMaterialKeys.GOLD),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.GOLD, 2),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.COPPER), 0.25f)
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, VanillaMaterialKeys.GOLD),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.GOLD, 2),
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.COPPER), 0.25f)
             .setExp(0.7f)
             .saveSuffixed(output, "_from_ore")
         // Silver
@@ -108,7 +109,7 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTChancedRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.ORES_NETHERITE_SCRAP),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 2),
+                HTMaterialResultHelper.item(CommonTagPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 2),
             ).setExp(1f)
             .saveSuffixed(output, "_from_ore")
         // Deep Steel
@@ -116,16 +117,16 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Raginite
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, RagiumMaterialKeys.RAGINITE),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 8),
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, RagiumMaterialKeys.RAGINITE),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 8),
             ).setExp(0.5f)
             .saveSuffixed(output, "_from_ore")
         // Ragi-Crystal
         HTChancedRecipeBuilder
             .crushing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.ORE, RagiumMaterialKeys.RAGI_CRYSTAL),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, RagiumMaterialKeys.RAGI_CRYSTAL, 2),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE), 0.25f)
+                itemCreator.fromTagKey(CommonTagPrefixes.ORE, RagiumMaterialKeys.RAGI_CRYSTAL),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGI_CRYSTAL, 2),
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE), 0.25f)
             .setExp(1f)
             .saveSuffixed(output, "_from_ore")
     }
@@ -155,20 +156,20 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS),
                 itemResult.create(Items.SAND, 2),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.SALTPETER), 0.25f)
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER), 0.25f)
             .saveSuffixed(output, "_from_sandstone")
 
         HTChancedRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.SANDSTONE_RED_BLOCKS),
                 itemResult.create(Items.RED_SAND, 2),
-            ).addResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, CommonMaterialKeys.SALTPETER), 0.25f)
+            ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER), 0.25f)
             .saveSuffixed(output, "_from_sandstone")
         // Obsidian Dust
         HTChancedRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN),
             ).save(output)
     }
 
@@ -179,7 +180,7 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             HTChancedRecipeBuilder
                 .crushing(
                     itemCreator.fromTagKey(tagKey, input),
-                    RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, VanillaMaterialKeys.WOOD, output),
+                    HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, output),
                 ).saveSuffixed(RagiumCrushingRecipeProvider.output, "_from_${tagKey.location().path}")
         }
 
@@ -211,7 +212,7 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTChancedRecipeBuilder
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
-                RagiumMaterialResultHelper.item(HCMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT),
+                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, RagiumMaterialKeys.MEAT),
             ).save(output)
 
         // Pulped Fish

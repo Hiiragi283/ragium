@@ -5,8 +5,6 @@ import hiiragi283.core.api.data.recipe.result.HTItemResultCreator
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
-import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.material.property.getDefaultPart
@@ -15,7 +13,9 @@ import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.registry.toLike
-import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HTTagPrefix
+import hiiragi283.core.api.tag.property.HTTagPropertyKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
@@ -34,41 +35,39 @@ import kotlin.streams.asSequence
 object RagiumRuntimeRecipeHandler {
     @SubscribeEvent
     fun registerRuntimeRecipe(event: HTRegisterRuntimeRecipeEvent) {
-        crushPrefixToDust(event, HCMaterialPrefixes.STORAGE_BLOCK, 1) { it.getStorageBlock().baseCount }
-        crushPrefixToDust(event, HCMaterialPrefixes.STORAGE_BLOCK_RAW, 1) { 12 }
+        crushPrefixToDust(event, CommonTagPrefixes.BLOCK, 1) { it.getStorageBlock().baseCount }
+        crushPrefixToDust(event, CommonTagPrefixes.RAW_BLOCK, 1) { 12 }
 
-        crushPrefixToDust(event, HCMaterialPrefixes.FUEL, 1)
-        crushPrefixToDust(event, HCMaterialPrefixes.GEAR, 1) { 4 }
-        crushPrefixToDust(event, HCMaterialPrefixes.GEM, 1)
-        crushPrefixToDust(event, HCMaterialPrefixes.INGOT, 1)
-        crushPrefixToDust(event, HCMaterialPrefixes.NUGGET, 9)
-        crushPrefixToDust(event, HCMaterialPrefixes.PEARL, 1)
-        crushPrefixToDust(event, HCMaterialPrefixes.PLATE, 1)
-        crushPrefixToDust(event, HCMaterialPrefixes.RAW_MATERIAL, 3) { 4 }
-        crushPrefixToDust(event, HCMaterialPrefixes.ROD, 2)
-        crushPrefixToDust(event, HCMaterialPrefixes.WIRE, 2)
+        crushPrefixToDust(event, CommonTagPrefixes.FUEL, 1)
+        crushPrefixToDust(event, CommonTagPrefixes.GEAR, 1) { 4 }
+        crushPrefixToDust(event, CommonTagPrefixes.GEM, 1)
+        crushPrefixToDust(event, CommonTagPrefixes.INGOT, 1)
+        crushPrefixToDust(event, CommonTagPrefixes.NUGGET, 9)
+        crushPrefixToDust(event, CommonTagPrefixes.PEARL, 1)
+        crushPrefixToDust(event, CommonTagPrefixes.PLATE, 1)
+        crushPrefixToDust(event, CommonTagPrefixes.RAW, 3) { 4 }
+        crushPrefixToDust(event, CommonTagPrefixes.ROD, 2)
+        crushPrefixToDust(event, CommonTagPrefixes.WIRE, 2)
 
         cutBlockToPlate(event)
         cutBaseToRod(event)
         cutWoodFromDefinition(event)
 
-        pressBaseToPrefix(event, HCMaterialPrefixes.STORAGE_BLOCK, HTMoldType.BLOCK, { it.getStorageBlock().baseCount }, 1)
-        pressBaseToPrefix(event, HCMaterialPrefixes.GEAR, HTMoldType.GEAR, { 4 }, 1)
-        pressBaseToPrefix(event, HCMaterialPrefixes.NUGGET, HTMoldType.NUGGET, { 1 }, 9)
-        pressBaseToPrefix(event, HCMaterialPrefixes.PLATE, HTMoldType.PLATE, { 1 }, 1)
+        pressBaseToPrefix(event, CommonTagPrefixes.BLOCK, HTMoldType.BLOCK, { it.getStorageBlock().baseCount }, 1)
+        pressBaseToPrefix(event, CommonTagPrefixes.GEAR, HTMoldType.GEAR, { 4 }, 1)
+        pressBaseToPrefix(event, CommonTagPrefixes.NUGGET, HTMoldType.NUGGET, { 1 }, 9)
+        pressBaseToPrefix(event, CommonTagPrefixes.PLATE, HTMoldType.PLATE, { 1 }, 1)
 
-        meltAndSolidify(event, HCMaterialPrefixes.STORAGE_BLOCK, HTMoldType.BLOCK) {
-            it.getDefaultFluidAmount() * it.getStorageBlock().baseCount
-        }
-        meltAndSolidify(event, HCMaterialPrefixes.DUST, null)
-        meltAndSolidify(event, HCMaterialPrefixes.FUEL, HTMoldType.GEM)
-        meltAndSolidify(event, HCMaterialPrefixes.GEAR, HTMoldType.GEAR) { it.getDefaultFluidAmount() * 4 }
-        meltAndSolidify(event, HCMaterialPrefixes.GEM, HTMoldType.GEM)
-        meltAndSolidify(event, HCMaterialPrefixes.INGOT, HTMoldType.INGOT)
-        meltAndSolidify(event, HCMaterialPrefixes.NUGGET, HTMoldType.NUGGET) { it.getDefaultFluidAmount() / 9 }
-        meltAndSolidify(event, HCMaterialPrefixes.PEARL, HTMoldType.GEM)
-        meltAndSolidify(event, HCMaterialPrefixes.PLATE, HTMoldType.PLATE)
-        meltAndSolidify(event, HCMaterialPrefixes.ROD, HTMoldType.ROD) { it.getDefaultFluidAmount() / 2 }
+        meltAndSolidify(event, CommonTagPrefixes.BLOCK, HTMoldType.BLOCK)
+        meltAndSolidify(event, CommonTagPrefixes.DUST, null)
+        meltAndSolidify(event, CommonTagPrefixes.FUEL, HTMoldType.GEM)
+        meltAndSolidify(event, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
+        meltAndSolidify(event, CommonTagPrefixes.GEM, HTMoldType.GEM)
+        meltAndSolidify(event, CommonTagPrefixes.INGOT, HTMoldType.INGOT)
+        meltAndSolidify(event, CommonTagPrefixes.NUGGET, HTMoldType.NUGGET)
+        meltAndSolidify(event, CommonTagPrefixes.PEARL, HTMoldType.GEM)
+        meltAndSolidify(event, CommonTagPrefixes.PLATE, HTMoldType.PLATE)
+        meltAndSolidify(event, CommonTagPrefixes.ROD, HTMoldType.ROD)
     }
 
     //    Crushing    //
@@ -76,7 +75,7 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun crushPrefixToDust(
         event: HTRegisterRuntimeRecipeEvent,
-        prefix: HTPrefixLike,
+        prefix: HTTagPrefix,
         inputCount: Int,
         outputCountGetter: (HTPropertyMap) -> Int? = { 1 },
     ) {
@@ -84,13 +83,13 @@ object RagiumRuntimeRecipeHandler {
             val outputCount: Int = outputCountGetter(propertyMap) ?: continue
 
             if (!event.isPresentTag(prefix, key)) continue
-            val dust: Item = event.getFirstHolder(HCMaterialPrefixes.DUST, key)?.value() ?: continue
+            val dust: Item = event.getFirstHolder(CommonTagPrefixes.DUST, key)?.value() ?: continue
 
             HTChancedRecipeBuilder
                 .crushing(
                     event.itemCreator.fromTagKey(prefix, key, inputCount),
                     event.itemResult.create(dust, outputCount),
-                ).saveSuffixed(event.output, "_from_${prefix.asPrefixName()}")
+                ).saveSuffixed(event.output, "_from_${prefix.name}")
         }
     }
 
@@ -100,12 +99,12 @@ object RagiumRuntimeRecipeHandler {
     private fun cutBlockToPlate(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
             if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
-            if (!event.isPresentTag(HCMaterialPrefixes.STORAGE_BLOCK, key)) continue
-            val plate: Item = event.getFirstHolder(HCMaterialPrefixes.PLATE, key)?.value() ?: continue
+            if (!event.isPresentTag(CommonTagPrefixes.BLOCK, key)) continue
+            val plate: Item = event.getFirstHolder(CommonTagPrefixes.PLATE, key)?.value() ?: continue
 
             HTChancedRecipeBuilder
                 .cutting(
-                    event.itemCreator.fromTagKey(HCMaterialPrefixes.STORAGE_BLOCK, key),
+                    event.itemCreator.fromTagKey(CommonTagPrefixes.BLOCK, key),
                     event.itemResult.create(plate, propertyMap.getStorageBlock().baseCount),
                 ).modifyTime { it * 3 }
                 .saveSuffixed(event.output, "_from_block")
@@ -116,17 +115,17 @@ object RagiumRuntimeRecipeHandler {
     private fun cutBaseToRod(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
             if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
-            val basePrefix: HTMaterialPrefix = propertyMap.getDefaultPart() ?: continue
-            if (basePrefix == HCMaterialPrefixes.ROD) continue
-            if (!event.isPresentTag(basePrefix, key)) continue
+            val inputTag: TagKey<Item> = propertyMap.getDefaultPart(key) ?: continue
+            if (inputTag == CommonTagPrefixes.ROD.itemTagKey(key)) continue
+            if (!event.isPresentTag(inputTag)) continue
 
-            val rod: Item = event.getFirstHolder(HCMaterialPrefixes.ROD, key)?.value() ?: continue
+            val rod: Item = event.getFirstHolder(CommonTagPrefixes.ROD, key)?.value() ?: continue
 
             HTChancedRecipeBuilder
                 .cutting(
-                    event.itemCreator.fromTagKey(basePrefix, key),
+                    event.itemCreator.fromTagKey(inputTag),
                     event.itemResult.create(rod, 2),
-                ).saveSuffixed(event.output, "_from_${basePrefix.name}")
+                ).saveSuffixed(event.output, "_from_${inputTag.location().path}")
         }
     }
 
@@ -245,41 +244,37 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun pressBaseToPrefix(
         event: HTRegisterRuntimeRecipeEvent,
-        prefix: HTPrefixLike,
+        prefix: HTTagPrefix,
         moldType: HTMoldType,
         inputCountGetter: (HTPropertyMap) -> Int?,
         outputCount: Int,
     ) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
             if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
-            val basePrefix: HTMaterialPrefix = propertyMap.getDefaultPart() ?: continue
-            if (basePrefix == prefix) continue
+            val inputTag: TagKey<Item> = propertyMap.getDefaultPart(key) ?: continue
+            if (inputTag == prefix.itemTagKey(key)) continue
             val inputCount: Int = inputCountGetter(propertyMap) ?: continue
 
-            if (!event.isPresentTag(basePrefix, key)) continue
+            if (!event.isPresentTag(inputTag)) continue
             val result: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
 
             HTSingleRecipeBuilder
                 .pressing(
-                    event.itemCreator.fromTagKey(basePrefix, key, inputCount),
+                    event.itemCreator.fromTagKey(inputTag, inputCount),
                     event.itemCreator.fromItem(moldType),
                     event.itemResult.create(result, outputCount),
-                ).saveSuffixed(event.output, "_from_${basePrefix.name}")
+                ).saveSuffixed(event.output, "_from_${inputTag.location().path}")
         }
     }
 
     //    Fluid    //
 
     @JvmStatic
-    private fun meltAndSolidify(
-        event: HTRegisterRuntimeRecipeEvent,
-        prefix: HTPrefixLike,
-        moldType: HTMoldType?,
-        fluidAmountGetter: (HTPropertyMap) -> Int = HTPropertyMap::getDefaultFluidAmount,
-    ) {
+    private fun meltAndSolidify(event: HTRegisterRuntimeRecipeEvent, prefix: HTTagPrefix, moldType: HTMoldType?) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
             if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
-            val fluidAmount: Int = fluidAmountGetter(propertyMap)
+
+            val fluidAmount: Int = prefix.getOrDefault(HTTagPropertyKeys.ITEM_SCALE)(propertyMap.getDefaultFluidAmount(), propertyMap)
 
             if (!event.isPresentTag(prefix, key)) continue
             val molten: HTFluidContent<*, *, *> = propertyMap[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: continue
@@ -288,7 +283,7 @@ object RagiumRuntimeRecipeHandler {
                 .melting(
                     event.itemCreator.fromTagKey(prefix, key),
                     event.fluidResult.create(molten, fluidAmount),
-                ).saveSuffixed(event.output, "_from_${prefix.asPrefixName()}")
+                ).saveSuffixed(event.output, "_from_${prefix.name}")
             // Solidify
             if (moldType == null) continue
             val item: Item = event.getFirstHolder(prefix, key)?.value() ?: continue

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
@@ -39,7 +39,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Echo Shard
         HTSimulatingRecipeBuilder
             .block(
-                itemCreator.fromTagKey(HCMaterialPrefixes.GEM, VanillaMaterialKeys.AMETHYST),
+                itemCreator.fromTagKey(CommonTagPrefixes.GEM, VanillaMaterialKeys.AMETHYST),
                 block(Blocks.SCULK_SHRIEKER),
             ).setResult(itemResult.create(Items.ECHO_SHARD))
             .save(output)

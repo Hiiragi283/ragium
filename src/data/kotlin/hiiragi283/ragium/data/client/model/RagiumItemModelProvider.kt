@@ -4,13 +4,14 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTItemModelProvider
-import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.resource.HTIdLike
-import hiiragi283.core.api.resource.vanillaId
-import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.api.resource.itemId
+import hiiragi283.core.api.resource.toId
+import hiiragi283.core.api.tag.HTTagPrefix
+import hiiragi283.core.api.tag.property.HTTagPropertyKeys
 import hiiragi283.core.common.registry.register.HTSimpleFluidContent
+import hiiragi283.core.setup.HCMiscRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTMoldType
@@ -31,7 +32,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         buildList {
             addAll(RagiumItems.REGISTER.asSequence())
 
-            removeAll(RagiumItems.MATERIALS.values)
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
             removeAll(RagiumItems.FOOD_CANS.values)
@@ -44,23 +44,19 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
         // Materials
         registerMaterials()
-        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { itemId: ResourceLocation ->
-            layeredItem(
-                RagiumItems.RAGI_ALLOY_COMPOUND,
-                vanillaId(HTConst.ITEM, "copper_ingot"),
-                itemId.withPrefix("item/"),
-            )
+        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { item ->
+            layeredItem(item, HTConst.MINECRAFT.toId(HTConst.ITEM, "copper_ingot"), item.itemId)
         }
         // Foods
         for ((canType: HTFoodCanType, item: HTIdLike) in RagiumItems.FOOD_CANS) {
             existTexture(item, RagiumAPI.id(HTConst.ITEM, "food_can", canType.serializedName), ::layeredItem)
         }
         // Utilities
-        existTexture(RagiumItems.BLANK_DISC) { itemId: ResourceLocation ->
-            withExistingParent(itemId.path, vanillaId(HTConst.ITEM, "template_music_disc"))
-                .texture("layer0", itemId.withPrefix("item/"))
+        existTexture(RagiumItems.BLANK_DISC) { item: HTIdLike ->
+            withExistingParent(item.getPath(), HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
+                .texture("layer0", item.itemId)
         }
-        layeredItem(RagiumItems.POTION_DROP, vanillaId(HTConst.ITEM, "ghast_tear"))
+        layeredItem(RagiumItems.POTION_DROP, HTConst.MINECRAFT.toId(HTConst.ITEM, "ghast_tear"))
 
         for ((moldType: HTMoldType, item: HTIdLike) in RagiumItems.MOLDS) {
             existTexture(item, RagiumAPI.id(HTConst.ITEM, "mold", moldType.serializedName), ::layeredItem)
@@ -72,14 +68,16 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
     }
 
     private fun registerMaterials() {
-        RagiumItems.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, item: HTIdLike) ->
-            val textureId: ResourceLocation = RagiumAPI.id(HTConst.ITEM, prefix.asPrefixName(), key.asMaterialName())
-            if (prefix == HCMaterialPrefixes.WIRE) {
-                existTexture(item, textureId) { itemIn: HTIdLike, layer: ResourceLocation ->
-                    layeredItem(itemIn, layer, wireOverlay)
+        HCMiscRegister.materialItems.forEach { (prefix: HTTagPrefix, _, item: HTIdLike) ->
+            if (item.getNamespace() != modid) return@forEach
+            existTexture(item) { itemIn: HTIdLike ->
+                val textureIcon: String = prefix[HTTagPropertyKeys.TEXTURE_ICON] ?: prefix.name
+                val overlay: ResourceLocation = HiiragiCoreAPI.id(HTConst.ITEM, "${textureIcon}_overlay")
+                if (existingFileHelper.exists(overlay, TEXTURE)) {
+                    layeredItem(itemIn, itemIn.itemId, overlay)
+                } else {
+                    layeredItem(itemIn, itemIn.itemId)
                 }
-            } else {
-                existTexture(item, textureId, ::layeredItem)
             }
         }
     }

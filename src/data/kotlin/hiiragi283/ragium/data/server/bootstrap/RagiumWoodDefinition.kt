@@ -1,9 +1,10 @@
 package hiiragi283.ragium.data.server.bootstrap
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.createKey
 import hiiragi283.core.api.registry.toHolderLike
-import hiiragi283.core.api.resource.vanillaId
+import hiiragi283.core.api.resource.toId
 import hiiragi283.core.common.registry.HTDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
@@ -86,7 +87,7 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
             HTWoodDefinition(
                 variants
                     .associateWith { variant: HTWoodDefinition.Variant ->
-                        HTDeferredItem<Item>(vanillaId("${path}_${variant.serializedName}")) as HTItemHolderLike<*>
+                        HTDeferredItem<Item>(HTConst.MINECRAFT.toId("${path}_${variant.serializedName}")) as HTItemHolderLike<*>
                     }.toMutableMap()
                     .apply(operator),
                 logTag,
@@ -97,7 +98,7 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
     @JvmStatic
     private fun register(context: BootstrapContext<HTWoodDefinition>, path: String, definition: HTWoodDefinition) {
         context.register(
-            RagiumAPI.WOOD_DEFINITION_KEY.createKey(vanillaId(path)),
+            RagiumAPI.WOOD_DEFINITION_KEY.createKey(HTConst.MINECRAFT.toId(path)),
             definition,
         )
     }

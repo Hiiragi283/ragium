@@ -26,8 +26,6 @@ import java.util.concurrent.CompletableFuture
 object RagiumDatagen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent) {
-        HTMaterialManagerImpl.gatherAttributes(true)
-
         val (server: HTRootDataGenerator, client: HTRootDataGenerator) = HTRootDataGenerator.withDataPack(event) {
             add(RagiumAPI.WOOD_DEFINITION_KEY, RagiumWoodDefinition)
         }

@@ -4,9 +4,9 @@ import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.data.tag.HTTagsProvider
 import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.resource.HTIdLike
-import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.api.tag.HTTagPrefix
+import hiiragi283.core.setup.HCMiscRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.registries.Registries
@@ -23,7 +23,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
     //    Material    //
 
     private fun material(factory: BuilderFactory<Block>) {
-        RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, block: HTIdLike) ->
+        HCMiscRegister.materialBlocks.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, block: HTIdLike) ->
+            if (key.getNamespace() != modId) return@forEach
             addMaterial(factory, prefix, key).add(block)
         }
     }
@@ -39,7 +40,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
 
         val pickaxe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_PICKAXE)
         sequence {
-            yieldAll(RagiumBlocks.MATERIALS.row(HCMaterialPrefixes.STORAGE_BLOCK).values)
+            yieldAll(HCMiscRegister.materialBlocks.values.filter { it.getNamespace() == modId })
 
             yield(RagiumBlocks.ALLOY_SMELTER)
             yield(RagiumBlocks.CRUSHER)

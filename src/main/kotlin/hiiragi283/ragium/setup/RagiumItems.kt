@@ -2,20 +2,17 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.collection.buildTable
-import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.HTMaterialTable
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
-import hiiragi283.core.api.material.prefix.HTPrefixLike
+import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
-import hiiragi283.core.common.material.HCMaterialPrefixes
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.core.common.storage.component.HTComponentHandler
 import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
 import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
+import hiiragi283.core.setup.HCMiscRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
@@ -29,15 +26,21 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.config.RagiumConfig
+import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import org.slf4j.Logger
-import java.util.function.UnaryOperator
+import kotlin.collections.component1
+import kotlin.collections.component2
 
 /**
  * @see hiiragi283.core.setup.HCItems
@@ -51,53 +54,13 @@ object RagiumItems {
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
-        eventBus.addListener(::registerItemCapabilities)
-
         REGISTER.register(eventBus)
+
+        eventBus.addListener(::modifyComponents)
+        eventBus.addListener(::registerItemCapabilities)
     }
 
     //    Materials    //
-
-    @JvmStatic
-    val MATERIALS: HTMaterialTable<HTMaterialPrefix, HTSimpleDeferredItem> = buildTable {
-        fun register(
-            prefix: HTPrefixLike,
-            key: HTMaterialKey,
-            path: String = prefix.createPath(key),
-            operator: UnaryOperator<Item.Properties> = UnaryOperator.identity(),
-        ) {
-            this[prefix.asMaterialPrefix(), key] = REGISTER.registerSimpleItem(path, operator)
-        }
-
-        // Dusts
-        arrayOf(
-            RagiumMaterialKeys.RAGINITE,
-            RagiumMaterialKeys.RAGI_CRYSTAL,
-            RagiumMaterialKeys.RAGI_ALLOY,
-            RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
-        ).forEach { register(HCMaterialPrefixes.DUST, it) }
-        // Gems
-        arrayOf(
-            RagiumMaterialKeys.RAGI_CRYSTAL,
-        ).forEach { register(HCMaterialPrefixes.GEM, it) }
-        // Ingots, Nuggets, Gears, Plates, Rods, Wires
-        arrayOf(
-            HCMaterialPrefixes.INGOT,
-            HCMaterialPrefixes.NUGGET,
-            HCMaterialPrefixes.GEAR,
-            HCMaterialPrefixes.PLATE,
-            HCMaterialPrefixes.ROD,
-            HCMaterialPrefixes.WIRE,
-        ).forEach {
-            register(it, RagiumMaterialKeys.RAGI_ALLOY)
-            register(it, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-        }
-
-        // Foods
-        register(HCMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT)
-        register(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT) { it.food(Foods.BEEF) }
-        register(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT) { it.food(Foods.COOKED_BEEF) }
-    }.let(::HTMaterialTable)
 
     @JvmField
     val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
@@ -175,6 +138,24 @@ object RagiumItems {
     }
 
     //    Event    //
+
+    @JvmStatic
+    private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        fun <T : Any> modify(item: ItemLike, type: DataComponentType<T>, value: T) {
+            event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
+        }
+
+        modify(
+            HCMiscRegister.materialItems.getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT),
+            DataComponents.FOOD,
+            Foods.BEEF,
+        )
+        modify(
+            HCMiscRegister.materialItems.getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT),
+            DataComponents.FOOD,
+            Foods.COOKED_BEEF,
+        )
+    }
 
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {

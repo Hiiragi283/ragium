@@ -5,9 +5,10 @@ import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.getOrThrow
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.resource.HTIdLike
-import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HTTagPrefix
+import hiiragi283.core.setup.HCMiscRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.common.item.HTFoodCanType
@@ -34,7 +35,8 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
 
     private fun copyTags() {
         // Material
-        RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, _) ->
+        HCMiscRegister.materialBlocks.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, _) ->
+            if (key.getNamespace() != modId) return@forEach
             copy(prefix, key)
         }
     }
@@ -42,9 +44,10 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
     //    Material    //
 
     private fun material(factory: BuilderFactory<Item>) {
-        RagiumItems.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, item: HTIdLike) ->
+        HCMiscRegister.materialItems.forEach { (prefix: HTTagPrefix, key: HTMaterialKey, item: HTIdLike) ->
+            if (key.getNamespace() != modId) return@forEach
             addMaterial(factory, prefix, key).add(item)
-            if (prefix == HCMaterialPrefixes.GEM || prefix == HCMaterialPrefixes.INGOT) {
+            if (prefix == CommonTagPrefixes.GEM || prefix == CommonTagPrefixes.INGOT) {
                 factory.apply(ItemTags.BEACON_PAYMENT_ITEMS).addTag(prefix, key)
             }
         }
@@ -62,10 +65,10 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         HTFoodCanType.entries.forEach(foodsCan::add)
         factory
             .apply(Tags.Items.FOODS_RAW_MEAT)
-            .add(RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT))
+            .add(HCMiscRegister.materialItems.getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT))
         factory
             .apply(Tags.Items.FOODS_COOKED_MEAT)
-            .add(RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
+            .add(HCMiscRegister.materialItems.getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
         // Others
         RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
 

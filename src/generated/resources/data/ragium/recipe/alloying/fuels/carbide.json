@@ -8,7 +8,7 @@
     "minecraft:calcite"
   ],
   "result": {
-    "id": "hiiragi_core:carbide",
+    "id": "hiiragi_core:carbide_fuel",
     "tag": "c:fuels/carbide"
   },
   "time": 200

@@ -3,14 +3,14 @@ package hiiragi283.ragium.data.client.model
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTBlockStateProvider
-import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.resource.blockId
-import hiiragi283.core.api.resource.vanillaId
+import hiiragi283.core.api.resource.toId
+import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
-import hiiragi283.core.common.registry.HTSimpleDeferredBlock
+import hiiragi283.core.setup.HCMiscRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.HTMachineBlock
@@ -46,7 +46,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
 
         layeredBlock(
             RagiumBlocks.UNIVERSAL_CHEST,
-            vanillaId("block", "white_concrete"),
+            HTConst.MINECRAFT.toId("block", "white_concrete"),
             RagiumBlocks.UNIVERSAL_CHEST.blockId,
         )
 
@@ -61,10 +61,20 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
     }
 
     private fun registerMaterials() {
-        RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, material: HTMaterialKey, block: HTSimpleDeferredBlock) ->
-            val textureId: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix.name, material.name)
-            existTexture(block, textureId, ::altTextureBlock)
+        // Ore
+        registerOres(HCMiscRegister.materialBlocks)
+
+        // Storage Block
+        fun register(prefix: HTTagPrefix) {
+            HCMiscRegister.materialBlocks
+                .row(prefix)
+                .values
+                .filter { it.getNamespace() == modId }
+                .forEach { existTexture(it, ::simpleBlockAndItem) }
         }
+
+        register(CommonTagPrefixes.BLOCK)
+        register(CommonTagPrefixes.RAW_BLOCK)
     }
 
     //    Extensions    //
@@ -105,7 +115,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         front: ResourceLocation,
     ): Pair<BlockModelBuilder, BlockModelBuilder> {
         val path: String = block.blockId.path
-        val modelId: ResourceLocation = vanillaId(HTConst.BLOCK, "orientable_with_bottom")
+        val modelId: ResourceLocation = HTConst.MINECRAFT.toId(HTConst.BLOCK, "orientable_with_bottom")
 
         val top: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix, "top_$tier")
         val side: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix, "side_$tier")

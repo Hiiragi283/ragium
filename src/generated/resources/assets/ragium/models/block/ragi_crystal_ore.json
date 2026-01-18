@@ -1,6 +1,8 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "hiiragi_core:block/layered",
+  "render_type": "minecraft:cutout",
   "textures": {
-    "all": "ragium:block/ore/ragi_crystal"
+    "layer0": "minecraft:block/stone",
+    "layer1": "ragium:block/ragi_crystal_ore"
   }
 }

@@ -5,11 +5,11 @@ import hiiragi283.core.api.data.recipe.ingredient.HTIngredientAccess
 import hiiragi283.core.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.material.prefix.HTPrefixLike
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
+import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.createCommonTag
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumTags
@@ -205,7 +205,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         add(holder.getId(), value, false, *conditions)
 
     // Item
-    private fun <T : Any> Builder<T, Item>.add(prefix: HTPrefixLike, key: HTMaterialLike, value: T): Builder<T, Item> =
+    private fun <T : Any> Builder<T, Item>.add(prefix: HTTagPrefix, key: HTMaterialLike, value: T): Builder<T, Item> =
         add(prefix.itemTagKey(key), value, false)
 
     // Fluid

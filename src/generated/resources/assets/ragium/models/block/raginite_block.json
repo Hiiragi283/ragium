@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ragium:block/storage_block/raginite"
+    "all": "ragium:block/raginite_block"
   }
 }

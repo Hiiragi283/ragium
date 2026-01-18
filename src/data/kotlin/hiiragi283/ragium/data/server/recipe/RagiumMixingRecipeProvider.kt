@@ -1,8 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.data.recipe.HTMaterialResultHelper
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -34,22 +35,22 @@ object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         // Diamond + Raginite -> Ragi-Crystal
         HTComplexRecipeBuilder
             .mixing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
+                itemCreator.fromTagKey(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND),
                 fluidCreator.fromTagKey(RagiumFluids.MOLTEN_RAGINITE, 100 * 8),
-            ).setResult(RagiumMaterialResultHelper.item(HCMaterialPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL))
+            ).setResult(HTMaterialResultHelper.item(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL))
             .save(output)
 
         // Creosote + Redstone -> Lubricant
         HTComplexRecipeBuilder
             .mixing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
+                itemCreator.fromTagKey(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE),
                 fluidCreator.fromTagKey(RagiumFluids.CREOSOTE, 1000),
             ).setResult(fluidResult.create(RagiumFluids.LUBRICANT, 500))
             .saveSuffixed(output, "_from_creosote_with_redstone")
         // Creosote + Raginite -> Lubricant
         HTComplexRecipeBuilder
             .mixing(
-                itemCreator.fromTagKey(HCMaterialPrefixes.DUST, RagiumMaterialKeys.RAGINITE),
+                itemCreator.fromTagKey(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE),
                 fluidCreator.fromTagKey(RagiumFluids.CREOSOTE, 1000),
             ).setResult(fluidResult.create(RagiumFluids.LUBRICANT, 750))
             .saveSuffixed(output, "_from_creosote_with_raginite")

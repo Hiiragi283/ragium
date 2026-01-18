@@ -8,7 +8,6 @@ import hiiragi283.core.common.data.lang.HTMaterialTranslationHelper
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
-import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 
 object RagiumCommonTranslation {
@@ -17,8 +16,7 @@ object RagiumCommonTranslation {
         val langType: HTLanguageType = provider.langType
 
         // Material
-        HTMaterialTranslationHelper.translateAll(provider, RagiumBlocks.MATERIALS::column)
-        HTMaterialTranslationHelper.translateAll(provider, RagiumItems.MATERIALS::column)
+        HTMaterialTranslationHelper.translateAll(provider)
         // Food Can
         for ((canType: HTFoodCanType, item: HTHasTranslationKey) in RagiumItems.FOOD_CANS) {
             provider.add(item, LangPattern("%s Paste Can", "%sのペースト缶詰").translate(langType, canType))
