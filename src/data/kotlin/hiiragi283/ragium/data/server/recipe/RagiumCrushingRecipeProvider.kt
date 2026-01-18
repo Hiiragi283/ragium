@@ -165,12 +165,6 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 itemResult.create(Items.RED_SAND, 2),
             ).addResult(HTMaterialResultHelper.item(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER), 0.25f)
             .saveSuffixed(output, "_from_sandstone")
-        // Obsidian Dust
-        HTChancedRecipeBuilder
-            .crushing(
-                itemCreator.fromTagKey(Tags.Items.OBSIDIANS),
-                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, VanillaMaterialKeys.OBSIDIAN),
-            ).save(output)
     }
 
     @JvmStatic
@@ -186,7 +180,6 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
         wood(ItemTags.BOATS, 1, 5)
         wood(ItemTags.LOGS_THAT_BURN, 1, 6)
-        wood(ItemTags.PLANKS, 1, 1)
         wood(ItemTags.WOODEN_BUTTONS, 1, 1)
         wood(ItemTags.WOODEN_DOORS, 1, 2)
         wood(ItemTags.WOODEN_PRESSURE_PLATES, 1, 2)
@@ -207,12 +200,6 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             .crushing(
                 itemCreator.fromTagKey(Tags.Items.CROPS_WHEAT),
                 itemResult.create(HCItems.WHEAT_FLOUR, HiiragiCoreTags.Items.FLOURS_WHEAT),
-            ).save(output)
-        // Minced Meat
-        HTChancedRecipeBuilder
-            .crushing(
-                itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
-                HTMaterialResultHelper.item(CommonTagPrefixes.DUST, RagiumMaterialKeys.MEAT),
             ).save(output)
 
         // Pulped Fish

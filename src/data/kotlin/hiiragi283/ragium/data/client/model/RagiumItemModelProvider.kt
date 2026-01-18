@@ -8,10 +8,7 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.itemId
 import hiiragi283.core.api.resource.toId
-import hiiragi283.core.api.tag.HTTagPrefix
-import hiiragi283.core.api.tag.property.HTTagPropertyKeys
 import hiiragi283.core.common.registry.register.HTSimpleFluidContent
-import hiiragi283.core.setup.HCMiscRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTMoldType
@@ -65,21 +62,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         registerUpgrades()
         // Buckets
         registerBuckets()
-    }
-
-    private fun registerMaterials() {
-        HCMiscRegister.materialItems.forEach { (prefix: HTTagPrefix, _, item: HTIdLike) ->
-            if (item.getNamespace() != modid) return@forEach
-            existTexture(item) { itemIn: HTIdLike ->
-                val textureIcon: String = prefix[HTTagPropertyKeys.TEXTURE_ICON] ?: prefix.name
-                val overlay: ResourceLocation = HiiragiCoreAPI.id(HTConst.ITEM, "${textureIcon}_overlay")
-                if (existingFileHelper.exists(overlay, TEXTURE)) {
-                    layeredItem(itemIn, itemIn.itemId, overlay)
-                } else {
-                    layeredItem(itemIn, itemIn.itemId)
-                }
-            }
-        }
     }
 
     private fun registerUpgrades() {

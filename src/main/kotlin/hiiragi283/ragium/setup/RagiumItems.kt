@@ -2,7 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.material.HTMaterialContentsAccess
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
@@ -12,7 +12,6 @@ import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.core.common.storage.component.HTComponentHandler
 import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
 import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
-import hiiragi283.core.setup.HCMiscRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
@@ -39,8 +38,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 import org.slf4j.Logger
-import kotlin.collections.component1
-import kotlin.collections.component2
 
 /**
  * @see hiiragi283.core.setup.HCItems
@@ -146,12 +143,12 @@ object RagiumItems {
         }
 
         modify(
-            HCMiscRegister.materialItems.getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT),
+            HTMaterialContentsAccess.INSTANCE.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT),
             DataComponents.FOOD,
             Foods.BEEF,
         )
         modify(
-            HCMiscRegister.materialItems.getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT),
+            HTMaterialContentsAccess.INSTANCE.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT),
             DataComponents.FOOD,
             Foods.COOKED_BEEF,
         )

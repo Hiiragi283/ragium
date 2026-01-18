@@ -1,9 +1,0 @@
-{
-  "type": "ragium:crushing",
-  "ingredient": "#c:foods/raw_meat",
-  "result": {
-    "id": "ragium:meat_dust",
-    "tag": "c:dusts/meat"
-  },
-  "time": 100
-}

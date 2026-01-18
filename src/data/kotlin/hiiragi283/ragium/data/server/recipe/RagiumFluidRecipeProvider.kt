@@ -76,30 +76,16 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         // Meat
         HTSingleRecipeBuilder
             .melting(
-                itemCreator.fromTagKey(Tags.Items.FOODS_RAW_MEAT),
-                createFluidResult(RagiumMaterialKeys.MEAT, HTMaterialPropertyKeys.MOLTEN_FLUID) { it * 2 },
-            ).saveSuffixed(output, "_from_raw")
-
-        HTSingleRecipeBuilder
-            .melting(
                 itemCreator.fromItem(Items.ROTTEN_FLESH),
                 createFluidResult(RagiumMaterialKeys.MEAT, HTMaterialPropertyKeys.MOLTEN_FLUID),
             ).saveSuffixed(output, "_from_rotten")
         // Glass
         meltAndSolidify(
-            itemCreator.fromTagKey(Tags.Items.GLASS_BLOCKS),
-            itemResult.create(Items.GLASS),
-            HCFluids.MOLTEN_GLASS,
-            1000,
-            HTMoldType.BLOCK,
-            "block",
-        )
-        meltAndSolidify(
             itemCreator.fromTagKey(Tags.Items.GLASS_PANES),
             itemResult.create(Items.GLASS_PANE),
             HCFluids.MOLTEN_GLASS,
             375,
-            HTMoldType.BLANK,
+            HTMoldType.PLATE,
             "pane",
         )
     }

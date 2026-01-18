@@ -14,6 +14,7 @@ import net.minecraft.data.PackOutput
 
 class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(output, RagiumAPI.MOD_ID) {
     override fun addTranslations() {
+        addMaterials()
         RagiumCommonTranslation.addTranslations(this)
 
         // Block

@@ -14,6 +14,7 @@ import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(output, RagiumAPI.MOD_ID) {
     override fun addTranslations() {
+        addMaterials()
         RagiumCommonTranslation.addTranslations(this)
 
         // Block

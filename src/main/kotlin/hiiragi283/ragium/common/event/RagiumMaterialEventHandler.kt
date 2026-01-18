@@ -24,6 +24,7 @@ import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.Tags
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumMaterialEventHandler {
@@ -83,7 +84,10 @@ object RagiumMaterialEventHandler {
         }
         // Others
         event.modify(RagiumMaterialKeys.MEAT) {
-            addDefaultPart(CommonTagPrefixes.INGOT)
+            addDefaultPart(
+                Tags.Items.FOODS_RAW_MEAT,
+                HTDeferredItem.simple(CommonTagPrefixes.INGOT.createId(RagiumMaterialKeys.MEAT)),
+            )
             setItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT)
             put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(HCFluids.MEAT))
 
@@ -97,7 +101,10 @@ object RagiumMaterialEventHandler {
             )
         }
         event.modify(RagiumMaterialKeys.COOKED_MEAT) {
-            addDefaultPart(CommonTagPrefixes.INGOT)
+            addDefaultPart(
+                Tags.Items.FOODS_COOKED_MEAT,
+                HTDeferredItem.simple(CommonTagPrefixes.INGOT.createId(RagiumMaterialKeys.COOKED_MEAT)),
+            )
             setItemPrefixes(CommonTagPrefixes.INGOT)
 
             addName("Cooked Meat", "焼肉")

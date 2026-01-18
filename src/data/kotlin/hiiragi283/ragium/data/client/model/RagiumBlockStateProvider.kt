@@ -8,9 +8,7 @@ import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.resource.blockId
 import hiiragi283.core.api.resource.toId
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
-import hiiragi283.core.setup.HCMiscRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.HTMachineBlock
@@ -61,20 +59,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
     }
 
     private fun registerMaterials() {
-        // Ore
-        registerOres(HCMiscRegister.materialBlocks)
+        registerOres()
 
-        // Storage Block
-        fun register(prefix: HTTagPrefix) {
-            HCMiscRegister.materialBlocks
-                .row(prefix)
-                .values
-                .filter { it.getNamespace() == modId }
-                .forEach { existTexture(it, ::simpleBlockAndItem) }
-        }
-
-        register(CommonTagPrefixes.BLOCK)
-        register(CommonTagPrefixes.RAW_BLOCK)
+        registerMaterials(CommonTagPrefixes.BLOCK)
+        registerMaterials(CommonTagPrefixes.RAW_BLOCK)
     }
 
     //    Extensions    //

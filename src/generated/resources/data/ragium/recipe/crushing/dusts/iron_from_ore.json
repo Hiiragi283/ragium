@@ -3,6 +3,7 @@
   "exp": "1/2",
   "extra_result": {
     "chance": "1/4",
+    "id": "hiiragi_core:tin_dust",
     "tag": "c:dusts/tin"
   },
   "ingredient": "#c:ores/iron",

@@ -1,6 +1,6 @@
 {
   "type": "ragium:solidifying",
-  "catalyst": "ragium:blank_mold",
+  "catalyst": "ragium:plate_mold",
   "ingredient": {
     "amount": 375,
     "fluids": "#c:molten_glass"

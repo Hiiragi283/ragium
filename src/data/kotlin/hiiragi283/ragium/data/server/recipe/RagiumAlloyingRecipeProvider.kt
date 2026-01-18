@@ -136,17 +136,6 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     private fun hiiragiCore() {
-        // Coal Coke + Calcite -> Carbide
-        HTAlloyingRecipeBuilder
-            .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.FUEL, CommonMaterialKeys.CARBIDE),
-                itemCreator.fromTagKeys(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.FUEL),
-                    listOf(CommonMaterialKeys.COAL_COKE),
-                ),
-                itemCreator.fromItem(Items.CALCITE),
-            ).save(output)
-
         // Amethyst + Lapis -> Azure Shard
         HTAlloyingRecipeBuilder
             .create(

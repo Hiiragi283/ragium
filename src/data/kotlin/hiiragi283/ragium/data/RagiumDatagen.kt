@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.core.api.data.HTRootDataGenerator
 import hiiragi283.core.api.function.partially1
-import hiiragi283.core.common.material.HTMaterialManagerImpl
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.client.RagiumTextureProvider
 import hiiragi283.ragium.data.client.lang.RagiumEnglishLangProvider
