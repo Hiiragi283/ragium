@@ -56,14 +56,16 @@ object RagiumRuntimeRecipeHandler {
         pressBaseToPrefix(event, CommonTagPrefixes.NUGGET, HTMoldType.NUGGET, { 1 }, 9)
         pressBaseToPrefix(event, CommonTagPrefixes.PLATE, HTMoldType.PLATE, { 1 }, 1)
 
-        meltBaseAndSolidify(event)
-        meltAndSolidify(event, CommonTagPrefixes.BLOCK)
-        meltAndSolidify(event, CommonTagPrefixes.DUST)
-        meltAndSolidify(event, CommonTagPrefixes.GEAR)
-        meltAndSolidify(event, CommonTagPrefixes.NUGGET)
-        meltAndSolidify(event, CommonTagPrefixes.PEARL)
-        meltAndSolidify(event, CommonTagPrefixes.PLATE)
-        meltAndSolidify(event, CommonTagPrefixes.ROD)
+        meltBaseToMolten(event)
+
+        solidifyPrefix(event, CommonTagPrefixes.BLOCK, HTMoldType.BLOCK)
+        solidifyPrefix(event, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
+        solidifyPrefix(event, CommonTagPrefixes.GEM, HTMoldType.GEM)
+        solidifyPrefix(event, CommonTagPrefixes.INGOT, HTMoldType.INGOT)
+        solidifyPrefix(event, CommonTagPrefixes.NUGGET, HTMoldType.NUGGET)
+        solidifyPrefix(event, CommonTagPrefixes.PEARL, HTMoldType.BALL)
+        solidifyPrefix(event, CommonTagPrefixes.PLATE, HTMoldType.PLATE)
+        solidifyPrefix(event, CommonTagPrefixes.ROD, HTMoldType.ROD)
     }
 
     //    Crushing    //
@@ -284,7 +286,7 @@ object RagiumRuntimeRecipeHandler {
     //    Fluid    //
 
     @JvmStatic
-    private fun meltBaseAndSolidify(event: HTRegisterRuntimeRecipeEvent) {
+    private fun meltBaseToMolten(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
             if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
             val defaultPart: HTDefaultPart = propertyMap.getDefaultPart() ?: continue
@@ -304,41 +306,25 @@ object RagiumRuntimeRecipeHandler {
                     event.itemCreator.fromTagKey(inputTag),
                     event.fluidResult.create(molten, fluidAmount),
                 ).saveSuffixed(event.output, "_from_${defaultPart.getSuffix()}")
-            // Solidify
-            val moldType: HTMoldType = HTMoldType.entries.firstOrNull { it.prefix == prefix } ?: HTMoldType.BLANK
-            val item: ItemLike = defaultPart.getItem(key) ?: continue
-            HTSingleRecipeBuilder
-                .solidifying(
-                    event.fluidCreator.fromTagKey(molten, fluidAmount),
-                    event.itemCreator.fromItem(moldType),
-                    event.itemResult.create(item),
-                ).saveSuffixed(event.output, "_from_molten")
         }
     }
 
     @JvmStatic
-    private fun meltAndSolidify(event: HTRegisterRuntimeRecipeEvent, prefix: HTTagPrefix) {
+    private fun solidifyPrefix(event: HTRegisterRuntimeRecipeEvent, prefix: HTTagPrefix, moldType: HTMoldType) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
             if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
 
-            val fluidAmount: Int = prefix.getOrDefault(HTTagPropertyKeys.ITEM_SCALE)(propertyMap.getDefaultFluidAmount(), propertyMap)
-
-            if (!event.isPresentTag(prefix, key)) continue
             val molten: HTFluidContent<*, *, *> = propertyMap[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: continue
-            // Melt
-            HTSingleRecipeBuilder
-                .melting(
-                    event.itemCreator.fromTagKey(prefix, key),
-                    event.fluidResult.create(molten, fluidAmount),
-                ).saveSuffixed(event.output, "_from_${prefix.name}")
+            val fluidAmount: Int =
+                prefix.getOrDefault(HTTagPropertyKeys.ITEM_SCALE)(propertyMap.getDefaultFluidAmount(), propertyMap)
+
             // Solidify
-            val moldType: HTMoldType = HTMoldType.entries.firstOrNull { it.prefix == prefix } ?: continue
-            val item: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
+            val result: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
             HTSingleRecipeBuilder
                 .solidifying(
                     event.fluidCreator.fromTagKey(molten, fluidAmount),
                     event.itemCreator.fromItem(moldType),
-                    event.itemResult.create(item),
+                    event.itemResult.create(result),
                 ).saveSuffixed(event.output, "_from_molten")
         }
     }

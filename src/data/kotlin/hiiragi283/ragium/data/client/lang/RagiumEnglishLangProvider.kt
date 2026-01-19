@@ -32,8 +32,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
         add(RagiumBlocks.SOLIDIFIER, "Solidifier")
 
-        add(RagiumBlocks.FERMENTER, "Fermeter")
+        add(RagiumBlocks.FERMENTER, "Fermenter")
         add(RagiumBlocks.PLANTER, "Planter")
+
+        add(RagiumBlocks.ENCHANTER, "Enchanter")
 
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")

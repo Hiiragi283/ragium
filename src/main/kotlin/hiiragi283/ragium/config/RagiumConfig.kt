@@ -124,6 +124,10 @@ object RagiumConfig {
 
             @JvmField
             val planter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.PLANTER, RagiumFluidConfigType.FIRST_INPUT)
+
+            // Enchanting
+            @JvmField
+            val enchanter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.ENCHANTER, RagiumFluidConfigType.FIRST_INPUT)
         }
     }
 }

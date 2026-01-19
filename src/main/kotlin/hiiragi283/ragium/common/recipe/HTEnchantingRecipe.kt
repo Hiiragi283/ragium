@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
@@ -46,11 +47,21 @@ class HTEnchantingRecipe(
         exp,
     )
 
+    val instances: List<EnchantmentInstance> =
+        enchantments.entrySet().map { (holder: Holder<Enchantment>, level: Int) -> EnchantmentInstance(holder, level) }
+    val expIngredient: HTFluidIngredient = createExpIngredient(enchantments)
+
     override fun matches(input: Input, level: Level): Boolean {
-        val bool1: Boolean = createExpIngredient(enchantments).test(input.fluid)
+        val bool1: Boolean = expIngredient.test(input.fluid)
         val bool2: Boolean = input.left.`is`(Items.BOOK)
         val bool3: Boolean = ingredient.test(input.right)
         return bool1 && bool2 && bool3
+    }
+
+    override fun assemble(input: Input, registries: HolderLookup.Provider): ItemStack {
+        var stack: ItemStack = input.left.copy()
+        stack = stack.item.applyEnchantments(stack, instances)
+        return stack
     }
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = createEnchantedBook(enchantments)

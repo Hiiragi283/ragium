@@ -10,18 +10,16 @@ import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
-import net.minecraft.world.item.enchantment.ItemEnchantments
 
 class HTEnchantingEmiRecipe(holder: RecipeHolder<HTEnchantingRecipe>) :
     HTHolderModularEmiRecipe<HTEnchantingRecipe>(
         { recipe: HTEnchantingRecipe, root: UIElement ->
-            val enchantments: ItemEnchantments = recipe.enchantments
             RagiumModularUIHelper.enchanting(
                 root,
-                inputSlot(HTEnchantingRecipe.createExpIngredient(enchantments)),
+                inputSlot(recipe.expIngredient),
                 ItemSlot().setItem(ItemStack(Items.BOOK)),
                 inputSlot(recipe.ingredient),
-                ItemSlot().setItem(createEnchantedBook(enchantments)),
+                ItemSlot().setItem(createEnchantedBook(recipe.enchantments)),
             )
             root.addChild(RagiumModularUIHelper.fakeProgress(recipe.time))
         },

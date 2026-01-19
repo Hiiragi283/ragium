@@ -113,6 +113,11 @@ object RagiumBlocks {
     val PLANTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
 
+    // Enchanting
+    @JvmField
+    val ENCHANTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)
+
     //    Storages    //
 
     @JvmField

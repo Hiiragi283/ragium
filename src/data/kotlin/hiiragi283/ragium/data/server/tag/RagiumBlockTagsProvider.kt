@@ -56,6 +56,8 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             yield(RagiumBlocks.FERMENTER)
             yield(RagiumBlocks.PLANTER)
 
+            yield(RagiumBlocks.ENCHANTER)
+
             yield(RagiumBlocks.BATTERY)
             yield(RagiumBlocks.CRATE)
             yield(RagiumBlocks.TANK)

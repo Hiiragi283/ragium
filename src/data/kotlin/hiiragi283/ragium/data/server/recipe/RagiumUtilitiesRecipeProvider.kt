@@ -155,6 +155,17 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             ).define('A', CommonTagPrefixes.INGOT, HCMaterialKeys.DEEP_STEEL)
             .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.NETHERITE)
             .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+
+        // Enchanting
+        fun enchanting(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
+            .create(block)
+            .pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            ).define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            .define('C', CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
+            .define('D', Tags.Items.OBSIDIANS_CRYING)
     }
 
     @JvmStatic

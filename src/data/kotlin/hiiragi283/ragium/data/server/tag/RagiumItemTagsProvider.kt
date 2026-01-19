@@ -95,12 +95,13 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.PYROLYZER)
-            .add(RagiumBlocks.SOLIDIFIER)
         factory
             .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
             // Basic
             .add(RagiumBlocks.FERMENTER)
             .add(RagiumBlocks.PLANTER)
+            // Enchanting
+            .add(RagiumBlocks.ENCHANTER)
 
         // Specific
         factory

@@ -75,13 +75,13 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.PYROLYZING,
             RagiumEmiRecipeCategories.REFINING,
             RagiumEmiRecipeCategories.SOLIDIFYING,
-            // Machine - Enchanting
-            RagiumEmiRecipeCategories.ENCHANTING,
             // Machine - Extra
             RagiumEmiRecipeCategories.SIMULATING,
             // Device - Basic
             RagiumEmiRecipeCategories.FERMENTING,
             RagiumEmiRecipeCategories.PLANTING,
+            // Device - Enchanting
+            RagiumEmiRecipeCategories.ENCHANTING,
         ).forEach(::addCategory.partially1(registry))
 
         // Recipes
@@ -101,8 +101,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         // addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
-
         addRegistryRecipes(registry, RagiumRecipeTypes.SIMULATING, ::HTSimulatingEmiRecipe)
 
         addDataMapRecipes(
@@ -115,6 +113,8 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             HTItemToFluidEmiRecipe.Companion::fermenting,
         )
         // addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
+
+        addRegistryRecipes(registry, RagiumRecipeTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
         // Misc
         registry.setDefaultComparison(
             RagiumBlocks.UNIVERSAL_CHEST.asItem(),

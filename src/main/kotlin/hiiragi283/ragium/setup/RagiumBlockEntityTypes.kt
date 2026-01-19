@@ -14,6 +14,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTFermenterBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTPlanterBlockEntity
+import hiiragi283.ragium.common.block.entity.enchant.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
@@ -105,6 +106,11 @@ object RagiumBlockEntityTypes {
     val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
         REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
 
+    // Enchanting
+    @JvmField
+    val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
+
     //    Storage    //
 
     @JvmField
@@ -159,6 +165,8 @@ object RagiumBlockEntityTypes {
         // Device
         registerHandler(event, FERMENTER.get())
         registerHandler(event, PLANTER.get())
+
+        registerHandler(event, ENCHANTER.get())
 
         // Storage
         registerHandler(event, BATTERY.get())

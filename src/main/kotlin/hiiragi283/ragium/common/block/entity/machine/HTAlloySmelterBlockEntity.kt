@@ -70,45 +70,47 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTEnergizedRecipeComponent.Cached<HTListItemRecipeInput, HTAlloyingRecipe> =
-        object : HTEnergizedRecipeComponent.Cached<HTListItemRecipeInput, HTAlloyingRecipe>(
+    override fun createRecipeComponent(): HTEnergizedRecipeComponent.Cached<HTListItemRecipeInput, HTAlloyingRecipe> = RecipeComponent()
+
+    inner class RecipeComponent :
+        HTEnergizedRecipeComponent.Cached<HTListItemRecipeInput, HTAlloyingRecipe>(
             RagiumRecipeTypes.ALLOYING,
             this,
         ) {
-            private val inputHandlers: List<HTSlotInputHandler<HTItemResourceType>> =
-                listOf(topInputSlot, leftInputSlot, rightInputSlot).map(::HTSlotInputHandler)
-            private val outputHandler: HTItemOutputHandler = HTItemOutputHandler.single(outputSlot)
+        private val inputHandlers: List<HTSlotInputHandler<HTItemResourceType>> =
+            listOf(topInputSlot, leftInputSlot, rightInputSlot).map(::HTSlotInputHandler)
+        private val outputHandler: HTItemOutputHandler = HTItemOutputHandler.single(outputSlot)
 
-            override fun insertOutput(
-                level: ServerLevel,
-                pos: BlockPos,
-                input: HTListItemRecipeInput,
-                recipe: HTAlloyingRecipe,
-            ) {
-                outputHandler.insert(recipe.getResultItem(level.registryAccess()))
-            }
-
-            override fun extractInput(
-                level: ServerLevel,
-                pos: BlockPos,
-                input: HTListItemRecipeInput,
-                recipe: HTAlloyingRecipe,
-            ) {
-                inputHandlers[0].consume(recipe.firstIngredient)
-                inputHandlers[1].consume(recipe.secondIngredient)
-                inputHandlers[2].consume(recipe.thirdIngredient)
-            }
-
-            override fun applyEffect() {
-                playSound(SoundEvents.FIRE_EXTINGUISH)
-            }
-
-            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTListItemRecipeInput =
-                HTListItemRecipeInput(inputHandlers.map { it.getItemStack() })
-
-            override fun canProgressRecipe(level: ServerLevel, input: HTListItemRecipeInput, recipe: HTAlloyingRecipe): Boolean =
-                outputHandler.canInsert(recipe.getResultItem(level.registryAccess()))
+        override fun insertOutput(
+            level: ServerLevel,
+            pos: BlockPos,
+            input: HTListItemRecipeInput,
+            recipe: HTAlloyingRecipe,
+        ) {
+            outputHandler.insert(recipe.getResultItem(level.registryAccess()))
         }
+
+        override fun extractInput(
+            level: ServerLevel,
+            pos: BlockPos,
+            input: HTListItemRecipeInput,
+            recipe: HTAlloyingRecipe,
+        ) {
+            inputHandlers[0].consume(recipe.firstIngredient)
+            inputHandlers[1].consume(recipe.secondIngredient)
+            inputHandlers[2].consume(recipe.thirdIngredient)
+        }
+
+        override fun applyEffect() {
+            playSound(SoundEvents.FIRE_EXTINGUISH)
+        }
+
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTListItemRecipeInput =
+            HTListItemRecipeInput(inputHandlers.map { it.getItemStack() })
+
+        override fun canProgressRecipe(level: ServerLevel, input: HTListItemRecipeInput, recipe: HTAlloyingRecipe): Boolean =
+            outputHandler.canInsert(recipe.getResultItem(level.registryAccess()))
+    }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.alloySmelter
 }
