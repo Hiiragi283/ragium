@@ -24,11 +24,13 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
+        add(RagiumBlocks.FORMING_PRESS, "Forming Press")
 
         add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
+        add(RagiumBlocks.SOLIDIFIER, "Solidifier")
 
         add(RagiumBlocks.PLANTER, "Planter")
 

@@ -4,8 +4,10 @@
     "ragium:crusher",
     "ragium:cutting_machine",
     "ragium:dryer",
+    "ragium:forming_press",
     "ragium:melter",
     "ragium:mixer",
-    "ragium:pyrolyzer"
+    "ragium:pyrolyzer",
+    "ragium:solidifier"
   ]
 }

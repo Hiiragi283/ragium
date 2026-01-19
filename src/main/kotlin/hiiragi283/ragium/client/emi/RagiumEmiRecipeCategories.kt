@@ -6,7 +6,6 @@ import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.toHolderLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.text.HTHasText
-import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.resources.ResourceLocation
@@ -87,7 +86,7 @@ object RagiumEmiRecipeCategories {
     val PLANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 
     @JvmField
-    val PRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PRESSING, Items.PISTON)
+    val PRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
 
     @JvmField
     val PYROLYZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
@@ -99,5 +98,5 @@ object RagiumEmiRecipeCategories {
     val SIMULATING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SIMULATING, Items.DRAGON_EGG)
 
     @JvmField
-    val SOLIDIFYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SOLIDIFYING, HTMoldType.BLANK)
+    val SOLIDIFYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SOLIDIFYING, RagiumBlocks.SOLIDIFIER)
 }

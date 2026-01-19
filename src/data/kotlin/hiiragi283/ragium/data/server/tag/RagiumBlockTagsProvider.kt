@@ -45,11 +45,13 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             yield(RagiumBlocks.ALLOY_SMELTER)
             yield(RagiumBlocks.CRUSHER)
             yield(RagiumBlocks.CUTTING_MACHINE)
+            yield(RagiumBlocks.FORMING_PRESS)
 
             yield(RagiumBlocks.DRYER)
             yield(RagiumBlocks.MELTER)
             yield(RagiumBlocks.MIXER)
             yield(RagiumBlocks.PYROLYZER)
+            yield(RagiumBlocks.SOLIDIFIER)
 
             yield(RagiumBlocks.PLANTER)
 

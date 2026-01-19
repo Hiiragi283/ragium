@@ -46,9 +46,6 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
         builder.addSlot(HTSlotInfo.INPUT, inputSlot)
     }
 
-    private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
-    private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
-
     override fun setupMainTab(root: UIElement) {
         RagiumModularUIHelper.melter(root, HTItemSlotElement(inputSlot), createFluidSlot(0))
         super.setupMainTab(root)
@@ -58,6 +55,9 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTMeltingRecipe> =
         object : HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTMeltingRecipe>(RagiumRecipeTypes.MELTING, this) {
+            private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+            private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+
             override fun insertOutput(
                 level: ServerLevel,
                 pos: BlockPos,

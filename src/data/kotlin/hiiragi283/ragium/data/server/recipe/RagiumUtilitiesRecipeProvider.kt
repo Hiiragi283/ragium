@@ -93,6 +93,9 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         basic(RagiumBlocks.CUTTING_MACHINE)
             .define('B', Items.IRON_AXE)
             .save(output)
+        basic(RagiumBlocks.FORMING_PRESS)
+            .define('B', Items.PISTON)
+            .save(output)
 
         // Advanced
         fun advanced(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
@@ -116,6 +119,9 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             .save(output)
         advanced(RagiumBlocks.PYROLYZER)
             .define('B', Items.NETHER_BRICKS)
+            .save(output)
+        advanced(RagiumBlocks.SOLIDIFIER)
+            .define('B', RagiumTags.Items.MOLDS)
             .save(output)
     }
 

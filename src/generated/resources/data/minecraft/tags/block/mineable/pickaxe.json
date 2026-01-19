@@ -11,6 +11,7 @@
     "ragium:dryer",
     "ragium:end_ragi_crystal_ore",
     "ragium:end_raginite_ore",
+    "ragium:forming_press",
     "ragium:imitation_spawner",
     "ragium:melter",
     "ragium:mixer",
@@ -24,6 +25,7 @@
     "ragium:raginite_block",
     "ragium:raginite_ore",
     "ragium:resonant_interface",
+    "ragium:solidifier",
     "ragium:tank",
     "ragium:universal_chest"
   ]

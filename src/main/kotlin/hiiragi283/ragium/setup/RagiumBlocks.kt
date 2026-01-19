@@ -77,6 +77,10 @@ object RagiumBlocks {
     val CUTTING_MACHINE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE, RagiumTranslation.CUTTING_MACHINE)
 
+    @JvmField
+    val FORMING_PRESS: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.FORMING_PRESS, RagiumTranslation.FORMING_PRESS)
+
     // Advanced
     @JvmField
     val DRYER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
@@ -93,6 +97,10 @@ object RagiumBlocks {
     @JvmField
     val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
+
+    @JvmField
+    val SOLIDIFIER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.SOLIDIFIER, RagiumTranslation.SOLIDIFIER)
 
     //    Device    //
 

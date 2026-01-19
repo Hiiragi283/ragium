@@ -57,6 +57,7 @@ object RagiumConfig {
         }
 
         class Processor(builder: ModConfigSpec.Builder) {
+            // Basic
             @JvmField
             val alloySmelter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ALLOY_SMELTER)
 
@@ -74,6 +75,10 @@ object RagiumConfig {
                 RagiumFluidConfigType.FIRST_INPUT,
             )
 
+            @JvmField
+            val formingPress: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FORMING_PRESS)
+
+            // Advanced
             @JvmField
             val dryer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
@@ -98,6 +103,13 @@ object RagiumConfig {
                 builder,
                 RagiumConst.PYROLYZER,
                 RagiumFluidConfigType.FIRST_OUTPUT,
+            )
+
+            @JvmField
+            val solidifier: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.SOLIDIFIER,
+                RagiumFluidConfigType.FIRST_INPUT,
             )
         }
 

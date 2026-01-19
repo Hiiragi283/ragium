@@ -16,10 +16,12 @@ import hiiragi283.ragium.common.block.entity.processing.HTAlloySmelterBlockEntit
 import hiiragi283.ragium.common.block.entity.processing.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTFormingPressBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTPyrolyzerBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTSolidifierBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTResonantInterfaceBlockEntity
@@ -66,6 +68,10 @@ object RagiumBlockEntityTypes {
     val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> =
         REGISTER.registerTick(RagiumConst.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
 
+    @JvmField
+    val FORMING_PRESS: HTDeferredBlockEntityType<HTFormingPressBlockEntity> =
+        REGISTER.registerTick(RagiumConst.FORMING_PRESS, ::HTFormingPressBlockEntity)
+
     // Advanced
     @JvmField
     val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> =
@@ -82,6 +88,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> =
         REGISTER.registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
+
+    @JvmField
+    val SOLIDIFIER: HTDeferredBlockEntityType<HTSolidifierBlockEntity> =
+        REGISTER.registerTick(RagiumConst.SOLIDIFIER, ::HTSolidifierBlockEntity)
 
     //    Device    //
 
@@ -133,10 +143,13 @@ object RagiumBlockEntityTypes {
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, CRUSHER.get())
         registerHandler(event, CUTTING_MACHINE.get())
+        registerHandler(event, FORMING_PRESS.get())
+
         registerHandler(event, DRYER.get())
         registerHandler(event, MELTER.get())
         registerHandler(event, MIXER.get())
         registerHandler(event, PYROLYZER.get())
+        registerHandler(event, SOLIDIFIER.get())
 
         // Device
         registerHandler(event, PLANTER.get())
