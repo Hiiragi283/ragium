@@ -47,6 +47,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         // Fluid
         addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオ")
         addFluid(RagiumFluids.ETHANOL, "エタノール")
+        addFluid(RagiumFluids.PLANT_OIL, "植物油")
         addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
         addFluid(RagiumFluids.FERTILIZER, "液体肥料")
 

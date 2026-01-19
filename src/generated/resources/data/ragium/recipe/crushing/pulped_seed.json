@@ -1,8 +1,0 @@
-{
-  "type": "ragium:crushing",
-  "ingredient": "#c:seeds",
-  "result": {
-    "id": "hiiragi_core:pulped_seed"
-  },
-  "time": 100
-}

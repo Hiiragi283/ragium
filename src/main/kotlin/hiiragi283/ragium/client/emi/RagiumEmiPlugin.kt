@@ -25,6 +25,7 @@ import hiiragi283.ragium.client.emi.recipe.HTChancedEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTComplexEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTEnchantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTItemToFluidEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSimulatingEmiRecipe
@@ -96,7 +97,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, HTComplexEmiRecipe.Companion::drying)
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemToFluidEmiRecipe.Companion::melting)
-        addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, HTComplexEmiRecipe.Companion::mixing)
+        addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, ::HTPyrolyzingEmiRecipe)
         // addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)

@@ -45,7 +45,7 @@ object RagiumRecipeTypes {
     val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
 
     @JvmField
-    val MIXING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
+    val MIXING: HTDeferredRecipeType<HTMixingRecipe.Input, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
 
     @JvmField
     val PLANTING: HTDeferredRecipeType<HTPlantingRecipe.Input, HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)

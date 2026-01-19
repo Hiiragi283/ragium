@@ -2,11 +2,9 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.HTMaterialResultHelper
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
-import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -21,7 +19,6 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         ores()
         stones()
         planks()
-        foods()
     }
 
     @JvmStatic
@@ -191,28 +188,5 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         wood(Tags.Items.FENCE_GATES_WOODEN, 1, 4)
         wood(Tags.Items.FENCES_WOODEN, 1, 5)
         wood(Tags.Items.RODS_WOODEN, 2, 1)
-    }
-
-    @JvmStatic
-    private fun foods() {
-        // Wheat Flour
-        HTChancedRecipeBuilder
-            .crushing(
-                itemCreator.fromTagKey(Tags.Items.CROPS_WHEAT),
-                itemResult.create(HCItems.WHEAT_FLOUR, HiiragiCoreTags.Items.FLOURS_WHEAT),
-            ).save(output)
-
-        // Pulped Fish
-        HTChancedRecipeBuilder
-            .crushing(
-                itemCreator.fromTagKey(Tags.Items.FOODS_RAW_FISH),
-                itemResult.create(HCItems.PULPED_FISH),
-            ).save(output)
-        // Pulped Seed
-        HTChancedRecipeBuilder
-            .crushing(
-                itemCreator.fromTagKey(Tags.Items.SEEDS),
-                itemResult.create(HCItems.PULPED_SEED),
-            ).save(output)
     }
 }

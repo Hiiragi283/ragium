@@ -21,7 +21,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTComplexRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -93,16 +92,6 @@ object RagiumRecipeSerializers {
     )
 
     @JvmStatic
-    private fun <I : Any, R : HTComplexResultRecipe.Simple> complex(
-        codec: ParameterCodec<in RegistryFriendlyByteBuf, R, I>,
-        factory: HTComplexRecipeBuilder.Factory<I, R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = processing(
-        codec,
-        COMPLEX_RESULT.forGetter(HTComplexResultRecipe.Simple::result),
-        factory::create,
-    )
-
-    @JvmStatic
     private fun <R : HTChancedRecipe> chanced(
         factory: HTChancedRecipeBuilder.Factory<R>,
         max: Int,
@@ -140,11 +129,12 @@ object RagiumRecipeSerializers {
     @JvmField
     val DRYING: RecipeSerializer<HTDryingRecipe> = REGISTER.registerSerializer(
         RagiumConst.DRYING,
-        complex(
+        processing(
             BiCodecs
                 .either(HTItemIngredient.CODEC, HTFluidIngredient.CODEC, true)
                 .fieldOf(HTConst.INGREDIENT)
                 .forGetter(HTDryingRecipe::ingredient),
+            COMPLEX_RESULT.forGetter(HTComplexResultRecipe.Simple::result),
             ::HTDryingRecipe,
         ),
     )
@@ -175,14 +165,23 @@ object RagiumRecipeSerializers {
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MIXING,
-        complex(
-            MapBiCodecs
-                .pair(
-                    HTItemIngredient.CODEC.fieldOf(RagiumConst.ITEM_INGREDIENT),
-                    HTFluidIngredient.CODEC.fieldOf(RagiumConst.FLUID_INGREDIENT),
-                ).forGetter(HTMixingRecipe::ingredient),
+        processing(
+            HTItemIngredient.CODEC
+                .listOrElement(0, 2)
+                .optionalFieldOf(RagiumConst.ITEM_INGREDIENT, listOf())
+                .forGetter(HTMixingRecipe::itemIngredients),
+            HTFluidIngredient.CODEC
+                .listOrElement(0, 2)
+                .optionalFieldOf(RagiumConst.FLUID_INGREDIENT, listOf())
+                .forGetter(HTMixingRecipe::fluidIngredients),
+            COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
             ::HTMixingRecipe,
-        ),
+        ).validate { recipe: HTMixingRecipe ->
+            if (recipe.itemIngredients.isEmpty() && recipe.fluidIngredients.isEmpty()) {
+                error("Either item or fluid ingredients is required for mixing recipe")
+            }
+            recipe
+        },
     )
 
     @JvmField

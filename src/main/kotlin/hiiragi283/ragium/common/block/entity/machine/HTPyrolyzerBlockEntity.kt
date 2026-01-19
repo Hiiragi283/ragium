@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.machine
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
+import hiiragi283.core.api.gui.element.HTItemSlotElement
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
@@ -12,6 +13,7 @@ import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
+import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -45,16 +47,21 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
     @DescSynced
     @Persisted(subPersisted = true)
-    val outputSlots: List<HTBasicItemSlot> = List(4) { (HTBasicItemSlot.output()) }
+    val outputSlot: HTBasicItemSlot = HTBasicItemSlot.output()
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
         builder.addSlot(HTSlotInfo.INPUT, inputSlot)
-        for (slot: HTBasicItemSlot in outputSlots) {
-            builder.addSlot(HTSlotInfo.OUTPUT, slot)
-        }
+
+        builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
     }
 
     override fun setupMainTab(root: UIElement) {
+        RagiumModularUIHelper.pyrolyzer(
+            root,
+            HTItemSlotElement(inputSlot),
+            HTItemSlotElement(outputSlot),
+            createFluidSlot(0)
+        )
         super.setupMainTab(root)
     }
 
@@ -65,7 +72,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     inner class RecipeComponent :
         HTEnergizedRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
         private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
-        private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
+        private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
         private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
         override fun insertOutput(

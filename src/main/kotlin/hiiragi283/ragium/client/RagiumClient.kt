@@ -115,6 +115,7 @@ object RagiumClient {
     private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
         event.dull(RagiumFluids.ETHANOL, Color(0xccffcc))
+        event.clear(RagiumFluids.PLANT_OIL, Color(0x66cc66))
         event.clear(RagiumFluids.BIOFUEL, Color(0x99cc00))
         event.clear(RagiumFluids.FERTILIZER, Color(0x339933))
 

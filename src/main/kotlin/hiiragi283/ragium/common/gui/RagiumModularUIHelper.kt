@@ -96,6 +96,31 @@ object RagiumModularUIHelper {
     }
 
     @JvmStatic
+    fun mixer(
+        root: UIElement,
+        leftItemInput: UIElement,
+        rightItemInput: UIElement,
+        leftFluidInput: UIElement,
+        rightFluidInput: UIElement,
+        itemOutput: UIElement,
+        fluidOutput: UIElement,
+    ) {
+        root.addRowChild {
+            alineCenter()
+            addChild(leftItemInput)
+            addChild(rightItemInput)
+            addChild(itemOutput.layout { it.marginLeftPercent(10 * 3f) })
+        }
+        root.addRowChild {
+            alineCenter()
+            addChild(leftFluidInput)
+            addChild(rightFluidInput)
+            addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(9f).marginTop(-9f) })
+            addChild(fluidOutput.layout { it })
+        }
+    }
+
+    @JvmStatic
     fun pyrolyzer(
         root: UIElement,
         input: UIElement,

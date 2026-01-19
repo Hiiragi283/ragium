@@ -21,6 +21,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import net.minecraft.data.recipes.RecipeOutput
@@ -58,6 +59,8 @@ object RagiumRuntimeRecipeHandler {
 
         meltBaseToMolten(event)
 
+        mixFlourToDough(event)
+
         solidifyPrefix(event, CommonTagPrefixes.BLOCK, HTMoldType.BLOCK)
         solidifyPrefix(event, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
         solidifyPrefix(event, CommonTagPrefixes.GEM, HTMoldType.GEM)
@@ -81,7 +84,8 @@ object RagiumRuntimeRecipeHandler {
             val outputCount: Int = outputCountGetter(propertyMap) ?: continue
 
             if (!event.isPresentTag(prefix, key)) continue
-            val dust: Item = event.getFirstHolder(CommonTagPrefixes.DUST, key)?.value() ?: continue
+            val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+            val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: continue
 
             HTChancedRecipeBuilder
                 .crushing(
@@ -95,11 +99,13 @@ object RagiumRuntimeRecipeHandler {
     private fun crushBaseToDust(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
             val defaultPart: HTDefaultPart = propertyMap.getDefaultPart() ?: continue
+
+            val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
             val inputTag: TagKey<Item> = defaultPart.getTag(key)
-            if (inputTag == CommonTagPrefixes.DUST.itemTagKey(key)) continue
+            if (inputTag == crushedPrefix.itemTagKey(key)) continue
 
             if (!event.isPresentTag(inputTag)) continue
-            val dust: Item = event.getFirstHolder(CommonTagPrefixes.DUST, key)?.value() ?: continue
+            val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: continue
             // Crushing
             HTChancedRecipeBuilder
                 .crushing(
@@ -283,14 +289,14 @@ object RagiumRuntimeRecipeHandler {
         }
     }
 
-    //    Fluid    //
+    //    Melting    //
 
     @JvmStatic
     private fun meltBaseToMolten(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
             if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
             val defaultPart: HTDefaultPart = propertyMap.getDefaultPart() ?: continue
-            val prefix: HTTagPrefix? = (defaultPart as? HTDefaultPart.Material)?.prefix
+            val prefix: HTTagPrefix? = (defaultPart as? HTDefaultPart.Prefixed)?.prefix
             val inputTag: TagKey<Item> = defaultPart.getTag(key)
 
             var fluidAmount: Int = propertyMap.getDefaultFluidAmount()
@@ -308,6 +314,27 @@ object RagiumRuntimeRecipeHandler {
                 ).saveSuffixed(event.output, "_from_${defaultPart.getSuffix()}")
         }
     }
+
+    //    Mixing    //
+
+    @JvmStatic
+    private fun mixFlourToDough(event: HTRegisterRuntimeRecipeEvent) {
+        for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+            if (!event.isPresentTag(crushedPrefix, key)) continue
+
+            val dough: Item = event.getFirstHolder(CommonTagPrefixes.DOUGH, key)?.value() ?: continue
+            // Mix
+            HTMixingRecipeBuilder
+                .create()
+                .addIngredient(event.itemCreator.fromTagKey(crushedPrefix, key))
+                .addIngredient(event.fluidCreator.water(250))
+                .setResult(event.itemResult.create(dough))
+                .save(event.output)
+        }
+    }
+
+    //    Solidifying    //
 
     @JvmStatic
     private fun solidifyPrefix(event: HTRegisterRuntimeRecipeEvent, prefix: HTTagPrefix, moldType: HTMoldType) {
