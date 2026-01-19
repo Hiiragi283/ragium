@@ -6,6 +6,7 @@ import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.RagiumAPI
+import net.minecraft.core.BlockPos
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
@@ -26,8 +28,8 @@ import org.apache.commons.lang3.math.Fraction
 object RagiumDataMapTypes {
     // Block
     @JvmField
-    val ROCK_CHANCE: DataMapType<Block, HTRockGenerationData> =
-        create("rock_generation", Registries.BLOCK, HTRockGenerationData.CODEC)
+    val FERMENT_SOURCE: DataMapType<Block, HTFermentSource> =
+        create("ferment_source", Registries.BLOCK, HTFermentSource.CODEC)
 
     // Entity Type
     @JvmField
@@ -53,7 +55,14 @@ object RagiumDataMapTypes {
 
     //    Extensions    //
 
-    fun getRockData(state: BlockState): HTRockGenerationData? = state.blockHolder.getData(ROCK_CHANCE)
+    fun getFermentLevel(getter: BlockGetter, centerPos: BlockPos): Int = BlockPos
+        .betweenClosed(centerPos.offset(-1, 0, -1), centerPos.offset(1, -1, 1))
+        .asSequence()
+        .map(getter::getBlockState)
+        .mapNotNull(::getFermentLevel)
+        .sum()
+
+    fun getFermentLevel(state: BlockState): Int? = state.blockHolder.getData(FERMENT_SOURCE)?.level
 
     /**
      * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。

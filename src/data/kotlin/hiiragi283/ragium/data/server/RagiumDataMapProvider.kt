@@ -7,12 +7,14 @@ import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.toHolderLike
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.createCommonTag
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.api.data.map.HTFermentSource
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFertilizerData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
@@ -29,6 +31,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
@@ -45,7 +48,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
         furnaceFuels()
 
-        mobHead()
+        fermentSources()
+        mobHeads()
 
         coolants()
         magmaticFuels()
@@ -64,7 +68,14 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     //    Ragium    //
 
-    private fun mobHead() {
+    private fun fermentSources() {
+        builder(RagiumDataMapTypes.FERMENT_SOURCE)
+            .addHolder(Blocks.BROWN_MUSHROOM.toHolderLike(), HTFermentSource(1))
+            .addHolder(Blocks.MYCELIUM.toHolderLike(), HTFermentSource(1))
+            .addHolder(Blocks.RED_MUSHROOM.toHolderLike(), HTFermentSource(1))
+    }
+
+    private fun mobHeads() {
         builder(RagiumDataMapTypes.MOB_HEAD)
             .add(EntityType.SKELETON, HTMobHead(Items.SKELETON_SKULL))
             .add(EntityType.WITHER_SKELETON, HTMobHead(Items.WITHER_SKELETON_SKULL))

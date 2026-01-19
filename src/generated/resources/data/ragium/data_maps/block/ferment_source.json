@@ -1,0 +1,13 @@
+{
+  "values": {
+    "minecraft:brown_mushroom": {
+      "level": 1
+    },
+    "minecraft:mycelium": {
+      "level": 1
+    },
+    "minecraft:red_mushroom": {
+      "level": 1
+    }
+  }
+}

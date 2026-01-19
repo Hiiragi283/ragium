@@ -69,6 +69,8 @@ object Ragium {
 
     @JvmStatic
     private fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
+        event.register(RagiumDataMapTypes.FERMENT_SOURCE)
+
         event.register(RagiumDataMapTypes.MOB_HEAD)
 
         event.register(RagiumDataMapTypes.COOLANT)
@@ -76,7 +78,6 @@ object Ragium {
         event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
         event.register(RagiumDataMapTypes.FERTILIZER)
 
-        event.register(RagiumDataMapTypes.ROCK_CHANCE)
         event.register(RagiumDataMapTypes.UPGRADE)
 
         LOGGER.info("Registered data map types!")

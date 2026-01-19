@@ -15,6 +15,7 @@ import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
@@ -47,7 +48,7 @@ class HTFermenterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             return HTMeltingRecipe(
                 HTItemIngredient(SizedIngredient.of(item, 1)),
                 HTFluidResultCreator.create(RagiumFluids.CRUDE_BIO, amount),
-                20 * 5,
+                20 * 10,
                 Fraction.ZERO,
             )
         }
@@ -113,7 +114,7 @@ class HTFermenterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
         override fun getMaxProgress(recipe: HTMeltingRecipe): Int = recipe.time
 
-        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = 1
+        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = RagiumDataMapTypes.getFermentLevel(level, pos)
 
         override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTMeltingRecipe): Boolean =
             outputHandler.canInsert(recipe.getResultFluid(level.registryAccess()))
