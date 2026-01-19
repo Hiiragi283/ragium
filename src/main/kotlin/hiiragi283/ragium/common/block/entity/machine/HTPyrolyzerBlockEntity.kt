@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.processing
+package hiiragi283.ragium.common.block.entity.machine
 
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
@@ -10,7 +10,8 @@ import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -59,8 +60,8 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe> =
-        object : HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
+    override fun createRecipeComponent(): HTEnergizedRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe> =
+        object : HTEnergizedRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
             private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
             private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
             private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }

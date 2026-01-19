@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.processing
+package hiiragi283.ragium.common.block.entity
 
 import com.lowdragmc.lowdraglib2.gui.sync.bindings.impl.DataBindingBuilder
 import com.lowdragmc.lowdraglib2.gui.sync.bindings.impl.SupplierDataSource
@@ -13,7 +13,6 @@ import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.core.api.times
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
@@ -32,6 +31,8 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     protected abstract fun createRecipeComponent(): HTRecipeComponent<*, *>
 
     fun getProgress(): Fraction = recipeComponent.getProgress(isActive())
+
+    fun modifyTime(time: Int): Int = modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeComponent.tick(level, pos)
 
@@ -65,8 +66,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         fun updateAndGetProgress(time: Int): Int {
             if (isCreative()) return 0
             battery.currentEnergyPerTick = modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
-            val time: Int = modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
-            return battery.currentEnergyPerTick * time
+            return battery.currentEnergyPerTick * modifyTime(time)
         }
 
         //    UI    //

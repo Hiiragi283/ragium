@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.RecipeHolder
 class HTItemToFluidEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder<HTMeltingRecipe>) :
     HTHolderModularEmiRecipe<HTMeltingRecipe>(
         { recipe: HTMeltingRecipe, root: UIElement ->
-            RagiumModularUIHelper.melter(
+            RagiumModularUIHelper.singleProcess(
                 root,
                 inputSlot(recipe.ingredient),
                 outputSlot(recipe.result),

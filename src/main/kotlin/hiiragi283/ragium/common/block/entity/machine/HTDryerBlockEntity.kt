@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.processing
+package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.config.HTMachineConfig

@@ -4,13 +4,13 @@ import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
-import hiiragi283.ragium.common.block.entity.processing.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyBattery
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 
-abstract class HTProcessingRecipeComponent<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(
+abstract class HTEnergizedRecipeComponent<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(
     protected val owner: HTProcessorBlockEntity.Energized,
 ) : HTRecipeComponent<INPUT, RECIPE>() {
     private val battery: HTMachineEnergyBattery.Processor get() = owner.battery
@@ -24,7 +24,7 @@ abstract class HTProcessingRecipeComponent<INPUT : RecipeInput, RECIPE : HTProce
     abstract class Cached<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(
         private val cache: HTRecipeCache<INPUT, RECIPE>,
         owner: HTProcessorBlockEntity.Energized,
-    ) : HTProcessingRecipeComponent<INPUT, RECIPE>(owner) {
+    ) : HTEnergizedRecipeComponent<INPUT, RECIPE>(owner) {
         constructor(
             finder: HTRecipeFinder<INPUT, RECIPE>,
             owner: HTProcessorBlockEntity.Energized,

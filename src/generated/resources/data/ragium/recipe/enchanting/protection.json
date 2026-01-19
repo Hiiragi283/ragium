@@ -1,0 +1,13 @@
+{
+  "type": "ragium:enchanting",
+  "enchantment": {
+    "levels": {
+      "minecraft:protection": 4
+    }
+  },
+  "ingredient": {
+    "amount": 64,
+    "items": "#c:ingots/iron"
+  },
+  "time": 200
+}

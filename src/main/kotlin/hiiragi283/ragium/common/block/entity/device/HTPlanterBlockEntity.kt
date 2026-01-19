@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.processing
+package hiiragi283.ragium.common.block.entity.device
 
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
@@ -16,6 +16,7 @@ import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -75,11 +76,16 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
 
     override fun createRecipeComponent(): HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe> =
         object : HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe>() {
-            private val cache: HTRecipeCache<HTPlantingRecipe.Input, HTPlantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.PLANTING)
+            private val cache: HTRecipeCache<HTPlantingRecipe.Input, HTPlantingRecipe> =
+                HTFinderRecipeCache(RagiumRecipeTypes.PLANTING)
 
             private val plantInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(plantSlot) }
             private val soilInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(soilSlot) }
-            private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
+            private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy {
+                HTSlotInputHandler(
+                    inputTank,
+                )
+            }
 
             private val cropOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(cropSlot) }
             private val seedOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(seedSlot) }

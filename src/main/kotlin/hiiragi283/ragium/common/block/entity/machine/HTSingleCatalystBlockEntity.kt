@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.processing
+package hiiragi283.ragium.common.block.entity.machine
 
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
@@ -12,7 +12,8 @@ import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
 import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
@@ -56,7 +57,7 @@ abstract class HTSingleCatalystBlockEntity(type: HTDeferredBlockEntityType<*>, p
     //    Processing    //
 
     abstract inner class RecipeComponent<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(finder: HTRecipeFinder<INPUT, RECIPE>) :
-        HTProcessingRecipeComponent.Cached<INPUT, RECIPE>(finder, this) {
+        HTEnergizedRecipeComponent.Cached<INPUT, RECIPE>(finder, this) {
         protected val catalystHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(catalystSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 

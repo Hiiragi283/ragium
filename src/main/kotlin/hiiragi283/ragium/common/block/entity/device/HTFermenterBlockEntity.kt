@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.processing
+package hiiragi283.ragium.common.block.entity.device
 
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
@@ -16,6 +16,7 @@ import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
@@ -71,7 +72,7 @@ class HTFermenterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
     }
 
     override fun setupMainTab(root: UIElement) {
-        RagiumModularUIHelper.melter(root, HTItemSlotElement(inputSlot), createFluidSlot(0))
+        RagiumModularUIHelper.singleProcess(root, HTItemSlotElement(inputSlot), createFluidSlot(0))
         super.setupMainTab(root)
     }
 

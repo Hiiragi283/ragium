@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.processing
+package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.config.HTMachineConfig
@@ -9,12 +9,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
-    HTChancedBlockEntity(RagiumBlockEntityTypes.CUTTING_MACHINE, pos, state) {
-    override fun getOutputSlotSize(): Int = 2
-
+class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTComplexBlockEntity(RagiumBlockEntityTypes.MIXER, pos, state) {
     override fun createRecipeComponent(): HTRecipeComponent<*, *> =
-        RecipeComponent(RagiumRecipeTypes.CUTTING, SoundEvents.UI_STONECUTTER_TAKE_RESULT)
+        RecipeComponent(RagiumRecipeTypes.MIXING, SoundEvents.BUCKET_FILL_AXOLOTL)
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.cuttingMachine
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.mixer
 }

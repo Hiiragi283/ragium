@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.processing
+package hiiragi283.ragium.common.block.entity.machine
 
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
@@ -12,7 +12,8 @@ import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
 import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -73,7 +74,7 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     inner class RecipeComponent<RECIPE : HTChancedRecipe>(
         finder: HTRecipeFinder<SingleRecipeInput, RECIPE>,
         private val sound: SoundEvent,
-    ) : HTProcessingRecipeComponent.Cached<SingleRecipeInput, RECIPE>(finder, this) {
+    ) : HTEnergizedRecipeComponent.Cached<SingleRecipeInput, RECIPE>(finder, this) {
         private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
 

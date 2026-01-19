@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.processing
+package hiiragi283.ragium.common.block.entity.machine
 
 import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
@@ -10,7 +10,8 @@ import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.ragium.common.block.entity.component.HTProcessingRecipeComponent
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
 import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -47,14 +48,14 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun setupMainTab(root: UIElement) {
-        RagiumModularUIHelper.melter(root, HTItemSlotElement(inputSlot), createFluidSlot(0))
+        RagiumModularUIHelper.singleProcess(root, HTItemSlotElement(inputSlot), createFluidSlot(0))
         super.setupMainTab(root)
     }
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTMeltingRecipe> =
-        object : HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTMeltingRecipe>(RagiumRecipeTypes.MELTING, this) {
+    override fun createRecipeComponent(): HTEnergizedRecipeComponent.Cached<SingleRecipeInput, HTMeltingRecipe> =
+        object : HTEnergizedRecipeComponent.Cached<SingleRecipeInput, HTMeltingRecipe>(RagiumRecipeTypes.MELTING, this) {
             private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
             private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 

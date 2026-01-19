@@ -98,7 +98,11 @@ object RagiumEmiRecipeCategories {
     @JvmField
     val SIMULATING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SIMULATING, Items.DRAGON_EGG)
 
-    // Device - Elite
+    // Machine - Enchanting
+    @JvmField
+    val ENCHANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ENCHANTING, Items.ENCHANTING_TABLE)
+
+    // Machine - Elite
     @JvmField
     val SOLIDIFYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SOLIDIFYING, RagiumBlocks.SOLIDIFIER)
 

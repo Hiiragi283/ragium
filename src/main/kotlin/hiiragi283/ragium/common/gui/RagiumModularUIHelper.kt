@@ -74,11 +74,20 @@ object RagiumModularUIHelper {
     }
 
     @JvmStatic
-    fun melter(root: UIElement, input: UIElement, output: UIElement) {
+    fun enchanting(
+        root: UIElement,
+        tank: UIElement,
+        left: UIElement,
+        right: UIElement,
+        output: UIElement,
+    ) {
         root.addRowChild {
             alineCenter()
-            addChild(input)
-            addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(10f) })
+            addChild(tank)
+            addChild(left.layout { it.marginLeftPercent(5f) })
+            addChild(HTModularUIHelper.plusIcon().layout { it.marginHorizontalPercent(5f) })
+            addChild(right)
+            addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(5f) })
             addChild(output)
         }
     }
@@ -113,6 +122,16 @@ object RagiumModularUIHelper {
             addChild(HTModularUIHelper.plusIcon().layout { it.marginHorizontalPercent(5f) })
             addChild(catalyst)
             addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(5f) })
+            addChild(output)
+        }
+    }
+
+    @JvmStatic
+    fun singleProcess(root: UIElement, input: UIElement, output: UIElement) {
+        root.addRowChild {
+            alineCenter()
+            addChild(input)
+            addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(10f) })
             addChild(output)
         }
     }

@@ -8,6 +8,7 @@ import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTComplexResult
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.HTRecipeBiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
@@ -26,6 +27,7 @@ import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
+import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTEntitySimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
@@ -40,6 +42,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import org.apache.commons.lang3.math.Fraction
 
 object RagiumRecipeSerializers {
@@ -143,6 +146,19 @@ object RagiumRecipeSerializers {
                 .fieldOf(HTConst.INGREDIENT)
                 .forGetter(HTDryingRecipe::ingredient),
             ::HTDryingRecipe,
+        ),
+    )
+
+    @JvmField
+    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.ENCHANTING,
+        processing(
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTEnchantingRecipe::ingredient),
+            BiCodec
+                .of(ItemEnchantments.CODEC, ItemEnchantments.STREAM_CODEC)
+                .fieldOf("enchantment")
+                .forGetter(HTEnchantingRecipe::enchantments),
+            ::HTEnchantingRecipe,
         ),
     )
 

@@ -17,6 +17,9 @@ class HTMachineConfig(
     fun getUsage(): Int = rate.asInt
 
     companion object {
+        @JvmField
+        val EMPTY = HTMachineConfig(mapOf(), { 0 }, { 0 })
+
         @JvmStatic
         private fun tankCapacity(builder: ModConfigSpec.Builder, type: RagiumFluidConfigType, capacity: Int): ModConfigSpec.IntValue =
             builder
