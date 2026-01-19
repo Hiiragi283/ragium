@@ -60,7 +60,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
             root,
             HTItemSlotElement(inputSlot),
             HTItemSlotElement(outputSlot),
-            createFluidSlot(0)
+            createFluidSlot(0),
         )
         super.setupMainTab(root)
     }

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:water"
+    },
+    {
+      "fluids": "#c:lava"
+    }
+  ],
+  "item_result": {
+    "id": "minecraft:obsidian"
+  },
+  "time": 200
+}

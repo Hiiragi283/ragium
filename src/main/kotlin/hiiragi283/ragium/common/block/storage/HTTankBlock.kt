@@ -5,9 +5,9 @@ import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.common.block.HTBasicEntityBlock
 import hiiragi283.core.common.block.HTBlockWithModularUI
+import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
-import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -21,8 +21,8 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 import net.neoforged.neoforge.fluids.FluidUtil
 
-class HTTankBlock(properties: Properties) :
-    HTBasicEntityBlock(RagiumBlockEntityTypes.TANK, properties),
+class HTTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) :
+    HTBasicEntityBlock(type, properties),
     HTBlockWithDescription,
     HTBlockWithModularUI {
     companion object {

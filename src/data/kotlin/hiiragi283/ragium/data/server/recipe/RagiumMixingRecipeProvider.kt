@@ -1,8 +1,11 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.HTMaterialResultHelper
+import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
@@ -29,13 +32,22 @@ object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
             .setResult(itemResult.create(Items.FLINT))
             .setTime(20 * 5)
             .save(output)
-        
+
         // Water + Lava -> Obsidian
         HTMixingRecipeBuilder
             .create()
             .addIngredient(fluidCreator.water(1000))
             .addIngredient(fluidCreator.lava(1000))
             .setResult(itemResult.create(Items.OBSIDIAN))
+            .save(output)
+
+        // Eldritch Flux
+        HTMixingRecipeBuilder
+            .create()
+            .addIngredient(itemCreator.fromTagKey(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER))
+            .addIngredient(createFluidIng(HCMaterialKeys.CRIMSON_CRYSTAL, HTMaterialPropertyKeys.MOLTEN_FLUID))
+            .addIngredient(createFluidIng(HCMaterialKeys.WARPED_CRYSTAL, HTMaterialPropertyKeys.MOLTEN_FLUID))
+            .setResult(createFluidResult(HCMaterialKeys.ELDRITCH, HTMaterialPropertyKeys.MOLTEN_FLUID))
             .save(output)
 
         // Diamond + Raginite -> Ragi-Crystal

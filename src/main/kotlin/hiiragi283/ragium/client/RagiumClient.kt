@@ -132,6 +132,7 @@ object RagiumClient {
     private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         // Block Entity
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.IMITATION_SPAWNER.get(), ::HTImitationSpawnerRenderer)
     }

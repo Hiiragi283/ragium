@@ -44,6 +44,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
 
         add(RagiumBlocks.IMITATION_SPAWNER, "スポナーの模造品")
+
+        add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブバッテリー")
+        add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブクレート")
+        add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
         addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオ")
         addFluid(RagiumFluids.ETHANOL, "エタノール")

@@ -44,6 +44,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
 
         add(RagiumBlocks.IMITATION_SPAWNER, "Imitation Spawner")
+
+        add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
+        add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
+        add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
         // Fluid
         addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
         addFluid(RagiumFluids.ETHANOL, "Ethanol")

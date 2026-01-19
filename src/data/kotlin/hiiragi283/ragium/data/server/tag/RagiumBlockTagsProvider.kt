@@ -65,6 +65,10 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
             yield(RagiumBlocks.UNIVERSAL_CHEST)
 
             yield(RagiumBlocks.IMITATION_SPAWNER)
+
+            yield(RagiumBlocks.CREATIVE_BATTERY)
+            yield(RagiumBlocks.CREATIVE_CRATE)
+            yield(RagiumBlocks.CREATIVE_TANK)
         }.forEach(pickaxe::add)
     }
 

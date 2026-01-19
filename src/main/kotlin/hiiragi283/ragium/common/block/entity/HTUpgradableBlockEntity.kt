@@ -31,6 +31,7 @@ abstract class HTUpgradableBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
     override fun setupTab(consumer: BiConsumer<Tab, UIElement>) {
         super.setupTab(consumer)
         // Upgrade
+        if (!enableUpgradeTab()) return
         consumer.accept(
             Tab().setText("Upgrades"),
             UIElement()
@@ -43,6 +44,8 @@ abstract class HTUpgradableBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
                 }.addInventory(),
         )
     }
+    
+    protected open fun enableUpgradeTab(): Boolean = true
 
     //    HTUpgradeHandler    //
 

@@ -41,6 +41,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
 
         // Storage
         altModelBlock(RagiumBlocks.TANK)
+        altModelBlock(RagiumBlocks.CREATIVE_TANK, id = RagiumBlocks.TANK.blockId)
 
         layeredBlock(
             RagiumBlocks.UNIVERSAL_CHEST,

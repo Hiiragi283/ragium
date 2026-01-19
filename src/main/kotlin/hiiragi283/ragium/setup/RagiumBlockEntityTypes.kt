@@ -26,6 +26,9 @@ import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTCreativeCrateBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTResonantInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
@@ -133,6 +136,18 @@ object RagiumBlockEntityTypes {
     val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> =
         REGISTER.registerType(RagiumConst.UNIVERSAL_CHEST, ::HTUniversalChestBlockEntity)
 
+    @JvmField
+    val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
+        REGISTER.registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
+
+    @JvmField
+    val CREATIVE_CRATE: HTDeferredBlockEntityType<HTCreativeCrateBlockEntity> =
+        REGISTER.registerTick("creative_crate", ::HTCreativeCrateBlockEntity)
+
+    @JvmField
+    val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> =
+        REGISTER.registerTick("creative_tank", ::HTCreativeTankBlockEntity)
+
     //    Event    //
 
     // Supported Blocks
@@ -172,6 +187,10 @@ object RagiumBlockEntityTypes {
         registerHandler(event, BATTERY.get())
         registerHandler(event, CRATE.get())
         registerHandler(event, TANK.get())
+
+        registerHandler(event, CREATIVE_BATTERY.get())
+        registerHandler(event, CREATIVE_CRATE.get())
+        registerHandler(event, CREATIVE_TANK.get())
 
         HTItemCapabilities.registerBlockEntity(event, UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)
 

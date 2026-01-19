@@ -124,7 +124,7 @@ object RagiumBlocks {
     val BATTERY: HTDeferredBlock<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
         "battery",
         machine().noOcclusion(),
-        ::HTBatteryBlock,
+        ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.BATTERY),
         ::HTBatteryBlockItem,
     )
 
@@ -132,7 +132,7 @@ object RagiumBlocks {
     val CRATE: HTDeferredBlock<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
         "crate",
         machine().noOcclusion(),
-        ::HTCrateBlock,
+        ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CRATE),
         ::HTCrateBlockItem,
     )
 
@@ -140,7 +140,7 @@ object RagiumBlocks {
     val TANK: HTDeferredBlock<HTTankBlock, HTTankBlockItem> = REGISTER.register(
         "tank",
         machine().noOcclusion(),
-        ::HTTankBlock,
+        ::HTTankBlock.partially1(RagiumBlockEntityTypes.TANK),
         ::HTTankBlockItem,
     )
 
@@ -170,6 +170,32 @@ object RagiumBlocks {
             ::HTImitationSpawnerBlock,
             ::HTImitationSpawnerBlockItem,
         )
+
+    //    Creatives    //
+
+    @JvmField
+    val CREATIVE_BATTERY: HTDeferredBlock<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
+        "creative_battery",
+        machine().noOcclusion(),
+        ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.CREATIVE_BATTERY),
+        ::HTBatteryBlockItem,
+    )
+
+    @JvmField
+    val CREATIVE_CRATE: HTDeferredBlock<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
+        "creative_crate",
+        machine().noOcclusion(),
+        ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CREATIVE_CRATE),
+        ::HTCrateBlockItem,
+    )
+
+    @JvmField
+    val CREATIVE_TANK: HTDeferredBlock<HTTankBlock, HTTankBlockItem> = REGISTER.register(
+        "creative_tank",
+        machine().noOcclusion(),
+        ::HTTankBlock.partially1(RagiumBlockEntityTypes.CREATIVE_TANK),
+        ::HTTankBlockItem,
+    )
 
     //    Extensions    //
 

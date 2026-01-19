@@ -3,6 +3,7 @@ package hiiragi283.ragium.setup
 import com.mojang.logging.LogUtils
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.material.HTMaterialContentsAccess
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
@@ -14,6 +15,7 @@ import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
 import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
+import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
@@ -164,6 +166,7 @@ object RagiumItems {
                 HTComponentFluidTank.create(capacity, context)
             },
             RagiumBlocks.TANK,
+            RagiumBlocks.CREATIVE_TANK,
         )
 
         // Energy
@@ -191,6 +194,22 @@ object RagiumItems {
                 item,
             )
         }
+
+        event.registerItem(
+            RagiumCapabilities.UPGRADABLE_ITEM,
+            { _, _ ->
+                object : HTUpgradeHandler {
+                    override fun getUpgrades(): List<HTItemResourceType> = listOf()
+
+                    override fun isValidUpgrade(upgrade: HTItemResourceType): Boolean = false
+
+                    override fun isCreative(): Boolean = true
+                }
+            },
+            RagiumBlocks.CREATIVE_BATTERY,
+            RagiumBlocks.CREATIVE_CRATE,
+            RagiumBlocks.CREATIVE_TANK,
+        )
 
         LOGGER.info("Registered Item Capabilities!")
     }
