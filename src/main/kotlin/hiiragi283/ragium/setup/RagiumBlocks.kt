@@ -106,6 +106,10 @@ object RagiumBlocks {
 
     // Basic
     @JvmField
+    val FERMENTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.FERMENTER, RagiumTranslation.FERMENTER)
+
+    @JvmField
     val PLANTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
 

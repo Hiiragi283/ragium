@@ -99,6 +99,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         factory
             .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
             // Basic
+            .add(RagiumBlocks.FERMENTER)
             .add(RagiumBlocks.PLANTER)
 
         // Specific
@@ -131,6 +132,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.PYROLYZER)
             .add(RagiumBlocks.SOLIDIFIER)
             // Device
+            .add(RagiumBlocks.FERMENTER)
             .add(RagiumBlocks.PLANTER)
             // Storage
             .add(RagiumBlocks.TANK)

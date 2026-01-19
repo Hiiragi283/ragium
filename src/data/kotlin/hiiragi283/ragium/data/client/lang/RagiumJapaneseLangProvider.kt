@@ -32,6 +32,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.PYROLYZER, "熱分解室")
         add(RagiumBlocks.SOLIDIFIER, "成型機")
 
+        add(RagiumBlocks.FERMENTER, "発酵槽")
         add(RagiumBlocks.PLANTER, "栽培機")
 
         add(RagiumBlocks.BATTERY, "可変バッテリー")

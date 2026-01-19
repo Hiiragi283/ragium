@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.block.entity.processing.HTAlloySmelterBlockEntit
 import hiiragi283.ragium.common.block.entity.processing.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTDryerBlockEntity
+import hiiragi283.ragium.common.block.entity.processing.HTFermenterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTFormingPressBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.processing.HTMixerBlockEntity
@@ -97,6 +98,10 @@ object RagiumBlockEntityTypes {
 
     // Basic
     @JvmField
+    val FERMENTER: HTDeferredBlockEntityType<HTFermenterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.FERMENTER, ::HTFermenterBlockEntity)
+
+    @JvmField
     val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
         REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
 
@@ -152,6 +157,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, SOLIDIFIER.get())
 
         // Device
+        registerHandler(event, FERMENTER.get())
         registerHandler(event, PLANTER.get())
 
         // Storage

@@ -23,12 +23,13 @@ import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTChancedEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTComplexEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTMeltingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTItemToFluidEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSimulatingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
+import hiiragi283.ragium.common.block.entity.processing.HTFermenterBlockEntity
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -46,6 +47,8 @@ import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
+import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import kotlin.streams.asSequence
 
 @EmiEntrypoint
@@ -74,6 +77,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Extra
             RagiumEmiRecipeCategories.SIMULATING,
             // Device - Basic
+            RagiumEmiRecipeCategories.FERMENTING,
             RagiumEmiRecipeCategories.PLANTING,
         ).forEach(::addCategory.partially1(registry))
 
@@ -88,7 +92,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.PRESSING, ::HTPressingEmiRecipe)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, HTComplexEmiRecipe.Companion::drying)
-        addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemToFluidEmiRecipe.Companion::melting)
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, HTComplexEmiRecipe.Companion::mixing)
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, ::HTPyrolyzingEmiRecipe)
         // addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
@@ -96,6 +100,15 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         addRegistryRecipes(registry, RagiumRecipeTypes.SIMULATING, ::HTSimulatingEmiRecipe)
 
+        addDataMapRecipes(
+            registry,
+            ITEM_LOOKUP,
+            NeoForgeDataMaps.COMPOSTABLES,
+            { holder: HTHolderLike<Item, Item>, compostable: Compostable ->
+                HTFermenterBlockEntity.createRecipe(holder.get(), compostable.chance)
+            },
+            HTItemToFluidEmiRecipe.Companion::fermenting,
+        )
         // addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
         // Misc
         registry.setDefaultComparison(

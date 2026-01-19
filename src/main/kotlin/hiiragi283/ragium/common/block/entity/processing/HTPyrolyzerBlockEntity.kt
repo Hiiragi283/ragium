@@ -53,10 +53,6 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
-    private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
-    private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
-
     override fun setupMainTab(root: UIElement) {
         super.setupMainTab(root)
     }
@@ -65,6 +61,10 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeComponent(): HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe> =
         object : HTProcessingRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
+            private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+            private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
+            private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+
             override fun insertOutput(
                 level: ServerLevel,
                 pos: BlockPos,

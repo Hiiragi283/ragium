@@ -138,6 +138,9 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.IRON)
             .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
 
+        basic(RagiumBlocks.FERMENTER)
+            .define('B', Items.COMPOSTER)
+            .save(output)
         basic(RagiumBlocks.PLANTER)
             .define('B', Tags.Items.GLASS_BLOCKS)
             .save(output)

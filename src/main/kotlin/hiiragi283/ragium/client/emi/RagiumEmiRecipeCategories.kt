@@ -6,6 +6,8 @@ import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.toHolderLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.text.HTHasText
+import hiiragi283.core.api.text.toText
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.resources.ResourceLocation
@@ -64,6 +66,7 @@ object RagiumEmiRecipeCategories {
         vararg workStations: ItemLike,
     ): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike = processor(recipeType, recipeType.getId(), width, height, *workStations)
 
+    // Machine - Basic
     @JvmField
     val ALLOYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
@@ -74,6 +77,10 @@ object RagiumEmiRecipeCategories {
     val CUTTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
+    val PRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
+
+    // Machine - Advanced
+    @JvmField
     val DRYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.DRYING, RagiumBlocks.DRYER)
 
     @JvmField
@@ -81,12 +88,6 @@ object RagiumEmiRecipeCategories {
 
     @JvmField
     val MIXING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
-
-    @JvmField
-    val PLANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
-
-    @JvmField
-    val PRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
 
     @JvmField
     val PYROLYZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
@@ -97,6 +98,17 @@ object RagiumEmiRecipeCategories {
     @JvmField
     val SIMULATING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SIMULATING, Items.DRAGON_EGG)
 
+    // Device - Elite
     @JvmField
     val SOLIDIFYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SOLIDIFYING, RagiumBlocks.SOLIDIFIER)
+
+    // Device - Basic
+
+    @JvmField
+    val FERMENTING: HTEmiRecipeCategory = processor("Fermenting"::toText, RagiumAPI.id("fermenting"), RagiumBlocks.FERMENTER)
+
+    @JvmField
+    val PLANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
+
+    // Device - Advanced
 }

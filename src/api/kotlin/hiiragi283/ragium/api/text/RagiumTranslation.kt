@@ -42,6 +42,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     SOLIDIFIER("description", RagiumConst.SOLIDIFIER),
 
     // Blocks - Device
+    FERMENTER("description", RagiumConst.FERMENTER),
     PLANTER("description", "planter"),
     ENCHANTER("description", "enchanter"),
 

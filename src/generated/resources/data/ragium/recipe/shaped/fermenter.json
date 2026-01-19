@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/azure_steel"
+    },
+    "B": {
+      "item": "minecraft:composter"
+    },
+    "C": {
+      "tag": "c:gears/iron"
+    },
+    "D": {
+      "tag": "c:ingots/steel"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "DDD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:fermenter"
+  }
+}

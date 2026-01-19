@@ -114,6 +114,14 @@ object RagiumConfig {
         }
 
         class Device(builder: ModConfigSpec.Builder) {
+            // Basic
+            @JvmField
+            val fermenter: HTMachineConfig = HTMachineConfig.createDevice(
+                builder,
+                RagiumConst.FERMENTER,
+                RagiumFluidConfigType.FIRST_OUTPUT,
+            )
+
             @JvmField
             val planter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.PLANTER, RagiumFluidConfigType.FIRST_INPUT)
         }

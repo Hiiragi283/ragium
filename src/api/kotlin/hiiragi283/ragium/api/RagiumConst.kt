@@ -17,6 +17,7 @@ object RagiumConst {
     const val SIMULATOR = "simulator"
     const val SOLIDIFIER = "solidifier"
 
+    const val FERMENTER = "fermenter"
     const val PLANTER = "planter"
 
     const val UNIVERSAL_CHEST = "universal_chest"

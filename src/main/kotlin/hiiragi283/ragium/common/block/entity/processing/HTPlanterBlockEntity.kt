@@ -67,13 +67,6 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
         builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, seedSlot)
     }
 
-    private val plantInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(plantSlot) }
-    private val soilInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(soilSlot) }
-    private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
-
-    private val cropOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(cropSlot) }
-    private val seedOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(seedSlot) }
-
     override fun setupMainTab(root: UIElement) {
         super.setupMainTab(root)
     }
@@ -83,6 +76,13 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
     override fun createRecipeComponent(): HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe> =
         object : HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe>() {
             private val cache: HTRecipeCache<HTPlantingRecipe.Input, HTPlantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.PLANTING)
+
+            private val plantInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(plantSlot) }
+            private val soilInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(soilSlot) }
+            private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
+
+            private val cropOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(cropSlot) }
+            private val seedOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(seedSlot) }
 
             override fun insertOutput(
                 level: ServerLevel,
