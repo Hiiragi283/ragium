@@ -49,7 +49,7 @@ class HTEnchantingRecipe(
 
     val instances: List<EnchantmentInstance> =
         enchantments.entrySet().map { (holder: Holder<Enchantment>, level: Int) -> EnchantmentInstance(holder, level) }
-    val expIngredient: HTFluidIngredient = createExpIngredient(enchantments)
+    val expIngredient: HTFluidIngredient by lazy { createExpIngredient(enchantments) }
 
     override fun matches(input: Input, level: Level): Boolean {
         val bool1: Boolean = expIngredient.test(input.fluid)

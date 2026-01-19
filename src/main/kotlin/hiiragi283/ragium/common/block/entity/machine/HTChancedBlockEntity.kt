@@ -10,22 +10,16 @@ import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
 import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
-import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
-import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
-import hiiragi283.ragium.config.RagiumFluidConfigType
-import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvent
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
@@ -33,38 +27,31 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     HTProcessorBlockEntity.Energized(type, pos, state) {
     @DescSynced
     @Persisted(subPersisted = true)
-    private val inputTank: HTBasicFluidTank = HTVariableFluidTank.input(
-        getTankCapacity(RagiumFluidConfigType.FIRST_INPUT),
-        canInsert = RagiumFluids.LUBRICANT::isOf,
-    )
-
-    final override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
-        builder.addSlot(HTSlotInfo.INPUT, inputTank)
-    }
-
-    @DescSynced
-    @Persisted(subPersisted = true)
     private val inputSlot: HTBasicItemSlot = HTBasicItemSlot.input()
 
     @DescSynced
     @Persisted(subPersisted = true)
-    private val outputSlots: List<HTBasicItemSlot> = List(getOutputSlotSize()) { HTBasicItemSlot.output() }
+    private val outputSlot: HTBasicItemSlot = HTBasicItemSlot.output()
+
+    @DescSynced
+    @Persisted(subPersisted = true)
+    private val extraOutputSlots: List<HTBasicItemSlot> = List(2) { HTBasicItemSlot.output() }
 
     final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
         builder.addSlot(HTSlotInfo.INPUT, inputSlot)
-        for (slot: HTBasicItemSlot in outputSlots) {
-            builder.addSlot(HTSlotInfo.OUTPUT, slot)
+
+        builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
+        for (slot: HTBasicItemSlot in extraOutputSlots) {
+            builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, slot)
         }
     }
-
-    protected abstract fun getOutputSlotSize(): Int
 
     final override fun setupMainTab(root: UIElement) {
         RagiumModularUIHelper.chanced(
             root,
-            createFluidSlot(0),
             HTItemSlotElement(inputSlot),
-            outputSlots.map(::HTItemSlotElement),
+            HTItemSlotElement(outputSlot),
+            extraOutputSlots.map(::HTItemSlotElement),
         )
         super.setupMainTab(root)
     }
@@ -76,7 +63,8 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         private val sound: SoundEvent,
     ) : HTEnergizedRecipeComponent.Cached<SingleRecipeInput, RECIPE>(finder, this) {
         private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
-        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
+        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+        private val extraOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(extraOutputSlots) }
 
         override fun insertOutput(
             level: ServerLevel,
@@ -84,7 +72,8 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             input: SingleRecipeInput,
             recipe: RECIPE,
         ) {
-            recipe.getResultItems(level).forEach(outputHandler::insert)
+            outputHandler.insert(recipe.getResultItem(level.registryAccess()))
+            recipe.getExtraResultItems(level).forEach(extraOutputHandler::insert)
         }
 
         override fun extractInput(
@@ -100,12 +89,9 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             playSound(sound)
         }
 
-        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean {
-            for (stack: ItemStack in recipe.getResultItems(level.registryAccess(), 0f)) {
-                if (!outputHandler.canInsert(stack)) return false
-            }
-            return true
-        }
+        // 副産物は余剰分が出ても無視される
+        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean =
+            outputHandler.canInsert(recipe.getResultItem(level.registryAccess()))
 
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput =
             SingleRecipeInput(inputHandler.getItemStack())

@@ -40,16 +40,19 @@ object RagiumModularUIHelper {
     @JvmStatic
     fun chanced(
         root: UIElement,
-        lubricant: UIElement,
         input: UIElement,
+        output: UIElement,
         extraOutputs: Iterable<UIElement>,
     ) {
         root.addRowChild {
             alineCenter()
-            addChild(lubricant)
             addChild(input)
             addChild(HTModularUIHelper.rightArrowIcon().layout { it.marginHorizontalPercent(5f) })
-            extraOutputs.forEach(this::addChild)
+            addChild(output)
+            if (extraOutputs.any()) {
+                addChild(HTModularUIHelper.plusIcon().layout { it.marginHorizontalPercent(5f) })
+                extraOutputs.forEach(this::addChild)
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.item.component
 
 import hiiragi283.core.api.registry.HTHolderLike
-import hiiragi283.core.api.resource.HTKeyLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.api.text.HTHasText
@@ -12,8 +11,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.EntityType
 
 data class HTSpawnerMob(private val value: Holder<EntityType<*>>) :
-    HTKeyLike.HolderDelegate<EntityType<*>>,
-    HTHolderLike<EntityType<*>, EntityType<*>>,
+    HTHolderLike.HolderDelegate<EntityType<*>, EntityType<*>>,
     HTHasText {
     companion object {
         @JvmField

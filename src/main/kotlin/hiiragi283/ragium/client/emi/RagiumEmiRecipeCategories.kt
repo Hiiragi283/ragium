@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.emi
 import dev.emi.emi.api.widget.Bounds
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.registry.toHolderLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.text.HTHasText
 import hiiragi283.core.api.text.toText
@@ -25,19 +24,19 @@ object RagiumEmiRecipeCategories {
         HTEmiRecipeCategory.create(GENERATOR_BOUNDS, item, item.getId(), item)
 
     @JvmField
-    val THERMAL: HTEmiRecipeCategory = generator(Items.COAL.toHolderLike())
+    val THERMAL: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.COAL))
 
     @JvmField
-    val CULINARY: HTEmiRecipeCategory = generator(Items.GOLDEN_APPLE.toHolderLike())
+    val CULINARY: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.GOLDEN_APPLE))
 
     @JvmField
-    val MAGMATIC: HTEmiRecipeCategory = generator(Items.LAVA_BUCKET.toHolderLike())
+    val MAGMATIC: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.LAVA_BUCKET))
 
     @JvmField
-    val COOLANT: HTEmiRecipeCategory = generator(Items.ICE.toHolderLike())
+    val COOLANT: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.ICE))
 
     @JvmField
-    val COMBUSTION: HTEmiRecipeCategory = generator(Items.BLAZE_POWDER.toHolderLike())
+    val COMBUSTION: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.BLAZE_POWDER))
 
     //    Processor    //
 

@@ -21,17 +21,13 @@ abstract class HTChancedRecipe(
     time: Int,
     exp: Fraction,
 ) : HTProcessingRecipe<SingleRecipeInput>(time, exp) {
-    fun getResultItems(level: LevelAccessor): List<ItemStack> = getResultItems(level.registryAccess(), level.random)
+    fun getExtraResultItems(level: LevelAccessor): List<ItemStack> = getExtraResultItems(level.registryAccess(), level.random)
 
-    fun getResultItems(provider: HolderLookup.Provider, random: RandomSource): List<ItemStack> =
-        getResultItems(provider, random.nextFloat())
+    fun getExtraResultItems(provider: HolderLookup.Provider, random: RandomSource): List<ItemStack> =
+        getExtraResultItems(provider, random.nextFloat())
 
-    fun getResultItems(provider: HolderLookup.Provider, random: Float): List<ItemStack> {
+    fun getExtraResultItems(provider: HolderLookup.Provider, random: Float): List<ItemStack> {
         val map: MutableMap<HTItemResourceType, Int> = mutableMapOf()
-
-        result.getStackOrEmpty(provider).toResourcePair()?.let { (resource: HTItemResourceType, count: Int) ->
-            map.put(resource, count)
-        }
 
         for (chanced: HTChancedItemResult in extraResults) {
             val (resource: HTItemResourceType, count: Int) = chanced.getStackOrEmpty(provider, random).toResourcePair() ?: continue

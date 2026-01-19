@@ -1,22 +1,10 @@
 {
   "values": {
-    "minecraft:creeper": {
-      "head": "minecraft:creeper_head"
-    },
-    "minecraft:ender_dragon": {
-      "head": "minecraft:dragon_head"
-    },
-    "minecraft:piglin": {
-      "head": "minecraft:piglin_head"
-    },
-    "minecraft:skeleton": {
-      "head": "minecraft:skeleton_skull"
-    },
-    "minecraft:wither_skeleton": {
-      "head": "minecraft:wither_skeleton_skull"
-    },
-    "minecraft:zombie": {
-      "head": "minecraft:zombie_head"
-    }
+    "minecraft:creeper": "minecraft:creeper_head",
+    "minecraft:ender_dragon": "minecraft:dragon_head",
+    "minecraft:piglin": "minecraft:piglin_head",
+    "minecraft:skeleton": "minecraft:skeleton_skull",
+    "minecraft:wither_skeleton": "minecraft:wither_skeleton_skull",
+    "minecraft:zombie": "minecraft:zombie_head"
   }
 }

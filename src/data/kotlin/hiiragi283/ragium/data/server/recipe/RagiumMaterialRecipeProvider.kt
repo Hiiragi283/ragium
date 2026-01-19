@@ -41,6 +41,15 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     private fun meat() {
+        // Meat Ingot -> Cooked Meat Ingot
+        HTCookingRecipeBuilder
+            .smeltingAndSmoking(
+                HTMaterialContentsAccess.INSTANCE.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT),
+            ) {
+                addIngredient(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT)
+                setExp(0.35f)
+                saveSuffixed(output, "_from_ingot")
+            }
         // Meat + Bone -> Bone with Meat
         HTShapedRecipeBuilder
             .create(RagiumBlocks.MEAT_BLOCK)

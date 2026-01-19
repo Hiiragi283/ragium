@@ -3,9 +3,7 @@ package hiiragi283.ragium.data.server.bootstrap
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.createKey
-import hiiragi283.core.api.registry.toHolderLike
 import hiiragi283.core.api.resource.toId
-import hiiragi283.core.common.registry.HTDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import net.minecraft.core.RegistrySetBuilder
@@ -30,8 +28,8 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
             "crimson",
             ItemTags.CRIMSON_STEMS,
         ) {
-            put(HTWoodDefinition.Variant.LOG, Items.CRIMSON_STEM.toHolderLike())
-            put(HTWoodDefinition.Variant.WOOD, Items.CRIMSON_HYPHAE.toHolderLike())
+            put(HTWoodDefinition.Variant.LOG, HTItemHolderLike.Simple(Items.CRIMSON_STEM))
+            put(HTWoodDefinition.Variant.WOOD, HTItemHolderLike.Simple(Items.CRIMSON_HYPHAE))
             remove(HTWoodDefinition.Variant.BOAT)
             remove(HTWoodDefinition.Variant.CHEST_BOAT)
         }
@@ -40,8 +38,8 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
             "warped",
             ItemTags.WARPED_STEMS,
         ) {
-            put(HTWoodDefinition.Variant.LOG, Items.WARPED_STEM.toHolderLike())
-            put(HTWoodDefinition.Variant.WOOD, Items.WARPED_HYPHAE.toHolderLike())
+            put(HTWoodDefinition.Variant.LOG, HTItemHolderLike.Simple(Items.WARPED_STEM))
+            put(HTWoodDefinition.Variant.WOOD, HTItemHolderLike.Simple(Items.WARPED_HYPHAE))
             remove(HTWoodDefinition.Variant.BOAT)
             remove(HTWoodDefinition.Variant.CHEST_BOAT)
         }
@@ -50,9 +48,9 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
             "bamboo",
             ItemTags.BAMBOO_BLOCKS,
         ) {
-            put(HTWoodDefinition.Variant.LOG, Items.BAMBOO_BLOCK.toHolderLike())
-            put(HTWoodDefinition.Variant.BOAT, Items.BAMBOO_RAFT.toHolderLike())
-            put(HTWoodDefinition.Variant.CHEST_BOAT, Items.BAMBOO_CHEST_RAFT.toHolderLike())
+            put(HTWoodDefinition.Variant.LOG, HTItemHolderLike.Simple(Items.BAMBOO_BLOCK))
+            put(HTWoodDefinition.Variant.BOAT, HTItemHolderLike.Simple(Items.BAMBOO_RAFT))
+            put(HTWoodDefinition.Variant.CHEST_BOAT, HTItemHolderLike.Simple(Items.BAMBOO_CHEST_RAFT))
             remove(HTWoodDefinition.Variant.WOOD)
         }
     }
@@ -85,11 +83,15 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
             context,
             path,
             HTWoodDefinition(
-                variants
-                    .associateWith { variant: HTWoodDefinition.Variant ->
-                        HTDeferredItem<Item>(HTConst.MINECRAFT.toId("${path}_${variant.serializedName}")) as HTItemHolderLike<*>
-                    }.toMutableMap()
-                    .apply(operator),
+                buildMap {
+                    for (variant in variants) {
+                        put(
+                            variant,
+                            HTItemHolderLike.Simple(HTConst.MINECRAFT.toId("${path}_${variant.serializedName}")),
+                        )
+                    }
+                    operator()
+                },
                 logTag,
             ),
         )

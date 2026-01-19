@@ -11,6 +11,7 @@ import hiiragi283.core.api.material.property.addName
 import hiiragi283.core.api.material.property.addTextureSet
 import hiiragi283.core.api.material.property.setBlockPrefixes
 import hiiragi283.core.api.material.property.setItemPrefixes
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -21,7 +22,6 @@ import hiiragi283.ragium.api.material.property.HTFormingRecipeFlag
 import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
-import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.Tags
@@ -96,7 +96,7 @@ object RagiumMaterialEventHandler {
             put(
                 HTMaterialPropertyKeys.SMELTING,
                 HTSmeltingMaterialProperty.withSmoking(
-                    HTDeferredItem<Item>(CommonTagPrefixes.INGOT.createId(RagiumMaterialKeys.COOKED_MEAT)),
+                    HTItemHolderLike.Simple(CommonTagPrefixes.INGOT.createId(RagiumMaterialKeys.COOKED_MEAT)),
                 ),
             )
         }
@@ -111,7 +111,7 @@ object RagiumMaterialEventHandler {
             put(
                 HTMaterialPropertyKeys.SMELTING,
                 HTSmeltingMaterialProperty.smeltingOnly(
-                    HTDeferredItem<Item>(CommonTagPrefixes.DUST.createId(CommonMaterialKeys.ASH)),
+                    HTItemHolderLike.Simple(CommonTagPrefixes.DUST.createId(CommonMaterialKeys.ASH)),
                 ),
             )
         }

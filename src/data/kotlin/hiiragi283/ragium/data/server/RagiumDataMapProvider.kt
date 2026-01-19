@@ -6,8 +6,9 @@ import hiiragi283.core.api.data.recipe.ingredient.HTItemIngredientCreator
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.registry.HTBlockHolderLike
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.toHolderLike
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.tag.HTTagPrefix
@@ -18,7 +19,6 @@ import hiiragi283.ragium.api.data.map.HTFermentSource
 import hiiragi283.ragium.api.data.map.HTFluidCoolantData
 import hiiragi283.ragium.api.data.map.HTFluidFertilizerData
 import hiiragi283.ragium.api.data.map.HTFluidFuelData
-import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
@@ -70,19 +70,19 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun fermentSources() {
         builder(RagiumDataMapTypes.FERMENT_SOURCE)
-            .addHolder(Blocks.BROWN_MUSHROOM.toHolderLike(), HTFermentSource(1))
-            .addHolder(Blocks.MYCELIUM.toHolderLike(), HTFermentSource(1))
-            .addHolder(Blocks.RED_MUSHROOM.toHolderLike(), HTFermentSource(1))
+            .addHolder(HTBlockHolderLike.Simple(Blocks.BROWN_MUSHROOM), HTFermentSource(1))
+            .addHolder(HTBlockHolderLike.Simple(Blocks.MYCELIUM), HTFermentSource(1))
+            .addHolder(HTBlockHolderLike.Simple(Blocks.RED_MUSHROOM), HTFermentSource(1))
     }
 
     private fun mobHeads() {
         builder(RagiumDataMapTypes.MOB_HEAD)
-            .add(EntityType.SKELETON, HTMobHead(Items.SKELETON_SKULL))
-            .add(EntityType.WITHER_SKELETON, HTMobHead(Items.WITHER_SKELETON_SKULL))
-            .add(EntityType.ZOMBIE, HTMobHead(Items.ZOMBIE_HEAD))
-            .add(EntityType.CREEPER, HTMobHead(Items.CREEPER_HEAD))
-            .add(EntityType.ENDER_DRAGON, HTMobHead(Items.DRAGON_HEAD))
-            .add(EntityType.PIGLIN, HTMobHead(Items.PIGLIN_HEAD))
+            .add(EntityType.SKELETON, HTItemHolderLike.Simple(Items.SKELETON_SKULL))
+            .add(EntityType.WITHER_SKELETON, HTItemHolderLike.Simple(Items.WITHER_SKELETON_SKULL))
+            .add(EntityType.ZOMBIE, HTItemHolderLike.Simple(Items.ZOMBIE_HEAD))
+            .add(EntityType.CREEPER, HTItemHolderLike.Simple(Items.CREEPER_HEAD))
+            .add(EntityType.ENDER_DRAGON, HTItemHolderLike.Simple(Items.DRAGON_HEAD))
+            .add(EntityType.PIGLIN, HTItemHolderLike.Simple(Items.PIGLIN_HEAD))
     }
 
     private fun coolants() {

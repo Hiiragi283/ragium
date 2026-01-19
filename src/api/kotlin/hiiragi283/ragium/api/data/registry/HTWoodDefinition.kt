@@ -1,13 +1,10 @@
 package hiiragi283.ragium.api.data.registry
 
-import hiiragi283.core.api.function.andThen
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.registry.toHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import io.netty.buffer.ByteBuf
-import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.tags.TagKey
@@ -16,18 +13,10 @@ import net.minecraft.world.item.Item
 
 data class HTWoodDefinition(private val map: Map<Variant, HTItemHolderLike<*>>, val logTag: TagKey<Item>) {
     companion object {
-        @JvmStatic
-        private val ITEM_CODEC: BiCodec<RegistryFriendlyByteBuf, HTItemHolderLike<*>> = VanillaBiCodecs
-            .holder(Registries.ITEM)
-            .xmap(
-                Holder<Item>::value.andThen(Item::toHolderLike),
-                HTItemHolderLike<*>::getItemHolder,
-            )
-
         @JvmField
         val CODEC: BiCodec<RegistryFriendlyByteBuf, HTWoodDefinition> =
             BiCodec.composite(
-                BiCodecs.mapOf(Variant.CODEC, ITEM_CODEC).fieldOf("variants").forGetter(HTWoodDefinition::map),
+                BiCodecs.mapOf(Variant.CODEC, HTItemHolderLike.HOLDER_CODEC).fieldOf("variants").forGetter(HTWoodDefinition::map),
                 VanillaBiCodecs.tagKey(Registries.ITEM, true).fieldOf("log_tag").forGetter(HTWoodDefinition::logTag),
                 ::HTWoodDefinition,
             )

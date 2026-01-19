@@ -154,13 +154,8 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
                     currentEnch = getEnchantmentList(level, stack, cost)
                 }
                 if (currentEnch.isEmpty()) return null
-                val ingredient: HTItemIngredient = SizedIngredient.of(Tags.Items.ENCHANTING_FUELS, 3).let(::HTItemIngredient)
-                if (!ingredient.test(input.right)) {
-                    currentEnch = listOf()
-                    return null
-                }
-                return HTEnchantingRecipe(
-                    ingredient,
+                val recipe = HTEnchantingRecipe(
+                    SizedIngredient.of(Tags.Items.ENCHANTING_FUELS, 3).let(::HTItemIngredient),
                     buildEnchantments {
                         for (instance: EnchantmentInstance in currentEnch) {
                             set(instance.enchantment, instance.level)
@@ -169,6 +164,11 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
                     20 * 5,
                     Fraction.ZERO,
                 )
+                if (!recipe.matches(input, level)) {
+                    currentEnch = listOf()
+                    return null
+                }
+                return recipe
             } else {
                 return cache.getFirstRecipe(input, level)
             }
