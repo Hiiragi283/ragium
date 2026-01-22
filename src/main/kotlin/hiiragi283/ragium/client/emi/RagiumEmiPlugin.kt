@@ -18,7 +18,6 @@ import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.registry.getHolderDataMap
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTChancedEmiRecipe
@@ -164,7 +163,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun addGenerators(registry: EmiRegistry) {
-        fun addFuelRecipes(category: HTEmiRecipeCategory, dataMapType: DataMapType<Fluid, HTFluidFuelData>) {
+        fun addFuelRecipes(category: HTEmiRecipeCategory, dataMapType: DataMapType<Fluid, Int>) {
             /*addDataMapRecipes(
                 registry,
                 FLUID_LOOKUP,

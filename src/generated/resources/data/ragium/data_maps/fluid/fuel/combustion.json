@@ -1,43 +1,17 @@
 {
   "values": {
-    "#c:biodiesel": {
-      "time": 360
-    },
-    "#c:bioethanol": {
-      "time": 240
-    },
-    "#c:biofuel": {
-      "time": 360
-    },
-    "#c:creosote": {
-      "time": 80
-    },
-    "#c:crude_bio": {
-      "time": 120
-    },
-    "#c:crude_oil": {
-      "time": 120
-    },
-    "#c:diesel": {
-      "time": 360
-    },
-    "#c:ethanol": {
-      "time": 240
-    },
-    "#c:fuel": {
-      "time": 360
-    },
-    "#c:high_power_biodiesel": {
-      "time": 480
-    },
-    "#c:lpg": {
-      "time": 240
-    },
-    "#c:oil": {
-      "time": 120
-    },
-    "#c:plant_oil": {
-      "time": 120
-    }
+    "#c:biodiesel": 360,
+    "#c:bioethanol": 240,
+    "#c:biofuel": 360,
+    "#c:creosote": 80,
+    "#c:crude_bio": 120,
+    "#c:crude_oil": 120,
+    "#c:diesel": 360,
+    "#c:ethanol": 240,
+    "#c:fuel": 360,
+    "#c:high_power_biodiesel": 480,
+    "#c:lpg": 240,
+    "#c:oil": 120,
+    "#c:plant_oil": 120
   }
 }

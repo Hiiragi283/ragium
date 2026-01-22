@@ -5,10 +5,10 @@ import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.gui.ui.elements.Switch
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
+import hiiragi283.core.api.data.recipe.creator.HTIngredientCreator
 import hiiragi283.core.api.gui.element.HTItemSlotElement
 import hiiragi283.core.api.item.enchantment.buildEnchantments
 import hiiragi283.core.api.recipe.HTRecipeCache
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.holderSetOrNull
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.getFluidStack
@@ -47,7 +47,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import org.apache.commons.lang3.math.Fraction
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.ENCHANTER, pos, state) {
@@ -155,7 +154,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
                 }
                 if (currentEnch.isEmpty()) return null
                 val recipe = HTEnchantingRecipe(
-                    SizedIngredient.of(Tags.Items.ENCHANTING_FUELS, 3).let(::HTItemIngredient),
+                    HTIngredientCreator.create(Tags.Items.ENCHANTING_FUELS, 3),
                     buildEnchantments {
                         for (instance: EnchantmentInstance in currentEnch) {
                             set(instance.enchantment, instance.level)

@@ -14,38 +14,38 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
     override fun buildRecipeInternal() {
         // Mud -> Clay + Water
         HTComplexRecipeBuilder
-            .drying(itemCreator.fromItem(Items.MUD))
+            .drying(inputCreator.create(Items.MUD))
             .setResult(itemResult.create(Items.CLAY))
             .setResult(fluidResult.water(250))
             .saveSuffixed(output, "_from_mud")
         // Crying Obsidian -> Obsidian + ???
         HTComplexRecipeBuilder
-            .drying(itemCreator.fromTagKey(Tags.Items.OBSIDIANS_CRYING))
+            .drying(inputCreator.create(Tags.Items.OBSIDIANS_CRYING))
             .setResult(itemResult.create(Items.OBSIDIAN))
             .setResult(createFluidResult(HCMaterialKeys.ELDRITCH, HTMaterialPropertyKeys.MOLTEN_FLUID))
             .setTime(20 * 20)
             .saveSuffixed(output, "_from_crying")
         // Sapling -> Dead Bush
         HTComplexRecipeBuilder
-            .drying(itemCreator.fromTagKey(ItemTags.SAPLINGS))
+            .drying(inputCreator.create(ItemTags.SAPLINGS))
             .setResult(itemResult.create(Items.DEAD_BUSH))
             .setResult(fluidResult.water(125))
             .saveSuffixed(output, "_from_sapling")
         // Wet Sponge -> Sponge + Water
         HTComplexRecipeBuilder
-            .drying(itemCreator.fromItem(Items.WET_SPONGE))
+            .drying(inputCreator.create(Items.WET_SPONGE))
             .setResult(itemResult.create(Items.SPONGE))
             .setResult(fluidResult.water(1000))
             .saveSuffixed(output, "_from_sponge")
         // Kelp -> Dried Kelp + Salt Water
         HTComplexRecipeBuilder
-            .drying(itemCreator.fromItem(Items.KELP))
+            .drying(inputCreator.create(Items.KELP))
             .setResult(itemResult.create(Items.DRIED_KELP))
             .saveSuffixed(output, "_from_kelp")
 
         // Slime -> Raw Rubber
         HTComplexRecipeBuilder
-            .drying(itemCreator.fromItem(Items.SLIME_BALL))
+            .drying(inputCreator.create(Items.SLIME_BALL))
             .setResult(itemResult.create(HCItems.RAW_RUBBER))
             .saveSuffixed(output, "_from_slime")
     }

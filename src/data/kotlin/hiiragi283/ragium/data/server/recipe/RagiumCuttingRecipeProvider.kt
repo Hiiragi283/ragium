@@ -16,13 +16,13 @@ object RagiumCuttingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         // Stick
         HTChancedRecipeBuilder
             .cutting(
-                itemCreator.fromTagKey(ItemTags.WOODEN_SLABS),
+                inputCreator.create(ItemTags.WOODEN_SLABS),
                 itemResult.create(Items.STICK, 4),
             ).saveSuffixed(output, "_from_wooden_slabs")
 
         HTChancedRecipeBuilder
             .cutting(
-                itemCreator.fromTagKey(ItemTags.SAPLINGS),
+                inputCreator.create(ItemTags.SAPLINGS),
                 itemResult.create(Items.STICK),
             ).saveSuffixed(output, "_from_saplings")
     }

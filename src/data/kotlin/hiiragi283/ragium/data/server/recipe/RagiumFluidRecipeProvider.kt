@@ -20,13 +20,13 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         // Water
         HTSingleRecipeBuilder
             .melting(
-                itemCreator.fromItem(Items.SNOW_BLOCK),
+                inputCreator.create(Items.SNOW_BLOCK),
                 fluidResult.water(1000),
             ).setTime(20 * 5)
             .saveSuffixed(output, "_from_snow_block")
 
         meltAndSolidify(
-            itemCreator.fromItem(Items.SNOWBALL),
+            inputCreator.create(Items.SNOWBALL),
             itemResult.create(Items.SNOWBALL),
             VanillaFluidContents.WATER,
             250,
@@ -35,7 +35,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             20,
         )
         meltAndSolidify(
-            itemCreator.fromItem(Items.ICE),
+            inputCreator.create(Items.ICE),
             itemResult.create(Items.ICE),
             VanillaFluidContents.WATER,
             1000,
@@ -45,43 +45,43 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         // Lava
         HTSingleRecipeBuilder
             .melting(
-                itemCreator.fromTagKeys(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES)),
+                inputCreator.create(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES)),
                 fluidResult.lava(125),
             ).setTime(20 * 30)
             .saveSuffixed(output, "_from_stones")
         HTSingleRecipeBuilder
             .melting(
-                itemCreator.fromTagKey(Tags.Items.NETHERRACKS),
+                inputCreator.create(Tags.Items.NETHERRACKS),
                 fluidResult.lava(125),
             ).saveSuffixed(output, "_from_netherrack")
         HTSingleRecipeBuilder
             .melting(
-                itemCreator.fromItem(Items.MAGMA_BLOCK),
+                inputCreator.create(Items.MAGMA_BLOCK),
                 fluidResult.lava(250),
             ).saveSuffixed(output, "_from_magma")
 
         HTSingleRecipeBuilder
             .solidifying(
-                fluidCreator.lava(1000),
-                itemCreator.fromItem(HTMoldType.BLOCK),
+                inputCreator.lava(1000),
+                inputCreator.create(HTMoldType.BLOCK),
                 itemResult.create(Items.OBSIDIAN),
             ).save(output)
         // Latex
         HTSingleRecipeBuilder
             .solidifying(
-                fluidCreator.fromTagKey(HCFluids.LATEX, 1000),
-                itemCreator.fromItem(HTMoldType.BALL),
+                inputCreator.create(HCFluids.LATEX, 1000),
+                inputCreator.create(HTMoldType.BALL),
                 itemResult.create(HCItems.RAW_RUBBER, 2),
             ).save(output)
         // Meat
         HTSingleRecipeBuilder
             .melting(
-                itemCreator.fromItem(Items.ROTTEN_FLESH),
+                inputCreator.create(Items.ROTTEN_FLESH),
                 createFluidResult(RagiumMaterialKeys.MEAT, HTMaterialPropertyKeys.MOLTEN_FLUID),
             ).saveSuffixed(output, "_from_rotten")
         // Glass
         meltAndSolidify(
-            itemCreator.fromTagKey(Tags.Items.GLASS_PANES),
+            inputCreator.create(Tags.Items.GLASS_PANES),
             itemResult.create(Items.GLASS_PANE),
             HCFluids.MOLTEN_GLASS,
             375,
@@ -110,8 +110,8 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         // Solidify
         HTSingleRecipeBuilder
             .solidifying(
-                fluidCreator.fromTagKey(fluid, amount),
-                itemCreator.fromItem(mold),
+                inputCreator.create(fluid, amount),
+                inputCreator.create(mold),
                 result,
             ).setTime(time)
             .save(output)

@@ -4,9 +4,9 @@ import com.lowdragmc.lowdraglib2.gui.ui.UIElement
 import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
 import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.data.recipe.result.HTFluidResultCreator
+import hiiragi283.core.api.data.recipe.creator.HTFluidResultCreator
+import hiiragi283.core.api.data.recipe.creator.HTIngredientCreator
 import hiiragi283.core.api.gui.element.HTItemSlotElement
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.times
@@ -37,7 +37,6 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.ComposterBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.crafting.SizedIngredient
 import org.apache.commons.lang3.math.Fraction
 
 class HTFermenterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.FERMENTER, pos, state) {
@@ -47,7 +46,7 @@ class HTFermenterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             if (chance <= 0f) return null
             val amount: Int = (HTConst.DEFAULT_FLUID_AMOUNT * chance.toFraction()).toInt()
             return HTMeltingRecipe(
-                HTItemIngredient(SizedIngredient.of(item, 1)),
+                HTIngredientCreator.create(item),
                 HTFluidResultCreator.create(RagiumFluids.CRUDE_BIO, amount),
                 20 * 10,
                 Fraction.ZERO,

@@ -39,7 +39,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Echo Shard
         HTSimulatingRecipeBuilder
             .block(
-                itemCreator.fromTagKey(CommonTagPrefixes.GEM, VanillaMaterialKeys.AMETHYST),
+                inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.AMETHYST),
                 block(Blocks.SCULK_SHRIEKER),
             ).setResult(itemResult.create(Items.ECHO_SHARD))
             .save(output)
@@ -66,14 +66,14 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Honey Bottle
         HTSimulatingRecipeBuilder
             .block(
-                itemCreator.fromItem(Items.GLASS_BOTTLE),
+                inputCreator.create(Items.GLASS_BOTTLE),
                 block(Blocks.BEE_NEST),
             ).setResult(itemResult.create(Items.HONEY_BOTTLE))
             .save(output)
         // Egg
         HTSimulatingRecipeBuilder
             .entity(
-                itemCreator.fromTagKey(Tags.Items.SEEDS),
+                inputCreator.create(Tags.Items.SEEDS),
                 entity(EntityType.CHICKEN),
             ).setResult(itemResult.create(Items.EGG))
             .save(output)
@@ -88,7 +88,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Dragon Breath
         HTSimulatingRecipeBuilder
             .block(
-                itemCreator.fromItem(Items.GLASS_BOTTLE),
+                inputCreator.create(Items.GLASS_BOTTLE),
                 block(Blocks.DRAGON_HEAD),
             ).setResult(itemResult.create(Items.DRAGON_BREATH))
             .save(output)
@@ -103,7 +103,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Poppy
         HTSimulatingRecipeBuilder
             .entity(
-                itemCreator.fromTagKey(Tags.Items.FERTILIZERS),
+                inputCreator.create(Tags.Items.FERTILIZERS),
                 entity(EntityType.IRON_GOLEM),
             ).setResult(itemResult.create(Items.POPPY))
             .save(output)
@@ -117,7 +117,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Ancient Debris
         HTSimulatingRecipeBuilder
             .entity(
-                itemCreator.fromItem(Items.NETHER_BRICKS, 64),
+                inputCreator.create(Items.NETHER_BRICKS, 64),
                 entity(EntityType.PIGLIN_BRUTE),
             ).setResult(itemResult.create(Items.ANCIENT_DEBRIS))
             .save(output)
@@ -131,7 +131,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Turtle Scute
         HTSimulatingRecipeBuilder
             .entity(
-                itemCreator.fromItem(Items.SEAGRASS, 8),
+                inputCreator.create(Items.SEAGRASS, 8),
                 entity(EntityType.TURTLE),
             ).setResult(itemResult.create(Items.TURTLE_SCUTE))
             .save(output)
@@ -140,7 +140,7 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Nether Star
         HTSimulatingRecipeBuilder
             .block(
-                itemCreator.fromItem(HCItems.WITHER_DOLL),
+                inputCreator.create(HCItems.WITHER_DOLL),
                 block(Tags.Blocks.OBSIDIANS_CRYING),
             ).setResult(itemResult.create(HCItems.WITHER_STAR))
             .save(output)

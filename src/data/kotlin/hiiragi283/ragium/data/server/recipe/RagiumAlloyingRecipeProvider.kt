@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.common.data.recipe.HTMaterialResultHelper
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -24,24 +23,24 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Netherite
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, VanillaMaterialKeys.NETHERITE, 2),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.NETHERITE, 2),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.GOLD),
                     4,
                 ),
-                itemCreator.fromTagKey(CommonTagPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 4),
+                inputCreator.create(CommonTagPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 4),
             ).save(output)
 
         // Steel from Coal
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.IRON),
                 ),
-                itemCreator.fromTagKeys(
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.FUEL),
                     listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL),
                     2,
@@ -50,12 +49,12 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Steel from Coke
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.IRON),
                 ),
-                itemCreator.fromTagKeys(
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.FUEL),
                     listOf(CommonMaterialKeys.COAL_COKE),
                 ),
@@ -63,13 +62,13 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Invar
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, CommonMaterialKeys.INVAR, 3),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.INVAR, 3),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.IRON),
                     2,
                 ),
-                itemCreator.fromTagKeys(
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(CommonMaterialKeys.NICKEL),
                 ),
@@ -78,12 +77,12 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Electrum
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, CommonMaterialKeys.ELECTRUM, 2),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.ELECTRUM, 2),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.GOLD),
                 ),
-                itemCreator.fromTagKeys(
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(CommonMaterialKeys.SILVER),
                 ),
@@ -92,13 +91,13 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Bronze
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRONZE, 4),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRONZE, 4),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.COPPER),
                     3,
                 ),
-                itemCreator.fromTagKeys(
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(CommonMaterialKeys.TIN),
                 ),
@@ -107,12 +106,12 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Brass
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRASS, 2),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRASS, 2),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.COPPER),
                 ),
-                itemCreator.fromTagKeys(
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(CommonMaterialKeys.ZINC),
                 ),
@@ -121,12 +120,12 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Constantan
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, CommonMaterialKeys.CONSTANTAN, 2),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.CONSTANTAN, 2),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.COPPER),
                 ),
-                itemCreator.fromTagKeys(
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(CommonMaterialKeys.NICKEL),
                 ),
@@ -139,12 +138,12 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Amethyst + Lapis -> Azure Shard
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.GEM, HCMaterialKeys.AZURE, 2),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.GEM, HCMaterialKeys.AZURE, 2),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
                     listOf(VanillaMaterialKeys.AMETHYST),
                 ),
-                itemCreator.fromTagKeys(
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
                     listOf(VanillaMaterialKeys.LAPIS),
                 ),
@@ -152,12 +151,12 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Azure Shard + Iron -> Azure Steel
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.IRON),
                 ),
-                itemCreator.fromTagKeys(
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
                     listOf(HCMaterialKeys.AZURE),
                     2,
@@ -167,17 +166,17 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Rubber
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2),
-                itemCreator.fromItem(HCItems.RAW_RUBBER),
-                itemCreator.fromTagKey(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
+                itemResult.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2),
+                inputCreator.create(HCItems.RAW_RUBBER),
+                inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
             ).saveSuffixed(output, "_with_sulfur")
 
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4),
-                itemCreator.fromItem(HCItems.RAW_RUBBER),
-                itemCreator.fromTagKey(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4),
+                inputCreator.create(HCItems.RAW_RUBBER),
+                inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST),
                     listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL),
                 ),
@@ -187,9 +186,9 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTAlloyingRecipeBuilder
             .create(
                 itemResult.create(HCItems.AMBROSIA),
-                itemCreator.fromItem(HCItems.IRIDESCENT_POWDER),
-                itemCreator.fromItem(Items.HONEY_BLOCK, 64),
-                itemCreator.fromItem(Items.ENCHANTED_GOLDEN_APPLE, 16),
+                inputCreator.create(HCItems.IRIDESCENT_POWDER),
+                inputCreator.create(Items.HONEY_BLOCK, 64),
+                inputCreator.create(Items.ENCHANTED_GOLDEN_APPLE, 16),
             ).save(output)
     }
 
@@ -198,22 +197,22 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Raginite + Copper -> Ragi-Alloy
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(VanillaMaterialKeys.COPPER),
                 ),
-                itemCreator.fromTagKey(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 2),
+                inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 2),
             ).save(output)
         // Ragi-Alloy + Glowstone -> Adv Ragi-Alloy
         HTAlloyingRecipeBuilder
             .create(
-                HTMaterialResultHelper.item(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY),
-                itemCreator.fromTagKeys(
+                itemResult.create(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY),
+                inputCreator.create(
                     listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
                     listOf(RagiumMaterialKeys.RAGI_ALLOY),
                 ),
-                itemCreator.fromTagKey(CommonTagPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 2),
+                inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 2),
             ).save(output)
     }
 }

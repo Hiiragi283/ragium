@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
+import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.RagiumAPI
@@ -29,8 +30,7 @@ import org.apache.commons.lang3.math.Fraction
 object RagiumDataMapTypes {
     // Block
     @JvmField
-    val FERMENT_SOURCE: DataMapType<Block, HTFermentSource> =
-        create("ferment_source", Registries.BLOCK, HTFermentSource.CODEC)
+    val FERMENT_SOURCE: DataMapType<Block, Int> = create("ferment_source", Registries.BLOCK, BiCodecs.POSITIVE_INT)
 
     // Entity Type
     @JvmField
@@ -42,16 +42,16 @@ object RagiumDataMapTypes {
 
     // Fluid
     @JvmField
-    val COOLANT: DataMapType<Fluid, HTFluidCoolantData> = create("coolant", Registries.FLUID, HTFluidCoolantData.CODEC)
+    val COOLANT: DataMapType<Fluid, Int> = create("coolant", Registries.FLUID, BiCodecs.POSITIVE_INT)
 
     @JvmField
-    val MAGMATIC_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("magmatic")
+    val MAGMATIC_FUEL: DataMapType<Fluid, Int> = createFuel("magmatic")
 
     @JvmField
-    val COMBUSTION_FUEL: DataMapType<Fluid, HTFluidFuelData> = createFuel("combustion")
+    val COMBUSTION_FUEL: DataMapType<Fluid, Int> = createFuel("combustion")
 
     @JvmField
-    val FERTILIZER: DataMapType<Fluid, HTFluidFertilizerData> = create("fertilizer", Registries.FLUID, HTFluidFertilizerData.CODEC)
+    val FERTILIZER: DataMapType<Fluid, Fraction> = create("fertilizer", Registries.FLUID, BiCodecs.POSITIVE_FRACTION)
 
     // Item
     @JvmField
@@ -67,7 +67,7 @@ object RagiumDataMapTypes {
         .mapNotNull(::getFermentLevel)
         .sum()
 
-    fun getFermentLevel(state: BlockState): Int? = state.blockHolder.getData(FERMENT_SOURCE)?.level
+    fun getFermentLevel(state: BlockState): Int? = state.blockHolder.getData(FERMENT_SOURCE)
 
     /**
      * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。
@@ -81,19 +81,19 @@ object RagiumDataMapTypes {
     /**
      * 指定した[resource]から，一度の処理に必要な冷却材の使用量を取得します。
      */
-    fun getCoolantAmount(resource: HTFluidResourceType): Int = resource.getData(COOLANT)?.amount ?: 0
+    fun getCoolantAmount(resource: HTFluidResourceType): Int = resource.getData(COOLANT) ?: 0
 
     /**
      * 指定した[resource]から，100 mbの高温の液体による燃焼時間を取得します。
      */
-    fun getTimeFromMagmatic(resource: HTFluidResourceType): Int = resource.getData(MAGMATIC_FUEL)?.time ?: 0
+    fun getTimeFromMagmatic(resource: HTFluidResourceType): Int = resource.getData(MAGMATIC_FUEL) ?: 0
 
     /**
      * 指定した[resource]から，100 mbの液体燃料による燃焼時間を取得します。
      */
-    fun getTimeFromCombustion(resource: HTFluidResourceType): Int = resource.getData(COMBUSTION_FUEL)?.time ?: 0
+    fun getTimeFromCombustion(resource: HTFluidResourceType): Int = resource.getData(COMBUSTION_FUEL) ?: 0
 
-    fun getFluidFertilizer(resource: HTFluidResourceType): Fraction? = resource.getData(FERTILIZER)?.multiplier
+    fun getFluidFertilizer(resource: HTFluidResourceType): Fraction? = resource.getData(FERTILIZER)
 
     /**
      * 指定した[stack]から，アップグレードのデータを取得します。
@@ -117,6 +117,5 @@ object RagiumDataMapTypes {
             .build()
 
     @JvmStatic
-    private fun createFuel(path: String): DataMapType<Fluid, HTFluidFuelData> =
-        create("fuel/$path", Registries.FLUID, HTFluidFuelData.CODEC)
+    private fun createFuel(path: String): DataMapType<Fluid, Int> = create("fuel/$path", Registries.FLUID, BiCodecs.POSITIVE_INT)
 }

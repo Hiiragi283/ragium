@@ -18,7 +18,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
 
     @JvmStatic
     private fun crops() {
-        val farmland: HTItemIngredient = itemCreator.fromItem(Items.FARMLAND)
+        val farmland: HTItemIngredient = inputCreator.create(Items.FARMLAND)
         // Wheat
         HTPlantingRecipeBuilder
             .create(
@@ -64,7 +64,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             HTPlantingRecipeBuilder
                 .create(
                     item,
-                    itemCreator.fromTagKey(Tags.Items.SANDS),
+                    inputCreator.create(Tags.Items.SANDS),
                     itemResult.create(item, 3),
                 ).save(output)
         }
@@ -73,21 +73,21 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         HTPlantingRecipeBuilder
             .create(
                 Items.APPLE,
-                itemCreator.fromItem(Items.OAK_SAPLING),
+                inputCreator.create(Items.OAK_SAPLING),
                 itemResult.create(Items.APPLE, 3),
             ).save(output)
         // Cocoa Beans
         HTPlantingRecipeBuilder
             .create(
                 Items.COCOA_BEANS,
-                itemCreator.fromTagKey(ItemTags.JUNGLE_LOGS),
+                inputCreator.create(ItemTags.JUNGLE_LOGS),
                 itemResult.create(Items.COCOA_BEANS, 3),
             ).save(output)
         // Nether Wart
         HTPlantingRecipeBuilder
             .create(
                 Items.NETHER_WART,
-                itemCreator.fromItem(Items.SOUL_SAND),
+                inputCreator.create(Items.SOUL_SAND),
                 itemResult.create(Items.NETHER_WART, 3),
             ).save(output)
 
@@ -103,7 +103,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             HTPlantingRecipeBuilder
                 .create(
                     item,
-                    itemCreator.fromItem(Items.MYCELIUM),
+                    inputCreator.create(Items.MYCELIUM),
                     itemResult.create(item, 5),
                 ).saveSuffixed(output, "_with_mycelium")
         }
@@ -112,7 +112,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     @JvmStatic
     private fun trees() {
         // Trees
-        val dirt: HTItemIngredient = itemCreator.fromTagKey(ItemTags.DIRT)
+        val dirt: HTItemIngredient = inputCreator.create(ItemTags.DIRT)
         mapOf(
             Items.OAK_SAPLING to Items.OAK_LOG,
             Items.SPRUCE_SAPLING to Items.SPRUCE_LOG,
@@ -135,44 +135,44 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         HTPlantingRecipeBuilder
             .create(
                 Items.CRIMSON_FUNGUS,
-                itemCreator.fromItem(Items.CRIMSON_NYLIUM),
+                inputCreator.create(Items.CRIMSON_NYLIUM),
                 itemResult.create(Items.CRIMSON_STEM, 6),
             ).save(output)
 
         HTPlantingRecipeBuilder
             .create(
                 Items.WARPED_FUNGUS,
-                itemCreator.fromItem(Items.WARPED_NYLIUM),
+                inputCreator.create(Items.WARPED_NYLIUM),
                 itemResult.create(Items.WARPED_STEM, 6),
             ).save(output)
         // Chorus
         HTPlantingRecipeBuilder
             .create(
                 Items.CHORUS_FLOWER,
-                itemCreator.fromTagKey(Tags.Items.END_STONES),
+                inputCreator.create(Tags.Items.END_STONES),
                 itemResult.create(Items.CHORUS_FRUIT, 6),
             ).save(output)
     }
 
     @JvmStatic
     private fun plants() {
-        val aquaticSoil: HTItemIngredient = itemCreator.fromTagKeys(listOf(Tags.Items.GRAVELS, Tags.Items.SANDS))
+        val aquaticSoil: HTItemIngredient = inputCreator.create(listOf(Tags.Items.GRAVELS, Tags.Items.SANDS))
 
         mapOf(
-            Items.VINE to itemCreator.fromTagKey(Tags.Items.COBBLESTONES),
-            Items.LILY_PAD to itemCreator.fromTagKey(Tags.Items.BUCKETS_WATER),
+            Items.VINE to inputCreator.create(Tags.Items.COBBLESTONES),
+            Items.LILY_PAD to inputCreator.create(Tags.Items.BUCKETS_WATER),
             Items.SEAGRASS to aquaticSoil,
             Items.SEA_PICKLE to aquaticSoil,
-            Items.TUBE_CORAL to itemCreator.fromItem(Items.TUBE_CORAL_BLOCK),
-            Items.BRAIN_CORAL to itemCreator.fromItem(Items.BRAIN_CORAL_BLOCK),
-            Items.BUBBLE_CORAL to itemCreator.fromItem(Items.BUBBLE_CORAL_BLOCK),
-            Items.FIRE_CORAL to itemCreator.fromItem(Items.FIRE_CORAL_BLOCK),
-            Items.HORN_CORAL to itemCreator.fromItem(Items.HORN_CORAL_BLOCK),
-            Items.TUBE_CORAL_FAN to itemCreator.fromItem(Items.TUBE_CORAL_BLOCK),
-            Items.BRAIN_CORAL_FAN to itemCreator.fromItem(Items.BRAIN_CORAL_BLOCK),
-            Items.BUBBLE_CORAL_FAN to itemCreator.fromItem(Items.BUBBLE_CORAL_BLOCK),
-            Items.FIRE_CORAL_FAN to itemCreator.fromItem(Items.FIRE_CORAL_BLOCK),
-            Items.HORN_CORAL_FAN to itemCreator.fromItem(Items.HORN_CORAL_BLOCK),
+            Items.TUBE_CORAL to inputCreator.create(Items.TUBE_CORAL_BLOCK),
+            Items.BRAIN_CORAL to inputCreator.create(Items.BRAIN_CORAL_BLOCK),
+            Items.BUBBLE_CORAL to inputCreator.create(Items.BUBBLE_CORAL_BLOCK),
+            Items.FIRE_CORAL to inputCreator.create(Items.FIRE_CORAL_BLOCK),
+            Items.HORN_CORAL to inputCreator.create(Items.HORN_CORAL_BLOCK),
+            Items.TUBE_CORAL_FAN to inputCreator.create(Items.TUBE_CORAL_BLOCK),
+            Items.BRAIN_CORAL_FAN to inputCreator.create(Items.BRAIN_CORAL_BLOCK),
+            Items.BUBBLE_CORAL_FAN to inputCreator.create(Items.BUBBLE_CORAL_BLOCK),
+            Items.FIRE_CORAL_FAN to inputCreator.create(Items.FIRE_CORAL_BLOCK),
+            Items.HORN_CORAL_FAN to inputCreator.create(Items.HORN_CORAL_BLOCK),
         ).forEach { (plant: Item, soil: HTItemIngredient) ->
             HTPlantingRecipeBuilder
                 .create(

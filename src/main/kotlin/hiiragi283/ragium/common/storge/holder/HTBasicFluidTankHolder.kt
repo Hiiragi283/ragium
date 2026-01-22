@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.storge.holder
 
-import hiiragi283.core.api.collection.ImmutableMultiMap
 import hiiragi283.core.api.storage.fluid.HTFluidTank
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import net.minecraft.core.Direction
@@ -8,7 +7,7 @@ import net.minecraft.core.Direction
 class HTBasicFluidTankHolder private constructor(
     configGetter: HTSlotInfoProvider?,
     slots: List<HTFluidTank>,
-    slotMap: ImmutableMultiMap<HTSlotInfo, HTFluidTank>,
+    slotMap: Map<HTSlotInfo, List<HTFluidTank>>,
 ) : HTSlottedCapabilityHolder<HTFluidTank>(configGetter, slots, slotMap),
     HTFluidTankHolder {
     companion object {

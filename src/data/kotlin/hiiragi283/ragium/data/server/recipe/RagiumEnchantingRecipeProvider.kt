@@ -16,7 +16,7 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         // Protection
         HTEnchantingRecipeBuilder
             .create(
-                itemCreator.fromTagKey(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON, 64),
+                inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON, 64),
                 enchLookup.getOrThrow(Enchantments.PROTECTION),
             ).save(output)
     }
