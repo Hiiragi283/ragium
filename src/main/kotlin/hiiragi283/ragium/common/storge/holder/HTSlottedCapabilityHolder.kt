@@ -40,11 +40,11 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
             slotMap[info] = list
         }
 
-        fun addSlot(info: HTSlotInfo, slot: SLOT) {
+        fun <T : SLOT> addSlot(info: HTSlotInfo, slot: T): T {
             check(!hasBuilt) { "Builder has already built" }
             slots += slot
             when (info) {
-                HTSlotInfo.NONE -> return
+                HTSlotInfo.NONE -> return slot
                 HTSlotInfo.BOTH -> {
                     putSlot(info, slot)
                     putSlot(HTSlotInfo.INPUT, slot)
@@ -56,6 +56,7 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
                 }
             }
             LOGGER.debug("Added slot {} for config {}", slot, info)
+            return slot
         }
 
         fun build(): HOLDER? {

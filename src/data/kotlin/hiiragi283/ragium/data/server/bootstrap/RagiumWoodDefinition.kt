@@ -29,8 +29,8 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
             "crimson",
             ItemTags.CRIMSON_STEMS,
         ) {
-            put(HTWoodDefinition.Variant.LOG, HTItemHolderLike.Simple(Items.CRIMSON_STEM))
-            put(HTWoodDefinition.Variant.WOOD, HTItemHolderLike.Simple(Items.CRIMSON_HYPHAE))
+            put(HTWoodDefinition.Variant.LOG, HTItemHolderLike.of(Items.CRIMSON_STEM))
+            put(HTWoodDefinition.Variant.WOOD, HTItemHolderLike.of(Items.CRIMSON_HYPHAE))
             remove(HTWoodDefinition.Variant.BOAT)
             remove(HTWoodDefinition.Variant.CHEST_BOAT)
         }
@@ -39,8 +39,8 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
             "warped",
             ItemTags.WARPED_STEMS,
         ) {
-            put(HTWoodDefinition.Variant.LOG, HTItemHolderLike.Simple(Items.WARPED_STEM))
-            put(HTWoodDefinition.Variant.WOOD, HTItemHolderLike.Simple(Items.WARPED_HYPHAE))
+            put(HTWoodDefinition.Variant.LOG, HTItemHolderLike.of(Items.WARPED_STEM))
+            put(HTWoodDefinition.Variant.WOOD, HTItemHolderLike.of(Items.WARPED_HYPHAE))
             remove(HTWoodDefinition.Variant.BOAT)
             remove(HTWoodDefinition.Variant.CHEST_BOAT)
         }
@@ -49,9 +49,9 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
             "bamboo",
             ItemTags.BAMBOO_BLOCKS,
         ) {
-            put(HTWoodDefinition.Variant.LOG, HTItemHolderLike.Simple(Items.BAMBOO_BLOCK))
-            put(HTWoodDefinition.Variant.BOAT, HTItemHolderLike.Simple(Items.BAMBOO_RAFT))
-            put(HTWoodDefinition.Variant.CHEST_BOAT, HTItemHolderLike.Simple(Items.BAMBOO_CHEST_RAFT))
+            put(HTWoodDefinition.Variant.LOG, HTItemHolderLike.of(Items.BAMBOO_BLOCK))
+            put(HTWoodDefinition.Variant.BOAT, HTItemHolderLike.of(Items.BAMBOO_RAFT))
+            put(HTWoodDefinition.Variant.CHEST_BOAT, HTItemHolderLike.of(Items.BAMBOO_CHEST_RAFT))
             remove(HTWoodDefinition.Variant.WOOD)
         }
     }
@@ -90,7 +90,7 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
                     for (variant in variants) {
                         put(
                             variant,
-                            HTItemHolderLike.Simple(HTConst.MINECRAFT.toId("${path}_${variant.serializedName}")),
+                            HTItemHolderLike.of(HTConst.MINECRAFT.toId("${path}_${variant.serializedName}")),
                         )
                     }
                     operator()

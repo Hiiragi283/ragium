@@ -1,16 +1,23 @@
 package hiiragi283.ragium.common.block.entity.component
 
-import hiiragi283.core.api.HTDataSerializable
+import hiiragi283.core.api.block.entity.HTBlockEntityComponent
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.serialization.component.HTComponentSerializable
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 
-abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any> :
+abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any>(protected open val owner: HTBlockEntity) :
     HTRecipeHandler<INPUT, RECIPE>(),
-    HTDataSerializable {
+    HTBlockEntityComponent,
+    HTComponentSerializable.Empty {
+    init {
+        owner.addComponent(this)
+    }
+
     //    HTRecipeHandler    //
 
     final override fun completeRecipe(
@@ -43,15 +50,18 @@ abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any> :
 
     protected abstract fun applyEffect()
 
-    //    HTDataSerializable    //
+    //    HTBlockEntityComponent    //
 
-    override fun serializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        nbt.putInt(RagiumConst.PROGRESS, progress)
-        nbt.putInt(RagiumConst.MAX_PROGRESS, maxProgress)
+    override fun serialize(output: HTValueOutput) {
+        output.putInt(RagiumConst.PROGRESS, progress)
+        output.putInt(RagiumConst.MAX_PROGRESS, maxProgress)
     }
 
-    override fun deserializeNBT(provider: HolderLookup.Provider, nbt: CompoundTag) {
-        nbt.getInt(RagiumConst.PROGRESS).let(::progress::set)
-        nbt.getInt(RagiumConst.MAX_PROGRESS).let(::maxProgress::set)
+    override fun deserialize(input: HTValueInput) {
+        val maxProgress: Int = input.getInt(RagiumConst.MAX_PROGRESS) ?: return
+        this.maxProgress = maxProgress
+
+        val progress: Int = input.getInt(RagiumConst.PROGRESS) ?: return
+        this.progress = progress
     }
 }

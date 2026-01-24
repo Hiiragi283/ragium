@@ -1,16 +1,10 @@
 package hiiragi283.ragium.common.block.entity
 
-import com.lowdragmc.lowdraglib2.gui.sync.bindings.impl.DataBindingBuilder
-import com.lowdragmc.lowdraglib2.gui.sync.bindings.impl.SupplierDataSource
-import com.lowdragmc.lowdraglib2.gui.ui.UIElement
-import com.lowdragmc.lowdraglib2.gui.ui.elements.Label
-import com.lowdragmc.lowdraglib2.gui.ui.elements.ProgressBar
-import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
-import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
+import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.div
-import hiiragi283.core.api.function.andThen
-import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.core.api.times
+import hiiragi283.core.common.gui.menu.HTContainerMenu
+import hiiragi283.core.common.gui.sync.HTIntSyncSlot
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
@@ -24,11 +18,24 @@ import org.apache.commons.lang3.math.Fraction
 
 abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state) {
-    @DescSynced
-    @Persisted(subPersisted = true)
-    protected val recipeComponent: HTRecipeComponent<*, *> = createRecipeComponent()
+    protected lateinit var recipeComponent: HTRecipeComponent<*, *>
+        private set
+
+    override fun initializeVariables() {
+        super.initializeVariables()
+        recipeComponent = createRecipeComponent()
+    }
 
     protected abstract fun createRecipeComponent(): HTRecipeComponent<*, *>
+
+    //    Ticking    //
+
+    override fun addMenuTrackers(menu: HTContainerMenu<*>) {
+        super.addMenuTrackers(menu)
+        // Progress
+        menu.track(HTIntSyncSlot.create(recipeComponent::progress))
+        menu.track(HTIntSyncSlot.create(recipeComponent::maxProgress))
+    }
 
     fun getProgress(): Fraction = recipeComponent.getProgress(isActive())
 
@@ -36,49 +43,21 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeComponent.tick(level, pos)
 
-    //    UI    //
-
-    override fun setupMainTab(root: UIElement) {
-        root.addChild(
-            ProgressBar()
-                .label { label: Label ->
-                    label.bindDataSource(
-                        SupplierDataSource.of {
-                            HTCommonTranslation.PROGRESS.translate((getProgress() * 100).toInt())
-                        },
-                    )
-                }.bind(DataBindingBuilder.floatValS2C(::getProgress.andThen(Fraction::toFloat)).build()),
-        )
-    }
-
     //    Energized    //
 
     abstract class Energized(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
         HTProcessorBlockEntity(type, pos, state) {
-        @DescSynced
-        @Persisted(subPersisted = true)
-        val battery: HTMachineEnergyBattery.Processor = HTMachineEnergyBattery.input(this)
+        lateinit var battery: HTMachineEnergyBattery.Processor
+            private set
 
-        final override fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder) {
-            builder.addSlot(HTSlotInfo.INPUT, battery)
+        final override fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
+            battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
         }
 
         fun updateAndGetProgress(time: Int): Int {
             if (isCreative()) return 0
             battery.currentEnergyPerTick = modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
             return battery.currentEnergyPerTick * modifyTime(time)
-        }
-
-        //    UI    //
-
-        override fun setupMainTab(root: UIElement) {
-            super.setupMainTab(root)
-            root.addChild(
-                ProgressBar()
-                    .label { label: Label ->
-                        label.bindDataSource(SupplierDataSource.of { HTCommonTranslation.STORED_FE.translate(battery.getAmount()) })
-                    }.bind(DataBindingBuilder.floatValS2C(battery::getLevelAsFloat).build()),
-            )
         }
     }
 }

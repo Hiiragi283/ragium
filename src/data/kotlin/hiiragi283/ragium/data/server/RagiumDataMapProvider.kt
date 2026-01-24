@@ -65,19 +65,19 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     private fun fermentSources() {
         builder(RagiumDataMapTypes.FERMENT_SOURCE)
-            .addHolder(HTBlockHolderLike.Simple(Blocks.BROWN_MUSHROOM), 1)
-            .addHolder(HTBlockHolderLike.Simple(Blocks.MYCELIUM), 1)
-            .addHolder(HTBlockHolderLike.Simple(Blocks.RED_MUSHROOM), 1)
+            .addHolder(HTBlockHolderLike.of(Blocks.BROWN_MUSHROOM), 1)
+            .addHolder(HTBlockHolderLike.of(Blocks.MYCELIUM), 1)
+            .addHolder(HTBlockHolderLike.of(Blocks.RED_MUSHROOM), 1)
     }
 
     private fun mobHeads() {
         builder(RagiumDataMapTypes.MOB_HEAD)
-            .add(EntityType.SKELETON, HTItemHolderLike.Simple(Items.SKELETON_SKULL))
-            .add(EntityType.WITHER_SKELETON, HTItemHolderLike.Simple(Items.WITHER_SKELETON_SKULL))
-            .add(EntityType.ZOMBIE, HTItemHolderLike.Simple(Items.ZOMBIE_HEAD))
-            .add(EntityType.CREEPER, HTItemHolderLike.Simple(Items.CREEPER_HEAD))
-            .add(EntityType.ENDER_DRAGON, HTItemHolderLike.Simple(Items.DRAGON_HEAD))
-            .add(EntityType.PIGLIN, HTItemHolderLike.Simple(Items.PIGLIN_HEAD))
+            .add(EntityType.SKELETON, HTItemHolderLike.of(Items.SKELETON_SKULL))
+            .add(EntityType.WITHER_SKELETON, HTItemHolderLike.of(Items.WITHER_SKELETON_SKULL))
+            .add(EntityType.ZOMBIE, HTItemHolderLike.of(Items.ZOMBIE_HEAD))
+            .add(EntityType.CREEPER, HTItemHolderLike.of(Items.CREEPER_HEAD))
+            .add(EntityType.ENDER_DRAGON, HTItemHolderLike.of(Items.DRAGON_HEAD))
+            .add(EntityType.PIGLIN, HTItemHolderLike.of(Items.PIGLIN_HEAD))
     }
 
     private fun coolants() {

@@ -1,7 +1,9 @@
 package hiiragi283.ragium.common.block.entity
 
-import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
-import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.api.serialization.value.read
+import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -16,11 +18,19 @@ import net.minecraft.world.level.block.state.BlockState
 class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
     HTExtendedBlockEntity(RagiumBlockEntityTypes.IMITATION_SPAWNER, pos, state),
     Spawner {
-    @DescSynced
-    @Persisted
     var spawnerMob: HTSpawnerMob? = null
 
     //    Save & Load    //
+
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        output.write("spawner", HTSpawnerMob.CODEC, spawnerMob)
+    }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        input.read("spawner", HTSpawnerMob.CODEC).let(::spawnerMob::set)
+    }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
@@ -37,5 +47,15 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun setEntityId(entityType: EntityType<*>, random: RandomSource) {
         spawnerMob = HTSpawnerMob(entityType)
         setChanged()
+    }
+
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        output.write("spawner", HTSpawnerMob.CODEC, spawnerMob)
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        input.read("spawner", HTSpawnerMob.CODEC).let(::spawnerMob::set)
     }
 }

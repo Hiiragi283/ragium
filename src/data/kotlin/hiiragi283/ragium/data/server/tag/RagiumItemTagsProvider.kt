@@ -1,11 +1,8 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.collection.forEach
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
-import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -25,8 +22,6 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
     HTItemTagsProvider(RagiumAPI.MOD_ID, blockTags, context) {
-    private val contents: HTMaterialContents = HiiragiCoreAccess.INSTANCE.materialContents
-
     override fun addTagsInternal(factory: BuilderFactory<Item>) {
         copyTags()
 
@@ -38,18 +33,13 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
 
     private fun copyTags() {
         // Material
-        contents.getBlockTable().forEach { (prefix: HTTagPrefix, key: HTMaterialKey, _) ->
-            if (key.namespace != modId) return@forEach
-            copy(prefix, key)
-        }
+        copyMaterials()
     }
 
     //    Material    //
 
     private fun material(factory: BuilderFactory<Item>) {
-        contents.getItemTable().forEach { (prefix: HTTagPrefix, key: HTMaterialKey, item: HTIdLike) ->
-            if (key.namespace != modId) return@forEach
-            addMaterial(factory, prefix, key).add(item)
+        addMaterials(factory) { (prefix: HTTagPrefix, key: HTMaterialKey, item: HTIdLike) ->
             if (prefix == CommonTagPrefixes.GEM || prefix == CommonTagPrefixes.INGOT) {
                 factory.apply(ItemTags.BEACON_PAYMENT_ITEMS).addTag(prefix, key)
             }

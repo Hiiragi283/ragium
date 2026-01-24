@@ -24,19 +24,19 @@ object RagiumEmiRecipeCategories {
         HTEmiRecipeCategory.create(GENERATOR_BOUNDS, item, item.getId(), item)
 
     @JvmField
-    val THERMAL: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.COAL))
+    val THERMAL: HTEmiRecipeCategory = generator(HTItemHolderLike.of(Items.COAL))
 
     @JvmField
-    val CULINARY: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.GOLDEN_APPLE))
+    val CULINARY: HTEmiRecipeCategory = generator(HTItemHolderLike.of(Items.GOLDEN_APPLE))
 
     @JvmField
-    val MAGMATIC: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.LAVA_BUCKET))
+    val MAGMATIC: HTEmiRecipeCategory = generator(HTItemHolderLike.of(Items.LAVA_BUCKET))
 
     @JvmField
-    val COOLANT: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.ICE))
+    val COOLANT: HTEmiRecipeCategory = generator(HTItemHolderLike.of(Items.ICE))
 
     @JvmField
-    val COMBUSTION: HTEmiRecipeCategory = generator(HTItemHolderLike.Simple(Items.BLAZE_POWDER))
+    val COMBUSTION: HTEmiRecipeCategory = generator(HTItemHolderLike.of(Items.BLAZE_POWDER))
 
     //    Processor    //
 

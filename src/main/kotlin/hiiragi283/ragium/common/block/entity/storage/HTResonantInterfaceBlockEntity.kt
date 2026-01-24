@@ -1,15 +1,18 @@
 package hiiragi283.ragium.common.block.entity.storage
 
-import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
-import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
-import com.lowdragmc.lowdraglib2.syncdata.annotation.UpdateListener
 import hiiragi283.core.api.render.area.HTAreaDefinition
+import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.api.serialization.value.read
+import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.client.render.area.HTAreaRendererManager
-import hiiragi283.core.common.block.entity.HTExtendedBlockEntityNew
+import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.core.common.capability.HTItemCapabilities
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.entity.HTTargetedBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -27,7 +30,7 @@ import java.util.*
 typealias CacheMap<T> = MutableMap<Direction?, BlockCapabilityCache<T, Direction?>>
 
 class HTResonantInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTExtendedBlockEntityNew(RagiumBlockEntityTypes.RESONANT_INTERFACE, pos, state),
+    HTExtendedBlockEntity(RagiumBlockEntityTypes.RESONANT_INTERFACE, pos, state),
     HTAreaDefinition,
     HTHandlerProvider,
     HTTargetedBlockEntity {
@@ -54,39 +57,54 @@ class HTResonantInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTHandlerProvider    //
 
     override fun getItemHandler(direction: Direction?): IItemHandler? {
-        val serverLevel: ServerLevel = serverLevel ?: return null
+        val serverLevel: ServerLevel = getServerLevel() ?: return null
         val pos: BlockPos = location ?: return null
         return itemCache.computeIfAbsent(direction) { HTItemCapabilities.createCache(serverLevel, pos, it) }.capability
     }
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler? {
-        val serverLevel: ServerLevel = serverLevel ?: return null
+        val serverLevel: ServerLevel = getServerLevel() ?: return null
         val pos: BlockPos = location ?: return null
         return fluidCache.computeIfAbsent(direction) { HTFluidCapabilities.createCache(serverLevel, pos, it) }.capability
     }
 
     override fun getEnergyStorage(direction: Direction?): IEnergyStorage? {
-        val serverLevel: ServerLevel = serverLevel ?: return null
+        val serverLevel: ServerLevel = getServerLevel() ?: return null
         val pos: BlockPos = location ?: return null
         return energyCache.computeIfAbsent(direction) { HTEnergyCapabilities.createCache(serverLevel, pos, it) }.capability
     }
 
     //    HTTargetedBlockEntity    //
 
-    @DescSynced
-    @Persisted
-    @UpdateListener(methodName = "updateLocation")
     private var location: BlockPos? = null
 
-    private fun updateLocation(oldPos: BlockPos?, newPos: BlockPos?) {
-        this.location = newPos
-        if (oldPos != null) {
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        output.write(RagiumConst.LOCATION, VanillaBiCodecs.BLOCK_POS, location)
+    }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        location = input.read(RagiumConst.LOCATION, VanillaBiCodecs.BLOCK_POS)
+    }
+
+    override fun initReducedUpdateTag(output: HTValueOutput) {
+        super.initReducedUpdateTag(output)
+        output.write(RagiumConst.LOCATION, VanillaBiCodecs.BLOCK_POS, location)
+    }
+
+    override fun handleUpdateTag(input: HTValueInput) {
+        super.handleUpdateTag(input)
+        val oldLocation: BlockPos? = this.location
+        val location: BlockPos? = input.read(RagiumConst.LOCATION, VanillaBiCodecs.BLOCK_POS)
+        this.location = location
+        if (oldLocation != null) {
             level
                 ?.dimension()
-                ?.let { GlobalPos(it, oldPos) }
+                ?.let { GlobalPos(it, oldLocation) }
                 ?.let(HTAreaRendererManager::removeArea)
         }
-        if (newPos != null) {
+        if (location != null) {
             HTAreaRendererManager.addArea(this)
         }
     }

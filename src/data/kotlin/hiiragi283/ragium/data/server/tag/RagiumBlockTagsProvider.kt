@@ -1,23 +1,14 @@
 package hiiragi283.ragium.data.server.tag
 
-import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.collection.forEach
 import hiiragi283.core.api.data.HTDataGenContext
+import hiiragi283.core.api.data.tag.HTBlockTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
-import hiiragi283.core.api.data.tag.HTTagsProvider
-import hiiragi283.core.api.material.HTMaterialContents
-import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.resource.HTIdLike
-import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumBlocks
-import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Block
 
-class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>(RagiumAPI.MOD_ID, Registries.BLOCK, context) {
-    private val contents: HTMaterialContents = HiiragiCoreAccess.INSTANCE.materialContents
-
+class RagiumBlockTagsProvider(context: HTDataGenContext) : HTBlockTagsProvider(RagiumAPI.MOD_ID, context) {
     override fun addTagsInternal(factory: BuilderFactory<Block>) {
         material(factory)
         mineable(factory)
@@ -27,10 +18,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider<Block>
     //    Material    //
 
     private fun material(factory: BuilderFactory<Block>) {
-        contents.getBlockTable().forEach { (prefix: HTTagPrefix, key: HTMaterialKey, block: HTIdLike) ->
-            if (key.namespace != modId) return@forEach
-            addMaterial(factory, prefix, key).add(block)
-        }
+        addMaterials(factory) {}
     }
 
     //    Mineable    //

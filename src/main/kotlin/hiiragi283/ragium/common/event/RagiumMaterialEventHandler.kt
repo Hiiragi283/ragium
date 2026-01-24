@@ -97,7 +97,7 @@ object RagiumMaterialEventHandler {
             put(
                 HTMaterialPropertyKeys.SMELTING,
                 HTSmeltingMaterialProperty.withSmoking(
-                    HTItemHolderLike.Simple(CommonTagPrefixes.INGOT.createId(RagiumMaterialKeys.COOKED_MEAT)),
+                    HTItemHolderLike.of(CommonTagPrefixes.INGOT.createId(RagiumMaterialKeys.COOKED_MEAT)),
                 ),
             )
         }
@@ -111,9 +111,7 @@ object RagiumMaterialEventHandler {
             setName("Cooked Meat", "焼肉")
             put(
                 HTMaterialPropertyKeys.SMELTING,
-                HTSmeltingMaterialProperty.smeltingOnly(
-                    HTItemHolderLike.Simple(CommonTagPrefixes.DUST.createId(CommonMaterialKeys.ASH)),
-                ),
+                HTSmeltingMaterialProperty.smeltingOnly(HTItemHolderLike.of(CommonTagPrefixes.DUST.createId(CommonMaterialKeys.ASH))),
             )
         }
 

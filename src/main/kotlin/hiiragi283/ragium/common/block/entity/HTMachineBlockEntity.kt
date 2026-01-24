@@ -25,7 +25,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Ticking    //
 
-    final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState) {
+    final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         val lastActive: Boolean = isActive(state)
         val result: Boolean = onUpdateMachine(level, pos, state)
         // 以前の結果と異なる場合は更新する
@@ -37,6 +37,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             level.setBlockAndUpdate(pos, newState)
             setChanged()
         }
+        return result
     }
 
     protected abstract fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean
