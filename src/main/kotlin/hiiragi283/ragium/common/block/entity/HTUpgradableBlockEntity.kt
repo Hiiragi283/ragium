@@ -44,7 +44,7 @@ abstract class HTUpgradableBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
                 }.addInventory(),
         )
     }
-    
+
     protected open fun enableUpgradeTab(): Boolean = true
 
     //    HTUpgradeHandler    //

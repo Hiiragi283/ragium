@@ -7,12 +7,10 @@ import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.alchemy.Potion
-import java.util.function.Consumer
 
 class HTPotionDropItem(properties: Properties) :
     Item(properties),
@@ -28,10 +26,10 @@ class HTPotionDropItem(properties: Properties) :
             ?.addPotionTooltip(tooltips::add, 1f, context.tickRate())
     }
 
-    override fun addItems(baseItem: HTItemHolderLike<*>, parameters: CreativeModeTab.ItemDisplayParameters, consumer: Consumer<ItemStack>) {
-        for (holder: Holder<Potion> in parameters.holders().lookupOrThrow(Registries.POTION).listElements()) {
-            if (holder.value().isEnabled(parameters.enabledFeatures())) {
-                consumer.accept(HTPotionHelper.createPotion(baseItem, holder))
+    override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
+        for (holder: Holder<Potion> in context.provider.lookupOrThrow(Registries.POTION).listElements()) {
+            if (holder.value().isEnabled(context.enabledFeatures)) {
+                HTPotionHelper.createPotion(baseItem, holder).let(context)
             }
         }
     }

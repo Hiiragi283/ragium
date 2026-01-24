@@ -218,7 +218,7 @@ object RagiumBlocks {
         translation: HTTranslation,
         properties: BlockBehaviour.Properties = machine(),
     ): HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> = REGISTER.register(
-        type.getPath(),
+        type.path,
         properties,
         ::HTMachineBlock.partially2(translation, type),
         ::HTMachineBlockItem,

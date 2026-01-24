@@ -16,11 +16,9 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import java.util.function.Consumer
 
 class HTUniversalChestBlockItem(block: HTUniversalChestBlock, properties: Properties) :
     HTDescriptionBlockItem<HTUniversalChestBlock>(block, properties),
@@ -35,10 +33,10 @@ class HTUniversalChestBlockItem(block: HTUniversalChestBlock, properties: Proper
 
     //    HTSubCreativeTabContents    //
 
-    override fun addItems(baseItem: HTItemHolderLike<*>, parameters: CreativeModeTab.ItemDisplayParameters, consumer: Consumer<ItemStack>) {
-        for (color: DyeColor in DyeColor.entries) {
-            consumer.accept(createItemStack(baseItem, RagiumDataComponents.COLOR, color))
-        }
+    override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
+        DyeColor.entries
+            .map { color: DyeColor -> createItemStack(baseItem, RagiumDataComponents.COLOR, color) }
+            .forEach(context)
     }
 
     override fun shouldAddDefault(): Boolean = false

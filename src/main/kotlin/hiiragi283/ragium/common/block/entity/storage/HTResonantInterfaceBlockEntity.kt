@@ -6,7 +6,7 @@ import com.lowdragmc.lowdraglib2.syncdata.annotation.UpdateListener
 import hiiragi283.core.api.render.area.HTAreaDefinition
 import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.client.render.area.HTAreaRendererManager
-import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
+import hiiragi283.core.common.block.entity.HTExtendedBlockEntityNew
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.core.common.capability.HTItemCapabilities
@@ -27,7 +27,7 @@ import java.util.*
 typealias CacheMap<T> = MutableMap<Direction?, BlockCapabilityCache<T, Direction?>>
 
 class HTResonantInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTExtendedBlockEntity(RagiumBlockEntityTypes.RESONANT_INTERFACE, pos, state),
+    HTExtendedBlockEntityNew(RagiumBlockEntityTypes.RESONANT_INTERFACE, pos, state),
     HTAreaDefinition,
     HTHandlerProvider,
     HTTargetedBlockEntity {

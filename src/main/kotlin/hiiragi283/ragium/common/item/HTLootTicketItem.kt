@@ -19,7 +19,6 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
@@ -29,7 +28,6 @@ import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
-import java.util.function.Consumer
 
 class HTLootTicketItem(properties: Properties) :
     Item(properties.rarity(Rarity.RARE)),
@@ -83,9 +81,9 @@ class HTLootTicketItem(properties: Properties) :
             .forEach(tooltips::add)
     }
 
-    override fun addItems(baseItem: HTItemHolderLike<*>, parameters: CreativeModeTab.ItemDisplayParameters, consumer: Consumer<ItemStack>) {
+    override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
         for (tickets: HTDefaultLootTickets in HTDefaultLootTickets.entries) {
-            createItemStack(baseItem, RagiumDataComponents.LOOT_TICKET, tickets.targets).let(consumer::accept)
+            createItemStack(baseItem, RagiumDataComponents.LOOT_TICKET, tickets.targets).let(context)
         }
     }
 }

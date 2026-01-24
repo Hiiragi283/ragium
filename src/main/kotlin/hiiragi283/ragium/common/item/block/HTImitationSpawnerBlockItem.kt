@@ -12,10 +12,8 @@ import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import java.util.function.Consumer
 
 class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Properties) :
     HTBlockItem<HTImitationSpawnerBlock>(block, properties),
@@ -35,18 +33,18 @@ class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Pr
             ?.let(tooltips::add)
     }
 
-    override fun addItems(baseItem: HTItemHolderLike<*>, parameters: CreativeModeTab.ItemDisplayParameters, consumer: Consumer<ItemStack>) {
-        parameters
-            .holders()
+    override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
+        context
+            .provider
             .lookupOrThrow(Registries.ENTITY_TYPE)
             .filterElements(HTImitationSpawnerBlock::filterEntityType)
             .listElements()
-            .forEach { holder: Holder<EntityType<*>> ->
+            .map { holder: Holder<EntityType<*>> ->
                 createItemStack(
                     baseItem,
                     RagiumDataComponents.SPAWNER_MOB,
                     HTSpawnerMob(holder),
-                ).let(consumer::accept)
-            }
+                )
+            }.forEach(context)
     }
 }

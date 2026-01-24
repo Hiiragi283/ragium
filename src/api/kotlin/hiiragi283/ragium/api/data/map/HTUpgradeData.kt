@@ -1,5 +1,6 @@
 package hiiragi283.ragium.api.data.map
 
+import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -15,9 +16,6 @@ import net.minecraft.world.item.ItemStack
 import org.apache.commons.lang3.math.Fraction
 import java.util.Optional
 import java.util.function.Consumer
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.iterator
 
 /**
  * @see net.minecraft.world.item.enchantment.Enchantment
@@ -49,6 +47,7 @@ data class HTUpgradeData private constructor(
             return bool1 && bool2
         }
 
+        @HTBuilderMarker
         @JvmStatic
         inline fun create(builderAction: Builder.() -> Unit): HTUpgradeData = Builder().apply(builderAction).build()
     }

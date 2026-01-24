@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -22,7 +21,7 @@ object RagiumDryingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         HTComplexRecipeBuilder
             .drying(inputCreator.create(Tags.Items.OBSIDIANS_CRYING))
             .setResult(itemResult.create(Items.OBSIDIAN))
-            .setResult(createFluidResult(HCMaterialKeys.ELDRITCH, HTMaterialPropertyKeys.MOLTEN_FLUID))
+            .setResult(fluidResult.molten(HCMaterialKeys.ELDRITCH))
             .setTime(20 * 20)
             .saveSuffixed(output, "_from_crying")
         // Sapling -> Dead Bush

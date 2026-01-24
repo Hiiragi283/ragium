@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
@@ -57,14 +56,14 @@ object RagiumPyrolyzingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
             .create(
                 inputCreator.create(ItemTags.CRIMSON_STEMS, 8),
                 itemResult.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
-                createFluidResult(HCMaterialKeys.CRIMSON_CRYSTAL, HTMaterialPropertyKeys.MOLTEN_FLUID),
+                fluidResult.molten(HCMaterialKeys.CRIMSON_CRYSTAL),
             ).saveSuffixed(output, "_from_log")
         // Warped Stem -> Dew of the Warp
         HTPyrolyzingRecipeBuilder
             .create(
                 inputCreator.create(ItemTags.WARPED_STEMS, 8),
                 itemResult.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
-                createFluidResult(HCMaterialKeys.WARPED_CRYSTAL, HTMaterialPropertyKeys.MOLTEN_FLUID),
+                fluidResult.molten(HCMaterialKeys.WARPED_CRYSTAL),
             ).saveSuffixed(output, "_from_log")
     }
 }

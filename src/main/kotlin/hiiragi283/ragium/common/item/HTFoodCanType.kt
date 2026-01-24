@@ -1,7 +1,8 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.core.api.data.lang.HTLangName
-import hiiragi283.core.api.data.lang.HTLanguageType
+import hiiragi283.core.api.data.lang.HTLangType
+import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.setup.RagiumItems
@@ -28,9 +29,9 @@ enum class HTFoodCanType(private val enPattern: String, private val jaPattern: S
 
     override fun getItemHolder(): HTSimpleDeferredItem = RagiumItems.FOOD_CANS[this]!!
 
-    override fun getTranslatedName(type: HTLanguageType): String = when (type) {
-        HTLanguageType.EN_US -> enPattern
-        HTLanguageType.JA_JP -> jaPattern
+    override fun getTranslatedName(type: HTLangType): String = when (type) {
+        HTLangTypes.JA_JP -> jaPattern
+        else -> enPattern
     }
 
     override fun getSerializedName(): String = name.lowercase()

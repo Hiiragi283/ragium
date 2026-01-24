@@ -1,8 +1,11 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.material.HTMaterialContentsAccess
+import hiiragi283.core.api.material.HTMaterialLike
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.data.recipe.builder.HTCookingRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -30,9 +33,8 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             .define('B', CommonTagPrefixes.INGOT, VanillaMaterialKeys.COPPER)
             .save(output)
         // Ragi-Alloy Compound -> Ragi-Alloy
-        val ingot: ItemLike = HTMaterialContentsAccess.INSTANCE.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
         HTCookingRecipeBuilder
-            .smeltingAndBlasting(ingot) {
+            .smeltingAndBlasting(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)) {
                 addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
                 setExp(0.7f)
                 saveSuffixed(output, "_from_compound")
@@ -43,9 +45,7 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     private fun meat() {
         // Meat Ingot -> Cooked Meat Ingot
         HTCookingRecipeBuilder
-            .smeltingAndSmoking(
-                HTMaterialContentsAccess.INSTANCE.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT),
-            ) {
+            .smeltingAndSmoking(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)) {
                 addIngredient(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT)
                 setExp(0.35f)
                 saveSuffixed(output, "_from_ingot")
@@ -76,4 +76,8 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         for ((canType: HTFoodCanType, item: ItemLike) in RagiumItems.FOOD_CANS) {
         }
     }
+
+    @JvmStatic
+    private fun getOrThrow(prefix: HTTagPrefix, material: HTMaterialLike): HTItemHolderLike<*> =
+        HiiragiCoreAccess.INSTANCE.materialContents.getItemOrThrow(prefix, material)
 }

@@ -50,7 +50,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         }
         // Utilities
         existTexture(RagiumItems.BLANK_DISC) { item: HTIdLike ->
-            withExistingParent(item.getPath(), HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
+            withExistingParent(item.path, HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
                 .texture("layer0", item.itemId)
         }
         layeredItem(RagiumItems.POTION_DROP, HTConst.MINECRAFT.toId(HTConst.ITEM, "ghast_tear"))

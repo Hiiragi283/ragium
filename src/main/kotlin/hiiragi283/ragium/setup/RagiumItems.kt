@@ -2,7 +2,7 @@ package hiiragi283.ragium.setup
 
 import com.mojang.logging.LogUtils
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.material.HTMaterialContentsAccess
+import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.text.HTTranslation
@@ -144,16 +144,10 @@ object RagiumItems {
             event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
         }
 
-        modify(
-            HTMaterialContentsAccess.INSTANCE.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT),
-            DataComponents.FOOD,
-            Foods.BEEF,
-        )
-        modify(
-            HTMaterialContentsAccess.INSTANCE.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT),
-            DataComponents.FOOD,
-            Foods.COOKED_BEEF,
-        )
+        with(HiiragiCoreAccess.INSTANCE.materialContents) {
+            modify(getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
+            modify(getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
+        }
     }
 
     @JvmStatic

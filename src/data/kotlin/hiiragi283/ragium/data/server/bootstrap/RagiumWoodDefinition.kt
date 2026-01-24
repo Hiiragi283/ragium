@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.bootstrap
 
+import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.createKey
@@ -55,6 +56,7 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
         }
     }
 
+    @HTBuilderMarker
     @JvmStatic
     private fun register(
         context: BootstrapContext<HTWoodDefinition>,
@@ -71,6 +73,7 @@ object RagiumWoodDefinition : RegistrySetBuilder.RegistryBootstrap<HTWoodDefinit
         )
     }
 
+    @HTBuilderMarker
     @JvmStatic
     private fun register(
         context: BootstrapContext<HTWoodDefinition>,
