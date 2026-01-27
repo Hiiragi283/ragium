@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.core.api.data.HTDataGenContext
-import hiiragi283.core.api.data.recipe.creator.HTIngredientCreator
+import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient

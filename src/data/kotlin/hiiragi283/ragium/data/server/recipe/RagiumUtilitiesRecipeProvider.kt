@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
+import hiiragi283.core.api.data.holder.HTIngredientHolder
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -35,33 +36,35 @@ import net.neoforged.neoforge.common.Tags
 object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         // Molds
-        HTShapedRecipeBuilder
-            .create(HTMoldType.BLANK)
-            .storage4()
-            .define('A', CommonTagPrefixes.PLATE, CommonMaterialKeys.STEEL)
-            .save(output)
+        HTShapedRecipeBuilder.create(output) {
+            storage4()
+            define('A') += CommonTagPrefixes.PLATE to CommonMaterialKeys.STEEL
+            resultStack += HTMoldType.BLANK
+        }
 
         for (moldType: HTMoldType in HTMoldType.entries) {
-            HTStonecuttingRecipeBuilder
-                .create(moldType)
-                .addIngredient(RagiumTags.Items.MOLDS)
-                .save(output)
+            HTStonecuttingRecipeBuilder.create(output) {
+                ingredient += RagiumTags.Items.MOLDS
+                resultStack += moldType
+            }
         }
 
         // Location Ticket
-        HTShapedRecipeBuilder
-            .create(RagiumItems.LOCATION_TICKET, 8)
-            .hollow8()
-            .define('A', Items.PAPER)
-            .define('B', Tags.Items.ENDER_PEARLS)
-            .saveSuffixed(output, "_with_ender")
+        HTShapedRecipeBuilder.create(output) {
+            hollow8()
+            define('A') += Items.PAPER
+            define('B') += Tags.Items.ENDER_PEARLS
+            resultStack += RagiumItems.LOCATION_TICKET to 8
+            recipeId suffix "_with_ender"
+        }
 
-        HTShapedRecipeBuilder
-            .create(RagiumItems.LOCATION_TICKET, 8)
-            .hollow8()
-            .define('A', Items.PAPER)
-            .define('B', CommonTagPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL)
-            .saveSuffixed(output, "_with_warped")
+        HTShapedRecipeBuilder.create(output) {
+            hollow8()
+            define('A') += Items.PAPER
+            define('B') += CommonTagPrefixes.GEM to HCMaterialKeys.WARPED_CRYSTAL
+            resultStack += RagiumItems.LOCATION_TICKET to 8
+            recipeId suffix "_with_warped"
+        }
         // Loot Ticket
         lootTickets()
         // Potion Drop -> Potion
@@ -75,98 +78,101 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     @JvmStatic
     private fun machines() {
         // Basic
-        fun basic(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
-            .create(block)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.COPPER)
-            .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+        fun basic(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+            HTShapedRecipeBuilder.create(output) {
+                pattern(
+                    "AAA",
+                    "BCB",
+                    "DDD",
+                )
+                define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
+                define('B').let(consumer)
+                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.COPPER
+                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+                resultStack += block
+            }
+        }
 
-        basic(RagiumBlocks.ALLOY_SMELTER)
-            .define('B', Items.FURNACE)
-            .save(output)
-        basic(RagiumBlocks.CRUSHER)
-            .define('B', CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
-            .save(output)
-        basic(RagiumBlocks.CUTTING_MACHINE)
-            .define('B', Items.IRON_AXE)
-            .save(output)
-        basic(RagiumBlocks.FORMING_PRESS)
-            .define('B', Items.PISTON)
-            .save(output)
+        basic(RagiumBlocks.ALLOY_SMELTER) { it += Items.FURNACE }
+        basic(RagiumBlocks.CRUSHER) { it += CommonTagPrefixes.GEM to VanillaMaterialKeys.DIAMOND }
+        basic(RagiumBlocks.CUTTING_MACHINE) { it += Items.IRON_AXE }
+        basic(RagiumBlocks.FORMING_PRESS) { it += Items.PISTON }
 
         // Advanced
-        fun advanced(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
-            .create(block)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-            .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.GOLD)
-            .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+        fun advanced(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+            HTShapedRecipeBuilder.create(output) {
+                pattern(
+                    "AAA",
+                    "BCB",
+                    "DDD",
+                )
+                define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.ADVANCED_RAGI_ALLOY
+                define('B').let(consumer)
+                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.GOLD
+                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+                resultStack += block
+            }
+        }
 
-        advanced(RagiumBlocks.DRYER)
-            .define('B', ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            .save(output)
-        advanced(RagiumBlocks.MELTER)
-            .define('B', Items.BLAST_FURNACE)
-            .save(output)
-        advanced(RagiumBlocks.MIXER)
-            .define('B', Items.CAULDRON)
-            .save(output)
-        advanced(RagiumBlocks.PYROLYZER)
-            .define('B', Items.NETHER_BRICKS)
-            .save(output)
-        advanced(RagiumBlocks.SOLIDIFIER)
-            .define('B', RagiumTags.Items.MOLDS)
-            .save(output)
+        advanced(RagiumBlocks.DRYER) { it += ItemTags.SOUL_FIRE_BASE_BLOCKS }
+        advanced(RagiumBlocks.MELTER) { it += Items.BLAST_FURNACE }
+        advanced(RagiumBlocks.MIXER) { it += Items.CAULDRON }
+        advanced(RagiumBlocks.PYROLYZER) { it += Items.NETHER_BRICKS }
+        advanced(RagiumBlocks.SOLIDIFIER) { it += RagiumTags.Items.MOLDS }
     }
 
     @JvmStatic
     private fun devices() {
         // Basic
-        fun basic(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
-            .create(block)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL)
-            .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.IRON)
-            .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+        fun basic(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+            HTShapedRecipeBuilder.create(output) {
+                pattern(
+                    "AAA",
+                    "BCB",
+                    "DDD",
+                )
+                define('A') += CommonTagPrefixes.INGOT to HCMaterialKeys.AZURE_STEEL
+                define('B').let(consumer)
+                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON
+                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+                resultStack += block
+            }
+        }
 
-        basic(RagiumBlocks.FERMENTER)
-            .define('B', Items.COMPOSTER)
-            .save(output)
-        basic(RagiumBlocks.PLANTER)
-            .define('B', Tags.Items.GLASS_BLOCKS)
-            .save(output)
+        basic(RagiumBlocks.FERMENTER) { it += Items.COMPOSTER }
+        basic(RagiumBlocks.PLANTER) { it += Tags.Items.GLASS_BLOCKS }
 
         // Advanced
-        fun advanced(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
-            .create(block)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', CommonTagPrefixes.INGOT, HCMaterialKeys.DEEP_STEEL)
-            .define('C', CommonTagPrefixes.GEAR, VanillaMaterialKeys.NETHERITE)
-            .define('D', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+        fun advanced(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+            HTShapedRecipeBuilder.create(output) {
+                pattern(
+                    "AAA",
+                    "BCB",
+                    "DDD",
+                )
+                define('A') += CommonTagPrefixes.INGOT to HCMaterialKeys.DEEP_STEEL
+                define('B').let(consumer)
+                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.NETHERITE
+                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+                resultStack += block
+            }
+        }
 
         // Enchanting
-        fun enchanting(block: ItemLike): HTShapedRecipeBuilder = HTShapedRecipeBuilder
-            .create(block)
-            .pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            ).define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            .define('C', CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
-            .define('D', Tags.Items.OBSIDIANS_CRYING)
+        fun enchanting(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+            HTShapedRecipeBuilder.create(output) {
+                pattern(
+                    "AAA",
+                    "BCB",
+                    "DDD",
+                )
+                define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
+                define('B').let(consumer)
+                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.DIAMOND
+                define('D') += Tags.Items.OBSIDIANS_CRYING
+                resultStack += block
+            }
+        }
     }
 
     @JvmStatic
@@ -179,123 +185,128 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             Triple(RagiumBlocks.TANK, Tags.Items.BUCKETS_EMPTY, HCDataComponents.FLUID),
         ).forEach { (block: HTDeferredBlock<*, *>, core: TagKey<Item>, component: DataComponentType<*>) ->
             // Shaped
-            HTShapedRecipeBuilder
-                .create(block)
-                .crossLayered()
-                .define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-                .define('B', CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER)
-                .define('C', Tags.Items.GLASS_BLOCKS)
-                .define('D', core)
-                .save(output)
+            HTShapedRecipeBuilder.create(output) {
+                crossLayered()
+                define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
+                define('B') += CommonTagPrefixes.PLATE to CommonMaterialKeys.RUBBER
+                define('C') += Tags.Items.GLASS_BLOCKS
+                define('D') += core
+                resultStack += block
+            }
             // Clear Component
-            HTClearComponentRecipeBuilder(block.itemHolder)
-                .setTargets(component)
-                .save(output)
+            HTClearComponentRecipeBuilder.create(output) {
+                item = block
+                targets += listOf(component)
+            }
         }
         // Resonant Interface
         // Universal Chest
-        HTShapedRecipeBuilder
-            .create(RagiumBlocks.UNIVERSAL_CHEST)
-            .hollow8()
-            .define('A', CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
-            .define('B', CommonTagPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL)
-            .save(output)
+        HTShapedRecipeBuilder.create(output) {
+            hollow8()
+            define('A') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+            define('B') += CommonTagPrefixes.GEM to HCMaterialKeys.WARPED_CRYSTAL
+            resultStack += RagiumBlocks.UNIVERSAL_CHEST
+        }
 
         for (color: DyeColor in DyeColor.entries) {
-            HTShapelessRecipeBuilder(createItemStack(RagiumBlocks.UNIVERSAL_CHEST, RagiumDataComponents.COLOR, color))
-                .addIngredient(RagiumBlocks.UNIVERSAL_CHEST)
-                .addIngredient(color.tag)
-                .savePrefixed(output, "${color.serializedName}_")
+            HTShapelessRecipeBuilder.create(output) {
+                ingredients += RagiumBlocks.UNIVERSAL_CHEST
+                ingredients += color.tag
+                resultStack += createItemStack(RagiumBlocks.UNIVERSAL_CHEST, RagiumDataComponents.COLOR, color)
+                recipeId prefix "${color.serializedName}_"
+            }
         }
     }
 
     @JvmStatic
     private fun lootTickets() {
-        HTShapedRecipeBuilder
-            .create(RagiumItems.LOOT_TICKET)
-            .cross8()
-            .define('A', CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            .define('B', Tags.Items.DYES_RED)
-            .define('C', Items.PAPER)
-            .setCategory(CraftingBookCategory.EQUIPMENT)
-            .save(output)
+        HTShapedRecipeBuilder.create(output) {
+            cross8()
+            define('A') += CommonTagPrefixes.GEM to RagiumMaterialKeys.RAGI_CRYSTAL
+            define('B') += Tags.Items.DYES_RED
+            define('C') += Items.PAPER
+            resultStack += RagiumItems.LOOT_TICKET to 4
+            category = CraftingBookCategory.EQUIPMENT
+        }
 
         // End City
         addLootTicket(HTDefaultLootTickets.END_CITY) {
-            addIngredient(Items.PURPUR_BLOCK)
-            addIngredient(Items.SHULKER_SHELL)
+            it += Items.PURPUR_BLOCK
+            it += Items.SHULKER_SHELL
         }
         // Simple Dungeon
         addLootTicket(HTDefaultLootTickets.DUNGEON) {
-            addIngredient(Tags.Items.COBBLESTONES_MOSSY)
-            addIngredient(Items.ROTTEN_FLESH)
+            it += Tags.Items.COBBLESTONES_MOSSY
+            it += Items.ROTTEN_FLESH
         }
         // Mineshaft
         addLootTicket(HTDefaultLootTickets.MINESHAFT) {
-            addIngredient(ItemTags.PLANKS)
-            addIngredient(ItemTags.RAILS)
+            it += ItemTags.PLANKS
+            it += ItemTags.RAILS
         }
         // Nether Fortress
         addLootTicket(HTDefaultLootTickets.NETHER_FORTRESS) {
-            addIngredient(Items.NETHER_BRICKS)
-            addIngredient(Tags.Items.CROPS_NETHER_WART)
+            it += Items.NETHER_BRICKS
+            it += Tags.Items.CROPS_NETHER_WART
         }
 
         // Desert Pyramid
         addLootTicket(HTDefaultLootTickets.DESERT_PYRAMID) {
-            addIngredient(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
-            addIngredient(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD)
+            it += Tags.Items.SANDSTONE_UNCOLORED_BLOCKS
+            it += CommonTagPrefixes.INGOT to VanillaMaterialKeys.GOLD
         }
         // Jungle Temple
         addLootTicket(HTDefaultLootTickets.TEMPLE) {
-            addIngredient(Tags.Items.COBBLESTONES_MOSSY)
-            addIngredient(Items.VINE)
+            it += Tags.Items.COBBLESTONES_MOSSY
+            it += Items.VINE
         }
         // Igloo Chest
         addLootTicket(HTDefaultLootTickets.IGLOO) {
-            addIngredient(Items.SNOW_BLOCK)
-            addIngredient(ItemTags.BEDS)
+            it += Items.SNOW_BLOCK
+            it += ItemTags.BEDS
         }
         // Mansion
         addLootTicket(HTDefaultLootTickets.MANSION) {
-            addIngredient(Items.DARK_OAK_PLANKS)
-            addIngredient(CommonTagPrefixes.GEM, VanillaMaterialKeys.EMERALD)
+            it += Items.DARK_OAK_PLANKS
+            it += CommonTagPrefixes.GEM to VanillaMaterialKeys.EMERALD
         }
 
         // Buried Treasure
         addLootTicket(HTDefaultLootTickets.BURIED_TREASURE) {
-            addIngredient(Tags.Items.SANDS_COLORLESS)
-            addIngredient(Items.PUFFERFISH)
+            it += Tags.Items.SANDS_COLORLESS
+            it += Items.PUFFERFISH
         }
         // Shipwreck
         addLootTicket(HTDefaultLootTickets.SHIPWRECK) {
-            addIngredient(Tags.Items.CHESTS_WOODEN)
-            addIngredient(Items.KELP)
+            it += Tags.Items.CHESTS_WOODEN
+            it += Items.KELP
         }
         // Bastion Remnant
         addLootTicket(HTDefaultLootTickets.BASTION_REMNANT) {
-            addIngredient(Items.BLACKSTONE)
-            addIngredient(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD)
+            it += Items.BLACKSTONE
+            it += CommonTagPrefixes.INGOT to VanillaMaterialKeys.GOLD
         }
         // Ancient City
         addLootTicket(HTDefaultLootTickets.ANCIENT_CITY) {
-            addIngredient(Items.DEEPSLATE_TILES)
-            addIngredient(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO)
+            it += Items.DEEPSLATE_TILES
+            it += CommonTagPrefixes.GEM to VanillaMaterialKeys.ECHO
         }
         // Ruined Portal
         addLootTicket(HTDefaultLootTickets.RUINED_PORTAL) {
-            addIngredient(Tags.Items.OBSIDIANS_NORMAL)
-            addIngredient(Tags.Items.CROPS_NETHER_WART)
+            it += Tags.Items.OBSIDIANS_NORMAL
+            it += Tags.Items.CROPS_NETHER_WART
         }
     }
 
     @HTBuilderMarker
     @JvmStatic
-    private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, builderAction: HTShapelessRecipeBuilder.() -> Unit) {
-        HTShapelessRecipeBuilder(HTDefaultLootTickets.getLootTicket(lootTicket))
-            .addIngredient(RagiumItems.LOOT_TICKET)
-            .apply(builderAction)
-            .setCategory(CraftingBookCategory.EQUIPMENT)
-            .saveSuffixed(output, "/${lootTicket.name.lowercase()}")
+    private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, consumer: (HTIngredientHolder.Multiple) -> Unit) {
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += RagiumItems.LOOT_TICKET
+            ingredients.let(consumer)
+            resultStack += HTDefaultLootTickets.getLootTicket(lootTicket)
+            category = CraftingBookCategory.EQUIPMENT
+            recipeId suffix "/${lootTicket.name.lowercase()}"
+        }
     }
 }

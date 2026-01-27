@@ -8,6 +8,7 @@ import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTComplexResult
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.HTRecipeBiCodecs
@@ -15,7 +16,6 @@ import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.ParameterCodec
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -188,7 +188,7 @@ object RagiumRecipeSerializers {
     val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
         RagiumConst.PLANTING,
         MapBiCodec.composite(
-            HTItemResourceType.CODEC.fieldOf("seed").forGetter(HTPlantingRecipe::seed),
+            HTItemHolderLike.HOLDER_CODEC.fieldOf("seed").forGetter(HTPlantingRecipe::seed),
             HTItemIngredient.UNSIZED_CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
             HTItemResult.CODEC.fieldOf("crop").forGetter(HTPlantingRecipe::crop),
             HTRecipeBiCodecs.TIME.forGetter(HTPlantingRecipe::time),

@@ -1,6 +1,11 @@
 {
   "type": "ragium:crushing",
   "exp": 1,
+  "extra_result": {
+    "chance": "1/4",
+    "id": "hiiragi_core:prismarine_dust",
+    "tag": "c:dusts/prismarine"
+  },
   "ingredient": "#c:ores/emerald",
   "result": {
     "count": 2,

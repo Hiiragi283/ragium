@@ -1,6 +1,5 @@
 package hiiragi283.ragium.setup
 
-import com.mojang.logging.LogUtils
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.storage.item.HTItemResourceType
@@ -39,15 +38,11 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import org.slf4j.Logger
 
 /**
  * @see hiiragi283.core.setup.HCItems
  */
 object RagiumItems {
-    @JvmField
-    val LOGGER: Logger = LogUtils.getLogger()
-
     @JvmField
     val REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
@@ -204,8 +199,6 @@ object RagiumItems {
             RagiumBlocks.CREATIVE_CRATE,
             RagiumBlocks.CREATIVE_TANK,
         )
-
-        LOGGER.info("Registered Item Capabilities!")
     }
 
     //    Extensions    //

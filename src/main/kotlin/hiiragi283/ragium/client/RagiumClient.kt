@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client
 
-import com.mojang.logging.LogUtils
 import hiiragi283.core.api.event.HTRegisterWidgetRendererEvent
 import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
@@ -33,18 +32,14 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
-import org.slf4j.Logger
 import java.awt.Color
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
 data object RagiumClient : HTClientMod() {
-    @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
-
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
         configScreen(container)
 
-        LOGGER.info("Hiiragi-Core loaded on client side")
+        RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
@@ -69,7 +64,6 @@ data object RagiumClient : HTClientMod() {
             },
             RagiumBlocks.UNIVERSAL_CHEST.get(),
         )
-        LOGGER.info("Registered block colors")
     }
 
     override fun registerItemColors(event: RegisterColorHandlersEvent.Item) {
@@ -100,7 +94,6 @@ data object RagiumClient : HTClientMod() {
             RagiumBlocks.UNIVERSAL_CHEST,
             // RagiumItems.UNIVERSAL_BUNDLE,
         )
-        LOGGER.info("Registered item colors")
     }
 
     override fun registerClientExtensions(event: RegisterClientExtensionsEvent) {

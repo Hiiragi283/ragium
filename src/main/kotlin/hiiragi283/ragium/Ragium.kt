@@ -1,6 +1,5 @@
 package hiiragi283.ragium
 
-import com.mojang.logging.LogUtils
 import com.mojang.serialization.Codec
 import hiiragi283.core.api.mod.HTCommonMod
 import hiiragi283.ragium.api.RagiumAPI
@@ -24,13 +23,9 @@ import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
 import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
-import org.slf4j.Logger
 
 @Mod(RagiumAPI.MOD_ID)
 data object Ragium : HTCommonMod() {
-    @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
-
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(RagiumMiscRegister::register)
 
@@ -49,7 +44,7 @@ data object Ragium : HTCommonMod() {
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 
-        LOGGER.info("Ragium loaded")
+        RagiumAPI.LOGGER.info("Ragium loaded")
     }
 
     override fun registerDynamicRegistries(event: DataPackRegistryEvent.NewRegistry) {

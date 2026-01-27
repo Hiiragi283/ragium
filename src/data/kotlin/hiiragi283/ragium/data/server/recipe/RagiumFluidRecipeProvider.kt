@@ -17,14 +17,16 @@ import net.neoforged.neoforge.common.Tags
 object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         // Water
-        HTSingleRecipeBuilder
-            .melting(inputCreator.create(Items.SNOW_BLOCK), fluidResult.water(1000))
-            .setTime(20 * 5)
-            .saveSuffixed(output, "_from_snow_block")
+        HTSingleRecipeBuilder.melting(output) {
+            ingredient = inputCreator.create(Items.SNOW_BLOCK)
+            result = resultCreator.water(1000)
+            time = 20 * 5
+            recipeId suffix "_from_snow_block"
+        }
 
         meltAndSolidify(
             inputCreator.create(Items.SNOWBALL),
-            itemResult.create(Items.SNOWBALL),
+            resultCreator.create(Items.SNOWBALL),
             VanillaFluidContents.WATER,
             250,
             HTMoldType.BALL,
@@ -33,45 +35,49 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         )
         meltAndSolidify(
             inputCreator.create(Items.ICE),
-            itemResult.create(Items.ICE),
+            resultCreator.create(Items.ICE),
             VanillaFluidContents.WATER,
             1000,
             HTMoldType.BLOCK,
             "ice",
         )
         // Lava
-        HTSingleRecipeBuilder
-            .melting(inputCreator.create(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES)), fluidResult.lava(125))
-            .setTime(20 * 30)
-            .saveSuffixed(output, "_from_stones")
-        HTSingleRecipeBuilder
-            .melting(inputCreator.create(Tags.Items.NETHERRACKS), fluidResult.lava(125))
-            .saveSuffixed(output, "_from_netherrack")
-        HTSingleRecipeBuilder
-            .melting(inputCreator.create(Items.MAGMA_BLOCK), fluidResult.lava(250))
-            .saveSuffixed(output, "_from_magma")
+        HTSingleRecipeBuilder.melting(output) {
+            ingredient = inputCreator.create(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES))
+            result = resultCreator.lava(125)
+            time = 20 * 30
+            recipeId suffix "_from_stones"
+        }
+        HTSingleRecipeBuilder.melting(output) {
+            ingredient = inputCreator.create(Tags.Items.NETHERRACKS)
+            result = resultCreator.lava(125)
+            recipeId suffix "_from_netherrack"
+        }
+        HTSingleRecipeBuilder.melting(output) {
+            ingredient = inputCreator.create(Items.MAGMA_BLOCK)
+            result = resultCreator.lava(250)
+            recipeId suffix "_from_magma"
+        }
 
-        HTSingleRecipeBuilder
-            .solidifying(
-                inputCreator.lava(1000),
-                inputCreator.create(HTMoldType.BLOCK),
-                itemResult.create(Items.OBSIDIAN),
-            ).save(output)
+        HTSingleRecipeBuilder.solidifying(output) {
+            ingredient = inputCreator.lava(1000) to inputCreator.create(HTMoldType.BLOCK)
+            result = resultCreator.create(Items.OBSIDIAN)
+        }
         // Latex
-        HTSingleRecipeBuilder
-            .solidifying(
-                inputCreator.create(HCFluids.LATEX, 1000),
-                inputCreator.create(HTMoldType.BALL),
-                itemResult.create(HCItems.RAW_RUBBER, 2),
-            ).save(output)
+        HTSingleRecipeBuilder.solidifying(output) {
+            ingredient = inputCreator.create(HCFluids.LATEX, 1000) to inputCreator.create(HTMoldType.BALL)
+            result = resultCreator.create(HCItems.RAW_RUBBER, 2)
+        }
         // Meat
-        HTSingleRecipeBuilder
-            .melting(inputCreator.create(Items.ROTTEN_FLESH), fluidResult.molten(RagiumMaterialKeys.MEAT))
-            .saveSuffixed(output, "_from_rotten")
+        HTSingleRecipeBuilder.melting(output) {
+            ingredient = inputCreator.create(Items.ROTTEN_FLESH)
+            result = resultCreator.molten(RagiumMaterialKeys.MEAT)
+            recipeId suffix "_from_rotten"
+        }
         // Glass
         meltAndSolidify(
             inputCreator.create(Tags.Items.GLASS_PANES),
-            itemResult.create(Items.GLASS_PANE),
+            resultCreator.create(Items.GLASS_PANE),
             HCFluids.MOLTEN_GLASS,
             375,
             HTMoldType.PLATE,
@@ -90,19 +96,17 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         time: Int = 20 * 10,
     ) {
         // Melting
-        HTSingleRecipeBuilder
-            .melting(
-                input,
-                fluidResult.create(fluid, amount),
-            ).setTime(time)
-            .saveSuffixed(output, "_from_$suffix")
+        HTSingleRecipeBuilder.melting(output) {
+            this.ingredient = input
+            this.result = resultCreator.create(fluid, amount)
+            this.time = time
+            recipeId suffix "_from_$suffix"
+        }
         // Solidify
-        HTSingleRecipeBuilder
-            .solidifying(
-                inputCreator.create(fluid, amount),
-                inputCreator.create(mold),
-                result,
-            ).setTime(time)
-            .save(output)
+        HTSingleRecipeBuilder.solidifying(output) {
+            this.ingredient = inputCreator.create(fluid, amount) to inputCreator.create(mold)
+            this.result = result
+            this.time = time
+        }
     }
 }

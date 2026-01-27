@@ -14,16 +14,16 @@ object RagiumCuttingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     @JvmStatic
     private fun wooden() {
         // Stick
-        HTChancedRecipeBuilder
-            .cutting(
-                inputCreator.create(ItemTags.WOODEN_SLABS),
-                itemResult.create(Items.STICK, 4),
-            ).saveSuffixed(output, "_from_wooden_slabs")
+        HTChancedRecipeBuilder.cutting(output) {
+            ingredient = inputCreator.create(ItemTags.WOODEN_SLABS)
+            result = resultCreator.create(Items.STICK, 4)
+            recipeId suffix "_from_wooden_slabs"
+        }
 
-        HTChancedRecipeBuilder
-            .cutting(
-                inputCreator.create(ItemTags.SAPLINGS),
-                itemResult.create(Items.STICK),
-            ).saveSuffixed(output, "_from_saplings")
+        HTChancedRecipeBuilder.cutting(output) {
+            ingredient = inputCreator.create(ItemTags.SAPLINGS)
+            result = resultCreator.create(Items.STICK)
+            recipeId suffix "_from_saplings"
+        }
     }
 }

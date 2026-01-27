@@ -4,9 +4,7 @@
     "count": 6,
     "id": "minecraft:kelp"
   },
-  "seed": {
-    "id": "minecraft:kelp"
-  },
+  "seed": "minecraft:kelp",
   "soil": [
     "#c:gravels",
     "#c:sands"

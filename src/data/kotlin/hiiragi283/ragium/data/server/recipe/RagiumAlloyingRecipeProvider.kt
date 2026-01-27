@@ -21,198 +21,184 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun common() {
         // Netherite
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.NETHERITE, 2),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.GOLD),
-                    4,
-                ),
-                inputCreator.create(CommonTagPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 4),
-            ).save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, VanillaMaterialKeys.NETHERITE, 2)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.GOLD),
+                4,
+            )
+            ingredients += inputCreator.create(CommonTagPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 4)
+        }
 
         // Steel from Coal
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.IRON),
-                ),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.FUEL),
-                    listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL),
-                    2,
-                ),
-            ).saveSuffixed(output, "_from_coal")
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.IRON),
+            )
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.FUEL),
+                listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL),
+                2,
+            )
+            recipeId suffix "_from_coal"
+        }
         // Steel from Coke
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.IRON),
-                ),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.FUEL),
-                    listOf(CommonMaterialKeys.COAL_COKE),
-                ),
-            ).saveSuffixed(output, "_from_coke")
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.IRON),
+            )
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.FUEL),
+                listOf(CommonMaterialKeys.COAL_COKE),
+            )
+            recipeId suffix "_from_coke"
+        }
         // Invar
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.INVAR, 3),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.IRON),
-                    2,
-                ),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(CommonMaterialKeys.NICKEL),
-                ),
-            ).tagCondition(CommonTagPrefixes.INGOT, CommonMaterialKeys.INVAR)
-            .save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.INVAR, 3)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.IRON),
+                2,
+            )
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(CommonMaterialKeys.NICKEL),
+            )
+            conditions += CommonTagPrefixes.INGOT.itemTagKey(CommonMaterialKeys.INVAR)
+        }
         // Electrum
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.ELECTRUM, 2),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.GOLD),
-                ),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(CommonMaterialKeys.SILVER),
-                ),
-            ).tagCondition(CommonTagPrefixes.INGOT, CommonMaterialKeys.ELECTRUM)
-            .save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.ELECTRUM, 2)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.GOLD),
+            )
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(CommonMaterialKeys.SILVER),
+            )
+            conditions += CommonTagPrefixes.INGOT.itemTagKey(CommonMaterialKeys.ELECTRUM)
+        }
         // Bronze
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRONZE, 4),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.COPPER),
-                    3,
-                ),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(CommonMaterialKeys.TIN),
-                ),
-            ).tagCondition(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRONZE)
-            .save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRONZE, 4)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.COPPER),
+                3,
+            )
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(CommonMaterialKeys.TIN),
+            )
+        }
         // Brass
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRASS, 2),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.COPPER),
-                ),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(CommonMaterialKeys.ZINC),
-                ),
-            ).tagCondition(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRASS)
-            .save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRASS, 2)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.COPPER),
+            )
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(CommonMaterialKeys.ZINC),
+            )
+        }
         // Constantan
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.CONSTANTAN, 2),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.COPPER),
-                ),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(CommonMaterialKeys.NICKEL),
-                ),
-            ).tagCondition(CommonTagPrefixes.INGOT, CommonMaterialKeys.CONSTANTAN)
-            .save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.CONSTANTAN, 2)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.COPPER),
+            )
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(CommonMaterialKeys.NICKEL),
+            )
+            conditions += CommonTagPrefixes.INGOT.itemTagKey(CommonMaterialKeys.CONSTANTAN)
+        }
     }
 
     @JvmStatic
     private fun hiiragiCore() {
         // Amethyst + Lapis -> Azure Shard
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.GEM, HCMaterialKeys.AZURE, 2),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
-                    listOf(VanillaMaterialKeys.AMETHYST),
-                ),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
-                    listOf(VanillaMaterialKeys.LAPIS),
-                ),
-            ).save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.GEM, HCMaterialKeys.AZURE, 2)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
+                listOf(VanillaMaterialKeys.AMETHYST),
+            )
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
+                listOf(VanillaMaterialKeys.LAPIS),
+            )
+        }
         // Azure Shard + Iron -> Azure Steel
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.IRON),
-                ),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
-                    listOf(HCMaterialKeys.AZURE),
-                    2,
-                ),
-            ).save(output)
-
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.IRON),
+            )
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM),
+                listOf(HCMaterialKeys.AZURE),
+                2,
+            )
+        }
         // Rubber
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2),
-                inputCreator.create(HCItems.RAW_RUBBER),
-                inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
-            ).saveSuffixed(output, "_with_sulfur")
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2)
+            ingredients += inputCreator.create(HCItems.RAW_RUBBER)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            recipeId suffix "_with_sulfur"
+        }
 
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4),
-                inputCreator.create(HCItems.RAW_RUBBER),
-                inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST),
-                    listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL),
-                ),
-            ).saveSuffixed(output, "_with_sulfur_and_coal")
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4)
+            ingredients += inputCreator.create(HCItems.RAW_RUBBER)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST),
+                listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL),
+            )
+            recipeId suffix "_with_sulfur_and_coal"
+        }
 
         // Ambrosia
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(HCItems.AMBROSIA),
-                inputCreator.create(HCItems.IRIDESCENT_POWDER),
-                inputCreator.create(Items.HONEY_BLOCK, 64),
-                inputCreator.create(Items.ENCHANTED_GOLDEN_APPLE, 16),
-            ).save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.create(HCItems.AMBROSIA)
+            ingredients += inputCreator.create(HCItems.IRIDESCENT_POWDER)
+            ingredients += inputCreator.create(Items.HONEY_BLOCK, 64)
+            ingredients += inputCreator.create(Items.ENCHANTED_GOLDEN_APPLE, 16)
+        }
     }
 
     @JvmStatic
     private fun ragium() {
         // Raginite + Copper -> Ragi-Alloy
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(VanillaMaterialKeys.COPPER),
-                ),
-                inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 2),
-            ).save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(VanillaMaterialKeys.COPPER),
+            )
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 2)
+        }
         // Ragi-Alloy + Glowstone -> Adv Ragi-Alloy
-        HTAlloyingRecipeBuilder
-            .create(
-                itemResult.create(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY),
-                inputCreator.create(
-                    listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
-                    listOf(RagiumMaterialKeys.RAGI_ALLOY),
-                ),
-                inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 2),
-            ).save(output)
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            ingredients += inputCreator.create(
+                listOf(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT),
+                listOf(RagiumMaterialKeys.RAGI_ALLOY),
+            )
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 2)
+        }
     }
 }

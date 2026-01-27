@@ -96,11 +96,11 @@ object RagiumRuntimeRecipeHandler {
             val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
             val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: continue
 
-            HTChancedRecipeBuilder
-                .crushing(
-                    inputCreator.create(prefix, key, inputCount),
-                    resultCreator.create(dust, outputCount),
-                ).saveSuffixed(output, "_from_${prefix.name}")
+            HTChancedRecipeBuilder.crushing(output) {
+                ingredient = inputCreator.create(prefix, key, inputCount)
+                result = resultCreator.create(dust, outputCount)
+                recipeId suffix "_from_${prefix.name}"
+            }
         }
     }
 
@@ -116,11 +116,11 @@ object RagiumRuntimeRecipeHandler {
             if (!event.isPresentTag(inputTag)) continue
             val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: continue
             // Crushing
-            HTChancedRecipeBuilder
-                .crushing(
-                    inputCreator.create(inputTag),
-                    resultCreator.create(dust),
-                ).saveSuffixed(output, "_from_${defaultPart.getSuffix()}")
+            HTChancedRecipeBuilder.crushing(output) {
+                ingredient = inputCreator.create(inputTag)
+                result = resultCreator.create(dust)
+                recipeId suffix "_from_${defaultPart.getSuffix()}"
+            }
         }
     }
 
@@ -133,12 +133,12 @@ object RagiumRuntimeRecipeHandler {
             if (!event.isPresentTag(CommonTagPrefixes.BLOCK, key)) continue
             val plate: Item = event.getFirstHolder(CommonTagPrefixes.PLATE, key)?.value() ?: continue
 
-            HTChancedRecipeBuilder
-                .cutting(
-                    inputCreator.create(CommonTagPrefixes.BLOCK, key),
-                    resultCreator.create(plate, propertyMap.getStorageBlock().baseCount),
-                ).modifyTime { it * 3 }
-                .saveSuffixed(output, "_from_block")
+            HTChancedRecipeBuilder.cutting(output) {
+                ingredient = inputCreator.create(CommonTagPrefixes.BLOCK, key)
+                result = resultCreator.create(plate, propertyMap.getStorageBlock().baseCount)
+                time *= 3
+                recipeId suffix "_from_block"
+            }
         }
     }
 
@@ -152,11 +152,11 @@ object RagiumRuntimeRecipeHandler {
 
             val rod: Item = event.getFirstHolder(CommonTagPrefixes.ROD, key)?.value() ?: continue
 
-            HTChancedRecipeBuilder
-                .cutting(
-                    inputCreator.create(inputTag),
-                    resultCreator.create(rod, 2),
-                ).saveSuffixed(output, "_from_${inputTag.location().path}")
+            HTChancedRecipeBuilder.cutting(output) {
+                ingredient = inputCreator.create(inputTag)
+                result = resultCreator.create(rod, 2)
+                recipeId suffix "_from_${inputTag.location().path}"
+            }
         }
     }
 
@@ -171,97 +171,101 @@ object RagiumRuntimeRecipeHandler {
                 val definition: HTWoodDefinition = holder.get()
                 val planks: ItemLike = definition[HTWoodDefinition.Variant.PLANKS] ?: return@forEach
                 // Log -> 6x Planks
-                HTChancedRecipeBuilder
-                    .cutting(
-                        inputCreator.create(definition.logTag),
-                        resultCreator.create(planks, 6),
-                    ).saveSuffixed(output, "_from_log")
+                HTChancedRecipeBuilder.cutting(output) {
+                    ingredient
+                    result
+                    recipeId suffix ""
+                }
+
+                HTChancedRecipeBuilder.cutting(output) {
+                    ingredient = inputCreator.create(definition.logTag)
+                    result = resultCreator.create(planks, 6)
+                    recipeId suffix "_from_log"
+                }
                 // Boat
                 definition[HTWoodDefinition.Variant.BOAT]?.let { boat ->
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            inputCreator.create(boat),
-                            resultCreator.create(planks, 5),
-                        ).saveSuffixed(output, "_from_boat")
+                    HTChancedRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(boat)
+                        result = resultCreator.create(planks, 5)
+                        recipeId suffix "_from_boat"
+                    }
                     // Chest Boat
                     definition[HTWoodDefinition.Variant.CHEST_BOAT]?.let {
-                        HTChancedRecipeBuilder
-                            .cutting(
-                                inputCreator.create(it),
-                                resultCreator.create(boat),
-                            ).addResult(resultCreator.create(Items.CHEST))
-                            .save(output)
+                        HTChancedRecipeBuilder.cutting(output) {
+                            ingredient = inputCreator.create(it)
+                            result = resultCreator.create(boat)
+                            chancedResults += resultCreator.create(Items.CHEST)
+                        }
                     }
                 }
                 // Button
                 // Fence
                 definition[HTWoodDefinition.Variant.FENCE]?.let {
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            inputCreator.create(it),
-                            resultCreator.create(planks),
-                        ).addResult(resultCreator.create(Items.STICK))
-                        .saveSuffixed(output, "_from_fence")
+                    HTChancedRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(it)
+                        result = resultCreator.create(planks)
+                        chancedResults += resultCreator.create(Items.STICK)
+                        recipeId suffix "_from_fence"
+                    }
                 }
                 // Fence Gate
                 definition[HTWoodDefinition.Variant.FENCE_GATE]?.let {
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            inputCreator.create(it),
-                            resultCreator.create(planks, 2),
-                        ).addResult(resultCreator.create(Items.STICK, 4))
-                        .saveSuffixed(output, "_from_fence_gate")
+                    HTChancedRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(it)
+                        result = resultCreator.create(planks, 2)
+                        chancedResults += resultCreator.create(Items.STICK, 4)
+                        recipeId suffix "_from_fence_gate"
+                    }
                 }
                 // Pressure Plate
                 definition[HTWoodDefinition.Variant.PRESSURE_PLATE]?.let {
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            inputCreator.create(it),
-                            resultCreator.create(planks, 2),
-                        ).saveSuffixed(output, "_from_pressure_plate")
+                    HTChancedRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(it)
+                        result = resultCreator.create(planks, 2)
+                        recipeId suffix "_from_pressure_plate"
+                    }
                 }
                 // Sign
                 definition[HTWoodDefinition.Variant.SIGN]?.let {
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            inputCreator.create(it),
-                            resultCreator.create(planks, 2),
-                        ).addResult(resultCreator.create(Items.STICK), fraction(1, 3))
-                        .saveSuffixed(output, "_from_sign")
+                    HTChancedRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(it)
+                        result = resultCreator.create(planks, 2)
+                        chancedResults += resultCreator.create(Items.STICK) to fraction(1, 3)
+                        recipeId suffix "_from_sign"
+                    }
                 }
                 // Hanging Sign
                 definition[HTWoodDefinition.Variant.HANGING_SIGN]?.let {
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            inputCreator.create(it),
-                            resultCreator.create(planks, 4),
-                        ).addResult(resultCreator.create(Items.CHAIN), fraction(1, 3))
-                        .saveSuffixed(output, "_from_hanging_sign")
+                    HTChancedRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(it)
+                        result = resultCreator.create(planks, 4)
+                        chancedResults += resultCreator.create(Items.CHAIN) to fraction(1, 3)
+                        recipeId suffix "_from_hanging_sign"
+                    }
                 }
                 // Slab
                 definition[HTWoodDefinition.Variant.SLAB]?.let {
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            inputCreator.create(planks),
-                            resultCreator.create(it, 2),
-                        ).save(output)
+                    HTChancedRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(planks)
+                        result = resultCreator.create(it, 2)
+                    }
                 }
                 // Stairs
                 // Door
                 definition[HTWoodDefinition.Variant.DOOR]?.let {
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            inputCreator.create(it),
-                            resultCreator.create(planks, 2),
-                        ).saveSuffixed(output, "_from_door")
+                    HTChancedRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(it)
+                        result = resultCreator.create(planks, 2)
+                        recipeId suffix "_from_door"
+                    }
                 }
                 // Trapdoor
                 definition[HTWoodDefinition.Variant.TRAPDOOR]?.let {
-                    HTChancedRecipeBuilder
-                        .cutting(
-                            inputCreator.create(it),
-                            resultCreator.create(planks, 3),
-                        ).saveSuffixed(output, "_from_trapdoor")
+                    HTChancedRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(it)
+                        result = resultCreator.create(planks, 3)
+                        recipeId suffix "_from_trapdoor"
+                    }
                 }
             }
     }
@@ -285,12 +289,11 @@ object RagiumRuntimeRecipeHandler {
             if (!event.isPresentTag(inputTag)) continue
             val result: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
 
-            HTSingleRecipeBuilder
-                .pressing(
-                    inputCreator.create(inputTag, inputCount),
-                    inputCreator.create(moldType),
-                    resultCreator.create(result, outputCount),
-                ).saveSuffixed(output, "_from_${inputTag.location().path}")
+            HTSingleRecipeBuilder.pressing(output) {
+                this.ingredient = inputCreator.create(inputTag, inputCount) to inputCreator.create(moldType)
+                this.result = resultCreator.create(result, outputCount)
+                this.recipeId suffix "_from_${inputTag.location().path}"
+            }
         }
     }
 
@@ -312,11 +315,11 @@ object RagiumRuntimeRecipeHandler {
             if (!event.isPresentTag(inputTag)) continue
             val molten: HTFluidContent<*, *, *> = propertyMap[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: continue
             // Melt
-            HTSingleRecipeBuilder
-                .melting(
-                    inputCreator.create(inputTag),
-                    resultCreator.create(molten, fluidAmount),
-                ).saveSuffixed(output, "_from_${defaultPart.getSuffix()}")
+            HTSingleRecipeBuilder.melting(output) {
+                ingredient = inputCreator.create(inputTag)
+                result = resultCreator.create(molten, fluidAmount)
+                recipeId suffix "_from_${defaultPart.getSuffix()}"
+            }
         }
     }
 
@@ -330,12 +333,11 @@ object RagiumRuntimeRecipeHandler {
 
             val dough: Item = event.getFirstHolder(CommonTagPrefixes.DOUGH, key)?.value() ?: continue
             // Mix
-            HTMixingRecipeBuilder
-                .create()
-                .addIngredient(inputCreator.create(crushedPrefix, key))
-                .addIngredient(inputCreator.water(250))
-                .setResult(resultCreator.create(dough))
-                .save(output)
+            HTMixingRecipeBuilder.create(output) {
+                itemIngredients += inputCreator.create(crushedPrefix, key)
+                fluidIngredients += inputCreator.water(250)
+                result += resultCreator.create(dough)
+            }
         }
     }
 
@@ -352,12 +354,11 @@ object RagiumRuntimeRecipeHandler {
 
             // Solidify
             val result: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
-            HTSingleRecipeBuilder
-                .solidifying(
-                    inputCreator.create(molten, fluidAmount),
-                    inputCreator.create(moldType),
-                    resultCreator.create(result),
-                ).saveSuffixed(output, "_from_molten")
+            HTSingleRecipeBuilder.solidifying(output) {
+                this.ingredient = inputCreator.create(molten, fluidAmount) to inputCreator.create(moldType)
+                this.result = resultCreator.create(result)
+                recipeId suffix "_from_molten"
+            }
         }
     }
 }

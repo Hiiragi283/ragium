@@ -4,9 +4,7 @@
     "count": 3,
     "id": "minecraft:seagrass"
   },
-  "seed": {
-    "id": "minecraft:seagrass"
-  },
+  "seed": "minecraft:seagrass",
   "soil": [
     "#c:gravels",
     "#c:sands"

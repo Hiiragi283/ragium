@@ -1,29 +1,27 @@
 package hiiragi283.ragium.common.data.recipe
 
+import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
-class HTAlloyingRecipeBuilder(
-    private val firstIngredient: HTItemIngredient,
-    private val secondIngredient: HTItemIngredient,
-    private val thirdIngredient: HTItemIngredient?,
-    private val result: HTItemResult,
-) : HTProcessingRecipeBuilder<HTAlloyingRecipeBuilder>(RagiumConst.ALLOYING) {
+class HTAlloyingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.ALLOYING) {
     companion object {
+        @HTBuilderMarker
         @JvmStatic
-        fun create(
-            result: HTItemResult,
-            firstIngredient: HTItemIngredient,
-            secondIngredient: HTItemIngredient,
-            thirdIngredient: HTItemIngredient? = null,
-        ): HTAlloyingRecipeBuilder = HTAlloyingRecipeBuilder(firstIngredient, secondIngredient, thirdIngredient, result)
+        inline fun create(output: RecipeOutput, builderAction: HTAlloyingRecipeBuilder.() -> Unit) {
+            HTAlloyingRecipeBuilder().apply(builderAction).save(output)
+        }
     }
+
+    val ingredients: MutableList<HTItemIngredient> = mutableListOf()
+    lateinit var result: HTItemResult
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): HTAlloyingRecipe = HTAlloyingRecipe(firstIngredient, secondIngredient, thirdIngredient, result, time, exp)
+    override fun createRecipe(): HTAlloyingRecipe = HTAlloyingRecipe(ingredients, result, time, exp)
 }

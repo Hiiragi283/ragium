@@ -15,68 +15,62 @@ import net.neoforged.neoforge.common.Tags
 object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         // Dirt + Water -> Mud
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(inputCreator.create(Items.DIRT))
-            .addIngredient(inputCreator.water(250))
-            .setResult(itemResult.create(Items.MUD))
-            .setTime(20 * 5)
-            .save(output)
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(Items.DIRT)
+            fluidIngredients += inputCreator.water(250)
+            result += resultCreator.create(Items.MUD)
+            time = 20 * 5
+        }
         // Gravel + Water -> Flint
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(inputCreator.create(Tags.Items.GRAVELS))
-            .addIngredient(inputCreator.water(250))
-            .setResult(itemResult.create(Items.FLINT))
-            .setTime(20 * 5)
-            .save(output)
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(Tags.Items.GRAVELS)
+            fluidIngredients += inputCreator.water(250)
+            result += resultCreator.create(Items.FLINT)
+            time = 20 * 5
+        }
 
         // Water + Lava -> Obsidian
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(inputCreator.water(1000))
-            .addIngredient(inputCreator.lava(1000))
-            .setResult(itemResult.create(Items.OBSIDIAN))
-            .save(output)
+        HTMixingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.water(1000)
+            fluidIngredients += inputCreator.lava(1000)
+            result += resultCreator.create(Items.OBSIDIAN)
+        }
 
         // Eldritch Flux
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER))
-            .addIngredient(inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL))
-            .addIngredient(inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL))
-            .setResult(fluidResult.molten(HCMaterialKeys.ELDRITCH))
-            .save(output)
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
+            fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
+            fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
+            result += resultCreator.molten(HCMaterialKeys.ELDRITCH)
+        }
 
         // Diamond + Raginite -> Ragi-Crystal
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND))
-            .addIngredient(inputCreator.create(RagiumFluids.MOLTEN_RAGINITE, 100 * 8))
-            .setResult(itemResult.create(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL))
-            .save(output)
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
+            fluidIngredients += inputCreator.create(RagiumFluids.MOLTEN_RAGINITE, 100 * 8)
+            result += resultCreator.material(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+        }
 
         // Creosote + Redstone -> Lubricant
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE))
-            .addIngredient(inputCreator.create(RagiumFluids.CREOSOTE, 1000))
-            .setResult(fluidResult.create(RagiumFluids.LUBRICANT, 500))
-            .saveSuffixed(output, "_from_creosote_with_redstone")
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
+            fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
+            result += resultCreator.create(RagiumFluids.LUBRICANT, 500)
+            recipeId suffix "_from_creosote_with_redstone"
+        }
         // Creosote + Raginite -> Lubricant
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE))
-            .addIngredient(inputCreator.create(RagiumFluids.CREOSOTE, 1000))
-            .setResult(fluidResult.create(RagiumFluids.LUBRICANT, 750))
-            .saveSuffixed(output, "_from_creosote_with_raginite")
-
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+            fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
+            result += resultCreator.create(RagiumFluids.LUBRICANT, 750)
+            recipeId suffix "_from_creosote_with_raginite"
+        }
         // Ethanol + Plant Oil -> Biofuel
-        HTMixingRecipeBuilder
-            .create()
-            .addIngredient(inputCreator.create(RagiumFluids.ETHANOL, 750))
-            .addIngredient(inputCreator.create(RagiumFluids.PLANT_OIL, 1000))
-            .setResult(fluidResult.create(RagiumFluids.BIOFUEL, 500))
-            .saveSuffixed(output, "_from_ethanol")
+        HTMixingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.ETHANOL, 750)
+            fluidIngredients += inputCreator.create(RagiumFluids.PLANT_OIL, 1000)
+            result += resultCreator.create(RagiumFluids.BIOFUEL, 500)
+            recipeId suffix "_from_ethanol"
+        }
     }
 }

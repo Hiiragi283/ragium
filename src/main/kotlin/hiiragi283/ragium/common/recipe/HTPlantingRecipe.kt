@@ -5,9 +5,10 @@ import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.toResourcePair
-import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.storage.item.toResource
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -17,12 +18,11 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.common.crafting.DataComponentIngredient
 import net.neoforged.neoforge.fluids.FluidStack
 import org.apache.commons.lang3.math.Fraction
 
 class HTPlantingRecipe(
-    val seed: HTItemResourceType,
+    val seed: HTItemHolderLike<*>,
     val soil: HTItemIngredient,
     val crop: HTItemResult,
     time: Int,
@@ -32,11 +32,8 @@ class HTPlantingRecipe(
         const val FLUID_AMOUNT = 50
     }
 
-    val seedIngredient: HTItemIngredient = when {
-        seed.components.isEmpty -> Ingredient.of(seed.type())
-        else -> DataComponentIngredient.of(false, seed.toStack())
-    }.let(::HTItemIngredient)
-    val seedResult = HTItemResult(Ior.Left(seed), 1)
+    val seedIngredient: HTItemIngredient = Ingredient.of(seed).let(::HTItemIngredient)
+    val seedResult = HTItemResult(Ior.Left(seed.toResource()!!), 1)
 
     fun getResultSeed(provider: HolderLookup.Provider): ItemStack = seedResult.getStackOrEmpty(provider)
 

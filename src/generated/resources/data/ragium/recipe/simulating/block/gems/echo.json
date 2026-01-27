@@ -3,7 +3,8 @@
   "catalyst": "minecraft:sculk_shrieker",
   "ingredient": "#c:gems/amethyst",
   "item_result": {
-    "id": "minecraft:echo_shard"
+    "id": "minecraft:echo_shard",
+    "tag": "c:gems/echo"
   },
   "time": 200
 }

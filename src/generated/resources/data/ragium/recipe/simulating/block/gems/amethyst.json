@@ -3,7 +3,8 @@
   "catalyst": "minecraft:budding_amethyst",
   "item_result": {
     "count": 4,
-    "id": "minecraft:amethyst_shard"
+    "id": "minecraft:amethyst_shard",
+    "tag": "c:gems/amethyst"
   },
   "time": 200
 }

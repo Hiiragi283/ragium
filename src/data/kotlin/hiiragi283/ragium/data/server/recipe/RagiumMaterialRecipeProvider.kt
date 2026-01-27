@@ -26,50 +26,51 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun raginite() {
         // Raginite + Copper -> Ragi-Alloy Compound
-        HTShapedRecipeBuilder
-            .create(RagiumItems.RAGI_ALLOY_COMPOUND)
-            .hollow4()
-            .define('A', CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            .define('B', CommonTagPrefixes.INGOT, VanillaMaterialKeys.COPPER)
-            .save(output)
+        HTShapedRecipeBuilder.create(output) {
+            hollow4()
+            define('A') += CommonTagPrefixes.DUST to RagiumMaterialKeys.RAGINITE
+            define('B') += CommonTagPrefixes.INGOT to VanillaMaterialKeys.COPPER
+            resultStack += RagiumItems.RAGI_ALLOY_COMPOUND
+        }
         // Ragi-Alloy Compound -> Ragi-Alloy
-        HTCookingRecipeBuilder
-            .smeltingAndBlasting(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)) {
-                addIngredient(RagiumItems.RAGI_ALLOY_COMPOUND)
-                setExp(0.7f)
-                saveSuffixed(output, "_from_compound")
-            }
+        HTCookingRecipeBuilder.smeltingAndBlasting(output) {
+            ingredient += RagiumItems.RAGI_ALLOY_COMPOUND
+            resultStack += getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            exp = 0.7f
+            recipeId suffix "_from_compound"
+        }
     }
 
     @JvmStatic
     private fun meat() {
         // Meat Ingot -> Cooked Meat Ingot
-        HTCookingRecipeBuilder
-            .smeltingAndSmoking(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)) {
-                addIngredient(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT)
-                setExp(0.35f)
-                saveSuffixed(output, "_from_ingot")
-            }
+        HTCookingRecipeBuilder.smeltingAndSmoking(output) {
+            ingredient += CommonTagPrefixes.INGOT to RagiumMaterialKeys.MEAT
+            resultStack += getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)
+            exp = 0.35f
+            recipeId suffix "_from_ingot"
+        }
         // Meat + Bone -> Bone with Meat
-        HTShapedRecipeBuilder
-            .create(RagiumBlocks.MEAT_BLOCK)
-            .hollow8()
-            .define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT)
-            .define('B', Tags.Items.BONES)
-            .save(output)
+        HTShapedRecipeBuilder.create(output) {
+            hollow8()
+            define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.MEAT
+            define('B') += Tags.Items.BONES
+            resultStack += RagiumBlocks.MEAT_BLOCK
+        }
 
-        HTShapedRecipeBuilder
-            .create(RagiumBlocks.COOKED_MEAT_BLOCK)
-            .hollow8()
-            .define('A', CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)
-            .define('B', Tags.Items.BONES)
-            .save(output)
+        HTShapedRecipeBuilder.create(output) {
+            hollow8()
+            define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.COOKED_MEAT
+            define('B') += Tags.Items.BONES
+            resultStack += RagiumBlocks.COOKED_MEAT_BLOCK
+        }
 
-        HTCookingRecipeBuilder.smeltingAndSmoking(RagiumBlocks.COOKED_MEAT_BLOCK) {
-            addIngredient(RagiumBlocks.MEAT_BLOCK)
-            setTime(20 * 30)
-            setExp(0.7f)
-            saveSuffixed(output, "_from_raw")
+        HTCookingRecipeBuilder.smeltingAndSmoking(output) {
+            ingredient += RagiumBlocks.MEAT_BLOCK
+            resultStack += RagiumBlocks.COOKED_MEAT_BLOCK
+            time *= 3
+            exp = 1f
+            recipeId suffix "_from_raw"
         }
 
         // Food Cans

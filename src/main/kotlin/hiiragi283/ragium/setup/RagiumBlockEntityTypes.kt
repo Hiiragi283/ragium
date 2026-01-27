@@ -1,6 +1,5 @@
 package hiiragi283.ragium.setup
 
-import com.mojang.logging.LogUtils
 import hiiragi283.core.common.block.HTBlockWithEntity
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.core.common.capability.HTEnergyCapabilities
@@ -37,12 +36,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
-import org.slf4j.Logger
 
 object RagiumBlockEntityTypes {
-    @JvmField
-    val LOGGER: Logger = LogUtils.getLogger()
-
     @JvmField
     val REGISTER = HTDeferredBlockEntityTypeRegister(RagiumAPI.MOD_ID)
 
@@ -159,7 +154,6 @@ object RagiumBlockEntityTypes {
                 event.modify(block.getBlockEntityType().get(), block)
             }
         }
-        LOGGER.info("Added supported blocks to BlockEntityType!")
     }
 
     // Capabilities
@@ -197,8 +191,6 @@ object RagiumBlockEntityTypes {
         HTItemCapabilities.registerBlockEntity(event, RESONANT_INTERFACE.get(), HTResonantInterfaceBlockEntity::getItemHandler)
         HTItemCapabilities.registerBlockEntity(event, RESONANT_INTERFACE.get(), HTResonantInterfaceBlockEntity::getItemHandler)
         HTItemCapabilities.registerBlockEntity(event, RESONANT_INTERFACE.get(), HTResonantInterfaceBlockEntity::getItemHandler)
-
-        LOGGER.info("Registered Block Capabilities!")
     }
 
     @JvmStatic

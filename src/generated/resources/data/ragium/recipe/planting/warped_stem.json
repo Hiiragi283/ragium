@@ -4,9 +4,7 @@
     "count": 6,
     "id": "minecraft:warped_stem"
   },
-  "seed": {
-    "id": "minecraft:warped_fungus"
-  },
+  "seed": "minecraft:warped_fungus",
   "soil": "minecraft:warped_nylium",
   "time": 200
 }

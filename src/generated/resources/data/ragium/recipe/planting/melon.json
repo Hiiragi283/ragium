@@ -3,9 +3,7 @@
   "crop": {
     "id": "minecraft:melon"
   },
-  "seed": {
-    "id": "minecraft:melon_seeds"
-  },
+  "seed": "minecraft:melon_seeds",
   "soil": "minecraft:farmland",
   "time": 200
 }

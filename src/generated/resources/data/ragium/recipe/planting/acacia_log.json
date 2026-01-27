@@ -4,9 +4,7 @@
     "count": 6,
     "id": "minecraft:acacia_log"
   },
-  "seed": {
-    "id": "minecraft:acacia_sapling"
-  },
+  "seed": "minecraft:acacia_sapling",
   "soil": "#minecraft:dirt",
   "time": 200
 }

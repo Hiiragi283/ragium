@@ -14,56 +14,52 @@ import net.minecraft.tags.ItemTags
 object RagiumPyrolyzingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         // Log -> Charcoal
-        HTPyrolyzingRecipeBuilder
-            .create(
-                inputCreator.create(ItemTags.LOGS_THAT_BURN, 8),
-                itemResult.create(CommonTagPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8),
-                fluidResult.create(RagiumFluids.CREOSOTE, 1000),
-            ).saveSuffixed(output, "_from_log")
+        HTPyrolyzingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(ItemTags.LOGS_THAT_BURN, 8)
+            itemResult = resultCreator.material(CommonTagPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 1000)
+            recipeId suffix "_from_log"
+        }
         // Compressed Sawdust -> Charcoal
-        HTPyrolyzingRecipeBuilder
-            .create(
-                inputCreator.create(HCItems.COMPRESSED_SAWDUST, 8),
-                itemResult.create(CommonTagPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8),
-                fluidResult.create(RagiumFluids.CREOSOTE, 1000),
-            ).setTime(20 * 10)
-            .saveSuffixed(output, "_from_sawdust")
-
+        HTPyrolyzingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(HCItems.COMPRESSED_SAWDUST, 8)
+            itemResult = resultCreator.material(CommonTagPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 1000)
+            time /= 3
+            recipeId suffix "_from_sawdust"
+        }
         // Coal -> Coke + Creosote
-        HTPyrolyzingRecipeBuilder
-            .create(
-                inputCreator.create(CommonTagPrefixes.FUEL, VanillaMaterialKeys.COAL, 8),
-                itemResult.create(CommonTagPrefixes.FUEL, CommonMaterialKeys.COAL_COKE, 8),
-                fluidResult.create(RagiumFluids.CREOSOTE, 2000),
-            ).saveSuffixed(output, "_from_coal")
+        HTPyrolyzingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.FUEL, VanillaMaterialKeys.COAL, 8)
+            itemResult = resultCreator.material(CommonTagPrefixes.FUEL, CommonMaterialKeys.COAL_COKE, 8)
+            fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 2000)
+        }
 
-        HTPyrolyzingRecipeBuilder
-            .create(
-                inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL, 8),
-                itemResult.create(CommonTagPrefixes.DUST, CommonMaterialKeys.COAL_COKE, 8),
-                fluidResult.create(RagiumFluids.CREOSOTE, 2000),
-            ).saveSuffixed(output, "_from_coal_dust")
+        HTPyrolyzingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL, 8)
+            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.COAL_COKE, 8)
+            fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 2000)
+        }
 
-        HTPyrolyzingRecipeBuilder
-            .create(
-                inputCreator.create(CommonTagPrefixes.BLOCK, VanillaMaterialKeys.COAL),
-                itemResult.create(CommonTagPrefixes.BLOCK, CommonMaterialKeys.COAL_COKE),
-                fluidResult.create(RagiumFluids.CREOSOTE, 2000),
-            ).saveSuffixed(output, "_from_coal_block")
+        HTPyrolyzingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.BLOCK, VanillaMaterialKeys.COAL)
+            itemResult = resultCreator.material(CommonTagPrefixes.BLOCK, CommonMaterialKeys.COAL_COKE)
+            fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 2000)
+        }
 
         // Crimson Stem -> Crimson Blood
-        HTPyrolyzingRecipeBuilder
-            .create(
-                inputCreator.create(ItemTags.CRIMSON_STEMS, 8),
-                itemResult.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
-                fluidResult.molten(HCMaterialKeys.CRIMSON_CRYSTAL),
-            ).saveSuffixed(output, "_from_log")
+        HTPyrolyzingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(ItemTags.CRIMSON_STEMS, 8)
+            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            fluidResult = resultCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
+            recipeId suffix "_from_crimson_stem"
+        }
         // Warped Stem -> Dew of the Warp
-        HTPyrolyzingRecipeBuilder
-            .create(
-                inputCreator.create(ItemTags.WARPED_STEMS, 8),
-                itemResult.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR),
-                fluidResult.molten(HCMaterialKeys.WARPED_CRYSTAL),
-            ).saveSuffixed(output, "_from_log")
+        HTPyrolyzingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(ItemTags.WARPED_STEMS, 8)
+            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            fluidResult = resultCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
+            recipeId suffix "_from_warped_stem"
+        }
     }
 }

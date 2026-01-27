@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.storge.holder
 
-import com.mojang.logging.LogUtils
 import hiiragi283.core.api.storage.holder.HTCapabilityHolder
+import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.Direction
-import org.slf4j.Logger
 import kotlin.collections.plusAssign
 
 /**
@@ -14,11 +13,6 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
     private val slots: List<SLOT>,
     private val slotMap: Map<HTSlotInfo, List<SLOT>>,
 ) : HTConfigCapabilityHolder(configGetter) {
-    companion object {
-        @JvmField
-        val LOGGER: Logger = LogUtils.getLogger()
-    }
-
     protected fun getSlots(side: Direction?): List<SLOT> = when {
         side == null || this.configGetter == null -> slots
         else -> configGetter.getSlotInfo(side).let(::getSlots)
@@ -55,7 +49,7 @@ abstract class HTSlottedCapabilityHolder<SLOT : Any>(
                     putSlot(HTSlotInfo.BOTH, slot)
                 }
             }
-            LOGGER.debug("Added slot {} for config {}", slot, info)
+            RagiumAPI.LOGGER.debug("Added slot {} for config {}", slot, info)
             return slot
         }
 

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.entity.component
 
-import com.mojang.logging.LogUtils
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
 import hiiragi283.core.api.nextEntry
 import hiiragi283.core.api.serialization.codec.BiCodec
@@ -12,13 +11,13 @@ import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.serialization.value.read
 import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.common.block.entity.HTBlockEntity
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.common.storge.holder.HTSlotInfoProvider
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
-import org.slf4j.Logger
 import java.util.*
 
 /**
@@ -28,9 +27,6 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
     HTBlockEntityComponent,
     HTSlotInfoProvider {
     companion object {
-        @JvmStatic
-        private val LOGGER: Logger = LogUtils.getLogger()
-
         @JvmStatic
         private val CONFIG_CODEC: BiCodec<ByteBuf, Map<Direction, HTSlotInfo>> =
             BiCodecs.mapOf(VanillaBiCodecs.DIRECTION, HTSlotInfo.CODEC)
@@ -67,6 +63,6 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
     fun cycleSlotInfo(side: Direction) {
         val newSlot: HTSlotInfo = getSlotInfo(side).nextEntry()
         val oldSlot: HTSlotInfo? = slotInfoCache.put(side, newSlot)
-        LOGGER.debug("Updated slot info for {} from {} to {}", side, oldSlot, newSlot)
+        RagiumAPI.LOGGER.debug("Updated slot info for {} from {} to {}", side, oldSlot, newSlot)
     }
 }

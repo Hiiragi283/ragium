@@ -14,10 +14,9 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     override fun buildRecipeInternal() {
         val enchLookup: HolderLookup.RegistryLookup<Enchantment> = provider.lookupOrThrow(Registries.ENCHANTMENT)
         // Protection
-        HTEnchantingRecipeBuilder
-            .create(
-                inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON, 64),
-                enchLookup.getOrThrow(Enchantments.PROTECTION),
-            ).save(output)
+        HTEnchantingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON, 64)
+            holder = enchLookup.getOrThrow(Enchantments.PROTECTION)
+        }
     }
 }

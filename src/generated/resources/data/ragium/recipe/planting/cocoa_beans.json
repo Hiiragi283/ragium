@@ -4,9 +4,7 @@
     "count": 3,
     "id": "minecraft:cocoa_beans"
   },
-  "seed": {
-    "id": "minecraft:cocoa_beans"
-  },
+  "seed": "minecraft:cocoa_beans",
   "soil": "#minecraft:jungle_logs",
   "time": 200
 }

@@ -4,9 +4,7 @@
     "count": 6,
     "id": "minecraft:jungle_log"
   },
-  "seed": {
-    "id": "minecraft:jungle_sapling"
-  },
+  "seed": "minecraft:jungle_sapling",
   "soil": "#minecraft:dirt",
   "time": 200
 }

@@ -30,19 +30,16 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
 
     override fun buildRecipeInternal() {
         // Amethyst
-        HTSimulatingRecipeBuilder
-            .block(
-                null,
-                block(Blocks.BUDDING_AMETHYST),
-            ).setResult(itemResult.create(Items.AMETHYST_SHARD, 4))
-            .save(output)
+        HTSimulatingRecipeBuilder.block(output) {
+            catalyst = block(Blocks.BUDDING_AMETHYST)
+            result += resultCreator.material(CommonTagPrefixes.GEM, VanillaMaterialKeys.AMETHYST, 4)
+        }
         // Echo Shard
-        HTSimulatingRecipeBuilder
-            .block(
-                inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.AMETHYST),
-                block(Blocks.SCULK_SHRIEKER),
-            ).setResult(itemResult.create(Items.ECHO_SHARD))
-            .save(output)
+        HTSimulatingRecipeBuilder.block(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
+            catalyst = block(Blocks.SCULK_SHRIEKER)
+            result += resultCreator.material(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO)
+        }
 
         mobExtracting()
     }
@@ -50,99 +47,82 @@ object RagiumSimulatingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     @JvmStatic
     private fun mobExtracting() {
         // Armadillo Scute
-        HTSimulatingRecipeBuilder
-            .entity(
-                null,
-                entity(EntityType.ARMADILLO),
-            ).setResult(itemResult.create(Items.ARMADILLO_SCUTE))
-            .save(output)
+        HTSimulatingRecipeBuilder.entity(output) {
+            catalyst = entity(EntityType.ARMADILLO)
+            result += resultCreator.create(Items.ARMADILLO_SCUTE)
+        }
         // Honeycomb
-        HTSimulatingRecipeBuilder
-            .block(
-                null,
-                block(Blocks.BEE_NEST),
-            ).setResult(itemResult.create(Items.HONEYCOMB))
-            .save(output)
+        HTSimulatingRecipeBuilder.block(output) {
+            catalyst = block(Blocks.BEE_NEST)
+            result += resultCreator.create(Items.HONEYCOMB)
+        }
         // Honey Bottle
-        HTSimulatingRecipeBuilder
-            .block(
-                inputCreator.create(Items.GLASS_BOTTLE),
-                block(Blocks.BEE_NEST),
-            ).setResult(itemResult.create(Items.HONEY_BOTTLE))
-            .save(output)
+        HTSimulatingRecipeBuilder.block(output) {
+            ingredient = inputCreator.create(Items.GLASS_BOTTLE)
+            catalyst = block(Blocks.BEE_NEST)
+            result += resultCreator.create(Items.HONEY_BOTTLE)
+        }
         // Egg
-        HTSimulatingRecipeBuilder
-            .entity(
-                inputCreator.create(Tags.Items.SEEDS),
-                entity(EntityType.CHICKEN),
-            ).setResult(itemResult.create(Items.EGG))
-            .save(output)
+        HTSimulatingRecipeBuilder.entity(output) {
+            ingredient = inputCreator.create(Tags.Items.SEEDS)
+            catalyst = entity(EntityType.CHICKEN)
+            result += resultCreator.create(Items.EGG)
+        }
         // Milk from Cow
-        HTSimulatingRecipeBuilder
-            .entity(
-                null,
-                entity(EntityType.COW),
-            ).setResult(fluidResult.milk(250))
-            .saveSuffixed(output, "_from_cow")
+        HTSimulatingRecipeBuilder.entity(output) {
+            catalyst = entity(EntityType.COW)
+            result += resultCreator.milk(250)
+            recipeId suffix "_from_cow"
+        }
         // Heart of the Sea
         // Dragon Breath
-        HTSimulatingRecipeBuilder
-            .block(
-                inputCreator.create(Items.GLASS_BOTTLE),
-                block(Blocks.DRAGON_HEAD),
-            ).setResult(itemResult.create(Items.DRAGON_BREATH))
-            .save(output)
+        HTSimulatingRecipeBuilder.block(output) {
+            ingredient = inputCreator.create(Items.GLASS_BOTTLE)
+            catalyst = block(Blocks.DRAGON_HEAD)
+            result += resultCreator.create(Items.DRAGON_BREATH)
+        }
         // Frog Lights
         // Milk from Goat
-        HTSimulatingRecipeBuilder
-            .entity(
-                null,
-                entity(EntityType.GOAT),
-            ).setResult(fluidResult.milk(500))
-            .saveSuffixed(output, "_from_goat")
+        HTSimulatingRecipeBuilder.entity(output) {
+            catalyst = entity(EntityType.GOAT)
+            result += resultCreator.milk(500)
+            recipeId suffix "_from_goat"
+        }
         // Poppy
-        HTSimulatingRecipeBuilder
-            .entity(
-                inputCreator.create(Tags.Items.FERTILIZERS),
-                entity(EntityType.IRON_GOLEM),
-            ).setResult(itemResult.create(Items.POPPY))
-            .save(output)
+        HTSimulatingRecipeBuilder.entity(output) {
+            ingredient = inputCreator.create(Tags.Items.FERTILIZERS)
+            catalyst = entity(EntityType.IRON_GOLEM)
+            result += resultCreator.create(Items.POPPY)
+        }
         // Mushroom Stew from Mooshroom
-        HTSimulatingRecipeBuilder
-            .entity(
-                null,
-                entity(EntityType.MOOSHROOM),
-            ).setResult(fluidResult.create(HCFluids.MUSHROOM_STEW, 500))
-            .save(output)
+        HTSimulatingRecipeBuilder.entity(output) {
+            catalyst = entity(EntityType.MOOSHROOM)
+            result += resultCreator.create(HCFluids.MUSHROOM_STEW, 500)
+        }
         // Ancient Debris
-        HTSimulatingRecipeBuilder
-            .entity(
-                inputCreator.create(Items.NETHER_BRICKS, 64),
-                entity(EntityType.PIGLIN_BRUTE),
-            ).setResult(itemResult.create(Items.ANCIENT_DEBRIS))
-            .save(output)
+        HTSimulatingRecipeBuilder.entity(output) {
+            ingredient = inputCreator.create(Items.NETHER_BRICKS, 64)
+            catalyst = entity(EntityType.PIGLIN_BRUTE)
+            result += resultCreator.create(Items.ANCIENT_DEBRIS)
+        }
         // Wool
-        HTSimulatingRecipeBuilder
-            .entity(
-                null,
-                entity(EntityType.SHEEP),
-            ).setResult(itemResult.create(Items.WHITE_WOOL))
-            .save(output)
+        HTSimulatingRecipeBuilder.entity(output) {
+            catalyst = entity(EntityType.SHEEP)
+            result += resultCreator.create(Items.WHITE_WOOL)
+        }
         // Turtle Scute
-        HTSimulatingRecipeBuilder
-            .entity(
-                inputCreator.create(Items.SEAGRASS, 8),
-                entity(EntityType.TURTLE),
-            ).setResult(itemResult.create(Items.TURTLE_SCUTE))
-            .save(output)
+        HTSimulatingRecipeBuilder.entity(output) {
+            ingredient = inputCreator.create(Items.SEAGRASS, 8)
+            catalyst = entity(EntityType.TURTLE)
+            result += resultCreator.create(Items.TURTLE_SCUTE)
+        }
         // Resonant Debris
 
         // Nether Star
-        HTSimulatingRecipeBuilder
-            .block(
-                inputCreator.create(HCItems.WITHER_DOLL),
-                block(Tags.Blocks.OBSIDIANS_CRYING),
-            ).setResult(itemResult.create(HCItems.WITHER_STAR))
-            .save(output)
+        HTSimulatingRecipeBuilder.block(output) {
+            ingredient = inputCreator.create(HCItems.WITHER_DOLL)
+            catalyst = block(Tags.Blocks.OBSIDIANS_CRYING)
+            result += resultCreator.create(HCItems.WITHER_STAR)
+        }
     }
 }
