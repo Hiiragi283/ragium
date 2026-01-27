@@ -1,9 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import com.lowdragmc.lowdraglib2.gui.ui.UIElement
-import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
-import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
-import hiiragi283.core.api.gui.element.HTItemSlotElement
+import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
@@ -13,7 +10,6 @@ import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
-import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
@@ -25,35 +21,17 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val inputSlot: HTBasicItemSlot = HTBasicItemSlot.input()
+    private lateinit var inputSlot: HTBasicItemSlot
+    private lateinit var outputSlot: HTBasicItemSlot
+    private lateinit var extraOutputSlots: List<HTBasicItemSlot>
 
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val outputSlot: HTBasicItemSlot = HTBasicItemSlot.output()
+    final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
 
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val extraOutputSlots: List<HTBasicItemSlot> = List(2) { HTBasicItemSlot.output() }
-
-    final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
-        builder.addSlot(HTSlotInfo.INPUT, inputSlot)
-
-        builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
-        for (slot: HTBasicItemSlot in extraOutputSlots) {
-            builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, slot)
+        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
+        extraOutputSlots = List(2) {
+            builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, HTBasicItemSlot.output(listener))
         }
-    }
-
-    final override fun setupMainTab(root: UIElement) {
-        RagiumModularUIHelper.chanced(
-            root,
-            HTItemSlotElement(inputSlot),
-            HTItemSlotElement(outputSlot),
-            extraOutputSlots.map(::HTItemSlotElement),
-        )
-        super.setupMainTab(root)
     }
 
     //    Processing    //

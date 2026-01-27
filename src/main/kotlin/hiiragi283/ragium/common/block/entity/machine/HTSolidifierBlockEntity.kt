@@ -1,8 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import com.lowdragmc.lowdraglib2.gui.ui.UIElement
-import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
-import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
+import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.getFluidStack
@@ -26,15 +24,14 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
     HTSingleCatalystBlockEntity(RagiumBlockEntityTypes.SOLIDIFIER, pos, state) {
-    @DescSynced
-    @Persisted(subPersisted = true)
-    val inputTank: HTBasicFluidTank = HTVariableFluidTank.input(getTankCapacity(RagiumFluidConfigType.FIRST_INPUT))
+    private lateinit var inputTank: HTBasicFluidTank
 
-    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
-        builder.addSlot(HTSlotInfo.INPUT, inputTank)
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        inputTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)),
+        )
     }
-
-    override fun createInputSlot(): UIElement = createFluidSlot(0)
 
     //    Processing    //
 

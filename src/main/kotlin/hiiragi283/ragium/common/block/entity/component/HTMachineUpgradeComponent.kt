@@ -9,6 +9,7 @@ import hiiragi283.core.api.storage.attachments.HTAttachedItems
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.HTItemSlot
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.api.storage.item.setStack
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.core.common.storage.HTCapabilityCodec
 import hiiragi283.core.common.storage.item.HTBasicItemSlot

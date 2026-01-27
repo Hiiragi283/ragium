@@ -1,8 +1,7 @@
 package hiiragi283.ragium.common.event
 
-import hiiragi283.core.api.data.recipe.creator.HTFluidResultCreator
-import hiiragi283.core.api.data.recipe.creator.HTIngredientCreator
-import hiiragi283.core.api.data.recipe.creator.HTItemResultCreator
+import hiiragi283.core.api.data.recipe.HTIngredientCreator
+import hiiragi283.core.api.data.recipe.HTResultCreator
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialKey
@@ -39,15 +38,13 @@ import kotlin.streams.asSequence
 object RagiumRuntimeRecipeHandler {
     private lateinit var output: RecipeOutput
     private lateinit var inputCreator: HTIngredientCreator
-    private lateinit var fluidResult: HTFluidResultCreator
-    private lateinit var itemResult: HTItemResultCreator
+    private lateinit var resultCreator: HTResultCreator
 
     @SubscribeEvent
     fun registerRuntimeRecipe(event: HTRegisterRuntimeRecipeEvent) {
         output = event.output
         inputCreator = event.inputCreator
-        fluidResult = event.fluidResult
-        itemResult = event.itemResult
+        resultCreator = event.resultCreator
 
         crushPrefixToDust(event, CommonTagPrefixes.BLOCK, 1) { it.getStorageBlock().baseCount }
         crushPrefixToDust(event, CommonTagPrefixes.RAW_BLOCK, 1) { 12 }
@@ -102,7 +99,7 @@ object RagiumRuntimeRecipeHandler {
             HTChancedRecipeBuilder
                 .crushing(
                     inputCreator.create(prefix, key, inputCount),
-                    itemResult.create(dust, outputCount),
+                    resultCreator.create(dust, outputCount),
                 ).saveSuffixed(output, "_from_${prefix.name}")
         }
     }
@@ -122,7 +119,7 @@ object RagiumRuntimeRecipeHandler {
             HTChancedRecipeBuilder
                 .crushing(
                     inputCreator.create(inputTag),
-                    itemResult.create(dust),
+                    resultCreator.create(dust),
                 ).saveSuffixed(output, "_from_${defaultPart.getSuffix()}")
         }
     }
@@ -139,7 +136,7 @@ object RagiumRuntimeRecipeHandler {
             HTChancedRecipeBuilder
                 .cutting(
                     inputCreator.create(CommonTagPrefixes.BLOCK, key),
-                    itemResult.create(plate, propertyMap.getStorageBlock().baseCount),
+                    resultCreator.create(plate, propertyMap.getStorageBlock().baseCount),
                 ).modifyTime { it * 3 }
                 .saveSuffixed(output, "_from_block")
         }
@@ -158,7 +155,7 @@ object RagiumRuntimeRecipeHandler {
             HTChancedRecipeBuilder
                 .cutting(
                     inputCreator.create(inputTag),
-                    itemResult.create(rod, 2),
+                    resultCreator.create(rod, 2),
                 ).saveSuffixed(output, "_from_${inputTag.location().path}")
         }
     }
@@ -177,22 +174,22 @@ object RagiumRuntimeRecipeHandler {
                 HTChancedRecipeBuilder
                     .cutting(
                         inputCreator.create(definition.logTag),
-                        itemResult.create(planks, 6),
+                        resultCreator.create(planks, 6),
                     ).saveSuffixed(output, "_from_log")
                 // Boat
                 definition[HTWoodDefinition.Variant.BOAT]?.let { boat ->
                     HTChancedRecipeBuilder
                         .cutting(
                             inputCreator.create(boat),
-                            itemResult.create(planks, 5),
+                            resultCreator.create(planks, 5),
                         ).saveSuffixed(output, "_from_boat")
                     // Chest Boat
                     definition[HTWoodDefinition.Variant.CHEST_BOAT]?.let {
                         HTChancedRecipeBuilder
                             .cutting(
                                 inputCreator.create(it),
-                                itemResult.create(boat),
-                            ).addResult(itemResult.create(Items.CHEST))
+                                resultCreator.create(boat),
+                            ).addResult(resultCreator.create(Items.CHEST))
                             .save(output)
                     }
                 }
@@ -202,8 +199,8 @@ object RagiumRuntimeRecipeHandler {
                     HTChancedRecipeBuilder
                         .cutting(
                             inputCreator.create(it),
-                            itemResult.create(planks),
-                        ).addResult(itemResult.create(Items.STICK))
+                            resultCreator.create(planks),
+                        ).addResult(resultCreator.create(Items.STICK))
                         .saveSuffixed(output, "_from_fence")
                 }
                 // Fence Gate
@@ -211,8 +208,8 @@ object RagiumRuntimeRecipeHandler {
                     HTChancedRecipeBuilder
                         .cutting(
                             inputCreator.create(it),
-                            itemResult.create(planks, 2),
-                        ).addResult(itemResult.create(Items.STICK, 4))
+                            resultCreator.create(planks, 2),
+                        ).addResult(resultCreator.create(Items.STICK, 4))
                         .saveSuffixed(output, "_from_fence_gate")
                 }
                 // Pressure Plate
@@ -220,7 +217,7 @@ object RagiumRuntimeRecipeHandler {
                     HTChancedRecipeBuilder
                         .cutting(
                             inputCreator.create(it),
-                            itemResult.create(planks, 2),
+                            resultCreator.create(planks, 2),
                         ).saveSuffixed(output, "_from_pressure_plate")
                 }
                 // Sign
@@ -228,8 +225,8 @@ object RagiumRuntimeRecipeHandler {
                     HTChancedRecipeBuilder
                         .cutting(
                             inputCreator.create(it),
-                            itemResult.create(planks, 2),
-                        ).addResult(itemResult.create(Items.STICK), fraction(1, 3))
+                            resultCreator.create(planks, 2),
+                        ).addResult(resultCreator.create(Items.STICK), fraction(1, 3))
                         .saveSuffixed(output, "_from_sign")
                 }
                 // Hanging Sign
@@ -237,8 +234,8 @@ object RagiumRuntimeRecipeHandler {
                     HTChancedRecipeBuilder
                         .cutting(
                             inputCreator.create(it),
-                            itemResult.create(planks, 4),
-                        ).addResult(itemResult.create(Items.CHAIN), fraction(1, 3))
+                            resultCreator.create(planks, 4),
+                        ).addResult(resultCreator.create(Items.CHAIN), fraction(1, 3))
                         .saveSuffixed(output, "_from_hanging_sign")
                 }
                 // Slab
@@ -246,7 +243,7 @@ object RagiumRuntimeRecipeHandler {
                     HTChancedRecipeBuilder
                         .cutting(
                             inputCreator.create(planks),
-                            itemResult.create(it, 2),
+                            resultCreator.create(it, 2),
                         ).save(output)
                 }
                 // Stairs
@@ -255,7 +252,7 @@ object RagiumRuntimeRecipeHandler {
                     HTChancedRecipeBuilder
                         .cutting(
                             inputCreator.create(it),
-                            itemResult.create(planks, 2),
+                            resultCreator.create(planks, 2),
                         ).saveSuffixed(output, "_from_door")
                 }
                 // Trapdoor
@@ -263,7 +260,7 @@ object RagiumRuntimeRecipeHandler {
                     HTChancedRecipeBuilder
                         .cutting(
                             inputCreator.create(it),
-                            itemResult.create(planks, 3),
+                            resultCreator.create(planks, 3),
                         ).saveSuffixed(output, "_from_trapdoor")
                 }
             }
@@ -292,7 +289,7 @@ object RagiumRuntimeRecipeHandler {
                 .pressing(
                     inputCreator.create(inputTag, inputCount),
                     inputCreator.create(moldType),
-                    itemResult.create(result, outputCount),
+                    resultCreator.create(result, outputCount),
                 ).saveSuffixed(output, "_from_${inputTag.location().path}")
         }
     }
@@ -318,7 +315,7 @@ object RagiumRuntimeRecipeHandler {
             HTSingleRecipeBuilder
                 .melting(
                     inputCreator.create(inputTag),
-                    fluidResult.create(molten, fluidAmount),
+                    resultCreator.create(molten, fluidAmount),
                 ).saveSuffixed(output, "_from_${defaultPart.getSuffix()}")
         }
     }
@@ -337,7 +334,7 @@ object RagiumRuntimeRecipeHandler {
                 .create()
                 .addIngredient(inputCreator.create(crushedPrefix, key))
                 .addIngredient(inputCreator.water(250))
-                .setResult(itemResult.create(dough))
+                .setResult(resultCreator.create(dough))
                 .save(output)
         }
     }
@@ -359,7 +356,7 @@ object RagiumRuntimeRecipeHandler {
                 .solidifying(
                     inputCreator.create(molten, fluidAmount),
                     inputCreator.create(moldType),
-                    itemResult.create(result),
+                    resultCreator.create(result),
                 ).saveSuffixed(output, "_from_molten")
         }
     }

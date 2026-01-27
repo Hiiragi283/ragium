@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.div
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.times
-import hiiragi283.core.common.gui.menu.HTContainerMenu
 import hiiragi283.core.common.gui.sync.HTIntSyncSlot
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
@@ -30,11 +30,11 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     //    Ticking    //
 
-    override fun addMenuTrackers(menu: HTContainerMenu<*>) {
-        super.addMenuTrackers(menu)
+    override fun addMenuTrackers(holder: HTWidgetHolder) {
+        super.addMenuTrackers(holder)
         // Progress
-        menu.track(HTIntSyncSlot.create(recipeComponent::progress))
-        menu.track(HTIntSyncSlot.create(recipeComponent::maxProgress))
+        holder.track(HTIntSyncSlot.create(recipeComponent::progress))
+        holder.track(HTIntSyncSlot.create(recipeComponent::maxProgress))
     }
 
     fun getProgress(): Fraction = recipeComponent.getProgress(isActive())

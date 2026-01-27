@@ -1,9 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import com.lowdragmc.lowdraglib2.gui.ui.UIElement
-import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
-import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
-import hiiragi283.core.api.gui.element.HTItemSlotElement
+import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
@@ -18,7 +15,6 @@ import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
-import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.base.HTComplexResultRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -33,41 +29,26 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTComplexBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val inputTank: HTBasicFluidTank = HTVariableFluidTank.input(getTankCapacity(RagiumFluidConfigType.FIRST_INPUT))
+    private lateinit var inputTank: HTBasicFluidTank
+    private lateinit var outputTank: HTBasicFluidTank
 
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val outputTank: HTBasicFluidTank = HTVariableFluidTank.output(getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT))
-
-    final override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
-        builder.addSlot(HTSlotInfo.INPUT, inputTank)
-        builder.addSlot(HTSlotInfo.OUTPUT, outputTank)
-    }
-
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val inputSlot: HTBasicItemSlot = HTBasicItemSlot.input()
-
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val outputSlot: HTBasicItemSlot = HTBasicItemSlot.output()
-
-    final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
-        builder.addSlot(HTSlotInfo.INPUT, inputSlot)
-        builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
-    }
-
-    final override fun setupMainTab(root: UIElement) {
-        RagiumModularUIHelper.complex(
-            root,
-            createFluidSlot(0),
-            HTItemSlotElement(inputSlot),
-            HTItemSlotElement(outputSlot),
-            createFluidSlot(1),
+    final override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        inputTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)),
         )
-        super.setupMainTab(root)
+        outputTank = builder.addSlot(
+            HTSlotInfo.OUTPUT,
+            HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)),
+        )
+    }
+
+    private lateinit var inputSlot: HTBasicItemSlot
+    private lateinit var outputSlot: HTBasicItemSlot
+
+    final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
+        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
     //    Processing    //

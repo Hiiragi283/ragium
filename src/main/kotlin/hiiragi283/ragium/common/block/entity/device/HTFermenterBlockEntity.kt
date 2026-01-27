@@ -1,12 +1,9 @@
 package hiiragi283.ragium.common.block.entity.device
 
-import com.lowdragmc.lowdraglib2.gui.ui.UIElement
-import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
-import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.data.recipe.creator.HTFluidResultCreator
-import hiiragi283.core.api.data.recipe.creator.HTIngredientCreator
-import hiiragi283.core.api.gui.element.HTItemSlotElement
+import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.data.recipe.HTIngredientCreator
+import hiiragi283.core.api.data.recipe.HTResultCreator
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.times
@@ -18,7 +15,6 @@ import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
-import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -47,37 +43,29 @@ class HTFermenterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             val amount: Int = (HTConst.DEFAULT_FLUID_AMOUNT * chance.toFraction()).toInt()
             return HTMeltingRecipe(
                 HTIngredientCreator.create(item),
-                HTFluidResultCreator.create(RagiumFluids.CRUDE_BIO, amount),
+                HTResultCreator.create(RagiumFluids.CRUDE_BIO, amount),
                 20 * 10,
                 Fraction.ZERO,
             )
         }
     }
 
-    @DescSynced
-    @Persisted(subPersisted = true)
-    val outputTank: HTBasicFluidTank = HTVariableFluidTank.output(getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT))
+    private lateinit var outputTank: HTBasicFluidTank
 
-    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
-        builder.addSlot(HTSlotInfo.OUTPUT, outputTank)
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        outputTank =
+            builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)))
     }
 
-    @DescSynced
-    @Persisted(subPersisted = true)
-    val inputSlot: HTBasicItemSlot = HTBasicItemSlot.create()
+    private lateinit var inputSlot: HTBasicItemSlot
 
-    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
-        builder.addSlot(HTSlotInfo.INPUT, inputSlot)
-    }
-
-    override fun setupMainTab(root: UIElement) {
-        RagiumModularUIHelper.singleProcess(root, HTItemSlotElement(inputSlot), createFluidSlot(0))
-        super.setupMainTab(root)
+    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.create(listener))
     }
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = object : HTRecipeComponent<SingleRecipeInput, HTMeltingRecipe>() {
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> = object : HTRecipeComponent<SingleRecipeInput, HTMeltingRecipe>(this) {
         private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
         private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 

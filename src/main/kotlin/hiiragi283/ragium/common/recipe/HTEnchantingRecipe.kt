@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.data.recipe.creator.HTIngredientCreator
+import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.item.createEnchantedBook
 import hiiragi283.core.api.item.enchantment.buildEnchantments
 import hiiragi283.core.api.recipe.HTProcessingRecipe

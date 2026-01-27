@@ -28,7 +28,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     protected open fun createTank(listener: HTContentListener): HTFluidTank.Basic =
-        HTVariableFluidTank.create(listener, { HTUpgradeHelper.getFluidCapacity(this, RagiumConfig.COMMON.tankCapacity.asInt) })
+        HTVariableFluidTank.create(listener) { HTUpgradeHelper.getFluidCapacity(this, RagiumConfig.COMMON.tankCapacity.asInt) }
 
     final override fun getAmountView(): HTAmountView = tank
 }

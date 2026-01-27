@@ -1,9 +1,6 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import com.lowdragmc.lowdraglib2.gui.ui.UIElement
-import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
-import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
-import hiiragi283.core.api.gui.element.HTItemSlotElement
+import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.input.HTListItemRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
@@ -24,17 +21,12 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
     HTSingleCatalystBlockEntity(RagiumBlockEntityTypes.FORMING_PRESS, pos, state) {
-    @DescSynced
-    @Persisted(subPersisted = true)
-    val inputSlot: HTBasicItemSlot = HTBasicItemSlot.input()
+    private lateinit var inputSlot: HTBasicItemSlot
 
-    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
-        builder.addSlot(HTSlotInfo.INPUT, inputSlot)
-
-        super.createItemSlots(builder)
+    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
+        super.createItemSlots(builder, listener)
     }
-
-    override fun createInputSlot(): UIElement = HTItemSlotElement(inputSlot)
 
     //    Processing    //
 

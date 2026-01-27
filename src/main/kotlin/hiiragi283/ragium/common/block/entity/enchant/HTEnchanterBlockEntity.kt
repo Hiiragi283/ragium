@@ -1,12 +1,8 @@
 package hiiragi283.ragium.common.block.entity.enchant
 
-import com.lowdragmc.lowdraglib2.gui.sync.bindings.impl.DataBindingBuilder
-import com.lowdragmc.lowdraglib2.gui.ui.UIElement
-import com.lowdragmc.lowdraglib2.gui.ui.elements.Switch
-import com.lowdragmc.lowdraglib2.syncdata.annotation.DescSynced
-import com.lowdragmc.lowdraglib2.syncdata.annotation.Persisted
-import hiiragi283.core.api.data.recipe.creator.HTIngredientCreator
-import hiiragi283.core.api.gui.element.HTItemSlotElement
+import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.data.recipe.HTIngredientCreator
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.item.enchantment.buildEnchantments
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.registry.holderSetOrNull
@@ -14,6 +10,7 @@ import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.common.gui.sync.HTBoolSyncSlot
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
@@ -23,7 +20,6 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnchantingRecipeComponent
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
-import hiiragi283.ragium.common.gui.RagiumModularUIHelper
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -50,50 +46,42 @@ import net.neoforged.neoforge.common.Tags
 import org.apache.commons.lang3.math.Fraction
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.ENCHANTER, pos, state) {
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val expTank: HTBasicFluidTank = HTVariableFluidTank.input(
-        getTankCapacity(RagiumFluidConfigType.FIRST_INPUT),
-        canInsert = HCFluids.EXPERIENCE::isOf,
-    )
+    private lateinit var expTank: HTBasicFluidTank
 
-    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder) {
-        builder.addSlot(HTSlotInfo.INPUT, expTank)
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        expTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidTank.input(
+                listener,
+                getTankCapacity(RagiumFluidConfigType.FIRST_INPUT),
+                canInsert = HCFluids.EXPERIENCE::isOf,
+            ),
+        )
     }
 
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val leftSlot: HTBasicItemSlot = HTBasicItemSlot.input(limit = 1, canInsert = { it.toStack().isEnchantable })
+    private lateinit var leftSlot: HTBasicItemSlot
+    private lateinit var rightSlot: HTBasicItemSlot
+    private lateinit var outputSlot: HTBasicItemSlot
 
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val rightSlot: HTBasicItemSlot = HTBasicItemSlot.input()
+    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        leftSlot = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTBasicItemSlot.input(
+                listener,
+                limit = 1,
+                canInsert = { it.toStack().isEnchantable },
+            ),
+        )
+        rightSlot = builder.addSlot(HTSlotInfo.EXTRA_INPUT, HTBasicItemSlot.input(listener))
 
-    @DescSynced
-    @Persisted(subPersisted = true)
-    private val outputSlot: HTBasicItemSlot = HTBasicItemSlot.output()
-
-    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder) {
-        builder.addSlot(HTSlotInfo.INPUT, leftSlot)
-        builder.addSlot(HTSlotInfo.EXTRA_INPUT, rightSlot)
-
-        builder.addSlot(HTSlotInfo.OUTPUT, outputSlot)
+        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
-    @DescSynced
-    @Persisted
     private var isRandom: Boolean = false
 
-    override fun setupMainTab(root: UIElement) {
-        RagiumModularUIHelper.enchanting(
-            root,
-            createFluidSlot(0),
-            HTItemSlotElement(leftSlot),
-            HTItemSlotElement(rightSlot),
-            HTItemSlotElement(outputSlot),
-        )
-        super.setupMainTab(root)
-        root.addChild(Switch().bind(DataBindingBuilder.bool(::isRandom::get, ::isRandom::set).build()))
+    override fun addMenuTrackers(holder: HTWidgetHolder) {
+        super.addMenuTrackers(holder)
+        holder.track(HTBoolSyncSlot.create(::isRandom))
     }
 
     //    Processing    //
