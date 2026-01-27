@@ -17,7 +17,7 @@ class HTPyrolyzingRecipeBuilder : HTAbstractComplexRecipeBuilder(RagiumConst.PYR
             HTPyrolyzingRecipeBuilder().apply(builderAction).save(output)
         }
     }
-    
+
     init {
         time *= 3
     }

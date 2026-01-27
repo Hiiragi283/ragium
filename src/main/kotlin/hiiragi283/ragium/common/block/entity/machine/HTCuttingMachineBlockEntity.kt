@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTChancedBlockEntity(RagiumBlockEntityTypes.CUTTING_MACHINE, pos, state) {
+    override fun getOutputSlotSize(): Int = 2
+
     override fun createRecipeComponent(): HTRecipeComponent<*, *> =
         RecipeComponent(RagiumRecipeTypes.CUTTING, SoundEvents.UI_STONECUTTER_TAKE_RESULT)
 

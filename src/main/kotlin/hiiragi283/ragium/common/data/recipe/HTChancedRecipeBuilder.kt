@@ -32,7 +32,7 @@ class HTChancedRecipeBuilder(prefix: String, private val factory: Factory<*>) : 
     lateinit var ingredient: HTItemIngredient
     lateinit var result: HTItemResult
     val chancedResults = ChancedResults()
-    
+
     init {
         time /= 2
     }

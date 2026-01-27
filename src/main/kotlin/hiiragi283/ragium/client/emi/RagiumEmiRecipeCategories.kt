@@ -41,29 +41,22 @@ object RagiumEmiRecipeCategories {
     //    Processor    //
 
     @JvmStatic
-    private fun processor(hasText: HTHasText, id: ResourceLocation, vararg workStations: ItemLike): HTEmiRecipeCategory =
-        processor(hasText, id, 18 * 8, 18 * 2, *workStations)
-
-    @JvmStatic
-    private fun <T> processor(recipeType: T, vararg workStations: ItemLike): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike =
-        processor(recipeType, recipeType.getId(), *workStations)
-
-    @JvmStatic
     private fun processor(
         hasText: HTHasText,
         id: ResourceLocation,
-        width: Int,
-        height: Int,
         vararg workStations: ItemLike,
+        width: Int = 18 * 8,
+        height: Int = 18 * 3,
     ): HTEmiRecipeCategory = HTEmiRecipeCategory.create(Bounds(0, 0, width, height), hasText, id, *workStations)
 
     @JvmStatic
     private fun <T> processor(
         recipeType: T,
-        width: Int,
-        height: Int,
         vararg workStations: ItemLike,
-    ): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike = processor(recipeType, recipeType.getId(), width, height, *workStations)
+        width: Int = 18 * 8,
+        height: Int = 18 * 3,
+    ): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike =
+        processor(recipeType, recipeType.getId(), *workStations, width = width, height = height)
 
     // Machine - Basic
     @JvmField
@@ -86,7 +79,7 @@ object RagiumEmiRecipeCategories {
     val MELTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val MIXING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MIXING, 18 * 8, 18 * 3, RagiumBlocks.MIXER)
+    val MIXING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
     val PYROLYZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)

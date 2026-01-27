@@ -172,12 +172,6 @@ object RagiumRuntimeRecipeHandler {
                 val planks: ItemLike = definition[HTWoodDefinition.Variant.PLANKS] ?: return@forEach
                 // Log -> 6x Planks
                 HTChancedRecipeBuilder.cutting(output) {
-                    ingredient
-                    result
-                    recipeId suffix ""
-                }
-
-                HTChancedRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(definition.logTag)
                     result = resultCreator.create(planks, 6)
                     recipeId suffix "_from_log"

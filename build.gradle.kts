@@ -214,10 +214,9 @@ dependencies {
     runtimeOnly(libs.bundles.mods.runtime)
 
     implementation(libs.mek.get().toString() + ":all")
+    implementation(libs.enchdesc) { exclude(group = "mezz.jei") }
 
-    implementation(libs.enchdesc) {
-        exclude(group = "mezz.jei")
-    }
+    compileOnly(libs.ldlib) { isTransitive = false }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

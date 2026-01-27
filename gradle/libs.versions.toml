@@ -97,9 +97,7 @@ mods-impl = [
     "jade",
 ]
 
-mods-transitive = [
-    "ldlib"
-]
+mods-transitive = []
 
 mods-compile = [
     "yoga"

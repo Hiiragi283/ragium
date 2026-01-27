@@ -29,10 +29,12 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
 
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
-        extraOutputSlots = List(2) {
+        extraOutputSlots = List(getOutputSlotSize()) {
             builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, HTBasicItemSlot.output(listener))
         }
     }
+
+    protected abstract fun getOutputSlotSize(): Int
 
     //    Processing    //
 
