@@ -8,6 +8,7 @@ import hiiragi283.core.api.material.property.HTMaterialTextureSet
 import hiiragi283.core.api.material.property.HTSmeltingMaterialProperty
 import hiiragi283.core.api.material.property.addBlockPrefixes
 import hiiragi283.core.api.material.property.addCustomName
+import hiiragi283.core.api.material.property.addExtraOreResult
 import hiiragi283.core.api.material.property.addItemPrefixes
 import hiiragi283.core.api.material.property.setDefaultPart
 import hiiragi283.core.api.material.property.setName
@@ -15,12 +16,9 @@ import hiiragi283.core.api.material.property.setTextureSet
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.common.registry.HTDeferredItem
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.material.property.HTFormingRecipeFlag
-import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.neoforged.bus.api.SubscribeEvent
@@ -46,6 +44,7 @@ object RagiumMaterialEventHandler {
             setDefaultPart(HTDefaultPart.Prefixed.GEM)
             addBlockPrefixes(CommonTagPrefixes.ORES.plus(CommonTagPrefixes.BLOCK))
             addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM)
+            addExtraOreResult(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 1 / 4f)
 
             setName("Ragi-Crystal", "ラギクリスタル")
             setTextureSet("diamond", HTMaterialTextureSet.SHINE)
@@ -113,18 +112,6 @@ object RagiumMaterialEventHandler {
                 HTMaterialPropertyKeys.SMELTING,
                 HTSmeltingMaterialProperty.smeltingOnly(HTItemHolderLike.of(CommonTagPrefixes.DUST.createId(CommonMaterialKeys.ASH))),
             )
-        }
-
-        // Existing
-        event.modify(VanillaMaterialKeys.GLASS) {
-            put(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG, HTFormingRecipeFlag.solidifyOnly())
-        }
-
-        event.modify(CommonMaterialKeys.PLASTIC) {
-            put(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG, HTFormingRecipeFlag.solidifyOnly())
-        }
-        event.modify(CommonMaterialKeys.RUBBER) {
-            put(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG, HTFormingRecipeFlag.solidifyOnly())
         }
     }
 }

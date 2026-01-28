@@ -152,16 +152,16 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 2,
             )
         }
-        // Rubber
+        // Rubber Bar
         HTAlloyingRecipeBuilder.create(output) {
-            result = resultCreator.material(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 2)
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 2)
             ingredients += inputCreator.create(HCItems.RAW_RUBBER)
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             recipeId suffix "_with_sulfur"
         }
 
         HTAlloyingRecipeBuilder.create(output) {
-            result = resultCreator.material(CommonTagPrefixes.PLATE, CommonMaterialKeys.RUBBER, 4)
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 4)
             ingredients += inputCreator.create(HCItems.RAW_RUBBER)
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             ingredients += inputCreator.create(

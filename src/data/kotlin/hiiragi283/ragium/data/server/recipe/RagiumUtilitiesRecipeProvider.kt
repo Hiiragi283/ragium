@@ -4,6 +4,8 @@ import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.holder.HTIngredientHolder
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
+import hiiragi283.core.api.material.HTMaterialLike
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
@@ -12,7 +14,6 @@ import hiiragi283.core.common.data.recipe.builder.HTStonecuttingRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
-import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumTags
@@ -177,28 +178,27 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
 
     @JvmStatic
     private fun storages() {
-        // Battery, Crate, Tank
-        val ragiCrystal: TagKey<Item> = CommonTagPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL)
-        listOf(
-            Triple(RagiumBlocks.BATTERY, ragiCrystal, HCDataComponents.ENERGY),
-            Triple(RagiumBlocks.CRATE, Tags.Items.CHESTS, HCDataComponents.ITEM),
-            Triple(RagiumBlocks.TANK, Tags.Items.BUCKETS_EMPTY, HCDataComponents.FLUID),
-        ).forEach { (block: HTDeferredBlock<*, *>, core: TagKey<Item>, component: DataComponentType<*>) ->
-            // Shaped
-            HTShapedRecipeBuilder.create(output) {
-                crossLayered()
-                define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
-                define('B') += CommonTagPrefixes.PLATE to CommonMaterialKeys.RUBBER
-                define('C') += Tags.Items.GLASS_BLOCKS
-                define('D') += core
-                resultStack += block
-            }
-            // Clear Component
-            HTClearComponentRecipeBuilder.create(output) {
-                item = block
-                targets += listOf(component)
-            }
-        }
+        // Battery
+        variableStorage(
+            RagiumBlocks.BATTERY,
+            VanillaMaterialKeys.GOLD,
+            CommonTagPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL),
+            HCDataComponents.ENERGY,
+        )
+        // Crate
+        variableStorage(
+            RagiumBlocks.CRATE,
+            CommonMaterialKeys.PLASTIC,
+            Tags.Items.CHESTS,
+            HCDataComponents.ITEM,
+        )
+        // Tank
+        variableStorage(
+            RagiumBlocks.TANK,
+            CommonMaterialKeys.RUBBER,
+            Tags.Items.BUCKETS_EMPTY,
+            HCDataComponents.FLUID,
+        )
         // Resonant Interface
         // Universal Chest
         HTShapedRecipeBuilder.create(output) {
@@ -215,6 +215,29 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 resultStack += createItemStack(RagiumBlocks.UNIVERSAL_CHEST, RagiumDataComponents.COLOR, color)
                 recipeId prefix "${color.serializedName}_"
             }
+        }
+    }
+
+    @JvmStatic
+    private fun variableStorage(
+        block: HTItemHolderLike<*>,
+        top: HTMaterialLike,
+        core: TagKey<Item>,
+        component: DataComponentType<*>,
+    ) {
+        // Shaped
+        HTShapedRecipeBuilder.create(output) {
+            crossLayered()
+            define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
+            define('B') += CommonTagPrefixes.PLATE to top
+            define('C') += Tags.Items.GLASS_BLOCKS
+            define('D') += core
+            resultStack += block
+        }
+        // Clear Component
+        HTClearComponentRecipeBuilder.create(output) {
+            item = block
+            targets += listOf(component)
         }
     }
 

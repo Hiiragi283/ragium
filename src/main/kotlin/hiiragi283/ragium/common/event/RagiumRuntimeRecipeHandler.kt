@@ -1,5 +1,7 @@
 package hiiragi283.ragium.common.event
 
+import hiiragi283.core.api.component1
+import hiiragi283.core.api.component2
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.data.recipe.HTResultCreator
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
@@ -7,20 +9,22 @@ import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
+import hiiragi283.core.api.material.property.applyOreMultiplier
 import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.material.property.getStorageBlock
 import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.property.getOrDefault
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
-import hiiragi283.core.api.tag.property.HTTagPropertyKeys
+import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
-import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
@@ -32,6 +36,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import org.apache.commons.lang3.math.Fraction
 import kotlin.streams.asSequence
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
@@ -46,25 +51,27 @@ object RagiumRuntimeRecipeHandler {
         inputCreator = event.inputCreator
         resultCreator = event.resultCreator
 
-        crushPrefixToDust(event, CommonTagPrefixes.BLOCK, 1) { it.getStorageBlock().baseCount }
-        crushPrefixToDust(event, CommonTagPrefixes.RAW_BLOCK, 1) { 12 }
+        alloyBaseToPrefix(event, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
+        alloyBaseToPrefix(event, CommonTagPrefixes.PLATE, HTMoldType.PLATE)
+        alloyBaseToPrefix(event, CommonTagPrefixes.ROD, HTMoldType.ROD)
 
         crushBaseToDust(event)
-        crushPrefixToDust(event, CommonTagPrefixes.GEAR, 1) { 4 }
-        crushPrefixToDust(event, CommonTagPrefixes.NUGGET, 9)
-        crushPrefixToDust(event, CommonTagPrefixes.PLATE, 1)
-        crushPrefixToDust(event, CommonTagPrefixes.RAW, 3) { 4 }
-        crushPrefixToDust(event, CommonTagPrefixes.ROD, 2)
-        crushPrefixToDust(event, CommonTagPrefixes.WIRE, 2)
+        crushOreToDust(event)
+        crushPrefixToDust(event, CommonTagPrefixes.RAW_BLOCK)
+        crushPrefixToDust(event, CommonTagPrefixes.GEAR)
+        crushPrefixToDust(event, CommonTagPrefixes.NUGGET)
+        crushPrefixToDust(event, CommonTagPrefixes.PLATE)
+        crushPrefixToDust(event, CommonTagPrefixes.RAW)
+        crushPrefixToDust(event, CommonTagPrefixes.ROD)
+        crushPrefixToDust(event, CommonTagPrefixes.WIRE)
 
         cutBlockToPlate(event)
         cutBaseToRod(event)
         cutWoodFromDefinition(event)
 
-        pressBaseToPrefix(event, CommonTagPrefixes.BLOCK, HTMoldType.BLOCK, { it.getStorageBlock().baseCount }, 1)
-        pressBaseToPrefix(event, CommonTagPrefixes.GEAR, HTMoldType.GEAR, { 4 }, 1)
-        pressBaseToPrefix(event, CommonTagPrefixes.NUGGET, HTMoldType.NUGGET, { 1 }, 9)
-        pressBaseToPrefix(event, CommonTagPrefixes.PLATE, HTMoldType.PLATE, { 1 }, 1)
+        pressBaseToPrefix(event, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
+        pressBaseToPrefix(event, CommonTagPrefixes.NUGGET, HTMoldType.NUGGET)
+        pressBaseToPrefix(event, CommonTagPrefixes.PLATE, HTMoldType.PLATE)
 
         meltBaseToMolten(event)
 
@@ -80,22 +87,58 @@ object RagiumRuntimeRecipeHandler {
         solidifyPrefix(event, CommonTagPrefixes.ROD, HTMoldType.ROD)
     }
 
+    @JvmStatic
+    private fun baseOrDust(
+        event: HTRegisterRuntimeRecipeEvent,
+        key: HTMaterialKey,
+        propertyMap: HTPropertyMap,
+        amount: Int = 1,
+    ): Pair<HTDefaultPart, HTItemIngredient>? {
+        val defaultPart: HTDefaultPart = propertyMap.getDefaultPart() ?: return null
+        val inputTag: TagKey<Item> = defaultPart.getTag(key)
+        val dustTag: TagKey<Item> = CommonTagPrefixes.DUST.itemTagKey(key)
+        if (!event.isPresentTag(inputTag) && !event.isPresentTag(dustTag)) return null
+        return defaultPart to inputCreator.create(setOf(inputTag, dustTag), amount)
+    }
+
+    //    Alloying    //
+
+    @JvmStatic
+    private fun alloyBaseToPrefix(event: HTRegisterRuntimeRecipeEvent, prefix: HTTagPrefix, moldType: HTMoldType) {
+        for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            // 溶融加工が許可されていない場合はパス
+            if (!propertyMap.getOrDefault(HTMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
+            // プレフィックスのスケールから個数を算出
+            val fraction: Fraction = prefix.getScaledAmount(1, propertyMap)
+            val (inputCount: Int, outputCount: Int) = fraction
+            // 素材のプロパティから材料を取得
+            val (defaultPart: HTDefaultPart, input: HTItemIngredient) = baseOrDust(event, key, propertyMap, inputCount) ?: continue
+            // 完成品を取得
+            val result: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
+            // レシピを登録
+            HTAlloyingRecipeBuilder.create(output) {
+                this.ingredients += input
+                this.ingredients += inputCreator.create(moldType)
+                this.result = resultCreator.create(result, outputCount)
+                recipeId suffix "_from_${defaultPart.getSuffix()}"
+            }
+        }
+    }
+
     //    Crushing    //
 
     @JvmStatic
-    private fun crushPrefixToDust(
-        event: HTRegisterRuntimeRecipeEvent,
-        prefix: HTTagPrefix,
-        inputCount: Int,
-        outputCountGetter: (HTPropertyMap) -> Int? = { 1 },
-    ) {
+    private fun crushPrefixToDust(event: HTRegisterRuntimeRecipeEvent, prefix: HTTagPrefix) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
-            val outputCount: Int = outputCountGetter(propertyMap) ?: continue
-
+            // 材料が存在するか判定
             if (!event.isPresentTag(prefix, key)) continue
+            // 素材のプロパティから完成品を取得
             val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
             val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: continue
-
+            // プレフィックスのスケールから個数を算出
+            val fraction: Fraction = prefix.getScaledAmount(1, propertyMap)
+            val (outputCount: Int, inputCount: Int) = fraction
+            // レシピを登録
             HTChancedRecipeBuilder.crushing(output) {
                 ingredient = inputCreator.create(prefix, key, inputCount)
                 result = resultCreator.create(dust, outputCount)
@@ -107,19 +150,49 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun crushBaseToDust(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            // 素材のプロパティから材料を取得
             val defaultPart: HTDefaultPart = propertyMap.getDefaultPart() ?: continue
-
             val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
             val inputTag: TagKey<Item> = defaultPart.getTag(key)
-            if (inputTag == crushedPrefix.itemTagKey(key)) continue
-
             if (!event.isPresentTag(inputTag)) continue
+            // 加工の前後でタグが一致する場合はパス
+            if (inputTag == crushedPrefix.itemTagKey(key)) continue
+            // 完成品を取得
             val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: continue
-            // Crushing
+            // レシピを登録
             HTChancedRecipeBuilder.crushing(output) {
                 ingredient = inputCreator.create(inputTag)
                 result = resultCreator.create(dust)
                 recipeId suffix "_from_${defaultPart.getSuffix()}"
+            }
+        }
+    }
+
+    @JvmStatic
+    private fun crushOreToDust(event: HTRegisterRuntimeRecipeEvent) {
+        for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            // 材料が存在するか判定
+            if (!event.isPresentTag(CommonTagPrefixes.ORE, key)) continue
+            // 完成品を取得
+            val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+            val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: continue
+            // レシピを登録
+            HTChancedRecipeBuilder.crushing(output) {
+                // 材料
+                ingredient = inputCreator.create(CommonTagPrefixes.ORE, key)
+                // 主産物
+                val dustCount: Int = crushedPrefix
+                    .getScaledAmount(2, propertyMap)
+                    .let(propertyMap::applyOreMultiplier)
+                    .toInt()
+                result = resultCreator.create(dust, dustCount)
+                // 副産物
+                propertyMap
+                    .getOrDefault(HTMaterialPropertyKeys.ORE_EXTRA_RESULTS)
+                    .map { it.toResult(resultCreator) }
+                    .forEach(chancedResults::plusAssign)
+
+                recipeId suffix "_from_ore"
             }
         }
     }
@@ -129,10 +202,13 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun cutBlockToPlate(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
-            if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
+            // 機械加工が許可されていない場合はパス
+            if (!propertyMap.getOrDefault(HTMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
+            // 材料が存在するか判定
             if (!event.isPresentTag(CommonTagPrefixes.BLOCK, key)) continue
+            // 完成品を取得
             val plate: Item = event.getFirstHolder(CommonTagPrefixes.PLATE, key)?.value() ?: continue
-
+            // レシピを登録
             HTChancedRecipeBuilder.cutting(output) {
                 ingredient = inputCreator.create(CommonTagPrefixes.BLOCK, key)
                 result = resultCreator.create(plate, propertyMap.getStorageBlock().baseCount)
@@ -145,13 +221,16 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun cutBaseToRod(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
-            if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
+            // 機械加工が許可されていない場合はパス
+            if (!propertyMap.getOrDefault(HTMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
+            // 素材のプロパティから材料を取得
             val inputTag: TagKey<Item> = propertyMap.getDefaultPart(key) ?: continue
-            if (inputTag == CommonTagPrefixes.ROD.itemTagKey(key)) continue
             if (!event.isPresentTag(inputTag)) continue
-
+            // 加工の前後でタグが一致する場合はパス
+            if (inputTag == CommonTagPrefixes.ROD.itemTagKey(key)) continue
+            // 完成品を取得
             val rod: Item = event.getFirstHolder(CommonTagPrefixes.ROD, key)?.value() ?: continue
-
+            // レシピを登録
             HTChancedRecipeBuilder.cutting(output) {
                 ingredient = inputCreator.create(inputTag)
                 result = resultCreator.create(rod, 2)
@@ -267,22 +346,21 @@ object RagiumRuntimeRecipeHandler {
     //    Pressing    //
 
     @JvmStatic
-    private fun pressBaseToPrefix(
-        event: HTRegisterRuntimeRecipeEvent,
-        prefix: HTTagPrefix,
-        moldType: HTMoldType,
-        inputCountGetter: (HTPropertyMap) -> Int?,
-        outputCount: Int,
-    ) {
+    private fun pressBaseToPrefix(event: HTRegisterRuntimeRecipeEvent, prefix: HTTagPrefix, moldType: HTMoldType) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
-            if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
+            // 機械加工が許可されていない場合はパス
+            if (!propertyMap.getOrDefault(HTMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) continue
+            // 素材のプロパティから材料を取得
             val inputTag: TagKey<Item> = propertyMap.getDefaultPart(key) ?: continue
-            if (inputTag == prefix.itemTagKey(key)) continue
-            val inputCount: Int = inputCountGetter(propertyMap) ?: continue
-
             if (!event.isPresentTag(inputTag)) continue
+            // 加工の前後でタグが一致する場合はパス
+            if (inputTag == prefix.itemTagKey(key)) continue
+            // 完成品を取得
             val result: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
-
+            // プレフィックスのスケールから個数を算出
+            val fraction: Fraction = prefix.getScaledAmount(1, propertyMap)
+            val (inputCount: Int, outputCount: Int) = fraction
+            // レシピを登録
             HTSingleRecipeBuilder.pressing(output) {
                 this.ingredient = inputCreator.create(inputTag, inputCount) to inputCreator.create(moldType)
                 this.result = resultCreator.create(result, outputCount)
@@ -296,21 +374,20 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun meltBaseToMolten(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
-            if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
-            val defaultPart: HTDefaultPart = propertyMap.getDefaultPart() ?: continue
-            val prefix: HTTagPrefix? = (defaultPart as? HTDefaultPart.Prefixed)?.prefix
-            val inputTag: TagKey<Item> = defaultPart.getTag(key)
-
+            // 溶融加工が許可されていない場合はパス
+            if (!propertyMap.getOrDefault(HTMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
+            // 素材のプロパティから材料を取得
+            val (defaultPart: HTDefaultPart, input: HTItemIngredient) = baseOrDust(event, key, propertyMap) ?: continue
+            // 素材のプロパティから液体材料を取得
             var fluidAmount: Int = propertyMap.getDefaultFluidAmount()
+            val prefix: HTTagPrefix? = (defaultPart as? HTDefaultPart.Prefixed)?.prefix
             if (prefix != null) {
-                fluidAmount = prefix.getOrDefault(HTTagPropertyKeys.ITEM_SCALE)(fluidAmount, propertyMap)
+                fluidAmount = prefix.getScaledAmount(fluidAmount, propertyMap).toInt()
             }
-
-            if (!event.isPresentTag(inputTag)) continue
             val molten: HTFluidContent<*, *, *> = propertyMap[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: continue
-            // Melt
+            // レシピを登録
             HTSingleRecipeBuilder.melting(output) {
-                ingredient = inputCreator.create(inputTag)
+                ingredient = input
                 result = resultCreator.create(molten, fluidAmount)
                 recipeId suffix "_from_${defaultPart.getSuffix()}"
             }
@@ -322,11 +399,12 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun mixFlourToDough(event: HTRegisterRuntimeRecipeEvent) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
+            // 素材のプロパティから材料を取得
             val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
             if (!event.isPresentTag(crushedPrefix, key)) continue
-
+            // 完成品を取得
             val dough: Item = event.getFirstHolder(CommonTagPrefixes.DOUGH, key)?.value() ?: continue
-            // Mix
+            // レシピを登録
             HTMixingRecipeBuilder.create(output) {
                 itemIngredients += inputCreator.create(crushedPrefix, key)
                 fluidIngredients += inputCreator.water(250)
@@ -340,13 +418,13 @@ object RagiumRuntimeRecipeHandler {
     @JvmStatic
     private fun solidifyPrefix(event: HTRegisterRuntimeRecipeEvent, prefix: HTTagPrefix, moldType: HTMoldType) {
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in event.getAllMaterials()) {
-            if (!propertyMap.getOrDefault(RagiumMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
-
+            // 溶融加工が許可されていない場合はパス
+            if (!propertyMap.getOrDefault(HTMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) continue
+            // 素材のプロパティから材料を取得
             val molten: HTFluidContent<*, *, *> = propertyMap[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: continue
-            val fluidAmount: Int =
-                prefix.getOrDefault(HTTagPropertyKeys.ITEM_SCALE)(propertyMap.getDefaultFluidAmount(), propertyMap)
-
-            // Solidify
+            // プレフィックスと素材のプロパティから液体量を算出
+            val fluidAmount: Int = prefix.getScaledAmount(propertyMap.getDefaultFluidAmount(), propertyMap).toInt()
+            // レシピを登録
             val result: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
             HTSingleRecipeBuilder.solidifying(output) {
                 this.ingredient = inputCreator.create(molten, fluidAmount) to inputCreator.create(moldType)

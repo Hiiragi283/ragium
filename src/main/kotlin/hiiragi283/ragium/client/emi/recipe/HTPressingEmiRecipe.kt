@@ -22,7 +22,7 @@ class HTPressingEmiRecipe(holder: RecipeHolder<HTPressingRecipe>) :
         RagiumEmiTextures.addWidget(
             widgets,
             "press",
-            getPosition(1),
+            getPosition(2),
             getPosition(1),
             recipe.time,
             endToStart = false,
