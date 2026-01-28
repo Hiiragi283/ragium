@@ -45,7 +45,7 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
                 input: HTItemAndFluidRecipeInput,
                 recipe: HTSolidifyingRecipe,
             ) {
-                inputHandler.consume(recipe.ingredient)
+                inputHandler.consume(recipe.fluidIngredient)
             }
 
             override fun applyEffect() {

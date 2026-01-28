@@ -84,11 +84,12 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.CRUSHER)
             .add(RagiumBlocks.CUTTING_MACHINE)
             .add(RagiumBlocks.FORMING_PRESS)
-            // Advanced
+            // Heat
             .add(RagiumBlocks.DRYER)
             .add(RagiumBlocks.MELTER)
-            .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.PYROLYZER)
+            // Chemical
+            .add(RagiumBlocks.MIXER)
         factory
             .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
             // Basic

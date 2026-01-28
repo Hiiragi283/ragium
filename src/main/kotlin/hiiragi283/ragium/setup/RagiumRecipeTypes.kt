@@ -8,6 +8,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
@@ -26,6 +27,7 @@ object RagiumRecipeTypes {
     @JvmField
     val REGISTER = HTDeferredRecipeTypeRegister(RagiumAPI.MOD_ID)
 
+    // Machine - Basic
     @JvmField
     val ALLOYING: HTDeferredRecipeType<HTListItemRecipeInput, HTAlloyingRecipe> = REGISTER.registerType(RagiumConst.ALLOYING)
 
@@ -36,22 +38,14 @@ object RagiumRecipeTypes {
     val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTCuttingRecipe> = REGISTER.registerType(RagiumConst.CUTTING)
 
     @JvmField
+    val PRESSING: HTDeferredRecipeType<HTListItemRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
+
+    // Machine - Heat
+    @JvmField
     val DRYING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTDryingRecipe> = REGISTER.registerType(RagiumConst.DRYING)
 
     @JvmField
-    val ENCHANTING: HTDeferredRecipeType<HTEnchantingRecipe.Input, HTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
-
-    @JvmField
     val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
-
-    @JvmField
-    val MIXING: HTDeferredRecipeType<HTMixingRecipe.Input, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
-
-    @JvmField
-    val PLANTING: HTDeferredRecipeType<HTPlantingRecipe.Input, HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
-
-    @JvmField
-    val PRESSING: HTDeferredRecipeType<HTListItemRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
 
     @JvmField
     val PYROLYZING: HTDeferredRecipeType<SingleRecipeInput, HTPyrolyzingRecipe> = REGISTER.registerType(RagiumConst.PYROLYZING)
@@ -60,8 +54,26 @@ object RagiumRecipeTypes {
     val REFINING: HTDeferredRecipeType<HTSingleFluidRecipeInput, HTRefiningRecipe> = REGISTER.registerType(RagiumConst.REFINING)
 
     @JvmField
-    val SIMULATING: HTDeferredRecipeType<HTSimulatingRecipe.Input, HTSimulatingRecipe<*>> = REGISTER.registerType(RagiumConst.SIMULATING)
+    val SOLIDIFYING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
+
+    // Machine - Chemical
+    @JvmField
+    val BATHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTBathingRecipe> = REGISTER.registerType(RagiumConst.BATHING)
 
     @JvmField
-    val SOLIDIFYING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
+    val MIXING: HTDeferredRecipeType<HTMixingRecipe.Input, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
+
+    // Machine - Extra
+    @JvmField
+    val SIMULATING: HTDeferredRecipeType<HTSimulatingRecipe.Input, HTSimulatingRecipe<*>> = REGISTER.registerType(RagiumConst.SIMULATING)
+
+    // Device - Basic
+    @JvmField
+    val PLANTING: HTDeferredRecipeType<HTPlantingRecipe.Input, HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
+
+    // Device - Advanced
+
+    // Device - Enchanting
+    @JvmField
+    val ENCHANTING: HTDeferredRecipeType<HTEnchantingRecipe.Input, HTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
 }

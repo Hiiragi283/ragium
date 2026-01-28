@@ -99,8 +99,8 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         basic(RagiumBlocks.CUTTING_MACHINE) { it += Items.IRON_AXE }
         basic(RagiumBlocks.FORMING_PRESS) { it += Items.PISTON }
 
-        // Advanced
-        fun advanced(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+        // Heat
+        fun heat(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
             HTShapedRecipeBuilder.create(output) {
                 pattern(
                     "AAA",
@@ -115,11 +115,15 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             }
         }
 
-        advanced(RagiumBlocks.DRYER) { it += ItemTags.SOUL_FIRE_BASE_BLOCKS }
-        advanced(RagiumBlocks.MELTER) { it += Items.BLAST_FURNACE }
-        advanced(RagiumBlocks.MIXER) { it += Items.CAULDRON }
-        advanced(RagiumBlocks.PYROLYZER) { it += Items.NETHER_BRICKS }
-        advanced(RagiumBlocks.SOLIDIFIER) { it += RagiumTags.Items.MOLDS }
+        heat(RagiumBlocks.DRYER) { it += ItemTags.SOUL_FIRE_BASE_BLOCKS }
+        heat(RagiumBlocks.MELTER) { it += Items.BLAST_FURNACE }
+        heat(RagiumBlocks.PYROLYZER) { it += Items.NETHER_BRICKS }
+        heat(RagiumBlocks.SOLIDIFIER) { it += RagiumTags.Items.MOLDS }
+
+        // Chemical
+        heat(RagiumBlocks.MIXER) { it += Items.CAULDRON }
+
+        // Matter
     }
 
     @JvmStatic

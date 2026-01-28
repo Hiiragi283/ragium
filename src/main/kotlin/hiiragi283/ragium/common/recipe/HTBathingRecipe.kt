@@ -12,17 +12,17 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import org.apache.commons.lang3.math.Fraction
 
-class HTSolidifyingRecipe(
-    ingredient: HTFluidIngredient,
-    catalyst: HTItemIngredient,
+class HTBathingRecipe(
+    fluidIngredient: HTFluidIngredient,
+    itemIngredient: HTItemIngredient,
     result: HTItemResult,
     time: Int,
     exp: Fraction,
-) : HTFluidWithItemRecipe(ingredient, catalyst, result, time, exp) {
+) : HTFluidWithItemRecipe(fluidIngredient, itemIngredient, result, time, exp) {
     override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean =
-        fluidIngredient.test(input.fluid) && itemIngredient.testOnlyType(input.item)
+        fluidIngredient.test(input.fluid) && itemIngredient.test(input.item)
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.SOLIDIFYING
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BATHING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.SOLIDIFYING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.BATHING.get()
 }

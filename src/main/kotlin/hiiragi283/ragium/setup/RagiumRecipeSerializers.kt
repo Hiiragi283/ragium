@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -105,6 +106,7 @@ object RagiumRecipeSerializers {
         factory::create,
     )
 
+    // Machine - Basic
     @JvmField
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = REGISTER.registerSerializer(
         RagiumConst.ALLOYING,
@@ -127,6 +129,18 @@ object RagiumRecipeSerializers {
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, chanced(::HTCuttingRecipe, 1))
 
     @JvmField
+    val PRESSING: RecipeSerializer<HTPressingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.PRESSING,
+        processing(
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTPressingRecipe::ingredient),
+            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTPressingRecipe::catalyst),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTPressingRecipe::result),
+            ::HTPressingRecipe,
+        ),
+    )
+
+    // Machine - Heat
+    @JvmField
     val DRYING: RecipeSerializer<HTDryingRecipe> = REGISTER.registerSerializer(
         RagiumConst.DRYING,
         processing(
@@ -136,19 +150,6 @@ object RagiumRecipeSerializers {
                 .forGetter(HTDryingRecipe::ingredient),
             COMPLEX_RESULT.forGetter(HTComplexResultRecipe.Simple::result),
             ::HTDryingRecipe,
-        ),
-    )
-
-    @JvmField
-    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.ENCHANTING,
-        processing(
-            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTEnchantingRecipe::ingredient),
-            BiCodec
-                .of(ItemEnchantments.CODEC, ItemEnchantments.STREAM_CODEC)
-                .fieldOf("enchantment")
-                .forGetter(HTEnchantingRecipe::enchantments),
-            ::HTEnchantingRecipe,
         ),
     )
 
@@ -163,28 +164,6 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.MIXING,
-        processing(
-            HTItemIngredient.CODEC
-                .listOrElement(0, 2)
-                .optionalFieldOf(RagiumConst.ITEM_INGREDIENT, listOf())
-                .forGetter(HTMixingRecipe::itemIngredients),
-            HTFluidIngredient.CODEC
-                .listOrElement(0, 2)
-                .optionalFieldOf(RagiumConst.FLUID_INGREDIENT, listOf())
-                .forGetter(HTMixingRecipe::fluidIngredients),
-            COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
-            ::HTMixingRecipe,
-        ).validate { recipe: HTMixingRecipe ->
-            if (recipe.itemIngredients.isEmpty() && recipe.fluidIngredients.isEmpty()) {
-                error("Either item or fluid ingredients is required for mixing recipe")
-            }
-            recipe
-        },
-    )
-
-    @JvmField
     val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
         RagiumConst.PLANTING,
         MapBiCodec.composite(
@@ -194,17 +173,6 @@ object RagiumRecipeSerializers {
             HTRecipeBiCodecs.TIME.forGetter(HTPlantingRecipe::time),
             HTRecipeBiCodecs.EXP.forGetter(HTPlantingRecipe::exp),
             ::HTPlantingRecipe,
-        ),
-    )
-
-    @JvmField
-    val PRESSING: RecipeSerializer<HTPressingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.PRESSING,
-        processing(
-            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTPressingRecipe::ingredient),
-            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTPressingRecipe::catalyst),
-            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTPressingRecipe::result),
-            ::HTPressingRecipe,
         ),
     )
 
@@ -231,6 +199,52 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
+    val SOLIDIFYING: RecipeSerializer<HTSolidifyingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.SOLIDIFYING,
+        processing(
+            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSolidifyingRecipe::fluidIngredient),
+            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTSolidifyingRecipe::itemIngredient),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSolidifyingRecipe::result),
+            ::HTSolidifyingRecipe,
+        ),
+    )
+
+    // Machine - Chemical
+    @JvmField
+    val BATHING: RecipeSerializer<HTBathingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.BATHING,
+        processing(
+            HTFluidIngredient.CODEC.fieldOf(RagiumConst.FLUID_INGREDIENT).forGetter(HTBathingRecipe::fluidIngredient),
+            HTItemIngredient.CODEC.fieldOf(RagiumConst.ITEM_INGREDIENT).forGetter(HTBathingRecipe::itemIngredient),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBathingRecipe::result),
+            ::HTBathingRecipe,
+        ),
+    )
+
+    @JvmField
+    val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.MIXING,
+        processing(
+            HTItemIngredient.CODEC
+                .listOrElement(0, 2)
+                .optionalFieldOf(RagiumConst.ITEM_INGREDIENT, listOf())
+                .forGetter(HTMixingRecipe::itemIngredients),
+            HTFluidIngredient.CODEC
+                .listOrElement(0, 2)
+                .optionalFieldOf(RagiumConst.FLUID_INGREDIENT, listOf())
+                .forGetter(HTMixingRecipe::fluidIngredients),
+            COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
+            ::HTMixingRecipe,
+        ).validate { recipe: HTMixingRecipe ->
+            if (recipe.itemIngredients.isEmpty() && recipe.fluidIngredients.isEmpty()) {
+                error("Either item or fluid ingredients is required for mixing recipe")
+            }
+            recipe
+        },
+    )
+
+    // Machine - Extra
+    @JvmField
     val SIMULATING_BLOCK: RecipeSerializer<HTBlockSimulatingRecipe> = REGISTER.registerSerializer(
         RagiumConst.SIMULATING_BLOCK,
         processing(
@@ -252,14 +266,17 @@ object RagiumRecipeSerializers {
         ),
     )
 
+    // Device - Enchanting
     @JvmField
-    val SOLIDIFYING: RecipeSerializer<HTSolidifyingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.SOLIDIFYING,
+    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.ENCHANTING,
         processing(
-            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSolidifyingRecipe::ingredient),
-            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTSolidifyingRecipe::catalyst),
-            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSolidifyingRecipe::result),
-            ::HTSolidifyingRecipe,
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTEnchantingRecipe::ingredient),
+            BiCodec
+                .of(ItemEnchantments.CODEC, ItemEnchantments.STREAM_CODEC)
+                .fieldOf("enchantment")
+                .forGetter(HTEnchantingRecipe::enchantments),
+            ::HTEnchantingRecipe,
         ),
     )
 }

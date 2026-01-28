@@ -6,13 +6,13 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.common.data.recipe.HTMaterialRecipeProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.server.recipe.RagiumAlloyingRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumChemicalRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCuttingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumDryingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumEnchantingRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumMixingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumPlantingRecipeBuilder
 import hiiragi283.ragium.data.server.recipe.RagiumPressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumPyrolyzingRecipeProvider
@@ -30,8 +30,8 @@ class RagiumRecipeProvider(context: HTDataGenContext) : HTRecipeProvider(context
         consumer.accept(RagiumCuttingRecipeProvider)
         consumer.accept(RagiumDryingRecipeProvider)
         consumer.accept(RagiumEnchantingRecipeProvider)
-        consumer.accept(RagiumFluidRecipeProvider)
-        consumer.accept(RagiumMixingRecipeProvider)
+        consumer.accept(RagiumHeatRecipeProvider)
+        consumer.accept(RagiumChemicalRecipeProvider)
         consumer.accept(RagiumPlantingRecipeBuilder)
         consumer.accept(RagiumPressingRecipeProvider)
         consumer.accept(RagiumPyrolyzingRecipeProvider)

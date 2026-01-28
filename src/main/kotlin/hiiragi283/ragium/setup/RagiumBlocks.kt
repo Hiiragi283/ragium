@@ -81,7 +81,7 @@ object RagiumBlocks {
     val FORMING_PRESS: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.FORMING_PRESS, RagiumTranslation.FORMING_PRESS)
 
-    // Advanced
+    // Heat
     @JvmField
     val DRYER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.DRYER, RagiumTranslation.DRYER)
@@ -91,16 +91,19 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
 
     @JvmField
-    val MIXER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
-
-    @JvmField
     val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
     @JvmField
     val SOLIDIFIER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.SOLIDIFIER, RagiumTranslation.SOLIDIFIER)
+
+    // Chemical
+    @JvmField
+    val MIXER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
+
+    // Matter
 
     //    Device    //
 

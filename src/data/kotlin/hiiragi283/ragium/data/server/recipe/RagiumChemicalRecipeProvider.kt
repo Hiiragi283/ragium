@@ -6,19 +6,20 @@ import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
-object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
+object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         // Dirt + Water -> Mud
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Items.DIRT)
-            fluidIngredients += inputCreator.water(250)
-            result += resultCreator.create(Items.MUD)
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Items.DIRT)
+            fluidIngredient = inputCreator.water(250)
+            result = resultCreator.create(Items.MUD)
             time = 20 * 5
         }
         // Gravel + Water -> Flint
@@ -45,10 +46,10 @@ object RagiumMixingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
         }
 
         // Diamond + Raginite -> Ragi-Crystal
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
-            fluidIngredients += inputCreator.create(RagiumFluids.MOLTEN_RAGINITE, 100 * 8)
-            result += resultCreator.material(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
+            fluidIngredient = inputCreator.create(RagiumFluids.MOLTEN_RAGINITE, 100 * 8)
+            result = resultCreator.material(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
         }
 
         // Creosote + Redstone -> Lubricant

@@ -28,9 +28,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         add(RagiumBlocks.DRYER, "乾燥機")
         add(RagiumBlocks.MELTER, "溶融炉")
-        add(RagiumBlocks.MIXER, "混合機")
         add(RagiumBlocks.PYROLYZER, "熱分解室")
         add(RagiumBlocks.SOLIDIFIER, "成型機")
+
+        add(RagiumBlocks.MIXER, "混合機")
 
         add(RagiumBlocks.FERMENTER, "発酵槽")
         add(RagiumBlocks.PLANTER, "栽培機")
@@ -77,6 +78,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.BATHING, "化学浴")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.DRYING, "乾燥")

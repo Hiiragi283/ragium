@@ -5,6 +5,7 @@ object RagiumConst {
 
     const val ALLOY_SMELTER = "alloy_smelter"
     const val BREWERY = "brewery"
+    const val CHEMICAL_BATH = "chemical_bath"
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"
     const val DRYER = "dryer"
@@ -34,6 +35,7 @@ object RagiumConst {
     //    Recipes    //
 
     const val ALLOYING = "alloying"
+    const val BATHING = "bathing"
     const val BREWING = "brewing"
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"

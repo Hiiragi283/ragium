@@ -72,7 +72,7 @@ object RagiumBlockEntityTypes {
     val FORMING_PRESS: HTDeferredBlockEntityType<HTFormingPressBlockEntity> =
         REGISTER.registerTick(RagiumConst.FORMING_PRESS, ::HTFormingPressBlockEntity)
 
-    // Advanced
+    // Heat
     @JvmField
     val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> =
         REGISTER.registerTick(RagiumConst.DRYER, ::HTDryerBlockEntity)
@@ -82,16 +82,19 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
 
     @JvmField
-    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.MIXER, ::HTMixerBlockEntity)
-
-    @JvmField
     val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> =
         REGISTER.registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
 
     @JvmField
     val SOLIDIFIER: HTDeferredBlockEntityType<HTSolidifierBlockEntity> =
         REGISTER.registerTick(RagiumConst.SOLIDIFIER, ::HTSolidifierBlockEntity)
+
+    // Chemical
+    @JvmField
+    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
+        REGISTER.registerTick(RagiumConst.MIXER, ::HTMixerBlockEntity)
+
+    // Matter
 
     //    Device    //
 
@@ -167,9 +170,10 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, DRYER.get())
         registerHandler(event, MELTER.get())
-        registerHandler(event, MIXER.get())
         registerHandler(event, PYROLYZER.get())
         registerHandler(event, SOLIDIFIER.get())
+
+        registerHandler(event, MIXER.get())
 
         // Device
         registerHandler(event, FERMENTER.get())

@@ -28,9 +28,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.MELTER, "Melter")
-        add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
         add(RagiumBlocks.SOLIDIFIER, "Solidifier")
+
+        add(RagiumBlocks.MIXER, "Mixer")
 
         add(RagiumBlocks.FERMENTER, "Fermenter")
         add(RagiumBlocks.PLANTER, "Planter")
@@ -77,6 +78,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.BATHING, "Bathing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.DRYING, "Drying")

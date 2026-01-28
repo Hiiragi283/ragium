@@ -26,6 +26,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
@@ -425,10 +426,11 @@ object RagiumRuntimeRecipeHandler {
             // プレフィックスと素材のプロパティから液体量を算出
             val fluidAmount: Int = prefix.getScaledAmount(propertyMap.getDefaultFluidAmount(), propertyMap).toInt()
             // レシピを登録
-            val result: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
-            HTSingleRecipeBuilder.solidifying(output) {
-                this.ingredient = inputCreator.create(molten, fluidAmount) to inputCreator.create(moldType)
-                this.result = resultCreator.create(result)
+            val resultItem: Item = event.getFirstHolder(prefix, key)?.value() ?: continue
+            HTFluidWithItemRecipeBuilder.solidifying(output) {
+                fluidIngredient = inputCreator.create(molten, fluidAmount)
+                itemIngredient = inputCreator.create(moldType)
+                result = resultCreator.create(resultItem)
                 recipeId suffix "_from_molten"
             }
         }

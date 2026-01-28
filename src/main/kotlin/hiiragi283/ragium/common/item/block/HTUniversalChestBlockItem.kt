@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.item.block
 
-import com.lowdragmc.lowdraglib2.gui.factory.HeldItemUIMenuType
 import hiiragi283.core.api.item.HTDescriptionBlockItem
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.common.gui.factory.HTItemWidgetHolderContext
 import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.server.level.ServerPlayer
@@ -20,7 +20,7 @@ class HTUniversalChestBlockItem(block: HTUniversalChestBlock, properties: Proper
     HTSubCreativeTabContents {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
         if (player is ServerPlayer) {
-            HeldItemUIMenuType.openUI(player, usedHand)
+            HTItemWidgetHolderContext.openMenu(player, usedHand)
         }
         return InteractionResultHolder.sidedSuccess(player.getItemInHand(usedHand), level.isClientSide)
     }
