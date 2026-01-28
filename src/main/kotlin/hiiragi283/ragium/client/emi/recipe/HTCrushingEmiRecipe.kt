@@ -19,9 +19,9 @@ class HTCrushingEmiRecipe(holder: RecipeHolder<HTCrushingRecipe>) :
             endToStart = true,
         )
         // outputs
-        widgets.addSlot(output(0), getPosition(5.5), getPosition(0.5), HTBackgroundType.OUTPUT)
-        widgets.addSlot(output(1), getPosition(6.5), getPosition(0.5), HTBackgroundType.EXTRA_OUTPUT)
-        widgets.addSlot(output(2), getPosition(5.5), getPosition(1.5), HTBackgroundType.EXTRA_OUTPUT)
-        widgets.addSlot(output(3), getPosition(6.5), getPosition(1.5), HTBackgroundType.EXTRA_OUTPUT)
+        widgets.addSlot(output(0), getPosition(5.5), getPosition(1), HTBackgroundType.OUTPUT)
+        widgets.addSlot(output(1), getPosition(7), getPosition(0), HTBackgroundType.EXTRA_OUTPUT)
+        widgets.addSlot(output(2), getPosition(7), getPosition(1), HTBackgroundType.EXTRA_OUTPUT)
+        widgets.addSlot(output(3), getPosition(7), getPosition(2), HTBackgroundType.EXTRA_OUTPUT)
     }
 }

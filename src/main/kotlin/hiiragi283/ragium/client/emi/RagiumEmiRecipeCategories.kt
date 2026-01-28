@@ -40,23 +40,16 @@ object RagiumEmiRecipeCategories {
 
     //    Processor    //
 
-    @JvmStatic
-    private fun processor(
-        hasText: HTHasText,
-        id: ResourceLocation,
-        vararg workStations: ItemLike,
-        width: Int = 18 * 8,
-        height: Int = 18 * 3,
-    ): HTEmiRecipeCategory = HTEmiRecipeCategory.create(Bounds(0, 0, width, height), hasText, id, *workStations)
+    @JvmField
+    val PROCESSOR_BOUNDS = Bounds(0, 0, 8 * 18, 3 * 18)
 
     @JvmStatic
-    private fun <T> processor(
-        recipeType: T,
-        vararg workStations: ItemLike,
-        width: Int = 18 * 8,
-        height: Int = 18 * 3,
-    ): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike =
-        processor(recipeType, recipeType.getId(), *workStations, width = width, height = height)
+    private fun processor(hasText: HTHasText, id: ResourceLocation, vararg workStations: ItemLike): HTEmiRecipeCategory =
+        HTEmiRecipeCategory.create(PROCESSOR_BOUNDS, hasText, id, *workStations)
+
+    @JvmStatic
+    private fun <T> processor(recipeType: T, vararg workStations: ItemLike): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike =
+        processor(recipeType, recipeType.getId(), *workStations)
 
     // Machine - Basic
     @JvmField

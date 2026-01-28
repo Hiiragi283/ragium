@@ -4,11 +4,11 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.emi.RagiumEmiTextures
-import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
+import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTSolidifyingEmiRecipe(holder: RecipeHolder<HTSolidifyingRecipe>) :
-    HTProcessingEmiRecipe<HTSolidifyingRecipe>(RagiumEmiRecipeCategories.SOLIDIFYING, holder) {
+class HTPressingEmiRecipe(holder: RecipeHolder<HTPressingRecipe>) :
+    HTProcessingEmiRecipe<HTPressingRecipe>(RagiumEmiRecipeCategories.PRESSING, holder) {
     init {
         addInput(recipe.ingredient)
 
@@ -21,16 +21,16 @@ class HTSolidifyingEmiRecipe(holder: RecipeHolder<HTSolidifyingRecipe>) :
         widgets.addArrow(time = recipe.time)
         RagiumEmiTextures.addWidget(
             widgets,
-            "solidify",
-            getPosition(2),
-            getPosition(1.5),
+            "press",
+            getPosition(1),
+            getPosition(1),
             recipe.time,
-            endToStart = true,
+            endToStart = false,
         )
         // input
-        widgets.addTank(input(0), getPosition(0.5), HTBackgroundType.INPUT)
+        widgets.addSlot(input(0), getPosition(2), getPosition(0), HTBackgroundType.INPUT)
         // catalyst
-        widgets.addSlot(catalyst(0), getPosition(2), getPosition(0.5), HTBackgroundType.NONE)
+        widgets.addSlot(catalyst(0), getPosition(2), getPosition(2), HTBackgroundType.NONE)
         // output
         widgets.add2x2Slots()
     }

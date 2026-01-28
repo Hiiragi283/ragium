@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.emi.recipe
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.integration.emi.HTEmiHolderRecipe
 import hiiragi283.core.api.integration.emi.toEmi
 import hiiragi283.core.api.integration.emi.toItemEmi
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
@@ -18,7 +17,7 @@ import net.minecraft.world.level.block.Block
 import kotlin.jvm.optionals.getOrNull
 
 class HTSimulatingEmiRecipe(holder: RecipeHolder<HTSimulatingRecipe<*>>) :
-    HTEmiHolderRecipe<HTSimulatingRecipe<*>>(RagiumEmiRecipeCategories.SIMULATING, holder) {
+    HTProcessingEmiRecipe<HTSimulatingRecipe<*>>(RagiumEmiRecipeCategories.SIMULATING, holder) {
     init {
         addInput(recipe.ingredient.getOrNull())
 
@@ -32,7 +31,7 @@ class HTSimulatingEmiRecipe(holder: RecipeHolder<HTSimulatingRecipe<*>>) :
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addArrow(getPosition(3.5), getPosition(1), recipe.time)
+        widgets.addArrow(time = recipe.time)
         // input
         widgets.addSlot(input(0), getPosition(1.5), getPosition(0), HTBackgroundType.INPUT)
         // catalyst
