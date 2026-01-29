@@ -157,6 +157,7 @@
   "recipe_type.ragium.pyrolyzing": "熱分解",
   "recipe_type.ragium.refining": "精製",
   "recipe_type.ragium.solidifying": "成型",
+  "recipe_type.ragium.washing": "洗浄",
   "tag.fluid.c.biofuel": "バイオ燃料",
   "tag.fluid.c.coolant": "冷却液",
   "tag.fluid.c.creosote": "クレオソート",

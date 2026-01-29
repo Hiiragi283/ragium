@@ -47,10 +47,8 @@ object RagiumConst {
     const val PRESSING = "pressing"
     const val PYROLYZING = "pyrolyzing"
     const val REFINING = "refining"
-    const val SIMULATING = "simulating"
-    const val SIMULATING_BLOCK = "$SIMULATING/block"
-    const val SIMULATING_ENTITY = "$SIMULATING/entity"
     const val SOLIDIFYING = "solidifying"
+    const val WASHING = "washing"
 
     const val ITEM_INGREDIENT = "item_ingredient"
     const val FLUID_INGREDIENT = "fluid_ingredient"

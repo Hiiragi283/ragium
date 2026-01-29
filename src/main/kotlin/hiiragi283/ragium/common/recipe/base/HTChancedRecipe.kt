@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.recipe.base
 
 import hiiragi283.core.api.recipe.HTProcessingRecipe
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.storage.item.HTItemResourceType
@@ -9,18 +8,16 @@ import hiiragi283.core.api.storage.item.toResourcePair
 import net.minecraft.core.HolderLookup
 import net.minecraft.util.RandomSource
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.level.Level
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.LevelAccessor
 import org.apache.commons.lang3.math.Fraction
 
-abstract class HTChancedRecipe(
-    val ingredient: HTItemIngredient,
+abstract class HTChancedRecipe<INPUT : RecipeInput>(
     val result: HTItemResult,
     val extraResults: List<HTChancedItemResult>,
     time: Int,
     exp: Fraction,
-) : HTProcessingRecipe<SingleRecipeInput>(time, exp) {
+) : HTProcessingRecipe<INPUT>(time, exp) {
     fun getExtraResultItems(level: LevelAccessor): List<ItemStack> = getExtraResultItems(level.registryAccess(), level.random)
 
     fun getExtraResultItems(provider: HolderLookup.Provider, random: RandomSource): List<ItemStack> =
@@ -36,8 +33,6 @@ abstract class HTChancedRecipe(
 
         return map.map { (resource: HTItemResourceType, count: Int) -> resource.toStack(count) }
     }
-
-    final override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
 }

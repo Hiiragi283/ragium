@@ -9,7 +9,7 @@
       "fluids": "#c:plant_oil"
     }
   ],
-  "fluid_result": {
+  "result": {
     "amount": 500,
     "id": "ragium:biofuel",
     "tag": "c:biofuel"

@@ -7,9 +7,8 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.EnchantingTableBlock
 
-abstract class HTEnchantingRecipeComponent<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(
-    val owner: HTProcessorBlockEntity,
-) : HTRecipeComponent<INPUT, RECIPE>(owner) {
+abstract class HTEnchantingRecipeComponent<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(val owner: HTProcessorBlockEntity) :
+    HTRecipeComponent<INPUT, RECIPE>(owner) {
     final override fun getMaxProgress(recipe: RECIPE): Int = getTime(recipe).let(owner::modifyTime)
 
     open fun getTime(recipe: RECIPE): Int = recipe.time * 20

@@ -8,7 +8,7 @@ import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTCuttingEmiRecipe(holder: RecipeHolder<HTCuttingRecipe>) :
-    HTChancedEmiRecipe<HTCuttingRecipe>(RagiumEmiRecipeCategories.CUTTING, holder) {
+    HTItemToChancedEmiRecipe<HTCuttingRecipe>(RagiumEmiRecipeCategories.CUTTING, holder) {
     override fun addOutputSlots(widgets: WidgetHolder) {
         RagiumEmiTextures.addWidget(
             widgets,

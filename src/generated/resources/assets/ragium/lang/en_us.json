@@ -157,6 +157,7 @@
   "recipe_type.ragium.pyrolyzing": "Pyrolyzing",
   "recipe_type.ragium.refining": "Refining",
   "recipe_type.ragium.solidifying": "Solidifying",
+  "recipe_type.ragium.washing": "Washing",
   "tag.fluid.c.biofuel": "Biofuel",
   "tag.fluid.c.coolant": "Coolant",
   "tag.fluid.c.creosote": "Creosote",

@@ -90,6 +90,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
         add(RagiumRecipeTypes.REFINING, "Refining")
         add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
+        add(RagiumRecipeTypes.WASHING, "Washing")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")

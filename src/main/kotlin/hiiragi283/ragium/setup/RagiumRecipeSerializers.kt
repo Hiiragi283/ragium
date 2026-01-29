@@ -19,7 +19,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegist
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
-import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -33,8 +33,9 @@ import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
-import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
+import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTComplexResultRecipe
+import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
@@ -89,16 +90,16 @@ object RagiumRecipeSerializers {
     )
 
     @JvmStatic
-    private fun <R : HTChancedRecipe> chanced(
-        factory: HTChancedRecipeBuilder.Factory<R>,
+    private fun <R : HTItemToChancedRecipe> itemChanced(
+        factory: HTItemToChancedRecipeBuilder.Factory<R>,
         max: Int,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = processing(
-        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTChancedRecipe::ingredient),
-        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTChancedRecipe::result),
+        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTItemToChancedRecipe::ingredient),
+        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTItemToChancedRecipe::result),
         HTChancedItemResult.CODEC
             .listOrElement(0, max)
             .optionalFieldOf(RagiumConst.EXTRA_RESULT, listOf())
-            .forGetter(HTChancedRecipe::extraResults),
+            .forGetter(HTItemToChancedRecipe::extraResults),
         factory::create,
     )
 
@@ -119,10 +120,10 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, chanced(::HTCrushingRecipe, 3))
+    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, itemChanced(::HTCrushingRecipe, 3))
 
     @JvmField
-    val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, chanced(::HTCuttingRecipe, 1))
+    val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, itemChanced(::HTCuttingRecipe, 1))
 
     @JvmField
     val PRESSING: RecipeSerializer<HTPressingRecipe> = REGISTER.registerSerializer(
@@ -226,8 +227,25 @@ object RagiumRecipeSerializers {
                 .listOrElement(1, 2)
                 .fieldOf(RagiumConst.FLUID_INGREDIENT)
                 .forGetter(HTMixingRecipe::fluidIngredients),
-            COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
+            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTMixingRecipe::result),
             ::HTMixingRecipe,
+        ),
+    )
+
+    @JvmField
+    val WASHING: RecipeSerializer<HTWashingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.WASHING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC.fieldOf(RagiumConst.ITEM_INGREDIENT).forGetter(HTWashingRecipe::itemIngredient),
+            HTFluidIngredient.CODEC.fieldOf(RagiumConst.FLUID_INGREDIENT).forGetter(HTWashingRecipe::fluidIngredient),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTWashingRecipe::result),
+            HTChancedItemResult.CODEC
+                .listOrElement(0, 3)
+                .optionalFieldOf(RagiumConst.EXTRA_RESULT, listOf())
+                .forGetter(HTWashingRecipe::extraResults),
+            HTRecipeBiCodecs.TIME.forGetter(HTWashingRecipe::time),
+            HTRecipeBiCodecs.EXP.forGetter(HTWashingRecipe::exp),
+            ::HTWashingRecipe,
         ),
     )
 

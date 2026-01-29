@@ -90,6 +90,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
         add(RagiumRecipeTypes.REFINING, "精製")
         add(RagiumRecipeTypes.SOLIDIFYING, "成型")
+        add(RagiumRecipeTypes.WASHING, "洗浄")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")

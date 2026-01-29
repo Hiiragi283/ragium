@@ -32,7 +32,6 @@ class HTMixingEmiRecipe(holder: RecipeHolder<HTMixingRecipe>) :
         widgets.addSlot(input(1), getPosition(1), getPosition(2), HTBackgroundType.EXTRA_INPUT)
         widgets.addSlot(input(2), getPosition(2), getPosition(2), HTBackgroundType.EXTRA_INPUT)
         // outputs
-        widgets.addSlot(output(0), getPosition(5.5), getPosition(1), HTBackgroundType.OUTPUT)
-        widgets.addTank(output(1), getPosition(7), HTBackgroundType.OUTPUT)
+        widgets.addTank(output(0), getPosition(5.5), HTBackgroundType.OUTPUT)
     }
 }
