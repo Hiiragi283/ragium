@@ -8,7 +8,6 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.itemId
 import hiiragi283.core.api.resource.toId
-import hiiragi283.core.common.registry.register.HTSimpleFluidContent
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTMoldType
@@ -16,9 +15,6 @@ import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
-import kotlin.collections.addAll
-import kotlin.collections.contains
-import kotlin.collections.forEach
 
 class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(RagiumAPI.MOD_ID, context) {
     private val wireOverlay: ResourceLocation = HiiragiCoreAPI.id(HTConst.ITEM, "wire_overlay")
@@ -81,15 +77,17 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
     }
 
     private fun registerBuckets() {
-        val dripFluids: List<HTSimpleFluidContent> = buildList {
+        val dripFluids: List<HTFluidContent<*, *, *>> = buildList {
             // Organic
             add(RagiumFluids.CRUDE_BIO)
             // Oil
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.LUBRICANT)
+            // Organic
+            add(RagiumFluids.CREOSOTE)
+            add(RagiumFluids.COAL_LIQUID)
             // Misc
             add(RagiumFluids.MOLTEN_RAGINITE)
-            add(RagiumFluids.CREOSOTE)
         }
         for (content: HTFluidContent<*, *, *> in RagiumFluids.REGISTER.entries) {
             bucketItem(content, content in dripFluids)

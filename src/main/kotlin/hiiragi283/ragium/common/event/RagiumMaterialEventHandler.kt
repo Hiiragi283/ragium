@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.event
 
 import hiiragi283.core.api.event.HTMaterialPropertyEvent
+import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTFluidMaterialProperty
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
@@ -12,8 +13,9 @@ import hiiragi283.core.api.material.property.addItemPrefixes
 import hiiragi283.core.api.material.property.setDefaultPart
 import hiiragi283.core.api.material.property.setName
 import hiiragi283.core.api.material.property.setTextureSet
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.common.registry.HTDeferredItem
+import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -81,24 +83,23 @@ object RagiumMaterialEventHandler {
         }
         // Others
         event.modify(RagiumMaterialKeys.MEAT) {
-            setDefaultPart(
-                Tags.Items.FOODS_RAW_MEAT,
-                HTDeferredItem.simple(CommonTagPrefixes.INGOT.createId(RagiumMaterialKeys.MEAT)),
-            )
+            setDefaultPart(Tags.Items.FOODS_RAW_MEAT, createItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT))
             addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT)
+            put(HTMaterialPropertyKeys.SMELTED_TO, RagiumMaterialKeys.COOKED_MEAT)
             put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(HCFluids.MEAT))
 
             setName("Meat", "肉")
             addCustomName(CommonTagPrefixes.DUST, "Minced Meat", "ひき肉")
         }
         event.modify(RagiumMaterialKeys.COOKED_MEAT) {
-            setDefaultPart(
-                Tags.Items.FOODS_COOKED_MEAT,
-                HTDeferredItem.simple(CommonTagPrefixes.INGOT.createId(RagiumMaterialKeys.COOKED_MEAT)),
-            )
+            setDefaultPart(Tags.Items.FOODS_COOKED_MEAT, createItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
             addItemPrefixes(CommonTagPrefixes.INGOT)
+            put(HTMaterialPropertyKeys.CAN_BE_SMELTED, false)
 
             setName("Cooked Meat", "焼肉")
         }
     }
+
+    @JvmStatic
+    private fun createItem(prefix: HTTagPrefix, key: HTMaterialKey): HTItemHolderLike<*> = HTItemHolderLike.of(prefix.createId(key))
 }

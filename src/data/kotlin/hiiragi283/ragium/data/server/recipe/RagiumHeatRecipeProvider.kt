@@ -5,6 +5,7 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.VanillaFluidContents
+import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -12,6 +13,7 @@ import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -86,6 +88,17 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             HTMoldType.PLATE,
             "pane",
         )
+        // Eldritch
+        for (i: Int in (0..4)) {
+            HTSingleRecipeBuilder.melting(output) {
+                ingredient = inputCreator.create(
+                    false,
+                    Items.OMINOUS_BOTTLE,
+                ) { expect(DataComponents.OMINOUS_BOTTLE_AMPLIFIER, i) }
+                result = resultCreator.molten(HCMaterialKeys.ELDRITCH) { it * (i + 1) }
+                recipeId suffix "/$i"
+            }
+        }
     }
 
     @JvmStatic

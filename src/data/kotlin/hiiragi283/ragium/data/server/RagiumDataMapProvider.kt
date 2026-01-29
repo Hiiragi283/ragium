@@ -13,9 +13,9 @@ import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.createCommonTag
 import hiiragi283.core.setup.HCFluids
-import hiiragi283.ragium.api.RagiumTags
 import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
@@ -49,7 +49,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         coolants()
         magmaticFuels()
         combustionFuels()
-        fertilizer()
 
         upgrade()
     }
@@ -115,28 +114,24 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         builder(RagiumDataMapTypes.COMBUSTION_FUEL)
             // lowest
             .add(RagiumFluids.CREOSOTE, lowest)
-            // low
-            .add(RagiumFluids.CRUDE_OIL, low)
-            .add("oil", low)
-            .add(RagiumFluids.CRUDE_BIO, low)
             .add(RagiumFluids.PLANT_OIL, low)
+            // low
+            .add("oil", low)
+            .add(RagiumFluids.COAL_LIQUID, low)
+            .add(RagiumFluids.CRUDE_OIL, low)
+            .add(RagiumTags.Fluids.ALCOHOL, medium, false)
             // medium
-            .add(RagiumFluids.ETHANOL, medium)
             .add("bioethanol", medium)
-            .add("lpg", medium)
+            .add(RagiumFluids.COAL_GAS, medium)
+            .add(RagiumFluids.ETHYLENE, medium)
+            .add(RagiumFluids.LPG, medium)
+            .add(RagiumFluids.METHANE, medium)
             // high
-            .add(RagiumFluids.FUEL, high)
-            .add(RagiumFluids.BIOFUEL, high)
-            .add("diesel", high)
             .add("biodiesel", high)
+            .add("diesel", high)
+            .add(RagiumFluids.GASOLINE, high)
             // highest
             .add("high_power_biodiesel", highest)
-    }
-
-    private fun fertilizer() {
-        builder(RagiumDataMapTypes.FERTILIZER)
-            .add(Tags.Fluids.WATER, fraction(1), false)
-            .add(RagiumFluids.FERTILIZER, fraction(1.5f))
     }
 
     private fun upgrade() {

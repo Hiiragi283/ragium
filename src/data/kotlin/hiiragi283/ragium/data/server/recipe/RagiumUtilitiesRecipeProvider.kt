@@ -16,7 +16,7 @@ import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets

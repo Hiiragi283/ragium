@@ -1,22 +1,17 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.function.partially1
-import hiiragi283.core.api.item.alchemy.HTMobEffectInstance
-import hiiragi283.core.common.block.HTEffectLiquidBlock
 import hiiragi283.core.common.fluid.HTExplosiveFluidType
 import hiiragi283.core.common.registry.register.HTFluidContentRegister
 import hiiragi283.core.common.registry.register.HTSimpleFluidContent
+import hiiragi283.core.common.registry.register.HTVirtualFluidContent
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.core.Holder
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.effect.MobEffect
-import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.FluidType
-import java.util.function.UnaryOperator
 
 object RagiumFluids {
     @JvmField
@@ -35,22 +30,27 @@ object RagiumFluids {
     private fun slimy(): FluidType.Properties = create(SoundEvents.SLIME_BLOCK_PLACE, SoundEvents.SLIME_BLOCK_BREAK)
 
     @JvmField
-    val CRUDE_BIO: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("crude_bio", slimy())
+    val CRUDE_BIO: HTVirtualFluidContent = REGISTER.registerVirtual("crude_bio", slimy())
 
     @JvmField
-    val ETHANOL: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("ethanol", liquid())
+    val PLANT_OIL: HTVirtualFluidContent = REGISTER.registerVirtual("plant_oil", liquid())
 
     @JvmField
-    val PLANT_OIL: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("plant_oil", liquid())
+    val BIOFUEL: HTVirtualFluidContent = REGISTER.registerVirtual("biofuel", liquid())
+
+    //    Organic    //
+
+    // Coal
+    @JvmField
+    val CREOSOTE: HTVirtualFluidContent = REGISTER.registerVirtual("creosote", liquid())
 
     @JvmField
-    val BIOFUEL: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("biofuel", liquid())
+    val COAL_GAS: HTVirtualFluidContent = REGISTER.registerVirtual("coal_gas", gas())
 
     @JvmField
-    val FERTILIZER: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("fertilizer", liquid())
+    val COAL_LIQUID: HTVirtualFluidContent = REGISTER.registerVirtual("coal_liquid", liquid())
 
-    //    Oil    //
-
+    // Resource
     @JvmField
     val CRUDE_OIL: HTSimpleFluidContent = REGISTER.registerFlowing(
         "crude_oil",
@@ -64,24 +64,45 @@ object RagiumFluids {
     ) { it.speedFactor(0.4f) }
 
     @JvmField
-    val NAPHTHA: HTSimpleFluidContent = REGISTER.registerFlowing("naphtha", liquid(), ::HTExplosiveFluidType.partially1(3f))
+    val LPG: HTVirtualFluidContent = REGISTER.registerVirtual("natural_gas", gas())
 
     @JvmField
-    val FUEL: HTSimpleFluidContent = REGISTER.registerFlowing("fuel", liquid(), ::HTExplosiveFluidType.partially1(4f))
+    val NAPHTHA: HTVirtualFluidContent = REGISTER.registerVirtual("naphtha", liquid(), ::HTExplosiveFluidType.partially1(3f))
 
     @JvmField
-    val LUBRICANT: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("lubricant", liquid()) { it.speedFactor(0.8f) }
+    val RESIDUE_OIL: HTVirtualFluidContent = REGISTER.registerVirtual("residue_oil", liquid(), ::HTExplosiveFluidType.partially1(1f))
+
+    // Gaseous
+    @JvmField
+    val METHANE: HTVirtualFluidContent = REGISTER.registerVirtual("methane", gas())
+
+    @JvmField
+    val ETHYLENE: HTVirtualFluidContent = REGISTER.registerVirtual("ethylene", gas())
+
+    @JvmField
+    val BUTADIENE: HTVirtualFluidContent = REGISTER.registerVirtual("butadiene", gas())
+
+    // Alcohol
+    @JvmField
+    val METHANOL: HTVirtualFluidContent = REGISTER.registerVirtual("methanol", liquid())
+
+    @JvmField
+    val ETHANOL: HTVirtualFluidContent = REGISTER.registerVirtual("ethanol", liquid())
+
+    // Liquid
+    @JvmField
+    val GASOLINE: HTVirtualFluidContent = REGISTER.registerVirtual("gasoline", liquid(), ::HTExplosiveFluidType.partially1(4f))
+
+    @JvmField
+    val LUBRICANT: HTVirtualFluidContent = REGISTER.registerVirtual("lubricant", liquid())
 
     //    Misc    //
 
     @JvmField
-    val MOLTEN_RAGINITE: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("molten_raginite", molten().temperature(1300))
+    val MOLTEN_RAGINITE: HTVirtualFluidContent = REGISTER.registerVirtual("molten_raginite", molten().temperature(1300))
 
     @JvmField
-    val COOLANT: HTSimpleFluidContent = REGISTER.registerSimpleFlowing("coolant", liquid().temperature(273))
-
-    @JvmField
-    val CREOSOTE: HTSimpleFluidContent = REGISTER.registerFlowing("creosote", liquid(), ::HTExplosiveFluidType.partially1(2f))
+    val COOLANT: HTVirtualFluidContent = REGISTER.registerVirtual("coolant", liquid().temperature(273))
 
     //    Extensions    //
 
@@ -95,32 +116,8 @@ object RagiumFluids {
     private fun liquid(): FluidType.Properties = create(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
 
     @JvmStatic
+    private fun gas(): FluidType.Properties = liquid().density(-1000)
+
+    @JvmStatic
     private fun molten(): FluidType.Properties = create(SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA)
-
-    @JvmStatic
-    fun <TYPE : FluidType> registerEffected(
-        name: String,
-        properties: FluidType.Properties,
-        typeFactory: (FluidType.Properties) -> TYPE,
-        effect: Holder<MobEffect>,
-        amplifier: Int = 0,
-        duration: Int = 5 * 20,
-        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
-    ): HTSimpleFluidContent = REGISTER.registerFlowing(
-        name,
-        properties,
-        typeFactory,
-        ::HTEffectLiquidBlock.partially1(HTMobEffectInstance(effect, duration, amplifier)),
-        blockProperties = blockProperties,
-    )
-
-    @JvmStatic
-    fun registerEffected(
-        name: String,
-        properties: FluidType.Properties,
-        effect: Holder<MobEffect>,
-        amplifier: Int = 0,
-        duration: Int = 5 * 20,
-        blockProperties: UnaryOperator<BlockBehaviour.Properties> = UnaryOperator.identity(),
-    ): HTSimpleFluidContent = registerEffected(name, properties, ::FluidType, effect, amplifier, duration, blockProperties)
 }

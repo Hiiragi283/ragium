@@ -115,7 +115,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             itemIngredient = inputCreator.create(crushedPrefix, key)
             fluidIngredient = inputCreator.water(125)
             result = resultCreator.create(resultItem)
-            time /= 4
             recipeId suffix "from_${crushedPrefix.name}"
         }
     }

@@ -12,10 +12,9 @@ import hiiragi283.ragium.data.server.recipe.RagiumCuttingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumEnchantingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumOrganicRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumPlantingRecipeBuilder
 import hiiragi283.ragium.data.server.recipe.RagiumPressingRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumPyrolyzingRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumRefiningRecipeBuilder
 import hiiragi283.ragium.data.server.recipe.RagiumUtilitiesRecipeProvider
 import java.util.function.Consumer
 
@@ -24,15 +23,14 @@ class RagiumRecipeProvider(context: HTDataGenContext) : HTRecipeProvider(context
         consumer.accept(HTMaterialRecipeProvider(RagiumAPI.MOD_ID))
 
         consumer.accept(RagiumAlloyingRecipeProvider)
+        consumer.accept(RagiumChemicalRecipeProvider)
         consumer.accept(RagiumCrushingRecipeProvider)
         consumer.accept(RagiumCuttingRecipeProvider)
         consumer.accept(RagiumEnchantingRecipeProvider)
         consumer.accept(RagiumHeatRecipeProvider)
-        consumer.accept(RagiumChemicalRecipeProvider)
+        consumer.accept(RagiumOrganicRecipeProvider)
         consumer.accept(RagiumPlantingRecipeBuilder)
         consumer.accept(RagiumPressingRecipeProvider)
-        consumer.accept(RagiumPyrolyzingRecipeProvider)
-        consumer.accept(RagiumRefiningRecipeBuilder)
 
         consumer.accept(RagiumMaterialRecipeProvider)
         consumer.accept(RagiumUtilitiesRecipeProvider)

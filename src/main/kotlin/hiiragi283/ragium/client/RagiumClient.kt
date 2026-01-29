@@ -98,19 +98,30 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
-        event.dull(RagiumFluids.ETHANOL, Color(0xccffcc))
         event.clear(RagiumFluids.PLANT_OIL, Color(0x66cc66))
         event.clear(RagiumFluids.BIOFUEL, Color(0x99cc00))
-        event.clear(RagiumFluids.FERTILIZER, Color(0x339933))
+
+        event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
+        event.dull(RagiumFluids.COAL_GAS, Color(0xffcc99))
+        event.dull(RagiumFluids.COAL_LIQUID, Color(0x333366))
 
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
-        event.dull(RagiumFluids.NAPHTHA, Color(0xff6633))
-        event.clear(RagiumFluids.FUEL, Color(0xcc3300))
+        event.clear(RagiumFluids.LPG, Color(0xcccccc))
+        event.dull(RagiumFluids.NAPHTHA, Color(0xcc6600))
+        event.dull(RagiumFluids.RESIDUE_OIL, Color(0x663366))
+
+        event.dull(RagiumFluids.METHANE, Color(0xcc9999))
+        event.dull(RagiumFluids.ETHYLENE, Color(0x99cc99))
+        event.dull(RagiumFluids.BUTADIENE, Color(0x999966))
+
+        event.dull(RagiumFluids.METHANOL, Color(0xcc6699))
+        event.dull(RagiumFluids.ETHANOL, Color(0x99cc66))
+
+        event.clear(RagiumFluids.GASOLINE, Color(0xcccc00))
         event.dull(RagiumFluids.LUBRICANT, Color(0xff9900))
 
         event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
         event.clear(RagiumFluids.COOLANT, Color(0x009999))
-        event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
     }
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {

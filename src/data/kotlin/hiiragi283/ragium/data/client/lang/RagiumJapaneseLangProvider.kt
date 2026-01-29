@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.client.lang
 
 import hiiragi283.core.api.data.lang.HTLangProvider
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
@@ -51,19 +51,30 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
         addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオ")
-        addFluid(RagiumFluids.ETHANOL, "エタノール")
         addFluid(RagiumFluids.PLANT_OIL, "植物油")
         addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
-        addFluid(RagiumFluids.FERTILIZER, "液体肥料")
+
+        addFluid(RagiumFluids.CREOSOTE, "クレオソート")
+        addFluid(RagiumFluids.COAL_GAS, "石炭ガス")
+        addFluid(RagiumFluids.COAL_LIQUID, "液化石炭")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
+        addFluid(RagiumFluids.LPG, "液化天然ガス")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
-        addFluid(RagiumFluids.FUEL, "燃料")
+        addFluid(RagiumFluids.RESIDUE_OIL, "残渣油")
+
+        addFluid(RagiumFluids.METHANE, "メタン")
+        addFluid(RagiumFluids.ETHYLENE, "エチレン")
+        addFluid(RagiumFluids.BUTADIENE, "ブタジエン")
+
+        addFluid(RagiumFluids.METHANOL, "メタノール")
+        addFluid(RagiumFluids.ETHANOL, "エタノール")
+
+        addFluid(RagiumFluids.GASOLINE, "ガソリン")
         addFluid(RagiumFluids.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluids.MOLTEN_RAGINITE, "不安定化ラギナイト")
         addFluid(RagiumFluids.COOLANT, "冷却液")
-        addFluid(RagiumFluids.CREOSOTE, "クレオソート")
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")

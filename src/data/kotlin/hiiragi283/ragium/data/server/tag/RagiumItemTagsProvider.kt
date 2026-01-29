@@ -8,7 +8,7 @@ import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks

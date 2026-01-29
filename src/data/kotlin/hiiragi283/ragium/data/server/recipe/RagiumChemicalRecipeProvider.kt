@@ -135,13 +135,6 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result = resultCreator.create(RagiumFluids.LUBRICANT, 750)
             recipeId suffix "_from_creosote_with_raginite"
         }
-        // Ethanol + Plant Oil -> Biofuel
-        HTMixingRecipeBuilder.create(output) {
-            fluidIngredients += inputCreator.create(RagiumFluids.ETHANOL, 750)
-            fluidIngredients += inputCreator.create(RagiumFluids.PLANT_OIL, 1000)
-            result = resultCreator.create(RagiumFluids.BIOFUEL, 500)
-            recipeId suffix "_from_ethanol"
-        }
     }
 
     //    Washing    //

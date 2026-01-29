@@ -2,7 +2,7 @@ package hiiragi283.ragium.data.client.lang
 
 import hiiragi283.core.api.data.lang.HTLangProvider
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
@@ -51,19 +51,30 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
         // Fluid
         addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
-        addFluid(RagiumFluids.ETHANOL, "Ethanol")
         addFluid(RagiumFluids.PLANT_OIL, "Plant Oil")
         addFluid(RagiumFluids.BIOFUEL, "Biofuel")
-        addFluid(RagiumFluids.FERTILIZER, "Liquid Fertilizer")
+
+        addFluid(RagiumFluids.CREOSOTE, "Creosote")
+        addFluid(RagiumFluids.COAL_GAS, "Coal Gas")
+        addFluid(RagiumFluids.COAL_LIQUID, "Liquefied Coal")
 
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
+        addFluid(RagiumFluids.LPG, "LPG")
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
-        addFluid(RagiumFluids.FUEL, "Fuel")
+        addFluid(RagiumFluids.RESIDUE_OIL, "Residue Oil")
+
+        addFluid(RagiumFluids.METHANE, "Methane")
+        addFluid(RagiumFluids.ETHYLENE, "Ethylene")
+        addFluid(RagiumFluids.BUTADIENE, "Butadiene")
+
+        addFluid(RagiumFluids.METHANOL, "Methanol")
+        addFluid(RagiumFluids.ETHANOL, "Ethanol")
+
+        addFluid(RagiumFluids.GASOLINE, "Gasoline")
         addFluid(RagiumFluids.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluids.MOLTEN_RAGINITE, "Destabilized Raginite")
         addFluid(RagiumFluids.COOLANT, "Coolant")
-        addFluid(RagiumFluids.CREOSOTE, "Creosote")
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")

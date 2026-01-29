@@ -8,10 +8,10 @@
     {
       "amount": 2,
       "items": [
-        "#c:dusts/coal",
         "#c:dusts/charcoal",
-        "#c:fuels/coal",
-        "#c:fuels/charcoal"
+        "#c:dusts/coal",
+        "#c:fuels/charcoal",
+        "#c:fuels/coal"
       ]
     }
   ],

@@ -18,20 +18,20 @@ class HTMixingEmiRecipe(holder: RecipeHolder<HTMixingRecipe>) :
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addArrow(time = recipe.time)
+        widgets.addArrow(time = recipe.time, x = getPosition(4))
         RagiumEmiTextures.addWidget(
             widgets,
             "mix",
-            getPosition(1.5),
+            getPosition(3.5),
             getPosition(1),
             recipe.time,
             endToStart = true,
         )
         // inputs
-        widgets.addSlot(input(0), getPosition(1.5), getPosition(0), HTBackgroundType.INPUT)
-        widgets.addSlot(input(1), getPosition(1), getPosition(2), HTBackgroundType.EXTRA_INPUT)
-        widgets.addSlot(input(2), getPosition(2), getPosition(2), HTBackgroundType.EXTRA_INPUT)
+        widgets.addTank(input(1), getPosition(0.5), HTBackgroundType.INPUT)
+        widgets.addTank(input(2), getPosition(2.5), HTBackgroundType.INPUT)
+        widgets.addSlot(input(0), getPosition(1.5), getPosition(0), HTBackgroundType.EXTRA_INPUT)
         // outputs
-        widgets.addTank(output(0), getPosition(5.5), HTBackgroundType.OUTPUT)
+        widgets.addTank(output(0), getPosition(6), HTBackgroundType.OUTPUT)
     }
 }

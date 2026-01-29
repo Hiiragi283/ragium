@@ -6,8 +6,8 @@
       "#c:ingots/iron"
     ],
     [
-      "#c:dusts/coal_coke",
-      "#c:fuels/coal_coke"
+      "#c:coal_coke",
+      "#c:dusts/coal_coke"
     ]
   ],
   "result": {
