@@ -78,25 +78,9 @@ object RagiumConfig {
             @JvmField
             val formingPress: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FORMING_PRESS)
 
-            // Advanced
-            @JvmField
-            val dryer: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.DRYER,
-                RagiumFluidConfigType.FIRST_INPUT,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-            )
-
+            // Heat
             @JvmField
             val melter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.MELTER, RagiumFluidConfigType.FIRST_OUTPUT)
-
-            @JvmField
-            val mixer: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.MIXER,
-                RagiumFluidConfigType.FIRST_INPUT,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-            )
 
             @JvmField
             val pyrolyzer: HTMachineConfig = HTMachineConfig.createSimple(
@@ -111,6 +95,24 @@ object RagiumConfig {
                 RagiumConst.SOLIDIFIER,
                 RagiumFluidConfigType.FIRST_INPUT,
             )
+
+            // Chemical
+            @JvmField
+            val bath: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.CHEMICAL_BATH,
+                RagiumFluidConfigType.FIRST_INPUT,
+            )
+
+            @JvmField
+            val mixer: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.MIXER,
+                RagiumFluidConfigType.FIRST_INPUT,
+                RagiumFluidConfigType.FIRST_OUTPUT,
+            )
+
+            // Matter
         }
 
         class Device(builder: ModConfigSpec.Builder) {

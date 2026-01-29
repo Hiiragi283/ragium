@@ -17,7 +17,6 @@ import hiiragi283.ragium.common.block.entity.enchant.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTDryerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFormingPressBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
@@ -73,10 +72,6 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.FORMING_PRESS, ::HTFormingPressBlockEntity)
 
     // Heat
-    @JvmField
-    val DRYER: HTDeferredBlockEntityType<HTDryerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.DRYER, ::HTDryerBlockEntity)
-
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
         REGISTER.registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
@@ -168,7 +163,6 @@ object RagiumBlockEntityTypes {
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, FORMING_PRESS.get())
 
-        registerHandler(event, DRYER.get())
         registerHandler(event, MELTER.get())
         registerHandler(event, PYROLYZER.get())
         registerHandler(event, SOLIDIFIER.get())

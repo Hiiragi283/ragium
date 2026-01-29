@@ -26,7 +26,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.FORMING_PRESS, "プレス機")
 
-        add(RagiumBlocks.DRYER, "乾燥機")
         add(RagiumBlocks.MELTER, "溶融炉")
         add(RagiumBlocks.PYROLYZER, "熱分解室")
         add(RagiumBlocks.SOLIDIFIER, "成型機")
@@ -81,7 +80,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumRecipeTypes.BATHING, "化学浴")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.DRYING, "乾燥")
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.MIXING, "混合")
@@ -127,7 +125,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "%s: 追加の出力")
         add(RagiumTranslation.GUI_SLOT_NONE, "%s: なし")
 
-        add(RagiumTranslation.DRYER, "乾燥によって材料を変換する機械です。")
         add(RagiumTranslation.MELTER, "アイテムを融かして液体にする機械です。")
         add(RagiumTranslation.PYROLYZER, "熱によって材料を変換する機械です。")
 

@@ -83,10 +83,6 @@ object RagiumBlocks {
 
     // Heat
     @JvmField
-    val DRYER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.DRYER, RagiumTranslation.DRYER)
-
-    @JvmField
     val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
 

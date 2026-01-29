@@ -23,7 +23,6 @@ import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTBathingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTDryingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTEnchantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTItemToFluidEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMixingEmiRecipe
@@ -72,7 +71,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.CUTTING,
             RagiumEmiRecipeCategories.PRESSING,
             // Machine - Heat
-            RagiumEmiRecipeCategories.DRYING,
             RagiumEmiRecipeCategories.MELTING,
             RagiumEmiRecipeCategories.PYROLYZING,
             RagiumEmiRecipeCategories.REFINING,
@@ -98,7 +96,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.PRESSING, ::HTPressingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, ::HTDryingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemToFluidEmiRecipe.Companion::melting)
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, ::HTPyrolyzingEmiRecipe)
         // addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)

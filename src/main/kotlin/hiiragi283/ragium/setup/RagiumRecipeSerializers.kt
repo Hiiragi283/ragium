@@ -10,7 +10,6 @@ import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
-import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.HTRecipeBiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
@@ -24,7 +23,6 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
@@ -34,7 +32,6 @@ import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.ragium.common.recipe.base.HTComplexResultRecipe
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -137,19 +134,6 @@ object RagiumRecipeSerializers {
     )
 
     // Machine - Heat
-    @JvmField
-    val DRYING: RecipeSerializer<HTDryingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.DRYING,
-        processing(
-            BiCodecs
-                .either(HTItemIngredient.CODEC, HTFluidIngredient.CODEC, true)
-                .fieldOf(HTConst.INGREDIENT)
-                .forGetter(HTDryingRecipe::ingredient),
-            COMPLEX_RESULT.forGetter(HTComplexResultRecipe.Simple::result),
-            ::HTDryingRecipe,
-        ),
-    )
-
     @JvmField
     val MELTING: RecipeSerializer<HTMeltingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MELTING,

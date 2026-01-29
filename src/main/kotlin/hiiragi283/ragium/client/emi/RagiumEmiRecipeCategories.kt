@@ -66,9 +66,6 @@ object RagiumEmiRecipeCategories {
 
     // Machine - Heat
     @JvmField
-    val DRYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.DRYING, RagiumBlocks.DRYER)
-
-    @JvmField
     val MELTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField

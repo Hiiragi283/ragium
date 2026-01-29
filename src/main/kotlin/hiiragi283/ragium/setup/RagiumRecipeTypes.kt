@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
@@ -42,9 +41,6 @@ object RagiumRecipeTypes {
     val PRESSING: HTDeferredRecipeType<HTListItemRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
 
     // Machine - Heat
-    @JvmField
-    val DRYING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTDryingRecipe> = REGISTER.registerType(RagiumConst.DRYING)
-
     @JvmField
     val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
 

@@ -85,7 +85,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.CUTTING_MACHINE)
             .add(RagiumBlocks.FORMING_PRESS)
             // Heat
-            .add(RagiumBlocks.DRYER)
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.PYROLYZER)
             // Chemical
@@ -122,7 +121,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             // Machine
             .add(RagiumBlocks.CRUSHER)
             .add(RagiumBlocks.CUTTING_MACHINE)
-            .add(RagiumBlocks.DRYER)
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.PYROLYZER)

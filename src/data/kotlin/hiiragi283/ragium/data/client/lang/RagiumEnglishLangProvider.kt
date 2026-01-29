@@ -26,7 +26,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.FORMING_PRESS, "Forming Press")
 
-        add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
         add(RagiumBlocks.SOLIDIFIER, "Solidifier")
@@ -81,7 +80,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumRecipeTypes.BATHING, "Bathing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
-        add(RagiumRecipeTypes.DRYING, "Drying")
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.MIXING, "Mixing")
@@ -127,7 +125,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "%s: Extra Output")
         add(RagiumTranslation.GUI_SLOT_NONE, "%s: None")
 
-        add(RagiumTranslation.DRYER, "A machine which converts ingredients into others by drying.")
         add(RagiumTranslation.MELTER, "A machine which melts item into fluid.")
         add(RagiumTranslation.PYROLYZER, "A machine which converts ingredients into others by heating.")
 

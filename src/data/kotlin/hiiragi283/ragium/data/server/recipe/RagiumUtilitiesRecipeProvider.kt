@@ -115,7 +115,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             }
         }
 
-        heat(RagiumBlocks.DRYER) { it += ItemTags.SOUL_FIRE_BASE_BLOCKS }
         heat(RagiumBlocks.MELTER) { it += Items.BLAST_FURNACE }
         heat(RagiumBlocks.PYROLYZER) { it += Items.NETHER_BRICKS }
         heat(RagiumBlocks.SOLIDIFIER) { it += RagiumTags.Items.MOLDS }
