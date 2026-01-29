@@ -7,6 +7,7 @@ import hiiragi283.core.common.registry.HTDeferredRecipeType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -61,7 +62,7 @@ object RagiumRecipeTypes {
     val BATHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTBathingRecipe> = REGISTER.registerType(RagiumConst.BATHING)
 
     @JvmField
-    val MIXING: HTDeferredRecipeType<HTMixingRecipe.Input, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
+    val MIXING: HTDeferredRecipeType<HTChemicalRecipeInput, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
 
     // Machine - Extra
     @JvmField

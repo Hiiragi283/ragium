@@ -24,7 +24,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // Gravel + Water -> Flint
         HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Tags.Items.GRAVELS)
+            itemIngredient = inputCreator.create(Tags.Items.GRAVELS)
             fluidIngredients += inputCreator.water(250)
             result += resultCreator.create(Items.FLINT)
             time = 20 * 5
@@ -39,7 +39,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
         // Eldritch Flux
         HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
+            itemIngredient = inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
             result += resultCreator.molten(HCMaterialKeys.ELDRITCH)
@@ -54,14 +54,14 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
         // Creosote + Redstone -> Lubricant
         HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
+            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
             fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
             result += resultCreator.create(RagiumFluids.LUBRICANT, 500)
             recipeId suffix "_from_creosote_with_redstone"
         }
         // Creosote + Raginite -> Lubricant
         HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
             result += resultCreator.create(RagiumFluids.LUBRICANT, 750)
             recipeId suffix "_from_creosote_with_raginite"

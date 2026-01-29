@@ -7,7 +7,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.crafting.Recipe
+import java.util.Optional
 
 class HTMixingRecipeBuilder : HTAbstractComplexRecipeBuilder(RagiumConst.MIXING) {
     companion object {
@@ -18,13 +18,13 @@ class HTMixingRecipeBuilder : HTAbstractComplexRecipeBuilder(RagiumConst.MIXING)
         }
     }
 
-    val itemIngredients: MutableList<HTItemIngredient> = mutableListOf()
+    var itemIngredient: HTItemIngredient? = null
     val fluidIngredients: MutableList<HTFluidIngredient> = mutableListOf()
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): Recipe<*> = HTMixingRecipe(
-        itemIngredients,
+    override fun createRecipe(): HTMixingRecipe = HTMixingRecipe(
+        Optional.ofNullable(itemIngredient),
         fluidIngredients,
         result.build(),
         time,

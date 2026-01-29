@@ -225,22 +225,14 @@ object RagiumRecipeSerializers {
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MIXING,
         processing(
-            HTItemIngredient.CODEC
-                .listOrElement(0, 2)
-                .optionalFieldOf(RagiumConst.ITEM_INGREDIENT, listOf())
-                .forGetter(HTMixingRecipe::itemIngredients),
+            HTItemIngredient.CODEC.optionalFieldOf(RagiumConst.ITEM_INGREDIENT).forGetter(HTMixingRecipe::itemIngredient),
             HTFluidIngredient.CODEC
-                .listOrElement(0, 2)
-                .optionalFieldOf(RagiumConst.FLUID_INGREDIENT, listOf())
+                .listOrElement(1, 2)
+                .fieldOf(RagiumConst.FLUID_INGREDIENT)
                 .forGetter(HTMixingRecipe::fluidIngredients),
             COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
             ::HTMixingRecipe,
-        ).validate { recipe: HTMixingRecipe ->
-            if (recipe.itemIngredients.isEmpty() && recipe.fluidIngredients.isEmpty()) {
-                error("Either item or fluid ingredients is required for mixing recipe")
-            }
-            recipe
-        },
+        ),
     )
 
     // Machine - Extra
