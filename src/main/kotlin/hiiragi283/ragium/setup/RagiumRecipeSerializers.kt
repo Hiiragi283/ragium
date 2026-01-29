@@ -15,7 +15,6 @@ import hiiragi283.core.api.serialization.codec.HTRecipeBiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.ParameterCodec
-import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -23,12 +22,10 @@ import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
-import hiiragi283.ragium.common.recipe.HTBlockSimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDryingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
-import hiiragi283.ragium.common.recipe.HTEntitySimulatingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -38,7 +35,6 @@ import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
 import hiiragi283.ragium.common.recipe.base.HTComplexResultRecipe
-import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
@@ -235,28 +231,7 @@ object RagiumRecipeSerializers {
         ),
     )
 
-    // Machine - Extra
-    @JvmField
-    val SIMULATING_BLOCK: RecipeSerializer<HTBlockSimulatingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.SIMULATING_BLOCK,
-        processing(
-            HTItemIngredient.CODEC.optionalFieldOf(HTConst.INGREDIENT).forGetter(HTBlockSimulatingRecipe::ingredient),
-            VanillaBiCodecs.holderSet(Registries.BLOCK).fieldOf(HTConst.CATALYST).forGetter(HTBlockSimulatingRecipe::catalyst),
-            COMPLEX_RESULT.forGetter(HTBlockSimulatingRecipe::result),
-            ::HTBlockSimulatingRecipe,
-        ),
-    )
-
-    @JvmField
-    val SIMULATING_ENTITY: RecipeSerializer<HTEntitySimulatingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.SIMULATING_ENTITY,
-        processing(
-            HTItemIngredient.CODEC.optionalFieldOf(HTConst.INGREDIENT).forGetter(HTEntitySimulatingRecipe::ingredient),
-            VanillaBiCodecs.holderSet(Registries.ENTITY_TYPE).fieldOf(HTConst.CATALYST).forGetter(HTEntitySimulatingRecipe::catalyst),
-            COMPLEX_RESULT.forGetter(HTEntitySimulatingRecipe::result),
-            ::HTEntitySimulatingRecipe,
-        ),
-    )
+    // Machine - Matter
 
     // Device - Enchanting
     @JvmField

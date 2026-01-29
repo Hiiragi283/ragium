@@ -17,7 +17,6 @@ import hiiragi283.ragium.data.server.recipe.RagiumPlantingRecipeBuilder
 import hiiragi283.ragium.data.server.recipe.RagiumPressingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumPyrolyzingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumRefiningRecipeBuilder
-import hiiragi283.ragium.data.server.recipe.RagiumSimulatingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumUtilitiesRecipeProvider
 import java.util.function.Consumer
 
@@ -36,7 +35,6 @@ class RagiumRecipeProvider(context: HTDataGenContext) : HTRecipeProvider(context
         consumer.accept(RagiumPressingRecipeProvider)
         consumer.accept(RagiumPyrolyzingRecipeProvider)
         consumer.accept(RagiumRefiningRecipeBuilder)
-        consumer.accept(RagiumSimulatingRecipeProvider)
 
         consumer.accept(RagiumMaterialRecipeProvider)
         consumer.accept(RagiumUtilitiesRecipeProvider)

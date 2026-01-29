@@ -1,8 +1,0 @@
-{
-  "type": "ragium:simulating/block",
-  "catalyst": "minecraft:bee_nest",
-  "item_result": {
-    "id": "minecraft:honeycomb"
-  },
-  "time": 200
-}

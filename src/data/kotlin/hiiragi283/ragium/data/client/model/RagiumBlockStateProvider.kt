@@ -23,7 +23,7 @@ import net.neoforged.neoforge.client.model.generators.ModelFile
 
 class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider(RagiumAPI.MOD_ID, context) {
     val basic = "basic"
-    val advanced = "advanced"
+    val heat = "heat"
 
     override fun registerStatesAndModels() {
         registerMaterials()
@@ -31,10 +31,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         // Machine
         frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CRUSHER, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.CUTTING_MACHINE, RagiumConst.MACHINE, basic)
 
-        frontMachineBlock(RagiumBlocks.DRYER, RagiumConst.MACHINE, advanced)
-        frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, advanced)
-        frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, advanced)
+        frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)
+        frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, heat)
 
         // Device
         // frontMachineBlock(RagiumBlocks.PLANTER, RagiumConst.DEVICE, basic)
@@ -88,7 +88,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         block: HTHolderLike<Block, *>,
         prefix: String,
         tier: String,
-        front: ResourceLocation = block.getId().withPath { "${HTConst.BLOCK}/${RagiumConst.MACHINE}/${it}_front" },
+        front: ResourceLocation = block.getId().withPath { "${HTConst.BLOCK}/$prefix/${it}_front" },
     ) {
         val (inactive: BlockModelBuilder, active: BlockModelBuilder) = frontMachineModel(block, prefix, tier, front)
         machineBlock(block, inactive, active)

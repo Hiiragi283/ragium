@@ -1,9 +1,0 @@
-{
-  "type": "ragium:simulating/block",
-  "catalyst": "#c:obsidians/crying",
-  "ingredient": "hiiragi_core:wither_doll",
-  "item_result": {
-    "id": "hiiragi_core:wither_star"
-  },
-  "time": 200
-}

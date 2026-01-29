@@ -21,7 +21,6 @@ import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
-import hiiragi283.ragium.common.recipe.base.HTSimulatingRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeTypes {
@@ -64,9 +63,7 @@ object RagiumRecipeTypes {
     @JvmField
     val MIXING: HTDeferredRecipeType<HTChemicalRecipeInput, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
 
-    // Machine - Extra
-    @JvmField
-    val SIMULATING: HTDeferredRecipeType<HTSimulatingRecipe.Input, HTSimulatingRecipe<*>> = REGISTER.registerType(RagiumConst.SIMULATING)
+    // Machine - Matter
 
     // Device - Basic
     @JvmField

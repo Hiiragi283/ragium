@@ -87,9 +87,7 @@ object RagiumEmiRecipeCategories {
     @JvmField
     val MIXING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
-    // Machine - Extra
-    @JvmField
-    val SIMULATING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SIMULATING, Items.DRAGON_EGG)
+    // Machine - Matter
 
     // Device - Basic
 

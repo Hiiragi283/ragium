@@ -30,7 +30,6 @@ import hiiragi283.ragium.client.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTSimulatingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.block.entity.device.HTFermenterBlockEntity
@@ -80,8 +79,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Chemical
             RagiumEmiRecipeCategories.BATHING,
             RagiumEmiRecipeCategories.MIXING,
-            // Machine - Extra
-            RagiumEmiRecipeCategories.SIMULATING,
             // Device - Basic
             RagiumEmiRecipeCategories.FERMENTING,
             RagiumEmiRecipeCategories.PLANTING,
@@ -107,8 +104,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         addRegistryRecipes(registry, RagiumRecipeTypes.BATHING, ::HTBathingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
-
-        addRegistryRecipes(registry, RagiumRecipeTypes.SIMULATING, ::HTSimulatingEmiRecipe)
 
         addDataMapRecipes(
             registry,
