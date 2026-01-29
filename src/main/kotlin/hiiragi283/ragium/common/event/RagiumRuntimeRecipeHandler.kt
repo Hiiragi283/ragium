@@ -8,10 +8,8 @@ import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
-import hiiragi283.core.api.material.property.applyOreMultiplier
 import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.material.property.getDefaultPart
-import hiiragi283.core.api.material.property.getStorageBlock
 import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.property.getOrDefault
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -47,6 +45,9 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         cutWoodFromDefinition()
 
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in materialManager) {
+            bathDustToPrefix(event, key, propertyMap, CommonTagPrefixes.GEM)
+            bathDustToPrefix(event, key, propertyMap, CommonTagPrefixes.PEARL)
+
             crushBaseToDust(event, key, propertyMap)
             crushOreToDust(event, key, propertyMap)
             crushPrefixToDust(event, key, propertyMap, CommonTagPrefixes.RAW_BLOCK)
@@ -96,6 +97,30 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         val dustTag: TagKey<Item> = CommonTagPrefixes.DUST.itemTagKey(key)
         if (!event.isPresentTag(inputTag) && !event.isPresentTag(dustTag)) return null
         return defaultPart to inputCreator.create(setOf(inputTag, dustTag), amount)
+    }
+
+    //    Bathing    //
+
+    @JvmStatic
+    private fun bathDustToPrefix(
+        event: HTRegisterRuntimeRecipeEvent,
+        key: HTMaterialKey,
+        propertyMap: HTPropertyMap,
+        prefix: HTTagPrefix,
+    ) {
+        // 材料が存在するか判定
+        val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+        if (!event.isPresentTag(crushedPrefix, key)) return
+        // 完成品を取得
+        val resultItem: Item = event.getFirstHolder(prefix, key)?.value() ?: return
+        // レシピを登録
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(crushedPrefix, key)
+            fluidIngredient = inputCreator.water(125)
+            result = resultCreator.create(resultItem)
+            time /= 4
+            recipeId suffix "from_${crushedPrefix.name}"
+        }
     }
 
     //    Crushing    //
@@ -154,11 +179,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             // 材料
             ingredient = inputCreator.create(CommonTagPrefixes.ORE, key)
             // 主産物
-            val dustCount: Int = crushedPrefix
-                .getScaledAmount(2, propertyMap)
-                .let(propertyMap::applyOreMultiplier)
-                .toInt()
-            result = resultCreator.create(dust, dustCount)
+            result = resultCreator.create(dust, CommonTagPrefixes.ORE.getScaledAmount(1, propertyMap).toInt())
             // 副産物
             propertyMap
                 .getOrDefault(HTMaterialPropertyKeys.ORE_EXTRA_RESULTS)
@@ -180,7 +201,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // レシピを登録
         HTChancedRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.BLOCK, key)
-            result = resultCreator.create(plate, propertyMap.getStorageBlock().baseCount)
+            result = resultCreator.create(plate, propertyMap.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
             time *= 3
             recipeId suffix "_from_block"
         }

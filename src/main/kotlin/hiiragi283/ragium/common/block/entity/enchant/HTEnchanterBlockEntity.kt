@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.enchant
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.item.enchantment.buildEnchantments
 import hiiragi283.core.api.recipe.HTRecipeCache
@@ -81,7 +82,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
     override fun addMenuTrackers(holder: HTWidgetHolder) {
         super.addMenuTrackers(holder)
-        holder.track(HTBoolSyncSlot.create(::isRandom))
+        holder.track(HTBoolSyncSlot.create(::isRandom), HTSyncType.BOTH)
     }
 
     //    Processing    //

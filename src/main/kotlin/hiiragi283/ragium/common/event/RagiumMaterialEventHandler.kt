@@ -5,7 +5,6 @@ import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTFluidMaterialProperty
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.HTMaterialTextureSet
-import hiiragi283.core.api.material.property.HTSmeltingMaterialProperty
 import hiiragi283.core.api.material.property.addBlockPrefixes
 import hiiragi283.core.api.material.property.addCustomName
 import hiiragi283.core.api.material.property.addExtraOreResult
@@ -13,9 +12,7 @@ import hiiragi283.core.api.material.property.addItemPrefixes
 import hiiragi283.core.api.material.property.setDefaultPart
 import hiiragi283.core.api.material.property.setName
 import hiiragi283.core.api.material.property.setTextureSet
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.registry.HTDeferredItem
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
@@ -93,12 +90,6 @@ object RagiumMaterialEventHandler {
 
             setName("Meat", "肉")
             addCustomName(CommonTagPrefixes.DUST, "Minced Meat", "ひき肉")
-            put(
-                HTMaterialPropertyKeys.SMELTING,
-                HTSmeltingMaterialProperty.withSmoking(
-                    HTItemHolderLike.of(CommonTagPrefixes.INGOT.createId(RagiumMaterialKeys.COOKED_MEAT)),
-                ),
-            )
         }
         event.modify(RagiumMaterialKeys.COOKED_MEAT) {
             setDefaultPart(
@@ -108,10 +99,6 @@ object RagiumMaterialEventHandler {
             addItemPrefixes(CommonTagPrefixes.INGOT)
 
             setName("Cooked Meat", "焼肉")
-            put(
-                HTMaterialPropertyKeys.SMELTING,
-                HTSmeltingMaterialProperty.smeltingOnly(HTItemHolderLike.of(CommonTagPrefixes.DUST.createId(CommonMaterialKeys.ASH))),
-            )
         }
     }
 }

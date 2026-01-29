@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 
 abstract class HTEnergizedRecipeComponent<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>>(
-    override val owner: HTProcessorBlockEntity.Energized,
+    val owner: HTProcessorBlockEntity.Energized,
 ) : HTRecipeComponent<INPUT, RECIPE>(owner) {
     private val battery: HTMachineEnergyBattery.Processor get() = owner.battery
 

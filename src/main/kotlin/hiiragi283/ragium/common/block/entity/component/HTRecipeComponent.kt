@@ -10,7 +10,7 @@ import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 
-abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any>(protected open val owner: HTBlockEntity) :
+abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any>(owner: HTBlockEntity) :
     HTRecipeHandler<INPUT, RECIPE>(),
     HTBlockEntityComponent,
     HTComponentSerializable.Empty {

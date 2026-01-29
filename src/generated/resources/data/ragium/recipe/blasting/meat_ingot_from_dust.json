@@ -4,10 +4,10 @@
   "cookingtime": 100,
   "experience": 0.35,
   "ingredient": {
-    "item": "ragium:ragi_crystal_dust"
+    "item": "ragium:meat_dust"
   },
   "result": {
     "count": 1,
-    "id": "ragium:ragi_crystal_gem"
+    "id": "ragium:meat_ingot"
   }
 }
