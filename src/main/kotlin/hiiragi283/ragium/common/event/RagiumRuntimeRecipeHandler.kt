@@ -62,11 +62,9 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             bathFlourToDough(event, key, propertyMap)
 
             if (propertyMap.getOrDefault(HTMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) {
-                cutBaseToRod(event, key, propertyMap)
-
                 pressBaseToPrefix(event, key, propertyMap, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
-                pressBaseToPrefix(event, key, propertyMap, CommonTagPrefixes.NUGGET, HTMoldType.NUGGET)
                 pressBaseToPrefix(event, key, propertyMap, CommonTagPrefixes.PLATE, HTMoldType.PLATE)
+                pressBaseToPrefix(event, key, propertyMap, CommonTagPrefixes.ROD, HTMoldType.ROD)
             }
 
             if (propertyMap.getOrDefault(HTMaterialPropertyKeys.FORMING_RECIPE_FLAG).melting) {
@@ -218,23 +216,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             result = resultCreator.create(plate, propertyMap.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
             time *= 3
             recipeId suffix "_from_block"
-        }
-    }
-
-    @JvmStatic
-    private fun cutBaseToRod(event: HTRegisterRuntimeRecipeEvent, key: HTMaterialKey, propertyMap: HTPropertyMap) {
-        // 素材のプロパティから材料を取得
-        val inputTag: TagKey<Item> = propertyMap.getDefaultPart(key) ?: return
-        if (!event.isPresentTag(inputTag)) return
-        // 加工の前後でタグが一致する場合はパス
-        if (inputTag == CommonTagPrefixes.ROD.itemTagKey(key)) return
-        // 完成品を取得
-        val rod: Item = event.getFirstHolder(CommonTagPrefixes.ROD, key)?.value() ?: return
-        // レシピを登録
-        HTItemToChancedRecipeBuilder.cutting(output) {
-            ingredient = inputCreator.create(inputTag)
-            result = resultCreator.create(rod, 2)
-            recipeId suffix "_from_${inputTag.location().path}"
         }
     }
 

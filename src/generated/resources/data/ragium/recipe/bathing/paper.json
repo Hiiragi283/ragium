@@ -1,0 +1,12 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 125,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "#c:dusts/wood",
+  "result": {
+    "id": "minecraft:paper"
+  },
+  "time": 100
+}

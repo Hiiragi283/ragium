@@ -1,7 +1,5 @@
 {
   "values": [
-    "ragium:crusher",
-    "ragium:cutting_machine",
     "ragium:fermenter",
     "ragium:melter",
     "ragium:mixer",

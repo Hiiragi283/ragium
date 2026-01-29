@@ -6,6 +6,7 @@ import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.core.api.HTConst
@@ -118,6 +119,8 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         addRegistryRecipes(registry, RagiumRecipeTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
         // Misc
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, RagiumBlocks.ELECTRIC_FURNACE.toEmi())
+
         registry.setDefaultComparison(
             RagiumBlocks.UNIVERSAL_CHEST.asItem(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.COLOR) },

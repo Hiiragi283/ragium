@@ -78,6 +78,10 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE, RagiumTranslation.CUTTING_MACHINE)
 
     @JvmField
+    val ELECTRIC_FURNACE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.ELECTRIC_FURNACE, RagiumTranslation.ELECTRIC_FURNACE)
+
+    @JvmField
     val FORMING_PRESS: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.FORMING_PRESS, RagiumTranslation.FORMING_PRESS)
 

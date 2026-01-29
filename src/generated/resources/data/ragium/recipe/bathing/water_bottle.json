@@ -1,0 +1,17 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "minecraft:glass_bottle",
+  "result": {
+    "components": {
+      "minecraft:potion_contents": {
+        "potion": "minecraft:water"
+      }
+    },
+    "id": "minecraft:potion"
+  },
+  "time": 100
+}

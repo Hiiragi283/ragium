@@ -32,6 +32,10 @@ class HTFluidWithItemRecipeBuilder(prefix: String, private val factory: Factory<
     lateinit var itemIngredient: HTItemIngredient
     lateinit var result: HTItemResult
 
+    init {
+        time /= 2
+    }
+
     override fun getPrimalId(): ResourceLocation = result.getId()
 
     override fun createRecipe(): HTFluidWithItemRecipe = factory.create(

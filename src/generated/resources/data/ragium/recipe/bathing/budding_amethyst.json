@@ -1,0 +1,12 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 810,
+    "fluids": "#c:molten_eldritch"
+  },
+  "item_ingredient": "#c:storage_blocks/amethyst",
+  "result": {
+    "id": "minecraft:budding_amethyst"
+  },
+  "time": 100
+}
