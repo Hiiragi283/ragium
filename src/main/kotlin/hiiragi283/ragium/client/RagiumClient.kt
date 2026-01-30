@@ -123,8 +123,9 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.GASOLINE, Color(0xcccc00))
         event.dull(RagiumFluids.LUBRICANT, Color(0xff6600))
 
-        event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
         event.clear(RagiumFluids.COOLANT, Color(0x009999))
+        event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
+        event.clear(RagiumFluids.MOLTEN_RAGINITE, Color(0xff6699))
     }
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {

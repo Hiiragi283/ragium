@@ -2,12 +2,14 @@ package hiiragi283.ragium.common.event
 
 import hiiragi283.core.api.event.HTMaterialPropertyEvent
 import hiiragi283.core.api.material.HTMaterialKey
+import hiiragi283.core.api.material.property.HTBlockLootFactory
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTFluidMaterialProperty
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.HTMaterialTextureSet
 import hiiragi283.core.api.material.property.addBlockPrefixes
 import hiiragi283.core.api.material.property.addCustomName
+import hiiragi283.core.api.material.property.addCustomOreLoot
 import hiiragi283.core.api.material.property.addExtraOreResult
 import hiiragi283.core.api.material.property.addItemPrefixes
 import hiiragi283.core.api.material.property.setDefaultPart
@@ -20,6 +22,9 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount.addUniformBonusCount
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.Tags
@@ -37,6 +42,13 @@ object RagiumMaterialEventHandler {
 
             setName("Raginite", "ラギナイト")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
+            addCustomOreLoot(
+                HTBlockLootFactory.createOre(
+                    CommonTagPrefixes.DUST,
+                    UniformGenerator.between(4f, 5f),
+                    ApplyBonusCount::addUniformBonusCount
+                )
+            )
         }
         // Gems
         event.modify(RagiumMaterialKeys.RAGI_CRYSTAL) {
@@ -47,6 +59,7 @@ object RagiumMaterialEventHandler {
 
             setName("Ragi-Crystal", "ラギクリスタル")
             setTextureSet("diamond", HTMaterialTextureSet.SHINE)
+            addCustomOreLoot(HTBlockLootFactory.createOre(CommonTagPrefixes.GEM, null))
             put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
         }
         // Alloys

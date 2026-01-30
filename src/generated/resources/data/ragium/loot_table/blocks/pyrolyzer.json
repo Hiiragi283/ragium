@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:custom_name",
+                "minecraft:enchantments",
+                "minecraft:hide_additional_tooltip",
+                "ragium:machine_upgrades",
+                "hiiragi_core:energy",
+                "hiiragi_core:fluid",
+                "hiiragi_core:item"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "ragium:pyrolyzer"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ragium:blocks/pyrolyzer"
+}

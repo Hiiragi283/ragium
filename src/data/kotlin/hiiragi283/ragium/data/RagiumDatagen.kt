@@ -11,11 +11,13 @@ import hiiragi283.ragium.data.client.model.RagiumItemModelProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.bootstrap.RagiumWoodDefinition
+import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumItemTagsProvider
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.data.event.GatherDataEvent
@@ -29,6 +31,10 @@ object RagiumDatagen {
             add(RagiumAPI.WOOD_DEFINITION_KEY, RagiumWoodDefinition)
         }
         // Server
+        server.addLootTables(
+            ::RagiumBlockLootProvider to LootContextParamSets.BLOCK,
+        )
+
         server.addProvider(::RagiumRecipeProvider)
 
         server.addProvider(::RagiumFluidTagsProvider)

@@ -76,8 +76,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         addFluid(RagiumFluids.GASOLINE, "ガソリン")
         addFluid(RagiumFluids.LUBRICANT, "潤滑油")
 
-        addFluid(RagiumFluids.MOLTEN_RAGINITE, "不安定化ラギナイト")
         addFluid(RagiumFluids.COOLANT, "冷却液")
+        addFluid(RagiumFluids.MOLTEN_RAGINITE, "不安定化ラギナイト")
+        addFluid(RagiumFluids.RAGI_MATTER, "ラギマター")
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")

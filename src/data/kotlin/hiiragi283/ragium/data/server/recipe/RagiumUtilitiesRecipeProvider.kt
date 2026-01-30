@@ -147,22 +147,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         basic(RagiumBlocks.FERMENTER) { it += Items.COMPOSTER }
         basic(RagiumBlocks.PLANTER) { it += Tags.Items.GLASS_BLOCKS }
 
-        // Advanced
-        fun advanced(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
-            HTShapedRecipeBuilder.create(output) {
-                pattern(
-                    "AAA",
-                    "BCB",
-                    "DDD",
-                )
-                define('A') += CommonTagPrefixes.INGOT to HCMaterialKeys.DEEP_STEEL
-                define('B').let(consumer)
-                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.NETHERITE
-                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
-                resultStack += block
-            }
-        }
-
         // Enchanting
         fun enchanting(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
             HTShapedRecipeBuilder.create(output) {
@@ -171,10 +155,10 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                     "BCB",
                     "DDD",
                 )
-                define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
+                define('A') += CommonTagPrefixes.INGOT to CommonMaterialKeys.CARBON
                 define('B').let(consumer)
                 define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.DIAMOND
-                define('D') += Tags.Items.OBSIDIANS_CRYING
+                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
                 resultStack += block
             }
         }

@@ -76,8 +76,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         addFluid(RagiumFluids.GASOLINE, "Gasoline")
         addFluid(RagiumFluids.LUBRICANT, "Lubricant")
 
-        addFluid(RagiumFluids.MOLTEN_RAGINITE, "Destabilized Raginite")
         addFluid(RagiumFluids.COOLANT, "Coolant")
+        addFluid(RagiumFluids.MOLTEN_RAGINITE, "Destabilized Raginite")
+        addFluid(RagiumFluids.RAGI_MATTER, "Ragi-Matter")
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")

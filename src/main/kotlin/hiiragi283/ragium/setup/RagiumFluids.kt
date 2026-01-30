@@ -104,10 +104,13 @@ object RagiumFluids {
     //    Misc    //
 
     @JvmField
+    val COOLANT: HTVirtualFluidContent = REGISTER.registerVirtual("coolant", liquid().temperature(273))
+
+    @JvmField
     val MOLTEN_RAGINITE: HTVirtualFluidContent = REGISTER.registerVirtual("molten_raginite", molten().temperature(1300))
 
     @JvmField
-    val COOLANT: HTVirtualFluidContent = REGISTER.registerVirtual("coolant", liquid().temperature(273))
+    val RAGI_MATTER: HTVirtualFluidContent = REGISTER.registerVirtual("ragi_matter", gas())
 
     //    Extensions    //
 
