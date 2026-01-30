@@ -30,10 +30,10 @@ import hiiragi283.ragium.client.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTWashingEmiRecipe
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
-import hiiragi283.ragium.common.block.entity.device.HTFermenterBlockEntity
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -51,8 +51,6 @@ import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
-import net.neoforged.neoforge.registries.datamaps.builtin.Compostable
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 import kotlin.streams.asSequence
 
 @EmiEntrypoint
@@ -99,22 +97,13 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
 
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemToFluidEmiRecipe.Companion::melting)
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, ::HTPyrolyzingEmiRecipe)
-        // addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.BATHING, ::HTBathingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.WASHING, ::HTWashingEmiRecipe)
 
-        addDataMapRecipes(
-            registry,
-            ITEM_LOOKUP,
-            NeoForgeDataMaps.COMPOSTABLES,
-            { holder: HTHolderLike<Item, Item>, compostable: Compostable ->
-                HTFermenterBlockEntity.createRecipe(holder.get(), compostable.chance)
-            },
-            HTItemToFluidEmiRecipe.Companion::fermenting,
-        )
         addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.ENCHANTING, ::HTEnchantingEmiRecipe)

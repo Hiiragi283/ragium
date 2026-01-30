@@ -50,9 +50,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブクレート")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
-        addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオ")
-        addFluid(RagiumFluids.PLANT_OIL, "植物油")
-        addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
+        addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.CARBON_MONOXIDE, "一酸化炭素")
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
+        addFluid(RagiumFluids.OXYGEN, "酸素")
 
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
         addFluid(RagiumFluids.COAL_GAS, "石炭ガス")
@@ -70,6 +71,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         addFluid(RagiumFluids.METHANOL, "メタノール")
         addFluid(RagiumFluids.ETHANOL, "エタノール")
 
+        addFluid(RagiumFluids.SUNFLOWER_OIL, "ヒマワリ油")
+        addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
         addFluid(RagiumFluids.GASOLINE, "ガソリン")
         addFluid(RagiumFluids.LUBRICANT, "潤滑油")
 
@@ -78,8 +81,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.TAR, "タール")
 
+        add(RagiumItems.MOLASSES, "糖蜜")
         add(RagiumItems.EMPTY_CAN, "空の缶詰")
 
         add(RagiumItems.BLANK_DISC, "空のレコード")

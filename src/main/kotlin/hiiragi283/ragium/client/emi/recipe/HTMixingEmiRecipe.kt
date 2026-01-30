@@ -23,7 +23,7 @@ class HTMixingEmiRecipe(holder: RecipeHolder<HTMixingRecipe>) :
             widgets,
             "mix",
             getPosition(3.5),
-            getPosition(1),
+            getPosition(2),
             recipe.time,
             endToStart = true,
         )

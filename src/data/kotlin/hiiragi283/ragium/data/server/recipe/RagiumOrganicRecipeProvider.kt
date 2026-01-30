@@ -6,7 +6,9 @@ import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPyrolyzingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.ItemTags
 
@@ -14,6 +16,8 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     override fun buildRecipeInternal() {
         charcoal()
         coal()
+        crudeOil()
+        crudeBio()
     }
 
     @JvmStatic
@@ -34,7 +38,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId suffix "_from_sawdust"
         }
     }
-    
+
     @JvmStatic
     private fun coal() {
         // Coal -> Coke + Creosote
@@ -55,10 +59,58 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             itemResult = resultCreator.material(CommonTagPrefixes.BLOCK, CommonMaterialKeys.COAL_COKE)
             fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 2000)
         }
-        
+
         // Coal + Water -> Coal Gas
-        
+
         // Coal Gas -> LPG
-        
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.COAL_GAS, 750)
+            result = resultCreator.create(RagiumFluids.LPG, 250)
+            recipeId suffix "_from_coal_gas"
+        }
+
+        // Coal Dust + Residue Oil -> Coal Liquid
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL)
+            fluidIngredients += inputCreator.create(RagiumFluids.RESIDUE_OIL, 500)
+            result = resultCreator.create(RagiumFluids.COAL_LIQUID, 500)
+        }
+        // Coal Liquid -> Naphtha
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.COAL_LIQUID, 750)
+            result = resultCreator.create(RagiumFluids.NAPHTHA, 500)
+            recipeId suffix "_from_coal_liquid"
+        }
+    }
+
+    @JvmStatic
+    private fun crudeOil() {
+        // Crude Oil -> Naphtha
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.CRUDE_OIL, 500)
+            result = resultCreator.create(RagiumFluids.NAPHTHA, 250)
+            recipeId suffix "_from_crude_oil"
+        }
+        // Crude Oil + LPG + Naphtha + Residue Oil
+
+        // LPG -> Ethylene
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.LPG, 500)
+            result = resultCreator.create(RagiumFluids.ETHYLENE, 250)
+            recipeId suffix "_from_lpg"
+        }
+        // LPG -> Methane + Ethylene + Butadiene
+
+        // Naphtha -> Gasoline
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.NAPHTHA, 500)
+            result = resultCreator.create(RagiumFluids.GASOLINE, 250)
+            recipeId suffix "_from_naphtha"
+        }
+        // Naphtha -> Ethylene + Gasoline + Lubricant
+    }
+
+    @JvmStatic
+    private fun crudeBio() {
     }
 }

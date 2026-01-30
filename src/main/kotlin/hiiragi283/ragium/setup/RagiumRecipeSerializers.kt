@@ -174,7 +174,6 @@ object RagiumRecipeSerializers {
         processing(
             HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTRefiningRecipe::ingredient),
             HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTRefiningRecipe::result),
-            COMPLEX_RESULT.forGetter(HTRefiningRecipe::extraResult),
             ::HTRefiningRecipe,
         ),
     )

@@ -20,7 +20,6 @@ import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
@@ -31,8 +30,6 @@ import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.data.DataMapProvider
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 
 class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
     private lateinit var provider: HolderLookup.Provider
@@ -40,8 +37,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     override fun gather(provider: HolderLookup.Provider) {
         this.provider = provider
-
-        furnaceFuels()
 
         fermentSources()
         mobHeads()
@@ -54,11 +49,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     //    Vanilla    //
-
-    private fun furnaceFuels() {
-        builder(NeoForgeDataMaps.FURNACE_FUELS)
-            .add(RagiumItems.TAR, FurnaceFuel(20 * 10 * 4), false)
-    }
 
     //    Ragium    //
 
@@ -114,7 +104,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         builder(RagiumDataMapTypes.COMBUSTION_FUEL)
             // lowest
             .add(RagiumFluids.CREOSOTE, lowest)
-            .add(RagiumFluids.PLANT_OIL, low)
             // low
             .add("oil", low)
             .add(RagiumFluids.COAL_LIQUID, low)

@@ -2,8 +2,6 @@ package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.data.recipe.HTIngredientCreator
-import hiiragi283.core.api.data.recipe.HTResultCreator
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.times
@@ -24,7 +22,6 @@ import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -33,7 +30,6 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.ComposterBlock
 import net.minecraft.world.level.block.state.BlockState
-import org.apache.commons.lang3.math.Fraction
 
 class HTFermenterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.FERMENTER, pos, state) {
     companion object {
@@ -41,12 +37,7 @@ class HTFermenterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         fun createRecipe(item: ItemLike, chance: Float): HTMeltingRecipe? {
             if (chance <= 0f) return null
             val amount: Int = (HTConst.DEFAULT_FLUID_AMOUNT * chance.toFraction()).toInt()
-            return HTMeltingRecipe(
-                HTIngredientCreator.create(item),
-                HTResultCreator.create(RagiumFluids.CRUDE_BIO, amount),
-                20 * 10,
-                Fraction.ZERO,
-            )
+            return TODO()
         }
     }
 

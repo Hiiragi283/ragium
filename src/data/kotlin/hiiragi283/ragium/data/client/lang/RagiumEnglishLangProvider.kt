@@ -50,9 +50,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
         // Fluid
-        addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
-        addFluid(RagiumFluids.PLANT_OIL, "Plant Oil")
-        addFluid(RagiumFluids.BIOFUEL, "Biofuel")
+        addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluids.CARBON_MONOXIDE, "Carbon Monoxide")
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
+        addFluid(RagiumFluids.OXYGEN, "Oxygen")
 
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
         addFluid(RagiumFluids.COAL_GAS, "Coal Gas")
@@ -70,6 +71,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         addFluid(RagiumFluids.METHANOL, "Methanol")
         addFluid(RagiumFluids.ETHANOL, "Ethanol")
 
+        addFluid(RagiumFluids.SUNFLOWER_OIL, "Sunflower Oil")
+        addFluid(RagiumFluids.BIOFUEL, "Biofuel")
         addFluid(RagiumFluids.GASOLINE, "Gasoline")
         addFluid(RagiumFluids.LUBRICANT, "Lubricant")
 
@@ -78,8 +81,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-        add(RagiumItems.TAR, "Tar")
 
+        add(RagiumItems.MOLASSES, "Molasses")
         add(RagiumItems.EMPTY_CAN, "Empty Can")
 
         add(RagiumItems.BLANK_DISC, "Blank Disc")

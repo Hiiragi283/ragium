@@ -176,7 +176,6 @@ object RagiumBlockEntityTypes {
         registerHandler(event, MIXER.get())
 
         // Device
-        registerHandler(event, FERMENTER.get())
         registerHandler(event, PLANTER.get())
 
         registerHandler(event, ENCHANTER.get())

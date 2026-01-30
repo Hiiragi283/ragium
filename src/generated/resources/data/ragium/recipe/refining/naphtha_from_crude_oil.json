@@ -1,0 +1,13 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 500,
+    "fluids": "#c:crude_oil"
+  },
+  "result": {
+    "amount": 250,
+    "id": "ragium:naphtha",
+    "tag": "c:naphtha"
+  },
+  "time": 200
+}

@@ -1,5 +1,6 @@
 {
   "parent": "neoforge:item/bucket",
-  "fluid": "ragium:plant_oil",
+  "flip_gas": true,
+  "fluid": "ragium:lpg",
   "loader": "neoforge:fluid_container"
 }

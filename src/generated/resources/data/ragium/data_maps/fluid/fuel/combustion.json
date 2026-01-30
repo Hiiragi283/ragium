@@ -11,9 +11,8 @@
     "#c:ethylene": 240,
     "#c:gasoline": 360,
     "#c:high_power_biodiesel": 480,
+    "#c:lpg": 240,
     "#c:methane": 240,
-    "#c:natural_gas": 240,
-    "#c:oil": 120,
-    "#c:plant_oil": 120
+    "#c:oil": 120
   }
 }

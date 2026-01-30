@@ -22,21 +22,20 @@ object RagiumFluids {
         REGISTER.register(eventBus)
     }
 
-    //    Natural    //
+    //    Inorganic    //
 
-    //    Organic    //
-
-    @JvmStatic
-    private fun slimy(): FluidType.Properties = create(SoundEvents.SLIME_BLOCK_PLACE, SoundEvents.SLIME_BLOCK_BREAK)
+    // Gaseous
+    @JvmField
+    val HYDROGEN: HTVirtualFluidContent = REGISTER.registerVirtual("hydrogen", gas())
 
     @JvmField
-    val CRUDE_BIO: HTVirtualFluidContent = REGISTER.registerVirtual("crude_bio", slimy())
+    val CARBON_MONOXIDE: HTVirtualFluidContent = REGISTER.registerVirtual("carbon_monoxide", gas())
 
     @JvmField
-    val PLANT_OIL: HTVirtualFluidContent = REGISTER.registerVirtual("plant_oil", liquid())
+    val CARBON_DIOXIDE: HTVirtualFluidContent = REGISTER.registerVirtual("carbon_dioxide", gas())
 
     @JvmField
-    val BIOFUEL: HTVirtualFluidContent = REGISTER.registerVirtual("biofuel", liquid())
+    val OXYGEN: HTVirtualFluidContent = REGISTER.registerVirtual("oxygen", gas())
 
     //    Organic    //
 
@@ -64,7 +63,7 @@ object RagiumFluids {
     ) { it.speedFactor(0.4f) }
 
     @JvmField
-    val LPG: HTVirtualFluidContent = REGISTER.registerVirtual("natural_gas", gas())
+    val LPG: HTVirtualFluidContent = REGISTER.registerVirtual("lpg", gas())
 
     @JvmField
     val NAPHTHA: HTVirtualFluidContent = REGISTER.registerVirtual("naphtha", liquid(), ::HTExplosiveFluidType.partially1(3f))
@@ -90,6 +89,12 @@ object RagiumFluids {
     val ETHANOL: HTVirtualFluidContent = REGISTER.registerVirtual("ethanol", liquid())
 
     // Liquid
+    @JvmField
+    val SUNFLOWER_OIL: HTVirtualFluidContent = REGISTER.registerVirtual("sunflower_oil", liquid())
+
+    @JvmField
+    val BIOFUEL: HTVirtualFluidContent = REGISTER.registerVirtual("biofuel", liquid())
+
     @JvmField
     val GASOLINE: HTVirtualFluidContent = REGISTER.registerVirtual("gasoline", liquid(), ::HTExplosiveFluidType.partially1(4f))
 

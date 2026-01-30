@@ -78,8 +78,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
 
     private fun registerBuckets() {
         val dripFluids: List<HTFluidContent<*, *, *>> = buildList {
-            // Organic
-            add(RagiumFluids.CRUDE_BIO)
             // Oil
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.LUBRICANT)
