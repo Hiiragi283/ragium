@@ -4,6 +4,8 @@ import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.api.serialization.value.read
+import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.api.storage.item.HTItemHandler
 import hiiragi283.core.api.storage.item.HTItemSlot
@@ -30,7 +32,7 @@ class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
-        output.store("color", VanillaBiCodecs.COLOR, color)
+        output.write("color", VanillaBiCodecs.COLOR, color)
     }
 
     override fun readValue(input: HTValueInput) {
@@ -50,7 +52,7 @@ class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initReducedUpdateTag(output: HTValueOutput) {
         super.initReducedUpdateTag(output)
-        output.store("color", VanillaBiCodecs.COLOR, color)
+        output.write("color", VanillaBiCodecs.COLOR, color)
     }
 
     override fun handleUpdateTag(input: HTValueInput) {

@@ -3,5 +3,6 @@
   "ingredient": "#minecraft:saplings",
   "result": {
     "id": "minecraft:stick"
-  }
+  },
+  "time": 100
 }

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.storge.holder
 
-import hiiragi283.core.api.collection.ImmutableMultiMap
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.HTItemSlot
 import net.minecraft.core.Direction
@@ -8,7 +7,7 @@ import net.minecraft.core.Direction
 class HTBasicItemSlotHolder private constructor(
     configGetter: HTSlotInfoProvider?,
     slots: List<HTItemSlot>,
-    slotMap: ImmutableMultiMap<HTSlotInfo, HTItemSlot>,
+    slotMap: Map<HTSlotInfo, List<HTItemSlot>>,
 ) : HTSlottedCapabilityHolder<HTItemSlot>(configGetter, slots, slotMap),
     HTItemSlotHolder {
     companion object {

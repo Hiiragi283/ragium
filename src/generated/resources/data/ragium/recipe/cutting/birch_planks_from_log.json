@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "#minecraft:birch_logs",
-  "result": {
-    "count": 6,
-    "id": "minecraft:birch_planks"
-  }
-}

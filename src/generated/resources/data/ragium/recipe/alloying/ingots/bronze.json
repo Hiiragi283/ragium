@@ -1,13 +1,4 @@
 {
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:not",
-      "value": {
-        "type": "neoforge:tag_empty",
-        "tag": "c:ingots/bronze"
-      }
-    }
-  ],
   "type": "ragium:alloying",
   "ingredient": [
     {
@@ -24,6 +15,8 @@
   ],
   "result": {
     "count": 4,
+    "id": "hiiragi_core:bronze_ingot",
     "tag": "c:ingots/bronze"
-  }
+  },
+  "time": 200
 }

@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.api.serialization.value.read
+import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -22,12 +24,12 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
-        output.store("spawner", HTSpawnerMob.CODEC, spawnerMob)
+        output.write("spawner", HTSpawnerMob.CODEC, spawnerMob)
     }
 
     override fun readValue(input: HTValueInput) {
         super.readValue(input)
-        input.readAndSet("spawner", HTSpawnerMob.CODEC, ::spawnerMob::set)
+        input.read("spawner", HTSpawnerMob.CODEC).let(::spawnerMob::set)
     }
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
@@ -49,11 +51,11 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initReducedUpdateTag(output: HTValueOutput) {
         super.initReducedUpdateTag(output)
-        output.store("spawner", HTSpawnerMob.CODEC, spawnerMob)
+        output.write("spawner", HTSpawnerMob.CODEC, spawnerMob)
     }
 
     override fun handleUpdateTag(input: HTValueInput) {
         super.handleUpdateTag(input)
-        input.readAndSet("spawner", HTSpawnerMob.CODEC, ::spawnerMob::set)
+        input.read("spawner", HTSpawnerMob.CODEC).let(::spawnerMob::set)
     }
 }

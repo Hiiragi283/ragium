@@ -1,8 +1,0 @@
-{
-  "type": "ragium:simulating/entity",
-  "catalyst": "minecraft:iron_golem",
-  "ingredient": "#c:fertilizers",
-  "item_result": {
-    "id": "minecraft:poppy"
-  }
-}

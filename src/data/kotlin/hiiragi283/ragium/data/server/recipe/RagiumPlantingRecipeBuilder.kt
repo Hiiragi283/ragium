@@ -18,101 +18,91 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
 
     @JvmStatic
     private fun crops() {
-        val farmland: HTItemIngredient = itemCreator.fromItem(Items.FARMLAND)
+        val farmland: HTItemIngredient = inputCreator.create(Items.FARMLAND)
         // Wheat
-        HTPlantingRecipeBuilder
-            .create(
-                Items.WHEAT_SEEDS,
-                farmland,
-                itemResult.create(Items.WHEAT),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.WHEAT_SEEDS
+            soil = farmland
+            crop = resultCreator.create(Items.WHEAT)
+        }
         // Beetroot
-        HTPlantingRecipeBuilder
-            .create(
-                Items.BEETROOT_SEEDS,
-                farmland,
-                itemResult.create(Items.BEETROOT, 3),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.BEETROOT_SEEDS
+            soil = farmland
+            crop = resultCreator.create(Items.BEETROOT, 3)
+        }
 
         // Carrot, Potato, Berries
         for (item: Item in listOf(Items.CARROT, Items.POTATO, Items.SWEET_BERRIES, Items.GLOW_BERRIES)) {
-            HTPlantingRecipeBuilder
-                .create(
-                    item,
-                    farmland,
-                    itemResult.create(item, 3),
-                ).save(output)
+            HTPlantingRecipeBuilder.create(output) {
+                seed = Items.MELON_SEEDS
+                soil = farmland
+                crop = resultCreator.create(item, 3)
+            }
         }
 
         // Melon
-        HTPlantingRecipeBuilder
-            .create(
-                Items.MELON_SEEDS,
-                farmland,
-                itemResult.create(Items.MELON),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.MELON_SEEDS
+            soil = farmland
+            crop = resultCreator.create(Items.MELON)
+        }
         // Pumpkin
-        HTPlantingRecipeBuilder
-            .create(
-                Items.PUMPKIN_SEEDS,
-                farmland,
-                itemResult.create(Items.PUMPKIN),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.PUMPKIN_SEEDS
+            soil = farmland
+            crop = resultCreator.create(Items.PUMPKIN)
+        }
 
         // Cactus, Sugar Cane
         for (item: Item in listOf(Items.CACTUS, Items.SUGAR_CANE)) {
-            HTPlantingRecipeBuilder
-                .create(
-                    item,
-                    itemCreator.fromTagKey(Tags.Items.SANDS),
-                    itemResult.create(item, 3),
-                ).save(output)
+            HTPlantingRecipeBuilder.create(output) {
+                seed = item
+                soil = inputCreator.create(Tags.Items.SANDS)
+                crop = resultCreator.create(item, 3)
+            }
         }
 
         // Apple
-        HTPlantingRecipeBuilder
-            .create(
-                Items.APPLE,
-                itemCreator.fromItem(Items.OAK_SAPLING),
-                itemResult.create(Items.APPLE, 3),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.APPLE
+            soil = inputCreator.create(Items.OAK_SAPLING)
+            crop = resultCreator.create(Items.APPLE, 3)
+        }
         // Cocoa Beans
-        HTPlantingRecipeBuilder
-            .create(
-                Items.COCOA_BEANS,
-                itemCreator.fromTagKey(ItemTags.JUNGLE_LOGS),
-                itemResult.create(Items.COCOA_BEANS, 3),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.COCOA_BEANS
+            soil = inputCreator.create(ItemTags.JUNGLE_LOGS)
+            crop = resultCreator.create(Items.COCOA_BEANS, 3)
+        }
         // Nether Wart
-        HTPlantingRecipeBuilder
-            .create(
-                Items.NETHER_WART,
-                itemCreator.fromItem(Items.SOUL_SAND),
-                itemResult.create(Items.NETHER_WART, 3),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.NETHER_WART
+            soil = inputCreator.create(Items.SOUL_SAND)
+            crop = resultCreator.create(Items.NETHER_WART, 3)
+        }
 
         // Mushrooms
         for (item: Item in listOf(Items.RED_MUSHROOM, Items.BROWN_MUSHROOM)) {
-            HTPlantingRecipeBuilder
-                .create(
-                    item,
-                    farmland,
-                    itemResult.create(item, 3),
-                ).save(output)
+            HTPlantingRecipeBuilder.create(output) {
+                seed = item
+                soil = farmland
+                crop = resultCreator.create(item, 3)
+            }
 
-            HTPlantingRecipeBuilder
-                .create(
-                    item,
-                    itemCreator.fromItem(Items.MYCELIUM),
-                    itemResult.create(item, 5),
-                ).saveSuffixed(output, "_with_mycelium")
+            HTPlantingRecipeBuilder.create(output) {
+                seed = item
+                soil = inputCreator.create(Items.MYCELIUM)
+                crop = resultCreator.create(item, 5)
+                recipeId suffix "_with_mycelium"
+            }
         }
     }
 
     @JvmStatic
     private fun trees() {
         // Trees
-        val dirt: HTItemIngredient = itemCreator.fromTagKey(ItemTags.DIRT)
+        val dirt: HTItemIngredient = inputCreator.create(ItemTags.DIRT)
         mapOf(
             Items.OAK_SAPLING to Items.OAK_LOG,
             Items.SPRUCE_SAPLING to Items.SPRUCE_LOG,
@@ -124,70 +114,64 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             Items.MANGROVE_PROPAGULE to Items.MANGROVE_LOG,
             Items.BAMBOO to Items.BAMBOO,
         ).forEach { (sapling: Item, log: Item) ->
-            HTPlantingRecipeBuilder
-                .create(
-                    sapling,
-                    dirt,
-                    itemResult.create(log, 6),
-                ).save(output)
+            HTPlantingRecipeBuilder.create(output) {
+                seed = sapling
+                soil = dirt
+                crop = resultCreator.create(log, 6)
+            }
         }
         // Fungus
-        HTPlantingRecipeBuilder
-            .create(
-                Items.CRIMSON_FUNGUS,
-                itemCreator.fromItem(Items.CRIMSON_NYLIUM),
-                itemResult.create(Items.CRIMSON_STEM, 6),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.CRIMSON_FUNGUS
+            soil = inputCreator.create(Items.CRIMSON_NYLIUM)
+            crop = resultCreator.create(Items.CRIMSON_STEM, 6)
+        }
 
-        HTPlantingRecipeBuilder
-            .create(
-                Items.WARPED_FUNGUS,
-                itemCreator.fromItem(Items.WARPED_NYLIUM),
-                itemResult.create(Items.WARPED_STEM, 6),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.WARPED_FUNGUS
+            soil = inputCreator.create(Items.WARPED_NYLIUM)
+            crop = resultCreator.create(Items.WARPED_STEM, 6)
+        }
         // Chorus
-        HTPlantingRecipeBuilder
-            .create(
-                Items.CHORUS_FLOWER,
-                itemCreator.fromTagKey(Tags.Items.END_STONES),
-                itemResult.create(Items.CHORUS_FRUIT, 6),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.CHORUS_FLOWER
+            soil = inputCreator.create(Tags.Items.END_STONES)
+            crop = resultCreator.create(Items.CHORUS_FRUIT, 6)
+        }
     }
 
     @JvmStatic
     private fun plants() {
-        val aquaticSoil: HTItemIngredient = itemCreator.fromTagKeys(listOf(Tags.Items.GRAVELS, Tags.Items.SANDS))
+        val aquaticSoil: HTItemIngredient = inputCreator.create(listOf(Tags.Items.GRAVELS, Tags.Items.SANDS))
 
         mapOf(
-            Items.VINE to itemCreator.fromTagKey(Tags.Items.COBBLESTONES),
-            Items.LILY_PAD to itemCreator.fromTagKey(Tags.Items.BUCKETS_WATER),
+            Items.VINE to inputCreator.create(Tags.Items.COBBLESTONES),
+            Items.LILY_PAD to inputCreator.create(Tags.Items.BUCKETS_WATER),
             Items.SEAGRASS to aquaticSoil,
             Items.SEA_PICKLE to aquaticSoil,
-            Items.TUBE_CORAL to itemCreator.fromItem(Items.TUBE_CORAL_BLOCK),
-            Items.BRAIN_CORAL to itemCreator.fromItem(Items.BRAIN_CORAL_BLOCK),
-            Items.BUBBLE_CORAL to itemCreator.fromItem(Items.BUBBLE_CORAL_BLOCK),
-            Items.FIRE_CORAL to itemCreator.fromItem(Items.FIRE_CORAL_BLOCK),
-            Items.HORN_CORAL to itemCreator.fromItem(Items.HORN_CORAL_BLOCK),
-            Items.TUBE_CORAL_FAN to itemCreator.fromItem(Items.TUBE_CORAL_BLOCK),
-            Items.BRAIN_CORAL_FAN to itemCreator.fromItem(Items.BRAIN_CORAL_BLOCK),
-            Items.BUBBLE_CORAL_FAN to itemCreator.fromItem(Items.BUBBLE_CORAL_BLOCK),
-            Items.FIRE_CORAL_FAN to itemCreator.fromItem(Items.FIRE_CORAL_BLOCK),
-            Items.HORN_CORAL_FAN to itemCreator.fromItem(Items.HORN_CORAL_BLOCK),
+            Items.TUBE_CORAL to inputCreator.create(Items.TUBE_CORAL_BLOCK),
+            Items.BRAIN_CORAL to inputCreator.create(Items.BRAIN_CORAL_BLOCK),
+            Items.BUBBLE_CORAL to inputCreator.create(Items.BUBBLE_CORAL_BLOCK),
+            Items.FIRE_CORAL to inputCreator.create(Items.FIRE_CORAL_BLOCK),
+            Items.HORN_CORAL to inputCreator.create(Items.HORN_CORAL_BLOCK),
+            Items.TUBE_CORAL_FAN to inputCreator.create(Items.TUBE_CORAL_BLOCK),
+            Items.BRAIN_CORAL_FAN to inputCreator.create(Items.BRAIN_CORAL_BLOCK),
+            Items.BUBBLE_CORAL_FAN to inputCreator.create(Items.BUBBLE_CORAL_BLOCK),
+            Items.FIRE_CORAL_FAN to inputCreator.create(Items.FIRE_CORAL_BLOCK),
+            Items.HORN_CORAL_FAN to inputCreator.create(Items.HORN_CORAL_BLOCK),
         ).forEach { (plant: Item, soil: HTItemIngredient) ->
-            HTPlantingRecipeBuilder
-                .create(
-                    plant,
-                    soil,
-                    itemResult.create(plant, 3),
-                ).save(output)
+            HTPlantingRecipeBuilder.create(output) {
+                this.seed = plant
+                this.soil = soil
+                this.crop = resultCreator.create(plant, 3)
+            }
         }
 
         // Kelp
-        HTPlantingRecipeBuilder
-            .create(
-                Items.KELP,
-                aquaticSoil,
-                itemResult.create(Items.KELP, 6),
-            ).save(output)
+        HTPlantingRecipeBuilder.create(output) {
+            seed = Items.KELP
+            soil = aquaticSoil
+            crop = resultCreator.create(Items.KELP, 6)
+        }
     }
 }

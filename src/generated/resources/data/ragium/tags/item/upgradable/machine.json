@@ -3,7 +3,8 @@
     "ragium:alloy_smelter",
     "ragium:crusher",
     "ragium:cutting_machine",
-    "ragium:dryer",
+    "ragium:electric_furnace",
+    "ragium:forming_press",
     "ragium:melter",
     "ragium:mixer",
     "ragium:pyrolyzer"

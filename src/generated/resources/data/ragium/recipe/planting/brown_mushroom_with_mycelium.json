@@ -4,8 +4,7 @@
     "count": 5,
     "id": "minecraft:brown_mushroom"
   },
-  "seed": {
-    "id": "minecraft:brown_mushroom"
-  },
-  "soil": "minecraft:mycelium"
+  "seed": "minecraft:brown_mushroom",
+  "soil": "minecraft:mycelium",
+  "time": 200
 }

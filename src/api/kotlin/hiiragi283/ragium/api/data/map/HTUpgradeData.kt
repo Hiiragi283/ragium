@@ -1,11 +1,12 @@
 package hiiragi283.ragium.api.data.map
 
+import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.math.fraction
+import hiiragi283.core.api.fraction
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.text.HTCommonTranslation
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.api.upgrade.HTUpgradeKey
 import hiiragi283.ragium.api.upgrade.HTUpgradePropertyMap
@@ -15,9 +16,6 @@ import net.minecraft.world.item.ItemStack
 import org.apache.commons.lang3.math.Fraction
 import java.util.Optional
 import java.util.function.Consumer
-import kotlin.collections.component1
-import kotlin.collections.component2
-import kotlin.collections.iterator
 
 /**
  * @see net.minecraft.world.item.enchantment.Enchantment
@@ -49,6 +47,7 @@ data class HTUpgradeData private constructor(
             return bool1 && bool2
         }
 
+        @HTBuilderMarker
         @JvmStatic
         inline fun create(builderAction: Builder.() -> Unit): HTUpgradeData = Builder().apply(builderAction).build()
     }
@@ -63,12 +62,12 @@ data class HTUpgradeData private constructor(
         // Target Set
         targetSet
             .map(HTItemIngredient::getText)
-            .map { HTCommonTranslation.TOOLTIP_UPGRADE_TARGET.translateColored(HTDefaultColor.BLUE, HTDefaultColor.GRAY, it) }
+            .map { RagiumTranslation.TOOLTIP_UPGRADE_TARGET.translateColored(HTDefaultColor.BLUE, HTDefaultColor.GRAY, it) }
             .ifPresent(consumer)
         // Exclusive Set
         exclusiveSet
             .map(HTItemIngredient::getText)
-            .map { HTCommonTranslation.TOOLTIP_UPGRADE_EXCLUSIVE.translateColored(HTDefaultColor.RED, HTDefaultColor.GRAY, it) }
+            .map { RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE.translateColored(HTDefaultColor.RED, HTDefaultColor.GRAY, it) }
             .ifPresent(consumer)
     }
 

@@ -2,13 +2,14 @@ package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
+import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.getOrThrow
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.resource.HTIdLike
-import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -32,17 +33,14 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
 
     private fun copyTags() {
         // Material
-        RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, _) ->
-            copy(prefix, key)
-        }
+        copyMaterials()
     }
 
     //    Material    //
 
     private fun material(factory: BuilderFactory<Item>) {
-        RagiumItems.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, item: HTIdLike) ->
-            addMaterial(factory, prefix, key).add(item)
-            if (prefix == HCMaterialPrefixes.GEM || prefix == HCMaterialPrefixes.INGOT) {
+        addMaterials(factory) { (prefix: HTTagPrefix, key: HTMaterialKey, item: HTIdLike) ->
+            if (prefix == CommonTagPrefixes.GEM || prefix == CommonTagPrefixes.INGOT) {
                 factory.apply(ItemTags.BEACON_PAYMENT_ITEMS).addTag(prefix, key)
             }
         }
@@ -56,17 +54,14 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)
             .add(RagiumBlocks.MEAT_BLOCK)
             .add(RagiumBlocks.COOKED_MEAT_BLOCK)
-        addTags(factory, Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
-            .add(RagiumItems.FISH_CAN)
-            .add(RagiumItems.FRUIT_CAN)
-            .add(RagiumItems.MEAT_CAN)
-            .add(RagiumItems.SOUP_CAN)
+        val foodsCan: HTTagBuilder<Item> = addTags(factory, Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
+        HTFoodCanType.entries.forEach(foodsCan::add)
         factory
             .apply(Tags.Items.FOODS_RAW_MEAT)
-            .add(RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT))
+            .add(contents.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT))
         factory
             .apply(Tags.Items.FOODS_COOKED_MEAT)
-            .add(RagiumItems.MATERIALS.getOrThrow(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
+            .add(contents.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
         // Others
         RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
 
@@ -88,15 +83,20 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.ALLOY_SMELTER)
             .add(RagiumBlocks.CRUSHER)
             .add(RagiumBlocks.CUTTING_MACHINE)
-            // Advanced
-            .add(RagiumBlocks.DRYER)
+            .add(RagiumBlocks.ELECTRIC_FURNACE)
+            .add(RagiumBlocks.FORMING_PRESS)
+            // Heat
             .add(RagiumBlocks.MELTER)
-            .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.PYROLYZER)
+            // Chemical
+            .add(RagiumBlocks.MIXER)
         factory
             .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
             // Basic
+            .add(RagiumBlocks.FERMENTER)
             .add(RagiumBlocks.PLANTER)
+            // Enchanting
+            .add(RagiumBlocks.ENCHANTER)
 
         // Specific
         factory
@@ -120,13 +120,12 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE)
             // Generator
             // Machine
-            .add(RagiumBlocks.CRUSHER)
-            .add(RagiumBlocks.CUTTING_MACHINE)
-            .add(RagiumBlocks.DRYER)
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.PYROLYZER)
+            .add(RagiumBlocks.SOLIDIFIER)
             // Device
+            .add(RagiumBlocks.FERMENTER)
             .add(RagiumBlocks.PLANTER)
             // Storage
             .add(RagiumBlocks.TANK)

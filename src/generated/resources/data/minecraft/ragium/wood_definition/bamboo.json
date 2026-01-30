@@ -1,0 +1,19 @@
+{
+  "log_tag": "#minecraft:bamboo_blocks",
+  "variants": {
+    "boat": "minecraft:bamboo_raft",
+    "button": "minecraft:bamboo_button",
+    "chest_boat": "minecraft:bamboo_chest_raft",
+    "door": "minecraft:bamboo_door",
+    "fence": "minecraft:bamboo_fence",
+    "fence_gate": "minecraft:bamboo_fence_gate",
+    "hanging_sign": "minecraft:bamboo_hanging_sign",
+    "log": "minecraft:bamboo_block",
+    "planks": "minecraft:bamboo_planks",
+    "pressure_plate": "minecraft:bamboo_pressure_plate",
+    "sign": "minecraft:bamboo_sign",
+    "slab": "minecraft:bamboo_slab",
+    "stairs": "minecraft:bamboo_stairs",
+    "trapdoor": "minecraft:bamboo_trapdoor"
+  }
+}

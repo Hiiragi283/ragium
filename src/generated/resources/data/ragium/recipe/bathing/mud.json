@@ -1,0 +1,12 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "minecraft:dirt",
+  "result": {
+    "id": "minecraft:mud"
+  },
+  "time": 100
+}

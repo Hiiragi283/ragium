@@ -1,9 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "#c:foods/raw_meat",
-  "result": {
-    "amount": 180,
-    "id": "hiiragi_core:meat",
-    "tag": "c:meat"
-  }
-}

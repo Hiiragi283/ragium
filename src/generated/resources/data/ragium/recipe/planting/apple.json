@@ -4,8 +4,7 @@
     "count": 3,
     "id": "minecraft:apple"
   },
-  "seed": {
-    "id": "minecraft:apple"
-  },
-  "soil": "minecraft:oak_sapling"
+  "seed": "minecraft:apple",
+  "soil": "minecraft:oak_sapling",
+  "time": 200
 }

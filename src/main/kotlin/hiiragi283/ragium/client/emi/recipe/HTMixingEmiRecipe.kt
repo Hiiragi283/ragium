@@ -1,26 +1,37 @@
 package hiiragi283.ragium.client.emi.recipe
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.emi.RagiumEmiTextures
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.config.HTMachineConfig
-import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.item.crafting.RecipeHolder
+import kotlin.jvm.optionals.getOrNull
 
 class HTMixingEmiRecipe(holder: RecipeHolder<HTMixingRecipe>) :
-    HTComplexEmiRecipe<HTMixingRecipe>(RagiumConst.MIXER, RagiumEmiRecipeCategories.MIXING, holder) {
-    override fun addSubProgress(widgets: WidgetHolder) {
+    HTProcessingEmiRecipe<HTMixingRecipe>(RagiumEmiRecipeCategories.MIXING, holder) {
+    init {
+        addInput(recipe.itemIngredient.getOrNull())
+        recipe.fluidIngredients.forEach(::addInput)
+
+        addOutputs(recipe.result)
+    }
+
+    override fun addWidgets(widgets: WidgetHolder) {
+        widgets.addArrow(time = recipe.time, x = getPosition(4))
         RagiumEmiTextures.addWidget(
             widgets,
             "mix",
+            getPosition(3.5),
             getPosition(2),
-            getPosition(1.5),
             recipe.time,
             endToStart = true,
         )
+        // inputs
+        widgets.addTank(input(1), getPosition(0.5), HTBackgroundType.INPUT)
+        widgets.addTank(input(2), getPosition(2.5), HTBackgroundType.INPUT)
+        widgets.addSlot(input(0), getPosition(1.5), getPosition(0), HTBackgroundType.EXTRA_INPUT)
+        // outputs
+        widgets.addTank(output(0), getPosition(6), HTBackgroundType.OUTPUT)
     }
-
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.mixer
 }

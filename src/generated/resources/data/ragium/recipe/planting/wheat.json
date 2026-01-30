@@ -3,8 +3,7 @@
   "crop": {
     "id": "minecraft:wheat"
   },
-  "seed": {
-    "id": "minecraft:wheat_seeds"
-  },
-  "soil": "minecraft:farmland"
+  "seed": "minecraft:wheat_seeds",
+  "soil": "minecraft:farmland",
+  "time": 200
 }

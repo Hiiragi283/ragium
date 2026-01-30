@@ -139,7 +139,7 @@ neoForge {
             sourceSet = dataModule
 
             // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-            // gameDirectory = project.file("run-data")
+            gameDirectory = project.file("run-data")
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             programArguments.addAll(
@@ -214,10 +214,7 @@ dependencies {
     runtimeOnly(libs.bundles.mods.runtime)
 
     implementation(libs.mek.get().toString() + ":all")
-
-    implementation(libs.enchdesc) {
-        exclude(group = "mezz.jei")
-    }
+    implementation(libs.enchdesc) { exclude(group = "mezz.jei") }
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

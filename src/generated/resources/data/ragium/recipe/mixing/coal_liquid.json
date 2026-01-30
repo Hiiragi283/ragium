@@ -1,0 +1,14 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 500,
+    "fluids": "#c:residue_oil"
+  },
+  "item_ingredient": "#c:dusts/coal",
+  "result": {
+    "amount": 500,
+    "id": "ragium:coal_liquid",
+    "tag": "c:coal_liquid"
+  },
+  "time": 200
+}

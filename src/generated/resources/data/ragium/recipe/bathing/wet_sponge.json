@@ -1,0 +1,11 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "minecraft:sponge",
+  "result": {
+    "id": "minecraft:wet_sponge"
+  },
+  "time": 100
+}

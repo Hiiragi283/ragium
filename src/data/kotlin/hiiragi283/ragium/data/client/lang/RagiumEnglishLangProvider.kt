@@ -2,9 +2,9 @@ package hiiragi283.ragium.data.client.lang
 
 import hiiragi283.core.api.data.lang.HTLangProvider
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
-import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -14,6 +14,7 @@ import net.minecraft.data.PackOutput
 
 class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(output, RagiumAPI.MOD_ID) {
     override fun addTranslations() {
+        addMaterials()
         RagiumCommonTranslation.addTranslations(this)
 
         // Block
@@ -23,13 +24,19 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
+        add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
+        add(RagiumBlocks.FORMING_PRESS, "Forming Press")
 
-        add(RagiumBlocks.DRYER, "Dryer")
         add(RagiumBlocks.MELTER, "Melter")
-        add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
+        add(RagiumBlocks.SOLIDIFIER, "Solidifier")
 
+        add(RagiumBlocks.MIXER, "Mixer")
+
+        add(RagiumBlocks.FERMENTER, "Fermenter")
         add(RagiumBlocks.PLANTER, "Planter")
+
+        add(RagiumBlocks.ENCHANTER, "Enchanter")
 
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
@@ -38,31 +45,45 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
 
         add(RagiumBlocks.IMITATION_SPAWNER, "Imitation Spawner")
+
+        add(RagiumBlocks.CREATIVE_BATTERY, "Creative Battery")
+        add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
+        add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
         // Fluid
-        addFluid(RagiumFluids.SLIME, "Slime")
-        addFluid(RagiumFluids.GELLED_EXPLOSIVE, "Gelled Explosive")
-        addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
-        addFluid(RagiumFluids.ETHANOL, "Ethanol")
-        addFluid(RagiumFluids.BIOFUEL, "Biofuel")
-        addFluid(RagiumFluids.FERTILIZER, "Liquid Fertilizer")
+        addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluids.CARBON_MONOXIDE, "Carbon Monoxide")
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
+        addFluid(RagiumFluids.OXYGEN, "Oxygen")
+
+        addFluid(RagiumFluids.CREOSOTE, "Creosote")
+        addFluid(RagiumFluids.COAL_GAS, "Coal Gas")
+        addFluid(RagiumFluids.COAL_LIQUID, "Liquefied Coal")
 
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
+        addFluid(RagiumFluids.LPG, "LPG")
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
-        addFluid(RagiumFluids.FUEL, "Fuel")
+        addFluid(RagiumFluids.RESIDUE_OIL, "Residue Oil")
+
+        addFluid(RagiumFluids.METHANE, "Methane")
+        addFluid(RagiumFluids.ETHYLENE, "Ethylene")
+        addFluid(RagiumFluids.BUTADIENE, "Butadiene")
+
+        addFluid(RagiumFluids.METHANOL, "Methanol")
+        addFluid(RagiumFluids.ETHANOL, "Ethanol")
+
+        addFluid(RagiumFluids.SUNFLOWER_OIL, "Sunflower Oil")
+        addFluid(RagiumFluids.BIOFUEL, "Biofuel")
+        addFluid(RagiumFluids.GASOLINE, "Gasoline")
         addFluid(RagiumFluids.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluids.MOLTEN_RAGINITE, "Destabilized Raginite")
         addFluid(RagiumFluids.COOLANT, "Coolant")
-        addFluid(RagiumFluids.CREOSOTE, "Creosote")
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
-        add(RagiumItems.TAR, "Tar")
 
-        add(RagiumItems.FISH_CAN, "Fish Can")
-        add(RagiumItems.FRUIT_CAN, "Fruit Can")
-        add(RagiumItems.MEAT_CAN, "Meat Can")
-        add(RagiumItems.SOUP_CAN, "Soup Can")
+        add(RagiumItems.MOLASSES, "Molasses")
+        add(RagiumItems.EMPTY_CAN, "Empty Can")
 
         add(RagiumItems.BLANK_DISC, "Blank Disc")
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
@@ -71,17 +92,18 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.BATHING, "Bathing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
-        add(RagiumRecipeTypes.DRYING, "Drying")
+        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.PLANTING, "Planting")
         add(RagiumRecipeTypes.PRESSING, "Pressing")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
         add(RagiumRecipeTypes.REFINING, "Refining")
-        add(RagiumRecipeTypes.SIMULATING, "Simulating")
         add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
+        add(RagiumRecipeTypes.WASHING, "Washing")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")
@@ -111,14 +133,13 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "Second Output Tank Capacity")
         add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "Third Output Tank Capacity")
 
-        add(RagiumTranslation.GUI_SLOT_BOTH, "Both")
-        add(RagiumTranslation.GUI_SLOT_INPUT, "Input")
-        add(RagiumTranslation.GUI_SLOT_OUTPUT, "Output")
-        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "Extra Input")
-        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "Extra Output")
-        add(RagiumTranslation.GUI_SLOT_NONE, "None")
+        add(RagiumTranslation.GUI_SLOT_BOTH, "%s: Both")
+        add(RagiumTranslation.GUI_SLOT_INPUT, "%s: Input")
+        add(RagiumTranslation.GUI_SLOT_OUTPUT, "%s: Output")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "%s: Extra Input")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "%s: Extra Output")
+        add(RagiumTranslation.GUI_SLOT_NONE, "%s: None")
 
-        add(RagiumTranslation.DRYER, "A machine which converts ingredients into others by drying.")
         add(RagiumTranslation.MELTER, "A machine which melts item into fluid.")
         add(RagiumTranslation.PYROLYZER, "A machine which converts ingredients into others by heating.")
 
@@ -132,6 +153,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE, $$"Conflicting Upgrades: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_TARGET, $$"Upgrade Targets: %1$s")
         // Upgrade
         add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- Base Multiplier: %1$s")
         add(HTUpgradeKeys.IS_CREATIVE, "- Creative")

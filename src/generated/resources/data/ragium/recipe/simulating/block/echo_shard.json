@@ -1,8 +1,0 @@
-{
-  "type": "ragium:simulating/block",
-  "catalyst": "minecraft:sculk_shrieker",
-  "ingredient": "#c:gems/amethyst",
-  "item_result": {
-    "id": "minecraft:echo_shard"
-  }
-}

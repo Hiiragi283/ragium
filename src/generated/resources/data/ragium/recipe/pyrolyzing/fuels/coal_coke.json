@@ -1,0 +1,18 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:creosote",
+    "tag": "c:creosote"
+  },
+  "ingredient": {
+    "amount": 8,
+    "items": "#c:fuels/coal"
+  },
+  "item_result": {
+    "count": 8,
+    "id": "hiiragi_core:coal_coke_fuel",
+    "tag": "c:fuels/coal_coke"
+  },
+  "time": 600
+}

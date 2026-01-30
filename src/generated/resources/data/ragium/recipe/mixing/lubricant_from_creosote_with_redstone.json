@@ -3,10 +3,11 @@
   "fluid_ingredient": {
     "fluids": "#c:creosote"
   },
-  "fluid_result": {
+  "item_ingredient": "#c:dusts/redstone",
+  "result": {
     "amount": 500,
     "id": "ragium:lubricant",
     "tag": "c:lubricant"
   },
-  "item_ingredient": "#c:dusts/redstone"
+  "time": 200
 }

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 360,
+    "fluids": "#c:molten_eldritch"
+  },
+  "item_ingredient": "minecraft:trial_key",
+  "result": {
+    "id": "minecraft:ominous_trial_key"
+  },
+  "time": 100
+}

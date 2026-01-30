@@ -22,5 +22,6 @@
   "result": {
     "count": 2,
     "tag": "c:ingots/electrum"
-  }
+  },
+  "time": 200
 }

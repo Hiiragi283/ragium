@@ -4,8 +4,7 @@
     "count": 6,
     "id": "minecraft:cherry_log"
   },
-  "seed": {
-    "id": "minecraft:cherry_sapling"
-  },
-  "soil": "#minecraft:dirt"
+  "seed": "minecraft:cherry_sapling",
+  "soil": "#minecraft:dirt",
+  "time": 200
 }

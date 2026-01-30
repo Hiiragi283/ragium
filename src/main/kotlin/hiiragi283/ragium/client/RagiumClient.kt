@@ -1,18 +1,12 @@
 package hiiragi283.ragium.client
 
-import com.mojang.logging.LogUtils
+import hiiragi283.core.api.event.HTRegisterWidgetRendererEvent
+import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.client.gui.screen.HTAlloySmelterScreen
-import hiiragi283.ragium.client.gui.screen.HTChancedScreen
-import hiiragi283.ragium.client.gui.screen.HTComplexScreen
-import hiiragi283.ragium.client.gui.screen.HTMelterScreen
-import hiiragi283.ragium.client.gui.screen.HTPlanterScreen
-import hiiragi283.ragium.client.gui.screen.HTPyrolyzerScreen
-import hiiragi283.ragium.client.gui.screen.HTTankScreen
-import hiiragi283.ragium.client.gui.screen.HTUniversalChestScreen
+import hiiragi283.ragium.client.gui.widget.HTEnergyBarWidgetRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.client.render.block.HTTankRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
@@ -21,7 +15,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumMenuTypes
+import hiiragi283.ragium.setup.RagiumWidgetTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.DyeColor
@@ -32,43 +26,27 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.IEventBus
+import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
-import net.neoforged.neoforge.client.gui.ConfigurationScreen
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
-import org.slf4j.Logger
-import thedarkcolour.kotlinforforge.neoforge.forge.LOADING_CONTEXT
-import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 import java.awt.Color
 
 @Mod(value = RagiumAPI.MOD_ID, dist = [Dist.CLIENT])
-object RagiumClient {
-    @JvmStatic
-    private val LOGGER: Logger = LogUtils.getLogger()
+data object RagiumClient : HTClientMod() {
+    override fun initialize(eventBus: IEventBus, container: ModContainer) {
+        configScreen(container)
 
-    init {
-        val eventBus: IEventBus = MOD_BUS
-
-        eventBus.addListener(::registerBlockColors)
-        eventBus.addListener(::registerItemColors)
-        eventBus.addListener(::registerClientExtensions)
-        eventBus.addListener(::registerScreens)
-        eventBus.addListener(::registerEntityRenderer)
-
-        LOADING_CONTEXT.activeContainer.registerExtensionPoint(
-            IConfigScreenFactory::class.java,
-            IConfigScreenFactory(::ConfigurationScreen),
-        )
-
-        LOGGER.info("Hiiragi-Core loaded on client side!")
+        RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")
     }
 
-    @JvmStatic
-    private fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
+    override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
+        event.register(RagiumWidgetTypes.ENERGY_BAR.get(), ::HTEnergyBarWidgetRenderer)
+    }
+
+    override fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
         // Universal Chest
         event.register(
             { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->
@@ -86,12 +64,9 @@ object RagiumClient {
             },
             RagiumBlocks.UNIVERSAL_CHEST.get(),
         )
-
-        LOGGER.info("Registered block colors!")
     }
 
-    @JvmStatic
-    private fun registerItemColors(event: RegisterColorHandlersEvent.Item) {
+    override fun registerItemColors(event: RegisterColorHandlersEvent.Item) {
         // Buckets
         val bucketColor = DynamicFluidContainerModel.Colors()
         for (item: ItemLike in RagiumFluids.REGISTER.asItemSequence()) {
@@ -119,47 +94,43 @@ object RagiumClient {
             RagiumBlocks.UNIVERSAL_CHEST,
             // RagiumItems.UNIVERSAL_BUNDLE,
         )
-        LOGGER.info("Registered item colors!")
     }
 
-    @JvmStatic
-    private fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
-        event.dull(RagiumFluids.SLIME, Color(0x66cc66))
-        event.molten(RagiumFluids.GELLED_EXPLOSIVE, Color(0x339933))
-        event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
-        event.dull(RagiumFluids.ETHANOL, Color(0xccffcc))
-        event.clear(RagiumFluids.BIOFUEL, Color(0x99cc00))
-        event.clear(RagiumFluids.FERTILIZER, Color(0x339933))
+    override fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
+        event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
+        event.clear(RagiumFluids.CARBON_MONOXIDE, Color(0x66cccc))
+        event.clear(RagiumFluids.CARBON_DIOXIDE, Color(0x66cccc))
+        event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
+
+        event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
+        event.clear(RagiumFluids.COAL_GAS, Color(0xffcc99))
+        event.molten(RagiumFluids.COAL_LIQUID, Color(0x333366))
 
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
-        event.dull(RagiumFluids.NAPHTHA, Color(0xff6633))
-        event.clear(RagiumFluids.FUEL, Color(0xcc3300))
-        event.dull(RagiumFluids.LUBRICANT, Color(0xff9900))
+        event.clear(RagiumFluids.LPG, Color(0xcccccc))
+        event.dull(RagiumFluids.NAPHTHA, Color(0xcc6600))
+        event.molten(RagiumFluids.RESIDUE_OIL, Color(0x663366))
+
+        event.clear(RagiumFluids.METHANE, Color(0xcc9999))
+        event.clear(RagiumFluids.ETHYLENE, Color(0x99cc99))
+        event.clear(RagiumFluids.BUTADIENE, Color(0x999966))
+
+        event.dull(RagiumFluids.METHANOL, Color(0xcc6699))
+        event.dull(RagiumFluids.ETHANOL, Color(0x99cc66))
+
+        event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
+        event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
+        event.clear(RagiumFluids.GASOLINE, Color(0xcccc00))
+        event.dull(RagiumFluids.LUBRICANT, Color(0xff6600))
 
         event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
         event.clear(RagiumFluids.COOLANT, Color(0x009999))
-        event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
     }
 
-    private fun registerScreens(event: RegisterMenuScreensEvent) {
-        event.register(RagiumMenuTypes.ALLOY_SMELTER.get(), ::HTAlloySmelterScreen)
-        event.register(RagiumMenuTypes.CRUSHER.get(), ::HTChancedScreen)
-        event.register(RagiumMenuTypes.CUTTING_MACHINE.get(), ::HTChancedScreen)
-        event.register(RagiumMenuTypes.DRYER.get(), ::HTComplexScreen)
-        event.register(RagiumMenuTypes.MELTER.get(), ::HTMelterScreen)
-        event.register(RagiumMenuTypes.MIXER.get(), ::HTComplexScreen)
-        event.register(RagiumMenuTypes.PLANTER.get(), ::HTPlanterScreen)
-        event.register(RagiumMenuTypes.PYROLYZER.get(), ::HTPyrolyzerScreen)
-
-        event.register(RagiumMenuTypes.TANK.get(), ::HTTankScreen)
-        event.register(RagiumMenuTypes.UNIVERSAL_CHEST.get(), ::HTUniversalChestScreen)
-
-        LOGGER.info("Registered screens!")
-    }
-
-    private fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+    override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         // Block Entity
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.IMITATION_SPAWNER.get(), ::HTImitationSpawnerRenderer)
     }

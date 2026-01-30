@@ -1,7 +1,8 @@
 package hiiragi283.ragium.common.upgrade
 
 import hiiragi283.core.api.data.lang.HTLangName
-import hiiragi283.core.api.data.lang.HTLanguageType
+import hiiragi283.core.api.data.lang.HTLangType
+import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.setup.RagiumItems
@@ -12,7 +13,7 @@ import net.minecraft.world.item.Item
 enum class RagiumUpgradeType(val group: Group, private val enName: String, private val jpName: String) :
     StringRepresentable,
     HTLangName,
-    HTItemHolderLike<Item> {
+    HTItemHolderLike.Delegated<Item> {
     // Creative
     CREATIVE(Group.CREATIVE, "Creative", "クリエイティブ"),
 
@@ -43,9 +44,9 @@ enum class RagiumUpgradeType(val group: Group, private val enName: String, priva
 
     override fun getItemHolder(): HTSimpleDeferredItem = RagiumItems.UPGRADES[this]!!
 
-    override fun getTranslatedName(type: HTLanguageType): String = when (type) {
-        HTLanguageType.EN_US -> enName
-        HTLanguageType.JA_JP -> jpName
+    override fun getTranslatedName(type: HTLangType): String = when (type) {
+        HTLangTypes.JA_JP -> jpName
+        else -> enName
     }
 
     override fun getSerializedName(): String = name.lowercase()

@@ -1,20 +1,17 @@
 package hiiragi283.ragium.common.item.block
 
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.capability.HTFluidCapabilities
-import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.api.text.HTCommonTranslation
+import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
-class HTTankBlockItem(block: HTTankBlock, properties: Properties) :
-    HTStorageBlockItem<HTTankBlock>(block, properties),
-    HTSubCreativeTabContents {
+class HTTankBlockItem(block: HTTankBlock, properties: Properties) : HTStorageBlockItem<HTTankBlock>(block, properties) {
     /**
      * @see mekanism.common.item.block.machine.ItemBlockFluidTank.addStats
      */

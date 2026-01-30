@@ -1,25 +1,32 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
-class HTPyrolyzingRecipeBuilder(
-    private val ingredient: HTItemIngredient,
-    private val itemResult: HTItemResult,
-    private val fluidResult: HTFluidResult,
-) : HTProcessingRecipeBuilder<HTPyrolyzingRecipeBuilder>(RagiumConst.PYROLYZING) {
+class HTPyrolyzingRecipeBuilder : HTAbstractComplexRecipeBuilder(RagiumConst.PYROLYZING) {
     companion object {
+        @HTBuilderMarker
         @JvmStatic
-        fun create(ingredient: HTItemIngredient, itemResult: HTItemResult, fluidResult: HTFluidResult): HTPyrolyzingRecipeBuilder =
-            HTPyrolyzingRecipeBuilder(ingredient, itemResult, fluidResult)
+        inline fun create(output: RecipeOutput, builderAction: HTPyrolyzingRecipeBuilder.() -> Unit) {
+            HTPyrolyzingRecipeBuilder().apply(builderAction).save(output)
+        }
     }
 
-    override fun getPrimalId(): ResourceLocation = fluidResult.getId()
+    init {
+        time *= 3
+    }
+
+    lateinit var ingredient: HTItemIngredient
+    lateinit var itemResult: HTItemResult
+    lateinit var fluidResult: HTFluidResult
+
+    override fun getPrimalId(): ResourceLocation = itemResult.getId()
 
     override fun createRecipe(): HTPyrolyzingRecipe = HTPyrolyzingRecipe(ingredient, itemResult, fluidResult, time, exp)
 }

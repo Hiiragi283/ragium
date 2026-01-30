@@ -1,52 +1,25 @@
 package hiiragi283.ragium.client.emi.recipe
 
+import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.widget.WidgetHolder
+import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.emi.HTEmiHolderRecipe
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
-import hiiragi283.core.api.integration.emi.addArrow
 import hiiragi283.core.api.recipe.HTProcessingRecipe
-import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.config.HTMachineConfig
-import hiiragi283.ragium.config.RagiumFluidConfigType
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 
 abstract class HTProcessingEmiRecipe<RECIPE : HTProcessingRecipe<*>> : HTEmiHolderRecipe<RECIPE> {
-    private val backgroundTex: String
+    constructor(category: HTEmiRecipeCategory, id: ResourceLocation, recipe: RECIPE) : super(category, id, recipe)
 
-    constructor(
-        backgroundTex: String,
-        category: HTEmiRecipeCategory,
-        id: ResourceLocation,
-        recipe: RECIPE,
-    ) : super(category, id, recipe) {
-        this.backgroundTex = backgroundTex
+    constructor(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) : super(category, holder)
+
+    //    Extensions    //
+
+    fun WidgetHolder.add2x2Slots(x: Int = getPosition(5.5), y: Int = getPosition(0.5), ingredient: (Int) -> EmiIngredient = ::output) {
+        this.addSlot(ingredient(0), x, y, HTBackgroundType.OUTPUT)
+        this.addSlot(ingredient(1), x + getPosition(1), y, HTBackgroundType.OUTPUT)
+        this.addSlot(ingredient(2), x, y + getPosition(1), HTBackgroundType.OUTPUT)
+        this.addSlot(ingredient(3), x + getPosition(1), y + getPosition(1), HTBackgroundType.OUTPUT)
     }
-
-    constructor(
-        backgroundTex: String,
-        category: HTEmiRecipeCategory,
-        holder: RecipeHolder<RECIPE>,
-    ) : super(category, holder, category.bounds) {
-        this.backgroundTex = backgroundTex
-    }
-
-    override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addTexture(
-            RagiumAPI.id("textures/gui/container/$backgroundTex.png"),
-            0,
-            0,
-            displayWidth,
-            displayHeight,
-            25,
-            17,
-        )
-        widgets.addArrow(getArrowX(), getPosition(1), recipe.time)
-    }
-
-    protected open fun getArrowX(): Int = getPosition(3.5)
-
-    protected open fun getConfig(): HTMachineConfig? = null
-
-    protected fun getCapacity(type: RagiumFluidConfigType): Int = getConfig()?.tankMap?.get(type)?.asInt ?: 8000
 }

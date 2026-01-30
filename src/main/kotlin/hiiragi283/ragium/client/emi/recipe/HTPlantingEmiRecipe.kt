@@ -1,14 +1,14 @@
 package hiiragi283.ragium.client.emi.recipe
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.emi.RagiumEmiTextures
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTPlantingEmiRecipe(holder: RecipeHolder<HTPlantingRecipe>) :
-    HTProcessingEmiRecipe<HTPlantingRecipe>(RagiumConst.PLANTER, RagiumEmiRecipeCategories.PLANTING, holder) {
+    HTProcessingEmiRecipe<HTPlantingRecipe>(RagiumEmiRecipeCategories.PLANTING, holder) {
     init {
         addInput(recipe.seedIngredient)
 
@@ -19,7 +19,7 @@ class HTPlantingEmiRecipe(holder: RecipeHolder<HTPlantingRecipe>) :
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        super.addWidgets(widgets)
+        widgets.addArrow(time = recipe.time)
         RagiumEmiTextures.addWidget(
             widgets,
             "sun",
@@ -28,12 +28,12 @@ class HTPlantingEmiRecipe(holder: RecipeHolder<HTPlantingRecipe>) :
             recipe.time,
             endToStart = true,
         )
-        // Input
-        widgets.addInput(0, getPosition(2), getPosition(0))
-        // Catalyst
-        widgets.addCatalyst(0, getPosition(2), getPosition(2))
-        // Output
-        widgets.addOutput(0, getPosition(5.5), getPosition(0.5), true)
-        widgets.addOutput(1, getPosition(5.5), getPosition(2))
+        // input
+        widgets.addSlot(input(0), getPosition(2), getPosition(0), HTBackgroundType.INPUT)
+        // catalyst
+        widgets.addSlot(catalyst(0), getPosition(2), getPosition(2), HTBackgroundType.NONE)
+        // outputs
+        widgets.addSlot(output(0), getPosition(5.5), getPosition(0.5), HTBackgroundType.OUTPUT)
+        widgets.addSlot(output(1), getPosition(5.5), getPosition(2), HTBackgroundType.EXTRA_OUTPUT)
     }
 }

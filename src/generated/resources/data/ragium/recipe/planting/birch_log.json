@@ -4,8 +4,7 @@
     "count": 6,
     "id": "minecraft:birch_log"
   },
-  "seed": {
-    "id": "minecraft:birch_sapling"
-  },
-  "soil": "#minecraft:dirt"
+  "seed": "minecraft:birch_sapling",
+  "soil": "#minecraft:dirt",
+  "time": 200
 }

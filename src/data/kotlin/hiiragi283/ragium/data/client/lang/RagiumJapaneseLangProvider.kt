@@ -2,9 +2,9 @@ package hiiragi283.ragium.data.client.lang
 
 import hiiragi283.core.api.data.lang.HTLangProvider
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumTags
+import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
-import hiiragi283.ragium.common.text.RagiumTranslation
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -14,6 +14,7 @@ import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(output, RagiumAPI.MOD_ID) {
     override fun addTranslations() {
+        addMaterials()
         RagiumCommonTranslation.addTranslations(this)
 
         // Block
@@ -23,13 +24,19 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
+        add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
+        add(RagiumBlocks.FORMING_PRESS, "プレス機")
 
-        add(RagiumBlocks.DRYER, "乾燥機")
         add(RagiumBlocks.MELTER, "溶融炉")
-        add(RagiumBlocks.MIXER, "混合機")
         add(RagiumBlocks.PYROLYZER, "熱分解室")
+        add(RagiumBlocks.SOLIDIFIER, "成型機")
 
+        add(RagiumBlocks.MIXER, "混合機")
+
+        add(RagiumBlocks.FERMENTER, "発酵槽")
         add(RagiumBlocks.PLANTER, "栽培機")
+
+        add(RagiumBlocks.ENCHANTER, "エンチャンター")
 
         add(RagiumBlocks.BATTERY, "可変バッテリー")
         add(RagiumBlocks.CRATE, "可変クレート")
@@ -38,31 +45,45 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
 
         add(RagiumBlocks.IMITATION_SPAWNER, "スポナーの模造品")
+
+        add(RagiumBlocks.CREATIVE_BATTERY, "クリエイティブバッテリー")
+        add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブクレート")
+        add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
-        addFluid(RagiumFluids.SLIME, "スライム")
-        addFluid(RagiumFluids.GELLED_EXPLOSIVE, "ゲル状爆薬")
-        addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオ")
-        addFluid(RagiumFluids.ETHANOL, "エタノール")
-        addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
-        addFluid(RagiumFluids.FERTILIZER, "液体肥料")
+        addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.CARBON_MONOXIDE, "一酸化炭素")
+        addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
+        addFluid(RagiumFluids.OXYGEN, "酸素")
+
+        addFluid(RagiumFluids.CREOSOTE, "クレオソート")
+        addFluid(RagiumFluids.COAL_GAS, "石炭ガス")
+        addFluid(RagiumFluids.COAL_LIQUID, "液化石炭")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
+        addFluid(RagiumFluids.LPG, "液化天然ガス")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
-        addFluid(RagiumFluids.FUEL, "燃料")
+        addFluid(RagiumFluids.RESIDUE_OIL, "残渣油")
+
+        addFluid(RagiumFluids.METHANE, "メタン")
+        addFluid(RagiumFluids.ETHYLENE, "エチレン")
+        addFluid(RagiumFluids.BUTADIENE, "ブタジエン")
+
+        addFluid(RagiumFluids.METHANOL, "メタノール")
+        addFluid(RagiumFluids.ETHANOL, "エタノール")
+
+        addFluid(RagiumFluids.SUNFLOWER_OIL, "ヒマワリ油")
+        addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
+        addFluid(RagiumFluids.GASOLINE, "ガソリン")
         addFluid(RagiumFluids.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluids.MOLTEN_RAGINITE, "不安定化ラギナイト")
         addFluid(RagiumFluids.COOLANT, "冷却液")
-        addFluid(RagiumFluids.CREOSOTE, "クレオソート")
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.TAR, "タール")
 
-        add(RagiumItems.FISH_CAN, "魚の缶詰")
-        add(RagiumItems.FRUIT_CAN, "フルーツの缶詰")
-        add(RagiumItems.MEAT_CAN, "肉の缶詰")
-        add(RagiumItems.SOUP_CAN, "スープの缶詰")
+        add(RagiumItems.MOLASSES, "糖蜜")
+        add(RagiumItems.EMPTY_CAN, "空の缶詰")
 
         add(RagiumItems.BLANK_DISC, "空のレコード")
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
@@ -71,17 +92,18 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.BATHING, "化学浴")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.DRYING, "乾燥")
+        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.PRESSING, "プレス加工")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
         add(RagiumRecipeTypes.REFINING, "精製")
-        add(RagiumRecipeTypes.SIMULATING, "シミュレーション")
         add(RagiumRecipeTypes.SOLIDIFYING, "成型")
+        add(RagiumRecipeTypes.WASHING, "洗浄")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")
@@ -111,14 +133,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "2番目の出力タンクの容量")
         add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "3番目の出力タンクの容量")
 
-        add(RagiumTranslation.GUI_SLOT_BOTH, "双方")
-        add(RagiumTranslation.GUI_SLOT_INPUT, "入力")
-        add(RagiumTranslation.GUI_SLOT_OUTPUT, "出力")
-        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "追加の入力")
-        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "追加の出力")
-        add(RagiumTranslation.GUI_SLOT_NONE, "なし")
+        add(RagiumTranslation.GUI_SLOT_BOTH, "%s: 双方")
+        add(RagiumTranslation.GUI_SLOT_INPUT, "%s: 入力")
+        add(RagiumTranslation.GUI_SLOT_OUTPUT, "%s: 出力")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_INPUT, "%s: 追加の入力")
+        add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "%s: 追加の出力")
+        add(RagiumTranslation.GUI_SLOT_NONE, "%s: なし")
 
-        add(RagiumTranslation.DRYER, "乾燥によって材料を変換する機械です。")
         add(RagiumTranslation.MELTER, "アイテムを融かして液体にする機械です。")
         add(RagiumTranslation.PYROLYZER, "熱によって材料を変換する機械です。")
 
@@ -132,6 +153,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_TARGET, $$"アップグレードの対象: %1$s")
+        add(RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE, $$"競合するアップグレード: %1$s")
         // Upgrade
         add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- 基本倍率: %1$s")
         add(HTUpgradeKeys.IS_CREATIVE, "- クリエイティブ")

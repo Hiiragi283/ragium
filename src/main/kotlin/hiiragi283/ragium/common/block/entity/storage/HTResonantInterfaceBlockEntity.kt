@@ -1,15 +1,17 @@
 package hiiragi283.ragium.common.block.entity.storage
 
-import hiiragi283.core.api.capability.HTEnergyCapabilities
-import hiiragi283.core.api.capability.HTFluidCapabilities
-import hiiragi283.core.api.capability.HTItemCapabilities
 import hiiragi283.core.api.render.area.HTAreaDefinition
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.api.serialization.value.read
+import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.client.render.area.HTAreaRendererManager
 import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
+import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.common.capability.HTFluidCapabilities
+import hiiragi283.core.common.capability.HTItemCapabilities
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.block.entity.HTTargetedBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -78,7 +80,7 @@ class HTResonantInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
-        output.store(RagiumConst.LOCATION, VanillaBiCodecs.BLOCK_POS, location)
+        output.write(RagiumConst.LOCATION, VanillaBiCodecs.BLOCK_POS, location)
     }
 
     override fun readValue(input: HTValueInput) {
@@ -88,7 +90,7 @@ class HTResonantInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun initReducedUpdateTag(output: HTValueOutput) {
         super.initReducedUpdateTag(output)
-        output.store(RagiumConst.LOCATION, VanillaBiCodecs.BLOCK_POS, location)
+        output.write(RagiumConst.LOCATION, VanillaBiCodecs.BLOCK_POS, location)
     }
 
     override fun handleUpdateTag(input: HTValueInput) {
@@ -113,6 +115,5 @@ class HTResonantInterfaceBlockEntity(pos: BlockPos, state: BlockState) :
         itemCache.clear()
         fluidCache.clear()
         energyCache.clear()
-        getServerLevel()?.let(::sendUpdatePacket)
     }
 }

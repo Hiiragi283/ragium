@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/ingot/cooked_meat"
+    "layer0": "ragium:item/cooked_meat_ingot"
   }
 }

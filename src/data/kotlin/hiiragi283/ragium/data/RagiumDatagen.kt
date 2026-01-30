@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.core.api.data.HTRootDataGenerator
 import hiiragi283.core.api.function.partially1
-import hiiragi283.core.common.material.HTMaterialManagerImpl
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.client.RagiumTextureProvider
 import hiiragi283.ragium.data.client.lang.RagiumEnglishLangProvider
@@ -11,6 +10,7 @@ import hiiragi283.ragium.data.client.model.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.model.RagiumItemModelProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import hiiragi283.ragium.data.server.bootstrap.RagiumWoodDefinition
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumItemTagsProvider
@@ -25,9 +25,9 @@ import java.util.concurrent.CompletableFuture
 object RagiumDatagen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent) {
-        HTMaterialManagerImpl.gatherAttributes(true)
-
-        val (server: HTRootDataGenerator, client: HTRootDataGenerator) = HTRootDataGenerator.withDataPack(event)
+        val (server: HTRootDataGenerator, client: HTRootDataGenerator) = HTRootDataGenerator.withDataPack(event) {
+            add(RagiumAPI.WOOD_DEFINITION_KEY, RagiumWoodDefinition)
+        }
         // Server
         server.addProvider(::RagiumRecipeProvider)
 

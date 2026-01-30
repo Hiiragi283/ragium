@@ -1,23 +1,16 @@
 package hiiragi283.ragium.client.emi.recipe
 
-import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.integration.emi.toEmi
-import hiiragi283.core.api.integration.emi.toFluidEmi
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
-import hiiragi283.ragium.config.RagiumFluidConfigType
-import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.crafting.RecipeHolder
 import org.apache.commons.lang3.math.Fraction
 
-abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(
-    backgroundTex: String,
-    category: HTEmiRecipeCategory,
-    holder: RecipeHolder<RECIPE>,
-) : HTProcessingEmiRecipe<RECIPE>(backgroundTex, category, holder) {
+abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe<*>>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
+    HTProcessingEmiRecipe<RECIPE>(category, holder) {
     init {
-        addInput(recipe.ingredient)
+        addInputs()
 
         addOutputs(recipe.result)
         for ((result: HTItemResult, chance: Fraction) in recipe.extraResults) {
@@ -25,19 +18,5 @@ abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(
         }
     }
 
-    final override fun addWidgets(widgets: WidgetHolder) {
-        super.addWidgets(widgets)
-        // Input
-        widgets
-            .addTank(
-                RagiumFluids.LUBRICANT.toFluidEmi(),
-                getPosition(0.5),
-                getCapacity(RagiumFluidConfigType.FIRST_INPUT),
-            ).catalyst(true)
-        widgets.addInput(0, getPosition(2), getPosition(0.5))
-        // Output
-        addOutputSlots(widgets)
-    }
-
-    protected abstract fun addOutputSlots(widgets: WidgetHolder)
+    protected abstract fun addInputs()
 }

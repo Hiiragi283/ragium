@@ -4,22 +4,17 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTItemModelProvider
-import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.resource.HTIdLike
-import hiiragi283.core.api.resource.vanillaId
-import hiiragi283.core.common.material.HCMaterialPrefixes
-import hiiragi283.core.common.registry.register.HTSimpleFluidContent
+import hiiragi283.core.api.resource.itemId
+import hiiragi283.core.api.resource.toId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
-import kotlin.collections.addAll
-import kotlin.collections.contains
-import kotlin.collections.forEach
 
 class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(RagiumAPI.MOD_ID, context) {
     private val wireOverlay: ResourceLocation = HiiragiCoreAPI.id(HTConst.ITEM, "wire_overlay")
@@ -30,50 +25,39 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         buildList {
             addAll(RagiumItems.REGISTER.asSequence())
 
-            removeAll(RagiumItems.MATERIALS.values)
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
 
+            removeAll(RagiumItems.FOOD_CANS.values)
+
+            removeAll(RagiumItems.MOLDS.values)
             remove(RagiumItems.BLANK_DISC)
             remove(RagiumItems.POTION_DROP)
 
-            removeAll(RagiumItems.MOLDS.values)
             removeAll(RagiumItems.UPGRADES.values)
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
-
+        // Materials
         registerMaterials()
-        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { itemId: ResourceLocation ->
-            layeredItem(
-                RagiumItems.RAGI_ALLOY_COMPOUND,
-                vanillaId(HTConst.ITEM, "copper_ingot"),
-                itemId.withPrefix("item/"),
-            )
+        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { item ->
+            layeredItem(item, HTConst.MINECRAFT.toId(HTConst.ITEM, "copper_ingot"), item.itemId)
         }
-
-        existTexture(RagiumItems.BLANK_DISC) { itemId: ResourceLocation ->
-            withExistingParent(itemId.path, vanillaId(HTConst.ITEM, "template_music_disc"))
-                .texture("layer0", itemId.withPrefix("item/"))
+        // Foods
+        for ((canType: HTFoodCanType, item: HTIdLike) in RagiumItems.FOOD_CANS) {
+            existTexture(item, RagiumAPI.id(HTConst.ITEM, "food_can", canType.serializedName), ::layeredItem)
         }
-        layeredItem(RagiumItems.POTION_DROP, vanillaId(HTConst.ITEM, "ghast_tear"))
+        // Utilities
+        existTexture(RagiumItems.BLANK_DISC) { item: HTIdLike ->
+            withExistingParent(item.path, HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
+                .texture("layer0", item.itemId)
+        }
+        layeredItem(RagiumItems.POTION_DROP, HTConst.MINECRAFT.toId(HTConst.ITEM, "ghast_tear"))
 
         for ((moldType: HTMoldType, item: HTIdLike) in RagiumItems.MOLDS) {
             existTexture(item, RagiumAPI.id(HTConst.ITEM, "mold", moldType.serializedName), ::layeredItem)
         }
+        // Upgrades
         registerUpgrades()
-
+        // Buckets
         registerBuckets()
-    }
-
-    private fun registerMaterials() {
-        RagiumItems.MATERIALS.forEach { (prefix: HTMaterialPrefix, key: HTMaterialKey, item: HTIdLike) ->
-            val textureId: ResourceLocation = RagiumAPI.id(HTConst.ITEM, prefix.asPrefixName(), key.asMaterialName())
-            if (prefix == HCMaterialPrefixes.WIRE) {
-                existTexture(item, textureId) { itemIn: HTIdLike, layer: ResourceLocation ->
-                    layeredItem(itemIn, layer, wireOverlay)
-                }
-            } else {
-                existTexture(item, textureId, ::layeredItem)
-            }
-        }
     }
 
     private fun registerUpgrades() {
@@ -93,17 +77,15 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
     }
 
     private fun registerBuckets() {
-        val dripFluids: List<HTSimpleFluidContent> = buildList {
-            // Organic
-            add(RagiumFluids.SLIME)
-            add(RagiumFluids.GELLED_EXPLOSIVE)
-            add(RagiumFluids.CRUDE_BIO)
+        val dripFluids: List<HTFluidContent<*, *, *>> = buildList {
             // Oil
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.LUBRICANT)
+            // Organic
+            add(RagiumFluids.CREOSOTE)
+            add(RagiumFluids.COAL_LIQUID)
             // Misc
             add(RagiumFluids.MOLTEN_RAGINITE)
-            add(RagiumFluids.CREOSOTE)
         }
         for (content: HTFluidContent<*, *, *> in RagiumFluids.REGISTER.entries) {
             bucketItem(content, content in dripFluids)

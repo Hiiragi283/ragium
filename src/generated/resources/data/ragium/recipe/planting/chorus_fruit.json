@@ -4,8 +4,7 @@
     "count": 6,
     "id": "minecraft:chorus_fruit"
   },
-  "seed": {
-    "id": "minecraft:chorus_flower"
-  },
-  "soil": "#c:end_stones"
+  "seed": "minecraft:chorus_flower",
+  "soil": "#c:end_stones",
+  "time": 200
 }

@@ -4,8 +4,7 @@
     "count": 6,
     "id": "minecraft:mangrove_log"
   },
-  "seed": {
-    "id": "minecraft:mangrove_propagule"
-  },
-  "soil": "#minecraft:dirt"
+  "seed": "minecraft:mangrove_propagule",
+  "soil": "#minecraft:dirt",
+  "time": 200
 }

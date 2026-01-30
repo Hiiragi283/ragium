@@ -1,8 +1,0 @@
-{
-  "type": "ragium:simulating/block",
-  "catalyst": "minecraft:bee_nest",
-  "ingredient": "minecraft:glass_bottle",
-  "item_result": {
-    "id": "minecraft:honey_bottle"
-  }
-}

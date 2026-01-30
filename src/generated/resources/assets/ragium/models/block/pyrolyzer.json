@@ -3,7 +3,7 @@
   "textures": {
     "bottom": "ragium:block/machine/bottom",
     "front": "ragium:block/machine/pyrolyzer_front",
-    "side": "ragium:block/machine/side_advanced",
-    "top": "ragium:block/machine/top_advanced"
+    "side": "ragium:block/machine/side_heat",
+    "top": "ragium:block/machine/top_heat"
   }
 }

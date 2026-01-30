@@ -2,7 +2,7 @@
   "type": "minecraft:smelting",
   "category": "misc",
   "cookingtime": 600,
-  "experience": 0.7,
+  "experience": 1.0,
   "ingredient": {
     "item": "ragium:meat_block"
   },

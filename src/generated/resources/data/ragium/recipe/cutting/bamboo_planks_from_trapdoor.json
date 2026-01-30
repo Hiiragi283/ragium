@@ -1,8 +1,0 @@
-{
-  "type": "ragium:cutting",
-  "ingredient": "minecraft:bamboo_trapdoor",
-  "result": {
-    "count": 3,
-    "id": "minecraft:bamboo_planks"
-  }
-}

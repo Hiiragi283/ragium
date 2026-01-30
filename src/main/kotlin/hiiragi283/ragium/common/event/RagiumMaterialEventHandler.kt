@@ -1,86 +1,105 @@
 package hiiragi283.ragium.common.event
 
 import hiiragi283.core.api.event.HTMaterialPropertyEvent
+import hiiragi283.core.api.material.HTMaterialKey
+import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTFluidMaterialProperty
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
-import hiiragi283.core.api.material.property.HTSmeltingMaterialProperty
-import hiiragi283.core.api.material.property.addColor
-import hiiragi283.core.api.material.property.addDefaultPart
-import hiiragi283.core.api.material.property.addName
-import hiiragi283.core.api.material.property.addTemplate
-import hiiragi283.core.common.data.texture.HCTextureTemplates
-import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.api.material.property.HTMaterialTextureSet
+import hiiragi283.core.api.material.property.addBlockPrefixes
+import hiiragi283.core.api.material.property.addCustomName
+import hiiragi283.core.api.material.property.addExtraOreResult
+import hiiragi283.core.api.material.property.addItemPrefixes
+import hiiragi283.core.api.material.property.setDefaultPart
+import hiiragi283.core.api.material.property.setName
+import hiiragi283.core.api.material.property.setTextureSet
+import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.texture.RagiumMaterialPalette
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.Tags
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumMaterialEventHandler {
     @SubscribeEvent
     fun gatherAttributes(event: HTMaterialPropertyEvent) {
-        val isDataGen: Boolean = event.isDataGen
         // Minerals
         event.modify(RagiumMaterialKeys.RAGINITE) {
-            addDefaultPart(HCMaterialPrefixes.DUST)
+            setDefaultPart(HTDefaultPart.Prefixed.DUST)
+            addBlockPrefixes(CommonTagPrefixes.ORES.plus(CommonTagPrefixes.BLOCK))
+            addItemPrefixes(CommonTagPrefixes.DUST)
             put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(RagiumFluids.MOLTEN_RAGINITE))
-            if (isDataGen) {
-                addName("Raginite", "ラギナイト")
-                addColor(RagiumMaterialPalette.RAGINITE)
-                addTemplate(HCTextureTemplates.DUST_DULL)
-            }
+
+            setName("Raginite", "ラギナイト")
+            setTextureSet("mineral", HTMaterialTextureSet.DULL)
         }
         // Gems
         event.modify(RagiumMaterialKeys.RAGI_CRYSTAL) {
-            addDefaultPart(HCMaterialPrefixes.GEM)
-            if (isDataGen) {
-                addName("Ragi-Crystal", "ラギクリスタル")
-                addColor(RagiumMaterialPalette.RAGINITE)
-                addTemplate(HCTextureTemplates.GEM_DIAMOND)
-            }
+            setDefaultPart(HTDefaultPart.Prefixed.GEM)
+            addBlockPrefixes(CommonTagPrefixes.ORES.plus(CommonTagPrefixes.BLOCK))
+            addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM)
+            addExtraOreResult(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 1 / 4f)
+
+            setName("Ragi-Crystal", "ラギクリスタル")
+            setTextureSet("diamond", HTMaterialTextureSet.SHINE)
+            put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
         }
         // Alloys
         event.modify(RagiumMaterialKeys.RAGI_ALLOY) {
-            addDefaultPart(HCMaterialPrefixes.INGOT)
-            if (isDataGen) {
-                addName("Ragi-Alloy", "ラギ合金")
-                addColor(RagiumMaterialPalette.RAGINITE)
-                addTemplate(HCTextureTemplates.METAL)
-            }
+            setDefaultPart(HTDefaultPart.Prefixed.INGOT)
+            addBlockPrefixes(CommonTagPrefixes.BLOCK)
+            addItemPrefixes(
+                CommonTagPrefixes.DUST,
+                CommonTagPrefixes.INGOT,
+                CommonTagPrefixes.NUGGET,
+                CommonTagPrefixes.GEAR,
+                CommonTagPrefixes.PLATE,
+                CommonTagPrefixes.ROD,
+                CommonTagPrefixes.WIRE,
+            )
+
+            setName("Ragi-Alloy", "ラギ合金")
+            put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
         }
         event.modify(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) {
-            addDefaultPart(HCMaterialPrefixes.INGOT)
-            if (isDataGen) {
-                addName("Advanced Ragi-Alloy", "発展ラギ合金")
-                addColor(RagiumMaterialPalette.ADVANCED_RAGI_ALLOY)
-                addTemplate(HCTextureTemplates.METAL)
-            }
+            setDefaultPart(HTDefaultPart.Prefixed.INGOT)
+            addBlockPrefixes(CommonTagPrefixes.BLOCK)
+            addItemPrefixes(
+                CommonTagPrefixes.DUST,
+                CommonTagPrefixes.INGOT,
+                CommonTagPrefixes.NUGGET,
+                CommonTagPrefixes.GEAR,
+                CommonTagPrefixes.PLATE,
+                CommonTagPrefixes.ROD,
+                CommonTagPrefixes.WIRE,
+            )
+
+            setName("Advanced Ragi-Alloy", "発展ラギ合金")
         }
         // Others
         event.modify(RagiumMaterialKeys.MEAT) {
-            addDefaultPart(HCMaterialPrefixes.INGOT)
+            setDefaultPart(Tags.Items.FOODS_RAW_MEAT, createItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT))
+            addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT)
+            put(HTMaterialPropertyKeys.SMELTED_TO, RagiumMaterialKeys.COOKED_MEAT)
             put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(HCFluids.MEAT))
-            if (isDataGen) {
-                addName("Meat", "肉")
-                put(
-                    HTMaterialPropertyKeys.SMELTING,
-                    HTSmeltingMaterialProperty.withSmoking(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT),
-                )
-            }
+
+            setName("Meat", "肉")
+            addCustomName(CommonTagPrefixes.DUST, "Minced Meat", "ひき肉")
         }
         event.modify(RagiumMaterialKeys.COOKED_MEAT) {
-            addDefaultPart(HCMaterialPrefixes.INGOT)
-            if (isDataGen) {
-                addName("Cooked Meat", "焼肉")
-                put(
-                    HTMaterialPropertyKeys.SMELTING,
-                    HTSmeltingMaterialProperty.smeltingOnly(HCMaterialPrefixes.DUST, CommonMaterialKeys.ASH),
-                )
-            }
+            setDefaultPart(Tags.Items.FOODS_COOKED_MEAT, createItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
+            addItemPrefixes(CommonTagPrefixes.INGOT)
+            put(HTMaterialPropertyKeys.CAN_BE_SMELTED, false)
+
+            setName("Cooked Meat", "焼肉")
         }
     }
+
+    @JvmStatic
+    private fun createItem(prefix: HTTagPrefix, key: HTMaterialKey): HTItemHolderLike<*> = HTItemHolderLike.of(prefix.createId(key))
 }

@@ -1,8 +1,0 @@
-{
-  "type": "ragium:drying",
-  "ingredient": "minecraft:slime_ball",
-  "item_result": {
-    "id": "hiiragi_core:raw_rubber",
-    "tag": "c:raw_materials/rubber"
-  }
-}

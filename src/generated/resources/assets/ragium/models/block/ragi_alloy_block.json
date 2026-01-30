@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "ragium:block/storage_block/ragi_alloy"
+    "all": "ragium:block/ragi_alloy_block"
   }
 }

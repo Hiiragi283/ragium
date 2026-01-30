@@ -4,8 +4,7 @@
     "count": 6,
     "id": "minecraft:bamboo"
   },
-  "seed": {
-    "id": "minecraft:bamboo"
-  },
-  "soil": "#minecraft:dirt"
+  "seed": "minecraft:bamboo",
+  "soil": "#minecraft:dirt",
+  "time": 200
 }

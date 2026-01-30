@@ -3,14 +3,12 @@ package hiiragi283.ragium.data.client.model
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTBlockStateProvider
-import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.resource.blockId
-import hiiragi283.core.api.resource.vanillaId
+import hiiragi283.core.api.resource.toId
+import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
-import hiiragi283.core.common.registry.HTSimpleDeferredBlock
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.HTMachineBlock
@@ -25,7 +23,7 @@ import net.neoforged.neoforge.client.model.generators.ModelFile
 
 class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider(RagiumAPI.MOD_ID, context) {
     val basic = "basic"
-    val advanced = "advanced"
+    val heat = "heat"
 
     override fun registerStatesAndModels() {
         registerMaterials()
@@ -33,20 +31,22 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         // Machine
         frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CRUSHER, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.CUTTING_MACHINE, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.ELECTRIC_FURNACE, RagiumConst.MACHINE, basic)
 
-        frontMachineBlock(RagiumBlocks.DRYER, RagiumConst.MACHINE, advanced)
-        frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, advanced)
-        frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, advanced)
+        frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)
+        frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, heat)
 
         // Device
         // frontMachineBlock(RagiumBlocks.PLANTER, RagiumConst.DEVICE, basic)
 
         // Storage
         altModelBlock(RagiumBlocks.TANK)
+        altModelBlock(RagiumBlocks.CREATIVE_TANK, id = RagiumBlocks.TANK.blockId)
 
         layeredBlock(
             RagiumBlocks.UNIVERSAL_CHEST,
-            vanillaId("block", "white_concrete"),
+            HTConst.MINECRAFT.toId("block", "white_concrete"),
             RagiumBlocks.UNIVERSAL_CHEST.blockId,
         )
 
@@ -61,10 +61,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
     }
 
     private fun registerMaterials() {
-        RagiumBlocks.MATERIALS.forEach { (prefix: HTMaterialPrefix, material: HTMaterialKey, block: HTSimpleDeferredBlock) ->
-            val textureId: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix.name, material.name)
-            existTexture(block, textureId, ::altTextureBlock)
-        }
+        registerOres()
+
+        registerMaterials(CommonTagPrefixes.BLOCK)
+        registerMaterials(CommonTagPrefixes.RAW_BLOCK)
     }
 
     //    Extensions    //
@@ -89,7 +89,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         block: HTHolderLike<Block, *>,
         prefix: String,
         tier: String,
-        front: ResourceLocation = block.getId().withPath { "${HTConst.BLOCK}/${RagiumConst.MACHINE}/${it}_front" },
+        front: ResourceLocation = block.getId().withPath { "${HTConst.BLOCK}/$prefix/${it}_front" },
     ) {
         val (inactive: BlockModelBuilder, active: BlockModelBuilder) = frontMachineModel(block, prefix, tier, front)
         machineBlock(block, inactive, active)
@@ -105,7 +105,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         front: ResourceLocation,
     ): Pair<BlockModelBuilder, BlockModelBuilder> {
         val path: String = block.blockId.path
-        val modelId: ResourceLocation = vanillaId(HTConst.BLOCK, "orientable_with_bottom")
+        val modelId: ResourceLocation = HTConst.MINECRAFT.toId(HTConst.BLOCK, "orientable_with_bottom")
 
         val top: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix, "top_$tier")
         val side: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix, "side_$tier")

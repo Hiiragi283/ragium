@@ -1,0 +1,13 @@
+{
+  "type": "ragium:refining",
+  "ingredient": {
+    "amount": 500,
+    "fluids": "#c:lpg"
+  },
+  "result": {
+    "amount": 250,
+    "id": "ragium:ethylene",
+    "tag": "c:ethylene"
+  },
+  "time": 200
+}

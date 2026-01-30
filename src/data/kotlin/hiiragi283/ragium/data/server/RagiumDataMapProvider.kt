@@ -1,91 +1,86 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.core.api.data.HTDataGenContext
-import hiiragi283.core.api.data.recipe.ingredient.HTIngredientAccess
-import hiiragi283.core.api.data.recipe.ingredient.HTItemIngredientCreator
+import hiiragi283.core.api.data.recipe.HTIngredientCreator
+import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.material.prefix.HTPrefixLike
-import hiiragi283.core.api.math.fraction
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.registry.HTBlockHolderLike
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
+import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.createCommonTag
 import hiiragi283.core.setup.HCFluids
-import hiiragi283.ragium.api.RagiumTags
-import hiiragi283.ragium.api.data.map.HTFluidCoolantData
-import hiiragi283.ragium.api.data.map.HTFluidFertilizerData
-import hiiragi283.ragium.api.data.map.HTFluidFuelData
-import hiiragi283.ragium.api.data.map.HTMobHead
 import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import net.neoforged.neoforge.common.data.DataMapProvider
-import net.neoforged.neoforge.registries.datamaps.builtin.FurnaceFuel
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
 
 class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
     private lateinit var provider: HolderLookup.Provider
-    private val itemCreator: HTItemIngredientCreator = HTIngredientAccess.INSTANCE.itemCreator()
+    private val inputCreator: HTIngredientCreator = HTIngredientCreator
 
     override fun gather(provider: HolderLookup.Provider) {
         this.provider = provider
 
-        furnaceFuels()
-
-        mobHead()
+        fermentSources()
+        mobHeads()
 
         coolants()
         magmaticFuels()
         combustionFuels()
-        fertilizer()
 
         upgrade()
     }
 
     //    Vanilla    //
 
-    private fun furnaceFuels() {
-        builder(NeoForgeDataMaps.FURNACE_FUELS)
-            .add(RagiumItems.TAR, FurnaceFuel(20 * 10 * 4), false)
-    }
-
     //    Ragium    //
 
-    private fun mobHead() {
+    private fun fermentSources() {
+        builder(RagiumDataMapTypes.FERMENT_SOURCE)
+            .addHolder(HTBlockHolderLike.of(Blocks.BROWN_MUSHROOM), 1)
+            .addHolder(HTBlockHolderLike.of(Blocks.MYCELIUM), 1)
+            .addHolder(HTBlockHolderLike.of(Blocks.RED_MUSHROOM), 1)
+    }
+
+    private fun mobHeads() {
         builder(RagiumDataMapTypes.MOB_HEAD)
-            .add(EntityType.SKELETON, HTMobHead(Items.SKELETON_SKULL))
-            .add(EntityType.WITHER_SKELETON, HTMobHead(Items.WITHER_SKELETON_SKULL))
-            .add(EntityType.ZOMBIE, HTMobHead(Items.ZOMBIE_HEAD))
-            .add(EntityType.CREEPER, HTMobHead(Items.CREEPER_HEAD))
-            .add(EntityType.ENDER_DRAGON, HTMobHead(Items.DRAGON_HEAD))
-            .add(EntityType.PIGLIN, HTMobHead(Items.PIGLIN_HEAD))
+            .add(EntityType.SKELETON, HTItemHolderLike.of(Items.SKELETON_SKULL))
+            .add(EntityType.WITHER_SKELETON, HTItemHolderLike.of(Items.WITHER_SKELETON_SKULL))
+            .add(EntityType.ZOMBIE, HTItemHolderLike.of(Items.ZOMBIE_HEAD))
+            .add(EntityType.CREEPER, HTItemHolderLike.of(Items.CREEPER_HEAD))
+            .add(EntityType.ENDER_DRAGON, HTItemHolderLike.of(Items.DRAGON_HEAD))
+            .add(EntityType.PIGLIN, HTItemHolderLike.of(Items.PIGLIN_HEAD))
     }
 
     private fun coolants() {
         builder(RagiumDataMapTypes.COOLANT)
-            .add(Tags.Fluids.WATER, HTFluidCoolantData(100), false)
-            .add(RagiumFluids.COOLANT, HTFluidCoolantData(25))
+            .add(Tags.Fluids.WATER, 100, false)
+            .add(RagiumFluids.COOLANT, 25)
     }
 
     private fun magmaticFuels() {
-        val lowest = HTFluidFuelData(40)
-        val low = HTFluidFuelData(60)
-        val medium = HTFluidFuelData(120)
-        val high = HTFluidFuelData(180)
-        val highest = HTFluidFuelData(240)
+        val lowest = 40
+        val low = 60
+        val medium = 120
+        val high = 180
+        val highest = 240
 
         builder(RagiumDataMapTypes.MAGMATIC_FUEL)
             // lowest
@@ -100,43 +95,39 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     private fun combustionFuels() {
-        val lowest = HTFluidFuelData(80)
-        val low = HTFluidFuelData(120)
-        val medium = HTFluidFuelData(240)
-        val high = HTFluidFuelData(360)
-        val highest = HTFluidFuelData(480)
+        val lowest = 80
+        val low = 120
+        val medium = 240
+        val high = 360
+        val highest = 480
 
         builder(RagiumDataMapTypes.COMBUSTION_FUEL)
             // lowest
             .add(RagiumFluids.CREOSOTE, lowest)
             // low
-            .add(RagiumFluids.CRUDE_OIL, low)
             .add("oil", low)
-            .add(RagiumFluids.CRUDE_BIO, low)
+            .add(RagiumFluids.COAL_LIQUID, low)
+            .add(RagiumFluids.CRUDE_OIL, low)
+            .add(RagiumTags.Fluids.ALCOHOL, medium, false)
             // medium
-            .add(RagiumFluids.ETHANOL, medium)
             .add("bioethanol", medium)
-            .add("lpg", medium)
+            .add(RagiumFluids.COAL_GAS, medium)
+            .add(RagiumFluids.ETHYLENE, medium)
+            .add(RagiumFluids.LPG, medium)
+            .add(RagiumFluids.METHANE, medium)
             // high
-            .add(RagiumFluids.FUEL, high)
-            .add(RagiumFluids.BIOFUEL, high)
-            .add("diesel", high)
             .add("biodiesel", high)
+            .add("diesel", high)
+            .add(RagiumFluids.GASOLINE, high)
             // highest
             .add("high_power_biodiesel", highest)
-    }
-
-    private fun fertilizer() {
-        builder(RagiumDataMapTypes.FERTILIZER)
-            .add(Tags.Fluids.WATER, HTFluidFertilizerData(1f), false)
-            .add(RagiumFluids.FERTILIZER, HTFluidFertilizerData(1.5f))
     }
 
     private fun upgrade() {
         val builder: Builder<HTUpgradeData, Item> = builder(RagiumDataMapTypes.UPGRADE)
         // components
         // upgrades
-        val processor: HTItemIngredient = itemCreator.fromTagKey(RagiumTags.Items.PROCESSOR_UPGRADABLE)
+        val processor: HTItemIngredient = inputCreator.create(RagiumTags.Items.PROCESSOR_UPGRADABLE)
 
         for (type: RagiumUpgradeType in RagiumUpgradeType.entries) {
             val upgradeData: HTUpgradeData = when (type) {
@@ -163,36 +154,36 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
                 // Processor
                 RagiumUpgradeType.BLASTING -> HTUpgradeData.create {
                     set(RagiumUpgradeKeys.BLASTING, 1)
-                    targetSet(itemCreator.fromTagKey(RagiumTags.Items.SMELTING_UPGRADABLE))
-                    exclusiveSet(itemCreator.fromTagKey(RagiumTags.Items.SMELTER_EXCLUSIVE))
+                    targetSet(inputCreator.create(RagiumTags.Items.SMELTING_UPGRADABLE))
+                    exclusiveSet(inputCreator.create(RagiumTags.Items.SMELTER_EXCLUSIVE))
                 }
                 RagiumUpgradeType.EFFICIENT_CRUSHING -> HTUpgradeData.create {
                     set(RagiumUpgradeKeys.USE_LUBRICANT, 1)
-                    targetSet(itemCreator.fromTagKey(RagiumTags.Items.EFFICIENT_CRUSHING_UPGRADABLE))
+                    targetSet(inputCreator.create(RagiumTags.Items.EFFICIENT_CRUSHING_UPGRADABLE))
                 }
                 RagiumUpgradeType.EXTRA_VOIDING -> HTUpgradeData.create {
                     set(RagiumUpgradeKeys.VOID_EXTRA, 1)
-                    targetSet(itemCreator.fromTagKey(RagiumTags.Items.EXTRA_VOIDING_UPGRADABLE))
+                    targetSet(inputCreator.create(RagiumTags.Items.EXTRA_VOIDING_UPGRADABLE))
                 }
                 RagiumUpgradeType.SMOKING -> HTUpgradeData.create {
                     set(RagiumUpgradeKeys.SMOKING, 1)
-                    targetSet(itemCreator.fromTagKey(RagiumTags.Items.SMELTING_UPGRADABLE))
-                    exclusiveSet(itemCreator.fromTagKey(RagiumTags.Items.SMELTER_EXCLUSIVE))
+                    targetSet(inputCreator.create(RagiumTags.Items.SMELTING_UPGRADABLE))
+                    exclusiveSet(inputCreator.create(RagiumTags.Items.SMELTER_EXCLUSIVE))
                 }
                 // Device
 
                 // Storage
                 RagiumUpgradeType.ENERGY_CAPACITY -> HTUpgradeData.create {
                     set(HTUpgradeKeys.ENERGY_CAPACITY, 4)
-                    targetSet(itemCreator.fromTagKey(RagiumTags.Items.ENERGY_CAPACITY_UPGRADABLE))
+                    targetSet(inputCreator.create(RagiumTags.Items.ENERGY_CAPACITY_UPGRADABLE))
                 }
                 RagiumUpgradeType.FLUID_CAPACITY -> HTUpgradeData.create {
                     set(HTUpgradeKeys.FLUID_CAPACITY, 4)
-                    targetSet(itemCreator.fromTagKey(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE))
+                    targetSet(inputCreator.create(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE))
                 }
                 RagiumUpgradeType.ITEM_CAPACITY -> HTUpgradeData.create {
                     set(HTUpgradeKeys.ENERGY_CAPACITY, 4)
-                    targetSet(itemCreator.fromTagKey(RagiumTags.Items.ITEM_CAPACITY_UPGRADABLE))
+                    targetSet(inputCreator.create(RagiumTags.Items.ITEM_CAPACITY_UPGRADABLE))
                 }
             }
             builder.addHolder(type, upgradeData)
@@ -205,7 +196,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         add(holder.getId(), value, false, *conditions)
 
     // Item
-    private fun <T : Any> Builder<T, Item>.add(prefix: HTPrefixLike, key: HTMaterialLike, value: T): Builder<T, Item> =
+    private fun <T : Any> Builder<T, Item>.add(prefix: HTTagPrefix, key: HTMaterialLike, value: T): Builder<T, Item> =
         add(prefix.itemTagKey(key), value, false)
 
     // Fluid

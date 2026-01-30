@@ -6,12 +6,13 @@
       "#c:ingots/iron"
     ],
     [
-      "#c:dusts/coal_coke",
-      "#c:fuels/coal_coke"
+      "#c:coal_coke",
+      "#c:dusts/coal_coke"
     ]
   ],
   "result": {
     "id": "hiiragi_core:steel_ingot",
     "tag": "c:ingots/steel"
-  }
+  },
+  "time": 200
 }

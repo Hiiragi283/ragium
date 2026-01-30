@@ -3,7 +3,7 @@ package hiiragi283.ragium.config
 import hiiragi283.core.api.config.definePositiveInt
 import hiiragi283.core.api.config.translation
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.text.RagiumTranslation
+import hiiragi283.ragium.api.text.RagiumTranslation
 import net.neoforged.neoforge.common.ModConfigSpec
 import java.util.function.IntSupplier
 
@@ -17,6 +17,9 @@ class HTMachineConfig(
     fun getUsage(): Int = rate.asInt
 
     companion object {
+        @JvmField
+        val EMPTY = HTMachineConfig(mapOf(), { 0 }, { 0 })
+
         @JvmStatic
         private fun tankCapacity(builder: ModConfigSpec.Builder, type: RagiumFluidConfigType, capacity: Int): ModConfigSpec.IntValue =
             builder

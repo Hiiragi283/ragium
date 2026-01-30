@@ -1,0 +1,13 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 540,
+    "fluids": "#c:molten_raginite"
+  },
+  "item_ingredient": "#c:gems/diamond",
+  "result": {
+    "id": "ragium:ragi_crystal_gem",
+    "tag": "c:gems/ragi_crystal"
+  },
+  "time": 100
+}

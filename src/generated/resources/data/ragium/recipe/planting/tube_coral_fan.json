@@ -4,8 +4,7 @@
     "count": 3,
     "id": "minecraft:tube_coral_fan"
   },
-  "seed": {
-    "id": "minecraft:tube_coral_fan"
-  },
-  "soil": "minecraft:tube_coral_block"
+  "seed": "minecraft:tube_coral_fan",
+  "soil": "minecraft:tube_coral_block",
+  "time": 200
 }

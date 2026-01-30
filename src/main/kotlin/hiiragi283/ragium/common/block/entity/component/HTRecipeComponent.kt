@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity.component
 
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
-import hiiragi283.core.api.recipe.HTRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.serialization.component.HTComponentSerializable
 import hiiragi283.core.api.serialization.value.HTValueInput
@@ -10,12 +9,15 @@ import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.RecipeInput
 
-abstract class HTRecipeComponent<INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>>(protected open val owner: HTBlockEntity) :
+abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any>(owner: HTBlockEntity) :
     HTRecipeHandler<INPUT, RECIPE>(),
     HTBlockEntityComponent,
     HTComponentSerializable.Empty {
+    init {
+        owner.addComponent(this)
+    }
+
     //    HTRecipeHandler    //
 
     final override fun completeRecipe(
@@ -56,7 +58,10 @@ abstract class HTRecipeComponent<INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>>(
     }
 
     override fun deserialize(input: HTValueInput) {
-        input.getInt(RagiumConst.PROGRESS)?.let(::progress::set)
-        input.getInt(RagiumConst.MAX_PROGRESS)?.let(::maxProgress::set)
+        val maxProgress: Int = input.getInt(RagiumConst.MAX_PROGRESS) ?: return
+        this.maxProgress = maxProgress
+
+        val progress: Int = input.getInt(RagiumConst.PROGRESS) ?: return
+        this.progress = progress
     }
 }

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": "#c:cobblestones/normal",
+  "result": {
+    "id": "minecraft:mossy_cobblestone"
+  },
+  "time": 100
+}

@@ -7,7 +7,7 @@ import hiiragi283.core.api.storage.HTStoragePredicates
 import hiiragi283.core.common.storage.energy.HTBasicEnergyBattery
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.processing.HTProcessorBlockEntity
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.config.HTMachineConfig
 import java.util.function.Predicate
 
@@ -24,7 +24,7 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
 ) : HTBasicEnergyBattery(capacity, canExtract, canInsert, listener) {
     companion object {
         @JvmStatic
-        fun input(listener: HTContentListener?, blockEntity: HTProcessorBlockEntity): Processor =
+        fun input(listener: HTContentListener?, blockEntity: HTProcessorBlockEntity.Energized): Processor =
             Processor(blockEntity.getConfig(), listener, blockEntity)
 
         /*fun <BE : HTGeneratorBlockEntity> output(listener: HTContentListener?, blockEntity: BE): Generator {

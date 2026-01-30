@@ -1,154 +1,100 @@
 package hiiragi283.ragium.setup
 
-import com.mojang.logging.LogUtils
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.capability.HTEnergyCapabilities
-import hiiragi283.core.api.capability.HTFluidCapabilities
-import hiiragi283.core.api.collection.buildTable
-import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.HTMaterialTable
-import hiiragi283.core.api.material.prefix.HTMaterialPrefix
-import hiiragi283.core.api.material.prefix.HTPrefixLike
-import hiiragi283.core.api.storage.energy.HTEnergyBattery
-import hiiragi283.core.api.storage.fluid.HTFluidTank
+import hiiragi283.core.api.HiiragiCoreAccess
+import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.text.HTTranslation
-import hiiragi283.core.common.material.HCMaterialPrefixes
+import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
+import hiiragi283.core.common.storage.component.HTComponentHandler
+import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
+import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
+import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
+import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.HTPotionDropItem
 import hiiragi283.ragium.common.item.HTUpgradeItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.storge.attachment.HTComponentHandler
-import hiiragi283.ragium.common.storge.energy.HTComponentEnergyBattery
-import hiiragi283.ragium.common.storge.energy.HTComponentEnergyHandler
-import hiiragi283.ragium.common.storge.fluid.HTComponentFluidHandler
-import hiiragi283.ragium.common.storge.fluid.HTComponentFluidTank
 import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.config.RagiumConfig
+import net.minecraft.core.component.DataComponentPatch
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import org.slf4j.Logger
-import java.util.function.UnaryOperator
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
 
 /**
  * @see hiiragi283.core.setup.HCItems
  */
 object RagiumItems {
     @JvmField
-    val LOGGER: Logger = LogUtils.getLogger()
-
-    @JvmField
     val REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
-        eventBus.addListener(::registerItemCapabilities)
-
         REGISTER.register(eventBus)
+
+        eventBus.addListener(::modifyComponents)
+        eventBus.addListener(::registerItemCapabilities)
     }
 
     //    Materials    //
 
-    @JvmStatic
-    val MATERIALS: HTMaterialTable<HTMaterialPrefix, HTSimpleDeferredItem> = buildTable {
-        fun register(
-            prefix: HTPrefixLike,
-            key: HTMaterialKey,
-            path: String = prefix.createPath(key),
-            operator: UnaryOperator<Item.Properties> = UnaryOperator.identity(),
-        ) {
-            this[prefix.asMaterialPrefix(), key] = REGISTER.registerSimpleItem(path, operator)
-        }
-
-        // Dusts
-        arrayOf(
-            RagiumMaterialKeys.RAGINITE,
-            RagiumMaterialKeys.RAGI_CRYSTAL,
-            RagiumMaterialKeys.RAGI_ALLOY,
-            RagiumMaterialKeys.ADVANCED_RAGI_ALLOY,
-        ).forEach { register(HCMaterialPrefixes.DUST, it) }
-        // Gems
-        arrayOf(
-            RagiumMaterialKeys.RAGI_CRYSTAL,
-        ).forEach { register(HCMaterialPrefixes.GEM, it) }
-        // Ingots, Nuggets, Gears, Plates, Rods, Wires
-        arrayOf(
-            HCMaterialPrefixes.INGOT,
-            HCMaterialPrefixes.NUGGET,
-            HCMaterialPrefixes.GEAR,
-            HCMaterialPrefixes.PLATE,
-            HCMaterialPrefixes.ROD,
-            HCMaterialPrefixes.WIRE,
-        ).forEach {
-            register(it, RagiumMaterialKeys.RAGI_ALLOY)
-            register(it, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-        }
-
-        // Foods
-        register(HCMaterialPrefixes.DUST, RagiumMaterialKeys.MEAT)
-        register(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.MEAT) { it.food(Foods.BEEF) }
-        register(HCMaterialPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT) { it.food(Foods.COOKED_BEEF) }
-    }.let(::HTMaterialTable)
-
     @JvmField
     val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
-    @JvmField
-    val TAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("tar")
-
     //    Foods    //
 
-    @JvmStatic
-    private fun registerCan(name: String, nutrition: Int, saturation: Float): HTSimpleDeferredItem =
-        REGISTER.registerSimpleItem("${name}_can") {
+    @JvmField
+    val MOLASSES: HTSimpleDeferredItem = REGISTER.registerSimpleItem("molasses")
+
+    @JvmField
+    val EMPTY_CAN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("empty_can")
+
+    @JvmField
+    val FOOD_CANS: Map<HTFoodCanType, HTSimpleDeferredItem> = HTFoodCanType.entries.associateWith { canType ->
+        val nutrition: Int = when (canType) {
+            HTFoodCanType.FISH -> 5
+            HTFoodCanType.FRUIT -> 4
+            HTFoodCanType.MEAT -> 8
+            HTFoodCanType.SOUP -> 6
+            HTFoodCanType.VEGETABLE -> 5
+        }
+        val saturation: Float = when (canType) {
+            HTFoodCanType.FISH -> 0.6f
+            HTFoodCanType.FRUIT -> 0.3f
+            HTFoodCanType.MEAT -> 0.8f
+            HTFoodCanType.SOUP -> 0.6f
+            HTFoodCanType.VEGETABLE -> 0.6f
+        }
+        REGISTER.registerSimpleItem("${canType.serializedName}_can") {
             it.food(
                 FoodProperties
                     .Builder()
                     .nutrition(nutrition)
                     .saturationModifier(saturation)
                     .fast()
-                    .usingConvertsTo(Items.IRON_NUGGET)
+                    .usingConvertsTo(EMPTY_CAN)
                     .build(),
             )
         }
-
-    /**
-     * @see Foods.COOKED_COD
-     */
-    @JvmField
-    val FISH_CAN: HTSimpleDeferredItem = registerCan("fish", 5, 0.6f)
-
-    /**
-     * @see Foods.APPLE
-     */
-    @JvmField
-    val FRUIT_CAN: HTSimpleDeferredItem = registerCan("fruit", 4, 0.3f)
-
-    /**
-     * @see Foods.COOKED_BEEF
-     */
-    @JvmField
-    val MEAT_CAN: HTSimpleDeferredItem = registerCan("meat", 8, 0.8f)
-
-    /**
-     * @see Foods.BEETROOT_SOUP
-     */
-    @JvmField
-    val SOUP_CAN: HTSimpleDeferredItem = registerCan("soup", 6, 0.6f)
+    }
 
     //    Molds    //
 
@@ -188,19 +134,32 @@ object RagiumItems {
     //    Event    //
 
     @JvmStatic
+    private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
+        fun <T : Any> modify(item: ItemLike, type: DataComponentType<T>, value: T) {
+            event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
+        }
+
+        with(HiiragiCoreAccess.INSTANCE.materialContents) {
+            modify(getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
+            modify(getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
+        }
+    }
+
+    @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Fluid
-        registerFluid(
+        HTFluidCapabilities.registerItem(
             event,
             { context: HTComponentHandler.ContainerContext ->
                 val capacity: Int = HTUpgradeHelper.getFluidCapacity(context.attachedTo, RagiumConfig.COMMON.tankCapacity.asInt)
-                HTComponentFluidTank.create(context, capacity)
+                HTComponentFluidTank.create(capacity, context)
             },
             RagiumBlocks.TANK,
+            RagiumBlocks.CREATIVE_TANK,
         )
 
         // Energy
-        registerEnergy(
+        HTEnergyCapabilities.registerItem(
             event,
             { context: HTComponentHandler.ContainerContext ->
                 val capacity: Int = HTUpgradeHelper.getEnergyCapacity(context.attachedTo, RagiumConfig.COMMON.batteryCapacity.asInt)
@@ -225,32 +184,20 @@ object RagiumItems {
             )
         }
 
-        LOGGER.info("Registered Item Capabilities!")
-    }
-
-    @JvmStatic
-    fun registerFluid(
-        event: RegisterCapabilitiesEvent,
-        factory: HTComponentHandler.ContainerFactory<HTFluidTank>,
-        vararg items: ItemLike,
-    ) {
         event.registerItem(
-            HTFluidCapabilities.item,
-            { stack: ItemStack, _: Void? -> HTComponentFluidHandler(stack, 1, factory) },
-            *items,
-        )
-    }
+            RagiumCapabilities.UPGRADABLE_ITEM,
+            { _, _ ->
+                object : HTUpgradeHandler {
+                    override fun getUpgrades(): List<HTItemResourceType> = listOf()
 
-    @JvmStatic
-    fun registerEnergy(
-        event: RegisterCapabilitiesEvent,
-        factory: HTComponentHandler.ContainerFactory<HTEnergyBattery>,
-        vararg items: ItemLike,
-    ) {
-        event.registerItem(
-            HTEnergyCapabilities.item,
-            { stack: ItemStack, _: Void? -> HTComponentEnergyHandler(stack, 1, factory) },
-            *items,
+                    override fun isValidUpgrade(upgrade: HTItemResourceType): Boolean = false
+
+                    override fun isCreative(): Boolean = true
+                }
+            },
+            RagiumBlocks.CREATIVE_BATTERY,
+            RagiumBlocks.CREATIVE_CRATE,
+            RagiumBlocks.CREATIVE_TANK,
         )
     }
 

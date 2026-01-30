@@ -27,29 +27,29 @@ abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos
         state,
     ),
     HTSlotInfoProvider {
-    final override fun initializeFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
+    final override fun createFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
-        initializeFluidTanks(builder, listener)
+        createFluidTanks(builder, listener)
         return builder.build()
     }
 
-    protected open fun initializeFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}
+    protected open fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}
 
-    final override fun initializeEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
+    final override fun createEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
         val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
-        initializeEnergyBattery(builder, listener)
+        createEnergyBattery(builder, listener)
         return builder.build()
     }
 
-    protected open fun initializeEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {}
+    protected open fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {}
 
-    final override fun initializeItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+    final override fun createItemHandler(listener: HTContentListener): HTItemSlotHolder? {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
-        initializeItemSlots(builder, listener)
+        createItemSlots(builder, listener)
         return builder.build()
     }
 
-    protected open fun initializeItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {}
+    protected open fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {}
 
     //    HTSlotInfoProvider    //
 

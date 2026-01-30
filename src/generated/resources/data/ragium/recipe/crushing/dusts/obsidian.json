@@ -1,8 +1,0 @@
-{
-  "type": "ragium:crushing",
-  "ingredient": "#c:obsidians",
-  "result": {
-    "id": "hiiragi_core:obsidian_dust",
-    "tag": "c:dusts/obsidian"
-  }
-}

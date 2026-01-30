@@ -4,8 +4,7 @@
     "count": 6,
     "id": "minecraft:dark_oak_log"
   },
-  "seed": {
-    "id": "minecraft:dark_oak_sapling"
-  },
-  "soil": "#minecraft:dirt"
+  "seed": "minecraft:dark_oak_sapling",
+  "soil": "#minecraft:dirt",
+  "time": 200
 }

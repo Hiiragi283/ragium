@@ -1,0 +1,13 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    "hiiragi_core:raw_rubber",
+    "#c:dusts/sulfur"
+  ],
+  "result": {
+    "count": 2,
+    "id": "hiiragi_core:rubber_ingot",
+    "tag": "c:ingots/rubber"
+  },
+  "time": 200
+}

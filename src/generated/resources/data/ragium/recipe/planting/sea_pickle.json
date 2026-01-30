@@ -4,11 +4,10 @@
     "count": 3,
     "id": "minecraft:sea_pickle"
   },
-  "seed": {
-    "id": "minecraft:sea_pickle"
-  },
+  "seed": "minecraft:sea_pickle",
   "soil": [
     "#c:gravels",
     "#c:sands"
-  ]
+  ],
+  "time": 200
 }

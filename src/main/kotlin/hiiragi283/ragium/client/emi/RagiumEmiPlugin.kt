@@ -6,9 +6,9 @@ import dev.emi.emi.api.EmiRegistry
 import dev.emi.emi.api.recipe.EmiCraftingRecipe
 import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
+import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
 import dev.emi.emi.api.stack.EmiStack
-import dev.emi.emi.api.widget.Bounds
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.integration.emi.HTEmiPlugin
@@ -18,32 +18,26 @@ import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.registry.getHolderDataMap
 import hiiragi283.core.api.registry.toLike
-import hiiragi283.core.client.gui.screen.HTBlockEntityContainerScreen
-import hiiragi283.core.common.inventory.HTSlotHelper
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.data.map.HTFluidFuelData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
-import hiiragi283.ragium.client.emi.data.HTEmiFluidFuelData
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTBathingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTDryingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTFuelGeneratorEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTMeltingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTEnchantingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTItemToFluidEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTSimulatingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTWashingEmiRecipe
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
-import hiiragi283.ragium.common.inventory.HTUpgradableContainerMenu
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.client.gui.screens.Screen
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
@@ -57,7 +51,6 @@ import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
-import java.util.function.Consumer
 import kotlin.streams.asSequence
 
 @EmiEntrypoint
@@ -76,17 +69,20 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.CRUSHING,
             RagiumEmiRecipeCategories.CUTTING,
             RagiumEmiRecipeCategories.PRESSING,
-            // Machine - Advanced
-            RagiumEmiRecipeCategories.DRYING,
+            // Machine - Heat
             RagiumEmiRecipeCategories.MELTING,
-            RagiumEmiRecipeCategories.MIXING,
             RagiumEmiRecipeCategories.PYROLYZING,
             RagiumEmiRecipeCategories.REFINING,
             RagiumEmiRecipeCategories.SOLIDIFYING,
-            // Machine - Extra
-            RagiumEmiRecipeCategories.SIMULATING,
+            // Machine - Chemical
+            RagiumEmiRecipeCategories.BATHING,
+            RagiumEmiRecipeCategories.MIXING,
+            RagiumEmiRecipeCategories.WASHING,
             // Device - Basic
+            RagiumEmiRecipeCategories.FERMENTING,
             RagiumEmiRecipeCategories.PLANTING,
+            // Device - Enchanting
+            RagiumEmiRecipeCategories.ENCHANTING,
         ).forEach(::addCategory.partially1(registry))
 
         // Recipes
@@ -99,31 +95,20 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.PRESSING, ::HTPressingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.DRYING, ::HTDryingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, ::HTMeltingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemToFluidEmiRecipe.Companion::melting)
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, ::HTPyrolyzingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.SIMULATING, ::HTSimulatingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.BATHING, ::HTBathingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.WASHING, ::HTWashingEmiRecipe)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
+
+        addRegistryRecipes(registry, RagiumRecipeTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
         // Misc
-        registry.addGenericExclusionArea { screen: Screen, consumer: Consumer<Bounds> ->
-            if (screen is HTBlockEntityContainerScreen<*, *>) {
-                if (screen.menu is HTUpgradableContainerMenu<*>) {
-                    consumer.accept(
-                        Bounds(
-                            screen.startX + HTSlotHelper.getSlotPosX(9),
-                            screen.startY + HTSlotHelper.getSlotPosY(-0.5),
-                            18 * 2,
-                            18 * 4,
-                        ),
-                    )
-                }
-            }
-        }
+        registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, RagiumBlocks.ELECTRIC_FURNACE.toEmi())
 
         registry.setDefaultComparison(
             RagiumBlocks.UNIVERSAL_CHEST.asItem(),
@@ -170,8 +155,8 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun addGenerators(registry: EmiRegistry) {
-        fun addFuelRecipes(category: HTEmiRecipeCategory, dataMapType: DataMapType<Fluid, HTFluidFuelData>) {
-            addDataMapRecipes(
+        fun addFuelRecipes(category: HTEmiRecipeCategory, dataMapType: DataMapType<Fluid, Int>) {
+            /*addDataMapRecipes(
                 registry,
                 FLUID_LOOKUP,
                 dataMapType,
@@ -180,10 +165,10 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
                     HTEmiFluidFuelData(stack, data.time)
                 },
                 ::HTFuelGeneratorEmiRecipe.partially1(category),
-            )
+            )*/
         }
 
-        addItemStackRecipes(
+        /*addItemStackRecipes(
             registry,
             "thermal",
             { stack: ItemStack ->
@@ -194,7 +179,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
                 HTEmiFluidFuelData(stack1, burnTime)
             },
             ::HTFuelGeneratorEmiRecipe.partially1(RagiumEmiRecipeCategories.THERMAL),
-        )
+        )*/
 
         addFuelRecipes(RagiumEmiRecipeCategories.MAGMATIC, RagiumDataMapTypes.MAGMATIC_FUEL)
 

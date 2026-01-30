@@ -4,5 +4,6 @@
   "result": {
     "id": "minecraft:water",
     "tag": "c:water"
-  }
+  },
+  "time": 200
 }
