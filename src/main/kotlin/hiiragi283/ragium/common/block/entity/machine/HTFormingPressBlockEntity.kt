@@ -1,9 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.recipe.input.HTListItemRecipeInput
+import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
@@ -30,26 +29,27 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> =
-        object : RecipeComponent<HTListItemRecipeInput, HTPressingRecipe>(RagiumRecipeTypes.PRESSING) {
-            private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> = object : RecipeComponent<HTPressingRecipe>(RagiumRecipeTypes.PRESSING) {
+        private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
 
-            override fun extractInput(
-                level: ServerLevel,
-                pos: BlockPos,
-                input: HTListItemRecipeInput,
-                recipe: HTPressingRecipe,
-            ) {
-                inputHandler.consume(recipe.ingredient)
-            }
-
-            override fun applyEffect() {
-                playSound(SoundEvents.ANVIL_LAND)
-            }
-
-            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTListItemRecipeInput =
-                HTListItemRecipeInput(listOf(inputHandler.getItemStack(), catalystHandler.getItemStack()))
+        override fun extractInput(
+            level: ServerLevel,
+            pos: BlockPos,
+            input: HTViewRecipeInput,
+            recipe: HTPressingRecipe,
+        ) {
+            inputHandler.consume(recipe.ingredient)
         }
+
+        override fun applyEffect() {
+            playSound(SoundEvents.ANVIL_LAND)
+        }
+
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
+            items += inputHandler
+            items += catalystHandler
+        }
+    }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.formingPress
 }

@@ -2,11 +2,10 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.recipe.input.HTListItemRecipeInput
+import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.resource.isOf
 import hiiragi283.core.api.storage.HTStoragePredicates
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.storage.item.toResource
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
@@ -69,10 +68,10 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTEnergizedRecipeComponent.Cached<HTListItemRecipeInput, HTAlloyingRecipe> = RecipeComponent()
+    override fun createRecipeComponent(): HTEnergizedRecipeComponent.Cached<HTAlloyingRecipe> = RecipeComponent()
 
     inner class RecipeComponent :
-        HTEnergizedRecipeComponent.Cached<HTListItemRecipeInput, HTAlloyingRecipe>(
+        HTEnergizedRecipeComponent.Cached<HTAlloyingRecipe>(
             RagiumRecipeTypes.ALLOYING,
             this,
         ) {
@@ -82,7 +81,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         override fun insertOutput(
             level: ServerLevel,
             pos: BlockPos,
-            input: HTListItemRecipeInput,
+            input: HTViewRecipeInput,
             recipe: HTAlloyingRecipe,
         ) {
             outputHandler.insert(recipe.getResultItem(level.registryAccess()))
@@ -91,7 +90,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         override fun extractInput(
             level: ServerLevel,
             pos: BlockPos,
-            input: HTListItemRecipeInput,
+            input: HTViewRecipeInput,
             recipe: HTAlloyingRecipe,
         ) {
             inputHandlers[0].consume(recipe.firstIngredient)
@@ -103,10 +102,12 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
             playSound(SoundEvents.FIRE_EXTINGUISH)
         }
 
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTListItemRecipeInput =
-            HTListItemRecipeInput(inputHandlers.map { it.getItemStack() })
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
+            items +=
+                inputHandlers
+        }
 
-        override fun canProgressRecipe(level: ServerLevel, input: HTListItemRecipeInput, recipe: HTAlloyingRecipe): Boolean =
+        override fun canProgressRecipe(level: ServerLevel, input: HTViewRecipeInput, recipe: HTAlloyingRecipe): Boolean =
             outputHandler.canInsert(recipe.getResultItem(level.registryAccess()))
     }
 

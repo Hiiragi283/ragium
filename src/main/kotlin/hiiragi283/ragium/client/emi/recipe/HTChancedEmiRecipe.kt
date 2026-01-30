@@ -7,7 +7,7 @@ import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 import org.apache.commons.lang3.math.Fraction
 
-abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe<*>>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
+abstract class HTChancedEmiRecipe<RECIPE : HTChancedRecipe>(category: HTEmiRecipeCategory, holder: RecipeHolder<RECIPE>) :
     HTProcessingEmiRecipe<RECIPE>(category, holder) {
     init {
         addInputs()

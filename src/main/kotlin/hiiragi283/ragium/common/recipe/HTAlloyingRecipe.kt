@@ -1,9 +1,10 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.recipe.HTViewProcessingRecipe
+import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.input.HTListItemRecipeInput
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.HolderLookup
@@ -20,7 +21,7 @@ class HTAlloyingRecipe(
     val result: HTItemResult,
     time: Int,
     exp: Fraction,
-) : HTProcessingRecipe<HTListItemRecipeInput>(time, exp) {
+) : HTViewProcessingRecipe(time, exp) {
     constructor(
         ingredients: List<HTItemIngredient>,
         result: HTItemResult,
@@ -28,12 +29,9 @@ class HTAlloyingRecipe(
         exp: Fraction,
     ) : this(ingredients[0], ingredients[1], ingredients.getOrNull(2), result, time, exp)
 
-    override fun matches(input: HTListItemRecipeInput, level: Level): Boolean {
-        val bool1: Boolean = firstIngredient.test(input.getItem(0))
-        val bool2: Boolean = secondIngredient.test(input.getItem(1))
-        val stack2: ItemStack = input.getItem(2)
-        val bool3: Boolean = thirdIngredient?.test(stack2) ?: stack2.isEmpty
-        return bool1 && bool2 && bool3
+    override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
+        val ingredients: List<HTItemIngredient> = listOfNotNull(firstIngredient, secondIngredient, thirdIngredient)
+        return HTShapelessRecipeHelper.shapelessMatch(ingredients, input.items).size == ingredients.size
     }
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)

@@ -3,10 +3,9 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.div
 import hiiragi283.core.api.recipe.HTRecipeCache
+import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.times
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
@@ -55,10 +54,9 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe> =
-        object : HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe>(this) {
-            private val cache: HTRecipeCache<HTPlantingRecipe.Input, HTPlantingRecipe> =
-                HTFinderRecipeCache(RagiumRecipeTypes.PLANTING)
+    override fun createRecipeComponent(): HTRecipeComponent<HTViewRecipeInput, HTPlantingRecipe> =
+        object : HTRecipeComponent<HTViewRecipeInput, HTPlantingRecipe>(this) {
+            private val cache: HTRecipeCache<HTViewRecipeInput, HTPlantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.PLANTING)
 
             private val plantInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(plantSlot) }
             private val soilInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(soilSlot) }
@@ -74,7 +72,7 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
             override fun insertOutput(
                 level: ServerLevel,
                 pos: BlockPos,
-                input: HTPlantingRecipe.Input,
+                input: HTViewRecipeInput,
                 recipe: HTPlantingRecipe,
             ) {
                 val access: RegistryAccess = level.registryAccess()
@@ -85,7 +83,7 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
             override fun extractInput(
                 level: ServerLevel,
                 pos: BlockPos,
-                input: HTPlantingRecipe.Input,
+                input: HTViewRecipeInput,
                 recipe: HTPlantingRecipe,
             ) {
                 plantInputHandler.consume(recipe.seedIngredient.getRequiredAmount())
@@ -95,10 +93,14 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
             override fun applyEffect() {
             }
 
-            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTPlantingRecipe.Input =
-                HTPlantingRecipe.Input(plantInputHandler.getItemStack(), soilInputHandler.getItemStack(), fluidInputHandler.getFluidStack())
+            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
+                items += plantInputHandler
+                items += soilInputHandler
 
-            override fun getMatchedRecipe(input: HTPlantingRecipe.Input, level: ServerLevel): HTPlantingRecipe? =
+                fluids += fluidInputHandler
+            }
+
+            override fun getMatchedRecipe(input: HTViewRecipeInput, level: ServerLevel): HTPlantingRecipe? =
                 cache.getFirstRecipe(input, level)
 
             override fun getMaxProgress(recipe: HTPlantingRecipe): Int =
@@ -113,7 +115,7 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
                 }
             }
 
-            override fun canProgressRecipe(level: ServerLevel, input: HTPlantingRecipe.Input, recipe: HTPlantingRecipe): Boolean =
+            override fun canProgressRecipe(level: ServerLevel, input: HTViewRecipeInput, recipe: HTPlantingRecipe): Boolean =
                 cropOutputHandler.canInsert(recipe.getResultItem(level.registryAccess()))
         }
 

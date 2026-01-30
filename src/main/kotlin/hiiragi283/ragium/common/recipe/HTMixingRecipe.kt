@@ -1,10 +1,11 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.recipe.HTViewProcessingRecipe
+import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
-import hiiragi283.ragium.api.recipe.input.HTChemicalRecipeInput
+import hiiragi283.core.api.storage.item.HTItemView
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.HolderLookup
@@ -22,15 +23,15 @@ class HTMixingRecipe(
     val result: HTFluidResult,
     time: Int,
     exp: Fraction,
-) : HTProcessingRecipe<HTChemicalRecipeInput>(time, exp) {
+) : HTViewProcessingRecipe(time, exp) {
     fun getResultFluid(provider: HolderLookup.Provider): FluidStack = result.getStackOrEmpty(provider)
 
-    override fun matches(input: HTChemicalRecipeInput, level: Level): Boolean {
+    override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
         if (fluidIngredients.isEmpty()) return false
-        val item: ItemStack = input.getItem(0)
-        val bool1: Boolean = itemIngredient.map { it.test(item) }.orElseGet(item::isEmpty)
-        val bool2: Boolean = fluidIngredients.getOrNull(0)?.test(input.getFluid(0)) ?: true
-        val bool3: Boolean = fluidIngredients.getOrNull(1)?.test(input.getFluid(1)) ?: true
+        val view: HTItemView = input.getItemView(0)
+        val bool1: Boolean = itemIngredient.map { it.test(view) }.orElseGet(view::isEmpty)
+        val bool2: Boolean = fluidIngredients.getOrNull(0)?.test(input.getFluidView(0)) ?: true
+        val bool3: Boolean = fluidIngredients.getOrNull(1)?.test(input.getFluidView(1)) ?: true
         return bool1 && bool2 && bool3
     }
 

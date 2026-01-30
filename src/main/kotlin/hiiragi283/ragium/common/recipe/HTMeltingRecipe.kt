@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.recipe.HTViewProcessingRecipe
+import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -9,7 +10,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 import org.apache.commons.lang3.math.Fraction
@@ -19,10 +19,10 @@ class HTMeltingRecipe(
     val result: HTFluidResult,
     time: Int,
     exp: Fraction,
-) : HTProcessingRecipe<SingleRecipeInput>(time, exp) {
+) : HTViewProcessingRecipe(time, exp) {
     fun getResultFluid(provider: HolderLookup.Provider): FluidStack = result.getStackOrEmpty(provider)
 
-    override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
+    override fun matches(input: HTViewRecipeInput, level: Level): Boolean = ingredient.test(input.getItemView(0))
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 

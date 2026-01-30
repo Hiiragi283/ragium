@@ -6,9 +6,9 @@ import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.item.enchantment.buildEnchantments
 import hiiragi283.core.api.recipe.HTRecipeCache
+import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.registry.holderSetOrNull
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.sync.HTBoolSyncSlot
@@ -20,7 +20,6 @@ import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnchantingRecipeComponent
-import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -87,10 +86,10 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
+    override fun createRecipeComponent(): RecipeComponent = RecipeComponent()
 
-    inner class RecipeComponent : HTEnchantingRecipeComponent<HTEnchantingRecipe.Input, HTEnchantingRecipe>(this) {
-        private val cache: HTRecipeCache<HTEnchantingRecipe.Input, HTEnchantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.ENCHANTING)
+    inner class RecipeComponent : HTEnchantingRecipeComponent<HTEnchantingRecipe>(this) {
+        private val cache: HTRecipeCache<HTViewRecipeInput, HTEnchantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.ENCHANTING)
         private var currentEnch: List<EnchantmentInstance> = listOf()
 
         private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(expTank) }
@@ -101,7 +100,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         override fun insertOutput(
             level: ServerLevel,
             pos: BlockPos,
-            input: HTEnchantingRecipe.Input,
+            input: HTViewRecipeInput,
             recipe: HTEnchantingRecipe,
         ) {
             outputHandler.insert(recipe.assemble(input, level.registryAccess()))
@@ -111,7 +110,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         override fun extractInput(
             level: ServerLevel,
             pos: BlockPos,
-            input: HTEnchantingRecipe.Input,
+            input: HTViewRecipeInput,
             recipe: HTEnchantingRecipe,
         ) {
             fluidInputHandler.consume(recipe.expIngredient)
@@ -123,15 +122,19 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             playSound(SoundEvents.ENCHANTMENT_TABLE_USE)
         }
 
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTEnchantingRecipe.Input =
-            HTEnchantingRecipe.Input(fluidInputHandler.getFluidStack(), leftInputHandler.getItemStack(), rightInputHandler.getItemStack())
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
+            items += leftInputHandler
+            items += rightInputHandler
+
+            fluids += fluidInputHandler
+        }
 
         /**
          * @see net.minecraft.world.inventory.EnchantmentMenu
          */
-        override fun getMatchedRecipe(input: HTEnchantingRecipe.Input, level: ServerLevel): HTEnchantingRecipe? {
+        override fun getMatchedRecipe(input: HTViewRecipeInput, level: ServerLevel): HTEnchantingRecipe? {
             if (isRandom) {
-                val stack: ItemStack = input.left
+                val stack: ItemStack = input.getItemView(0).getItemStack()
                 val cost: Int = EnchantmentHelper.getEnchantmentCost(
                     level.random,
                     2,
@@ -181,7 +184,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             return enchantments
         }
 
-        override fun canProgressRecipe(level: ServerLevel, input: HTEnchantingRecipe.Input, recipe: HTEnchantingRecipe): Boolean =
+        override fun canProgressRecipe(level: ServerLevel, input: HTViewRecipeInput, recipe: HTEnchantingRecipe): Boolean =
             outputHandler.canInsert(recipe.assemble(input, level.registryAccess()))
     }
 
