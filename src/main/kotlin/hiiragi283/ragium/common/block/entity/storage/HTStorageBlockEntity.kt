@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.util.HTStackSlotHelper
@@ -20,6 +21,8 @@ abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
         HTStackSlotHelper.calculateRedstoneLevel(getAmountView())
+
+    open fun setupMenu(widgetHolder: HTWidgetHolder) {}
 
     //    Ticking    //
 

@@ -54,7 +54,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder.create(output) {
             hollow8()
             define('A') += Items.PAPER
-            define('B') += Tags.Items.ENDER_PEARLS
+            define('B') += CommonTagPrefixes.PEARL to VanillaMaterialKeys.ENDER
             resultStack += RagiumItems.LOCATION_TICKET to 8
             recipeId suffix "_with_ender"
         }

@@ -15,24 +15,13 @@ import net.minecraft.world.level.Level
 import org.apache.commons.lang3.math.Fraction
 
 class HTAlloyingRecipe(
-    val firstIngredient: HTItemIngredient,
-    val secondIngredient: HTItemIngredient,
-    val thirdIngredient: HTItemIngredient?,
+    val ingredients: List<HTItemIngredient>,
     val result: HTItemResult,
     time: Int,
     exp: Fraction,
 ) : HTViewProcessingRecipe(time, exp) {
-    constructor(
-        ingredients: List<HTItemIngredient>,
-        result: HTItemResult,
-        time: Int,
-        exp: Fraction,
-    ) : this(ingredients[0], ingredients[1], ingredients.getOrNull(2), result, time, exp)
-
-    override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
-        val ingredients: List<HTItemIngredient> = listOfNotNull(firstIngredient, secondIngredient, thirdIngredient)
-        return HTShapelessRecipeHelper.shapelessMatch(ingredients, input.items).size == ingredients.size
-    }
+    override fun matches(input: HTViewRecipeInput, level: Level): Boolean =
+        !HTShapelessRecipeHelper.shapelessMatch(ingredients, input.items).isEmpty()
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
 

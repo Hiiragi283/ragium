@@ -23,7 +23,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount.addUniformBonusCount
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -46,8 +45,8 @@ object RagiumMaterialEventHandler {
                 HTBlockLootFactory.createOre(
                     CommonTagPrefixes.DUST,
                     UniformGenerator.between(4f, 5f),
-                    ApplyBonusCount::addUniformBonusCount
-                )
+                    ApplyBonusCount::addUniformBonusCount,
+                ),
             )
         }
         // Gems

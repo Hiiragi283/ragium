@@ -105,12 +105,7 @@ object RagiumRecipeSerializers {
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = REGISTER.registerSerializer(
         RagiumConst.ALLOYING,
         processing(
-            HTItemIngredient.CODEC
-                .listOf(2, 3)
-                .fieldOf(HTConst.INGREDIENT)
-                .forGetter { recipe: HTAlloyingRecipe ->
-                    listOfNotNull(recipe.firstIngredient, recipe.secondIngredient, recipe.thirdIngredient)
-                },
+            HTItemIngredient.CODEC.listOf(2, 3).fieldOf(HTConst.INGREDIENT).forGetter(HTAlloyingRecipe::ingredients),
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAlloyingRecipe::result),
             ::HTAlloyingRecipe,
         ),

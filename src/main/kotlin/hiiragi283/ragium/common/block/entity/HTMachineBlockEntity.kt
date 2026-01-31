@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.block.HTMachineBlock
@@ -22,6 +23,8 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     fun isActive(): Boolean = isActive(this.blockState)
 
     fun isActive(state: BlockState): Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElse(false)
+
+    open fun setupMenu(widgetHolder: HTWidgetHolder) {}
 
     //    Ticking    //
 

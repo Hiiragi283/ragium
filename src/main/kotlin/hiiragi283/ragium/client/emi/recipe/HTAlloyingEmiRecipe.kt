@@ -9,9 +9,7 @@ import net.minecraft.world.item.crafting.RecipeHolder
 class HTAlloyingEmiRecipe(holder: RecipeHolder<HTAlloyingRecipe>) :
     HTProcessingEmiRecipe<HTAlloyingRecipe>(RagiumEmiRecipeCategories.ALLOYING, holder) {
     init {
-        addInput(recipe.firstIngredient)
-        addInput(recipe.secondIngredient)
-        addInput(recipe.thirdIngredient)
+        recipe.ingredients.forEach(::addInput)
 
         addOutputs(recipe.result)
     }

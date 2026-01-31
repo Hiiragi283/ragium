@@ -2,8 +2,6 @@ package hiiragi283.ragium.common.block.entity.enchant
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
-import hiiragi283.core.api.gui.sync.HTSyncType
-import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.item.enchantment.buildEnchantments
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTViewRecipeInput
@@ -11,7 +9,6 @@ import hiiragi283.core.api.registry.holderSetOrNull
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.common.gui.sync.HTBoolSyncSlot
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
@@ -78,11 +75,6 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
     }
 
     private var isRandom: Boolean = false
-
-    override fun addMenuTrackers(holder: HTWidgetHolder) {
-        super.addMenuTrackers(holder)
-        holder.track(HTBoolSyncSlot.create(::isRandom), HTSyncType.BOTH)
-    }
 
     //    Processing    //
 
