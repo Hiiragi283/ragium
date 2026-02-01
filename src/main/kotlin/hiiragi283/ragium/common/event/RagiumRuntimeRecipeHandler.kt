@@ -31,7 +31,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import org.apache.commons.lang3.math.Fraction
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
@@ -149,8 +148,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
         val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: return
         // プレフィックスのスケールから個数を算出
-        val fraction: Fraction = prefix.getScaledAmount(1, propertyMap)
-        val (outputCount: Int, inputCount: Int) = fraction
+        val (outputCount: Int, inputCount: Int) = prefix.getScaledAmount(1, propertyMap)
         // レシピを登録
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(prefix, key, inputCount)
@@ -339,8 +337,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val result: Item = event.getFirstHolder(prefix, key)?.value() ?: return
         // プレフィックスのスケールから個数を算出
-        val fraction: Fraction = prefix.getScaledAmount(1, propertyMap)
-        val (inputCount: Int, outputCount: Int) = fraction
+        val (inputCount: Int, outputCount: Int) = prefix.getScaledAmount(1, propertyMap)
         // レシピを登録
         HTSingleRecipeBuilder.pressing(output) {
             this.ingredient = inputCreator.create(inputTag, inputCount) to inputCreator.create(moldType)

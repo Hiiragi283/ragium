@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
@@ -11,7 +12,6 @@ import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.base.HTFluidWithItemRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import org.apache.commons.lang3.math.Fraction
 
 class HTFluidWithItemRecipeBuilder(prefix: String, private val factory: Factory<*>) : HTProcessingRecipeBuilder(prefix) {
     companion object {
@@ -42,8 +42,7 @@ class HTFluidWithItemRecipeBuilder(prefix: String, private val factory: Factory<
         fluidIngredient,
         itemIngredient,
         result,
-        time,
-        exp,
+        subParameters(),
     )
 
     //    Factory    //
@@ -53,8 +52,7 @@ class HTFluidWithItemRecipeBuilder(prefix: String, private val factory: Factory<
             fluidIngredient: HTFluidIngredient,
             itemIngredient: HTItemIngredient,
             result: HTItemResult,
-            time: Int,
-            exp: Fraction,
+            parameters: HTProcessingRecipe.SubParameters,
         ): RECIPE
     }
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
@@ -9,7 +10,6 @@ import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
 import net.minecraft.data.recipes.RecipeOutput
-import org.apache.commons.lang3.math.Fraction
 
 class HTItemToChancedRecipeBuilder(prefix: String, private val factory: Factory<*>) : HTChancedRecipeBuilder(prefix) {
     companion object {
@@ -32,7 +32,7 @@ class HTItemToChancedRecipeBuilder(prefix: String, private val factory: Factory<
         time /= 2
     }
 
-    override fun createRecipe(): HTItemToChancedRecipe = factory.create(ingredient, result, chancedResults.results, time, exp)
+    override fun createRecipe(): HTItemToChancedRecipe = factory.create(ingredient, result, chancedResults.results, subParameters())
 
     //    Factory    //
 
@@ -41,8 +41,7 @@ class HTItemToChancedRecipeBuilder(prefix: String, private val factory: Factory<
             ingredient: HTItemIngredient,
             result: HTItemResult,
             extraResults: List<HTChancedItemResult>,
-            time: Int,
-            exp: Fraction,
+            parameters: HTProcessingRecipe.SubParameters,
         ): RECIPE
     }
 }

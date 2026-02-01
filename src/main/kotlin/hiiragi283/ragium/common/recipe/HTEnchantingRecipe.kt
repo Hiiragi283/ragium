@@ -22,14 +22,9 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
-import org.apache.commons.lang3.math.Fraction
 
-class HTEnchantingRecipe(
-    val ingredient: HTItemIngredient,
-    val enchantments: ItemEnchantments,
-    time: Int,
-    exp: Fraction,
-) : HTViewProcessingRecipe(time, exp) {
+class HTEnchantingRecipe(val ingredient: HTItemIngredient, val enchantments: ItemEnchantments, parameters: SubParameters) :
+    HTViewProcessingRecipe(parameters) {
     companion object {
         @JvmStatic
         fun createExpIngredient(enchantments: ItemEnchantments): HTFluidIngredient = HTIngredientCreator.create(
@@ -38,11 +33,10 @@ class HTEnchantingRecipe(
         )
     }
 
-    constructor(ingredient: HTItemIngredient, holder: Holder<Enchantment>, time: Int, exp: Fraction) : this(
+    constructor(ingredient: HTItemIngredient, holder: Holder<Enchantment>, parameters: SubParameters) : this(
         ingredient,
         buildEnchantments { set(holder, holder.value().maxLevel) },
-        time,
-        exp,
+        parameters,
     )
 
     val instances: List<EnchantmentInstance> =

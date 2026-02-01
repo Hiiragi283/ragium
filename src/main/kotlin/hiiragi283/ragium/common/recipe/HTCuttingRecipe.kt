@@ -8,15 +8,13 @@ import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
-import org.apache.commons.lang3.math.Fraction
 
 class HTCuttingRecipe(
     ingredient: HTItemIngredient,
     result: HTItemResult,
     extraResults: List<HTChancedItemResult>,
-    time: Int,
-    exp: Fraction,
-) : HTItemToChancedRecipe(ingredient, result, extraResults, time, exp) {
+    parameters: SubParameters,
+) : HTItemToChancedRecipe(ingredient, result, extraResults, parameters) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CUTTING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.CUTTING.get()

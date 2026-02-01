@@ -26,7 +26,6 @@ class HTRefiningRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.REFINING) 
     override fun createRecipe(): HTRefiningRecipe = HTRefiningRecipe(
         ingredient,
         result,
-        time,
-        exp,
+        subParameters(),
     )
 }

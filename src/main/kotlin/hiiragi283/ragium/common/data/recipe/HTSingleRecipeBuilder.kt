@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.HTViewProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
@@ -12,7 +13,6 @@ import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import org.apache.commons.lang3.math.Fraction
 
 class HTSingleRecipeBuilder<ING : Any, RES : HTIdLike>(prefix: String, private val factory: Factory<ING, RES, *>) :
     HTProcessingRecipeBuilder(prefix) {
@@ -38,16 +38,11 @@ class HTSingleRecipeBuilder<ING : Any, RES : HTIdLike>(prefix: String, private v
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): HTViewProcessingRecipe = factory.create(ingredient, result, time, exp)
+    override fun createRecipe(): HTViewProcessingRecipe = factory.create(ingredient, result, subParameters())
 
     //    Factory    //
 
     fun interface Factory<ING : Any, RES : HTIdLike, RECIPE : HTViewProcessingRecipe> {
-        fun create(
-            ingredient: ING,
-            result: RES,
-            time: Int,
-            exp: Fraction,
-        ): RECIPE
+        fun create(ingredient: ING, result: RES, parameters: HTProcessingRecipe.SubParameters): RECIPE
     }
 }

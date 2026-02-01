@@ -25,5 +25,5 @@ class HTEnchantingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.ENCHANTI
 
     override fun getPrimalId(): ResourceLocation = holder.toLike().getId()
 
-    override fun createRecipe(): HTEnchantingRecipe = HTEnchantingRecipe(ingredient, holder, time, exp)
+    override fun createRecipe(): HTEnchantingRecipe = HTEnchantingRecipe(ingredient, holder, subParameters())
 }

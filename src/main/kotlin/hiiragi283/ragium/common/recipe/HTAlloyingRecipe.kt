@@ -12,14 +12,9 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import org.apache.commons.lang3.math.Fraction
 
-class HTAlloyingRecipe(
-    val ingredients: List<HTItemIngredient>,
-    val result: HTItemResult,
-    time: Int,
-    exp: Fraction,
-) : HTViewProcessingRecipe(time, exp) {
+class HTAlloyingRecipe(val ingredients: List<HTItemIngredient>, val result: HTItemResult, parameters: SubParameters) :
+    HTViewProcessingRecipe(parameters) {
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean =
         !HTShapelessRecipeHelper.shapelessMatch(ingredients, input.items).isEmpty()
 

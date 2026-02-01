@@ -24,7 +24,6 @@ class HTWashingRecipeBuilder : HTChancedRecipeBuilder(RagiumConst.WASHING) {
         fluidIngredient,
         result,
         chancedResults.results,
-        time,
-        exp,
+        subParameters(),
     )
 }

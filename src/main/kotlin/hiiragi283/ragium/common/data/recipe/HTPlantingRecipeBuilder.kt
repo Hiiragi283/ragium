@@ -30,7 +30,6 @@ class HTPlantingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.PLANTING) 
         HTItemHolderLike.of(seed),
         soil,
         crop,
-        time,
-        exp,
+        subParameters(),
     )
 }

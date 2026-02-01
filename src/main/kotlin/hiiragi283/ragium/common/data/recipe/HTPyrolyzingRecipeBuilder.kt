@@ -28,5 +28,5 @@ class HTPyrolyzingRecipeBuilder : HTAbstractComplexRecipeBuilder(RagiumConst.PYR
 
     override fun getPrimalId(): ResourceLocation = itemResult.getId()
 
-    override fun createRecipe(): HTPyrolyzingRecipe = HTPyrolyzingRecipe(ingredient, itemResult, fluidResult, time, exp)
+    override fun createRecipe(): HTPyrolyzingRecipe = HTPyrolyzingRecipe(ingredient, itemResult, fluidResult, subParameters())
 }

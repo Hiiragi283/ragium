@@ -23,5 +23,5 @@ class HTAlloyingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.ALLOYING) 
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): HTAlloyingRecipe = HTAlloyingRecipe(ingredients, result, time, exp)
+    override fun createRecipe(): HTAlloyingRecipe = HTAlloyingRecipe(ingredients, result, subParameters())
 }

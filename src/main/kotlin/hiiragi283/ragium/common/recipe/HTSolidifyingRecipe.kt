@@ -10,15 +10,13 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import org.apache.commons.lang3.math.Fraction
 
 class HTSolidifyingRecipe(
     ingredient: HTFluidIngredient,
     catalyst: HTItemIngredient,
     result: HTItemResult,
-    time: Int,
-    exp: Fraction,
-) : HTFluidWithItemRecipe(ingredient, catalyst, result, time, exp) {
+    parameters: SubParameters,
+) : HTFluidWithItemRecipe(ingredient, catalyst, result, parameters) {
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean =
         fluidIngredient.test(input.getFluidView(0)) && itemIngredient.testOnlyType(input.getItemView(0))
 

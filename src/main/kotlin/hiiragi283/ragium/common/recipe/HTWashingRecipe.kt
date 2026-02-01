@@ -11,16 +11,14 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import org.apache.commons.lang3.math.Fraction
 
 class HTWashingRecipe(
     val itemIngredient: HTItemIngredient,
     val fluidIngredient: HTFluidIngredient,
     result: HTItemResult,
     extraResults: List<HTChancedItemResult>,
-    time: Int,
-    exp: Fraction,
-) : HTChancedRecipe(result, extraResults, time, exp) {
+    parameters: SubParameters,
+) : HTChancedRecipe(result, extraResults, parameters) {
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean =
         itemIngredient.test(input.getItemView(0)) && fluidIngredient.test(input.getFluidView(0))
 

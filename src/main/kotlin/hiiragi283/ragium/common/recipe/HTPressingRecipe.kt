@@ -11,17 +11,15 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import org.apache.commons.lang3.math.Fraction
 
 class HTPressingRecipe(
     val ingredient: HTItemIngredient,
     val catalyst: HTItemIngredient,
     val result: HTItemResult,
-    time: Int,
-    exp: Fraction,
-) : HTViewProcessingRecipe(time, exp) {
-    constructor(pair: Pair<HTItemIngredient, HTItemIngredient>, result: HTItemResult, time: Int, exp: Fraction) :
-        this(pair.first, pair.second, result, time, exp)
+    parameters: SubParameters,
+) : HTViewProcessingRecipe(parameters) {
+    constructor(pair: Pair<HTItemIngredient, HTItemIngredient>, result: HTItemResult, parameters: SubParameters) :
+        this(pair.first, pair.second, result, parameters)
 
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean =
         ingredient.test(input.getItemView(0)) && catalyst.testOnlyType(input.getItemView(1))

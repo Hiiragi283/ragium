@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.enchant
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.item.enchantment.buildEnchantments
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.registry.holderSetOrNull
@@ -144,8 +145,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
                             set(instance.enchantment, instance.level)
                         }
                     },
-                    20 * 5,
-                    Fraction.ZERO,
+                    HTProcessingRecipe.SubParameters(20 * 5, Fraction.ZERO),
                 )
                 if (!recipe.matches(input, level)) {
                     currentEnch = listOf()

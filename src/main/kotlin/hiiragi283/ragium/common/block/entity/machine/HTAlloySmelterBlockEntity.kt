@@ -33,7 +33,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
-    
+
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         inputSlots
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->

@@ -30,7 +30,6 @@ class HTMixingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.MIXING) {
         Optional.ofNullable(itemIngredient),
         fluidIngredients,
         result,
-        time,
-        exp,
+        subParameters(),
     )
 }

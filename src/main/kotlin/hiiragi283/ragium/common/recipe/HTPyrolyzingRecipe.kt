@@ -13,15 +13,13 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
-import org.apache.commons.lang3.math.Fraction
 
 class HTPyrolyzingRecipe(
     val ingredient: HTItemIngredient,
     val itemResult: HTItemResult,
     val fluidResult: HTFluidResult,
-    time: Int,
-    exp: Fraction,
-) : HTViewProcessingRecipe(time, exp) {
+    parameters: SubParameters,
+) : HTViewProcessingRecipe(parameters) {
     fun getResultFluid(provider: HolderLookup.Provider): FluidStack = fluidResult.getStackOrEmpty(provider)
 
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean = ingredient.test(input.getItemView(0))

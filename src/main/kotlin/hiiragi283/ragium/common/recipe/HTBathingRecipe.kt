@@ -10,15 +10,13 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import org.apache.commons.lang3.math.Fraction
 
 class HTBathingRecipe(
     fluidIngredient: HTFluidIngredient,
     itemIngredient: HTItemIngredient,
     result: HTItemResult,
-    time: Int,
-    exp: Fraction,
-) : HTFluidWithItemRecipe(fluidIngredient, itemIngredient, result, time, exp) {
+    parameters: SubParameters,
+) : HTFluidWithItemRecipe(fluidIngredient, itemIngredient, result, parameters) {
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean =
         fluidIngredient.test(input.getFluidView(0)) && itemIngredient.test(input.getItemView(0))
 
