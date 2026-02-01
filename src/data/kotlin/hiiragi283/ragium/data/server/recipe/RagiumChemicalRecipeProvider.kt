@@ -8,9 +8,9 @@ import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
@@ -142,9 +142,8 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     fun washing() {
         // Gravel + Water -> Flint
-        HTWashingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(Tags.Items.GRAVELS)
-            fluidIngredient = inputCreator.water(250)
+        HTChancedRecipeBuilder.washing(output) {
+            ingredient = inputCreator.create(Tags.Items.GRAVELS) to inputCreator.water(250)
             result = resultCreator.create(Items.FLINT)
             chancedResults += resultCreator.create(Items.FLINT) to fraction(1, 3)
             time = 20 * 5

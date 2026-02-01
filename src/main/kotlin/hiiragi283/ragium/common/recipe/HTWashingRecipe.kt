@@ -19,6 +19,19 @@ class HTWashingRecipe(
     extraResults: List<HTChancedItemResult>,
     parameters: SubParameters,
 ) : HTChancedRecipe(result, extraResults, parameters) {
+    constructor(
+        pair: Pair<HTItemIngredient, HTFluidIngredient>,
+        result: HTItemResult,
+        extraResults: List<HTChancedItemResult>,
+        parameters: SubParameters,
+    ) : this(
+        pair.first,
+        pair.second,
+        result,
+        extraResults,
+        parameters,
+    )
+
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean =
         itemIngredient.test(input.getItemView(0)) && fluidIngredient.test(input.getFluidView(0))
 

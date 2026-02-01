@@ -21,8 +21,8 @@ import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
+import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import net.minecraft.tags.TagKey
@@ -150,7 +150,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // プレフィックスのスケールから個数を算出
         val (outputCount: Int, inputCount: Int) = prefix.getScaledAmount(1, propertyMap)
         // レシピを登録
-        HTItemToChancedRecipeBuilder.crushing(output) {
+        HTChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(prefix, key, inputCount)
             result = resultCreator.create(dust, outputCount)
             recipeId suffix "_from_${prefix.name}"
@@ -169,7 +169,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: return
         // レシピを登録
-        HTItemToChancedRecipeBuilder.crushing(output) {
+        HTChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(inputTag)
             result = resultCreator.create(dust)
             recipeId suffix "_from_${defaultPart.getSuffix()}"
@@ -184,7 +184,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
         val dust: Item = event.getFirstHolder(crushedPrefix, key)?.value() ?: return
         // レシピを登録
-        HTItemToChancedRecipeBuilder.crushing(output) {
+        HTChancedRecipeBuilder.crushing(output) {
             // 材料
             ingredient = inputCreator.create(CommonTagPrefixes.ORE, key)
             // 主産物
@@ -208,7 +208,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val plate: Item = event.getFirstHolder(CommonTagPrefixes.PLATE, key)?.value() ?: return
         // レシピを登録
-        HTItemToChancedRecipeBuilder.cutting(output) {
+        HTChancedRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.BLOCK, key)
             result = resultCreator.create(plate, propertyMap.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
             time *= 3
@@ -226,21 +226,21 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 val definition: HTWoodDefinition = holder.get()
                 val planks: ItemLike = definition[HTWoodDefinition.Variant.PLANKS] ?: return@forEach
                 // Log -> 6x Planks
-                HTItemToChancedRecipeBuilder.cutting(output) {
+                HTChancedRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(definition.logTag)
                     result = resultCreator.create(planks, 6)
                     recipeId suffix "_from_log"
                 }
                 // Boat
                 definition[HTWoodDefinition.Variant.BOAT]?.let { boat ->
-                    HTItemToChancedRecipeBuilder.cutting(output) {
+                    HTChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(boat)
                         result = resultCreator.create(planks, 5)
                         recipeId suffix "_from_boat"
                     }
                     // Chest Boat
                     definition[HTWoodDefinition.Variant.CHEST_BOAT]?.let {
-                        HTItemToChancedRecipeBuilder.cutting(output) {
+                        HTChancedRecipeBuilder.cutting(output) {
                             ingredient = inputCreator.create(it)
                             result = resultCreator.create(boat)
                             chancedResults += resultCreator.create(Items.CHEST)
@@ -250,7 +250,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 // Button
                 // Fence
                 definition[HTWoodDefinition.Variant.FENCE]?.let {
-                    HTItemToChancedRecipeBuilder.cutting(output) {
+                    HTChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
                         result = resultCreator.create(planks)
                         chancedResults += resultCreator.create(Items.STICK)
@@ -259,7 +259,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 }
                 // Fence Gate
                 definition[HTWoodDefinition.Variant.FENCE_GATE]?.let {
-                    HTItemToChancedRecipeBuilder.cutting(output) {
+                    HTChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
                         result = resultCreator.create(planks, 2)
                         chancedResults += resultCreator.create(Items.STICK, 4)
@@ -268,7 +268,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 }
                 // Pressure Plate
                 definition[HTWoodDefinition.Variant.PRESSURE_PLATE]?.let {
-                    HTItemToChancedRecipeBuilder.cutting(output) {
+                    HTChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
                         result = resultCreator.create(planks, 2)
                         recipeId suffix "_from_pressure_plate"
@@ -276,7 +276,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 }
                 // Sign
                 definition[HTWoodDefinition.Variant.SIGN]?.let {
-                    HTItemToChancedRecipeBuilder.cutting(output) {
+                    HTChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
                         result = resultCreator.create(planks, 2)
                         chancedResults += resultCreator.create(Items.STICK) to fraction(1, 3)
@@ -285,7 +285,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 }
                 // Hanging Sign
                 definition[HTWoodDefinition.Variant.HANGING_SIGN]?.let {
-                    HTItemToChancedRecipeBuilder.cutting(output) {
+                    HTChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
                         result = resultCreator.create(planks, 4)
                         chancedResults += resultCreator.create(Items.CHAIN) to fraction(1, 3)
@@ -294,7 +294,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 }
                 // Slab
                 definition[HTWoodDefinition.Variant.SLAB]?.let {
-                    HTItemToChancedRecipeBuilder.cutting(output) {
+                    HTChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(planks)
                         result = resultCreator.create(it, 2)
                     }
@@ -302,7 +302,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 // Stairs
                 // Door
                 definition[HTWoodDefinition.Variant.DOOR]?.let {
-                    HTItemToChancedRecipeBuilder.cutting(output) {
+                    HTChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
                         result = resultCreator.create(planks, 2)
                         recipeId suffix "_from_door"
@@ -310,7 +310,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 }
                 // Trapdoor
                 definition[HTWoodDefinition.Variant.TRAPDOOR]?.let {
-                    HTItemToChancedRecipeBuilder.cutting(output) {
+                    HTChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
                         result = resultCreator.create(planks, 3)
                         recipeId suffix "_from_trapdoor"

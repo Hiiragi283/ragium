@@ -16,7 +16,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegist
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
-import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -57,7 +57,7 @@ object RagiumRecipeSerializers {
 
     @JvmStatic
     private fun <R : HTItemToChancedRecipe> itemChanced(
-        factory: HTItemToChancedRecipeBuilder.Factory<R>,
+        factory: HTChancedRecipeBuilder.Factory<HTItemIngredient, R>,
         max: Int,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTItemToChancedRecipe::ingredient),
