@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
@@ -164,27 +163,15 @@ object RagiumRecipeSerializers {
 
     // Machine - Chemical
     @JvmField
-    val BATHING: RecipeSerializer<HTBathingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.BATHING,
-        MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf(RagiumConst.FLUID_INGREDIENT).forGetter(HTBathingRecipe::fluidIngredient),
-            HTItemIngredient.CODEC.fieldOf(RagiumConst.ITEM_INGREDIENT).forGetter(HTBathingRecipe::itemIngredient),
-            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBathingRecipe::result),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTBathingRecipe::parameters),
-            ::HTBathingRecipe,
-        ),
-    )
-
-    @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MIXING,
         MapBiCodec.composite(
-            HTItemIngredient.CODEC.optionalFieldOf(RagiumConst.ITEM_INGREDIENT).forGetter(HTMixingRecipe::itemIngredient),
-            HTFluidIngredient.CODEC
-                .listOrElement(1, 2)
-                .fieldOf(RagiumConst.FLUID_INGREDIENT)
-                .forGetter(HTMixingRecipe::fluidIngredients),
-            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTMixingRecipe::result),
+            MapBiCodecs
+                .ior(
+                    HTItemIngredient.CODEC.listOrElement(0, HTMixingRecipe.MAX_ITEM_INPUT).optionalFieldOf(RagiumConst.ITEM_INGREDIENT),
+                    HTFluidIngredient.CODEC.listOrElement(0, HTMixingRecipe.MAX_FLUID_INPUT).optionalFieldOf(RagiumConst.FLUID_INGREDIENT),
+                ).forGetter(HTMixingRecipe::ingredients),
+            COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTMixingRecipe::parameters),
             ::HTMixingRecipe,
         ),

@@ -7,7 +7,6 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.base.HTFluidWithItemRecipe
 import net.minecraft.data.recipes.RecipeOutput
@@ -15,12 +14,6 @@ import net.minecraft.resources.ResourceLocation
 
 class HTFluidWithItemRecipeBuilder(prefix: String, private val factory: Factory<*>) : HTProcessingRecipeBuilder(prefix) {
     companion object {
-        @HTBuilderMarker
-        @JvmStatic
-        inline fun bathing(output: RecipeOutput, builderAction: HTFluidWithItemRecipeBuilder.() -> Unit) {
-            HTFluidWithItemRecipeBuilder(RagiumConst.BATHING, ::HTBathingRecipe).apply(builderAction).save(output)
-        }
-
         @HTBuilderMarker
         @JvmStatic
         inline fun solidifying(output: RecipeOutput, builderAction: HTFluidWithItemRecipeBuilder.() -> Unit) {

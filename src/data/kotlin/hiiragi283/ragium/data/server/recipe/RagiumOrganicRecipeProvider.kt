@@ -71,9 +71,9 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
 
         // Coal Dust + Residue Oil -> Coal Liquid
         HTMixingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL)
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL)
             fluidIngredients += inputCreator.create(RagiumFluids.RESIDUE_OIL, 500)
-            result = resultCreator.create(RagiumFluids.COAL_LIQUID, 500)
+            result += resultCreator.create(RagiumFluids.COAL_LIQUID, 500)
         }
         // Coal Liquid -> Naphtha
         HTSingleRecipeBuilder.refining(output) {

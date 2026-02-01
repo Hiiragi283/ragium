@@ -101,13 +101,6 @@ object RagiumConfig {
 
             // Chemical
             @JvmField
-            val bath: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.CHEMICAL_BATH,
-                RagiumFluidConfigType.FIRST_INPUT,
-            )
-
-            @JvmField
             val mixer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.MIXER,

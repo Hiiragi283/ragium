@@ -1,17 +1,16 @@
 package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
-import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.monad.Ior
+import hiiragi283.core.api.monad.toIorOrThrow
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
-import java.util.Optional
 
-class HTMixingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.MIXING) {
+class HTMixingRecipeBuilder : HTAbstractComplexRecipeBuilder(RagiumConst.MIXING) {
     companion object {
         @HTBuilderMarker
         @JvmStatic
@@ -20,16 +19,20 @@ class HTMixingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.MIXING) {
         }
     }
 
-    var itemIngredient: HTItemIngredient? = null
     val fluidIngredients: MutableList<HTFluidIngredient> = mutableListOf()
-    lateinit var result: HTFluidResult
+    val itemIngredients: MutableList<HTItemIngredient> = mutableListOf()
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
     override fun createRecipe(): HTMixingRecipe = HTMixingRecipe(
-        Optional.ofNullable(itemIngredient),
-        fluidIngredients,
-        result,
+        createInput(),
+        result.build(),
         subParameters(),
     )
+
+    private fun createInput(): Ior<List<HTItemIngredient>, List<HTFluidIngredient>> {
+        val fluids: List<HTFluidIngredient>? = fluidIngredients.takeUnless(List<HTFluidIngredient>::isEmpty)
+        val items: List<HTItemIngredient>? = itemIngredients.takeUnless(List<HTItemIngredient>::isEmpty)
+        return (items to fluids).toIorOrThrow()
+    }
 }

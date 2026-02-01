@@ -10,11 +10,11 @@
       "fluids": "#c:molten_warped_crystal"
     }
   ],
-  "item_ingredient": "#hiiragi_core:eldritch_pearl_binder",
-  "result": {
+  "fluid_result": {
     "amount": 90,
     "id": "hiiragi_core:molten_eldritch",
     "tag": "c:molten_eldritch"
   },
+  "item_ingredient": "#hiiragi_core:eldritch_pearl_binder",
   "time": 200
 }

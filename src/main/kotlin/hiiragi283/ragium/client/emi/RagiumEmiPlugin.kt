@@ -21,7 +21,6 @@ import hiiragi283.core.api.registry.toLike
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTBathingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTEnchantingEmiRecipe
@@ -75,7 +74,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.REFINING,
             RagiumEmiRecipeCategories.SOLIDIFYING,
             // Machine - Chemical
-            RagiumEmiRecipeCategories.BATHING,
             RagiumEmiRecipeCategories.MIXING,
             RagiumEmiRecipeCategories.WASHING,
             // Device - Basic
@@ -100,7 +98,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.BATHING, ::HTBathingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.WASHING, ::HTWashingEmiRecipe)
 

@@ -6,7 +6,6 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
@@ -52,9 +51,6 @@ object RagiumRecipeTypes {
     val SOLIDIFYING: HTDeferredViewRecipeType<HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
 
     // Machine - Chemical
-    @JvmField
-    val BATHING: HTDeferredViewRecipeType<HTBathingRecipe> = REGISTER.registerType(RagiumConst.BATHING)
-
     @JvmField
     val MIXING: HTDeferredViewRecipeType<HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
 

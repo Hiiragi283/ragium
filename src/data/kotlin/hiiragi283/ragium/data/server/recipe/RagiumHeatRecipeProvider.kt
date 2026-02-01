@@ -80,6 +80,12 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             recipeId suffix "_from_rotten"
         }
         // Glass
+        HTFluidWithItemRecipeBuilder.solidifying(output) {
+            fluidIngredient = inputCreator.create(HCFluids.MOLTEN_GLASS, 250)
+            itemIngredient = inputCreator.create(HTMoldType.BALL)
+            result = resultCreator.create(Items.GLASS_BOTTLE)
+        }
+        
         meltAndSolidify(
             inputCreator.create(Tags.Items.GLASS_PANES),
             resultCreator.create(Items.GLASS_PANE),

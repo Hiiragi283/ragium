@@ -1,11 +1,12 @@
 package hiiragi283.ragium.common.recipe
 
+import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.recipe.HTViewProcessingRecipe
 import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.result.HTFluidResult
-import hiiragi283.core.api.storage.item.HTItemView
+import hiiragi283.core.api.recipe.result.HTComplexResult
+import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.HolderLookup
@@ -14,26 +15,32 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.Optional
 
 class HTMixingRecipe(
-    val itemIngredient: Optional<HTItemIngredient>,
-    val fluidIngredients: List<HTFluidIngredient>,
-    val result: HTFluidResult,
+    val ingredients: Ior<List<HTItemIngredient>, List<HTFluidIngredient>>,
+    val result: HTComplexResult,
     parameters: SubParameters,
 ) : HTViewProcessingRecipe(parameters) {
-    fun getResultFluid(provider: HolderLookup.Provider): FluidStack = result.getStackOrEmpty(provider)
-
-    override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
-        if (fluidIngredients.isEmpty()) return false
-        val view: HTItemView = input.getItemView(0)
-        val bool1: Boolean = itemIngredient.map { it.test(view) }.orElseGet(view::isEmpty)
-        val bool2: Boolean = fluidIngredients.getOrNull(0)?.test(input.getFluidView(0)) ?: true
-        val bool3: Boolean = fluidIngredients.getOrNull(1)?.test(input.getFluidView(1)) ?: true
-        return bool1 && bool2 && bool3
+    companion object {
+        const val MAX_FLUID_INPUT = 2
+        const val MAX_ITEM_INPUT = 3
     }
 
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
+    fun getResultFluid(provider: HolderLookup.Provider): FluidStack =
+        result.getRight()?.getStackResult(provider)?.value() ?: FluidStack.EMPTY
+
+    override fun matches(input: HTViewRecipeInput, level: Level): Boolean = ingredients.fold(
+        { HTShapelessRecipeHelper.shapelessMatch(it, input.items).isNotEmpty() },
+        { HTShapelessRecipeHelper.shapelessMatch(it, input.fluids).isNotEmpty() },
+        { items: List<HTItemIngredient>, fluids: List<HTFluidIngredient> ->
+            val bool1: Boolean = HTShapelessRecipeHelper.shapelessMatch(items, input.items).isNotEmpty()
+            val bool2: Boolean = HTShapelessRecipeHelper.shapelessMatch(fluids, input.fluids).isNotEmpty()
+            bool1 && bool2
+        },
+    )
+
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack =
+        result.getLeft()?.getStackResult(registries)?.value() ?: ItemStack.EMPTY
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 

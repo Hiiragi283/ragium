@@ -93,7 +93,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
-        add(RagiumRecipeTypes.BATHING, "Bathing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")

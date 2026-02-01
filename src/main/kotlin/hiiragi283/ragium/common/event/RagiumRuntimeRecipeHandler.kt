@@ -23,6 +23,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import net.minecraft.tags.TagKey
@@ -43,9 +44,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         cutWoodFromDefinition()
 
         for ((key: HTMaterialKey, propertyMap: HTPropertyMap) in materialManager) {
-            bathDustToPrefix(event, key, propertyMap, CommonTagPrefixes.GEM)
-            bathDustToPrefix(event, key, propertyMap, CommonTagPrefixes.PEARL)
-
             crushBaseToDust(event, key, propertyMap)
             crushOreToDust(event, key, propertyMap)
             crushPrefixToDust(event, key, propertyMap, CommonTagPrefixes.RAW_BLOCK)
@@ -58,7 +56,9 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
 
             cutBlockToPlate(event, key, propertyMap)
 
-            bathFlourToDough(event, key, propertyMap)
+            mixDustToPrefix(event, key, propertyMap, CommonTagPrefixes.GEM)
+            mixDustToPrefix(event, key, propertyMap, CommonTagPrefixes.PEARL)
+            mixFlourToDough(event, key, propertyMap)
 
             if (propertyMap.getOrDefault(HTMaterialPropertyKeys.FORMING_RECIPE_FLAG).mechanical) {
                 pressBaseToPrefix(event, key, propertyMap, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
@@ -93,44 +93,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         val dustTag: TagKey<Item> = CommonTagPrefixes.DUST.itemTagKey(key)
         if (!event.isPresentTag(inputTag) && !event.isPresentTag(dustTag)) return null
         return defaultPart to inputCreator.create(setOf(inputTag, dustTag), amount)
-    }
-
-    //    Bathing    //
-
-    @JvmStatic
-    private fun bathDustToPrefix(
-        event: HTRegisterRuntimeRecipeEvent,
-        key: HTMaterialKey,
-        propertyMap: HTPropertyMap,
-        prefix: HTTagPrefix,
-    ) {
-        // 材料が存在するか判定
-        val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
-        if (!event.isPresentTag(crushedPrefix, key)) return
-        // 完成品を取得
-        val resultItem: Item = event.getFirstHolder(prefix, key)?.value() ?: return
-        // レシピを登録
-        HTFluidWithItemRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(crushedPrefix, key)
-            fluidIngredient = inputCreator.water(125)
-            result = resultCreator.create(resultItem)
-            recipeId suffix "from_${crushedPrefix.name}"
-        }
-    }
-
-    @JvmStatic
-    private fun bathFlourToDough(event: HTRegisterRuntimeRecipeEvent, key: HTMaterialKey, propertyMap: HTPropertyMap) {
-        // 素材のプロパティから材料を取得
-        val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
-        if (!event.isPresentTag(crushedPrefix, key)) return
-        // 完成品を取得
-        val dough: Item = event.getFirstHolder(CommonTagPrefixes.DOUGH, key)?.value() ?: return
-        // レシピを登録
-        HTFluidWithItemRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(crushedPrefix, key)
-            fluidIngredient = inputCreator.water(250)
-            result = resultCreator.create(dough)
-        }
     }
 
     //    Crushing    //
@@ -364,6 +326,46 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             ingredient = input
             result = resultCreator.create(molten, fluidAmount)
             recipeId suffix "_from_${defaultPart.getSuffix()}"
+        }
+    }
+
+    //    Mixing    //
+
+    @JvmStatic
+    private fun mixDustToPrefix(
+        event: HTRegisterRuntimeRecipeEvent,
+        key: HTMaterialKey,
+        propertyMap: HTPropertyMap,
+        prefix: HTTagPrefix,
+    ) {
+        // 材料が存在するか判定
+        val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+        if (!event.isPresentTag(crushedPrefix, key)) return
+        // 完成品を取得
+        val resultItem: Item = event.getFirstHolder(prefix, key)?.value() ?: return
+        // レシピを登録
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(crushedPrefix, key)
+            fluidIngredients += inputCreator.water(125)
+            result += resultCreator.create(resultItem)
+            time /= 2
+            recipeId suffix "from_${crushedPrefix.name}"
+        }
+    }
+
+    @JvmStatic
+    private fun mixFlourToDough(event: HTRegisterRuntimeRecipeEvent, key: HTMaterialKey, propertyMap: HTPropertyMap) {
+        // 素材のプロパティから材料を取得
+        val crushedPrefix: HTTagPrefix = propertyMap.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+        if (!event.isPresentTag(crushedPrefix, key)) return
+        // 完成品を取得
+        val dough: Item = event.getFirstHolder(CommonTagPrefixes.DOUGH, key)?.value() ?: return
+        // レシピを登録
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(crushedPrefix, key)
+            fluidIngredients += inputCreator.water(250)
+            time /= 2
+            result += resultCreator.create(dough)
         }
     }
 

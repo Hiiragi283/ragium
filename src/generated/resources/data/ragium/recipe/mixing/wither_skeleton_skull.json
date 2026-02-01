@@ -1,12 +1,12 @@
 {
-  "type": "ragium:bathing",
+  "type": "ragium:mixing",
   "fluid_ingredient": {
     "amount": 90,
     "fluids": "#c:molten_eldritch"
   },
   "item_ingredient": "minecraft:skeleton_skull",
-  "result": {
+  "item_result": {
     "id": "minecraft:wither_skeleton_skull"
   },
-  "time": 100
+  "time": 200
 }
