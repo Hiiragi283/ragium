@@ -87,6 +87,9 @@ repositories {
         }
     } // RS2
 
+    maven(url = "https://central.sonatype.com/repository/maven-snapshots/") {
+        content { includeGroup("io.github.hiiragi283") }
+    }
     mavenCentral()
 }
 

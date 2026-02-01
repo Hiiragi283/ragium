@@ -1,0 +1,12 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:ball_mold",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:molten_glass"
+  },
+  "result": {
+    "id": "minecraft:glass_bottle"
+  },
+  "time": 100
+}

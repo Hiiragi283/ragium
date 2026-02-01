@@ -22,15 +22,15 @@ class HTPressingEmiRecipe(holder: RecipeHolder<HTPressingRecipe>) :
         RagiumEmiTextures.addWidget(
             widgets,
             "press",
-            getPosition(2),
+            getPosition(1.5),
             getPosition(1),
             recipe.time,
             endToStart = false,
         )
         // input
-        widgets.addSlot(input(0), getPosition(2), getPosition(0), HTBackgroundType.INPUT)
+        widgets.addSlot(input(0), getPosition(1.5), getPosition(0), HTBackgroundType.INPUT)
         // catalyst
-        widgets.addSlot(catalyst(0), getPosition(2), getPosition(2), HTBackgroundType.NONE)
+        widgets.addSlot(catalyst(0), getPosition(1.5), getPosition(2), HTBackgroundType.NONE)
         // output
         widgets.add2x2Slots()
     }

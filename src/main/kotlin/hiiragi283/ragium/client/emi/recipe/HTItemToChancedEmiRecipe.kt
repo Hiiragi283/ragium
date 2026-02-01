@@ -15,7 +15,7 @@ abstract class HTItemToChancedEmiRecipe<RECIPE : HTItemToChancedRecipe>(category
     final override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(time = recipe.time)
         // input
-        widgets.addSlot(input(0), getPosition(2), getPosition(0.5), HTBackgroundType.INPUT)
+        widgets.addSlot(input(0), getPosition(1.5), getPosition(0.5), HTBackgroundType.INPUT)
         // outputs
         addOutputSlots(widgets)
     }

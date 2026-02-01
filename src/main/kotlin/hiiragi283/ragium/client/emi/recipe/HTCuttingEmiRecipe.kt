@@ -13,13 +13,13 @@ class HTCuttingEmiRecipe(holder: RecipeHolder<HTCuttingRecipe>) :
         RagiumEmiTextures.addWidget(
             widgets,
             "saw",
-            getPosition(2),
+            getPosition(1.5),
             getPosition(1.5),
             recipe.time,
             endToStart = true,
         )
         // outputs
-        widgets.addSlot(output(0), getPosition(5.5), getPosition(0.5), HTBackgroundType.OUTPUT)
-        widgets.addSlot(output(1), getPosition(5.5), getPosition(2), HTBackgroundType.EXTRA_OUTPUT)
+        widgets.addSlot(output(0), getPosition(5), getPosition(0.5), HTBackgroundType.OUTPUT)
+        widgets.addSlot(output(1), getPosition(5), getPosition(2), HTBackgroundType.EXTRA_OUTPUT)
     }
 }

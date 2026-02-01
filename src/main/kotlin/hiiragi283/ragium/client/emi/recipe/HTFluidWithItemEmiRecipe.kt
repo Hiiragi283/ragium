@@ -23,13 +23,13 @@ abstract class HTFluidWithItemEmiRecipe<RECIPE : HTFluidWithItemRecipe>(
         RagiumEmiTextures.addWidget(
             widgets,
             icon,
-            getPosition(2),
+            getPosition(1.5),
             getPosition(1.5),
             recipe.time,
             endToStart = true,
         )
         // input
-        widgets.addTank(input(0), getPosition(0.5), HTBackgroundType.INPUT)
+        widgets.addTank(input(0), getPosition(0), HTBackgroundType.INPUT)
         // catalyst
         setupItemInput(widgets)
         // output

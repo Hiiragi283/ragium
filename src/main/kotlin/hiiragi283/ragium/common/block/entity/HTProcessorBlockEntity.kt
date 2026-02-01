@@ -12,7 +12,6 @@ import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
-import org.apache.commons.lang3.math.Fraction
 
 abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state) {
@@ -27,8 +26,6 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     protected abstract fun createRecipeComponent(): HTRecipeComponent<*, *>
 
     //    Ticking    //
-
-    fun getProgress(): Fraction = recipeComponent.getProgress(isActive())
 
     fun modifyTime(time: Int): Int = modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
 

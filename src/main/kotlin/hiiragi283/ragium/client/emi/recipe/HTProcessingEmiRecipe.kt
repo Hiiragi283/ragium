@@ -16,7 +16,7 @@ abstract class HTProcessingEmiRecipe<RECIPE : HTViewProcessingRecipe> : HTEmiHol
 
     //    Extensions    //
 
-    fun WidgetHolder.add2x2Slots(x: Int = getPosition(5.5), y: Int = getPosition(0.5), ingredient: (Int) -> EmiIngredient = ::output) {
+    fun WidgetHolder.add2x2Slots(x: Int = getPosition(5), y: Int = getPosition(0.5), ingredient: (Int) -> EmiIngredient = ::output) {
         this.addSlot(ingredient(0), x, y, HTBackgroundType.OUTPUT)
         this.addSlot(ingredient(1), x + getPosition(1), y, HTBackgroundType.OUTPUT)
         this.addSlot(ingredient(2), x, y + getPosition(1), HTBackgroundType.OUTPUT)

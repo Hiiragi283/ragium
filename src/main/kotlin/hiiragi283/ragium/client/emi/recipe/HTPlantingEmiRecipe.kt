@@ -23,17 +23,17 @@ class HTPlantingEmiRecipe(holder: RecipeHolder<HTPlantingRecipe>) :
         RagiumEmiTextures.addWidget(
             widgets,
             "sun",
-            getPosition(2),
+            getPosition(1.5),
             getPosition(1),
             recipe.time,
             endToStart = true,
         )
         // input
-        widgets.addSlot(input(0), getPosition(2), getPosition(0), HTBackgroundType.INPUT)
+        widgets.addSlot(input(0), getPosition(1.5), getPosition(0), HTBackgroundType.INPUT)
         // catalyst
-        widgets.addSlot(catalyst(0), getPosition(2), getPosition(2), HTBackgroundType.NONE)
+        widgets.addSlot(catalyst(0), getPosition(1.5), getPosition(2), HTBackgroundType.NONE)
         // outputs
-        widgets.addSlot(output(0), getPosition(5.5), getPosition(0.5), HTBackgroundType.OUTPUT)
-        widgets.addSlot(output(1), getPosition(5.5), getPosition(2), HTBackgroundType.EXTRA_OUTPUT)
+        widgets.addSlot(output(0), getPosition(5), getPosition(0.5), HTBackgroundType.OUTPUT)
+        widgets.addSlot(output(1), getPosition(5), getPosition(2), HTBackgroundType.EXTRA_OUTPUT)
     }
 }

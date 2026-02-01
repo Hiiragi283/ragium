@@ -13,6 +13,6 @@ class HTSolidifyingEmiRecipe(holder: RecipeHolder<HTSolidifyingRecipe>) :
     }
 
     override fun setupItemInput(widgets: WidgetHolder) {
-        widgets.addSlot(catalyst(0), getPosition(2), getPosition(0.5), HTBackgroundType.NONE)
+        widgets.addSlot(catalyst(0), getPosition(1.5), getPosition(0.5), HTBackgroundType.NONE)
     }
 }

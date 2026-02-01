@@ -15,8 +15,8 @@ class HTRefiningEmiRecipe(holder: RecipeHolder<HTRefiningRecipe>) :
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addArrow(time = recipe.time)
-        widgets.addBurning(getPosition(2), getPosition(1.5), recipe.time)
+        widgets.addArrow(time = recipe.time, x = getPosition(3.5))
+        widgets.addBurning(getPosition(3.5), getPosition(2), recipe.time)
         // input
         widgets.addTank(input(0), getPosition(2), HTBackgroundType.INPUT)
         // output

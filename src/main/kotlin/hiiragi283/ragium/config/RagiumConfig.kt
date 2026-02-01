@@ -59,7 +59,11 @@ object RagiumConfig {
         class Processor(builder: ModConfigSpec.Builder) {
             // Basic
             @JvmField
-            val alloySmelter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ALLOY_SMELTER)
+            val alloySmelter: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.ALLOY_SMELTER,
+                RagiumFluidConfigType.FIRST_INPUT,
+            )
 
             @JvmField
             val crusher: HTMachineConfig = HTMachineConfig.createSimple(

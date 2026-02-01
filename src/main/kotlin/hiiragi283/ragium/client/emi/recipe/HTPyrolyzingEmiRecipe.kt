@@ -17,17 +17,15 @@ class HTPyrolyzingEmiRecipe(holder: RecipeHolder<HTPyrolyzingRecipe>) :
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addArrow(time = recipe.time, x = getPosition(2.5))
-        widgets.addBurning(getPosition(1), getPosition(1.5), recipe.time)
+        widgets.addArrow(time = recipe.time)
+        widgets.addBurning(getPosition(1.5), getPosition(1.5), recipe.time)
         // input
-        widgets.addSlot(input(0), getPosition(1), getPosition(0.5), HTBackgroundType.INPUT)
+        widgets.addTank(catalyst(0), getPosition(0), HTBackgroundType.EXTRA_INPUT)
+        widgets.addSlot(input(0), getPosition(1.5), getPosition(0.5), HTBackgroundType.INPUT)
         // outputs
-        widgets.add2x2Slots(x = getPosition(4.5), ingredient = { index ->
-            when (index) {
-                0 -> output(index)
-                else -> EmiStack.EMPTY
-            }
-        })
-        widgets.addTank(output(1), getPosition(7), HTBackgroundType.OUTPUT)
+        widgets.addSlot(output(0), getPosition(5), getPosition(0), HTBackgroundType.OUTPUT)
+        widgets.addSlot(EmiStack.EMPTY, getPosition(5), getPosition(1), HTBackgroundType.OUTPUT)
+        widgets.addSlot(EmiStack.EMPTY, getPosition(5), getPosition(2), HTBackgroundType.OUTPUT)
+        widgets.addTank(output(1), getPosition(6.5), HTBackgroundType.EXTRA_OUTPUT)
     }
 }

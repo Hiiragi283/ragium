@@ -85,7 +85,7 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             itemIngredient = inputCreator.create(HTMoldType.BALL)
             result = resultCreator.create(Items.GLASS_BOTTLE)
         }
-        
+
         meltAndSolidify(
             inputCreator.create(Tags.Items.GLASS_PANES),
             resultCreator.create(Items.GLASS_PANE),

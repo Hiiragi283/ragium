@@ -6,6 +6,7 @@ import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
+import hiiragi283.ragium.client.emi.RagiumEmiTextures
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
@@ -26,7 +27,15 @@ class HTMixingEmiRecipe(holder: RecipeHolder<HTMixingRecipe>) :
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addArrow(time = recipe.time, x = getPosition(4))
+        RagiumEmiTextures.addWidget(
+            widgets,
+            "mix",
+            getPosition(4),
+            getPosition(1),
+            recipe.time,
+            endToStart = false,
+            horizontal = true,
+        )
         // inputs
         widgets.addSlot(input(0), getPosition(2.5), getPosition(0), HTBackgroundType.INPUT)
         widgets.addSlot(input(1), getPosition(2.5), getPosition(1), HTBackgroundType.INPUT)

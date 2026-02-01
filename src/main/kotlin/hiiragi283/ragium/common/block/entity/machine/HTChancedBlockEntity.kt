@@ -17,8 +17,10 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(type, pos, state) {
-    private lateinit var outputSlot: HTBasicItemSlot
-    private lateinit var extraOutputSlots: List<HTBasicItemSlot>
+    protected lateinit var outputSlot: HTBasicItemSlot
+        private set
+    protected lateinit var extraOutputSlots: List<HTBasicItemSlot>
+        private set
 
     final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         createInputSlots(builder, listener)

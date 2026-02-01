@@ -1,21 +1,29 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTViewRecipeInput
-import hiiragi283.core.common.gui.HTContainerItemSlot
-import hiiragi283.core.common.gui.widget.HTItemWidget
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.common.gui.widget.HTFluidWidget
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
+import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
+import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
@@ -25,6 +33,13 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ALLOY_SMELTER, pos, state) {
+    private lateinit var inputTank: HTBasicFluidTank
+
+    override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
+        inputTank =
+            builder.addSlot(HTSlotInfo.INPUT, HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)))
+    }
+
     private lateinit var inputSlots: List<HTBasicItemSlot>
     private lateinit var outputSlot: HTBasicItemSlot
 
@@ -35,24 +50,36 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        // progress
+        widgetHolder += HTProgressWidget.createArrow(
+            recipeComponent.fractionSlot,
+            HTSlotHelper.getSlotPosX(5),
+            HTSlotHelper.getSlotPosY(1),
+        )
+        // slots
+        widgetHolder += HTFluidWidget
+            .createSlot(
+                inputTank,
+                HTSlotHelper.getSlotPosX(2.5),
+                HTSlotHelper.getSlotPosY(2),
+            ).setBackground(HTBackgroundType.EXTRA_INPUT)
+
         inputSlots
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->
-                HTContainerItemSlot.create(
+                HTItemSlotWidget(
                     slot,
-                    HTSlotHelper.getSlotPosX(index + 1),
-                    HTSlotHelper.getSlotPosY(1),
-                    HTContainerItemSlot.Type.INPUT,
+                    HTSlotHelper.getSlotPosX(index + 1.5),
+                    HTSlotHelper.getSlotPosY(0),
+                    HTBackgroundType.INPUT,
                 )
-            }.map(HTItemWidget::SlotWidget)
-            .forEach(widgetHolder::addWidget)
+            }.forEach(widgetHolder::addWidget)
 
-        widgetHolder += HTItemWidget.SlotWidget(
-            HTContainerItemSlot.create(
-                outputSlot,
-                HTSlotHelper.getSlotPosX(6),
-                HTSlotHelper.getSlotPosY(1),
-                HTContainerItemSlot.Type.OUTPUT,
-            ),
+        widgetHolder += HTItemSlotWidget(
+            outputSlot,
+            HTSlotHelper.getSlotPosX(7),
+            HTSlotHelper.getSlotPosY(1),
+            HTBackgroundType.OUTPUT,
         )
     }
 
@@ -65,6 +92,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
             RagiumRecipeTypes.ALLOYING,
             this,
         ) {
+        private val inputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
         override fun insertOutput(

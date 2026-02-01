@@ -1,14 +1,19 @@
 package hiiragi283.ragium.common.block.entity.component
 
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
+import hiiragi283.core.api.component1
+import hiiragi283.core.api.component2
+import hiiragi283.core.api.fixedFraction
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.serialization.component.HTComponentSerializable
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.block.entity.HTBlockEntity
+import hiiragi283.core.common.gui.sync.HTFractionSyncSlot
 import hiiragi283.ragium.api.RagiumConst
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import org.apache.commons.lang3.math.Fraction
 
 abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any>(owner: HTBlockEntity) :
     HTRecipeHandler<INPUT, RECIPE>(),
@@ -19,6 +24,15 @@ abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any>(owner: HTBlockEntity
     }
 
     //    HTRecipeHandler    //
+
+    val fractionSlot: HTFractionSyncSlot = HTFractionSyncSlot.create(
+        { fixedFraction(progress, maxProgress, true) },
+        { fraction: Fraction ->
+            val (progress: Int, maxProgress: Int) = fraction
+            this.progress = progress
+            this.maxProgress = maxProgress
+        },
+    )
 
     final override fun completeRecipe(
         level: ServerLevel,

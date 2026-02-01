@@ -17,13 +17,14 @@ object RagiumEmiTextures {
         y: Int,
         time: Int,
         endToStart: Boolean,
+        horizontal: Boolean = false,
         fullToEmpty: Boolean = false,
     ): AnimatedTextureWidget = widgets.addAnimatedTexture(
         widget(name),
         x + 1,
         y + 1,
         1000 * time / 20,
-        false,
+        horizontal,
         endToStart,
         fullToEmpty,
     )
