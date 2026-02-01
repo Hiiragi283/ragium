@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ragium:raginite_block"
+          "name": "ragium:raw_ragi_crystal_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/raginite_block"
+  "random_sequence": "ragium:blocks/raw_ragi_crystal_block"
 }

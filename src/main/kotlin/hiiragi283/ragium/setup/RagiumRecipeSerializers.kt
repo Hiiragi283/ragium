@@ -16,7 +16,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegist
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
-import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -56,14 +56,14 @@ object RagiumRecipeSerializers {
 
     @JvmStatic
     private fun <R : HTItemToChancedRecipe> itemChanced(
-        factory: HTChancedRecipeBuilder.Factory<HTItemIngredient, R>,
+        factory: HTItemToChancedRecipeBuilder.Factory<R>,
         max: Int,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTItemToChancedRecipe::ingredient),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTItemToChancedRecipe::result),
         HTChancedItemResult.CODEC
             .listOrElement(0, max)
-            .optionalFieldOf(RagiumConst.EXTRA_RESULT, listOf())
+            .optionalFieldOf(HTConst.EXTRA_RESULT, listOf())
             .forGetter(HTItemToChancedRecipe::extraResults),
         HTProcessingRecipe.SubParameters.CODEC.forGetter(HTItemToChancedRecipe::parameters),
         factory::create,
@@ -79,6 +79,10 @@ object RagiumRecipeSerializers {
                 .fieldOf(HTConst.INGREDIENT)
                 .forGetter(HTAlloyingRecipe::ingredients),
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAlloyingRecipe::result),
+            HTChancedItemResult.CODEC
+                .listOrElement(0, 1)
+                .optionalFieldOf(HTConst.EXTRA_RESULT, listOf())
+                .forGetter(HTAlloyingRecipe::extraResults),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTAlloyingRecipe::parameters),
             ::HTAlloyingRecipe,
         ),
@@ -168,8 +172,8 @@ object RagiumRecipeSerializers {
         MapBiCodec.composite(
             MapBiCodecs
                 .ior(
-                    HTItemIngredient.CODEC.listOrElement(0, HTMixingRecipe.MAX_ITEM_INPUT).optionalFieldOf(RagiumConst.ITEM_INGREDIENT),
-                    HTFluidIngredient.CODEC.listOrElement(0, HTMixingRecipe.MAX_FLUID_INPUT).optionalFieldOf(RagiumConst.FLUID_INGREDIENT),
+                    HTItemIngredient.CODEC.listOrElement(0, HTMixingRecipe.MAX_ITEM_INPUT).optionalFieldOf(HTConst.ITEM_INGREDIENT),
+                    HTFluidIngredient.CODEC.listOrElement(0, HTMixingRecipe.MAX_FLUID_INPUT).optionalFieldOf(HTConst.FLUID_INGREDIENT),
                 ).forGetter(HTMixingRecipe::ingredients),
             COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTMixingRecipe::parameters),
@@ -181,12 +185,12 @@ object RagiumRecipeSerializers {
     val WASHING: RecipeSerializer<HTWashingRecipe> = REGISTER.registerSerializer(
         RagiumConst.WASHING,
         MapBiCodec.composite(
-            HTItemIngredient.CODEC.fieldOf(RagiumConst.ITEM_INGREDIENT).forGetter(HTWashingRecipe::itemIngredient),
-            HTFluidIngredient.CODEC.fieldOf(RagiumConst.FLUID_INGREDIENT).forGetter(HTWashingRecipe::fluidIngredient),
+            HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTWashingRecipe::itemIngredient),
+            HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTWashingRecipe::fluidIngredient),
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTWashingRecipe::result),
             HTChancedItemResult.CODEC
                 .listOrElement(0, 3)
-                .optionalFieldOf(RagiumConst.EXTRA_RESULT, listOf())
+                .optionalFieldOf(HTConst.EXTRA_RESULT, listOf())
                 .forGetter(HTWashingRecipe::extraResults),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTWashingRecipe::parameters),
             ::HTWashingRecipe,

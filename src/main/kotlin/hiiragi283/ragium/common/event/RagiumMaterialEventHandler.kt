@@ -22,44 +22,41 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.Tags
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumMaterialEventHandler {
+    private val materialBlockSet: Set<HTTagPrefix> = buildSet {
+        addAll(CommonTagPrefixes.ORES)
+        add(CommonTagPrefixes.RAW_BLOCK)
+        add(CommonTagPrefixes.BLOCK)
+    }
+
     @SubscribeEvent
     fun gatherAttributes(event: HTMaterialPropertyEvent) {
         // Minerals
         event.modify(RagiumMaterialKeys.RAGINITE) {
             setDefaultPart(HTDefaultPart.Prefixed.DUST)
-            addBlockPrefixes(CommonTagPrefixes.ORES.plus(CommonTagPrefixes.BLOCK))
-            addItemPrefixes(CommonTagPrefixes.DUST)
+            addBlockPrefixes(materialBlockSet.minus(CommonTagPrefixes.BLOCK))
+            addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.RAW)
             put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(RagiumFluids.MOLTEN_RAGINITE))
 
             setName("Raginite", "ラギナイト")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
-            addCustomOreLoot(
-                HTBlockLootFactory.createOre(
-                    CommonTagPrefixes.DUST,
-                    UniformGenerator.between(4f, 5f),
-                    ApplyBonusCount::addUniformBonusCount,
-                ),
-            )
+            addCustomOreLoot(HTBlockLootFactory.createOre(CommonTagPrefixes.RAW))
         }
         // Gems
         event.modify(RagiumMaterialKeys.RAGI_CRYSTAL) {
             setDefaultPart(HTDefaultPart.Prefixed.GEM)
-            addBlockPrefixes(CommonTagPrefixes.ORES.plus(CommonTagPrefixes.BLOCK))
-            addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM)
+            addBlockPrefixes(materialBlockSet)
+            addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.RAW, CommonTagPrefixes.GEM)
             addExtraOreResult(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 1 / 4f)
 
             setName("Ragi-Crystal", "ラギクリスタル")
             setTextureSet("diamond", HTMaterialTextureSet.SHINE)
-            addCustomOreLoot(HTBlockLootFactory.createOre(CommonTagPrefixes.GEM, null))
-            put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
+            addCustomOreLoot(HTBlockLootFactory.createOre(CommonTagPrefixes.RAW))
         }
         // Alloys
         event.modify(RagiumMaterialKeys.RAGI_ALLOY) {

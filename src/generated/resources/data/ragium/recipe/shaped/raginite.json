@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:dusts/raginite"
+      "tag": "c:raw_materials/raginite"
     },
     "B": {
-      "item": "ragium:raginite_dust"
+      "item": "ragium:raw_raginite"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:raginite_block"
+    "id": "ragium:raw_raginite_block"
   }
 }

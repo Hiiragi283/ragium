@@ -32,27 +32,15 @@
               "type": "minecraft:item",
               "functions": [
                 {
-                  "add": false,
-                  "count": {
-                    "type": "minecraft:uniform",
-                    "max": 5.0,
-                    "min": 4.0
-                  },
-                  "function": "minecraft:set_count"
-                },
-                {
                   "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:uniform_bonus_count",
-                  "function": "minecraft:apply_bonus",
-                  "parameters": {
-                    "bonusMultiplier": 1
-                  }
+                  "formula": "minecraft:ore_drops",
+                  "function": "minecraft:apply_bonus"
                 },
                 {
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "ragium:raginite_dust"
+              "name": "ragium:raw_raginite"
             }
           ]
         }

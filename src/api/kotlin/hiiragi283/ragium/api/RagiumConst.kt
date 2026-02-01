@@ -63,8 +63,4 @@ object RagiumConst {
     const val PLANTING = "planting"
 
     // Serialization
-    const val ITEM_INGREDIENT = "item_ingredient"
-    const val FLUID_INGREDIENT = "fluid_ingredient"
-
-    const val EXTRA_RESULT = "extra_result"
 }

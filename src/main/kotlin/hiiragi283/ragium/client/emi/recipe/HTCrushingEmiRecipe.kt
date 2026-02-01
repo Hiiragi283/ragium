@@ -1,7 +1,6 @@
 package hiiragi283.ragium.client.emi.recipe
 
 import dev.emi.emi.api.widget.WidgetHolder
-import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.emi.RagiumEmiTextures
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -19,9 +18,6 @@ class HTCrushingEmiRecipe(holder: RecipeHolder<HTCrushingRecipe>) :
             endToStart = true,
         )
         // outputs
-        widgets.addSlot(output(0), getPosition(5), getPosition(1), HTBackgroundType.OUTPUT)
-        widgets.addSlot(output(1), getPosition(6.5), getPosition(0), HTBackgroundType.EXTRA_OUTPUT)
-        widgets.addSlot(output(2), getPosition(6.5), getPosition(1), HTBackgroundType.EXTRA_OUTPUT)
-        widgets.addSlot(output(3), getPosition(6.5), getPosition(2), HTBackgroundType.EXTRA_OUTPUT)
+        widgets.addTripleOutputs()
     }
 }

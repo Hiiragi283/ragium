@@ -1,8 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.recipe.HTViewRecipeInput
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -34,6 +38,26 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected abstract fun createInputSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener)
 
     protected abstract fun getOutputSlotSize(): Int
+
+    protected fun addTripleOutputs(widgetHolder: HTWidgetHolder) {
+        // slots
+        widgetHolder += HTItemSlotWidget(
+            outputSlot,
+            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosY(1),
+            HTBackgroundType.OUTPUT,
+        )
+
+        for (i: Int in extraOutputSlots.indices) {
+            val slot: HTBasicItemSlot = extraOutputSlots[i]
+            widgetHolder += HTItemSlotWidget(
+                slot,
+                HTSlotHelper.getSlotPosX(7.5),
+                HTSlotHelper.getSlotPosY(i),
+                HTBackgroundType.EXTRA_OUTPUT,
+            )
+        }
+    }
 
     //    Processing    //
 

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:raw_materials/ragi_crystal"
+    },
+    "B": {
+      "item": "ragium:raw_ragi_crystal"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:raw_ragi_crystal_block"
+  }
+}

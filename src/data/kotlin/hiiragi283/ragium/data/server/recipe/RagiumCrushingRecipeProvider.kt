@@ -6,7 +6,7 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTChancedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.Tags
 object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         // Netherite Scrap
-        HTChancedRecipeBuilder.crushing(output) {
+        HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.ORES_NETHERITE_SCRAP)
             result = resultCreator.material(CommonTagPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 2)
             exp = fraction(1f)
@@ -25,14 +25,14 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // Beetroot -> Sugar + Molasses
-        HTChancedRecipeBuilder.crushing(output) {
+        HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.CROPS_BEETROOT)
             result = resultCreator.create(Items.SUGAR, 2)
             chancedResults += resultCreator.create(RagiumItems.MOLASSES)
             recipeId suffix "_from_beetroot"
         }
         // Sugar Cane -> Sugar + Molasses
-        HTChancedRecipeBuilder.crushing(output) {
+        HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.CROPS_SUGAR_CANE)
             result = resultCreator.create(Items.SUGAR, 4)
             chancedResults += resultCreator.create(RagiumItems.MOLASSES)
@@ -46,32 +46,32 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun stones() {
         // Stone -> Cobblestone
-        HTChancedRecipeBuilder.crushing(output) {
+        HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Items.STONE)
             result = resultCreator.create(Items.COBBLESTONE)
             recipeId suffix "_from_stone"
         }
         // Cobblestone -> Gravel
-        HTChancedRecipeBuilder.crushing(output) {
+        HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(listOf(Tags.Items.COBBLESTONES_NORMAL, Tags.Items.COBBLESTONES_MOSSY))
             result = resultCreator.create(Items.GRAVEL)
             recipeId suffix "_from_cobblestone"
         }
         // Gravel -> Sand
-        HTChancedRecipeBuilder.crushing(output) {
+        HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.GRAVELS)
             result = resultCreator.create(Items.SAND)
             recipeId suffix "_from_gravel"
         }
         // Sandstone -> Sand + Saltpeter
-        HTChancedRecipeBuilder.crushing(output) {
+        HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             result = resultCreator.create(Items.SAND, 2)
             chancedResults += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER) to fraction(1, 4)
             recipeId suffix "_from_sandstone"
         }
 
-        HTChancedRecipeBuilder.crushing(output) {
+        HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.SANDSTONE_RED_BLOCKS)
             result = resultCreator.create(Items.RED_SAND, 2)
             chancedResults += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER) to fraction(1, 4)
@@ -83,7 +83,7 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     private fun planks() {
         // Wood Dust
         fun wood(tagKey: TagKey<Item>, input: Int, output: Int) {
-            HTChancedRecipeBuilder.crushing(this.output) {
+            HTItemToChancedRecipeBuilder.crushing(this.output) {
                 ingredient = inputCreator.create(tagKey, input)
                 result = resultCreator.material(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, output)
                 recipeId suffix "_from_${tagKey.location().path}"
