@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/raw_ragi_crystal"
+    "layer0": "ragium:item/crushed_raginite_ore"
   }
 }
