@@ -5,11 +5,10 @@ import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.item.enchantment.buildEnchantments
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
-import hiiragi283.core.api.recipe.HTViewRecipeInput
+import hiiragi283.core.api.recipe.input.HTViewRecipeInput
 import hiiragi283.core.api.registry.holderSetOrNull
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
@@ -81,7 +80,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
     override fun createRecipeComponent(): RecipeComponent = RecipeComponent()
 
-    inner class RecipeComponent : HTEnchantingRecipeComponent<HTEnchantingRecipe>(this) {
+    inner class RecipeComponent : HTEnchantingRecipeComponent<HTViewRecipeInput, HTEnchantingRecipe>(this) {
         private val cache: HTRecipeCache<HTViewRecipeInput, HTEnchantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.ENCHANTING)
         private var currentEnch: List<EnchantmentInstance> = listOf()
 
@@ -116,10 +115,10 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         }
 
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
-            items += leftInputHandler
-            items += rightInputHandler
+            this += leftInputHandler
+            this += rightInputHandler
 
-            fluids += fluidInputHandler
+            this += fluidInputHandler
         }
 
         /**
@@ -127,7 +126,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
          */
         override fun getMatchedRecipe(input: HTViewRecipeInput, level: ServerLevel): HTEnchantingRecipe? {
             if (isRandom) {
-                val stack: ItemStack = input.getItemView(0).getItemStack()
+                val stack: ItemStack = input.getItem(0)
                 val cost: Int = EnchantmentHelper.getEnchantmentCost(
                     level.random,
                     2,

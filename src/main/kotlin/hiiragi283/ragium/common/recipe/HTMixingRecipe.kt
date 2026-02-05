@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.core.api.monad.Ior
-import hiiragi283.core.api.recipe.HTViewProcessingRecipe
-import hiiragi283.core.api.recipe.HTViewRecipeInput
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.input.HTViewRecipeInput
 import hiiragi283.core.api.recipe.result.HTComplexResult
 import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -20,7 +20,7 @@ class HTMixingRecipe(
     val ingredients: Ior<List<HTItemIngredient>, List<HTFluidIngredient>>,
     val result: HTComplexResult,
     parameters: SubParameters,
-) : HTViewProcessingRecipe(parameters) {
+) : HTProcessingRecipe<HTViewRecipeInput>(parameters) {
     companion object {
         const val MAX_FLUID_INPUT = 2
         const val MAX_ITEM_INPUT = 3

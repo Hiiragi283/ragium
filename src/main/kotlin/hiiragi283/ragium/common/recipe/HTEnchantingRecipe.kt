@@ -3,11 +3,10 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.item.createEnchantedBook
 import hiiragi283.core.api.item.enchantment.buildEnchantments
-import hiiragi283.core.api.recipe.HTViewProcessingRecipe
-import hiiragi283.core.api.recipe.HTViewRecipeInput
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.api.recipe.input.HTViewRecipeInput
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.util.HTExperienceHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -24,7 +23,7 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 
 class HTEnchantingRecipe(val ingredient: HTItemIngredient, val enchantments: ItemEnchantments, parameters: SubParameters) :
-    HTViewProcessingRecipe(parameters) {
+    HTProcessingRecipe<HTViewRecipeInput>(parameters) {
     companion object {
         @JvmStatic
         fun createExpIngredient(enchantments: ItemEnchantments): HTFluidIngredient = HTIngredientCreator.create(
@@ -44,14 +43,14 @@ class HTEnchantingRecipe(val ingredient: HTItemIngredient, val enchantments: Ite
     val expIngredient: HTFluidIngredient by lazy { createExpIngredient(enchantments) }
 
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
-        val bool1: Boolean = expIngredient.test(input.getFluidView(0))
-        val bool2: Boolean = input.getItemView(0).getResource()?.isOf(Items.BOOK) ?: false
-        val bool3: Boolean = ingredient.test(input.getItemView(1))
+        val bool1: Boolean = expIngredient.test(input.getFluidAt(0))
+        val bool2: Boolean = input.getItem(0).`is`(Items.BOOK)
+        val bool3: Boolean = ingredient.test(input.getItemAt(1))
         return bool1 && bool2 && bool3
     }
 
     override fun assemble(input: HTViewRecipeInput, registries: HolderLookup.Provider): ItemStack {
-        var stack: ItemStack = input.getItemView(0).getItemStack()
+        var stack: ItemStack = input.getItem(0)
         stack = stack.item.applyEnchantments(stack, instances)
         return stack
     }

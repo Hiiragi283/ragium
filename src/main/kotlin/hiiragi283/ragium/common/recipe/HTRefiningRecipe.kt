@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.HTViewProcessingRecipe
-import hiiragi283.core.api.recipe.HTViewRecipeInput
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -14,10 +14,10 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTRefiningRecipe(val ingredient: HTFluidIngredient, val result: HTFluidResult, parameters: SubParameters) :
-    HTViewProcessingRecipe(parameters) {
+    HTProcessingRecipe<HTSingleFluidRecipeInput>(parameters) {
     fun getResultFluid(provider: HolderLookup.Provider): FluidStack = result.getStackOrEmpty(provider)
 
-    override fun matches(input: HTViewRecipeInput, level: Level): Boolean = ingredient.test(input.getFluidView(0))
+    override fun matches(input: HTSingleFluidRecipeInput, level: Level): Boolean = ingredient.test(input.fluid)
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 

@@ -6,8 +6,7 @@
   },
   "result": {
     "amount": 250,
-    "id": "ragium:ethylene",
-    "tag": "c:ethylene"
+    "id": "ragium:ethylene"
   },
   "time": 200
 }

@@ -33,7 +33,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         HTPyrolyzingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(HCItems.COMPRESSED_SAWDUST, 8)
             itemResult = resultCreator.material(CommonTagPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
-            fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 1000)
+            fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 500)
             time /= 3
             recipeId suffix "_from_sawdust"
         }

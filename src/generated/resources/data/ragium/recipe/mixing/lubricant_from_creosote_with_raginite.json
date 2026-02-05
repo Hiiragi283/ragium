@@ -5,8 +5,7 @@
   },
   "fluid_result": {
     "amount": 750,
-    "id": "ragium:lubricant",
-    "tag": "c:lubricant"
+    "id": "ragium:lubricant"
   },
   "item_ingredient": "#c:dusts/raginite",
   "time": 100

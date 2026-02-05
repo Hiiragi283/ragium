@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.recipe.HTViewRecipeInput
+import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
@@ -34,13 +34,13 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
     //    Processing    //
 
     override fun createRecipeComponent(): HTRecipeComponent<*, *> =
-        object : RecipeComponent<HTSolidifyingRecipe>(RagiumRecipeTypes.SOLIDIFYING) {
+        object : RecipeComponent<HTItemAndFluidRecipeInput, HTSolidifyingRecipe>(RagiumRecipeTypes.SOLIDIFYING) {
             private val inputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
 
             override fun extractInput(
                 level: ServerLevel,
                 pos: BlockPos,
-                input: HTViewRecipeInput,
+                input: HTItemAndFluidRecipeInput,
                 recipe: HTSolidifyingRecipe,
             ) {
                 inputHandler.consume(recipe.fluidIngredient)
@@ -50,11 +50,8 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
                 playSound(SoundEvents.FIRE_EXTINGUISH)
             }
 
-            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
-                items += catalystHandler
-
-                fluids += inputHandler
-            }
+            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
+                createInput(catalystHandler, inputHandler)
         }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.solidifier

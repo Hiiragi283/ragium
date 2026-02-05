@@ -11,9 +11,9 @@ import net.minecraft.world.level.block.state.BlockState
 class HTCreativeTankBlockEntity(pos: BlockPos, state: BlockState) : HTTankBlockEntity(RagiumBlockEntityTypes.CREATIVE_TANK, pos, state) {
     private var fluid: HTFluidResourceType? = null
 
-    override fun createTank(listener: HTContentListener): HTMutableFluidTank = CreativeFluidTankN()
+    override fun createTank(listener: HTContentListener): HTMutableFluidTank = CreativeFluidTank()
 
-    private inner class CreativeFluidTankN :
+    private inner class CreativeFluidTank :
         HTMutableFluidTank(),
         HTContentListener.Empty,
         HTValueSerializable.Empty {

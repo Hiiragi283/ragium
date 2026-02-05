@@ -1,6 +1,9 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.recipe.HTViewRecipeInput
+import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
+import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.core.api.recipe.input.HTViewRecipeInput
 import hiiragi283.core.common.registry.HTDeferredRecipeType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
@@ -17,8 +20,7 @@ import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-
-typealias HTDeferredViewRecipeType<RECIPE> = HTDeferredRecipeType<HTViewRecipeInput, RECIPE>
+import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeTypes {
     @JvmField
@@ -26,46 +28,46 @@ object RagiumRecipeTypes {
 
     // Machine - Basic
     @JvmField
-    val ALLOYING: HTDeferredViewRecipeType<HTAlloyingRecipe> = REGISTER.registerType(RagiumConst.ALLOYING)
+    val ALLOYING: HTDeferredRecipeType<HTShapelessRecipeInput, HTAlloyingRecipe> = REGISTER.registerType(RagiumConst.ALLOYING)
 
     @JvmField
-    val CRUSHING: HTDeferredViewRecipeType<HTCrushingRecipe> = REGISTER.registerType(RagiumConst.CRUSHING)
+    val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTCrushingRecipe> = REGISTER.registerType(RagiumConst.CRUSHING)
 
     @JvmField
-    val CUTTING: HTDeferredViewRecipeType<HTCuttingRecipe> = REGISTER.registerType(RagiumConst.CUTTING)
+    val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTCuttingRecipe> = REGISTER.registerType(RagiumConst.CUTTING)
 
     @JvmField
-    val PRESSING: HTDeferredViewRecipeType<HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
+    val PRESSING: HTDeferredRecipeType<HTViewRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
 
     // Machine - Heat
     @JvmField
-    val MELTING: HTDeferredViewRecipeType<HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
+    val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
 
     @JvmField
-    val PYROLYZING: HTDeferredViewRecipeType<HTPyrolyzingRecipe> = REGISTER.registerType(RagiumConst.PYROLYZING)
+    val PYROLYZING: HTDeferredRecipeType<SingleRecipeInput, HTPyrolyzingRecipe> = REGISTER.registerType(RagiumConst.PYROLYZING)
 
     @JvmField
-    val REFINING: HTDeferredViewRecipeType<HTRefiningRecipe> = REGISTER.registerType(RagiumConst.REFINING)
+    val REFINING: HTDeferredRecipeType<HTSingleFluidRecipeInput, HTRefiningRecipe> = REGISTER.registerType(RagiumConst.REFINING)
 
     @JvmField
-    val SOLIDIFYING: HTDeferredViewRecipeType<HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
+    val SOLIDIFYING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
 
     // Machine - Chemical
     @JvmField
-    val MIXING: HTDeferredViewRecipeType<HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
+    val MIXING: HTDeferredRecipeType<HTViewRecipeInput, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
 
     @JvmField
-    val WASHING: HTDeferredViewRecipeType<HTWashingRecipe> = REGISTER.registerType(RagiumConst.WASHING)
+    val WASHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTWashingRecipe> = REGISTER.registerType(RagiumConst.WASHING)
 
     // Machine - Matter
 
     // Device - Basic
     @JvmField
-    val PLANTING: HTDeferredViewRecipeType<HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
+    val PLANTING: HTDeferredRecipeType<HTViewRecipeInput, HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
 
     // Device - Advanced
 
     // Device - Enchanting
     @JvmField
-    val ENCHANTING: HTDeferredViewRecipeType<HTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
+    val ENCHANTING: HTDeferredRecipeType<HTViewRecipeInput, HTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
 }

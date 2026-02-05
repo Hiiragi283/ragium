@@ -1,7 +1,11 @@
 package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.serialization.value.HTValueSerializable
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.api.serialization.value.read
+import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.HTMutableItemSlot
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -11,12 +15,11 @@ import net.minecraft.world.level.block.state.BlockState
 class HTCreativeCrateBlockEntity(pos: BlockPos, state: BlockState) : HTCrateBlockEntity(RagiumBlockEntityTypes.CREATIVE_CRATE, pos, state) {
     private var item: HTItemResourceType? = null
 
-    override fun createSlot(listener: HTContentListener): HTMutableItemSlot = CreativeItemSlotN()
+    override fun createSlot(listener: HTContentListener): HTMutableItemSlot = CreativeItemSlot()
 
-    private inner class CreativeItemSlotN :
+    private inner class CreativeItemSlot :
         HTMutableItemSlot(),
-        HTContentListener.Empty,
-        HTValueSerializable.Empty {
+        HTContentListener.Empty {
         override fun setResource(resource: HTItemResourceType?) {
             item = resource
         }
@@ -30,5 +33,13 @@ class HTCreativeCrateBlockEntity(pos: BlockPos, state: BlockState) : HTCrateBloc
         override fun getCapacity(resource: HTItemResourceType?): Int = Int.MAX_VALUE
 
         override fun isValid(resource: HTItemResourceType): Boolean = false
+
+        override fun serialize(output: HTValueOutput) {
+            output.write(HTConst.ITEM, HTItemResourceType.CODEC, item)
+        }
+
+        override fun deserialize(input: HTValueInput) {
+            item = input.read(HTConst.ITEM, HTItemResourceType.CODEC)
+        }
     }
 }

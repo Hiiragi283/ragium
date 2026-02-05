@@ -104,7 +104,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         if (!event.isPresentTag(prefix, entry)) return
         // 素材のプロパティから完成品を取得
         val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
-        val dust: Item = event.getFirstHolder(crushedPrefix, entry)?.value() ?: return
+        val dust: ItemLike = event.getFirstHolder(crushedPrefix, entry) ?: return
         // プレフィックスのスケールから個数を算出
         val (outputCount: Int, inputCount: Int) = prefix.getScaledAmount(1, entry)
         // レシピを登録
@@ -125,7 +125,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 加工の前後でタグが一致する場合はパス
         if (inputTag == crushedPrefix.itemTagKey(entry)) return
         // 完成品を取得
-        val dust: Item = event.getFirstHolder(crushedPrefix, entry)?.value() ?: return
+        val dust: ItemLike = event.getFirstHolder(crushedPrefix, entry) ?: return
         // レシピを登録
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(inputTag)
@@ -139,7 +139,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 材料が存在するか判定
         if (!event.isPresentTag(prefix, entry)) return
         // 完成品を取得
-        val crushedOre: Item = event.getFirstHolder(CommonTagPrefixes.CRUSHED_ORE, entry)?.value() ?: return
+        val crushedOre: ItemLike = event.getFirstHolder(CommonTagPrefixes.CRUSHED_ORE, entry) ?: return
         // レシピを登録
         HTItemToChancedRecipeBuilder.crushing(output) {
             // 材料
@@ -163,7 +163,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 材料が存在するか判定
         if (!event.isPresentTag(CommonTagPrefixes.BLOCK, entry)) return
         // 完成品を取得
-        val plate: Item = event.getFirstHolder(CommonTagPrefixes.PLATE, entry)?.value() ?: return
+        val plate: ItemLike = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
         // レシピを登録
         HTItemToChancedRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.BLOCK, entry)
@@ -291,7 +291,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 加工の前後でタグが一致する場合はパス
         if (inputTag == prefix.itemTagKey(entry)) return
         // 完成品を取得
-        val result: Item = event.getFirstHolder(prefix, entry)?.value() ?: return
+        val result: ItemLike = event.getFirstHolder(prefix, entry) ?: return
         // プレフィックスのスケールから個数を算出
         val (inputCount: Int, outputCount: Int) = prefix.getScaledAmount(1, entry)
         // レシピを登録
@@ -331,7 +331,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
         if (!event.isPresentTag(crushedPrefix, entry)) return
         // 完成品を取得
-        val resultItem: Item = event.getFirstHolder(prefix, entry)?.value() ?: return
+        val resultItem: ItemLike = event.getFirstHolder(prefix, entry) ?: return
         // レシピを登録
         HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(crushedPrefix, entry)
@@ -348,7 +348,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
         if (!event.isPresentTag(crushedPrefix, entry)) return
         // 完成品を取得
-        val dough: Item = event.getFirstHolder(CommonTagPrefixes.DOUGH, entry)?.value() ?: return
+        val dough: ItemLike = event.getFirstHolder(CommonTagPrefixes.DOUGH, entry) ?: return
         // レシピを登録
         HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(crushedPrefix, entry)
@@ -372,7 +372,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // プレフィックスと素材のプロパティから液体量を算出
         val fluidAmount: Int = prefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
         // レシピを登録
-        val resultItem: Item = event.getFirstHolder(prefix, entry)?.value() ?: return
+        val resultItem: ItemLike = event.getFirstHolder(prefix, entry) ?: return
         HTFluidWithItemRecipeBuilder.solidifying(output) {
             fluidIngredient = inputCreator.create(molten, fluidAmount)
             itemIngredient = inputCreator.create(moldType)
@@ -388,7 +388,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 材料が存在するか判定
         if (!event.isPresentTag(CommonTagPrefixes.CRUSHED_ORE, entry)) return
         // 完成品を取得
-        val dust: Item = event.getFirstHolder(CommonTagPrefixes.DUST, entry)?.value() ?: return
+        val dust: ItemLike = event.getFirstHolder(CommonTagPrefixes.DUST, entry) ?: return
         // レシピを登録
         HTWashingRecipeBuilder.create(output) {
             // 材料

@@ -28,7 +28,7 @@ class HTItemToFluidEmiRecipe(category: HTEmiRecipeCategory, holder: RecipeHolder
 
     override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(time = recipe.time)
-        widgets.addBurning(getPosition(1.5), getPosition(2), recipe.time)
+        widgets.addBurning(getPosition(1.5), getPosition(1.5), recipe.time)
         // input
         widgets.addSlot(input(0), getPosition(1.5), getPosition(0.5), HTBackgroundType.INPUT)
         // output

@@ -21,19 +21,19 @@ abstract class HTChancedRecipeBuilder(prefix: String) : HTProcessingRecipeBuilde
 
         @JvmName("addResult")
         operator fun plusAssign(result: HTItemResult) {
-            this.plusAssign(HTChancedItemResult(result, Fraction.ONE))
+            this.plusAssign(HTChancedItemResult(result, Fraction.ONE, null)) // TODO
         }
 
         @JvmName("addResult")
         operator fun plusAssign(pair: Pair<HTItemResult, Float>) {
             val (result: HTItemResult, chance: Float) = pair
-            this.plusAssign(HTChancedItemResult(result, chance.toFraction()))
+            this.plusAssign(HTChancedItemResult(result, chance.toFraction(), null)) // TODO
         }
 
         @JvmName("addResultWithFraction")
         operator fun plusAssign(pair: Pair<HTItemResult, Fraction>) {
             val (result: HTItemResult, chance: Fraction) = pair
-            this.plusAssign(HTChancedItemResult(result, chance))
+            this.plusAssign(HTChancedItemResult(result, chance, null)) // TODO
         }
 
         @JvmName("addResult")

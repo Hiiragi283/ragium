@@ -4,7 +4,8 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTViewRecipeInput
+import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -35,7 +36,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // progress
         widgetHolder += HTProgressWidget.createArrow(
             recipeComponent.fractionSlot,
-            HTSlotHelper.getSlotPosX(5),
+            HTSlotHelper.getSlotPosX(4.5),
             HTSlotHelper.getSlotPosY(1),
         )
         // slots
@@ -43,7 +44,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->
                 HTItemSlotWidget(
                     slot,
-                    HTSlotHelper.getSlotPosX(index + 1.5),
+                    HTSlotHelper.getSlotPosX(index + 1),
                     HTSlotHelper.getSlotPosY(0.5),
                     HTBackgroundType.INPUT,
                 )
@@ -54,12 +55,12 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent(): RecipeComponent<HTAlloyingRecipe> =
-        object : RecipeComponent<HTAlloyingRecipe>(RagiumRecipeTypes.ALLOYING, this) {
+    override fun createRecipeComponent(): RecipeComponent<*, *> =
+        object : RecipeComponent<HTShapelessRecipeInput, HTAlloyingRecipe>(RagiumRecipeTypes.ALLOYING, this) {
             override fun extractInput(
                 level: ServerLevel,
                 pos: BlockPos,
-                input: HTViewRecipeInput,
+                input: HTShapelessRecipeInput,
                 recipe: HTAlloyingRecipe,
             ) {
                 HTShapelessRecipeHelper.shapelessConsume(recipe.ingredients, inputSlots)
@@ -69,8 +70,11 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
                 playSound(SoundEvents.FIRE_EXTINGUISH)
             }
 
-            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? =
-                HTViewRecipeInput.create { items += inputSlots }
+            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTShapelessRecipeInput?  {
+                val map: Map<HTItemResourceType, Int> = HTShapelessRecipeInput.createMap(inputSlots)
+                if (map.isEmpty()) return null
+                return HTShapelessRecipeInput(map)
+            }
         }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.alloySmelter

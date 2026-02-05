@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.data.recipe
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.recipe.HTProcessingRecipe
-import hiiragi283.core.api.recipe.HTViewProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
@@ -64,11 +63,11 @@ class HTSingleRecipeBuilder<ING : Any, RES : Any>(
 
     override fun getPrimalId(): ResourceLocation = idFactory(result)
 
-    override fun createRecipe(): HTViewProcessingRecipe = factory.create(ingredient, result, subParameters())
+    override fun createRecipe(): HTProcessingRecipe<*> = factory.create(ingredient, result, subParameters())
 
     //    Factory    //
 
-    fun interface Factory<ING : Any, RES : Any, RECIPE : HTViewProcessingRecipe> {
+    fun interface Factory<ING : Any, RES : Any, RECIPE : HTProcessingRecipe<*>> {
         fun create(ingredient: ING, result: RES, parameters: HTProcessingRecipe.SubParameters): RECIPE
     }
 }

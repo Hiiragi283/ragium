@@ -7,10 +7,14 @@ import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.PotionContents
+import kotlin.jvm.optionals.getOrNull
 
 class HTPotionDropItem(properties: Properties) :
     Item(properties),
@@ -25,6 +29,17 @@ class HTPotionDropItem(properties: Properties) :
             .get(DataComponents.POTION_CONTENTS)
             ?.addPotionTooltip(tooltips::add, 1f, context.tickRate())
     }
+
+    override fun getCreatorModId(itemStack: ItemStack): String? = itemStack
+        .getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
+        .potion()
+        .flatMap(Holder<Potion>::unwrapKey)
+        .map(ResourceKey<Potion>::location)
+        .map(ResourceLocation::getNamespace)
+        .getOrNull()
+        ?: super.getCreatorModId(itemStack)
+
+    //    HTSubCreativeTabContents    //
 
     override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
         for (holder: Holder<Potion> in context.provider.lookupOrThrow(Registries.POTION).listElements()) {

@@ -1,8 +1,8 @@
 {
   "type": "ragium:pyrolyzing",
   "fluid_result": {
-    "id": "ragium:creosote",
-    "tag": "c:creosote"
+    "amount": 500,
+    "id": "ragium:creosote"
   },
   "ingredient": {
     "amount": 8,

@@ -6,8 +6,7 @@
   },
   "result": {
     "amount": 500,
-    "id": "ragium:naphtha",
-    "tag": "c:naphtha"
+    "id": "ragium:naphtha"
   },
   "time": 200
 }

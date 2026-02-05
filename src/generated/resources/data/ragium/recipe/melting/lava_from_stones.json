@@ -6,8 +6,7 @@
   ],
   "result": {
     "amount": 125,
-    "id": "minecraft:lava",
-    "tag": "c:lava"
+    "id": "minecraft:lava"
   },
   "time": 600
 }

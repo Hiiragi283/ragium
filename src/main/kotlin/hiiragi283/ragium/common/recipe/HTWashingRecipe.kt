@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.HTViewRecipeInput
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
@@ -18,7 +18,7 @@ class HTWashingRecipe(
     result: HTItemResult,
     extraResults: List<HTChancedItemResult>,
     parameters: SubParameters,
-) : HTChancedRecipe(result, extraResults, parameters) {
+) : HTChancedRecipe<HTItemAndFluidRecipeInput>(result, extraResults, parameters) {
     constructor(
         pair: Pair<HTItemIngredient, HTFluidIngredient>,
         result: HTItemResult,
@@ -32,8 +32,8 @@ class HTWashingRecipe(
         parameters,
     )
 
-    override fun matches(input: HTViewRecipeInput, level: Level): Boolean =
-        itemIngredient.test(input.getItemView(0)) && fluidIngredient.test(input.getFluidView(0))
+    override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean =
+        itemIngredient.test(input.item) && fluidIngredient.test(input.fluid)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.WASHING
 
