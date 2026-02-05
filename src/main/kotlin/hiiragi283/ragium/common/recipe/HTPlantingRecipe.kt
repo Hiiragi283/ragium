@@ -6,9 +6,7 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTViewRecipeInput
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.toResource
-import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.HolderLookup
@@ -34,11 +32,11 @@ class HTPlantingRecipe(
     fun getResultSeed(provider: HolderLookup.Provider): ItemStack = seedResult.getStackOrEmpty(provider)
 
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
-        val bool1: Boolean = seedIngredient.testOnlyType(input.getItemAt(0))
-        val bool2: Boolean = soil.testOnlyType(input.getItemAt(1))
-        val (resource: HTFluidResourceType, amount: Int) = input.getFluidAt(0)
-        val bool3: Boolean = RagiumDataMapTypes.getFluidFertilizer(resource) != null && amount >= FLUID_AMOUNT
-        return bool1 && bool2 && bool3
+        val bool1: Boolean = seedIngredient.testOnlyType(input.getItem(0))
+        val bool2: Boolean = soil.testOnlyType(input.getItem(1))
+        // val (resource: HTFluidResourceType, amount: Int) = input.getFluidAt(0)
+        // val bool3: Boolean = RagiumDataMapTypes.getFluidFertilizer(resource) != null && amount >= FLUID_AMOUNT
+        return bool1 && bool2
     }
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = crop.getStackOrEmpty(registries)

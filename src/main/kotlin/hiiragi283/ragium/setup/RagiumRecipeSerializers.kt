@@ -101,6 +101,7 @@ object RagiumRecipeSerializers {
             HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTPressingRecipe::ingredient),
             HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTPressingRecipe::catalyst),
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTPressingRecipe::result),
+            BiCodec.BOOL.optionalFieldOf("copy_component", false).forGetter(HTPressingRecipe::copyComponent),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTPressingRecipe::parameters),
             ::HTPressingRecipe,
         ),

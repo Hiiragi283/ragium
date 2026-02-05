@@ -1,0 +1,10 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": "minecraft:yellow_banner",
+  "copy_component": true,
+  "ingredient": "minecraft:yellow_banner",
+  "result": {
+    "id": "minecraft:yellow_banner"
+  },
+  "time": 200
+}

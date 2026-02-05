@@ -16,13 +16,11 @@ class HTPressingRecipe(
     val ingredient: HTItemIngredient,
     val catalyst: HTItemIngredient,
     val result: HTItemResult,
+    val copyComponent: Boolean,
     parameters: SubParameters,
 ) : HTProcessingRecipe<HTViewRecipeInput>(parameters) {
-    constructor(pair: Pair<HTItemIngredient, HTItemIngredient>, result: HTItemResult, parameters: SubParameters) :
-        this(pair.first, pair.second, result, parameters)
-
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
-        val bool1: Boolean = ingredient.test(input.getItemAt(0))
+        val bool1: Boolean = ingredient.test(input.getItem(0))
         val bool2: Boolean = input.catalyst?.let(catalyst::testOnlyType) ?: false
         return bool1 && bool2
     }

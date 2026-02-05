@@ -45,6 +45,7 @@ object RagiumConst {
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
     const val PRESSING = "pressing"
+    const val PRINTING = "printing"
 
     // Heat
     const val MELTING = "melting"

@@ -74,7 +74,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         }
 
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTShapelessRecipeInput? {
-            val map: Map<HTItemResourceType, Int> = HTShapelessRecipeInput.createMap(inputSlots)
+            val map: Map<HTItemResourceType, Int> = HTShapelessRecipeHelper.createMap(inputSlots)
             if (map.isEmpty()) return null
             return HTShapelessRecipeInput(map)
         }

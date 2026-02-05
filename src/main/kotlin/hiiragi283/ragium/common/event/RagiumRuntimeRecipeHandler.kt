@@ -24,6 +24,7 @@ import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
@@ -295,8 +296,9 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // プレフィックスのスケールから個数を算出
         val (inputCount: Int, outputCount: Int) = prefix.getScaledAmount(1, entry)
         // レシピを登録
-        HTSingleRecipeBuilder.pressing(output) {
-            this.ingredient = inputCreator.create(inputTag, inputCount) to inputCreator.create(moldType)
+        HTPressingRecipeBuilder.pressing(output) {
+            this.top = inputCreator.create(inputTag, inputCount)
+            this.bottom = inputCreator.create(moldType)
             this.result = resultCreator.create(result, outputCount)
             this.recipeId suffix "_from_${inputTag.location().path}"
         }

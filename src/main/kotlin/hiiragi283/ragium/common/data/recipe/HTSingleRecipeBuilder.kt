@@ -6,12 +6,10 @@ import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
-import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.minecraft.core.Holder
 import net.minecraft.data.recipes.RecipeOutput
@@ -40,15 +38,6 @@ class HTSingleRecipeBuilder<ING : Any, RES : Any>(
         @JvmStatic
         inline fun melting(output: RecipeOutput, builderAction: HTSingleRecipeBuilder<HTItemIngredient, HTFluidResult>.() -> Unit) {
             HTSingleRecipeBuilder(RagiumConst.MELTING, ::HTMeltingRecipe, HTFluidResult::getId).apply(builderAction).save(output)
-        }
-
-        @HTBuilderMarker
-        @JvmStatic
-        inline fun pressing(
-            output: RecipeOutput,
-            builderAction: HTSingleRecipeBuilder<Pair<HTItemIngredient, HTItemIngredient>, HTItemResult>.() -> Unit,
-        ) {
-            HTSingleRecipeBuilder(RagiumConst.PRESSING, ::HTPressingRecipe, HTItemResult::getId).apply(builderAction).save(output)
         }
 
         @HTBuilderMarker

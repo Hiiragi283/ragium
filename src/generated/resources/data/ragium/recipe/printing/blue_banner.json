@@ -1,0 +1,10 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": "minecraft:blue_banner",
+  "copy_component": true,
+  "ingredient": "minecraft:blue_banner",
+  "result": {
+    "id": "minecraft:blue_banner"
+  },
+  "time": 200
+}

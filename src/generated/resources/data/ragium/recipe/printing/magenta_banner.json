@@ -1,0 +1,10 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": "minecraft:magenta_banner",
+  "copy_component": true,
+  "ingredient": "minecraft:magenta_banner",
+  "result": {
+    "id": "minecraft:magenta_banner"
+  },
+  "time": 200
+}

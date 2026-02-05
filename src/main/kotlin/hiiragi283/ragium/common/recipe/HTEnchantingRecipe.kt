@@ -43,9 +43,9 @@ class HTEnchantingRecipe(val ingredient: HTItemIngredient, val enchantments: Ite
     val expIngredient: HTFluidIngredient by lazy { createExpIngredient(enchantments) }
 
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
-        val bool1: Boolean = expIngredient.test(input.getFluidAt(0))
+        val bool1: Boolean = expIngredient.test(input.getFluid(0))
         val bool2: Boolean = input.getItem(0).`is`(Items.BOOK)
-        val bool3: Boolean = ingredient.test(input.getItemAt(1))
+        val bool3: Boolean = ingredient.test(input.getItem(1))
         return bool1 && bool2 && bool3
     }
 

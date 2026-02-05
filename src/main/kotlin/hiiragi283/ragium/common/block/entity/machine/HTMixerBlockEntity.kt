@@ -4,7 +4,8 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.input.HTViewRecipeInput
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
@@ -14,6 +15,7 @@ import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -65,14 +67,14 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
     private inner class RecipeComponent :
-        HTEnergizedRecipeComponent.Cached<HTViewRecipeInput, HTMixingRecipe>(RagiumRecipeTypes.MIXING, this) {
+        HTEnergizedRecipeComponent.Cached<HTChemicalRecipeInput, HTMixingRecipe>(RagiumRecipeTypes.MIXING, this) {
         private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
         private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
         override fun insertOutput(
             level: ServerLevel,
             pos: BlockPos,
-            input: HTViewRecipeInput,
+            input: HTChemicalRecipeInput,
             recipe: HTMixingRecipe,
         ) {
             val access: RegistryAccess = level.registryAccess()
@@ -83,7 +85,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
         override fun extractInput(
             level: ServerLevel,
             pos: BlockPos,
-            input: HTViewRecipeInput,
+            input: HTChemicalRecipeInput,
             recipe: HTMixingRecipe,
         ) {
             val ingredients: Ior<List<HTItemIngredient>, List<HTFluidIngredient>> = recipe.ingredients
@@ -95,16 +97,18 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
             playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE)
         }
 
-        override fun canProgressRecipe(level: ServerLevel, input: HTViewRecipeInput, recipe: HTMixingRecipe): Boolean {
+        override fun canProgressRecipe(level: ServerLevel, input: HTChemicalRecipeInput, recipe: HTMixingRecipe): Boolean {
             val access: RegistryAccess = level.registryAccess()
             val bool1: Boolean = itemOutputHandler.canInsert(recipe.getResultItem(access))
             val bool2: Boolean = fluidOutputHandler.canInsert(recipe.getResultFluid(access))
             return bool1 && bool2
         }
 
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
-            inputSlots.forEach(this::plusAssign)
-            inputTanks.forEach(this::plusAssign)
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTChemicalRecipeInput? {
+            val itemMap: Map<HTItemResourceType, Int> = HTShapelessRecipeHelper.createMap(inputSlots)
+            val fluidMap: Map<HTFluidResourceType, Int> = HTShapelessRecipeHelper.createMap(inputTanks)
+            if (itemMap.isEmpty() && fluidMap.isEmpty()) return null
+            return HTChemicalRecipeInput(itemMap, fluidMap)
         }
     }
 
