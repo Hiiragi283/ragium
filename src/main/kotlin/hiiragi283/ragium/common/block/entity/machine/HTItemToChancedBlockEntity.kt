@@ -54,7 +54,7 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
     inner class RecipeComponent<RECIPE : HTItemToChancedRecipe>(
         finder: HTRecipeFinder<SingleRecipeInput, RECIPE>,
         private val sound: SoundEvent,
-    ) : HTChancedBlockEntity.RecipeComponent<SingleRecipeInput, RECIPE>(finder, this) {
+    ) : ChancedRecipeComponent<SingleRecipeInput, RECIPE>(finder, this) {
         private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
 
         override fun extractInput(

@@ -61,7 +61,7 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Processing    //
 
-    abstract inner class RecipeComponent<INPUT : RecipeInput, RECIPE : HTChancedRecipe<INPUT>>(
+    abstract inner class ChancedRecipeComponent<INPUT : RecipeInput, RECIPE : HTChancedRecipe<INPUT>>(
         finder: HTRecipeFinder<INPUT, RECIPE>,
         owner: Energized,
     ) : HTEnergizedRecipeComponent.Cached<INPUT, RECIPE>(finder, owner) {

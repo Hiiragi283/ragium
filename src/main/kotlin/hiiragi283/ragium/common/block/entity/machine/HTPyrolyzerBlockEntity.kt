@@ -9,6 +9,7 @@ import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
+import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -46,9 +47,9 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent() = RecipeComponent()
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
-    inner class RecipeComponent :
+    private inner class RecipeComponent :
         HTEnergizedRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
         private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
         private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
@@ -71,7 +72,7 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
             input: SingleRecipeInput,
             recipe: HTPyrolyzingRecipe,
         ) {
-            inputHandler.consume(recipe.ingredient.getRequiredAmount())
+            inputHandler.consume(recipe.ingredient)
         }
 
         override fun applyEffect() {

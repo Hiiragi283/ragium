@@ -72,7 +72,7 @@ object RagiumEmiRecipeCategories {
     val PYROLYZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     @JvmField
-    val REFINING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.REFINING, Items.BUCKET)
+    val REFINING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     @JvmField
     val SOLIDIFYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SOLIDIFYING, RagiumBlocks.SOLIDIFIER)
@@ -82,7 +82,7 @@ object RagiumEmiRecipeCategories {
     val MIXING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
-    val WASHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.WASHING, RagiumBlocks.MIXER)
+    val WASHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
 
     // val REACTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.REACTING, RagiumBlocks.MIXER)
 

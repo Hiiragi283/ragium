@@ -35,11 +35,12 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
 
     MELTER("description", RagiumConst.MELTER),
     PYROLYZER("description", RagiumConst.PYROLYZER),
-    REFINERY("description", "refinery"),
+    REFINERY("description", RagiumConst.REFINERY),
     SOLIDIFIER("description", RagiumConst.SOLIDIFIER),
 
     BREWERY("description", RagiumConst.BREWERY),
-    MIXER("description", "mixer"),
+    MIXER("description", RagiumConst.MIXER),
+    WASHER("description", RagiumConst.WASHER),
 
     // Blocks - Device
     FERMENTER("description", RagiumConst.FERMENTER),

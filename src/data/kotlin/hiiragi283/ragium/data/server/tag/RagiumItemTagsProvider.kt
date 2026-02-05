@@ -88,8 +88,11 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             // Heat
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.PYROLYZER)
+            .add(RagiumBlocks.REFINERY)
+            .add(RagiumBlocks.SOLIDIFIER)
             // Chemical
             .add(RagiumBlocks.MIXER)
+            .add(RagiumBlocks.WASHER)
         factory
             .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
             // Basic
@@ -122,7 +125,9 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             // Machine
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.MIXER)
+            .add(RagiumBlocks.WASHER)
             .add(RagiumBlocks.PYROLYZER)
+            .add(RagiumBlocks.REFINERY)
             .add(RagiumBlocks.SOLIDIFIER)
             // Device
             .add(RagiumBlocks.FERMENTER)

@@ -19,6 +19,7 @@ object RagiumConst {
     // Chemical
     const val BREWERY = "brewery"
     const val MIXER = "mixer"
+    const val WASHER = "washer"
 
     // Matter
     const val ENCHANTER = "enchanter"

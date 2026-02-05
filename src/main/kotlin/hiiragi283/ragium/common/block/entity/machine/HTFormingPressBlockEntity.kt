@@ -29,28 +29,29 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> =
-        object : RecipeComponent<HTViewRecipeInput, HTPressingRecipe>(RagiumRecipeTypes.PRESSING) {
-            private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
-            override fun extractInput(
-                level: ServerLevel,
-                pos: BlockPos,
-                input: HTViewRecipeInput,
-                recipe: HTPressingRecipe,
-            ) {
-                inputHandler.consume(recipe.ingredient)
-            }
+    private inner class RecipeComponent : SingleRecipeComponent<HTViewRecipeInput, HTPressingRecipe>(RagiumRecipeTypes.PRESSING) {
+        private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
 
-            override fun applyEffect() {
-                playSound(SoundEvents.ANVIL_LAND)
-            }
-
-            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
-                this += inputHandler
-                catalyst = catalystHandler.getResource()
-            }
+        override fun extractInput(
+            level: ServerLevel,
+            pos: BlockPos,
+            input: HTViewRecipeInput,
+            recipe: HTPressingRecipe,
+        ) {
+            inputHandler.consume(recipe.ingredient)
         }
+
+        override fun applyEffect() {
+            playSound(SoundEvents.ANVIL_LAND)
+        }
+
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
+            this += inputHandler
+            catalyst = catalystHandler.getResource()
+        }
+    }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.formingPress
 }

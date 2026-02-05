@@ -25,9 +25,11 @@
     "ragium:ragi_crystal_block",
     "ragium:raginite_ore",
     "ragium:raw_raginite_block",
+    "ragium:refinery",
     "ragium:resonant_interface",
     "ragium:solidifier",
     "ragium:tank",
-    "ragium:universal_chest"
+    "ragium:universal_chest",
+    "ragium:washer"
   ]
 }

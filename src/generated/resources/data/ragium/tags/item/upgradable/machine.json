@@ -7,6 +7,9 @@
     "ragium:forming_press",
     "ragium:melter",
     "ragium:mixer",
-    "ragium:pyrolyzer"
+    "ragium:pyrolyzer",
+    "ragium:refinery",
+    "ragium:solidifier",
+    "ragium:washer"
   ]
 }

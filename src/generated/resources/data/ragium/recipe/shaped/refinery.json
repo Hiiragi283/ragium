@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:ingots/gold"
+      "tag": "c:ingots/advanced_ragi_alloy"
     },
     "B": {
-      "item": "ragium:tank"
+      "tag": "c:glass_blocks"
     },
     "C": {
-      "tag": "c:gears/diamond"
+      "tag": "c:gears/gold"
     },
     "D": {
       "tag": "c:ingots/steel"
@@ -22,6 +22,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:mixer"
+    "id": "ragium:refinery"
   }
 }

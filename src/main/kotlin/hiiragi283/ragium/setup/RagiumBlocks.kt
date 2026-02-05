@@ -95,6 +95,10 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
     @JvmField
+    val REFINERY: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY)
+
+    @JvmField
     val SOLIDIFIER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.SOLIDIFIER, RagiumTranslation.SOLIDIFIER)
 
@@ -102,6 +106,10 @@ object RagiumBlocks {
     @JvmField
     val MIXER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
+
+    @JvmField
+    val WASHER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.WASHER, RagiumTranslation.WASHER)
 
     // Matter
 

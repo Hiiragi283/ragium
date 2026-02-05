@@ -99,13 +99,29 @@ object RagiumConfig {
                 RagiumFluidConfigType.FIRST_INPUT,
             )
 
+            @JvmField
+            val refinery: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.REFINERY,
+                RagiumFluidConfigType.FIRST_INPUT,
+                RagiumFluidConfigType.FIRST_OUTPUT,
+            )
+
             // Chemical
             @JvmField
             val mixer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.MIXER,
                 RagiumFluidConfigType.FIRST_INPUT,
+                RagiumFluidConfigType.SECOND_INPUT,
                 RagiumFluidConfigType.FIRST_OUTPUT,
+            )
+
+            @JvmField
+            val washer: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.WASHER,
+                RagiumFluidConfigType.FIRST_INPUT,
             )
 
             // Matter

@@ -42,9 +42,11 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTBlockTagsProvider(R
 
             yield(RagiumBlocks.MELTER)
             yield(RagiumBlocks.PYROLYZER)
+            yield(RagiumBlocks.REFINERY)
             yield(RagiumBlocks.SOLIDIFIER)
 
             yield(RagiumBlocks.MIXER)
+            yield(RagiumBlocks.WASHER)
 
             yield(RagiumBlocks.FERMENTER)
             yield(RagiumBlocks.PLANTER)

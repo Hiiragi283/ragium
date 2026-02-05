@@ -118,10 +118,27 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
 
         heat(RagiumBlocks.MELTER) { it += Items.BLAST_FURNACE }
         heat(RagiumBlocks.PYROLYZER) { it += Items.NETHER_BRICKS }
+        heat(RagiumBlocks.REFINERY) { it += Tags.Items.GLASS_BLOCKS }
         heat(RagiumBlocks.SOLIDIFIER) { it += RagiumTags.Items.MOLDS }
 
         // Chemical
-        heat(RagiumBlocks.MIXER) { it += Items.CAULDRON }
+        fun chemical(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+            HTShapedRecipeBuilder.create(output) {
+                pattern(
+                    "AAA",
+                    "BCB",
+                    "DDD",
+                )
+                define('A') += CommonTagPrefixes.INGOT to VanillaMaterialKeys.GOLD
+                define('B').let(consumer)
+                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.DIAMOND
+                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+                resultStack += block
+            }
+        }
+
+        chemical(RagiumBlocks.MIXER) { it += RagiumBlocks.TANK }
+        chemical(RagiumBlocks.WASHER) { it += Items.CAULDRON }
 
         // Matter
     }
