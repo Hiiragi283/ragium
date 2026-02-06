@@ -1,0 +1,19 @@
+{
+  "type": "ragium:reacting",
+  "catalyst": "minecraft:blaze_powder",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:water"
+    }
+  ],
+  "fluid_result": [
+    {
+      "id": "ragium:sulfuric_acid"
+    }
+  ],
+  "item_ingredient": [
+    "#c:dusts/sulfur"
+  ],
+  "item_result": [],
+  "time": 200
+}

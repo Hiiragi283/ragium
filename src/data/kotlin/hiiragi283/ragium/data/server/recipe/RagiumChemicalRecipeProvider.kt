@@ -11,6 +11,7 @@ import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
@@ -168,5 +169,37 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     fun reacting() {
+        // 2x KNO3 + H2SO4 -> 2x HNO3 + K2SO4
+        HTReactingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER, 2)
+            fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID)
+            fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID, 2000)
+            recipeId suffix "_from_saltpeter"
+        }
+        // 3x H2 + N2 -> 2x NH3
+        HTReactingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.HYDROGEN, 3000)
+            fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN)
+            catalyst = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.IRON)
+            fluidResults += resultCreator.create(RagiumFluids.AMMONIA, 2000)
+        }
+        // NH3 + 2x O2 -> HNO3 + H2O
+        HTReactingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.NITRIC_ACID)
+            fluidIngredients += inputCreator.create(RagiumFluids.OXYGEN, 2000)
+            catalyst = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
+            fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID)
+            fluidResults += resultCreator.water()
+            recipeId suffix "_from_ammonia"
+        }
+
+        // S + H2O -> H2SO4
+        HTReactingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            fluidIngredients += inputCreator.water(1000)
+            catalyst = inputCreator.create(Items.BLAZE_POWDER)
+            fluidResults += resultCreator.create(RagiumFluids.SULFURIC_ACID)
+            recipeId suffix "_from_sulfur"
+        }
     }
 }

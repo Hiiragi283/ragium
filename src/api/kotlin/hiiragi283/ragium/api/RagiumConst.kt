@@ -61,6 +61,7 @@ object RagiumConst {
     // Chemical
     const val BREWING = "brewing"
     const val MIXING = "mixing"
+    const val REACTING = "reacting"
     const val WASHING = "washing"
 
     // Matter

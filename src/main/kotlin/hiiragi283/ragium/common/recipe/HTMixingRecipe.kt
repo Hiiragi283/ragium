@@ -1,11 +1,8 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.monad.Ior
-import hiiragi283.core.api.recipe.HTProcessingRecipe
-import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTComplexResult
-import hiiragi283.core.util.HTShapelessRecipeHelper
+import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
+import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -16,11 +13,8 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTMixingRecipe(
-    val ingredients: Ior<List<HTItemIngredient>, List<HTFluidIngredient>>,
-    val result: HTComplexResult,
-    parameters: SubParameters,
-) : HTProcessingRecipe<HTChemicalRecipeInput>(parameters) {
+class HTMixingRecipe(ingredients: HTChemicalIngredient, val result: HTComplexResult, parameters: SubParameters) :
+    HTChemicalRecipe(ingredients, parameters) {
     companion object {
         const val MAX_FLUID_INPUT = 2
         const val MAX_ITEM_INPUT = 3
@@ -29,15 +23,7 @@ class HTMixingRecipe(
     fun getResultFluid(provider: HolderLookup.Provider): FluidStack =
         result.getRight()?.getStackResult(provider)?.value() ?: FluidStack.EMPTY
 
-    override fun matches(input: HTChemicalRecipeInput, level: Level): Boolean = ingredients.fold(
-        { HTShapelessRecipeHelper.shapelessMatch(it, input.items).isNotEmpty() },
-        { HTShapelessRecipeHelper.shapelessMatch(it, input.fluids).isNotEmpty() },
-        { items: List<HTItemIngredient>, fluids: List<HTFluidIngredient> ->
-            val bool1: Boolean = HTShapelessRecipeHelper.shapelessMatch(items, input.items).isNotEmpty()
-            val bool2: Boolean = HTShapelessRecipeHelper.shapelessMatch(fluids, input.fluids).isNotEmpty()
-            bool1 && bool2
-        },
-    )
+    override fun matches(input: HTChemicalRecipeInput, level: Level): Boolean = matchIngredients(input)
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack =
         result.getLeft()?.getStackResult(registries)?.value() ?: ItemStack.EMPTY

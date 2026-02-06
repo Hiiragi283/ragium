@@ -1,9 +1,13 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": {
-    "fluids": "#c:water"
-  },
-  "item_ingredient": "minecraft:sponge",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:water"
+    }
+  ],
+  "item_ingredient": [
+    "minecraft:sponge"
+  ],
   "item_result": {
     "id": "minecraft:wet_sponge"
   },

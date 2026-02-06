@@ -1,10 +1,14 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": {
-    "amount": 810,
-    "fluids": "#c:molten_eldritch"
-  },
-  "item_ingredient": "#c:storage_blocks/amethyst",
+  "fluid_ingredient": [
+    {
+      "amount": 810,
+      "fluids": "#c:molten_eldritch"
+    }
+  ],
+  "item_ingredient": [
+    "#c:storage_blocks/amethyst"
+  ],
   "item_result": {
     "id": "minecraft:budding_amethyst"
   },

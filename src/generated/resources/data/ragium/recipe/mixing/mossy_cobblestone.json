@@ -1,10 +1,14 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": {
-    "amount": 250,
-    "fluids": "#c:water"
-  },
-  "item_ingredient": "#c:cobblestones/normal",
+  "fluid_ingredient": [
+    {
+      "amount": 250,
+      "fluids": "#c:water"
+    }
+  ],
+  "item_ingredient": [
+    "#c:cobblestones/normal"
+  ],
   "item_result": {
     "id": "minecraft:mossy_cobblestone"
   },

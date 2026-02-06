@@ -1,0 +1,23 @@
+{
+  "type": "ragium:reacting",
+  "catalyst": "minecraft:blaze_powder",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:water"
+    }
+  ],
+  "fluid_result": [
+    {
+      "amount": 250,
+      "id": "ragium:synthetic_gas"
+    }
+  ],
+  "item_ingredient": [
+    [
+      "#c:coal",
+      "#c:dusts/coal"
+    ]
+  ],
+  "item_result": [],
+  "time": 200
+}

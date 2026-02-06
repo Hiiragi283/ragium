@@ -1,10 +1,14 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": {
-    "amount": 360,
-    "fluids": "#c:molten_eldritch"
-  },
-  "item_ingredient": "minecraft:trial_key",
+  "fluid_ingredient": [
+    {
+      "amount": 360,
+      "fluids": "#c:molten_eldritch"
+    }
+  ],
+  "item_ingredient": [
+    "minecraft:trial_key"
+  ],
   "item_result": {
     "id": "minecraft:ominous_trial_key"
   },

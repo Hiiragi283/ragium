@@ -1,10 +1,14 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": {
-    "amount": 250,
-    "fluids": "#c:water"
-  },
-  "item_ingredient": "minecraft:glass_bottle",
+  "fluid_ingredient": [
+    {
+      "amount": 250,
+      "fluids": "#c:water"
+    }
+  ],
+  "item_ingredient": [
+    "minecraft:glass_bottle"
+  ],
   "item_result": {
     "components": {
       "minecraft:potion_contents": {

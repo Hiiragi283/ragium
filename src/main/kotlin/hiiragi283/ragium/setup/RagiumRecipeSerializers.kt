@@ -29,9 +29,12 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import hiiragi283.ragium.common.recipe.HTReactingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
+import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
+import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -177,18 +180,40 @@ object RagiumRecipeSerializers {
     )
 
     // Machine - Chemical
+    @JvmStatic
+    private fun chemIng(maxItem: Int, maxFluid: Int): MapBiCodec<RegistryFriendlyByteBuf, HTChemicalIngredient> = MapBiCodecs
+        .ior(
+            HTItemIngredient.CODEC.listOf(0, maxItem).optionalFieldOf(HTConst.ITEM_INGREDIENT),
+            HTFluidIngredient.CODEC.listOf(0, maxFluid).optionalFieldOf(HTConst.FLUID_INGREDIENT),
+        )
+
+    @JvmStatic
+    private fun chemRes(maxItem: Int, maxFluid: Int): MapBiCodec<RegistryFriendlyByteBuf, HTChemicalResult> = MapBiCodecs
+        .ior(
+            HTItemResult.CODEC.listOrElement(0, maxItem).optionalFieldOf(HTConst.ITEM_RESULT),
+            HTFluidResult.CODEC.listOrElement(0, maxFluid).optionalFieldOf(HTConst.FLUID_RESULT),
+        )
+
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MIXING,
         MapBiCodec.composite(
-            MapBiCodecs
-                .ior(
-                    HTItemIngredient.CODEC.listOrElement(0, HTMixingRecipe.MAX_ITEM_INPUT).optionalFieldOf(HTConst.ITEM_INGREDIENT),
-                    HTFluidIngredient.CODEC.listOrElement(0, HTMixingRecipe.MAX_FLUID_INPUT).optionalFieldOf(HTConst.FLUID_INGREDIENT),
-                ).forGetter(HTMixingRecipe::ingredients),
+            chemIng(HTMixingRecipe.MAX_ITEM_INPUT, HTMixingRecipe.MAX_FLUID_INPUT).forGetter(HTMixingRecipe::ingredients),
             COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTMixingRecipe::parameters),
             ::HTMixingRecipe,
+        ),
+    )
+
+    @JvmField
+    val REACTING: RecipeSerializer<HTReactingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.REACTING,
+        MapBiCodec.composite(
+            chemIng(HTReactingRecipe.MAX_ITEM_INPUT, HTReactingRecipe.MAX_FLUID_INPUT).forGetter(HTReactingRecipe::ingredients),
+            HTItemIngredient.UNSIZED_CODEC.optionalFieldOf(HTConst.CATALYST).forGetter { Optional.ofNullable(it.catalyst) },
+            chemRes(HTReactingRecipe.MAX_ITEM_OUTPUT, HTReactingRecipe.MAX_FLUID_OUTPUT).forGetter(HTReactingRecipe::results),
+            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTReactingRecipe::parameters),
+            ::HTReactingRecipe,
         ),
     )
 
@@ -217,7 +242,7 @@ object RagiumRecipeSerializers {
         MapBiCodec.composite(
             HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTCompressingRecipe::ingredient),
             BiCodecs.POSITIVE_INT.fieldOf("power").forGetter(HTCompressingRecipe::power),
-            HTItemIngredient.CODEC.optionalFieldOf(HTConst.CATALYST).forGetter { Optional.ofNullable(it.catalyst) },
+            HTItemIngredient.UNSIZED_CODEC.optionalFieldOf(HTConst.CATALYST).forGetter { Optional.ofNullable(it.catalyst) },
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCompressingRecipe::result),
             ::HTCompressingRecipe,
         ),

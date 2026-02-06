@@ -1,0 +1,25 @@
+{
+  "type": "ragium:reacting",
+  "catalyst": "#c:dusts/platinum",
+  "fluid_ingredient": [
+    {
+      "amount": 250,
+      "fluids": "#c:synthetic_gas"
+    },
+    {
+      "fluids": "#c:water"
+    }
+  ],
+  "fluid_result": [
+    {
+      "id": "ragium:carbon_dioxide"
+    },
+    {
+      "amount": 2000,
+      "id": "ragium:hydrogen"
+    }
+  ],
+  "item_ingredient": [],
+  "item_result": [],
+  "time": 200
+}

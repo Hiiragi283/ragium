@@ -8,9 +8,11 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPyrolyzingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.Items
 
 object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
@@ -60,13 +62,34 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 2000)
         }
         // Coal + Water -> Synthetic Gas
-        // _Synthetic Gas + H2O -> CO2 + 2x H2
+        HTReactingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
+            fluidIngredients += inputCreator.water(1000)
+            catalyst = inputCreator.create(Items.BLAZE_POWDER)
+            fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
+            recipeId suffix "_from_coal"
+        }
+        // Synthetic Gas + H2O -> CO2 + 2x H2
+        HTReactingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
+            fluidIngredients += inputCreator.water(1000)
+            catalyst = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
+            fluidResults += resultCreator.create(RagiumFluids.CARBON_DIOXIDE, 1000)
+            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 2000)
+            recipeId replace RagiumAPI.id("water_gas_shift_reaction")
+        }
 
         // Coal Dust + Residue Oil -> Synthetic Oil
         HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL)
             fluidIngredients += inputCreator.create(RagiumFluids.RESIDUE_OIL, 500)
             result += resultCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
+        }
+        // Synthetic Oil -> Naphtha
+        HTSingleRecipeBuilder.refining(output) {
+            ingredient = inputCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
+            result = resultCreator.create(RagiumFluids.NAPHTHA, 250)
+            recipeId suffix "_from_synthetic_oil"
         }
     }
 

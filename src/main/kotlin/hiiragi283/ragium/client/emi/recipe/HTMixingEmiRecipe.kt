@@ -2,27 +2,19 @@ package hiiragi283.ragium.client.emi.recipe
 
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.monad.Ior
-import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.emi.RagiumEmiTextures
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTMixingEmiRecipe(holder: RecipeHolder<HTMixingRecipe>) :
-    HTProcessingEmiRecipe<HTMixingRecipe>(RagiumEmiRecipeCategories.MIXING, holder) {
-    init {
-        val ingredients: Ior<List<HTItemIngredient>, List<HTFluidIngredient>> = recipe.ingredients
-        val items: List<HTItemIngredient> = ingredients.getLeft() ?: listOf()
-        for (i: Int in (0..<HTMixingRecipe.MAX_ITEM_INPUT)) {
-            addInput(items.getOrNull(i))
-        }
-        val fluids: List<HTFluidIngredient> = ingredients.getRight() ?: listOf()
-        for (i: Int in (0..<HTMixingRecipe.MAX_FLUID_INPUT)) {
-            addInput(fluids.getOrNull(i))
-        }
-
+    HTChemicalEmiRecipe<HTMixingRecipe>(
+        HTMixingRecipe.MAX_ITEM_INPUT,
+        HTMixingRecipe.MAX_FLUID_INPUT,
+        RagiumEmiRecipeCategories.MIXING,
+        holder,
+    ) {
+    override fun addOutputs() {
         addOutputs(recipe.result)
     }
 
