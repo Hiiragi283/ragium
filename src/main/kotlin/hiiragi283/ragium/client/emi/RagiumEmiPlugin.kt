@@ -21,6 +21,7 @@ import hiiragi283.core.api.registry.toLike
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTCompressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTEnchantingEmiRecipe
@@ -76,11 +77,11 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Chemical
             RagiumEmiRecipeCategories.MIXING,
             RagiumEmiRecipeCategories.WASHING,
-            // Device - Basic
+            // Device
+            RagiumEmiRecipeCategories.COMPRESSING,
+            RagiumEmiRecipeCategories.ENCHANTING,
             RagiumEmiRecipeCategories.FERMENTING,
             RagiumEmiRecipeCategories.PLANTING,
-            // Device - Enchanting
-            RagiumEmiRecipeCategories.ENCHANTING,
         ).forEach(::addCategory.partially1(registry))
 
         // Recipes
@@ -101,9 +102,9 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.WASHING, ::HTWashingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
-
+        addRegistryRecipes(registry, RagiumRecipeTypes.COMPRESSING, ::HTCompressingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.ENCHANTING, ::HTEnchantingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.PLANTING, ::HTPlantingEmiRecipe)
         // Misc
         registry.addWorkstation(VanillaEmiRecipeCategories.SMELTING, RagiumBlocks.ELECTRIC_FURNACE.toEmi())
 

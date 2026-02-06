@@ -95,6 +95,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.COMPRESSING, "爆縮")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")

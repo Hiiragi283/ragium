@@ -88,17 +88,16 @@ object RagiumEmiRecipeCategories {
 
     // Machine - Matter
 
-    // Device - Basic
+    // Device
+    @JvmField
+    val COMPRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.COMPRESSING, Items.TNT)
+
+    @JvmField
+    val ENCHANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 
     @JvmField
     val FERMENTING: HTEmiRecipeCategory = processor("Fermenting"::toText, RagiumAPI.id("fermenting"), RagiumBlocks.FERMENTER)
 
     @JvmField
     val PLANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
-
-    // Device - Advanced
-
-    // Device - Enchanting
-    @JvmField
-    val ENCHANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 }

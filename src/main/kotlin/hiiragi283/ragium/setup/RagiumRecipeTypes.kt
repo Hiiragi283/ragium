@@ -9,6 +9,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
@@ -62,13 +63,13 @@ object RagiumRecipeTypes {
 
     // Machine - Matter
 
-    // Device - Basic
+    // Device
     @JvmField
-    val PLANTING: HTDeferredRecipeType<HTViewRecipeInput, HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
+    val COMPRESSING: HTDeferredRecipeType<HTCompressingRecipe.Input, HTCompressingRecipe> = REGISTER.registerType(RagiumConst.COMPRESSING)
 
-    // Device - Advanced
-
-    // Device - Enchanting
     @JvmField
     val ENCHANTING: HTDeferredRecipeType<HTViewRecipeInput, HTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
+
+    @JvmField
+    val PLANTING: HTDeferredRecipeType<HTViewRecipeInput, HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
 }

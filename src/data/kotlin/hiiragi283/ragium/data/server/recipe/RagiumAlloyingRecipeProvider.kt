@@ -41,6 +41,22 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE))
             recipeId suffix "_from_coke"
         }
+        // Stainless
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.STAINLESS_STEEL, 9)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON), 6)
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.NICKEL), 2)
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.CHROMIUM))
+            time *= 3
+        }
+        // Stainless from Invar
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.STAINLESS_STEEL, 9)
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.INVAR), 6)
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.CHROMIUM))
+            time *= 3
+            recipeId suffix "_from_invar"
+        }
         // Invar
         HTAlloyingRecipeBuilder.create(output) {
             result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.INVAR, 3)

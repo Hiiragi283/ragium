@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
+import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.HCMaterialKeys
@@ -146,7 +147,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             itemIngredient = inputCreator.create(Tags.Items.GRAVELS)
             fluidIngredient = inputCreator.water(250)
             result = resultCreator.create(Items.FLINT)
-            chancedResults += resultCreator.create(Items.FLINT) to fraction(1, 3)
+            extraResults += HTChancedItemResult.create {
+                result = resultCreator.create(Items.FLINT)
+                chance = fraction(1, 3)
+            }
             time = 20 * 5
         }
     }

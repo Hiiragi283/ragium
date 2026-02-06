@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
+import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -28,14 +29,18 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.CROPS_BEETROOT)
             result = resultCreator.create(Items.SUGAR, 2)
-            chancedResults += resultCreator.create(RagiumItems.MOLASSES)
+            extraResults += HTChancedItemResult.create {
+                result = resultCreator.create(RagiumItems.MOLASSES)
+            }
             recipeId suffix "_from_beetroot"
         }
         // Sugar Cane -> Sugar + Molasses
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.CROPS_SUGAR_CANE)
             result = resultCreator.create(Items.SUGAR, 4)
-            chancedResults += resultCreator.create(RagiumItems.MOLASSES)
+            extraResults += HTChancedItemResult.create {
+                result = resultCreator.create(RagiumItems.MOLASSES)
+            }
             recipeId suffix "_from_cane"
         }
 
@@ -67,14 +72,20 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             result = resultCreator.create(Items.SAND, 2)
-            chancedResults += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER) to fraction(1, 4)
+            extraResults += HTChancedItemResult.create {
+                result = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER)
+                chance = fraction(1, 4)
+            }
             recipeId suffix "_from_sandstone"
         }
 
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.SANDSTONE_RED_BLOCKS)
             result = resultCreator.create(Items.RED_SAND, 2)
-            chancedResults += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER) to fraction(1, 4)
+            extraResults += HTChancedItemResult.create {
+                result = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER)
+                chance = fraction(1, 4)
+            }
             recipeId suffix "_from_sandstone"
         }
     }

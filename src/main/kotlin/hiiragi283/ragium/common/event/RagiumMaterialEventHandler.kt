@@ -6,6 +6,7 @@ import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.property.HTBlockLootFactory
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTFluidMaterialProperty
+import hiiragi283.core.api.material.property.HTMaterialLevel
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.HTMaterialTextureSet
 import hiiragi283.core.api.material.property.addBlockPrefixes
@@ -54,7 +55,8 @@ object RagiumMaterialEventHandler {
             setDefaultPart(HTDefaultPart.Prefixed.GEM)
             addBlockPrefixes(CommonTagPrefixes.BLOCK)
             addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM)
-            addExtraOreResult(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 1 / 4f)
+
+            addExtraOreResult(RagiumMaterialKeys.RAGINITE, 1 / 4f)
 
             setName("Ragi-Crystal", "ラギクリスタル")
             setTextureSet("diamond", HTMaterialTextureSet.SHINE)
@@ -62,18 +64,19 @@ object RagiumMaterialEventHandler {
             put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumMaterialKeys.RAGINITE.getId())
         }
         // Alloys
+        val alloySet = setOf(
+            CommonTagPrefixes.DUST,
+            CommonTagPrefixes.INGOT,
+            CommonTagPrefixes.NUGGET,
+            CommonTagPrefixes.GEAR,
+            CommonTagPrefixes.PLATE,
+            CommonTagPrefixes.ROD,
+            CommonTagPrefixes.WIRE,
+        )
         event.modify(RagiumMaterialKeys.RAGI_ALLOY) {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
             addBlockPrefixes(CommonTagPrefixes.BLOCK)
-            addItemPrefixes(
-                CommonTagPrefixes.DUST,
-                CommonTagPrefixes.INGOT,
-                CommonTagPrefixes.NUGGET,
-                CommonTagPrefixes.GEAR,
-                CommonTagPrefixes.PLATE,
-                CommonTagPrefixes.ROD,
-                CommonTagPrefixes.WIRE,
-            )
+            addItemPrefixes(alloySet)
 
             setName("Ragi-Alloy", "ラギ合金")
             put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
@@ -81,15 +84,9 @@ object RagiumMaterialEventHandler {
         event.modify(RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
             addBlockPrefixes(CommonTagPrefixes.BLOCK)
-            addItemPrefixes(
-                CommonTagPrefixes.DUST,
-                CommonTagPrefixes.INGOT,
-                CommonTagPrefixes.NUGGET,
-                CommonTagPrefixes.GEAR,
-                CommonTagPrefixes.PLATE,
-                CommonTagPrefixes.ROD,
-                CommonTagPrefixes.WIRE,
-            )
+            addItemPrefixes(alloySet)
+            put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.MEDIUM)
+            put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.MEDIUM)
 
             setName("Advanced Ragi-Alloy", "発展ラギ合金")
         }
@@ -97,9 +94,10 @@ object RagiumMaterialEventHandler {
         event.modify(RagiumMaterialKeys.MEAT) {
             setDefaultPart(Tags.Items.FOODS_RAW_MEAT, createItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT))
             addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.INGOT)
-            put(HTMaterialPropertyKeys.SMELTED_TO, RagiumMaterialKeys.COOKED_MEAT)
+            put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.NONE)
+            put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.NONE)
             put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(HCFluids.MEAT))
-            this += HTMaterialPropertyKeys.DISABLE_MECHANICAL
+            put(HTMaterialPropertyKeys.SMELTED_TO, RagiumMaterialKeys.COOKED_MEAT)
 
             setName("Meat", "肉")
             addCustomName(CommonTagPrefixes.DUST, "Minced Meat", "ひき肉")
@@ -107,9 +105,9 @@ object RagiumMaterialEventHandler {
         event.modify(RagiumMaterialKeys.COOKED_MEAT) {
             setDefaultPart(Tags.Items.FOODS_COOKED_MEAT, createItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
             addItemPrefixes(CommonTagPrefixes.INGOT)
+            put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.NONE)
+            put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.NONE)
             this += HTMaterialPropertyKeys.DISABLE_SMELTING
-            this += HTMaterialPropertyKeys.DISABLE_MECHANICAL
-            this += HTMaterialPropertyKeys.DISABLE_MELTING
 
             setName("Cooked Meat", "焼肉")
         }

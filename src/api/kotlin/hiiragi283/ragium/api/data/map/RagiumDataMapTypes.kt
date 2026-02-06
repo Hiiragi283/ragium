@@ -55,11 +55,15 @@ object RagiumDataMapTypes {
 
     // Item
     @JvmField
+    val EXPLOSIVE: DataMapType<Item, Int> = create("explosive", Registries.ITEM, BiCodecs.POSITIVE_INT)
+
+    @JvmField
     val UPGRADE: DataMapType<Item, HTUpgradeData> =
         create("upgrade", Registries.ITEM, HTUpgradeData.CODEC)
 
     //    Extensions    //
 
+    @JvmStatic
     fun getFermentLevel(getter: BlockGetter, centerPos: BlockPos): Int = BlockPos
         .betweenClosed(centerPos.offset(-1, 0, -1), centerPos.offset(1, -1, 1))
         .asSequence()
@@ -67,11 +71,13 @@ object RagiumDataMapTypes {
         .mapNotNull(::getFermentLevel)
         .sum()
 
+    @JvmStatic
     fun getFermentLevel(state: BlockState): Int? = state.blockHolder.getData(FERMENT_SOURCE)
 
     /**
      * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。
      */
+    @JvmStatic
     @Suppress("DEPRECATION")
     fun getMobHead(entity: Entity): ItemStack = entity.type
         .builtInRegistryHolder()
@@ -81,28 +87,37 @@ object RagiumDataMapTypes {
     /**
      * 指定した[resource]から，一度の処理に必要な冷却材の使用量を取得します。
      */
+    @JvmStatic
     fun getCoolantAmount(resource: HTFluidResourceType): Int = resource.getData(COOLANT) ?: 0
 
     /**
      * 指定した[resource]から，100 mbの高温の液体による燃焼時間を取得します。
      */
+    @JvmStatic
     fun getTimeFromMagmatic(resource: HTFluidResourceType): Int = resource.getData(MAGMATIC_FUEL) ?: 0
 
     /**
      * 指定した[resource]から，100 mbの液体燃料による燃焼時間を取得します。
      */
+    @JvmStatic
     fun getTimeFromCombustion(resource: HTFluidResourceType): Int = resource.getData(COMBUSTION_FUEL) ?: 0
 
+    @JvmStatic
     fun getFluidFertilizer(resource: HTFluidResourceType): Fraction? = resource.getData(FERTILIZER)
+
+    @JvmStatic
+    fun getExplosivePower(stack: ItemStack): Int? = stack.itemHolder.getData(EXPLOSIVE)
 
     /**
      * 指定した[stack]から，アップグレードのデータを取得します。
      */
+    @JvmStatic
     fun getUpgradeData(stack: ItemStack): HTUpgradeData? = stack.itemHolder.getData(UPGRADE)
 
     /**
      * 指定した[resource]から，アップグレードのデータを取得します。
      */
+    @JvmStatic
     fun getUpgradeData(resource: HTItemResourceType): HTUpgradeData? = resource.getData(UPGRADE)
 
     @JvmStatic

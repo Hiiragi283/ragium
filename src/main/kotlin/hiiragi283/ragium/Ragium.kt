@@ -62,6 +62,7 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
         event.register(RagiumDataMapTypes.FERTILIZER)
 
+        event.register(RagiumDataMapTypes.EXPLOSIVE)
         event.register(RagiumDataMapTypes.UPGRADE)
     }
 }

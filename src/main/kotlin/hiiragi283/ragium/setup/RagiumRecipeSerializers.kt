@@ -10,6 +10,7 @@ import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
+import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
@@ -18,6 +19,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
@@ -34,6 +36,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
 import net.minecraft.world.item.enchantment.ItemEnchantments
+import java.util.Optional
 
 object RagiumRecipeSerializers {
     @JvmField
@@ -120,18 +123,6 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.PLANTING,
-        MapBiCodec.composite(
-            HTItemHolderLike.HOLDER_CODEC.fieldOf("seed").forGetter(HTPlantingRecipe::seed),
-            HTItemIngredient.UNSIZED_CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
-            HTItemResult.CODEC.fieldOf("crop").forGetter(HTPlantingRecipe::crop),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTPlantingRecipe::parameters),
-            ::HTPlantingRecipe,
-        ),
-    )
-
-    @JvmField
     val PYROLYZING: RecipeSerializer<HTPyrolyzingRecipe> = REGISTER.registerSerializer(
         RagiumConst.PYROLYZING,
         MapBiCodec.composite(
@@ -200,7 +191,19 @@ object RagiumRecipeSerializers {
 
     // Machine - Matter
 
-    // Device - Enchanting
+    // Device
+    @JvmField
+    val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.COMPRESSING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTCompressingRecipe::ingredient),
+            BiCodecs.POSITIVE_INT.fieldOf("power").forGetter(HTCompressingRecipe::power),
+            HTItemIngredient.CODEC.optionalFieldOf(HTConst.CATALYST).forGetter { Optional.ofNullable(it.catalyst) },
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCompressingRecipe::result),
+            ::HTCompressingRecipe,
+        ),
+    )
+
     @JvmField
     val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = REGISTER.registerSerializer(
         RagiumConst.ENCHANTING,
@@ -212,6 +215,18 @@ object RagiumRecipeSerializers {
                 .forGetter(HTEnchantingRecipe::enchantments),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTEnchantingRecipe::parameters),
             ::HTEnchantingRecipe,
+        ),
+    )
+
+    @JvmField
+    val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.PLANTING,
+        MapBiCodec.composite(
+            HTItemHolderLike.HOLDER_CODEC.fieldOf("seed").forGetter(HTPlantingRecipe::seed),
+            HTItemIngredient.UNSIZED_CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
+            HTItemResult.CODEC.fieldOf("crop").forGetter(HTPlantingRecipe::crop),
+            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTPlantingRecipe::parameters),
+            ::HTPlantingRecipe,
         ),
     )
 }

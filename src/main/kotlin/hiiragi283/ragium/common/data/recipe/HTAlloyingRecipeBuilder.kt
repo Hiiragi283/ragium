@@ -20,7 +20,7 @@ class HTAlloyingRecipeBuilder : HTChancedRecipeBuilder(RagiumConst.ALLOYING) {
     override fun createRecipe(): HTAlloyingRecipe = HTAlloyingRecipe(
         ingredients,
         result,
-        chancedResults.results,
+        extraResults,
         subParameters(),
     )
 }

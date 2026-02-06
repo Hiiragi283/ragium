@@ -26,6 +26,9 @@ object RagiumConst {
     const val FERMENTER = "fermenter"
     const val PLANTER = "planter"
 
+    // Device
+    const val COMPRESSOR = "compressor"
+
     // Storage
     const val UNIVERSAL_CHEST = "universal_chest"
 
@@ -61,6 +64,7 @@ object RagiumConst {
     // Matter
 
     // Device
+    const val COMPRESSING = "compressing"
     const val ENCHANTING = "enchanting"
     const val PLANTING = "planting"
 

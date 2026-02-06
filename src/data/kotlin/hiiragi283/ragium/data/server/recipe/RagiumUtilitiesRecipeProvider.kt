@@ -89,7 +89,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
                 define('B').let(consumer)
                 define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.COPPER
-                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+                define('D') += CommonTagPrefixes.INGOT to VanillaMaterialKeys.IRON
                 resultStack += block
             }
         }
@@ -110,7 +110,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 )
                 define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.ADVANCED_RAGI_ALLOY
                 define('B').let(consumer)
-                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.GOLD
+                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON
                 define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
                 resultStack += block
             }
@@ -129,10 +129,10 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                     "BCB",
                     "DDD",
                 )
-                define('A') += CommonTagPrefixes.INGOT to VanillaMaterialKeys.GOLD
+                define('A') += CommonTagPrefixes.PLATE to CommonMaterialKeys.STAINLESS_STEEL
                 define('B').let(consumer)
-                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.DIAMOND
-                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.GOLD
+                define('D') += CommonTagPrefixes.PLATE to CommonMaterialKeys.CARBON
                 resultStack += block
             }
         }

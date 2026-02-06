@@ -32,7 +32,7 @@ class HTItemToChancedRecipeBuilder(prefix: String, private val factory: Factory<
         time /= 2
     }
 
-    override fun createRecipe(): HTItemToChancedRecipe = factory.create(ingredient, result, chancedResults.results, subParameters())
+    override fun createRecipe(): HTItemToChancedRecipe = factory.create(ingredient, result, extraResults, subParameters())
 
     //    Factory    //
 
