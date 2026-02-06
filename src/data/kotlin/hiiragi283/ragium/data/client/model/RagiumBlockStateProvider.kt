@@ -24,6 +24,7 @@ import net.neoforged.neoforge.client.model.generators.ModelFile
 class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider(RagiumAPI.MOD_ID, context) {
     val basic = "basic"
     val heat = "heat"
+    val chemical = "chemical"
 
     override fun registerStatesAndModels() {
         registerMaterials()
@@ -36,6 +37,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
 
         frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)
         frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, heat)
+        frontMachineBlock(RagiumBlocks.REFINERY, RagiumConst.MACHINE, heat)
+
+        frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
+        frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)
 
         // Device
         // frontMachineBlock(RagiumBlocks.PLANTER, RagiumConst.DEVICE, basic)

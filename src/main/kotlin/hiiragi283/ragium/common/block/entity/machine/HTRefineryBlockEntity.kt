@@ -1,8 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
@@ -39,6 +43,27 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
             HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)),
         )
     }
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        // progress
+        addProgressBar(widgetHolder)
+        // tank
+        widgetHolder += HTFluidWidget
+            .createTank(
+                inputTank,
+                HTSlotHelper.getSlotPosX(2.5),
+                HTSlotHelper.getSlotPosY(0),
+            ).setBackground(HTBackgroundType.INPUT)
+        widgetHolder += HTFluidWidget
+            .createTank(
+                outputTank,
+                HTSlotHelper.getSlotPosX(6),
+                HTSlotHelper.getSlotPosY(0),
+            ).setBackground(HTBackgroundType.OUTPUT)
+    }
+
+    //    Processing    //
 
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 

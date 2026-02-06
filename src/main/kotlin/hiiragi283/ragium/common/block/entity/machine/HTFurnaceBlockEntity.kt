@@ -1,9 +1,13 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
@@ -35,6 +39,25 @@ class HTFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
+    }
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        // progress
+        addProgressBar(widgetHolder)
+        // slot
+        widgetHolder += HTItemSlotWidget(
+            inputSlot,
+            HTSlotHelper.getSlotPosX(2.5),
+            HTSlotHelper.getSlotPosY(0.5),
+            HTBackgroundType.INPUT,
+        )
+        widgetHolder += HTItemSlotWidget(
+            outputSlot,
+            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosY(1),
+            HTBackgroundType.OUTPUT,
+        )
     }
 
     //    Processing    //

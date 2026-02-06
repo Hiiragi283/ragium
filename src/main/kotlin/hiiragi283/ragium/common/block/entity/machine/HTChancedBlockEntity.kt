@@ -74,12 +74,12 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             input: INPUT,
             recipe: RECIPE,
         ) {
-            outputHandler.insert(recipe.getResultItem(level.registryAccess()))
+            outputHandler.insert(recipe.assemble(input, level.registryAccess()))
             recipe.getExtraResultItems(level).forEach(extraOutputHandler::insert)
         }
 
         // 副産物は余剰分が出ても無視される
         final override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean =
-            outputHandler.canInsert(recipe.getResultItem(level.registryAccess()))
+            outputHandler.canInsert(recipe.assemble(input, level.registryAccess()))
     }
 }

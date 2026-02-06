@@ -13,13 +13,14 @@ class HTAlloyingEmiRecipe(holder: RecipeHolder<HTAlloyingRecipe>) :
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addArrow(time = recipe.time, x = getPosition(3.25))
+        widgets.addArrow(time = recipe.time, x = getPosition(3.5))
         widgets.addBurning(getPosition(1), getPosition(1.5), recipe.time)
         // inputs
         widgets.addSlot(input(0), getPosition(0), getPosition(0.5), HTBackgroundType.INPUT)
         widgets.addSlot(input(1), getPosition(1), getPosition(0.5), HTBackgroundType.INPUT)
         widgets.addSlot(input(2), getPosition(2), getPosition(0.5), HTBackgroundType.INPUT)
         // outputs
-        widgets.addTripleOutputs()
+        widgets.addSlot(output(0), getPosition(5.5), getPosition(0.5), HTBackgroundType.OUTPUT)
+        widgets.addSlot(output(1), getPosition(5.5), getPosition(2), HTBackgroundType.EXTRA_OUTPUT)
     }
 }

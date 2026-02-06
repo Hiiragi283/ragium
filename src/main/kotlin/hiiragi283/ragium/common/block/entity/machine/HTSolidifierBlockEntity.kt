@@ -1,8 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
@@ -29,6 +33,15 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
             HTSlotInfo.INPUT,
             HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)),
         )
+    }
+
+    override fun setupInput(widgetHolder: HTWidgetHolder) {
+        widgetHolder += HTFluidWidget
+            .createTank(
+                inputTank,
+                HTSlotHelper.getSlotPosX(1),
+                HTSlotHelper.getSlotPosY(0),
+            ).setBackground(HTBackgroundType.INPUT)
     }
 
     //    Processing    //

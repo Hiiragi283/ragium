@@ -1,9 +1,14 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.common.gui.widget.HTFluidWidget
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -40,6 +45,30 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTChancedBlockEnti
     }
 
     override fun getOutputSlotSize(): Int = 3
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        // progress
+        addProgressBar(widgetHolder)
+        // tank
+        widgetHolder += HTFluidWidget
+            .createTank(
+                inputTank,
+                HTSlotHelper.getSlotPosX(1),
+                HTSlotHelper.getSlotPosY(0),
+            ).setBackground(HTBackgroundType.INPUT)
+        // slots
+        widgetHolder += HTItemSlotWidget(
+            inputSlot,
+            HTSlotHelper.getSlotPosX(2.5),
+            HTSlotHelper.getSlotPosY(0.5),
+            HTBackgroundType.INPUT,
+        )
+
+        addTripleOutputs(widgetHolder)
+    }
+
+    //    Processing    //
 
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 

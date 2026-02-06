@@ -7,7 +7,6 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
@@ -35,11 +34,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
         // progress
-        widgetHolder += HTProgressWidget.createArrow(
-            recipeComponent.fractionSlot,
-            HTSlotHelper.getSlotPosX(4.5),
-            HTSlotHelper.getSlotPosY(1),
-        )
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4.5))
         // slots
         inputSlots
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->
@@ -51,7 +46,19 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
                 )
             }.forEach(widgetHolder::addWidget)
 
-        addTripleOutputs(widgetHolder)
+        widgetHolder += HTItemSlotWidget(
+            outputSlot,
+            HTSlotHelper.getSlotPosX(6.5),
+            HTSlotHelper.getSlotPosY(0.5),
+            HTBackgroundType.OUTPUT,
+        )
+
+        widgetHolder += HTItemSlotWidget(
+            extraOutputSlots[0],
+            HTSlotHelper.getSlotPosX(6.5),
+            HTSlotHelper.getSlotPosY(2),
+            HTBackgroundType.EXTRA_OUTPUT,
+        )
     }
 
     //    Processing    //

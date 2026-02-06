@@ -7,7 +7,6 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeFinder
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -31,11 +30,7 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
     final override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
         // progress
-        widgetHolder += HTProgressWidget.createArrow(
-            recipeComponent.fractionSlot,
-            HTSlotHelper.getSlotPosX(4),
-            HTSlotHelper.getSlotPosY(1),
-        )
+        addProgressBar(widgetHolder)
         // slots
         widgetHolder += HTItemSlotWidget(
             inputSlot,

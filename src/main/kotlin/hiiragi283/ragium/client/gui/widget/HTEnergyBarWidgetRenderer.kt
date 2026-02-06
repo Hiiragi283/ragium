@@ -1,9 +1,10 @@
 package hiiragi283.ragium.client.gui.widget
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.gui.HTBounds
+import hiiragi283.core.api.resource.toId
 import hiiragi283.core.client.gui.widget.HTSpriteWidgetRenderer
 import hiiragi283.core.util.HTTooltipHelper
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.widget.HTEnergyBarWidget
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
@@ -21,7 +22,7 @@ class HTEnergyBarWidgetRenderer(widget: HTEnergyBarWidget) : HTSpriteWidgetRende
 
     override fun shouldRender(): Boolean = widget.getAmount() > 0
 
-    override fun getSprite(): TextureAtlasSprite? = getSprite(RagiumAPI.id("container", "energy_bar"))
+    override fun getSprite(): TextureAtlasSprite? = getSprite(HTConst.MINECRAFT.toId(HTConst.BLOCK, "red_concrete"))
 
     override fun getColor(): Int = -1
 

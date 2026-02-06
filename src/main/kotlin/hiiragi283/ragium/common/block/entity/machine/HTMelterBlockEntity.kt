@@ -1,7 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.common.gui.widget.HTFluidWidget
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
@@ -38,6 +43,26 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.create(listener))
+    }
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        // progress
+        addProgressBar(widgetHolder)
+        // slot
+        widgetHolder += HTItemSlotWidget(
+            inputSlot,
+            HTSlotHelper.getSlotPosX(2.5),
+            HTSlotHelper.getSlotPosY(0.5),
+            HTBackgroundType.INPUT,
+        )
+        // tank
+        widgetHolder += HTFluidWidget
+            .createTank(
+                outputTank,
+                HTSlotHelper.getSlotPosX(6),
+                HTSlotHelper.getSlotPosY(0),
+            ).setBackground(HTBackgroundType.OUTPUT)
     }
 
     //    Processing    //

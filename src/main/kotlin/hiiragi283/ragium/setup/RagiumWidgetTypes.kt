@@ -10,5 +10,5 @@ object RagiumWidgetTypes {
     val REGISTER = HTDeferredWidgetTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val ENERGY_BAR: HTDeferredWidgetType<HTEnergyBarWidget> = REGISTER.registerType<HTEnergyBarWidget>("energy_bar")
+    val ENERGY_BAR: HTDeferredWidgetType<HTEnergyBarWidget> = REGISTER.registerType("energy_bar")
 }

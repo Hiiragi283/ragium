@@ -1,8 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.input.HTViewRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
@@ -25,6 +29,15 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
         super.createItemSlots(builder, listener)
+    }
+
+    override fun setupInput(widgetHolder: HTWidgetHolder) {
+        widgetHolder += HTItemSlotWidget(
+            inputSlot,
+            HTSlotHelper.getSlotPosX(2.5),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+        )
     }
 
     //    Processing    //
