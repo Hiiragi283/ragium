@@ -23,6 +23,7 @@ import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.core.api.times
 import hiiragi283.core.common.material.CommonMaterialKeys
+import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
@@ -110,12 +111,12 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     private fun alloyDustToIngot(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
         if (HTMaterialPropertyKeys.DISABLE_SMELTING in entry) return
         val meltingLevel: HTMaterialLevel = entry.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT)
-        val flux: TagKey<Item> = when (meltingLevel) {
+        val flux: Set<TagKey<Item>> = when (meltingLevel) {
             HTMaterialLevel.NONE -> return
-            HTMaterialLevel.LOW -> ItemTags.SMELTS_TO_GLASS
-            HTMaterialLevel.MEDIUM -> ItemTags.SOUL_FIRE_BASE_BLOCKS
-            HTMaterialLevel.HIGH -> CommonTagPrefixes.DUST.itemTagKey(CommonMaterialKeys.COAL_COKE)
-            HTMaterialLevel.HIGHEST -> CommonTagPrefixes.DUST.itemTagKey(CommonMaterialKeys.CINNABAR)
+            HTMaterialLevel.LOW -> setOf(ItemTags.SMELTS_TO_GLASS)
+            HTMaterialLevel.MEDIUM -> setOf(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            HTMaterialLevel.HIGH -> baseOrDust(CommonMaterialKeys.COAL_COKE)
+            HTMaterialLevel.HIGHEST -> baseOrDust(HCMaterialKeys.CRIMSON_CRYSTAL)
         }
         if (entry.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT) == HTMaterialLevel.NONE) return
         // 材料が存在するか判定

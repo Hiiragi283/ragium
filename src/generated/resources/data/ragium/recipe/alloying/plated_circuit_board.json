@@ -1,0 +1,11 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    "ragium:circuit_board",
+    "#c:plates/gold"
+  ],
+  "result": {
+    "id": "ragium:plated_circuit_board"
+  },
+  "time": 200
+}

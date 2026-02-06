@@ -21,6 +21,7 @@ import hiiragi283.core.api.registry.toLike
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTAssemblingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCompressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
@@ -66,6 +67,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.COMBUSTION,
             // Machine - Basic
             RagiumEmiRecipeCategories.ALLOYING,
+            RagiumEmiRecipeCategories.ASSEMBLING,
             RagiumEmiRecipeCategories.CRUSHING,
             RagiumEmiRecipeCategories.CUTTING,
             RagiumEmiRecipeCategories.PRESSING,
@@ -90,6 +92,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addInteractions(registry)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.ALLOYING, ::HTAlloyingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.ASSEMBLING, ::HTAssemblingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, ::HTCrushingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.PRESSING, ::HTPressingEmiRecipe)

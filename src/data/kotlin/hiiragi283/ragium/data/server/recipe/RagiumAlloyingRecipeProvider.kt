@@ -9,6 +9,7 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 
 object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
@@ -144,6 +145,19 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result = resultCreator.material(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
             ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGI_ALLOY))
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 2)
+        }
+
+        // Quartz + Plastic -> Circuit Board
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.create(RagiumItems.CIRCUIT_BOARD)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.QUARTZ)
+            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.PLASTIC)
+        }
+        // Circuit Board + Gold Plate -> Plated
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.create(RagiumItems.PLATED_CIRCUIT_BOARD)
+            ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
+            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.GOLD)
         }
     }
 }

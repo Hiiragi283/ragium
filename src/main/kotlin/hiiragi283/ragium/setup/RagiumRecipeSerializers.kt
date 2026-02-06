@@ -19,6 +19,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -88,6 +89,24 @@ object RagiumRecipeSerializers {
                 .forGetter(HTAlloyingRecipe::extraResults),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTAlloyingRecipe::parameters),
             ::HTAlloyingRecipe,
+        ),
+    )
+
+    @JvmField
+    val ASSEMBLING: RecipeSerializer<HTAssemblingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.ASSEMBLING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC
+                .listOf(1, HTAssemblingRecipe.MAX_ITEM_INPUTS)
+                .fieldOf(HTConst.INGREDIENT)
+                .forGetter(HTAssemblingRecipe::itemIngredients),
+            HTFluidIngredient.CODEC
+                .optionalFieldOf(HTConst.FLUID_INGREDIENT)
+                .forGetter { Optional.ofNullable(it.fluidIngredient) },
+            BiCodecs.NON_NEGATIVE_INT.fieldOf("circuit").forGetter(HTAssemblingRecipe::circuit),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAssemblingRecipe::result),
+            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTAssemblingRecipe::parameters),
+            ::HTAssemblingRecipe,
         ),
     )
 

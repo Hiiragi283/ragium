@@ -56,6 +56,9 @@ object RagiumEmiRecipeCategories {
     val ALLOYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
+    val ASSEMBLING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
+
+    @JvmField
     val CRUSHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
 
     @JvmField

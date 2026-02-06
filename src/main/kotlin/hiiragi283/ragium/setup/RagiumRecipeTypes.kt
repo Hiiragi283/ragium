@@ -9,6 +9,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -31,6 +32,9 @@ object RagiumRecipeTypes {
     // Machine - Basic
     @JvmField
     val ALLOYING: HTDeferredRecipeType<HTShapelessRecipeInput, HTAlloyingRecipe> = REGISTER.registerType(RagiumConst.ALLOYING)
+
+    @JvmField
+    val ASSEMBLING: HTDeferredRecipeType<HTAssemblingRecipe.Input, HTAssemblingRecipe> = REGISTER.registerType(RagiumConst.ASSEMBLING)
 
     @JvmField
     val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTCrushingRecipe> = REGISTER.registerType(RagiumConst.CRUSHING)

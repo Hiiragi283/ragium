@@ -1,0 +1,38 @@
+{
+  "type": "ragium:assembling",
+  "circuit": 0,
+  "fluid_ingredient": {
+    "amount": 5670,
+    "fluids": "#c:molten_eldritch"
+  },
+  "ingredient": [
+    {
+      "amount": 64,
+      "items": "#c:ingots/ruthenium"
+    },
+    {
+      "amount": 64,
+      "items": "#c:ingots/rhodium"
+    },
+    {
+      "amount": 64,
+      "items": "#c:ingots/palladium"
+    },
+    {
+      "amount": 64,
+      "items": "#c:ingots/osmium"
+    },
+    {
+      "amount": 64,
+      "items": "#c:ingots/iridium"
+    },
+    {
+      "amount": 64,
+      "items": "#c:ingots/platinum"
+    }
+  ],
+  "result": {
+    "id": "hiiragi_core:iridescent_powder"
+  },
+  "time": 2000
+}

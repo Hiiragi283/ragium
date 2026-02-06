@@ -35,6 +35,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTBlockTagsProvider(R
             yieldAll(contents.getAllBlocks().filter { it.namespace == modId })
 
             yield(RagiumBlocks.ALLOY_SMELTER)
+            yield(RagiumBlocks.ASSEMBLER)
             yield(RagiumBlocks.CRUSHER)
             yield(RagiumBlocks.CUTTING_MACHINE)
             yield(RagiumBlocks.ELECTRIC_FURNACE)

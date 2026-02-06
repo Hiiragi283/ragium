@@ -100,6 +100,19 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         basic(RagiumBlocks.ELECTRIC_FURNACE) { it += Items.FURNACE }
         basic(RagiumBlocks.FORMING_PRESS) { it += Items.PISTON }
 
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "ABA",
+                "BCB",
+                "DBD",
+            )
+            define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
+            define('B') += RagiumItems.ELECTRIC_CIRCUIT
+            define('C') += Items.CRAFTER
+            define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+            resultStack += RagiumBlocks.ASSEMBLER
+        }
+
         // Heat
         fun heat(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
             HTShapedRecipeBuilder.create(output) {

@@ -25,7 +25,7 @@ class HTCompressingEmiRecipe(holder: RecipeHolder<HTCompressingRecipe>) :
                 .let(EmiIngredient::of)
         }
     }
-    
+
     init {
         addInput(recipe.ingredient)
 

@@ -22,6 +22,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
@@ -84,6 +85,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+        add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
+        add(RagiumItems.PLATED_CIRCUIT_BOARD, "Plated Circuit Board")
+        add(RagiumItems.PRINTED_CIRCUIT_BOARD, "Printed Circuit Board")
+        add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
 
         add(RagiumItems.MOLASSES, "Molasses")
         add(RagiumItems.EMPTY_CAN, "Empty Can")
@@ -95,6 +100,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
         add(RagiumRecipeTypes.COMPRESSING, "Implosion Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")

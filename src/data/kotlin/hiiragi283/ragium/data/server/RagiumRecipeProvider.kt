@@ -6,6 +6,7 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.common.data.recipe.HTMaterialRecipeProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.server.recipe.RagiumAlloyingRecipeProvider
+import hiiragi283.ragium.data.server.recipe.RagiumAssemblingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumChemicalRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCuttingRecipeProvider
@@ -23,6 +24,7 @@ class RagiumRecipeProvider(context: HTDataGenContext) : HTRecipeProvider(context
         consumer.accept(HTMaterialRecipeProvider(RagiumAPI.MOD_ID))
 
         consumer.accept(RagiumAlloyingRecipeProvider)
+        consumer.accept(RagiumAssemblingRecipeProvider)
         consumer.accept(RagiumChemicalRecipeProvider)
         consumer.accept(RagiumCrushingRecipeProvider)
         consumer.accept(RagiumCuttingRecipeProvider)

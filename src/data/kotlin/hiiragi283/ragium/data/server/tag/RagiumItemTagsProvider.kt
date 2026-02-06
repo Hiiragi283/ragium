@@ -81,6 +81,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(RagiumTags.Items.MACHINE_UPGRADABLE)
             // Basic
             .add(RagiumBlocks.ALLOY_SMELTER)
+            .add(RagiumBlocks.ASSEMBLER)
             .add(RagiumBlocks.CRUSHER)
             .add(RagiumBlocks.CUTTING_MACHINE)
             .add(RagiumBlocks.ELECTRIC_FURNACE)
@@ -123,12 +124,13 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE)
             // Generator
             // Machine
+            .add(RagiumBlocks.ASSEMBLER)
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.MIXER)
-            .add(RagiumBlocks.WASHER)
             .add(RagiumBlocks.PYROLYZER)
             .add(RagiumBlocks.REFINERY)
             .add(RagiumBlocks.SOLIDIFIER)
+            .add(RagiumBlocks.WASHER)
             // Device
             .add(RagiumBlocks.FERMENTER)
             .add(RagiumBlocks.PLANTER)

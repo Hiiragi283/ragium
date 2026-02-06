@@ -70,6 +70,10 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
 
     @JvmField
+    val ASSEMBLER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.ASSEMBLER, RagiumTranslation.ASSEMBLER)
+
+    @JvmField
     val CRUSHER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER)
 

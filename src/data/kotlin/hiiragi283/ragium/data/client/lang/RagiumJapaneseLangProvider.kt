@@ -22,6 +22,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
 
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
+        add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
@@ -84,6 +85,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        add(RagiumItems.CIRCUIT_BOARD, "回路基板")
+        add(RagiumItems.PLATED_CIRCUIT_BOARD, "鍍金された回路基板")
+        add(RagiumItems.PRINTED_CIRCUIT_BOARD, "刻印された回路基板")
+        add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
 
         add(RagiumItems.MOLASSES, "糖蜜")
         add(RagiumItems.EMPTY_CAN, "空の缶詰")
@@ -95,6 +100,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.COMPRESSING, "爆縮")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")

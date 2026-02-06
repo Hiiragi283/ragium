@@ -59,6 +59,18 @@ object RagiumItems {
     @JvmField
     val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
+    @JvmField
+    val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
+
+    @JvmField
+    val PLATED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plated_circuit_board")
+
+    @JvmField
+    val PRINTED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("printed_circuit_board")
+
+    @JvmField
+    val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")
+
     //    Foods    //
 
     @JvmField
