@@ -6,7 +6,7 @@
   },
   "fluid_result": {
     "amount": 500,
-    "id": "ragium:coal_liquid"
+    "id": "ragium:synthetic_oil"
   },
   "item_ingredient": "#c:dusts/coal",
   "time": 200

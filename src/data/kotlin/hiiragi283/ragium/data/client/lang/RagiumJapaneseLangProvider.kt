@@ -53,17 +53,22 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブクレート")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
+        addFluid(RagiumFluids.AIR, "空気")
         addFluid(RagiumFluids.HYDROGEN, "水素")
-        addFluid(RagiumFluids.CARBON_MONOXIDE, "一酸化炭素")
         addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
+        addFluid(RagiumFluids.NITROGEN, "窒素")
+        addFluid(RagiumFluids.AMMONIA, "アンモニア")
         addFluid(RagiumFluids.OXYGEN, "酸素")
 
+        addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
+        addFluid(RagiumFluids.MIXTURE_ACID, "混酸")
+        addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
+
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
-        addFluid(RagiumFluids.COAL_GAS, "石炭ガス")
-        addFluid(RagiumFluids.COAL_LIQUID, "液化石炭")
+        addFluid(RagiumFluids.SYNTHETIC_GAS, "合成ガス")
+        addFluid(RagiumFluids.SYNTHETIC_OIL, "合成油")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
-        addFluid(RagiumFluids.LPG, "液化天然ガス")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumFluids.RESIDUE_OIL, "残渣油")
 

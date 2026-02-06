@@ -59,27 +59,14 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             itemResult = resultCreator.material(CommonTagPrefixes.BLOCK, CommonMaterialKeys.COAL_COKE)
             fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 2000)
         }
+        // Coal + Water -> Synthetic Gas
+        // _Synthetic Gas + H2O -> CO2 + 2x H2
 
-        // Coal + Water -> Coal Gas
-
-        // Coal Gas -> LPG
-        HTSingleRecipeBuilder.refining(output) {
-            ingredient = inputCreator.create(RagiumFluids.COAL_GAS, 750)
-            result = resultCreator.create(RagiumFluids.LPG, 250)
-            recipeId suffix "_from_coal_gas"
-        }
-
-        // Coal Dust + Residue Oil -> Coal Liquid
+        // Coal Dust + Residue Oil -> Synthetic Oil
         HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL)
             fluidIngredients += inputCreator.create(RagiumFluids.RESIDUE_OIL, 500)
-            result += resultCreator.create(RagiumFluids.COAL_LIQUID, 500)
-        }
-        // Coal Liquid -> Naphtha
-        HTSingleRecipeBuilder.refining(output) {
-            ingredient = inputCreator.create(RagiumFluids.COAL_LIQUID, 750)
-            result = resultCreator.create(RagiumFluids.NAPHTHA, 500)
-            recipeId suffix "_from_coal_liquid"
+            result += resultCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
         }
     }
 
@@ -91,15 +78,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             result = resultCreator.create(RagiumFluids.NAPHTHA, 250)
             recipeId suffix "_from_crude_oil"
         }
-        // Crude Oil + LPG + Naphtha + Residue Oil
-
-        // LPG -> Ethylene
-        HTSingleRecipeBuilder.refining(output) {
-            ingredient = inputCreator.create(RagiumFluids.LPG, 500)
-            result = resultCreator.create(RagiumFluids.ETHYLENE, 250)
-            recipeId suffix "_from_lpg"
-        }
-        // LPG -> Methane + Ethylene + Butadiene
+        // Crude Oil + C2H4 + Naphtha + Residue Oil
 
         // Naphtha -> Gasoline
         HTSingleRecipeBuilder.refining(output) {
@@ -107,7 +86,9 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             result = resultCreator.create(RagiumFluids.GASOLINE, 250)
             recipeId suffix "_from_naphtha"
         }
-        // Naphtha -> Ethylene + Gasoline + Lubricant
+        // Naphtha -> C2H4 + C4H6 + Gasoline
+
+        // Residue Oil -> Lubricant  Asphalt
     }
 
     @JvmStatic

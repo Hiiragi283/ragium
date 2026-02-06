@@ -6,6 +6,7 @@ import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
+import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
@@ -151,6 +152,14 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 result = resultCreator.create(Items.FLINT)
                 chance = fraction(1, 3)
             }
+            time = 20 * 5
+        }
+
+        // Ash + Water -> Carbon
+        HTWashingRecipeBuilder.create(output) {
+            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH, 4)
+            fluidIngredient = inputCreator.water(250)
+            result = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 3)
             time = 20 * 5
         }
     }

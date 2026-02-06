@@ -26,14 +26,14 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Crimson Stem -> Crimson Blood
         HTPyrolyzingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(ItemTags.CRIMSON_STEMS, 8)
-            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 4)
             fluidResult = resultCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
             recipeId suffix "_from_crimson_stem"
         }
         // Warped Stem -> Dew of the Warp
         HTPyrolyzingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(ItemTags.WARPED_STEMS, 8)
-            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 4)
             fluidResult = resultCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
             recipeId suffix "_from_warped_stem"
         }

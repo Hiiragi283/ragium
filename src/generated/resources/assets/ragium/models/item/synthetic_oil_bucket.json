@@ -1,5 +1,5 @@
 {
   "parent": "neoforge:item/bucket_drip",
-  "fluid": "ragium:coal_liquid",
+  "fluid": "ragium:synthetic_oil",
   "loader": "neoforge:fluid_container"
 }

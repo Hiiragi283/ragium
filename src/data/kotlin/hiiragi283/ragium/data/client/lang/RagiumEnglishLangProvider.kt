@@ -53,17 +53,22 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
         // Fluid
+        addFluid(RagiumFluids.AIR, "Air")
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
-        addFluid(RagiumFluids.CARBON_MONOXIDE, "Carbon Monoxide")
         addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
+        addFluid(RagiumFluids.NITROGEN, "Nitrogen")
+        addFluid(RagiumFluids.AMMONIA, "Ammonia")
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
 
+        addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
+        addFluid(RagiumFluids.MIXTURE_ACID, "Mixture Acid")
+        addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
+
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
-        addFluid(RagiumFluids.COAL_GAS, "Coal Gas")
-        addFluid(RagiumFluids.COAL_LIQUID, "Liquefied Coal")
+        addFluid(RagiumFluids.SYNTHETIC_GAS, "Synthetic Gas")
+        addFluid(RagiumFluids.SYNTHETIC_OIL, "Synthetic Oil")
 
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
-        addFluid(RagiumFluids.LPG, "LPG")
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
         addFluid(RagiumFluids.RESIDUE_OIL, "Residue Oil")
 

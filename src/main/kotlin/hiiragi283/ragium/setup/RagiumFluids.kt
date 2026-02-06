@@ -26,16 +26,39 @@ object RagiumFluids {
 
     // Gaseous
     @JvmField
+    val AIR: HTVirtualFluidContent = REGISTER.registerVirtual("air", gas())
+
+    // H
+    @JvmField
     val HYDROGEN: HTVirtualFluidContent = REGISTER.registerVirtual("hydrogen", gas())
 
-    @JvmField
-    val CARBON_MONOXIDE: HTVirtualFluidContent = REGISTER.registerVirtual("carbon_monoxide", gas())
-
+    // C
     @JvmField
     val CARBON_DIOXIDE: HTVirtualFluidContent = REGISTER.registerVirtual("carbon_dioxide", gas())
 
+    // N
+    @JvmField
+    val NITROGEN: HTVirtualFluidContent = REGISTER.registerVirtual("nitrogen", gas())
+
+    @JvmField
+    val AMMONIA: HTVirtualFluidContent = REGISTER.registerVirtual("ammonia", gas())
+
+    // O
     @JvmField
     val OXYGEN: HTVirtualFluidContent = REGISTER.registerVirtual("oxygen", gas())
+
+    // Liquid
+
+    // N
+    @JvmField
+    val NITRIC_ACID: HTVirtualFluidContent = REGISTER.registerVirtual("nitric_acid", liquid())
+
+    @JvmField
+    val MIXTURE_ACID: HTVirtualFluidContent = REGISTER.registerVirtual("mixture_acid", liquid())
+
+    // S
+    @JvmField
+    val SULFURIC_ACID: HTVirtualFluidContent = REGISTER.registerVirtual("sulfuric_acid", liquid())
 
     //    Organic    //
 
@@ -44,12 +67,12 @@ object RagiumFluids {
     val CREOSOTE: HTVirtualFluidContent = REGISTER.registerVirtual("creosote", liquid())
 
     @JvmField
-    val COAL_GAS: HTVirtualFluidContent = REGISTER.registerVirtual("coal_gas", gas())
+    val SYNTHETIC_GAS: HTVirtualFluidContent = REGISTER.registerVirtual("synthetic_gas", gas())
 
     @JvmField
-    val COAL_LIQUID: HTVirtualFluidContent = REGISTER.registerVirtual("coal_liquid", liquid())
+    val SYNTHETIC_OIL: HTVirtualFluidContent = REGISTER.registerVirtual("synthetic_oil", liquid())
 
-    // Resource
+    // Crude Oil
     @JvmField
     val CRUDE_OIL: HTSimpleFluidContent = REGISTER.registerFlowing(
         "crude_oil",
@@ -61,9 +84,6 @@ object RagiumFluids {
             .motionScale(0.0001),
         ::HTExplosiveFluidType.partially1(2f),
     ) { it.speedFactor(0.4f) }
-
-    @JvmField
-    val LPG: HTVirtualFluidContent = REGISTER.registerVirtual("lpg", gas())
 
     @JvmField
     val NAPHTHA: HTVirtualFluidContent = REGISTER.registerVirtual("naphtha", liquid(), ::HTExplosiveFluidType.partially1(3f))

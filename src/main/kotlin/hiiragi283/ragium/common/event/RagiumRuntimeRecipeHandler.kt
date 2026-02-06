@@ -7,6 +7,7 @@ import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialManager
 import hiiragi283.core.api.material.property.HTDefaultPart
+import hiiragi283.core.api.material.property.HTExtraOreResultMap
 import hiiragi283.core.api.material.property.HTMaterialLevel
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.getDefaultFluidAmount
@@ -21,7 +22,6 @@ import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.property.getScaledAmount
-import hiiragi283.core.api.times
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -40,6 +40,7 @@ import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
@@ -59,6 +60,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             compressDustToGem(event, entry)
 
             crushBaseToDust(event, entry)
+            crushCrushedToDust(event, entry)
             crushOreToCrushed(event, entry, CommonTagPrefixes.ORE)
             crushOreToCrushed(event, entry, CommonTagPrefixes.RAW)
             crushPrefixToDust(event, entry, CommonTagPrefixes.GEAR)
@@ -207,12 +209,33 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             // 主産物
             result = resultCreator.create(crushedOre, prefix.getScaledAmount(2, entry).toInt())
             // 副産物
-            entry
-                .getOrDefault(HTMaterialPropertyKeys.ORE_EXTRA_RESULTS)
-                .map { it.toResult(resultCreator) }
-                .forEach(extraResults::plusAssign)
+            entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
+                ?.getResult(HTExtraOreResultMap.Phase.CRUSH_ORE)
+                ?.let(extraResults::add)
 
             recipeId suffix "_from_${prefix.name}"
+        }
+    }
+
+    @JvmStatic
+    private fun crushCrushedToDust(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 材料が存在するか判定
+        if (!event.isPresentTag(CommonTagPrefixes.CRUSHED_ORE, entry)) return
+        // 完成品を取得
+        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+        val dust: ItemLike = event.getFirstHolder(crushedPrefix, entry) ?: return
+        // レシピを登録
+        HTItemToChancedRecipeBuilder.crushing(output) {
+            // 材料
+            ingredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
+            // 主産物
+            result = resultCreator.create(dust, CommonTagPrefixes.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
+            // 副産物
+            entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
+                ?.getResult(HTExtraOreResultMap.Phase.CRUSH_CRUSHED)
+                ?.let(extraResults::add)
+
+            recipeId suffix "_from_crushed_ore"
         }
     }
 
@@ -483,11 +506,9 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             // 主産物
             result = resultCreator.create(dust, CommonTagPrefixes.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
             // 副産物
-            entry
-                .getOrDefault(HTMaterialPropertyKeys.ORE_EXTRA_RESULTS)
-                .map { it.toResult(resultCreator) }
-                .map { it.copy(chance = it.chance * 2) }
-                .forEach(extraResults::plusAssign)
+            entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
+                ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
+                ?.let(extraResults::add)
 
             recipeId suffix "_from_crushed_ore"
         }

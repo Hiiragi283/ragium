@@ -107,14 +107,14 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(RagiumFluids.CREOSOTE, lowest)
             // low
             .add("oil", low)
-            .add(RagiumFluids.COAL_LIQUID, low)
+            .add(RagiumFluids.SYNTHETIC_OIL, low)
             .add(RagiumFluids.CRUDE_OIL, low)
             .add(RagiumTags.Fluids.ALCOHOL, medium, false)
             // medium
             .add("bioethanol", medium)
-            .add(RagiumFluids.COAL_GAS, medium)
+            .add(RagiumFluids.SYNTHETIC_GAS, medium)
             .add(RagiumFluids.ETHYLENE, medium)
-            .add(RagiumFluids.LPG, medium)
+            .add("lpg", medium)
             .add(RagiumFluids.METHANE, medium)
             // high
             .add("biodiesel", high)

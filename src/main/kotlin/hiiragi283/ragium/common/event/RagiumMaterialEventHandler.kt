@@ -12,7 +12,6 @@ import hiiragi283.core.api.material.property.HTMaterialTextureSet
 import hiiragi283.core.api.material.property.addBlockPrefixes
 import hiiragi283.core.api.material.property.addCustomName
 import hiiragi283.core.api.material.property.addCustomOreLoot
-import hiiragi283.core.api.material.property.addExtraOreResult
 import hiiragi283.core.api.material.property.addItemPrefixes
 import hiiragi283.core.api.material.property.setDefaultPart
 import hiiragi283.core.api.material.property.setName
@@ -55,8 +54,6 @@ object RagiumMaterialEventHandler {
             setDefaultPart(HTDefaultPart.Prefixed.GEM)
             addBlockPrefixes(CommonTagPrefixes.BLOCK)
             addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.GEM)
-
-            addExtraOreResult(RagiumMaterialKeys.RAGINITE, 1 / 4f)
 
             setName("Ragi-Crystal", "ラギクリスタル")
             setTextureSet("diamond", HTMaterialTextureSet.SHINE)
