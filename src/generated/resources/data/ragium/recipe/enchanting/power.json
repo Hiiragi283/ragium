@@ -1,9 +1,9 @@
 {
   "type": "ragium:enchanting",
-  "enchantment": "minecraft:protection",
+  "enchantment": "minecraft:power",
   "ingredient": {
     "amount": 64,
-    "items": "#c:ingots/steel"
+    "items": "#c:gems/amethyst"
   },
   "time": 200
 }

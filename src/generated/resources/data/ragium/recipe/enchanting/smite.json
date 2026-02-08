@@ -1,9 +1,9 @@
 {
   "type": "ragium:enchanting",
-  "enchantment": "minecraft:protection",
+  "enchantment": "minecraft:smite",
   "ingredient": {
     "amount": 64,
-    "items": "#c:ingots/steel"
+    "items": "#c:dusts/salt"
   },
   "time": 200
 }

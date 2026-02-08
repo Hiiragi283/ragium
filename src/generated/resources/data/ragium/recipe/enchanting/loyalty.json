@@ -1,9 +1,9 @@
 {
   "type": "ragium:enchanting",
-  "enchantment": "minecraft:protection",
+  "enchantment": "minecraft:loyalty",
   "ingredient": {
     "amount": 64,
-    "items": "#c:ingots/steel"
+    "items": "minecraft:lead"
   },
   "time": 200
 }

@@ -1,0 +1,6 @@
+{
+  "type": "ragium:enchanting",
+  "enchantment": "minecraft:mending",
+  "ingredient": "#c:nether_stars",
+  "time": 200
+}

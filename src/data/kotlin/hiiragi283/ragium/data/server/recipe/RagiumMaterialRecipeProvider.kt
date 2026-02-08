@@ -8,36 +8,17 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.data.recipe.builder.HTCookingRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
-import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTPyrolyzingRecipeBuilder
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        // Crimson Stem -> Crimson Blood
-        HTPyrolyzingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(ItemTags.CRIMSON_STEMS, 8)
-            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 4)
-            fluidResult = resultCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
-            recipeId suffix "_from_crimson_stem"
-        }
-        // Warped Stem -> Dew of the Warp
-        HTPyrolyzingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(ItemTags.WARPED_STEMS, 8)
-            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 4)
-            fluidResult = resultCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
-            recipeId suffix "_from_warped_stem"
-        }
-
         raginite()
         meat()
     }
@@ -98,6 +79,8 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     }
 
     @JvmStatic
-    private fun getOrThrow(prefix: HTTagPrefix, material: HTMaterialLike): HTItemHolderLike<*> =
-        HiiragiCoreAccess.INSTANCE.materialContents.getItemOrThrow(prefix, material)
+    private fun getOrThrow(prefix: HTTagPrefix, material: HTMaterialLike): HTItemHolderLike<*> = HiiragiCoreAccess.INSTANCE
+        .materialContents
+        .getItem(prefix, material)
+        ?: error("Unknown ${prefix.name} for ${material.asMaterialId()}")
 }

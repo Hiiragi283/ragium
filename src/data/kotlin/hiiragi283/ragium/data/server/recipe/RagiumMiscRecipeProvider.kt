@@ -6,11 +6,35 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.resource.toId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 
-object RagiumPressingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
+object RagiumMiscRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
+        cutting()
+        printing()
+    }
+
+    @JvmStatic
+    private fun cutting() {
+        // Stick
+        HTItemToChancedRecipeBuilder.cutting(output) {
+            ingredient = inputCreator.create(ItemTags.WOODEN_SLABS)
+            result = resultCreator.create(Items.STICK, 4)
+            recipeId suffix "_from_wooden_slabs"
+        }
+
+        HTItemToChancedRecipeBuilder.cutting(output) {
+            ingredient = inputCreator.create(ItemTags.SAPLINGS)
+            result = resultCreator.create(Items.STICK)
+            recipeId suffix "_from_saplings"
+        }
+    }
+
+    @JvmStatic
+    private fun printing() {
         // XX Banner
         for (color: HTDefaultColor in HTDefaultColor.entries) {
             val banner: HTItemHolderLike<*> = HTItemHolderLike.of(HTConst.MINECRAFT.toId("${color.serializedName}_banner"))

@@ -6,18 +6,15 @@
       "fluids": "#c:water"
     }
   ],
-  "fluid_result": [
-    {
-      "amount": 250,
-      "id": "ragium:synthetic_gas"
-    }
-  ],
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:synthetic_gas"
+  },
   "item_ingredient": [
     [
       "#c:coal",
       "#c:dusts/coal"
     ]
   ],
-  "item_result": [],
   "time": 200
 }

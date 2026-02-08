@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
+import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -10,6 +11,7 @@ import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPyrolyzingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -17,9 +19,13 @@ import net.minecraft.world.item.Items
 object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         charcoal()
+
         coal()
         crudeOil()
-        crudeBio()
+        methane()
+
+        crimson()
+        warped()
     }
 
     @JvmStatic
@@ -61,6 +67,23 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             itemResult = resultCreator.material(CommonTagPrefixes.BLOCK, CommonMaterialKeys.COAL_COKE)
             fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 2000)
         }
+        // Creosote + Redstone -> Lubricant
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
+            fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
+            result += resultCreator.create(RagiumFluids.LUBRICANT, 500)
+            time /= 2
+            recipeId suffix "_from_creosote_with_redstone"
+        }
+        // Creosote + Raginite -> Lubricant
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
+            fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
+            result += resultCreator.create(RagiumFluids.LUBRICANT, 750)
+            time /= 2
+            recipeId suffix "_from_creosote_with_raginite"
+        }
+
         // Coal + Water -> Synthetic Gas
         HTReactingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
@@ -71,7 +94,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         }
         // Synthetic Gas + H2O -> CO2 + 2x H2
         HTReactingRecipeBuilder.create(output) {
-            fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
+            fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
             fluidIngredients += inputCreator.water(1000)
             catalyst = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
             fluidResults += resultCreator.create(RagiumFluids.CARBON_DIOXIDE, 1000)
@@ -115,6 +138,62 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     }
 
     @JvmStatic
-    private fun crudeBio() {
+    private fun methane() {
+        // CH4 + Water -> Methanol
+        // CH4 + CO2 -> Synthetic Gas
+        HTReactingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
+            fluidIngredients += inputCreator.create(RagiumFluids.CARBON_DIOXIDE, 1000)
+            catalyst = listOf(CommonMaterialKeys.RUTHENIUM, CommonMaterialKeys.RHODIUM)
+                .map(CommonTagPrefixes.DUST::itemTagKey)
+                .let(inputCreator::create)
+            fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 2000)
+            recipeId replace RagiumAPI.id("dry_reforming")
+        }
+        // CH4 + H2O -> CO2 + 4x H2
+        HTReactingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
+            fluidIngredients += inputCreator.water(1000)
+            catalyst = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL)
+            fluidResults += resultCreator.create(RagiumFluids.CARBON_DIOXIDE, 1000)
+            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 4000)
+            recipeId suffix "_from_methane"
+        }
+    }
+
+    @JvmStatic
+    private fun crimson() {
+        // Crimson Stem -> Crimson Blood
+        HTPyrolyzingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(ItemTags.CRIMSON_STEMS, 8)
+            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 4)
+            fluidResult = resultCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
+            recipeId suffix "_from_crimson_stem"
+        }
+        // Crimson Dust + Lava -> Blaze Powder
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL)
+            fluidIngredients += inputCreator.lava(250)
+            result += resultCreator.create(Items.BLAZE_POWDER)
+            recipeId suffix "_from_crimson"
+        }
+    }
+
+    @JvmStatic
+    private fun warped() {
+        // Warped Stem -> Dew of the Warp
+        HTPyrolyzingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(ItemTags.WARPED_STEMS, 8)
+            itemResult = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 4)
+            fluidResult = resultCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
+            recipeId suffix "_from_warped_stem"
+        }
+        // Warped Dust + Lava -> Ender Pearl
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL)
+            fluidIngredients += inputCreator.lava(250)
+            result += resultCreator.create(Items.ENDER_PEARL)
+            recipeId suffix "_from_warped"
+        }
     }
 }

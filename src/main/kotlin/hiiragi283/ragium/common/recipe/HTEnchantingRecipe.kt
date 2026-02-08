@@ -2,7 +2,8 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.item.createEnchantedBook
-import hiiragi283.core.api.item.enchantment.buildEnchantments
+import hiiragi283.core.api.item.enchantment.toInstances
+import hiiragi283.core.api.monad.Either
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -22,25 +23,38 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 
-class HTEnchantingRecipe(val ingredient: HTItemIngredient, val enchantments: ItemEnchantments, parameters: SubParameters) :
-    HTProcessingRecipe<HTViewRecipeInput>(parameters) {
-    companion object {
-        @JvmStatic
-        fun createExpIngredient(enchantments: ItemEnchantments): HTFluidIngredient = HTIngredientCreator.create(
-            HCFluids.EXPERIENCE,
-            HTExperienceHelper.getTotalMaxCost(enchantments).let(HTExperienceHelper::fluidAmountFromExp),
-        )
-    }
+class HTEnchantingRecipe(
+    val ingredient: HTItemIngredient,
+    val contents: Either<Holder<Enchantment>, ItemEnchantments>,
+    parameters: SubParameters,
+) : HTProcessingRecipe<HTViewRecipeInput>(parameters) {
+    constructor(
+        ingredient: HTItemIngredient,
+        holder: Holder<Enchantment>,
+        parameters: SubParameters,
+    ) : this(ingredient, Either.Left(holder), parameters)
 
-    constructor(ingredient: HTItemIngredient, holder: Holder<Enchantment>, parameters: SubParameters) : this(
+    constructor(ingredient: HTItemIngredient, enchantments: ItemEnchantments, parameters: SubParameters) : this(
         ingredient,
-        buildEnchantments { set(holder, holder.value().maxLevel) },
+        Either.Right(enchantments),
         parameters,
     )
 
-    val instances: List<EnchantmentInstance> =
-        enchantments.entrySet().map { (holder: Holder<Enchantment>, level: Int) -> EnchantmentInstance(holder, level) }
-    val expIngredient: HTFluidIngredient by lazy { createExpIngredient(enchantments) }
+    val expIngredient: HTFluidIngredient by lazy {
+        val amount: Int = contents
+            .map(
+                { holder: Holder<Enchantment> ->
+                    val enchantment: Enchantment = holder.value()
+                    enchantment.getMaxCost(enchantment.maxLevel)
+                },
+                HTExperienceHelper::getTotalMaxCost,
+            ).let(HTExperienceHelper::fluidAmountFromExp)
+        HTIngredientCreator.create(HCFluids.EXPERIENCE, amount)
+    }
+
+    fun createEnchBook(): ItemStack = contents.map(::createEnchantedBook, ::createEnchantedBook)
+
+    //    HTProcessingRecipe    //
 
     override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
         val bool1: Boolean = expIngredient.test(input.getFluid(0))
@@ -51,11 +65,20 @@ class HTEnchantingRecipe(val ingredient: HTItemIngredient, val enchantments: Ite
 
     override fun assemble(input: HTViewRecipeInput, registries: HolderLookup.Provider): ItemStack {
         var stack: ItemStack = input.getItem(0)
+        val instances: List<EnchantmentInstance> = contents
+            .map(
+                { holder: Holder<Enchantment> ->
+                    listOf(EnchantmentInstance(holder, holder.value().maxLevel))
+                },
+                { enchantments: ItemEnchantments ->
+                    enchantments.toInstances()
+                },
+            )
         stack = stack.item.applyEnchantments(stack, instances)
         return stack
     }
 
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = createEnchantedBook(enchantments)
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = createEnchBook()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ENCHANTING
 

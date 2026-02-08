@@ -10,13 +10,9 @@
       "fluids": "#c:nitrogen"
     }
   ],
-  "fluid_result": [
-    {
-      "amount": 2000,
-      "id": "ragium:ammonia"
-    }
-  ],
-  "item_ingredient": [],
-  "item_result": [],
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:ammonia"
+  },
   "time": 200
 }

@@ -152,8 +152,8 @@ object RagiumItems {
         }
 
         with(HiiragiCoreAccess.INSTANCE.materialContents) {
-            modify(getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
-            modify(getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
+            modify(getItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT)!!, DataComponents.FOOD, Foods.BEEF)
+            modify(getItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)!!, DataComponents.FOOD, Foods.COOKED_BEEF)
         }
     }
 

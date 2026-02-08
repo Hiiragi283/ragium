@@ -58,10 +58,10 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         HTFoodCanType.entries.forEach(foodsCan::add)
         factory
             .apply(Tags.Items.FOODS_RAW_MEAT)
-            .add(contents.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT))
+            .add(contents.getItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT)!!)
         factory
             .apply(Tags.Items.FOODS_COOKED_MEAT)
-            .add(contents.getItemOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
+            .add(contents.getItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)!!)
         // Others
         RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
 

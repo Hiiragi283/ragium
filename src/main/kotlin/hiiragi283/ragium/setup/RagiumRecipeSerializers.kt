@@ -13,6 +13,7 @@ import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
+import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -36,6 +37,7 @@ import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
+import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
@@ -57,8 +59,8 @@ object RagiumRecipeSerializers {
     @JvmStatic
     private val COMPLEX_RESULT: MapBiCodec<RegistryFriendlyByteBuf, HTComplexResult> = MapBiCodecs
         .ior(
-            HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT),
-            HTFluidResult.CODEC.optionalFieldOf(HTConst.FLUID_RESULT),
+            HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT),
+            HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT),
         )
 
     @JvmStatic
@@ -183,15 +185,15 @@ object RagiumRecipeSerializers {
     @JvmStatic
     private fun chemIng(maxItem: Int, maxFluid: Int): MapBiCodec<RegistryFriendlyByteBuf, HTChemicalIngredient> = MapBiCodecs
         .ior(
-            HTItemIngredient.CODEC.listOf(0, maxItem).optionalFieldOf(HTConst.ITEM_INGREDIENT),
-            HTFluidIngredient.CODEC.listOf(0, maxFluid).optionalFieldOf(HTConst.FLUID_INGREDIENT),
+            HTItemIngredient.CODEC.listOf(0, maxItem).optionalFieldOf(HTConst.ITEM_INGREDIENT, listOf()),
+            HTFluidIngredient.CODEC.listOf(0, maxFluid).optionalFieldOf(HTConst.FLUID_INGREDIENT, listOf()),
         )
 
     @JvmStatic
     private fun chemRes(maxItem: Int, maxFluid: Int): MapBiCodec<RegistryFriendlyByteBuf, HTChemicalResult> = MapBiCodecs
         .ior(
-            HTItemResult.CODEC.listOrElement(0, maxItem).optionalFieldOf(HTConst.ITEM_RESULT),
-            HTFluidResult.CODEC.listOrElement(0, maxFluid).optionalFieldOf(HTConst.FLUID_RESULT),
+            HTItemResult.CODEC.listOrElement(0, maxItem).optionalFieldOf(HTConst.ITEM_RESULT, listOf()),
+            HTFluidResult.CODEC.listOrElement(0, maxFluid).optionalFieldOf(HTConst.FLUID_RESULT, listOf()),
         )
 
     @JvmField
@@ -253,10 +255,13 @@ object RagiumRecipeSerializers {
         RagiumConst.ENCHANTING,
         MapBiCodec.composite(
             HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTEnchantingRecipe::ingredient),
-            BiCodec
-                .of(ItemEnchantments.CODEC, ItemEnchantments.STREAM_CODEC)
-                .fieldOf("enchantment")
-                .forGetter(HTEnchantingRecipe::enchantments),
+            BiCodecs
+                .either(
+                    VanillaBiCodecs.holder(Registries.ENCHANTMENT),
+                    BiCodec.of(ItemEnchantments.CODEC, ItemEnchantments.STREAM_CODEC),
+                    true,
+                ).fieldOf("enchantment")
+                .forGetter(HTEnchantingRecipe::contents),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTEnchantingRecipe::parameters),
             ::HTEnchantingRecipe,
         ),

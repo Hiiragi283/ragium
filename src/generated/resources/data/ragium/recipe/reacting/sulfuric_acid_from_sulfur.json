@@ -6,14 +6,11 @@
       "fluids": "#c:water"
     }
   ],
-  "fluid_result": [
-    {
-      "id": "ragium:sulfuric_acid"
-    }
-  ],
+  "fluid_result": {
+    "id": "ragium:sulfuric_acid"
+  },
   "item_ingredient": [
     "#c:dusts/sulfur"
   ],
-  "item_result": [],
   "time": 200
 }

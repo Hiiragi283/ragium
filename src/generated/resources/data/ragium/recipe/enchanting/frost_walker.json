@@ -1,9 +1,9 @@
 {
   "type": "ragium:enchanting",
-  "enchantment": "minecraft:protection",
+  "enchantment": "minecraft:frost_walker",
   "ingredient": {
     "amount": 64,
-    "items": "#c:ingots/steel"
+    "items": "minecraft:packed_ice"
   },
   "time": 200
 }

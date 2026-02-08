@@ -3,7 +3,7 @@
   "catalyst": "#c:dusts/platinum",
   "fluid_ingredient": [
     {
-      "fluids": "#c:nitric_acid"
+      "fluids": "#c:ammonia"
     },
     {
       "amount": 2000,
@@ -18,7 +18,5 @@
       "id": "minecraft:water"
     }
   ],
-  "item_ingredient": [],
-  "item_result": [],
   "time": 200
 }

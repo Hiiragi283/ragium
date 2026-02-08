@@ -1,9 +1,9 @@
 {
   "type": "ragium:enchanting",
-  "enchantment": "minecraft:protection",
+  "enchantment": "minecraft:unbreaking",
   "ingredient": {
     "amount": 64,
-    "items": "#c:ingots/steel"
+    "items": "#c:obsidians"
   },
   "time": 200
 }

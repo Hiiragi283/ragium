@@ -1,9 +1,9 @@
 {
   "type": "ragium:reacting",
-  "catalyst": "#c:dusts/platinum",
+  "catalyst": "#c:dusts/nickel",
   "fluid_ingredient": [
     {
-      "fluids": "#c:synthetic_gas"
+      "fluids": "#c:methane"
     },
     {
       "fluids": "#c:water"
@@ -14,7 +14,7 @@
       "id": "ragium:carbon_dioxide"
     },
     {
-      "amount": 2000,
+      "amount": 4000,
       "id": "ragium:hydrogen"
     }
   ],

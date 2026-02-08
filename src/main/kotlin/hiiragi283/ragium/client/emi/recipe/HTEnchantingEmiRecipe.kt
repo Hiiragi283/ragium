@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.emi.recipe
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.emi.toEmi
-import hiiragi283.core.api.item.createEnchantedBook
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import net.minecraft.world.item.Items
@@ -16,7 +15,7 @@ class HTEnchantingEmiRecipe(holder: RecipeHolder<HTEnchantingRecipe>) :
         addInput(Items.BOOK.toEmi())
         addInput(recipe.ingredient)
 
-        addOutputs(createEnchantedBook(recipe.enchantments).toEmi())
+        addOutputs(recipe.createEnchBook().toEmi())
     }
 
     override fun addWidgets(widgets: WidgetHolder) {

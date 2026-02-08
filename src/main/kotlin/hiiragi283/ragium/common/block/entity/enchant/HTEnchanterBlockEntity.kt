@@ -1,12 +1,8 @@
 package hiiragi283.ragium.common.block.entity.enchant
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.data.recipe.HTIngredientCreator
-import hiiragi283.core.api.item.enchantment.buildEnchantments
-import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.input.HTViewRecipeInput
-import hiiragi283.core.api.registry.holderSetOrNull
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
@@ -28,19 +24,10 @@ import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderSet
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.tags.EnchantmentTags
-import net.minecraft.util.RandomSource
-import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
-import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.common.Tags
-import org.apache.commons.lang3.math.Fraction
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.ENCHANTER, pos, state) {
     private lateinit var expTank: HTBasicFluidTank
@@ -73,8 +60,6 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
-
-    private var isRandom: Boolean = false
 
     //    Processing    //
 
@@ -125,7 +110,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
          * @see net.minecraft.world.inventory.EnchantmentMenu
          */
         override fun getMatchedRecipe(input: HTViewRecipeInput, level: ServerLevel): HTEnchantingRecipe? {
-            if (isRandom) {
+            /*if (isRandom) {
                 val stack: ItemStack = input.getItem(0)
                 val cost: Int = EnchantmentHelper.getEnchantmentCost(
                     level.random,
@@ -139,11 +124,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
                 if (currentEnch.isEmpty()) return null
                 val recipe = HTEnchantingRecipe(
                     HTIngredientCreator.create(Tags.Items.ENCHANTING_FUELS, 3),
-                    buildEnchantments {
-                        for (instance: EnchantmentInstance in currentEnch) {
-                            set(instance.enchantment, instance.level)
-                        }
-                    },
+                    currentEnch,
                     HTProcessingRecipe.SubParameters(20 * 5, Fraction.ZERO),
                 )
                 if (!recipe.matches(input, level)) {
@@ -153,13 +134,14 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
                 return recipe
             } else {
                 return cache.getFirstRecipe(input, level)
-            }
+            }*/
+            return cache.getFirstRecipe(input, level)
         }
 
         /**
          * @see net.minecraft.world.inventory.EnchantmentMenu.getEnchantmentList
          */
-        private fun getEnchantmentList(level: ServerLevel, stack: ItemStack, cost: Int): List<EnchantmentInstance> {
+        /*private fun getEnchantmentList(level: ServerLevel, stack: ItemStack, cost: Int): List<EnchantmentInstance> {
             val holderSet: HolderSet<Enchantment> =
                 level.registryAccess().holderSetOrNull(EnchantmentTags.IN_ENCHANTING_TABLE) ?: return emptyList()
             val random: RandomSource = level.random
@@ -173,7 +155,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
                 enchantments.removeAt(random.nextInt(enchantments.size))
             }
             return enchantments
-        }
+        }*/
 
         override fun canProgressRecipe(level: ServerLevel, input: HTViewRecipeInput, recipe: HTEnchantingRecipe): Boolean =
             outputHandler.canInsert(recipe.assemble(input, level.registryAccess()))

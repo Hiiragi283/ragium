@@ -46,23 +46,6 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result += resultCreator.molten(HCMaterialKeys.ELDRITCH)
         }
 
-        // Creosote + Redstone -> Lubricant
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-            fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
-            result += resultCreator.create(RagiumFluids.LUBRICANT, 500)
-            time /= 2
-            recipeId suffix "_from_creosote_with_redstone"
-        }
-        // Creosote + Raginite -> Lubricant
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
-            fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
-            result += resultCreator.create(RagiumFluids.LUBRICANT, 750)
-            time /= 2
-            recipeId suffix "_from_creosote_with_raginite"
-        }
-
         waterMixing()
 
         eldritchMixing()
@@ -185,7 +168,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // NH3 + 2x O2 -> HNO3 + H2O
         HTReactingRecipeBuilder.create(output) {
-            fluidIngredients += inputCreator.create(RagiumFluids.NITRIC_ACID)
+            fluidIngredients += inputCreator.create(RagiumFluids.AMMONIA)
             fluidIngredients += inputCreator.create(RagiumFluids.OXYGEN, 2000)
             catalyst = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
             fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID)

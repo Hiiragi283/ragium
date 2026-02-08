@@ -5,18 +5,15 @@
       "fluids": "#c:sulfuric_acid"
     }
   ],
-  "fluid_result": [
-    {
-      "amount": 2000,
-      "id": "ragium:nitric_acid"
-    }
-  ],
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:nitric_acid"
+  },
   "item_ingredient": [
     {
       "amount": 2,
       "items": "#c:dusts/saltpeter"
     }
   ],
-  "item_result": [],
   "time": 200
 }

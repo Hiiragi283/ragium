@@ -1,9 +1,9 @@
 {
   "type": "ragium:enchanting",
-  "enchantment": "minecraft:protection",
+  "enchantment": "minecraft:silk_touch",
   "ingredient": {
     "amount": 64,
-    "items": "#c:ingots/steel"
+    "items": "#c:strings"
   },
   "time": 200
 }

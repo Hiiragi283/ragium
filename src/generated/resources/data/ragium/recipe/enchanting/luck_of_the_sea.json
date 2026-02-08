@@ -1,9 +1,9 @@
 {
   "type": "ragium:enchanting",
-  "enchantment": "minecraft:protection",
+  "enchantment": "minecraft:luck_of_the_sea",
   "ingredient": {
     "amount": 64,
-    "items": "#c:ingots/steel"
+    "items": "minecraft:prismarine_shard"
   },
   "time": 200
 }

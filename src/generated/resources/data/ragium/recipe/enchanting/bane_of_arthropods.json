@@ -1,9 +1,9 @@
 {
   "type": "ragium:enchanting",
-  "enchantment": "minecraft:protection",
+  "enchantment": "minecraft:bane_of_arthropods",
   "ingredient": {
     "amount": 64,
-    "items": "#c:ingots/steel"
+    "items": "#c:dusts/sulfur"
   },
   "time": 200
 }
