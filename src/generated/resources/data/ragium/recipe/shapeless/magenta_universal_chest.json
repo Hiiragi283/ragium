@@ -11,7 +11,7 @@
   ],
   "result": {
     "components": {
-      "ragium:color": "magenta"
+      "hiiragi_core:color": "magenta"
     },
     "count": 1,
     "id": "ragium:universal_chest"

@@ -12,7 +12,7 @@ import net.minecraft.world.level.material.Fluid
 
 class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>(RagiumAPI.MOD_ID, Registries.FLUID, context) {
     override fun addTagsInternal(factory: BuilderFactory<Fluid>) {
-        for (content: HTFluidContent<*, *, *> in RagiumFluids.REGISTER.asSequence()) {
+        for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             factory.apply(content.fluidTag).addContent(content)
         }
 
@@ -20,13 +20,18 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>
             .apply(RagiumTags.Fluids.ALCOHOL)
             .addContent(RagiumFluids.METHANOL)
             .addContent(RagiumFluids.ETHANOL)
+
+        factory
+            .apply(RagiumTags.Fluids.BIODIESEL)
+            .addContent(RagiumFluids.BIOFUEL)
+        factory
+            .apply(RagiumTags.Fluids.DIESEL)
+            .addContent(RagiumFluids.FUEL)
     }
 
-    fun HTTagBuilder<Fluid>.addContent(content: HTFluidContent<*, *, *>): HTTagBuilder<Fluid> {
+    fun HTTagBuilder<Fluid>.addContent(content: HTFluidContent): HTTagBuilder<Fluid> {
         this.add(content)
-        if (content is HTFluidContent.Flowing<*, *, *, *>) {
-            this.add(content.flowingHolder)
-        }
+        content.flowingHolder?.let(this::add)
         return this
     }
 }

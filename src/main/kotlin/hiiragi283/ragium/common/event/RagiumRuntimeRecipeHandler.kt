@@ -57,6 +57,9 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         for (entry: HTMaterialManager.Entry in materialManager) {
             alloyDustToIngot(event, entry)
 
+            bathDustToPrefix(event, entry, CommonTagPrefixes.GEM)
+            bathDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
+
             compressDustToGem(event, entry)
 
             crushBaseToDust(event, entry)
@@ -73,8 +76,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
 
             meltBaseToMolten(event, entry)
 
-            mixDustToPrefix(event, entry, CommonTagPrefixes.GEM)
-            mixDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
             mixFlourToDough(event, entry)
 
             pressBaseToPrefix(event, entry, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
@@ -136,6 +137,25 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 chance = fraction(1, 2)
             }
             recipeId suffix "_with_flux"
+        }
+    }
+
+    //    Bathing    //
+
+    @JvmStatic
+    private fun bathDustToPrefix(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
+        // 材料が存在するか判定
+        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+        if (!event.isPresentTag(crushedPrefix, entry)) return
+        // 完成品を取得
+        val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
+        // レシピを登録
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(crushedPrefix, entry)
+            fluidIngredient = inputCreator.water(125)
+            result = resultCreator.create(resultItem)
+            time /= 2
+            recipeId suffix "from_${crushedPrefix.name}"
         }
     }
 
@@ -423,7 +443,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         if (prefix != null) {
             fluidAmount = prefix.getScaledAmount(fluidAmount, entry).toInt()
         }
-        val molten: HTFluidContent<*, *, *> = entry[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: return
+        val molten: HTFluidContent = entry[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: return
         // レシピを登録
         HTSingleRecipeBuilder.melting(output) {
             ingredient = input
@@ -433,23 +453,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     }
 
     //    Mixing    //
-
-    @JvmStatic
-    private fun mixDustToPrefix(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
-        // 材料が存在するか判定
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
-        if (!event.isPresentTag(crushedPrefix, entry)) return
-        // 完成品を取得
-        val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
-        // レシピを登録
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(crushedPrefix, entry)
-            fluidIngredients += inputCreator.water(125)
-            result += resultCreator.create(resultItem)
-            time /= 2
-            recipeId suffix "from_${crushedPrefix.name}"
-        }
-    }
 
     @JvmStatic
     private fun mixFlourToDough(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
@@ -477,7 +480,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         moldType: HTMoldType,
     ) {
         // 素材のプロパティから材料を取得
-        val molten: HTFluidContent<*, *, *> = entry[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: return
+        val molten: HTFluidContent = entry[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: return
         // プレフィックスと素材のプロパティから液体量を算出
         val fluidAmount: Int = prefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
         // レシピを登録

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:bathing",
+  "catalyst": "#c:obsidians/normal",
+  "ingredient": {
+    "amount": 90,
+    "fluids": "#c:molten_eldritch"
+  },
+  "result": {
+    "id": "minecraft:crying_obsidian"
+  },
+  "time": 100
+}

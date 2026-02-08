@@ -2,13 +2,13 @@ package hiiragi283.ragium.client.emi.recipe
 
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.integration.emi.HTEmiHolderRecipe
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
+import hiiragi283.ragium.client.emi.recipe.base.HTProcessingEmiRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTAssemblingEmiRecipe(holder: RecipeHolder<HTAssemblingRecipe>) :
-    HTEmiHolderRecipe<HTAssemblingRecipe>(RagiumEmiRecipeCategories.ASSEMBLING, holder) {
+    HTProcessingEmiRecipe<HTAssemblingRecipe>(RagiumEmiRecipeCategories.ASSEMBLING, holder) {
     init {
         addInput(recipe.fluidIngredient)
         recipe.itemIngredients.forEach(::addInput)

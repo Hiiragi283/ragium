@@ -7,6 +7,7 @@ import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPyrolyzingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTReactingRecipeBuilder
@@ -126,13 +127,13 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         }
         // Crude Oil + C2H4 + Naphtha + Residue Oil
 
-        // Naphtha -> Gasoline
+        // Naphtha -> Fuel
         HTSingleRecipeBuilder.refining(output) {
             ingredient = inputCreator.create(RagiumFluids.NAPHTHA, 500)
-            result = resultCreator.create(RagiumFluids.GASOLINE, 250)
+            result = resultCreator.create(RagiumFluids.FUEL, 250)
             recipeId suffix "_from_naphtha"
         }
-        // Naphtha -> C2H4 + C4H6 + Gasoline
+        // Naphtha -> C2H4 + C4H6 + Fuel
 
         // Residue Oil -> Lubricant  Asphalt
     }
@@ -171,10 +172,10 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId suffix "_from_crimson_stem"
         }
         // Crimson Dust + Lava -> Blaze Powder
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL)
-            fluidIngredients += inputCreator.lava(250)
-            result += resultCreator.create(Items.BLAZE_POWDER)
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL)
+            fluidIngredient = inputCreator.lava(250)
+            result = resultCreator.create(Items.BLAZE_POWDER)
             recipeId suffix "_from_crimson"
         }
     }
@@ -189,10 +190,10 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId suffix "_from_warped_stem"
         }
         // Warped Dust + Lava -> Ender Pearl
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL)
-            fluidIngredients += inputCreator.lava(250)
-            result += resultCreator.create(Items.ENDER_PEARL)
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL)
+            fluidIngredient = inputCreator.lava(250)
+            result = resultCreator.create(Items.ENDER_PEARL)
             recipeId suffix "_from_warped"
         }
     }

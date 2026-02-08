@@ -21,6 +21,7 @@ import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -195,6 +196,18 @@ object RagiumRecipeSerializers {
             HTItemResult.CODEC.listOrElement(0, maxItem).optionalFieldOf(HTConst.ITEM_RESULT, listOf()),
             HTFluidResult.CODEC.listOrElement(0, maxFluid).optionalFieldOf(HTConst.FLUID_RESULT, listOf()),
         )
+
+    @JvmField
+    val BATHING: RecipeSerializer<HTBathingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.BATHING,
+        MapBiCodec.composite(
+            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTBathingRecipe::fluidIngredient),
+            HTItemIngredient.CODEC.fieldOf(HTConst.CATALYST).forGetter(HTBathingRecipe::itemIngredient),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBathingRecipe::result),
+            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTBathingRecipe::parameters),
+            ::HTBathingRecipe,
+        ),
+    )
 
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(

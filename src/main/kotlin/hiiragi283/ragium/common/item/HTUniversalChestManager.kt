@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.serialization.value.HTValueSerializable
@@ -10,12 +11,11 @@ import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.core.Direction
 import net.minecraft.server.MinecraftServer
-import net.minecraft.world.item.DyeColor
 
-class HTUniversalChestManager private constructor(private val map: MutableMap<DyeColor, HTItemHandler>) : HTValueSerializable {
+class HTUniversalChestManager private constructor(private val map: MutableMap<HTDefaultColor, HTItemHandler>) : HTValueSerializable {
     companion object {
         @JvmStatic
-        fun getHandler(server: MinecraftServer, color: DyeColor): HTItemHandler =
+        fun getHandler(server: MinecraftServer, color: HTDefaultColor): HTItemHandler =
             server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_CHEST).getHandler(color)
 
         @JvmStatic
@@ -24,10 +24,10 @@ class HTUniversalChestManager private constructor(private val map: MutableMap<Dy
 
     constructor() : this(mutableMapOf())
 
-    fun getHandler(color: DyeColor): HTItemHandler = map.computeIfAbsent(color) { ChestHandler() }
+    fun getHandler(color: HTDefaultColor): HTItemHandler = map.computeIfAbsent(color) { ChestHandler() }
 
     override fun serialize(output: HTValueOutput) {
-        for (color: DyeColor in DyeColor.entries) {
+        for (color: HTDefaultColor in HTDefaultColor.entries) {
             val outputIn: HTValueOutput = output.child(color.serializedName)
             val handler: HTItemHandler = getHandler(color)
             HTCapabilityCodec.ITEM.saveTo(outputIn, handler.getItemSlots(handler.getItemSideFor()))
@@ -35,7 +35,7 @@ class HTUniversalChestManager private constructor(private val map: MutableMap<Dy
     }
 
     override fun deserialize(input: HTValueInput) {
-        for (color: DyeColor in DyeColor.entries) {
+        for (color: HTDefaultColor in HTDefaultColor.entries) {
             val inputIn: HTValueInput = input.child(color.serializedName) ?: continue
             val handler: HTItemHandler = getHandler(color)
             HTCapabilityCodec.ITEM.loadFrom(inputIn, handler.getItemSlots(handler.getItemSideFor()))

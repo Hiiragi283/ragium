@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.emi.recipe
+package hiiragi283.ragium.client.emi.recipe.base
 
 import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.widget.WidgetHolder

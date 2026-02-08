@@ -16,6 +16,12 @@ object RagiumTags {
         @JvmField
         val ALCOHOL: TagKey<Fluid> = common("alcohol")
 
+        @JvmField
+        val BIODIESEL: TagKey<Fluid> = common("biodiesel")
+
+        @JvmField
+        val DIESEL: TagKey<Fluid> = common("diesel")
+
         @JvmStatic
         private fun common(vararg path: String): TagKey<Fluid> = Registries.FLUID.createTagKey(HTConst.COMMON.toId(*path))
 

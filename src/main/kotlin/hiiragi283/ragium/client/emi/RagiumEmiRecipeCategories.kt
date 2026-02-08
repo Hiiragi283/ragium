@@ -82,6 +82,9 @@ object RagiumEmiRecipeCategories {
 
     // Machine - Chemical
     @JvmField
+    val BATHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.BATHING, RagiumBlocks.MIXER)
+
+    @JvmField
     val MIXING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField

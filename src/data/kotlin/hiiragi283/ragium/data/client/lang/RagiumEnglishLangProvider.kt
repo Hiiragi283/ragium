@@ -79,10 +79,11 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         addFluid(RagiumFluids.METHANOL, "Methanol")
         addFluid(RagiumFluids.ETHANOL, "Ethanol")
 
+        addFluid(RagiumFluids.FUEL, "Fuel")
+        addFluid(RagiumFluids.LUBRICANT, "Lubricant")
+
         addFluid(RagiumFluids.SUNFLOWER_OIL, "Sunflower Oil")
         addFluid(RagiumFluids.BIOFUEL, "Biofuel")
-        addFluid(RagiumFluids.GASOLINE, "Gasoline")
-        addFluid(RagiumFluids.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluids.COOLANT, "Coolant")
         addFluid(RagiumFluids.MOLTEN_RAGINITE, "Destabilized Raginite")
@@ -106,19 +107,23 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
-        add(RagiumRecipeTypes.COMPRESSING, "Implosion Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
-        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
-        add(RagiumRecipeTypes.MELTING, "Melting")
-        add(RagiumRecipeTypes.MIXING, "Mixing")
-        add(RagiumRecipeTypes.PLANTING, "Planting")
         add(RagiumRecipeTypes.PRESSING, "Pressing")
+
+        add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
-        add(RagiumRecipeTypes.REACTING, "Chemical Reacting")
         add(RagiumRecipeTypes.REFINING, "Refining")
         add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
+
+        add(RagiumRecipeTypes.BATHING, "Bathing")
+        add(RagiumRecipeTypes.MIXING, "Mixing")
+        add(RagiumRecipeTypes.REACTING, "Chemical Reacting")
         add(RagiumRecipeTypes.WASHING, "Washing")
+
+        add(RagiumRecipeTypes.COMPRESSING, "Implosion Compressing")
+        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
+        add(RagiumRecipeTypes.PLANTING, "Planting")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.function.partially2
 import hiiragi283.core.api.text.HTTranslation
@@ -7,6 +8,7 @@ import hiiragi283.core.common.registry.HTBasicDeferredBlock
 import hiiragi283.core.common.registry.HTDeferredBlock
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
+import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -26,7 +28,6 @@ import hiiragi283.ragium.common.item.block.HTResonantInterfaceBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
 import net.minecraft.world.food.Foods
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
@@ -173,7 +174,7 @@ object RagiumBlocks {
         machine(),
         ::HTUniversalChestBlock,
         ::HTUniversalChestBlockItem,
-    ) { it.component(RagiumDataComponents.COLOR, DyeColor.WHITE) }
+    ) { it.component(HCDataComponents.COLOR, HTDefaultColor.WHITE) }
 
     //    Utilities    //
 

@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.text.toText
+import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.core.util.HTItemDropHelper
 import hiiragi283.ragium.api.block.entity.HTTargetedBlockEntity
-import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
 import net.minecraft.network.chat.Component
@@ -24,15 +24,15 @@ class HTLocationTicketItem(properties: Properties) : Item(properties) {
         if (!level.isClientSide) {
             if (!player.isShiftKeyDown) {
                 // チケットの座標をブロックに書き込む
-                val location: GlobalPos = stack.get(RagiumDataComponents.LOCATION) ?: return InteractionResult.PASS
+                val location: GlobalPos = stack.get(HCDataComponents.LOCATION) ?: return InteractionResult.PASS
                 (level.getBlockEntity(pos) as? HTTargetedBlockEntity)?.updateTarget(location)
             } else {
                 // チケットに座標を書き込む
                 val pos = GlobalPos(level.dimension(), pos)
-                if (stack.count == 1 || stack.has(RagiumDataComponents.LOCATION)) {
-                    stack.set(RagiumDataComponents.LOCATION, pos)
+                if (stack.count == 1 || stack.has(HCDataComponents.LOCATION)) {
+                    stack.set(HCDataComponents.LOCATION, pos)
                 } else {
-                    val newStack: ItemStack = createItemStack(this, RagiumDataComponents.LOCATION, pos)
+                    val newStack: ItemStack = createItemStack(this, HCDataComponents.LOCATION, pos)
                     HTItemDropHelper.giveStackTo(player, newStack)
                     stack.consume(1, player)
                 }
@@ -48,11 +48,11 @@ class HTLocationTicketItem(properties: Properties) : Item(properties) {
         flag: TooltipFlag,
     ) {
         stack
-            .get(RagiumDataComponents.LOCATION)
+            .get(HCDataComponents.LOCATION)
             ?.let(GlobalPos::toString)
             ?.let(String::toText)
             ?.let(tooltips::add) // TODO
     }
 
-    override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || stack.has(RagiumDataComponents.LOCATION)
+    override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || stack.has(HCDataComponents.LOCATION)
 }

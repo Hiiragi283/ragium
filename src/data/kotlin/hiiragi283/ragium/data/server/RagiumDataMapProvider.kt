@@ -107,19 +107,19 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(RagiumFluids.CREOSOTE, lowest)
             // low
             .add("oil", low)
-            .add(RagiumFluids.SYNTHETIC_OIL, low)
             .add(RagiumFluids.CRUDE_OIL, low)
+            .add(RagiumFluids.SYNTHETIC_OIL, low)
             .add(RagiumTags.Fluids.ALCOHOL, medium, false)
             // medium
             .add("bioethanol", medium)
-            .add(RagiumFluids.SYNTHETIC_GAS, medium)
-            .add(RagiumFluids.ETHYLENE, medium)
             .add("lpg", medium)
+            .add(RagiumFluids.ETHYLENE, medium)
             .add(RagiumFluids.METHANE, medium)
+            .add(RagiumFluids.SYNTHETIC_GAS, medium)
             // high
-            .add("biodiesel", high)
-            .add("diesel", high)
-            .add(RagiumFluids.GASOLINE, high)
+            .add(RagiumFluids.FUEL, high)
+            .add(RagiumTags.Fluids.BIODIESEL, high, false)
+            .add(RagiumTags.Fluids.DIESEL, high, false)
             // highest
             .add("high_power_biodiesel", highest)
     }
@@ -210,8 +210,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         add(prefix.itemTagKey(key), value, false)
 
     // Fluid
-    private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent<*, *, *>, value: T): Builder<T, Fluid> =
-        add(content.fluidTag, value, false)
+    private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent, value: T): Builder<T, Fluid> = add(content.fluidTag, value, false)
 
     private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> =
         add(Registries.FLUID.createCommonTag(path), value, false)

@@ -77,7 +77,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
     }
 
     private fun registerBuckets() {
-        val dripFluids: List<HTFluidContent<*, *, *>> = buildList {
+        val dripFluids: List<HTFluidContent> = buildList {
             // Oil
             add(RagiumFluids.CRUDE_OIL)
             add(RagiumFluids.LUBRICANT)
@@ -87,7 +87,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             // Misc
             add(RagiumFluids.MOLTEN_RAGINITE)
         }
-        for (content: HTFluidContent<*, *, *> in RagiumFluids.REGISTER.entries) {
+        for (content: HTFluidContent in RagiumFluids.REGISTER.entries) {
             bucketItem(content, content in dripFluids)
         }
     }

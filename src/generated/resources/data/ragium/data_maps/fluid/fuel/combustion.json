@@ -7,7 +7,7 @@
     "#c:crude_oil": 120,
     "#c:diesel": 360,
     "#c:ethylene": 240,
-    "#c:gasoline": 360,
+    "#c:fuel": 360,
     "#c:high_power_biodiesel": 480,
     "#c:lpg": 240,
     "#c:methane": 240,

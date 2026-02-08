@@ -1,10 +1,12 @@
 package hiiragi283.ragium.client
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.event.HTRegisterWidgetRendererEvent
 import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
+import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.widget.HTEnergyBarWidgetRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
@@ -12,13 +14,11 @@ import hiiragi283.ragium.client.render.block.HTTankRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumWidgetTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.BlockAndTintGetter
@@ -53,11 +53,11 @@ data object RagiumClient : HTClientMod() {
                 when {
                     tint != 0 -> -1
                     getter != null && pos != null -> {
-                        val color: DyeColor = getter
+                        val color: HTDefaultColor = getter
                             .getTypedBlockEntity<HTUniversalChestBlockEntity>(pos)
                             ?.color
-                            ?: DyeColor.WHITE
-                        color.textureDiffuseColor
+                            ?: HTDefaultColor.WHITE
+                        color.dyeColor.textureDiffuseColor
                     }
                     else -> -1
                 }
@@ -88,7 +88,7 @@ data object RagiumClient : HTClientMod() {
             { stack: ItemStack, tint: Int ->
                 when {
                     tint != 0 -> -1
-                    else -> stack.get(RagiumDataComponents.COLOR)?.textureDiffuseColor ?: -1
+                    else -> stack.get(HCDataComponents.COLOR)?.dyeColor?.textureDiffuseColor ?: -1
                 }
             },
             RagiumBlocks.UNIVERSAL_CHEST,
@@ -123,10 +123,11 @@ data object RagiumClient : HTClientMod() {
         event.dull(RagiumFluids.METHANOL, Color(0xcc6699))
         event.dull(RagiumFluids.ETHANOL, Color(0x99cc66))
 
+        event.clear(RagiumFluids.FUEL, Color(0xcccc00))
+        event.dull(RagiumFluids.LUBRICANT, Color(0xff6600))
+
         event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
         event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
-        event.clear(RagiumFluids.GASOLINE, Color(0xcccc00))
-        event.dull(RagiumFluids.LUBRICANT, Color(0xff6600))
 
         event.clear(RagiumFluids.COOLANT, Color(0x009999))
         event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
@@ -143,15 +144,15 @@ data object RagiumClient : HTClientMod() {
 
     //    Extensions    //
 
-    private fun RegisterClientExtensionsEvent.clear(content: HTFluidContent<*, *, *>, color: Color) {
+    private fun RegisterClientExtensionsEvent.clear(content: HTFluidContent, color: Color) {
         this.registerFluidType(HTSimpleFluidExtensions.clear(color), content.getFluidType())
     }
 
-    private fun RegisterClientExtensionsEvent.dull(content: HTFluidContent<*, *, *>, color: Color) {
+    private fun RegisterClientExtensionsEvent.dull(content: HTFluidContent, color: Color) {
         this.registerFluidType(HTSimpleFluidExtensions.dull(color), content.getFluidType())
     }
 
-    private fun RegisterClientExtensionsEvent.molten(content: HTFluidContent<*, *, *>, color: Color) {
+    private fun RegisterClientExtensionsEvent.molten(content: HTFluidContent, color: Color) {
         this.registerFluidType(HTSimpleFluidExtensions.molten(color), content.getFluidType())
     }
 }

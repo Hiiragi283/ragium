@@ -4,6 +4,7 @@ import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.emi.RagiumEmiTextures
+import hiiragi283.ragium.client.emi.recipe.base.HTItemToChancedEmiRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 

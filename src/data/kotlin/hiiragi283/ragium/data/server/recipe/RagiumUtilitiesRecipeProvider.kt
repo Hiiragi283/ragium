@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.holder.HTIngredientHolder
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
@@ -22,12 +23,10 @@ import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
@@ -226,11 +225,11 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             resultStack += RagiumBlocks.UNIVERSAL_CHEST
         }
 
-        for (color: DyeColor in DyeColor.entries) {
+        for (color: HTDefaultColor in HTDefaultColor.entries) {
             HTShapelessRecipeBuilder.create(output) {
                 ingredients += RagiumBlocks.UNIVERSAL_CHEST
-                ingredients += color.tag
-                resultStack += createItemStack(RagiumBlocks.UNIVERSAL_CHEST, RagiumDataComponents.COLOR, color)
+                ingredients += color.dyesTag
+                resultStack += createItemStack(RagiumBlocks.UNIVERSAL_CHEST, HCDataComponents.COLOR, color)
                 recipeId prefix "${color.serializedName}_"
             }
         }

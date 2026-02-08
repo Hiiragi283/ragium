@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.client.model
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTBlockStateProvider
-import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.resource.blockId
 import hiiragi283.core.api.resource.toId
@@ -59,10 +58,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         cutoutSimpleBlock(RagiumBlocks.IMITATION_SPAWNER)
 
         // Fluid
-        RagiumFluids.REGISTER
-            .asSequence()
-            .filterIsInstance<HTFluidContent.Flowing<*, *, *, *>>()
-            .forEach(::liquidBlock)
+        RagiumFluids.REGISTER.asSequence().forEach(::liquidBlock)
     }
 
     private fun registerMaterials() {

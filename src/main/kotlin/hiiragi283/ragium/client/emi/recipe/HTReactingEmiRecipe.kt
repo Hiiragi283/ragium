@@ -5,6 +5,7 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
+import hiiragi283.ragium.client.emi.recipe.base.HTChemicalEmiRecipe
 import hiiragi283.ragium.common.recipe.HTReactingRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import net.minecraft.world.item.crafting.RecipeHolder

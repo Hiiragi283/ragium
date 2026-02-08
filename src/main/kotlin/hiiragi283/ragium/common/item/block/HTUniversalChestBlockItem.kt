@@ -1,17 +1,17 @@
 package hiiragi283.ragium.common.item.block
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.item.HTDescriptionBlockItem
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.common.gui.factory.HTItemWidgetHolderContext
+import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
-import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
@@ -28,8 +28,8 @@ class HTUniversalChestBlockItem(block: HTUniversalChestBlock, properties: Proper
     //    HTSubCreativeTabContents    //
 
     override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
-        DyeColor.entries
-            .map { color: DyeColor -> createItemStack(baseItem, RagiumDataComponents.COLOR, color) }
+        HTDefaultColor.entries
+            .map { color: HTDefaultColor -> createItemStack(baseItem, HCDataComponents.COLOR, color) }
             .forEach(context)
     }
 

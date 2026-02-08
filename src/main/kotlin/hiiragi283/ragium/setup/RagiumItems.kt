@@ -12,6 +12,7 @@ import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.core.common.storage.component.HTComponentHandler
 import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
 import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
+import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
@@ -216,5 +217,5 @@ object RagiumItems {
     //    Extensions    //
 
     private fun Item.Properties.description(translation: HTTranslation): Item.Properties =
-        this.component(RagiumDataComponents.DESCRIPTION, translation)
+        this.component(HCDataComponents.DESCRIPTION, translation)
 }

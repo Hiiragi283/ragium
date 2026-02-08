@@ -79,10 +79,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         addFluid(RagiumFluids.METHANOL, "メタノール")
         addFluid(RagiumFluids.ETHANOL, "エタノール")
 
+        addFluid(RagiumFluids.FUEL, "燃料")
+        addFluid(RagiumFluids.LUBRICANT, "潤滑油")
+
         addFluid(RagiumFluids.SUNFLOWER_OIL, "ヒマワリ油")
         addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
-        addFluid(RagiumFluids.GASOLINE, "ガソリン")
-        addFluid(RagiumFluids.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluids.COOLANT, "冷却液")
         addFluid(RagiumFluids.MOLTEN_RAGINITE, "不安定化ラギナイト")
@@ -106,19 +107,23 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider.Japanese(o
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.ASSEMBLING, "組立")
-        add(RagiumRecipeTypes.COMPRESSING, "爆縮")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
-        add(RagiumRecipeTypes.MELTING, "溶融")
-        add(RagiumRecipeTypes.MIXING, "混合")
-        add(RagiumRecipeTypes.PLANTING, "栽培")
         add(RagiumRecipeTypes.PRESSING, "プレス加工")
+
+        add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
-        add(RagiumRecipeTypes.REACTING, "化学反応")
         add(RagiumRecipeTypes.REFINING, "精製")
         add(RagiumRecipeTypes.SOLIDIFYING, "成型")
+
+        add(RagiumRecipeTypes.BATHING, "化学浴")
+        add(RagiumRecipeTypes.MIXING, "混合")
+        add(RagiumRecipeTypes.REACTING, "化学反応")
         add(RagiumRecipeTypes.WASHING, "洗浄")
+
+        add(RagiumRecipeTypes.COMPRESSING, "爆縮")
+        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
+        add(RagiumRecipeTypes.PLANTING, "栽培")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")

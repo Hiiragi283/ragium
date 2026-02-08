@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.emi.recipe
+package hiiragi283.ragium.client.emi.recipe.base
 
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient

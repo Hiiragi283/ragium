@@ -111,7 +111,7 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     private fun meltAndSolidify(
         input: HTItemIngredient,
         result: HTItemResult,
-        fluid: HTFluidContent<*, *, *>,
+        fluid: HTFluidContent,
         amount: Int,
         mold: HTMoldType,
         suffix: String,
