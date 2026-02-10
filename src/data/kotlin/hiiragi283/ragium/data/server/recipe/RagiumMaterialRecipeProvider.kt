@@ -8,6 +8,8 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.data.recipe.builder.HTCookingRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
+import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTFoodCanType
@@ -21,6 +23,7 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     override fun buildRecipeInternal() {
         raginite()
         meat()
+        stainless()
     }
 
     @JvmStatic
@@ -75,6 +78,34 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
         // Food Cans
         for ((canType: HTFoodCanType, item: ItemLike) in RagiumItems.FOOD_CANS) {
+        }
+    }
+
+    @JvmStatic
+    private fun stainless() {
+        // Stainless
+        HTShapelessRecipeBuilder.create(output) {
+            repeat(6) {
+                ingredients += CommonTagPrefixes.DUST to VanillaMaterialKeys.IRON
+            }
+            repeat(2) {
+                ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.NICKEL
+            }
+            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.CHROMIUM
+            resultStack += getOrThrow(CommonTagPrefixes.DUST, CommonMaterialKeys.STAINLESS_STEEL) to 9
+        }
+        // Stainless from Invar
+        HTShapelessRecipeBuilder.create(output) {
+            repeat(6) {
+                ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.INVAR
+            }
+            repeat(2) {
+                ingredients += CommonTagPrefixes.DUST to VanillaMaterialKeys.IRON
+                ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.CHROMIUM
+            }
+            resultStack += getOrThrow(CommonTagPrefixes.DUST, CommonMaterialKeys.STAINLESS_STEEL) to 9
+            conditions += CommonTagPrefixes.DUST to CommonMaterialKeys.INVAR
+            recipeId suffix "_from_invar"
         }
     }
 

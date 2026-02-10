@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:block_mold",
+  "ingredient": {
+    "fluids": "#c:honey"
+  },
+  "result": {
+    "id": "minecraft:honey_block"
+  },
+  "time": 200
+}

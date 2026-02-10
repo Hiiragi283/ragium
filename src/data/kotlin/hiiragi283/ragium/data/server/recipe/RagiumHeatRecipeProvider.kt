@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTFluidContent
@@ -15,10 +16,18 @@ import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
+        vanilla()
+        hiiragi()
+    }
+
+    @JvmStatic
+    private fun vanilla() {
         // Water
         HTSingleRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Items.SNOW_BLOCK)
@@ -27,23 +36,16 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             recipeId suffix "_from_snow_block"
         }
 
-        meltAndSolidify(
-            inputCreator.create(Items.SNOWBALL),
-            resultCreator.create(Items.SNOWBALL),
-            VanillaFluidContents.WATER,
-            250,
-            HTMoldType.BALL,
-            "snowball",
-            20,
-        )
-        meltAndSolidify(
-            inputCreator.create(Items.ICE),
-            resultCreator.create(Items.ICE),
-            VanillaFluidContents.WATER,
-            1000,
-            HTMoldType.BLOCK,
-            "ice",
-        )
+        meltAndSolidify(Items.SNOWBALL, VanillaFluidContents.WATER, 250, HTMoldType.BALL, "snowball", 20)
+        meltAndSolidify(Items.ICE, VanillaFluidContents.WATER, 1000, HTMoldType.BLOCK, "ice")
+
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
+            fluidIngredient = inputCreator.water(250)
+            result = resultCreator.create(HTPotionHelper.createPotion(Items.POTION, Potions.WATER))
+            time /= 4
+            recipeId replace id("water_bottle")
+        }
         // Lava
         HTSingleRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES))
@@ -67,6 +69,37 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             itemIngredient = inputCreator.create(HTMoldType.BLOCK)
             result = resultCreator.create(Items.OBSIDIAN)
         }
+    }
+
+    @JvmStatic
+    private fun hiiragi() {
+        // Experience
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
+            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
+            result = resultCreator.create(Items.EXPERIENCE_BOTTLE)
+        }
+        // Honey
+        meltAndSolidify(Items.HONEY_BLOCK, HCFluids.HONEY, 1000, HTMoldType.BLOCK, "block")
+
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
+            fluidIngredient = inputCreator.create(HCFluids.HONEY, 250)
+            result = resultCreator.create(Items.HONEY_BOTTLE)
+        }
+        // Mushroom Stew
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Items.BOWL)
+            fluidIngredient = inputCreator.create(HCFluids.MUSHROOM_STEW, 250)
+            result = resultCreator.create(Items.MUSHROOM_STEW)
+        }
+        // Dragon Breath
+        HTFluidWithItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
+            fluidIngredient = inputCreator.create(HCFluids.DRAGON_BREATH, 250)
+            result = resultCreator.create(Items.DRAGON_BREATH)
+        }
+
         // Latex
         HTFluidWithItemRecipeBuilder.solidifying(output) {
             fluidIngredient = inputCreator.create(HCFluids.LATEX, 1000)
@@ -105,6 +138,28 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
                 recipeId suffix "/$i"
             }
         }
+    }
+
+    //    Extensions    //
+
+    @JvmStatic
+    private fun meltAndSolidify(
+        item: ItemLike,
+        fluid: HTFluidContent,
+        amount: Int,
+        mold: HTMoldType,
+        suffix: String,
+        time: Int = 20 * 10,
+    ) {
+        meltAndSolidify(
+            inputCreator.create(item),
+            resultCreator.create(item),
+            fluid,
+            amount,
+            mold,
+            suffix,
+            time,
+        )
     }
 
     @JvmStatic

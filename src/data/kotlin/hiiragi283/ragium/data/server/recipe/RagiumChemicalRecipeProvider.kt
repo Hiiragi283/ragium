@@ -1,14 +1,16 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
+import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
@@ -17,21 +19,20 @@ import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
 
 object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
+        bathing()
         mixing()
         washing()
-
         reacting()
     }
 
-    //    Mixing    //
+    //    Bathing    //
 
     @JvmStatic
-    private fun mixing() {
+    private fun bathing() {
         // Diamond + Raginite -> Ragi-Crystal
         HTFluidWithItemRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.DIAMOND)
@@ -39,21 +40,13 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result = resultCreator.material(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
         }
 
-        // Eldritch Flux
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
-            result += resultCreator.molten(HCMaterialKeys.ELDRITCH)
-        }
+        waterBathing()
 
-        waterMixing()
-
-        eldritchMixing()
+        eldritchBathing()
     }
 
     @JvmStatic
-    private fun waterMixing() {
+    private fun waterBathing() {
         // Cobblestone -> Mossy
         HTFluidWithItemRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Tags.Items.COBBLESTONES_NORMAL)
@@ -85,18 +78,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result = resultCreator.create(Items.PAPER)
             time /= 2
         }
-        // Bottle -> Water Bottle
-        HTFluidWithItemRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
-            fluidIngredient = inputCreator.water(250)
-            result = resultCreator.create(HTPotionHelper.createPotion(Items.POTION, Potions.WATER))
-            time /= 4
-            recipeId replace id("water_bottle")
-        }
     }
 
     @JvmStatic
-    private fun eldritchMixing() {
+    private fun eldritchBathing() {
         // Obsidian -> Crying Obsidian
         HTFluidWithItemRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Tags.Items.OBSIDIANS_NORMAL)
@@ -121,6 +106,27 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             itemIngredient = inputCreator.create(Items.TRIAL_KEY)
             fluidIngredient = inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 4 }
             result = resultCreator.create(Items.OMINOUS_TRIAL_KEY)
+        }
+    }
+
+    //    Mixing    //
+
+    @JvmStatic
+    private fun mixing() {
+        // Eldritch Flux
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
+            fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
+            fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
+            result += resultCreator.molten(HCMaterialKeys.ELDRITCH)
+        }
+        // Liquid Dyes
+        for ((color: HTDefaultColor, content: HTFluidContent) in HCFluids.DYE) {
+            HTMixingRecipeBuilder.create(output) {
+                itemIngredients += inputCreator.create(color.dyesTag)
+                fluidIngredients += inputCreator.water(250)
+                result += resultCreator.create(content, 250)
+            }
         }
     }
 

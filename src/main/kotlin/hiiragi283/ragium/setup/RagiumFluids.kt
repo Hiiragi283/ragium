@@ -11,7 +11,6 @@ import net.minecraft.world.level.pathfinder.PathType
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.common.SoundActions
 import net.neoforged.neoforge.fluids.FluidType
-import java.util.function.UnaryOperator
 
 object RagiumFluids {
     @JvmField
@@ -83,7 +82,7 @@ object RagiumFluids {
             .motionScale(0.0001)
         typeFactory = ::HTExplosiveFluidType.partially1(2f)
 
-        blockProperties = UnaryOperator { it.speedFactor(0.4f) }
+        blockProperties = { it.speedFactor(0.4f) }
     }
 
     @JvmField

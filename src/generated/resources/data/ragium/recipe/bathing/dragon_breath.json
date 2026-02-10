@@ -1,0 +1,12 @@
+{
+  "type": "ragium:bathing",
+  "catalyst": "minecraft:glass_bottle",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:dragon_breath"
+  },
+  "result": {
+    "id": "minecraft:dragon_breath"
+  },
+  "time": 100
+}

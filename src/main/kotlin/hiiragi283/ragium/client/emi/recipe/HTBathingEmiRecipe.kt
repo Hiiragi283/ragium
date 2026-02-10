@@ -14,6 +14,6 @@ class HTBathingEmiRecipe(holder: RecipeHolder<HTBathingRecipe>) :
     }
 
     override fun setupItemInput(widgets: WidgetHolder) {
-        widgets.addSlot(input(0), getPosition(1.5), getPosition(0.5), HTBackgroundType.INPUT)
+        widgets.addSlot(input(1), getPosition(1.5), getPosition(0.5), HTBackgroundType.INPUT)
     }
 }
