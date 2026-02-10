@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:punch",
-  "ingredient": {
-    "amount": 16,
-    "items": "minecraft:sticky_piston"
-  },
-  "time": 200
-}

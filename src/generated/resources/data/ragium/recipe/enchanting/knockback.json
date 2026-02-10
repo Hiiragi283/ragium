@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:knockback",
-  "ingredient": {
-    "amount": 16,
-    "items": "minecraft:piston"
-  },
-  "time": 200
-}

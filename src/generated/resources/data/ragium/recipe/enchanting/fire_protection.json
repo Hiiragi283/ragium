@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:fire_protection",
-  "ingredient": {
-    "amount": 64,
-    "items": "minecraft:magma_cream"
-  },
-  "time": 200
-}

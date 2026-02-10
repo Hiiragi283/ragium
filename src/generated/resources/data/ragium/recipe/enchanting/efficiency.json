@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:efficiency",
-  "ingredient": {
-    "amount": 64,
-    "items": "#c:dusts/redstone"
-  },
-  "time": 200
-}

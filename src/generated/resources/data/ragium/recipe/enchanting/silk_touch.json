@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:silk_touch",
-  "ingredient": {
-    "amount": 64,
-    "items": "#c:strings"
-  },
-  "time": 200
-}

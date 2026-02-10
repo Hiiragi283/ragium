@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:unbreaking",
-  "ingredient": {
-    "amount": 64,
-    "items": "#c:obsidians"
-  },
-  "time": 200
-}

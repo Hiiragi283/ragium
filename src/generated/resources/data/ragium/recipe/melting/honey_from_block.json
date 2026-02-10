@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "minecraft:honey_block",
-  "result": {
-    "id": "hiiragi_core:honey"
-  },
-  "time": 200
-}

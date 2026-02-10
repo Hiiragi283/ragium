@@ -1,9 +1,0 @@
-{
-  "type": "ragium:crushing",
-  "ingredient": "#minecraft:wooden_buttons",
-  "result": {
-    "id": "hiiragi_core:wood_dust",
-    "tag": "c:dusts/wood"
-  },
-  "time": 100
-}

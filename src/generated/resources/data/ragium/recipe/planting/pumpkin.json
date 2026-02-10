@@ -1,9 +1,0 @@
-{
-  "type": "ragium:planting",
-  "crop": {
-    "id": "minecraft:pumpkin"
-  },
-  "seed": "minecraft:pumpkin_seeds",
-  "soil": "minecraft:farmland",
-  "time": 200
-}

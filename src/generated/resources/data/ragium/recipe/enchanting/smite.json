@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:smite",
-  "ingredient": {
-    "amount": 64,
-    "items": "#c:dusts/salt"
-  },
-  "time": 200
-}

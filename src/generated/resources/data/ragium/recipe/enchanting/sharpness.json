@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:sharpness",
-  "ingredient": {
-    "amount": 64,
-    "items": "#c:gems/quartz"
-  },
-  "time": 200
-}

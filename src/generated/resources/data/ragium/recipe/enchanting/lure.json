@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:lure",
-  "ingredient": {
-    "amount": 64,
-    "items": "#c:gems/prismarine"
-  },
-  "time": 200
-}

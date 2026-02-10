@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:channeling",
-  "ingredient": {
-    "amount": 16,
-    "items": "minecraft:lightning_rod"
-  },
-  "time": 200
-}

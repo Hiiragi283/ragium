@@ -5,6 +5,7 @@ import hiiragi283.core.api.mod.HTCommonMod
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.registry.HTWoodDefinition
+import hiiragi283.ragium.common.datagen.RagiumServerResourceProvider
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -17,6 +18,7 @@ import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import hiiragi283.ragium.setup.RagiumWidgetTypes
+import net.mehvahdjukaar.moonlight.api.platform.RegHelper
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -43,6 +45,8 @@ data object Ragium : HTCommonMod() {
         RagiumWidgetTypes.REGISTER.register(eventBus)
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
+
+        RegHelper.registerDynamicResourceProvider(RagiumServerResourceProvider)
 
         RagiumAPI.LOGGER.info("Ragium loaded")
     }

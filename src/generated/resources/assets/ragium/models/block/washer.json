@@ -1,9 +1,0 @@
-{
-  "parent": "minecraft:block/orientable_with_bottom",
-  "textures": {
-    "bottom": "ragium:block/machine/bottom",
-    "front": "ragium:block/machine/washer_front",
-    "side": "ragium:block/machine/side_chemical",
-    "top": "ragium:block/machine/top_chemical"
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "parent": "hiiragi_core:block/layered",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "layer0": "minecraft:block/white_concrete",
-    "layer1": "ragium:block/universal_chest"
-  }
-}

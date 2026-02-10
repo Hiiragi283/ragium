@@ -1,8 +1,0 @@
-{
-  "type": "ragium:crushing",
-  "ingredient": "minecraft:stone",
-  "result": {
-    "id": "minecraft:cobblestone"
-  },
-  "time": 100
-}

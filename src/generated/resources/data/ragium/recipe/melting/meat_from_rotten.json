@@ -1,9 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "minecraft:rotten_flesh",
-  "result": {
-    "amount": 90,
-    "id": "hiiragi_core:meat"
-  },
-  "time": 200
-}

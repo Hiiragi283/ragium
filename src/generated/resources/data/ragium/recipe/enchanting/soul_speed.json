@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:soul_speed",
-  "ingredient": {
-    "amount": 64,
-    "items": "#minecraft:soul_fire_base_blocks"
-  },
-  "time": 200
-}

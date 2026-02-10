@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:flame",
-  "ingredient": {
-    "amount": 16,
-    "items": "#c:rods/blaze"
-  },
-  "time": 200
-}

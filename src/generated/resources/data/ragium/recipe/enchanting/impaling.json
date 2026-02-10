@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:impaling",
-  "ingredient": {
-    "amount": 32,
-    "items": "minecraft:nautilus_shell"
-  },
-  "time": 200
-}

@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:depth_strider",
-  "ingredient": {
-    "amount": 64,
-    "items": "#c:plates/plastic"
-  },
-  "time": 200
-}

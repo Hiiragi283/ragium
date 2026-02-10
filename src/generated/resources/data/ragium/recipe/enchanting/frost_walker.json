@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:frost_walker",
-  "ingredient": {
-    "amount": 64,
-    "items": "minecraft:packed_ice"
-  },
-  "time": 200
-}

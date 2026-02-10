@@ -38,6 +38,7 @@ import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
+import hiiragi283.ragium.common.datagen.recipe.RagiumEnchantingRecipeProvider
 import hiiragi283.ragium.common.item.HTMoldType
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -60,7 +61,9 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         bathToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
         bathToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
 
-        cutWoodFromDefinition()
+        cutWoodFromDefinition(event)
+
+        enchanting(event)
 
         for (entry: HTMaterialManager.Entry in materialManager) {
             alloyDustToIngot(event, entry)
@@ -298,8 +301,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     }
 
     @JvmStatic
-    private fun cutWoodFromDefinition() {
-        provider
+    private fun cutWoodFromDefinition(event: HTRegisterRuntimeRecipeEvent) {
+        event.provider
             .lookupOrThrow(RagiumAPI.WOOD_DEFINITION_KEY)
             .listElements()
             .map { it.toLike() }
@@ -410,6 +413,13 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                     }
                 }
             }
+    }
+
+    //    Enchanting    //
+
+    @JvmStatic
+    private fun enchanting(event: HTRegisterRuntimeRecipeEvent) {
+        RagiumEnchantingRecipeProvider.buildRecipes(event.provider, output)
     }
 
     //    Pressing    //

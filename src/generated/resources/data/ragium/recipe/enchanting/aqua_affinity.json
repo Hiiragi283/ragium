@@ -1,9 +1,0 @@
-{
-  "type": "ragium:enchanting",
-  "enchantment": "minecraft:aqua_affinity",
-  "ingredient": {
-    "amount": 16,
-    "items": "minecraft:tropical_fish"
-  },
-  "time": 200
-}
