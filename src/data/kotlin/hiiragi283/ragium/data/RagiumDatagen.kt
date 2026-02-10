@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.core.api.data.HTRootDataGenerator
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.data.client.RagiumTextureProvider
 import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
@@ -13,7 +12,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent
 object RagiumDatagen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent) {
-        val (server: HTRootDataGenerator, client: HTRootDataGenerator) = HTRootDataGenerator.withDataPack(event)
+        val (server: HTRootDataGenerator, _) = HTRootDataGenerator.withDataPack(event)
         // Server
         server.addLootTables(
             ::RagiumBlockLootProvider to LootContextParamSets.BLOCK,
@@ -31,7 +30,7 @@ object RagiumDatagen {
         // client.addProvider(::RagiumEnglishLangProvider)
         // client.addProvider(::RagiumJapaneseLangProvider)
 
-        client.addProvider(::RagiumTextureProvider)
+        // client.addProvider(::RagiumTextureProvider)
 
         // client.addProvider(::RagiumBlockStateProvider)
         // client.addProvider(::RagiumItemModelProvider)
