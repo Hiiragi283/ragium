@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.datagen
 
 import hiiragi283.core.api.data.HTDynamicResourceProvider
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.datagen.bootstrap.RagiumWoodDefinition
 import hiiragi283.ragium.common.datagen.map.RagiumDataMapProviders
 import hiiragi283.ragium.common.datagen.recipe.RagiumAlloyingRecipeProvider
 import hiiragi283.ragium.common.datagen.recipe.RagiumAssemblingRecipeProvider
@@ -28,7 +27,6 @@ object RagiumServerResourceProvider : HTDynamicResourceProvider.Server(RagiumAPI
         HTDynamicResourceProvider.addMaterialIds(this::addSupportedNamespaces)
 
         // Dynamic Registry
-        executor.accept(RagiumWoodDefinition)
 
         // Data Map
         executor.accept(RagiumDataMapProviders.MobHead)
