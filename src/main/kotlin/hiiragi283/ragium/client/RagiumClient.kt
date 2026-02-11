@@ -41,7 +41,7 @@ data object RagiumClient : HTClientMod() {
         configScreen(container)
 
         HCClientResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
-        
+
         RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")
     }
 

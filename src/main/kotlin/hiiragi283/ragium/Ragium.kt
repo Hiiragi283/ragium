@@ -43,7 +43,7 @@ data object Ragium : HTCommonMod() {
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 
         HCServerResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
-        
+
         RagiumAPI.LOGGER.info("Ragium loaded")
     }
 
