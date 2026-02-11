@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket_drip",
-  "fluid": "ragium:molten_raginite",
-  "loader": "neoforge:fluid_container"
-}

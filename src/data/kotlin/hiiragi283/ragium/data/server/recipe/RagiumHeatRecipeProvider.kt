@@ -1,5 +1,6 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -7,13 +8,13 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.VanillaFluidContents
 import hiiragi283.core.common.material.HCMaterialKeys
+import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
@@ -109,24 +110,27 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
         // Meat
         HTSingleRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Items.ROTTEN_FLESH)
-            result = resultCreator.molten(RagiumMaterialKeys.MEAT)
+            result = resultCreator.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT)
             recipeId suffix "_from_rotten"
         }
         // Glass
         HTFluidWithItemRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.create(HCFluids.MOLTEN_GLASS, 250)
+            fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS) { it / 4 }
             itemIngredient = inputCreator.create(HTMoldType.BALL)
             result = resultCreator.create(Items.GLASS_BOTTLE)
         }
 
-        meltAndSolidify(
-            inputCreator.create(Tags.Items.GLASS_PANES),
-            resultCreator.create(Items.GLASS_PANE),
-            HCFluids.MOLTEN_GLASS,
-            375,
-            HTMoldType.PLATE,
-            "pane",
-        )
+        HTSingleRecipeBuilder.melting(output) {
+            ingredient = inputCreator.create(Tags.Items.GLASS_PANES)
+            result = resultCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
+            recipeId suffix "_from_pane"
+        }
+        
+        HTFluidWithItemRecipeBuilder.solidifying(output) {
+            fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
+            itemIngredient = inputCreator.create(HTMoldType.PLATE)
+            result = resultCreator.create(Items.GLASS_PANE)
+        }
         // Eldritch
         for (i: Int in (0..4)) {
             HTSingleRecipeBuilder.melting(output) {

@@ -84,8 +84,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             // Organic
             add(RagiumFluids.CREOSOTE)
             add(RagiumFluids.SYNTHETIC_OIL)
-            // Misc
-            add(RagiumFluids.MOLTEN_RAGINITE)
         }
         for (content: HTFluidContent in RagiumFluids.REGISTER.entries) {
             bucketItem(content, content in dripFluids)

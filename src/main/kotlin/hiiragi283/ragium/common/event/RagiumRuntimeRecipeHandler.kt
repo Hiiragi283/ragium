@@ -1,11 +1,13 @@
 package hiiragi283.ragium.common.event
 
 import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.component1
 import hiiragi283.core.api.component2
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
+import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.HTMaterialManager
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTExtraOreResultMap
@@ -459,6 +461,10 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     //    Melting    //
 
     @JvmStatic
+    private fun getMolten(material: HTMaterialLike): HTFluidContent? =
+        HiiragiCoreAccess.INSTANCE.materialContents.getMoltenFluidMap()[material.asMaterialKey()]
+
+    @JvmStatic
     private fun meltBaseToMolten(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
         if (entry.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT) == HTMaterialLevel.NONE) return
         // 素材のプロパティから材料を取得
@@ -469,7 +475,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         if (prefix != null) {
             fluidAmount = prefix.getScaledAmount(fluidAmount, entry).toInt()
         }
-        val molten: HTFluidContent = entry[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: return
+        val molten: HTFluidContent = getMolten(entry) ?: return
         // レシピを登録
         HTSingleRecipeBuilder.melting(output) {
             ingredient = input
@@ -506,7 +512,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         moldType: HTMoldType,
     ) {
         // 素材のプロパティから材料を取得
-        val molten: HTFluidContent = entry[HTMaterialPropertyKeys.MOLTEN_FLUID]?.fluid ?: return
+        val molten: HTFluidContent = getMolten(entry) ?: return
         // プレフィックスと素材のプロパティから液体量を算出
         val fluidAmount: Int = prefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
         // レシピを登録

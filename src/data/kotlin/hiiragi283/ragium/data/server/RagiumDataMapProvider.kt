@@ -90,7 +90,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             // medium
             .add(Tags.Fluids.LAVA, medium, false)
             // high
-            .add(HCFluids.MOLTEN_CRIMSON_CRYSTAL, high)
             .add("blaze_blood", high)
         // highest
     }

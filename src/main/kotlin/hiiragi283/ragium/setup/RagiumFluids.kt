@@ -132,16 +132,6 @@ object RagiumFluids {
     @JvmField
     val BIOFUEL: HTFluidContent = REGISTER.registerVirtual("biofuel") { properties = liquid() }
 
-    //    Molten    //
-
-    @JvmField
-    val MOLTEN_RAGINITE: HTFluidContent = REGISTER.registerVirtual("molten_raginite") { properties = molten().temperature(1300) }
-
-    @JvmField
-    val MOLTEN_STAINLESS_STEEL: HTFluidContent = REGISTER.registerVirtual("molten_stainless_steel") {
-        properties = molten().temperature(1300)
-    }
-
     //    Misc    //
 
     @JvmField

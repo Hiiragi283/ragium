@@ -132,9 +132,6 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
         event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
 
-        event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
-        event.molten(RagiumFluids.MOLTEN_STAINLESS_STEEL, Color(0xb0bad0))
-
         event.clear(RagiumFluids.COOLANT, Color(0x009999))
         event.clear(RagiumFluids.RAGI_MATTER, Color(0xff6699))
     }

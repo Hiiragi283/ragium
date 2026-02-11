@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "fluid": "ragium:molten_stainless_steel",
-  "loader": "neoforge:fluid_container"
-}

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.client
 
 import hiiragi283.core.api.data.lang.HTLangProvider
+import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -12,7 +13,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.data.PackOutput
 
-class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(output, RagiumAPI.MOD_ID) {
+class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, RagiumAPI.MOD_ID, HTLangTypes.EN_US) {
     override fun addTranslations() {
         RagiumCommonTranslation.addTranslations(this)
 
@@ -85,7 +86,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider.English(out
         addFluid(RagiumFluids.BIOFUEL, "Biofuel")
 
         addFluid(RagiumFluids.COOLANT, "Coolant")
-        addFluid(RagiumFluids.MOLTEN_RAGINITE, "Destabilized Raginite")
         addFluid(RagiumFluids.RAGI_MATTER, "Ragi-Matter")
 
         // Item
