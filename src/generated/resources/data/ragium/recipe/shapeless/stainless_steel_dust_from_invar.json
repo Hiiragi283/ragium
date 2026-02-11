@@ -33,17 +33,17 @@
       "tag": "c:dusts/iron"
     },
     {
-      "tag": "c:dusts/chromium"
+      "tag": "c:dusts/ragi_crystal"
     },
     {
       "tag": "c:dusts/iron"
     },
     {
-      "tag": "c:dusts/chromium"
+      "tag": "c:dusts/ragi_crystal"
     }
   ],
   "result": {
     "count": 9,
-    "id": "hiiragi_core:stainless_steel_dust"
+    "id": "ragium:stainless_steel_dust"
   }
 }

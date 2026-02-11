@@ -141,7 +141,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                     "BCB",
                     "DDD",
                 )
-                define('A') += CommonTagPrefixes.PLATE to CommonMaterialKeys.STAINLESS_STEEL
+                define('A') += CommonTagPrefixes.PLATE to RagiumMaterialKeys.STAINLESS_STEEL
                 define('B').let(consumer)
                 define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.GOLD
                 define('D') += CommonTagPrefixes.PLATE to CommonMaterialKeys.CARBON

@@ -1,19 +1,18 @@
 package hiiragi283.ragium.data.server.tag
 
+import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
-import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.resource.HTIdLike
+import hiiragi283.core.api.data.tag.HTTagsProvider
+import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
@@ -22,40 +21,17 @@ import java.util.concurrent.CompletableFuture
 
 class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
     HTItemTagsProvider(RagiumAPI.MOD_ID, blockTags, context) {
-    override fun addTagsInternal(factory: BuilderFactory<Item>) {
-        copyTags()
-
-        material(factory)
-        misc(factory)
-    }
-
-    //    Copy    //
-
-    private fun copyTags() {
-        // Material
-        copyMaterials()
-    }
-
-    //    Material    //
-
-    private fun material(factory: BuilderFactory<Item>) {
-        addMaterials(factory) { (prefix: HTTagPrefix, key: HTMaterialKey, item: HTIdLike) ->
-            if (prefix == CommonTagPrefixes.GEM || prefix == CommonTagPrefixes.INGOT) {
-                factory.apply(ItemTags.BEACON_PAYMENT_ITEMS).addTag(prefix, key)
-            }
-        }
-    }
-
-    //    Misc    //
-
-    private fun misc(factory: BuilderFactory<Item>) {
+    override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Item>) {
         // Foods
         factory
             .apply(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)
             .add(RagiumBlocks.MEAT_BLOCK)
             .add(RagiumBlocks.COOKED_MEAT_BLOCK)
+
         val foodsCan: HTTagBuilder<Item> = addTags(factory, Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
         HTFoodCanType.entries.forEach(foodsCan::add)
+
+        val contents: HTMaterialContents = HiiragiCoreAccess.INSTANCE.materialContents
         factory
             .apply(Tags.Items.FOODS_RAW_MEAT)
             .add(contents.getItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT)!!)
@@ -68,7 +44,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         upgradeTargets(factory)
     }
 
-    private fun upgradeTargets(factory: BuilderFactory<Item>) {
+    private fun upgradeTargets(factory: HTTagsProvider.BuilderFactory<Item>) {
         // Group
         factory
             .apply(RagiumTags.Items.GENERATOR_UPGRADABLE)

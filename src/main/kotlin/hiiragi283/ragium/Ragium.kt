@@ -1,10 +1,9 @@
 package hiiragi283.ragium
 
-import com.mojang.serialization.Codec
 import hiiragi283.core.api.mod.HTCommonMod
+import hiiragi283.core.common.data.HCServerResourceProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
-import hiiragi283.ragium.api.data.registry.HTWoodDefinition
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -21,7 +20,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
-import net.neoforged.neoforge.registries.DataPackRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 
 @Mod(RagiumAPI.MOD_ID)
@@ -44,12 +42,9 @@ data object Ragium : HTCommonMod() {
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 
-        RagiumAPI.LOGGER.info("Ragium loaded")
-    }
+        HCServerResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
 
-    override fun registerDynamicRegistries(event: DataPackRegistryEvent.NewRegistry) {
-        val woodDefinition: Codec<HTWoodDefinition> = HTWoodDefinition.CODEC.codec
-        event.dataPackRegistry(RagiumAPI.WOOD_DEFINITION_KEY, woodDefinition, woodDefinition)
+        RagiumAPI.LOGGER.info("Ragium loaded")
     }
 
     override fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {

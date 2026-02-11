@@ -28,7 +28,8 @@ jade = "15.10.3+neoforge"
 kc = "1.1.1-neoforge+mc1.21.1"
 magitech = "0.12.1"
 mek = "1.21.1-10.7.17.83"
-oritech = "0.19.6"
+moonlight = "1.21-2.29.16"
+oritech = "1.0.1"
 pneuma = "8.2.13+mc1.21.1"
 replica = "1.21-1.2.6"
 
@@ -66,6 +67,7 @@ jade = { group = "maven.modrinth", name = "jade", version.ref = "jade" }
 kc = { group = "maven.modrinth", name = "kaleidoscope-cookery", version.ref = "kc" }
 magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
+moonlight = { group = "net.mehvahdjukaar", name = "moonlight-neoforge", version.ref = "moonlight" }
 oritech = { group = "rearth.oritech", name = "oritech-neoforge-1.21.1", version.ref = "oritech" }
 pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
 replica = { group = "maven.modrinth", name = "replication", version.ref = "replica" }
@@ -93,7 +95,9 @@ mods-impl = [
     "jade",
 ]
 
-mods-transitive = []
+mods-transitive = [
+    "moonlight"
+]
 
 mods-compile = []
 

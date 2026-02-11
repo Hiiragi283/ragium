@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.loot
 
 import hiiragi283.core.api.data.loot.HTBlockLootTableProvider
+import hiiragi283.core.api.registry.HTBlockHolderLike
 import hiiragi283.core.common.block.HTBlockWithEntity
 import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.setup.HCDataComponents
@@ -18,6 +19,8 @@ import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 
 class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTableProvider(RagiumAPI.MOD_ID, registries) {
+    override fun getRawBlocks(): Sequence<HTBlockHolderLike<*, *>> = RagiumBlocks.REGISTER.asBlockSequence()
+
     override fun generate() {
         RagiumBlocks.REGISTER
             .asBlockSequence()
@@ -45,8 +48,6 @@ class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTa
                     },
                 )
             }
-
-        registerMaterials()
     }
 
     private fun copyComponent(block: Block, builderAction: CopyComponentsFunction.Builder.() -> Unit): LootTable.Builder = LootTable

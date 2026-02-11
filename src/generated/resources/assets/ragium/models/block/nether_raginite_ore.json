@@ -1,8 +1,0 @@
-{
-  "parent": "hiiragi_core:block/layered",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "layer0": "minecraft:block/netherrack",
-    "layer1": "ragium:block/raginite_ore"
-  }
-}

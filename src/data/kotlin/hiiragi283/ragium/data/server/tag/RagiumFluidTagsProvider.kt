@@ -10,8 +10,8 @@ import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.material.Fluid
 
-class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider<Fluid>(RagiumAPI.MOD_ID, Registries.FLUID, context) {
-    override fun addTagsInternal(factory: BuilderFactory<Fluid>) {
+class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGen<Fluid>(RagiumAPI.MOD_ID, Registries.FLUID, context) {
+    override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Fluid>) {
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             factory.apply(content.fluidTag).addContent(content)
         }

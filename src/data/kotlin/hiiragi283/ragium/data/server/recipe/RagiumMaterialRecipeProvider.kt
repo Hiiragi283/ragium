@@ -91,8 +91,8 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             repeat(2) {
                 ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.NICKEL
             }
-            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.CHROMIUM
-            resultStack += getOrThrow(CommonTagPrefixes.DUST, CommonMaterialKeys.STAINLESS_STEEL) to 9
+            ingredients += CommonTagPrefixes.DUST to RagiumMaterialKeys.RAGI_CRYSTAL
+            resultStack += getOrThrow(CommonTagPrefixes.DUST, RagiumMaterialKeys.STAINLESS_STEEL) to 9
         }
         // Stainless from Invar
         HTShapelessRecipeBuilder.create(output) {
@@ -101,9 +101,9 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             }
             repeat(2) {
                 ingredients += CommonTagPrefixes.DUST to VanillaMaterialKeys.IRON
-                ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.CHROMIUM
+                ingredients += CommonTagPrefixes.DUST to RagiumMaterialKeys.RAGI_CRYSTAL
             }
-            resultStack += getOrThrow(CommonTagPrefixes.DUST, CommonMaterialKeys.STAINLESS_STEEL) to 9
+            resultStack += getOrThrow(CommonTagPrefixes.DUST, RagiumMaterialKeys.STAINLESS_STEEL) to 9
             conditions += CommonTagPrefixes.DUST to CommonMaterialKeys.INVAR
             recipeId suffix "_from_invar"
         }

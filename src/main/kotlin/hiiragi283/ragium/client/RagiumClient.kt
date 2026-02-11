@@ -6,6 +6,7 @@ import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
+import hiiragi283.core.client.data.HCClientResourceProvider
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.widget.HTEnergyBarWidgetRenderer
@@ -38,6 +39,8 @@ import java.awt.Color
 data object RagiumClient : HTClientMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
         configScreen(container)
+
+        HCClientResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
 
         RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")
     }
@@ -129,8 +132,10 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
         event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
 
-        event.clear(RagiumFluids.COOLANT, Color(0x009999))
         event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
+        event.molten(RagiumFluids.MOLTEN_STAINLESS_STEEL, Color(0xb0bad0))
+
+        event.clear(RagiumFluids.COOLANT, Color(0x009999))
         event.clear(RagiumFluids.RAGI_MATTER, Color(0xff6699))
     }
 
