@@ -55,6 +55,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         // Fluid
         addFluid(RagiumFluids.AIR, "Air")
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluids.HELIUM, "Helium")
         addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
         addFluid(RagiumFluids.NITROGEN, "Nitrogen")
         addFluid(RagiumFluids.AMMONIA, "Ammonia")
@@ -115,6 +116,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.REFINING, "Refining")
         add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
 
+        add(RagiumRecipeTypes.ARC_FURNACE, "Arc Smelting")
         add(RagiumRecipeTypes.BATHING, "Bathing")
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.REACTING, "Chemical Reacting")

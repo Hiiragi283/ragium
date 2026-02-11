@@ -102,6 +102,7 @@ data object RagiumClient : HTClientMod() {
     override fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         event.clear(RagiumFluids.AIR, Color(0xffffff))
         event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
+        event.clear(RagiumFluids.HELIUM, Color(0xffff99))
         event.clear(RagiumFluids.CARBON_DIOXIDE, Color(0x66cccc))
         event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
         event.clear(RagiumFluids.AMMONIA, Color(0x666699))

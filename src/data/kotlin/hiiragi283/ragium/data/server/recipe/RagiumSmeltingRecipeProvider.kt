@@ -8,19 +8,20 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 
-object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
+object RagiumSmeltingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        common()
-        hiiragiCore()
-        ragium()
+        alloying()
+        arcSmelting()
     }
 
     @JvmStatic
-    private fun common() {
+    private fun alloying() {
         // Netherite
         HTAlloyingRecipeBuilder.create(output) {
             result = resultCreator.material(CommonTagPrefixes.INGOT, VanillaMaterialKeys.NETHERITE, 2)
@@ -75,10 +76,7 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.NICKEL))
             conditions += CommonTagPrefixes.INGOT.itemTagKey(CommonMaterialKeys.CONSTANTAN)
         }
-    }
 
-    @JvmStatic
-    private fun hiiragiCore() {
         // Amethyst + Lapis -> Azure Shard
         HTAlloyingRecipeBuilder.create(output) {
             result = resultCreator.material(CommonTagPrefixes.GEM, HCMaterialKeys.AZURE, 2)
@@ -98,7 +96,6 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             recipeId suffix "_with_sulfur"
         }
-
         HTAlloyingRecipeBuilder.create(output) {
             result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 4)
             ingredients += inputCreator.create(HCItems.RAW_RUBBER)
@@ -114,10 +111,7 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredients += inputCreator.create(Items.HONEY_BLOCK, 64)
             ingredients += inputCreator.create(Items.ENCHANTED_GOLDEN_APPLE, 16)
         }
-    }
 
-    @JvmStatic
-    private fun ragium() {
         // Raginite + Copper -> Ragi-Alloy
         HTAlloyingRecipeBuilder.create(output) {
             result = resultCreator.material(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
@@ -142,6 +136,17 @@ object RagiumAlloyingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result = resultCreator.create(RagiumItems.PLATED_CIRCUIT_BOARD)
             ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
             ingredients += inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.GOLD)
+        }
+    }
+
+    @JvmStatic
+    private fun arcSmelting() {
+        // Iron + Oxygen -> Steel
+        HTFluidWithItemRecipeBuilder.arcSmelting(output) {
+            itemIngredient = inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON))
+            fluidIngredient = inputCreator.create(RagiumFluids.OXYGEN, 250)
+            result = resultCreator.molten(CommonMaterialKeys.STEEL)
+            recipeId suffix "_from_iron"
         }
     }
 }

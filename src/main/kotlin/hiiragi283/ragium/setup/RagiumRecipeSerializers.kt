@@ -20,6 +20,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTArcSmeltingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
@@ -196,6 +197,18 @@ object RagiumRecipeSerializers {
             HTItemResult.CODEC.listOrElement(0, maxItem).optionalFieldOf(HTConst.ITEM_RESULT, listOf()),
             HTFluidResult.CODEC.listOrElement(0, maxFluid).optionalFieldOf(HTConst.FLUID_RESULT, listOf()),
         )
+
+    @JvmField
+    val ARC_SMELTING: RecipeSerializer<HTArcSmeltingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.ARC_SMELTING,
+        MapBiCodec.composite(
+            HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTArcSmeltingRecipe::fluidIngredient),
+            HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTArcSmeltingRecipe::itemIngredient),
+            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTArcSmeltingRecipe::result),
+            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTArcSmeltingRecipe::parameters),
+            ::HTArcSmeltingRecipe,
+        ),
+    )
 
     @JvmField
     val BATHING: RecipeSerializer<HTBathingRecipe> = REGISTER.registerSerializer(

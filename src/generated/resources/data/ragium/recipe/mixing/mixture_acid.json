@@ -1,0 +1,17 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "amount": 500,
+      "fluids": "#c:nitric_acid"
+    },
+    {
+      "amount": 500,
+      "fluids": "#c:sulfuric_acid"
+    }
+  ],
+  "fluid_result": {
+    "id": "ragium:mixture_acid"
+  },
+  "time": 200
+}

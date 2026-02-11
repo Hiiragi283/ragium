@@ -128,6 +128,13 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 result += resultCreator.create(content, 250)
             }
         }
+
+        // Nitric Acid + Sulfuric Acid -> Mixture Acid
+        HTMixingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.NITRIC_ACID, 500)
+            fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
+            result += resultCreator.create(RagiumFluids.MIXTURE_ACID)
+        }
     }
 
     //    Washing    //

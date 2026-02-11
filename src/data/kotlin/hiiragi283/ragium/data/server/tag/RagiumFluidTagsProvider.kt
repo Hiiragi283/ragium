@@ -1,20 +1,16 @@
 package hiiragi283.ragium.data.server.tag
 
 import hiiragi283.core.api.data.HTDataGenContext
-import hiiragi283.core.api.data.tag.HTTagBuilder
+import hiiragi283.core.api.data.tag.HTFluidTagsProvider
 import hiiragi283.core.api.data.tag.HTTagsProvider
-import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumFluids
-import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.material.Fluid
 
-class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGen<Fluid>(RagiumAPI.MOD_ID, Registries.FLUID, context) {
+class RagiumFluidTagsProvider(context: HTDataGenContext) : HTFluidTagsProvider(RagiumAPI.MOD_ID, context) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Fluid>) {
-        for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
-            factory.apply(content.fluidTag).addContent(content)
-        }
+        addContents(factory, RagiumFluids.REGISTER.asSequence())
 
         factory
             .apply(RagiumTags.Fluids.ALCOHOL)
@@ -27,11 +23,5 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
         factory
             .apply(RagiumTags.Fluids.DIESEL)
             .addContent(RagiumFluids.FUEL)
-    }
-
-    fun HTTagBuilder<Fluid>.addContent(content: HTFluidContent): HTTagBuilder<Fluid> {
-        this.add(content)
-        content.flowingHolder?.let(this::add)
-        return this
     }
 }

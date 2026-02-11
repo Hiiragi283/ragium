@@ -6,12 +6,14 @@ import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.data.tag.HTTagsProvider
 import hiiragi283.core.api.material.HTMaterialContents
+import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -22,6 +24,10 @@ import java.util.concurrent.CompletableFuture
 class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
     HTItemTagsProvider(RagiumAPI.MOD_ID, blockTags, context) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Item>) {
+        // Buckets
+        for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
+            addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)
+        }
         // Foods
         factory
             .apply(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)

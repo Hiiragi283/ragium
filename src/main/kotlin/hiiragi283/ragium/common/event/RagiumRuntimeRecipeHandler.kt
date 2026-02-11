@@ -16,7 +16,6 @@ import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.property.getOrDefault
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTItemHolderLike
@@ -24,12 +23,8 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.core.common.material.ColoredMaterials
-import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.material.HCMaterialKeys
-import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
@@ -38,6 +33,7 @@ import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.setup.RagiumFluids
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry
@@ -65,7 +61,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         cutWoodFromDefinition()
 
         for (entry: HTMaterialManager.Entry in materialManager) {
-            alloyDustToIngot(event, entry)
+            arcSmeltingDustToIngot(event, entry)
 
             bathDustToPrefix(event, entry, CommonTagPrefixes.GEM)
             bathDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
@@ -73,9 +69,11 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             compressDustToGem(event, entry)
 
             crushBaseToDust(event, entry)
-            crushCrushedToDust(event, entry)
+            
             crushOreToCrushed(event, entry, CommonTagPrefixes.ORE)
             crushOreToCrushed(event, entry, CommonTagPrefixes.RAW)
+            crushCrushedToDust(event, entry)
+            
             crushPrefixToDust(event, entry, CommonTagPrefixes.GEAR)
             crushPrefixToDust(event, entry, CommonTagPrefixes.NUGGET)
             crushPrefixToDust(event, entry, CommonTagPrefixes.PLATE)
@@ -84,7 +82,10 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
 
             cutBlockToPlate(event, entry)
 
-            meltBaseToMolten(event, entry)
+            meltPrefixToMolten(event, entry, CommonTagPrefixes.DUST)
+            meltPrefixToMolten(event, entry, CommonTagPrefixes.GEM)
+            meltPrefixToMolten(event, entry, CommonTagPrefixes.INGOT)
+            meltPrefixToMolten(event, entry, CommonTagPrefixes.PEARL)
 
             mixFlourToDough(event, entry)
 
@@ -106,46 +107,35 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     }
 
     @JvmStatic
-    private fun baseOrDust(
-        event: HTRegisterRuntimeRecipeEvent,
-        entry: HTMaterialManager.Entry,
-        amount: Int = 1,
-    ): Pair<HTDefaultPart, HTItemIngredient>? {
-        val defaultPart: HTDefaultPart = entry.getDefaultPart() ?: return null
-        val inputTag: TagKey<Item> = defaultPart.getTag(entry)
-        val dustTag: TagKey<Item> = CommonTagPrefixes.DUST.itemTagKey(entry)
-        if (!event.isPresentTag(inputTag) && !event.isPresentTag(dustTag)) return null
-        return defaultPart to inputCreator.create(setOf(inputTag, dustTag), amount)
-    }
+    private fun getMolten(material: HTMaterialLike): HTFluidContent? =
+        HiiragiCoreAccess.INSTANCE.materialContents.getMoltenFluidMap()[material.asMaterialKey()]
 
-    //    Alloying    //
+    //    Arc Smelting    //
 
     @JvmStatic
-    private fun alloyDustToIngot(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        if (HTMaterialPropertyKeys.DISABLE_SMELTING in entry) return
+    private fun arcSmeltingDustToIngot(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 放電に必要なガスを取得
         val meltingLevel: HTMaterialLevel = entry.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT)
-        val flux: Set<TagKey<Item>> = when (meltingLevel) {
+        val (inputGas: HTFluidContent, amount: Int) = when (meltingLevel) {
             HTMaterialLevel.NONE -> return
-            HTMaterialLevel.LOW -> setOf(ItemTags.SMELTS_TO_GLASS)
-            HTMaterialLevel.MEDIUM -> setOf(ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            HTMaterialLevel.HIGH -> baseOrDust(CommonMaterialKeys.COAL_COKE)
-            HTMaterialLevel.HIGHEST -> baseOrDust(HCMaterialKeys.CRIMSON_CRYSTAL)
+            HTMaterialLevel.LOW -> return
+            HTMaterialLevel.MEDIUM -> RagiumFluids.NITROGEN to 250
+            HTMaterialLevel.HIGH -> RagiumFluids.NITROGEN to 500
+            HTMaterialLevel.HIGHEST -> RagiumFluids.HELIUM to 250
         }
         // 材料が存在するか判定
         val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
         if (!event.isPresentTag(crushedPrefix, entry)) return
+        // 素材のプロパティから液体材料を取得
+        val fluidAmount: Int = crushedPrefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
         // 完成品を取得
-        val ingot: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.INGOT, entry) ?: return
+        val molten: HTFluidContent = getMolten(entry) ?: return
         // レシピを登録
-        HTAlloyingRecipeBuilder.create(output) {
-            ingredients += inputCreator.create(flux)
-            ingredients += inputCreator.create(crushedPrefix, entry)
-            result = resultCreator.create(ingot)
-            extraResults += HTChancedItemResult.create {
-                result = resultCreator.material(CommonTagPrefixes.DUST, VanillaMaterialKeys.GLASS)
-                chance = fraction(1, 2)
-            }
-            recipeId suffix "_with_flux"
+        HTFluidWithItemRecipeBuilder.arcSmelting(output) {
+            itemIngredient = inputCreator.create(crushedPrefix, entry)
+            fluidIngredient = inputCreator.create(inputGas, amount)
+            result = resultCreator.create(molten, fluidAmount)
+            recipeId suffix "_from_${crushedPrefix.name}"
         }
     }
 
@@ -461,26 +451,27 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     //    Melting    //
 
     @JvmStatic
-    private fun getMolten(material: HTMaterialLike): HTFluidContent? =
-        HiiragiCoreAccess.INSTANCE.materialContents.getMoltenFluidMap()[material.asMaterialKey()]
-
-    @JvmStatic
-    private fun meltBaseToMolten(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        if (entry.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT) == HTMaterialLevel.NONE) return
-        // 素材のプロパティから材料を取得
-        val (defaultPart: HTDefaultPart, input: HTItemIngredient) = baseOrDust(event, entry) ?: return
-        // 素材のプロパティから液体材料を取得
-        var fluidAmount: Int = entry.getDefaultFluidAmount()
-        val prefix: HTTagPrefix? = (defaultPart as? HTDefaultPart.Prefixed)?.prefix
-        if (prefix != null) {
-            fluidAmount = prefix.getScaledAmount(fluidAmount, entry).toInt()
+    private fun meltPrefixToMolten(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
+        val meltingLevel: HTMaterialLevel = entry.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT)
+        val recipeTime: Int = when (meltingLevel) {
+            HTMaterialLevel.NONE -> return
+            HTMaterialLevel.LOW -> 20 * 5
+            HTMaterialLevel.MEDIUM -> 20 * 10
+            HTMaterialLevel.HIGH -> 20 * 20
+            HTMaterialLevel.HIGHEST -> return
         }
+        // 材料が存在するか判定
+        if (!event.isPresentTag(prefix, entry)) return
+        // 素材のプロパティから液体材料を取得
+        val fluidAmount: Int = prefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
+        // 完成品を取得
         val molten: HTFluidContent = getMolten(entry) ?: return
         // レシピを登録
         HTSingleRecipeBuilder.melting(output) {
-            ingredient = input
+            ingredient = inputCreator.create(prefix, entry)
             result = resultCreator.create(molten, fluidAmount)
-            recipeId suffix "_from_${defaultPart.getSuffix()}"
+            recipeId suffix "_from_${prefix.name}"
+            time = recipeTime
         }
     }
 

@@ -8,6 +8,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTArcSmeltingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
@@ -61,6 +62,9 @@ object RagiumRecipeTypes {
     val SOLIDIFYING: HTDeferredRecipeType<HTSingleCatalystRecipeInput, HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
 
     // Machine - Chemical
+    @JvmField
+    val ARC_FURNACE: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTArcSmeltingRecipe> = REGISTER.registerType(RagiumConst.ARC_FURNACE)
+
     @JvmField
     val BATHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTBathingRecipe> = REGISTER.registerType(RagiumConst.BATHING)
 

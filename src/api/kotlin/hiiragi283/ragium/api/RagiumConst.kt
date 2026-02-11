@@ -18,6 +18,7 @@ object RagiumConst {
     const val SOLIDIFIER = "solidifier"
 
     // Chemical
+    const val ARC_FURNACE = "arc_furnace"
     const val BREWERY = "brewery"
     const val CHEMICAL_BATH = "chemical_bath"
     const val MIXER = "mixer"
@@ -60,6 +61,7 @@ object RagiumConst {
     const val SOLIDIFYING = "solidifying"
 
     // Chemical
+    const val ARC_SMELTING = "arc_smelting"
     const val BATHING = "bathing"
     const val BREWING = "brewing"
     const val MIXING = "mixing"
