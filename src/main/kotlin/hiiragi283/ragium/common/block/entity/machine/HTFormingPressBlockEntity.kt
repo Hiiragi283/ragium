@@ -4,13 +4,15 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.input.HTViewRecipeInput
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
+import hiiragi283.ragium.common.recipe.input.HTSingleCatalystRecipeInput
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTMachineConfig
@@ -44,26 +46,17 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
-    private inner class RecipeComponent : SingleRecipeComponent<HTViewRecipeInput, HTPressingRecipe>(RagiumRecipeTypes.PRESSING) {
-        private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
-
-        override fun extractInput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: HTViewRecipeInput,
-            recipe: HTPressingRecipe,
-        ) {
-            inputHandler.consume(recipe.ingredient)
-        }
+    private inner class RecipeComponent :
+        SingleRecipeComponent<HTItemResourceType, HTItemIngredient, HTPressingRecipe>(RagiumRecipeTypes.PRESSING) {
+        override fun createInputHandler(): HTSlotInputHandler<HTItemResourceType> = HTSlotInputHandler(inputSlot)
 
         override fun applyEffect() {
             playSound(SoundEvents.ANVIL_LAND)
         }
 
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
-            this += inputHandler
-            catalyst = catalystHandler.getResource()
-        }
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTSingleCatalystRecipeInput? =
+            HTSingleCatalystRecipeInput(inputHandler.getItemStack(), catalystHandler.getItemStack())
+                .takeUnless(HTSingleCatalystRecipeInput::isEmpty)
     }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.formingPress

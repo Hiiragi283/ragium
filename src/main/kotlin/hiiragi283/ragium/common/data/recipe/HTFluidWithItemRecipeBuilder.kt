@@ -9,7 +9,6 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
-import hiiragi283.ragium.common.recipe.base.HTFluidWithItemRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -38,7 +37,7 @@ class HTFluidWithItemRecipeBuilder(prefix: String, private val factory: Factory<
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): HTFluidWithItemRecipe = factory.create(
+    override fun createRecipe(): HTProcessingRecipe<*> = factory.create(
         fluidIngredient,
         itemIngredient,
         result,
@@ -47,7 +46,7 @@ class HTFluidWithItemRecipeBuilder(prefix: String, private val factory: Factory<
 
     //    Factory    //
 
-    fun interface Factory<RECIPE : HTFluidWithItemRecipe> {
+    fun interface Factory<RECIPE : HTProcessingRecipe<*>> {
         fun create(
             fluidIngredient: HTFluidIngredient,
             itemIngredient: HTItemIngredient,

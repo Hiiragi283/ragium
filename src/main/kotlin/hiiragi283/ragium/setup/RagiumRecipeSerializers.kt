@@ -174,8 +174,8 @@ object RagiumRecipeSerializers {
     val SOLIDIFYING: RecipeSerializer<HTSolidifyingRecipe> = REGISTER.registerSerializer(
         RagiumConst.SOLIDIFYING,
         MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSolidifyingRecipe::fluidIngredient),
-            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTSolidifyingRecipe::itemIngredient),
+            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSolidifyingRecipe::ingredient),
+            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTSolidifyingRecipe::catalyst),
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSolidifyingRecipe::result),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTSolidifyingRecipe::parameters),
             ::HTSolidifyingRecipe,

@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
+import hiiragi283.ragium.common.recipe.input.HTSingleCatalystRecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeTypes {
@@ -45,7 +46,7 @@ object RagiumRecipeTypes {
     val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTCuttingRecipe> = REGISTER.registerType(RagiumConst.CUTTING)
 
     @JvmField
-    val PRESSING: HTDeferredRecipeType<HTViewRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
+    val PRESSING: HTDeferredRecipeType<HTSingleCatalystRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
 
     // Machine - Heat
     @JvmField
@@ -58,7 +59,7 @@ object RagiumRecipeTypes {
     val REFINING: HTDeferredRecipeType<HTSingleFluidRecipeInput, HTRefiningRecipe> = REGISTER.registerType(RagiumConst.REFINING)
 
     @JvmField
-    val SOLIDIFYING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
+    val SOLIDIFYING: HTDeferredRecipeType<HTSingleCatalystRecipeInput, HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
 
     // Machine - Chemical
     @JvmField

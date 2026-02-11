@@ -10,7 +10,10 @@ import net.minecraft.world.item.crafting.RecipeHolder
 class HTBathingEmiRecipe(holder: RecipeHolder<HTBathingRecipe>) :
     HTFluidWithItemEmiRecipe<HTBathingRecipe>("mix", RagiumEmiRecipeCategories.BATHING, holder) {
     init {
+        addInput(recipe.fluidIngredient)
         addInput(recipe.itemIngredient)
+
+        addOutputs(recipe.result)
     }
 
     override fun setupItemInput(widgets: WidgetHolder) {

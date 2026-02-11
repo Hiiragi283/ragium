@@ -125,7 +125,7 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             result = resultCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
             recipeId suffix "_from_pane"
         }
-        
+
         HTFluidWithItemRecipeBuilder.solidifying(output) {
             fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
             itemIngredient = inputCreator.create(HTMoldType.PLATE)

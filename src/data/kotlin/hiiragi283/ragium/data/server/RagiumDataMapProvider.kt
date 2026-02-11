@@ -12,7 +12,6 @@ import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.createCommonTag
-import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.tag.RagiumTags

@@ -3,21 +3,15 @@ package hiiragi283.ragium.client.emi.recipe.base
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
+import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.ragium.client.emi.RagiumEmiTextures
-import hiiragi283.ragium.common.recipe.base.HTFluidWithItemRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTFluidWithItemEmiRecipe<RECIPE : HTFluidWithItemRecipe>(
+abstract class HTFluidWithItemEmiRecipe<RECIPE : HTProcessingRecipe<*>>(
     private val icon: String,
     category: HTEmiRecipeCategory,
     holder: RecipeHolder<RECIPE>,
 ) : HTProcessingEmiRecipe<RECIPE>(category, holder) {
-    init {
-        addInput(recipe.fluidIngredient)
-
-        addOutputs(recipe.result)
-    }
-
     final override fun addWidgets(widgets: WidgetHolder) {
         widgets.addArrow(time = recipe.time)
         RagiumEmiTextures.addWidget(

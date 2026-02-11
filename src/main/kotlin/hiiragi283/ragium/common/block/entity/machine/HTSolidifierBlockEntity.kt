@@ -4,13 +4,16 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.fluid.getFluidStack
+import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
+import hiiragi283.ragium.common.recipe.input.HTSingleCatalystRecipeInput
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
@@ -49,24 +52,16 @@ class HTSolidifierBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
     private inner class RecipeComponent :
-        SingleRecipeComponent<HTItemAndFluidRecipeInput, HTSolidifyingRecipe>(RagiumRecipeTypes.SOLIDIFYING) {
-        private val inputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
-
-        override fun extractInput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: HTItemAndFluidRecipeInput,
-            recipe: HTSolidifyingRecipe,
-        ) {
-            inputHandler.consume(recipe.fluidIngredient)
-        }
+        SingleRecipeComponent<HTFluidResourceType, HTFluidIngredient, HTSolidifyingRecipe>(RagiumRecipeTypes.SOLIDIFYING) {
+        override fun createInputHandler(): HTSlotInputHandler<HTFluidResourceType> = HTSlotInputHandler(inputTank)
 
         override fun applyEffect() {
             playSound(SoundEvents.FIRE_EXTINGUISH)
         }
 
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
-            createInput(catalystHandler, inputHandler)
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTSingleCatalystRecipeInput? =
+            HTSingleCatalystRecipeInput(inputHandler.getFluidStack(), catalystHandler.getItemStack())
+                .takeUnless(HTSingleCatalystRecipeInput::isEmpty)
     }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.solidifier

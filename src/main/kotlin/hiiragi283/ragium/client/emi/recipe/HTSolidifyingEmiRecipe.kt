@@ -10,7 +10,11 @@ import net.minecraft.world.item.crafting.RecipeHolder
 class HTSolidifyingEmiRecipe(holder: RecipeHolder<HTSolidifyingRecipe>) :
     HTFluidWithItemEmiRecipe<HTSolidifyingRecipe>("solidify", RagiumEmiRecipeCategories.SOLIDIFYING, holder) {
     init {
-        addCatalyst(recipe.itemIngredient)
+        addInput(recipe.ingredient)
+
+        addCatalyst(recipe.catalyst)
+
+        addOutputs(recipe.result)
     }
 
     override fun setupItemInput(widgets: WidgetHolder) {
