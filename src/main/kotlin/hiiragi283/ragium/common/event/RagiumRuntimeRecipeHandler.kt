@@ -60,7 +60,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         bathToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
         bathToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
 
-        cutWoodFromDefinition(event)
+        cutWoodFromDefinition()
 
         for (entry: HTMaterialManager.Entry in materialManager) {
             alloyDustToIngot(event, entry)
@@ -298,7 +298,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     }
 
     @JvmStatic
-    private fun cutWoodFromDefinition(event: HTRegisterRuntimeRecipeEvent) {
+    private fun cutWoodFromDefinition() {
         for (type: WoodType in WoodTypeRegistry.INSTANCE) {
             val planks: ItemLike = type.getItemOfThis(VanillaWoodChildKeys.PLANKS) ?: continue
             // Log -> 6x Planks

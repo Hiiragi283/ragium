@@ -6,6 +6,7 @@ import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
+import hiiragi283.core.client.data.HCClientResourceProvider
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.widget.HTEnergyBarWidgetRenderer
@@ -39,6 +40,8 @@ data object RagiumClient : HTClientMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
         configScreen(container)
 
+        HCClientResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
+        
         RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")
     }
 

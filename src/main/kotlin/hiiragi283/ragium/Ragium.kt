@@ -1,6 +1,7 @@
 package hiiragi283.ragium
 
 import hiiragi283.core.api.mod.HTCommonMod
+import hiiragi283.core.common.data.HCServerResourceProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.config.RagiumConfig
@@ -41,6 +42,8 @@ data object Ragium : HTCommonMod() {
 
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 
+        HCServerResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
+        
         RagiumAPI.LOGGER.info("Ragium loaded")
     }
 
