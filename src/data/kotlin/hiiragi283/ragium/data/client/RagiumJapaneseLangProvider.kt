@@ -58,6 +58,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.HELIUM, "ヘリウム")
         addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
         addFluid(RagiumFluids.NITROGEN, "窒素")
+        addFluid(RagiumFluids.LIQUID_NITROGEN, "液体窒素")
         addFluid(RagiumFluids.AMMONIA, "アンモニア")
         addFluid(RagiumFluids.OXYGEN, "酸素")
 
@@ -85,8 +86,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         addFluid(RagiumFluids.SUNFLOWER_OIL, "ヒマワリ油")
         addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
+        addFluid(RagiumFluids.GLYCEROL, "グリセロール")
 
-        addFluid(RagiumFluids.COOLANT, "冷却液")
         addFluid(RagiumFluids.RAGI_MATTER, "ラギマター")
 
         // Item

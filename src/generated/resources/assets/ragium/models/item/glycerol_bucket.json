@@ -1,5 +1,5 @@
 {
   "parent": "neoforge:item/bucket",
-  "fluid": "ragium:coolant",
+  "fluid": "ragium:glycerol",
   "loader": "neoforge:fluid_container"
 }

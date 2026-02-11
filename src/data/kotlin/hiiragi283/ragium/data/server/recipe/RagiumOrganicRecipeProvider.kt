@@ -8,6 +8,7 @@ import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPyrolyzingRecipeBuilder
@@ -28,6 +29,14 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
 
         crimson()
         warped()
+
+        // Organic Oil + Alcohol -> Biofuel + Glycerol
+        HTReactingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.SUNFLOWER_OIL)
+            fluidIngredients += inputCreator.create(RagiumTags.Fluids.ALCOHOL, 3000)
+            fluidResults += resultCreator.create(RagiumFluids.BIOFUEL, 3000)
+            fluidResults += resultCreator.create(RagiumFluids.GLYCEROL)
+        }
     }
 
     @HTBuilderMarker

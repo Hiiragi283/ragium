@@ -105,6 +105,7 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.HELIUM, Color(0xffff99))
         event.clear(RagiumFluids.CARBON_DIOXIDE, Color(0x66cccc))
         event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
+        event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
         event.clear(RagiumFluids.AMMONIA, Color(0x666699))
         event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
 
@@ -132,8 +133,8 @@ data object RagiumClient : HTClientMod() {
 
         event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
         event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
+        event.clear(RagiumFluids.GLYCEROL, Color(0x66cc99))
 
-        event.clear(RagiumFluids.COOLANT, Color(0x009999))
         event.clear(RagiumFluids.RAGI_MATTER, Color(0xff6699))
     }
 

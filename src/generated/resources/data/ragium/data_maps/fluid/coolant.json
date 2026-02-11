@@ -1,6 +1,6 @@
 {
   "values": {
-    "#c:coolant": 25,
+    "#c:liquid_nitrogen": 5,
     "#c:water": 100
   }
 }

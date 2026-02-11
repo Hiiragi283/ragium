@@ -5,6 +5,7 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.common.fluid.HTExplosiveFluidType
 import hiiragi283.core.common.registry.register.HTFluidContentRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.fluid.HTLiquidNitrogenFluidType
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.pathfinder.PathType
@@ -42,6 +43,13 @@ object RagiumFluids {
     // N
     @JvmField
     val NITROGEN: HTFluidContent = REGISTER.registerVirtual("nitrogen") { properties = gas() }
+
+    @JvmField
+    val LIQUID_NITROGEN: HTFluidContent = REGISTER.registerFlowing("liquid_nitrogen") {
+        properties = liquid().temperature(300 - 196)
+        typeFactory = ::HTLiquidNitrogenFluidType
+        blockFactory = null
+    }
 
     @JvmField
     val AMMONIA: HTFluidContent = REGISTER.registerVirtual("ammonia") { properties = gas() }
@@ -136,10 +144,10 @@ object RagiumFluids {
     @JvmField
     val BIOFUEL: HTFluidContent = REGISTER.registerVirtual("biofuel") { properties = liquid() }
 
-    //    Misc    //
-
     @JvmField
-    val COOLANT: HTFluidContent = REGISTER.registerFlowing("coolant") { properties = liquid().temperature(273) }
+    val GLYCEROL: HTFluidContent = REGISTER.registerVirtual("glycerol") { properties = liquid() }
+
+    //    Misc    //
 
     @JvmField
     val RAGI_MATTER: HTFluidContent = REGISTER.registerVirtual("ragi_matter") { properties = gas() }

@@ -58,6 +58,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.HELIUM, "Helium")
         addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
         addFluid(RagiumFluids.NITROGEN, "Nitrogen")
+        addFluid(RagiumFluids.LIQUID_NITROGEN, "Liquid Nitrogen")
         addFluid(RagiumFluids.AMMONIA, "Ammonia")
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
 
@@ -85,8 +86,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         addFluid(RagiumFluids.SUNFLOWER_OIL, "Sunflower Oil")
         addFluid(RagiumFluids.BIOFUEL, "Biofuel")
+        addFluid(RagiumFluids.GLYCEROL, "Glycerol")
 
-        addFluid(RagiumFluids.COOLANT, "Coolant")
         addFluid(RagiumFluids.RAGI_MATTER, "Ragi-Matter")
 
         // Item
