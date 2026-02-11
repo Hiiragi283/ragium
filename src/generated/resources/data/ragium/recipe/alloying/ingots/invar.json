@@ -1,0 +1,30 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/invar"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 2,
+      "items": [
+        "#c:dusts/iron",
+        "#c:ingots/iron"
+      ]
+    },
+    [
+      "#c:dusts/nickel",
+      "#c:ingots/nickel"
+    ]
+  ],
+  "result": {
+    "count": 3,
+    "tag": "c:ingots/invar"
+  },
+  "time": 200
+}

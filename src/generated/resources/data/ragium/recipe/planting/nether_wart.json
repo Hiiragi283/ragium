@@ -1,0 +1,10 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 3,
+    "id": "minecraft:nether_wart"
+  },
+  "seed": "minecraft:nether_wart",
+  "soil": "minecraft:soul_sand",
+  "time": 200
+}

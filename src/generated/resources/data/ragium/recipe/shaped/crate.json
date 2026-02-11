@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragi_alloy"
+    },
+    "B": {
+      "tag": "c:plates/plastic"
+    },
+    "C": {
+      "tag": "c:glass_blocks"
+    },
+    "D": {
+      "tag": "c:chests"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:crate"
+  }
+}

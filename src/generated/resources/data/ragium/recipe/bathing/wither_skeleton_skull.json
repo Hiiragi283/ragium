@@ -1,0 +1,12 @@
+{
+  "type": "ragium:bathing",
+  "catalyst": "minecraft:skeleton_skull",
+  "ingredient": {
+    "amount": 90,
+    "fluids": "#c:molten_eldritch"
+  },
+  "result": {
+    "id": "minecraft:wither_skeleton_skull"
+  },
+  "time": 100
+}

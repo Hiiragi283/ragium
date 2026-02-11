@@ -35,7 +35,6 @@ import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
-import hiiragi283.ragium.common.datagen.recipe.RagiumEnchantingRecipeProvider
 import hiiragi283.ragium.common.item.HTMoldType
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
@@ -62,8 +61,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         bathToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
 
         cutWoodFromDefinition(event)
-
-        enchanting(event)
 
         for (entry: HTMaterialManager.Entry in materialManager) {
             alloyDustToIngot(event, entry)
@@ -418,13 +415,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 }
             }
         }
-    }
-
-    //    Enchanting    //
-
-    @JvmStatic
-    private fun enchanting(event: HTRegisterRuntimeRecipeEvent) {
-        RagiumEnchantingRecipeProvider.buildRecipes(event.provider, output)
     }
 
     //    Pressing    //

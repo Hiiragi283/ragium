@@ -1,0 +1,9 @@
+{
+  "type": "ragium:enchanting",
+  "enchantment": "minecraft:power",
+  "ingredient": {
+    "amount": 64,
+    "items": "#c:gems/amethyst"
+  },
+  "time": 200
+}

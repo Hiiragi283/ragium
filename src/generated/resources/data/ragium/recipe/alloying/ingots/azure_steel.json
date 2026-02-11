@@ -1,0 +1,21 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    [
+      "#c:dusts/iron",
+      "#c:ingots/iron"
+    ],
+    {
+      "amount": 2,
+      "items": [
+        "#c:dusts/azure",
+        "#c:gems/azure"
+      ]
+    }
+  ],
+  "result": {
+    "id": "hiiragi_core:azure_steel_ingot",
+    "tag": "c:ingots/azure_steel"
+  },
+  "time": 200
+}

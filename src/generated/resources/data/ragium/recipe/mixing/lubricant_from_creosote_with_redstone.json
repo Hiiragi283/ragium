@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:creosote"
+    }
+  ],
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:lubricant"
+  },
+  "item_ingredient": [
+    "#c:dusts/redstone"
+  ],
+  "time": 100
+}

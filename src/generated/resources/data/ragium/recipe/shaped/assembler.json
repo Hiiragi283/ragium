@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:ingots/ragi_alloy"
+    },
+    "B": {
+      "item": "ragium:electric_circuit"
+    },
+    "C": {
+      "item": "minecraft:crafter"
+    },
+    "D": {
+      "tag": "c:ingots/steel"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB",
+    "DBD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:assembler"
+  }
+}

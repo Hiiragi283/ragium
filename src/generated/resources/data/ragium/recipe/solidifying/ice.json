@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:block_mold",
+  "ingredient": {
+    "fluids": "#c:water"
+  },
+  "result": {
+    "id": "minecraft:ice"
+  },
+  "time": 200
+}

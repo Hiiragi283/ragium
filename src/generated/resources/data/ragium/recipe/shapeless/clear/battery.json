@@ -1,0 +1,5 @@
+{
+  "type": "hiiragi_core:clear_component",
+  "ingredient": "ragium:battery",
+  "targets": "hiiragi_core:energy"
+}

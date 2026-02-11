@@ -1,0 +1,18 @@
+{
+  "values": {
+    "#c:alcohol": 240,
+    "#c:biodiesel": 360,
+    "#c:bioethanol": 240,
+    "#c:creosote": 80,
+    "#c:crude_oil": 120,
+    "#c:diesel": 360,
+    "#c:ethylene": 240,
+    "#c:fuel": 360,
+    "#c:high_power_biodiesel": 480,
+    "#c:lpg": 240,
+    "#c:methane": 240,
+    "#c:oil": 120,
+    "#c:synthetic_gas": 240,
+    "#c:synthetic_oil": 120
+  }
+}

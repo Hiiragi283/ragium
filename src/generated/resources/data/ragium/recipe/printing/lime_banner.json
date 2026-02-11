@@ -1,0 +1,10 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": "minecraft:lime_banner",
+  "copy_component": true,
+  "ingredient": "minecraft:lime_banner",
+  "result": {
+    "id": "minecraft:lime_banner"
+  },
+  "time": 200
+}

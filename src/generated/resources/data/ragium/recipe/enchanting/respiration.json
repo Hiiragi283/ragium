@@ -1,0 +1,9 @@
+{
+  "type": "ragium:enchanting",
+  "enchantment": "minecraft:respiration",
+  "ingredient": {
+    "amount": 64,
+    "items": "minecraft:pufferfish"
+  },
+  "time": 200
+}

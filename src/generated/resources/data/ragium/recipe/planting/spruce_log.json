@@ -1,0 +1,10 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 6,
+    "id": "minecraft:spruce_log"
+  },
+  "seed": "minecraft:spruce_sapling",
+  "soil": "#minecraft:dirt",
+  "time": 200
+}

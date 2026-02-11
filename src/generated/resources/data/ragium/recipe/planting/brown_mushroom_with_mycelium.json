@@ -1,0 +1,10 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 5,
+    "id": "minecraft:brown_mushroom"
+  },
+  "seed": "minecraft:brown_mushroom",
+  "soil": "minecraft:mycelium",
+  "time": 200
+}

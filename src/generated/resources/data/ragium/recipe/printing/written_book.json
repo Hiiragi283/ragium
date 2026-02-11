@@ -1,0 +1,10 @@
+{
+  "type": "ragium:pressing",
+  "catalyst": "minecraft:written_book",
+  "copy_component": true,
+  "ingredient": "minecraft:book",
+  "result": {
+    "id": "minecraft:written_book"
+  },
+  "time": 200
+}

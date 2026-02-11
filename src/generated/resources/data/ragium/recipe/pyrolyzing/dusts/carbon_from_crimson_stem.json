@@ -1,0 +1,17 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 90,
+    "id": "hiiragi_core:molten_crimson_crystal"
+  },
+  "ingredient": {
+    "amount": 8,
+    "items": "#minecraft:crimson_stems"
+  },
+  "item_result": {
+    "count": 4,
+    "id": "hiiragi_core:carbon_dust",
+    "tag": "c:dusts/carbon"
+  },
+  "time": 600
+}

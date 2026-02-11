@@ -1,0 +1,9 @@
+{
+  "type": "ragium:enchanting",
+  "enchantment": "minecraft:loyalty",
+  "ingredient": {
+    "amount": 64,
+    "items": "minecraft:lead"
+  },
+  "time": 200
+}

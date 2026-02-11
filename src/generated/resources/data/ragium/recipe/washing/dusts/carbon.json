@@ -1,0 +1,17 @@
+{
+  "type": "ragium:washing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": {
+    "amount": 4,
+    "items": "#c:dusts/ash"
+  },
+  "result": {
+    "count": 3,
+    "id": "hiiragi_core:carbon_dust",
+    "tag": "c:dusts/carbon"
+  },
+  "time": 100
+}

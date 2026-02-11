@@ -1,0 +1,9 @@
+{
+  "type": "ragium:enchanting",
+  "enchantment": "minecraft:sweeping_edge",
+  "ingredient": {
+    "amount": 64,
+    "items": "#c:plates/iron"
+  },
+  "time": 200
+}

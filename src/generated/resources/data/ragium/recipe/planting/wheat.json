@@ -1,0 +1,9 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "id": "minecraft:wheat"
+  },
+  "seed": "minecraft:wheat_seeds",
+  "soil": "minecraft:farmland",
+  "time": 200
+}

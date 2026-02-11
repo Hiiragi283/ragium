@@ -1,0 +1,10 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": "#c:barrels/wooden",
+  "result": {
+    "count": 7,
+    "id": "hiiragi_core:wood_dust",
+    "tag": "c:dusts/wood"
+  },
+  "time": 100
+}

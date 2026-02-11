@@ -1,0 +1,9 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "id": "minecraft:melon"
+  },
+  "seed": "minecraft:melon_seeds",
+  "soil": "minecraft:farmland",
+  "time": 200
+}

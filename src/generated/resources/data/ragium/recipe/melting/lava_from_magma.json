@@ -1,0 +1,9 @@
+{
+  "type": "ragium:melting",
+  "ingredient": "minecraft:magma_block",
+  "result": {
+    "amount": 250,
+    "id": "minecraft:lava"
+  },
+  "time": 200
+}

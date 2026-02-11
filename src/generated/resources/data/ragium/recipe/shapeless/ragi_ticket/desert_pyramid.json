@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "ragium:ragi_ticket"
+    },
+    {
+      "tag": "c:sandstone/uncolored_blocks"
+    },
+    {
+      "tag": "c:ingots/gold"
+    }
+  ],
+  "result": {
+    "components": {
+      "ragium:loot_ticket": "minecraft:chests/desert_pyramid"
+    },
+    "count": 1,
+    "id": "ragium:ragi_ticket"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 3,
+    "id": "minecraft:sugar_cane"
+  },
+  "seed": "minecraft:sugar_cane",
+  "soil": "#c:sands",
+  "time": 200
+}

@@ -1,0 +1,10 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 3,
+    "id": "minecraft:apple"
+  },
+  "seed": "minecraft:apple",
+  "soil": "minecraft:oak_sapling",
+  "time": 200
+}

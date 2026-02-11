@@ -37,7 +37,6 @@ object RagiumMaterialEventHandler {
     fun gatherAttributes(event: HTMaterialPropertyEvent) {
         // Minerals
         event.modify(RagiumMaterialKeys.RAGINITE) {
-            setDefaultPart(HTDefaultPart.Prefixed.DUST)
             addBlockPrefixes(materialBlockSet)
             addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.RAW, CommonTagPrefixes.CRUSHED_ORE)
             put(HTMaterialPropertyKeys.MOLTEN_FLUID, HTFluidMaterialProperty(RagiumFluids.MOLTEN_RAGINITE))

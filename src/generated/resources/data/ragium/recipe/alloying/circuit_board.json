@@ -1,0 +1,11 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    "#c:dusts/quartz",
+    "#c:plates/plastic"
+  ],
+  "result": {
+    "id": "ragium:circuit_board"
+  },
+  "time": 200
+}

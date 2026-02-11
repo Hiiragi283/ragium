@@ -1,0 +1,9 @@
+{
+  "type": "ragium:enchanting",
+  "enchantment": "minecraft:protection",
+  "ingredient": {
+    "amount": 64,
+    "items": "#c:ingots/steel"
+  },
+  "time": 200
+}

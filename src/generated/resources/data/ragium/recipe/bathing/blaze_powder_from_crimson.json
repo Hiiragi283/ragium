@@ -1,0 +1,12 @@
+{
+  "type": "ragium:bathing",
+  "catalyst": "#c:dusts/crimson_crystal",
+  "ingredient": {
+    "amount": 250,
+    "fluids": "#c:lava"
+  },
+  "result": {
+    "id": "minecraft:blaze_powder"
+  },
+  "time": 100
+}

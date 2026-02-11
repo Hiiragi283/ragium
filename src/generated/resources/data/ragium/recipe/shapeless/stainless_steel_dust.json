@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:dusts/iron"
+    },
+    {
+      "tag": "c:dusts/iron"
+    },
+    {
+      "tag": "c:dusts/iron"
+    },
+    {
+      "tag": "c:dusts/iron"
+    },
+    {
+      "tag": "c:dusts/iron"
+    },
+    {
+      "tag": "c:dusts/iron"
+    },
+    {
+      "tag": "c:dusts/nickel"
+    },
+    {
+      "tag": "c:dusts/nickel"
+    },
+    {
+      "tag": "c:dusts/ragi_crystal"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "ragium:stainless_steel_dust"
+  }
+}

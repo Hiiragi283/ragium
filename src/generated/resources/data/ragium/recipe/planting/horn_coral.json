@@ -1,0 +1,10 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 3,
+    "id": "minecraft:horn_coral"
+  },
+  "seed": "minecraft:horn_coral",
+  "soil": "minecraft:horn_coral_block",
+  "time": 200
+}

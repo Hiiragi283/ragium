@@ -1,0 +1,22 @@
+{
+  "type": "ragium:reacting",
+  "catalyst": "#c:dusts/platinum",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:ammonia"
+    },
+    {
+      "amount": 2000,
+      "fluids": "#c:oxygen"
+    }
+  ],
+  "fluid_result": [
+    {
+      "id": "ragium:nitric_acid"
+    },
+    {
+      "id": "minecraft:water"
+    }
+  ],
+  "time": 200
+}

@@ -1,0 +1,20 @@
+{
+  "type": "ragium:reacting",
+  "catalyst": [
+    "#c:dusts/rhodium",
+    "#c:dusts/ruthenium"
+  ],
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:methane"
+    },
+    {
+      "fluids": "#c:carbon_dioxide"
+    }
+  ],
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:synthetic_gas"
+  },
+  "time": 200
+}

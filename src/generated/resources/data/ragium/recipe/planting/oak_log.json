@@ -1,0 +1,10 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 6,
+    "id": "minecraft:oak_log"
+  },
+  "seed": "minecraft:oak_sapling",
+  "soil": "#minecraft:dirt",
+  "time": 200
+}

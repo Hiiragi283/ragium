@@ -1,0 +1,10 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 6,
+    "id": "minecraft:crimson_stem"
+  },
+  "seed": "minecraft:crimson_fungus",
+  "soil": "minecraft:crimson_nylium",
+  "time": 200
+}

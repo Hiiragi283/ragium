@@ -8,7 +8,6 @@ import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.client.datagen.RagiumClientResourceProvider
 import hiiragi283.ragium.client.gui.widget.HTEnergyBarWidgetRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.client.render.block.HTTankRenderer
@@ -18,7 +17,6 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumWidgetTypes
-import net.mehvahdjukaar.moonlight.api.platform.RegHelper
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
@@ -40,7 +38,6 @@ import java.awt.Color
 data object RagiumClient : HTClientMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
         configScreen(container)
-        RegHelper.registerDynamicResourceProvider(RagiumClientResourceProvider)
 
         RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")
     }

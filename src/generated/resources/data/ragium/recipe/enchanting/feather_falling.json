@@ -1,0 +1,9 @@
+{
+  "type": "ragium:enchanting",
+  "enchantment": "minecraft:feather_falling",
+  "ingredient": {
+    "amount": 64,
+    "items": "#c:feathers"
+  },
+  "time": 200
+}

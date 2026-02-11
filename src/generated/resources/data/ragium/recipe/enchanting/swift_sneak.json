@@ -1,0 +1,9 @@
+{
+  "type": "ragium:enchanting",
+  "enchantment": "minecraft:swift_sneak",
+  "ingredient": {
+    "amount": 16,
+    "items": "#c:gems/echo"
+  },
+  "time": 200
+}

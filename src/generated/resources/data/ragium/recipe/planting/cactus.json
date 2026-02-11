@@ -1,0 +1,10 @@
+{
+  "type": "ragium:planting",
+  "crop": {
+    "count": 3,
+    "id": "minecraft:cactus"
+  },
+  "seed": "minecraft:cactus",
+  "soil": "#c:sands",
+  "time": 200
+}

@@ -1,0 +1,11 @@
+{
+  "type": "ragium:solidifying",
+  "catalyst": "ragium:block_mold",
+  "ingredient": {
+    "fluids": "#c:lava"
+  },
+  "result": {
+    "id": "minecraft:obsidian"
+  },
+  "time": 100
+}

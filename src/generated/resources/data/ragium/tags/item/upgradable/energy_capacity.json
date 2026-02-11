@@ -1,0 +1,7 @@
+{
+  "values": [
+    "#ragium:upgradable/generator",
+    "#ragium:upgradable/machine",
+    "ragium:battery"
+  ]
+}
