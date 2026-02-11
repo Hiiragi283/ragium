@@ -1,5 +1,8 @@
 {
   "type": "ragium:pyrolyzing",
+  "fluid_ingredient": {
+    "fluids": "#c:nitrogen"
+  },
   "fluid_result": {
     "amount": 500,
     "id": "ragium:creosote"
@@ -13,5 +16,5 @@
     "id": "minecraft:charcoal",
     "tag": "c:charcoal"
   },
-  "time": 200
+  "time": 100
 }

@@ -4,7 +4,7 @@
     "amount": 90,
     "id": "hiiragi_core:molten_warped_crystal"
   },
-  "ingredient": {
+  "item_ingredient": {
     "amount": 8,
     "items": "#minecraft:warped_stems"
   },

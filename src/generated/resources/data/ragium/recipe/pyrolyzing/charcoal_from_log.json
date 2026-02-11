@@ -3,7 +3,7 @@
   "fluid_result": {
     "id": "ragium:creosote"
   },
-  "ingredient": {
+  "item_ingredient": {
     "amount": 8,
     "items": "#minecraft:logs_that_burn"
   },

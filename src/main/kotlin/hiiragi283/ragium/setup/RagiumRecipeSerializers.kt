@@ -152,7 +152,8 @@ object RagiumRecipeSerializers {
     val PYROLYZING: RecipeSerializer<HTPyrolyzingRecipe> = REGISTER.registerSerializer(
         RagiumConst.PYROLYZING,
         MapBiCodec.composite(
-            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTPyrolyzingRecipe::ingredient),
+            HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTPyrolyzingRecipe::itemIngredient),
+            HTFluidIngredient.CODEC.optionalFieldOf(HTConst.FLUID_INGREDIENT).forGetter { Optional.ofNullable(it.fluidIngredient) },
             HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT).forGetter(HTPyrolyzingRecipe::itemResult),
             HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT).forGetter(HTPyrolyzingRecipe::fluidResult),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTPyrolyzingRecipe::parameters),

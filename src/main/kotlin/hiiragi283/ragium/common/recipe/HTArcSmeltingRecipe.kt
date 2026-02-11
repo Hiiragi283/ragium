@@ -15,9 +15,9 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTArcSmeltingRecipe(
     fluidIngredient: HTFluidIngredient,
     itemIngredient: HTItemIngredient,
-    result: HTFluidResult,
+    val result: HTFluidResult,
     parameters: SubParameters,
-) : HTFluidWithItemRecipe<HTFluidResult>(fluidIngredient, itemIngredient, result, parameters) {
+) : HTFluidWithItemRecipe(fluidIngredient, itemIngredient, parameters) {
     fun getResultFluid(provider: HolderLookup.Provider): FluidStack = result.getStackOrEmpty(provider)
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY

@@ -69,11 +69,11 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             compressDustToGem(event, entry)
 
             crushBaseToDust(event, entry)
-            
+
             crushOreToCrushed(event, entry, CommonTagPrefixes.ORE)
             crushOreToCrushed(event, entry, CommonTagPrefixes.RAW)
             crushCrushedToDust(event, entry)
-            
+
             crushPrefixToDust(event, entry, CommonTagPrefixes.GEAR)
             crushPrefixToDust(event, entry, CommonTagPrefixes.NUGGET)
             crushPrefixToDust(event, entry, CommonTagPrefixes.PLATE)

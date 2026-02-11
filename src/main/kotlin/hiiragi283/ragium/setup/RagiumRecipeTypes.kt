@@ -53,7 +53,7 @@ object RagiumRecipeTypes {
     val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
 
     @JvmField
-    val PYROLYZING: HTDeferredRecipeType<SingleRecipeInput, HTPyrolyzingRecipe> = REGISTER.registerType(RagiumConst.PYROLYZING)
+    val PYROLYZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTPyrolyzingRecipe> = REGISTER.registerType(RagiumConst.PYROLYZING)
 
     @JvmField
     val REFINING: HTDeferredRecipeType<HTSingleFluidRecipeInput, HTRefiningRecipe> = REGISTER.registerType(RagiumConst.REFINING)

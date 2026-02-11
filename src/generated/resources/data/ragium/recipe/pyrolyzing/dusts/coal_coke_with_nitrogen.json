@@ -1,5 +1,8 @@
 {
   "type": "ragium:pyrolyzing",
+  "fluid_ingredient": {
+    "fluids": "#c:nitrogen"
+  },
   "fluid_result": {
     "amount": 2000,
     "id": "ragium:creosote"
@@ -13,5 +16,5 @@
     "id": "hiiragi_core:coal_coke_dust",
     "tag": "c:dusts/coal_coke"
   },
-  "time": 600
+  "time": 300
 }

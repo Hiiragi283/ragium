@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
@@ -24,16 +26,22 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.PYROLYZER, pos, state) {
+    private lateinit var inputTank: HTBasicFluidTank
     private lateinit var outputTank: HTBasicFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
-        outputTank =
-            builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)))
+        inputTank = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)),
+        )
+        outputTank = builder.addSlot(
+            HTSlotInfo.OUTPUT,
+            HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)),
+        )
     }
 
     private lateinit var inputSlot: HTBasicItemSlot
@@ -50,15 +58,17 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
     private inner class RecipeComponent :
-        HTEnergizedRecipeComponent.Cached<SingleRecipeInput, HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
-        private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
-        private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+        HTEnergizedRecipeComponent.Cached<HTItemAndFluidRecipeInput, HTPyrolyzingRecipe>(RagiumRecipeTypes.PYROLYZING, this) {
+        private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
+        private val itemInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+
         private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+        private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
         override fun insertOutput(
             level: ServerLevel,
             pos: BlockPos,
-            input: SingleRecipeInput,
+            input: HTItemAndFluidRecipeInput,
             recipe: HTPyrolyzingRecipe,
         ) {
             val access: RegistryAccess = level.registryAccess()
@@ -69,19 +79,21 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
         override fun extractInput(
             level: ServerLevel,
             pos: BlockPos,
-            input: SingleRecipeInput,
+            input: HTItemAndFluidRecipeInput,
             recipe: HTPyrolyzingRecipe,
         ) {
-            inputHandler.consume(recipe.ingredient)
+            fluidInputHandler.consume(recipe.fluidIngredient)
+            itemInputHandler.consume(recipe.itemIngredient)
         }
 
         override fun applyEffect() {
             playSound(SoundEvents.BLAZE_AMBIENT, volume = 0.5f)
         }
 
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
+            createInput(itemInputHandler, fluidInputHandler)
 
-        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTPyrolyzingRecipe): Boolean {
+        override fun canProgressRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput, recipe: HTPyrolyzingRecipe): Boolean {
             val access: RegistryAccess = level.registryAccess()
             val bool1: Boolean = itemOutputHandler.canInsert(recipe.getResultItem(access))
             val bool2: Boolean = fluidOutputHandler.canInsert(recipe.getResultFluid(access))

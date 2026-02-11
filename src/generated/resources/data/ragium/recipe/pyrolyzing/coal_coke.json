@@ -4,7 +4,7 @@
     "amount": 2000,
     "id": "ragium:creosote"
   },
-  "ingredient": {
+  "item_ingredient": {
     "amount": 8,
     "items": "#c:coal"
   },

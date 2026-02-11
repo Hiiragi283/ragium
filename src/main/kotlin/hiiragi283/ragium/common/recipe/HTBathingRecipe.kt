@@ -14,9 +14,9 @@ import net.minecraft.world.item.crafting.RecipeType
 class HTBathingRecipe(
     fluidIngredient: HTFluidIngredient,
     itemIngredient: HTItemIngredient,
-    result: HTItemResult,
+    val result: HTItemResult,
     parameters: SubParameters,
-) : HTFluidWithItemRecipe<HTItemResult>(fluidIngredient, itemIngredient, result, parameters) {
+) : HTFluidWithItemRecipe(fluidIngredient, itemIngredient, parameters) {
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BATHING
