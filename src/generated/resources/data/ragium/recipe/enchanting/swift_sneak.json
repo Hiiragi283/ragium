@@ -1,5 +1,6 @@
 {
   "type": "ragium:enchanting",
+  "book": "minecraft:book",
   "enchantment": "minecraft:swift_sneak",
   "ingredient": {
     "amount": 16,

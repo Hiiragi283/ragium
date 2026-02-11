@@ -1,5 +1,6 @@
 {
   "type": "ragium:enchanting",
+  "book": "minecraft:book",
   "enchantment": "minecraft:luck_of_the_sea",
   "ingredient": {
     "amount": 64,

@@ -1,5 +1,6 @@
 {
   "type": "ragium:enchanting",
+  "book": "minecraft:book",
   "enchantment": "minecraft:projectile_protection",
   "ingredient": {
     "amount": 64,

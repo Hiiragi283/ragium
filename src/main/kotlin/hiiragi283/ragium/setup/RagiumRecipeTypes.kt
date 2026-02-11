@@ -3,7 +3,6 @@ package hiiragi283.ragium.setup
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
-import hiiragi283.core.api.recipe.input.HTViewRecipeInput
 import hiiragi283.core.common.registry.HTDeferredRecipeType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
@@ -81,8 +80,8 @@ object RagiumRecipeTypes {
     val COMPRESSING: HTDeferredRecipeType<HTCompressingRecipe.Input, HTCompressingRecipe> = REGISTER.registerType(RagiumConst.COMPRESSING)
 
     @JvmField
-    val ENCHANTING: HTDeferredRecipeType<HTViewRecipeInput, HTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
+    val ENCHANTING: HTDeferredRecipeType<HTEnchantingRecipe.Input, HTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
 
     @JvmField
-    val PLANTING: HTDeferredRecipeType<HTViewRecipeInput, HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
+    val PLANTING: HTDeferredRecipeType<HTPlantingRecipe.Input, HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
 }

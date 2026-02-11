@@ -1,5 +1,6 @@
 {
   "type": "ragium:enchanting",
+  "book": "minecraft:book",
   "enchantment": "minecraft:efficiency",
   "ingredient": {
     "amount": 64,

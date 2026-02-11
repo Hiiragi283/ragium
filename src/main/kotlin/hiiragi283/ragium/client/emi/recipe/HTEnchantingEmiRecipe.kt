@@ -6,14 +6,13 @@ import hiiragi283.core.api.integration.emi.toEmi
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.emi.recipe.base.HTProcessingEmiRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTEnchantingEmiRecipe(holder: RecipeHolder<HTEnchantingRecipe>) :
     HTProcessingEmiRecipe<HTEnchantingRecipe>(RagiumEmiRecipeCategories.ENCHANTING, holder) {
     init {
         addInput(recipe.expIngredient)
-        addInput(Items.BOOK.toEmi())
+        addInput(recipe.book)
         addInput(recipe.ingredient)
 
         addOutputs(recipe.createEnchBook().toEmi())

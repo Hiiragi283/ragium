@@ -7,7 +7,7 @@ import hiiragi283.core.api.monad.Either
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.input.HTViewRecipeInput
+import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.util.HTExperienceHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -15,31 +15,20 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.fluids.FluidStack
 
 class HTEnchantingRecipe(
+    val book: HTItemIngredient,
     val ingredient: HTItemIngredient,
     val contents: Either<Holder<Enchantment>, ItemEnchantments>,
     parameters: SubParameters,
-) : HTProcessingRecipe<HTViewRecipeInput>(parameters) {
-    constructor(
-        ingredient: HTItemIngredient,
-        holder: Holder<Enchantment>,
-        parameters: SubParameters,
-    ) : this(ingredient, Either.Left(holder), parameters)
-
-    constructor(ingredient: HTItemIngredient, enchantments: ItemEnchantments, parameters: SubParameters) : this(
-        ingredient,
-        Either.Right(enchantments),
-        parameters,
-    )
-
+) : HTProcessingRecipe<HTEnchantingRecipe.Input>(parameters) {
     val expIngredient: HTFluidIngredient by lazy {
         val amount: Int = contents
             .map(
@@ -56,15 +45,15 @@ class HTEnchantingRecipe(
 
     //    HTProcessingRecipe    //
 
-    override fun matches(input: HTViewRecipeInput, level: Level): Boolean {
-        val bool1: Boolean = expIngredient.test(input.getFluid(0))
-        val bool2: Boolean = input.getItem(0).`is`(Items.BOOK)
-        val bool3: Boolean = ingredient.test(input.getItem(1))
+    override fun matches(input: Input, level: Level): Boolean {
+        val bool1: Boolean = expIngredient.test(input.fluid)
+        val bool2: Boolean = book.testOnlyType(input.book)
+        val bool3: Boolean = ingredient.test(input.item)
         return bool1 && bool2 && bool3
     }
 
-    override fun assemble(input: HTViewRecipeInput, registries: HolderLookup.Provider): ItemStack {
-        var stack: ItemStack = input.getItem(0)
+    override fun assemble(input: Input, registries: HolderLookup.Provider): ItemStack {
+        var stack: ItemStack = input.book
         val instances: List<EnchantmentInstance> = contents
             .map(
                 { holder: Holder<Enchantment> ->
@@ -83,4 +72,19 @@ class HTEnchantingRecipe(
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ENCHANTING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTING.get()
+
+    @JvmRecord
+    data class Input(val book: ItemStack, val item: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {
+        override fun getFluid(index: Int): FluidStack = fluid
+
+        override fun getFluidSize(): Int = 0
+
+        override fun getItem(index: Int): ItemStack = when (index) {
+            0 -> book
+            1 -> item
+            else -> error("No item for index: $index")
+        }
+
+        override fun size(): Int = 2
+    }
 }

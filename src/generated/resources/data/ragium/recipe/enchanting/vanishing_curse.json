@@ -1,5 +1,6 @@
 {
   "type": "ragium:enchanting",
+  "book": "minecraft:book",
   "enchantment": "minecraft:vanishing_curse",
   "ingredient": "#c:cobblestones",
   "time": 200

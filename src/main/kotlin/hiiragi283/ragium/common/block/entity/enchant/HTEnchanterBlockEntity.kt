@@ -2,9 +2,10 @@ package hiiragi283.ragium.common.block.entity.enchant
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.HTRecipeCache
-import hiiragi283.core.api.recipe.input.HTViewRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
@@ -65,8 +66,8 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
     override fun createRecipeComponent(): RecipeComponent = RecipeComponent()
 
-    inner class RecipeComponent : HTEnchantingRecipeComponent<HTViewRecipeInput, HTEnchantingRecipe>(this) {
-        private val cache: HTRecipeCache<HTViewRecipeInput, HTEnchantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.ENCHANTING)
+    inner class RecipeComponent : HTEnchantingRecipeComponent<HTEnchantingRecipe.Input, HTEnchantingRecipe>(this) {
+        private val cache: HTRecipeCache<HTEnchantingRecipe.Input, HTEnchantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.ENCHANTING)
         private var currentEnch: List<EnchantmentInstance> = listOf()
 
         private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(expTank) }
@@ -77,7 +78,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         override fun insertOutput(
             level: ServerLevel,
             pos: BlockPos,
-            input: HTViewRecipeInput,
+            input: HTEnchantingRecipe.Input,
             recipe: HTEnchantingRecipe,
         ) {
             outputHandler.insert(recipe.assemble(input, level.registryAccess()))
@@ -87,7 +88,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         override fun extractInput(
             level: ServerLevel,
             pos: BlockPos,
-            input: HTViewRecipeInput,
+            input: HTEnchantingRecipe.Input,
             recipe: HTEnchantingRecipe,
         ) {
             fluidInputHandler.consume(recipe.expIngredient)
@@ -99,17 +100,22 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             playSound(SoundEvents.ENCHANTMENT_TABLE_USE)
         }
 
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
-            this += leftInputHandler
-            this += rightInputHandler
-
-            this += fluidInputHandler
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTEnchantingRecipe.Input? {
+            val input = HTEnchantingRecipe.Input(
+                leftInputHandler.getItemStack(),
+                rightInputHandler.getItemStack(),
+                fluidInputHandler.getFluidStack(),
+            )
+            return when {
+                input.isEmpty -> null
+                else -> input
+            }
         }
 
         /**
          * @see net.minecraft.world.inventory.EnchantmentMenu
          */
-        override fun getMatchedRecipe(input: HTViewRecipeInput, level: ServerLevel): HTEnchantingRecipe? {
+        override fun getMatchedRecipe(input: HTEnchantingRecipe.Input, level: ServerLevel): HTEnchantingRecipe? {
             /*if (isRandom) {
                 val stack: ItemStack = input.getItem(0)
                 val cost: Int = EnchantmentHelper.getEnchantmentCost(
@@ -157,7 +163,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             return enchantments
         }*/
 
-        override fun canProgressRecipe(level: ServerLevel, input: HTViewRecipeInput, recipe: HTEnchantingRecipe): Boolean =
+        override fun canProgressRecipe(level: ServerLevel, input: HTEnchantingRecipe.Input, recipe: HTEnchantingRecipe): Boolean =
             outputHandler.canInsert(recipe.assemble(input, level.registryAccess()))
     }
 

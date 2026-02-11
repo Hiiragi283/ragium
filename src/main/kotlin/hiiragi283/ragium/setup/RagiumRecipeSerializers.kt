@@ -267,6 +267,7 @@ object RagiumRecipeSerializers {
     val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = REGISTER.registerSerializer(
         RagiumConst.ENCHANTING,
         MapBiCodec.composite(
+            HTItemIngredient.UNSIZED_CODEC.fieldOf("book").forGetter(HTEnchantingRecipe::book),
             HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTEnchantingRecipe::ingredient),
             BiCodecs
                 .either(

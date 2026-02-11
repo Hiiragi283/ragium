@@ -1,5 +1,6 @@
 {
   "type": "ragium:enchanting",
+  "book": "minecraft:book",
   "enchantment": "minecraft:riptide",
   "ingredient": "minecraft:heart_of_the_sea",
   "time": 200

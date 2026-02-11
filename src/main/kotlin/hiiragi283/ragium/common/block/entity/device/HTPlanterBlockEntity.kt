@@ -3,9 +3,10 @@ package hiiragi283.ragium.common.block.entity.device
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.div
 import hiiragi283.core.api.recipe.HTRecipeCache
-import hiiragi283.core.api.recipe.input.HTViewRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.api.times
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
@@ -54,68 +55,75 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = object : HTRecipeComponent<HTViewRecipeInput, HTPlantingRecipe>(this) {
-        private val cache: HTRecipeCache<HTViewRecipeInput, HTPlantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.PLANTING)
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> =
+        object : HTRecipeComponent<HTPlantingRecipe.Input, HTPlantingRecipe>(this) {
+            private val cache: HTRecipeCache<HTPlantingRecipe.Input, HTPlantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.PLANTING)
 
-        private val plantInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(plantSlot) }
-        private val soilInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(soilSlot) }
-        private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy {
-            HTSlotInputHandler(
-                inputTank,
-            )
-        }
-
-        private val cropOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(cropSlot) }
-        private val seedOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(seedSlot) }
-
-        override fun insertOutput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: HTViewRecipeInput,
-            recipe: HTPlantingRecipe,
-        ) {
-            val access: RegistryAccess = level.registryAccess()
-            cropOutputHandler.insert(recipe.getResultItem(access))
-            seedOutputHandler.insert(recipe.getResultSeed(access))
-        }
-
-        override fun extractInput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: HTViewRecipeInput,
-            recipe: HTPlantingRecipe,
-        ) {
-            plantInputHandler.consume(recipe.seedIngredient.getRequiredAmount())
-            fluidInputHandler.consume(HTPlantingRecipe.FLUID_AMOUNT)
-        }
-
-        override fun applyEffect() {
-        }
-
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTViewRecipeInput? = HTViewRecipeInput.create {
-            this += plantInputHandler
-            this += soilInputHandler
-
-            this += fluidInputHandler
-        }
-
-        override fun getMatchedRecipe(input: HTViewRecipeInput, level: ServerLevel): HTPlantingRecipe? = cache.getFirstRecipe(input, level)
-
-        override fun getMaxProgress(recipe: HTPlantingRecipe): Int =
-            modifyValue(HTUpgradeKeys.SPEED) { recipe.time * LightEngine.MAX_LEVEL / (it * getBaseMultiplier()) }
-
-        override fun getProgress(level: ServerLevel, pos: BlockPos): Int {
-            val blockLight: Int = level.getBrightness(LightLayer.BLOCK, pos.above())
-            val skyLight: Int = level.getBrightness(LightLayer.SKY, pos.above())
-            return when {
-                level.canSeeSky(pos.above()) -> skyLight
-                else -> minOf(blockLight, skyLight)
+            private val plantInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(plantSlot) }
+            private val soilInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(soilSlot) }
+            private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy {
+                HTSlotInputHandler(
+                    inputTank,
+                )
             }
-        }
 
-        override fun canProgressRecipe(level: ServerLevel, input: HTViewRecipeInput, recipe: HTPlantingRecipe): Boolean =
-            cropOutputHandler.canInsert(recipe.getResultItem(level.registryAccess()))
-    }
+            private val cropOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(cropSlot) }
+            private val seedOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(seedSlot) }
+
+            override fun insertOutput(
+                level: ServerLevel,
+                pos: BlockPos,
+                input: HTPlantingRecipe.Input,
+                recipe: HTPlantingRecipe,
+            ) {
+                val access: RegistryAccess = level.registryAccess()
+                cropOutputHandler.insert(recipe.getResultItem(access))
+                seedOutputHandler.insert(recipe.getResultSeed(access))
+            }
+
+            override fun extractInput(
+                level: ServerLevel,
+                pos: BlockPos,
+                input: HTPlantingRecipe.Input,
+                recipe: HTPlantingRecipe,
+            ) {
+                plantInputHandler.consume(recipe.seedIngredient.getRequiredAmount())
+                fluidInputHandler.consume(HTPlantingRecipe.FLUID_AMOUNT)
+            }
+
+            override fun applyEffect() {
+            }
+
+            override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTPlantingRecipe.Input? {
+                val input = HTPlantingRecipe.Input(
+                    plantInputHandler.getItemStack(),
+                    soilInputHandler.getItemStack(),
+                    fluidInputHandler.getFluidStack(),
+                )
+                return when {
+                    input.isEmpty -> null
+                    else -> input
+                }
+            }
+
+            override fun getMatchedRecipe(input: HTPlantingRecipe.Input, level: ServerLevel): HTPlantingRecipe? =
+                cache.getFirstRecipe(input, level)
+
+            override fun getMaxProgress(recipe: HTPlantingRecipe): Int =
+                modifyValue(HTUpgradeKeys.SPEED) { recipe.time * LightEngine.MAX_LEVEL / (it * getBaseMultiplier()) }
+
+            override fun getProgress(level: ServerLevel, pos: BlockPos): Int {
+                val blockLight: Int = level.getBrightness(LightLayer.BLOCK, pos.above())
+                val skyLight: Int = level.getBrightness(LightLayer.SKY, pos.above())
+                return when {
+                    level.canSeeSky(pos.above()) -> skyLight
+                    else -> minOf(blockLight, skyLight)
+                }
+            }
+
+            override fun canProgressRecipe(level: ServerLevel, input: HTPlantingRecipe.Input, recipe: HTPlantingRecipe): Boolean =
+                cropOutputHandler.canInsert(recipe.getResultItem(level.registryAccess()))
+        }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.device.planter
 }
