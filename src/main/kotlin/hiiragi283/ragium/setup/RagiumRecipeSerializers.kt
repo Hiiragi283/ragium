@@ -20,7 +20,7 @@ import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBathingRecipe
+import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -188,14 +188,14 @@ object RagiumRecipeSerializers {
         )
 
     @JvmField
-    val BATHING: RecipeSerializer<HTBathingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.BATHING,
+    val CANNING: RecipeSerializer<HTCanningRecipe> = REGISTER.registerSerializer(
+        RagiumConst.CANNING,
         MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTBathingRecipe::fluidIngredient),
-            HTItemIngredient.CODEC.fieldOf(HTConst.CATALYST).forGetter(HTBathingRecipe::itemIngredient),
-            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBathingRecipe::result),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTBathingRecipe::parameters),
-            ::HTBathingRecipe,
+            HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTCanningRecipe::fluidIngredient),
+            HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTCanningRecipe::itemIngredient),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCanningRecipe::result),
+            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTCanningRecipe::parameters),
+            ::HTCanningRecipe,
         ),
     )
 

@@ -22,7 +22,7 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTBathingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTCanningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCompressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
@@ -79,7 +79,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.FREEZING,
             RagiumEmiRecipeCategories.SOLIDIFYING,
             // Machine - Chemical
-            RagiumEmiRecipeCategories.BATHING,
+            RagiumEmiRecipeCategories.CANNING,
             RagiumEmiRecipeCategories.MIXING,
             RagiumEmiRecipeCategories.WASHING,
             // Device
@@ -105,7 +105,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.FREEZING, HTItemOrFluidEmiRecipe.Companion::freezing)
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.BATHING, ::HTBathingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.CANNING, ::HTCanningEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.WASHING, ::HTWashingEmiRecipe)
 

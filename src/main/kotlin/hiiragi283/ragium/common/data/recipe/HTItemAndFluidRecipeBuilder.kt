@@ -8,24 +8,24 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.recipe.HTBathingRecipe
+import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
-class HTFluidWithItemRecipeBuilder<RESULT : HTIdLike>(prefix: String, private val factory: Factory<RESULT, *>) :
+class HTItemAndFluidRecipeBuilder<RESULT : HTIdLike>(prefix: String, private val factory: Factory<RESULT, *>) :
     HTProcessingRecipeBuilder(prefix) {
     companion object {
         @HTBuilderMarker
         @JvmStatic
-        inline fun bathing(output: RecipeOutput, builderAction: HTFluidWithItemRecipeBuilder<HTItemResult>.() -> Unit) {
-            HTFluidWithItemRecipeBuilder(RagiumConst.BATHING, ::HTBathingRecipe).apply(builderAction).save(output)
+        inline fun canning(output: RecipeOutput, builderAction: HTItemAndFluidRecipeBuilder<HTItemResult>.() -> Unit) {
+            HTItemAndFluidRecipeBuilder(RagiumConst.CANNING, ::HTCanningRecipe).apply(builderAction).save(output)
         }
 
         @HTBuilderMarker
         @JvmStatic
-        inline fun solidifying(output: RecipeOutput, builderAction: HTFluidWithItemRecipeBuilder<HTItemResult>.() -> Unit) {
-            HTFluidWithItemRecipeBuilder(RagiumConst.SOLIDIFYING, ::HTSolidifyingRecipe).apply(builderAction).save(output)
+        inline fun solidifying(output: RecipeOutput, builderAction: HTItemAndFluidRecipeBuilder<HTItemResult>.() -> Unit) {
+            HTItemAndFluidRecipeBuilder(RagiumConst.SOLIDIFYING, ::HTSolidifyingRecipe).apply(builderAction).save(output)
         }
     }
 

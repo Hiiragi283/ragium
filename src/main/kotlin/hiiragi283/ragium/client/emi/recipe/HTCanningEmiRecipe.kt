@@ -3,12 +3,12 @@ package hiiragi283.ragium.client.emi.recipe
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
-import hiiragi283.ragium.client.emi.recipe.base.HTFluidWithItemEmiRecipe
-import hiiragi283.ragium.common.recipe.HTBathingRecipe
+import hiiragi283.ragium.client.emi.recipe.base.HTItemAndFluidEmiRecipe
+import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTBathingEmiRecipe(holder: RecipeHolder<HTBathingRecipe>) :
-    HTFluidWithItemEmiRecipe<HTBathingRecipe>("mix", RagiumEmiRecipeCategories.BATHING, holder) {
+class HTCanningEmiRecipe(holder: RecipeHolder<HTCanningRecipe>) :
+    HTItemAndFluidEmiRecipe<HTCanningRecipe>("mix", RagiumEmiRecipeCategories.CANNING, holder) {
     init {
         addInput(recipe.fluidIngredient)
         addInput(recipe.itemIngredient)

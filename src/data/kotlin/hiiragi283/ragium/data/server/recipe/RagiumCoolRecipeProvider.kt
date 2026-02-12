@@ -4,9 +4,8 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
-import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemAndFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.setup.RagiumFluids
@@ -63,21 +62,14 @@ object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
 
     @JvmStatic
     private fun solidifying() {
-        // Latex -> Raw Rubber
-        HTFluidWithItemRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.create(HCFluids.LATEX, 1000)
-            itemIngredient = inputCreator.create(HTMoldType.BALL)
-            result = resultCreator.create(HCItems.RAW_RUBBER, 2)
-        }
-
         // Glass -> Glass Bottle
-        HTFluidWithItemRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS) { it / 4 }
+        HTItemAndFluidRecipeBuilder.solidifying(output) {
+            fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS)
             itemIngredient = inputCreator.create(HTMoldType.BALL)
             result = resultCreator.create(Items.GLASS_BOTTLE)
         }
         // Glass -> Pane
-        HTFluidWithItemRecipeBuilder.solidifying(output) {
+        HTItemAndFluidRecipeBuilder.solidifying(output) {
             fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
             itemIngredient = inputCreator.create(HTMoldType.PLATE)
             result = resultCreator.create(Items.GLASS_PANE)

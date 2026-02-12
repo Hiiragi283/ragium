@@ -3,12 +3,12 @@ package hiiragi283.ragium.client.emi.recipe
 import dev.emi.emi.api.widget.WidgetHolder
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
-import hiiragi283.ragium.client.emi.recipe.base.HTFluidWithItemEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.base.HTItemAndFluidEmiRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTSolidifyingEmiRecipe(holder: RecipeHolder<HTSolidifyingRecipe>) :
-    HTFluidWithItemEmiRecipe<HTSolidifyingRecipe>("solidify", RagiumEmiRecipeCategories.SOLIDIFYING, holder) {
+    HTItemAndFluidEmiRecipe<HTSolidifyingRecipe>("solidify", RagiumEmiRecipeCategories.SOLIDIFYING, holder) {
     init {
         addInput(recipe.ingredient)
 

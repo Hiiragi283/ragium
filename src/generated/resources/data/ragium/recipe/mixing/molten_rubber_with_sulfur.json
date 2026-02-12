@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:latex"
+    }
+  ],
+  "fluid_result": {
+    "amount": 180,
+    "id": "hiiragi_core:molten_rubber"
+  },
+  "item_ingredient": [
+    "#c:dusts/sulfur"
+  ],
+  "time": 200
+}

@@ -1,10 +1,10 @@
 {
-  "type": "ragium:bathing",
-  "catalyst": "minecraft:glass_bottle",
-  "ingredient": {
+  "type": "ragium:canning",
+  "fluid_ingredient": {
     "amount": 250,
     "fluids": "#c:dragon_breath"
   },
+  "item_ingredient": "minecraft:glass_bottle",
   "result": {
     "id": "minecraft:dragon_breath"
   },

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "amount": 90,
+      "fluids": "#c:molten_eldritch"
+    }
+  ],
+  "item_ingredient": [
+    "#c:obsidians/normal"
+  ],
+  "item_result": {
+    "id": "minecraft:crying_obsidian"
+  },
+  "time": 200
+}

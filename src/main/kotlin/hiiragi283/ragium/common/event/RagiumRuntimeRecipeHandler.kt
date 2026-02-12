@@ -26,7 +26,7 @@ import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemAndFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
@@ -52,12 +52,12 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     fun registerRuntimeRecipe(event: HTRegisterRuntimeRecipeEvent) {
         this.delegated = event.context
 
-        bathToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
-        bathToColor(ItemTags.BEDS, ColoredMaterials.BED)
-        bathToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
-        bathToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
-
         cutWoodFromDefinition()
+
+        mixToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
+        mixToColor(ItemTags.BEDS, ColoredMaterials.BED)
+        mixToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
+        mixToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
 
         for (entry: HTMaterialManager.Entry in materialManager) {
             bathDustToPrefix(event, entry, CommonTagPrefixes.GEM)
@@ -116,26 +116,12 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         // レシピを登録
-        HTFluidWithItemRecipeBuilder.bathing(output) {
+        HTItemAndFluidRecipeBuilder.canning(output) {
             itemIngredient = inputCreator.create(crushedPrefix, entry)
             fluidIngredient = inputCreator.water(125)
             result = resultCreator.create(resultItem)
             time /= 2
             recipeId suffix "from_${crushedPrefix.name}"
-        }
-    }
-
-    @JvmStatic
-    private fun bathToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTItemHolderLike<*>>) {
-        for ((color: HTDefaultColor, colored: HTItemHolderLike<*>) in map) {
-            val dye: HTFluidContent = HCFluids.getDye(color)
-            // レシピを登録
-            HTFluidWithItemRecipeBuilder.bathing(output) {
-                itemIngredient = inputCreator.create(inputTag)
-                fluidIngredient = inputCreator.create(dye, 250)
-                result = resultCreator.create(colored)
-                time /= 2
-            }
         }
     }
 
@@ -460,6 +446,20 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         }
     }
 
+    @JvmStatic
+    private fun mixToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTItemHolderLike<*>>) {
+        for ((color: HTDefaultColor, colored: HTItemHolderLike<*>) in map) {
+            val dye: HTFluidContent = HCFluids.getDye(color)
+            // レシピを登録
+            HTMixingRecipeBuilder.create(output) {
+                itemIngredients += inputCreator.create(inputTag)
+                fluidIngredients += inputCreator.create(dye, 250)
+                itemResults += resultCreator.create(colored)
+                time /= 2
+            }
+        }
+    }
+
     //    Solidifying    //
 
     @JvmStatic
@@ -475,7 +475,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         val fluidAmount: Int = prefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
         // レシピを登録
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
-        HTFluidWithItemRecipeBuilder.solidifying(output) {
+        HTItemAndFluidRecipeBuilder.solidifying(output) {
             fluidIngredient = inputCreator.create(molten, fluidAmount)
             itemIngredient = inputCreator.create(moldType)
             result = resultCreator.create(resultItem)

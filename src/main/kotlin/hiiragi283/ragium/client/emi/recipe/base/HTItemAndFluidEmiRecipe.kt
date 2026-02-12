@@ -7,7 +7,7 @@ import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.ragium.client.emi.RagiumEmiTextures
 import net.minecraft.world.item.crafting.RecipeHolder
 
-abstract class HTFluidWithItemEmiRecipe<RECIPE : HTProcessingRecipe<*>>(
+abstract class HTItemAndFluidEmiRecipe<RECIPE : HTProcessingRecipe<*>>(
     private val icon: String,
     category: HTEmiRecipeCategory,
     holder: RecipeHolder<RECIPE>,

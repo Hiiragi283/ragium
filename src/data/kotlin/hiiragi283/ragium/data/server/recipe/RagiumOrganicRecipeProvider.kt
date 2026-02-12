@@ -9,7 +9,6 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
-import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPyrolyzingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
@@ -201,10 +200,11 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId suffix "_from_crimson_stem"
         }
         // Crimson Dust + Lava -> Blaze Powder
-        HTFluidWithItemRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL)
-            fluidIngredient = inputCreator.lava(250)
-            result = resultCreator.create(Items.BLAZE_POWDER)
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL)
+            fluidIngredients += inputCreator.lava(250)
+
+            itemResults += resultCreator.create(Items.BLAZE_POWDER)
             recipeId suffix "_from_crimson"
         }
     }
@@ -219,10 +219,11 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId suffix "_from_warped_stem"
         }
         // Warped Dust + Lava -> Ender Pearl
-        HTFluidWithItemRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL)
-            fluidIngredient = inputCreator.lava(250)
-            result = resultCreator.create(Items.ENDER_PEARL)
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL)
+            fluidIngredients += inputCreator.lava(250)
+
+            itemResults += resultCreator.create(Items.ENDER_PEARL)
             recipeId suffix "_from_warped"
         }
     }
