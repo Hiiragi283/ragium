@@ -1,0 +1,21 @@
+{
+  "type": "ragium:distilling",
+  "fluid_result": [
+    {
+      "amount": 250,
+      "id": "ragium:residue_oil"
+    },
+    {
+      "amount": 500,
+      "id": "ragium:naphtha"
+    },
+    {
+      "amount": 250,
+      "id": "ragium:ethylene"
+    }
+  ],
+  "ingredient": {
+    "fluids": "#c:crude_oil"
+  },
+  "time": 200
+}

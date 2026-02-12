@@ -29,7 +29,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
-        add(RagiumBlocks.REFINERY, "Refinery")
+
         add(RagiumBlocks.SOLIDIFIER, "Solidifier")
 
         add(RagiumBlocks.MIXER, "Mixer")
@@ -111,9 +111,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.PRESSING, "Pressing")
 
+        add(RagiumRecipeTypes.DISTILLING, "Distilling")
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
-        add(RagiumRecipeTypes.REFINING, "Refining")
 
         add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
@@ -150,6 +150,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
         add(RagiumTranslation.CONFIG_FLUID_FIRST_INPUT, "First Input Tank Capacity")
         add(RagiumTranslation.CONFIG_FLUID_SECOND_INPUT, "Second Input Tank Capacity")
+        add(RagiumTranslation.CONFIG_FLUID_THIRD_INPUT, "Third Input Tank Capacity")
         add(RagiumTranslation.CONFIG_FLUID_FIRST_OUTPUT, "First Output Tank Capacity")
         add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "Second Output Tank Capacity")
         add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "Third Output Tank Capacity")

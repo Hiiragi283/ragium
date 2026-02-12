@@ -29,7 +29,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         add(RagiumBlocks.MELTER, "溶融炉")
         add(RagiumBlocks.PYROLYZER, "熱分解室")
-        add(RagiumBlocks.REFINERY, "精製機")
+
         add(RagiumBlocks.SOLIDIFIER, "成型機")
 
         add(RagiumBlocks.MIXER, "混合機")
@@ -111,9 +111,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.PRESSING, "プレス加工")
 
+        add(RagiumRecipeTypes.DISTILLING, "蒸留")
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
-        add(RagiumRecipeTypes.REFINING, "精製")
 
         add(RagiumRecipeTypes.FREEZING, "冷凍")
         add(RagiumRecipeTypes.SOLIDIFYING, "成型")
@@ -150,6 +150,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
         add(RagiumTranslation.CONFIG_FLUID_FIRST_INPUT, "1番目の入力タンクの容量")
         add(RagiumTranslation.CONFIG_FLUID_SECOND_INPUT, "2番目の入力タンクの容量")
+        add(RagiumTranslation.CONFIG_FLUID_THIRD_INPUT, "3番目の入力タンクの容量")
         add(RagiumTranslation.CONFIG_FLUID_FIRST_OUTPUT, "1番目の出力タンクの容量")
         add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "2番目の出力タンクの容量")
         add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "3番目の出力タンクの容量")

@@ -83,28 +83,27 @@ object RagiumConfig {
 
             // Heat
             @JvmField
-            val melter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.MELTER, RagiumFluidConfigType.FIRST_OUTPUT)
+            val melter: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.MELTER,
+                RagiumFluidConfigType.FIRST_INPUT,
+                RagiumFluidConfigType.FIRST_OUTPUT,
+            )
 
             @JvmField
             val pyrolyzer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.PYROLYZER,
+                RagiumFluidConfigType.FIRST_INPUT,
                 RagiumFluidConfigType.FIRST_OUTPUT,
             )
 
+            // Cool
             @JvmField
             val solidifier: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.SOLIDIFIER,
                 RagiumFluidConfigType.FIRST_INPUT,
-            )
-
-            @JvmField
-            val refinery: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.REFINERY,
-                RagiumFluidConfigType.FIRST_INPUT,
-                RagiumFluidConfigType.FIRST_OUTPUT,
             )
 
             // Chemical
@@ -114,7 +113,9 @@ object RagiumConfig {
                 RagiumConst.MIXER,
                 RagiumFluidConfigType.FIRST_INPUT,
                 RagiumFluidConfigType.SECOND_INPUT,
+                RagiumFluidConfigType.THIRD_INPUT,
                 RagiumFluidConfigType.FIRST_OUTPUT,
+                RagiumFluidConfigType.SECOND_OUTPUT,
             )
 
             @JvmField
@@ -129,13 +130,6 @@ object RagiumConfig {
 
         class Device(builder: ModConfigSpec.Builder) {
             // Basic
-            @JvmField
-            val fermenter: HTMachineConfig = HTMachineConfig.createDevice(
-                builder,
-                RagiumConst.FERMENTER,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-            )
-
             @JvmField
             val planter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.PLANTER, RagiumFluidConfigType.FIRST_INPUT)
 

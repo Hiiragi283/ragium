@@ -9,6 +9,7 @@ enum class RagiumFluidConfigType :
     StringRepresentable {
     FIRST_INPUT,
     SECOND_INPUT,
+    THIRD_INPUT,
     FIRST_OUTPUT,
     SECOND_OUTPUT,
     THIRD_OUTPUT,
@@ -18,6 +19,7 @@ enum class RagiumFluidConfigType :
         when (this) {
             FIRST_INPUT -> RagiumTranslation.CONFIG_FLUID_FIRST_INPUT
             SECOND_INPUT -> RagiumTranslation.CONFIG_FLUID_SECOND_INPUT
+            THIRD_INPUT -> RagiumTranslation.CONFIG_FLUID_THIRD_INPUT
             FIRST_OUTPUT -> RagiumTranslation.CONFIG_FLUID_FIRST_OUTPUT
             SECOND_OUTPUT -> RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT
             THIRD_OUTPUT -> RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT

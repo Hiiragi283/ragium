@@ -9,9 +9,9 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.common.data.recipe.HTDistillingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPyrolyzingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.ItemTags
@@ -136,32 +136,33 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
         }
         // Synthetic Oil -> Naphtha
-        HTSingleRecipeBuilder.refining(output) {
+        HTDistillingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
-            result = resultCreator.create(RagiumFluids.NAPHTHA, 250)
+            fluidResults += resultCreator.create(RagiumFluids.NAPHTHA, 250)
             recipeId suffix "_from_synthetic_oil"
         }
     }
 
     @JvmStatic
     private fun crudeOil() {
-        // Crude Oil -> Naphtha
-        HTSingleRecipeBuilder.refining(output) {
-            ingredient = inputCreator.create(RagiumFluids.CRUDE_OIL, 500)
-            result = resultCreator.create(RagiumFluids.NAPHTHA, 250)
+        // Crude Oil + C2H4 + Naphtha + Residue Oil
+        HTDistillingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.CRUDE_OIL, 1000)
+            fluidResults += resultCreator.create(RagiumFluids.RESIDUE_OIL, 250)
+            fluidResults += resultCreator.create(RagiumFluids.NAPHTHA, 500)
+            fluidResults += resultCreator.create(RagiumFluids.ETHYLENE, 250)
             recipeId suffix "_from_crude_oil"
         }
-        // Crude Oil + C2H4 + Naphtha + Residue Oil
 
-        // Naphtha -> Fuel
-        HTSingleRecipeBuilder.refining(output) {
-            ingredient = inputCreator.create(RagiumFluids.NAPHTHA, 500)
-            result = resultCreator.create(RagiumFluids.FUEL, 250)
+        // Naphtha -> C2H4 + C4H6 + Fuel
+        HTDistillingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.NAPHTHA, 1000)
+            fluidResults += resultCreator.create(RagiumFluids.FUEL, 500)
+            fluidResults += resultCreator.create(RagiumFluids.BUTADIENE, 250)
+            fluidResults += resultCreator.create(RagiumFluids.ETHYLENE, 250)
             recipeId suffix "_from_naphtha"
         }
-        // Naphtha -> C2H4 + C4H6 + Fuel
-
-        // Residue Oil -> Lubricant  Asphalt
+        // Residue Oil -> Lubricant + Asphalt
     }
 
     @JvmStatic

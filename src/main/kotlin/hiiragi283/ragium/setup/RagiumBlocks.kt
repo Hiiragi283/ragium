@@ -95,10 +95,7 @@ object RagiumBlocks {
     val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
-    @JvmField
-    val REFINERY: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY)
-
+    // Cool
     @JvmField
     val SOLIDIFIER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.SOLIDIFIER, RagiumTranslation.SOLIDIFIER)

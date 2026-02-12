@@ -5,26 +5,30 @@ object RagiumConst {
 
     // Basic
     const val ALLOY_SMELTER = "alloy_smelter"
-    const val ASSEMBLER = "assembler"
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"
     const val ELECTRIC_FURNACE = "electric_furnace"
     const val FORMING_PRESS = "forming_press"
+    const val SQUEEZER = "squeezer"
 
     // Heat
+    const val DISTILLATION_TOWER = "distillation_tower"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
-    const val REFINERY = "refinery"
+
+    // Cool
+    const val FREEZER = "freezer"
     const val SOLIDIFIER = "solidifier"
 
     // Chemical
     const val BREWERY = "brewery"
+    const val CENTRIFUGE = "centrifuge"
+    const val ELECTROLYZER = "electrolyzer"
     const val MIXER = "mixer"
     const val WASHER = "washer"
 
     // Matter
     const val ENCHANTER = "enchanter"
-    const val FERMENTER = "fermenter"
     const val PLANTER = "planter"
 
     // Device
@@ -53,9 +57,9 @@ object RagiumConst {
     const val SQUEEZING = "squeezing"
 
     // Heat
+    const val DISTILLING = "distilling"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
-    const val REFINING = "refining" // TODO
 
     // Cool
     const val FREEZING = "freezing"

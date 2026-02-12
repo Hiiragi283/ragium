@@ -1,0 +1,12 @@
+{
+  "type": "ragium:distilling",
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:naphtha"
+  },
+  "ingredient": {
+    "amount": 500,
+    "fluids": "#c:synthetic_oil"
+  },
+  "time": 200
+}

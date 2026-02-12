@@ -26,13 +26,13 @@ import hiiragi283.ragium.client.emi.recipe.HTCanningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCompressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTDistillingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTEnchantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTItemOrFluidEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTWashingEmiRecipe
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
@@ -72,9 +72,9 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.CUTTING,
             RagiumEmiRecipeCategories.PRESSING,
             // Machine - Heat
+            RagiumEmiRecipeCategories.DISTILLING,
             RagiumEmiRecipeCategories.MELTING,
             RagiumEmiRecipeCategories.PYROLYZING,
-            RagiumEmiRecipeCategories.REFINING,
             // Machine - Cool
             RagiumEmiRecipeCategories.FREEZING,
             RagiumEmiRecipeCategories.SOLIDIFYING,
@@ -98,9 +98,9 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.PRESSING, ::HTPressingEmiRecipe)
 
+        addRegistryRecipes(registry, RagiumRecipeTypes.DISTILLING, ::HTDistillingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemOrFluidEmiRecipe.Companion::melting)
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, ::HTPyrolyzingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.FREEZING, HTItemOrFluidEmiRecipe.Companion::freezing)
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)

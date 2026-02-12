@@ -1,0 +1,21 @@
+{
+  "type": "ragium:distilling",
+  "fluid_result": [
+    {
+      "amount": 500,
+      "id": "ragium:fuel"
+    },
+    {
+      "amount": 250,
+      "id": "ragium:butadiene"
+    },
+    {
+      "amount": 250,
+      "id": "ragium:ethylene"
+    }
+  ],
+  "ingredient": {
+    "fluids": "#c:naphtha"
+  },
+  "time": 200
+}

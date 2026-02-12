@@ -42,12 +42,19 @@ object RagiumEmiRecipeCategories {
     val PROCESSOR_BOUNDS = Bounds(0, 0, 8 * 18, 3 * 18)
 
     @JvmStatic
-    private fun processor(hasText: HTHasText, id: ResourceLocation, vararg workStations: ItemLike): HTEmiRecipeCategory =
-        HTEmiRecipeCategory.create(PROCESSOR_BOUNDS, hasText, id, *workStations)
+    private fun processor(
+        hasText: HTHasText,
+        id: ResourceLocation,
+        vararg workStations: ItemLike,
+        bounds: Bounds = PROCESSOR_BOUNDS,
+    ): HTEmiRecipeCategory = HTEmiRecipeCategory.create(bounds, hasText, id, *workStations)
 
     @JvmStatic
-    private fun <T> processor(recipeType: T, vararg workStations: ItemLike): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike =
-        processor(recipeType, recipeType.getId(), *workStations)
+    private fun <T> processor(
+        recipeType: T,
+        vararg workStations: ItemLike,
+        bounds: Bounds = PROCESSOR_BOUNDS,
+    ): HTEmiRecipeCategory where T : HTHasText, T : HTIdLike = processor(recipeType, recipeType.getId(), *workStations, bounds = bounds)
 
     // Machine - Basic
     @JvmField
@@ -64,13 +71,17 @@ object RagiumEmiRecipeCategories {
 
     // Machine - Heat
     @JvmField
+    val DISTILLING: HTEmiRecipeCategory = processor(
+        RagiumRecipeTypes.DISTILLING,
+        Items.FIREWORK_STAR,
+        bounds = Bounds(0, 0, 8 * 18, 5 * 18),
+    )
+
+    @JvmField
     val MELTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
     val PYROLYZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
-
-    @JvmField
-    val REFINING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     // Machine - Cool
     @JvmField

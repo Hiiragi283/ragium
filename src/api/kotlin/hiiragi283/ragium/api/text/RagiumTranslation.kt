@@ -14,6 +14,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     CONFIG_ENERGY_RATE("config", "energy_rate"),
     CONFIG_FLUID_FIRST_INPUT("config", "fluid", "first_input"),
     CONFIG_FLUID_SECOND_INPUT("config", "fluid", "second_input"),
+    CONFIG_FLUID_THIRD_INPUT("config", "fluid", "third_input"),
     CONFIG_FLUID_FIRST_OUTPUT("config", "fluid", "first_output"),
     CONFIG_FLUID_SECOND_OUTPUT("config", "fluid", "second_output"),
     CONFIG_FLUID_THIRD_OUTPUT("config", "fluid", "third_output"),
@@ -35,7 +36,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
 
     MELTER("description", RagiumConst.MELTER),
     PYROLYZER("description", RagiumConst.PYROLYZER),
-    REFINERY("description", RagiumConst.REFINERY),
+
     SOLIDIFIER("description", RagiumConst.SOLIDIFIER),
 
     BREWERY("description", RagiumConst.BREWERY),
