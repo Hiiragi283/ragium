@@ -1,8 +1,8 @@
 {
   "type": "ragium:melting",
-  "ingredient": "minecraft:honey_block",
-  "result": {
+  "fluid_result": {
     "id": "hiiragi_core:honey"
   },
+  "item_ingredient": "minecraft:honey_block",
   "time": 200
 }

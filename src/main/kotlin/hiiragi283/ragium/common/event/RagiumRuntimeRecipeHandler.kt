@@ -27,13 +27,12 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCompressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
-import hiiragi283.ragium.setup.RagiumFluids
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry
@@ -61,8 +60,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         cutWoodFromDefinition()
 
         for (entry: HTMaterialManager.Entry in materialManager) {
-            arcSmeltingDustToIngot(event, entry)
-
             bathDustToPrefix(event, entry, CommonTagPrefixes.GEM)
             bathDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
 
@@ -93,7 +90,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             pressBaseToPrefix(event, entry, CommonTagPrefixes.PLATE, HTMoldType.PLATE)
             pressBaseToPrefix(event, entry, CommonTagPrefixes.ROD, HTMoldType.ROD)
 
-            solidifyPrefix(event, entry, CommonTagPrefixes.BLOCK, HTMoldType.BLOCK)
             solidifyPrefix(event, entry, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
             solidifyPrefix(event, entry, CommonTagPrefixes.GEM, HTMoldType.GEM)
             solidifyPrefix(event, entry, CommonTagPrefixes.INGOT, HTMoldType.INGOT)
@@ -109,35 +105,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     @JvmStatic
     private fun getMolten(material: HTMaterialLike): HTFluidContent? =
         HiiragiCoreAccess.INSTANCE.materialContents.getMoltenFluidMap()[material.asMaterialKey()]
-
-    //    Arc Smelting    //
-
-    @JvmStatic
-    private fun arcSmeltingDustToIngot(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 放電に必要なガスを取得
-        val meltingLevel: HTMaterialLevel = entry.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT)
-        val (inputGas: HTFluidContent, amount: Int) = when (meltingLevel) {
-            HTMaterialLevel.NONE -> return
-            HTMaterialLevel.LOW -> return
-            HTMaterialLevel.MEDIUM -> RagiumFluids.NITROGEN to 250
-            HTMaterialLevel.HIGH -> RagiumFluids.NITROGEN to 500
-            HTMaterialLevel.HIGHEST -> RagiumFluids.HELIUM to 250
-        }
-        // 材料が存在するか判定
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
-        if (!event.isPresentTag(crushedPrefix, entry)) return
-        // 素材のプロパティから液体材料を取得
-        val fluidAmount: Int = crushedPrefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
-        // 完成品を取得
-        val molten: HTFluidContent = getMolten(entry) ?: return
-        // レシピを登録
-        HTFluidWithItemRecipeBuilder.arcSmelting(output) {
-            itemIngredient = inputCreator.create(crushedPrefix, entry)
-            fluidIngredient = inputCreator.create(inputGas, amount)
-            result = resultCreator.create(molten, fluidAmount)
-            recipeId suffix "_from_${crushedPrefix.name}"
-        }
-    }
 
     //    Bathing    //
 
@@ -467,9 +434,9 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val molten: HTFluidContent = getMolten(entry) ?: return
         // レシピを登録
-        HTSingleRecipeBuilder.melting(output) {
-            ingredient = inputCreator.create(prefix, entry)
-            result = resultCreator.create(molten, fluidAmount)
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(prefix, entry)
+            result += resultCreator.create(molten, fluidAmount)
             recipeId suffix "_from_${prefix.name}"
             time = recipeTime
         }
@@ -489,7 +456,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             itemIngredients += inputCreator.create(crushedPrefix, entry)
             fluidIngredients += inputCreator.water(250)
             time /= 2
-            result += resultCreator.create(dough)
+            itemResults += resultCreator.create(dough)
         }
     }
 

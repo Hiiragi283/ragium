@@ -1,0 +1,28 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:methane"
+    },
+    {
+      "fluids": "#c:water"
+    }
+  ],
+  "fluid_result": [
+    {
+      "id": "ragium:carbon_dioxide"
+    },
+    {
+      "amount": 4000,
+      "id": "ragium:hydrogen"
+    }
+  ],
+  "item_ingredient": [
+    "#c:dusts/nickel"
+  ],
+  "item_result": {
+    "id": "hiiragi_core:nickel_dust",
+    "tag": "c:dusts/nickel"
+  },
+  "time": 200
+}

@@ -72,6 +72,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     private fun coolants() {
         builder(RagiumDataMapTypes.COOLANT)
             .add(Tags.Fluids.WATER, 100, false)
+            .add(RagiumFluids.LIQUID_HYDROGEN, 5)
+            .add(RagiumFluids.LIQUID_OXYGEN, 5)
             .add(RagiumFluids.LIQUID_NITROGEN, 5)
     }
 

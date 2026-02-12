@@ -1,9 +1,9 @@
 {
   "type": "ragium:melting",
-  "ingredient": "#c:netherracks",
-  "result": {
+  "fluid_result": {
     "amount": 125,
     "id": "minecraft:lava"
   },
+  "item_ingredient": "#c:netherracks",
   "time": 200
 }

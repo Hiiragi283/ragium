@@ -71,10 +71,6 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
 
     @JvmField
-    val ASSEMBLER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.ASSEMBLER, RagiumTranslation.ASSEMBLER)
-
-    @JvmField
     val CRUSHER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER)
 
@@ -121,10 +117,6 @@ object RagiumBlocks {
     //    Device    //
 
     // Basic
-    @JvmField
-    val FERMENTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.FERMENTER, RagiumTranslation.FERMENTER)
-
     @JvmField
     val PLANTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)

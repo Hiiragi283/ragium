@@ -5,11 +5,9 @@ import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.recipe.HTArcSmeltingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.minecraft.data.recipes.RecipeOutput
@@ -18,12 +16,6 @@ import net.minecraft.resources.ResourceLocation
 class HTFluidWithItemRecipeBuilder<RESULT : HTIdLike>(prefix: String, private val factory: Factory<RESULT, *>) :
     HTProcessingRecipeBuilder(prefix) {
     companion object {
-        @HTBuilderMarker
-        @JvmStatic
-        inline fun arcSmelting(output: RecipeOutput, builderAction: HTFluidWithItemRecipeBuilder<HTFluidResult>.() -> Unit) {
-            HTFluidWithItemRecipeBuilder(RagiumConst.ARC_SMELTING, ::HTArcSmeltingRecipe).apply(builderAction).save(output)
-        }
-
         @HTBuilderMarker
         @JvmStatic
         inline fun bathing(output: RecipeOutput, builderAction: HTFluidWithItemRecipeBuilder<HTItemResult>.() -> Unit) {

@@ -22,7 +22,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
-        add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
@@ -36,7 +35,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.WASHER, "Washer")
 
-        add(RagiumBlocks.FERMENTER, "Fermenter")
         add(RagiumBlocks.PLANTER, "Planter")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
@@ -55,12 +53,14 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         // Fluid
         addFluid(RagiumFluids.AIR, "Air")
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluids.LIQUID_HYDROGEN, "Liquid Hydrogen")
         addFluid(RagiumFluids.HELIUM, "Helium")
         addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
         addFluid(RagiumFluids.NITROGEN, "Nitrogen")
         addFluid(RagiumFluids.LIQUID_NITROGEN, "Liquid Nitrogen")
         addFluid(RagiumFluids.AMMONIA, "Ammonia")
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
+        addFluid(RagiumFluids.LIQUID_OXYGEN, "Liquid Oxygen")
 
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.MIXTURE_ACID, "Mixture Acid")
@@ -107,7 +107,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
-        add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.PRESSING, "Pressing")
@@ -115,12 +114,12 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
         add(RagiumRecipeTypes.REFINING, "Refining")
+
+        add(RagiumRecipeTypes.FREEZING, "Freezing")
         add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
 
-        add(RagiumRecipeTypes.ARC_FURNACE, "Arc Smelting")
         add(RagiumRecipeTypes.BATHING, "Bathing")
         add(RagiumRecipeTypes.MIXING, "Mixing")
-        add(RagiumRecipeTypes.REACTING, "Chemical Reacting")
         add(RagiumRecipeTypes.WASHING, "Washing")
 
         add(RagiumRecipeTypes.COMPRESSING, "Implosion Compressing")

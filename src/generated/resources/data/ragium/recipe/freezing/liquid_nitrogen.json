@@ -1,0 +1,11 @@
+{
+  "type": "ragium:freezing",
+  "fluid_ingredient": {
+    "fluids": "#c:nitrogen"
+  },
+  "fluid_result": {
+    "amount": 100,
+    "id": "ragium:liquid_nitrogen"
+  },
+  "time": 200
+}

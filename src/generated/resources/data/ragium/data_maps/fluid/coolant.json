@@ -1,6 +1,8 @@
 {
   "values": {
+    "#c:liquid_hydrogen": 5,
     "#c:liquid_nitrogen": 5,
+    "#c:liquid_oxygen": 5,
     "#c:water": 100
   }
 }

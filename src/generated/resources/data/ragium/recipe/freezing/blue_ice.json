@@ -1,0 +1,11 @@
+{
+  "type": "ragium:freezing",
+  "item_ingredient": {
+    "amount": 6,
+    "items": "minecraft:packed_ice"
+  },
+  "item_result": {
+    "id": "minecraft:blue_ice"
+  },
+  "time": 200
+}

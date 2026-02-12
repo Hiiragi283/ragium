@@ -19,7 +19,6 @@ enum class HTMoldType(private val enPattern: String, private val jaPattern: Stri
     HTItemHolderLike.Delegated<Item> {
     BLANK("Blank", "空"),
     BALL("Ball", "ボール"),
-    BLOCK("Block", "ブロック"),
     GEAR("Gear", "歯車"),
     GEM("Gem", "宝石"),
     INGOT("Ingot", "インゴット"),

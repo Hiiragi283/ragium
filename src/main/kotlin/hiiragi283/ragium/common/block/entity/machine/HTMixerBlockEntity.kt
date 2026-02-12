@@ -79,7 +79,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
         ) {
             val access: RegistryAccess = level.registryAccess()
             itemOutputHandler.insert(recipe.getResultItem(access))
-            fluidOutputHandler.insert(recipe.getResultFluid(access))
+            // fluidOutputHandler.insert(recipe.getResultFluid(access))
         }
 
         override fun extractInput(
@@ -100,7 +100,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
         override fun canProgressRecipe(level: ServerLevel, input: HTChemicalRecipeInput, recipe: HTMixingRecipe): Boolean {
             val access: RegistryAccess = level.registryAccess()
             val bool1: Boolean = itemOutputHandler.canInsert(recipe.getResultItem(access))
-            val bool2: Boolean = fluidOutputHandler.canInsert(recipe.getResultFluid(access))
+            val bool2: Boolean = false // TODO
             return bool1 && bool2
         }
 

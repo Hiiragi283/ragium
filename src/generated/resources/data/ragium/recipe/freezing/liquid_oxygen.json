@@ -1,0 +1,11 @@
+{
+  "type": "ragium:freezing",
+  "fluid_ingredient": {
+    "fluids": "#c:oxygen"
+  },
+  "fluid_result": {
+    "amount": 100,
+    "id": "ragium:liquid_oxygen"
+  },
+  "time": 200
+}

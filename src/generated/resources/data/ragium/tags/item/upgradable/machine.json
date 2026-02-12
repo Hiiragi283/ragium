@@ -1,7 +1,6 @@
 {
   "values": [
     "ragium:alloy_smelter",
-    "ragium:assembler",
     "ragium:crusher",
     "ragium:cutting_machine",
     "ragium:electric_furnace",

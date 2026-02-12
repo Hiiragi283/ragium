@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
+import hiiragi283.core.api.recipe.HTFluidRecipe
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -23,7 +24,8 @@ class HTPyrolyzingRecipe(
     val itemResult: HTItemResult,
     val fluidResult: HTFluidResult,
     parameters: SubParameters,
-) : HTProcessingRecipe<HTItemAndFluidRecipeInput>(parameters) {
+) : HTProcessingRecipe<HTItemAndFluidRecipeInput>(parameters),
+    HTFluidRecipe {
     constructor(
         itemIngredient: HTItemIngredient,
         fluidIngredient: Optional<HTFluidIngredient>,
@@ -32,7 +34,7 @@ class HTPyrolyzingRecipe(
         parameters: SubParameters,
     ) : this(itemIngredient, fluidIngredient.getOrNull(), itemResult, fluidResult, parameters)
 
-    fun getResultFluid(provider: HolderLookup.Provider): FluidStack = fluidResult.getStackOrEmpty(provider)
+    override fun getResultFluid(registries: HolderLookup.Provider): FluidStack = fluidResult.getStackOrEmpty(registries)
 
     override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean {
         val bool1: Boolean = itemIngredient.test(input.item)

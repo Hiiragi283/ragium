@@ -1,0 +1,23 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:methane"
+    },
+    {
+      "fluids": "#c:carbon_dioxide"
+    }
+  ],
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:synthetic_gas"
+  },
+  "item_ingredient": [
+    "#c:dusts/ruthenium"
+  ],
+  "item_result": {
+    "id": "hiiragi_core:ruthenium_dust",
+    "tag": "c:dusts/ruthenium"
+  },
+  "time": 200
+}

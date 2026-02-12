@@ -1,0 +1,22 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:sunflower_oil"
+    },
+    {
+      "amount": 3000,
+      "fluids": "#c:alcohol"
+    }
+  ],
+  "fluid_result": [
+    {
+      "amount": 3000,
+      "id": "ragium:biofuel"
+    },
+    {
+      "id": "ragium:glycerol"
+    }
+  ],
+  "time": 200
+}

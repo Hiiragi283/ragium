@@ -8,19 +8,17 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTArcSmeltingRecipe
-import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
-import hiiragi283.ragium.common.recipe.HTReactingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
@@ -37,9 +35,6 @@ object RagiumRecipeTypes {
     val ALLOYING: HTDeferredRecipeType<HTShapelessRecipeInput, HTAlloyingRecipe> = REGISTER.registerType(RagiumConst.ALLOYING)
 
     @JvmField
-    val ASSEMBLING: HTDeferredRecipeType<HTAssemblingRecipe.Input, HTAssemblingRecipe> = REGISTER.registerType(RagiumConst.ASSEMBLING)
-
-    @JvmField
     val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTCrushingRecipe> = REGISTER.registerType(RagiumConst.CRUSHING)
 
     @JvmField
@@ -50,7 +45,7 @@ object RagiumRecipeTypes {
 
     // Machine - Heat
     @JvmField
-    val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
+    val MELTING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
 
     @JvmField
     val PYROLYZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTPyrolyzingRecipe> = REGISTER.registerType(RagiumConst.PYROLYZING)
@@ -58,21 +53,19 @@ object RagiumRecipeTypes {
     @JvmField
     val REFINING: HTDeferredRecipeType<HTSingleFluidRecipeInput, HTRefiningRecipe> = REGISTER.registerType(RagiumConst.REFINING)
 
+    // Machine - Cool
+    @JvmField
+    val FREEZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTFreezingRecipe> = REGISTER.registerType(RagiumConst.FREEZING)
+
     @JvmField
     val SOLIDIFYING: HTDeferredRecipeType<HTSingleCatalystRecipeInput, HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
 
     // Machine - Chemical
     @JvmField
-    val ARC_FURNACE: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTArcSmeltingRecipe> = REGISTER.registerType(RagiumConst.ARC_FURNACE)
-
-    @JvmField
     val BATHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTBathingRecipe> = REGISTER.registerType(RagiumConst.BATHING)
 
     @JvmField
     val MIXING: HTDeferredRecipeType<HTChemicalRecipeInput, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
-
-    @JvmField
-    val REACTING: HTDeferredRecipeType<HTChemicalRecipeInput, HTReactingRecipe> = REGISTER.registerType(RagiumConst.REACTING)
 
     @JvmField
     val WASHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTWashingRecipe> = REGISTER.registerType(RagiumConst.WASHING)

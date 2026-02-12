@@ -11,11 +11,9 @@ import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegiste
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTFermenterBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.enchant.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFormingPressBlockEntity
@@ -64,10 +62,6 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
 
     @JvmField
-    val ASSEMBLER: HTDeferredBlockEntityType<HTAssemblerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.ASSEMBLER, ::HTAssemblerBlockEntity)
-
-    @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
         REGISTER.registerTick(RagiumConst.CRUSHER, ::HTCrusherBlockEntity)
 
@@ -114,10 +108,6 @@ object RagiumBlockEntityTypes {
     //    Device    //
 
     // Basic
-    @JvmField
-    val FERMENTER: HTDeferredBlockEntityType<HTFermenterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.FERMENTER, ::HTFermenterBlockEntity)
-
     @JvmField
     val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
         REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
@@ -179,7 +169,6 @@ object RagiumBlockEntityTypes {
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         // Machine
         registerHandler(event, ALLOY_SMELTER.get())
-        registerHandler(event, ASSEMBLER.get())
         registerHandler(event, CRUSHER.get())
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, ELECTRIC_FURNACE.get())

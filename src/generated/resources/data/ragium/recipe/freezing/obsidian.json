@@ -1,0 +1,10 @@
+{
+  "type": "ragium:freezing",
+  "fluid_ingredient": {
+    "fluids": "#c:lava"
+  },
+  "item_result": {
+    "id": "minecraft:obsidian"
+  },
+  "time": 200
+}

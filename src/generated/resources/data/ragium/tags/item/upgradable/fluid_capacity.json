@@ -1,7 +1,5 @@
 {
   "values": [
-    "ragium:assembler",
-    "ragium:fermenter",
     "ragium:melter",
     "ragium:mixer",
     "ragium:planter",

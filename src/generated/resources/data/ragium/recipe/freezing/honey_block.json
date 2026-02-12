@@ -1,0 +1,10 @@
+{
+  "type": "ragium:freezing",
+  "fluid_ingredient": {
+    "fluids": "#c:honey"
+  },
+  "item_result": {
+    "id": "minecraft:honey_block"
+  },
+  "time": 200
+}

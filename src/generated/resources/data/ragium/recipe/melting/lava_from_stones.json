@@ -1,12 +1,12 @@
 {
   "type": "ragium:melting",
-  "ingredient": [
-    "#c:cobblestones",
-    "#c:stones"
-  ],
-  "result": {
+  "fluid_result": {
     "amount": 125,
     "id": "minecraft:lava"
   },
+  "item_ingredient": [
+    "#c:cobblestones",
+    "#c:stones"
+  ],
   "time": 600
 }

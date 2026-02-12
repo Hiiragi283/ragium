@@ -1,8 +1,0 @@
-{
-  "type": "ragium:melting",
-  "ingredient": "minecraft:ice",
-  "result": {
-    "id": "minecraft:water"
-  },
-  "time": 200
-}

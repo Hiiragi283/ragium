@@ -1,15 +1,15 @@
 {
   "type": "ragium:melting",
-  "ingredient": {
+  "fluid_result": {
+    "amount": 270,
+    "id": "hiiragi_core:molten_eldritch"
+  },
+  "item_ingredient": {
     "type": "neoforge:components",
     "components": {
       "minecraft:ominous_bottle_amplifier": 2
     },
     "items": "minecraft:ominous_bottle"
-  },
-  "result": {
-    "amount": 270,
-    "id": "hiiragi_core:molten_eldritch"
   },
   "time": 200
 }

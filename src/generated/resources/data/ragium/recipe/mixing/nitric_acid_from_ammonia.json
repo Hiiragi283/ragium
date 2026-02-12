@@ -1,0 +1,28 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:ammonia"
+    },
+    {
+      "amount": 2000,
+      "fluids": "#c:oxygen"
+    }
+  ],
+  "fluid_result": [
+    {
+      "id": "ragium:nitric_acid"
+    },
+    {
+      "id": "minecraft:water"
+    }
+  ],
+  "item_ingredient": [
+    "#c:dusts/platinum"
+  ],
+  "item_result": {
+    "id": "hiiragi_core:platinum_dust",
+    "tag": "c:dusts/platinum"
+  },
+  "time": 200
+}

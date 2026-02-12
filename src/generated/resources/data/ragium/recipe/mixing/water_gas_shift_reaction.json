@@ -1,0 +1,28 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:synthetic_gas"
+    },
+    {
+      "fluids": "#c:water"
+    }
+  ],
+  "fluid_result": [
+    {
+      "id": "ragium:carbon_dioxide"
+    },
+    {
+      "amount": 2000,
+      "id": "ragium:hydrogen"
+    }
+  ],
+  "item_ingredient": [
+    "#c:dusts/platinum"
+  ],
+  "item_result": {
+    "id": "hiiragi_core:platinum_dust",
+    "tag": "c:dusts/platinum"
+  },
+  "time": 200
+}

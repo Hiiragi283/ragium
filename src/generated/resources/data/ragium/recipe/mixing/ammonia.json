@@ -1,0 +1,24 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "amount": 3000,
+      "fluids": "#c:hydrogen"
+    },
+    {
+      "fluids": "#c:nitrogen"
+    }
+  ],
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:ammonia"
+  },
+  "item_ingredient": [
+    "#c:dusts/iron"
+  ],
+  "item_result": {
+    "id": "hiiragi_core:iron_dust",
+    "tag": "c:dusts/iron"
+  },
+  "time": 200
+}

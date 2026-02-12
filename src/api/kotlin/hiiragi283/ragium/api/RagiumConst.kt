@@ -48,29 +48,34 @@ object RagiumConst {
 
     // Basic
     const val ALLOYING = "alloying"
-    const val ASSEMBLING = "assembling"
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
     const val PRESSING = "pressing"
     const val PRINTING = "printing"
+    const val SQUEEZING = "squeezing"
 
     // Heat
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
-    const val REFINING = "refining"
+    const val REFINING = "refining" // TODO
+
+    // Cool
+    const val FREEZING = "freezing"
     const val SOLIDIFYING = "solidifying"
 
     // Chemical
-    const val ARC_SMELTING = "arc_smelting"
     const val BATHING = "bathing"
-    const val BREWING = "brewing"
+    const val CENTRIFUGING = "centrifuging"
+    const val ELECTROLYZING = "electrolyzing"
     const val MIXING = "mixing"
-    const val REACTING = "reacting"
     const val WASHING = "washing"
 
     // Matter
+    const val FABRICATING = "fabricating"
+    const val DUPLICATING = "duplicating"
 
     // Device
+    const val BREWING = "brewing"
     const val COMPRESSING = "compressing"
     const val ENCHANTING = "enchanting"
     const val PLANTING = "planting"

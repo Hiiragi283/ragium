@@ -22,7 +22,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
 
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
-        add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
@@ -36,7 +35,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.MIXER, "混合機")
         add(RagiumBlocks.WASHER, "洗浄機")
 
-        add(RagiumBlocks.FERMENTER, "発酵槽")
         add(RagiumBlocks.PLANTER, "栽培機")
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
@@ -55,12 +53,14 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         // Fluid
         addFluid(RagiumFluids.AIR, "空気")
         addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.LIQUID_HYDROGEN, "液体水素")
         addFluid(RagiumFluids.HELIUM, "ヘリウム")
         addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
         addFluid(RagiumFluids.NITROGEN, "窒素")
         addFluid(RagiumFluids.LIQUID_NITROGEN, "液体窒素")
         addFluid(RagiumFluids.AMMONIA, "アンモニア")
         addFluid(RagiumFluids.OXYGEN, "酸素")
+        addFluid(RagiumFluids.LIQUID_OXYGEN, "液体酸素")
 
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.MIXTURE_ACID, "混酸")
@@ -107,7 +107,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
-        add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.PRESSING, "プレス加工")
@@ -115,12 +114,12 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
         add(RagiumRecipeTypes.REFINING, "精製")
+
+        add(RagiumRecipeTypes.FREEZING, "冷凍")
         add(RagiumRecipeTypes.SOLIDIFYING, "成型")
 
-        add(RagiumRecipeTypes.ARC_FURNACE, "アーク精錬")
         add(RagiumRecipeTypes.BATHING, "化学浴")
         add(RagiumRecipeTypes.MIXING, "混合")
-        add(RagiumRecipeTypes.REACTING, "化学反応")
         add(RagiumRecipeTypes.WASHING, "洗浄")
 
         add(RagiumRecipeTypes.COMPRESSING, "爆縮")

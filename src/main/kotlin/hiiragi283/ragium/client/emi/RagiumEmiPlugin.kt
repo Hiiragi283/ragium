@@ -22,19 +22,16 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTArcSmeltingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTAssemblingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTBathingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCompressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTEnchantingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTItemToFluidEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTItemOrFluidEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPlantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPressingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPyrolyzingEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTReactingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTRefiningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTSolidifyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTWashingEmiRecipe
@@ -71,7 +68,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.COMBUSTION,
             // Machine - Basic
             RagiumEmiRecipeCategories.ALLOYING,
-            RagiumEmiRecipeCategories.ASSEMBLING,
             RagiumEmiRecipeCategories.CRUSHING,
             RagiumEmiRecipeCategories.CUTTING,
             RagiumEmiRecipeCategories.PRESSING,
@@ -79,17 +75,16 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.MELTING,
             RagiumEmiRecipeCategories.PYROLYZING,
             RagiumEmiRecipeCategories.REFINING,
+            // Machine - Cool
+            RagiumEmiRecipeCategories.FREEZING,
             RagiumEmiRecipeCategories.SOLIDIFYING,
             // Machine - Chemical
-            RagiumEmiRecipeCategories.ARC_FURNACE,
             RagiumEmiRecipeCategories.BATHING,
             RagiumEmiRecipeCategories.MIXING,
-            RagiumEmiRecipeCategories.REACTING,
             RagiumEmiRecipeCategories.WASHING,
             // Device
             RagiumEmiRecipeCategories.COMPRESSING,
             RagiumEmiRecipeCategories.ENCHANTING,
-            RagiumEmiRecipeCategories.FERMENTING,
             RagiumEmiRecipeCategories.PLANTING,
         ).forEach(::addCategory.partially1(registry))
 
@@ -99,20 +94,19 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addInteractions(registry)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.ALLOYING, ::HTAlloyingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.ASSEMBLING, ::HTAssemblingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CRUSHING, ::HTCrushingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.PRESSING, ::HTPressingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemToFluidEmiRecipe.Companion::melting)
+        addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemOrFluidEmiRecipe.Companion::melting)
         addRegistryRecipes(registry, RagiumRecipeTypes.PYROLYZING, ::HTPyrolyzingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.REFINING, ::HTRefiningEmiRecipe)
+
+        addRegistryRecipes(registry, RagiumRecipeTypes.FREEZING, HTItemOrFluidEmiRecipe.Companion::freezing)
         addRegistryRecipes(registry, RagiumRecipeTypes.SOLIDIFYING, ::HTSolidifyingEmiRecipe)
 
-        addRegistryRecipes(registry, RagiumRecipeTypes.ARC_FURNACE, ::HTArcSmeltingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.BATHING, ::HTBathingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MIXING, ::HTMixingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.REACTING, ::HTReactingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.WASHING, ::HTWashingEmiRecipe)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.COMPRESSING, ::HTCompressingEmiRecipe)

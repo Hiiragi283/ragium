@@ -3,43 +3,171 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.VanillaFluidContents
+import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidWithItemRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        vanilla()
-        hiiragi()
+        alloying()
+        melting()
     }
 
     @JvmStatic
-    private fun vanilla() {
+    private fun alloying() {
+        // Netherite
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, VanillaMaterialKeys.NETHERITE, 2)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.GOLD), 4)
+            ingredients += inputCreator.create(CommonTagPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 4)
+        }
+
+        // Steel from Coal
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON))
+            ingredients += inputCreator.create(listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL).flatMap(::baseOrDust), 2)
+            recipeId suffix "_from_coal"
+        }
+        // Steel from Coke
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON))
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE))
+            recipeId suffix "_from_coke"
+        }
+        // Invar
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.INVAR, 3)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON), 2)
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.NICKEL))
+            conditions += CommonTagPrefixes.INGOT.itemTagKey(CommonMaterialKeys.INVAR)
+        }
+        // Electrum
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.ELECTRUM, 2)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.GOLD))
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.SILVER))
+            conditions += CommonTagPrefixes.INGOT.itemTagKey(CommonMaterialKeys.ELECTRUM)
+        }
+        // Bronze
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRONZE, 4)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COPPER), 3)
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.TIN))
+        }
+        // Brass
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.BRASS, 2)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COPPER))
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.ZINC))
+        }
+        // Constantan
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.CONSTANTAN, 2)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COPPER))
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.NICKEL))
+            conditions += CommonTagPrefixes.INGOT.itemTagKey(CommonMaterialKeys.CONSTANTAN)
+        }
+
+        // Amethyst + Lapis -> Azure Shard
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.GEM, HCMaterialKeys.AZURE, 2)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.AMETHYST))
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.LAPIS))
+        }
+        // Azure Shard + Iron -> Azure Steel
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON))
+            ingredients += inputCreator.create(baseOrDust(HCMaterialKeys.AZURE), 2)
+        }
+        // Rubber Bar
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 2)
+            ingredients += inputCreator.create(HCItems.RAW_RUBBER)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            recipeId suffix "_with_sulfur"
+        }
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 4)
+            ingredients += inputCreator.create(HCItems.RAW_RUBBER)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
+            recipeId suffix "_with_sulfur_and_carbon"
+        }
+
+        // Ambrosia
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.create(HCItems.AMBROSIA)
+            ingredients += inputCreator.create(HCItems.IRIDESCENT_POWDER)
+            ingredients += inputCreator.create(Items.HONEY_BLOCK, 64)
+            ingredients += inputCreator.create(Items.ENCHANTED_GOLDEN_APPLE, 16)
+        }
+
+        // Raginite + Copper -> Ragi-Alloy
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COPPER))
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 2)
+        }
+        // Ragi-Alloy + Glowstone -> Adv Ragi-Alloy
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+            ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGI_ALLOY))
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 2)
+        }
+
+        // Quartz + Plastic -> Circuit Board
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.create(RagiumItems.CIRCUIT_BOARD)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.QUARTZ)
+            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.PLASTIC)
+        }
+        // Circuit Board + Gold Plate -> Plated
+        HTAlloyingRecipeBuilder.create(output) {
+            result = resultCreator.create(RagiumItems.PLATED_CIRCUIT_BOARD)
+            ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
+            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.GOLD)
+        }
+    }
+    
+    @JvmStatic
+    private fun melting() {
         // Water
-        HTSingleRecipeBuilder.melting(output) {
-            ingredient = inputCreator.create(Items.SNOW_BLOCK)
-            result = resultCreator.water(1000)
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(Items.SNOW_BLOCK)
+            result += resultCreator.water(1000)
             time = 20 * 5
             recipeId suffix "_from_snow_block"
         }
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(Items.SNOWBALL)
+            result += resultCreator.water(250)
+            time = 20
+            recipeId suffix "_from_snowball"
+        }
 
-        meltAndSolidify(Items.SNOWBALL, VanillaFluidContents.WATER, 250, HTMoldType.BALL, "snowball", 20)
-        meltAndSolidify(Items.ICE, VanillaFluidContents.WATER, 1000, HTMoldType.BLOCK, "ice")
-
+        HTFluidWithItemRecipeBuilder.solidifying(output) {
+            fluidIngredient = inputCreator.water(250)
+            itemIngredient = inputCreator.create(HTMoldType.BALL)
+            result = resultCreator.create(Items.SNOWBALL)
+            time /= 4
+        }
         HTFluidWithItemRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
             fluidIngredient = inputCreator.water(250)
@@ -48,32 +176,22 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             recipeId replace id("water_bottle")
         }
         // Lava
-        HTSingleRecipeBuilder.melting(output) {
-            ingredient = inputCreator.create(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES))
-            result = resultCreator.lava(125)
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES))
+            result += resultCreator.lava(125)
             time = 20 * 30
             recipeId suffix "_from_stones"
         }
-        HTSingleRecipeBuilder.melting(output) {
-            ingredient = inputCreator.create(Tags.Items.NETHERRACKS)
-            result = resultCreator.lava(125)
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(Tags.Items.NETHERRACKS)
+            result += resultCreator.lava(125)
             recipeId suffix "_from_netherrack"
         }
-        HTSingleRecipeBuilder.melting(output) {
-            ingredient = inputCreator.create(Items.MAGMA_BLOCK)
-            result = resultCreator.lava(250)
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(Items.MAGMA_BLOCK)
+            result += resultCreator.lava(250)
             recipeId suffix "_from_magma"
         }
-
-        HTFluidWithItemRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.lava(1000)
-            itemIngredient = inputCreator.create(HTMoldType.BLOCK)
-            result = resultCreator.create(Items.OBSIDIAN)
-        }
-    }
-
-    @JvmStatic
-    private fun hiiragi() {
         // Experience
         HTFluidWithItemRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
@@ -81,7 +199,11 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             result = resultCreator.create(Items.EXPERIENCE_BOTTLE)
         }
         // Honey
-        meltAndSolidify(Items.HONEY_BLOCK, HCFluids.HONEY, 1000, HTMoldType.BLOCK, "block")
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(Items.HONEY_BLOCK)
+            result += resultCreator.create(HCFluids.HONEY)
+            recipeId suffix "_from_block"
+        }
 
         HTFluidWithItemRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
@@ -100,95 +222,29 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             fluidIngredient = inputCreator.create(HCFluids.DRAGON_BREATH, 250)
             result = resultCreator.create(Items.DRAGON_BREATH)
         }
-
-        // Latex
-        HTFluidWithItemRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.create(HCFluids.LATEX, 1000)
-            itemIngredient = inputCreator.create(HTMoldType.BALL)
-            result = resultCreator.create(HCItems.RAW_RUBBER, 2)
-        }
         // Meat
-        HTSingleRecipeBuilder.melting(output) {
-            ingredient = inputCreator.create(Items.ROTTEN_FLESH)
-            result = resultCreator.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT)
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(Items.ROTTEN_FLESH)
+            result += resultCreator.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT)
             recipeId suffix "_from_rotten"
         }
         // Glass
-        HTFluidWithItemRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS) { it / 4 }
-            itemIngredient = inputCreator.create(HTMoldType.BALL)
-            result = resultCreator.create(Items.GLASS_BOTTLE)
-        }
-
-        HTSingleRecipeBuilder.melting(output) {
-            ingredient = inputCreator.create(Tags.Items.GLASS_PANES)
-            result = resultCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(Tags.Items.GLASS_PANES)
+            result += resultCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
             recipeId suffix "_from_pane"
         }
 
-        HTFluidWithItemRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
-            itemIngredient = inputCreator.create(HTMoldType.PLATE)
-            result = resultCreator.create(Items.GLASS_PANE)
-        }
         // Eldritch
         for (i: Int in (0..4)) {
-            HTSingleRecipeBuilder.melting(output) {
-                ingredient = inputCreator.create(
+            HTItemOrFluidRecipeBuilder.melting(output) {
+                ingredient += inputCreator.create(
                     false,
                     Items.OMINOUS_BOTTLE,
                 ) { expect(DataComponents.OMINOUS_BOTTLE_AMPLIFIER, i) }
-                result = resultCreator.molten(HCMaterialKeys.ELDRITCH) { it * (i + 1) }
+                result += resultCreator.molten(HCMaterialKeys.ELDRITCH) { it * (i + 1) }
                 recipeId suffix "/$i"
             }
-        }
-    }
-
-    //    Extensions    //
-
-    @JvmStatic
-    private fun meltAndSolidify(
-        item: ItemLike,
-        fluid: HTFluidContent,
-        amount: Int,
-        mold: HTMoldType,
-        suffix: String,
-        time: Int = 20 * 10,
-    ) {
-        meltAndSolidify(
-            inputCreator.create(item),
-            resultCreator.create(item),
-            fluid,
-            amount,
-            mold,
-            suffix,
-            time,
-        )
-    }
-
-    @JvmStatic
-    private fun meltAndSolidify(
-        input: HTItemIngredient,
-        result: HTItemResult,
-        fluid: HTFluidContent,
-        amount: Int,
-        mold: HTMoldType,
-        suffix: String,
-        time: Int = 20 * 10,
-    ) {
-        // Melting
-        HTSingleRecipeBuilder.melting(output) {
-            this.ingredient = input
-            this.result = resultCreator.create(fluid, amount)
-            this.time = time
-            recipeId suffix "_from_$suffix"
-        }
-        // Solidify
-        HTFluidWithItemRecipeBuilder.solidifying(output) {
-            this.fluidIngredient = inputCreator.create(fluid, amount)
-            this.itemIngredient = inputCreator.create(mold)
-            this.result = result
-            this.time = time
         }
     }
 }

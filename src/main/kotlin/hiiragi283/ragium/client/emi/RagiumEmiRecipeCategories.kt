@@ -5,8 +5,6 @@ import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.text.HTHasText
-import hiiragi283.core.api.text.toText
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.resources.ResourceLocation
@@ -56,9 +54,6 @@ object RagiumEmiRecipeCategories {
     val ALLOYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val ASSEMBLING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER)
-
-    @JvmField
     val CRUSHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
 
     @JvmField
@@ -77,21 +72,19 @@ object RagiumEmiRecipeCategories {
     @JvmField
     val REFINING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
+    // Machine - Cool
+    @JvmField
+    val FREEZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.FREEZING, Items.PACKED_ICE)
+
     @JvmField
     val SOLIDIFYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SOLIDIFYING, RagiumBlocks.SOLIDIFIER)
 
     // Machine - Chemical
     @JvmField
-    val ARC_FURNACE: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ARC_FURNACE, Items.BLAST_FURNACE)
-
-    @JvmField
     val BATHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.BATHING, RagiumBlocks.MIXER)
 
     @JvmField
     val MIXING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
-
-    @JvmField
-    val REACTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.REACTING, RagiumBlocks.MIXER)
 
     @JvmField
     val WASHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
@@ -104,9 +97,6 @@ object RagiumEmiRecipeCategories {
 
     @JvmField
     val ENCHANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
-
-    @JvmField
-    val FERMENTING: HTEmiRecipeCategory = processor("Fermenting"::toText, RagiumAPI.id("fermenting"), RagiumBlocks.FERMENTER)
 
     @JvmField
     val PLANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
