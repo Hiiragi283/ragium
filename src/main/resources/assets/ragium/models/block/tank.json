@@ -1,7 +1,7 @@
 {
 	"format_version": "1.9.0",
 	"credit": "Made by Hiiragi Russell Tsubasa",
-  "render_type": "minecraft:cutout",
+    "render_type": "minecraft:cutout",
 	"textures": {
 		"0": "ragium:block/tank_side",
 		"1": "ragium:block/tank_top",

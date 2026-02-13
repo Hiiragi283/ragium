@@ -5,12 +5,14 @@ import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTBendingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTLathingRecipe
+import hiiragi283.ragium.common.recipe.HTSqueezingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -33,6 +35,12 @@ class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>>(p
         @JvmStatic
         inline fun lathing(output: RecipeOutput, builderAction: HTSingleRecipeBuilder<HTItemIngredient, HTItemResult>.() -> Unit) {
             HTSingleRecipeBuilder(RagiumConst.LATHING, ::HTLathingRecipe).apply(builderAction).save(output)
+        }
+
+        @HTBuilderMarker
+        @JvmStatic
+        inline fun squeezing(output: RecipeOutput, builderAction: HTSingleRecipeBuilder<HTItemIngredient, HTFluidResult>.() -> Unit) {
+            HTSingleRecipeBuilder(RagiumConst.SQUEEZING, ::HTSqueezingRecipe).apply(builderAction).save(output)
         }
     }
 

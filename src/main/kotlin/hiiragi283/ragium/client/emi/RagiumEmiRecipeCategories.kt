@@ -75,6 +75,9 @@ object RagiumEmiRecipeCategories {
     @JvmField
     val PRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
 
+    @JvmField
+    val SQUEEZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SQUEEZING, Items.HOPPER)
+
     // Machine - Heat
     @JvmField
     val DISTILLING: HTEmiRecipeCategory = processor(

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:squeezing",
+  "ingredient": {
+    "amount": 1,
+    "items": "#minecraft:jungle_logs"
+  },
+  "result": {
+    "amount": 250,
+    "id": "hiiragi_core:latex"
+  },
+  "time": 200
+}

@@ -7,9 +7,9 @@ import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTHolderLike
+import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.registry.asSequence
+import hiiragi283.core.api.registry.asFluidSequence
 import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
@@ -51,8 +51,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     @JvmStatic
     private fun fluidSequence(): Sequence<Fluid> = provider
         .lookupOrThrow(Registries.FLUID)
-        .asSequence()
-        .map(HTHolderLike.HolderDelegate<Fluid, Fluid>::get)
+        .asFluidSequence()
+        .map(HTFluidHolderLike<*>::asFluid)
         .filter { fluid: Fluid -> fluid.isSource(fluid.defaultFluidState()) }
 
     //    Canning    //

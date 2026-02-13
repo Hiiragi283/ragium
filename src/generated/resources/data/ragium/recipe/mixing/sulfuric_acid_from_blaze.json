@@ -3,10 +3,6 @@
   "fluid_ingredient": [
     {
       "fluids": "#c:water"
-    },
-    {
-      "amount": 500,
-      "fluids": "#c:oxygen"
     }
   ],
   "fluid_result": {
@@ -15,7 +11,7 @@
   "item_ingredient": [
     {
       "amount": 1,
-      "items": "#c:dusts/sulfur"
+      "items": "minecraft:blaze_powder"
     }
   ],
   "time": 200

@@ -36,6 +36,7 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import hiiragi283.ragium.common.recipe.HTSqueezingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
 import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
@@ -134,6 +135,17 @@ object RagiumRecipeSerializers {
             BiCodec.BOOL.optionalFieldOf("copy_component", false).forGetter(HTPressingRecipe::copyComponent),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTPressingRecipe::parameters),
             ::HTPressingRecipe,
+        ),
+    )
+
+    @JvmField
+    val SQUEEZING: RecipeSerializer<HTSqueezingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.SQUEEZING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSqueezingRecipe::ingredient),
+            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSqueezingRecipe::result),
+            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTSqueezingRecipe::parameters),
+            ::HTSqueezingRecipe,
         ),
     )
 

@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
+import net.neoforged.neoforge.client.model.generators.ModelProvider
 
 class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider(RagiumAPI.MOD_ID, context) {
     val basic = "basic"
@@ -38,7 +39,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)
 
         // Device
-        // frontMachineBlock(RagiumBlocks.PLANTER, RagiumConst.DEVICE, basic)
 
         // Storage
         altModelBlock(RagiumBlocks.TANK)
@@ -106,7 +106,9 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
             .texture("top", top)
             .texture("side", side)
             .texture("bottom", bottom)
-            .texture("front", front)
+        if (fileHelper.exists(front, ModelProvider.TEXTURE)) {
+            inactive.texture("front", front)
+        }
         // active
         val active: BlockModelBuilder = models()
             .withExistingParent("${path}_active", modelId)
@@ -114,6 +116,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
             .texture("side", side)
             .texture("bottom", bottom)
             .texture("front", front.withSuffix("_active"))
+        val frontActive: ResourceLocation = front.withSuffix("_active")
+        if (fileHelper.exists(frontActive, ModelProvider.TEXTURE)) {
+            active.texture("front", frontActive)
+        }
         return inactive to active
     }
 }

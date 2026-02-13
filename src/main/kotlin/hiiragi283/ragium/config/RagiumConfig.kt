@@ -94,7 +94,7 @@ object RagiumConfig {
             val squeezer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.SQUEEZER,
-                RagiumFluidConfigType.FIRST_OUTPUT
+                RagiumFluidConfigType.FIRST_OUTPUT,
             )
 
             // Heat

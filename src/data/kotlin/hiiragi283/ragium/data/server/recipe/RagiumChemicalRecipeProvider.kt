@@ -264,11 +264,19 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_from_ammonia"
         }
 
-        // S + H2O -> H2SO4
+        // Blaze Powder + H2O -> H2SO4
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(Items.BLAZE_POWDER, amount = 0)
+            itemIngredients += inputCreator.create(Items.BLAZE_POWDER)
+            fluidIngredients += inputCreator.water(1000)
+
+            fluidResults += resultCreator.create(RagiumFluids.SULFURIC_ACID)
+            recipeId suffix "_from_blaze"
+        }
+        // S + H2O + 1/2 O2 -> H2SO4
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             fluidIngredients += inputCreator.water(1000)
+            fluidIngredients += inputCreator.create(RagiumFluids.OXYGEN, 500)
 
             fluidResults += resultCreator.create(RagiumFluids.SULFURIC_ACID)
             recipeId suffix "_from_sulfur"

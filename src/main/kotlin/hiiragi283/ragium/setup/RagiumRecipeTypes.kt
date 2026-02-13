@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import hiiragi283.ragium.common.recipe.HTSqueezingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.common.recipe.input.HTSingleCatalystRecipeInput
@@ -52,6 +53,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val PRESSING: HTDeferredRecipeType<HTSingleCatalystRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
+
+    @JvmField
+    val SQUEEZING: HTDeferredRecipeType<SingleRecipeInput, HTSqueezingRecipe> = REGISTER.registerType(RagiumConst.SQUEEZING)
 
     // Machine - Heat
     @JvmField

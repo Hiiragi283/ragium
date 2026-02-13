@@ -9,6 +9,7 @@ import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.HTMaterialTextureSet
 import hiiragi283.core.api.material.property.addBlockPrefixes
 import hiiragi283.core.api.material.property.addCustomName
+import hiiragi283.core.api.material.property.addFluidPrefixes
 import hiiragi283.core.api.material.property.addItemPrefixes
 import hiiragi283.core.api.material.property.setDefaultPart
 import hiiragi283.core.api.material.property.setName
@@ -17,6 +18,7 @@ import hiiragi283.core.api.property.plusAssign
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
+import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.neoforged.bus.api.SubscribeEvent
@@ -35,9 +37,9 @@ object RagiumMaterialEventHandler {
         // Minerals
         event.modify(RagiumMaterialKeys.RAGINITE) {
             addBlockPrefixes(materialBlockSet)
+            addFluidPrefixes(CommonFluidTagPrefixes.MOLTEN)
             addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.RAW, CommonTagPrefixes.CRUSHED_ORE)
             put(HTMaterialPropertyKeys.ORE_RESULT_MULTIPLIER, fraction(3))
-            this += HTMaterialPropertyKeys.GENERATE_MOLTEN
 
             setName("Raginite", "ラギナイト")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
@@ -66,7 +68,6 @@ object RagiumMaterialEventHandler {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
             addBlockPrefixes(CommonTagPrefixes.BLOCK)
             addItemPrefixes(alloySet)
-            this += HTMaterialPropertyKeys.GENERATE_MOLTEN
 
             setName("Ragi-Alloy", "ラギ合金")
             put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
@@ -77,18 +78,17 @@ object RagiumMaterialEventHandler {
             addItemPrefixes(alloySet)
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.MEDIUM)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.MEDIUM)
-            this += HTMaterialPropertyKeys.GENERATE_MOLTEN
 
             setName("Advanced Ragi-Alloy", "発展ラギ合金")
         }
         event.modify(RagiumMaterialKeys.STAINLESS_STEEL) {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
             addBlockPrefixes(CommonTagPrefixes.BLOCK)
+            addFluidPrefixes(CommonFluidTagPrefixes.MOLTEN)
             addItemPrefixes(alloySet.minus(CommonTagPrefixes.WIRE))
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.HIGH)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.HIGH)
             this += HTMaterialPropertyKeys.DISABLE_SMELTING
-            this += HTMaterialPropertyKeys.GENERATE_MOLTEN
 
             setName("Stainless Steel", "ステンレス鋼")
             setTextureSet(HTMaterialTextureSet.SHINE)

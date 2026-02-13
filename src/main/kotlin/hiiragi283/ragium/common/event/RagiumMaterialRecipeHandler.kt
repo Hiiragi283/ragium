@@ -1,11 +1,9 @@
 package hiiragi283.ragium.common.event
 
-import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.component1
 import hiiragi283.core.api.component2
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
-import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.HTMaterialManager
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTExtraOreResultMap
@@ -14,10 +12,11 @@ import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.property.getOrDefault
-import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
+import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
 import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
@@ -58,7 +57,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             crushPrefixToDust(event, entry, CommonTagPrefixes.ROD)
             crushPrefixToDust(event, entry, CommonTagPrefixes.WIRE)
 
-            cutBlockToPlate(event, entry)
+            // cutBlockToPlate(event, entry)
 
             latheBaseToRod(event, entry)
 
@@ -93,10 +92,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     @JvmStatic
     private fun getTimeFromMelting(propertyMap: HTPropertyMap, time: Int = 20 * 10): Int? =
         (propertyMap.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT) * time)?.toInt()
-
-    @JvmStatic
-    private fun getMolten(material: HTMaterialLike): HTFluidContent? =
-        HiiragiCoreAccess.INSTANCE.materialContents.getMoltenFluidMap()[material.asMaterialKey()]
 
     //    Bathing    //
 
@@ -237,21 +232,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
     //    Cutting    //
 
-    @JvmStatic
-    private fun cutBlockToPlate(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 材料が存在するか判定
-        if (!event.isPresentTag(CommonTagPrefixes.BLOCK, entry)) return
-        // 完成品を取得
-        val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
-        // レシピを登録
-        HTItemToChancedRecipeBuilder.cutting(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.BLOCK, entry)
-            result = resultCreator.create(plate, entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
-            time = getTimeFromHardness(entry, time) ?: return
-            recipeId suffix "_from_block"
-        }
-    }
-
     //    Freezing    //
 
     @JvmStatic
@@ -261,14 +241,14 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         prefix: HTTagPrefix,
         moldType: HTMoldType,
     ) {
-        // 素材のプロパティから材料を取得
-        val molten: HTFluidContent = getMolten(entry) ?: return
-        // プレフィックスと素材のプロパティから液体量を算出
-        val fluidAmount: Int = prefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
+        // 材料が存在するか判定
+        if (!event.isPresentTag(CommonFluidTagPrefixes.MOLTEN, entry)) return
         // レシピを登録
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         HTItemOrFluidRecipeBuilder.freezing(output) {
-            ingredient += inputCreator.create(molten, fluidAmount)
+            ingredient += inputCreator.create(CommonFluidTagPrefixes.MOLTEN, entry) {
+                prefix.getScaledAmount(it, entry).toInt()
+            }
             ingredient += inputCreator.create(moldType, amount = 0)
             result += resultCreator.create(resultItem)
             recipeId suffix "_from_molten"
@@ -301,7 +281,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 素材のプロパティから液体材料を取得
         val fluidAmount: Int = prefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
         // 完成品を取得
-        val molten: HTFluidContent = getMolten(entry) ?: return
+        val molten: HTFluidHolderLike<*> = event.getFirstHolder(CommonFluidTagPrefixes.MOLTEN, entry) ?: return
         // レシピを登録
         HTItemOrFluidRecipeBuilder.melting(output) {
             ingredient += inputCreator.create(prefix, entry)

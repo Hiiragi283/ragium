@@ -1,0 +1,12 @@
+{
+  "type": "ragium:squeezing",
+  "ingredient": {
+    "amount": 1,
+    "items": "#minecraft:soul_fire_base_blocks"
+  },
+  "result": {
+    "amount": 500,
+    "id": "ragium:crude_oil"
+  },
+  "time": 200
+}

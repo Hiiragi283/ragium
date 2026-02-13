@@ -74,7 +74,11 @@ abstract class HTSingleCatalystBlockEntity(type: HTDeferredBlockEntityType<*>, p
 
     //    Processing    //
 
-    abstract inner class SingleRecipeComponent<RESOURCE : HTResourceType<*>, ING : HTIngredient<*, RESOURCE>, RECIPE : HTSingleCatalystRecipe<ING>>(
+    abstract inner class SingleRecipeComponent<
+        RESOURCE : HTResourceType<*>,
+        ING : HTIngredient<*, RESOURCE>,
+        RECIPE : HTSingleCatalystRecipe<ING>,
+    >(
         finder: HTRecipeFinder<HTSingleCatalystRecipeInput, RECIPE>,
     ) : HTEnergizedRecipeComponent.Cached<HTSingleCatalystRecipeInput, RECIPE>(finder, this) {
         protected val inputHandler: HTSlotInputHandler<RESOURCE> by lazy { createInputHandler() }

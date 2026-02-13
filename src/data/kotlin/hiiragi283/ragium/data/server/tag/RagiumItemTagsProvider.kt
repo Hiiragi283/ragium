@@ -26,7 +26,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Item>) {
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
-            addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)
+            addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.getBucketHolder())
         }
         // Foods
         factory

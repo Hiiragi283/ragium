@@ -28,6 +28,7 @@ import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTDistillingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTEnchantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTItemOrFluidEmiRecipe
+import hiiragi283.ragium.client.emi.recipe.HTItemToFluidEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPlantingEmiRecipe
@@ -73,6 +74,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.CUTTING,
             RagiumEmiRecipeCategories.LATHING,
             RagiumEmiRecipeCategories.PRESSING,
+            RagiumEmiRecipeCategories.SQUEEZING,
             // Machine - Heat
             RagiumEmiRecipeCategories.DISTILLING,
             RagiumEmiRecipeCategories.MELTING,
@@ -100,6 +102,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.LATHING, HTItemToItemEmiRecipe.Companion::lathing)
         addRegistryRecipes(registry, RagiumRecipeTypes.PRESSING, ::HTPressingEmiRecipe)
+        addRegistryRecipes(registry, RagiumRecipeTypes.SQUEEZING, HTItemToFluidEmiRecipe.Companion::squeezing)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.DISTILLING, ::HTDistillingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemOrFluidEmiRecipe.Companion::melting)
