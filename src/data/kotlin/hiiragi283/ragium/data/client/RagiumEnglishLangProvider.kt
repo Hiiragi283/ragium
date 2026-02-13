@@ -30,8 +30,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
 
-        add(RagiumBlocks.SOLIDIFIER, "Solidifier")
-
         add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.WASHER, "Washer")
 
@@ -109,6 +107,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.BENDING, "Bending")
+        add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.LATHING, "Lathing")
@@ -119,13 +118,11 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
 
         add(RagiumRecipeTypes.FREEZING, "Freezing")
-        add(RagiumRecipeTypes.SOLIDIFYING, "Solidifying")
 
         add(RagiumRecipeTypes.CANNING, "Canning")
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.WASHING, "Washing")
 
-        add(RagiumRecipeTypes.COMPRESSING, "Implosion Compressing")
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
         add(RagiumRecipeTypes.PLANTING, "Planting")
 
@@ -165,8 +162,23 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "%s: Extra Output")
         add(RagiumTranslation.GUI_SLOT_NONE, "%s: None")
 
-        add(RagiumTranslation.MELTER, "A machine which melts item into fluid.")
-        add(RagiumTranslation.PYROLYZER, "A machine which converts ingredients into others by heating.")
+        add(RagiumTranslation.ALLOY_SMELTER, "A machine which combines multiple items into one.")
+        add(RagiumTranslation.BENDING_MACHINE, "A machine which converts ingot into plate.")
+        add(RagiumTranslation.COMPRESSOR, "A machine which compresses item.")
+        add(RagiumTranslation.CRUSHER, "A machine which crushes item into dust.")
+        add(RagiumTranslation.CUTTING_MACHINE, "A machine which converts log or wooden items into planks.")
+        add(RagiumTranslation.ELECTRIC_FURNACE, "A machine which smelts item by using energy.")
+        add(RagiumTranslation.FORMING_PRESS, "A machine which combines multiple items into one.")
+        add(RagiumTranslation.LATHE, "A machine which converts gem or ingot into rod.")
+        add(RagiumTranslation.SQUEEZER, "A machine which extracts fluid from item")
+
+        add(RagiumTranslation.MELTER, "A machine which melts item or heats up fluid.")
+        add(RagiumTranslation.PYROLYZER, "A machine which converts log or coal into charcoal or coal coke.")
+
+        add(RagiumTranslation.FREEZER, "A machine which freeze item or cools down fluid.")
+
+        add(RagiumTranslation.MIXER, "A machine which combines multiple items or fluids.")
+        add(RagiumTranslation.WASHER, "A machine which producing item from crushed ore and fluid.")
 
         add(RagiumTranslation.BATTERY, "A energy storage which capacity is extendable by upgrade.")
         add(RagiumTranslation.CRATE, "A item storage which capacity is extendable by upgrade.")

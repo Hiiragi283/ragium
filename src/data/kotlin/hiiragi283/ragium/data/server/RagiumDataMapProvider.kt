@@ -44,7 +44,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
         magmaticFuels()
         combustionFuels()
 
-        explosive()
         upgrade()
     }
 
@@ -128,15 +127,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     // Item
-    private fun explosive() {
-        builder(RagiumDataMapTypes.EXPLOSIVE)
-            .addHolder(HTItemHolderLike.of(Items.FIREWORK_ROCKET), 1)
-            .addHolder(HTItemHolderLike.of(Items.TNT), 4)
-            .addHolder(HTItemHolderLike.of(Items.END_CRYSTAL), 8)
-        // Dynamite - 4
-        // Industrial TNT - 8
-    }
-
     private fun upgrade() {
         val builder: Builder<HTUpgradeData, Item> = builder(RagiumDataMapTypes.UPGRADE)
         // components

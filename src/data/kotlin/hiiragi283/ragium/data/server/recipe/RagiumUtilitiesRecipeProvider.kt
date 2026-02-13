@@ -118,8 +118,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         heat(RagiumBlocks.MELTER) { it += Items.BLAST_FURNACE }
         heat(RagiumBlocks.PYROLYZER) { it += Items.NETHER_BRICKS }
 
-        heat(RagiumBlocks.SOLIDIFIER) { it += RagiumTags.Items.MOLDS }
-
         // Chemical
         fun chemical(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
             HTShapedRecipeBuilder.create(output) {

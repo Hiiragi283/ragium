@@ -6,7 +6,7 @@ import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.ragium.client.emi.RagiumEmiRecipeCategories
 import hiiragi283.ragium.client.emi.recipe.base.HTProcessingEmiRecipe
 import hiiragi283.ragium.common.recipe.HTBendingRecipe
-import hiiragi283.ragium.common.recipe.HTCompressingRecipeN
+import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTLathingRecipe
 import hiiragi283.ragium.common.recipe.base.HTSingleProcessingRecipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -19,7 +19,7 @@ class HTItemToItemEmiRecipe<RECIPE : HTSingleProcessingRecipe.ItemToItem>(catego
             HTItemToItemEmiRecipe(RagiumEmiRecipeCategories.BENDING, holder)
 
         @JvmStatic
-        fun compressing(holder: RecipeHolder<HTCompressingRecipeN>): HTItemToItemEmiRecipe<HTCompressingRecipeN> =
+        fun compressing(holder: RecipeHolder<HTCompressingRecipe>): HTItemToItemEmiRecipe<HTCompressingRecipe> =
             HTItemToItemEmiRecipe(RagiumEmiRecipeCategories.COMPRESSING, holder)
 
         @JvmStatic

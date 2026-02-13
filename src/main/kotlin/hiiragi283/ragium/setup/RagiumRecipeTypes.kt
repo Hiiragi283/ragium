@@ -22,7 +22,6 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
-import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.common.recipe.input.HTSingleCatalystRecipeInput
@@ -38,6 +37,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val BENDING: HTDeferredRecipeType<SingleRecipeInput, HTBendingRecipe> = REGISTER.registerType(RagiumConst.BENDING)
+
+    @JvmField
+    val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTCompressingRecipe> = REGISTER.registerType(RagiumConst.COMPRESSING)
 
     @JvmField
     val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTCrushingRecipe> = REGISTER.registerType(RagiumConst.CRUSHING)
@@ -65,9 +67,6 @@ object RagiumRecipeTypes {
     @JvmField
     val FREEZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTFreezingRecipe> = REGISTER.registerType(RagiumConst.FREEZING)
 
-    @JvmField
-    val SOLIDIFYING: HTDeferredRecipeType<HTSingleCatalystRecipeInput, HTSolidifyingRecipe> = REGISTER.registerType(RagiumConst.SOLIDIFYING)
-
     // Machine - Chemical
     @JvmField
     val CANNING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTCanningRecipe> = REGISTER.registerType(RagiumConst.CANNING)
@@ -81,9 +80,6 @@ object RagiumRecipeTypes {
     // Machine - Matter
 
     // Device
-    @JvmField
-    val COMPRESSING: HTDeferredRecipeType<HTCompressingRecipe.Input, HTCompressingRecipe> = REGISTER.registerType(RagiumConst.COMPRESSING)
-
     @JvmField
     val ENCHANTING: HTDeferredRecipeType<HTEnchantingRecipe.Input, HTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
 

@@ -30,8 +30,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.MELTER, "溶融炉")
         add(RagiumBlocks.PYROLYZER, "熱分解室")
 
-        add(RagiumBlocks.SOLIDIFIER, "成型機")
-
         add(RagiumBlocks.MIXER, "混合機")
         add(RagiumBlocks.WASHER, "洗浄機")
 
@@ -109,6 +107,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.BENDING, "曲げ加工")
+        add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.LATHING, "旋盤加工")
@@ -119,13 +118,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
 
         add(RagiumRecipeTypes.FREEZING, "冷凍")
-        add(RagiumRecipeTypes.SOLIDIFYING, "成型")
 
         add(RagiumRecipeTypes.CANNING, "缶詰")
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.WASHING, "洗浄")
 
-        add(RagiumRecipeTypes.COMPRESSING, "爆縮")
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.PLANTING, "栽培")
 
@@ -165,8 +162,23 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT, "%s: 追加の出力")
         add(RagiumTranslation.GUI_SLOT_NONE, "%s: なし")
 
-        add(RagiumTranslation.MELTER, "アイテムを融かして液体にする機械です。")
-        add(RagiumTranslation.PYROLYZER, "熱によって材料を変換する機械です。")
+        add(RagiumTranslation.ALLOY_SMELTER, "複数のアイテムを一つに焼き上げる機械です。")
+        add(RagiumTranslation.BENDING_MACHINE, "インゴットを板材に加工する機械です。")
+        add(RagiumTranslation.COMPRESSOR, "アイテムを圧縮する機械です。")
+        add(RagiumTranslation.CRUSHER, "アイテムを粉にする機械です。")
+        add(RagiumTranslation.CUTTING_MACHINE, "原木や木製アイテムを木材に加工する機械です。")
+        add(RagiumTranslation.ELECTRIC_FURNACE, "エネルギーでアイテムを焼く機械です。")
+        add(RagiumTranslation.FORMING_PRESS, "複数のアイテムを一つに固める機械です。")
+        add(RagiumTranslation.LATHE, "宝石やインゴットを棒材に加工する機械です。")
+        add(RagiumTranslation.SQUEEZER, "アイテムから液体を抽出する機械です。")
+
+        add(RagiumTranslation.MELTER, "アイテムを融かしたり，液体を加熱したりする機械です。")
+        add(RagiumTranslation.PYROLYZER, "原木や石炭を木炭やコークスに加工する機械です。")
+
+        add(RagiumTranslation.FREEZER, "アイテムを凍らせたり，液体を冷却したりする機械です。")
+
+        add(RagiumTranslation.MIXER, "複数のアイテムや液体を混ぜる機械です。")
+        add(RagiumTranslation.WASHER, "砕いた鉱石と液体からアイテムを生産する機械です。")
 
         add(RagiumTranslation.BATTERY, "アップグレードで容量を拡張可能なエネルギーストレージです。")
         add(RagiumTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")

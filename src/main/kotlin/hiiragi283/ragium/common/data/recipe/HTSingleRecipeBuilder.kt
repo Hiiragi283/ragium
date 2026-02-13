@@ -9,7 +9,7 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.recipe.result.HTRecipeResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTBendingRecipe
-import hiiragi283.ragium.common.recipe.HTCompressingRecipeN
+import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTLathingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
@@ -26,7 +26,7 @@ class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>>(p
         @HTBuilderMarker
         @JvmStatic
         inline fun compressing(output: RecipeOutput, builderAction: HTSingleRecipeBuilder<HTItemIngredient, HTItemResult>.() -> Unit) {
-            HTSingleRecipeBuilder(RagiumConst.COMPRESSING, ::HTCompressingRecipeN).apply(builderAction).save(output)
+            HTSingleRecipeBuilder(RagiumConst.COMPRESSING, ::HTCompressingRecipe).apply(builderAction).save(output)
         }
 
         @HTBuilderMarker

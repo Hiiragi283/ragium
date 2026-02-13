@@ -62,6 +62,12 @@ object RagiumConfig {
             val alloySmelter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ALLOY_SMELTER)
 
             @JvmField
+            val bendingMachine: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.BENDING_MACHINE)
+
+            @JvmField
+            val compressor: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.COMPRESSOR)
+
+            @JvmField
             val crusher: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.CRUSHER,
@@ -80,6 +86,16 @@ object RagiumConfig {
 
             @JvmField
             val formingPress: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FORMING_PRESS)
+
+            @JvmField
+            val lathe: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.LATHE)
+
+            @JvmField
+            val squeezer: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.SQUEEZER,
+                RagiumFluidConfigType.FIRST_OUTPUT
+            )
 
             // Heat
             @JvmField
@@ -100,10 +116,11 @@ object RagiumConfig {
 
             // Cool
             @JvmField
-            val solidifier: HTMachineConfig = HTMachineConfig.createSimple(
+            val freezer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
-                RagiumConst.SOLIDIFIER,
+                RagiumConst.FREEZER,
                 RagiumFluidConfigType.FIRST_INPUT,
+                RagiumFluidConfigType.FIRST_OUTPUT,
             )
 
             // Chemical

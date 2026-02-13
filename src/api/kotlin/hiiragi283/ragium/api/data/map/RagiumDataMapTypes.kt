@@ -55,11 +55,7 @@ object RagiumDataMapTypes {
 
     // Item
     @JvmField
-    val EXPLOSIVE: DataMapType<Item, Int> = create("explosive", Registries.ITEM, BiCodecs.POSITIVE_INT)
-
-    @JvmField
-    val UPGRADE: DataMapType<Item, HTUpgradeData> =
-        create("upgrade", Registries.ITEM, HTUpgradeData.CODEC)
+    val UPGRADE: DataMapType<Item, HTUpgradeData> = create("upgrade", Registries.ITEM, HTUpgradeData.CODEC)
 
     //    Extensions    //
 
@@ -104,9 +100,6 @@ object RagiumDataMapTypes {
 
     @JvmStatic
     fun getFluidFertilizer(resource: HTFluidResourceType): Fraction? = resource.getData(FERTILIZER)
-
-    @JvmStatic
-    fun getExplosivePower(stack: ItemStack): Int? = stack.itemHolder.getData(EXPLOSIVE)
 
     /**
      * 指定した[stack]から，アップグレードのデータを取得します。

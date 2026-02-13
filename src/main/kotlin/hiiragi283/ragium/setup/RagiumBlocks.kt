@@ -96,9 +96,6 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
     // Cool
-    @JvmField
-    val SOLIDIFIER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.SOLIDIFIER, RagiumTranslation.SOLIDIFIER)
 
     // Chemical
     @JvmField

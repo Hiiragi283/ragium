@@ -71,7 +71,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.PYROLYZER)
             // Cool
-            .add(RagiumBlocks.SOLIDIFIER)
             // Chemical
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.WASHER)
@@ -107,7 +106,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.PYROLYZER)
-            .add(RagiumBlocks.SOLIDIFIER)
             .add(RagiumBlocks.WASHER)
             // Device
             .add(RagiumBlocks.PLANTER)

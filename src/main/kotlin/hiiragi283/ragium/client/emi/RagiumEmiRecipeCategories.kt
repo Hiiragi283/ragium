@@ -93,9 +93,6 @@ object RagiumEmiRecipeCategories {
     @JvmField
     val FREEZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.FREEZING, Items.PACKED_ICE)
 
-    @JvmField
-    val SOLIDIFYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.SOLIDIFYING, RagiumBlocks.SOLIDIFIER)
-
     // Machine - Chemical
     @JvmField
     val CANNING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CANNING, Items.GLASS_BOTTLE)

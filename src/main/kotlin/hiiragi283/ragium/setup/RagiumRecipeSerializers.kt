@@ -36,7 +36,6 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
-import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
 import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
@@ -111,6 +110,12 @@ object RagiumRecipeSerializers {
     val BENDING: RecipeSerializer<HTBendingRecipe> = REGISTER.registerSerializer(RagiumConst.BENDING, itemToItem(::HTBendingRecipe))
 
     @JvmField
+    val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.COMPRESSING,
+        itemToItem(::HTCompressingRecipe),
+    )
+
+    @JvmField
     val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, itemChanced(::HTCrushingRecipe, 3))
 
     @JvmField
@@ -181,18 +186,6 @@ object RagiumRecipeSerializers {
     // Machine - Cool
     @JvmField
     val FREEZING: RecipeSerializer<HTFreezingRecipe> = REGISTER.registerSerializer(RagiumConst.FREEZING, itemOrFluid(::HTFreezingRecipe))
-
-    @JvmField
-    val SOLIDIFYING: RecipeSerializer<HTSolidifyingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.SOLIDIFYING,
-        MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSolidifyingRecipe::ingredient),
-            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.CATALYST).forGetter(HTSolidifyingRecipe::catalyst),
-            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSolidifyingRecipe::result),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTSolidifyingRecipe::parameters),
-            ::HTSolidifyingRecipe,
-        ),
-    )
 
     // Machine - Chemical
     @JvmStatic
@@ -266,18 +259,6 @@ object RagiumRecipeSerializers {
     // Machine - Matter
 
     // Device
-    @JvmField
-    val COMPRESSING: RecipeSerializer<HTCompressingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.COMPRESSING,
-        MapBiCodec.composite(
-            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTCompressingRecipe::ingredient),
-            BiCodecs.POSITIVE_INT.fieldOf("power").forGetter(HTCompressingRecipe::power),
-            HTItemIngredient.UNSIZED_CODEC.optionalFieldOf(HTConst.CATALYST).forGetter { Optional.ofNullable(it.catalyst) },
-            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCompressingRecipe::result),
-            ::HTCompressingRecipe,
-        ),
-    )
-
     @JvmField
     val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = REGISTER.registerSerializer(
         RagiumConst.ENCHANTING,

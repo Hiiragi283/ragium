@@ -21,7 +21,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTSolidifierBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
@@ -86,9 +85,6 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
 
     // Cool
-    @JvmField
-    val SOLIDIFIER: HTDeferredBlockEntityType<HTSolidifierBlockEntity> =
-        REGISTER.registerTick(RagiumConst.SOLIDIFIER, ::HTSolidifierBlockEntity)
 
     // Chemical
     @JvmField
@@ -172,8 +168,6 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, MELTER.get())
         registerHandler(event, PYROLYZER.get())
-
-        registerHandler(event, SOLIDIFIER.get())
 
         registerHandler(event, MIXER.get())
         registerHandler(event, WASHER.get())

@@ -9,7 +9,6 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
-import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -20,12 +19,6 @@ class HTItemAndFluidRecipeBuilder<RESULT : HTIdLike>(prefix: String, private val
         @JvmStatic
         inline fun canning(output: RecipeOutput, builderAction: HTItemAndFluidRecipeBuilder<HTItemResult>.() -> Unit) {
             HTItemAndFluidRecipeBuilder(RagiumConst.CANNING, ::HTCanningRecipe).apply(builderAction).save(output)
-        }
-
-        @HTBuilderMarker
-        @JvmStatic
-        inline fun solidifying(output: RecipeOutput, builderAction: HTItemAndFluidRecipeBuilder<HTItemResult>.() -> Unit) {
-            HTItemAndFluidRecipeBuilder(RagiumConst.SOLIDIFYING, ::HTSolidifyingRecipe).apply(builderAction).save(output)
         }
     }
 

@@ -29,17 +29,24 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
 
     // Blocks - Machine
     ALLOY_SMELTER("description", RagiumConst.ALLOY_SMELTER),
+    BENDING_MACHINE("description", RagiumConst.BENDING_MACHINE),
+    COMPRESSOR("description", RagiumConst.COMPRESSOR),
     CRUSHER("description", RagiumConst.CRUSHER),
     CUTTING_MACHINE("description", RagiumConst.CUTTING_MACHINE),
     ELECTRIC_FURNACE("description", RagiumConst.ELECTRIC_FURNACE),
     FORMING_PRESS("description", RagiumConst.FORMING_PRESS),
+    LATHE("description", RagiumConst.LATHE),
+    SQUEEZER("description", RagiumConst.SQUEEZER),
 
+    DISTILLATION_TOWER("description", RagiumConst.DISTILLATION_TOWER),
     MELTER("description", RagiumConst.MELTER),
     PYROLYZER("description", RagiumConst.PYROLYZER),
 
-    SOLIDIFIER("description", RagiumConst.SOLIDIFIER),
+    FREEZER("description", RagiumConst.FREEZER),
 
     BREWERY("description", RagiumConst.BREWERY),
+    CENTRIFUGE("description", RagiumConst.CENTRIFUGE),
+    ELECTROLYZER("description", RagiumConst.ELECTROLYZER),
     MIXER("description", RagiumConst.MIXER),
     WASHER("description", RagiumConst.WASHER),
 
