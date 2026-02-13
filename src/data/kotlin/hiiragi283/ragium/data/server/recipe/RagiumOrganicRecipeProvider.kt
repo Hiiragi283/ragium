@@ -110,20 +110,18 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         // Coal + Water -> Synthetic Gas
         HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
-            itemIngredients += inputCreator.create(Items.BLAZE_POWDER)
+            itemIngredients += inputCreator.create(Items.BLAZE_POWDER, amount = 0)
             fluidIngredients += inputCreator.water(1000)
 
-            itemResults += resultCreator.create(Items.BLAZE_POWDER)
             fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
             recipeId suffix "_from_coal"
         }
         // Synthetic Gas + H2O -> CO2 + 2x H2
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM, amount = 0)
             fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
             fluidIngredients += inputCreator.water(1000)
 
-            itemResults += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
             fluidResults += resultCreator.create(RagiumFluids.CARBON_DIOXIDE, 1000)
             fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 2000)
             recipeId replace RagiumAPI.id("water_gas_shift_reaction")
@@ -170,21 +168,21 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         // CH4 + Water -> Methanol
         // CH4 + CO2 -> Synthetic Gas
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.RUTHENIUM)
+            itemIngredients += listOf(CommonMaterialKeys.RUTHENIUM, CommonMaterialKeys.RHODIUM)
+                .map(CommonTagPrefixes.DUST::itemTagKey)
+                .let { inputCreator.create(it, amount = 0) }
             fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
             fluidIngredients += inputCreator.create(RagiumFluids.CARBON_DIOXIDE, 1000)
 
-            itemResults += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.RUTHENIUM)
             fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 2000)
             recipeId replace RagiumAPI.id("dry_reforming")
         }
         // CH4 + H2O -> CO2 + 4x H2
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL)
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL, amount = 0)
             fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
             fluidIngredients += inputCreator.water(1000)
 
-            itemResults += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL)
             fluidResults += resultCreator.create(RagiumFluids.CARBON_DIOXIDE, 1000)
             fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 4000)
             recipeId suffix "_from_methane"

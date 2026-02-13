@@ -44,6 +44,12 @@ object RagiumCrushingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_from_cane"
         }
 
+        // Ice -> Snowball
+        HTItemToChancedRecipeBuilder.crushing(output) {
+            ingredient = inputCreator.create(Items.ICE)
+            result = resultCreator.create(Items.SNOWBALL, 4)
+        }
+
         stones()
         planks()
     }

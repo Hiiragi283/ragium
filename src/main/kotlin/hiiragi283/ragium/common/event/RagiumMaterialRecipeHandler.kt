@@ -26,6 +26,7 @@ import hiiragi283.ragium.common.data.recipe.HTItemAndFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import net.minecraft.tags.TagKey
@@ -43,17 +44,15 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         this.delegated = event.context
 
         for (entry: HTMaterialManager.Entry in materialManager) {
-            bathDustToPrefix(event, entry, CommonTagPrefixes.GEM)
-            bathDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
+            // Basic
+            bendIngotToPlate(event, entry)
 
             compressDustToGem(event, entry)
 
             crushBaseToDust(event, entry)
-
             crushOreToCrushed(event, entry, CommonTagPrefixes.ORE)
             crushOreToCrushed(event, entry, CommonTagPrefixes.RAW)
             crushCrushedToDust(event, entry)
-
             crushPrefixToDust(event, entry, CommonTagPrefixes.GEAR)
             crushPrefixToDust(event, entry, CommonTagPrefixes.NUGGET)
             crushPrefixToDust(event, entry, CommonTagPrefixes.PLATE)
@@ -62,17 +61,15 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
             cutBlockToPlate(event, entry)
 
+            latheBaseToRod(event, entry)
+
+            pressBaseToGear(event, entry)
+            // Heat
             meltPrefixToMolten(event, entry, CommonTagPrefixes.DUST)
             meltPrefixToMolten(event, entry, CommonTagPrefixes.GEM)
             meltPrefixToMolten(event, entry, CommonTagPrefixes.INGOT)
             meltPrefixToMolten(event, entry, CommonTagPrefixes.PEARL)
-
-            mixFlourToDough(event, entry)
-
-            pressBaseToPrefix(event, entry, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
-            pressBaseToPrefix(event, entry, CommonTagPrefixes.PLATE, HTMoldType.PLATE)
-            pressBaseToPrefix(event, entry, CommonTagPrefixes.ROD, HTMoldType.ROD)
-
+            // Cool
             solidifyPrefix(event, entry, CommonTagPrefixes.GEAR, HTMoldType.GEAR)
             solidifyPrefix(event, entry, CommonTagPrefixes.GEM, HTMoldType.GEM)
             solidifyPrefix(event, entry, CommonTagPrefixes.INGOT, HTMoldType.INGOT)
@@ -80,6 +77,11 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             solidifyPrefix(event, entry, CommonTagPrefixes.PEARL, HTMoldType.BALL)
             solidifyPrefix(event, entry, CommonTagPrefixes.PLATE, HTMoldType.PLATE)
             solidifyPrefix(event, entry, CommonTagPrefixes.ROD, HTMoldType.ROD)
+            // Chemical
+            bathDustToPrefix(event, entry, CommonTagPrefixes.GEM)
+            bathDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
+
+            mixFlourToDough(event, entry)
 
             washCrushedOre(event, entry)
         }
@@ -105,6 +107,21 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             result = resultCreator.create(resultItem)
             time /= 2
             recipeId suffix "from_${crushedPrefix.name}"
+        }
+    }
+
+    //    Bending    //
+
+    @JvmStatic
+    private fun bendIngotToPlate(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 材料が存在するか判定
+        if (!event.isPresentTag(CommonTagPrefixes.INGOT, entry)) return
+        // 完成品を取得
+        val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
+        // レシピを登録
+        HTSingleRecipeBuilder.bending(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.INGOT, entry)
+            result = resultCreator.create(plate)
         }
     }
 
@@ -225,6 +242,22 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         }
     }
 
+    //    Lathing    //
+
+    @JvmStatic
+    private fun latheBaseToRod(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 材料が存在するか判定
+        val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
+        if (!event.isPresentTag(inputTag)) return
+        // 完成品を取得
+        val rod: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.ROD, entry) ?: return
+        // レシピを登録
+        HTSingleRecipeBuilder.lathing(output) {
+            ingredient = inputCreator.create(inputTag)
+            result = resultCreator.create(rod, 2)
+        }
+    }
+
     //    Melting    //
 
     @JvmStatic
@@ -273,39 +306,26 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     //    Pressing    //
 
     @JvmStatic
-    private fun pressBaseToPrefix(
-        event: HTRegisterRuntimeRecipeEvent,
-        entry: HTMaterialManager.Entry,
-        prefix: HTTagPrefix,
-        moldType: HTMoldType,
-    ) {
+    private fun pressBaseToGear(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
         val hardness: HTMaterialLevel = entry.getOrDefault(HTMaterialPropertyKeys.HARDNESS)
-        if (hardness == HTMaterialLevel.NONE) return
+        val recipeTime = when (hardness) {
+            HTMaterialLevel.NONE -> return
+            HTMaterialLevel.LOW -> 50
+            HTMaterialLevel.MEDIUM -> 100
+            HTMaterialLevel.HIGH -> 200
+            HTMaterialLevel.HIGHEST -> 400
+        }
         // 素材のプロパティから材料を取得
         val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
         if (!event.isPresentTag(inputTag)) return
-        // 加工の前後でタグが一致する場合はパス
-        if (inputTag == prefix.itemTagKey(entry)) return
         // 完成品を取得
-        val result: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
-        // プレフィックスのスケールから個数を算出
-        val (inputCount: Int, outputCount: Int) = prefix.getScaledAmount(1, entry)
+        val gear: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.GEAR, entry) ?: return
         // レシピを登録
-        if (hardness == HTMaterialLevel.HIGHEST) {
-            HTCompressingRecipeBuilder.create(output) {
-                this.ingredient = inputCreator.create(inputTag, inputCount)
-                this.power = 8
-                this.catalyst = inputCreator.create(moldType)
-                this.result = resultCreator.create(result, outputCount)
-                this.recipeId suffix "_from_${inputTag.location().path}"
-            }
-        } else {
-            HTPressingRecipeBuilder.pressing(output) {
-                this.top = inputCreator.create(inputTag, inputCount)
-                this.bottom = inputCreator.create(moldType)
-                this.result = resultCreator.create(result, outputCount)
-                this.recipeId suffix "_from_${inputTag.location().path}"
-            }
+        HTPressingRecipeBuilder.pressing(output) {
+            top = inputCreator.create(inputTag, 4)
+            bottom = inputCreator.create(HTMoldType.GEAR)
+            result = resultCreator.create(gear)
+            time = recipeTime
         }
     }
 

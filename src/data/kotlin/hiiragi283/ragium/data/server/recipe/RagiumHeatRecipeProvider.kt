@@ -10,9 +10,7 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTAlloyingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemAndFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
@@ -149,13 +147,6 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             result += resultCreator.water(250)
             time = 20
             recipeId suffix "_from_snowball"
-        }
-
-        HTItemAndFluidRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.water(250)
-            itemIngredient = inputCreator.create(HTMoldType.BALL)
-            result = resultCreator.create(Items.SNOWBALL)
-            time /= 4
         }
         // Lava
         HTItemOrFluidRecipeBuilder.melting(output) {

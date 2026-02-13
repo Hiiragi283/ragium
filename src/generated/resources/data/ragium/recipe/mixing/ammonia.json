@@ -15,13 +15,8 @@
   },
   "item_ingredient": [
     {
-      "amount": 1,
       "items": "#c:dusts/iron"
     }
   ],
-  "item_result": {
-    "id": "hiiragi_core:iron_dust",
-    "tag": "c:dusts/iron"
-  },
   "time": 200
 }

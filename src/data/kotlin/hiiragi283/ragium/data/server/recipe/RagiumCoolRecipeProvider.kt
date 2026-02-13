@@ -2,19 +2,15 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTItemAndFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
 
 object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         freezing()
-        solidifying()
     }
 
     @JvmStatic
@@ -57,22 +53,6 @@ object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
                 ingredient += inputCreator.create(gas)
                 result += resultCreator.create(liquid, 100)
             }
-        }
-    }
-
-    @JvmStatic
-    private fun solidifying() {
-        // Glass -> Glass Bottle
-        HTItemAndFluidRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS)
-            itemIngredient = inputCreator.create(HTMoldType.BALL)
-            result = resultCreator.create(Items.GLASS_BOTTLE)
-        }
-        // Glass -> Pane
-        HTItemAndFluidRecipeBuilder.solidifying(output) {
-            fluidIngredient = inputCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
-            itemIngredient = inputCreator.create(HTMoldType.PLATE)
-            result = resultCreator.create(Items.GLASS_PANE)
         }
     }
 }

@@ -247,20 +247,18 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // 3x H2 + N2 -> 2x NH3
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.IRON)
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.IRON, amount = 0)
             fluidIngredients += inputCreator.create(RagiumFluids.HYDROGEN, 3000)
             fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN)
 
-            itemResults += resultCreator.material(CommonTagPrefixes.DUST, VanillaMaterialKeys.IRON)
             fluidResults += resultCreator.create(RagiumFluids.AMMONIA, 2000)
         }
         // NH3 + 2x O2 -> HNO3 + H2O
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM, amount = 0)
             fluidIngredients += inputCreator.create(RagiumFluids.AMMONIA)
             fluidIngredients += inputCreator.create(RagiumFluids.OXYGEN, 2000)
 
-            itemResults += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
             fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID)
             fluidResults += resultCreator.water()
             recipeId suffix "_from_ammonia"
@@ -268,11 +266,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
         // S + H2O -> H2SO4
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(Items.BLAZE_POWDER)
+            itemIngredients += inputCreator.create(Items.BLAZE_POWDER, amount = 0)
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             fluidIngredients += inputCreator.water(1000)
 
-            itemResults += resultCreator.create(Items.BLAZE_POWDER)
             fluidResults += resultCreator.create(RagiumFluids.SULFURIC_ACID)
             recipeId suffix "_from_sulfur"
         }

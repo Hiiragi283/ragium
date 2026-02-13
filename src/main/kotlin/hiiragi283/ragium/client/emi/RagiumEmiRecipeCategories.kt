@@ -61,10 +61,16 @@ object RagiumEmiRecipeCategories {
     val ALLOYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
+    val BENDING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.BENDING, Items.PISTON)
+
+    @JvmField
     val CRUSHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
 
     @JvmField
     val CUTTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
+
+    @JvmField
+    val LATHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.LATHING, Items.STICK)
 
     @JvmField
     val PRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)

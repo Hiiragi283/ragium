@@ -18,12 +18,8 @@
       ]
     },
     {
-      "amount": 1,
       "items": "minecraft:blaze_powder"
     }
   ],
-  "item_result": {
-    "id": "minecraft:blaze_powder"
-  },
   "time": 200
 }

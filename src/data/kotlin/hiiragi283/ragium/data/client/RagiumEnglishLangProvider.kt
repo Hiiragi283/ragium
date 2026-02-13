@@ -108,8 +108,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.BENDING, "Bending")
         add(RagiumRecipeTypes.CRUSHING, "Crushing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
+        add(RagiumRecipeTypes.LATHING, "Lathing")
         add(RagiumRecipeTypes.PRESSING, "Pressing")
 
         add(RagiumRecipeTypes.DISTILLING, "Distilling")

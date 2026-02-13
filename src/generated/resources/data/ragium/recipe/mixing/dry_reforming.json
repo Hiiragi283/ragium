@@ -14,13 +14,11 @@
   },
   "item_ingredient": [
     {
-      "amount": 1,
-      "items": "#c:dusts/ruthenium"
+      "items": [
+        "#c:dusts/rhodium",
+        "#c:dusts/ruthenium"
+      ]
     }
   ],
-  "item_result": {
-    "id": "hiiragi_core:ruthenium_dust",
-    "tag": "c:dusts/ruthenium"
-  },
   "time": 200
 }

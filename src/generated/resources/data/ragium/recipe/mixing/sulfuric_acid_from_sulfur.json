@@ -10,7 +10,6 @@
   },
   "item_ingredient": [
     {
-      "amount": 1,
       "items": "minecraft:blaze_powder"
     },
     {
@@ -18,8 +17,5 @@
       "items": "#c:dusts/sulfur"
     }
   ],
-  "item_result": {
-    "id": "minecraft:blaze_powder"
-  },
   "time": 200
 }

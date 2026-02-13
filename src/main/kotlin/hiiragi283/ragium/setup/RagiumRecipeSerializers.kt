@@ -20,7 +20,9 @@ import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTBendingRecipe
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -28,6 +30,7 @@ import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
+import hiiragi283.ragium.common.recipe.HTLathingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -40,6 +43,7 @@ import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
+import hiiragi283.ragium.common.recipe.base.HTSingleProcessingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -58,6 +62,16 @@ object RagiumRecipeSerializers {
         REGISTER.registerSerializer("potion_drop", SimpleCraftingRecipeSerializer(::HTPotionDropRecipe))
 
     //    Machine    //
+
+    @JvmStatic
+    private fun <R : HTSingleProcessingRecipe.ItemToItem> itemToItem(
+        factory: HTSingleRecipeBuilder.Factory<HTItemIngredient, HTItemResult, R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSingleProcessingRecipe.ItemToItem::ingredient),
+        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSingleProcessingRecipe.ItemToItem::result),
+        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTSingleProcessingRecipe.ItemToItem::parameters),
+        factory::create,
+    )
 
     @JvmStatic
     private fun <R : HTItemToChancedRecipe> itemChanced(
@@ -94,10 +108,16 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
+    val BENDING: RecipeSerializer<HTBendingRecipe> = REGISTER.registerSerializer(RagiumConst.BENDING, itemToItem(::HTBendingRecipe))
+
+    @JvmField
     val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, itemChanced(::HTCrushingRecipe, 3))
 
     @JvmField
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, itemChanced(::HTCuttingRecipe, 1))
+
+    @JvmField
+    val LATHING: RecipeSerializer<HTLathingRecipe> = REGISTER.registerSerializer(RagiumConst.LATHING, itemToItem(::HTLathingRecipe))
 
     @JvmField
     val PRESSING: RecipeSerializer<HTPressingRecipe> = REGISTER.registerSerializer(
@@ -118,7 +138,7 @@ object RagiumRecipeSerializers {
         factory: HTItemOrFluidRecipeBuilder.Factory<RECIPE>,
     ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
         MapBiCodecs
-            .either(
+            .ior(
                 HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT),
                 HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT),
             ).forGetter(HTItemOrFluidRecipe::ingredient),

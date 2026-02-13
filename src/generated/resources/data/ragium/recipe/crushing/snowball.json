@@ -1,0 +1,12 @@
+{
+  "type": "ragium:crushing",
+  "ingredient": {
+    "amount": 1,
+    "items": "minecraft:ice"
+  },
+  "result": {
+    "count": 4,
+    "id": "minecraft:snowball"
+  },
+  "time": 100
+}

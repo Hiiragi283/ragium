@@ -19,13 +19,8 @@
   ],
   "item_ingredient": [
     {
-      "amount": 1,
       "items": "#c:dusts/platinum"
     }
   ],
-  "item_result": {
-    "id": "hiiragi_core:platinum_dust",
-    "tag": "c:dusts/platinum"
-  },
   "time": 200
 }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.core.api.monad.Either
+import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
@@ -12,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
 class HTFreezingRecipe(
-    ingredient: Either<HTItemIngredient, HTFluidIngredient>,
+    ingredient: Ior<HTItemIngredient, HTFluidIngredient>,
     result: Either<HTItemResult, HTFluidResult>,
     parameters: SubParameters,
 ) : HTItemOrFluidRecipe(ingredient, result, parameters) {

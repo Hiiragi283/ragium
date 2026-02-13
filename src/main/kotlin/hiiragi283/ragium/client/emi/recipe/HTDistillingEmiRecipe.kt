@@ -27,14 +27,14 @@ class HTDistillingEmiRecipe(holder: RecipeHolder<HTDistillingRecipe>) :
     }
 
     override fun addWidgets(widgets: WidgetHolder) {
-        widgets.addArrow(time = recipe.time)
+        widgets.addArrow(time = recipe.time, y = getPosition(2))
         // input
-        widgets.addTank(input(0), getPosition(1.5), HTBackgroundType.INPUT)
+        widgets.addTank(input(0), getPosition(1.5), HTBackgroundType.INPUT, y = getPosition(1))
         // outputs
-        widgets.addSlot(output(0), getPosition(5.5), getPosition(4), HTBackgroundType.EXTRA_OUTPUT)
+        widgets.addSlot(output(0), getPosition(5), getPosition(4), HTBackgroundType.EXTRA_OUTPUT)
         val maxFluids: Int = HTDistillingRecipe.MAX_FLUID_OUTPUT
         for (i: Int in (0..<maxFluids)) {
-            widgets.addSlot(output(i + 1), getPosition(7), getPosition(maxFluids - i), HTBackgroundType.OUTPUT)
+            widgets.addSlot(output(i + 1), getPosition(6.5), getPosition(maxFluids - (i + 1)), HTBackgroundType.OUTPUT)
         }
     }
 }

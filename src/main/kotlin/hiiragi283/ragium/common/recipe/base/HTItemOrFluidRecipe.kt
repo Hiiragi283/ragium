@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.recipe.base
 
 import hiiragi283.core.api.monad.Either
+import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.recipe.HTFluidRecipe
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
@@ -14,13 +15,18 @@ import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 
 abstract class HTItemOrFluidRecipe(
-    val ingredient: Either<HTItemIngredient, HTFluidIngredient>,
+    val ingredient: Ior<HTItemIngredient, HTFluidIngredient>,
     val result: Either<HTItemResult, HTFluidResult>,
     parameters: SubParameters,
 ) : HTProcessingRecipe<HTItemAndFluidRecipeInput>(parameters),
     HTFluidRecipe {
-    final override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean =
-        ingredient.map({ it.test(input.item) }, { it.test(input.fluid) })
+    final override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean = ingredient.fold(
+        { it.test(input.item) },
+        { it.test(input.fluid) },
+        { itemIng: HTItemIngredient, fluidIng: HTFluidIngredient ->
+            itemIng.test(input.item) && fluidIng.test(input.fluid)
+        },
+    )
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack =
         result.getLeft()?.getStackResult(registries)?.value() ?: ItemStack.EMPTY
