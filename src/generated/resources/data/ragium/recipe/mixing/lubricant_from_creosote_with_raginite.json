@@ -10,7 +10,10 @@
     "id": "ragium:lubricant"
   },
   "item_ingredient": [
-    "#c:dusts/raginite"
+    {
+      "amount": 1,
+      "items": "#c:dusts/raginite"
+    }
   ],
   "time": 100
 }

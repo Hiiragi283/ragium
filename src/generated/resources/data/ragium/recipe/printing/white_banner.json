@@ -2,7 +2,10 @@
   "type": "ragium:pressing",
   "catalyst": "minecraft:white_banner",
   "copy_component": true,
-  "ingredient": "minecraft:white_banner",
+  "ingredient": {
+    "amount": 1,
+    "items": "minecraft:white_banner"
+  },
   "result": {
     "id": "minecraft:white_banner"
   },

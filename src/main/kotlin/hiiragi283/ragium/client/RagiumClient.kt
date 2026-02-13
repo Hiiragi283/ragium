@@ -111,6 +111,7 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
         event.dull(RagiumFluids.LIQUID_OXYGEN, Color(0x00cccc))
 
+        event.dull(RagiumFluids.ROCKET_FUEL, Color(0xccccff))
         event.clear(RagiumFluids.NITRIC_ACID, Color(0x9999cc))
         event.clear(RagiumFluids.MIXTURE_ACID, Color(0xcc3300))
         event.clear(RagiumFluids.SULFURIC_ACID, Color(0xcccc00))

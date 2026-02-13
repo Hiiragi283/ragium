@@ -7,7 +7,10 @@
     }
   ],
   "item_ingredient": [
-    "minecraft:trial_key"
+    {
+      "amount": 1,
+      "items": "minecraft:trial_key"
+    }
   ],
   "item_result": {
     "id": "minecraft:ominous_trial_key"

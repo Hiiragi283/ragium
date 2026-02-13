@@ -4,6 +4,9 @@
     "amount": 125,
     "id": "minecraft:lava"
   },
-  "item_ingredient": "#c:netherracks",
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:netherracks"
+  },
   "time": 200
 }

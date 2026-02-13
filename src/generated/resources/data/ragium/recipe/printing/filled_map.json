@@ -2,7 +2,10 @@
   "type": "ragium:pressing",
   "catalyst": "minecraft:filled_map",
   "copy_component": true,
-  "ingredient": "minecraft:map",
+  "ingredient": {
+    "amount": 1,
+    "items": "minecraft:map"
+  },
   "result": {
     "id": "minecraft:filled_map"
   },

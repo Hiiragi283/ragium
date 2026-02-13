@@ -1,6 +1,9 @@
 {
   "type": "ragium:crushing",
-  "ingredient": "#minecraft:wooden_pressure_plates",
+  "ingredient": {
+    "amount": 1,
+    "items": "#minecraft:wooden_pressure_plates"
+  },
   "result": {
     "count": 2,
     "id": "hiiragi_core:wood_dust",

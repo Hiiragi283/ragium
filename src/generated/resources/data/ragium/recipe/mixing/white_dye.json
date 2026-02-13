@@ -11,7 +11,10 @@
     "id": "hiiragi_core:white_dye"
   },
   "item_ingredient": [
-    "#c:dyes/white"
+    {
+      "amount": 1,
+      "items": "#c:dyes/white"
+    }
   ],
   "time": 200
 }

@@ -52,6 +52,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
 
     //    Ragium    //
 
+    // Block
     private fun fermentSources() {
         builder(RagiumDataMapTypes.FERMENT_SOURCE)
             .addHolder(HTBlockHolderLike.of(Blocks.BROWN_MUSHROOM), 1)
@@ -59,6 +60,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .addHolder(HTBlockHolderLike.of(Blocks.RED_MUSHROOM), 1)
     }
 
+    // Entity Type
     private fun mobHeads() {
         builder(RagiumDataMapTypes.MOB_HEAD)
             .add(EntityType.SKELETON, HTItemHolderLike.of(Items.SKELETON_SKULL))
@@ -69,6 +71,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(EntityType.PIGLIN, HTItemHolderLike.of(Items.PIGLIN_HEAD))
     }
 
+    // Fluid
     private fun coolants() {
         builder(RagiumDataMapTypes.COOLANT)
             .add(Tags.Fluids.WATER, 100, false)
@@ -124,6 +127,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add("high_power_biodiesel", highest)
     }
 
+    // Item
     private fun explosive() {
         builder(RagiumDataMapTypes.EXPLOSIVE)
             .addHolder(HTItemHolderLike.of(Items.FIREWORK_ROCKET), 1)

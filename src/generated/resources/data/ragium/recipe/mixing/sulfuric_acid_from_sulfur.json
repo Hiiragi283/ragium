@@ -9,8 +9,14 @@
     "id": "ragium:sulfuric_acid"
   },
   "item_ingredient": [
-    "minecraft:blaze_powder",
-    "#c:dusts/sulfur"
+    {
+      "amount": 1,
+      "items": "minecraft:blaze_powder"
+    },
+    {
+      "amount": 1,
+      "items": "#c:dusts/sulfur"
+    }
   ],
   "item_result": {
     "id": "minecraft:blaze_powder"

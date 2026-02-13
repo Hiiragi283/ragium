@@ -3,7 +3,10 @@
   "extra_result": {
     "id": "ragium:molasses"
   },
-  "ingredient": "#c:crops/sugar_cane",
+  "ingredient": {
+    "amount": 1,
+    "items": "#c:crops/sugar_cane"
+  },
   "result": {
     "count": 4,
     "id": "minecraft:sugar"

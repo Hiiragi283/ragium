@@ -2,7 +2,10 @@
   "type": "ragium:pressing",
   "catalyst": "minecraft:cyan_banner",
   "copy_component": true,
-  "ingredient": "minecraft:cyan_banner",
+  "ingredient": {
+    "amount": 1,
+    "items": "minecraft:cyan_banner"
+  },
   "result": {
     "id": "minecraft:cyan_banner"
   },

@@ -8,12 +8,17 @@ import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
+import net.minecraft.core.HolderLookup
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 
 typealias HTChemicalIngredient = Ior<List<HTItemIngredient>, List<HTFluidIngredient>>
 typealias HTChemicalResult = Ior<List<HTItemResult>, List<HTFluidResult>>
 
-abstract class HTChemicalRecipe(val ingredients: HTChemicalIngredient, parameters: SubParameters) :
+abstract class HTChemicalRecipe(val ingredients: HTChemicalIngredient, val results: HTChemicalResult, parameters: SubParameters) :
     HTProcessingRecipe<HTChemicalRecipeInput>(parameters) {
+    override fun matches(input: HTChemicalRecipeInput, level: Level): Boolean = matchIngredients(input)
+
     protected fun matchIngredients(input: HTChemicalRecipeInput): Boolean = ingredients.fold(
         { HTShapelessRecipeHelper.shapelessMatch(it, input.items).isNotEmpty() },
         { HTShapelessRecipeHelper.shapelessMatch(it, input.fluids).isNotEmpty() },
@@ -23,4 +28,6 @@ abstract class HTChemicalRecipe(val ingredients: HTChemicalIngredient, parameter
             bool1 && bool2
         },
     )
+
+    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 }

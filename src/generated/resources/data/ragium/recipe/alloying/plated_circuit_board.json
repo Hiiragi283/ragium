@@ -1,8 +1,14 @@
 {
   "type": "ragium:alloying",
   "ingredient": [
-    "ragium:circuit_board",
-    "#c:plates/gold"
+    {
+      "amount": 1,
+      "items": "ragium:circuit_board"
+    },
+    {
+      "amount": 1,
+      "items": "#c:plates/gold"
+    }
   ],
   "result": {
     "id": "ragium:plated_circuit_board"

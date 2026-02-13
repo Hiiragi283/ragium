@@ -58,7 +58,7 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
             input: SingleRecipeInput,
             recipe: RECIPE,
         ) {
-            inputHandler.consume(recipe.ingredient.getRequiredAmount())
+            inputHandler.consume(recipe.ingredient)
         }
 
         override fun applyEffect() {

@@ -1,6 +1,9 @@
 {
   "type": "ragium:crushing",
-  "ingredient": "minecraft:stone",
+  "ingredient": {
+    "amount": 1,
+    "items": "minecraft:stone"
+  },
   "result": {
     "id": "minecraft:cobblestone"
   },

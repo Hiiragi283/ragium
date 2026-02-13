@@ -7,7 +7,10 @@
     }
   ],
   "item_ingredient": [
-    "#c:dusts/crimson_crystal"
+    {
+      "amount": 1,
+      "items": "#c:dusts/crimson_crystal"
+    }
   ],
   "item_result": {
     "id": "minecraft:blaze_powder"

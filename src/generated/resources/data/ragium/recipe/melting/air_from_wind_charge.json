@@ -2,14 +2,11 @@
   "type": "ragium:melting",
   "fluid_result": {
     "amount": 125,
-    "id": "minecraft:lava"
+    "id": "ragium:air"
   },
   "item_ingredient": {
     "amount": 1,
-    "items": [
-      "#c:cobblestones",
-      "#c:stones"
-    ]
+    "items": "minecraft:wind_charge"
   },
-  "time": 600
+  "time": 200
 }

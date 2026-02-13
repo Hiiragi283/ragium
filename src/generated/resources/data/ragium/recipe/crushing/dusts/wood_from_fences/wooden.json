@@ -1,6 +1,9 @@
 {
   "type": "ragium:crushing",
-  "ingredient": "#c:fences/wooden",
+  "ingredient": {
+    "amount": 1,
+    "items": "#c:fences/wooden"
+  },
   "result": {
     "count": 5,
     "id": "hiiragi_core:wood_dust",

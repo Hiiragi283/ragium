@@ -11,7 +11,10 @@
     "id": "hiiragi_core:yellow_dye"
   },
   "item_ingredient": [
-    "#c:dyes/yellow"
+    {
+      "amount": 1,
+      "items": "#c:dyes/yellow"
+    }
   ],
   "time": 200
 }

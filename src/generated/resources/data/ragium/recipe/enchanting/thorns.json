@@ -2,6 +2,9 @@
   "type": "ragium:enchanting",
   "book": "minecraft:book",
   "enchantment": "minecraft:thorns",
-  "ingredient": "#c:crops/cactus",
+  "ingredient": {
+    "amount": 1,
+    "items": "#c:crops/cactus"
+  },
   "time": 200
 }

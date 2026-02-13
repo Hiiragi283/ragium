@@ -10,7 +10,10 @@
     "id": "ragium:lubricant"
   },
   "item_ingredient": [
-    "#c:dusts/redstone"
+    {
+      "amount": 1,
+      "items": "#c:dusts/redstone"
+    }
   ],
   "time": 100
 }

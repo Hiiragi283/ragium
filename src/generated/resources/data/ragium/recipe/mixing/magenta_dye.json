@@ -11,7 +11,10 @@
     "id": "hiiragi_core:magenta_dye"
   },
   "item_ingredient": [
-    "#c:dyes/magenta"
+    {
+      "amount": 1,
+      "items": "#c:dyes/magenta"
+    }
   ],
   "time": 200
 }

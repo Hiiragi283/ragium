@@ -11,7 +11,10 @@
     "id": "hiiragi_core:orange_dye"
   },
   "item_ingredient": [
-    "#c:dyes/orange"
+    {
+      "amount": 1,
+      "items": "#c:dyes/orange"
+    }
   ],
   "time": 200
 }

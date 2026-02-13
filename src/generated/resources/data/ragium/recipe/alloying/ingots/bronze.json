@@ -8,10 +8,13 @@
         "#c:ingots/copper"
       ]
     },
-    [
-      "#c:dusts/tin",
-      "#c:ingots/tin"
-    ]
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/tin",
+        "#c:ingots/tin"
+      ]
+    }
   ],
   "result": {
     "count": 4,

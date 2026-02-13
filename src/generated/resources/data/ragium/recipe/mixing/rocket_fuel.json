@@ -1,0 +1,17 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "amount": 500,
+      "fluids": "#c:liquid_hydrogen"
+    },
+    {
+      "amount": 500,
+      "fluids": "#c:liquid_oxygen"
+    }
+  ],
+  "fluid_result": {
+    "id": "ragium:rocket_fuel"
+  },
+  "time": 200
+}

@@ -11,7 +11,10 @@
     "id": "hiiragi_core:lime_dye"
   },
   "item_ingredient": [
-    "#c:dyes/lime"
+    {
+      "amount": 1,
+      "items": "#c:dyes/lime"
+    }
   ],
   "time": 200
 }

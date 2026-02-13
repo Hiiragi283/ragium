@@ -11,7 +11,10 @@
     "id": "hiiragi_core:red_dye"
   },
   "item_ingredient": [
-    "#c:dyes/red"
+    {
+      "amount": 1,
+      "items": "#c:dyes/red"
+    }
   ],
   "time": 200
 }

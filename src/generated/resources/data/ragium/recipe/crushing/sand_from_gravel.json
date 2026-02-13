@@ -1,6 +1,9 @@
 {
   "type": "ragium:crushing",
-  "ingredient": "#c:gravels",
+  "ingredient": {
+    "amount": 1,
+    "items": "#c:gravels"
+  },
   "result": {
     "id": "minecraft:sand"
   },

@@ -1,6 +1,9 @@
 {
   "type": "ragium:crushing",
-  "ingredient": "#c:chests/wooden",
+  "ingredient": {
+    "amount": 1,
+    "items": "#c:chests/wooden"
+  },
   "result": {
     "count": 8,
     "id": "hiiragi_core:wood_dust",

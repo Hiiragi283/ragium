@@ -3,6 +3,9 @@
   "fluid_result": {
     "id": "minecraft:water"
   },
-  "item_ingredient": "minecraft:snow_block",
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:snow_block"
+  },
   "time": 100
 }

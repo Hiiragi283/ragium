@@ -24,7 +24,7 @@ class HTEnchantingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.ENCHANTI
         }
     }
 
-    var book: HTItemIngredient = HTItemIngredient(Ingredient.of(Items.BOOK))
+    var book: HTItemIngredient = HTItemIngredient(Ingredient.of(Items.BOOK), 1)
     lateinit var ingredient: HTItemIngredient
     val result: ResultHolder = ResultHolder()
 

@@ -11,7 +11,10 @@
     "id": "hiiragi_core:light_blue_dye"
   },
   "item_ingredient": [
-    "#c:dyes/light_blue"
+    {
+      "amount": 1,
+      "items": "#c:dyes/light_blue"
+    }
   ],
   "time": 200
 }

@@ -87,7 +87,7 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
                 input: HTPlantingRecipe.Input,
                 recipe: HTPlantingRecipe,
             ) {
-                plantInputHandler.consume(recipe.seedIngredient.getRequiredAmount())
+                plantInputHandler.consume(recipe.seedIngredient)
                 fluidInputHandler.consume(HTPlantingRecipe.FLUID_AMOUNT)
             }
 

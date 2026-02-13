@@ -74,6 +74,10 @@ object RagiumFluids {
 
     // Liquid
 
+    // H
+    @JvmField
+    val ROCKET_FUEL: HTFluidContent = REGISTER.registerVirtual("rocket_fuel") { properties = liquid() }
+
     // N
     @JvmField
     val NITRIC_ACID: HTFluidContent = REGISTER.registerFlowing("nitric_acid") { properties = liquid() }

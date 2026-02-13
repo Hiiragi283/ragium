@@ -7,7 +7,10 @@
     }
   ],
   "item_ingredient": [
-    "#c:obsidians/normal"
+    {
+      "amount": 1,
+      "items": "#c:obsidians/normal"
+    }
   ],
   "item_result": {
     "id": "minecraft:crying_obsidian"

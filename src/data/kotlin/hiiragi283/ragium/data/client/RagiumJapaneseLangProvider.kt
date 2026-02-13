@@ -62,6 +62,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.OXYGEN, "酸素")
         addFluid(RagiumFluids.LIQUID_OXYGEN, "液体酸素")
 
+        addFluid(RagiumFluids.ROCKET_FUEL, "ロケット燃料")
         addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
         addFluid(RagiumFluids.MIXTURE_ACID, "混酸")
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")

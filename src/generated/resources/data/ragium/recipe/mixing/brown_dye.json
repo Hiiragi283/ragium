@@ -11,7 +11,10 @@
     "id": "hiiragi_core:brown_dye"
   },
   "item_ingredient": [
-    "#c:dyes/brown"
+    {
+      "amount": 1,
+      "items": "#c:dyes/brown"
+    }
   ],
   "time": 200
 }

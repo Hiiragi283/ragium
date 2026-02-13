@@ -4,7 +4,10 @@
     "amount": 250,
     "fluids": "#c:mushroom_stew"
   },
-  "item_ingredient": "minecraft:bowl",
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:bowl"
+  },
   "result": {
     "id": "minecraft:mushroom_stew"
   },

@@ -1,14 +1,20 @@
 {
   "type": "ragium:alloying",
   "ingredient": [
-    [
-      "#c:dusts/iron",
-      "#c:ingots/iron"
-    ],
-    [
-      "#c:coal_coke",
-      "#c:dusts/coal_coke"
-    ]
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/iron",
+        "#c:ingots/iron"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:coal_coke",
+        "#c:dusts/coal_coke"
+      ]
+    }
   ],
   "result": {
     "id": "hiiragi_core:steel_ingot",

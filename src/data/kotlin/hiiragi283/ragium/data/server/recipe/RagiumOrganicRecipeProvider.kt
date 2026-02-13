@@ -9,8 +9,8 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTDistillingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPyrolyzingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
@@ -29,7 +29,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         warped()
 
         // Organic Oil + Alcohol -> Biofuel + Glycerol
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             fluidIngredients += inputCreator.create(RagiumFluids.SUNFLOWER_OIL)
             fluidIngredients += inputCreator.create(RagiumTags.Fluids.ALCOHOL, 3000)
             fluidResults += resultCreator.create(RagiumFluids.BIOFUEL, 3000)
@@ -91,7 +91,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             fluidResult = resultCreator.create(RagiumFluids.CREOSOTE, 2000)
         }
         // Creosote + Redstone -> Lubricant
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
             fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
             fluidResults += resultCreator.create(RagiumFluids.LUBRICANT, 500)
@@ -99,7 +99,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId suffix "_from_creosote_with_redstone"
         }
         // Creosote + Raginite -> Lubricant
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE)
             fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE, 1000)
             fluidResults += resultCreator.create(RagiumFluids.LUBRICANT, 750)
@@ -108,7 +108,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         }
 
         // Coal + Water -> Synthetic Gas
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
             itemIngredients += inputCreator.create(Items.BLAZE_POWDER)
             fluidIngredients += inputCreator.water(1000)
@@ -118,7 +118,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId suffix "_from_coal"
         }
         // Synthetic Gas + H2O -> CO2 + 2x H2
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
             fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
             fluidIngredients += inputCreator.water(1000)
@@ -130,7 +130,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         }
 
         // Coal Dust + Residue Oil -> Synthetic Oil
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL)
             fluidIngredients += inputCreator.create(RagiumFluids.RESIDUE_OIL, 500)
             fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
@@ -169,7 +169,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     private fun methane() {
         // CH4 + Water -> Methanol
         // CH4 + CO2 -> Synthetic Gas
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.RUTHENIUM)
             fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
             fluidIngredients += inputCreator.create(RagiumFluids.CARBON_DIOXIDE, 1000)
@@ -179,7 +179,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId replace RagiumAPI.id("dry_reforming")
         }
         // CH4 + H2O -> CO2 + 4x H2
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL)
             fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
             fluidIngredients += inputCreator.water(1000)
@@ -201,7 +201,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId suffix "_from_crimson_stem"
         }
         // Crimson Dust + Lava -> Blaze Powder
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL)
             fluidIngredients += inputCreator.lava(250)
 
@@ -220,7 +220,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId suffix "_from_warped_stem"
         }
         // Warped Dust + Lava -> Ender Pearl
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL)
             fluidIngredients += inputCreator.lava(250)
 

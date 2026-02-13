@@ -11,7 +11,10 @@
     "id": "hiiragi_core:gray_dye"
   },
   "item_ingredient": [
-    "#c:dyes/gray"
+    {
+      "amount": 1,
+      "items": "#c:dyes/gray"
+    }
   ],
   "time": 200
 }

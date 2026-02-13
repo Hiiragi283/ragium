@@ -30,7 +30,7 @@ class HTPlantingRecipe(
         const val FLUID_AMOUNT = 50
     }
 
-    val seedIngredient: HTItemIngredient = Ingredient.of(seed).let(::HTItemIngredient)
+    val seedIngredient: HTItemIngredient = HTItemIngredient(Ingredient.of(seed), 1)
     val seedResult = HTItemResult(Ior.Left(seed.toResource()!!), 1)
 
     fun getResultSeed(provider: HolderLookup.Provider): ItemStack = seedResult.getStackOrEmpty(provider)

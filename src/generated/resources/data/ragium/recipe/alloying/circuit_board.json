@@ -1,8 +1,14 @@
 {
   "type": "ragium:alloying",
   "ingredient": [
-    "#c:dusts/quartz",
-    "#c:plates/plastic"
+    {
+      "amount": 1,
+      "items": "#c:dusts/quartz"
+    },
+    {
+      "amount": 1,
+      "items": "#c:plates/plastic"
+    }
   ],
   "result": {
     "id": "ragium:circuit_board"

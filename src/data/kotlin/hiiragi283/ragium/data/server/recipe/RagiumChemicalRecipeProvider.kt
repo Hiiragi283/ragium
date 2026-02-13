@@ -13,8 +13,8 @@ import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemAndFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
@@ -26,6 +26,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     override fun buildRecipeInternal() {
         bathing()
         canning()
+        centrifuging()
         mixing()
         washing()
         reacting()
@@ -36,78 +37,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun bathing() {
         // Diamond + Raginite -> Ragi-Crystal
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.DIAMOND)
             fluidIngredients += inputCreator.molten(RagiumMaterialKeys.RAGINITE) { it * 6 }
             itemResults += resultCreator.material(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-        }
-
-        waterBathing()
-
-        eldritchBathing()
-    }
-
-    @JvmStatic
-    private fun waterBathing() {
-        // Cobblestone -> Mossy
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Tags.Items.COBBLESTONES_NORMAL)
-            fluidIngredients += inputCreator.water(250)
-            itemResults += resultCreator.create(Items.MOSSY_COBBLESTONE)
-            time /= 2
-        }
-        // XX Concrete Powder -> XX Concrete
-        // Dirt + Water -> Mud
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Items.DIRT)
-            fluidIngredients += inputCreator.water(250)
-            itemResults += resultCreator.create(Items.MUD)
-            time /= 2
-        }
-        // XX Dead Coral -> XX Coral
-        // Sponge -> Wet Sponge
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Items.SPONGE)
-            fluidIngredients += inputCreator.water(1000)
-            itemResults += resultCreator.create(Items.WET_SPONGE)
-            time /= 2
-        }
-
-        // Sawdust -> Paper
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD)
-            fluidIngredients += inputCreator.water(125)
-            itemResults += resultCreator.create(Items.PAPER)
-            time /= 2
-        }
-    }
-
-    @JvmStatic
-    private fun eldritchBathing() {
-        // Obsidian -> Crying Obsidian
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Tags.Items.OBSIDIANS_NORMAL)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH)
-            itemResults += resultCreator.create(Items.CRYING_OBSIDIAN)
-        }
-        // Amethyst Block -> Budding Amethyst
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.BLOCK, VanillaMaterialKeys.AMETHYST)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 9 }
-            itemResults += resultCreator.create(Items.BUDDING_AMETHYST)
-        }
-        // Skeleton Skull -> Wither Skeleton Skull
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Items.SKELETON_SKULL)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH)
-            itemResults += resultCreator.create(Items.WITHER_SKELETON_SKULL)
-        }
-
-        // Trial Key -> Ominous Key
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Items.TRIAL_KEY)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 4 }
-            itemResults += resultCreator.create(Items.OMINOUS_TRIAL_KEY)
         }
     }
 
@@ -149,12 +82,21 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
     }
 
+    //    Centrifuging    //
+
+    @JvmStatic
+    private fun centrifuging() {
+        // Magma Cream -> Slime Ball + Blaze Powder
+
+        // Air -> 4x N2 + O2
+    }
+
     //    Mixing    //
 
     @JvmStatic
     private fun mixing() {
         // Eldritch Flux
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
@@ -162,21 +104,21 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // Liquid Dyes
         for ((color: HTDefaultColor, content: HTFluidContent) in HCFluids.DYE) {
-            HTMixingRecipeBuilder.create(output) {
+            HTChemicalRecipeBuilder.mixing(output) {
                 itemIngredients += inputCreator.create(color.dyesTag)
                 fluidIngredients += inputCreator.water(250)
                 fluidResults += resultCreator.create(content, 250)
             }
         }
         // Latex + Sulfur -> Molten Rubber
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             fluidIngredients += inputCreator.create(HCFluids.LATEX, 1000)
 
             fluidResults += resultCreator.molten(CommonMaterialKeys.RUBBER) { it * 2 }
             recipeId suffix "_with_sulfur"
         }
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
             fluidIngredients += inputCreator.create(HCFluids.LATEX, 1000)
@@ -185,11 +127,85 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_with_sulfur_and_carbon"
         }
 
+        // 2x Liq H2 + Liq O2 -> 2x Rocket Fuel
+        HTChemicalRecipeBuilder.mixing(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.LIQUID_HYDROGEN, 500)
+            fluidIngredients += inputCreator.create(RagiumFluids.LIQUID_OXYGEN, 500)
+            fluidResults += resultCreator.create(RagiumFluids.ROCKET_FUEL)
+        }
         // Nitric Acid + Sulfuric Acid -> Mixture Acid
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             fluidIngredients += inputCreator.create(RagiumFluids.NITRIC_ACID, 500)
             fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
             fluidResults += resultCreator.create(RagiumFluids.MIXTURE_ACID)
+        }
+
+        waterMixing()
+
+        eldritchMixing()
+    }
+
+    @JvmStatic
+    private fun waterMixing() {
+        // Cobblestone -> Mossy
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(Tags.Items.COBBLESTONES_NORMAL)
+            fluidIngredients += inputCreator.water(250)
+            itemResults += resultCreator.create(Items.MOSSY_COBBLESTONE)
+            time /= 2
+        }
+        // XX Concrete Powder -> XX Concrete
+        // Dirt + Water -> Mud
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(Items.DIRT)
+            fluidIngredients += inputCreator.water(250)
+            itemResults += resultCreator.create(Items.MUD)
+            time /= 2
+        }
+        // XX Dead Coral -> XX Coral
+        // Sponge -> Wet Sponge
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(Items.SPONGE)
+            fluidIngredients += inputCreator.water(1000)
+            itemResults += resultCreator.create(Items.WET_SPONGE)
+            time /= 2
+        }
+
+        // Sawdust -> Paper
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD)
+            fluidIngredients += inputCreator.water(125)
+            itemResults += resultCreator.create(Items.PAPER)
+            time /= 2
+        }
+    }
+
+    @JvmStatic
+    private fun eldritchMixing() {
+        // Obsidian -> Crying Obsidian
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(Tags.Items.OBSIDIANS_NORMAL)
+            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH)
+            itemResults += resultCreator.create(Items.CRYING_OBSIDIAN)
+        }
+        // Amethyst Block -> Budding Amethyst
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.BLOCK, VanillaMaterialKeys.AMETHYST)
+            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 9 }
+            itemResults += resultCreator.create(Items.BUDDING_AMETHYST)
+        }
+        // Skeleton Skull -> Wither Skeleton Skull
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(Items.SKELETON_SKULL)
+            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH)
+            itemResults += resultCreator.create(Items.WITHER_SKELETON_SKULL)
+        }
+
+        // Trial Key -> Ominous Key
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(Items.TRIAL_KEY)
+            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 4 }
+            itemResults += resultCreator.create(Items.OMINOUS_TRIAL_KEY)
         }
     }
 
@@ -223,14 +239,14 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     fun reacting() {
         // 2x KNO3 + H2SO4 -> 2x HNO3 + K2SO4
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER, 2)
             fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID)
             fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID, 2000)
             recipeId suffix "_from_saltpeter"
         }
         // 3x H2 + N2 -> 2x NH3
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.IRON)
             fluidIngredients += inputCreator.create(RagiumFluids.HYDROGEN, 3000)
             fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN)
@@ -239,7 +255,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             fluidResults += resultCreator.create(RagiumFluids.AMMONIA, 2000)
         }
         // NH3 + 2x O2 -> HNO3 + H2O
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM)
             fluidIngredients += inputCreator.create(RagiumFluids.AMMONIA)
             fluidIngredients += inputCreator.create(RagiumFluids.OXYGEN, 2000)
@@ -251,7 +267,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // S + H2O -> H2SO4
-        HTMixingRecipeBuilder.create(output) {
+        HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(Items.BLAZE_POWDER)
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             fluidIngredients += inputCreator.water(1000)

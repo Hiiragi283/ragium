@@ -1,14 +1,20 @@
 {
   "type": "ragium:alloying",
   "ingredient": [
-    [
-      "#c:dusts/copper",
-      "#c:ingots/copper"
-    ],
-    [
-      "#c:dusts/zinc",
-      "#c:ingots/zinc"
-    ]
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/copper",
+        "#c:ingots/copper"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/zinc",
+        "#c:ingots/zinc"
+      ]
+    }
   ],
   "result": {
     "count": 2,

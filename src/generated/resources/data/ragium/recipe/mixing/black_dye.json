@@ -11,7 +11,10 @@
     "id": "hiiragi_core:black_dye"
   },
   "item_ingredient": [
-    "#c:dyes/black"
+    {
+      "amount": 1,
+      "items": "#c:dyes/black"
+    }
   ],
   "time": 200
 }

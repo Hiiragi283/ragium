@@ -4,6 +4,9 @@
     "amount": 250,
     "id": "minecraft:water"
   },
-  "item_ingredient": "minecraft:snowball",
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:snowball"
+  },
   "time": 20
 }

@@ -1,14 +1,20 @@
 {
   "type": "ragium:alloying",
   "ingredient": [
-    [
-      "#c:dusts/amethyst",
-      "#c:gems/amethyst"
-    ],
-    [
-      "#c:dusts/lapis",
-      "#c:gems/lapis"
-    ]
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/amethyst",
+        "#c:gems/amethyst"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/lapis",
+        "#c:gems/lapis"
+      ]
+    }
   ],
   "result": {
     "count": 2,

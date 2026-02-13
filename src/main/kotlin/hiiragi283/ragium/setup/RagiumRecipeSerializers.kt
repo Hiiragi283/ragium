@@ -17,6 +17,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegist
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
+import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -35,6 +36,7 @@ import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTSolidifyingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
+import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
@@ -187,6 +189,20 @@ object RagiumRecipeSerializers {
             HTFluidResult.CODEC.listOrElement(0, maxFluid).optionalFieldOf(HTConst.FLUID_RESULT, listOf()),
         )
 
+    @JvmStatic
+    private fun <RECIPE : HTChemicalRecipe> chemical(
+        maxItemIn: Int,
+        maxFluidIn: Int,
+        maxItemOut: Int,
+        maxFluidOut: Int,
+        factory: HTChemicalRecipeBuilder.Factory<RECIPE>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
+        chemIng(maxItemIn, maxFluidIn).forGetter(HTChemicalRecipe::ingredients),
+        chemRes(maxItemOut, maxFluidOut).forGetter(HTChemicalRecipe::results),
+        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTChemicalRecipe::parameters),
+        factory::create,
+    )
+
     @JvmField
     val CANNING: RecipeSerializer<HTCanningRecipe> = REGISTER.registerSerializer(
         RagiumConst.CANNING,
@@ -202,10 +218,11 @@ object RagiumRecipeSerializers {
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MIXING,
-        MapBiCodec.composite(
-            chemIng(HTMixingRecipe.MAX_ITEM_INPUT, HTMixingRecipe.MAX_FLUID_INPUT).forGetter(HTMixingRecipe::ingredients),
-            chemRes(HTMixingRecipe.MAX_ITEM_OUTPUT, HTMixingRecipe.MAX_FLUID_OUTPUT).forGetter(HTMixingRecipe::results),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTMixingRecipe::parameters),
+        chemical(
+            HTMixingRecipe.MAX_ITEM_INPUT,
+            HTMixingRecipe.MAX_FLUID_INPUT,
+            HTMixingRecipe.MAX_ITEM_OUTPUT,
+            HTMixingRecipe.MAX_FLUID_OUTPUT,
             ::HTMixingRecipe,
         ),
     )

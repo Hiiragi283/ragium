@@ -62,6 +62,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
         addFluid(RagiumFluids.LIQUID_OXYGEN, "Liquid Oxygen")
 
+        addFluid(RagiumFluids.ROCKET_FUEL, "Rocket Fuel")
         addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
         addFluid(RagiumFluids.MIXTURE_ACID, "Mixture Acid")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")

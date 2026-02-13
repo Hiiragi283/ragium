@@ -17,10 +17,13 @@
         "#c:ingots/iron"
       ]
     },
-    [
-      "#c:dusts/nickel",
-      "#c:ingots/nickel"
-    ]
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/nickel",
+        "#c:ingots/nickel"
+      ]
+    }
   ],
   "result": {
     "count": 3,

@@ -11,7 +11,10 @@
     "id": "hiiragi_core:purple_dye"
   },
   "item_ingredient": [
-    "#c:dyes/purple"
+    {
+      "amount": 1,
+      "items": "#c:dyes/purple"
+    }
   ],
   "time": 200
 }

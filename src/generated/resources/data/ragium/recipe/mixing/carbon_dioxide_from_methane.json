@@ -18,7 +18,10 @@
     }
   ],
   "item_ingredient": [
-    "#c:dusts/nickel"
+    {
+      "amount": 1,
+      "items": "#c:dusts/nickel"
+    }
   ],
   "item_result": {
     "id": "hiiragi_core:nickel_dust",

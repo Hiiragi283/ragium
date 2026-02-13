@@ -4,7 +4,10 @@
     "amount": 250,
     "fluids": "#c:water"
   },
-  "item_ingredient": "minecraft:glass_bottle",
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:glass_bottle"
+  },
   "result": {
     "components": {
       "minecraft:potion_contents": {

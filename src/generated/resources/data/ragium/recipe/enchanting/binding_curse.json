@@ -2,6 +2,9 @@
   "type": "ragium:enchanting",
   "book": "minecraft:book",
   "enchantment": "minecraft:binding_curse",
-  "ingredient": "#c:pumpkins/carved",
+  "ingredient": {
+    "amount": 1,
+    "items": "#c:pumpkins/carved"
+  },
   "time": 200
 }

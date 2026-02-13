@@ -10,7 +10,10 @@
     "id": "hiiragi_core:molten_rubber"
   },
   "item_ingredient": [
-    "#c:dusts/sulfur"
+    {
+      "amount": 1,
+      "items": "#c:dusts/sulfur"
+    }
   ],
   "time": 200
 }

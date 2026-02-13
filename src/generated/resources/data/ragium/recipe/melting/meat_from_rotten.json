@@ -4,6 +4,9 @@
     "amount": 90,
     "id": "hiiragi_core:meat"
   },
-  "item_ingredient": "minecraft:rotten_flesh",
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:rotten_flesh"
+  },
   "time": 200
 }

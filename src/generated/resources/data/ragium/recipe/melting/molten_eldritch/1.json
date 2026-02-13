@@ -5,11 +5,14 @@
     "id": "hiiragi_core:molten_eldritch"
   },
   "item_ingredient": {
-    "type": "neoforge:components",
-    "components": {
-      "minecraft:ominous_bottle_amplifier": 1
-    },
-    "items": "minecraft:ominous_bottle"
+    "amount": 1,
+    "items": {
+      "type": "neoforge:components",
+      "components": {
+        "minecraft:ominous_bottle_amplifier": 1
+      },
+      "items": "minecraft:ominous_bottle"
+    }
   },
   "time": 200
 }

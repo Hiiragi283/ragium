@@ -7,7 +7,10 @@
     }
   ],
   "item_ingredient": [
-    "#c:storage_blocks/amethyst"
+    {
+      "amount": 1,
+      "items": "#c:storage_blocks/amethyst"
+    }
   ],
   "item_result": {
     "id": "minecraft:budding_amethyst"

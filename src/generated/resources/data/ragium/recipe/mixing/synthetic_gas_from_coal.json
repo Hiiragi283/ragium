@@ -10,11 +10,17 @@
     "id": "ragium:synthetic_gas"
   },
   "item_ingredient": [
-    [
-      "#c:coal",
-      "#c:dusts/coal"
-    ],
-    "minecraft:blaze_powder"
+    {
+      "amount": 1,
+      "items": [
+        "#c:coal",
+        "#c:dusts/coal"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": "minecraft:blaze_powder"
+    }
   ],
   "item_result": {
     "id": "minecraft:blaze_powder"

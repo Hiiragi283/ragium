@@ -10,14 +10,20 @@
   ],
   "type": "ragium:alloying",
   "ingredient": [
-    [
-      "#c:dusts/gold",
-      "#c:ingots/gold"
-    ],
-    [
-      "#c:dusts/silver",
-      "#c:ingots/silver"
-    ]
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/gold",
+        "#c:ingots/gold"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/silver",
+        "#c:ingots/silver"
+      ]
+    }
   ],
   "result": {
     "count": 2,

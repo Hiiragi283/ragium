@@ -13,7 +13,10 @@
     "id": "ragium:synthetic_gas"
   },
   "item_ingredient": [
-    "#c:dusts/ruthenium"
+    {
+      "amount": 1,
+      "items": "#c:dusts/ruthenium"
+    }
   ],
   "item_result": {
     "id": "hiiragi_core:ruthenium_dust",

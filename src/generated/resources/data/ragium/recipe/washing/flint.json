@@ -8,7 +8,10 @@
     "amount": 250,
     "fluids": "#c:water"
   },
-  "item_ingredient": "#c:gravels",
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:gravels"
+  },
   "result": {
     "id": "minecraft:flint"
   },

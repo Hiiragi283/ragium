@@ -1,7 +1,10 @@
 {
   "type": "ragium:alloying",
   "ingredient": [
-    "hiiragi_core:iridescent_powder",
+    {
+      "amount": 1,
+      "items": "hiiragi_core:iridescent_powder"
+    },
     {
       "amount": 64,
       "items": "minecraft:honey_block"

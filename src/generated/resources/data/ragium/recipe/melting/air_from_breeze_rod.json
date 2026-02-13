@@ -1,11 +1,12 @@
 {
   "type": "ragium:melting",
   "fluid_result": {
-    "id": "hiiragi_core:honey"
+    "amount": 500,
+    "id": "ragium:air"
   },
   "item_ingredient": {
     "amount": 1,
-    "items": "minecraft:honey_block"
+    "items": "#c:rods/breeze"
   },
   "time": 200
 }

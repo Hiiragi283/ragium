@@ -1,9 +1,12 @@
 {
   "type": "ragium:crushing",
-  "ingredient": [
-    "#c:cobblestones/mossy",
-    "#c:cobblestones/normal"
-  ],
+  "ingredient": {
+    "amount": 1,
+    "items": [
+      "#c:cobblestones/mossy",
+      "#c:cobblestones/normal"
+    ]
+  },
   "result": {
     "id": "minecraft:gravel"
   },
