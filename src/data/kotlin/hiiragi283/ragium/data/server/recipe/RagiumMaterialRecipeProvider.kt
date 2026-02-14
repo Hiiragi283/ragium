@@ -111,7 +111,7 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     private fun getOrThrow(prefix: HTTagPrefix, material: HTMaterialLike): HTItemHolderLike<*> = HiiragiCoreAccess.INSTANCE
-        .materialContents
-        .getItem(prefix, material)
-        ?: error("Unknown ${prefix.name} for ${material.asMaterialId()}")
+        .registeredContents
+        .items
+        .getOrThrow(prefix, material)
 }

@@ -5,7 +5,6 @@ import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.data.tag.HTTagsProvider
-import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
@@ -37,13 +36,14 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         val foodsCan: HTTagBuilder<Item> = addTags(factory, Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
         HTFoodCanType.entries.forEach(foodsCan::add)
 
-        val contents: HTMaterialContents = HiiragiCoreAccess.INSTANCE.materialContents
-        factory
-            .apply(Tags.Items.FOODS_RAW_MEAT)
-            .add(contents.getItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT)!!)
-        factory
-            .apply(Tags.Items.FOODS_COOKED_MEAT)
-            .add(contents.getItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)!!)
+        with(HiiragiCoreAccess.INSTANCE.registeredContents.items) {
+            factory
+                .apply(Tags.Items.FOODS_RAW_MEAT)
+                .add(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT))
+            factory
+                .apply(Tags.Items.FOODS_COOKED_MEAT)
+                .add(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
+        }
         // Others
         RagiumItems.MOLDS.values.forEach(factory.apply(RagiumTags.Items.MOLDS)::add)
 

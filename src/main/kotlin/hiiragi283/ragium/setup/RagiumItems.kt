@@ -152,9 +152,9 @@ object RagiumItems {
             event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
         }
 
-        with(HiiragiCoreAccess.INSTANCE.materialContents) {
-            modify(getItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT)!!, DataComponents.FOOD, Foods.BEEF)
-            modify(getItem(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)!!, DataComponents.FOOD, Foods.COOKED_BEEF)
+        with(HiiragiCoreAccess.INSTANCE.registeredContents.items) {
+            modify(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
+            modify(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
         }
     }
 
