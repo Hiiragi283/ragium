@@ -38,6 +38,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.WASHER, "Washer")
 
+        add(RagiumBlocks.TREE_TAP, "Tree Tap")
+        add(RagiumBlocks.LATEX_CAULDRON, "Latex Cauldron")
         add(RagiumBlocks.PLANTER, "Planter")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
@@ -117,7 +119,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.LATHING, "Lathing")
         add(RagiumRecipeTypes.PRESSING, "Pressing")
-        add(RagiumRecipeTypes.SQUEEZING, "Squeezing")
 
         add(RagiumRecipeTypes.DISTILLING, "Distilling")
         add(RagiumRecipeTypes.MELTING, "Melting")
@@ -176,7 +177,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.ELECTRIC_FURNACE, "A machine which smelts item by using energy.")
         add(RagiumTranslation.FORMING_PRESS, "A machine which combines multiple items into one.")
         add(RagiumTranslation.LATHE, "A machine which converts gem or ingot into rod.")
-        add(RagiumTranslation.SQUEEZER, "A machine which extracts fluid from item")
 
         add(RagiumTranslation.MELTER, "A machine which melts item or heats up fluid.")
         add(RagiumTranslation.PYROLYZER, "A machine which converts log or coal into charcoal or coal coke.")

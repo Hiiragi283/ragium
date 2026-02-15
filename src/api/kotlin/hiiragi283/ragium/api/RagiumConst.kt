@@ -12,7 +12,7 @@ object RagiumConst {
     const val ELECTRIC_FURNACE = "electric_furnace"
     const val FORMING_PRESS = "forming_press"
     const val LATHE = "lathe"
-    const val SQUEEZER = "squeezer"
+    const val WIREMILL = "wiremill"
 
     // Heat
     const val DISTILLATION_TOWER = "distillation_tower"
@@ -57,7 +57,6 @@ object RagiumConst {
     const val LATHING = "lathing"
     const val PRESSING = "pressing"
     const val PRINTING = "printing"
-    const val SQUEEZING = "squeezing"
     const val WIRING = "wiring"
 
     // Heat

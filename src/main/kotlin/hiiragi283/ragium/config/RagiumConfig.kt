@@ -90,13 +90,6 @@ object RagiumConfig {
             @JvmField
             val lathe: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.LATHE)
 
-            @JvmField
-            val squeezer: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.SQUEEZER,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-            )
-
             // Heat
             @JvmField
             val melter: HTMachineConfig = HTMachineConfig.createSimple(

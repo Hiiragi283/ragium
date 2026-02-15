@@ -5,7 +5,6 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.resource.toId
-import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
@@ -19,7 +18,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         cutting()
         lathing()
         printing()
-        squeezing()
     }
 
     @JvmStatic
@@ -68,22 +66,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             top = inputCreator.create(Items.MAP)
             bottom = inputCreator.create(Items.FILLED_MAP)
             result = resultCreator.create(Items.FILLED_MAP)
-        }
-    }
-
-    @JvmStatic
-    private fun squeezing() {
-        // Jungle -> Latex
-        HTSingleRecipeBuilder.squeezing(output) {
-            ingredient = inputCreator.create(ItemTags.JUNGLE_LOGS)
-            result = resultCreator.create(HCFluids.LATEX, 250)
-            recipeId suffix "_from_jungle"
-        }
-        // Acacia -> Latex
-        HTSingleRecipeBuilder.squeezing(output) {
-            ingredient = inputCreator.create(ItemTags.ACACIA_LOGS)
-            result = resultCreator.create(HCFluids.LATEX, 125)
-            recipeId suffix "_from_acacia"
         }
     }
 }

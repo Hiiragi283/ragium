@@ -1,9 +1,12 @@
 package hiiragi283.ragium
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.mod.HTCommonMod
 import hiiragi283.core.common.data.HCServerResourceProvider
+import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.common.block.cauldron.RagiumCauldronInteractions
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -16,16 +19,20 @@ import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import hiiragi283.ragium.setup.RagiumWidgetTypes
+import net.minecraft.world.level.block.LayeredCauldronBlock
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
+import net.neoforged.neoforge.fluids.RegisterCauldronFluidContentEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 
 @Mod(RagiumAPI.MOD_ID)
 data object Ragium : HTCommonMod() {
     override fun initialize(eventBus: IEventBus, container: ModContainer) {
         eventBus.addListener(RagiumMiscRegister::register)
+        eventBus.addListener(::registerCauldronContent)
 
         RagiumDataComponents.REGISTER.register(eventBus)
 
@@ -58,5 +65,18 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumDataMapTypes.FERTILIZER)
 
         event.register(RagiumDataMapTypes.UPGRADE)
+    }
+
+    override fun commonSetup(event: FMLCommonSetupEvent) {
+        RagiumCauldronInteractions.init()
+    }
+
+    private fun registerCauldronContent(event: RegisterCauldronFluidContentEvent) {
+        event.register(
+            RagiumBlocks.LATEX_CAULDRON.get(),
+            HCFluids.LATEX.get(),
+            HTConst.DEFAULT_FLUID_AMOUNT,
+            LayeredCauldronBlock.LEVEL,
+        )
     }
 }

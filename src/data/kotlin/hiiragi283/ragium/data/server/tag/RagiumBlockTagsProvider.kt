@@ -4,6 +4,7 @@ import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.BlockTags
@@ -11,6 +12,7 @@ import net.minecraft.world.level.block.Block
 
 class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGen<Block>(RagiumAPI.MOD_ID, Registries.BLOCK, context) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Block>) {
+        // Mineable
         val hoe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_HOE)
         sequence {
             yield(RagiumBlocks.MEAT_BLOCK)
@@ -36,6 +38,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
             yield(RagiumBlocks.MIXER)
             yield(RagiumBlocks.WASHER)
 
+            yield(RagiumBlocks.TREE_TAP)
             yield(RagiumBlocks.PLANTER)
 
             yield(RagiumBlocks.ENCHANTER)
@@ -52,5 +55,15 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
             yield(RagiumBlocks.CREATIVE_CRATE)
             yield(RagiumBlocks.CREATIVE_TANK)
         }.forEach(pickaxe::add)
+        // Other
+        factory
+            .apply(BlockTags.CAULDRONS)
+            .add(RagiumBlocks.LATEX_CAULDRON)
+
+        factory
+            .apply(RagiumTags.Blocks.LATEX_DRIPPING_LOGS)
+            .addTag(BlockTags.ACACIA_LOGS)
+            .addTag(BlockTags.JUNGLE_LOGS)
+            .addTag(BlockTags.MANGROVE_LOGS)
     }
 }

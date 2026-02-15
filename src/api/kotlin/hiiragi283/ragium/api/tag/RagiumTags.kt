@@ -7,9 +7,23 @@ import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.material.Fluid
 
 object RagiumTags {
+    //    Blocks    //
+
+    object Blocks {
+        @JvmField
+        val LATEX_DRIPPING_LOGS: TagKey<Block> = mod("latex_dripping_logs")
+
+        @JvmStatic
+        private fun common(vararg path: String): TagKey<Block> = Registries.BLOCK.createTagKey(HTConst.COMMON.toId(*path))
+
+        @JvmStatic
+        private fun mod(vararg path: String): TagKey<Block> = Registries.BLOCK.createTagKey(RagiumAPI.id(*path))
+    }
+
     //    Fluids    //
 
     object Fluids {

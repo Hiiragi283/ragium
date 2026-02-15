@@ -8,12 +8,14 @@ import dev.emi.emi.api.recipe.EmiRecipe
 import dev.emi.emi.api.recipe.EmiWorldInteractionRecipe
 import dev.emi.emi.api.recipe.VanillaEmiRecipeCategories
 import dev.emi.emi.api.stack.Comparison
+import dev.emi.emi.api.stack.EmiIngredient
 import dev.emi.emi.api.stack.EmiStack
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.integration.emi.HTEmiPlugin
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.integration.emi.toEmi
+import hiiragi283.core.api.integration.emi.toFluidEmi
 import hiiragi283.core.api.item.alchemy.HTBottleType
 import hiiragi283.core.api.item.alchemy.HTPotionContents
 import hiiragi283.core.api.registry.HTHolderLike
@@ -21,9 +23,11 @@ import hiiragi283.core.api.registry.asSequence
 import hiiragi283.core.api.registry.getHolderDataMap
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.util.HCPotionFluidHelper
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCanningEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTCrushingEmiRecipe
@@ -31,7 +35,6 @@ import hiiragi283.ragium.client.emi.recipe.HTCuttingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTDistillingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTEnchantingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTItemOrFluidEmiRecipe
-import hiiragi283.ragium.client.emi.recipe.HTItemToFluidEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTItemToItemEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTMixingEmiRecipe
 import hiiragi283.ragium.client.emi.recipe.HTPlantingEmiRecipe
@@ -50,10 +53,12 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.crafting.BlockTagIngredient
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import kotlin.streams.asSequence
 
@@ -76,7 +81,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumEmiRecipeCategories.CUTTING,
             RagiumEmiRecipeCategories.LATHING,
             RagiumEmiRecipeCategories.PRESSING,
-            RagiumEmiRecipeCategories.SQUEEZING,
             // Machine - Heat
             RagiumEmiRecipeCategories.DISTILLING,
             RagiumEmiRecipeCategories.MELTING,
@@ -104,7 +108,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         addRegistryRecipes(registry, RagiumRecipeTypes.CUTTING, ::HTCuttingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.LATHING, HTItemToItemEmiRecipe.Companion::lathing)
         addRegistryRecipes(registry, RagiumRecipeTypes.PRESSING, ::HTPressingEmiRecipe)
-        addRegistryRecipes(registry, RagiumRecipeTypes.SQUEEZING, HTItemToFluidEmiRecipe.Companion::squeezing)
 
         addRegistryRecipes(registry, RagiumRecipeTypes.DISTILLING, ::HTDistillingEmiRecipe)
         addRegistryRecipes(registry, RagiumRecipeTypes.MELTING, HTItemOrFluidEmiRecipe.Companion::melting)
@@ -218,6 +221,17 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
                         .build()
                 }
             }
+        // Log + Tree Tap & Cauldron -> Latex
+        addRecipeSafe(registry, RagiumAPI.id("/world", "interaction", "latex_from_log")) { id: ResourceLocation ->
+            EmiWorldInteractionRecipe
+                .builder()
+                .id(id)
+                .leftInput(BlockTagIngredient(RagiumTags.Blocks.LATEX_DRIPPING_LOGS).toVanilla().let(EmiIngredient::of))
+                .rightInput(RagiumBlocks.TREE_TAP.toEmi(), false)
+                .rightInput(Items.CAULDRON.toEmi(), false)
+                .output(HCFluids.LATEX.toFluidEmi())
+                .build()
+        }
     }
 
     //    Extensions    //

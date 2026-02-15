@@ -38,6 +38,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.MIXER, "混合機")
         add(RagiumBlocks.WASHER, "洗浄機")
 
+        add(RagiumBlocks.TREE_TAP, "ツリータップ")
+        add(RagiumBlocks.LATEX_CAULDRON, "ラテックス入り大釜")
         add(RagiumBlocks.PLANTER, "栽培機")
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
@@ -117,7 +119,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.LATHING, "旋盤加工")
         add(RagiumRecipeTypes.PRESSING, "プレス加工")
-        add(RagiumRecipeTypes.SQUEEZING, "圧搾")
 
         add(RagiumRecipeTypes.DISTILLING, "蒸留")
         add(RagiumRecipeTypes.MELTING, "溶融")
@@ -176,7 +177,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.ELECTRIC_FURNACE, "エネルギーでアイテムを焼く機械です。")
         add(RagiumTranslation.FORMING_PRESS, "複数のアイテムを一つに固める機械です。")
         add(RagiumTranslation.LATHE, "宝石やインゴットを棒材に加工する機械です。")
-        add(RagiumTranslation.SQUEEZER, "アイテムから液体を抽出する機械です。")
 
         add(RagiumTranslation.MELTER, "アイテムを融かしたり，液体を加熱したりする機械です。")
         add(RagiumTranslation.PYROLYZER, "原木や石炭を木炭やコークスに加工する機械です。")

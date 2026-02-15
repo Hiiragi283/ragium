@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTBlockStateProvider
+import hiiragi283.core.api.registry.HTBlockHolderLike
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.resource.blockId
 import hiiragi283.core.api.resource.toId
@@ -14,6 +15,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.LayeredCauldronBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
@@ -46,6 +48,16 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)
 
         // Device
+        registerVariants(RagiumBlocks.LATEX_CAULDRON) { _, state: BlockState ->
+            val suffix: String = when (val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)) {
+                3 -> "_full"
+                else -> "_level$level"
+            }
+            ConfiguredModel
+                .builder()
+                .modelFile(ModelFile.UncheckedModelFile(HTConst.MINECRAFT.toId("block/water_cauldron").withSuffix(suffix)))
+                .build()
+        }
 
         // Storage
         altModelBlock(RagiumBlocks.TANK)
@@ -127,5 +139,18 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
             active.texture("front", frontActive)
         }
         return inactive to active
+    }
+
+    private fun cauldronBlock(block: HTBlockHolderLike<*, *>) {
+        registerVariants(block) { _, state: BlockState ->
+            val suffix: String = when (val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)) {
+                3 -> "_full"
+                else -> "_level$level"
+            }
+            ConfiguredModel
+                .builder()
+                .modelFile(ModelFile.UncheckedModelFile(HTConst.MINECRAFT.toId("block/water_cauldron").withSuffix(suffix)))
+                .build()
+        }
     }
 }

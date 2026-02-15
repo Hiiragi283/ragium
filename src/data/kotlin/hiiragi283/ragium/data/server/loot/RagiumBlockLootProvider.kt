@@ -11,6 +11,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
@@ -48,6 +49,8 @@ class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTa
                     },
                 )
             }
+
+        dropOther(RagiumBlocks.LATEX_CAULDRON.asBlock(), Items.CAULDRON)
     }
 
     private fun copyComponent(block: Block, builderAction: CopyComponentsFunction.Builder.() -> Unit): LootTable.Builder = LootTable
