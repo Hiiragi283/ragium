@@ -6,13 +6,33 @@ plugins {
     idea
     kotlin("jvm") version "2.2.20"
     alias(libs.plugins.neo.moddev)
+
     alias(libs.plugins.ktlint)
+
+    alias(libs.plugins.axion.release)
 }
 
 val modId = "ragium"
 
-version = libs.versions.ragium.get()
-group = "hiiragi283.ragium"
+group = "io.github.hiiragi283"
+
+scmVersion {
+    useHighestVersion = true
+    tag {
+        prefix = "v"
+        versionSeparator = ""
+    }
+    versionCreator("simple")
+    repository {
+        pushTagsOnly = true
+    }
+    checks {
+        uncommittedChanges = false
+        aheadOfRemote = false
+    }
+}
+
+version = scmVersion.version
 base.archivesName = modId
 
 val apiModule: SourceSet = sourceSets.create("api")
@@ -241,7 +261,7 @@ val generateModMetadata: TaskProvider<ProcessResources> = tasks.register("genera
         "mod_id" to modId,
         "mod_name" to "Ragium",
         "mod_license" to "MPL-2.0",
-        "mod_version" to libs.versions.ragium.get(),
+        "mod_version" to version.toString(),
         "mod_authors" to "Hiiragi283",
         "mod_description" to
             "Ragium is a tech mod based on vanilla materials. This mod aims to expand vanilla features and automate many work.",

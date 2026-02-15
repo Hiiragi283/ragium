@@ -1,16 +1,15 @@
 {
   "type": "ragium:pyrolyzing",
   "fluid_result": {
-    "amount": 500,
     "id": "ragium:crude_oil"
   },
   "item_ingredient": {
-    "amount": 1,
-    "items": "hiiragi_core:oil_shale"
+    "amount": 4,
+    "items": "#minecraft:soul_fire_base_blocks"
   },
   "item_result": {
     "count": 4,
-    "id": "minecraft:clay_ball"
+    "id": "minecraft:sand"
   },
   "time": 600
 }

@@ -1,15 +1,19 @@
 {
   "type": "ragium:pyrolyzing",
+  "fluid_ingredient": {
+    "fluids": "#c:nitrogen"
+  },
   "fluid_result": {
-    "amount": 500,
+    "amount": 2000,
     "id": "ragium:crude_oil"
   },
   "item_ingredient": {
-    "amount": 1,
+    "amount": 4,
     "items": "hiiragi_core:oil_sand"
   },
   "item_result": {
+    "count": 4,
     "id": "minecraft:sand"
   },
-  "time": 600
+  "time": 300
 }

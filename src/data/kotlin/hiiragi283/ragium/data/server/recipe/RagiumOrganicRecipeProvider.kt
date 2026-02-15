@@ -145,25 +145,25 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     @JvmStatic
     private fun crudeOil() {
         // Oil Sand -> Sand + Crude Oil
-        HTPyrolyzingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(HCBlocks.OIL_SAND)
-            itemResult = resultCreator.create(Items.SAND)
-            fluidResult = resultCreator.create(RagiumFluids.CRUDE_OIL, 500)
-            recipeId suffix "_from_sand"
+        pyrolyzing {
+            itemIngredient = inputCreator.create(HCBlocks.OIL_SAND, 4)
+            itemResult = resultCreator.create(Items.SAND, 4)
+            fluidResult = resultCreator.create(RagiumFluids.CRUDE_OIL, 2000)
+            recipeId replace id("crude_oil_from_sand")
         }
         // Oil Shale -> Clay + Crude Oil
-        HTPyrolyzingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(HCBlocks.OIL_SHALE)
-            itemResult = resultCreator.create(Items.CLAY_BALL, 4)
-            fluidResult = resultCreator.create(RagiumFluids.CRUDE_OIL, 500)
-            recipeId suffix "_from_shale"
+        pyrolyzing {
+            itemIngredient = inputCreator.create(HCBlocks.OIL_SHALE, 4)
+            itemResult = resultCreator.create(Items.CLAY_BALL, 16)
+            fluidResult = resultCreator.create(RagiumFluids.CRUDE_OIL, 2000)
+            recipeId replace id("crude_oil_from_shale")
         }
         // Soul Sand/Soil -> Sand + Crude Oil
-        HTPyrolyzingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            itemResult = resultCreator.create(Items.SAND)
-            fluidResult = resultCreator.create(RagiumFluids.CRUDE_OIL, 250)
-            recipeId suffix "_from_soul"
+        pyrolyzing {
+            itemIngredient = inputCreator.create(ItemTags.SOUL_FIRE_BASE_BLOCKS, 4)
+            itemResult = resultCreator.create(Items.SAND, 4)
+            fluidResult = resultCreator.create(RagiumFluids.CRUDE_OIL)
+            recipeId replace id("crude_oil_from_soul")
         }
 
         // Crude Oil + C2H4 + Naphtha + Residue Oil

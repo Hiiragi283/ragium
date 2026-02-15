@@ -1,0 +1,18 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_ingredient": {
+    "fluids": "#c:nitrogen"
+  },
+  "fluid_result": {
+    "id": "ragium:crude_oil"
+  },
+  "item_ingredient": {
+    "amount": 4,
+    "items": "#minecraft:soul_fire_base_blocks"
+  },
+  "item_result": {
+    "count": 4,
+    "id": "minecraft:sand"
+  },
+  "time": 300
+}
