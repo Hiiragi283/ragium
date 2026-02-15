@@ -2,6 +2,7 @@ package hiiragi283.ragium.client
 
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.event.HTRegisterWidgetRendererEvent
+import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.world.getTypedBlockEntity
@@ -19,9 +20,7 @@ import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumWidgetTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.state.BlockState
@@ -79,7 +78,7 @@ data object RagiumClient : HTClientMod() {
         event.register(
             { stack: ItemStack, tint: Int ->
                 if (tint == 0) {
-                    stack.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY).color
+                    HTPotionHelper.getPotion(stack).color
                 } else {
                     -1
                 }

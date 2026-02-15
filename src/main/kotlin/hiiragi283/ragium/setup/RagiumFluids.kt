@@ -72,6 +72,12 @@ object RagiumFluids {
         blockFactory = null
     }
 
+    // F
+
+    // S
+
+    // Cl
+
     // Liquid
 
     // H
@@ -88,6 +94,8 @@ object RagiumFluids {
     // S
     @JvmField
     val SULFURIC_ACID: HTFluidContent = REGISTER.registerFlowing("sulfuric_acid") { properties = liquid() }
+
+    // Cl
 
     //    Organic    //
 

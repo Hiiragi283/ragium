@@ -14,11 +14,15 @@ import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.integration.emi.HTEmiPlugin
 import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.integration.emi.toEmi
+import hiiragi283.core.api.item.alchemy.HTBottleType
+import hiiragi283.core.api.item.alchemy.HTPotionContents
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.registry.HTHolderLike
+import hiiragi283.core.api.registry.asSequence
 import hiiragi283.core.api.registry.getHolderDataMap
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.util.HCPotionFluidHelper
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.client.emi.recipe.HTAlloyingEmiRecipe
@@ -48,10 +52,10 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.SpawnEggItem
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.material.Fluid
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 import kotlin.streams.asSequence
 
@@ -141,21 +145,23 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
         // Potion Drop
         EmiPort
             .getPotionRegistry()
-            .holders()
-            .forEach { potion: Holder<Potion> ->
+            .asLookup()
+            .asSequence()
+            .mapNotNull { holder: HTHolderLike.HolderDelegate<Potion, Potion> ->
+                val potion: Holder<Potion> = holder.getHolder()
+                val contents: HTPotionContents = HTPotionContents.of(potion, HTBottleType.DEFAULT) ?: return@mapNotNull null
+                holder to contents
+            }.forEach { (holder: HTHolderLike.HolderDelegate<Potion, Potion>, contents: HTPotionContents) ->
                 addRecipeSafe(
                     registry,
-                    potion.toLike().getId().withPrefix("/${HTConst.SHAPELESS}/${RagiumAPI.MOD_ID}/potion"),
+                    holder.getId().withPrefix("/${HTConst.SHAPELESS}/${RagiumAPI.MOD_ID}/potion_bucket"),
                 ) { id: ResourceLocation ->
                     EmiCraftingRecipe(
                         listOf(
-                            HTPotionHelper.createPotion(RagiumItems.POTION_DROP, potion).toEmi(),
-                            Items.GLASS_BOTTLE.toEmi(),
-                            Items.GLASS_BOTTLE.toEmi(),
-                            Items.GLASS_BOTTLE.toEmi(),
-                            Items.GLASS_BOTTLE.toEmi(),
+                            HTPotionHelper.setContents(RagiumItems.POTION_DROP.toStack(), contents).toEmi(),
+                            Tags.Items.BUCKETS_WATER.toEmi(),
                         ),
-                        HTPotionHelper.createPotion(Items.POTION, potion, 4).toEmi(),
+                        HCPotionFluidHelper.createBucket(contents).toEmi(),
                         id,
                         true,
                     )

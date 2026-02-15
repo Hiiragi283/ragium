@@ -6,6 +6,7 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.setup.HCBlocks
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
@@ -143,6 +144,28 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
 
     @JvmStatic
     private fun crudeOil() {
+        // Oil Sand -> Sand + Crude Oil
+        HTPyrolyzingRecipeBuilder.create(output) {
+            itemIngredient = inputCreator.create(HCBlocks.OIL_SAND)
+            itemResult = resultCreator.create(Items.SAND)
+            fluidResult = resultCreator.create(RagiumFluids.CRUDE_OIL, 500)
+            recipeId suffix "_from_sand"
+        }
+        // Oil Shale -> Clay + Crude Oil
+        HTPyrolyzingRecipeBuilder.create(output) {
+            itemIngredient = inputCreator.create(HCBlocks.OIL_SHALE)
+            itemResult = resultCreator.create(Items.CLAY_BALL, 4)
+            fluidResult = resultCreator.create(RagiumFluids.CRUDE_OIL, 500)
+            recipeId suffix "_from_shale"
+        }
+        // Soul Sand/Soil -> Sand + Crude Oil
+        HTPyrolyzingRecipeBuilder.create(output) {
+            itemIngredient = inputCreator.create(ItemTags.SOUL_FIRE_BASE_BLOCKS)
+            itemResult = resultCreator.create(Items.SAND)
+            fluidResult = resultCreator.create(RagiumFluids.CRUDE_OIL, 250)
+            recipeId suffix "_from_soul"
+        }
+
         // Crude Oil + C2H4 + Naphtha + Residue Oil
         HTDistillingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(RagiumFluids.CRUDE_OIL, 1000)

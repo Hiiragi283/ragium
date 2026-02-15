@@ -16,7 +16,7 @@ import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.crafting.HTPotionDropRecipe
+import hiiragi283.ragium.common.crafting.HTPotionBucketRecipe
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
@@ -58,8 +58,8 @@ object RagiumRecipeSerializers {
     //    Custom    //
 
     @JvmField
-    val POTION_DROP: SimpleCraftingRecipeSerializer<HTPotionDropRecipe> =
-        REGISTER.registerSerializer("potion_drop", SimpleCraftingRecipeSerializer(::HTPotionDropRecipe))
+    val POTION_BUCKET: SimpleCraftingRecipeSerializer<HTPotionBucketRecipe> =
+        REGISTER.registerSerializer("potion_bucket", SimpleCraftingRecipeSerializer(::HTPotionBucketRecipe))
 
     //    Machine    //
 

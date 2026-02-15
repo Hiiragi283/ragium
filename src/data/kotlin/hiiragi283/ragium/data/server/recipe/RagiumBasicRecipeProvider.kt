@@ -10,7 +10,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
-import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 
@@ -85,13 +84,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             ingredient = inputCreator.create(ItemTags.ACACIA_LOGS)
             result = resultCreator.create(HCFluids.LATEX, 125)
             recipeId suffix "_from_acacia"
-        }
-
-        // Soul Sand/Soil -> Crude Oil
-        HTSingleRecipeBuilder.squeezing(output) {
-            ingredient = inputCreator.create(ItemTags.SOUL_FIRE_BASE_BLOCKS)
-            result = resultCreator.create(RagiumFluids.CRUDE_OIL, 500)
-            recipeId suffix "_from_soul"
         }
     }
 }
