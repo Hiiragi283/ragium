@@ -71,6 +71,14 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
 
     @JvmField
+    val BENDING_MACHINE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.BENDING_MACHINE, RagiumTranslation.BENDING_MACHINE)
+
+    @JvmField
+    val COMPRESSOR: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.COMPRESSOR, RagiumTranslation.COMPRESSOR)
+
+    @JvmField
     val CRUSHER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER)
 
@@ -86,6 +94,10 @@ object RagiumBlocks {
     val FORMING_PRESS: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.FORMING_PRESS, RagiumTranslation.FORMING_PRESS)
 
+    @JvmField
+    val LATHE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.LATHE, RagiumTranslation.LATHE)
+
     // Heat
     @JvmField
     val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
@@ -96,6 +108,9 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
     // Cool
+    @JvmField
+    val FREEZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.FREEZER, RagiumTranslation.FREEZER)
 
     // Chemical
     @JvmField

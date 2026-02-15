@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
+import hiiragi283.ragium.common.block.entity.machine.base.HTItemToChancedBlockEntity
 import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes

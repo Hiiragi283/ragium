@@ -2,13 +2,12 @@ package hiiragi283.ragium.common.block.entity.enchant
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.HTRecipeCache
-import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.getFluidStack
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
+import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
-import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.setup.HCFluids
@@ -70,9 +69,9 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         private val cache: HTRecipeCache<HTEnchantingRecipe.Input, HTEnchantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.ENCHANTING)
         private var currentEnch: List<EnchantmentInstance> = listOf()
 
-        private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(expTank) }
-        private val leftInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(leftSlot) }
-        private val rightInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(rightSlot) }
+        private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(expTank) }
+        private val leftInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(leftSlot) }
+        private val rightInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(rightSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
         override fun insertOutput(

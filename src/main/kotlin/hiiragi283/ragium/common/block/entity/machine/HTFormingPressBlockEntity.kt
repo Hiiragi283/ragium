@@ -6,9 +6,8 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
+import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
@@ -48,15 +47,13 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
 
     private inner class RecipeComponent :
         SingleRecipeComponent<HTItemResourceType, HTItemIngredient, HTPressingRecipe>(RagiumRecipeTypes.PRESSING) {
-        override fun createInputHandler(): HTSlotInputHandler<HTItemResourceType> = HTSlotInputHandler(inputSlot)
+        override fun createInputHandler(): HTItemInputHandler = HTItemInputHandler(inputSlot)
 
         override fun applyEffect() {
             playSound(SoundEvents.ANVIL_LAND)
         }
 
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTSingleCatalystRecipeInput? =
-            HTSingleCatalystRecipeInput(inputHandler.getItemStack(), catalystHandler.getItemStack())
-                .takeUnless(HTSingleCatalystRecipeInput::isEmpty)
+        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTSingleCatalystRecipeInput? = TODO()
     }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.formingPress

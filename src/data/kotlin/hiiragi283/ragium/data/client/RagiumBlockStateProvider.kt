@@ -23,17 +23,24 @@ import net.neoforged.neoforge.client.model.generators.ModelProvider
 class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider(RagiumAPI.MOD_ID, context) {
     val basic = "basic"
     val heat = "heat"
+    val cool = "cool"
     val chemical = "chemical"
 
     override fun registerStatesAndModels() {
         // Machine
         frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.BENDING_MACHINE, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.COMPRESSOR, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CRUSHER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CUTTING_MACHINE, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.ELECTRIC_FURNACE, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.FORMING_PRESS, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.LATHE, RagiumConst.MACHINE, basic)
 
         frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)
         frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, heat)
+
+        frontMachineBlock(RagiumBlocks.FREEZER, RagiumConst.MACHINE, cool)
 
         frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)
@@ -115,7 +122,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
             .texture("top", top)
             .texture("side", side)
             .texture("bottom", bottom)
-            .texture("front", front.withSuffix("_active"))
         val frontActive: ResourceLocation = front.withSuffix("_active")
         if (fileHelper.exists(frontActive, ModelProvider.TEXTURE)) {
             active.texture("front", frontActive)

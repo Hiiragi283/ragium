@@ -22,13 +22,18 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        add(RagiumBlocks.BENDING_MACHINE, "Bending Machine")
+        add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
         add(RagiumBlocks.FORMING_PRESS, "Forming Press")
+        add(RagiumBlocks.LATHE, "Lathe")
 
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
+
+        add(RagiumBlocks.FREEZER, "Freezer")
 
         add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.WASHER, "Washer")

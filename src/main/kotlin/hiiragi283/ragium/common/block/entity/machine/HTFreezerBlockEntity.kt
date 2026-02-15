@@ -10,13 +10,13 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.MELTER, pos, state) {
+class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.FREEZER, pos, state) {
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(
-        RagiumRecipeTypes.MELTING,
+        RagiumRecipeTypes.FREEZING,
         { it.ingredient.getLeft() },
         { it.ingredient.getRight() },
-        { playSound(SoundEvents.LAVA_POP) },
+        { playSound(SoundEvents.GLASS_HIT) },
     )
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.melter
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.freezer
 }

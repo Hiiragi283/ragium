@@ -1,13 +1,12 @@
-package hiiragi283.ragium.common.block.entity.machine
+package hiiragi283.ragium.common.block.entity.machine.base
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeFinder
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
+import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
@@ -50,7 +49,7 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
         finder: HTRecipeFinder<SingleRecipeInput, RECIPE>,
         private val sound: SoundEvent,
     ) : ChancedRecipeComponent<SingleRecipeInput, RECIPE>(finder, this) {
-        private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+        private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 
         override fun extractInput(
             level: ServerLevel,

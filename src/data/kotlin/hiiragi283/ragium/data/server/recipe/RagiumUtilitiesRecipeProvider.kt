@@ -75,70 +75,80 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         storages()
     }
 
+    //    Machine    //
+
     @JvmStatic
     private fun machines() {
         // Basic
-        fun basic(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
-            HTShapedRecipeBuilder.create(output) {
-                pattern(
-                    "AAA",
-                    "BCB",
-                    "DDD",
-                )
-                define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
-                define('B').let(consumer)
-                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.COPPER
-                define('D') += CommonTagPrefixes.INGOT to VanillaMaterialKeys.IRON
-                resultStack += block
-            }
-        }
-
         basic(RagiumBlocks.ALLOY_SMELTER) { it += Items.FURNACE }
+        basic(RagiumBlocks.BENDING_MACHINE) { it += ItemTags.ANVIL }
+        basic(RagiumBlocks.COMPRESSOR) { it += Items.PISTON }
         basic(RagiumBlocks.CRUSHER) { it += CommonTagPrefixes.GEM to VanillaMaterialKeys.DIAMOND }
         basic(RagiumBlocks.CUTTING_MACHINE) { it += Items.IRON_AXE }
         basic(RagiumBlocks.ELECTRIC_FURNACE) { it += Items.FURNACE }
         basic(RagiumBlocks.FORMING_PRESS) { it += Items.PISTON }
-
+        basic(RagiumBlocks.LATHE) { it += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON }
         // Heat
-        fun heat(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
-            HTShapedRecipeBuilder.create(output) {
-                pattern(
-                    "AAA",
-                    "BCB",
-                    "DDD",
-                )
-                define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.ADVANCED_RAGI_ALLOY
-                define('B').let(consumer)
-                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON
-                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
-                resultStack += block
-            }
-        }
-
-        heat(RagiumBlocks.MELTER) { it += Items.BLAST_FURNACE }
-        heat(RagiumBlocks.PYROLYZER) { it += Items.NETHER_BRICKS }
-
+        advanced(RagiumBlocks.MELTER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.BLAST_FURNACE }
+        advanced(RagiumBlocks.PYROLYZER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.NETHER_BRICKS }
+        // Cool
+        advanced(RagiumBlocks.FREEZER, HCMaterialKeys.AZURE_STEEL) { it += Items.SNOW_BLOCK }
         // Chemical
-        fun chemical(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
-            HTShapedRecipeBuilder.create(output) {
-                pattern(
-                    "AAA",
-                    "BCB",
-                    "DDD",
-                )
-                define('A') += CommonTagPrefixes.PLATE to RagiumMaterialKeys.STAINLESS_STEEL
-                define('B').let(consumer)
-                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.GOLD
-                define('D') += CommonTagPrefixes.PLATE to CommonMaterialKeys.CARBON
-                resultStack += block
-            }
-        }
-
         chemical(RagiumBlocks.MIXER) { it += RagiumBlocks.TANK }
         chemical(RagiumBlocks.WASHER) { it += Items.CAULDRON }
 
         // Matter
     }
+
+    @JvmStatic
+    private fun basic(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            )
+            define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
+            define('B').let(consumer)
+            define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.COPPER
+            define('D') += CommonTagPrefixes.INGOT to VanillaMaterialKeys.IRON
+            resultStack += block
+        }
+    }
+
+    @JvmStatic
+    private fun advanced(block: ItemLike, material: HTMaterialLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            )
+            define('A') += CommonTagPrefixes.INGOT to material
+            define('B').let(consumer)
+            define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON
+            define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
+            resultStack += block
+        }
+    }
+
+    @JvmStatic
+    private fun chemical(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            )
+            define('A') += CommonTagPrefixes.PLATE to RagiumMaterialKeys.STAINLESS_STEEL
+            define('B').let(consumer)
+            define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.GOLD
+            define('D') += CommonTagPrefixes.PLATE to CommonMaterialKeys.CARBON
+            resultStack += block
+        }
+    }
+
+    //    Device    //
 
     @JvmStatic
     private fun devices() {
@@ -176,6 +186,8 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             }
         }
     }
+
+    //    Storage    //
 
     @JvmStatic
     private fun storages() {
@@ -241,6 +253,8 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             targets += listOf(component)
         }
     }
+
+    //    Other    //
 
     @JvmStatic
     private fun lootTickets() {

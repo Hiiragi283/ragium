@@ -16,7 +16,6 @@ import hiiragi283.core.api.integration.emi.HTEmiRecipeCategory
 import hiiragi283.core.api.integration.emi.toEmi
 import hiiragi283.core.api.item.alchemy.HTBottleType
 import hiiragi283.core.api.item.alchemy.HTPotionContents
-import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.registry.asSequence
 import hiiragi283.core.api.registry.getHolderDataMap
@@ -46,7 +45,6 @@ import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
@@ -136,9 +134,6 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
             RagiumItems.LOOT_TICKET.get(),
             Comparison.compareData { stack: EmiStack -> stack.get(RagiumDataComponents.LOOT_TICKET) },
         )
-
-        val potion: Comparison = Comparison.compareData { stack: EmiStack -> stack.get(DataComponents.POTION_CONTENTS) }
-        registry.setDefaultComparison(RagiumItems.POTION_DROP.get(), potion)
     }
 
     private fun addCustomRecipes(registry: EmiRegistry) {
@@ -158,7 +153,7 @@ class RagiumEmiPlugin : HTEmiPlugin(RagiumAPI.MOD_ID) {
                 ) { id: ResourceLocation ->
                     EmiCraftingRecipe(
                         listOf(
-                            HTPotionHelper.setContents(RagiumItems.POTION_DROP.toStack(), contents).toEmi(),
+                            HCPotionFluidHelper.createItem(RagiumItems.POTION_DROP, contents).toEmi(),
                             Tags.Items.BUCKETS_WATER.toEmi(),
                         ),
                         HCPotionFluidHelper.createBucket(contents).toEmi(),

@@ -61,7 +61,10 @@ object RagiumEmiRecipeCategories {
     val ALLOYING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val BENDING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.BENDING, Items.PISTON)
+    val BENDING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.BENDING, RagiumBlocks.BENDING_MACHINE)
+
+    @JvmField
+    val COMPRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
     val CRUSHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
@@ -70,7 +73,7 @@ object RagiumEmiRecipeCategories {
     val CUTTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
-    val LATHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.LATHING, Items.STICK)
+    val LATHING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.LATHING, RagiumBlocks.LATHE)
 
     @JvmField
     val PRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
@@ -94,7 +97,7 @@ object RagiumEmiRecipeCategories {
 
     // Machine - Cool
     @JvmField
-    val FREEZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.FREEZING, Items.PACKED_ICE)
+    val FREEZING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
 
     // Machine - Chemical
     @JvmField
@@ -109,9 +112,6 @@ object RagiumEmiRecipeCategories {
     // Machine - Matter
 
     // Device
-    @JvmField
-    val COMPRESSING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.COMPRESSING, Items.TNT)
-
     @JvmField
     val ENCHANTING: HTEmiRecipeCategory = processor(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 

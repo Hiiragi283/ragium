@@ -5,12 +5,11 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeFinder
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.HTFinderRecipeCache
+import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
-import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
@@ -73,7 +72,7 @@ class HTFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
                     level.recipeManager.getRecipeFor(RecipeType.SMELTING, input, level, holder).getOrNull()
                 },
             )
-            private val inputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
+            private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
             private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
             override fun insertOutput(

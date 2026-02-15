@@ -2,6 +2,8 @@
   "values": [
     "ragium:alloy_smelter",
     "ragium:battery",
+    "ragium:bending_machine",
+    "ragium:compressor",
     "ragium:crate",
     "ragium:creative_battery",
     "ragium:creative_crate",
@@ -11,7 +13,9 @@
     "ragium:electric_furnace",
     "ragium:enchanter",
     "ragium:forming_press",
+    "ragium:freezer",
     "ragium:imitation_spawner",
+    "ragium:lathe",
     "ragium:melter",
     "ragium:mixer",
     "ragium:planter",

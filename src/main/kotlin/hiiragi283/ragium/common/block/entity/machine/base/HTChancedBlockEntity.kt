@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.machine
+package hiiragi283.ragium.common.block.entity.machine.base
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType

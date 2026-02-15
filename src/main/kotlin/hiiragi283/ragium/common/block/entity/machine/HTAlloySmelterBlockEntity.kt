@@ -10,6 +10,7 @@ import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
+import hiiragi283.ragium.common.block.entity.machine.base.HTChancedBlockEntity
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.config.HTMachineConfig

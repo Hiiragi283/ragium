@@ -5,14 +5,14 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
+import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
+import hiiragi283.ragium.common.block.entity.machine.base.HTChancedBlockEntity
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -77,8 +77,8 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTChancedBlockEnti
             RagiumRecipeTypes.WASHING,
             this,
         ) {
-        private val itemInputHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(inputSlot) }
-        private val fluidInputHandler: HTSlotInputHandler<HTFluidResourceType> by lazy { HTSlotInputHandler(inputTank) }
+        private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+        private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
 
         override fun extractInput(
             level: ServerLevel,

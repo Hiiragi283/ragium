@@ -5,13 +5,13 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeFinder
+import hiiragi283.core.api.recipe.handler.HTInputHandler
 import hiiragi283.core.api.recipe.ingredient.HTIngredient
 import hiiragi283.core.api.storage.HTStoragePredicates
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.resource.HTResourceType
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
-import hiiragi283.core.common.recipe.handler.HTSlotInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
@@ -81,11 +81,11 @@ abstract class HTSingleCatalystBlockEntity(type: HTDeferredBlockEntityType<*>, p
     >(
         finder: HTRecipeFinder<HTSingleCatalystRecipeInput, RECIPE>,
     ) : HTEnergizedRecipeComponent.Cached<HTSingleCatalystRecipeInput, RECIPE>(finder, this) {
-        protected val inputHandler: HTSlotInputHandler<RESOURCE> by lazy { createInputHandler() }
-        protected val catalystHandler: HTSlotInputHandler<HTItemResourceType> by lazy { HTSlotInputHandler(catalystSlot) }
+        protected val inputHandler: HTInputHandler<RESOURCE> by lazy { createInputHandler() }
+        protected val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
 
-        protected abstract fun createInputHandler(): HTSlotInputHandler<RESOURCE>
+        protected abstract fun createInputHandler(): HTInputHandler<RESOURCE>
 
         final override fun insertOutput(
             level: ServerLevel,

@@ -14,10 +14,14 @@ import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.enchant.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTBendingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFormingPressBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTLatheBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
@@ -60,6 +64,14 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
 
     @JvmField
+    val BENDING_MACHINE: HTDeferredBlockEntityType<HTBendingMachineBlockEntity> =
+        REGISTER.registerTick(RagiumConst.BENDING_MACHINE, ::HTBendingMachineBlockEntity)
+
+    @JvmField
+    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> =
+        REGISTER.registerTick(RagiumConst.COMPRESSOR, ::HTCompressorBlockEntity)
+
+    @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
         REGISTER.registerTick(RagiumConst.CRUSHER, ::HTCrusherBlockEntity)
 
@@ -75,6 +87,10 @@ object RagiumBlockEntityTypes {
     val FORMING_PRESS: HTDeferredBlockEntityType<HTFormingPressBlockEntity> =
         REGISTER.registerTick(RagiumConst.FORMING_PRESS, ::HTFormingPressBlockEntity)
 
+    @JvmField
+    val LATHE: HTDeferredBlockEntityType<HTLatheBlockEntity> =
+        REGISTER.registerTick(RagiumConst.LATHE, ::HTLatheBlockEntity)
+
     // Heat
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
@@ -85,6 +101,9 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
 
     // Cool
+    @JvmField
+    val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
+        REGISTER.registerTick(RagiumConst.FREEZER, ::HTFreezerBlockEntity)
 
     // Chemical
     @JvmField
@@ -161,13 +180,18 @@ object RagiumBlockEntityTypes {
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
         // Machine
         registerHandler(event, ALLOY_SMELTER.get())
+        registerHandler(event, BENDING_MACHINE.get())
+        registerHandler(event, COMPRESSOR.get())
         registerHandler(event, CRUSHER.get())
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, ELECTRIC_FURNACE.get())
         registerHandler(event, FORMING_PRESS.get())
+        registerHandler(event, LATHE.get())
 
         registerHandler(event, MELTER.get())
         registerHandler(event, PYROLYZER.get())
+
+        registerHandler(event, FREEZER.get())
 
         registerHandler(event, MIXER.get())
         registerHandler(event, WASHER.get())
