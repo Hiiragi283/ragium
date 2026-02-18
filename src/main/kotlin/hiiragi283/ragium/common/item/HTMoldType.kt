@@ -16,7 +16,7 @@ import net.minecraft.world.item.Item
 enum class HTMoldType(private val enPattern: String, private val jaPattern: String) :
     StringRepresentable,
     HTLangName,
-    HTItemHolderLike.Delegated<Item> {
+    HTItemHolderLike.Simple<Item> {
     BLANK("Blank", "空"),
     BALL("Ball", "ボール"),
     GEAR("Gear", "歯車"),

@@ -13,7 +13,7 @@ import net.minecraft.world.item.Item
 enum class RagiumUpgradeType(val group: Group, private val enName: String, private val jpName: String) :
     StringRepresentable,
     HTLangName,
-    HTItemHolderLike.Delegated<Item> {
+    HTItemHolderLike.Simple<Item> {
     // Creative
     CREATIVE(Group.CREATIVE, "Creative", "クリエイティブ"),
 

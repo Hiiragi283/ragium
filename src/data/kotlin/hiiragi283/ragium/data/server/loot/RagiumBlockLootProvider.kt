@@ -20,7 +20,7 @@ import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue
 
 class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTableProvider(RagiumAPI.MOD_ID, registries) {
-    override fun getRawBlocks(): Sequence<HTBlockHolderLike<*, *>> = RagiumBlocks.REGISTER.asBlockSequence()
+    override fun getRawBlocks(): Sequence<HTBlockHolderLike<*>> = RagiumBlocks.REGISTER.asBlockSequence()
 
     override fun generate() {
         RagiumBlocks.REGISTER

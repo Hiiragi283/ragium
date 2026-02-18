@@ -141,7 +141,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         return inactive to active
     }
 
-    private fun cauldronBlock(block: HTBlockHolderLike<*, *>) {
+    private fun cauldronBlock(block: HTBlockHolderLike<*>) {
         registerVariants(block) { _, state: BlockState ->
             val suffix: String = when (val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)) {
                 3 -> "_full"

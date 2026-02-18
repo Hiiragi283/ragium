@@ -15,7 +15,7 @@ import net.neoforged.neoforge.common.Tags
 enum class HTFoodCanType(private val enPattern: String, private val jaPattern: String, val foodTag: TagKey<Item>) :
     StringRepresentable,
     HTLangName,
-    HTItemHolderLike.Delegated<Item> {
+    HTItemHolderLike.Simple<Item> {
     FISH("Fish", "魚", Tags.Items.FOODS_COOKED_FISH),
     FRUIT("Fruit", "果物", Tags.Items.FOODS_FRUIT),
     MEAT("Meat", "肉", Tags.Items.FOODS_COOKED_MEAT),

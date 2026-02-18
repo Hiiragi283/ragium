@@ -27,7 +27,7 @@ class HTPlantingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.PLANTING) 
     override fun getPrimalId(): ResourceLocation = crop.getId()
 
     override fun createRecipe(): HTPlantingRecipe = HTPlantingRecipe(
-        HTItemHolderLike.of(seed),
+        HTItemHolderLike.of(seed.asItem()),
         soil,
         crop,
         subParameters(),

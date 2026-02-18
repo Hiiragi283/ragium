@@ -15,10 +15,10 @@ import hiiragi283.core.api.material.property.setDefaultPart
 import hiiragi283.core.api.material.property.setName
 import hiiragi283.core.api.material.property.setTextureSet
 import hiiragi283.core.api.property.plusAssign
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
+import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.neoforged.bus.api.SubscribeEvent
@@ -116,5 +116,5 @@ object RagiumMaterialEventHandler {
     }
 
     @JvmStatic
-    private fun createItem(prefix: HTTagPrefix, key: HTMaterialKey): HTItemHolderLike<*> = HTItemHolderLike.of(prefix.createId(key))
+    private fun createItem(prefix: HTTagPrefix, key: HTMaterialKey): HTSimpleDeferredItem = HTSimpleDeferredItem(prefix.createId(key))
 }

@@ -249,7 +249,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             ingredient += inputCreator.create(CommonFluidTagPrefixes.MOLTEN, entry) {
                 prefix.getScaledAmount(it, entry).toInt()
             }
-            ingredient += inputCreator.create(moldType, amount = 0)
+            ingredient += inputCreator.create(moldType.asItem(), amount = 0)
             result += resultCreator.create(resultItem)
             recipeId suffix "_from_molten"
         }
