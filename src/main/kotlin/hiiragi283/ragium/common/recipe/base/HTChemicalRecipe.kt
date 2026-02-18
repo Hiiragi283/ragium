@@ -19,14 +19,10 @@ abstract class HTChemicalRecipe(val ingredients: HTChemicalIngredient, val resul
     HTProcessingRecipe<HTChemicalRecipeInput>(parameters) {
     override fun matches(input: HTChemicalRecipeInput, level: Level): Boolean = matchIngredients(input)
 
-    protected fun matchIngredients(input: HTChemicalRecipeInput): Boolean = ingredients.fold(
+    protected fun matchIngredients(input: HTChemicalRecipeInput): Boolean = ingredients.map(
         { HTShapelessRecipeHelper.shapelessMatch(it, input.items).isNotEmpty() },
         { HTShapelessRecipeHelper.shapelessMatch(it, input.fluids).isNotEmpty() },
-        { items: List<HTItemIngredient>, fluids: List<HTFluidIngredient> ->
-            val bool1: Boolean = HTShapelessRecipeHelper.shapelessMatch(items, input.items).isNotEmpty()
-            val bool2: Boolean = HTShapelessRecipeHelper.shapelessMatch(fluids, input.fluids).isNotEmpty()
-            bool1 && bool2
-        },
+        { matchItems: Boolean, matchFluids: Boolean -> matchItems && matchFluids },
     )
 
     override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY

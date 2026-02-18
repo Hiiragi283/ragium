@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.function.identityLeft
 import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.monad.toIorOrThrow
 import hiiragi283.core.api.recipe.HTProcessingRecipe
@@ -73,7 +74,7 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
         fun toIor(): Ior<ITEM, FLUID> = (item to fluid).toIorOrThrow()
     }
 
-    override fun getPrimalId(): ResourceLocation = result.toIor().swap().map(HTFluidResult::getId, HTItemResult::getId)
+    override fun getPrimalId(): ResourceLocation = result.toIor().map(HTItemResult::getId, HTFluidResult::getId, identityLeft())
 
     override fun createRecipe(): HTItemOrFluidRecipe = factory.create(
         ingredient.toIor(),

@@ -20,9 +20,9 @@ import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
 import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
@@ -318,10 +318,10 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val gear: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.GEAR, entry) ?: return
         // レシピを登録
-        HTPressingRecipeBuilder.pressing(output) {
-            top = inputCreator.create(inputTag, 4)
-            bottom = inputCreator.create(HTMoldType.GEAR)
+        HTCombineItemRecipeBuilder.pressing(output) {
             result = resultCreator.create(gear)
+            ingredients += inputCreator.create(inputTag, 4)
+            ingredients += inputCreator.create(HTMoldType.GEAR)
             time = getTimeFromHardness(entry, time) ?: return
         }
     }

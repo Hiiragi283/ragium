@@ -24,7 +24,6 @@ import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
-import hiiragi283.ragium.common.recipe.input.HTSingleCatalystRecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeTypes {
@@ -51,7 +50,7 @@ object RagiumRecipeTypes {
     val LATHING: HTDeferredRecipeType<SingleRecipeInput, HTLathingRecipe> = REGISTER.registerType(RagiumConst.LATHING)
 
     @JvmField
-    val PRESSING: HTDeferredRecipeType<HTSingleCatalystRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
+    val PRESSING: HTDeferredRecipeType<HTShapelessRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
 
     // Machine - Heat
     @JvmField

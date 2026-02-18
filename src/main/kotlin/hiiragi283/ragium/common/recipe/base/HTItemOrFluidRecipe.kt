@@ -22,10 +22,10 @@ abstract class HTItemOrFluidRecipe(
     final override fun getResultFluid(registries: HolderLookup.Provider): FluidStack =
         result.getRight()?.getStackResult(registries)?.value() ?: FluidStack.EMPTY
 
-    override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean = ingredient.fold(
+    override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean = ingredient.map(
         { it.test(input.item) },
         { it.test(input.fluid) },
-        { item: HTItemIngredient, fluid: HTFluidIngredient -> item.test(input.item) && fluid.test(input.fluid) },
+        { matchItem: Boolean, matchFluid: Boolean -> matchItem && matchFluid },
     )
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack =

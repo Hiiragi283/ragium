@@ -1,13 +1,8 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.resource.toId
-import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -17,7 +12,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         bending()
         cutting()
         lathing()
-        printing()
+        // printing()
     }
 
     @JvmStatic
@@ -43,8 +38,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         }
     }
 
-    @JvmStatic
-    private fun printing() {
+    /*private fun printing() {
         // XX Banner
         for (color: HTDefaultColor in HTDefaultColor.entries) {
             val banner = HTSimpleDeferredItem(HTConst.MINECRAFT.toId("${color.serializedName}_banner"))
@@ -67,5 +61,5 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             bottom = inputCreator.create(Items.FILLED_MAP)
             result = resultCreator.create(Items.FILLED_MAP)
         }
-    }
+    }*/
 }

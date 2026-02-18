@@ -10,6 +10,7 @@ import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemToChancedRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTPressingRecipeCategory
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -51,8 +52,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemToChancedRecipeCategory.crushing(guiHelper),
             HTItemToChancedRecipeCategory.cutting(guiHelper),
             HTItemToItemRecipeCategory.lathing(guiHelper),
+            HTPressingRecipeCategory(guiHelper),
             // Machine - Heat
-            HTDistillingRecipeCategory.heat(guiHelper),
+            HTDistillingRecipeCategory(guiHelper),
             HTItemOrFluidRecipeCategory.melting(guiHelper),
             HTItemOrFluidRecipeCategory.pyrolyzing(guiHelper),
             // Machine - Cool
@@ -72,6 +74,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeTypes.CRUSHING.get())
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING, RagiumRecipeTypes.CUTTING.get())
         registration.addRecipes(RagiumJeiRecipeTypes.LATHING, RagiumRecipeTypes.LATHING.get())
+        registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeTypes.PRESSING.get())
         // Machine - Heat
         registration.addRecipes(RagiumJeiRecipeTypes.DISTILLING, RagiumRecipeTypes.DISTILLING.get())
         registration.addRecipes(RagiumJeiRecipeTypes.MELTING, RagiumRecipeTypes.MELTING.get())
