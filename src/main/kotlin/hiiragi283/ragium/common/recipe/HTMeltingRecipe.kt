@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.monad.Either
 import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -14,7 +13,7 @@ import net.minecraft.world.item.crafting.RecipeType
 
 class HTMeltingRecipe(
     ingredient: Ior<HTItemIngredient, HTFluidIngredient>,
-    result: Either<HTItemResult, HTFluidResult>,
+    result: Ior<HTItemResult, HTFluidResult>,
     parameters: SubParameters,
 ) : HTItemOrFluidRecipe(ingredient, result, parameters) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MELTING

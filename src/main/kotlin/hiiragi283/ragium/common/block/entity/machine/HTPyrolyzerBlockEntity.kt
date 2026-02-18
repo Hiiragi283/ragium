@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
@@ -81,8 +83,9 @@ class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
             input: HTItemAndFluidRecipeInput,
             recipe: HTPyrolyzingRecipe,
         ) {
-            fluidInputHandler.consume(recipe.fluidIngredient)
-            itemInputHandler.consume(recipe.itemIngredient)
+            val (item: HTItemIngredient?, fluid: HTFluidIngredient?) = recipe.ingredient.toPair()
+            fluidInputHandler.consume(fluid)
+            itemInputHandler.consume(item)
         }
 
         override fun applyEffect() {

@@ -48,7 +48,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
 import net.minecraft.world.item.enchantment.ItemEnchantments
-import java.util.Optional
 
 object RagiumRecipeSerializers {
     @JvmField
@@ -139,7 +138,7 @@ object RagiumRecipeSerializers {
 
     // Machine - Heat
     @JvmStatic
-    private fun <RECIPE : HTItemOrFluidRecipe> itemOrFluid(
+    private fun <RECIPE : HTItemOrFluidRecipe> iorToIor(
         factory: HTItemOrFluidRecipeBuilder.Factory<RECIPE>,
     ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
         MapBiCodecs
@@ -148,7 +147,7 @@ object RagiumRecipeSerializers {
                 HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT),
             ).forGetter(HTItemOrFluidRecipe::ingredient),
         MapBiCodecs
-            .either(
+            .ior(
                 HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT),
                 HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT),
             ).forGetter(HTItemOrFluidRecipe::result),
@@ -168,24 +167,17 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val MELTING: RecipeSerializer<HTMeltingRecipe> = REGISTER.registerSerializer(RagiumConst.MELTING, itemOrFluid(::HTMeltingRecipe))
+    val MELTING: RecipeSerializer<HTMeltingRecipe> = REGISTER.registerSerializer(RagiumConst.MELTING, iorToIor(::HTMeltingRecipe))
 
     @JvmField
     val PYROLYZING: RecipeSerializer<HTPyrolyzingRecipe> = REGISTER.registerSerializer(
         RagiumConst.PYROLYZING,
-        MapBiCodec.composite(
-            HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTPyrolyzingRecipe::itemIngredient),
-            HTFluidIngredient.CODEC.optionalFieldOf(HTConst.FLUID_INGREDIENT).forGetter { Optional.ofNullable(it.fluidIngredient) },
-            HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT).forGetter(HTPyrolyzingRecipe::itemResult),
-            HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT).forGetter(HTPyrolyzingRecipe::fluidResult),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTPyrolyzingRecipe::parameters),
-            ::HTPyrolyzingRecipe,
-        ),
+        iorToIor(::HTPyrolyzingRecipe),
     )
 
     // Machine - Cool
     @JvmField
-    val FREEZING: RecipeSerializer<HTFreezingRecipe> = REGISTER.registerSerializer(RagiumConst.FREEZING, itemOrFluid(::HTFreezingRecipe))
+    val FREEZING: RecipeSerializer<HTFreezingRecipe> = REGISTER.registerSerializer(RagiumConst.FREEZING, iorToIor(::HTFreezingRecipe))
 
     // Machine - Chemical
     @JvmStatic
@@ -217,16 +209,7 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val CANNING: RecipeSerializer<HTCanningRecipe> = REGISTER.registerSerializer(
-        RagiumConst.CANNING,
-        MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTCanningRecipe::fluidIngredient),
-            HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTCanningRecipe::itemIngredient),
-            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCanningRecipe::result),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTCanningRecipe::parameters),
-            ::HTCanningRecipe,
-        ),
-    )
+    val CANNING: RecipeSerializer<HTCanningRecipe> = REGISTER.registerSerializer(RagiumConst.CANNING, iorToIor(::HTCanningRecipe))
 
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(

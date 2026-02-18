@@ -20,7 +20,6 @@ import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
 import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemAndFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPressingRecipeBuilder
@@ -103,10 +102,10 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         // レシピを登録
-        HTItemAndFluidRecipeBuilder.canning(output) {
-            itemIngredient = inputCreator.create(crushedPrefix, entry)
-            fluidIngredient = inputCreator.water(125)
-            result = resultCreator.create(resultItem)
+        HTItemOrFluidRecipeBuilder.canning(output) {
+            ingredient += inputCreator.create(crushedPrefix, entry)
+            ingredient += inputCreator.water(125)
+            result += resultCreator.create(resultItem)
             time /= 2
             recipeId suffix "from_${crushedPrefix.name}"
         }

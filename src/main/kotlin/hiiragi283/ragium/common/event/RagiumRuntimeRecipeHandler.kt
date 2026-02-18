@@ -1,34 +1,52 @@
 package hiiragi283.ragium.common.event
 
+import com.google.common.collect.ImmutableMultimap
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
+import hiiragi283.core.api.item.alchemy.HTBottleType
+import hiiragi283.core.api.item.alchemy.HTPotionContents
+import hiiragi283.core.api.item.alchemy.HTPotionHelper
+import hiiragi283.core.api.recipe.ingredient.HTPotionFluidIngredient
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.asFluidSequence
+import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.util.HCPotionFluidHelper
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemAndFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
+import hiiragi283.ragium.mixin.PotionBrewingAccessor
+import hiiragi283.ragium.mixin.PotionBrewingMixAccessor
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry
+import net.minecraft.core.Holder
+import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.PotionBrewing
+import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.brewing.BrewingRecipe
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
@@ -42,6 +60,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
 
         cutWoodFromDefinition()
 
+        mixBrewing()
         mixToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
         mixToColor(ItemTags.BEDS, ColoredMaterials.BED)
         mixToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
@@ -63,10 +82,10 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             val bucket: Item = fluid.bucket
             if (bucket == Items.AIR) return@forEach
             // レシピを登録
-            HTItemAndFluidRecipeBuilder.canning(output) {
-                itemIngredient = inputCreator.create(Tags.Items.BUCKETS_EMPTY)
-                fluidIngredient = inputCreator.create(fluid, HTConst.DEFAULT_FLUID_AMOUNT)
-                result = resultCreator.create(bucket)
+            HTItemOrFluidRecipeBuilder.canning(output) {
+                ingredient += inputCreator.create(Tags.Items.BUCKETS_EMPTY)
+                ingredient += inputCreator.create(fluid, HTConst.DEFAULT_FLUID_AMOUNT)
+                result += resultCreator.create(bucket)
                 time = 20
             }
         }
@@ -195,6 +214,43 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     }
 
     //    Mixing    //
+
+    @JvmStatic
+    private fun mixBrewing() {
+        // 醸造レシピを集める
+        val potionBrewing: PotionBrewing = HiiragiCoreAPI.getActiveServer()?.potionBrewing() ?: return
+        val builder: ImmutableMultimap.Builder<Holder<Potion>, Pair<Holder<Potion>, Ingredient>> = ImmutableMultimap.builder()
+        // Vanilla
+        for (accessor: PotionBrewingMixAccessor<Potion> in (potionBrewing as PotionBrewingAccessor).potionMixes) {
+            val potionFrom: Holder<Potion> = accessor.from
+            val potionTo: Holder<Potion> = accessor.to
+            if (potionTo.value().effects.isEmpty()) continue
+            builder.put(potionTo, potionFrom to accessor.ingredient)
+        }
+        // Modded
+        for (recipe: BrewingRecipe in potionBrewing.recipes.filterIsInstance<BrewingRecipe>()) {
+            val potionFrom: Holder<Potion> = getPotion(recipe.input.items[0])
+            val potionTo: Holder<Potion> = getPotion(recipe.output)
+            if (potionTo.value().effects.isEmpty()) continue
+            builder.put(potionTo, potionFrom to recipe.ingredient)
+        }
+        // 醸造レシピを登録していく
+        val multimap: ImmutableMultimap<Holder<Potion>, Pair<Holder<Potion>, Ingredient>> = builder.build()
+        for (potionTo: Holder<Potion> in multimap.keySet()) {
+            multimap[potionTo].forEachIndexed { index: Int, (potionFrom: Holder<Potion>, ingredient: Ingredient) ->
+                val resultContents: HTPotionContents = HTPotionContents.of(potionTo, HTBottleType.DEFAULT) ?: return@forEachIndexed
+                HTChemicalRecipeBuilder.mixing(output) {
+                    itemIngredients += inputCreator.create(ingredient)
+                    fluidIngredients += inputCreator.create(HTPotionFluidIngredient(HolderSet.direct(potionFrom), HTBottleType.DEFAULT))
+                    fluidResults += resultCreator.create(HCPotionFluidHelper.createFluid(resultContents))
+                    recipeId replace potionTo.toLike().getId().withSuffix("_$index")
+                }
+            }
+        }
+    }
+
+    @JvmStatic
+    private fun getPotion(stack: ItemStack): Holder<Potion> = HTPotionHelper.getPotion(stack).potion.orElse(Potions.WATER)
 
     @JvmStatic
     private fun mixToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTItemHolderLike<*>>) {

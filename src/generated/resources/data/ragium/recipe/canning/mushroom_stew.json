@@ -8,7 +8,7 @@
     "amount": 1,
     "items": "minecraft:bowl"
   },
-  "result": {
+  "item_result": {
     "id": "minecraft:mushroom_stew"
   },
   "time": 100

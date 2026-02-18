@@ -14,7 +14,7 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemAndFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
@@ -49,36 +49,36 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun canning() {
         // Water Bottle
-        HTItemAndFluidRecipeBuilder.canning(output) {
-            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
-            fluidIngredient = inputCreator.water(250)
-            result = resultCreator.create(HTPotionHelper.createPotion(Items.POTION, Potions.WATER))
+        HTItemOrFluidRecipeBuilder.canning(output) {
+            ingredient += inputCreator.create(Items.GLASS_BOTTLE)
+            ingredient += inputCreator.water(250)
+            result += resultCreator.create(HTPotionHelper.createPotion(Items.POTION, Potions.WATER))
             time /= 4
             recipeId replace id("water_bottle")
         }
         // Experience
-        HTItemAndFluidRecipeBuilder.canning(output) {
-            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
-            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
-            result = resultCreator.create(Items.EXPERIENCE_BOTTLE)
+        HTItemOrFluidRecipeBuilder.canning(output) {
+            ingredient += inputCreator.create(Items.GLASS_BOTTLE)
+            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 250)
+            result += resultCreator.create(Items.EXPERIENCE_BOTTLE)
         }
         // Honey Bottle
-        HTItemAndFluidRecipeBuilder.canning(output) {
-            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
-            fluidIngredient = inputCreator.create(HCFluids.HONEY, 250)
-            result = resultCreator.create(Items.HONEY_BOTTLE)
+        HTItemOrFluidRecipeBuilder.canning(output) {
+            ingredient += inputCreator.create(Items.GLASS_BOTTLE)
+            ingredient += inputCreator.create(HCFluids.HONEY, 250)
+            result += resultCreator.create(Items.HONEY_BOTTLE)
         }
         // Mushroom Stew
-        HTItemAndFluidRecipeBuilder.canning(output) {
-            itemIngredient = inputCreator.create(Items.BOWL)
-            fluidIngredient = inputCreator.create(HCFluids.MUSHROOM_STEW, 250)
-            result = resultCreator.create(Items.MUSHROOM_STEW)
+        HTItemOrFluidRecipeBuilder.canning(output) {
+            ingredient += inputCreator.create(Items.BOWL)
+            ingredient += inputCreator.create(HCFluids.MUSHROOM_STEW, 250)
+            result += resultCreator.create(Items.MUSHROOM_STEW)
         }
         // Dragon Breath
-        HTItemAndFluidRecipeBuilder.canning(output) {
-            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
-            fluidIngredient = inputCreator.create(HCFluids.DRAGON_BREATH, 250)
-            result = resultCreator.create(Items.DRAGON_BREATH)
+        HTItemOrFluidRecipeBuilder.canning(output) {
+            ingredient += inputCreator.create(Items.GLASS_BOTTLE)
+            ingredient += inputCreator.create(HCFluids.DRAGON_BREATH, 250)
+            result += resultCreator.create(Items.DRAGON_BREATH)
         }
     }
 

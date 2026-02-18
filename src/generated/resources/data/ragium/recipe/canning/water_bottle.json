@@ -8,7 +8,7 @@
     "amount": 1,
     "items": "minecraft:glass_bottle"
   },
-  "result": {
+  "item_result": {
     "components": {
       "minecraft:potion_contents": {
         "potion": "minecraft:water"

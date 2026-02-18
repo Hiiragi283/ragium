@@ -8,7 +8,7 @@
     "amount": 1,
     "items": "minecraft:glass_bottle"
   },
-  "result": {
+  "item_result": {
     "id": "minecraft:experience_bottle"
   },
   "time": 100

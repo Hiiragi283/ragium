@@ -54,9 +54,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Heat
             HTDistillingRecipeCategory.heat(guiHelper),
             HTItemOrFluidRecipeCategory.melting(guiHelper),
+            HTItemOrFluidRecipeCategory.pyrolyzing(guiHelper),
             // Machine - Cool
             HTItemOrFluidRecipeCategory.freezing(guiHelper),
             // Machine - Chemical
+            HTItemOrFluidRecipeCategory.canning(guiHelper),
             HTMixingRecipeCategory(guiHelper),
             // Device
         )
@@ -73,9 +75,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Machine - Heat
         registration.addRecipes(RagiumJeiRecipeTypes.DISTILLING, RagiumRecipeTypes.DISTILLING.get())
         registration.addRecipes(RagiumJeiRecipeTypes.MELTING, RagiumRecipeTypes.MELTING.get())
+        registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeTypes.PYROLYZING.get())
         // Machine - Cool
         registration.addRecipes(RagiumJeiRecipeTypes.FREEZING, RagiumRecipeTypes.FREEZING.get())
         // Machine - Chemical
+        registration.addRecipes(RagiumJeiRecipeTypes.CANNING, RagiumRecipeTypes.CANNING.get())
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeTypes.MIXING.get())
         // Device
     }
