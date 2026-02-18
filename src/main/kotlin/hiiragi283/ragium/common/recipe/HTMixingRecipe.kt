@@ -11,9 +11,9 @@ import net.minecraft.world.item.crafting.RecipeType
 class HTMixingRecipe(ingredients: HTChemicalIngredient, results: HTChemicalResult, parameters: SubParameters) :
     HTChemicalRecipe(ingredients, results, parameters) {
     companion object {
-        const val MAX_FLUID_INPUT = 3
+        const val MAX_FLUID_INPUT = 2
         const val MAX_FLUID_OUTPUT = 2
-        const val MAX_ITEM_INPUT = 3
+        const val MAX_ITEM_INPUT = 4
         const val MAX_ITEM_OUTPUT = 1
     }
 

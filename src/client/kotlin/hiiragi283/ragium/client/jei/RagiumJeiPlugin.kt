@@ -5,6 +5,11 @@ import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTDistillingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTItemToChancedRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTItemToItemRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -41,6 +46,19 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipeCategories(
             // Machine - Basic
             HTAlloyingRecipeCategory(guiHelper),
+            HTItemToItemRecipeCategory.bending(guiHelper),
+            HTItemToItemRecipeCategory.compressing(guiHelper),
+            HTItemToChancedRecipeCategory.crushing(guiHelper),
+            HTItemToChancedRecipeCategory.cutting(guiHelper),
+            HTItemToItemRecipeCategory.lathing(guiHelper),
+            // Machine - Heat
+            HTDistillingRecipeCategory.heat(guiHelper),
+            HTItemOrFluidRecipeCategory.melting(guiHelper),
+            // Machine - Cool
+            HTItemOrFluidRecipeCategory.freezing(guiHelper),
+            // Machine - Chemical
+            HTMixingRecipeCategory(guiHelper),
+            // Device
         )
     }
 
@@ -52,7 +70,14 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeTypes.CRUSHING.get())
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING, RagiumRecipeTypes.CUTTING.get())
         registration.addRecipes(RagiumJeiRecipeTypes.LATHING, RagiumRecipeTypes.LATHING.get())
-        registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeTypes.PRESSING.get())
+        // Machine - Heat
+        registration.addRecipes(RagiumJeiRecipeTypes.DISTILLING, RagiumRecipeTypes.DISTILLING.get())
+        registration.addRecipes(RagiumJeiRecipeTypes.MELTING, RagiumRecipeTypes.MELTING.get())
+        // Machine - Cool
+        registration.addRecipes(RagiumJeiRecipeTypes.FREEZING, RagiumRecipeTypes.FREEZING.get())
+        // Machine - Chemical
+        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeTypes.MIXING.get())
+        // Device
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
@@ -65,6 +90,19 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.CUTTING,
             RagiumJeiRecipeTypes.LATHING,
             RagiumJeiRecipeTypes.PRESSING,
+            // Machine - Heat
+            RagiumJeiRecipeTypes.DISTILLING,
+            RagiumJeiRecipeTypes.MELTING,
+            RagiumJeiRecipeTypes.PYROLYZING,
+            // Machine - Cool
+            RagiumJeiRecipeTypes.FREEZING,
+            // Machine - Chemical
+            RagiumJeiRecipeTypes.CANNING,
+            RagiumJeiRecipeTypes.MIXING,
+            RagiumJeiRecipeTypes.WASHING,
+            // Device
+            RagiumJeiRecipeTypes.ENCHANTING,
+            RagiumJeiRecipeTypes.PLANTING,
         )
     }
 }
