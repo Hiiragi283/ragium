@@ -78,21 +78,18 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             ingredient += inputCreator.create(CommonTagPrefixes.FUEL, VanillaMaterialKeys.COAL, 8)
             result += resultCreator.material(CommonTagPrefixes.FUEL, CommonMaterialKeys.COAL_COKE, 8)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
-            recipeId suffix "_from_coal"
         }
 
         pyrolyzing {
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL, 8)
             result += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.COAL_COKE, 8)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
-            recipeId suffix "_from_coal_dust"
         }
 
         pyrolyzing {
             ingredient += inputCreator.create(CommonTagPrefixes.BLOCK, VanillaMaterialKeys.COAL)
             result += resultCreator.material(CommonTagPrefixes.BLOCK, CommonMaterialKeys.COAL_COKE)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
-            recipeId suffix "_from_coal_block"
         }
         // Creosote + Redstone -> Lubricant
         HTChemicalRecipeBuilder.mixing(output) {

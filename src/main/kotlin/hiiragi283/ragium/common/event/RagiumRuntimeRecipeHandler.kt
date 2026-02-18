@@ -68,25 +68,34 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     }
 
     @JvmStatic
-    private fun fluidSequence(): Sequence<Fluid> = provider
+    private fun fluidSequence(): Sequence<HTFluidHolderLike<*>> = provider
         .lookupOrThrow(Registries.FLUID)
         .asFluidSequence()
-        .map(HTFluidHolderLike<*>::asFluid)
-        .filter { fluid: Fluid -> fluid.isSource(fluid.defaultFluidState()) }
+        .filter { holder: HTFluidHolderLike<*> ->
+            val fluid: Fluid = holder.asFluid()
+            fluid.isSource(fluid.defaultFluidState())
+        }
 
     //    Canning    //
 
     @JvmStatic
     private fun canFluidToBucket() {
-        fluidSequence().forEach { fluid: Fluid ->
-            val bucket: Item = fluid.bucket
+        fluidSequence().forEach { holder: HTFluidHolderLike<*> ->
+            val bucket: Item = holder.getBucket()
             if (bucket == Items.AIR) return@forEach
             // レシピを登録
             HTItemOrFluidRecipeBuilder.canning(output) {
                 ingredient += inputCreator.create(Tags.Items.BUCKETS_EMPTY)
-                ingredient += inputCreator.create(fluid, HTConst.DEFAULT_FLUID_AMOUNT)
+                ingredient += inputCreator.create(holder.asFluid(), HTConst.DEFAULT_FLUID_AMOUNT)
                 result += resultCreator.create(bucket)
                 time = 20
+            }
+            HTItemOrFluidRecipeBuilder.canning(output) {
+                ingredient += inputCreator.create(bucket)
+                result += resultCreator.create(Items.BUCKET)
+                result += resultCreator.create(holder, HTConst.DEFAULT_FLUID_AMOUNT)
+                time = 20
+                recipeId replace holder.getId().withPrefix("bucket_from_")
             }
         }
     }

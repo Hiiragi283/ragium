@@ -6,6 +6,7 @@ import hiiragi283.core.api.fraction
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -57,28 +58,55 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId replace id("water_bottle")
         }
         // Experience
-        HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(Items.GLASS_BOTTLE)
-            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 250)
-            result += resultCreator.create(Items.EXPERIENCE_BOTTLE)
-        }
+        fillAndEmpty(
+            HTItemHolderLike.of(Items.GLASS_BOTTLE),
+            HTItemHolderLike.of(Items.EXPERIENCE_BOTTLE),
+            HCFluids.EXPERIENCE,
+            250,
+        )
         // Honey Bottle
-        HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(Items.GLASS_BOTTLE)
-            ingredient += inputCreator.create(HCFluids.HONEY, 250)
-            result += resultCreator.create(Items.HONEY_BOTTLE)
-        }
+        fillAndEmpty(
+            HTItemHolderLike.of(Items.GLASS_BOTTLE),
+            HTItemHolderLike.of(Items.HONEY_BOTTLE),
+            HCFluids.HONEY,
+            250,
+        )
         // Mushroom Stew
-        HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(Items.BOWL)
-            ingredient += inputCreator.create(HCFluids.MUSHROOM_STEW, 250)
-            result += resultCreator.create(Items.MUSHROOM_STEW)
-        }
+        fillAndEmpty(
+            HTItemHolderLike.of(Items.BOWL),
+            HTItemHolderLike.of(Items.MUSHROOM_STEW),
+            HCFluids.MUSHROOM_STEW,
+            250,
+        )
         // Dragon Breath
+        fillAndEmpty(
+            HTItemHolderLike.of(Items.GLASS_BOTTLE),
+            HTItemHolderLike.of(Items.DRAGON_BREATH),
+            HCFluids.DRAGON_BREATH,
+            250,
+        )
+    }
+
+    @JvmStatic
+    private fun fillAndEmpty(
+        empty: HTItemHolderLike<*>,
+        filled: HTItemHolderLike<*>,
+        fluid: HTFluidContent,
+        amount: Int,
+    ) {
+        // Empty -> Filled
         HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(Items.GLASS_BOTTLE)
-            ingredient += inputCreator.create(HCFluids.DRAGON_BREATH, 250)
-            result += resultCreator.create(Items.DRAGON_BREATH)
+            ingredient += inputCreator.create(empty)
+            ingredient += inputCreator.create(fluid, amount)
+            result += resultCreator.create(filled)
+            recipeId suffix "_from_${empty.path}"
+        }
+        // Filled -> Empty
+        HTItemOrFluidRecipeBuilder.canning(output) {
+            ingredient += inputCreator.create(filled)
+            result += resultCreator.create(empty)
+            result += resultCreator.create(fluid, amount)
+            recipeId suffix "_from_${filled.path}"
         }
     }
 

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:canning",
+  "fluid_result": {
+    "amount": 250,
+    "id": "hiiragi_core:mushroom_stew"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:mushroom_stew"
+  },
+  "item_result": {
+    "id": "minecraft:bowl"
+  },
+  "time": 100
+}

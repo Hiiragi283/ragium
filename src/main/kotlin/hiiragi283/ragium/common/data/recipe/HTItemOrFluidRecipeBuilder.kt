@@ -73,7 +73,7 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
         fun toIor(): Ior<ITEM, FLUID> = (item to fluid).toIorOrThrow()
     }
 
-    override fun getPrimalId(): ResourceLocation = result.toIor().map(HTItemResult::getId, HTFluidResult::getId)
+    override fun getPrimalId(): ResourceLocation = result.toIor().swap().map(HTFluidResult::getId, HTItemResult::getId)
 
     override fun createRecipe(): HTItemOrFluidRecipe = factory.create(
         ingredient.toIor(),
