@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTRecipeFinder
+import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -62,9 +62,8 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     //    Processing    //
 
     abstract inner class ChancedRecipeComponent<INPUT : RecipeInput, RECIPE : HTChancedRecipe<INPUT>>(
-        finder: HTRecipeFinder<INPUT, RECIPE>,
-        owner: Energized,
-    ) : HTEnergizedRecipeComponent.Cached<INPUT, RECIPE>(finder, owner) {
+        lookup: HTRecipeLookup<INPUT, RECIPE>,
+    ) : HTEnergizedRecipeComponent.Cached<INPUT, RECIPE>(lookup, this) {
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
         private val extraOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(extraOutputSlots) }
 

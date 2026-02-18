@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTRecipeFinder
+import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTInputHandler
 import hiiragi283.core.api.recipe.ingredient.HTIngredient
 import hiiragi283.core.api.storage.HTStoragePredicates
@@ -79,8 +79,8 @@ abstract class HTSingleCatalystBlockEntity(type: HTDeferredBlockEntityType<*>, p
         ING : HTIngredient<*, RESOURCE>,
         RECIPE : HTSingleCatalystRecipe<ING>,
     >(
-        finder: HTRecipeFinder<HTSingleCatalystRecipeInput, RECIPE>,
-    ) : HTEnergizedRecipeComponent.Cached<HTSingleCatalystRecipeInput, RECIPE>(finder, this) {
+        lookup: HTRecipeLookup<HTSingleCatalystRecipeInput, RECIPE>,
+    ) : HTEnergizedRecipeComponent.Cached<HTSingleCatalystRecipeInput, RECIPE>(lookup, this) {
         protected val inputHandler: HTInputHandler<RESOURCE> by lazy { createInputHandler() }
         protected val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }

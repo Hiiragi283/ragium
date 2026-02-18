@@ -61,6 +61,8 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             latheBaseToRod(event, entry)
 
             pressBaseToGear(event, entry)
+
+            wireBaseToWire(event, entry)
             // Heat
             meltPrefixToMolten(event, entry, CommonTagPrefixes.DUST)
             meltPrefixToMolten(event, entry, CommonTagPrefixes.GEM)
@@ -347,6 +349,23 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
                 ?.let(extraResults::add)
 
             recipeId suffix "_from_crushed_ore"
+        }
+    }
+
+    //    Wiring    //
+
+    @JvmStatic
+    private fun wireBaseToWire(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 材料が存在するか判定
+        val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
+        if (!event.isPresentTag(inputTag)) return
+        // 完成品を取得
+        val wire: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.WIRE, entry) ?: return
+        // レシピを登録
+        HTSingleRecipeBuilder.wiring(output) {
+            ingredient = inputCreator.create(inputTag)
+            result = resultCreator.create(wire, 2)
+            time = getTimeFromHardness(entry, time) ?: return
         }
     }
 }

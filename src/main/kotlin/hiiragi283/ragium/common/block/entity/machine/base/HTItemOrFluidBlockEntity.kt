@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.block.entity.HTSoundPlayerBlockEntity
 import hiiragi283.core.api.recipe.HTFluidRecipe
 import hiiragi283.core.api.recipe.HTProcessingRecipe
-import hiiragi283.core.api.recipe.HTRecipeFinder
+import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
@@ -55,12 +55,12 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
     //    Processing    //
 
     protected inner class RecipeComponent<RECIPE>(
-        recipeType: HTRecipeFinder<HTItemAndFluidRecipeInput, RECIPE>,
+        lookup: HTRecipeLookup<HTItemAndFluidRecipeInput, RECIPE>,
         private val itemIngredient: (RECIPE) -> HTItemIngredient?,
         private val fluidIngredient: (RECIPE) -> HTFluidIngredient?,
         private val soundAction: (HTSoundPlayerBlockEntity) -> Unit,
     ) : HTEnergizedRecipeComponent.Cached<HTItemAndFluidRecipeInput, RECIPE>(
-            recipeType,
+            lookup,
             this,
         ) where RECIPE : HTProcessingRecipe<HTItemAndFluidRecipeInput>, RECIPE : HTFluidRecipe {
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }

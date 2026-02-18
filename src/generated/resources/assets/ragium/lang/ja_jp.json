@@ -185,6 +185,7 @@
   "recipe_type.ragium.pressing": "プレス加工",
   "recipe_type.ragium.pyrolyzing": "熱分解",
   "recipe_type.ragium.washing": "洗浄",
+  "recipe_type.ragium.wiring": "ワイヤ加工",
   "tag.fluid.c.air": "空気",
   "tag.fluid.c.ammonia": "アンモニア",
   "tag.fluid.c.biofuel": "バイオ燃料",

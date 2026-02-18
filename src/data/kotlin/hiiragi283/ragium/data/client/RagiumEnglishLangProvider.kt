@@ -119,6 +119,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.LATHING, "Lathing")
         add(RagiumRecipeTypes.PRESSING, "Pressing")
+        add(RagiumRecipeTypes.WIRING, "Wiring")
 
         add(RagiumRecipeTypes.DISTILLING, "Distilling")
         add(RagiumRecipeTypes.MELTING, "Melting")

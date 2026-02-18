@@ -20,6 +20,7 @@ import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
+import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -33,8 +34,9 @@ object RagiumJeiRecipeTypes {
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> processor(
         recipeType: HTDeferredRecipeType<INPUT, RECIPE>,
         icon: ItemLike,
-        bounds: HTBounds = HTBounds(0, 0, 18 * 8, 18 * 3),
-    ): HTJeiHolderRecipeType<RECIPE> = HTJeiRecipeType.createRecipe(recipeType, recipeType, ItemStack(icon), bounds)
+        width: Int = 18 * 8,
+        height: Int = 18 * 3,
+    ): HTJeiHolderRecipeType<RECIPE> = HTJeiRecipeType.createRecipe(recipeType, recipeType, ItemStack(icon), HTBounds(0, 0, width, height))
 
     // Machine - Basic
     @JvmField
@@ -65,10 +67,14 @@ object RagiumJeiRecipeTypes {
     val PRESSING: HTJeiHolderRecipeType<HTPressingRecipe> =
         processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
 
+    @JvmField
+    val WIRING: HTJeiHolderRecipeType<HTWiringRecipe> =
+        processor(RagiumRecipeTypes.WIRING, RagiumBlocks.LATHE)
+
     // Machine - Heat
     @JvmField
     val DISTILLING: HTJeiHolderRecipeType<HTDistillingRecipe> =
-        processor(RagiumRecipeTypes.DISTILLING, Items.FIREWORK_STAR, HTBounds(0, 0, 9 * 18, 1 * 18))
+        processor(RagiumRecipeTypes.DISTILLING, Items.FIREWORK_STAR, height = 18 * 1)
 
     @JvmField
     val MELTING: HTJeiHolderRecipeType<HTMeltingRecipe> =
@@ -81,7 +87,7 @@ object RagiumJeiRecipeTypes {
     // Machine - Cool
     @JvmField
     val FREEZING: HTJeiHolderRecipeType<HTFreezingRecipe> =
-        processor(RagiumRecipeTypes.FREEZING, Items.PACKED_ICE)
+        processor(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
 
     // Machine - Chemical
     @JvmField

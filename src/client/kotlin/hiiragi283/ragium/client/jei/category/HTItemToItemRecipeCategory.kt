@@ -7,6 +7,7 @@ import hiiragi283.ragium.client.jei.category.base.HTProcessingRecipeCategory
 import hiiragi283.ragium.common.recipe.HTBendingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTLathingRecipe
+import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.common.recipe.base.HTSingleProcessingRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -29,6 +30,10 @@ class HTItemToItemRecipeCategory<RECIPE : HTSingleProcessingRecipe.ItemToItem>(
         @JvmStatic
         fun lathing(guiHelper: IGuiHelper): HTItemToItemRecipeCategory<HTLathingRecipe> =
             HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.LATHING)
+
+        @JvmStatic
+        fun wiring(guiHelper: IGuiHelper): HTItemToItemRecipeCategory<HTWiringRecipe> =
+            HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.WIRING)
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RECIPE, focuses: IFocusGroup) {

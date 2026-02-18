@@ -16,6 +16,7 @@ class HTDistillingRecipeCategory(guiHelper: IGuiHelper) :
     HTProcessingRecipeCategory<HTDistillingRecipe>(guiHelper, RagiumJeiRecipeTypes.DISTILLING) {
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTDistillingRecipe, focuses: IFocusGroup) {
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(1.25), getPosition(0))
+        builder.addRecipePlusSign().setPosition(getPosition(4) + 2, getPosition(0) + 2)
     }
 
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTDistillingRecipe, focuses: IFocusGroup) {
@@ -31,7 +32,7 @@ class HTDistillingRecipeCategory(guiHelper: IGuiHelper) :
 
         for (i: Int in 0 until HTDistillingRecipe.MAX_FLUID_OUTPUT) {
             builder
-                .addFluidSlot(getPosition(4 + i), getPosition(0), false, fluidOut?.getOrNull(i))
+                .addFluidSlot(getPosition(5 + i), getPosition(0), false, fluidOut?.getOrNull(i))
                 .setSlotBackground(HTBackgroundType.OUTPUT)
         }
     }

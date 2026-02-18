@@ -23,6 +23,7 @@ import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
+import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
@@ -51,6 +52,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val PRESSING: HTDeferredRecipeType<HTShapelessRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
+
+    @JvmField
+    val WIRING: HTDeferredRecipeType<SingleRecipeInput, HTWiringRecipe> = REGISTER.registerType(RagiumConst.WIRING)
 
     // Machine - Heat
     @JvmField

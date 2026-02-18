@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine.base
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.block.entity.HTSoundPlayerBlockEntity
-import hiiragi283.core.api.recipe.HTRecipeFinder
+import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -30,9 +30,9 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
     //    Processing    //
 
     protected inner class RecipeComponent<RECIPE : HTSingleProcessingRecipe.ItemToItem>(
-        recipeType: HTRecipeFinder<SingleRecipeInput, RECIPE>,
+        lookup: HTRecipeLookup<SingleRecipeInput, RECIPE>,
         private val soundAction: (HTSoundPlayerBlockEntity) -> Unit,
-    ) : HTEnergizedRecipeComponent.Cached<SingleRecipeInput, RECIPE>(recipeType, this) {
+    ) : HTEnergizedRecipeComponent.Cached<SingleRecipeInput, RECIPE>(lookup, this) {
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 

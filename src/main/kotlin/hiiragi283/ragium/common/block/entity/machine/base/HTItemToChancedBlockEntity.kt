@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTRecipeFinder
+import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -46,9 +46,9 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
     //    Processing    //
 
     inner class RecipeComponent<RECIPE : HTItemToChancedRecipe>(
-        finder: HTRecipeFinder<SingleRecipeInput, RECIPE>,
+        lookup: HTRecipeLookup<SingleRecipeInput, RECIPE>,
         private val sound: SoundEvent,
-    ) : ChancedRecipeComponent<SingleRecipeInput, RECIPE>(finder, this) {
+    ) : ChancedRecipeComponent<SingleRecipeInput, RECIPE>(lookup) {
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 
         override fun extractInput(

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine.base
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.block.entity.HTSoundPlayerBlockEntity
-import hiiragi283.core.api.recipe.HTRecipeFinder
+import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
@@ -34,9 +34,9 @@ abstract class HTCombineItemRecipeBlockEntity(type: HTDeferredBlockEntityType<*>
     //    Processing    //
 
     inner class CombineRecipeComponent<RECIPE : HTCombineItemRecipe>(
-        finder: HTRecipeFinder<HTShapelessRecipeInput, RECIPE>,
+        lookup: HTRecipeLookup<HTShapelessRecipeInput, RECIPE>,
         private val soundAction: (HTSoundPlayerBlockEntity) -> Unit,
-    ) : HTEnergizedRecipeComponent.Cached<HTShapelessRecipeInput, RECIPE>(finder, this) {
+    ) : HTEnergizedRecipeComponent.Cached<HTShapelessRecipeInput, RECIPE>(lookup, this) {
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
         override fun insertOutput(

@@ -3,9 +3,6 @@
   "package": "hiiragi283.ragium.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [],
-  "mixins": [
-    "PotionBrewingAccessor",
-    "PotionBrewingMixAccessor"
-  ],
+  "mixins": [],
   "minVersion": "0.8"
 }

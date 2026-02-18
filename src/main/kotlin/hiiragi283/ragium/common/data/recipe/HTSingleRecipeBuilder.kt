@@ -11,6 +11,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTBendingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTLathingRecipe
+import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -33,6 +34,12 @@ class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>>(p
         @JvmStatic
         inline fun lathing(output: RecipeOutput, builderAction: HTSingleRecipeBuilder<HTItemIngredient, HTItemResult>.() -> Unit) {
             HTSingleRecipeBuilder(RagiumConst.LATHING, ::HTLathingRecipe).apply(builderAction).save(output)
+        }
+
+        @HTBuilderMarker
+        @JvmStatic
+        inline fun wiring(output: RecipeOutput, builderAction: HTSingleRecipeBuilder<HTItemIngredient, HTItemResult>.() -> Unit) {
+            HTSingleRecipeBuilder(RagiumConst.WIRING, ::HTWiringRecipe).apply(builderAction).save(output)
         }
     }
 

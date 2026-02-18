@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level
 class HTDistillingRecipe(val ingredient: HTFluidIngredient, val results: HTChemicalResult, parameters: SubParameters) :
     HTProcessingRecipe<HTSingleFluidRecipeInput>(parameters) {
     companion object {
-        const val MAX_FLUID_OUTPUT = 5
+        const val MAX_FLUID_OUTPUT = 3
         const val MAX_ITEM_OUTPUT = 1
     }
 

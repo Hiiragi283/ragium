@@ -75,7 +75,6 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTChancedBlockEnti
     private inner class RecipeComponent :
         ChancedRecipeComponent<HTItemAndFluidRecipeInput, HTWashingRecipe>(
             RagiumRecipeTypes.WASHING,
-            this,
         ) {
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }

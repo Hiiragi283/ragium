@@ -119,6 +119,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.LATHING, "旋盤加工")
         add(RagiumRecipeTypes.PRESSING, "プレス加工")
+        add(RagiumRecipeTypes.WIRING, "ワイヤ加工")
 
         add(RagiumRecipeTypes.DISTILLING, "蒸留")
         add(RagiumRecipeTypes.MELTING, "溶融")
