@@ -38,8 +38,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.MIXER, "混合機")
         add(RagiumBlocks.WASHER, "洗浄機")
 
-        add(RagiumBlocks.TREE_TAP, "ツリータップ")
-        add(RagiumBlocks.LATEX_CAULDRON, "ラテックス入り大釜")
         add(RagiumBlocks.PLANTER, "栽培機")
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")

@@ -15,8 +15,6 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
-import hiiragi283.ragium.common.block.HTTreeTapBlock
-import hiiragi283.ragium.common.block.cauldron.HTLatexCauldronBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTResonantInterfaceBlock
@@ -35,7 +33,6 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
-import net.minecraft.world.level.material.PushReaction
 import net.neoforged.bus.api.IEventBus
 
 /**
@@ -129,24 +126,6 @@ object RagiumBlocks {
     //    Device    //
 
     // Basic
-    @JvmField
-    val TREE_TAP: HTBasicDeferredBlock<HTTreeTapBlock> = REGISTER.registerSimple(
-        "tree_tap",
-        machine()
-            .sound(SoundType.LANTERN)
-            .pushReaction(PushReaction.DESTROY)
-            .noOcclusion()
-            .randomTicks(),
-        ::HTTreeTapBlock,
-    )
-
-    @JvmField
-    val LATEX_CAULDRON: HTBasicDeferredBlock<HTLatexCauldronBlock> = REGISTER.registerSimple(
-        "latex_cauldron",
-        copyOf(Blocks.CAULDRON),
-        ::HTLatexCauldronBlock,
-    )
-
     @JvmField
     val PLANTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)

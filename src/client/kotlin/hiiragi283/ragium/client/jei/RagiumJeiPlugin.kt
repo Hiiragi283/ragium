@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.jei
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.api.monad.Ior
-import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.common.recipe.HCBrewingRecipe
 import hiiragi283.core.common.recipe.HTVanillaRecipeTypes
 import hiiragi283.core.setup.HCDataComponents
@@ -19,7 +18,6 @@ import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.registration.IRecipeCatalystRegistration
@@ -28,7 +26,6 @@ import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
-import org.apache.commons.lang3.math.Fraction
 
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
@@ -76,37 +73,33 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
     override fun registerRecipes(registration: IRecipeRegistration) {
         // Machine - Basic
-        registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING, RagiumRecipeTypes.ALLOYING)
-        registration.addRecipes(RagiumJeiRecipeTypes.BENDING, RagiumRecipeTypes.BENDING)
-        registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING, RagiumRecipeTypes.COMPRESSING)
-        registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING, RagiumRecipeTypes.CRUSHING)
-        registration.addRecipes(RagiumJeiRecipeTypes.CUTTING, RagiumRecipeTypes.CUTTING)
-        registration.addRecipes(RagiumJeiRecipeTypes.LATHING, RagiumRecipeTypes.LATHING)
-        registration.addRecipes(RagiumJeiRecipeTypes.PRESSING, RagiumRecipeTypes.PRESSING)
-        registration.addRecipes(RagiumJeiRecipeTypes.WIRING, RagiumRecipeTypes.WIRING)
+        registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING)
+        registration.addRecipes(RagiumJeiRecipeTypes.BENDING)
+        registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING)
+        registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING)
+        registration.addRecipes(RagiumJeiRecipeTypes.CUTTING)
+        registration.addRecipes(RagiumJeiRecipeTypes.LATHING)
+        registration.addRecipes(RagiumJeiRecipeTypes.PRESSING)
+        registration.addRecipes(RagiumJeiRecipeTypes.WIRING)
         // Machine - Heat
-        registration.addRecipes(RagiumJeiRecipeTypes.DISTILLING, RagiumRecipeTypes.DISTILLING)
-        registration.addRecipes(RagiumJeiRecipeTypes.MELTING, RagiumRecipeTypes.MELTING)
-        registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING, RagiumRecipeTypes.PYROLYZING)
+        registration.addRecipes(RagiumJeiRecipeTypes.DISTILLING)
+        registration.addRecipes(RagiumJeiRecipeTypes.MELTING)
+        registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING)
         // Machine - Cool
-        registration.addRecipes(RagiumJeiRecipeTypes.FREEZING, RagiumRecipeTypes.FREEZING)
+        registration.addRecipes(RagiumJeiRecipeTypes.FREEZING)
         // Machine - Chemical
-        registration.addRecipes(RagiumJeiRecipeTypes.CANNING, RagiumRecipeTypes.CANNING)
+        registration.addRecipes(RagiumJeiRecipeTypes.CANNING)
         registration.addRecipes(
             getRecipeType(RagiumJeiRecipeTypes.CANNING),
             HTVanillaRecipeTypes.BREWING.getAllRecipes().map { holder: RecipeHolder<HCBrewingRecipe> ->
                 val recipe: HCBrewingRecipe = holder.value
                 RecipeHolder(
                     holder.id,
-                    HTCanningRecipe(
-                        Ior.Both(recipe.ingredient, recipe.potionFrom),
-                        Ior.Right(recipe.potionTo),
-                        HTProcessingRecipe.SubParameters(100, Fraction.ZERO),
-                    ),
+                    HTCanningRecipe(Ior.Both(recipe.ingredient, recipe.potionFrom), Ior.Right(recipe.potionTo), recipe.parameters),
                 )
             },
         )
-        registration.addRecipes(RagiumJeiRecipeTypes.MIXING, RagiumRecipeTypes.MIXING)
+        registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
         // Device
     }
 

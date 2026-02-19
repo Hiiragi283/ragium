@@ -58,7 +58,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         lookup: HTRecipeLookup<HTItemAndFluidRecipeInput, RECIPE>,
         private val itemIngredient: (RECIPE) -> HTItemIngredient?,
         private val fluidIngredient: (RECIPE) -> HTFluidIngredient?,
-        private val soundAction: (HTSoundPlayerBlockEntity) -> Unit,
+        private val user: HTSoundPlayerBlockEntity.User,
     ) : HTEnergizedRecipeComponent.Cached<HTItemAndFluidRecipeInput, RECIPE>(
             lookup,
             this,
@@ -91,7 +91,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         }
 
         override fun applyEffect() {
-            soundAction(this@HTItemOrFluidBlockEntity)
+            user.playSound(this@HTItemOrFluidBlockEntity)
         }
 
         final override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =

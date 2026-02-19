@@ -31,7 +31,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
 
     protected inner class RecipeComponent<RECIPE : HTSingleProcessingRecipe.ItemToItem>(
         lookup: HTRecipeLookup<SingleRecipeInput, RECIPE>,
-        private val soundAction: (HTSoundPlayerBlockEntity) -> Unit,
+        private val user: HTSoundPlayerBlockEntity.User,
     ) : HTEnergizedRecipeComponent.Cached<SingleRecipeInput, RECIPE>(lookup, this) {
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
@@ -55,7 +55,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
         }
 
         override fun applyEffect() {
-            soundAction(this@HTItemToItemBlockEntity)
+            user.playSound(this@HTItemToItemBlockEntity)
         }
 
         override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean =

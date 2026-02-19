@@ -35,7 +35,7 @@ abstract class HTCombineItemRecipeBlockEntity(type: HTDeferredBlockEntityType<*>
 
     inner class CombineRecipeComponent<RECIPE : HTCombineItemRecipe>(
         lookup: HTRecipeLookup<HTShapelessRecipeInput, RECIPE>,
-        private val soundAction: (HTSoundPlayerBlockEntity) -> Unit,
+        private val user: HTSoundPlayerBlockEntity.User,
     ) : HTEnergizedRecipeComponent.Cached<HTShapelessRecipeInput, RECIPE>(lookup, this) {
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
@@ -58,7 +58,7 @@ abstract class HTCombineItemRecipeBlockEntity(type: HTDeferredBlockEntityType<*>
         }
 
         override fun applyEffect() {
-            soundAction(this@HTCombineItemRecipeBlockEntity)
+            user.playSound(this@HTCombineItemRecipeBlockEntity)
         }
 
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTShapelessRecipeInput? {

@@ -9,7 +9,6 @@ import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.core.client.data.HCClientResourceProvider
 import hiiragi283.core.setup.HCDataComponents
-import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.gui.widget.HTEnergyBarWidgetRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
@@ -31,7 +30,6 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
 import java.awt.Color
@@ -51,14 +49,6 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
-        // Latex Cauldron
-        event.register(
-            { _: BlockState, _: BlockAndTintGetter?, _: BlockPos?, _: Int ->
-                IClientFluidTypeExtensions.of(HCFluids.LATEX.get()).tintColor
-            },
-            RagiumBlocks.LATEX_CAULDRON.get(),
-        )
-
         // Universal Chest
         event.register(
             { _: BlockState, getter: BlockAndTintGetter?, pos: BlockPos?, tint: Int ->

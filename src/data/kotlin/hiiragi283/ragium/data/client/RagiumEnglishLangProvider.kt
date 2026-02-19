@@ -38,8 +38,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.WASHER, "Washer")
 
-        add(RagiumBlocks.TREE_TAP, "Tree Tap")
-        add(RagiumBlocks.LATEX_CAULDRON, "Latex Cauldron")
         add(RagiumBlocks.PLANTER, "Planter")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")

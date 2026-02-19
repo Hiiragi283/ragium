@@ -47,18 +47,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)
 
-        // Device
-        registerVariants(RagiumBlocks.LATEX_CAULDRON) { _, state: BlockState ->
-            val suffix: String = when (val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)) {
-                3 -> "_full"
-                else -> "_level$level"
-            }
-            ConfiguredModel
-                .builder()
-                .modelFile(ModelFile.UncheckedModelFile(HTConst.MINECRAFT.toId("block/water_cauldron").withSuffix(suffix)))
-                .build()
-        }
-
         // Storage
         altModelBlock(RagiumBlocks.TANK)
         altModelBlock(RagiumBlocks.CREATIVE_TANK, id = RagiumBlocks.TANK.blockId)

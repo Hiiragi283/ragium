@@ -14,9 +14,6 @@ object RagiumTags {
     //    Blocks    //
 
     object Blocks {
-        @JvmField
-        val LATEX_DRIPPING_LOGS: TagKey<Block> = mod("latex_dripping_logs")
-
         @JvmStatic
         private fun common(vararg path: String): TagKey<Block> = Registries.BLOCK.createTagKey(HTConst.COMMON.toId(*path))
 
