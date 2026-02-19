@@ -16,5 +16,5 @@ class HTBendingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.ANVIL_PLACE, pitch = 0.5f)
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.bendingMachine
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.bendingMachine
 }

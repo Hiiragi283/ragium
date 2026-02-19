@@ -1,10 +1,5 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.gui.HTSlotHelper
-import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.block.entity.machine.base.HTCombineItemRecipeBlockEntity
 import hiiragi283.ragium.config.HTMachineConfig
@@ -17,33 +12,10 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     HTCombineItemRecipeBlockEntity(RagiumBlockEntityTypes.ALLOY_SMELTER, pos, state) {
-    override fun setupMenu(widgetHolder: HTWidgetHolder) {
-        super.setupMenu(widgetHolder)
-        // progress
-        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4.5))
-        // slots
-        inputSlots
-            .mapIndexed { index: Int, slot: HTBasicItemSlot ->
-                HTItemSlotWidget(
-                    slot,
-                    HTSlotHelper.getSlotPosX(index + 1),
-                    HTSlotHelper.getSlotPosY(0.5),
-                    HTBackgroundType.INPUT,
-                )
-            }.forEach(widgetHolder::addWidget)
-
-        widgetHolder += HTItemSlotWidget(
-            outputSlot,
-            HTSlotHelper.getSlotPosX(6.5),
-            HTSlotHelper.getSlotPosY(0.5),
-            HTBackgroundType.OUTPUT,
-        )
-    }
-
     //    Processing    //
 
     override fun createRecipeComponent(): HTRecipeComponent<*, *> =
         CombineRecipeComponent(RagiumRecipeTypes.ALLOYING) { it.playSound(SoundEvents.FIRE_EXTINGUISH) }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.alloySmelter
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.alloySmelter
 }

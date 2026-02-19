@@ -73,7 +73,7 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val WIRING: HTHolderJeiRecipeType<SingleRecipeInput, HTWiringRecipe> =
-        processor(RagiumRecipeTypes.WIRING, RagiumBlocks.LATHE)
+        processor(RagiumRecipeTypes.WIRING, RagiumBlocks.WIREMILL)
 
     // Machine - Heat
     @JvmField
@@ -96,7 +96,7 @@ object RagiumJeiRecipeTypes {
     // Machine - Chemical
     @JvmField
     val CANNING: HTHolderJeiRecipeType<HTItemAndFluidRecipeInput, HTCanningRecipe> =
-        processor(RagiumRecipeTypes.CANNING, Items.GLASS_BOTTLE)
+        processor(RagiumRecipeTypes.CANNING, RagiumBlocks.CANNING_MACHINE)
 
     @JvmField
     val MIXING: HTHolderJeiRecipeType<HTChemicalRecipeInput, HTMixingRecipe> =

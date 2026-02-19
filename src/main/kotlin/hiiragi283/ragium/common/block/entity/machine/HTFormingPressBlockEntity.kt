@@ -15,5 +15,5 @@ class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeComponent(): HTRecipeComponent<*, *> =
         CombineRecipeComponent(RagiumRecipeTypes.PRESSING) { it.playSound(SoundEvents.ANVIL_LAND) }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.formingPress
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.formingPress
 }

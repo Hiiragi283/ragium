@@ -112,5 +112,5 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
         }
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.mixer
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.mixer
 }

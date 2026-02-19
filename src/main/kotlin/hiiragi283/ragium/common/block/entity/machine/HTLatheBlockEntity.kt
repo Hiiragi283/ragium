@@ -15,5 +15,5 @@ class HTLatheBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEn
         playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT, pitch = 0.5f)
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.lathe
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.lathe
 }

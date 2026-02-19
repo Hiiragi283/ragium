@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.gui.widget
 
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.gui.HTAbstractGui
 import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.resource.toId
 import hiiragi283.core.client.gui.widget.HTSpriteWidgetRenderer
@@ -16,7 +17,8 @@ import org.apache.commons.lang3.math.Fraction
 import java.util.function.Consumer
 
 @OnlyIn(Dist.CLIENT)
-class HTEnergyBarWidgetRenderer(widget: HTEnergyBarWidget) : HTSpriteWidgetRenderer<HTEnergyBarWidget>(widget) {
+class HTEnergyBarWidgetRenderer(gui: HTAbstractGui, widget: HTEnergyBarWidget) :
+    HTSpriteWidgetRenderer<HTEnergyBarWidget>(gui, widget) {
     override fun renderBackground(bounds: HTBounds, guiGraphics: GuiGraphics) {
     }
 

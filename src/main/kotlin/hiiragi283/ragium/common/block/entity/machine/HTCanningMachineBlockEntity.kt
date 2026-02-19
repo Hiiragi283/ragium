@@ -10,10 +10,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.FREEZER, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.FREEZING) {
-        playSound(SoundEvents.GLASS_HIT)
+class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
+    HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.CANNING_MACHINE, pos, state) {
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.CANNING) {
+        playSound(SoundEvents.BOTTLE_FILL)
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.freezer
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.canningMachine
 }

@@ -13,6 +13,7 @@ import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
@@ -138,21 +139,13 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 fluidResults += resultCreator.create(content, 250)
             }
         }
-        // Latex + Sulfur -> Molten Rubber
+        // Latex + Sulfur + Carbon -> Rubber
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
-            fluidIngredients += inputCreator.create(HCFluids.LATEX, 1000)
-
-            fluidResults += resultCreator.molten(CommonMaterialKeys.RUBBER) { it * 2 }
-            recipeId suffix "_with_sulfur"
-        }
-        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(HCItems.RAW_RUBBER)
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
-            fluidIngredients += inputCreator.create(HCFluids.LATEX, 1000)
 
-            fluidResults += resultCreator.molten(CommonMaterialKeys.RUBBER) { it * 4 }
-            recipeId suffix "_with_sulfur_and_carbon"
+            itemResults += resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 4)
         }
 
         // 2x Liq H2 + Liq O2 -> 2x Rocket Fuel

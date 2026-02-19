@@ -11,12 +11,9 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.MELTER, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(
-        RagiumRecipeTypes.MELTING,
-        { it.ingredient.getLeft() },
-        { it.ingredient.getRight() },
-        { playSound(SoundEvents.LAVA_POP) },
-    )
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.MELTING) {
+        playSound(SoundEvents.LAVA_POP)
+    }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.melter
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.melter
 }

@@ -38,10 +38,21 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
             HTBackgroundType.INPUT,
         )
 
-        setupOutputSlots(widgetHolder)
+        widgetHolder += HTItemSlotWidget(
+            outputSlot,
+            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosY(0.5),
+            HTBackgroundType.OUTPUT,
+        )
+        widgetHolder += HTItemSlotWidget(
+            extraOutputSlots[0],
+            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosY(2),
+            HTBackgroundType.EXTRA_OUTPUT,
+        )
     }
 
-    protected abstract fun setupOutputSlots(widgetHolder: HTWidgetHolder)
+    override fun getOutputSlotSize(): Int = 1
 
     //    Processing    //
 

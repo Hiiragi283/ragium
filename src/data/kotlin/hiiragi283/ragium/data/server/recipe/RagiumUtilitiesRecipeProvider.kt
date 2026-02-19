@@ -88,15 +88,16 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         basic(RagiumBlocks.ELECTRIC_FURNACE) { it += Items.FURNACE }
         basic(RagiumBlocks.FORMING_PRESS) { it += Items.PISTON }
         basic(RagiumBlocks.LATHE) { it += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON }
+        basic(RagiumBlocks.WIREMILL) { it += CommonTagPrefixes.ROD to VanillaMaterialKeys.IRON }
         // Heat
         advanced(RagiumBlocks.MELTER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.BLAST_FURNACE }
         advanced(RagiumBlocks.PYROLYZER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.NETHER_BRICKS }
         // Cool
         advanced(RagiumBlocks.FREEZER, HCMaterialKeys.AZURE_STEEL) { it += Items.SNOW_BLOCK }
         // Chemical
+        chemical(RagiumBlocks.CANNING_MACHINE) { it += Items.GLASS_BOTTLE }
         chemical(RagiumBlocks.MIXER) { it += RagiumBlocks.TANK }
         chemical(RagiumBlocks.WASHER) { it += Items.CAULDRON }
-
         // Matter
     }
 

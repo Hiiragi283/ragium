@@ -21,7 +21,7 @@ object RagiumConfig {
     class Common(builder: ModConfigSpec.Builder) {
         // Processor
         @JvmField
-        val processor: Processor
+        val machine: Machine
 
         // Device
         @JvmField
@@ -38,9 +38,9 @@ object RagiumConfig {
         val tankCapacity: ModConfigSpec.IntValue
 
         init {
-            builder.push("processor")
-            builder.comment("Configurations for Processors")
-            processor = Processor(builder)
+            builder.push("machine")
+            builder.comment("Configurations for Machines")
+            machine = Machine(builder)
             builder.pop()
 
             builder.push("device")
@@ -56,7 +56,7 @@ object RagiumConfig {
             builder.pop()
         }
 
-        class Processor(builder: ModConfigSpec.Builder) {
+        class Machine(builder: ModConfigSpec.Builder) {
             // Basic
             @JvmField
             val alloySmelter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ALLOY_SMELTER)
@@ -90,6 +90,9 @@ object RagiumConfig {
             @JvmField
             val lathe: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.LATHE)
 
+            @JvmField
+            val wiremill: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.WIREMILL)
+
             // Heat
             @JvmField
             val melter: HTMachineConfig = HTMachineConfig.createSimple(
@@ -117,6 +120,14 @@ object RagiumConfig {
             )
 
             // Chemical
+            @JvmField
+            val canningMachine: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.CANNING_MACHINE,
+                RagiumFluidConfigType.FIRST_INPUT,
+                RagiumFluidConfigType.FIRST_OUTPUT,
+            )
+
             @JvmField
             val mixer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,

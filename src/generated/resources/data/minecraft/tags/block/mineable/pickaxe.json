@@ -3,6 +3,7 @@
     "ragium:alloy_smelter",
     "ragium:battery",
     "ragium:bending_machine",
+    "ragium:canning_machine",
     "ragium:compressor",
     "ragium:crate",
     "ragium:creative_battery",
@@ -23,6 +24,7 @@
     "ragium:resonant_interface",
     "ragium:tank",
     "ragium:universal_chest",
-    "ragium:washer"
+    "ragium:washer",
+    "ragium:wiremill"
   ]
 }

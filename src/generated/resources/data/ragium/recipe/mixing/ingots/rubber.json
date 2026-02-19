@@ -1,15 +1,10 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": [
-    {
-      "fluids": "#c:latex"
-    }
-  ],
-  "fluid_result": {
-    "amount": 360,
-    "id": "hiiragi_core:molten_rubber"
-  },
   "item_ingredient": [
+    {
+      "amount": 1,
+      "items": "hiiragi_core:raw_rubber"
+    },
     {
       "amount": 1,
       "items": "#c:dusts/sulfur"
@@ -19,5 +14,10 @@
       "items": "#c:dusts/carbon"
     }
   ],
+  "item_result": {
+    "count": 4,
+    "id": "hiiragi_core:rubber_ingot",
+    "tag": "c:ingots/rubber"
+  },
   "time": 200
 }

@@ -6,7 +6,6 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumBasicRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumChemicalRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumCoolRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumCrushingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumEnchantingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
@@ -20,7 +19,6 @@ class RagiumRecipeProvider(context: HTDataGenContext) : HTRecipeProvider(context
         consumer.accept(RagiumBasicRecipeProvider)
         consumer.accept(RagiumChemicalRecipeProvider)
         consumer.accept(RagiumCoolRecipeProvider)
-        consumer.accept(RagiumCrushingRecipeProvider)
         consumer.accept(RagiumEnchantingRecipeProvider)
         consumer.accept(RagiumHeatRecipeProvider)
         consumer.accept(RagiumOrganicRecipeProvider)

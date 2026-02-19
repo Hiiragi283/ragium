@@ -24,6 +24,7 @@ object RagiumConst {
 
     // Chemical
     const val BREWERY = "brewery"
+    const val CANNING_MACHINE = "canning_machine"
     const val CENTRIFUGE = "centrifuge"
     const val ELECTROLYZER = "electrolyzer"
     const val MIXER = "mixer"

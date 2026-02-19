@@ -10,11 +10,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToItemBlockEntity(RagiumBlockEntityTypes.COMPRESSOR, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.COMPRESSING) {
-        playSound(SoundEvents.ANVIL_PLACE, pitch = 0.5f)
+class HTWiremillBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity(RagiumBlockEntityTypes.WIREMILL, pos, state) {
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.WIRING) {
+        playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT, pitch = 1.5f)
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.compressor
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.wiremill
 }

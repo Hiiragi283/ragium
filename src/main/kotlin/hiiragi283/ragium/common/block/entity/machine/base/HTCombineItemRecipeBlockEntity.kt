@@ -2,9 +2,13 @@ package hiiragi283.ragium.common.block.entity.machine.base
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.block.entity.HTSoundPlayerBlockEntity
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -29,6 +33,29 @@ abstract class HTCombineItemRecipeBlockEntity(type: HTDeferredBlockEntityType<*>
         inputSlots = List(3) { HTBasicItemSlot.input(listener) }
 
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
+    }
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        // progress
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4.5))
+        // slots
+        inputSlots
+            .mapIndexed { index: Int, slot: HTBasicItemSlot ->
+                HTItemSlotWidget(
+                    slot,
+                    HTSlotHelper.getSlotPosX(index + 1),
+                    HTSlotHelper.getSlotPosY(0.5),
+                    HTBackgroundType.INPUT,
+                )
+            }.forEach(widgetHolder::addWidget)
+
+        widgetHolder += HTItemSlotWidget(
+            outputSlot,
+            HTSlotHelper.getSlotPosX(6.5),
+            HTSlotHelper.getSlotPosY(1),
+            HTBackgroundType.OUTPUT,
+        )
     }
 
     //    Processing    //

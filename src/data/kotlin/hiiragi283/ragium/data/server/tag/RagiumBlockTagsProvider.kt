@@ -28,12 +28,14 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
             yield(RagiumBlocks.ELECTRIC_FURNACE)
             yield(RagiumBlocks.FORMING_PRESS)
             yield(RagiumBlocks.LATHE)
+            yield(RagiumBlocks.WIREMILL)
 
             yield(RagiumBlocks.MELTER)
             yield(RagiumBlocks.PYROLYZER)
 
             yield(RagiumBlocks.FREEZER)
 
+            yield(RagiumBlocks.CANNING_MACHINE)
             yield(RagiumBlocks.MIXER)
             yield(RagiumBlocks.WASHER)
 

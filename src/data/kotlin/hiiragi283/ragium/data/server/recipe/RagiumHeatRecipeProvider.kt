@@ -129,6 +129,12 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
             ingredients += inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.GOLD)
         }
+        // Rubber + Sulfur -> Rubber
+        HTCombineItemRecipeBuilder.alloying(output) {
+            result = resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 2)
+            ingredients += inputCreator.create(HCItems.RAW_RUBBER)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+        }
     }
 
     //    Melting    //

@@ -97,5 +97,5 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTChancedBlockEnti
             createInput(itemInputHandler, fluidInputHandler)
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.processor.washer
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.washer
 }

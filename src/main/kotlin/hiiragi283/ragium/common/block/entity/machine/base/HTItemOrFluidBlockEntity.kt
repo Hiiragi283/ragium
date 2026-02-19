@@ -2,12 +2,13 @@ package hiiragi283.ragium.common.block.entity.machine.base
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.block.entity.HTSoundPlayerBlockEntity
-import hiiragi283.core.api.recipe.HTFluidRecipe
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeLookup
-import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.common.gui.widget.HTFluidWidget
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
@@ -17,6 +18,7 @@ import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
+import hiiragi283.ragium.common.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -52,17 +54,44 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        // progress
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(3.5))
+        // inputs
+        widgetHolder += HTItemSlotWidget(
+            inputSlot,
+            HTSlotHelper.getSlotPosX(2.5),
+            HTSlotHelper.getSlotPosY(0.5),
+            HTBackgroundType.INPUT,
+        )
+        widgetHolder += HTFluidWidget
+            .createTank(
+                inputTank,
+                HTSlotHelper.getSlotPosX(1),
+                HTSlotHelper.getSlotPosY(0),
+            ).setBackground(HTBackgroundType.EXTRA_INPUT)
+        // outputs
+        widgetHolder += HTItemSlotWidget(
+            outputSlot,
+            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosY(1),
+            HTBackgroundType.OUTPUT,
+        )
+        widgetHolder += HTFluidWidget
+            .createTank(
+                outputTank,
+                HTSlotHelper.getSlotPosX(7.5),
+                HTSlotHelper.getSlotPosY(0),
+            ).setBackground(HTBackgroundType.EXTRA_OUTPUT)
+    }
+
     //    Processing    //
 
-    protected inner class RecipeComponent<RECIPE>(
+    protected inner class RecipeComponent<RECIPE : HTItemOrFluidRecipe>(
         lookup: HTRecipeLookup<HTItemAndFluidRecipeInput, RECIPE>,
-        private val itemIngredient: (RECIPE) -> HTItemIngredient?,
-        private val fluidIngredient: (RECIPE) -> HTFluidIngredient?,
         private val user: HTSoundPlayerBlockEntity.User,
-    ) : HTEnergizedRecipeComponent.Cached<HTItemAndFluidRecipeInput, RECIPE>(
-            lookup,
-            this,
-        ) where RECIPE : HTProcessingRecipe<HTItemAndFluidRecipeInput>, RECIPE : HTFluidRecipe {
+    ) : HTEnergizedRecipeComponent.Cached<HTItemAndFluidRecipeInput, RECIPE>(lookup, this) {
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 
@@ -86,8 +115,8 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             input: HTItemAndFluidRecipeInput,
             recipe: RECIPE,
         ) {
-            fluidInputHandler.consume(fluidIngredient(recipe))
-            itemInputHandler.consume(itemIngredient(recipe))
+            fluidInputHandler.consume(recipe.ingredient.getRight())
+            itemInputHandler.consume(recipe.ingredient.getLeft())
         }
 
         override fun applyEffect() {

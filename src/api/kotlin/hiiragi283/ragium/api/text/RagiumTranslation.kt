@@ -36,6 +36,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     ELECTRIC_FURNACE("description", RagiumConst.ELECTRIC_FURNACE),
     FORMING_PRESS("description", RagiumConst.FORMING_PRESS),
     LATHE("description", RagiumConst.LATHE),
+    WIREMILL("description", RagiumConst.WIREMILL),
 
     DISTILLATION_TOWER("description", RagiumConst.DISTILLATION_TOWER),
     MELTER("description", RagiumConst.MELTER),
@@ -44,6 +45,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     FREEZER("description", RagiumConst.FREEZER),
 
     BREWERY("description", RagiumConst.BREWERY),
+    CANNING_MACHINE("description", RagiumConst.CANNING_MACHINE),
     CENTRIFUGE("description", RagiumConst.CENTRIFUGE),
     ELECTROLYZER("description", RagiumConst.ELECTROLYZER),
     MIXER("description", RagiumConst.MIXER),

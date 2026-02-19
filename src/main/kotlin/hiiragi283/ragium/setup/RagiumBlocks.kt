@@ -98,6 +98,10 @@ object RagiumBlocks {
     val LATHE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.LATHE, RagiumTranslation.LATHE)
 
+    @JvmField
+    val WIREMILL: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.WIREMILL, RagiumTranslation.WIREMILL)
+
     // Heat
     @JvmField
     val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
@@ -113,6 +117,10 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.FREEZER, RagiumTranslation.FREEZER)
 
     // Chemical
+    @JvmField
+    val CANNING_MACHINE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.CANNING_MACHINE, RagiumTranslation.CANNING_MACHINE)
+
     @JvmField
     val MIXER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
