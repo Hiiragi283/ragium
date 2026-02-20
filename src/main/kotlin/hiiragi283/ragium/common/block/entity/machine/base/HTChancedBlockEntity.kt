@@ -74,7 +74,7 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             recipe: RECIPE,
         ) {
             outputHandler.insert(recipe.assemble(input, level.registryAccess()))
-            recipe.getExtraResultItems(level).forEach(extraOutputHandler::insert)
+            recipe.getExtraResultItem(level)?.let(extraOutputHandler::insert)
         }
 
         // 副産物は余剰分が出ても無視される

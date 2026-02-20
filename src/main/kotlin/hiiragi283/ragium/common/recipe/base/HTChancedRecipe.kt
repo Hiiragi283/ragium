@@ -3,34 +3,20 @@ package hiiragi283.ragium.common.recipe.base
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.toResourcePair
+import hiiragi283.core.api.recipe.result.getStackOrNull
 import net.minecraft.core.HolderLookup
-import net.minecraft.util.RandomSource
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.LevelAccessor
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 abstract class HTChancedRecipe<INPUT : RecipeInput>(
     val result: HTItemResult,
-    val extraResults: List<HTChancedItemResult>,
+    val extraResult: Optional<HTChancedItemResult>,
     parameters: SubParameters,
 ) : HTProcessingRecipe<INPUT>(parameters) {
-    fun getExtraResultItems(level: LevelAccessor): List<ItemStack> = getExtraResultItems(level.registryAccess(), level.random)
-
-    fun getExtraResultItems(provider: HolderLookup.Provider, random: RandomSource): List<ItemStack> =
-        getExtraResultItems(provider, random.nextFloat())
-
-    fun getExtraResultItems(provider: HolderLookup.Provider, random: Float): List<ItemStack> {
-        val map: MutableMap<HTItemResourceType, Int> = mutableMapOf()
-
-        for (chanced: HTChancedItemResult in extraResults) {
-            val (resource: HTItemResourceType, count: Int) = chanced.getStackOrEmpty(provider, random).toResourcePair() ?: continue
-            map.compute(resource) { _, old: Int? -> (old ?: 0) + count }
-        }
-
-        return map.map { (resource: HTItemResourceType, count: Int) -> resource.toStack(count) }
-    }
+    fun getExtraResultItem(level: LevelAccessor): ItemStack? = extraResult.getOrNull()?.getStackOrNull(level)
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
 }

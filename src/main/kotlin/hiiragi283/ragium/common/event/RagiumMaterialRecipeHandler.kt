@@ -162,7 +162,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // レシピを登録
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(prefix, entry, inputCount)
-            result = resultCreator.create(dust, outputCount)
+            this.result = resultCreator.create(dust, outputCount)
             time = getTimeFromHardness(entry, time) ?: return
             recipeId suffix "_from_${prefix.name}"
         }
@@ -182,7 +182,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // レシピを登録
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(inputTag)
-            result = resultCreator.create(dust)
+            this.result = resultCreator.create(dust)
             time = getTimeFromHardness(entry, time) ?: return
             recipeId suffix "_from_${defaultPart.getSuffix()}"
         }
@@ -199,11 +199,11 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             // 材料
             ingredient = inputCreator.create(prefix, entry)
             // 主産物
-            result = resultCreator.create(crushedOre, prefix.getScaledAmount(2, entry).toInt())
+            this.result = resultCreator.create(crushedOre, prefix.getScaledAmount(2, entry).toInt())
             // 副産物
             entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(HTExtraOreResultMap.Phase.CRUSH_ORE)
-                ?.let(extraResults::add)
+                ?.let(extraResult::plusAssign)
 
             recipeId suffix "_from_${prefix.name}"
         }
@@ -221,11 +221,11 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             // 材料
             ingredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
             // 主産物
-            result = resultCreator.create(dust, CommonTagPrefixes.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
+            this.result = resultCreator.create(dust, CommonTagPrefixes.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
             // 副産物
             entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(HTExtraOreResultMap.Phase.CRUSH_CRUSHED)
-                ?.let(extraResults::add)
+                ?.let(extraResult::plusAssign)
 
             recipeId suffix "_from_crushed_ore"
         }
@@ -342,11 +342,11 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
             fluidIngredient = inputCreator.water(250)
             // 主産物
-            result = resultCreator.create(dust, CommonTagPrefixes.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
+            this.result = resultCreator.create(dust, CommonTagPrefixes.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
             // 副産物
             entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
-                ?.let(extraResults::add)
+                ?.let(extraResult::plusAssign)
 
             recipeId suffix "_from_crushed_ore"
         }

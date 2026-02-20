@@ -4,7 +4,6 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTItemHolderLike
@@ -80,14 +79,10 @@ object RagiumRecipeSerializers {
     @JvmStatic
     private fun <R : HTItemToChancedRecipe> itemChanced(
         factory: HTItemToChancedRecipeBuilder.Factory<R>,
-        max: Int,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTItemToChancedRecipe::ingredient),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTItemToChancedRecipe::result),
-        HTChancedItemResult.CODEC
-            .listOrElement(0, max)
-            .optionalFieldOf(HTConst.EXTRA_RESULT, listOf())
-            .forGetter(HTItemToChancedRecipe::extraResults),
+        HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTItemToChancedRecipe::extraResult),
         HTProcessingRecipe.SubParameters.CODEC.forGetter(HTItemToChancedRecipe::parameters),
         factory::create,
     )
@@ -134,10 +129,10 @@ object RagiumRecipeSerializers {
         REGISTER.registerSerializer(RagiumConst.COMPRESSING, itemToItem(::HTCompressingRecipe))
 
     @JvmField
-    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, itemChanced(::HTCrushingRecipe, 3))
+    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, itemChanced(::HTCrushingRecipe))
 
     @JvmField
-    val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, itemChanced(::HTCuttingRecipe, 1))
+    val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, itemChanced(::HTCuttingRecipe))
 
     @JvmField
     val LATHING: RecipeSerializer<HTLathingRecipe> = REGISTER.registerSerializer(RagiumConst.LATHING, itemToItem(::HTLathingRecipe))
@@ -226,10 +221,7 @@ object RagiumRecipeSerializers {
             HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTWashingRecipe::itemIngredient),
             HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTWashingRecipe::fluidIngredient),
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTWashingRecipe::result),
-            HTChancedItemResult.CODEC
-                .listOrElement(0, 3)
-                .optionalFieldOf(HTConst.EXTRA_RESULT, listOf())
-                .forGetter(HTWashingRecipe::extraResults),
+            HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTWashingRecipe::extraResult),
             HTProcessingRecipe.SubParameters.CODEC.forGetter(HTWashingRecipe::parameters),
             ::HTWashingRecipe,
         ),

@@ -10,6 +10,7 @@ import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
 import net.minecraft.data.recipes.RecipeOutput
+import java.util.Optional
 
 class HTItemToChancedRecipeBuilder(prefix: String, private val factory: Factory<*>) : HTChancedRecipeBuilder(prefix) {
     companion object {
@@ -32,7 +33,7 @@ class HTItemToChancedRecipeBuilder(prefix: String, private val factory: Factory<
         time /= 2
     }
 
-    override fun createRecipe(): HTItemToChancedRecipe = factory.create(ingredient, result, extraResults, subParameters())
+    override fun createRecipe(): HTItemToChancedRecipe = factory.create(ingredient, result, extraResult.toOptional(), subParameters())
 
     //    Factory    //
 
@@ -40,7 +41,7 @@ class HTItemToChancedRecipeBuilder(prefix: String, private val factory: Factory<
         fun create(
             ingredient: HTItemIngredient,
             result: HTItemResult,
-            extraResults: List<HTChancedItemResult>,
+            extraResult: Optional<HTChancedItemResult>,
             parameters: HTProcessingRecipe.SubParameters,
         ): RECIPE
     }

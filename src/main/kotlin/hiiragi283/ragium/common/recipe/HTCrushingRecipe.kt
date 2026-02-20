@@ -8,13 +8,14 @@ import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import java.util.Optional
 
 class HTCrushingRecipe(
     ingredient: HTItemIngredient,
     result: HTItemResult,
-    extraResults: List<HTChancedItemResult>,
+    extraResult: Optional<HTChancedItemResult>,
     parameters: SubParameters,
-) : HTItemToChancedRecipe(ingredient, result, extraResults, parameters) {
+) : HTItemToChancedRecipe(ingredient, result, extraResult, parameters) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CRUSHING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.CRUSHING.get()

@@ -11,27 +11,15 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
+import java.util.Optional
 
 class HTWashingRecipe(
     val itemIngredient: HTItemIngredient,
     val fluidIngredient: HTFluidIngredient,
     result: HTItemResult,
-    extraResults: List<HTChancedItemResult>,
+    extraResult: Optional<HTChancedItemResult>,
     parameters: SubParameters,
-) : HTChancedRecipe<HTItemAndFluidRecipeInput>(result, extraResults, parameters) {
-    constructor(
-        pair: Pair<HTItemIngredient, HTFluidIngredient>,
-        result: HTItemResult,
-        extraResults: List<HTChancedItemResult>,
-        parameters: SubParameters,
-    ) : this(
-        pair.first,
-        pair.second,
-        result,
-        extraResults,
-        parameters,
-    )
-
+) : HTChancedRecipe<HTItemAndFluidRecipeInput>(result, extraResult, parameters) {
     override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean =
         itemIngredient.test(input.item) && fluidIngredient.test(input.fluid)
 

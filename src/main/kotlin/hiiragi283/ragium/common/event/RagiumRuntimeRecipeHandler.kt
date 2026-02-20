@@ -5,7 +5,6 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
@@ -115,9 +114,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                     HTItemToChancedRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
                         result = resultCreator.create(boat)
-                        extraResults += HTChancedItemResult.create {
-                            result = resultCreator.create(Items.CHEST)
-                        }
+                        extraResult += resultCreator.create(Items.CHEST)
                     }
                 }
             }
@@ -127,9 +124,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 HTItemToChancedRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
                     result = resultCreator.create(planks)
-                    extraResults += HTChancedItemResult.create {
-                        result = resultCreator.create(Items.STICK)
-                    }
+                    extraResult += resultCreator.create(Items.STICK)
                     recipeId suffix "_from_fence"
                 }
             }
@@ -138,9 +133,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 HTItemToChancedRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
                     result = resultCreator.create(planks, 2)
-                    extraResults += HTChancedItemResult.create {
-                        result = resultCreator.create(Items.STICK, 4)
-                    }
+                    extraResult += resultCreator.create(Items.STICK, 4)
                     recipeId suffix "_from_fence_gate"
                 }
             }
@@ -157,10 +150,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 HTItemToChancedRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
                     result = resultCreator.create(planks, 2)
-                    extraResults += HTChancedItemResult.create {
-                        result = resultCreator.create(Items.STICK)
-                        chance = fraction(1, 3)
-                    }
+                    extraResult += resultCreator.create(Items.STICK) to fraction(1, 3)
                     recipeId suffix "_from_sign"
                 }
             }
@@ -169,10 +159,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 HTItemToChancedRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
                     result = resultCreator.create(planks, 4)
-                    extraResults += HTChancedItemResult.create {
-                        result = resultCreator.create(Items.CHAIN)
-                        chance = fraction(1, 3)
-                    }
+                    extraResult += resultCreator.create(Items.CHAIN) to fraction(1, 3)
                     recipeId suffix "_from_hanging_sign"
                 }
             }

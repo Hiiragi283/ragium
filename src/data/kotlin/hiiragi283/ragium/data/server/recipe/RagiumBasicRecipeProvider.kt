@@ -2,10 +2,10 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
@@ -19,6 +19,7 @@ import net.neoforged.neoforge.common.Tags
 object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         bending()
+        compressing()
         crushing()
         cutting()
         lathing()
@@ -29,6 +30,23 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
     @JvmStatic
     private fun bending() {}
+
+    //    Compressing    //
+
+    @JvmStatic
+    private fun compressing() {
+        // Sculk Vein -> Sculk
+        HTSingleRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(Items.SCULK_VEIN, 8)
+            result = resultCreator.create(Items.SCULK)
+        }
+
+        // Sawdust -> Compressed
+        HTSingleRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 8)
+            result = resultCreator.create(HCItems.COMPRESSED_SAWDUST)
+        }
+    }
 
     //    Crushing    //
 
@@ -46,18 +64,14 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.CROPS_BEETROOT)
             result = resultCreator.create(Items.SUGAR, 2)
-            extraResults += HTChancedItemResult.create {
-                result = resultCreator.create(RagiumItems.MOLASSES)
-            }
+            extraResult += resultCreator.create(RagiumItems.MOLASSES)
             recipeId suffix "_from_beetroot"
         }
         // Sugar Cane -> Sugar + Molasses
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.CROPS_SUGAR_CANE)
             result = resultCreator.create(Items.SUGAR, 4)
-            extraResults += HTChancedItemResult.create {
-                result = resultCreator.create(RagiumItems.MOLASSES)
-            }
+            extraResult += resultCreator.create(RagiumItems.MOLASSES)
             recipeId suffix "_from_cane"
         }
 
@@ -95,20 +109,14 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
             result = resultCreator.create(Items.SAND, 2)
-            extraResults += HTChancedItemResult.create {
-                result = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER)
-                chance = fraction(1, 4)
-            }
+            extraResult += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER) to fraction(1, 4)
             recipeId suffix "_from_sandstone"
         }
 
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.SANDSTONE_RED_BLOCKS)
             result = resultCreator.create(Items.RED_SAND, 2)
-            extraResults += HTChancedItemResult.create {
-                result = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER)
-                chance = fraction(1, 4)
-            }
+            extraResult += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER) to fraction(1, 4)
             recipeId suffix "_from_sandstone"
         }
     }
@@ -143,11 +151,19 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
     @JvmStatic
     private fun cutting() {
-        // Stick
+        // Sapling -> Stick
         HTItemToChancedRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(ItemTags.SAPLINGS)
             result = resultCreator.create(Items.STICK)
             recipeId suffix "_from_saplings"
+        }
+
+        // Book -> Paper + Leather
+        HTItemToChancedRecipeBuilder.cutting(output) {
+            ingredient = inputCreator.create(Items.BOOK)
+            result = resultCreator.create(Items.PAPER, 3)
+            extraResult += resultCreator.create(Items.LEATHER)
+            recipeId suffix "_from_book"
         }
     }
 
@@ -155,10 +171,10 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
     @JvmStatic
     private fun lathing() {
-        // Stick
+        // Slab -> Stick
         HTSingleRecipeBuilder.lathing(output) {
             ingredient = inputCreator.create(ItemTags.WOODEN_SLABS)
-            result = resultCreator.create(Items.STICK, 4)
+            result = resultCreator.create(Items.STICK, 2)
             recipeId suffix "_from_wooden_slabs"
         }
     }

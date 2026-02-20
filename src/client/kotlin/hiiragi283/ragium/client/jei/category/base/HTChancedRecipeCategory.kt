@@ -8,6 +8,7 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import net.minecraft.world.item.crafting.RecipeHolder
+import kotlin.jvm.optionals.getOrNull
 
 abstract class HTChancedRecipeCategory<RECIPE : HTChancedRecipe<*>>(
     guiHelper: IGuiHelper,
@@ -25,7 +26,7 @@ abstract class HTChancedRecipeCategory<RECIPE : HTChancedRecipe<*>>(
             .addItemSlot(getPosition(5.5), getPosition(0.5), recipe.result)
             .setSlotBackground(HTBackgroundType.OUTPUT)
         builder
-            .addItemSlot(getPosition(5.5), getPosition(2), recipe.extraResults.getOrNull(0))
+            .addItemSlot(getPosition(5.5), getPosition(2), recipe.extraResult.getOrNull())
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
     }
 

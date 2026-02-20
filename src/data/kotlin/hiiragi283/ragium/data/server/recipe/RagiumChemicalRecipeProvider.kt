@@ -4,7 +4,6 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
-import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -239,10 +238,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             itemIngredient = inputCreator.create(Tags.Items.GRAVELS)
             fluidIngredient = inputCreator.water(250)
             result = resultCreator.create(Items.FLINT)
-            extraResults += HTChancedItemResult.create {
-                result = resultCreator.create(Items.FLINT)
-                chance = fraction(1, 3)
-            }
+            extraResult += resultCreator.create(Items.FLINT) to fraction(1, 3)
             time = 20 * 5
         }
 
