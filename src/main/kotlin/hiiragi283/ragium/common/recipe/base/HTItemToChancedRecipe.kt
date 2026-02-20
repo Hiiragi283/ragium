@@ -11,7 +11,7 @@ abstract class HTItemToChancedRecipe(
     val ingredient: HTItemIngredient,
     result: HTItemResult,
     extraResult: Optional<HTChancedItemResult>,
-    parameters: SubParameters,
-) : HTChancedRecipe<SingleRecipeInput>(result, extraResult, parameters) {
+    time: Int,
+) : HTChancedRecipe<SingleRecipeInput>(result, extraResult, time) {
     final override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
 }

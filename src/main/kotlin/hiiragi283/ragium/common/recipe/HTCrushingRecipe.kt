@@ -14,8 +14,8 @@ class HTCrushingRecipe(
     ingredient: HTItemIngredient,
     result: HTItemResult,
     extraResult: Optional<HTChancedItemResult>,
-    parameters: SubParameters,
-) : HTItemToChancedRecipe(ingredient, result, extraResult, parameters) {
+    time: Int,
+) : HTItemToChancedRecipe(ingredient, result, extraResult, time) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CRUSHING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.CRUSHING.get()

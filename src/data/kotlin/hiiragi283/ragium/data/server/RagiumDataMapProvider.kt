@@ -5,7 +5,6 @@ import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.registry.HTBlockHolderLike
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.toLike
@@ -54,9 +53,9 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     // Block
     private fun fermentSources() {
         builder(RagiumDataMapTypes.FERMENT_SOURCE)
-            .addHolder(HTBlockHolderLike.of(Blocks.BROWN_MUSHROOM), 1)
-            .addHolder(HTBlockHolderLike.of(Blocks.MYCELIUM), 1)
-            .addHolder(HTBlockHolderLike.of(Blocks.RED_MUSHROOM), 1)
+            .addHolder(Blocks.BROWN_MUSHROOM.toLike(), 1)
+            .addHolder(Blocks.MYCELIUM.toLike(), 1)
+            .addHolder(Blocks.RED_MUSHROOM.toLike(), 1)
     }
 
     // Entity Type

@@ -24,6 +24,6 @@ class HTWashingRecipeBuilder : HTChancedRecipeBuilder(RagiumConst.WASHING) {
         fluidIngredient,
         result,
         extraResult.toOptional(),
-        subParameters(),
+        time,
     )
 }

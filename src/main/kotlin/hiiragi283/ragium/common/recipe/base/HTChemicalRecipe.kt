@@ -15,8 +15,8 @@ import net.minecraft.world.level.Level
 typealias HTChemicalIngredient = Ior<List<HTItemIngredient>, List<HTFluidIngredient>>
 typealias HTChemicalResult = Ior<List<HTItemResult>, List<HTFluidResult>>
 
-abstract class HTChemicalRecipe(val ingredients: HTChemicalIngredient, val results: HTChemicalResult, parameters: SubParameters) :
-    HTProcessingRecipe<HTChemicalRecipeInput>(parameters) {
+abstract class HTChemicalRecipe(val ingredients: HTChemicalIngredient, val results: HTChemicalResult, final override val time: Int) :
+    HTProcessingRecipe<HTChemicalRecipeInput> {
     override fun matches(input: HTChemicalRecipeInput, level: Level): Boolean = matchIngredients(input)
 
     protected fun matchIngredients(input: HTChemicalRecipeInput): Boolean = ingredients.map(

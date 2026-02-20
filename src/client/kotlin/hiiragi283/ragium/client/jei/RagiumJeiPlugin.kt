@@ -95,7 +95,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 val recipe: HCBrewingRecipe = holder.value
                 RecipeHolder(
                     holder.id,
-                    HTCanningRecipe(Ior.Both(recipe.ingredient, recipe.potionFrom), Ior.Right(recipe.potionTo), recipe.parameters),
+                    HTCanningRecipe(Ior.Both(recipe.ingredient, recipe.potionFrom), Ior.Right(recipe.potionTo), recipe.time),
                 )
             },
         )

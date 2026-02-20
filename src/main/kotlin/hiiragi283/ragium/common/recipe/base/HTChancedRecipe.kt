@@ -14,8 +14,8 @@ import kotlin.jvm.optionals.getOrNull
 abstract class HTChancedRecipe<INPUT : RecipeInput>(
     val result: HTItemResult,
     val extraResult: Optional<HTChancedItemResult>,
-    parameters: SubParameters,
-) : HTProcessingRecipe<INPUT>(parameters) {
+    final override val time: Int,
+) : HTProcessingRecipe<INPUT> {
     fun getExtraResultItem(level: LevelAccessor): ItemStack? = extraResult.getOrNull()?.getStackOrNull(level)
 
     final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)

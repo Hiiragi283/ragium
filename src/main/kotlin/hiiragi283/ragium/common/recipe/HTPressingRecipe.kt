@@ -8,8 +8,8 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTPressingRecipe(ingredients: List<HTItemIngredient>, result: HTItemResult, parameters: SubParameters) :
-    HTCombineItemRecipe(ingredients, result, parameters) {
+class HTPressingRecipe(ingredients: List<HTItemIngredient>, result: HTItemResult, time: Int) :
+    HTCombineItemRecipe(ingredients, result, time) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PRESSING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.PRESSING.get()

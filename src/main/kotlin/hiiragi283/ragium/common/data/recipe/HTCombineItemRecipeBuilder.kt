@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
-import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
@@ -35,12 +34,12 @@ class HTCombineItemRecipeBuilder(prefix: String, private val factory: Factory<*>
     override fun createRecipe(): HTCombineItemRecipe = factory.create(
         ingredients,
         result,
-        subParameters(),
+        time,
     )
 
     //    Factory    //
 
     fun interface Factory<RECIPE : HTCombineItemRecipe> {
-        fun create(ingredients: List<HTItemIngredient>, result: HTItemResult, parameters: HTProcessingRecipe.SubParameters): RECIPE
+        fun create(ingredients: List<HTItemIngredient>, result: HTItemResult, time: Int): RECIPE
     }
 }

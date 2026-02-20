@@ -5,6 +5,7 @@ import hiiragi283.core.api.event.HTRegisterWidgetRendererEvent
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.getFluidType
 import hiiragi283.core.api.world.getTypedBlockEntity
 import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.core.client.data.HCClientResourceProvider

@@ -9,6 +9,7 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.asFluidSequence
+import hiiragi283.core.api.registry.getBucket
 import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
@@ -52,7 +53,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         .lookupOrThrow(Registries.FLUID)
         .asFluidSequence()
         .filter { holder: HTFluidHolderLike<*> ->
-            val fluid: Fluid = holder.asFluid()
+            val fluid: Fluid = holder.get()
             fluid.isSource(fluid.defaultFluidState())
         }
 
@@ -66,7 +67,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             // レシピを登録
             HTItemOrFluidRecipeBuilder.canning(output) {
                 ingredient += inputCreator.create(Tags.Items.BUCKETS_EMPTY)
-                ingredient += inputCreator.create(holder.asFluid(), HTConst.DEFAULT_FLUID_AMOUNT)
+                ingredient += inputCreator.create(holder.get(), HTConst.DEFAULT_FLUID_AMOUNT)
                 result += resultCreator.create(bucket)
                 time = 20
             }

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.registry.toResource
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput

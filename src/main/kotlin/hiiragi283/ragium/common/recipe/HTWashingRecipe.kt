@@ -18,8 +18,8 @@ class HTWashingRecipe(
     val fluidIngredient: HTFluidIngredient,
     result: HTItemResult,
     extraResult: Optional<HTChancedItemResult>,
-    parameters: SubParameters,
-) : HTChancedRecipe<HTItemAndFluidRecipeInput>(result, extraResult, parameters) {
+    time: Int,
+) : HTChancedRecipe<HTItemAndFluidRecipeInput>(result, extraResult, time) {
     override fun matches(input: HTItemAndFluidRecipeInput, level: Level): Boolean =
         itemIngredient.test(input.item) && fluidIngredient.test(input.fluid)
 

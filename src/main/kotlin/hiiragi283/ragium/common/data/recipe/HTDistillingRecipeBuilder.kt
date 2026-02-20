@@ -30,6 +30,6 @@ class HTDistillingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.DISTILLI
     override fun createRecipe(): HTDistillingRecipe = HTDistillingRecipe(
         ingredient,
         (listOfNotNull(itemResult) to fluidResults).toIorOrThrow(),
-        subParameters(),
+        time,
     )
 }

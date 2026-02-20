@@ -1,6 +1,5 @@
 {
   "type": "ragium:crushing",
-  "exp": 1,
   "ingredient": {
     "amount": 1,
     "items": "#c:ores/netherite_scrap"

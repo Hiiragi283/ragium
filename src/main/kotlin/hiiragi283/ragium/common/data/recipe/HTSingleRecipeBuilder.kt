@@ -48,11 +48,11 @@ class HTSingleRecipeBuilder<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>>(p
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): HTProcessingRecipe<*> = factory.create(ingredient, result, subParameters())
+    override fun createRecipe(): HTProcessingRecipe<*> = factory.create(ingredient, result, time)
 
     //    Factory    //
 
     fun interface Factory<ING : HTIngredient<*, *>, RES : HTRecipeResult<*>, RECIPE : HTProcessingRecipe<*>> {
-        fun create(ingredient: ING, result: RES, parameters: HTProcessingRecipe.SubParameters): RECIPE
+        fun create(ingredient: ING, result: RES, time: Int): RECIPE
     }
 }

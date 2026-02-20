@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
-import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
@@ -33,7 +32,7 @@ class HTItemToChancedRecipeBuilder(prefix: String, private val factory: Factory<
         time /= 2
     }
 
-    override fun createRecipe(): HTItemToChancedRecipe = factory.create(ingredient, result, extraResult.toOptional(), subParameters())
+    override fun createRecipe(): HTItemToChancedRecipe = factory.create(ingredient, result, extraResult.toOptional(), time)
 
     //    Factory    //
 
@@ -42,7 +41,7 @@ class HTItemToChancedRecipeBuilder(prefix: String, private val factory: Factory<
             ingredient: HTItemIngredient,
             result: HTItemResult,
             extraResult: Optional<HTChancedItemResult>,
-            parameters: HTProcessingRecipe.SubParameters,
+            time: Int,
         ): RECIPE
     }
 }

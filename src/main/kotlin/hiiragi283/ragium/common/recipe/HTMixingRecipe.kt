@@ -8,8 +8,8 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTMixingRecipe(ingredients: HTChemicalIngredient, results: HTChemicalResult, parameters: SubParameters) :
-    HTChemicalRecipe(ingredients, results, parameters) {
+class HTMixingRecipe(ingredients: HTChemicalIngredient, results: HTChemicalResult, time: Int) :
+    HTChemicalRecipe(ingredients, results, time) {
     companion object {
         const val MAX_FLUID_INPUT = 2
         const val MAX_FLUID_OUTPUT = 2

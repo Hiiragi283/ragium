@@ -8,8 +8,8 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTWiringRecipe(ingredient: HTItemIngredient, result: HTItemResult, parameters: SubParameters) :
-    HTSingleProcessingRecipe.ItemToItem(ingredient, result, parameters) {
+class HTWiringRecipe(ingredient: HTItemIngredient, result: HTItemResult, time: Int) :
+    HTSingleProcessingRecipe.ItemToItem(ingredient, result, time) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.WIRING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.WIRING.get()

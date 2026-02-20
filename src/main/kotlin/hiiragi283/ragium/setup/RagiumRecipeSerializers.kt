@@ -72,7 +72,7 @@ object RagiumRecipeSerializers {
             .fieldOf(HTConst.INGREDIENT)
             .forGetter(HTCombineItemRecipe::ingredients),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCombineItemRecipe::result),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTCombineItemRecipe::parameters),
+        HTProcessingRecipe.timeCodec(),
         factory::create,
     )
 
@@ -83,7 +83,7 @@ object RagiumRecipeSerializers {
         HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTItemToChancedRecipe::ingredient),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTItemToChancedRecipe::result),
         HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTItemToChancedRecipe::extraResult),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTItemToChancedRecipe::parameters),
+        HTProcessingRecipe.timeCodec(),
         factory::create,
     )
 
@@ -101,7 +101,7 @@ object RagiumRecipeSerializers {
                 HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT),
                 HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT),
             ).forGetter(HTItemOrFluidRecipe::result),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTItemOrFluidRecipe::parameters),
+        HTProcessingRecipe.timeCodec(),
         factory::create,
     )
 
@@ -111,7 +111,7 @@ object RagiumRecipeSerializers {
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSingleProcessingRecipe.ItemToItem::ingredient),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSingleProcessingRecipe.ItemToItem::result),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTSingleProcessingRecipe.ItemToItem::parameters),
+        HTProcessingRecipe.timeCodec(),
         factory::create,
     )
 
@@ -151,7 +151,7 @@ object RagiumRecipeSerializers {
         MapBiCodec.composite(
             HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTDistillingRecipe::ingredient),
             chemRes(HTDistillingRecipe.MAX_ITEM_OUTPUT, HTDistillingRecipe.MAX_FLUID_OUTPUT).forGetter(HTDistillingRecipe::results),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTDistillingRecipe::parameters),
+            HTProcessingRecipe.timeCodec(),
             ::HTDistillingRecipe,
         ),
     )
@@ -194,7 +194,7 @@ object RagiumRecipeSerializers {
     ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
         chemIng(maxItemIn, maxFluidIn).forGetter(HTChemicalRecipe::ingredients),
         chemRes(maxItemOut, maxFluidOut).forGetter(HTChemicalRecipe::results),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTChemicalRecipe::parameters),
+        HTProcessingRecipe.timeCodec(),
         factory::create,
     )
 
@@ -222,7 +222,7 @@ object RagiumRecipeSerializers {
             HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTWashingRecipe::fluidIngredient),
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTWashingRecipe::result),
             HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTWashingRecipe::extraResult),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTWashingRecipe::parameters),
+            HTProcessingRecipe.timeCodec(),
             ::HTWashingRecipe,
         ),
     )
@@ -243,7 +243,7 @@ object RagiumRecipeSerializers {
                     true,
                 ).fieldOf("enchantment")
                 .forGetter(HTEnchantingRecipe::contents),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTEnchantingRecipe::parameters),
+            HTProcessingRecipe.timeCodec(),
             ::HTEnchantingRecipe,
         ),
     )
@@ -255,7 +255,7 @@ object RagiumRecipeSerializers {
             HTItemHolderLike.HOLDER_CODEC.fieldOf("seed").forGetter(HTPlantingRecipe::seed),
             HTItemIngredient.UNSIZED_CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
             HTItemResult.CODEC.fieldOf("crop").forGetter(HTPlantingRecipe::crop),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTPlantingRecipe::parameters),
+            HTProcessingRecipe.timeCodec(),
             ::HTPlantingRecipe,
         ),
     )

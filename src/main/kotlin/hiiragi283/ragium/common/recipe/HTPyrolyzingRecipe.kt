@@ -11,11 +11,8 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTPyrolyzingRecipe(
-    ingredient: Ior<HTItemIngredient, HTFluidIngredient>,
-    result: Ior<HTItemResult, HTFluidResult>,
-    parameters: SubParameters,
-) : HTItemOrFluidRecipe(ingredient, result, parameters) {
+class HTPyrolyzingRecipe(ingredient: Ior<HTItemIngredient, HTFluidIngredient>, result: Ior<HTItemResult, HTFluidResult>, time: Int) :
+    HTItemOrFluidRecipe(ingredient, result, time) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PYROLYZING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.PYROLYZING.get()

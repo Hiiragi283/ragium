@@ -8,7 +8,6 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.toResourcePair
-import hiiragi283.core.api.storage.item.toResource
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -24,8 +23,8 @@ class HTPlantingRecipe(
     val seed: HTItemHolderLike<*>,
     val soil: HTItemIngredient,
     val crop: HTItemResult,
-    parameters: SubParameters,
-) : HTProcessingRecipe<HTPlantingRecipe.Input>(parameters) {
+    override val time: Int,
+) : HTProcessingRecipe<HTPlantingRecipe.Input> {
     companion object {
         const val FLUID_AMOUNT = 50
     }

@@ -54,6 +54,6 @@ class HTEnchantingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.ENCHANTI
         book,
         ingredient,
         result.content,
-        subParameters(),
+        time,
     )
 }

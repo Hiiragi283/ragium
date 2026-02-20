@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.data.recipe
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.monad.toIorOrThrow
-import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
@@ -36,12 +35,12 @@ class HTChemicalRecipeBuilder(prefix: String, private val factory: Factory<*>) :
     override fun createRecipe(): HTChemicalRecipe = factory.create(
         (itemIngredients to fluidIngredients).toIorOrThrow(),
         (itemResults to fluidResults).toIorOrThrow(),
-        subParameters(),
+        time,
     )
 
     //    Factory    //
 
     fun interface Factory<RECIPE : HTChemicalRecipe> {
-        fun create(ingredient: HTChemicalIngredient, result: HTChemicalResult, parameters: HTProcessingRecipe.SubParameters): RECIPE
+        fun create(ingredient: HTChemicalIngredient, result: HTChemicalResult, time: Int): RECIPE
     }
 }

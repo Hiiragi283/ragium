@@ -9,8 +9,8 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
-abstract class HTCombineItemRecipe(val ingredients: List<HTItemIngredient>, val result: HTItemResult, parameters: SubParameters) :
-    HTProcessingRecipe<HTShapelessRecipeInput>(parameters) {
+abstract class HTCombineItemRecipe(val ingredients: List<HTItemIngredient>, val result: HTItemResult, final override val time: Int) :
+    HTProcessingRecipe<HTShapelessRecipeInput> {
     override fun matches(input: HTShapelessRecipeInput, level: Level): Boolean =
         !HTShapelessRecipeHelper.shapelessMatch(ingredients, input.items).isEmpty()
 

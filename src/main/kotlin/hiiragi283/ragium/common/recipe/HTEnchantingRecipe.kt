@@ -27,8 +27,8 @@ class HTEnchantingRecipe(
     val book: HTItemIngredient,
     val ingredient: HTItemIngredient,
     val contents: Either<Holder<Enchantment>, ItemEnchantments>,
-    parameters: SubParameters,
-) : HTProcessingRecipe<HTEnchantingRecipe.Input>(parameters) {
+    override val time: Int,
+) : HTProcessingRecipe<HTEnchantingRecipe.Input> {
     val expIngredient: HTFluidIngredient by lazy {
         val amount: Int = contents
             .map(

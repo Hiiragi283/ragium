@@ -56,7 +56,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         HTItemToChancedRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(Tags.Items.ORES_NETHERITE_SCRAP)
             result = resultCreator.material(CommonTagPrefixes.SCRAP, VanillaMaterialKeys.NETHERITE, 2)
-            exp = fraction(1f)
             recipeId suffix "_from_ore"
         }
 

@@ -5,7 +5,6 @@ import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.function.identityLeft
 import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.monad.toIorOrThrow
-import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
@@ -79,16 +78,12 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
     override fun createRecipe(): HTItemOrFluidRecipe = factory.create(
         ingredient.toIor(),
         result.toIor(),
-        subParameters(),
+        time,
     )
 
     //    Factory    //
 
     fun interface Factory<RECIPE : HTItemOrFluidRecipe> {
-        fun create(
-            ingredient: Ior<HTItemIngredient, HTFluidIngredient>,
-            result: Ior<HTItemResult, HTFluidResult>,
-            parameters: HTProcessingRecipe.SubParameters,
-        ): RECIPE
+        fun create(ingredient: Ior<HTItemIngredient, HTFluidIngredient>, result: Ior<HTItemResult, HTFluidResult>, time: Int): RECIPE
     }
 }

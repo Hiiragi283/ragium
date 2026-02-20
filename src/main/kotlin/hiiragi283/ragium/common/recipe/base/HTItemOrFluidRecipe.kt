@@ -16,8 +16,8 @@ import net.neoforged.neoforge.fluids.FluidStack
 abstract class HTItemOrFluidRecipe(
     val ingredient: Ior<HTItemIngredient, HTFluidIngredient>,
     val result: Ior<HTItemResult, HTFluidResult>,
-    parameters: SubParameters,
-) : HTProcessingRecipe<HTItemAndFluidRecipeInput>(parameters),
+    final override val time: Int,
+) : HTProcessingRecipe<HTItemAndFluidRecipeInput>,
     HTFluidRecipe {
     final override fun getResultFluid(registries: HolderLookup.Provider): FluidStack =
         result.getRight()?.getStackResult(registries)?.value() ?: FluidStack.EMPTY
