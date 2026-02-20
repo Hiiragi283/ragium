@@ -18,7 +18,6 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
-import hiiragi283.ragium.common.crafting.HTPotionBucketRecipe
 import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -67,8 +66,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         }
         // Loot Ticket
         lootTickets()
-        // Potion Drop -> Potion
-        save(id("shapeless/potion_bucket"), HTPotionBucketRecipe(CraftingBookCategory.MISC))
 
         machines()
         devices()

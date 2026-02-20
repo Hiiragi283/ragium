@@ -5,7 +5,7 @@ import hiiragi283.core.api.integration.jei.addFluidStack
 import hiiragi283.core.api.integration.jei.addFluidStacks
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.ragium.api.integration.jei.HTItemOrFluidRecipeCategoryExtension
-import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
+import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.neoforge.NeoForgeTypes
@@ -15,26 +15,28 @@ import net.minecraft.core.RegistryAccess
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTBucketDrainingRecipeCategoryExtension(val manager: IIngredientManager) :
-    HTItemOrFluidRecipeCategoryExtension<HTBucketDrainingRecipe> {
-    override fun <T : IIngredientAcceptor<T>> setInputFluid(recipe: HTBucketDrainingRecipe, accessor: T) {}
+class HTDrainingRecipeCategoryExtension<RECIPE : HTItemOrFluidRecipe>(
+    private val manager: IIngredientManager,
+    private val inputFilter: (ItemStack) -> Boolean,
+) : HTItemOrFluidRecipeCategoryExtension<RECIPE> {
+    override fun <T : IIngredientAcceptor<T>> setInputFluid(recipe: RECIPE, accessor: T) {}
 
-    override fun <T : IIngredientAcceptor<T>> setInputItem(recipe: HTBucketDrainingRecipe, accessor: T) {
+    override fun <T : IIngredientAcceptor<T>> setInputItem(recipe: RECIPE, accessor: T) {
         accessor
             .addItemStacks(
                 manager.allItemStacks
                     .asSequence()
-                    .filter(recipe::isFilledBucket)
+                    .filter(inputFilter)
                     .toList(),
             )
     }
 
-    override fun <T : IIngredientAcceptor<T>> setOutputFluid(recipe: HTBucketDrainingRecipe, accessor: T) {
+    override fun <T : IIngredientAcceptor<T>> setOutputFluid(recipe: RECIPE, accessor: T) {
         accessor.addFluidStacks(true, listOf())
     }
 
     override fun onDisplayedIngredientsUpdate(
-        recipe: HTBucketDrainingRecipe,
+        recipe: RECIPE,
         inputFluid: IRecipeSlotDrawable,
         inputItem: IRecipeSlotDrawable,
         outputItem: IRecipeSlotDrawable,

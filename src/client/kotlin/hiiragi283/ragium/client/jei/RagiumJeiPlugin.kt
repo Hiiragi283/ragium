@@ -16,12 +16,15 @@ import hiiragi283.ragium.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTPressingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTBucketDrainingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
+import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -41,15 +44,15 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         @JvmStatic
         lateinit var melting: HTItemOrFluidRecipeCategory
             private set
-        
+
         @JvmStatic
         lateinit var pyrolyzing: HTItemOrFluidRecipeCategory
             private set
-        
+
         @JvmStatic
         lateinit var freezing: HTItemOrFluidRecipeCategory
             private set
-        
+
         @JvmStatic
         lateinit var canning: HTItemOrFluidRecipeCategory
             private set
@@ -85,8 +88,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTCanningRecipe>())
 
         val manager: IIngredientManager = registration.jeiHelpers.ingredientManager
-        canning.addExtension(HTBucketDrainingRecipeCategoryExtension(manager))
+        canning.addExtension(HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, HTBucketDrainingRecipe::isFilledBucket))
         canning.addExtension(HTBucketFillingRecipeCategoryExtension(manager))
+
+        canning.addExtension(HTDrainingRecipeCategoryExtension<HTPotionDrainingRecipe>(manager, HTPotionDrainingRecipe::isPotion))
+        canning.addExtension(HTPotionFillingRecipeCategoryExtension(manager))
 
         registration.addRecipeCategories(
             // Machine - Basic

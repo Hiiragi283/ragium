@@ -15,7 +15,6 @@ import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.crafting.HTPotionBucketRecipe
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
@@ -47,10 +46,11 @@ import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
 import hiiragi283.ragium.common.recipe.base.HTSingleProcessingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
+import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
+import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
 import net.minecraft.world.item.enchantment.ItemEnchantments
 
 object RagiumRecipeSerializers {
@@ -68,8 +68,12 @@ object RagiumRecipeSerializers {
         REGISTER.registerSerializer("bucket_filling", MapBiCodecs.unit(HTBucketFillingRecipe))
 
     @JvmField
-    val POTION_BUCKET: SimpleCraftingRecipeSerializer<HTPotionBucketRecipe> =
-        REGISTER.registerSerializer("potion_bucket", SimpleCraftingRecipeSerializer(::HTPotionBucketRecipe))
+    val POTION_DRAINING: RecipeSerializer<HTPotionDrainingRecipe> =
+        REGISTER.registerSerializer("potion_draining", MapBiCodecs.unit(HTPotionDrainingRecipe))
+
+    @JvmField
+    val POTION_FILLING: RecipeSerializer<HTPotionFillingRecipe> =
+        REGISTER.registerSerializer("potion_filling", MapBiCodecs.unit(HTPotionFillingRecipe))
 
     //    Machine    //
 

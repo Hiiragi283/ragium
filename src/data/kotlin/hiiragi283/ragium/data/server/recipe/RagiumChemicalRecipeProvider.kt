@@ -21,6 +21,8 @@ import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
+import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
+import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
@@ -54,6 +56,9 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     private fun canning() {
         save(id(RagiumConst.CANNING, "bucket_draining"), HTBucketDrainingRecipe)
         save(id(RagiumConst.CANNING, "bucket_filling"), HTBucketFillingRecipe)
+
+        save(id(RagiumConst.CANNING, "potion_draining"), HTPotionDrainingRecipe)
+        save(id(RagiumConst.CANNING, "potion_filling"), HTPotionFillingRecipe)
 
         // Water Bottle
         HTItemOrFluidRecipeBuilder.canning(output) {
