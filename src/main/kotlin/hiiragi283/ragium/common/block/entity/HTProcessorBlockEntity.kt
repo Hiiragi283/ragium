@@ -4,12 +4,16 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.div
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.monad.Ior
+import hiiragi283.core.api.monad.toIor
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.HTFluidView
+import hiiragi283.core.api.storage.fluid.toStackOrEmpty
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.HTItemView
+import hiiragi283.core.api.storage.item.toStackOrEmpty
 import hiiragi283.core.api.times
 import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -63,9 +67,13 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     }
 
     fun createInput(itemView: HTItemView, fluidView: HTFluidView): HTItemAndFluidRecipeInput? {
-        val item: HTItemResourceType = itemView.getResource() ?: return null
-        val fluid: HTFluidResourceType = fluidView.getResource() ?: return null
-        return HTItemAndFluidRecipeInput(item.toStack(itemView.getAmount()), fluid.toStack(itemView.getAmount()))
+        val ior: Ior<HTItemResourceType, HTFluidResourceType> = (itemView.getResource() to fluidView.getResource()).toIor() ?: return null
+        return ior.toPair().let { (item: HTItemResourceType?, fluid: HTFluidResourceType?) ->
+            HTItemAndFluidRecipeInput(
+                item.toStackOrEmpty(itemView.getAmount()),
+                fluid.toStackOrEmpty(fluidView.getAmount()),
+            )
+        }
     }
 
     //    Energized    //

@@ -4,7 +4,6 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.common.recipe.HTFinderRecipeCache
 import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
@@ -66,7 +65,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
     override fun createRecipeComponent(): RecipeComponent = RecipeComponent()
 
     inner class RecipeComponent : HTEnchantingRecipeComponent<HTEnchantingRecipe.Input, HTEnchantingRecipe>(this) {
-        private val cache: HTRecipeCache<HTEnchantingRecipe.Input, HTEnchantingRecipe> = HTFinderRecipeCache(RagiumRecipeTypes.ENCHANTING)
+        private val cache: HTRecipeCache<HTEnchantingRecipe.Input, HTEnchantingRecipe> = RagiumRecipeTypes.ENCHANTING.createCache()
         private var currentEnch: List<EnchantmentInstance> = listOf()
 
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(expTank) }

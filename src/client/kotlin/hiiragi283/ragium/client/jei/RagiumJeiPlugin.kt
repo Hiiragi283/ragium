@@ -3,6 +3,7 @@ package hiiragi283.ragium.client.jei
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.api.monad.Ior
+import hiiragi283.core.api.recipe.map
 import hiiragi283.core.common.recipe.HCBrewingRecipe
 import hiiragi283.core.common.recipe.HTVanillaRecipeTypes
 import hiiragi283.core.setup.HCDataComponents
@@ -92,11 +93,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(
             getRecipeType(RagiumJeiRecipeTypes.CANNING),
             HTVanillaRecipeTypes.BREWING.getAllRecipes().map { holder: RecipeHolder<HCBrewingRecipe> ->
-                val recipe: HCBrewingRecipe = holder.value
-                RecipeHolder(
-                    holder.id,
-                    HTCanningRecipe(Ior.Both(recipe.ingredient, recipe.potionFrom), Ior.Right(recipe.potionTo), recipe.time),
-                )
+                holder.map { HTCanningRecipe(Ior.Both(it.ingredient, it.potionFrom), Ior.Right(it.potionTo), it.time) }
             },
         )
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)

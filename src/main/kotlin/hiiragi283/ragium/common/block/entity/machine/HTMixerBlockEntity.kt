@@ -67,7 +67,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
     private inner class RecipeComponent :
-        HTEnergizedRecipeComponent.Cached<HTChemicalRecipeInput, HTMixingRecipe>(RagiumRecipeTypes.MIXING, this) {
+        HTEnergizedRecipeComponent.ProcessingCached<HTChemicalRecipeInput, HTMixingRecipe>(RagiumRecipeTypes.MIXING, this) {
         private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
         private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
