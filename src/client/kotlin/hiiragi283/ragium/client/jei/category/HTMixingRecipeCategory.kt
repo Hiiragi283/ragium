@@ -1,6 +1,10 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.integration.jei.addFluidIngredient
+import hiiragi283.core.api.integration.jei.addFluidResult
+import hiiragi283.core.api.integration.jei.addItemIngredient
+import hiiragi283.core.api.integration.jei.addItemResult
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
@@ -25,24 +29,29 @@ class HTMixingRecipeCategory(guiHelper: IGuiHelper) :
         val (itemIn: List<HTItemIngredient>?, fluidIn: List<HTFluidIngredient>?) = recipe.ingredients.toPair()
         for (i: Int in (0 until HTMixingRecipe.MAX_ITEM_INPUT)) {
             builder
-                .addItemSlot(getPosition(1 + i % 2), getPosition(i / 2), itemIn?.getOrNull(i))
+                .addInputSlot(getPosition(1 + i % 2), getPosition(i / 2))
+                .addItemIngredient(itemIn?.getOrNull(i))
                 .setSlotBackground(HTBackgroundType.INPUT)
         }
         for (i: Int in (0 until HTMixingRecipe.MAX_FLUID_INPUT)) {
             builder
-                .addFluidSlot(getPosition(1 + i % 2), getPosition(2), false, fluidIn?.getOrNull(i))
+                .addInputSlot(getPosition(1 + i % 2), getPosition(2))
+                .addFluidIngredient(false, fluidIn?.getOrNull(i))
                 .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
         }
         // outputs
         val (itemOut: List<HTItemResult>?, fluidOut: List<HTFluidResult>?) = recipe.results.toPair()
         builder
-            .addItemSlot(getPosition(5.5), getPosition(0.5), itemOut?.firstOrNull())
+            .addOutputSlot(getPosition(5.5), getPosition(0.5))
+            .addItemResult(itemOut?.firstOrNull())
             .setSlotBackground(HTBackgroundType.OUTPUT)
         builder
-            .addFluidSlot(getPosition(5.5), getPosition(2), false, fluidOut?.getOrNull(0))
+            .addOutputSlot(getPosition(5.5), getPosition(2))
+            .addFluidResult(false, fluidOut?.getOrNull(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
         builder
-            .addFluidSlot(getPosition(6.5), getPosition(2), false, fluidOut?.getOrNull(1))
+            .addOutputSlot(getPosition(6.5), getPosition(2))
+            .addFluidResult(false, fluidOut?.getOrNull(1))
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
     }
 }

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.event
 
-import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
@@ -9,12 +8,10 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.asFluidSequence
-import hiiragi283.core.api.registry.getBucket
 import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
@@ -28,7 +25,6 @@ import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.neoforge.common.Tags
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
@@ -37,8 +33,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     @SubscribeEvent
     fun registerRuntimeRecipe(event: HTRegisterRuntimeRecipeEvent) {
         this.delegated = event.context
-
-        canFluidToBucket()
 
         cutWoodFromDefinition()
 
@@ -58,28 +52,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         }
 
     //    Canning    //
-
-    @JvmStatic
-    private fun canFluidToBucket() {
-        fluidSequence().forEach { holder: HTFluidHolderLike<*> ->
-            val bucket: Item = holder.getBucket()
-            if (bucket == Items.AIR) return@forEach
-            // レシピを登録
-            HTItemOrFluidRecipeBuilder.canning(output) {
-                ingredient += inputCreator.create(Tags.Items.BUCKETS_EMPTY)
-                ingredient += inputCreator.create(holder.get(), HTConst.DEFAULT_FLUID_AMOUNT)
-                result += resultCreator.create(bucket)
-                time = 20
-            }
-            HTItemOrFluidRecipeBuilder.canning(output) {
-                ingredient += inputCreator.create(bucket)
-                result += resultCreator.create(Items.BUCKET)
-                result += resultCreator.create(holder, HTConst.DEFAULT_FLUID_AMOUNT)
-                time = 20
-                recipeId replace holder.getId().withPrefix("bucket_from_")
-            }
-        }
-    }
 
     //    Cutting    //
 

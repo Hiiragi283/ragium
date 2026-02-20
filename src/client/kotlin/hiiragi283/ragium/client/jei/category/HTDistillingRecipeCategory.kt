@@ -1,6 +1,9 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.integration.jei.addFluidIngredient
+import hiiragi283.core.api.integration.jei.addFluidResult
+import hiiragi283.core.api.integration.jei.addItemResult
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
@@ -22,17 +25,20 @@ class HTDistillingRecipeCategory(guiHelper: IGuiHelper) :
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTDistillingRecipe, focuses: IFocusGroup) {
         // input
         builder
-            .addFluidSlot(getPosition(0), getPosition(0), false, recipe.ingredient)
+            .addInputSlot(getPosition(0), getPosition(0))
+            .addFluidIngredient(false, recipe.ingredient)
             .setSlotBackground(HTBackgroundType.INPUT)
         // outputs
         val (itemOut: List<HTItemResult>?, fluidOut: List<HTFluidResult>?) = recipe.results.toPair()
         builder
-            .addItemSlot(getPosition(3), getPosition(0), itemOut?.firstOrNull())
+            .addOutputSlot(getPosition(3), getPosition(0))
+            .addItemResult(itemOut?.firstOrNull())
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
 
         for (i: Int in 0 until HTDistillingRecipe.MAX_FLUID_OUTPUT) {
             builder
-                .addFluidSlot(getPosition(5 + i), getPosition(0), false, fluidOut?.getOrNull(i))
+                .addOutputSlot(getPosition(5 + i), getPosition(0))
+                .addFluidResult(false, fluidOut?.getOrNull(i))
                 .setSlotBackground(HTBackgroundType.OUTPUT)
         }
     }

@@ -1,6 +1,8 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.integration.jei.addItemIngredient
+import hiiragi283.core.api.integration.jei.addItemResult
 import hiiragi283.core.api.integration.jei.type.HTJeiRecipeType
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.client.jei.category.base.HTProcessingRecipeCategory
@@ -44,11 +46,13 @@ class HTItemToItemRecipeCategory<RECIPE : HTSingleProcessingRecipe.ItemToItem>(
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RECIPE, focuses: IFocusGroup) {
         // input
         builder
-            .addItemSlot(getPosition(1.5), getPosition(0.5), recipe.ingredient)
+            .addInputSlot(getPosition(1.5), getPosition(0.5))
+            .addItemIngredient(recipe.ingredient)
             .setSlotBackground(HTBackgroundType.INPUT)
         // output
         builder
-            .addItemSlot(getPosition(5.5), getPosition(1), recipe.result)
+            .addOutputSlot(getPosition(5.5), getPosition(1))
+            .addItemResult(recipe.result)
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 }

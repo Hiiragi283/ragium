@@ -38,13 +38,15 @@ import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.HTWiringRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
 import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.base.HTCombineItemRecipe
-import hiiragi283.ragium.common.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
 import hiiragi283.ragium.common.recipe.base.HTSingleProcessingRecipe
+import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
+import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -56,6 +58,14 @@ object RagiumRecipeSerializers {
     val REGISTER = HTDeferredRecipeSerializerRegister(RagiumAPI.MOD_ID)
 
     //    Custom    //
+
+    @JvmField
+    val BUCKET_DRAINING: RecipeSerializer<HTBucketDrainingRecipe> =
+        REGISTER.registerSerializer("bucket_draining", MapBiCodecs.unit(HTBucketDrainingRecipe))
+
+    @JvmField
+    val BUCKET_FILLING: RecipeSerializer<HTBucketFillingRecipe> =
+        REGISTER.registerSerializer("bucket_filling", MapBiCodecs.unit(HTBucketFillingRecipe))
 
     @JvmField
     val POTION_BUCKET: SimpleCraftingRecipeSerializer<HTPotionBucketRecipe> =
@@ -88,19 +98,19 @@ object RagiumRecipeSerializers {
     )
 
     @JvmStatic
-    private fun <RECIPE : HTItemOrFluidRecipe> itemOrFluid(
+    private fun <RECIPE : HTBasicItemOrFluidRecipe> itemOrFluid(
         factory: HTItemOrFluidRecipeBuilder.Factory<RECIPE>,
     ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
         MapBiCodecs
             .ior(
                 HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT),
                 HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT),
-            ).forGetter(HTItemOrFluidRecipe::ingredient),
+            ).forGetter(HTBasicItemOrFluidRecipe::ingredient),
         MapBiCodecs
             .ior(
                 HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT),
                 HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT),
-            ).forGetter(HTItemOrFluidRecipe::result),
+            ).forGetter(HTBasicItemOrFluidRecipe::result),
         HTProcessingRecipe.timeCodec(),
         factory::create,
     )

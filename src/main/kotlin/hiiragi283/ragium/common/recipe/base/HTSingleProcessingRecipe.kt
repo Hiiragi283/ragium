@@ -29,7 +29,7 @@ abstract class HTSingleProcessingRecipe<INGREDIENT : HTIngredient<*, *>, RESULT 
 
     abstract class ItemToFluid(ingredient: HTItemIngredient, result: HTFluidResult, time: Int) :
         HTSingleProcessingRecipe<HTItemIngredient, HTFluidResult, SingleRecipeInput>(ingredient, result, time),
-        HTFluidRecipe.Simple {
+        HTFluidRecipe.Simple<SingleRecipeInput> {
         override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
 
         override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
@@ -44,7 +44,7 @@ abstract class HTSingleProcessingRecipe<INGREDIENT : HTIngredient<*, *>, RESULT 
 
     abstract class FluidToFluid(ingredient: HTFluidIngredient, result: HTFluidResult, time: Int) :
         HTSingleProcessingRecipe<HTFluidIngredient, HTFluidResult, HTSingleFluidRecipeInput>(ingredient, result, time),
-        HTFluidRecipe.Simple {
+        HTFluidRecipe.Simple<SingleRecipeInput> {
         override fun matches(input: HTSingleFluidRecipeInput, level: Level): Boolean = ingredient.test(input.fluid)
 
         override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY

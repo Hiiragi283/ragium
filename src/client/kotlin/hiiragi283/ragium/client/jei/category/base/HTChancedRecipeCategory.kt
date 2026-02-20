@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.jei.category.base
 
 import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.integration.jei.addItemResult
 import hiiragi283.core.api.integration.jei.type.HTJeiRecipeType
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -23,10 +24,13 @@ abstract class HTChancedRecipeCategory<RECIPE : HTChancedRecipe<*>>(
         setupRecipeInput(builder, recipe, focuses)
         // outputs
         builder
-            .addItemSlot(getPosition(5.5), getPosition(0.5), recipe.result)
+            .addInputSlot(getPosition(5.5), getPosition(0.5))
+            .addItemResult(recipe.result)
             .setSlotBackground(HTBackgroundType.OUTPUT)
+
         builder
-            .addItemSlot(getPosition(5.5), getPosition(2), recipe.extraResult.getOrNull())
+            .addOutputSlot(getPosition(5.5), getPosition(2))
+            .addItemResult(recipe.extraResult.getOrNull())
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
     }
 

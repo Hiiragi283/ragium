@@ -51,7 +51,7 @@ class HTLocationTicketItem(properties: Properties) : Item(properties) {
             .get(HCDataComponents.LOCATION)
             ?.let(GlobalPos::toString)
             ?.let(String::toText)
-            ?.let(tooltips::add) // TODO
+            ?.let(tooltips::add)
     }
 
     override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || stack.has(HCDataComponents.LOCATION)

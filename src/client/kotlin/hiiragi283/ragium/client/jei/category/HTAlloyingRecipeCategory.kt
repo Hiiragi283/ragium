@@ -1,6 +1,8 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.integration.jei.addItemIngredient
+import hiiragi283.core.api.integration.jei.addItemResult
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.client.jei.category.base.HTProcessingRecipeCategory
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -20,17 +22,21 @@ class HTAlloyingRecipeCategory(guiHelper: IGuiHelper) :
         builder.setShapeless()
         // inputs
         builder
-            .addItemSlot(getPosition(0), getPosition(0.5), recipe.ingredients[0])
+            .addInputSlot(getPosition(0), getPosition(0.5))
+            .addItemIngredient(recipe.ingredients[0])
             .setSlotBackground(HTBackgroundType.INPUT)
         builder
-            .addItemSlot(getPosition(1), getPosition(0.5), recipe.ingredients[1])
+            .addInputSlot(getPosition(1), getPosition(0.5))
+            .addItemIngredient(recipe.ingredients[1])
             .setSlotBackground(HTBackgroundType.INPUT)
         builder
-            .addItemSlot(getPosition(2), getPosition(0.5), recipe.ingredients.getOrNull(2))
+            .addInputSlot(getPosition(2), getPosition(0.5))
+            .addItemIngredient(recipe.ingredients.getOrNull(2))
             .setSlotBackground(HTBackgroundType.INPUT)
         // output
         builder
-            .addItemSlot(getPosition(5.5), getPosition(1), recipe.result)
+            .addOutputSlot(getPosition(5.5), getPosition(1))
+            .addItemResult(recipe.result)
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 }

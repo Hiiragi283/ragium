@@ -16,9 +16,9 @@ import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
-import hiiragi283.ragium.common.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -88,10 +88,10 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
 
     //    Processing    //
 
-    protected inner class RecipeComponent<RECIPE : HTItemOrFluidRecipe>(
-        lookup: HTRecipeLookup<HTItemAndFluidRecipeInput, RECIPE>,
+    protected inner class RecipeComponent(
+        lookup: HTRecipeLookup<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe>,
         private val user: HTSoundPlayerBlockEntity.User,
-    ) : HTEnergizedRecipeComponent.ProcessingCached<HTItemAndFluidRecipeInput, RECIPE>(lookup, this) {
+    ) : HTEnergizedRecipeComponent.ProcessingCached<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe>(lookup, this) {
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 
@@ -102,21 +102,22 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             level: ServerLevel,
             pos: BlockPos,
             input: HTItemAndFluidRecipeInput,
-            recipe: RECIPE,
+            recipe: HTItemOrFluidRecipe,
         ) {
             val access: RegistryAccess = level.registryAccess()
-            itemOutputHandler.insert(recipe.getResultItem(access))
-            fluidOutputHandler.insert(recipe.getResultFluid(access))
+            itemOutputHandler.insert(recipe.assemble(input, access))
+            fluidOutputHandler.insert(recipe.assembleFluid(input, access))
         }
 
         override fun extractInput(
             level: ServerLevel,
             pos: BlockPos,
             input: HTItemAndFluidRecipeInput,
-            recipe: RECIPE,
+            recipe: HTItemOrFluidRecipe,
         ) {
-            fluidInputHandler.consume(recipe.ingredient.getRight())
-            itemInputHandler.consume(recipe.ingredient.getLeft())
+            val (itemAmount: Int?, fluidAmount: Int?) = recipe.getRequiredAmount(input).toPair()
+            fluidInputHandler.consume(fluidAmount ?: 0)
+            itemInputHandler.consume(itemAmount ?: 0)
         }
 
         override fun applyEffect() {
@@ -126,10 +127,10 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
             createInput(itemInputHandler, fluidInputHandler)
 
-        override fun canProgressRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput, recipe: RECIPE): Boolean {
+        override fun canProgressRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput, recipe: HTItemOrFluidRecipe): Boolean {
             val access: RegistryAccess = level.registryAccess()
-            val bool1: Boolean = itemOutputHandler.canInsert(recipe.getResultItem(access))
-            val bool2: Boolean = fluidOutputHandler.canInsert(recipe.getResultFluid(access))
+            val bool1: Boolean = itemOutputHandler.canInsert(recipe.assemble(input, access))
+            val bool2: Boolean = fluidOutputHandler.canInsert(recipe.assembleFluid(input, access))
             return bool1 && bool2
         }
     }

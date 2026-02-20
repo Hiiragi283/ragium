@@ -14,7 +14,7 @@ import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
-import hiiragi283.ragium.common.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -75,7 +75,7 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
 
     override fun getPrimalId(): ResourceLocation = result.toIor().map(HTItemResult::getId, HTFluidResult::getId, identityLeft())
 
-    override fun createRecipe(): HTItemOrFluidRecipe = factory.create(
+    override fun createRecipe(): HTBasicItemOrFluidRecipe = factory.create(
         ingredient.toIor(),
         result.toIor(),
         time,
@@ -83,7 +83,7 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
 
     //    Factory    //
 
-    fun interface Factory<RECIPE : HTItemOrFluidRecipe> {
+    fun interface Factory<RECIPE : HTBasicItemOrFluidRecipe> {
         fun create(ingredient: Ior<HTItemIngredient, HTFluidIngredient>, result: Ior<HTItemResult, HTFluidResult>, time: Int): RECIPE
     }
 }

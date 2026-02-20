@@ -15,7 +15,13 @@ import hiiragi283.ragium.client.jei.category.HTItemToChancedRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTPressingRecipeCategory
+import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTBucketDrainingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
+import hiiragi283.ragium.common.recipe.HTFreezingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -25,11 +31,30 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
+import mezz.jei.api.runtime.IIngredientManager
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
+    companion object {
+        @JvmStatic
+        lateinit var melting: HTItemOrFluidRecipeCategory
+            private set
+        
+        @JvmStatic
+        lateinit var pyrolyzing: HTItemOrFluidRecipeCategory
+            private set
+        
+        @JvmStatic
+        lateinit var freezing: HTItemOrFluidRecipeCategory
+            private set
+        
+        @JvmStatic
+        lateinit var canning: HTItemOrFluidRecipeCategory
+            private set
+    }
+
     override fun registerItemSubtypes(registration: ISubtypeRegistration) {
         registration.registerSubtypeInterpreter(
             RagiumBlocks.UNIVERSAL_CHEST.asItem(),
@@ -49,6 +74,20 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerCategories(registration: IRecipeCategoryRegistration) {
         val guiHelper: IGuiHelper = registration.jeiHelpers.guiHelper
 
+        melting = HTItemOrFluidRecipeCategory.melting(guiHelper)
+        pyrolyzing = HTItemOrFluidRecipeCategory.pyrolyzing(guiHelper)
+        freezing = HTItemOrFluidRecipeCategory.freezing(guiHelper)
+        canning = HTItemOrFluidRecipeCategory.canning(guiHelper)
+
+        melting.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTMeltingRecipe>())
+        pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTPyrolyzingRecipe>())
+        freezing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTFreezingRecipe>())
+        canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTCanningRecipe>())
+
+        val manager: IIngredientManager = registration.jeiHelpers.ingredientManager
+        canning.addExtension(HTBucketDrainingRecipeCategoryExtension(manager))
+        canning.addExtension(HTBucketFillingRecipeCategoryExtension(manager))
+
         registration.addRecipeCategories(
             // Machine - Basic
             HTAlloyingRecipeCategory(guiHelper),
@@ -61,12 +100,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemToItemRecipeCategory.wiring(guiHelper),
             // Machine - Heat
             HTDistillingRecipeCategory(guiHelper),
-            HTItemOrFluidRecipeCategory.melting(guiHelper),
-            HTItemOrFluidRecipeCategory.pyrolyzing(guiHelper),
+            melting,
+            pyrolyzing,
             // Machine - Cool
-            HTItemOrFluidRecipeCategory.freezing(guiHelper),
+            freezing,
             // Machine - Chemical
-            HTItemOrFluidRecipeCategory.canning(guiHelper),
+            canning,
             HTMixingRecipeCategory(guiHelper),
             // Device
         )
