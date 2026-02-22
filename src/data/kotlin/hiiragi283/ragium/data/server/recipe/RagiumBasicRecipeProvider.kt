@@ -24,7 +24,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         compressing()
         crushing()
         cutting()
-        lathing()
         printing()
     }
 
@@ -158,6 +157,12 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             result = resultCreator.create(Items.STICK)
             recipeId suffix "_from_saplings"
         }
+        // Slab -> Stick
+        HTItemToChancedRecipeBuilder.cutting(output) {
+            ingredient = inputCreator.create(ItemTags.WOODEN_SLABS)
+            result = resultCreator.create(Items.STICK, 2)
+            recipeId suffix "_from_wooden_slabs"
+        }
 
         // Book -> Paper + Leather
         HTItemToChancedRecipeBuilder.cutting(output) {
@@ -165,18 +170,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             result = resultCreator.create(Items.PAPER, 3)
             extraResult += resultCreator.create(Items.LEATHER)
             recipeId suffix "_from_book"
-        }
-    }
-
-    //    Lathing    //
-
-    @JvmStatic
-    private fun lathing() {
-        // Slab -> Stick
-        HTItemToItemRecipeBuilder.lathing(output) {
-            ingredient = inputCreator.create(ItemTags.WOODEN_SLABS)
-            result = resultCreator.create(Items.STICK, 2)
-            recipeId suffix "_from_wooden_slabs"
         }
     }
 

@@ -5,13 +5,11 @@ object RagiumConst {
 
     // Basic
     const val ALLOY_SMELTER = "alloy_smelter"
-    const val BENDING_MACHINE = "bending_machine"
     const val COMPRESSOR = "compressor"
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"
     const val ELECTRIC_FURNACE = "electric_furnace"
     const val FORMING_PRESS = "forming_press"
-    const val LATHE = "lathe"
     const val WIREMILL = "wiremill"
 
     // Heat
@@ -52,10 +50,8 @@ object RagiumConst {
 
     // Basic
     const val ALLOYING = "alloying"
-    const val BENDING = "bending"
     const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
-    const val LATHING = "lathing"
     const val PRESSING = "pressing"
     const val PRINTING = "printing"
     const val WIRING = "wiring"

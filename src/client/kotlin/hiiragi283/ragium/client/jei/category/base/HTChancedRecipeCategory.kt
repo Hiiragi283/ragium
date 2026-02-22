@@ -24,7 +24,7 @@ abstract class HTChancedRecipeCategory<RECIPE : HTChancedRecipe<*>>(
         setupRecipeInput(builder, recipe, focuses)
         // outputs
         builder
-            .addInputSlot(getPosition(5.5), getPosition(0.5))
+            .addOutputSlot(getPosition(5.5), getPosition(0.5))
             .addItemResult(recipe.result)
             .setSlotBackground(HTBackgroundType.OUTPUT)
 

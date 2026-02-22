@@ -22,13 +22,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
 
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
-        add(RagiumBlocks.BENDING_MACHINE, "圧延機")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
         add(RagiumBlocks.FORMING_PRESS, "プレス機")
-        add(RagiumBlocks.LATHE, "旋盤機")
         add(RagiumBlocks.WIREMILL, "ワイヤミル")
 
         add(RagiumBlocks.MELTER, "溶融炉")
@@ -112,11 +110,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
-        add(RagiumRecipeTypes.BENDING, "曲げ加工")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.LATHING, "旋盤加工")
         add(RagiumRecipeTypes.PRESSING, "プレス加工")
         add(RagiumRecipeTypes.PRINTING, "印刷")
         add(RagiumRecipeTypes.WIRING, "ワイヤ加工")
@@ -171,13 +167,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.GUI_SLOT_NONE, "%s: なし")
 
         add(RagiumTranslation.ALLOY_SMELTER, "複数のアイテムを一つに焼き上げる機械です。")
-        add(RagiumTranslation.BENDING_MACHINE, "インゴットを板材に加工する機械です。")
         add(RagiumTranslation.COMPRESSOR, "アイテムを圧縮する機械です。")
         add(RagiumTranslation.CRUSHER, "アイテムを粉にする機械です。")
         add(RagiumTranslation.CUTTING_MACHINE, "原木や木製アイテムを木材に加工する機械です。")
         add(RagiumTranslation.ELECTRIC_FURNACE, "エネルギーでアイテムを焼く機械です。")
         add(RagiumTranslation.FORMING_PRESS, "複数のアイテムを一つに固める機械です。")
-        add(RagiumTranslation.LATHE, "宝石やインゴットを棒材に加工する機械です。")
 
         add(RagiumTranslation.MELTER, "アイテムを融かしたり，液体を加熱したりする機械です。")
         add(RagiumTranslation.PYROLYZER, "原木や石炭を木炭やコークスに加工する機械です。")

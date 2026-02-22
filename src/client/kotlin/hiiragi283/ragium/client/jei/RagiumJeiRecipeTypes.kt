@@ -17,7 +17,6 @@ import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -44,10 +43,6 @@ object RagiumJeiRecipeTypes {
         processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val BENDING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe> =
-        processor(RagiumRecipeTypes.BENDING, RagiumBlocks.BENDING_MACHINE)
-
-    @JvmField
     val COMPRESSING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe> =
         processor(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
@@ -60,15 +55,11 @@ object RagiumJeiRecipeTypes {
         processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
-    val LATHING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe> =
-        processor(RagiumRecipeTypes.LATHING, RagiumBlocks.LATHE)
-
-    @JvmField
     val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe> =
         processor(RagiumRecipeTypes.PRINTING, Items.WRITABLE_BOOK)
 
     @JvmField
-    val PRESSING: HTHolderRecipeViewerType<HTShapelessRecipeInput, HTPressingRecipe> =
+    val PRESSING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe> =
         processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
 
     @JvmField

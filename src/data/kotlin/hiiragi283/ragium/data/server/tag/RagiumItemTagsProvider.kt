@@ -64,13 +64,11 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(RagiumTags.Items.MACHINE_UPGRADABLE)
             // Basic
             .add(RagiumBlocks.ALLOY_SMELTER)
-            .add(RagiumBlocks.BENDING_MACHINE)
             .add(RagiumBlocks.COMPRESSOR)
             .add(RagiumBlocks.CRUSHER)
             .add(RagiumBlocks.CUTTING_MACHINE)
             .add(RagiumBlocks.ELECTRIC_FURNACE)
             .add(RagiumBlocks.FORMING_PRESS)
-            .add(RagiumBlocks.LATHE)
             .add(RagiumBlocks.WIREMILL)
             // Heat
             .add(RagiumBlocks.MELTER)

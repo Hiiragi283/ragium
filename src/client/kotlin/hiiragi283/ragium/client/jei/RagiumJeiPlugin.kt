@@ -15,7 +15,6 @@ import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemToChancedRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTPressingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemToItemRecipeCategoryExtension
@@ -47,15 +46,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     companion object {
         // ItemToItem
         @JvmStatic
-        lateinit var bending: HTItemToItemRecipeCategory
-            private set
-
-        @JvmStatic
         lateinit var compressing: HTItemToItemRecipeCategory
-            private set
-
-        @JvmStatic
-        lateinit var lathing: HTItemToItemRecipeCategory
             private set
 
         @JvmStatic
@@ -63,6 +54,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             private set
 
         // ItemAndItem
+        @JvmStatic
+        lateinit var pressing: HTItemAndItemRecipeCategory
+            private set
+
         @JvmStatic
         lateinit var printing: HTItemAndItemRecipeCategory
             private set
@@ -112,13 +107,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipeCategories(
             // Machine - Basic
             HTAlloyingRecipeCategory(guiHelper),
-            bending,
             compressing,
             HTItemToChancedRecipeCategory.crushing(guiHelper),
             HTItemToChancedRecipeCategory.cutting(guiHelper),
-            lathing,
+            pressing,
             printing,
-            HTPressingRecipeCategory(guiHelper),
             wiring,
             // Machine - Heat
             HTDistillingRecipeCategory(guiHelper),
@@ -134,20 +127,18 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun initItemToItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        bending = HTItemToItemRecipeCategory.bending(guiHelper)
         compressing = HTItemToItemRecipeCategory.compressing(guiHelper)
-        lathing = HTItemToItemRecipeCategory.lathing(guiHelper)
         wiring = HTItemToItemRecipeCategory.wiring(guiHelper)
 
-        bending.addExtension(HTBasicItemToItemRecipeCategoryExtension())
         compressing.addExtension(HTBasicItemToItemRecipeCategoryExtension())
-        lathing.addExtension(HTBasicItemToItemRecipeCategoryExtension())
         wiring.addExtension(HTBasicItemToItemRecipeCategoryExtension())
     }
 
     private fun initItemAndItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
+        pressing = HTItemAndItemRecipeCategory.pressing(guiHelper)
         printing = HTItemAndItemRecipeCategory.printing(guiHelper)
 
+        pressing.addExtension(HTBasicItemAndItemRecipeCategoryExtension())
         printing.addExtension(HTBasicItemAndItemRecipeCategoryExtension())
 
         printing.addExtension(HTBookCopyingRecipeCategoryExtension)
@@ -174,11 +165,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerRecipes(registration: IRecipeRegistration) {
         // Machine - Basic
         registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING)
-        registration.addRecipes(RagiumJeiRecipeTypes.BENDING)
         registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING)
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING)
-        registration.addRecipes(RagiumJeiRecipeTypes.LATHING)
         registration.addRecipes(RagiumJeiRecipeTypes.PRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.PRINTING)
         registration.addRecipes(RagiumJeiRecipeTypes.WIRING)
@@ -204,11 +193,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipeCatalysts(
             // Machine - Basic
             RagiumJeiRecipeTypes.ALLOYING,
-            RagiumJeiRecipeTypes.BENDING,
             RagiumJeiRecipeTypes.COMPRESSING,
             RagiumJeiRecipeTypes.CRUSHING,
             RagiumJeiRecipeTypes.CUTTING,
-            RagiumJeiRecipeTypes.LATHING,
             RagiumJeiRecipeTypes.PRESSING,
             RagiumJeiRecipeTypes.PRINTING,
             RagiumJeiRecipeTypes.WIRING,

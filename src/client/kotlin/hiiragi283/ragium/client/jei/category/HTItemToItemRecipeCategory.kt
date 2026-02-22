@@ -17,14 +17,8 @@ class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeView
     HTProcessingRecipeCategory<HTItemToItemRecipe>(guiHelper, recipeType) {
     companion object {
         @JvmStatic
-        fun bending(guiHelper: IGuiHelper): HTItemToItemRecipeCategory = HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.BENDING)
-
-        @JvmStatic
         fun compressing(guiHelper: IGuiHelper): HTItemToItemRecipeCategory =
             HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.COMPRESSING)
-
-        @JvmStatic
-        fun lathing(guiHelper: IGuiHelper): HTItemToItemRecipeCategory = HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.LATHING)
 
         @JvmStatic
         fun wiring(guiHelper: IGuiHelper): HTItemToItemRecipeCategory = HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.WIRING)

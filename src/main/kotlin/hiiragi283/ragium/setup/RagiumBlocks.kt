@@ -71,10 +71,6 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
 
     @JvmField
-    val BENDING_MACHINE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.BENDING_MACHINE, RagiumTranslation.BENDING_MACHINE)
-
-    @JvmField
     val COMPRESSOR: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.COMPRESSOR, RagiumTranslation.COMPRESSOR)
 
@@ -93,10 +89,6 @@ object RagiumBlocks {
     @JvmField
     val FORMING_PRESS: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.FORMING_PRESS, RagiumTranslation.FORMING_PRESS)
-
-    @JvmField
-    val LATHE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.LATHE, RagiumTranslation.LATHE)
 
     @JvmField
     val WIREMILL: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =

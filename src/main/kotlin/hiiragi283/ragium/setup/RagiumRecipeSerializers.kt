@@ -22,7 +22,6 @@ import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBendingRecipe
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -30,7 +29,6 @@ import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
-import hiiragi283.ragium.common.recipe.HTLathingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -156,9 +154,6 @@ object RagiumRecipeSerializers {
         REGISTER.registerSerializer(RagiumConst.ALLOYING, combine(::HTAlloyingRecipe))
 
     @JvmField
-    val BENDING: RecipeSerializer<HTBendingRecipe> = REGISTER.registerSerializer(RagiumConst.BENDING, itemToItem(::HTBendingRecipe))
-
-    @JvmField
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> =
         REGISTER.registerSerializer(RagiumConst.COMPRESSING, itemToItem(::HTCompressingRecipe))
 
@@ -169,11 +164,7 @@ object RagiumRecipeSerializers {
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, itemChanced(::HTCuttingRecipe))
 
     @JvmField
-    val LATHING: RecipeSerializer<HTLathingRecipe> = REGISTER.registerSerializer(RagiumConst.LATHING, itemToItem(::HTLathingRecipe))
-
-    @JvmField
-    val PRESSING: RecipeSerializer<HTPressingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.PRESSING, combine(::HTPressingRecipe))
+    val PRESSING: RecipeSerializer<HTPressingRecipe> = REGISTER.registerSerializer(RagiumConst.PRESSING, itemAndItem(::HTPressingRecipe))
 
     @JvmField
     val WIRING: RecipeSerializer<HTWiringRecipe> = REGISTER.registerSerializer(RagiumConst.WIRING, itemToItem(::HTWiringRecipe))

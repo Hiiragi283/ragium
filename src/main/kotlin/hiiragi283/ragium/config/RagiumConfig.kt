@@ -62,9 +62,6 @@ object RagiumConfig {
             val alloySmelter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ALLOY_SMELTER)
 
             @JvmField
-            val bendingMachine: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.BENDING_MACHINE)
-
-            @JvmField
             val compressor: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.COMPRESSOR)
 
             @JvmField
@@ -86,9 +83,6 @@ object RagiumConfig {
 
             @JvmField
             val formingPress: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FORMING_PRESS)
-
-            @JvmField
-            val lathe: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.LATHE)
 
             @JvmField
             val wiremill: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.WIREMILL)

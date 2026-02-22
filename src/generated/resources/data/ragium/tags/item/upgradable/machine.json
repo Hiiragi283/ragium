@@ -1,7 +1,6 @@
 {
   "values": [
     "ragium:alloy_smelter",
-    "ragium:bending_machine",
     "ragium:canning_machine",
     "ragium:compressor",
     "ragium:crusher",
@@ -9,7 +8,6 @@
     "ragium:electric_furnace",
     "ragium:forming_press",
     "ragium:freezer",
-    "ragium:lathe",
     "ragium:melter",
     "ragium:mixer",
     "ragium:pyrolyzer",

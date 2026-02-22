@@ -1,5 +1,5 @@
 {
-  "type": "ragium:lathing",
+  "type": "ragium:cutting",
   "ingredient": {
     "amount": 1,
     "items": "#minecraft:wooden_slabs"
@@ -8,5 +8,5 @@
     "count": 2,
     "id": "minecraft:stick"
   },
-  "time": 200
+  "time": 100
 }

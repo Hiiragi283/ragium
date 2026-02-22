@@ -17,6 +17,10 @@ class HTItemAndItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
     HTProcessingRecipeCategory<HTItemAndItemRecipe>(guiHelper, recipeType) {
     companion object {
         @JvmStatic
+        fun pressing(guiHelper: IGuiHelper): HTItemAndItemRecipeCategory =
+            HTItemAndItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PRESSING)
+
+        @JvmStatic
         fun printing(guiHelper: IGuiHelper): HTItemAndItemRecipeCategory =
             HTItemAndItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PRINTING)
     }

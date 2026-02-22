@@ -31,13 +31,11 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
     override fun registerStatesAndModels() {
         // Machine
         frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)
-        frontMachineBlock(RagiumBlocks.BENDING_MACHINE, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.COMPRESSOR, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CRUSHER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CUTTING_MACHINE, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.ELECTRIC_FURNACE, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.FORMING_PRESS, RagiumConst.MACHINE, basic)
-        frontMachineBlock(RagiumBlocks.LATHE, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.WIREMILL, RagiumConst.MACHINE, basic)
 
         frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)
