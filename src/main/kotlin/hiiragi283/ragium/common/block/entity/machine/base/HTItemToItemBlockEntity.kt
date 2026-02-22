@@ -11,9 +11,9 @@ import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
-import hiiragi283.ragium.common.recipe.base.HTSingleProcessingRecipe
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
@@ -55,10 +55,10 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
 
     //    Processing    //
 
-    protected inner class RecipeComponent<RECIPE : HTSingleProcessingRecipe.ItemToItem>(
-        lookup: HTRecipeLookup<SingleRecipeInput, RECIPE>,
+    protected inner class RecipeComponent(
+        lookup: HTRecipeLookup<SingleRecipeInput, HTItemToItemRecipe>,
         private val user: HTSoundPlayerBlockEntity.User,
-    ) : HTEnergizedRecipeComponent.ProcessingCached<SingleRecipeInput, RECIPE>(lookup, this) {
+    ) : HTEnergizedRecipeComponent.ProcessingCached<SingleRecipeInput, HTItemToItemRecipe>(lookup, this) {
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
@@ -66,7 +66,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
             level: ServerLevel,
             pos: BlockPos,
             input: SingleRecipeInput,
-            recipe: RECIPE,
+            recipe: HTItemToItemRecipe,
         ) {
             outputHandler.insert(recipe.assemble(input, level.registryAccess()))
         }
@@ -75,16 +75,16 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
             level: ServerLevel,
             pos: BlockPos,
             input: SingleRecipeInput,
-            recipe: RECIPE,
+            recipe: HTItemToItemRecipe,
         ) {
-            inputHandler.consume(recipe.ingredient)
+            inputHandler.consume(recipe.getRequiredAmount(input))
         }
 
         override fun applyEffect() {
             user.playSound(this@HTItemToItemBlockEntity)
         }
 
-        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean =
+        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToItemRecipe): Boolean =
             outputHandler.canInsert(recipe.assemble(input, level.registryAccess()))
 
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)

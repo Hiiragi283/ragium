@@ -19,11 +19,10 @@ import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
 import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import net.minecraft.tags.TagKey
@@ -80,8 +79,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             bathDustToPrefix(event, entry, CommonTagPrefixes.GEM)
             bathDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
 
-            mixFlourToDough(event, entry)
-
             washCrushedOre(event, entry)
         }
     }
@@ -122,7 +119,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
         // レシピを登録
-        HTSingleRecipeBuilder.bending(output) {
+        HTItemToItemRecipeBuilder.bending(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.INGOT, entry)
             result = resultCreator.create(plate)
             time = getTimeFromHardness(entry, time) ?: return
@@ -141,7 +138,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
         // レシピを登録
-        HTSingleRecipeBuilder.compressing(output) {
+        HTItemToItemRecipeBuilder.compressing(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, entry)
             result = resultCreator.create(plate)
             time = getTimeFromHardness(entry, time) ?: return
@@ -266,7 +263,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val rod: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.ROD, entry) ?: return
         // レシピを登録
-        HTSingleRecipeBuilder.lathing(output) {
+        HTItemToItemRecipeBuilder.lathing(output) {
             ingredient = inputCreator.create(inputTag)
             result = resultCreator.create(rod, 2)
             time = getTimeFromHardness(entry, time) ?: return
@@ -294,8 +291,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
     //    Mixing    //
 
-    @JvmStatic
-    private fun mixFlourToDough(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+    /*private fun mixFlourToDough(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
         // 素材のプロパティから材料を取得
         val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
         if (!event.isPresentTag(crushedPrefix, entry)) return
@@ -308,7 +304,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             time /= 2
             itemResults += resultCreator.create(dough)
         }
-    }
+    }*/
 
     //    Pressing    //
 
@@ -362,7 +358,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val wire: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.WIRE, entry) ?: return
         // レシピを登録
-        HTSingleRecipeBuilder.wiring(output) {
+        HTItemToItemRecipeBuilder.wiring(output) {
             ingredient = inputCreator.create(inputTag)
             result = resultCreator.create(wire, 2)
             time = getTimeFromHardness(entry, time) ?: return

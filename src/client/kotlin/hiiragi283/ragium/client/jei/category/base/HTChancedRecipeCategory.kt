@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.jei.category.base
 
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addItemResult
-import hiiragi283.core.api.integration.jei.type.HTJeiRecipeType
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -13,7 +13,7 @@ import kotlin.jvm.optionals.getOrNull
 
 abstract class HTChancedRecipeCategory<RECIPE : HTChancedRecipe<*>>(
     guiHelper: IGuiHelper,
-    recipeType: HTJeiRecipeType<RecipeHolder<RECIPE>>,
+    recipeType: HTRecipeViewerType<RecipeHolder<RECIPE>>,
 ) : HTProcessingRecipeCategory<RECIPE>(guiHelper, recipeType) {
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RECIPE, focuses: IFocusGroup) {
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.5), getPosition(1))

@@ -109,7 +109,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.BLANK_DISC, "空のレコード")
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
-        add(RagiumItems.POTION_DROP, "ポーションの雫")
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")

@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.item.HTPotionBasedItem
 import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -127,9 +126,6 @@ object RagiumItems {
 
     @JvmField
     val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
-
-    @JvmField
-    val POTION_DROP: HTSimpleDeferredItem = REGISTER.registerItem("potion_drop", ::HTPotionBasedItem)
 
     //   Upgrades    //
 

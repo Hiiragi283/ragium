@@ -16,6 +16,7 @@ import hiiragi283.ragium.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTPressingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTBasicItemToItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
@@ -41,6 +42,24 @@ import net.minecraft.world.item.crafting.RecipeHolder
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     companion object {
+        // ItemToItem
+        @JvmStatic
+        lateinit var bending: HTItemToItemRecipeCategory
+            private set
+
+        @JvmStatic
+        lateinit var compressing: HTItemToItemRecipeCategory
+            private set
+
+        @JvmStatic
+        lateinit var lathing: HTItemToItemRecipeCategory
+            private set
+
+        @JvmStatic
+        lateinit var wiring: HTItemToItemRecipeCategory
+            private set
+
+        // ItemOrFluid
         @JvmStatic
         lateinit var melting: HTItemOrFluidRecipeCategory
             private set
@@ -76,34 +95,21 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
     override fun registerCategories(registration: IRecipeCategoryRegistration) {
         val guiHelper: IGuiHelper = registration.jeiHelpers.guiHelper
-
-        melting = HTItemOrFluidRecipeCategory.melting(guiHelper)
-        pyrolyzing = HTItemOrFluidRecipeCategory.pyrolyzing(guiHelper)
-        freezing = HTItemOrFluidRecipeCategory.freezing(guiHelper)
-        canning = HTItemOrFluidRecipeCategory.canning(guiHelper)
-
-        melting.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTMeltingRecipe>())
-        pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTPyrolyzingRecipe>())
-        freezing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTFreezingRecipe>())
-        canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTCanningRecipe>())
-
         val manager: IIngredientManager = registration.jeiHelpers.ingredientManager
-        canning.addExtension(HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, HTBucketDrainingRecipe::isFilledBucket))
-        canning.addExtension(HTBucketFillingRecipeCategoryExtension(manager))
 
-        canning.addExtension(HTDrainingRecipeCategoryExtension<HTPotionDrainingRecipe>(manager, HTPotionDrainingRecipe::isPotion))
-        canning.addExtension(HTPotionFillingRecipeCategoryExtension(manager))
+        initItemToItem(guiHelper, manager)
+        initItemOrFluid(guiHelper, manager)
 
         registration.addRecipeCategories(
             // Machine - Basic
             HTAlloyingRecipeCategory(guiHelper),
-            HTItemToItemRecipeCategory.bending(guiHelper),
-            HTItemToItemRecipeCategory.compressing(guiHelper),
+            bending,
+            compressing,
             HTItemToChancedRecipeCategory.crushing(guiHelper),
             HTItemToChancedRecipeCategory.cutting(guiHelper),
-            HTItemToItemRecipeCategory.lathing(guiHelper),
+            lathing,
             HTPressingRecipeCategory(guiHelper),
-            HTItemToItemRecipeCategory.wiring(guiHelper),
+            wiring,
             // Machine - Heat
             HTDistillingRecipeCategory(guiHelper),
             melting,
@@ -115,6 +121,36 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTMixingRecipeCategory(guiHelper),
             // Device
         )
+    }
+
+    private fun initItemToItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
+        bending = HTItemToItemRecipeCategory.bending(guiHelper)
+        compressing = HTItemToItemRecipeCategory.compressing(guiHelper)
+        lathing = HTItemToItemRecipeCategory.lathing(guiHelper)
+        wiring = HTItemToItemRecipeCategory.wiring(guiHelper)
+
+        bending.addExtension(HTBasicItemToItemRecipeCategoryExtension())
+        compressing.addExtension(HTBasicItemToItemRecipeCategoryExtension())
+        lathing.addExtension(HTBasicItemToItemRecipeCategoryExtension())
+        wiring.addExtension(HTBasicItemToItemRecipeCategoryExtension())
+    }
+
+    private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
+        melting = HTItemOrFluidRecipeCategory.melting(guiHelper)
+        pyrolyzing = HTItemOrFluidRecipeCategory.pyrolyzing(guiHelper)
+        freezing = HTItemOrFluidRecipeCategory.freezing(guiHelper)
+        canning = HTItemOrFluidRecipeCategory.canning(guiHelper)
+
+        melting.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTMeltingRecipe>())
+        pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTPyrolyzingRecipe>())
+        freezing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTFreezingRecipe>())
+        canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTCanningRecipe>())
+
+        canning.addExtension(HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, HTBucketDrainingRecipe::isFilledBucket))
+        canning.addExtension(HTBucketFillingRecipeCategoryExtension(manager))
+
+        canning.addExtension(HTDrainingRecipeCategoryExtension<HTPotionDrainingRecipe>(manager, HTPotionDrainingRecipe::isPotion))
+        canning.addExtension(HTPotionFillingRecipeCategoryExtension(manager))
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {

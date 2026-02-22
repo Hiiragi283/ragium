@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.integration.jei.type.HTJeiRecipeType
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.ragium.api.integration.jei.HTItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
@@ -16,7 +16,7 @@ import net.minecraft.world.item.crafting.RecipeHolder
 /**
  * @see mezz.jei.api.recipe.category.extensions.vanilla.smithing.IExtendableSmithingRecipeCategory
  */
-class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTJeiRecipeType<RecipeHolder<HTItemOrFluidRecipe>>) :
+class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeViewerType<RecipeHolder<HTItemOrFluidRecipe>>) :
     HTProcessingRecipeCategory<HTItemOrFluidRecipe>(guiHelper, recipeType) {
     companion object {
         @JvmStatic
@@ -79,10 +79,9 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTJeiRecipe
         recipeSlots: List<IRecipeSlotDrawable>,
         focuses: IFocusGroup,
     ) {
-        val (recipe1: HTItemOrFluidRecipe, extension: HTItemOrFluidRecipeCategoryExtension<HTItemOrFluidRecipe>) = getExtension<HTItemOrFluidRecipe>(
-            recipe.value(),
-        )
-            ?: return
+        val (recipe1: HTItemOrFluidRecipe, extension: HTItemOrFluidRecipeCategoryExtension<HTItemOrFluidRecipe>) =
+            getExtension<HTItemOrFluidRecipe>(recipe.value())
+                ?: return
         extension.onDisplayedIngredientsUpdate(
             recipe1,
             recipeSlots[0],
@@ -100,14 +99,15 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTJeiRecipe
         recipe: HTItemOrFluidRecipe,
     ): Pair<RECIPE, HTItemOrFluidRecipeCategoryExtension<RECIPE>>? {
         val recipe1: RECIPE = recipe as? RECIPE ?: return null
-        val extension = (extensions[recipe::class.java] as? HTItemOrFluidRecipeCategoryExtension<RECIPE>) ?: run {
-            for ((clazz: Class<out HTItemOrFluidRecipe>, extension: HTItemOrFluidRecipeCategoryExtension<*>) in extensions) {
-                if (clazz.isInstance(recipe)) {
-                    return@run extension as? HTItemOrFluidRecipeCategoryExtension<RECIPE>
+        val extension: HTItemOrFluidRecipeCategoryExtension<RECIPE> =
+            (extensions[recipe::class.java] as? HTItemOrFluidRecipeCategoryExtension<RECIPE>) ?: run {
+                for ((clazz: Class<out HTItemOrFluidRecipe>, extension: HTItemOrFluidRecipeCategoryExtension<*>) in extensions) {
+                    if (clazz.isInstance(recipe)) {
+                        return@run extension as? HTItemOrFluidRecipeCategoryExtension<RECIPE>
+                    }
                 }
-            }
-            null
-        } ?: return null
+                null
+            } ?: return null
         return recipe1 to extension
     }
 }

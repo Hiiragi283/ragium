@@ -19,7 +19,7 @@ import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTBendingRecipe
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
@@ -38,12 +38,12 @@ import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicItemToItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
 import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.base.HTCombineItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
-import hiiragi283.ragium.common.recipe.base.HTSingleProcessingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
@@ -120,11 +120,11 @@ object RagiumRecipeSerializers {
     )
 
     @JvmStatic
-    private fun <R : HTSingleProcessingRecipe.ItemToItem> itemToItem(
-        factory: HTSingleRecipeBuilder.Factory<HTItemIngredient, HTItemResult, R>,
+    private fun <R : HTBasicItemToItemRecipe> itemToItem(
+        factory: HTItemToItemRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSingleProcessingRecipe.ItemToItem::ingredient),
-        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSingleProcessingRecipe.ItemToItem::result),
+        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTBasicItemToItemRecipe::ingredient),
+        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBasicItemToItemRecipe::result),
         HTProcessingRecipe.timeCodec(),
         factory::create,
     )

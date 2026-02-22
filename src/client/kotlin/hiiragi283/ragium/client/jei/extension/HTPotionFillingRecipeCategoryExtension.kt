@@ -12,24 +12,19 @@ import mezz.jei.api.runtime.IIngredientManager
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTPotionFillingRecipeCategoryExtension(val manager: IIngredientManager):
-    HTItemOrFluidRecipeCategoryExtension<HTPotionFillingRecipe>{
-    override fun <T : IIngredientAcceptor<T>> setInputFluid(
-        recipe: HTPotionFillingRecipe,
-        accessor: T,
-    ) {
+class HTPotionFillingRecipeCategoryExtension(val manager: IIngredientManager) :
+    HTItemOrFluidRecipeCategoryExtension<HTPotionFillingRecipe> {
+    override fun <T : IIngredientAcceptor<T>> setInputFluid(recipe: HTPotionFillingRecipe, accessor: T) {
         accessor
             .addFluidStacks(
                 true,
-                manager.getAllIngredients(NeoForgeTypes.FLUID_STACK)
-                    .filter { HTPotionHelper.getContents(it) != null }
+                manager
+                    .getAllIngredients(NeoForgeTypes.FLUID_STACK)
+                    .filter { HTPotionHelper.getContents(it) != null },
             )
     }
 
-    override fun <T : IIngredientAcceptor<T>> setInputItem(
-        recipe: HTPotionFillingRecipe,
-        accessor: T,
-    ) {
+    override fun <T : IIngredientAcceptor<T>> setInputItem(recipe: HTPotionFillingRecipe, accessor: T) {
         accessor.addItemLike(Items.GLASS_BOTTLE)
     }
 
@@ -39,12 +34,13 @@ class HTPotionFillingRecipeCategoryExtension(val manager: IIngredientManager):
         inputItem: IRecipeSlotDrawable,
         outputItem: IRecipeSlotDrawable,
         outputFluid: IRecipeSlotDrawable,
-        focuses: IFocusGroup
+        focuses: IFocusGroup,
     ) {
         val fluidStack: FluidStack = inputFluid.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).orElse(FluidStack.EMPTY).copy()
         if (fluidStack.isEmpty) return
 
-        HTPotionHelper.getContents(fluidStack)
+        HTPotionHelper
+            .getContents(fluidStack)
             ?.let(HTPotionHelper::createPotion)
             ?.let(outputItem.createDisplayOverrides()::addItemStack)
     }

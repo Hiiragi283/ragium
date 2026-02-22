@@ -32,7 +32,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
 
             removeAll(RagiumItems.MOLDS.values)
             remove(RagiumItems.BLANK_DISC)
-            remove(RagiumItems.POTION_DROP)
 
             removeAll(RagiumItems.UPGRADES.values)
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
@@ -49,7 +48,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             withExistingParent(item.path, HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
                 .texture("layer0", item.itemId)
         }
-        layeredItem(RagiumItems.POTION_DROP, HTConst.MINECRAFT.toId(HTConst.ITEM, "ghast_tear"))
 
         for ((moldType: HTMoldType, item: HTIdLike) in RagiumItems.MOLDS) {
             existTexture(item, RagiumAPI.id(HTConst.ITEM, "mold", moldType.serializedName), ::layeredItem)

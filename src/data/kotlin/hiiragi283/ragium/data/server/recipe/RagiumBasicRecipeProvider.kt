@@ -8,7 +8,7 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -36,13 +36,13 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun compressing() {
         // Sculk Vein -> Sculk
-        HTSingleRecipeBuilder.compressing(output) {
+        HTItemToItemRecipeBuilder.compressing(output) {
             ingredient = inputCreator.create(Items.SCULK_VEIN, 8)
             result = resultCreator.create(Items.SCULK)
         }
 
         // Sawdust -> Compressed
-        HTSingleRecipeBuilder.compressing(output) {
+        HTItemToItemRecipeBuilder.compressing(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 8)
             result = resultCreator.create(HCItems.COMPRESSED_SAWDUST)
         }
@@ -171,7 +171,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun lathing() {
         // Slab -> Stick
-        HTSingleRecipeBuilder.lathing(output) {
+        HTItemToItemRecipeBuilder.lathing(output) {
             ingredient = inputCreator.create(ItemTags.WOODEN_SLABS)
             result = resultCreator.create(Items.STICK, 2)
             recipeId suffix "_from_wooden_slabs"

@@ -8,19 +8,16 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
+import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBendingRecipe
-import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
-import hiiragi283.ragium.common.recipe.HTLathingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
@@ -33,10 +30,10 @@ object RagiumRecipeTypes {
     val ALLOYING: HTDeferredRecipeType<HTShapelessRecipeInput, HTAlloyingRecipe> = REGISTER.registerType(RagiumConst.ALLOYING)
 
     @JvmField
-    val BENDING: HTDeferredRecipeType<SingleRecipeInput, HTBendingRecipe> = REGISTER.registerType(RagiumConst.BENDING)
+    val BENDING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe> = REGISTER.registerType(RagiumConst.BENDING)
 
     @JvmField
-    val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTCompressingRecipe> = REGISTER.registerType(RagiumConst.COMPRESSING)
+    val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe> = REGISTER.registerType(RagiumConst.COMPRESSING)
 
     @JvmField
     val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTCrushingRecipe> = REGISTER.registerType(RagiumConst.CRUSHING)
@@ -45,13 +42,13 @@ object RagiumRecipeTypes {
     val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTCuttingRecipe> = REGISTER.registerType(RagiumConst.CUTTING)
 
     @JvmField
-    val LATHING: HTDeferredRecipeType<SingleRecipeInput, HTLathingRecipe> = REGISTER.registerType(RagiumConst.LATHING)
+    val LATHING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe> = REGISTER.registerType(RagiumConst.LATHING)
 
     @JvmField
     val PRESSING: HTDeferredRecipeType<HTShapelessRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
 
     @JvmField
-    val WIRING: HTDeferredRecipeType<SingleRecipeInput, HTWiringRecipe> = REGISTER.registerType(RagiumConst.WIRING)
+    val WIRING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe> = REGISTER.registerType(RagiumConst.WIRING)
 
     // Machine - Heat
     @JvmField

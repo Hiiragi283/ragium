@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addItemIngredient
-import hiiragi283.core.api.integration.jei.type.HTJeiRecipeType
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.client.jei.category.base.HTChancedRecipeCategory
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTItemToChancedRecipeCategory<RECIPE : HTItemToChancedRecipe>(
     guiHelper: IGuiHelper,
-    recipeType: HTJeiRecipeType<RecipeHolder<RECIPE>>,
+    recipeType: HTRecipeViewerType<RecipeHolder<RECIPE>>,
 ) : HTChancedRecipeCategory<RECIPE>(guiHelper, recipeType) {
     companion object {
         @JvmStatic
