@@ -7,8 +7,10 @@ import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
+import hiiragi283.ragium.common.recipe.special.HTBookCopyingRecipe
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -23,7 +25,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         crushing()
         cutting()
         lathing()
-        // printing()
+        printing()
     }
 
     //    Bending    //
@@ -179,6 +181,10 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     }
 
     //    Printing    //
+
+    private fun printing() {
+        save(id(RagiumConst.PRINTING, "book_copying"), HTBookCopyingRecipe)
+    }
 
     /*private fun printing() {
         // XX Banner

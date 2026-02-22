@@ -2,10 +2,12 @@ package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.recipe.HTRecipeType
+import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
+import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -60,6 +62,10 @@ object RagiumJeiRecipeTypes {
     @JvmField
     val LATHING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe> =
         processor(RagiumRecipeTypes.LATHING, RagiumBlocks.LATHE)
+
+    @JvmField
+    val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe> =
+        processor(RagiumRecipeTypes.PRINTING, Items.WRITABLE_BOOK)
 
     @JvmField
     val PRESSING: HTHolderRecipeViewerType<HTShapelessRecipeInput, HTPressingRecipe> =

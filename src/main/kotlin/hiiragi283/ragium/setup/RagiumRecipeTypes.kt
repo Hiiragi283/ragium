@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
@@ -7,6 +8,7 @@ import hiiragi283.core.common.registry.HTDeferredRecipeType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -46,6 +48,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val PRESSING: HTDeferredRecipeType<HTShapelessRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
+
+    @JvmField
+    val PRINTING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemAndItemRecipe> = REGISTER.registerType(RagiumConst.PRINTING)
 
     @JvmField
     val WIRING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe> = REGISTER.registerType(RagiumConst.WIRING)

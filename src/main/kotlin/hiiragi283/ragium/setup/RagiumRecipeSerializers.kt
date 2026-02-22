@@ -17,6 +17,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
@@ -37,6 +38,7 @@ import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.HTWiringRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicItemAndItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemToItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
@@ -44,6 +46,7 @@ import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.base.HTCombineItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
+import hiiragi283.ragium.common.recipe.special.HTBookCopyingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
@@ -59,6 +62,12 @@ object RagiumRecipeSerializers {
 
     //    Custom    //
 
+    // Printing
+    @JvmField
+    val BOOK_COPYING: RecipeSerializer<HTBookCopyingRecipe> =
+        REGISTER.registerSerializer("book_copying", MapBiCodecs.unit(HTBookCopyingRecipe))
+
+    // Canning
     @JvmField
     val BUCKET_DRAINING: RecipeSerializer<HTBucketDrainingRecipe> =
         REGISTER.registerSerializer("bucket_draining", MapBiCodecs.unit(HTBucketDrainingRecipe))
@@ -125,6 +134,17 @@ object RagiumRecipeSerializers {
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTBasicItemToItemRecipe::ingredient),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBasicItemToItemRecipe::result),
+        HTProcessingRecipe.timeCodec(),
+        factory::create,
+    )
+
+    @JvmStatic
+    private fun <R : HTBasicItemAndItemRecipe> itemAndItem(
+        factory: HTItemAndItemRecipeBuilder.Factory<R>,
+    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
+        HTItemIngredient.CODEC.fieldOf("first_ingredient").forGetter(HTBasicItemAndItemRecipe::first),
+        HTItemIngredient.CODEC.fieldOf("second_ingredient").forGetter(HTBasicItemAndItemRecipe::second),
+        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBasicItemAndItemRecipe::result),
         HTProcessingRecipe.timeCodec(),
         factory::create,
     )
