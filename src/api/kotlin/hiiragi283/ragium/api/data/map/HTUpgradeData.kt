@@ -3,19 +3,20 @@ package hiiragi283.ragium.api.data.map
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.fraction
+import hiiragi283.core.api.function.onPresent
+import hiiragi283.core.api.function.wrapOptional
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.text.Text
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.api.upgrade.HTUpgradeKey
 import hiiragi283.ragium.api.upgrade.HTUpgradePropertyMap
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import org.apache.commons.lang3.math.Fraction
 import java.util.Optional
-import java.util.function.Consumer
 
 /**
  * @see net.minecraft.world.item.enchantment.Enchantment
@@ -23,7 +24,7 @@ import java.util.function.Consumer
 @ConsistentCopyVisibility
 data class HTUpgradeData private constructor(
     val propertyMap: HTUpgradePropertyMap,
-    private val targetSet: Optional<HTItemIngredient>,
+    val targetSet: Optional<HTItemIngredient>,
     val exclusiveSet: Optional<HTItemIngredient>,
 ) : Map<HTUpgradeKey, Fraction> by propertyMap {
     companion object {
@@ -54,21 +55,21 @@ data class HTUpgradeData private constructor(
 
     fun isTarget(stack: ItemStack): Boolean = targetSet.map { it.test(stack) }.orElse(true)
 
-    fun appendTooltips(consumer: Consumer<Component>) {
+    inline fun appendTooltips(consumer: (Text) -> Unit) {
         // Properties
         for ((key: HTUpgradeKey, property: Fraction) in propertyMap) {
-            consumer.accept(key.translateColored(HTDefaultColor.GRAY, HTUpgradeHelper.getPropertyColor(key, property), property))
+            consumer(key.translateColored(HTDefaultColor.GRAY, HTUpgradeHelper.getPropertyColor(key, property), property))
         }
         // Target Set
         targetSet
             .map(HTItemIngredient::getText)
             .map { RagiumTranslation.TOOLTIP_UPGRADE_TARGET.translateColored(HTDefaultColor.BLUE, HTDefaultColor.GRAY, it) }
-            .ifPresent(consumer)
+            .onPresent(consumer)
         // Exclusive Set
         exclusiveSet
             .map(HTItemIngredient::getText)
             .map { RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE.translateColored(HTDefaultColor.RED, HTDefaultColor.GRAY, it) }
-            .ifPresent(consumer)
+            .onPresent(consumer)
     }
 
     //    Builder    //
@@ -96,8 +97,8 @@ data class HTUpgradeData private constructor(
 
         fun build(): HTUpgradeData = HTUpgradeData(
             HTUpgradePropertyMap.create(propertyMap),
-            Optional.ofNullable(targetSet),
-            Optional.ofNullable(exclusiveSet),
+            targetSet.wrapOptional(),
+            exclusiveSet.wrapOptional(),
         )
     }
 }

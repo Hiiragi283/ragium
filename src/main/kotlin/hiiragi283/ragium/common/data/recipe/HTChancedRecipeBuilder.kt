@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.function.wrapOptional
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import net.minecraft.resources.ResourceLocation
@@ -26,7 +27,7 @@ abstract class HTChancedRecipeBuilder(prefix: String) : HTProcessingRecipeBuilde
             this.result = result
         }
 
-        fun toOptional(): Optional<HTChancedItemResult> = Optional.ofNullable(result)
+        fun toOptional(): Optional<HTChancedItemResult> = result.wrapOptional()
     }
 
     final override fun getPrimalId(): ResourceLocation = result.getId()

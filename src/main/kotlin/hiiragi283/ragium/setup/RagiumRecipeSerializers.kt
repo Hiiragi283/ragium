@@ -62,6 +62,10 @@ object RagiumRecipeSerializers {
 
     // Printing
     @JvmField
+    val BANNER_COPYING: RecipeSerializer<HTBookCopyingRecipe> =
+        REGISTER.registerSerializer("banner_copying", MapBiCodecs.unit(HTBookCopyingRecipe))
+
+    @JvmField
     val BOOK_COPYING: RecipeSerializer<HTBookCopyingRecipe> =
         REGISTER.registerSerializer("book_copying", MapBiCodecs.unit(HTBookCopyingRecipe))
 

@@ -11,6 +11,7 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
+import mezz.jei.api.recipe.RecipeIngredientRole
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTItemAndItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeViewerType<RecipeHolder<HTItemAndItemRecipe>>) :
@@ -51,7 +52,7 @@ class HTItemAndItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
         )
         extension.setSecondInput(
             recipe1,
-            builder.addInputSlot(getPosition(3.5), getPosition(0.5)).setSlotBackground(HTBackgroundType.INPUT),
+            builder.addSlot(RecipeIngredientRole.CATALYST, getPosition(3.5), getPosition(0.5)).setSlotBackground(HTBackgroundType.NONE),
         )
         // output
         extension.setOutput(
@@ -76,7 +77,6 @@ class HTItemAndItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
     private fun <RECIPE : HTItemAndItemRecipe> getExtension(
         recipe: HTItemAndItemRecipe,
     ): Pair<RECIPE, HTItemAndItemRecipeCategoryExtension<RECIPE>>? {
-        val recipe1: RECIPE = recipe as? RECIPE ?: return null
         val extension: HTItemAndItemRecipeCategoryExtension<RECIPE> =
             (extensions[recipe::class.java] as? HTItemAndItemRecipeCategoryExtension<RECIPE>) ?: run {
                 for ((clazz: Class<out HTItemAndItemRecipe>, extension: HTItemAndItemRecipeCategoryExtension<*>) in extensions) {
@@ -86,6 +86,6 @@ class HTItemAndItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
                 }
                 null
             } ?: return null
-        return recipe1 to extension
+        return (recipe as RECIPE) to extension
     }
 }

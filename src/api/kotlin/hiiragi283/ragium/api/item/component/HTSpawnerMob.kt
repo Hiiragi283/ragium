@@ -4,10 +4,10 @@ import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.api.text.HTHasText
+import hiiragi283.core.api.text.Text
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.EntityType
 
 data class HTSpawnerMob(private val value: Holder<EntityType<*>>) :
@@ -27,5 +27,5 @@ data class HTSpawnerMob(private val value: Holder<EntityType<*>>) :
 
     override fun get(): EntityType<*> = value.value()
 
-    override fun getText(): Component = get().description
+    override fun getText(): Text = get().description
 }

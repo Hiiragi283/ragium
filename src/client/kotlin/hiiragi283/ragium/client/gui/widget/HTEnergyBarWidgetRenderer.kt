@@ -4,12 +4,12 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.gui.HTAbstractGui
 import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.resource.toId
+import hiiragi283.core.api.text.Text
 import hiiragi283.core.client.gui.widget.HTSpriteWidgetRenderer
 import hiiragi283.core.util.HTTooltipHelper
 import hiiragi283.ragium.common.gui.widget.HTEnergyBarWidget
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.renderer.texture.TextureAtlasSprite
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.TooltipFlag
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
@@ -30,7 +30,7 @@ class HTEnergyBarWidgetRenderer(gui: HTAbstractGui, widget: HTEnergyBarWidget) :
 
     override fun getLevel(): Fraction = widget.getLevelAsFraction()
 
-    override fun collectTooltips(consumer: Consumer<Component>, flag: TooltipFlag) {
+    override fun collectTooltips(consumer: Consumer<Text>, flag: TooltipFlag) {
         HTTooltipHelper.addEnergyTooltip(widget.getAmount(), consumer, false)
     }
 }

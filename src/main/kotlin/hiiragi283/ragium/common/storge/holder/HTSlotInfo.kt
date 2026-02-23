@@ -3,10 +3,10 @@ package hiiragi283.ragium.common.storge.holder
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
+import hiiragi283.core.api.text.Text
 import hiiragi283.ragium.api.text.RagiumTranslation
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
-import net.minecraft.network.chat.Component
 
 enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: HTDefaultColor) {
     BOTH(true, true, HTDefaultColor.PURPLE),
@@ -22,7 +22,7 @@ enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color
         val CODEC: BiCodec<ByteBuf, HTSlotInfo> = BiCodecs.enum()
     }
 
-    fun getText(side: Direction): Component = when (this) {
+    fun getText(side: Direction): Text = when (this) {
         BOTH -> RagiumTranslation.GUI_SLOT_BOTH
         INPUT -> RagiumTranslation.GUI_SLOT_INPUT
         OUTPUT -> RagiumTranslation.GUI_SLOT_OUTPUT

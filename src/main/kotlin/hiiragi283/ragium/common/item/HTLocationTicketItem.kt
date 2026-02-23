@@ -1,13 +1,13 @@
 package hiiragi283.ragium.common.item
 
 import hiiragi283.core.api.item.createItemStack
+import hiiragi283.core.api.text.Text
 import hiiragi283.core.api.text.toText
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.core.util.HTItemDropHelper
 import hiiragi283.ragium.api.block.entity.HTTargetedBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.GlobalPos
-import net.minecraft.network.chat.Component
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
@@ -44,7 +44,7 @@ class HTLocationTicketItem(properties: Properties) : Item(properties) {
     override fun appendHoverText(
         stack: ItemStack,
         context: TooltipContext,
-        tooltips: MutableList<Component>,
+        tooltips: MutableList<Text>,
         flag: TooltipFlag,
     ) {
         stack

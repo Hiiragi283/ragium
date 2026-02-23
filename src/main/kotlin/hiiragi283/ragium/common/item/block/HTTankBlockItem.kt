@@ -4,10 +4,10 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.api.text.HTCommonTranslation
+import hiiragi283.core.api.text.Text
 import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.block.storage.HTTankBlock
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
@@ -18,7 +18,7 @@ class HTTankBlockItem(block: HTTankBlock, properties: Properties) : HTStorageBlo
     override fun addStats(
         stack: ItemStack,
         context: TooltipContext,
-        tooltips: MutableList<Component>,
+        tooltips: MutableList<Text>,
         flag: TooltipFlag,
     ) {
         val isCreative: Boolean = HTUpgradeHelper.isCreative(stack)

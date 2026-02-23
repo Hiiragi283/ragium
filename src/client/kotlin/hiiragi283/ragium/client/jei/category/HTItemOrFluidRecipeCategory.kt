@@ -98,7 +98,6 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
     private fun <RECIPE : HTItemOrFluidRecipe> getExtension(
         recipe: HTItemOrFluidRecipe,
     ): Pair<RECIPE, HTItemOrFluidRecipeCategoryExtension<RECIPE>>? {
-        val recipe1: RECIPE = recipe as? RECIPE ?: return null
         val extension: HTItemOrFluidRecipeCategoryExtension<RECIPE> =
             (extensions[recipe::class.java] as? HTItemOrFluidRecipeCategoryExtension<RECIPE>) ?: run {
                 for ((clazz: Class<out HTItemOrFluidRecipe>, extension: HTItemOrFluidRecipeCategoryExtension<*>) in extensions) {
@@ -108,6 +107,6 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
                 }
                 null
             } ?: return null
-        return recipe1 to extension
+        return (recipe as RECIPE) to extension
     }
 }

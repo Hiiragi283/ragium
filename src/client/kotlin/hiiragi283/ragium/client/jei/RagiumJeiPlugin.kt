@@ -15,6 +15,7 @@ import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemToChancedRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
+import hiiragi283.ragium.client.jei.extension.HTBannerCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemToItemRecipeCategoryExtension
@@ -23,9 +24,6 @@ import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExten
 import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
-import hiiragi283.ragium.common.recipe.HTFreezingRecipe
-import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -139,8 +137,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         printing = HTItemAndItemRecipeCategory.printing(guiHelper)
 
         pressing.addExtension(HTBasicItemAndItemRecipeCategoryExtension())
-        printing.addExtension(HTBasicItemAndItemRecipeCategoryExtension())
 
+        printing.addExtension(HTBannerCopyingRecipeCategoryExtension)
         printing.addExtension(HTBookCopyingRecipeCategoryExtension)
     }
 
@@ -150,10 +148,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         freezing = HTItemOrFluidRecipeCategory.freezing(guiHelper)
         canning = HTItemOrFluidRecipeCategory.canning(guiHelper)
 
-        melting.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTMeltingRecipe>())
-        pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTPyrolyzingRecipe>())
-        freezing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTFreezingRecipe>())
-        canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension<HTCanningRecipe>())
+        melting.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
+        pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
+        freezing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
+        canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
 
         canning.addExtension(HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, HTBucketDrainingRecipe::isFilledBucket))
         canning.addExtension(HTBucketFillingRecipeCategoryExtension(manager))

@@ -6,26 +6,28 @@ import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
-import net.minecraft.world.item.component.WrittenBookContent
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.level.block.entity.BannerPatternLayers
 
 /**
- * @see net.minecraft.world.item.crafting.BookCloningRecipe
+ * @see net.minecraft.world.item.crafting.BannerDuplicateRecipe
  */
-data object HTBookCopyingRecipe : HTItemAndItemRecipe {
-    override fun testFirstItem(stack: ItemStack): Boolean = stack.`is`(Items.WRITABLE_BOOK)
+data class HTBannerCopyingRecipe(val banner: Item) : HTItemAndItemRecipe {
+    fun hasNonEmptyPattern(stack: ItemStack): Boolean = stack
+        .getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY)
+        .layers()
+        .isNotEmpty()
 
-    override fun testSecondItem(stack: ItemStack): Boolean =
-        stack.`is`(Items.WRITTEN_BOOK) && stack.has(DataComponents.WRITTEN_BOOK_CONTENT)
+    override fun testFirstItem(stack: ItemStack): Boolean = stack.`is`(banner)
+
+    override fun testSecondItem(stack: ItemStack): Boolean = testFirstItem(stack) && hasNonEmptyPattern(stack)
 
     override fun assemble(input: HTDoubleRecipeInput, registries: HolderLookup.Provider): ItemStack {
         val parentStack: ItemStack = input.second.copy()
-        val writtenTexts: WrittenBookContent = parentStack.getOrDefault(DataComponents.WRITTEN_BOOK_CONTENT, WrittenBookContent.EMPTY)
-        val copiedTexts: WrittenBookContent = writtenTexts.tryCraftCopy() ?: return input.first.copyWithCount(1)
-        parentStack.set(DataComponents.WRITTEN_BOOK_CONTENT, copiedTexts)
+        if (!hasNonEmptyPattern(parentStack)) return input.first.copyWithCount(1)
         return parentStack
     }
 
@@ -33,7 +35,7 @@ data object HTBookCopyingRecipe : HTItemAndItemRecipe {
 
     override val time: Int = 100
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BOOK_COPYING
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BANNER_COPYING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.PRINTING.get()
 }
