@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -44,6 +45,7 @@ import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
 import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.base.HTCombineItemRecipe
+import hiiragi283.ragium.common.recipe.special.HTBannerCopyingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBookCopyingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
@@ -62,8 +64,14 @@ object RagiumRecipeSerializers {
 
     // Printing
     @JvmField
-    val BANNER_COPYING: RecipeSerializer<HTBookCopyingRecipe> =
-        REGISTER.registerSerializer("banner_copying", MapBiCodecs.unit(HTBookCopyingRecipe))
+    val BANNER_COPYING: RecipeSerializer<HTBannerCopyingRecipe> =
+        REGISTER.registerSerializer(
+            "banner_copying",
+            MapBiCodec.composite(
+                HTDefaultColor.CODEC.fieldOf("color").forGetter(HTBannerCopyingRecipe::color),
+                ::HTBannerCopyingRecipe,
+            ),
+        )
 
     @JvmField
     val BOOK_COPYING: RecipeSerializer<HTBookCopyingRecipe> =

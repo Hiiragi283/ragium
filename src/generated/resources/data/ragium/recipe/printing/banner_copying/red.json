@@ -1,3 +1,4 @@
 {
-  "type": "ragium:banner_copying"
+  "type": "ragium:banner_copying",
+  "color": "red"
 }

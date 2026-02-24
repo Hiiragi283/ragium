@@ -4,10 +4,8 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
-import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -181,8 +179,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
     private fun printing() {
         for (color: HTDefaultColor in HTDefaultColor.entries) {
-            val banner: HTSimpleDeferredItem = ColoredMaterials.BANNER[color] ?: continue
-            save(id(RagiumConst.PRINTING, "banner_copying", color.serializedName), HTBannerCopyingRecipe(banner.get()))
+            save(id(RagiumConst.PRINTING, "banner_copying", color.serializedName), HTBannerCopyingRecipe(color))
         }
 
         save(id(RagiumConst.PRINTING, "book_copying"), HTBookCopyingRecipe)
