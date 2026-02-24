@@ -50,7 +50,6 @@ object RagiumConst {
 
     // Basic
     const val ALLOYING = "alloying"
-    const val CRUSHING = "crushing"
     const val CUTTING = "cutting"
     const val PRESSING = "pressing"
     const val PRINTING = "printing"
@@ -76,7 +75,6 @@ object RagiumConst {
     const val FABRICATING = "fabricating"
 
     // Device
-    const val BREWING = "brewing"
     const val COMPRESSING = "compressing"
     const val ENCHANTING = "enchanting"
     const val PLANTING = "planting"

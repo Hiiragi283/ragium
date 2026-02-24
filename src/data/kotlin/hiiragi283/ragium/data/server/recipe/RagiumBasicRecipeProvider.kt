@@ -7,7 +7,6 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.recipe.special.HTBannerCopyingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBookCopyingRecipe
@@ -33,13 +32,13 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun compressing() {
         // Sculk Vein -> Sculk
-        HTItemToItemRecipeBuilder.compressing(output) {
+        RagiumRecipeBuilder.compressing(output) {
             ingredient = inputCreator.create(Items.SCULK_VEIN, 8)
             result = resultCreator.create(Items.SCULK)
         }
 
         // Sawdust -> Compressed
-        HTItemToItemRecipeBuilder.compressing(output) {
+        RagiumRecipeBuilder.compressing(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 8)
             result = resultCreator.create(HCItems.COMPRESSED_SAWDUST)
         }

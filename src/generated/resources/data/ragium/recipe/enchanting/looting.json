@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:looting",
   "ingredient": {
     "amount": 64,
     "items": "#c:gems/emerald"
-  },
-  "time": 200
+  }
 }

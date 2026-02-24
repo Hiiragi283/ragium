@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:luck_of_the_sea",
   "ingredient": {
     "amount": 64,
     "items": "minecraft:prismarine_shard"
-  },
-  "time": 200
+  }
 }

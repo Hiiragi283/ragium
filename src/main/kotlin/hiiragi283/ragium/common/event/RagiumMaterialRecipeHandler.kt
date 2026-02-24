@@ -21,7 +21,6 @@ import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
@@ -273,7 +272,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val wire: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.WIRE, entry) ?: return
         // レシピを登録
-        HTItemToItemRecipeBuilder.wiring(output) {
+        RagiumRecipeBuilder.wiring(output) {
             ingredient = inputCreator.create(inputTag)
             result = resultCreator.create(wire, 2)
             time = getTimeFromHardness(entry, time) ?: return

@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:sweeping_edge",
   "ingredient": {
     "amount": 64,
     "items": "#c:plates/iron"
-  },
-  "time": 200
+  }
 }

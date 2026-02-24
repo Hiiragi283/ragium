@@ -8,13 +8,13 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.serialization.codec.BiCodec
-import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.core.common.data.recipe.builder.HCItemToChancedRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTItemToChancedRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTItemToItemRecipeBuilder
 import hiiragi283.core.common.recipe.base.HTBasicItemToChancedRecipe
+import hiiragi283.core.common.recipe.base.HTBasicItemToItemRecipe
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -22,14 +22,13 @@ import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDistillingRecipe
-import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
+import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -39,7 +38,6 @@ import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemAndItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
-import hiiragi283.ragium.common.recipe.base.HTBasicItemToItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
 import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
@@ -53,7 +51,6 @@ import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.enchantment.ItemEnchantments
 
 object RagiumRecipeSerializers {
     @JvmField
@@ -110,7 +107,7 @@ object RagiumRecipeSerializers {
 
     @JvmStatic
     private fun <R : HTBasicItemToChancedRecipe> itemChanced(
-        factory: HCItemToChancedRecipeBuilder.Factory<R>,
+        factory: HTItemToChancedRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTBasicItemToChancedRecipe::ingredient),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBasicItemToChancedRecipe::result),
@@ -264,20 +261,12 @@ object RagiumRecipeSerializers {
 
     // Device
     @JvmField
-    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.ENCHANTING,
+    val HOLDER_ENCHANTING: RecipeSerializer<HTHolderEnchantingRecipe> = REGISTER.registerSerializer(
+        "${RagiumConst.ENCHANTING}/holder",
         MapBiCodec.composite(
-            HTItemIngredient.UNSIZED_CODEC.fieldOf("book").forGetter(HTEnchantingRecipe::book),
-            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTEnchantingRecipe::ingredient),
-            BiCodecs
-                .either(
-                    VanillaBiCodecs.holder(Registries.ENCHANTMENT),
-                    BiCodec.of(ItemEnchantments.CODEC, ItemEnchantments.STREAM_CODEC),
-                    true,
-                ).fieldOf("enchantment")
-                .forGetter(HTEnchantingRecipe::contents),
-            HTProcessingRecipe.timeCodec(),
-            ::HTEnchantingRecipe,
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTHolderEnchantingRecipe::ingredient),
+            VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment").forGetter(HTHolderEnchantingRecipe::holder),
+            ::HTHolderEnchantingRecipe,
         ),
     )
 

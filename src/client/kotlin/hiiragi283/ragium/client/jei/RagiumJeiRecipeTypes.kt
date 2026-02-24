@@ -2,18 +2,18 @@ package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.recipe.HTItemToChancedRecipe
+import hiiragi283.core.api.recipe.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
+import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
-import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTDistillingRecipe
-import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
@@ -43,7 +43,7 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val COMPRESSING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
-        processor(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
+        processor(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR, 18 * 4, 18 * 1)
 
     @JvmField
     val CUTTING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
@@ -51,15 +51,15 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        processor(RagiumRecipeTypes.PRINTING, Items.WRITABLE_BOOK)
+        processor(RagiumRecipeTypes.PRINTING, Items.WRITABLE_BOOK, 18 * 6, 18 * 1)
 
     @JvmField
     val PRESSING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
+        processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS, 18 * 6, 18 * 1)
 
     @JvmField
     val WIRING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
-        processor(RagiumRecipeTypes.WIRING, RagiumBlocks.WIREMILL)
+        processor(RagiumRecipeTypes.WIRING, RagiumBlocks.WIREMILL, 18 * 4, 18 * 1)
 
     // Machine - Heat
     @JvmField
@@ -96,7 +96,7 @@ object RagiumJeiRecipeTypes {
 
     // Device
     @JvmField
-    val ENCHANTING: HTHolderRecipeViewerType<HTEnchantingRecipe.Input, HTEnchantingRecipe> =
+    val ENCHANTING: HTHolderRecipeViewerType<HTEnchantingRecipe.Input, HTEnchantingRecipe.Serializable> =
         processor(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 
     @JvmField

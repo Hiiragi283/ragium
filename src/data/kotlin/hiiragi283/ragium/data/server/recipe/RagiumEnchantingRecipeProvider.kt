@@ -29,15 +29,15 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
 
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Tags.Items.PUMPKINS_CARVED)
-            result += enchLookup.getOrThrow(Enchantments.BINDING_CURSE)
+            enchantment = enchLookup.getOrThrow(Enchantments.BINDING_CURSE)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Tags.Items.COBBLESTONES)
-            result += enchLookup.getOrThrow(Enchantments.VANISHING_CURSE)
+            enchantment = enchLookup.getOrThrow(Enchantments.VANISHING_CURSE)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Tags.Items.NETHER_STARS)
-            result += enchLookup.getOrThrow(Enchantments.MENDING)
+            enchantment = enchLookup.getOrThrow(Enchantments.MENDING)
         }
     }
 
@@ -45,51 +45,51 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     private fun armor() {
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL, 64)
-            result += enchLookup.getOrThrow(Enchantments.PROTECTION)
+            enchantment = enchLookup.getOrThrow(Enchantments.PROTECTION)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.MAGMA_CREAM, 64)
-            result += enchLookup.getOrThrow(Enchantments.FIRE_PROTECTION)
+            enchantment = enchLookup.getOrThrow(Enchantments.FIRE_PROTECTION)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Tags.Items.FEATHERS, 64)
-            result += enchLookup.getOrThrow(Enchantments.FEATHER_FALLING)
+            enchantment = enchLookup.getOrThrow(Enchantments.FEATHER_FALLING)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON, 64)
-            result += enchLookup.getOrThrow(Enchantments.PROJECTILE_PROTECTION)
+            enchantment = enchLookup.getOrThrow(Enchantments.PROJECTILE_PROTECTION)
         }
 
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.PUFFERFISH, 64)
-            result += enchLookup.getOrThrow(Enchantments.RESPIRATION)
+            enchantment = enchLookup.getOrThrow(Enchantments.RESPIRATION)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.TROPICAL_FISH, 16)
-            result += enchLookup.getOrThrow(Enchantments.AQUA_AFFINITY)
+            enchantment = enchLookup.getOrThrow(Enchantments.AQUA_AFFINITY)
         }
 
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Tags.Items.CROPS_CACTUS)
-            result += enchLookup.getOrThrow(Enchantments.THORNS)
+            enchantment = enchLookup.getOrThrow(Enchantments.THORNS)
         }
 
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.PLASTIC, 64)
-            result += enchLookup.getOrThrow(Enchantments.DEPTH_STRIDER)
+            enchantment = enchLookup.getOrThrow(Enchantments.DEPTH_STRIDER)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.PACKED_ICE, 64)
-            result += enchLookup.getOrThrow(Enchantments.FROST_WALKER)
+            enchantment = enchLookup.getOrThrow(Enchantments.FROST_WALKER)
         }
 
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(ItemTags.SOUL_FIRE_BASE_BLOCKS, 64)
-            result += enchLookup.getOrThrow(Enchantments.SOUL_SPEED)
+            enchantment = enchLookup.getOrThrow(Enchantments.SOUL_SPEED)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO, 16)
-            result += enchLookup.getOrThrow(Enchantments.SWIFT_SNEAK)
+            enchantment = enchLookup.getOrThrow(Enchantments.SWIFT_SNEAK)
         }
     }
 
@@ -97,31 +97,31 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     private fun melee() {
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.QUARTZ, 64)
-            result += enchLookup.getOrThrow(Enchantments.SHARPNESS)
+            enchantment = enchLookup.getOrThrow(Enchantments.SHARPNESS)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SALT, 64)
-            result += enchLookup.getOrThrow(Enchantments.SMITE)
+            enchantment = enchLookup.getOrThrow(Enchantments.SMITE)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR, 64)
-            result += enchLookup.getOrThrow(Enchantments.BANE_OF_ARTHROPODS)
+            enchantment = enchLookup.getOrThrow(Enchantments.BANE_OF_ARTHROPODS)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.PISTON, 16)
-            result += enchLookup.getOrThrow(Enchantments.KNOCKBACK)
+            enchantment = enchLookup.getOrThrow(Enchantments.KNOCKBACK)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.BLAZE_POWDER, 32)
-            result += enchLookup.getOrThrow(Enchantments.FIRE_ASPECT)
+            enchantment = enchLookup.getOrThrow(Enchantments.FIRE_ASPECT)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.EMERALD, 64)
-            result += enchLookup.getOrThrow(Enchantments.LOOTING)
+            enchantment = enchLookup.getOrThrow(Enchantments.LOOTING)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.IRON, 64)
-            result += enchLookup.getOrThrow(Enchantments.SWEEPING_EDGE)
+            enchantment = enchLookup.getOrThrow(Enchantments.SWEEPING_EDGE)
         }
     }
 
@@ -129,19 +129,19 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     private fun tool() {
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE, 64)
-            result += enchLookup.getOrThrow(Enchantments.EFFICIENCY)
+            enchantment = enchLookup.getOrThrow(Enchantments.EFFICIENCY)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Tags.Items.STRINGS, 64)
-            result += enchLookup.getOrThrow(Enchantments.SILK_TOUCH)
+            enchantment = enchLookup.getOrThrow(Enchantments.SILK_TOUCH)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Tags.Items.OBSIDIANS, 64)
-            result += enchLookup.getOrThrow(Enchantments.UNBREAKING)
+            enchantment = enchLookup.getOrThrow(Enchantments.UNBREAKING)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.LAPIS, 64)
-            result += enchLookup.getOrThrow(Enchantments.FORTUNE)
+            enchantment = enchLookup.getOrThrow(Enchantments.FORTUNE)
         }
     }
 
@@ -149,19 +149,19 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     private fun bow() {
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.AMETHYST, 64)
-            result += enchLookup.getOrThrow(Enchantments.POWER)
+            enchantment = enchLookup.getOrThrow(Enchantments.POWER)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.STICKY_PISTON, 16)
-            result += enchLookup.getOrThrow(Enchantments.PUNCH)
+            enchantment = enchLookup.getOrThrow(Enchantments.PUNCH)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Tags.Items.RODS_BLAZE, 16)
-            result += enchLookup.getOrThrow(Enchantments.FLAME)
+            enchantment = enchLookup.getOrThrow(Enchantments.FLAME)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.IRIDIUM)
-            result += enchLookup.getOrThrow(Enchantments.INFINITY)
+            enchantment = enchLookup.getOrThrow(Enchantments.INFINITY)
         }
     }
 
@@ -169,11 +169,11 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     private fun lure() {
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.PRISMARINE_SHARD, 64)
-            result += enchLookup.getOrThrow(Enchantments.LUCK_OF_THE_SEA)
+            enchantment = enchLookup.getOrThrow(Enchantments.LUCK_OF_THE_SEA)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.PRISMARINE, 64)
-            result += enchLookup.getOrThrow(Enchantments.LURE)
+            enchantment = enchLookup.getOrThrow(Enchantments.LURE)
         }
     }
 
@@ -181,19 +181,19 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     private fun trident() {
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.LEAD, 64)
-            result += enchLookup.getOrThrow(Enchantments.LOYALTY)
+            enchantment = enchLookup.getOrThrow(Enchantments.LOYALTY)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.NAUTILUS_SHELL, 32)
-            result += enchLookup.getOrThrow(Enchantments.IMPALING)
+            enchantment = enchLookup.getOrThrow(Enchantments.IMPALING)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.HEART_OF_THE_SEA)
-            result += enchLookup.getOrThrow(Enchantments.RIPTIDE)
+            enchantment = enchLookup.getOrThrow(Enchantments.RIPTIDE)
         }
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.LIGHTNING_ROD, 16)
-            result += enchLookup.getOrThrow(Enchantments.CHANNELING)
+            enchantment = enchLookup.getOrThrow(Enchantments.CHANNELING)
         }
     }
 

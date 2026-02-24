@@ -4,22 +4,24 @@ import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.client.jei.HCJeiRecipeTypes
 import hiiragi283.core.client.jei.category.HTItemToChancedRecipeCategory
+import hiiragi283.core.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.core.client.jei.extension.HTBasicItemToChancedRecipeCategoryExtension
+import hiiragi283.core.client.jei.extension.HTBasicItemToItemRecipeCategoryExtension
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTDistillingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBannerCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTBasicItemToItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
@@ -77,6 +79,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         @JvmStatic
         lateinit var canning: HTItemOrFluidRecipeCategory
             private set
+
+        // Other
+        @JvmStatic
+        lateinit var enchanting: HTEnchantingRecipeCategory
+            private set
     }
 
     override fun registerItemSubtypes(registration: ISubtypeRegistration) {
@@ -104,6 +111,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         initItemAndItem(guiHelper, manager)
         initItemOrFluid(guiHelper, manager)
 
+        enchanting = HTEnchantingRecipeCategory(guiHelper)
+        enchanting.addExtension(HTHolderEnchantingRecipeCategoryExtension)
+
         registration.addRecipeCategories(
             // Machine - Basic
             HTAlloyingRecipeCategory(guiHelper),
@@ -122,12 +132,13 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             canning,
             HTMixingRecipeCategory(guiHelper),
             // Device
+            enchanting,
         )
     }
 
     private fun initItemToItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        compressing = HTItemToItemRecipeCategory.compressing(guiHelper)
-        wiring = HTItemToItemRecipeCategory.wiring(guiHelper)
+        compressing = HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.COMPRESSING)
+        wiring = HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.WIRING)
 
         compressing.addExtension(HTBasicItemToItemRecipeCategoryExtension())
         wiring.addExtension(HTBasicItemToItemRecipeCategoryExtension())
@@ -140,8 +151,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun initItemAndItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        pressing = HTItemAndItemRecipeCategory.pressing(guiHelper)
-        printing = HTItemAndItemRecipeCategory.printing(guiHelper)
+        pressing = HTItemAndItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PRESSING)
+        printing = HTItemAndItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PRINTING)
 
         pressing.addExtension(HTBasicItemAndItemRecipeCategoryExtension())
 
@@ -185,6 +196,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.CANNING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
         // Device
+        registration.addRecipes(RagiumJeiRecipeTypes.ENCHANTING)
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

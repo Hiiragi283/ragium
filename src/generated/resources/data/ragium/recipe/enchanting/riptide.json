@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:riptide",
   "ingredient": {
     "amount": 1,
     "items": "minecraft:heart_of_the_sea"
-  },
-  "time": 200
+  }
 }

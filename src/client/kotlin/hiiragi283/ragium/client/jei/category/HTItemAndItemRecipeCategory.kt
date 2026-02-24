@@ -4,7 +4,6 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.integration.jei.HTItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
-import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.client.jei.category.base.HTProcessingRecipeCategory
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
@@ -16,16 +15,6 @@ import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTItemAndItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRecipeViewerType<*, HTItemAndItemRecipe.Serializable>) :
     HTProcessingRecipeCategory<HTItemAndItemRecipe.Serializable>(guiHelper, recipeType) {
-    companion object {
-        @JvmStatic
-        fun pressing(guiHelper: IGuiHelper): HTItemAndItemRecipeCategory =
-            HTItemAndItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PRESSING)
-
-        @JvmStatic
-        fun printing(guiHelper: IGuiHelper): HTItemAndItemRecipeCategory =
-            HTItemAndItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PRINTING)
-    }
-
     private val extensions: MutableMap<Class<out HTItemAndItemRecipe>, HTItemAndItemRecipeCategoryExtension<*>> = hashMapOf()
 
     inline fun <reified RECIPE : HTItemAndItemRecipe> addExtension(extension: HTItemAndItemRecipeCategoryExtension<RECIPE>) {
@@ -39,7 +28,8 @@ class HTItemAndItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRec
     //    HTProcessingRecipeCategory    //
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemAndItemRecipe.Serializable, focuses: IFocusGroup) {
-        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.5), getPosition(1.5))
+        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
+        builder.addRecipePlusSign().setPosition(getPosition(1) + 2, getPosition(0) + 2)
     }
 
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemAndItemRecipe.Serializable, focuses: IFocusGroup) {
@@ -48,16 +38,16 @@ class HTItemAndItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRec
         // inputs
         extension.setFirstInput(
             recipe1,
-            builder.addInputSlot(getPosition(1.5), getPosition(1.5)).setSlotBackground(HTBackgroundType.INPUT),
+            builder.addInputSlot(getPosition(0), getPosition(0)).setSlotBackground(HTBackgroundType.INPUT),
         )
         extension.setSecondInput(
             recipe1,
-            builder.addSlot(RecipeIngredientRole.CATALYST, getPosition(3.5), getPosition(0.5)).setSlotBackground(HTBackgroundType.NONE),
+            builder.addSlot(RecipeIngredientRole.CATALYST, getPosition(2), getPosition(0)).setSlotBackground(HTBackgroundType.NONE),
         )
         // output
         extension.setOutput(
             recipe1,
-            builder.addOutputSlot(getPosition(5.5), getPosition(1.5)).setSlotBackground(HTBackgroundType.OUTPUT),
+            builder.addOutputSlot(getPosition(5), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT),
         )
     }
 

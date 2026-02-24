@@ -1,18 +1,10 @@
 package hiiragi283.ragium.common.block.entity.enchant
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.recipe.HTRecipeCache
-import hiiragi283.core.api.storage.fluid.getFluidStack
-import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.common.recipe.handler.HTItemInputHandler
-import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.block.entity.component.HTEnchantingRecipeComponent
-import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -21,11 +13,7 @@ import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.sounds.SoundEvents
-import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.level.block.state.BlockState
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.ENCHANTER, pos, state) {
@@ -62,10 +50,10 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
     //    Processing    //
 
-    override fun createRecipeComponent(): RecipeComponent = RecipeComponent()
+    override fun createRecipeComponent() = TODO()
 
-    inner class RecipeComponent : HTEnchantingRecipeComponent<HTEnchantingRecipe.Input, HTEnchantingRecipe>(this) {
-        private val cache: HTRecipeCache<HTEnchantingRecipe.Input, HTEnchantingRecipe> = RagiumRecipeTypes.ENCHANTING.createCache()
+    /*inner class RecipeComponent : HTEnchantingRecipeComponent<HTEnchantingRecipeN.Input, HTEnchantingRecipeN.Serializable>(this) {
+        private val cache: HTRecipeCache<HTEnchantingRecipeN.Input, HTEnchantingRecipeN.Serializable> = RagiumRecipeTypes.ENCHANTING.createCache()
         private var currentEnch: List<EnchantmentInstance> = listOf()
 
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(expTank) }
@@ -111,8 +99,8 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         }
 
         /**
-         * @see net.minecraft.world.inventory.EnchantmentMenu
-         */
+     * @see net.minecraft.world.inventory.EnchantmentMenu
+     */
         override fun getMatchedRecipe(input: HTEnchantingRecipe.Input, level: ServerLevel): HTEnchantingRecipe? {
             /*if (isRandom) {
                 val stack: ItemStack = input.getItem(0)
@@ -143,8 +131,8 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         }
 
         /**
-         * @see net.minecraft.world.inventory.EnchantmentMenu.getEnchantmentList
-         */
+     * @see net.minecraft.world.inventory.EnchantmentMenu.getEnchantmentList
+     */
         /*private fun getEnchantmentList(level: ServerLevel, stack: ItemStack, cost: Int): List<EnchantmentInstance> {
             val holderSet: HolderSet<Enchantment> =
                 level.registryAccess().holderSetOrNull(EnchantmentTags.IN_ENCHANTING_TABLE) ?: return emptyList()
@@ -163,7 +151,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
         override fun canProgressRecipe(level: ServerLevel, input: HTEnchantingRecipe.Input, recipe: HTEnchantingRecipe): Boolean =
             outputHandler.canInsert(recipe.assemble(input, level.registryAccess()))
-    }
+    }*/
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.device.enchanter
 }

@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:infinity",
   "ingredient": {
     "amount": 1,
     "items": "#c:ingots/iridium"
-  },
-  "time": 200
+  }
 }
