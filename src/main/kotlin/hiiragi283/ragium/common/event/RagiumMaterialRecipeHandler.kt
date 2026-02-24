@@ -21,13 +21,12 @@ import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.item.HTMoldType
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
@@ -41,16 +40,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
         for (entry: HTMaterialManager.Entry in materialManager) {
             // Basic
-            crushBaseToDust(event, entry)
-            crushOreToCrushed(event, entry, CommonTagPrefixes.ORE)
-            crushOreToCrushed(event, entry, CommonTagPrefixes.RAW)
-            crushCrushedToDust(event, entry)
-            crushPrefixToDust(event, entry, CommonTagPrefixes.GEAR)
-            crushPrefixToDust(event, entry, CommonTagPrefixes.NUGGET)
-            crushPrefixToDust(event, entry, CommonTagPrefixes.PLATE)
-            crushPrefixToDust(event, entry, CommonTagPrefixes.ROD)
-            crushPrefixToDust(event, entry, CommonTagPrefixes.WIRE)
-
             cutBaseToRod(event, entry)
             cutBlockToPlate(event, entry)
 
@@ -110,89 +99,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
     //    Crushing    //
 
-    @JvmStatic
-    private fun crushPrefixToDust(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
-        // 材料が存在するか判定
-        if (!event.isPresentTag(prefix, entry)) return
-        // 素材のプロパティから完成品を取得
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
-        val dust: HTItemHolderLike<*> = event.getFirstHolder(crushedPrefix, entry) ?: return
-        // プレフィックスのスケールから個数を算出
-        val (outputCount: Int, inputCount: Int) = prefix.getScaledAmount(1, entry)
-        // レシピを登録
-        HTItemToChancedRecipeBuilder.crushing(output) {
-            ingredient = inputCreator.create(prefix, entry, inputCount)
-            this.result = resultCreator.create(dust, outputCount)
-            time = getTimeFromHardness(entry, time) ?: return
-            recipeId suffix "_from_${prefix.name}"
-        }
-    }
-
-    @JvmStatic
-    private fun crushBaseToDust(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 素材のプロパティから材料を取得
-        val defaultPart: HTDefaultPart = entry.getDefaultPart() ?: return
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
-        val inputTag: TagKey<Item> = defaultPart.getTag(entry)
-        if (!event.isPresentTag(inputTag)) return
-        // 加工の前後でタグが一致する場合はパス
-        if (inputTag == crushedPrefix.itemTagKey(entry)) return
-        // 完成品を取得
-        val dust: HTItemHolderLike<*> = event.getFirstHolder(crushedPrefix, entry) ?: return
-        // レシピを登録
-        HTItemToChancedRecipeBuilder.crushing(output) {
-            ingredient = inputCreator.create(inputTag)
-            this.result = resultCreator.create(dust)
-            time = getTimeFromHardness(entry, time) ?: return
-            recipeId suffix "_from_${defaultPart.getSuffix()}"
-        }
-    }
-
-    @JvmStatic
-    private fun crushOreToCrushed(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
-        // 材料が存在するか判定
-        if (!event.isPresentTag(prefix, entry)) return
-        // 完成品を取得
-        val crushedOre: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.CRUSHED_ORE, entry) ?: return
-        // レシピを登録
-        HTItemToChancedRecipeBuilder.crushing(output) {
-            // 材料
-            ingredient = inputCreator.create(prefix, entry)
-            // 主産物
-            this.result = resultCreator.create(crushedOre, prefix.getScaledAmount(2, entry).toInt())
-            // 副産物
-            entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
-                ?.getResult(HTExtraOreResultMap.Phase.CRUSH_ORE)
-                ?.let(extraResult::plusAssign)
-
-            recipeId suffix "_from_${prefix.name}"
-        }
-    }
-
-    @JvmStatic
-    private fun crushCrushedToDust(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 材料が存在するか判定
-        if (!event.isPresentTag(CommonTagPrefixes.CRUSHED_ORE, entry)) return
-        // 完成品を取得
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
-        val dust: ItemLike = event.getFirstHolder(crushedPrefix, entry) ?: return
-        // プレフィックスのスケールから個数を算出
-        val (outputCount: Int, inputCount: Int) = CommonTagPrefixes.CRUSHED_ORE.getScaledAmount(1, entry)
-        // レシピを登録
-        HTItemToChancedRecipeBuilder.crushing(output) {
-            // 材料
-            ingredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry, inputCount)
-            // 主産物
-            this.result = resultCreator.create(dust, outputCount)
-            // 副産物
-            entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
-                ?.getResult(HTExtraOreResultMap.Phase.CRUSH_CRUSHED)
-                ?.let(extraResult::plusAssign)
-
-            recipeId suffix "_from_crushed_ore"
-        }
-    }
-
     //    Cutting    //
 
     @JvmStatic
@@ -208,7 +114,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // プレフィックスのスケールから個数を算出
         val (inputCount: Int, outputCount: Int) = CommonTagPrefixes.ROD.getScaledAmount(1, entry)
         // レシピを登録
-        HTItemToChancedRecipeBuilder.cutting(output) {
+        RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(inputTag, inputCount)
             result = resultCreator.create(rod, outputCount)
             time = getTimeFromHardness(entry, time * 3) ?: return
@@ -223,7 +129,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
         // レシピを登録
-        HTItemToChancedRecipeBuilder.cutting(output) {
+        RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.BLOCK, entry)
             result = resultCreator.create(plate, entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
             time = getTimeFromHardness(entry, time * 3) ?: (time * 3)

@@ -111,7 +111,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
-        add(RagiumRecipeTypes.CRUSHING, "粉砕")
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.PRESSING, "プレス加工")
         add(RagiumRecipeTypes.PRINTING, "印刷")

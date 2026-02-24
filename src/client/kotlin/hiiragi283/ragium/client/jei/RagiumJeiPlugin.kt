@@ -2,28 +2,25 @@ package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
-import hiiragi283.core.api.util.Ior
-import hiiragi283.core.common.recipe.HCBrewingRecipe
-import hiiragi283.core.common.recipe.HTVanillaRecipeTypes
+import hiiragi283.core.client.jei.HCJeiRecipeTypes
+import hiiragi283.core.client.jei.category.HTItemToChancedRecipeCategory
+import hiiragi283.core.client.jei.extension.HTBasicItemToChancedRecipeCategoryExtension
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTDistillingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTItemToChancedRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBannerCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTBasicItemToChancedRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemToItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
-import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -36,9 +33,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
 import mezz.jei.api.runtime.IIngredientManager
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeHolder
 
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
@@ -53,10 +48,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             private set
 
         // ItemToChanced
-        @JvmStatic
-        lateinit var crushing: HTItemToChancedRecipeCategory
-            private set
-
         @JvmStatic
         lateinit var cutting: HTItemToChancedRecipeCategory
             private set
@@ -117,7 +108,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Basic
             HTAlloyingRecipeCategory(guiHelper),
             compressing,
-            crushing,
             cutting,
             pressing,
             printing,
@@ -144,10 +134,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun initItemToChanced(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        crushing = HTItemToChancedRecipeCategory.crushing(guiHelper)
-        cutting = HTItemToChancedRecipeCategory.cutting(guiHelper)
+        cutting = HTItemToChancedRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CUTTING)
 
-        crushing.addExtension(HTBasicItemToChancedRecipeCategoryExtension())
         cutting.addExtension(HTBasicItemToChancedRecipeCategoryExtension())
     }
 
@@ -183,7 +171,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Machine - Basic
         registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING)
         registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING)
-        registration.addRecipes(RagiumJeiRecipeTypes.CRUSHING)
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING)
         registration.addRecipes(RagiumJeiRecipeTypes.PRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.PRINTING)
@@ -196,25 +183,17 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.FREEZING)
         // Machine - Chemical
         registration.addRecipes(RagiumJeiRecipeTypes.CANNING)
-        registration.addRecipes(
-            getRecipeType(RagiumJeiRecipeTypes.CANNING),
-            HTVanillaRecipeTypes.BREWING.getAllRecipes().map { (id: ResourceLocation, recipe: HCBrewingRecipe) ->
-                RecipeHolder(
-                    id,
-                    HTCanningRecipe(Ior.Both(recipe.ingredient, recipe.potionFrom), Ior.Right(recipe.potionTo), recipe.time),
-                )
-            },
-        )
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
         // Device
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
+        registration.addRecipeCatalyst(RagiumBlocks.CRUSHER, getRecipeType(HCJeiRecipeTypes.CRUSHING))
+
         registration.addRecipeCatalysts(
             // Machine - Basic
             RagiumJeiRecipeTypes.ALLOYING,
             RagiumJeiRecipeTypes.COMPRESSING,
-            RagiumJeiRecipeTypes.CRUSHING,
             RagiumJeiRecipeTypes.CUTTING,
             RagiumJeiRecipeTypes.PRESSING,
             RagiumJeiRecipeTypes.PRINTING,

@@ -13,6 +13,8 @@ import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.core.common.data.recipe.builder.HCItemToChancedRecipeBuilder
+import hiiragi283.core.common.recipe.base.HTBasicItemToChancedRecipe
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -20,12 +22,10 @@ import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
@@ -39,7 +39,6 @@ import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemAndItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
-import hiiragi283.ragium.common.recipe.base.HTBasicItemToChancedRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemToItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
 import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
@@ -111,7 +110,7 @@ object RagiumRecipeSerializers {
 
     @JvmStatic
     private fun <R : HTBasicItemToChancedRecipe> itemChanced(
-        factory: HTItemToChancedRecipeBuilder.Factory<R>,
+        factory: HCItemToChancedRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTBasicItemToChancedRecipe::ingredient),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBasicItemToChancedRecipe::result),
@@ -168,9 +167,6 @@ object RagiumRecipeSerializers {
     @JvmField
     val COMPRESSING: RecipeSerializer<HTCompressingRecipe> =
         REGISTER.registerSerializer(RagiumConst.COMPRESSING, itemToItem(::HTCompressingRecipe))
-
-    @JvmField
-    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, itemChanced(::HTCrushingRecipe))
 
     @JvmField
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, itemChanced(::HTCuttingRecipe))

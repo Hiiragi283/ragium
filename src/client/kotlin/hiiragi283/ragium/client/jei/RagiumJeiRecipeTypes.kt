@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.gui.HTBounds
+import hiiragi283.core.api.recipe.HTItemToChancedRecipe
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
@@ -9,7 +10,6 @@ import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
-import hiiragi283.ragium.api.recipe.HTItemToChancedRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTDistillingRecipe
@@ -46,12 +46,8 @@ object RagiumJeiRecipeTypes {
         processor(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
-    val CRUSHING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
-        processor(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
-
-    @JvmField
     val CUTTING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
-        processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
+        processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 5, 18 * 1)
 
     @JvmField
     val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =

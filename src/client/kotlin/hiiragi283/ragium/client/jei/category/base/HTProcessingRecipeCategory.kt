@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.jei.category.base
 import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.core.api.recipe.base.HTSerializableRecipe
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
-import hiiragi283.core.client.jei.category.HTHolderRecipeCategory
+import hiiragi283.core.client.jei.category.base.HTHolderRecipeCategory
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
