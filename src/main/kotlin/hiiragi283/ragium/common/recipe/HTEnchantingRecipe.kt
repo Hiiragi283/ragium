@@ -3,11 +3,12 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.item.createEnchantedBook
 import hiiragi283.core.api.item.enchantment.toInstances
-import hiiragi283.core.api.monad.Either
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.recipe.base.HTProcessingRecipe
+import hiiragi283.core.api.recipe.base.HTSerializableRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
+import hiiragi283.core.api.util.Either
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.util.HTExperienceHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -20,7 +21,6 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 import net.minecraft.world.item.enchantment.ItemEnchantments
-import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTEnchantingRecipe(
@@ -28,7 +28,8 @@ class HTEnchantingRecipe(
     val ingredient: HTItemIngredient,
     val contents: Either<Holder<Enchantment>, ItemEnchantments>,
     override val time: Int,
-) : HTProcessingRecipe<HTEnchantingRecipe.Input> {
+) : HTProcessingRecipe<HTEnchantingRecipe.Input>,
+    HTSerializableRecipe<HTEnchantingRecipe.Input> {
     val expIngredient: HTFluidIngredient by lazy {
         val amount: Int = contents
             .map(
@@ -45,13 +46,6 @@ class HTEnchantingRecipe(
 
     //    HTProcessingRecipe    //
 
-    override fun matches(input: Input, level: Level): Boolean {
-        val bool1: Boolean = expIngredient.test(input.fluid)
-        val bool2: Boolean = book.testOnlyType(input.book)
-        val bool3: Boolean = ingredient.test(input.item)
-        return bool1 && bool2 && bool3
-    }
-
     override fun assemble(input: Input, registries: HolderLookup.Provider): ItemStack {
         var stack: ItemStack = input.book
         val instances: List<EnchantmentInstance> = contents
@@ -67,11 +61,16 @@ class HTEnchantingRecipe(
         return stack
     }
 
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = createEnchBook()
-
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ENCHANTING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTING.get()
+
+    override fun test(input: Input): Boolean {
+        val bool1: Boolean = expIngredient.test(input.fluid)
+        val bool2: Boolean = book.testOnlyType(input.book)
+        val bool3: Boolean = ingredient.test(input.item)
+        return bool1 && bool2 && bool3
+    }
 
     @JvmRecord
     data class Input(val book: ItemStack, val item: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {

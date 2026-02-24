@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.recipe.base
 
-import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.util.Ior
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
@@ -16,7 +16,7 @@ abstract class HTBasicItemOrFluidRecipe(
     val ingredient: Ior<HTItemIngredient, HTFluidIngredient>,
     val result: Ior<HTItemResult, HTFluidResult>,
     final override val time: Int,
-) : HTItemOrFluidRecipe {
+) : HTItemOrFluidRecipe.Serializable {
     final override fun getPredicate(): Ior<Predicate<ItemStack>, Predicate<FluidStack>> =
         ingredient.mapLeft { Predicate(it::test) }.mapRight { Predicate(it::test) }
 

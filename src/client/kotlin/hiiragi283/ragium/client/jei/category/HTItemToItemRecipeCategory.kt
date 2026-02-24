@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
+import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.integration.jei.HTItemToItemRecipeCategoryExtension
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
@@ -13,8 +13,8 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import net.minecraft.world.item.crafting.RecipeHolder
 
-class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeViewerType<RecipeHolder<HTItemToItemRecipe>>) :
-    HTProcessingRecipeCategory<HTItemToItemRecipe>(guiHelper, recipeType) {
+class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRecipeViewerType<*, HTItemToItemRecipe.Serializable>) :
+    HTProcessingRecipeCategory<HTItemToItemRecipe.Serializable>(guiHelper, recipeType) {
     companion object {
         @JvmStatic
         fun compressing(guiHelper: IGuiHelper): HTItemToItemRecipeCategory =
@@ -36,11 +36,11 @@ class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeView
 
     //    HTProcessingRecipeCategory    //
 
-    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemToItemRecipe, focuses: IFocusGroup) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemToItemRecipe.Serializable, focuses: IFocusGroup) {
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.5), getPosition(1))
     }
 
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemToItemRecipe, focuses: IFocusGroup) {
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemToItemRecipe.Serializable, focuses: IFocusGroup) {
         val (recipe1: HTItemToItemRecipe, extension: HTItemToItemRecipeCategoryExtension<HTItemToItemRecipe>) =
             getExtension<HTItemToItemRecipe>(recipe) ?: return
         // input
@@ -56,7 +56,7 @@ class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeView
     }
 
     override fun onDisplayedIngredientsUpdate(
-        recipe: RecipeHolder<HTItemToItemRecipe>,
+        recipe: RecipeHolder<HTItemToItemRecipe.Serializable>,
         recipeSlots: List<IRecipeSlotDrawable>,
         focuses: IFocusGroup,
     ) {
@@ -65,7 +65,8 @@ class HTItemToItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeView
         extension.onDisplayedIngredientsUpdate(recipe1, recipeSlots[0], recipeSlots[1], focuses)
     }
 
-    override fun isHandled(recipe: RecipeHolder<HTItemToItemRecipe>): Boolean = getExtension<HTItemToItemRecipe>(recipe.value()) != null
+    override fun isHandled(recipe: RecipeHolder<HTItemToItemRecipe.Serializable>): Boolean =
+        getExtension<HTItemToItemRecipe>(recipe.value()) != null
 
     @Suppress("UNCHECKED_CAST")
     private fun <RECIPE : HTItemToItemRecipe> getExtension(

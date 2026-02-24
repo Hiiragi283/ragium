@@ -6,13 +6,12 @@ import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.level.Level
 
 abstract class HTBasicItemToItemRecipe(val ingredient: HTItemIngredient, val result: HTItemResult, final override val time: Int) :
-    HTItemToItemRecipe {
+    HTItemToItemRecipe.Serializable {
     override fun getRequiredAmount(input: SingleRecipeInput): Int = ingredient.amount
 
-    override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
+    override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
 
-    override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
+    override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 }

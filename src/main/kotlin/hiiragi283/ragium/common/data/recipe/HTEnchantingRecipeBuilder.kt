@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
-import hiiragi283.core.api.monad.Either
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.toLike
+import hiiragi283.core.api.util.Either
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import net.minecraft.core.Holder

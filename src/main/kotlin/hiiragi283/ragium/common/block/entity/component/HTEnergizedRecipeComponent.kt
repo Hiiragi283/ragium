@@ -1,17 +1,16 @@
 package hiiragi283.ragium.common.block.entity.component
 
-import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyBattery
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import java.util.function.ToIntFunction
 
-abstract class HTEnergizedRecipeComponent<INPUT : RecipeInput, RECIPE : Recipe<INPUT>>(
+abstract class HTEnergizedRecipeComponent<INPUT : RecipeInput, RECIPE : Any>(
     val owner: HTProcessorBlockEntity.Energized,
     timeGetter: ToIntFunction<RECIPE>,
 ) : HTProcessingRecipeComponent<INPUT, RECIPE>(owner, timeGetter) {
@@ -28,7 +27,7 @@ abstract class HTEnergizedRecipeComponent<INPUT : RecipeInput, RECIPE : Recipe<I
         private val cache: HTRecipeCache<INPUT, RECIPE>,
         owner: HTProcessorBlockEntity.Energized,
     ) : Processing<INPUT, RECIPE>(owner) {
-        constructor(lookup: HTRecipeLookup<INPUT, RECIPE>, owner: HTProcessorBlockEntity.Energized) : this(lookup.createCache(), owner)
+        constructor(lookup: HTRecipeLookup<INPUT, RECIPE, *>, owner: HTProcessorBlockEntity.Energized) : this(lookup.createCache(), owner)
 
         final override fun getMatchedRecipe(input: INPUT, level: ServerLevel): RECIPE? = cache.getFirstRecipe(input, level)
     }

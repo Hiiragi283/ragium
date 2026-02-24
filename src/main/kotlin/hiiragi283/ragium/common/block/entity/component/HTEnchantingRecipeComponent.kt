@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.component
 
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel

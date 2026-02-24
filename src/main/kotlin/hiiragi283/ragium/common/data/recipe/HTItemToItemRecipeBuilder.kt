@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
-import hiiragi283.core.api.recipe.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
@@ -32,7 +31,7 @@ class HTItemToItemRecipeBuilder(prefix: String, private val factory: Factory<*>)
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): HTProcessingRecipe<*> = factory.create(ingredient, result, time)
+    override fun createRecipe(): HTBasicItemToItemRecipe = factory.create(ingredient, result, time)
 
     //    Factory    //
 

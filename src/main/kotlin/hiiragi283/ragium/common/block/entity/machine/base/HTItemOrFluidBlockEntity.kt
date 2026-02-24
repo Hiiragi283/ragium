@@ -88,10 +88,10 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
 
     //    Processing    //
 
-    protected inner class RecipeComponent(
-        lookup: HTRecipeLookup<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe>,
+    protected inner class RecipeComponent<RECIPE : HTItemOrFluidRecipe>(
+        lookup: HTRecipeLookup<HTItemAndFluidRecipeInput, RECIPE, *>,
         private val user: HTSoundPlayerBlockEntity.User,
-    ) : HTEnergizedRecipeComponent.ProcessingCached<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe>(lookup, this) {
+    ) : HTEnergizedRecipeComponent.ProcessingCached<HTItemAndFluidRecipeInput, RECIPE>(lookup, this) {
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 
@@ -102,7 +102,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             level: ServerLevel,
             pos: BlockPos,
             input: HTItemAndFluidRecipeInput,
-            recipe: HTItemOrFluidRecipe,
+            recipe: RECIPE,
         ) {
             val access: RegistryAccess = level.registryAccess()
             itemOutputHandler.insert(recipe.assemble(input, access))
@@ -113,7 +113,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             level: ServerLevel,
             pos: BlockPos,
             input: HTItemAndFluidRecipeInput,
-            recipe: HTItemOrFluidRecipe,
+            recipe: RECIPE,
         ) {
             val (itemAmount: Int?, fluidAmount: Int?) = recipe.getRequiredAmount(input).toPair()
             fluidInputHandler.consume(fluidAmount ?: 0)
@@ -127,7 +127,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
             createInput(itemInputHandler, fluidInputHandler)
 
-        override fun canProgressRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput, recipe: HTItemOrFluidRecipe): Boolean {
+        override fun canProgressRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput, recipe: RECIPE): Boolean {
             val access: RegistryAccess = level.registryAccess()
             val bool1: Boolean = itemOutputHandler.canInsert(recipe.assemble(input, access))
             val bool2: Boolean = fluidOutputHandler.canInsert(recipe.assembleFluid(input, access))

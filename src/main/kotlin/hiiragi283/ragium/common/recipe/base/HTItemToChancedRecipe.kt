@@ -4,7 +4,6 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import net.minecraft.world.item.crafting.SingleRecipeInput
-import net.minecraft.world.level.Level
 import java.util.Optional
 
 abstract class HTItemToChancedRecipe(
@@ -13,5 +12,5 @@ abstract class HTItemToChancedRecipe(
     extraResult: Optional<HTChancedItemResult>,
     time: Int,
 ) : HTChancedRecipe<SingleRecipeInput>(result, extraResult, time) {
-    final override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
+    final override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 }

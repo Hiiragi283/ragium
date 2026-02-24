@@ -55,10 +55,10 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
 
     //    Processing    //
 
-    protected inner class RecipeComponent(
-        lookup: HTRecipeLookup<SingleRecipeInput, HTItemToItemRecipe>,
+    protected inner class RecipeComponent<RECIPE : HTItemToItemRecipe>(
+        lookup: HTRecipeLookup<SingleRecipeInput, RECIPE, *>,
         private val user: HTSoundPlayerBlockEntity.User,
-    ) : HTEnergizedRecipeComponent.ProcessingCached<SingleRecipeInput, HTItemToItemRecipe>(lookup, this) {
+    ) : HTEnergizedRecipeComponent.ProcessingCached<SingleRecipeInput, RECIPE>(lookup, this) {
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
@@ -66,7 +66,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
             level: ServerLevel,
             pos: BlockPos,
             input: SingleRecipeInput,
-            recipe: HTItemToItemRecipe,
+            recipe: RECIPE,
         ) {
             outputHandler.insert(recipe.assemble(input, level.registryAccess()))
         }
@@ -75,7 +75,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
             level: ServerLevel,
             pos: BlockPos,
             input: SingleRecipeInput,
-            recipe: HTItemToItemRecipe,
+            recipe: RECIPE,
         ) {
             inputHandler.consume(recipe.getRequiredAmount(input))
         }
@@ -84,7 +84,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
             user.playSound(this@HTItemToItemBlockEntity)
         }
 
-        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: HTItemToItemRecipe): Boolean =
+        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean =
             outputHandler.canInsert(recipe.assemble(input, level.registryAccess()))
 
         override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)

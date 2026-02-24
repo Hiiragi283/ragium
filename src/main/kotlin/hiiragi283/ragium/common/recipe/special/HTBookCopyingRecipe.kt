@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType
 /**
  * @see net.minecraft.world.item.crafting.BookCloningRecipe
  */
-data object HTBookCopyingRecipe : HTItemAndItemRecipe {
+data object HTBookCopyingRecipe : HTItemAndItemRecipe.Serializable {
     override fun testFirstItem(stack: ItemStack): Boolean = stack.`is`(Items.WRITABLE_BOOK)
 
     override fun testSecondItem(stack: ItemStack): Boolean =

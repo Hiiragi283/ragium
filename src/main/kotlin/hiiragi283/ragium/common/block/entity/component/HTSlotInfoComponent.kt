@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.component
 
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
-import hiiragi283.core.api.nextEntry
+import hiiragi283.core.api.function.nextEntry
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs

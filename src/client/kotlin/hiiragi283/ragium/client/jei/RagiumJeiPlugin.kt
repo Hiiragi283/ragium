@@ -2,8 +2,7 @@ package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
-import hiiragi283.core.api.monad.Ior
-import hiiragi283.core.api.recipe.map
+import hiiragi283.core.api.util.Ior
 import hiiragi283.core.common.recipe.HCBrewingRecipe
 import hiiragi283.core.common.recipe.HTVanillaRecipeTypes
 import hiiragi283.core.setup.HCDataComponents
@@ -36,6 +35,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
 import mezz.jei.api.runtime.IIngredientManager
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 
@@ -179,8 +179,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.CANNING)
         registration.addRecipes(
             getRecipeType(RagiumJeiRecipeTypes.CANNING),
-            HTVanillaRecipeTypes.BREWING.getAllRecipes().map { holder: RecipeHolder<HCBrewingRecipe> ->
-                holder.map { HTCanningRecipe(Ior.Both(it.ingredient, it.potionFrom), Ior.Right(it.potionTo), it.time) }
+            HTVanillaRecipeTypes.BREWING.getAllRecipes().map { (id: ResourceLocation, recipe: HCBrewingRecipe) ->
+                RecipeHolder(
+                    id,
+                    HTCanningRecipe(Ior.Both(recipe.ingredient, recipe.potionFrom), Ior.Right(recipe.potionTo), recipe.time),
+                )
             },
         )
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)

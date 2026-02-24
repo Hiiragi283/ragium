@@ -12,7 +12,7 @@ abstract class HTBasicItemAndItemRecipe(
     val second: HTItemIngredient,
     val result: HTItemResult,
     final override val time: Int,
-) : HTItemAndItemRecipe {
+) : HTItemAndItemRecipe.Serializable {
     override fun testFirstItem(stack: ItemStack): Boolean = first.test(stack)
 
     override fun testSecondItem(stack: ItemStack): Boolean = second.test(stack)

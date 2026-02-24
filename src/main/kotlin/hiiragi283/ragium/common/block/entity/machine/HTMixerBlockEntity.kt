@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.monad.Ior
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.util.Ior
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
@@ -78,7 +78,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
             recipe: HTMixingRecipe,
         ) {
             val access: RegistryAccess = level.registryAccess()
-            itemOutputHandler.insert(recipe.getResultItem(access))
+            itemOutputHandler.insert(recipe.assemble(input, access))
             // fluidOutputHandler.insert(recipe.getResultFluid(access))
         }
 
@@ -99,7 +99,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
 
         override fun canProgressRecipe(level: ServerLevel, input: HTChemicalRecipeInput, recipe: HTMixingRecipe): Boolean {
             val access: RegistryAccess = level.registryAccess()
-            val bool1: Boolean = itemOutputHandler.canInsert(recipe.getResultItem(access))
+            val bool1: Boolean = itemOutputHandler.canInsert(recipe.assemble(input, access))
             val bool2: Boolean = false // TODO
             return bool1 && bool2
         }

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
+import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.integration.jei.HTItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
@@ -16,8 +16,8 @@ import net.minecraft.world.item.crafting.RecipeHolder
 /**
  * @see mezz.jei.api.recipe.category.extensions.vanilla.smithing.IExtendableSmithingRecipeCategory
  */
-class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeViewerType<RecipeHolder<HTItemOrFluidRecipe>>) :
-    HTProcessingRecipeCategory<HTItemOrFluidRecipe>(guiHelper, recipeType) {
+class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRecipeViewerType<*, HTItemOrFluidRecipe.Serializable>) :
+    HTProcessingRecipeCategory<HTItemOrFluidRecipe.Serializable>(guiHelper, recipeType) {
     companion object {
         @JvmStatic
         fun canning(guiHelper: IGuiHelper): HTItemOrFluidRecipeCategory =
@@ -48,11 +48,11 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
 
     //    HTProcessingRecipeCategory    //
 
-    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemOrFluidRecipe, focuses: IFocusGroup) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemOrFluidRecipe.Serializable, focuses: IFocusGroup) {
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(1))
     }
 
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemOrFluidRecipe, focuses: IFocusGroup) {
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemOrFluidRecipe.Serializable, focuses: IFocusGroup) {
         val (recipe1: HTItemOrFluidRecipe, extension: HTItemOrFluidRecipeCategoryExtension<HTItemOrFluidRecipe>) =
             getExtension<HTItemOrFluidRecipe>(recipe) ?: return
 
@@ -75,7 +75,7 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
     }
 
     override fun onDisplayedIngredientsUpdate(
-        recipe: RecipeHolder<HTItemOrFluidRecipe>,
+        recipe: RecipeHolder<HTItemOrFluidRecipe.Serializable>,
         recipeSlots: List<IRecipeSlotDrawable>,
         focuses: IFocusGroup,
     ) {
@@ -92,7 +92,8 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
         )
     }
 
-    override fun isHandled(recipe: RecipeHolder<HTItemOrFluidRecipe>): Boolean = getExtension<HTItemOrFluidRecipe>(recipe.value()) != null
+    override fun isHandled(recipe: RecipeHolder<HTItemOrFluidRecipe.Serializable>): Boolean =
+        getExtension<HTItemOrFluidRecipe>(recipe.value()) != null
 
     @Suppress("UNCHECKED_CAST")
     private fun <RECIPE : HTItemOrFluidRecipe> getExtension(

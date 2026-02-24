@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
-import hiiragi283.core.api.function.wrapOptional
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.util.wrapOptional
 import net.minecraft.resources.ResourceLocation
 import org.apache.commons.lang3.math.Fraction
 import java.util.Optional

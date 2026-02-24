@@ -3,12 +3,12 @@ package hiiragi283.ragium.common.data.recipe
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.function.identityLeft
-import hiiragi283.core.api.monad.Ior
-import hiiragi283.core.api.monad.toIorOrThrow
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.util.Ior
+import hiiragi283.core.api.util.toIorOrThrow
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe

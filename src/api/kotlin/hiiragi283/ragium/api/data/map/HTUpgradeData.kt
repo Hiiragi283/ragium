@@ -3,12 +3,12 @@ package hiiragi283.ragium.api.data.map
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.function.onPresent
-import hiiragi283.core.api.function.wrapOptional
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.text.Text
+import hiiragi283.core.api.util.onPresent
+import hiiragi283.core.api.util.wrapOptional
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.api.upgrade.HTUpgradeKey

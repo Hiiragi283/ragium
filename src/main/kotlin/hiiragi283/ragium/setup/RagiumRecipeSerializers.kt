@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult

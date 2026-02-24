@@ -2,7 +2,7 @@ package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addItemIngredient
-import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
+import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.client.jei.category.base.HTChancedRecipeCategory
 import hiiragi283.ragium.common.recipe.HTCrushingRecipe
@@ -11,11 +11,10 @@ import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTItemToChancedRecipeCategory<RECIPE : HTItemToChancedRecipe>(
     guiHelper: IGuiHelper,
-    recipeType: HTRecipeViewerType<RecipeHolder<RECIPE>>,
+    recipeType: HTHolderRecipeViewerType<*, RECIPE>,
 ) : HTChancedRecipeCategory<RECIPE>(guiHelper, recipeType) {
     companion object {
         @JvmStatic

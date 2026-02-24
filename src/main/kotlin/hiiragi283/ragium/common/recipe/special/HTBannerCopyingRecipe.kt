@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.entity.BannerPatternLayers
 /**
  * @see net.minecraft.world.item.crafting.BannerDuplicateRecipe
  */
-data class HTBannerCopyingRecipe(val banner: Item) : HTItemAndItemRecipe {
+data class HTBannerCopyingRecipe(val banner: Item) : HTItemAndItemRecipe.Serializable {
     fun hasNonEmptyPattern(stack: ItemStack): Boolean = stack
         .getOrDefault(DataComponents.BANNER_PATTERNS, BannerPatternLayers.EMPTY)
         .layers()

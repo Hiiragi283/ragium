@@ -31,7 +31,7 @@ import net.minecraft.world.level.ItemLike
 object RagiumJeiRecipeTypes {
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> processor(
-        recipeType: HTRecipeType<INPUT, RECIPE>,
+        recipeType: HTRecipeType.Managed<INPUT, RECIPE>,
         icon: ItemLike,
         width: Int = 18 * 8,
         height: Int = 18 * 3,
@@ -43,7 +43,7 @@ object RagiumJeiRecipeTypes {
         processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
-    val COMPRESSING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe> =
+    val COMPRESSING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
         processor(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
 
     @JvmField
@@ -55,15 +55,15 @@ object RagiumJeiRecipeTypes {
         processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
 
     @JvmField
-    val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe> =
+    val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
         processor(RagiumRecipeTypes.PRINTING, Items.WRITABLE_BOOK)
 
     @JvmField
-    val PRESSING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe> =
+    val PRESSING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
         processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
 
     @JvmField
-    val WIRING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe> =
+    val WIRING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
         processor(RagiumRecipeTypes.WIRING, RagiumBlocks.WIREMILL)
 
     // Machine - Heat
@@ -72,21 +72,21 @@ object RagiumJeiRecipeTypes {
         processor(RagiumRecipeTypes.DISTILLING, Items.FIREWORK_STAR, height = 18 * 1)
 
     @JvmField
-    val MELTING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> =
+    val MELTING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         processor(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
-    val PYROLYZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> =
+    val PYROLYZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     // Machine - Cool
     @JvmField
-    val FREEZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> =
+    val FREEZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         processor(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
 
     // Machine - Chemical
     @JvmField
-    val CANNING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> =
+    val CANNING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         processor(RagiumRecipeTypes.CANNING, RagiumBlocks.CANNING_MACHINE)
 
     @JvmField

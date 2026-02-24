@@ -57,7 +57,7 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
     //    Processing    //
 
     inner class RecipeComponent<RECIPE : HTItemToChancedRecipe>(
-        lookup: HTRecipeLookup<SingleRecipeInput, RECIPE>,
+        lookup: HTRecipeLookup<SingleRecipeInput, RECIPE, *>,
         private val sound: SoundEvent,
     ) : ChancedRecipeComponent<SingleRecipeInput, RECIPE>(lookup) {
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }

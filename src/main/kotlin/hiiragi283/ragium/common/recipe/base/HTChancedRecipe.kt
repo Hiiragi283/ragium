@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe.base
 
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.recipe.result.getStackOrNull
@@ -15,8 +15,8 @@ abstract class HTChancedRecipe<INPUT : RecipeInput>(
     val result: HTItemResult,
     val extraResult: Optional<HTChancedItemResult>,
     final override val time: Int,
-) : HTProcessingRecipe<INPUT> {
+) : HTProcessingRecipe.Serializable<INPUT> {
     fun getExtraResultItem(level: LevelAccessor): ItemStack? = extraResult.getOrNull()?.getStackOrNull(level)
 
-    final override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
+    final override fun assemble(input: INPUT, registries: HolderLookup.Provider): ItemStack = result.getStackOrEmpty(registries)
 }
