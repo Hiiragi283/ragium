@@ -9,7 +9,7 @@ import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
+import hiiragi283.ragium.api.recipe.HTItemToChancedRecipe
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
@@ -68,7 +68,7 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
             input: SingleRecipeInput,
             recipe: RECIPE,
         ) {
-            inputHandler.consume(recipe.ingredient)
+            inputHandler.consume(recipe.getRequiredAmount(input))
         }
 
         override fun applyEffect() {

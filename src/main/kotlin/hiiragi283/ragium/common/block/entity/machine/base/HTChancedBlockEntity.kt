@@ -9,9 +9,9 @@ import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.api.recipe.HTChancedRecipe
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
-import hiiragi283.ragium.common.recipe.base.HTChancedRecipe
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
@@ -74,7 +74,7 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
             recipe: RECIPE,
         ) {
             outputHandler.insert(recipe.assemble(input, level.registryAccess()))
-            recipe.getExtraResultItem(level)?.let(extraOutputHandler::insert)
+            recipe.assembleExtraItem(input, level).let(extraOutputHandler::insert)
         }
 
         // 副産物は余剰分が出ても無視される

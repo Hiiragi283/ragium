@@ -38,12 +38,12 @@ import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemAndItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicItemToChancedRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemToItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
 import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.base.HTCombineItemRecipe
-import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
 import hiiragi283.ragium.common.recipe.special.HTBookCopyingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
@@ -102,12 +102,12 @@ object RagiumRecipeSerializers {
     )
 
     @JvmStatic
-    private fun <R : HTItemToChancedRecipe> itemChanced(
+    private fun <R : HTBasicItemToChancedRecipe> itemChanced(
         factory: HTItemToChancedRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTItemToChancedRecipe::ingredient),
-        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTItemToChancedRecipe::result),
-        HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTItemToChancedRecipe::extraResult),
+        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTBasicItemToChancedRecipe::ingredient),
+        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBasicItemToChancedRecipe::result),
+        HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTBasicItemToChancedRecipe::extraResult),
         HTProcessingRecipe.timeCodec(),
         factory::create,
     )

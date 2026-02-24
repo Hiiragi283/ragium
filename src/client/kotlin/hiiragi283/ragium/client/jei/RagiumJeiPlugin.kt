@@ -17,6 +17,7 @@ import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBannerCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTBasicItemToChancedRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemToItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
@@ -49,6 +50,15 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         @JvmStatic
         lateinit var wiring: HTItemToItemRecipeCategory
+            private set
+
+        // ItemToChanced
+        @JvmStatic
+        lateinit var crushing: HTItemToChancedRecipeCategory
+            private set
+
+        @JvmStatic
+        lateinit var cutting: HTItemToChancedRecipeCategory
             private set
 
         // ItemAndItem
@@ -99,6 +109,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         val manager: IIngredientManager = registration.jeiHelpers.ingredientManager
 
         initItemToItem(guiHelper, manager)
+        initItemToChanced(guiHelper, manager)
         initItemAndItem(guiHelper, manager)
         initItemOrFluid(guiHelper, manager)
 
@@ -106,8 +117,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Basic
             HTAlloyingRecipeCategory(guiHelper),
             compressing,
-            HTItemToChancedRecipeCategory.crushing(guiHelper),
-            HTItemToChancedRecipeCategory.cutting(guiHelper),
+            crushing,
+            cutting,
             pressing,
             printing,
             wiring,
@@ -130,6 +141,14 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         compressing.addExtension(HTBasicItemToItemRecipeCategoryExtension())
         wiring.addExtension(HTBasicItemToItemRecipeCategoryExtension())
+    }
+
+    private fun initItemToChanced(guiHelper: IGuiHelper, manager: IIngredientManager) {
+        crushing = HTItemToChancedRecipeCategory.crushing(guiHelper)
+        cutting = HTItemToChancedRecipeCategory.cutting(guiHelper)
+
+        crushing.addExtension(HTBasicItemToChancedRecipeCategoryExtension())
+        cutting.addExtension(HTBasicItemToChancedRecipeCategoryExtension())
     }
 
     private fun initItemAndItem(guiHelper: IGuiHelper, manager: IIngredientManager) {

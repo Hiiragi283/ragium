@@ -10,10 +10,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
+import hiiragi283.ragium.api.recipe.HTItemToChancedRecipe
 import hiiragi283.ragium.api.recipe.HTItemToItemRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
@@ -36,11 +35,11 @@ object RagiumRecipeTypes {
         REGISTER.registerType(RagiumConst.COMPRESSING)
 
     @JvmField
-    val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTCrushingRecipe> =
+    val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.CRUSHING)
 
     @JvmField
-    val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTCuttingRecipe> =
+    val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.CUTTING)
 
     @JvmField

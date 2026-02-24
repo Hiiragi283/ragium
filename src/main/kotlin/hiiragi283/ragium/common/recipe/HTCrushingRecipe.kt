@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
+import hiiragi283.ragium.common.recipe.base.HTBasicItemToChancedRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -15,7 +15,7 @@ class HTCrushingRecipe(
     result: HTItemResult,
     extraResult: Optional<HTChancedItemResult>,
     time: Int,
-) : HTItemToChancedRecipe(ingredient, result, extraResult, time) {
+) : HTBasicItemToChancedRecipe(ingredient, result, extraResult, time) {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CRUSHING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.CRUSHING.get()
