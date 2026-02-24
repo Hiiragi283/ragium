@@ -4,11 +4,15 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.div
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.api.storage.fluid.toStackOrEmpty
+import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
+import hiiragi283.core.api.storage.holder.HTFluidTankHolder
+import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.HTItemView
 import hiiragi283.core.api.storage.item.toStackOrEmpty
@@ -22,6 +26,8 @@ import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.gui.widget.HTEnergyBarWidget
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
+import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -48,6 +54,30 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         )
     }
 
+    final override fun createFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
+        val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
+        createFluidTanks(builder, recipeComponent.createListener(listener))
+        return builder.build()
+    }
+
+    protected open fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}
+
+    final override fun createEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
+        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
+        createEnergyBattery(builder, recipeComponent.createListener(listener))
+        return builder.build()
+    }
+
+    protected open fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {}
+
+    final override fun createItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+        val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
+        createItemSlots(builder, recipeComponent.createListener(listener))
+        return builder.build()
+    }
+
+    protected open fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {}
+
     //    Ticking    //
 
     fun modifyTime(time: Int): Int = modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
@@ -64,6 +94,16 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     fun createInput(view: HTFluidView): HTSingleFluidRecipeInput? {
         val resource: HTFluidResourceType = view.getResource() ?: return null
         return HTSingleFluidRecipeInput(resource.toStack(view.getAmount()))
+    }
+
+    fun createInput(firstView: HTItemView, secondView: HTItemView): HTDoubleRecipeInput? {
+        val ior: Ior<HTItemResourceType, HTItemResourceType> = (firstView.getResource() to secondView.getResource()).toIor() ?: return null
+        return ior.toPair().let { (first: HTItemResourceType?, second: HTItemResourceType?) ->
+            HTDoubleRecipeInput(
+                first.toStackOrEmpty(firstView.getAmount()),
+                second.toStackOrEmpty(secondView.getAmount()),
+            )
+        }
     }
 
     fun createInput(itemView: HTItemView, fluidView: HTFluidView): HTItemAndFluidRecipeInput? {

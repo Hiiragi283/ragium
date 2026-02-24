@@ -22,6 +22,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
 
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
+        add(RagiumBlocks.AUTO_CHISEL, "自動石切台")
         add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")

@@ -5,6 +5,7 @@ object RagiumConst {
 
     // Basic
     const val ALLOY_SMELTER = "alloy_smelter"
+    const val AUTO_CHISEL = "auto_chisel"
     const val COMPRESSOR = "compressor"
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"

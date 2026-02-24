@@ -21,6 +21,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
         val pickaxe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_PICKAXE)
         sequence {
             yield(RagiumBlocks.ALLOY_SMELTER)
+            yield(RagiumBlocks.AUTO_CHISEL)
             yield(RagiumBlocks.COMPRESSOR)
             yield(RagiumBlocks.CRUSHER)
             yield(RagiumBlocks.CUTTING_MACHINE)

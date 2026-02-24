@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.api.storage.energy.HTEnergyBattery
+import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.storge.energy.HTVariableEnergyBattery
@@ -20,8 +21,10 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
     lateinit var battery: HTEnergyBattery.Basic
         private set
 
-    final override fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
+    final override fun createEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
+        val builder = HTBasicEnergyBatteryHolder.Builder(this)
         battery = builder.addSlot(HTSlotInfo.BOTH, createBattery(listener))
+        return builder.build()
     }
 
     protected open fun createBattery(listener: HTContentListener): HTEnergyBattery.Basic = HTVariableEnergyBattery.create(listener) {

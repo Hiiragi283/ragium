@@ -11,9 +11,9 @@ import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.api.recipe.HTItemAndFluidToChancedRecipe
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.block.entity.machine.base.HTChancedBlockEntity
-import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -73,7 +73,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTChancedBlockEnti
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
     private inner class RecipeComponent :
-        ChancedRecipeComponent<HTItemAndFluidRecipeInput, HTWashingRecipe>(
+        ChancedRecipeComponent<HTItemAndFluidRecipeInput, HTItemAndFluidToChancedRecipe.Serializable>(
             RagiumRecipeTypes.WASHING,
         ) {
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
@@ -83,10 +83,10 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTChancedBlockEnti
             level: ServerLevel,
             pos: BlockPos,
             input: HTItemAndFluidRecipeInput,
-            recipe: HTWashingRecipe,
+            recipe: HTItemAndFluidToChancedRecipe.Serializable,
         ) {
-            itemInputHandler.consume(recipe.itemIngredient)
-            fluidInputHandler.consume(recipe.fluidIngredient)
+            itemInputHandler.consume(recipe.getRequiredItemAmount(input))
+            fluidInputHandler.consume(recipe.getRequiredFluidAmount(input))
         }
 
         override fun applyEffect() {

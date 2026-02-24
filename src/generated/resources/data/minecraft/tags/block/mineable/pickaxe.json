@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:alloy_smelter",
+    "ragium:auto_chisel",
     "ragium:battery",
     "ragium:canning_machine",
     "ragium:compressor",

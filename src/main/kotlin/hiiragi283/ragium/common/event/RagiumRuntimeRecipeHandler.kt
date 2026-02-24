@@ -5,10 +5,9 @@ import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.registry.asFluidSequence
 import hiiragi283.core.common.material.ColoredMaterials
+import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
@@ -16,13 +15,11 @@ import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry
-import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
-import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
@@ -35,6 +32,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         this.delegated = event.context
 
         cutWoodFromDefinition()
+        cutBedToPlanks()
 
         mixToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
         mixToColor(ItemTags.BEDS, ColoredMaterials.BED)
@@ -42,41 +40,46 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         mixToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
     }
 
-    @JvmStatic
-    private fun fluidSequence(): Sequence<HTFluidHolderLike<*>> = provider
-        .lookupOrThrow(Registries.FLUID)
-        .asFluidSequence()
-        .filter { holder: HTFluidHolderLike<*> ->
-            val fluid: Fluid = holder.get()
-            fluid.isSource(fluid.defaultFluidState())
-        }
-
-    //    Canning    //
-
     //    Cutting    //
 
     @JvmStatic
     private fun cutWoodFromDefinition() {
         for (type: WoodType in WoodTypeRegistry.INSTANCE) {
             val planks: ItemLike = type.getItemOfThis(VanillaWoodChildKeys.PLANKS) ?: continue
-            // Log -> 6x Planks
-            type.getItemOfThis(VanillaWoodChildKeys.LOG)?.let {
+            // Stripped Log -> 6x Planks
+            type.getItemOfThis(VanillaWoodChildKeys.STRIPPED_LOG)?.let { strippedLog: Item ->
                 RagiumRecipeBuilder.cutting(output) {
-                    ingredient = inputCreator.create(it)
+                    ingredient = inputCreator.create(strippedLog)
                     result = resultCreator.create(planks, 6)
                     recipeId suffix "_from_log"
                 }
+                // Log -> Stripped Log
+                type.getItemOfThis(VanillaWoodChildKeys.LOG)?.let {
+                    RagiumRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(it)
+                        result = resultCreator.create(strippedLog)
+                        recipeId suffix "_from_log"
+                    }
+                }
             }
-            // Wood -> 6x Planks
-            type.getItemOfThis(VanillaWoodChildKeys.WOOD)?.let {
+            // Stripped Wood -> 6x Planks
+            type.getItemOfThis(VanillaWoodChildKeys.STRIPPED_WOOD)?.let { strippedWood: Item ->
                 RagiumRecipeBuilder.cutting(output) {
-                    ingredient = inputCreator.create(it)
+                    ingredient = inputCreator.create(strippedWood)
                     result = resultCreator.create(planks, 6)
                     recipeId suffix "_from_wood"
                 }
+                // Wood -> Stripped Wood
+                type.getItemOfThis(VanillaWoodChildKeys.WOOD)?.let {
+                    RagiumRecipeBuilder.cutting(output) {
+                        ingredient = inputCreator.create(it)
+                        result = resultCreator.create(strippedWood)
+                        recipeId suffix "_from_wood"
+                    }
+                }
             }
             // Boat
-            type.getItemOfThis(VanillaWoodChildKeys.BOAT)?.let { boat ->
+            type.getItemOfThis(VanillaWoodChildKeys.BOAT)?.let { boat: Item ->
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(boat)
                     result = resultCreator.create(planks, 5)
@@ -159,6 +162,19 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                     result = resultCreator.create(planks, 3)
                     recipeId suffix "_from_trapdoor"
                 }
+            }
+        }
+    }
+
+    @JvmStatic
+    private fun cutBedToPlanks() {
+        for ((color: HTDefaultColor, bed: HTSimpleDeferredItem) in ColoredMaterials.BED) {
+            val wool: HTSimpleDeferredItem = ColoredMaterials.WOOL[color] ?: continue
+            RagiumRecipeBuilder.cutting(output) {
+                ingredient = inputCreator.create(bed)
+                result = resultCreator.create(wool, 3)
+                extraResult += resultCreator.create(Items.OAK_PLANKS, 3)
+                recipeId suffix "_from_bed"
             }
         }
     }

@@ -71,6 +71,10 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
 
     @JvmField
+    val AUTO_CHISEL: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.AUTO_CHISEL, RagiumTranslation.AUTO_CHISEL)
+
+    @JvmField
     val COMPRESSOR: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.COMPRESSOR, RagiumTranslation.COMPRESSOR)
 

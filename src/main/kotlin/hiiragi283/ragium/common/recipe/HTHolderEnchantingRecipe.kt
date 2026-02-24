@@ -20,16 +20,13 @@ class HTHolderEnchantingRecipe(val ingredient: HTItemIngredient, val holder: Hol
         return enchantment.getMaxCost(enchantment.maxLevel).let(HTExperienceHelper::fluidAmountFromExp)
     }
 
+    override fun testBook(stack: ItemStack): Boolean = stack.`is`(Items.BOOK)
+
+    override fun testItem(stack: ItemStack): Boolean = ingredient.test(stack)
+
     override fun getRequiredExpAmount(input: HTEnchantingRecipe.Input): Int = requiredExpAmount
 
     override fun getRequiredItemAmount(input: HTEnchantingRecipe.Input): Int = ingredient.amount
-
-    override fun test(input: HTEnchantingRecipe.Input): Boolean {
-        val bool1: Boolean = testExperience(input)
-        val bool2: Boolean = input.book.`is`(Items.BOOK)
-        val bool3: Boolean = ingredient.test(input.item)
-        return bool1 && bool2 && bool3
-    }
 
     override fun assemble(input: HTEnchantingRecipe.Input, registries: HolderLookup.Provider): ItemStack {
         var stack: ItemStack = input.book

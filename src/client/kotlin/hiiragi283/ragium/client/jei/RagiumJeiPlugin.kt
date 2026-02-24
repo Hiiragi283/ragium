@@ -29,6 +29,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
 import mezz.jei.api.JeiPlugin
+import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
@@ -200,7 +201,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
+        registration.addRecipeCatalyst(RagiumBlocks.AUTO_CHISEL, RecipeTypes.STONECUTTING)
         registration.addRecipeCatalyst(RagiumBlocks.CRUSHER, getRecipeType(HCJeiRecipeTypes.CRUSHING))
+        registration.addRecipeCatalyst(RagiumBlocks.ELECTRIC_FURNACE, RecipeTypes.SMELTING)
 
         registration.addRecipeCatalysts(
             // Machine - Basic

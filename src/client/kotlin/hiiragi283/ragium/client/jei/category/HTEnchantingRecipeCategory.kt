@@ -1,7 +1,7 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.client.jei.category.base.HTHolderRecipeCategory
+import hiiragi283.core.client.jei.category.base.HTLookupRecipeCategory
 import hiiragi283.ragium.api.integration.jei.HTEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
@@ -13,7 +13,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
-    HTHolderRecipeCategory<HTEnchantingRecipe.Serializable>(guiHelper, RagiumJeiRecipeTypes.ENCHANTING) {
+    HTLookupRecipeCategory.Managed<HTEnchantingRecipe.Serializable>(guiHelper, RagiumJeiRecipeTypes.ENCHANTING) {
     private val extensions: MutableMap<Class<out HTEnchantingRecipe>, HTEnchantingRecipeCategoryExtension<*>> = hashMapOf()
 
     inline fun <reified RECIPE : HTEnchantingRecipe> addExtension(extension: HTEnchantingRecipeCategoryExtension<RECIPE>) {
@@ -45,7 +45,7 @@ class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
         // output
         extension.setOutput(
             recipe1,
-            builder.addOutputSlot(getPosition(7), getPosition(1)).setSlotBackground(HTBackgroundType.OUTPUT),
+            builder.addOutputSlot(getPosition(6.5), getPosition(1)).setSlotBackground(HTBackgroundType.OUTPUT),
         )
     }
 

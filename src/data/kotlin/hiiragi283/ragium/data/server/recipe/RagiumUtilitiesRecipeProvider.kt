@@ -78,6 +78,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     private fun machines() {
         // Basic
         basic(RagiumBlocks.ALLOY_SMELTER) { it += Items.FURNACE }
+        basic(RagiumBlocks.AUTO_CHISEL) { it += Items.STONECUTTER }
         basic(RagiumBlocks.COMPRESSOR) { it += Items.PISTON }
         basic(RagiumBlocks.CRUSHER) { it += CommonTagPrefixes.GEM to VanillaMaterialKeys.DIAMOND }
         basic(RagiumBlocks.CUTTING_MACHINE) { it += Items.IRON_AXE }

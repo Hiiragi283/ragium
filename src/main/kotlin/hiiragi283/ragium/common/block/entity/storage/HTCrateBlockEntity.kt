@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.storage.amount.HTAmountView
+import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.HTMutableItemSlot
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
@@ -20,8 +21,10 @@ open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos,
     lateinit var slot: HTMutableItemSlot
         private set
 
-    final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+    final override fun createItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+        val builder = HTBasicItemSlotHolder.Builder(this)
         slot = builder.addSlot(HTSlotInfo.BOTH, createSlot(listener))
+        return builder.build()
     }
 
     protected open fun createSlot(listener: HTContentListener): HTMutableItemSlot =

@@ -7,7 +7,9 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
+import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.recipe.special.HTBannerCopyingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBookCopyingRecipe
 import net.minecraft.tags.ItemTags
@@ -19,6 +21,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         compressing()
         crushing()
         cutting()
+        pressing()
         printing()
     }
 
@@ -76,8 +79,21 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         }
     }
 
+    //    Pressing    //
+
+    @JvmStatic
+    private fun pressing() {
+        // Sawdust -> Particle Board
+        HTItemAndItemRecipeBuilder.pressing(output) {
+            first = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 2)
+            second = inputCreator.create(HTMoldType.PLATE)
+            result = resultCreator.create(HCItems.PARTICLE_BOARD)
+        }
+    }
+
     //    Printing    //
 
+    @JvmStatic
     private fun printing() {
         for (color: HTDefaultColor in HTDefaultColor.entries) {
             save(id(RagiumConst.PRINTING, "banner_copying", color.serializedName), HTBannerCopyingRecipe(color))
@@ -85,29 +101,4 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
         save(id(RagiumConst.PRINTING, "book_copying"), HTBookCopyingRecipe)
     }
-
-    /*private fun printing() {
-        // XX Banner
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
-            val banner = HTSimpleDeferredItem(HTConst.MINECRAFT.toId("${color.serializedName}_banner"))
-            HTPressingRecipeBuilder.printing(output) {
-                top = inputCreator.create(banner)
-                bottom = inputCreator.create(banner)
-                result = resultCreator.create(banner)
-            }
-        }
-
-        // Book -> Written Book
-        HTPressingRecipeBuilder.printing(output) {
-            top = inputCreator.create(Items.BOOK)
-            bottom = inputCreator.create(Items.WRITTEN_BOOK)
-            result = resultCreator.create(Items.WRITTEN_BOOK)
-        }
-        // Map -> Filled Map
-        HTPressingRecipeBuilder.printing(output) {
-            top = inputCreator.create(Items.MAP)
-            bottom = inputCreator.create(Items.FILLED_MAP)
-            result = resultCreator.create(Items.FILLED_MAP)
-        }
-    }*/
 }

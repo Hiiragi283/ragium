@@ -31,6 +31,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
     override fun registerStatesAndModels() {
         // Machine
         frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.AUTO_CHISEL, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.COMPRESSOR, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CRUSHER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CUTTING_MACHINE, RagiumConst.MACHINE, basic)

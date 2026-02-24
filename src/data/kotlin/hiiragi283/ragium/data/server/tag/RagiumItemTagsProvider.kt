@@ -64,6 +64,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(RagiumTags.Items.MACHINE_UPGRADABLE)
             // Basic
             .add(RagiumBlocks.ALLOY_SMELTER)
+            .add(RagiumBlocks.AUTO_CHISEL)
             .add(RagiumBlocks.COMPRESSOR)
             .add(RagiumBlocks.CRUSHER)
             .add(RagiumBlocks.CUTTING_MACHINE)

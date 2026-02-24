@@ -10,13 +10,13 @@ import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.HTItemAndFluidToChancedRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
-import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -89,7 +89,7 @@ object RagiumJeiRecipeTypes {
         processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
-    val WASHING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
+    val WASHING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemAndFluidToChancedRecipe.Serializable> =
         processor(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
 
     // Machine - Matter
