@@ -55,10 +55,11 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
         // Fluid
-        addFluid(RagiumFluids.AIR, "Air")
+        // addFluid(RagiumFluids.AIR, "Air")
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
         addFluid(RagiumFluids.LIQUID_HYDROGEN, "Liquid Hydrogen")
         addFluid(RagiumFluids.HELIUM, "Helium")
+        addFluid(RagiumFluids.CARBON_MONOXIDE, "Carbon Monoxide")
         addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
         addFluid(RagiumFluids.NITROGEN, "Nitrogen")
         addFluid(RagiumFluids.LIQUID_NITROGEN, "Liquid Nitrogen")
@@ -72,7 +73,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
 
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
-        addFluid(RagiumFluids.SYNTHETIC_GAS, "Synthetic Gas")
+        // addFluid(RagiumFluids.SYNTHETIC_GAS, "Synthetic Gas")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "Synthetic Oil")
 
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
@@ -80,14 +81,18 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.RESIDUE_OIL, "Residue Oil")
 
         addFluid(RagiumFluids.METHANE, "Methane")
-        addFluid(RagiumFluids.ETHYLENE, "Ethylene")
-        addFluid(RagiumFluids.BUTADIENE, "Butadiene")
+        addFluid(RagiumFluids.ETHENE, "Ethene")
+        // addFluid(RagiumFluids.BUTADIENE, "Butadiene")
 
         addFluid(RagiumFluids.METHANOL, "Methanol")
         addFluid(RagiumFluids.ETHANOL, "Ethanol")
 
+        addFluid(RagiumFluids.METHANAL, "Formaldehyde")
+
+        addFluid(RagiumFluids.METHANOIC_ACID, "Formic Acid")
+
         addFluid(RagiumFluids.FUEL, "Fuel")
-        addFluid(RagiumFluids.LUBRICANT, "Lubricant")
+        // addFluid(RagiumFluids.LUBRICANT, "Lubricant")
 
         addFluid(RagiumFluids.SUNFLOWER_OIL, "Sunflower Oil")
         addFluid(RagiumFluids.BIOFUEL, "Biofuel")

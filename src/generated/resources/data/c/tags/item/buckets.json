@@ -1,14 +1,13 @@
 {
   "values": [
-    "#c:buckets/air",
     "#c:buckets/ammonia",
     "#c:buckets/biofuel",
-    "#c:buckets/butadiene",
     "#c:buckets/carbon_dioxide",
+    "#c:buckets/carbon_monoxide",
     "#c:buckets/creosote",
     "#c:buckets/crude_oil",
     "#c:buckets/ethanol",
-    "#c:buckets/ethylene",
+    "#c:buckets/ethene",
     "#c:buckets/fuel",
     "#c:buckets/glycerol",
     "#c:buckets/helium",
@@ -16,8 +15,9 @@
     "#c:buckets/liquid_hydrogen",
     "#c:buckets/liquid_nitrogen",
     "#c:buckets/liquid_oxygen",
-    "#c:buckets/lubricant",
+    "#c:buckets/methanal",
     "#c:buckets/methane",
+    "#c:buckets/methanoic_acid",
     "#c:buckets/methanol",
     "#c:buckets/mixture_acid",
     "#c:buckets/naphtha",
@@ -29,7 +29,6 @@
     "#c:buckets/rocket_fuel",
     "#c:buckets/sulfuric_acid",
     "#c:buckets/sunflower_oil",
-    "#c:buckets/synthetic_gas",
     "#c:buckets/synthetic_oil"
   ]
 }

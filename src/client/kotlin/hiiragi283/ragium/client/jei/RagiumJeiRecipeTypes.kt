@@ -64,7 +64,7 @@ object RagiumJeiRecipeTypes {
     // Machine - Heat
     @JvmField
     val DISTILLING: HTHolderRecipeViewerType<HTSingleFluidRecipeInput, HTDistillingRecipe> =
-        processor(RagiumRecipeTypes.DISTILLING, Items.FIREWORK_STAR, height = 18 * 1)
+        processor(RagiumRecipeTypes.DISTILLING, Items.FIREWORK_STAR)
 
     @JvmField
     val MELTING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =

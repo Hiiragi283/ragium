@@ -14,7 +14,7 @@ import net.minecraft.world.item.crafting.RecipeType
 class HTDistillingRecipe(val ingredient: HTFluidIngredient, val results: HTChemicalResult, override val time: Int) :
     HTProcessingRecipe.Serializable<HTSingleFluidRecipeInput> {
     companion object {
-        const val MAX_FLUID_OUTPUT = 3
+        const val MAX_FLUID_OUTPUT = 2
         const val MAX_ITEM_OUTPUT = 1
     }
 

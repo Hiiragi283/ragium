@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:creosote"
+    },
+    {
+      "fluids": "#c:methanal"
+    }
+  ],
+  "item_result": {
+    "count": 4,
+    "id": "hiiragi_core:polymer_resin"
+  },
+  "time": 200
+}

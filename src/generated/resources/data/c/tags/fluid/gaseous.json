@@ -1,16 +1,14 @@
 {
   "values": [
-    "#c:air",
     "#c:ammonia",
-    "#c:butadiene",
     "#c:carbon_dioxide",
-    "#c:ethylene",
+    "#c:carbon_monoxide",
+    "#c:ethene",
     "#c:helium",
     "#c:hydrogen",
     "#c:methane",
     "#c:nitrogen",
     "#c:oxygen",
-    "#c:ragi_matter",
-    "#c:synthetic_gas"
+    "#c:ragi_matter"
   ]
 }

@@ -5,20 +5,16 @@
       "fluids": "#c:carbon_monoxide"
     },
     {
-      "fluids": "#c:water"
+      "amount": 2000,
+      "fluids": "#c:hydrogen"
     }
   ],
-  "fluid_result": [
-    {
-      "id": "ragium:carbon_dioxide"
-    },
-    {
-      "id": "ragium:hydrogen"
-    }
-  ],
+  "fluid_result": {
+    "id": "ragium:methanol"
+  },
   "item_ingredient": [
     {
-      "items": "#c:dusts/iron"
+      "items": "#c:dusts/copper"
     }
   ],
   "time": 200

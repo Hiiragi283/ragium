@@ -24,9 +24,17 @@ object RagiumTags {
     //    Fluids    //
 
     object Fluids {
+        // Chemical
         @JvmField
         val ALCOHOL: TagKey<Fluid> = common("alcohol")
 
+        @JvmField
+        val ALDEHYDE: TagKey<Fluid> = common("aldehyde")
+
+        @JvmField
+        val CARBOXYLIC_ACID: TagKey<Fluid> = common("carboxylic_acid")
+
+        // Other
         @JvmField
         val BIODIESEL: TagKey<Fluid> = common("biodiesel")
 

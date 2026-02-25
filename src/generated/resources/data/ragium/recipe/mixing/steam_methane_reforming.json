@@ -10,10 +10,10 @@
   ],
   "fluid_result": [
     {
-      "id": "ragium:carbon_dioxide"
+      "id": "ragium:carbon_monoxide"
     },
     {
-      "amount": 4000,
+      "amount": 3000,
       "id": "ragium:hydrogen"
     }
   ],

@@ -2,12 +2,12 @@
   "type": "ragium:mixing",
   "fluid_ingredient": [
     {
-      "fluids": "#c:water"
+      "fluids": "#c:methanol"
     }
   ],
   "fluid_result": [
     {
-      "id": "ragium:carbon_monoxide"
+      "id": "ragium:methanal"
     },
     {
       "id": "ragium:hydrogen"
@@ -15,14 +15,7 @@
   ],
   "item_ingredient": [
     {
-      "amount": 1,
-      "items": [
-        "#c:coal",
-        "#c:dusts/coal"
-      ]
-    },
-    {
-      "items": "minecraft:blaze_powder"
+      "items": "#c:dusts/silver"
     }
   ],
   "time": 200

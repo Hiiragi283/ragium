@@ -112,11 +112,9 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(RagiumFluids.SYNTHETIC_OIL, low)
             .add(RagiumTags.Fluids.ALCOHOL, medium, false)
             // medium
-            .add("bioethanol", medium)
             .add("lpg", medium)
-            .add(RagiumFluids.ETHYLENE, medium)
+            .add(RagiumFluids.ETHENE, medium)
             .add(RagiumFluids.METHANE, medium)
-            .add(RagiumFluids.SYNTHETIC_GAS, medium)
             // high
             .add(RagiumFluids.FUEL, high)
             .add(RagiumTags.Fluids.BIODIESEL, high, false)

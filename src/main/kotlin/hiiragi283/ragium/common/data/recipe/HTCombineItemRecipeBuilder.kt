@@ -6,16 +6,15 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.base.HTCombineItemRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
-class HTCombineItemRecipeBuilder(prefix: String, private val factory: Factory<*>) : HTProcessingRecipeBuilder(prefix) {
+class HTCombineItemRecipeBuilder(prefix: String) : HTProcessingRecipeBuilder(prefix) {
     companion object {
         @HTBuilderMarker
         @JvmStatic
         inline fun alloying(output: RecipeOutput, builderAction: HTCombineItemRecipeBuilder.() -> Unit) {
-            HTCombineItemRecipeBuilder(RagiumConst.ALLOYING, ::HTAlloyingRecipe).apply(builderAction).save(output)
+            HTCombineItemRecipeBuilder(RagiumConst.ALLOYING).apply(builderAction).save(output)
         }
     }
 
@@ -24,15 +23,9 @@ class HTCombineItemRecipeBuilder(prefix: String, private val factory: Factory<*>
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): HTCombineItemRecipe = factory.create(
+    override fun createRecipe(): HTAlloyingRecipe = HTAlloyingRecipe(
         ingredients,
         result,
         time,
     )
-
-    //    Factory    //
-
-    fun interface Factory<RECIPE : HTCombineItemRecipe> {
-        fun create(ingredients: List<HTItemIngredient>, result: HTItemResult, time: Int): RECIPE
-    }
 }

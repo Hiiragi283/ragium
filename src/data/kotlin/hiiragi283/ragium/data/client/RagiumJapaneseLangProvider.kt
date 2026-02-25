@@ -55,10 +55,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブクレート")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
-        addFluid(RagiumFluids.AIR, "空気")
+        // addFluid(RagiumFluids.AIR, "空気")
         addFluid(RagiumFluids.HYDROGEN, "水素")
         addFluid(RagiumFluids.LIQUID_HYDROGEN, "液体水素")
         addFluid(RagiumFluids.HELIUM, "ヘリウム")
+        addFluid(RagiumFluids.CARBON_MONOXIDE, "一酸化炭素")
         addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
         addFluid(RagiumFluids.NITROGEN, "窒素")
         addFluid(RagiumFluids.LIQUID_NITROGEN, "液体窒素")
@@ -72,7 +73,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
 
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
-        addFluid(RagiumFluids.SYNTHETIC_GAS, "合成ガス")
+        // addFluid(RagiumFluids.SYNTHETIC_GAS, "合成ガス")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "合成油")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
@@ -80,14 +81,18 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.RESIDUE_OIL, "残渣油")
 
         addFluid(RagiumFluids.METHANE, "メタン")
-        addFluid(RagiumFluids.ETHYLENE, "エチレン")
-        addFluid(RagiumFluids.BUTADIENE, "ブタジエン")
+        addFluid(RagiumFluids.ETHENE, "エテン")
+        // addFluid(RagiumFluids.BUTADIENE, "ブタジエン")
 
         addFluid(RagiumFluids.METHANOL, "メタノール")
         addFluid(RagiumFluids.ETHANOL, "エタノール")
 
+        addFluid(RagiumFluids.METHANAL, "ホルムアルデヒド")
+
+        addFluid(RagiumFluids.METHANOIC_ACID, "ギ酸")
+
         addFluid(RagiumFluids.FUEL, "燃料")
-        addFluid(RagiumFluids.LUBRICANT, "潤滑油")
+        // addFluid(RagiumFluids.LUBRICANT, "潤滑油")
 
         addFluid(RagiumFluids.SUNFLOWER_OIL, "ヒマワリ油")
         addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")

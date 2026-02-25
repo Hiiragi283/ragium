@@ -2,7 +2,7 @@
   "type": "ragium:melting",
   "fluid_result": {
     "amount": 125,
-    "id": "ragium:air"
+    "id": "ragium:nitrogen"
   },
   "item_ingredient": {
     "amount": 1,

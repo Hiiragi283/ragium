@@ -203,16 +203,11 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             }
         }
 
-        // Air
+        // Nitrogen
         HTItemOrFluidRecipeBuilder.melting(output) {
             ingredient += inputCreator.create(Items.WIND_CHARGE)
-            result += resultCreator.create(RagiumFluids.AIR, 125)
+            result += resultCreator.create(RagiumFluids.NITROGEN, 125)
             recipeId suffix "_from_wind_charge"
-        }
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(Tags.Items.RODS_BREEZE)
-            result += resultCreator.create(RagiumFluids.AIR, 500)
-            recipeId suffix "_from_breeze_rod"
         }
     }
 }

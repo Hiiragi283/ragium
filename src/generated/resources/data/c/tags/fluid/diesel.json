@@ -1,5 +1,9 @@
 {
   "values": [
-    "ragium:fuel"
+    {
+      "id": "#c:diesel",
+      "required": false
+    },
+    "#c:fuel"
   ]
 }

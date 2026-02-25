@@ -7,15 +7,14 @@
     },
     {
       "amount": 250,
-      "id": "ragium:butadiene"
-    },
-    {
-      "amount": 250,
-      "id": "ragium:ethylene"
+      "id": "ragium:ethene"
     }
   ],
   "ingredient": {
     "fluids": "#c:naphtha"
+  },
+  "item_result": {
+    "id": "hiiragi_core:polymer_resin"
   },
   "time": 200
 }

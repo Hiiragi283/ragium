@@ -6,12 +6,8 @@
       "id": "ragium:residue_oil"
     },
     {
-      "amount": 500,
+      "amount": 750,
       "id": "ragium:naphtha"
-    },
-    {
-      "amount": 250,
-      "id": "ragium:ethylene"
     }
   ],
   "ingredient": {

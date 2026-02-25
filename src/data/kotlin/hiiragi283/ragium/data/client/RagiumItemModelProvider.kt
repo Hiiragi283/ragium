@@ -78,7 +78,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         val dripFluids: List<HTFluidContent> = buildList {
             // Oil
             add(RagiumFluids.CRUDE_OIL)
-            add(RagiumFluids.LUBRICANT)
             // Organic
             add(RagiumFluids.CREOSOTE)
             add(RagiumFluids.SYNTHETIC_OIL)

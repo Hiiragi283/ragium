@@ -1,6 +1,5 @@
 {
   "parent": "neoforge:item/bucket",
-  "flip_gas": true,
-  "fluid": "ragium:synthetic_gas",
+  "fluid": "ragium:methanoic_acid",
   "loader": "neoforge:fluid_container"
 }
