@@ -8,6 +8,7 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.itemId
 import hiiragi283.core.api.resource.toId
+import hiiragi283.core.api.times
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTMoldType
@@ -32,11 +33,12 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
 
             removeAll(RagiumItems.MOLDS.values)
             remove(RagiumItems.BLANK_DISC)
+            remove(RagiumItems.BLUE_PRINT)
 
             removeAll(RagiumItems.UPGRADES.values)
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
         // Materials
-        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { item ->
+        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { item: HTIdLike ->
             layeredItem(item, HTConst.MINECRAFT.toId(HTConst.ITEM, "copper_ingot"), item.itemId)
         }
         // Foods
@@ -47,6 +49,13 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         existTexture(RagiumItems.BLANK_DISC) { item: HTIdLike ->
             withExistingParent(item.path, HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
                 .texture("layer0", item.itemId)
+        }
+        existTexture(RagiumItems.BLUE_PRINT) { item: HTIdLike ->
+            layeredItem(
+                item,
+                item.itemId,
+                HTConst.MINECRAFT.toId(HTConst.ITEM, "filled_map_markings"),
+            )
         }
 
         for ((moldType: HTMoldType, item: HTIdLike) in RagiumItems.MOLDS) {

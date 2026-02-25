@@ -18,6 +18,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
+import hiiragi283.ragium.common.item.HTBluePrintItem
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
@@ -120,6 +121,9 @@ object RagiumItems {
 
     @JvmField
     val BLANK_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_disc")
+
+    @JvmField
+    val BLUE_PRINT: HTSimpleDeferredItem = REGISTER.registerItem("blue_print", ::HTBluePrintItem)
 
     @JvmField
     val LOCATION_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
