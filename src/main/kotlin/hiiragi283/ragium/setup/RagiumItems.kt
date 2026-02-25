@@ -16,6 +16,7 @@ import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.item.HTBlueprintItem
@@ -116,7 +117,7 @@ object RagiumItems {
 
     @JvmField
     val BLUEPRINT: HTSimpleDeferredItem = REGISTER.registerItem("blueprint", ::HTBlueprintItem) {
-        it.stacksTo(1).component(RagiumDataComponents.BLUEPRINT_NUMBER, 0)
+        it.stacksTo(1).component(RagiumDataComponents.BLUEPRINT_NUMBER, 0).description(RagiumTranslation.BLUEPRINT)
     }
 
     @JvmField

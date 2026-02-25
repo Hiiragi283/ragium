@@ -61,6 +61,8 @@
   "constants.ragium.mod_name": "Ragium",
   "description.ragium.alloy_smelter": "A machine which combines multiple items into one.",
   "description.ragium.battery": "A energy storage which capacity is extendable by upgrade.",
+  "description.ragium.blueprint": "Right click on GUI to cycle number",
+  "description.ragium.blueprint.number": "Number: %1$s",
   "description.ragium.buffer": "A combined storage with 9 slots, 3 tanks, and 1 battery.",
   "description.ragium.compressor": "A machine which compresses item.",
   "description.ragium.crate": "A item storage which capacity is extendable by upgrade.",

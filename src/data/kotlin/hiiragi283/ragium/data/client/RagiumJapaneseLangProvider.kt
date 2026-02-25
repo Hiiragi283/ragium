@@ -178,6 +178,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.BUFFER, "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。")
         add(RagiumTranslation.UNIVERSAL_CHEST, "色ごとに中身を共有するチェストです。")
 
+        add(RagiumTranslation.BLUEPRINT, "GUI上で右クリックすると番号を変えられます。")
+        add(RagiumTranslation.BLUEPRINT_NUMBER, $$"番号: %1$s")
+
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"座標: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")

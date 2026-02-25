@@ -61,6 +61,8 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     UNIVERSAL_CHEST("description", RagiumConst.UNIVERSAL_CHEST),
 
     // Items
+    BLUEPRINT("description", "blueprint"),
+    BLUEPRINT_NUMBER("description", "blueprint", "number"),
 
     // Tooltips
     TOOLTIP_BLOCK_POS("tooltip", "block_pos"),

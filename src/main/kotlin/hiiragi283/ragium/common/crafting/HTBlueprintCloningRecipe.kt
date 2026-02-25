@@ -40,7 +40,7 @@ class HTBlueprintCloningRecipe(category: CraftingBookCategory) : HTCustomRecipe(
     override fun assemble(input: ImmutableRecipeInput, registries: HolderLookup.Provider): ItemStack {
         val (empty: Int, target: ItemStack) = getBlueprints(input)
         return when {
-            !target.isEmpty && empty > 0 -> target.copyWithCount(empty)
+            !target.isEmpty && empty > 0 -> target.copyWithCount(empty + 1)
             else -> ItemStack.EMPTY
         }
     }

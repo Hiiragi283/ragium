@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.item
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.text.Text
-import hiiragi283.core.api.text.toText
+import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
 import io.netty.buffer.ByteBuf
 import net.minecraft.world.entity.SlotAccess
@@ -51,6 +51,6 @@ class HTBlueprintItem(properties: Properties) : Item(properties) {
         tooltips: MutableList<Text>,
         flag: TooltipFlag,
     ) {
-        tooltips += "Number: ${stack.getOrDefault(RagiumDataComponents.BLUEPRINT_NUMBER, 0)}".toText()
+        tooltips += RagiumTranslation.BLUEPRINT_NUMBER.translate(stack.getOrDefault(RagiumDataComponents.BLUEPRINT_NUMBER, 0))
     }
 }
