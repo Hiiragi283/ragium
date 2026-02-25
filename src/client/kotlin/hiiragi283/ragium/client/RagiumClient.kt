@@ -87,12 +87,9 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
-        // event.clear(RagiumFluids.AIR, Color(0xffffff))
         event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
         event.dull(RagiumFluids.LIQUID_HYDROGEN, Color(0x3333cc))
         event.clear(RagiumFluids.HELIUM, Color(0xffff99))
-        event.clear(RagiumFluids.CARBON_MONOXIDE, Color(0x66cccc))
-        event.clear(RagiumFluids.CARBON_DIOXIDE, Color(0x66cccc))
         event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
         event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
         event.clear(RagiumFluids.AMMONIA, Color(0x666699))
@@ -105,27 +102,14 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.SULFURIC_ACID, Color(0xcccc00))
 
         event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
-        // event.clear(RagiumFluids.SYNTHETIC_GAS, Color(0xffcc99))
         event.molten(RagiumFluids.SYNTHETIC_OIL, Color(0x333344))
 
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
-        event.dull(RagiumFluids.NAPHTHA, Color(0xcc6600))
+        event.clear(RagiumFluids.FUEL, Color(0xff6600))
         event.molten(RagiumFluids.RESIDUE_OIL, Color(0x663366))
 
         event.clear(RagiumFluids.METHANE, Color(0xcc9999))
-        event.clear(RagiumFluids.ETHENE, Color(0x99cc99))
-        // event.clear(RagiumFluids.BUTADIENE, Color(0x999966))
-
-        event.dull(RagiumFluids.METHANOL, Color(0xcc6699))
         event.dull(RagiumFluids.ETHANOL, Color(0x99cc66))
-
-        event.dull(RagiumFluids.METHANAL, Color(0xcc3399))
-
-        event.dull(RagiumFluids.METHANOIC_ACID, Color(0xcc3366))
-
-        event.clear(RagiumFluids.FUEL, Color(0xcccc00))
-        // event.dull(RagiumFluids.LUBRICANT, Color(0xff6600))
-
         event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
         event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
         event.clear(RagiumFluids.GLYCEROL, Color(0x66cc99))

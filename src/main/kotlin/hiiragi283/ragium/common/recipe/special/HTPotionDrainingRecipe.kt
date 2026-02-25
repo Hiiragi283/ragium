@@ -6,6 +6,8 @@ import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.util.Ior
 import hiiragi283.core.util.HCPotionFluidHelper
+import hiiragi283.ragium.api.recipe.FluidAmount
+import hiiragi283.ragium.api.recipe.ItemAmount
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
@@ -22,7 +24,7 @@ data object HTPotionDrainingRecipe : HTCustomCanningRecipe() {
 
     override fun getPredicate(): Ior<Predicate<ItemStack>, Predicate<FluidStack>> = Ior.Left(Predicate(::isPotion))
 
-    override fun getRequiredAmount(input: HTItemAndFluidRecipeInput): Ior<Int, Int> = Ior.Left(1)
+    override fun getRequiredAmount(input: HTItemAndFluidRecipeInput): Ior<ItemAmount, FluidAmount> = Ior.Left(1)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.POTION_DRAINING
 

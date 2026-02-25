@@ -59,8 +59,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.HYDROGEN, "水素")
         addFluid(RagiumFluids.LIQUID_HYDROGEN, "液体水素")
         addFluid(RagiumFluids.HELIUM, "ヘリウム")
-        addFluid(RagiumFluids.CARBON_MONOXIDE, "一酸化炭素")
-        addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
         addFluid(RagiumFluids.NITROGEN, "窒素")
         addFluid(RagiumFluids.LIQUID_NITROGEN, "液体窒素")
         addFluid(RagiumFluids.AMMONIA, "アンモニア")
@@ -73,27 +71,14 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
 
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
-        // addFluid(RagiumFluids.SYNTHETIC_GAS, "合成ガス")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "合成油")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
-        addFluid(RagiumFluids.NAPHTHA, "ナフサ")
+        addFluid(RagiumFluids.FUEL, "燃料")
         addFluid(RagiumFluids.RESIDUE_OIL, "残渣油")
 
         addFluid(RagiumFluids.METHANE, "メタン")
-        addFluid(RagiumFluids.ETHENE, "エテン")
-        // addFluid(RagiumFluids.BUTADIENE, "ブタジエン")
-
-        addFluid(RagiumFluids.METHANOL, "メタノール")
         addFluid(RagiumFluids.ETHANOL, "エタノール")
-
-        addFluid(RagiumFluids.METHANAL, "ホルムアルデヒド")
-
-        addFluid(RagiumFluids.METHANOIC_ACID, "ギ酸")
-
-        addFluid(RagiumFluids.FUEL, "燃料")
-        // addFluid(RagiumFluids.LUBRICANT, "潤滑油")
-
         addFluid(RagiumFluids.SUNFLOWER_OIL, "ヒマワリ油")
         addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
         addFluid(RagiumFluids.GLYCEROL, "グリセロール")
@@ -123,9 +108,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.PRINTING, "印刷")
         add(RagiumRecipeTypes.WIRING, "ワイヤ加工")
 
-        add(RagiumRecipeTypes.DISTILLING, "蒸留")
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")
+        add(RagiumRecipeTypes.REFINING, "精製")
 
         add(RagiumRecipeTypes.FREEZING, "冷却")
 

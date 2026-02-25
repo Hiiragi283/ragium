@@ -1,5 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "fluid": "ragium:methanoic_acid",
-  "loader": "neoforge:fluid_container"
-}

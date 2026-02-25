@@ -4,10 +4,8 @@ import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.text.Text
 import hiiragi283.core.api.text.toText
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumDataComponents
 import io.netty.buffer.ByteBuf
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.SlotAccess
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ClickAction
@@ -25,9 +23,6 @@ class HTBluePrintItem(properties: Properties) : Item(properties.component(Ragium
 
         @JvmField
         val RANGE_CODEC: BiCodec<ByteBuf, Int> = BiCodecs.intRange(0, MAX_NUMBER)
-
-        @JvmField
-        val MODEL_PREDICATE: ResourceLocation = RagiumAPI.id("blue_print_number")
     }
 
     override fun overrideOtherStackedOnMe(

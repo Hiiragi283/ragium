@@ -1,11 +1,11 @@
 {
-  "type": "ragium:distilling",
+  "type": "ragium:refining",
+  "blue_print_number": 0,
   "fluid_result": {
-    "amount": 250,
-    "id": "ragium:naphtha"
+    "amount": 500,
+    "id": "ragium:fuel"
   },
   "ingredient": {
-    "amount": 500,
     "fluids": "#c:synthetic_oil"
   },
   "time": 200

@@ -34,6 +34,18 @@ object RagiumMaterialEventHandler {
 
     @SubscribeEvent
     fun gatherAttributes(event: HTMaterialPropertyEvent) {
+        // Fuels
+        event.modify(RagiumMaterialKeys.PETROLEUM_COKE) {
+            setDefaultPart(HTDefaultPart.Prefixed.FUEL)
+            addBlockPrefixes(CommonTagPrefixes.BLOCK)
+            addItemPrefixes(CommonTagPrefixes.DUST, CommonTagPrefixes.FUEL, CommonTagPrefixes.TINY)
+            put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.NONE)
+            put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.NONE)
+
+            setName("Petroleum Coke", "石油コークス")
+            setTextureSet("fuel")
+            put(HTMaterialPropertyKeys.FUEL_TIME, 20 * 10 * 12)
+        }
         // Minerals
         event.modify(RagiumMaterialKeys.RAGINITE) {
             addBlockPrefixes(materialBlockSet)

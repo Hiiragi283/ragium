@@ -5,7 +5,6 @@ import hiiragi283.core.api.recipe.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
-import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.common.registry.HTDeferredRecipeType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
@@ -15,9 +14,9 @@ import hiiragi283.ragium.api.recipe.HTItemAndFluidToChancedRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
@@ -52,16 +51,16 @@ object RagiumRecipeTypes {
 
     // Machine - Heat
     @JvmField
-    val DISTILLING: HTDeferredRecipeType<HTSingleFluidRecipeInput, HTDistillingRecipe> =
-        REGISTER.registerType(RagiumConst.DISTILLING)
-
-    @JvmField
     val MELTING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.MELTING)
 
     @JvmField
     val PYROLYZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.PYROLYZING)
+
+    @JvmField
+    val REFINING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTRefiningRecipe> =
+        REGISTER.registerType(RagiumConst.REFINING)
 
     // Machine - Cool
     @JvmField

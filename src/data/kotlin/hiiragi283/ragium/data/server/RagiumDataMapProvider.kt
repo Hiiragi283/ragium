@@ -113,7 +113,7 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(RagiumTags.Fluids.ALCOHOL, medium, false)
             // medium
             .add("lpg", medium)
-            .add(RagiumFluids.ETHENE, medium)
+            .add("ethene", medium)
             .add(RagiumFluids.METHANE, medium)
             // high
             .add(RagiumFluids.FUEL, high)

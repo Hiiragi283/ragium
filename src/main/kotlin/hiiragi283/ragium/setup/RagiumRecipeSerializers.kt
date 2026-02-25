@@ -21,11 +21,11 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
+import hiiragi283.ragium.common.item.HTBluePrintItem
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
@@ -33,6 +33,7 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemAndItemRecipe
@@ -172,23 +173,28 @@ object RagiumRecipeSerializers {
 
     // Machine - Heat
     @JvmField
-    val DISTILLING: RecipeSerializer<HTDistillingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.DISTILLING,
-        MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTDistillingRecipe::ingredient),
-            chemRes(HTDistillingRecipe.MAX_ITEM_OUTPUT, HTDistillingRecipe.MAX_FLUID_OUTPUT).forGetter(HTDistillingRecipe::results),
-            HTProcessingRecipe.timeCodec(),
-            ::HTDistillingRecipe,
-        ),
-    )
-
-    @JvmField
     val MELTING: RecipeSerializer<HTMeltingRecipe> =
         REGISTER.registerSerializer(RagiumConst.MELTING, itemOrFluid(::HTMeltingRecipe))
 
     @JvmField
     val PYROLYZING: RecipeSerializer<HTPyrolyzingRecipe> =
         REGISTER.registerSerializer(RagiumConst.PYROLYZING, itemOrFluid(::HTPyrolyzingRecipe))
+
+    @JvmField
+    val REFINING: RecipeSerializer<HTRefiningRecipe> = REGISTER.registerSerializer(
+        RagiumConst.REFINING,
+        MapBiCodec.composite(
+            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTRefiningRecipe::ingredient),
+            HTBluePrintItem.RANGE_CODEC.fieldOf("blue_print_number").forGetter(HTRefiningRecipe::number),
+            MapBiCodecs
+                .ior(
+                    HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT),
+                    HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT),
+                ).forGetter(HTRefiningRecipe::result),
+            HTProcessingRecipe.timeCodec(),
+            ::HTRefiningRecipe,
+        ),
+    )
 
     // Machine - Cool
     @JvmField

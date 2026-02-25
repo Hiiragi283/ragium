@@ -7,13 +7,12 @@ import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCBlocks
-import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTDistillingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -24,7 +23,6 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
 
         coal()
         crudeOil()
-        methane()
 
         crimson()
         warped()
@@ -91,35 +89,35 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             result += resultCreator.material(CommonTagPrefixes.BLOCK, CommonMaterialKeys.COAL_COKE)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
         }
-        // Creosote + Formaldehyde -> Polymer Resin
-        HTChemicalRecipeBuilder.mixing(output) {
-            fluidIngredients += inputCreator.create(RagiumFluids.CREOSOTE)
-            fluidIngredients += inputCreator.create(RagiumFluids.METHANAL)
 
-            itemResults += resultCreator.create(HCItems.POLYMER_RESIN, 4)
-        }
-        // C + H2O -> CO + H2
+        // Coal + Water -> Synthetic Gas
         HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
             itemIngredients += inputCreator.create(Items.BLAZE_POWDER, amount = 0)
             fluidIngredients += inputCreator.water(1000)
 
-            fluidResults += resultCreator.create(RagiumFluids.CARBON_MONOXIDE)
-            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN)
-            recipeId replace id("synthetic_gas_from_coal")
+            fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
+            recipeId suffix "_from_coal"
         }
+        // Synthetic Gas + H2O -> CO2 + 2x H2
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM, amount = 0)
+            fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
+            fluidIngredients += inputCreator.water(1000)
 
+            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 2000)
+            recipeId replace RagiumAPI.id("water_gas_shift_reaction")
+        }
         // Coal Dust + Residue Oil -> Synthetic Oil
         HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL)
             fluidIngredients += inputCreator.create(RagiumFluids.RESIDUE_OIL, 500)
             fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
         }
-        // Synthetic Oil -> Naphtha
-        HTDistillingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
-            fluidResults += resultCreator.create(RagiumFluids.NAPHTHA, 250)
-            recipeId suffix "_from_synthetic_oil"
+        // Synthetic Oil -> Fuel
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.SYNTHETIC_OIL)
+            result += resultCreator.create(RagiumFluids.FUEL, 500)
         }
     }
 
@@ -147,86 +145,45 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             recipeId replace id("crude_oil_from_soul")
         }
 
-        // Crude Oil -> Naphtha + Residue Oil
-        HTDistillingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(RagiumFluids.CRUDE_OIL, 1000)
-            fluidResults += resultCreator.create(RagiumFluids.RESIDUE_OIL, 250)
-            fluidResults += resultCreator.create(RagiumFluids.NAPHTHA, 750)
+        // Crude Oil -> Polymer Resin + Fuel
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.CRUDE_OIL)
+            result += resultCreator.create(HCItems.POLYMER_RESIN, 3)
+            result += resultCreator.create(RagiumFluids.FUEL, 250)
             recipeId suffix "_from_crude_oil"
         }
-        // Naphtha -> C2H4 + Fuel
-        HTDistillingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(RagiumFluids.NAPHTHA, 1000)
-            itemResult = resultCreator.create(HCItems.POLYMER_RESIN)
-            fluidResults += resultCreator.create(RagiumFluids.FUEL, 500)
-            fluidResults += resultCreator.create(RagiumFluids.ETHENE, 250)
-            recipeId suffix "_from_naphtha"
+        // Crude Oil -> Plastic + Residue Oil
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.CRUDE_OIL)
+            number = 1
+            result += resultCreator.material(CommonTagPrefixes.PLATE, CommonMaterialKeys.PLASTIC, 3)
+            result += resultCreator.create(RagiumFluids.RESIDUE_OIL, 250)
+            recipeId suffix "_from_crude_oil"
         }
-        // Residue Oil -> Raw Rubber + Fuel
-        HTDistillingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(RagiumFluids.RESIDUE_OIL, 1000)
-            itemResult = resultCreator.create(HCItems.RAW_RUBBER, 3)
-            fluidResults += resultCreator.create(RagiumFluids.FUEL, 250)
-            time *= 3
-            recipeId suffix "_from_residue_oil"
+        // Crude Oil -> Rubber + Residue Oil
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.CRUDE_OIL)
+            number = 2
+            result += resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 3)
+            result += resultCreator.create(RagiumFluids.RESIDUE_OIL, 250)
+            recipeId suffix "_from_crude_oil"
         }
-    }
 
-    @JvmStatic
-    private fun methane() {
-        // CH4 + H2O -> CO + 3x H2
+        // Polymer Resin + Water -> Plastic
+
+        // Polymer Resin + Water -> Rubber
+
+        // Residue Oil -> Petroleum Coke
+        // Residue Oil -> Fuel
+
+        // CH4 + H2O -> Synthetic Gas
         HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL, amount = 0)
-            fluidIngredients += inputCreator.create(RagiumFluids.METHANE)
+            fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
             fluidIngredients += inputCreator.water(1000)
 
-            fluidResults += resultCreator.create(RagiumFluids.CARBON_MONOXIDE)
-            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 3000)
-            recipeId replace id("steam_methane_reforming")
-        }
-        // CO + H2O -> CO2 + H2
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.IRON, amount = 0)
-            fluidIngredients += inputCreator.create(RagiumFluids.CARBON_MONOXIDE)
-            fluidIngredients += inputCreator.water(1000)
-
-            fluidResults += resultCreator.create(RagiumFluids.CARBON_DIOXIDE)
-            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN)
-            recipeId replace id("water_gas_shift_reaction")
-        }
-
-        // CO + 2x H2 -[Cu]-> CH3OH
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COPPER, amount = 0)
-            fluidIngredients += inputCreator.create(RagiumFluids.CARBON_MONOXIDE)
-            fluidIngredients += inputCreator.create(RagiumFluids.HYDROGEN, 2000)
-
-            fluidResults += resultCreator.create(RagiumFluids.METHANOL)
-        }
-        // CH3OH -[Ag]-> HCHO + H2
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SILVER, amount = 0)
-            fluidIngredients += inputCreator.create(RagiumFluids.METHANOL)
-
-            fluidResults += resultCreator.create(RagiumFluids.METHANAL)
-            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN)
-        }
-
-        // CH3OH + CO -> HCOOCH3
-        // HCOOCH3 + H2O -> HCOOH + CH3OH
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM, amount = 0)
-            fluidIngredients += inputCreator.create(RagiumFluids.CARBON_MONOXIDE)
-            fluidIngredients += inputCreator.water(1000)
-
-            fluidResults += resultCreator.create(RagiumFluids.METHANOIC_ACID)
-        }
-        // Latex + HCOOH -> Raw Rubber
-        HTChemicalRecipeBuilder.mixing(output) {
-            fluidIngredients += inputCreator.create(HCFluids.LATEX)
-            fluidIngredients += inputCreator.create(RagiumFluids.METHANOIC_ACID, 250)
-
-            itemResults += resultCreator.create(HCItems.RAW_RUBBER, 4)
+            fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 2000)
+            recipeId suffix "_from_methane"
         }
     }
 

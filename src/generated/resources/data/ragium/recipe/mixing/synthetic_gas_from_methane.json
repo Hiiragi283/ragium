@@ -8,15 +8,10 @@
       "fluids": "#c:water"
     }
   ],
-  "fluid_result": [
-    {
-      "id": "ragium:carbon_monoxide"
-    },
-    {
-      "amount": 3000,
-      "id": "ragium:hydrogen"
-    }
-  ],
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:synthetic_gas"
+  },
   "item_ingredient": [
     {
       "items": "#c:dusts/nickel"

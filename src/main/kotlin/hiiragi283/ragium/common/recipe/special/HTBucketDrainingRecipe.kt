@@ -2,6 +2,8 @@ package hiiragi283.ragium.common.recipe.special
 
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.util.Ior
+import hiiragi283.ragium.api.recipe.FluidAmount
+import hiiragi283.ragium.api.recipe.ItemAmount
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.BucketItem
@@ -25,7 +27,7 @@ data object HTBucketDrainingRecipe : HTCustomCanningRecipe() {
 
     override fun getPredicate(): Ior<Predicate<ItemStack>, Predicate<FluidStack>> = Ior.Left(Predicate(::isFilledBucket))
 
-    override fun getRequiredAmount(input: HTItemAndFluidRecipeInput): Ior<Int, Int> = Ior.Left(1)
+    override fun getRequiredAmount(input: HTItemAndFluidRecipeInput): Ior<ItemAmount, FluidAmount> = Ior.Left(1)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BUCKET_DRAINING
 

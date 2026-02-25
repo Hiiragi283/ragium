@@ -1,0 +1,16 @@
+{
+  "type": "ragium:refining",
+  "blue_print_number": 0,
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:fuel"
+  },
+  "ingredient": {
+    "fluids": "#c:crude_oil"
+  },
+  "item_result": {
+    "count": 3,
+    "id": "hiiragi_core:polymer_resin"
+  },
+  "time": 200
+}

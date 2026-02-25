@@ -9,6 +9,9 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.Predicate
 
+typealias ItemAmount = Int
+typealias FluidAmount = Int
+
 interface HTItemOrFluidRecipe :
     HTProcessingRecipe<HTItemAndFluidRecipeInput>,
     HTFluidRecipe<HTItemAndFluidRecipeInput> {
@@ -20,7 +23,7 @@ interface HTItemOrFluidRecipe :
 
     fun getPredicate(): Ior<Predicate<ItemStack>, Predicate<FluidStack>>
 
-    fun getRequiredAmount(input: HTItemAndFluidRecipeInput): Ior<Int, Int>
+    fun getRequiredAmount(input: HTItemAndFluidRecipeInput): Ior<ItemAmount, FluidAmount>
 
     //    Serializable    //
 

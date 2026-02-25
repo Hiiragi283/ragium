@@ -41,13 +41,6 @@ object RagiumFluids {
     @JvmField
     val HELIUM: HTFluidContent = REGISTER.registerVirtual("helium") { properties = gas() }
 
-    // C
-    @JvmField
-    val CARBON_MONOXIDE: HTFluidContent = REGISTER.registerVirtual("carbon_monoxide") { properties = gas() }
-
-    @JvmField
-    val CARBON_DIOXIDE: HTFluidContent = REGISTER.registerVirtual("carbon_dioxide") { properties = gas() }
-
     // N
     @JvmField
     val NITROGEN: HTFluidContent = REGISTER.registerVirtual("nitrogen") { properties = gas() }
@@ -105,6 +98,9 @@ object RagiumFluids {
     val CREOSOTE: HTFluidContent = REGISTER.registerFlowing("creosote") { properties = liquid() }
 
     @JvmField
+    val SYNTHETIC_GAS: HTFluidContent = REGISTER.registerVirtual("synthetic_gas") { properties = gas() }
+
+    @JvmField
     val SYNTHETIC_OIL: HTFluidContent = REGISTER.registerVirtual("synthetic_oil") { properties = liquid() }
 
     // Crude Oil
@@ -122,9 +118,9 @@ object RagiumFluids {
     }
 
     @JvmField
-    val NAPHTHA: HTFluidContent = REGISTER.registerVirtual("naphtha") {
+    val FUEL: HTFluidContent = REGISTER.registerVirtual("fuel") {
         properties = liquid()
-        typeFactory = ::HTExplosiveFluidType.partially1(3f)
+        typeFactory = ::HTExplosiveFluidType.partially1(4f)
     }
 
     @JvmField
@@ -133,36 +129,13 @@ object RagiumFluids {
         typeFactory = ::HTExplosiveFluidType.partially1(1f)
     }
 
-    // Gaseous
+    //    Biomass    //
+
     @JvmField
     val METHANE: HTFluidContent = REGISTER.registerVirtual("methane") { properties = gas() }
 
     @JvmField
-    val ETHENE: HTFluidContent = REGISTER.registerVirtual("ethene") { properties = gas() }
-
-    // Alcohol
-    @JvmField
-    val METHANOL: HTFluidContent = REGISTER.registerVirtual("methanol") { properties = liquid() }
-
-    @JvmField
     val ETHANOL: HTFluidContent = REGISTER.registerVirtual("ethanol") { properties = liquid() }
-
-    // Aldehyde
-    @JvmField
-    val METHANAL: HTFluidContent = REGISTER.registerVirtual("methanal") { properties = liquid() }
-
-    // Carboxylic Acid
-    @JvmField
-    val METHANOIC_ACID: HTFluidContent = REGISTER.registerVirtual("methanoic_acid") { properties = liquid() }
-
-    // Oil Products
-    @JvmField
-    val FUEL: HTFluidContent = REGISTER.registerVirtual("fuel") {
-        properties = liquid()
-        typeFactory = ::HTExplosiveFluidType.partially1(4f)
-    }
-
-    //    Biomass    //
 
     @JvmField
     val SUNFLOWER_OIL: HTFluidContent = REGISTER.registerVirtual("sunflower_oil") { properties = liquid() }

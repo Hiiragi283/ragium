@@ -2,23 +2,19 @@
   "type": "ragium:mixing",
   "fluid_ingredient": [
     {
-      "fluids": "#c:carbon_monoxide"
+      "fluids": "#c:synthetic_gas"
     },
     {
       "fluids": "#c:water"
     }
   ],
-  "fluid_result": [
-    {
-      "id": "ragium:carbon_dioxide"
-    },
-    {
-      "id": "ragium:hydrogen"
-    }
-  ],
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:hydrogen"
+  },
   "item_ingredient": [
     {
-      "items": "#c:dusts/iron"
+      "items": "#c:dusts/platinum"
     }
   ],
   "time": 200

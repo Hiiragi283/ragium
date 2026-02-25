@@ -16,17 +16,9 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTFluidTagsProvider(R
         // Chemical
         factory
             .apply(RagiumTags.Fluids.ALCOHOL)
-            .addContentTag(RagiumFluids.METHANOL)
             .addContentTag(RagiumFluids.ETHANOL)
             .addTag(commonTag("alcohol"), HTTagDependType.OPTIONAL)
             .addTag(commonTag("bioethanol"), HTTagDependType.OPTIONAL)
-
-        factory
-            .apply(RagiumTags.Fluids.ALDEHYDE)
-            .addContentTag(RagiumFluids.METHANAL)
-        factory
-            .apply(RagiumTags.Fluids.CARBOXYLIC_ACID)
-            .addContentTag(RagiumFluids.METHANOIC_ACID)
         // Other
         factory
             .apply(RagiumTags.Fluids.BIODIESEL)

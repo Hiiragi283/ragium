@@ -7,16 +7,15 @@ import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
-import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndFluidToChancedRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTDistillingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -63,16 +62,16 @@ object RagiumJeiRecipeTypes {
 
     // Machine - Heat
     @JvmField
-    val DISTILLING: HTHolderRecipeViewerType<HTSingleFluidRecipeInput, HTDistillingRecipe> =
-        processor(RagiumRecipeTypes.DISTILLING, Items.FIREWORK_STAR)
-
-    @JvmField
     val MELTING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         processor(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
     val PYROLYZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
+
+    @JvmField
+    val REFINING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTRefiningRecipe> =
+        processor(RagiumRecipeTypes.REFINING, Items.FIREWORK_STAR)
 
     // Machine - Cool
     @JvmField

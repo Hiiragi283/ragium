@@ -4,7 +4,6 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.integration.jei.HTItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
-import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.client.jei.category.base.HTProcessingRecipeCategory
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
@@ -18,24 +17,6 @@ import net.minecraft.world.item.crafting.RecipeHolder
  */
 class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRecipeViewerType<*, HTItemOrFluidRecipe.Serializable>) :
     HTProcessingRecipeCategory<HTItemOrFluidRecipe.Serializable>(guiHelper, recipeType) {
-    companion object {
-        @JvmStatic
-        fun canning(guiHelper: IGuiHelper): HTItemOrFluidRecipeCategory =
-            HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CANNING)
-
-        @JvmStatic
-        fun freezing(guiHelper: IGuiHelper): HTItemOrFluidRecipeCategory =
-            HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING)
-
-        @JvmStatic
-        fun melting(guiHelper: IGuiHelper): HTItemOrFluidRecipeCategory =
-            HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING)
-
-        @JvmStatic
-        fun pyrolyzing(guiHelper: IGuiHelper): HTItemOrFluidRecipeCategory =
-            HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
-    }
-
     private val extensions: MutableMap<Class<out HTItemOrFluidRecipe>, HTItemOrFluidRecipeCategoryExtension<*>> = hashMapOf()
 
     inline fun <reified RECIPE : HTItemOrFluidRecipe> addExtension(extension: HTItemOrFluidRecipeCategoryExtension<RECIPE>) {

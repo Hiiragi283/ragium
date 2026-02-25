@@ -8,7 +8,6 @@
       "id": "#c:bioethanol",
       "required": false
     },
-    "#c:ethanol",
-    "#c:methanol"
+    "#c:ethanol"
   ]
 }

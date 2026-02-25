@@ -14,9 +14,9 @@ object RagiumConst {
     const val WIREMILL = "wiremill"
 
     // Heat
-    const val DISTILLATION_TOWER = "distillation_tower"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
+    const val REFINERY = "refinery"
 
     // Cool
     const val FREEZER = "freezer"
@@ -57,9 +57,9 @@ object RagiumConst {
     const val WIRING = "wiring"
 
     // Heat
-    const val DISTILLING = "distilling"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
+    const val REFINING = "refining"
 
     // Cool
     const val FREEZING = "freezing"

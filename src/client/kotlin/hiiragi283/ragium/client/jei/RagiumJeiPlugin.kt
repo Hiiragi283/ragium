@@ -10,11 +10,11 @@ import hiiragi283.core.client.jei.extension.HTBasicItemToItemRecipeCategoryExten
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTDistillingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTRefiningRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBannerCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
@@ -124,9 +124,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             printing,
             wiring,
             // Machine - Heat
-            HTDistillingRecipeCategory(guiHelper),
             melting,
             pyrolyzing,
+            HTRefiningRecipeCategory(guiHelper),
             // Machine - Cool
             freezing,
             // Machine - Chemical
@@ -162,10 +162,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        melting = HTItemOrFluidRecipeCategory.melting(guiHelper)
-        pyrolyzing = HTItemOrFluidRecipeCategory.pyrolyzing(guiHelper)
-        freezing = HTItemOrFluidRecipeCategory.freezing(guiHelper)
-        canning = HTItemOrFluidRecipeCategory.canning(guiHelper)
+        melting = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CANNING)
+        pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING)
+        freezing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING)
+        canning = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
 
         melting.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
@@ -188,9 +188,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.PRINTING)
         registration.addRecipes(RagiumJeiRecipeTypes.WIRING)
         // Machine - Heat
-        registration.addRecipes(RagiumJeiRecipeTypes.DISTILLING)
         registration.addRecipes(RagiumJeiRecipeTypes.MELTING)
         registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING)
+        registration.addRecipes(RagiumJeiRecipeTypes.REFINING)
         // Machine - Cool
         registration.addRecipes(RagiumJeiRecipeTypes.FREEZING)
         // Machine - Chemical
@@ -214,9 +214,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.PRINTING,
             RagiumJeiRecipeTypes.WIRING,
             // Machine - Heat
-            RagiumJeiRecipeTypes.DISTILLING,
             RagiumJeiRecipeTypes.MELTING,
             RagiumJeiRecipeTypes.PYROLYZING,
+            RagiumJeiRecipeTypes.REFINING,
             // Machine - Cool
             RagiumJeiRecipeTypes.FREEZING,
             // Machine - Chemical

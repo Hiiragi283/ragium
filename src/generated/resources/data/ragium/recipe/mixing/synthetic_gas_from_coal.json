@@ -5,14 +5,10 @@
       "fluids": "#c:water"
     }
   ],
-  "fluid_result": [
-    {
-      "id": "ragium:carbon_monoxide"
-    },
-    {
-      "id": "ragium:hydrogen"
-    }
-  ],
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:synthetic_gas"
+  },
   "item_ingredient": [
     {
       "amount": 1,

@@ -1,0 +1,17 @@
+{
+  "type": "ragium:refining",
+  "blue_print_number": 2,
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:residue_oil"
+  },
+  "ingredient": {
+    "fluids": "#c:crude_oil"
+  },
+  "item_result": {
+    "count": 3,
+    "id": "hiiragi_core:rubber_ingot",
+    "tag": "c:ingots/rubber"
+  },
+  "time": 200
+}

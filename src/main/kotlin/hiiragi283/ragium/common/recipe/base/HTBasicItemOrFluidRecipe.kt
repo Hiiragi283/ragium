@@ -6,7 +6,9 @@ import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.util.Ior
+import hiiragi283.ragium.api.recipe.FluidAmount
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
+import hiiragi283.ragium.api.recipe.ItemAmount
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
@@ -20,7 +22,7 @@ abstract class HTBasicItemOrFluidRecipe(
     final override fun getPredicate(): Ior<Predicate<ItemStack>, Predicate<FluidStack>> =
         ingredient.mapLeft { Predicate(it::test) }.mapRight { Predicate(it::test) }
 
-    final override fun getRequiredAmount(input: HTItemAndFluidRecipeInput): Ior<Int, Int> =
+    final override fun getRequiredAmount(input: HTItemAndFluidRecipeInput): Ior<ItemAmount, FluidAmount> =
         ingredient.mapLeft(HTItemIngredient::amount).mapRight(HTFluidIngredient::amount)
 
     final override fun assembleFluid(input: HTItemAndFluidRecipeInput, registries: HolderLookup.Provider): FluidStack =
