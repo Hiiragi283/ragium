@@ -71,6 +71,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
 
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
+        addFluid(RagiumFluids.SYNTHETIC_GAS, "Synthetic Gas")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "Synthetic Oil")
 
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
@@ -96,7 +97,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.EMPTY_CAN, "Empty Can")
 
         add(RagiumItems.BLANK_DISC, "Blank Disc")
-        add(RagiumItems.BLUE_PRINT, "Blue Print")
+        add(RagiumItems.BLUEPRINT, "Blueprint")
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
 
@@ -123,7 +124,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")
-        add(RagiumTags.Items.MOLDS, "Molds")
 
         add(RagiumTags.Items.GENERATOR_UPGRADABLE, "Generators")
         add(RagiumTags.Items.PROCESSOR_UPGRADABLE, "Processors")

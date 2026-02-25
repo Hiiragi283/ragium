@@ -3,15 +3,16 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/steel"
+      "tag": "c:plastics"
     }
   },
   "pattern": [
-    "AA",
-    "AA"
+    " A ",
+    "A A",
+    " A "
   ],
   "result": {
     "count": 1,
-    "id": "ragium:blank_mold"
+    "id": "ragium:blank_disc"
   }
 }

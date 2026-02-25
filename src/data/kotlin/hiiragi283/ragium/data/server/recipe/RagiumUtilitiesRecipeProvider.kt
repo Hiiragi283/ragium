@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.holder.HTIngredientHolder
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
@@ -8,17 +9,16 @@ import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
-import hiiragi283.core.common.data.recipe.builder.HTStonecuttingRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.RagiumTags
-import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.common.crafting.HTBlueprintCloningRecipe
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -34,36 +34,25 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        // Molds
+        // Blueprint
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += Items.PAPER
+            ingredients += Tags.Items.DYES_WHITE
+            ingredients += Tags.Items.DYES_BLUE
+            resultStack += RagiumItems.BLUEPRINT
+        }
+        save(id(HTConst.SHAPELESS, "blueprint_cloning"), HTBlueprintCloningRecipe(CraftingBookCategory.MISC))
+        // Blank Disc
         HTShapedRecipeBuilder.create(output) {
-            storage4()
-            define('A') += CommonTagPrefixes.PLATE to CommonMaterialKeys.STEEL
-            resultStack += HTMoldType.BLANK
+            pattern(
+                " A ",
+                "A A",
+                " A ",
+            )
+            define('A') += HiiragiCoreTags.Items.PLASTICS
+            resultStack += RagiumItems.BLANK_DISC
         }
 
-        for (moldType: HTMoldType in HTMoldType.entries) {
-            HTStonecuttingRecipeBuilder.create(output) {
-                ingredient += RagiumTags.Items.MOLDS
-                resultStack += moldType
-            }
-        }
-
-        // Location Ticket
-        HTShapedRecipeBuilder.create(output) {
-            hollow8()
-            define('A') += Items.PAPER
-            define('B') += CommonTagPrefixes.PEARL to VanillaMaterialKeys.ENDER
-            resultStack += RagiumItems.LOCATION_TICKET to 8
-            recipeId suffix "_with_ender"
-        }
-
-        HTShapedRecipeBuilder.create(output) {
-            hollow8()
-            define('A') += Items.PAPER
-            define('B') += CommonTagPrefixes.GEM to HCMaterialKeys.WARPED_CRYSTAL
-            resultStack += RagiumItems.LOCATION_TICKET to 8
-            recipeId suffix "_with_warped"
-        }
         // Loot Ticket
         lootTickets()
 

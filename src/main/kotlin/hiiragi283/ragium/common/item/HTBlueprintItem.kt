@@ -14,12 +14,12 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
-class HTBluePrintItem(properties: Properties) : Item(properties.component(RagiumDataComponents.BLUE_PRINT_NUMBER, 0)) {
+class HTBlueprintItem(properties: Properties) : Item(properties) {
     companion object {
         const val MAX_NUMBER = 7
 
         @JvmField
-        val RANGE: IntRange = 0..7
+        val RANGE: IntRange = 0..MAX_NUMBER
 
         @JvmField
         val RANGE_CODEC: BiCodec<ByteBuf, Int> = BiCodecs.intRange(0, MAX_NUMBER)
@@ -34,7 +34,7 @@ class HTBluePrintItem(properties: Properties) : Item(properties.component(Ragium
         access: SlotAccess,
     ): Boolean {
         if (action == ClickAction.SECONDARY) {
-            stack.update(RagiumDataComponents.BLUE_PRINT_NUMBER, 0) {
+            stack.update(RagiumDataComponents.BLUEPRINT_NUMBER, 0) {
                 when {
                     it < MAX_NUMBER -> it + 1
                     else -> 0
@@ -51,6 +51,6 @@ class HTBluePrintItem(properties: Properties) : Item(properties.component(Ragium
         tooltips: MutableList<Text>,
         flag: TooltipFlag,
     ) {
-        tooltips += "Number: ${stack.getOrDefault(RagiumDataComponents.BLUE_PRINT_NUMBER, 0)}".toText()
+        tooltips += "Number: ${stack.getOrDefault(RagiumDataComponents.BLUEPRINT_NUMBER, 0)}".toText()
     }
 }

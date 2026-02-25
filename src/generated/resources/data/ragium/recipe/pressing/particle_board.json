@@ -8,8 +8,10 @@
     "id": "hiiragi_core:particle_board"
   },
   "second_ingredient": {
-    "amount": 1,
-    "items": "ragium:plate_mold"
+    "items": {
+      "type": "ragium:blue_print",
+      "number": 5
+    }
   },
   "time": 200
 }

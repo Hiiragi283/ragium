@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
@@ -59,7 +58,7 @@ object RagiumRecipeTypes {
         REGISTER.registerType(RagiumConst.PYROLYZING)
 
     @JvmField
-    val REFINING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTRefiningRecipe> =
+    val REFINING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.REFINING)
 
     // Machine - Cool

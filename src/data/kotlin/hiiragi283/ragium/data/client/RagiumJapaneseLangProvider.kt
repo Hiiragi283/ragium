@@ -71,6 +71,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
 
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
+        addFluid(RagiumFluids.SYNTHETIC_GAS, "合成ガス")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "合成油")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
@@ -96,7 +97,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.EMPTY_CAN, "空の缶詰")
 
         add(RagiumItems.BLANK_DISC, "空のレコード")
-        add(RagiumItems.BLUE_PRINT, "青写真")
+        add(RagiumItems.BLUEPRINT, "青写真")
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
 
@@ -123,7 +124,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")
-        add(RagiumTags.Items.MOLDS, "鋳型")
 
         add(RagiumTags.Items.GENERATOR_UPGRADABLE, "発電機")
         add(RagiumTags.Items.PROCESSOR_UPGRADABLE, "処理装置")

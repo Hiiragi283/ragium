@@ -48,9 +48,6 @@ object RagiumTags {
         @JvmField
         val FOODS_CAN: TagKey<Item> = common("foods", "can")
 
-        @JvmField
-        val MOLDS: TagKey<Item> = mod("molds")
-
         // Upgrade Target
         @JvmField
         val GENERATOR_UPGRADABLE: TagKey<Item> = mod("upgradable", "generator")

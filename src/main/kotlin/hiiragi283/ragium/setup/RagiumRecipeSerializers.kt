@@ -18,10 +18,10 @@ import hiiragi283.core.common.recipe.base.HTBasicItemToItemRecipe
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.crafting.HTBlueprintCloningRecipe
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.item.HTBluePrintItem
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
@@ -50,12 +50,20 @@ import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
 
 object RagiumRecipeSerializers {
     @JvmField
     val REGISTER = HTDeferredRecipeSerializerRegister(RagiumAPI.MOD_ID)
 
     //    Custom    //
+
+    // Crafting
+    @JvmField
+    val BLUEPRINT_CLONING: SimpleCraftingRecipeSerializer<HTBlueprintCloningRecipe> = REGISTER.registerSerializer(
+        "blueprint_cloning",
+        SimpleCraftingRecipeSerializer(::HTBlueprintCloningRecipe),
+    )
 
     // Printing
     @JvmField
@@ -181,20 +189,8 @@ object RagiumRecipeSerializers {
         REGISTER.registerSerializer(RagiumConst.PYROLYZING, itemOrFluid(::HTPyrolyzingRecipe))
 
     @JvmField
-    val REFINING: RecipeSerializer<HTRefiningRecipe> = REGISTER.registerSerializer(
-        RagiumConst.REFINING,
-        MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTRefiningRecipe::ingredient),
-            HTBluePrintItem.RANGE_CODEC.fieldOf("blue_print_number").forGetter(HTRefiningRecipe::number),
-            MapBiCodecs
-                .ior(
-                    HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT),
-                    HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT),
-                ).forGetter(HTRefiningRecipe::result),
-            HTProcessingRecipe.timeCodec(),
-            ::HTRefiningRecipe,
-        ),
-    )
+    val REFINING: RecipeSerializer<HTRefiningRecipe> =
+        REGISTER.registerSerializer(RagiumConst.REFINING, itemOrFluid(::HTRefiningRecipe))
 
     // Machine - Cool
     @JvmField

@@ -14,7 +14,6 @@ import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTRefiningRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBannerCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
@@ -74,6 +73,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             private set
 
         @JvmStatic
+        lateinit var refining: HTItemOrFluidRecipeCategory
+            private set
+
+        @JvmStatic
         lateinit var freezing: HTItemOrFluidRecipeCategory
             private set
 
@@ -126,7 +129,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Heat
             melting,
             pyrolyzing,
-            HTRefiningRecipeCategory(guiHelper),
+            refining,
             // Machine - Cool
             freezing,
             // Machine - Chemical
@@ -164,11 +167,13 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
         melting = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CANNING)
         pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING)
+        refining = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.REFINING)
         freezing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING)
         canning = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
 
         melting.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
+        refining.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         freezing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
 

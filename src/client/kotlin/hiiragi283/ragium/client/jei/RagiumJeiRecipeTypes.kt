@@ -15,7 +15,6 @@ import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
-import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -70,7 +69,7 @@ object RagiumJeiRecipeTypes {
         processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     @JvmField
-    val REFINING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTRefiningRecipe> =
+    val REFINING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         processor(RagiumRecipeTypes.REFINING, Items.FIREWORK_STAR)
 
     // Machine - Cool

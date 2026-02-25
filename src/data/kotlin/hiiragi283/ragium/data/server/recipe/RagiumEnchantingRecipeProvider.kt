@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
@@ -75,7 +76,7 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         }
 
         HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.PLASTIC, 64)
+            ingredient = inputCreator.create(HiiragiCoreTags.Items.PLASTICS, 64)
             enchantment = enchLookup.getOrThrow(Enchantments.DEPTH_STRIDER)
         }
         HTEnchantingRecipeBuilder.create(output) {

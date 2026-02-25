@@ -18,11 +18,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
-import hiiragi283.ragium.common.item.HTBluePrintItem
+import hiiragi283.ragium.common.item.HTBlueprintItem
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
-import hiiragi283.ragium.common.item.HTMoldType
 import hiiragi283.ragium.common.item.HTUpgradeItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
@@ -110,20 +109,15 @@ object RagiumItems {
         }
     }
 
-    //    Molds    //
-
-    @JvmField
-    val MOLDS: Map<HTMoldType, HTSimpleDeferredItem> = HTMoldType.entries.associateWith { moldType: HTMoldType ->
-        REGISTER.registerSimpleItem("${moldType.serializedName}_mold")
-    }
-
     //    Utilities    //
 
     @JvmField
     val BLANK_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_disc")
 
     @JvmField
-    val BLUE_PRINT: HTSimpleDeferredItem = REGISTER.registerItem("blue_print", ::HTBluePrintItem)
+    val BLUEPRINT: HTSimpleDeferredItem = REGISTER.registerItem("blueprint", ::HTBlueprintItem) {
+        it.stacksTo(1).component(RagiumDataComponents.BLUEPRINT_NUMBER, 0)
+    }
 
     @JvmField
     val LOCATION_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)

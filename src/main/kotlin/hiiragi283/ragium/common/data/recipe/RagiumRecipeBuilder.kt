@@ -1,12 +1,15 @@
 package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
+import hiiragi283.core.api.data.recipe.HTIngredientCreator
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.common.data.recipe.builder.HTItemToChancedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTWiringRecipe
+import hiiragi283.ragium.common.recipe.ingredient.HTBluePrintIngredient
 import net.minecraft.data.recipes.RecipeOutput
 
 data object RagiumRecipeBuilder {
@@ -28,3 +31,5 @@ data object RagiumRecipeBuilder {
         HTItemToItemRecipeBuilder(RagiumConst.WIRING, ::HTWiringRecipe).apply(builderAction).save(output)
     }
 }
+
+fun HTIngredientCreator.blueprint(number: Int): HTItemIngredient = this.create(HTBluePrintIngredient(number).toVanilla(), 0)

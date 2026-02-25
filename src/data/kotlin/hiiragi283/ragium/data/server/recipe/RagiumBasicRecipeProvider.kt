@@ -9,7 +9,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
-import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.common.data.recipe.blueprint
 import hiiragi283.ragium.common.recipe.special.HTBannerCopyingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBookCopyingRecipe
 import net.minecraft.tags.ItemTags
@@ -86,7 +86,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         // Sawdust -> Particle Board
         HTItemAndItemRecipeBuilder.pressing(output) {
             first = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 2)
-            second = inputCreator.create(HTMoldType.PLATE)
+            second = inputCreator.blueprint(5)
             result = resultCreator.create(HCItems.PARTICLE_BOARD)
         }
     }

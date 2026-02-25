@@ -1,12 +1,17 @@
 {
   "type": "ragium:refining",
-  "blue_print_number": 0,
+  "fluid_ingredient": {
+    "fluids": "#c:synthetic_oil"
+  },
   "fluid_result": {
     "amount": 500,
     "id": "ragium:fuel"
   },
-  "ingredient": {
-    "fluids": "#c:synthetic_oil"
+  "item_ingredient": {
+    "items": {
+      "type": "ragium:blue_print",
+      "number": 0
+    }
   },
   "time": 200
 }

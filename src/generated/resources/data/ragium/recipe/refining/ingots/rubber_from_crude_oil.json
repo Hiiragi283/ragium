@@ -1,12 +1,17 @@
 {
   "type": "ragium:refining",
-  "blue_print_number": 2,
+  "fluid_ingredient": {
+    "fluids": "#c:crude_oil"
+  },
   "fluid_result": {
     "amount": 250,
     "id": "ragium:residue_oil"
   },
-  "ingredient": {
-    "fluids": "#c:crude_oil"
+  "item_ingredient": {
+    "items": {
+      "type": "ragium:blue_print",
+      "number": 2
+    }
   },
   "item_result": {
     "count": 3,
