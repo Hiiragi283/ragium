@@ -1,0 +1,6 @@
+{
+  "type": "ragium:printing",
+  "copy_strategy": "origin",
+  "ingredient": "minecraft:yellow_banner",
+  "origin": "minecraft:yellow_banner"
+}

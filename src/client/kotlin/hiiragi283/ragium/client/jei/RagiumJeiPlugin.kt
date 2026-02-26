@@ -14,7 +14,7 @@ import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
-import hiiragi283.ragium.client.jei.extension.HTBannerCopyingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
@@ -22,6 +22,7 @@ import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExten
 import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTPrintingRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -130,6 +131,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Chemical
             canning,
             HTMixingRecipeCategory(guiHelper),
+            HTWashingRecipeCategory(guiHelper),
             // Device
             enchanting,
         )
@@ -153,7 +155,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         pressing.addExtension(HTBasicItemAndItemRecipeCategoryExtension())
 
-        printing.addExtension(HTBannerCopyingRecipeCategoryExtension)
+        printing.addExtension(HTPrintingRecipeCategoryExtension)
         printing.addExtension(HTBookCopyingRecipeCategoryExtension)
     }
 
@@ -193,6 +195,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Machine - Chemical
         registration.addRecipes(RagiumJeiRecipeTypes.CANNING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
+        registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
         // Device
         registration.addRecipes(RagiumJeiRecipeTypes.ENCHANTING)
     }

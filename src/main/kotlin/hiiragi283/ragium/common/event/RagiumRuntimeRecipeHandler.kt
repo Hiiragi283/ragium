@@ -10,7 +10,7 @@ import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
@@ -34,10 +34,10 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         cutWoodFromDefinition()
         cutBedToPlanks()
 
-        mixToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
-        mixToColor(ItemTags.BEDS, ColoredMaterials.BED)
-        mixToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
-        mixToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
+        washToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
+        washToColor(ItemTags.BEDS, ColoredMaterials.BED)
+        washToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
+        washToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
     }
 
     //    Cutting    //
@@ -179,17 +179,17 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         }
     }
 
-    //    Mixing    //
+    //    Washing    //
 
     @JvmStatic
-    private fun mixToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTItemHolderLike<*>>) {
+    private fun washToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTItemHolderLike<*>>) {
         for ((color: HTDefaultColor, colored: HTItemHolderLike<*>) in map) {
             val dye: HTFluidContent = HCFluids.getDye(color)
             // レシピを登録
-            HTChemicalRecipeBuilder.mixing(output) {
-                itemIngredients += inputCreator.create(inputTag)
-                fluidIngredients += inputCreator.create(dye, 250)
-                itemResults += resultCreator.create(colored)
+            HTWashingRecipeBuilder.create(output) {
+                itemIngredient = inputCreator.create(inputTag)
+                fluidIngredient = inputCreator.create(dye, 250)
+                result = resultCreator.create(colored)
                 time /= 2
             }
         }

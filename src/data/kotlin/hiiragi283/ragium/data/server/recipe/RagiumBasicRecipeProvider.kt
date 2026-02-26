@@ -1,8 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -10,10 +11,12 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
-import hiiragi283.ragium.common.recipe.special.HTBannerCopyingRecipe
-import hiiragi283.ragium.common.recipe.special.HTBookCopyingRecipe
+import hiiragi283.ragium.common.recipe.special.HTBookCloningRecipe
+import hiiragi283.ragium.common.recipe.special.HTPrintingRecipe
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.neoforged.neoforge.common.Tags
 
 object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
@@ -89,10 +92,37 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
     @JvmStatic
     private fun printing() {
-        for (color: HTDefaultColor in HTDefaultColor.entries) {
-            save(id(RagiumConst.PRINTING, "banner_copying", color.serializedName), HTBannerCopyingRecipe(color))
+        // Banner
+        for ((_, banner: HTItemHolderLike<*>) in ColoredMaterials.BANNER) {
+            save(
+                banner.getId().withPrefix("${RagiumConst.PRINTING}/"),
+                HTPrintingRecipe(
+                    inputCreator.create(banner),
+                    banner,
+                    HTPrintingRecipe.CopyStrategy.ORIGIN,
+                ),
+            )
         }
+        // Map -> Filled Map
+        save(
+            id(RagiumConst.PRINTING, "map"),
+            HTPrintingRecipe(
+                inputCreator.create(Items.MAP),
+                HTItemHolderLike.of(Items.FILLED_MAP),
+                HTPrintingRecipe.CopyStrategy.ORIGIN,
+            ),
+        )
+        // Blank Disc -> Disc
+        save(
+            id(RagiumConst.PRINTING, "disc"),
+            HTPrintingRecipe(
+                inputCreator.create(Tags.Items.MUSIC_DISCS),
+                HTItemHolderLike.of(RagiumItems.BLANK_DISC),
+                HTPrintingRecipe.CopyStrategy.INPUT,
+            ),
+        )
 
-        save(id(RagiumConst.PRINTING, "book_copying"), HTBookCopyingRecipe)
+        // Writable Book -> Written Book
+        save(id(RagiumConst.PRINTING, "book_cloning"), HTBookCloningRecipe)
     }
 }

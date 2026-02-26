@@ -10,12 +10,12 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
-import hiiragi283.ragium.api.recipe.HTItemAndFluidToChancedRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
+import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
@@ -72,7 +72,7 @@ object RagiumRecipeTypes {
         REGISTER.registerType(RagiumConst.MIXING)
 
     @JvmField
-    val WASHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemAndFluidToChancedRecipe.Serializable> =
+    val WASHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
         REGISTER.registerType(RagiumConst.WASHING)
 
     // Machine - Matter

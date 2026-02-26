@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType
 /**
  * @see net.minecraft.world.item.crafting.BookCloningRecipe
  */
-data object HTBookCopyingRecipe : HTItemAndItemRecipe.Serializable {
+data object HTBookCloningRecipe : HTItemAndItemRecipe.Serializable {
     override fun testFirstItem(stack: ItemStack): Boolean = stack.`is`(Items.WRITABLE_BOOK)
 
     override fun testSecondItem(stack: ItemStack): Boolean =
@@ -33,7 +33,7 @@ data object HTBookCopyingRecipe : HTItemAndItemRecipe.Serializable {
 
     override val time: Int = 100
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BOOK_COPYING
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BOOK_CLONING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.PRINTING.get()
 }
