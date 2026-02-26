@@ -12,7 +12,6 @@
     "ragium:melter",
     "ragium:mixer",
     "ragium:pyrolyzer",
-    "ragium:washer",
-    "ragium:wiremill"
+    "ragium:washer"
   ]
 }

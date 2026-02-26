@@ -18,8 +18,10 @@ import hiiragi283.core.api.property.plusAssign
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
+import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -124,6 +126,11 @@ object RagiumMaterialEventHandler {
             this += HTMaterialPropertyKeys.DISABLE_SMELTING
 
             setName("Cooked Meat", "焼肉")
+        }
+
+        // Existing
+        event.modify(VanillaMaterialKeys.WOOD) {
+            addItemPrefixes(RagiumTagPrefixes.PELLET)
         }
     }
 

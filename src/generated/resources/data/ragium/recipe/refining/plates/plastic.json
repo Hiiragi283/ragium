@@ -1,0 +1,17 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "hiiragi_core:polymer_resin"
+  },
+  "item_result": {
+    "count": 2,
+    "id": "hiiragi_core:plastic_plate",
+    "tag": "c:plates/plastic"
+  },
+  "time": 200
+}

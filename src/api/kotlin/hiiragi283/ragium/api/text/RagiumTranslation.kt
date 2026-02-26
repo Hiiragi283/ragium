@@ -35,7 +35,6 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     CUTTING_MACHINE("description", RagiumConst.CUTTING_MACHINE),
     ELECTRIC_FURNACE("description", RagiumConst.ELECTRIC_FURNACE),
     FORMING_PRESS("description", RagiumConst.FORMING_PRESS),
-    WIREMILL("description", RagiumConst.WIREMILL),
 
     MELTER("description", RagiumConst.MELTER),
     PYROLYZER("description", RagiumConst.PYROLYZER),

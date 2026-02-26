@@ -39,12 +39,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             ingredient = inputCreator.create(Items.SCULK_VEIN, 8)
             result = resultCreator.create(Items.SCULK)
         }
-
-        // Sawdust -> Compressed
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 8)
-            result = resultCreator.create(HCItems.COMPRESSED_SAWDUST)
-        }
     }
 
     //    Crushing    //

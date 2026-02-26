@@ -55,10 +55,6 @@ object RagiumJeiRecipeTypes {
     val PRESSING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
         processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS, 18 * 6, 18 * 1)
 
-    @JvmField
-    val WIRING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
-        processor(RagiumRecipeTypes.WIRING, RagiumBlocks.WIREMILL, 18 * 4, 18 * 1)
-
     // Machine - Heat
     @JvmField
     val MELTING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =

@@ -36,6 +36,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     override fun gather(provider: HolderLookup.Provider) {
         this.provider = provider
 
+        furnaceFuels()
+
         fermentSources()
         mobHeads()
 
@@ -47,6 +49,8 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     //    Vanilla    //
+
+    private fun furnaceFuels() {}
 
     //    Ragium    //
 

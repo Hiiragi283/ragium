@@ -9,10 +9,12 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCBlocks
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
+import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -61,7 +63,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         }
         // Compressed Sawdust -> Charcoal
         pyrolyzing {
-            ingredient += inputCreator.create(HCItems.COMPRESSED_SAWDUST, 8)
+            ingredient += inputCreator.create(RagiumTagPrefixes.PELLET, VanillaMaterialKeys.WOOD, 8)
             result += resultCreator.material(CommonTagPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 500)
             time /= 3
@@ -119,6 +121,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             ingredient += inputCreator.create(RagiumFluids.SYNTHETIC_OIL)
             ingredient += inputCreator.blueprint(0)
             result += resultCreator.create(RagiumFluids.FUEL, 500)
+            recipeId suffix "_from_synthetic_oil"
         }
     }
 
@@ -172,11 +175,24 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         }
 
         // Polymer Resin + Water -> Plastic
-
-        // Polymer Resin + Water -> Rubber
-
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.water(250)
+            ingredient += inputCreator.create(HCItems.POLYMER_RESIN)
+            result += resultCreator.material(CommonTagPrefixes.PLATE, CommonMaterialKeys.PLASTIC, 2)
+        }
         // Residue Oil -> Petroleum Coke
+        HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
+            ingredient += inputCreator.create(RagiumFluids.RESIDUE_OIL, 250)
+            ingredient += inputCreator.blueprint(0)
+            result += resultCreator.material(CommonTagPrefixes.FUEL, RagiumMaterialKeys.PETROLEUM_COKE)
+        }
         // Residue Oil -> Fuel
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(RagiumFluids.RESIDUE_OIL, 500)
+            ingredient += inputCreator.blueprint(1)
+            result += resultCreator.create(RagiumFluids.FUEL, 250)
+            recipeId suffix "_from_residue_oil"
+        }
 
         // CH4 + H2O -> Synthetic Gas
         HTChemicalRecipeBuilder.mixing(output) {

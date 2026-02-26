@@ -9,7 +9,7 @@
   },
   "item_ingredient": {
     "amount": 8,
-    "items": "hiiragi_core:compressed_sawdust"
+    "items": "#c:pellets/wood"
   },
   "item_result": {
     "count": 8,

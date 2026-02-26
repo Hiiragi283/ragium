@@ -94,10 +94,6 @@ object RagiumBlocks {
     val FORMING_PRESS: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.FORMING_PRESS, RagiumTranslation.FORMING_PRESS)
 
-    @JvmField
-    val WIREMILL: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.WIREMILL, RagiumTranslation.WIREMILL)
-
     // Heat
     @JvmField
     val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =

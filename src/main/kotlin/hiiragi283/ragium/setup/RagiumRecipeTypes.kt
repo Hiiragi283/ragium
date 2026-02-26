@@ -44,10 +44,6 @@ object RagiumRecipeTypes {
     val PRINTING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.PRINTING)
 
-    @JvmField
-    val WIRING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
-        REGISTER.registerType(RagiumConst.WIRING)
-
     // Machine - Heat
     @JvmField
     val MELTING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =

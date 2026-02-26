@@ -20,6 +20,7 @@ import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
 import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
@@ -40,6 +41,8 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
         for (entry: HTMaterialManager.Entry in materialManager) {
             // Basic
+            compressDustToPellet(event, entry)
+
             cutBaseToRod(event, entry)
             cutBlockToPlate(event, entry)
 
@@ -92,6 +95,21 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     }.let(inputCreator::blueprint)
 
     //    Compressing    //
+
+    @JvmStatic
+    private fun compressDustToPellet(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 材料が存在するか判定
+        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+        if (!event.isPresentTag(crushedPrefix, entry)) return
+        // 完成品を取得
+        val pellet: HTItemHolderLike<*> = event.getFirstHolder(RagiumTagPrefixes.PELLET, entry) ?: return
+        // レシピを登録
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(crushedPrefix, entry, 8)
+            result = resultCreator.create(pellet)
+            recipeId suffix "_from_dust"
+        }
+    }
 
     //    Crushing    //
 
@@ -283,8 +301,9 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val wire: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.WIRE, entry) ?: return
         // レシピを登録
-        RagiumRecipeBuilder.wiring(output) {
-            ingredient = inputCreator.create(inputTag)
+        HTItemAndItemRecipeBuilder.pressing(output) {
+            first = inputCreator.create(inputTag)
+            second = getBlueprint(CommonTagPrefixes.WIRE)
             result = resultCreator.create(wire, 2)
             time = getTimeFromHardness(entry, time) ?: return
         }

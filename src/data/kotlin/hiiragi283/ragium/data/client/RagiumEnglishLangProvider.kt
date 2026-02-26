@@ -28,7 +28,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
         add(RagiumBlocks.FORMING_PRESS, "Forming Press")
-        add(RagiumBlocks.WIREMILL, "Wiremill")
 
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
@@ -93,7 +92,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.PRINTED_CIRCUIT_BOARD, "Printed Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
 
-        add(RagiumItems.MOLASSES, "Molasses")
         add(RagiumItems.EMPTY_CAN, "Empty Can")
 
         add(RagiumItems.BLANK_DISC, "Blank Disc")
@@ -107,7 +105,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.CUTTING, "Cutting")
         add(RagiumRecipeTypes.PRESSING, "Pressing")
         add(RagiumRecipeTypes.PRINTING, "Printing")
-        add(RagiumRecipeTypes.WIRING, "Wiring")
 
         add(RagiumRecipeTypes.MELTING, "Melting")
         add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")

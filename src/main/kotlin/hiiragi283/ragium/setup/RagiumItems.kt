@@ -76,9 +76,6 @@ object RagiumItems {
     //    Foods    //
 
     @JvmField
-    val MOLASSES: HTSimpleDeferredItem = REGISTER.registerSimpleItem("molasses")
-
-    @JvmField
     val EMPTY_CAN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("empty_can")
 
     @JvmField

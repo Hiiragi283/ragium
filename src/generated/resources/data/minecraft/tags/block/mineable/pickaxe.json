@@ -23,7 +23,6 @@
     "ragium:resonant_interface",
     "ragium:tank",
     "ragium:universal_chest",
-    "ragium:washer",
-    "ragium:wiremill"
+    "ragium:washer"
   ]
 }

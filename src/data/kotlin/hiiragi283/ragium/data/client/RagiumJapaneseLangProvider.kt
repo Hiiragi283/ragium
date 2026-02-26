@@ -28,7 +28,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
         add(RagiumBlocks.FORMING_PRESS, "プレス機")
-        add(RagiumBlocks.WIREMILL, "ワイヤミル")
 
         add(RagiumBlocks.MELTER, "溶融炉")
         add(RagiumBlocks.PYROLYZER, "熱分解室")
@@ -93,7 +92,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.PRINTED_CIRCUIT_BOARD, "刻印された回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
 
-        add(RagiumItems.MOLASSES, "糖蜜")
         add(RagiumItems.EMPTY_CAN, "空の缶詰")
 
         add(RagiumItems.BLANK_DISC, "空のレコード")
@@ -107,7 +105,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.CUTTING, "切断")
         add(RagiumRecipeTypes.PRESSING, "プレス加工")
         add(RagiumRecipeTypes.PRINTING, "印刷")
-        add(RagiumRecipeTypes.WIRING, "ワイヤ加工")
 
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")

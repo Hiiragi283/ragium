@@ -35,7 +35,6 @@ import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.ragium.common.recipe.HTWiringRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemAndItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
@@ -175,9 +174,6 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val PRESSING: RecipeSerializer<HTPressingRecipe> = REGISTER.registerSerializer(RagiumConst.PRESSING, itemAndItem(::HTPressingRecipe))
-
-    @JvmField
-    val WIRING: RecipeSerializer<HTWiringRecipe> = REGISTER.registerSerializer(RagiumConst.WIRING, itemToItem(::HTWiringRecipe))
 
     // Machine - Heat
     @JvmField

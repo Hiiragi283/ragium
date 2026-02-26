@@ -87,9 +87,6 @@ object RagiumConfig {
             @JvmField
             val formingPress: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FORMING_PRESS)
 
-            @JvmField
-            val wiremill: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.WIREMILL)
-
             // Heat
             @JvmField
             val melter: HTMachineConfig = HTMachineConfig.createSimple(

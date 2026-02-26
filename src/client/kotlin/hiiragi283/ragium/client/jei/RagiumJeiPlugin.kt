@@ -45,10 +45,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         lateinit var compressing: HTItemToItemRecipeCategory
             private set
 
-        @JvmStatic
-        lateinit var wiring: HTItemToItemRecipeCategory
-            private set
-
         // ItemToChanced
         @JvmStatic
         lateinit var cutting: HTItemToChancedRecipeCategory
@@ -125,7 +121,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             cutting,
             pressing,
             printing,
-            wiring,
             // Machine - Heat
             melting,
             pyrolyzing,
@@ -142,10 +137,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
     private fun initItemToItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
         compressing = HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.COMPRESSING)
-        wiring = HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.WIRING)
 
         compressing.addExtension(HTBasicItemToItemRecipeCategoryExtension())
-        wiring.addExtension(HTBasicItemToItemRecipeCategoryExtension())
     }
 
     private fun initItemToChanced(guiHelper: IGuiHelper, manager: IIngredientManager) {
@@ -191,7 +184,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING)
         registration.addRecipes(RagiumJeiRecipeTypes.PRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.PRINTING)
-        registration.addRecipes(RagiumJeiRecipeTypes.WIRING)
         // Machine - Heat
         registration.addRecipes(RagiumJeiRecipeTypes.MELTING)
         registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING)
@@ -217,7 +209,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.CUTTING,
             RagiumJeiRecipeTypes.PRESSING,
             RagiumJeiRecipeTypes.PRINTING,
-            RagiumJeiRecipeTypes.WIRING,
             // Machine - Heat
             RagiumJeiRecipeTypes.MELTING,
             RagiumJeiRecipeTypes.PYROLYZING,
