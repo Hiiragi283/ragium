@@ -11,7 +11,9 @@
     "ragium:freezer",
     "ragium:melter",
     "ragium:mixer",
+    "ragium:printer",
     "ragium:pyrolyzer",
+    "ragium:refinery",
     "ragium:washer"
   ]
 }

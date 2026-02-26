@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "ragium:block/machine/bottom",
+    "front": "ragium:block/machine/refinery_front_active",
+    "side": "ragium:block/machine/side_heat",
+    "top": "ragium:block/machine/top_heat"
+  }
+}

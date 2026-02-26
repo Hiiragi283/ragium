@@ -11,6 +11,7 @@ object RagiumConst {
     const val CUTTING_MACHINE = "cutting_machine"
     const val ELECTRIC_FURNACE = "electric_furnace"
     const val FORMING_PRESS = "forming_press"
+    const val PRINTER = "printer"
 
     // Heat
     const val MELTER = "melter"

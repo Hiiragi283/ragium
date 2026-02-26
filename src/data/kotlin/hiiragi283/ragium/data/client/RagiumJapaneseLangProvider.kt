@@ -28,9 +28,11 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
         add(RagiumBlocks.FORMING_PRESS, "プレス機")
+        add(RagiumBlocks.PRINTER, "プリンター")
 
         add(RagiumBlocks.MELTER, "溶融炉")
         add(RagiumBlocks.PYROLYZER, "熱分解室")
+        add(RagiumBlocks.REFINERY, "精製室")
 
         add(RagiumBlocks.FREEZER, "冷却機")
 

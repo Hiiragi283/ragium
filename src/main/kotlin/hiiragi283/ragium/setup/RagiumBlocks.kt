@@ -94,6 +94,10 @@ object RagiumBlocks {
     val FORMING_PRESS: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.FORMING_PRESS, RagiumTranslation.FORMING_PRESS)
 
+    @JvmField
+    val PRINTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.PRINTER, RagiumTranslation.PRINTER)
+
     // Heat
     @JvmField
     val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
@@ -102,6 +106,10 @@ object RagiumBlocks {
     @JvmField
     val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
+
+    @JvmField
+    val REFINERY: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY)
 
     // Cool
     @JvmField

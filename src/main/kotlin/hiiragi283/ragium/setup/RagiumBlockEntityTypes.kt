@@ -23,7 +23,9 @@ import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPrinterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTStonecutterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTWasherBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
@@ -87,6 +89,10 @@ object RagiumBlockEntityTypes {
     val FORMING_PRESS: HTDeferredBlockEntityType<HTFormingPressBlockEntity> =
         REGISTER.registerTick(RagiumConst.FORMING_PRESS, ::HTFormingPressBlockEntity)
 
+    @JvmField
+    val PRINTER: HTDeferredBlockEntityType<HTPrinterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.PRINTER, ::HTPrinterBlockEntity)
+
     // Heat
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
@@ -95,6 +101,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> =
         REGISTER.registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
+
+    @JvmField
+    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> =
+        REGISTER.registerTick(RagiumConst.REFINERY, ::HTRefineryBlockEntity)
 
     // Cool
     @JvmField
@@ -186,9 +196,11 @@ object RagiumBlockEntityTypes {
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, ELECTRIC_FURNACE.get())
         registerHandler(event, FORMING_PRESS.get())
+        registerHandler(event, PRINTER.get())
 
         registerHandler(event, MELTER.get())
         registerHandler(event, PYROLYZER.get())
+        registerHandler(event, REFINERY.get())
 
         registerHandler(event, FREEZER.get())
 

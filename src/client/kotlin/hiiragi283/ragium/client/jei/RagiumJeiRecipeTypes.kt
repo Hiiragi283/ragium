@@ -19,7 +19,6 @@ import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -49,7 +48,7 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        processor(RagiumRecipeTypes.PRINTING, Items.WRITABLE_BOOK, 18 * 6, 18 * 1)
+        processor(RagiumRecipeTypes.PRINTING, RagiumBlocks.PRINTER, 18 * 6, 18 * 1)
 
     @JvmField
     val PRESSING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
@@ -66,7 +65,7 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val REFINING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        processor(RagiumRecipeTypes.REFINING, Items.FIREWORK_STAR)
+        processor(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     // Machine - Cool
     @JvmField

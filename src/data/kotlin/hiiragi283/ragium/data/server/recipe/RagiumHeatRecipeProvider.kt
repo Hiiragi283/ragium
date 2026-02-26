@@ -109,13 +109,19 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
         HTCombineItemRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COPPER))
-            ingredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE, 2)
+            ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGINITE), 2)
         }
         // Ragi-Alloy + Glowstone -> Adv Ragi-Alloy
         HTCombineItemRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
             ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGI_ALLOY))
-            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.GLOWSTONE, 2)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.GLOWSTONE), 2)
+        }
+        // Raginite + Diamond -> Ragi-Crystal
+        HTCombineItemRecipeBuilder.alloying(output) {
+            result = resultCreator.material(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.DIAMOND))
+            ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGINITE), 8)
         }
 
         // Quartz + Plastic -> Circuit Board

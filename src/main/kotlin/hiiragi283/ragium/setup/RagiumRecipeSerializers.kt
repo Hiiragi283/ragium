@@ -80,7 +80,7 @@ object RagiumRecipeSerializers {
             ::HTPrintingRecipe,
         ),
     )
-    
+
     // Canning
     @JvmField
     val BUCKET_DRAINING: RecipeSerializer<HTBucketDrainingRecipe> =

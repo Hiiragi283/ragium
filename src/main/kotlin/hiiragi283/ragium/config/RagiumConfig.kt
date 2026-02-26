@@ -86,6 +86,9 @@ object RagiumConfig {
 
             @JvmField
             val formingPress: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FORMING_PRESS)
+            
+            @JvmField
+            val printer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.PRINTER)
 
             // Heat
             @JvmField
@@ -100,6 +103,14 @@ object RagiumConfig {
             val pyrolyzer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.PYROLYZER,
+                RagiumFluidConfigType.FIRST_INPUT,
+                RagiumFluidConfigType.FIRST_OUTPUT,
+            )
+
+            @JvmField
+            val refinery: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.REFINERY,
                 RagiumFluidConfigType.FIRST_INPUT,
                 RagiumFluidConfigType.FIRST_OUTPUT,
             )

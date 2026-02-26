@@ -28,9 +28,11 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
         add(RagiumBlocks.FORMING_PRESS, "Forming Press")
+        add(RagiumBlocks.PRINTER, "Printer")
 
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
+        add(RagiumBlocks.REFINERY, "Refinery")
 
         add(RagiumBlocks.FREEZER, "Freezer")
 
