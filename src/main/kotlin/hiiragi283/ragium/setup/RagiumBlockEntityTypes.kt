@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.enchant.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCanningMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
@@ -113,6 +114,10 @@ object RagiumBlockEntityTypes {
 
     // Chemical
     @JvmField
+    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
+        REGISTER.registerTick(RagiumConst.BREWERY, ::HTBreweryBlockEntity)
+
+    @JvmField
     val CANNING_MACHINE: HTDeferredBlockEntityType<HTCanningMachineBlockEntity> =
         REGISTER.registerTick(RagiumConst.CANNING_MACHINE, ::HTCanningMachineBlockEntity)
 
@@ -204,6 +209,7 @@ object RagiumBlockEntityTypes {
 
         registerHandler(event, FREEZER.get())
 
+        registerHandler(event, BREWERY.get())
         registerHandler(event, CANNING_MACHINE.get())
         registerHandler(event, MIXER.get())
         registerHandler(event, WASHER.get())

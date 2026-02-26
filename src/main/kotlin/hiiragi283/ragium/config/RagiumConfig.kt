@@ -86,7 +86,7 @@ object RagiumConfig {
 
             @JvmField
             val formingPress: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FORMING_PRESS)
-            
+
             @JvmField
             val printer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.PRINTER)
 
@@ -125,6 +125,14 @@ object RagiumConfig {
             )
 
             // Chemical
+            @JvmField
+            val brewery: HTMachineConfig = HTMachineConfig.createSimple(
+                builder,
+                RagiumConst.BREWERY,
+                RagiumFluidConfigType.FIRST_INPUT,
+                RagiumFluidConfigType.FIRST_OUTPUT,
+            )
+
             @JvmField
             val canningMachine: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,

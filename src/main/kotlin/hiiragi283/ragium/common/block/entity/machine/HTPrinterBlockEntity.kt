@@ -10,9 +10,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTPrinterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemAndItemBlockEntity(RagiumBlockEntityTypes.PRINTER, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.PRESSING) {
+class HTPrinterBlockEntity(pos: BlockPos, state: BlockState) : HTItemAndItemBlockEntity(RagiumBlockEntityTypes.PRINTER, pos, state) {
+    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.PRINTING) {
         playSound(SoundEvents.BOOK_PAGE_TURN)
     }
 

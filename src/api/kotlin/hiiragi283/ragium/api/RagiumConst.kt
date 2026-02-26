@@ -24,8 +24,6 @@ object RagiumConst {
     // Chemical
     const val BREWERY = "brewery"
     const val CANNING_MACHINE = "canning_machine"
-    const val CENTRIFUGE = "centrifuge"
-    const val ELECTROLYZER = "electrolyzer"
     const val MIXER = "mixer"
     const val WASHER = "washer"
 
@@ -51,6 +49,7 @@ object RagiumConst {
 
     // Basic
     const val ALLOYING = "alloying"
+    const val COMPRESSING = "compressing"
     const val CUTTING = "cutting"
     const val PRESSING = "pressing"
     const val PRINTING = "printing"
@@ -65,8 +64,6 @@ object RagiumConst {
 
     // Chemical
     const val CANNING = "canning"
-    const val CENTRIFUGING = "centrifuging"
-    const val ELECTROLYZING = "electrolyzing"
     const val MIXING = "mixing"
     const val WASHING = "washing"
 
@@ -75,7 +72,6 @@ object RagiumConst {
     const val FABRICATING = "fabricating"
 
     // Device
-    const val COMPRESSING = "compressing"
     const val ENCHANTING = "enchanting"
     const val PLANTING = "planting"
 

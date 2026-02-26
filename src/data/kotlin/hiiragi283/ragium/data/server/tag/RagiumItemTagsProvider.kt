@@ -76,6 +76,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             // Cool
             .add(RagiumBlocks.FREEZER)
             // Chemical
+            .add(RagiumBlocks.BREWERY)
             .add(RagiumBlocks.CANNING_MACHINE)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.WASHER)
@@ -108,6 +109,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE)
             // Generator
             // Machine
+            .add(RagiumBlocks.BREWERY)
             .add(RagiumBlocks.CANNING_MACHINE)
             .add(RagiumBlocks.FREEZER)
             .add(RagiumBlocks.MELTER)

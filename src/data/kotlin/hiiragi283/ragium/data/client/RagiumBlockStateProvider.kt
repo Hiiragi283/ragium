@@ -45,6 +45,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
 
         frontMachineBlock(RagiumBlocks.FREEZER, RagiumConst.MACHINE, cool)
 
+        frontMachineBlock(RagiumBlocks.BREWERY, RagiumConst.MACHINE, chemical)
         frontMachineBlock(RagiumBlocks.CANNING_MACHINE, RagiumConst.MACHINE, chemical)
         frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)

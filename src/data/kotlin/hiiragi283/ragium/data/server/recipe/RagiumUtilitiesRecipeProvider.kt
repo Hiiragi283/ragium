@@ -90,6 +90,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         // Cool
         advanced(RagiumBlocks.FREEZER, HCMaterialKeys.AZURE_STEEL) { it += Items.SNOW_BLOCK }
         // Chemical
+        chemical(RagiumBlocks.BREWERY) { it += Items.BREWING_STAND }
         chemical(RagiumBlocks.CANNING_MACHINE) { it += Items.GLASS_BOTTLE }
         chemical(RagiumBlocks.MIXER) { it += RagiumBlocks.TANK }
         chemical(RagiumBlocks.WASHER) { it += Items.CAULDRON }

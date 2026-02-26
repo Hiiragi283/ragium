@@ -10,8 +10,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state) {
+class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state) {
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.REFINING) {
         playSound(SoundEvents.LAVA_POP)
     }
