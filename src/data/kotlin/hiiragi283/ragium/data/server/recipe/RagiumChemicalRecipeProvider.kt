@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
+import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -46,7 +47,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTChemicalRecipeBuilder.mixing(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.DIAMOND)
             fluidIngredients += inputCreator.molten(RagiumMaterialKeys.RAGINITE) { it * 6 }
-            itemResults += resultCreator.material(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+            itemResults += resultCreator.material(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
         }
     }
 
@@ -155,7 +156,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
 
-            itemResults += resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 4)
+            itemResults += resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 4)
         }
 
         // 2x Liq H2 + Liq O2 -> 2x Rocket Fuel
@@ -221,7 +222,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // Amethyst Block -> Budding Amethyst
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.BLOCK, VanillaMaterialKeys.AMETHYST)
+            itemIngredients += inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 9 }
             itemResults += resultCreator.create(Items.BUDDING_AMETHYST)
         }
@@ -257,7 +258,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTWashingRecipeBuilder.create(output) {
             itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH, 4)
             fluidIngredient = inputCreator.water(250)
-            result = resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 3)
+            result = resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
             time = 20 * 5
         }
     }

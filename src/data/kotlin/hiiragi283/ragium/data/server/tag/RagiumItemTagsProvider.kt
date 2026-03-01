@@ -6,10 +6,11 @@ import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.data.tag.HTTagsProvider
 import hiiragi283.core.api.material.HTMaterialContents
+import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.material.part.HTPart
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.getBucketHolder
-import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.item.HTFoodCanType
@@ -25,7 +26,7 @@ import java.util.concurrent.CompletableFuture
 class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
     HTItemTagsProvider(RagiumAPI.MOD_ID, blockTags, context) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Item>) {
-        val items: HTMaterialContents<HTTagPrefix, Item> = HiiragiCoreAccess.INSTANCE.registeredContents.items
+        val items: HTMaterialContents<HTPart, Item> = HiiragiCoreAccess.INSTANCE.registeredContents.items
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.getBucketHolder())
@@ -41,10 +42,10 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
 
         factory
             .apply(Tags.Items.FOODS_RAW_MEAT)
-            .add(items.getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT))
+            .add(items.getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.MEAT))
         factory
             .apply(Tags.Items.FOODS_COOKED_MEAT)
-            .add(items.getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT))
+            .add(items.getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT))
         // Others
         upgradeTargets(factory)
     }

@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
@@ -57,14 +58,14 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         // Log -> Charcoal
         pyrolyzing {
             ingredient += inputCreator.create(ItemTags.LOGS_THAT_BURN, 8)
-            result += resultCreator.material(CommonTagPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            result += resultCreator.material(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 1000)
             recipeId suffix "_from_log"
         }
         // Compressed Sawdust -> Charcoal
         pyrolyzing {
             ingredient += inputCreator.create(RagiumTagPrefixes.PELLET, VanillaMaterialKeys.WOOD, 8)
-            result += resultCreator.material(CommonTagPrefixes.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            result += resultCreator.material(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 500)
             time /= 3
             recipeId suffix "_from_sawdust"
@@ -76,19 +77,19 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         // Coal -> Coke + Creosote
         pyrolyzing {
             ingredient += inputCreator.create(CommonTagPrefixes.FUEL, VanillaMaterialKeys.COAL, 8)
-            result += resultCreator.material(CommonTagPrefixes.FUEL, CommonMaterialKeys.COAL_COKE, 8)
+            result += resultCreator.material(CommonParts.FUEL, CommonMaterialKeys.COAL_COKE, 8)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
         }
 
         pyrolyzing {
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL, 8)
-            result += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.COAL_COKE, 8)
+            result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.COAL_COKE, 8)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
         }
 
         pyrolyzing {
-            ingredient += inputCreator.create(CommonTagPrefixes.BLOCK, VanillaMaterialKeys.COAL)
-            result += resultCreator.material(CommonTagPrefixes.BLOCK, CommonMaterialKeys.COAL_COKE)
+            ingredient += inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.COAL)
+            result += resultCreator.material(CommonParts.BLOCK, CommonMaterialKeys.COAL_COKE)
             result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
         }
 
@@ -161,7 +162,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(RagiumFluids.CRUDE_OIL)
             ingredient += inputCreator.blueprint(1)
-            result += resultCreator.material(CommonTagPrefixes.PLATE, CommonMaterialKeys.PLASTIC, 3)
+            result += resultCreator.material(CommonParts.PLATE, CommonMaterialKeys.PLASTIC, 3)
             result += resultCreator.create(RagiumFluids.RESIDUE_OIL, 250)
             recipeId suffix "_from_crude_oil"
         }
@@ -169,7 +170,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(RagiumFluids.CRUDE_OIL)
             ingredient += inputCreator.blueprint(2)
-            result += resultCreator.material(CommonTagPrefixes.INGOT, CommonMaterialKeys.RUBBER, 3)
+            result += resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 3)
             result += resultCreator.create(RagiumFluids.RESIDUE_OIL, 250)
             recipeId suffix "_from_crude_oil"
         }
@@ -178,13 +179,13 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.water(250)
             ingredient += inputCreator.create(HCItems.POLYMER_RESIN)
-            result += resultCreator.material(CommonTagPrefixes.PLATE, CommonMaterialKeys.PLASTIC, 2)
+            result += resultCreator.material(CommonParts.PLATE, CommonMaterialKeys.PLASTIC, 2)
         }
         // Residue Oil -> Petroleum Coke
         HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
             ingredient += inputCreator.create(RagiumFluids.RESIDUE_OIL, 250)
             ingredient += inputCreator.blueprint(0)
-            result += resultCreator.material(CommonTagPrefixes.FUEL, RagiumMaterialKeys.PETROLEUM_COKE)
+            result += resultCreator.material(CommonParts.FUEL, RagiumMaterialKeys.PETROLEUM_COKE)
         }
         // Residue Oil -> Fuel
         HTItemOrFluidRecipeBuilder.refining(output) {
@@ -210,7 +211,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         // Crimson Stem -> Crimson Blood
         pyrolyzing {
             ingredient += inputCreator.create(ItemTags.CRIMSON_STEMS, 8)
-            result += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 4)
+            result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 4)
             result += resultCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
             recipeId suffix "_from_crimson_stem"
         }
@@ -229,7 +230,7 @@ object RagiumOrganicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         // Warped Stem -> Dew of the Warp
         pyrolyzing {
             ingredient += inputCreator.create(ItemTags.WARPED_STEMS, 8)
-            result += resultCreator.material(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON, 4)
+            result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 4)
             result += resultCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
             recipeId suffix "_from_warped_stem"
         }

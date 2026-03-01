@@ -3,8 +3,10 @@ package hiiragi283.ragium.data.server.recipe
 import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.material.HTMaterialLike
+import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.material.part.HTPartLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.data.recipe.builder.HTCookingRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
@@ -38,7 +40,7 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Ragi-Alloy Compound -> Ragi-Alloy
         HTCookingRecipeBuilder.smeltingAndBlasting(output) {
             ingredient += RagiumItems.RAGI_ALLOY_COMPOUND
-            resultStack += getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+            resultStack += getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             exp = 0.7f
             recipeId suffix "_from_compound"
         }
@@ -49,7 +51,7 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Meat Ingot -> Cooked Meat Ingot
         HTCookingRecipeBuilder.smeltingAndSmoking(output) {
             ingredient += CommonTagPrefixes.INGOT to RagiumMaterialKeys.MEAT
-            resultStack += getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT)
+            resultStack += getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT)
             exp = 0.35f
             recipeId suffix "_from_ingot"
         }
@@ -92,7 +94,7 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.NICKEL
             }
             ingredients += CommonTagPrefixes.DUST to RagiumMaterialKeys.RAGI_CRYSTAL
-            resultStack += getOrThrow(CommonTagPrefixes.DUST, RagiumMaterialKeys.STAINLESS_STEEL) to 9
+            resultStack += getOrThrow(CommonParts.DUST, RagiumMaterialKeys.STAINLESS_STEEL) to 9
         }
         // Stainless from Invar
         HTShapelessRecipeBuilder.create(output) {
@@ -103,16 +105,16 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 ingredients += CommonTagPrefixes.DUST to VanillaMaterialKeys.IRON
                 ingredients += CommonTagPrefixes.DUST to RagiumMaterialKeys.RAGI_CRYSTAL
             }
-            resultStack += getOrThrow(CommonTagPrefixes.DUST, RagiumMaterialKeys.STAINLESS_STEEL) to 9
+            resultStack += getOrThrow(CommonParts.DUST, RagiumMaterialKeys.STAINLESS_STEEL) to 9
             conditions += CommonTagPrefixes.DUST to CommonMaterialKeys.INVAR
             recipeId suffix "_from_invar"
         }
     }
 
     @JvmStatic
-    private fun getOrThrow(prefix: HTTagPrefix, material: HTMaterialLike): Item = HiiragiCoreAccess.INSTANCE
+    private fun getOrThrow(part: HTPartLike, material: HTMaterialLike): Item = HiiragiCoreAccess.INSTANCE
         .registeredContents
         .items
-        .getOrThrow(prefix, material)
+        .getOrThrow(part, material)
         .get()
 }

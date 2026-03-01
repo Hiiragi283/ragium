@@ -5,6 +5,10 @@ import hiiragi283.core.api.component2
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.material.HTMaterialManager
+import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.material.part.HTPartLike
+import hiiragi283.core.api.material.part.property.getScaledAmount
+import hiiragi283.core.api.material.part.tagPrefix
 import hiiragi283.core.api.material.property.HTDefaultPart
 import hiiragi283.core.api.material.property.HTExtraOreResultMap
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
@@ -18,7 +22,6 @@ import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
-import hiiragi283.core.api.tag.property.getScaledAmount
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
@@ -51,23 +54,23 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
             wireBaseToWire(event, entry)
             // Heat
-            meltPrefixToMolten(event, entry, CommonTagPrefixes.DUST)
-            meltPrefixToMolten(event, entry, CommonTagPrefixes.GEM)
-            meltPrefixToMolten(event, entry, CommonTagPrefixes.INGOT)
-            meltPrefixToMolten(event, entry, CommonTagPrefixes.PEARL)
+            meltPrefixToMolten(event, entry, CommonParts.DUST)
+            meltPrefixToMolten(event, entry, CommonParts.GEM)
+            meltPrefixToMolten(event, entry, CommonParts.INGOT)
+            meltPrefixToMolten(event, entry, CommonParts.PEARL)
 
             refineDustToPrefix(event, entry, CommonTagPrefixes.GEM)
             refineDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
             // Cool
-            freezeMoltenToPrefix(event, entry, CommonTagPrefixes.DUST)
-            freezeMoltenToPrefix(event, entry, CommonTagPrefixes.INGOT)
-            freezeMoltenToPrefix(event, entry, CommonTagPrefixes.GEM)
-            freezeMoltenToPrefix(event, entry, CommonTagPrefixes.PEARL)
+            freezeMoltenToPrefix(event, entry, CommonParts.DUST)
+            freezeMoltenToPrefix(event, entry, CommonParts.INGOT)
+            freezeMoltenToPrefix(event, entry, CommonParts.GEM)
+            freezeMoltenToPrefix(event, entry, CommonParts.PEARL)
 
-            freezeMoltenToPrefix(event, entry, CommonTagPrefixes.GEAR)
-            freezeMoltenToPrefix(event, entry, CommonTagPrefixes.PLATE)
-            freezeMoltenToPrefix(event, entry, CommonTagPrefixes.ROD)
-            freezeMoltenToPrefix(event, entry, CommonTagPrefixes.WIRE)
+            freezeMoltenToPrefix(event, entry, CommonParts.GEAR)
+            freezeMoltenToPrefix(event, entry, CommonParts.PLATE)
+            freezeMoltenToPrefix(event, entry, CommonParts.ROD)
+            freezeMoltenToPrefix(event, entry, CommonParts.WIRE)
             // Chemical
             washCrushedOre(event, entry)
         }
@@ -99,7 +102,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     @JvmStatic
     private fun compressDustToPellet(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
         // 材料が存在するか判定
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART).tagPrefix ?: return
         if (!event.isPresentTag(crushedPrefix, entry)) return
         // 完成品を取得
         val pellet: HTItemHolderLike<*> = event.getFirstHolder(RagiumTagPrefixes.PELLET, entry) ?: return
@@ -126,7 +129,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val rod: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.ROD, entry) ?: return
         // プレフィックスのスケールから個数を算出
-        val (inputCount: Int, outputCount: Int) = CommonTagPrefixes.ROD.getScaledAmount(1, entry)
+        val (inputCount: Int, outputCount: Int) = CommonParts.ROD.getScaledAmount(1, entry)
         // レシピを登録
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(inputTag, inputCount)
@@ -139,12 +142,12 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     @JvmStatic
     private fun cutBlockToPlate(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
         // 材料が存在するか判定
-        if (!event.isPresentTag(CommonTagPrefixes.BLOCK, entry)) return
+        if (!event.isPresentTag(CommonTagPrefixes.STORAGE_BLOCK, entry)) return
         // 完成品を取得
         val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
         // レシピを登録
         RagiumRecipeBuilder.cutting(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.BLOCK, entry)
+            ingredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, entry)
             result = resultCreator.create(plate, entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
             time = getTimeFromHardness(entry, time * 3) ?: (time * 3)
             recipeId suffix "_from_block"
@@ -154,14 +157,15 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     //    Freezing    //
 
     @JvmStatic
-    private fun freezeMoltenToPrefix(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
+    private fun freezeMoltenToPrefix(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, part: HTPartLike) {
+        val prefix: HTTagPrefix = part.tagPrefix ?: return
         // 材料が存在するか判定
         if (!event.isPresentTag(CommonFluidTagPrefixes.MOLTEN, entry)) return
         // レシピを登録
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         HTItemOrFluidRecipeBuilder.freezing(output) {
             ingredient += inputCreator.create(CommonFluidTagPrefixes.MOLTEN, entry) {
-                prefix.getScaledAmount(it, entry).toInt()
+                part.getScaledAmount(it, entry).toInt()
             }
             ingredient += getBlueprint(prefix)
             result += resultCreator.create(resultItem)
@@ -172,18 +176,19 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     //    Melting    //
 
     @JvmStatic
-    private fun meltPrefixToMolten(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
+    private fun meltPrefixToMolten(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, part: HTPartLike) {
+        val prefix: HTTagPrefix = part.tagPrefix ?: return
         // 材料が存在するか判定
         if (!event.isPresentTag(prefix, entry)) return
         // 素材のプロパティから液体材料を取得
-        val fluidAmount: Int = prefix.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
+        val fluidAmount: Int = part.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
         // 完成品を取得
         val molten: HTFluidHolderLike<*> = event.getFirstHolder(CommonFluidTagPrefixes.MOLTEN, entry) ?: return
         // レシピを登録
         HTItemOrFluidRecipeBuilder.melting(output) {
             ingredient += inputCreator.create(prefix, entry)
             result += resultCreator.create(molten, fluidAmount)
-            recipeId suffix "_from_${prefix.name}"
+            recipeId suffix "_from_${part.asPartName()}"
             time = getTimeFromMelting(entry, time) ?: return
         }
     }
@@ -253,7 +258,8 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     @JvmStatic
     private fun refineDustToPrefix(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
         // 材料が存在するか判定
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
+        val crushedPart: HTPartLike = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART)
+        val crushedPrefix: HTTagPrefix = crushedPart.tagPrefix ?: return
         if (!event.isPresentTag(crushedPrefix, entry)) return
         // 完成品を取得
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
@@ -263,7 +269,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             ingredient += inputCreator.water(125)
             result += resultCreator.create(resultItem)
             time /= 2
-            recipeId suffix "from_${crushedPrefix.name}"
+            recipeId suffix "from_${crushedPart.asPartName()}"
         }
     }
 
@@ -281,7 +287,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
             fluidIngredient = inputCreator.water(250)
             // 主産物
-            this.result = resultCreator.create(dust, CommonTagPrefixes.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
+            this.result = resultCreator.create(dust, CommonParts.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
             // 副産物
             entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)

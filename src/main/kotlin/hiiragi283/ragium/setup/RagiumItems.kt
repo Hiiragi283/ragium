@@ -3,8 +3,9 @@ package hiiragi283.ragium.setup
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.material.HTMaterialContents
+import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
@@ -150,8 +151,8 @@ object RagiumItems {
         }
 
         with(HiiragiCoreAccess.INSTANCE.registeredContents.items) {
-            modify(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
-            modify(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
+            modify(getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
+            modify(getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
         }
     }
 
