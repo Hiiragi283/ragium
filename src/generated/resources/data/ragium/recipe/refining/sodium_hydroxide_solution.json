@@ -1,0 +1,14 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "fluids": "#c:water"
+  },
+  "fluid_result": {
+    "id": "ragium:sodium_hydroxide_solution"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:slime_ball"
+  },
+  "time": 200
+}

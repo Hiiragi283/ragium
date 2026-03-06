@@ -15,7 +15,7 @@ object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     private fun freezing() {
         // Water -> Ice
         HTItemOrFluidRecipeBuilder.freezing(output) {
-            ingredient += inputCreator.water(1000)
+            ingredient += inputCreator.water()
             result += resultCreator.create(Items.ICE)
         }
         // Ice -> Packed Ice
@@ -31,7 +31,7 @@ object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
 
         // Lava -> Obsidian
         HTItemOrFluidRecipeBuilder.freezing(output) {
-            ingredient += inputCreator.lava(1000)
+            ingredient += inputCreator.lava()
             result += resultCreator.create(Items.OBSIDIAN)
         }
 

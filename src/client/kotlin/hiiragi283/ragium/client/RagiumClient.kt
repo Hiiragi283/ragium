@@ -92,8 +92,16 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.SYNTHETIC_GAS, Color(0xffcc99))
         event.molten(RagiumFluids.SYNTHETIC_OIL, Color(0x333344))
 
+        event.clear(RagiumFluids.METHANE, Color(0xcc9999))
+        event.dull(RagiumFluids.ETHANOL, Color(0x99cc66))
+        event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
+        event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
+        event.clear(RagiumFluids.GLYCEROL, Color(0x66cc99))
+
         event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
         event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
+
+        event.dull(RagiumFluids.NAOH_SOLUTION, Color(0x99cc00))
         // Nether
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
         event.clear(RagiumFluids.NAPHTHA, Color(0xff6600))
@@ -110,12 +118,6 @@ data object RagiumClient : HTClientMod() {
 
         event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
         event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
-
-        event.clear(RagiumFluids.METHANE, Color(0xcc9999))
-        event.dull(RagiumFluids.ETHANOL, Color(0x99cc66))
-        event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
-        event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
-        event.clear(RagiumFluids.GLYCEROL, Color(0x66cc99))
 
         event.clear(RagiumFluids.RAGI_MATTER, Color(0xff6699))
     }

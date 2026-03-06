@@ -61,8 +61,16 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.SYNTHETIC_GAS, "Synthetic Gas")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "Synthetic Oil")
 
+        addFluid(RagiumFluids.METHANE, "Biomass Gas")
+        addFluid(RagiumFluids.ETHANOL, "Ethanol")
+
+        addFluid(RagiumFluids.BIOFUEL, "Biofuel")
+        addFluid(RagiumFluids.GLYCEROL, "Glycerol")
+
         addFluid(RagiumFluids.NITROGEN, "Breeze Gas")
         addFluid(RagiumFluids.LIQUID_NITROGEN, "Coolant")
+
+        addFluid(RagiumFluids.NAOH_SOLUTION, "Slime Solution")
 
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")

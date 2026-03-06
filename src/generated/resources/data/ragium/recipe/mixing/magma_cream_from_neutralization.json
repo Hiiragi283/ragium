@@ -1,0 +1,19 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:sulfuric_acid"
+    },
+    {
+      "fluids": "#c:sodium_hydroxide_solution"
+    }
+  ],
+  "fluid_result": {
+    "amount": 2000,
+    "id": "minecraft:water"
+  },
+  "item_result": {
+    "id": "minecraft:magma_cream"
+  },
+  "time": 200
+}

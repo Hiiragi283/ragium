@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "ragium:sodium_hydroxide_solution",
+  "loader": "neoforge:fluid_container"
+}

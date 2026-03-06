@@ -61,8 +61,16 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.SYNTHETIC_GAS, "合成ガス")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "合成石油")
 
+        addFluid(RagiumFluids.METHANE, "バイオマスガス")
+        addFluid(RagiumFluids.ETHANOL, "エタノール")
+
+        addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
+        addFluid(RagiumFluids.GLYCEROL, "グリセロール")
+
         addFluid(RagiumFluids.NITROGEN, "ブリーズガス")
         addFluid(RagiumFluids.LIQUID_NITROGEN, "冷却材")
+
+        addFluid(RagiumFluids.NAOH_SOLUTION, "スライム溶液")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")

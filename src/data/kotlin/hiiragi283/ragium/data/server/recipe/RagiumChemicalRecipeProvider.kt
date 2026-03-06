@@ -1,240 +1,309 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.fraction
-import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
-import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.setup.HCBlocks
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
-import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
-import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
-import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
+import hiiragi283.ragium.setup.RagiumFluids
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potions
-import net.neoforged.neoforge.common.Tags
 
 object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        bathing()
-        canning()
-        mixing()
-        washing()
+        overworld()
+        nether()
+        end()
     }
 
-    //    Bathing    //
-
+    @HTBuilderMarker
     @JvmStatic
-    private fun bathing() {
-        // Diamond + Raginite -> Ragi-Crystal
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.DIAMOND)
-            fluidIngredients += inputCreator.molten(RagiumMaterialKeys.RAGINITE) { it * 6 }
-            itemResults += resultCreator.material(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+    private inline fun pyrolyzing(builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
+        // Without Nitrogen
+        HTItemOrFluidRecipeBuilder.pyrolyzing(output, builderAction)
+        // With Nitrogen
+        HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
+            builderAction()
+            ingredient += inputCreator.create(RagiumFluids.NITROGEN)
+            time /= 2
+            recipeId suffix "_with_nitrogen"
         }
     }
 
-    //    Canning    //
+    //    Overworld    //
 
     @JvmStatic
-    private fun canning() {
-        save(id(RagiumConst.CANNING, "bucket_draining"), HTBucketDrainingRecipe)
-        save(id(RagiumConst.CANNING, "bucket_filling"), HTBucketFillingRecipe)
+    private fun overworld() {
+        coal()
+        breeze()
+        slime()
+    }
 
-        save(id(RagiumConst.CANNING, "potion_draining"), HTPotionDrainingRecipe)
-        save(id(RagiumConst.CANNING, "potion_filling"), HTPotionFillingRecipe)
+    @JvmStatic
+    private fun coal() {
+        // Log -> Charcoal
+        pyrolyzing {
+            ingredient += inputCreator.create(ItemTags.LOGS_THAT_BURN, 8)
+            result += resultCreator.material(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            result += resultCreator.create(RagiumFluids.CREOSOTE, 1000)
+            recipeId suffix "_from_log"
+        }
+        // Compressed Sawdust -> Charcoal
+        pyrolyzing {
+            ingredient += inputCreator.create(RagiumTagPrefixes.PELLET, VanillaMaterialKeys.WOOD, 8)
+            result += resultCreator.material(CommonParts.FUEL, VanillaMaterialKeys.CHARCOAL, 8)
+            result += resultCreator.create(RagiumFluids.CREOSOTE, 500)
+            time /= 3
+            recipeId suffix "_from_sawdust"
+        }
 
-        // Water Bottle
-        HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(Items.GLASS_BOTTLE)
+        // Coal -> Coke + Creosote
+        pyrolyzing {
+            ingredient += inputCreator.create(CommonTagPrefixes.FUEL, VanillaMaterialKeys.COAL, 8)
+            result += resultCreator.material(CommonParts.FUEL, CommonMaterialKeys.COAL_COKE, 8)
+            result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
+        }
+        pyrolyzing {
+            ingredient += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.COAL, 8)
+            result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.COAL_COKE, 8)
+            result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
+        }
+        pyrolyzing {
+            ingredient += inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.COAL)
+            result += resultCreator.material(CommonParts.BLOCK, CommonMaterialKeys.COAL_COKE)
+            result += resultCreator.create(RagiumFluids.CREOSOTE, 2000)
+        }
+
+        // Coal + Water -> Synthetic Gas
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
+            itemIngredients += inputCreator.create(Items.BLAZE_POWDER, amount = 0)
+            fluidIngredients += inputCreator.water()
+
+            fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
+            recipeId suffix "_from_coal"
+        }
+        // Synthetic Gas + H2O -> CO2 + 2x H2
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM, amount = 0)
+            fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
+            fluidIngredients += inputCreator.water()
+
+            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 2000)
+            recipeId replace RagiumAPI.id("water_gas_shift_reaction")
+        }
+        // Coal -> Synthetic Oil
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
+            result += resultCreator.create(RagiumFluids.SYNTHETIC_OIL, 125)
+        }
+        // Synthetic Oil -> Fuel
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(RagiumFluids.SYNTHETIC_OIL)
+            result += resultCreator.create(RagiumFluids.FUEL, 500)
+            recipeId suffix "_from_synthetic_oil"
+        }
+    }
+
+    @JvmStatic
+    private fun breeze() {
+        // Wind Charge -> N2
+        HTItemOrFluidRecipeBuilder.melting(output) {
+            ingredient += inputCreator.create(Items.WIND_CHARGE)
+            result += resultCreator.create(RagiumFluids.NITROGEN, 125)
+        }
+        // N2 -> liq N2
+        HTItemOrFluidRecipeBuilder.freezing(output) {
+            ingredient += inputCreator.create(RagiumFluids.NITROGEN)
+            result += resultCreator.create(RagiumFluids.LIQUID_NITROGEN, 100)
+        }
+    }
+
+    @JvmStatic
+    private fun slime() {
+        // Slimeball + H2O -> NaOH aq
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(Items.SLIME_BALL)
+            ingredient += inputCreator.water()
+            result += resultCreator.create(RagiumFluids.NAOH_SOLUTION)
+        }
+        // H2SO4 + 2x NaOH aq -> Na2SO4 + 2x H2O
+        HTChemicalRecipeBuilder.mixing(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID)
+            fluidIngredients += inputCreator.create(RagiumFluids.NAOH_SOLUTION)
+            itemResults += resultCreator.create(Items.MAGMA_CREAM)
+            fluidResults += resultCreator.water(2000)
+            recipeId replace id("magma_cream_from_neutralization")
+        }
+    }
+
+    //    Nether    //
+
+    @JvmStatic
+    private fun nether() {
+        crudeOil()
+        crimson()
+        warped()
+
+        ghast()
+        explosive()
+        blaze()
+    }
+
+    @JvmStatic
+    private fun crudeOil() {
+        // Oil Sand -> Sand + Crude Oil
+        pyrolyzing {
+            ingredient += inputCreator.create(HCBlocks.OIL_SAND, 4)
+            result += resultCreator.create(Items.SAND, 4)
+            result += resultCreator.create(RagiumFluids.CRUDE_OIL, 2000)
+            recipeId replace id("crude_oil_from_sand")
+        }
+        // Oil Shale -> Clay + Crude Oil
+        pyrolyzing {
+            ingredient += inputCreator.create(HCBlocks.OIL_SHALE, 4)
+            result += resultCreator.create(Items.CLAY_BALL, 16)
+            result += resultCreator.create(RagiumFluids.CRUDE_OIL, 2000)
+            recipeId replace id("crude_oil_from_shale")
+        }
+        // Soul Sand -> Sand + Crude Oil
+        pyrolyzing {
+            ingredient += inputCreator.create(Items.SOUL_SAND, 4)
+            result += resultCreator.create(Items.SAND, 4)
+            result += resultCreator.create(RagiumFluids.CRUDE_OIL)
+            recipeId replace id("crude_oil_from_soul")
+        }
+
+        // Crude Oil -> Petroleum Coke + Naphtha
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(RagiumFluids.CRUDE_OIL)
+            result += resultCreator.material(CommonParts.FUEL, RagiumMaterialKeys.PETROLEUM_COKE)
+            result += resultCreator.create(RagiumFluids.NAPHTHA, 500)
+            recipeId suffix "_from_crude_oil"
+        }
+        // Naphtha -> Polymer Resin + Fuel
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(RagiumFluids.NAPHTHA)
+            result += resultCreator.create(HCItems.POLYMER_RESIN)
+            result += resultCreator.create(RagiumFluids.FUEL, 500)
+            recipeId suffix "_from_naphtha"
+        }
+        // Polymer Resin + Water -> Plastic
+        HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.water(250)
-            result += resultCreator.create(HTPotionHelper.createPotion(Items.POTION, Potions.WATER))
-            time /= 4
-            recipeId replace id("water_bottle")
+            ingredient += inputCreator.create(HCItems.POLYMER_RESIN)
+            result += resultCreator.material(CommonParts.PLATE, CommonMaterialKeys.PLASTIC, 2)
         }
-        // Experience
-        fillAndEmpty(
-            HTItemHolderLike.of(Items.GLASS_BOTTLE),
-            HTItemHolderLike.of(Items.EXPERIENCE_BOTTLE),
-            HCFluids.EXPERIENCE,
-            250,
-        )
-        // Honey Bottle
-        fillAndEmpty(
-            HTItemHolderLike.of(Items.GLASS_BOTTLE),
-            HTItemHolderLike.of(Items.HONEY_BOTTLE),
-            HCFluids.HONEY,
-            250,
-        )
-        // Mushroom Stew
-        fillAndEmpty(
-            HTItemHolderLike.of(Items.BOWL),
-            HTItemHolderLike.of(Items.MUSHROOM_STEW),
-            HCFluids.MUSHROOM_STEW,
-            250,
-        )
-        // Dragon Breath
-        fillAndEmpty(
-            HTItemHolderLike.of(Items.GLASS_BOTTLE),
-            HTItemHolderLike.of(Items.DRAGON_BREATH),
-            HCFluids.DRAGON_BREATH,
-            250,
-        )
-    }
 
-    @JvmStatic
-    private fun fillAndEmpty(
-        empty: HTItemHolderLike<*>,
-        filled: HTItemHolderLike<*>,
-        fluid: HTFluidContent,
-        amount: Int,
-    ) {
-        // Empty -> Filled
-        HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(empty)
-            ingredient += inputCreator.create(fluid, amount)
-            result += resultCreator.create(filled)
-            recipeId suffix "_from_${empty.path}"
-        }
-        // Filled -> Empty
-        HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(filled)
-            result += resultCreator.create(empty)
-            result += resultCreator.create(fluid, amount)
-            recipeId suffix "_from_${filled.path}"
-        }
-    }
-
-    //    Mixing    //
-
-    @JvmStatic
-    private fun mixing() {
-        // Eldritch Flux
+        // CH4 + H2O -> Synthetic Gas
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
-            fluidResults += resultCreator.molten(HCMaterialKeys.ELDRITCH)
-        }
-        // Liquid Dyes
-        for ((color: HTDefaultColor, content: HTFluidContent) in HCFluids.DYE) {
-            HTChemicalRecipeBuilder.mixing(output) {
-                itemIngredients += inputCreator.create(color.dyesTag)
-                fluidIngredients += inputCreator.water(250)
-                fluidResults += resultCreator.create(content, 250)
-            }
-        }
-        // Latex + Sulfur + Carbon -> Rubber
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(HCItems.RAW_RUBBER)
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL, amount = 0)
+            fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
+            fluidIngredients += inputCreator.water()
 
-            itemResults += resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 4)
-        }
-
-        waterMixing()
-
-        eldritchMixing()
-    }
-
-    @JvmStatic
-    private fun waterMixing() {
-        // Cobblestone -> Mossy
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(Tags.Items.COBBLESTONES_NORMAL)
-            fluidIngredients += inputCreator.water(250)
-            itemResults += resultCreator.create(Items.MOSSY_COBBLESTONE)
-            time /= 2
-        }
-        // XX Concrete Powder -> XX Concrete
-        // Dirt + Water -> Mud
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(Items.DIRT)
-            fluidIngredients += inputCreator.water(250)
-            itemResults += resultCreator.create(Items.MUD)
-            time /= 2
-        }
-        // XX Dead Coral -> XX Coral
-        // Sponge -> Wet Sponge
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(Items.SPONGE)
-            fluidIngredients += inputCreator.water(1000)
-            itemResults += resultCreator.create(Items.WET_SPONGE)
-            time /= 2
-        }
-
-        // Sawdust -> Paper
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD)
-            fluidIngredients += inputCreator.water(125)
-            itemResults += resultCreator.create(Items.PAPER)
-            time /= 2
+            fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 2000)
+            recipeId suffix "_from_methane"
         }
     }
 
     @JvmStatic
-    private fun eldritchMixing() {
-        // Obsidian -> Crying Obsidian
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(Tags.Items.OBSIDIANS_NORMAL)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH)
-            itemResults += resultCreator.create(Items.CRYING_OBSIDIAN)
+    private fun crimson() {
+        // Crimson Stem -> Crimson Blood
+        pyrolyzing {
+            ingredient += inputCreator.create(ItemTags.CRIMSON_STEMS, 8)
+            result += resultCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
+            recipeId suffix "_from_crimson_stem"
         }
-        // Amethyst Block -> Budding Amethyst
+        // Crimson Dust + Lava -> Blaze Powder
         HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 9 }
-            itemResults += resultCreator.create(Items.BUDDING_AMETHYST)
-        }
-        // Skeleton Skull -> Wither Skeleton Skull
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(Items.SKELETON_SKULL)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH)
-            itemResults += resultCreator.create(Items.WITHER_SKELETON_SKULL)
-        }
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL)
+            fluidIngredients += inputCreator.lava(250)
 
-        // Trial Key -> Ominous Key
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(Items.TRIAL_KEY)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 4 }
-            itemResults += resultCreator.create(Items.OMINOUS_TRIAL_KEY)
+            itemResults += resultCreator.create(Items.BLAZE_POWDER)
+            recipeId suffix "_from_crimson"
         }
     }
 
-    //    Washing    //
+    @JvmStatic
+    private fun warped() {
+        // Warped Stem -> Dew of the Warp
+        pyrolyzing {
+            ingredient += inputCreator.create(ItemTags.WARPED_STEMS, 8)
+            result += resultCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
+            recipeId suffix "_from_warped_stem"
+        }
+        // Warped Dust + Lava -> Ender Pearl
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL)
+            fluidIngredients += inputCreator.lava(250)
+
+            itemResults += resultCreator.create(Items.ENDER_PEARL)
+            recipeId suffix "_from_warped"
+        }
+    }
 
     @JvmStatic
-    fun washing() {
-        // Gravel + Water -> Flint
-        HTWashingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(Tags.Items.GRAVELS)
-            fluidIngredient = inputCreator.water(250)
-            result = resultCreator.create(Items.FLINT)
-            extraResult += resultCreator.create(Items.FLINT) to fraction(1, 3)
-            time = 20 * 5
+    private fun ghast() {
+        // Soul Soil -> KNO3
+
+        // 2x KNO3 + H2SO4 -> 2x HNO3 + K2SO4
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER, 2)
+            fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID)
+            fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID, 2000)
+            recipeId suffix "_from_saltpeter"
         }
 
-        // Ash + Water -> Carbon
-        HTWashingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH, 4)
-            fluidIngredient = inputCreator.water(250)
-            result = resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
-            time = 20 * 5
+        // Ghast Tear -> NO2
+        HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
+            ingredient += inputCreator.create(Items.GHAST_TEAR)
+            result += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE)
         }
+        // NO2 + H2O -> HNO3
+        HTChemicalRecipeBuilder.mixing(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN_DIOXIDE)
+            fluidIngredients += inputCreator.water()
+            fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID)
+        }
+    }
+
+    @JvmStatic
+    private fun explosive() {
+        // HNO3 + H2SO4 -> Mixture Acid
+        HTChemicalRecipeBuilder.mixing(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.NITRIC_ACID, 500)
+            fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
+            fluidResults += resultCreator.create(RagiumFluids.MIXTURE_ACID)
+        }
+    }
+
+    @JvmStatic
+    private fun blaze() {
+        // Blaze Powder -> SO2
+        HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
+            ingredient += inputCreator.create(Items.BLAZE_POWDER)
+            result += resultCreator.create(RagiumFluids.SULFUR_DIOXIDE)
+        }
+        // SO2 + H2O -> H2SO4
+        HTChemicalRecipeBuilder.mixing(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.SULFUR_DIOXIDE)
+            fluidIngredients += inputCreator.water()
+            fluidResults += resultCreator.create(RagiumFluids.SULFURIC_ACID)
+        }
+    }
+
+    //    The End    //
+
+    @JvmStatic
+    private fun end() {
     }
 }
