@@ -21,6 +21,7 @@ import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryEx
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTEnchantedBookDuplicatingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPrintingRecipeCategoryExtension
@@ -120,6 +121,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         duplicating = HTDuplicatingRecipeCategory(guiHelper)
         duplicating.addExtension(HTSimpleDuplicatingRecipeCategoryExtension)
+        duplicating.addExtension(HTEnchantedBookDuplicatingRecipeCategoryExtension(manager))
 
         enchanting = HTEnchantingRecipeCategory(guiHelper)
         enchanting.addExtension(HTHolderEnchantingRecipeCategoryExtension)

@@ -44,6 +44,7 @@ import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.special.HTBookCloningRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
+import hiiragi283.ragium.common.recipe.special.HTEnchantedBookDuplicatingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPrintingRecipe
@@ -99,6 +100,11 @@ object RagiumRecipeSerializers {
     @JvmField
     val POTION_FILLING: RecipeSerializer<HTPotionFillingRecipe> =
         REGISTER.registerSerializer("potion_filling", MapBiCodecs.unit(HTPotionFillingRecipe))
+
+    // Duplicating
+    @JvmField
+    val BOOK_DUPLICATING: RecipeSerializer<HTEnchantedBookDuplicatingRecipe> =
+        REGISTER.registerSerializer("enchanted_book_duplicating", MapBiCodecs.unit(HTEnchantedBookDuplicatingRecipe))
 
     //    Machine    //
 

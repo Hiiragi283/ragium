@@ -1,0 +1,6 @@
+{
+  "type": "ragium:duplicating",
+  "ingredient": "#c:stones",
+  "required_matter": 1,
+  "time": 200
+}

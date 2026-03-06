@@ -4,6 +4,7 @@ import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.integration.jei.addFluidStack
 import hiiragi283.core.api.integration.jei.addFluidStacks
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.util.getOrEmpty
 import hiiragi283.ragium.api.integration.jei.HTItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import mezz.jei.api.gui.builder.IIngredientAcceptor
@@ -13,7 +14,6 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.runtime.IIngredientManager
 import net.minecraft.core.RegistryAccess
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.fluids.FluidStack
 
 class HTDrainingRecipeCategoryExtension<RECIPE : HTItemOrFluidRecipe>(
     private val manager: IIngredientManager,
@@ -45,9 +45,10 @@ class HTDrainingRecipeCategoryExtension<RECIPE : HTItemOrFluidRecipe>(
     ) {
         val access: RegistryAccess = HiiragiCoreAPI.getActiveAccess() ?: return
         val input = HTItemAndFluidRecipeInput(
-            inputItem.displayedItemStack.orElse(ItemStack.EMPTY),
-            inputFluid.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).orElse(FluidStack.EMPTY),
+            inputItem.displayedItemStack.getOrEmpty(),
+            inputFluid.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).getOrEmpty(),
         )
+        if (input.isEmpty) return
 
         outputItem
             .createDisplayOverrides()

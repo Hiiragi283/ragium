@@ -1,0 +1,6 @@
+{
+  "type": "ragium:duplicating",
+  "ingredient": "#c:obsidians/normal",
+  "required_matter": 64,
+  "time": 200
+}

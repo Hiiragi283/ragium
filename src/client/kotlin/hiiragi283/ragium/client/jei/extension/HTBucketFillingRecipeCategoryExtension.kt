@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client.jei.extension
 
 import hiiragi283.core.api.integration.jei.addFluidStacks
+import hiiragi283.core.api.util.getOrEmpty
 import hiiragi283.ragium.api.integration.jei.HTItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
 import mezz.jei.api.gui.builder.IIngredientAcceptor
@@ -31,7 +32,7 @@ class HTBucketFillingRecipeCategoryExtension(val manager: IIngredientManager) :
         outputFluid: IRecipeSlotDrawable,
         focuses: IFocusGroup,
     ) {
-        val fluidStack: FluidStack = inputFluid.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).orElse(FluidStack.EMPTY).copy()
+        val fluidStack: FluidStack = inputFluid.getDisplayedIngredient(NeoForgeTypes.FLUID_STACK).getOrEmpty().copy()
         if (fluidStack.isEmpty) return
 
         outputItem

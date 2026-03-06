@@ -22,9 +22,11 @@ import hiiragi283.core.api.plugin.HTMaterialPlugin
 import hiiragi283.core.api.plugin.HTPlugin
 import hiiragi283.core.api.property.add
 import hiiragi283.core.api.property.plusAssign
+import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.part.RagiumParts
@@ -51,6 +53,8 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
         gem(provider)
         alloy(provider)
         other(provider)
+
+        existing(provider)
     }
 
     private val materialBlockSet: Set<HTPartLike> = setOf(
@@ -165,10 +169,25 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
             setName("Cooked Meat", "焼肉")
         }
+    }
 
+    @JvmStatic
+    private fun existing(provider: HTMaterialPlugin.MaterialProvider) {
         provider.getBuilder(VanillaMaterialKeys.WOOD).apply {
             addItemPrefixes(RagiumParts.pellet)
         }
+
+        provider.getBuilder(VanillaMaterialKeys.AMETHYST)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 32
+
+        provider.getBuilder(VanillaMaterialKeys.COPPER)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 256 / 2
+        provider.getBuilder(VanillaMaterialKeys.IRON)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 256
+        provider.getBuilder(VanillaMaterialKeys.GOLD)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 256 * 8
+
+        provider.getBuilder(CommonMaterialKeys.TIN)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 256
+        provider.getBuilder(CommonMaterialKeys.SILVER)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 256 * 8
+
+        provider.getBuilder(CommonMaterialKeys.LEAD)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 256 * 2
+        provider.getBuilder(CommonMaterialKeys.URANIUM)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 4096
     }
 
     @JvmStatic

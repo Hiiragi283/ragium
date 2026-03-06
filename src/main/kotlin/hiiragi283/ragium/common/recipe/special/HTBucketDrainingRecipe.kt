@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.recipe.special
 
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.util.Ior
+import hiiragi283.core.api.util.getOrEmpty
 import hiiragi283.ragium.api.recipe.FluidAmount
 import hiiragi283.ragium.api.recipe.ItemAmount
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -32,5 +33,5 @@ data object HTBucketDrainingRecipe : HTCustomCanningRecipe() {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BUCKET_DRAINING
 
     override fun assembleFluid(input: HTItemAndFluidRecipeInput, registries: HolderLookup.Provider): FluidStack =
-        FluidUtil.getFluidContained(input.item).orElse(FluidStack.EMPTY)
+        FluidUtil.getFluidContained(input.item).getOrEmpty()
 }
