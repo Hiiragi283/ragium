@@ -4,8 +4,8 @@ minecraft = "1.21.1"
 parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"
 
-neo-moddev = "2.0.116"
-neo-version = "21.1.216"
+neo-moddev = "2.0.140"
+neo-version = "21.1.219"
 
 kff-version = "5.10.0"
 ktlint = "13.1.0"

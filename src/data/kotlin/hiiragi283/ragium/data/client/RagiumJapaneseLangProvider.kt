@@ -57,37 +57,27 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブクレート")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
-        // addFluid(RagiumFluids.AIR, "空気")
-        addFluid(RagiumFluids.HYDROGEN, "水素")
-        addFluid(RagiumFluids.LIQUID_HYDROGEN, "液体水素")
-        addFluid(RagiumFluids.HELIUM, "ヘリウム")
-        addFluid(RagiumFluids.NITROGEN, "窒素")
-        addFluid(RagiumFluids.LIQUID_NITROGEN, "液体窒素")
-        addFluid(RagiumFluids.AMMONIA, "アンモニア")
-        addFluid(RagiumFluids.OXYGEN, "酸素")
-        addFluid(RagiumFluids.LIQUID_OXYGEN, "液体酸素")
-
-        addFluid(RagiumFluids.ROCKET_FUEL, "ロケット燃料")
-        addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
-        addFluid(RagiumFluids.MIXTURE_ACID, "混酸")
-        addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
-
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
         addFluid(RagiumFluids.SYNTHETIC_GAS, "合成ガス")
-        addFluid(RagiumFluids.SYNTHETIC_OIL, "合成油")
+        addFluid(RagiumFluids.SYNTHETIC_OIL, "合成石油")
+
+        addFluid(RagiumFluids.NITROGEN, "ブリーズガス")
+        addFluid(RagiumFluids.LIQUID_NITROGEN, "冷却材")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
+        addFluid(RagiumFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumFluids.FUEL, "燃料")
-        addFluid(RagiumFluids.RESIDUE_OIL, "残渣油")
 
-        addFluid(RagiumFluids.METHANE, "メタン")
-        addFluid(RagiumFluids.ETHANOL, "エタノール")
-        addFluid(RagiumFluids.SUNFLOWER_OIL, "ヒマワリ油")
-        addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
-        addFluid(RagiumFluids.GLYCEROL, "グリセロール")
+        addFluid(RagiumFluids.NITROGEN_DIOXIDE, "ガストガス")
+        addFluid(RagiumFluids.NITRIC_ACID, "ガスト酸")
+        addFluid(RagiumFluids.MIXTURE_ACID, "混酸")
+
+        addFluid(RagiumFluids.SULFUR_DIOXIDE, "ブレイズガス")
+        addFluid(RagiumFluids.SULFURIC_ACID, "ブレイズ酸")
+
+        addFluid(RagiumFluids.HELIUM, "エンドストーンガス")
 
         addFluid(RagiumFluids.RAGI_MATTER, "ラギマター")
-
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")

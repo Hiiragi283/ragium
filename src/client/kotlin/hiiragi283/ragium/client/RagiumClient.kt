@@ -87,27 +87,29 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
-        event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
-        event.dull(RagiumFluids.LIQUID_HYDROGEN, Color(0x3333cc))
-        event.clear(RagiumFluids.HELIUM, Color(0xffff99))
-        event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
-        event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
-        event.clear(RagiumFluids.AMMONIA, Color(0x666699))
-        event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
-        event.dull(RagiumFluids.LIQUID_OXYGEN, Color(0x00cccc))
-
-        event.dull(RagiumFluids.ROCKET_FUEL, Color(0xccccff))
-        event.clear(RagiumFluids.NITRIC_ACID, Color(0x9999cc))
-        event.clear(RagiumFluids.MIXTURE_ACID, Color(0xcc3300))
-        event.clear(RagiumFluids.SULFURIC_ACID, Color(0xcccc00))
-
+        // Overworld
         event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
         event.clear(RagiumFluids.SYNTHETIC_GAS, Color(0xffcc99))
         event.molten(RagiumFluids.SYNTHETIC_OIL, Color(0x333344))
 
+        event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
+        event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
+        // Nether
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
-        event.clear(RagiumFluids.FUEL, Color(0xff6600))
-        event.molten(RagiumFluids.RESIDUE_OIL, Color(0x663366))
+        event.clear(RagiumFluids.NAPHTHA, Color(0xff6600))
+        event.clear(RagiumFluids.FUEL, Color(0xff9900))
+
+        event.clear(RagiumFluids.NITROGEN_DIOXIDE, Color(0x9999cc))
+        event.dull(RagiumFluids.NITRIC_ACID, Color(0x9999cc))
+        event.dull(RagiumFluids.MIXTURE_ACID, Color(0xcc3300))
+
+        event.clear(RagiumFluids.SULFUR_DIOXIDE, Color(0xcccc00))
+        event.dull(RagiumFluids.SULFURIC_ACID, Color(0xcccc00))
+        // The End
+        event.clear(RagiumFluids.HELIUM, Color(0xffff99))
+
+        event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
+        event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
 
         event.clear(RagiumFluids.METHANE, Color(0xcc9999))
         event.dull(RagiumFluids.ETHANOL, Color(0x99cc66))

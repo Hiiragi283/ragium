@@ -6,6 +6,7 @@ import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.material.HTMaterialManager
 import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.material.part.HTFluidPart
 import hiiragi283.core.api.material.part.HTPartLike
 import hiiragi283.core.api.material.part.property.getScaledAmount
 import hiiragi283.core.api.material.part.tagPrefix
@@ -21,7 +22,6 @@ import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
-import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
@@ -160,11 +160,11 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     private fun freezeMoltenToPrefix(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, part: HTPartLike) {
         val prefix: HTTagPrefix = part.tagPrefix ?: return
         // 材料が存在するか判定
-        if (!event.isPresentTag(CommonFluidTagPrefixes.MOLTEN, entry)) return
+        if (!event.isPresentTag(HTFluidPart.MOLTEN, entry)) return
         // レシピを登録
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         HTItemOrFluidRecipeBuilder.freezing(output) {
-            ingredient += inputCreator.create(CommonFluidTagPrefixes.MOLTEN, entry) {
+            ingredient += inputCreator.create(HTFluidPart.MOLTEN, entry) {
                 part.getScaledAmount(it, entry).toInt()
             }
             ingredient += getBlueprint(prefix)
@@ -183,7 +183,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 素材のプロパティから液体材料を取得
         val fluidAmount: Int = part.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
         // 完成品を取得
-        val molten: HTFluidHolderLike<*> = event.getFirstHolder(CommonFluidTagPrefixes.MOLTEN, entry) ?: return
+        val molten: HTFluidHolderLike<*> = event.getFirstHolder(HTFluidPart.MOLTEN, entry) ?: return
         // レシピを登録
         HTItemOrFluidRecipeBuilder.melting(output) {
             ingredient += inputCreator.create(prefix, entry)

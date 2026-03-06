@@ -1,11 +1,9 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
 
 object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
@@ -41,18 +39,6 @@ object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
         HTItemOrFluidRecipeBuilder.freezing(output) {
             ingredient += inputCreator.create(HCFluids.HONEY)
             result += resultCreator.create(Items.HONEY_BLOCK)
-        }
-
-        // X2 -> Liq X2
-        mapOf(
-            RagiumFluids.HYDROGEN to RagiumFluids.LIQUID_HYDROGEN,
-            RagiumFluids.NITROGEN to RagiumFluids.LIQUID_NITROGEN,
-            RagiumFluids.OXYGEN to RagiumFluids.LIQUID_OXYGEN,
-        ).forEach { (gas: HTFluidContent, liquid: HTFluidContent) ->
-            HTItemOrFluidRecipeBuilder.freezing(output) {
-                ingredient += inputCreator.create(gas)
-                result += resultCreator.create(liquid, 100)
-            }
         }
     }
 }

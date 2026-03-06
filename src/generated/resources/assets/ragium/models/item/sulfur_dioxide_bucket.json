@@ -1,5 +1,6 @@
 {
   "parent": "neoforge:item/bucket",
-  "fluid": "ragium:rocket_fuel",
+  "flip_gas": true,
+  "fluid": "ragium:sulfur_dioxide",
   "loader": "neoforge:fluid_container"
 }

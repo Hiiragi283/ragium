@@ -14,7 +14,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Items
@@ -209,13 +208,6 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
                 result += resultCreator.molten(HCMaterialKeys.ELDRITCH) { it * (i + 1) }
                 recipeId suffix "/$i"
             }
-        }
-
-        // Nitrogen
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(Items.WIND_CHARGE)
-            result += resultCreator.create(RagiumFluids.NITROGEN, 125)
-            recipeId suffix "_from_wind_charge"
         }
     }
 }

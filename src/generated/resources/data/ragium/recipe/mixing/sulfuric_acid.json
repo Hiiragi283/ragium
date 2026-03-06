@@ -1,0 +1,15 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "fluids": "#c:sulfur_dioxide"
+    },
+    {
+      "fluids": "#c:water"
+    }
+  ],
+  "fluid_result": {
+    "id": "ragium:sulfuric_acid"
+  },
+  "time": 200
+}

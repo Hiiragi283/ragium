@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.recipe
 
+import com.google.common.primitives.Ints
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.util.HTExperienceHelper
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
@@ -17,7 +18,10 @@ import net.minecraft.world.item.enchantment.EnchantmentInstance
 class HTHolderEnchantingRecipe(val ingredient: HTItemIngredient, val holder: Holder<Enchantment>) : HTEnchantingRecipe.Serializable {
     val requiredExpAmount: Int get() {
         val enchantment: Enchantment = holder.value()
-        return enchantment.getMaxCost(enchantment.maxLevel).let(HTExperienceHelper::fluidAmountFromExp)
+        return enchantment
+            .getMaxCost(enchantment.maxLevel)
+            .let(HTExperienceHelper::fluidAmountFromExp)
+            .let(Ints::saturatedCast)
     }
 
     override fun testBook(stack: ItemStack): Boolean = stack.`is`(Items.BOOK)

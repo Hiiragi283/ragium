@@ -1,0 +1,11 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "id": "ragium:sulfur_dioxide"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:blaze_powder"
+  },
+  "time": 600
+}

@@ -2,17 +2,14 @@
   "type": "ragium:mixing",
   "fluid_ingredient": [
     {
+      "fluids": "#c:nitrogen_dioxide"
+    },
+    {
       "fluids": "#c:water"
     }
   ],
   "fluid_result": {
-    "id": "ragium:sulfuric_acid"
+    "id": "ragium:nitric_acid"
   },
-  "item_ingredient": [
-    {
-      "amount": 1,
-      "items": "minecraft:blaze_powder"
-    }
-  ],
   "time": 200
 }

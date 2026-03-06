@@ -1,20 +1,13 @@
 {
   "type": "ragium:refining",
   "fluid_ingredient": {
-    "fluids": "#c:crude_oil"
+    "fluids": "#c:naphtha"
   },
   "fluid_result": {
-    "amount": 250,
+    "amount": 500,
     "id": "ragium:fuel"
   },
-  "item_ingredient": {
-    "items": {
-      "type": "ragium:blue_print",
-      "number": 0
-    }
-  },
   "item_result": {
-    "count": 3,
     "id": "hiiragi_core:polymer_resin"
   },
   "time": 200

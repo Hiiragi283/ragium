@@ -1,0 +1,11 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "id": "ragium:nitrogen_dioxide"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:ghast_tear"
+  },
+  "time": 600
+}

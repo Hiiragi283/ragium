@@ -7,11 +7,5 @@
     "amount": 500,
     "id": "ragium:fuel"
   },
-  "item_ingredient": {
-    "items": {
-      "type": "ragium:blue_print",
-      "number": 0
-    }
-  },
   "time": 200
 }

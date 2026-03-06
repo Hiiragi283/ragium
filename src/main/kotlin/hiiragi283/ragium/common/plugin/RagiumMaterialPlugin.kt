@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.plugin
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.material.part.HTFluidPart
 import hiiragi283.core.api.material.part.HTPartLike
 import hiiragi283.core.api.material.part.property.HTPartPropertyKeys
 import hiiragi283.core.api.material.part.property.addNamePattern
@@ -21,7 +22,6 @@ import hiiragi283.core.api.plugin.HTMaterialPlugin
 import hiiragi283.core.api.plugin.HTPlugin
 import hiiragi283.core.api.property.add
 import hiiragi283.core.api.property.plusAssign
-import hiiragi283.core.api.tag.fluid.CommonFluidTagPrefixes
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
@@ -80,7 +80,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
     private fun mineral(provider: HTMaterialPlugin.MaterialProvider) {
         provider.getBuilder(RagiumMaterialKeys.RAGINITE).apply {
             addBlockPrefixes(materialBlockSet)
-            addFluidPrefixes(CommonFluidTagPrefixes.MOLTEN)
+            addFluidPrefixes(HTFluidPart.MOLTEN)
             addItemPrefixes(CommonParts.DUST, CommonParts.RAW, CommonParts.CRUSHED_ORE)
             put(HTMaterialPropertyKeys.ORE_RESULT_MULTIPLIER, fraction(3))
 
@@ -133,7 +133,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
         provider.getBuilder(RagiumMaterialKeys.STAINLESS_STEEL).apply {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
             addBlockPrefixes(CommonParts.BLOCK)
-            addFluidPrefixes(CommonFluidTagPrefixes.MOLTEN)
+            addFluidPrefixes(HTFluidPart.MOLTEN)
             addItemPrefixes(alloySet.minus(CommonParts.WIRE))
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.HIGH)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.HIGH)
