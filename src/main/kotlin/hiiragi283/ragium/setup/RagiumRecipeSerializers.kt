@@ -7,6 +7,7 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
@@ -33,6 +34,7 @@ import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
+import hiiragi283.ragium.common.recipe.HTSimpleDuplicatingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemAndItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
@@ -254,6 +256,16 @@ object RagiumRecipeSerializers {
     )
 
     // Machine - Matter
+    @JvmField
+    val DUPLICATING: RecipeSerializer<HTSimpleDuplicatingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.DUPLICATING,
+        MapBiCodec.composite(
+            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSimpleDuplicatingRecipe::ingredient),
+            BiCodecs.POSITIVE_INT.fieldOf("required_matter").forGetter(HTSimpleDuplicatingRecipe::requiredMatter),
+            HTProcessingRecipe.timeCodec(),
+            ::HTSimpleDuplicatingRecipe,
+        ),
+    )
 
     // Device
     @JvmField

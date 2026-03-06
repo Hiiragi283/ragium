@@ -33,11 +33,11 @@ class HTEnchantingRecipeBuilder<ENCH : Any>(private val factory: Factory<ENCH, *
 
     override fun getPrimalId(): ResourceLocation = idFactory(enchantment)
 
-    override fun createRecipe(): HTEnchantingRecipe.Serializable = factory.create(ingredient, enchantment)
+    override fun createRecipe(): HTEnchantingRecipe = factory.create(ingredient, enchantment)
 
     //    Factory    //
 
-    fun interface Factory<ENCH : Any, RECIPE : HTEnchantingRecipe.Serializable> {
+    fun interface Factory<ENCH : Any, RECIPE : HTEnchantingRecipe> {
         fun create(ingredient: HTItemIngredient, enchantment: ENCH): RECIPE
     }
 }

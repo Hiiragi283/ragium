@@ -15,7 +15,7 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentInstance
 
-class HTHolderEnchantingRecipe(val ingredient: HTItemIngredient, val holder: Holder<Enchantment>) : HTEnchantingRecipe.Serializable {
+class HTHolderEnchantingRecipe(val ingredient: HTItemIngredient, val holder: Holder<Enchantment>) : HTEnchantingRecipe {
     val requiredExpAmount: Int get() {
         val enchantment: Enchantment = holder.value()
         return enchantment

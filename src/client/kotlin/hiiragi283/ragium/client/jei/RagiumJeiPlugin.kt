@@ -10,6 +10,7 @@ import hiiragi283.core.client.jei.extension.HTBasicItemToItemRecipeCategoryExten
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTDuplicatingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
@@ -23,6 +24,7 @@ import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPrintingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTSimpleDuplicatingRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -83,6 +85,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         // Other
         @JvmStatic
+        lateinit var duplicating: HTDuplicatingRecipeCategory
+            private set
+
+        @JvmStatic
         lateinit var enchanting: HTEnchantingRecipeCategory
             private set
     }
@@ -112,6 +118,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         initItemAndItem(guiHelper, manager)
         initItemOrFluid(guiHelper, manager)
 
+        duplicating = HTDuplicatingRecipeCategory(guiHelper)
+        duplicating.addExtension(HTSimpleDuplicatingRecipeCategoryExtension)
+
         enchanting = HTEnchantingRecipeCategory(guiHelper)
         enchanting.addExtension(HTHolderEnchantingRecipeCategoryExtension)
 
@@ -132,6 +141,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             canning,
             HTMixingRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
+            // Machine - Matter
+            duplicating,
             // Device
             enchanting,
         )
@@ -196,6 +207,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.CANNING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
         registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
+        // Machine - Matter
+        registration.addRecipes(RagiumJeiRecipeTypes.DUPLICATING)
         // Device
         registration.addRecipes(RagiumJeiRecipeTypes.ENCHANTING)
     }
@@ -223,6 +236,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.CANNING,
             RagiumJeiRecipeTypes.MIXING,
             RagiumJeiRecipeTypes.WASHING,
+            // Machine - Matter
+            RagiumJeiRecipeTypes.DUPLICATING,
             // Device
             RagiumJeiRecipeTypes.ENCHANTING,
             RagiumJeiRecipeTypes.PLANTING,

@@ -117,6 +117,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.WASHING, "Washing")
 
+        add(RagiumRecipeTypes.DUPLICATING, "Duplicating")
+
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
         add(RagiumRecipeTypes.PLANTING, "Planting")
 

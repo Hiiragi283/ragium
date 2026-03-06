@@ -13,7 +13,7 @@ import mezz.jei.api.recipe.IFocusGroup
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
-    HTLookupRecipeCategory.Managed<HTEnchantingRecipe.Serializable>(guiHelper, RagiumJeiRecipeTypes.ENCHANTING) {
+    HTLookupRecipeCategory.Managed<HTEnchantingRecipe>(guiHelper, RagiumJeiRecipeTypes.ENCHANTING) {
     private val extensions: MutableMap<Class<out HTEnchantingRecipe>, HTEnchantingRecipeCategoryExtension<*>> = hashMapOf()
 
     inline fun <reified RECIPE : HTEnchantingRecipe> addExtension(extension: HTEnchantingRecipeCategoryExtension<RECIPE>) {
@@ -24,9 +24,9 @@ class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
         extensions[clazz] = extension
     }
 
-    //    HTHolderRecipeCategory    //
+    //    HTLookupRecipeCategory    //
 
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTEnchantingRecipe.Serializable, focuses: IFocusGroup) {
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTEnchantingRecipe, focuses: IFocusGroup) {
         val (recipe1: HTEnchantingRecipe, extension: HTEnchantingRecipeCategoryExtension<HTEnchantingRecipe>) =
             getExtension<HTEnchantingRecipe>(recipe) ?: return
         // inputs
@@ -49,17 +49,13 @@ class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
         )
     }
 
-    override fun createRecipeExtras(
-        builder: IRecipeExtrasBuilder,
-        recipe: RecipeHolder<HTEnchantingRecipe.Serializable>,
-        focuses: IFocusGroup,
-    ) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<HTEnchantingRecipe>, focuses: IFocusGroup) {
         builder.addRecipeArrow().setPosition(getPosition(4.75), getPosition(1))
         builder.addRecipePlusSign().setPosition(getPosition(2.5) + 2, getPosition(0.5) + 2)
     }
 
     override fun onDisplayedIngredientsUpdate(
-        recipe: RecipeHolder<HTEnchantingRecipe.Serializable>,
+        recipe: RecipeHolder<HTEnchantingRecipe>,
         recipeSlots: List<IRecipeSlotDrawable>,
         focuses: IFocusGroup,
     ) {
@@ -68,8 +64,7 @@ class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
         extension.onDisplayedIngredientsUpdate(recipe1, recipeSlots[0], recipeSlots[1], recipeSlots[2], recipeSlots[3], focuses)
     }
 
-    override fun isHandled(recipe: RecipeHolder<HTEnchantingRecipe.Serializable>): Boolean =
-        getExtension<HTEnchantingRecipe>(recipe.value()) != null
+    override fun isHandled(recipe: RecipeHolder<HTEnchantingRecipe>): Boolean = getExtension<HTEnchantingRecipe>(recipe.value()) != null
 
     @Suppress("UNCHECKED_CAST")
     private fun <RECIPE : HTEnchantingRecipe> getExtension(

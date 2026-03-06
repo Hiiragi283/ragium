@@ -117,6 +117,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.WASHING, "洗浄")
 
+        add(RagiumRecipeTypes.DUPLICATING, "複製")
+
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.PLANTING, "栽培")
 

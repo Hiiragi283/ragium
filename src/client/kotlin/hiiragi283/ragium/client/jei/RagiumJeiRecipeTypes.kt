@@ -8,6 +8,7 @@ import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
+import hiiragi283.ragium.api.recipe.HTDuplicatingRecipe
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
@@ -86,10 +87,13 @@ object RagiumJeiRecipeTypes {
         processor(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
 
     // Machine - Matter
+    @JvmField
+    val DUPLICATING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTDuplicatingRecipe> =
+        processor(RagiumRecipeTypes.DUPLICATING, RagiumBlocks.TANK, 18 * 6, 18 * 1)
 
     // Device
     @JvmField
-    val ENCHANTING: HTHolderRecipeViewerType<HTEnchantingRecipe.Input, HTEnchantingRecipe.Serializable> =
+    val ENCHANTING: HTHolderRecipeViewerType<HTEnchantingRecipe.Input, HTEnchantingRecipe> =
         processor(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 
     @JvmField

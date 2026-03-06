@@ -1,6 +1,5 @@
 package hiiragi283.ragium.api.recipe
 
-import hiiragi283.core.api.recipe.HTRecipe
 import hiiragi283.core.api.recipe.base.HTSerializableRecipe
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
@@ -9,7 +8,7 @@ import hiiragi283.core.setup.HCFluids
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 
-interface HTEnchantingRecipe : HTRecipe<HTEnchantingRecipe.Input> {
+interface HTEnchantingRecipe : HTSerializableRecipe<HTEnchantingRecipe.Input> {
     override fun test(input: Input): Boolean {
         val (resource: HTFluidResourceType, amount: Int) = input.fluid.toResourcePair() ?: return false
         val bool1: Boolean = HCFluids.EXPERIENCE.isOf(resource) && amount >= getRequiredExpAmount(input)
@@ -40,10 +39,4 @@ interface HTEnchantingRecipe : HTRecipe<HTEnchantingRecipe.Input> {
 
         override fun size(): Int = 2
     }
-
-    //    Serializable    //
-
-    interface Serializable :
-        HTEnchantingRecipe,
-        HTSerializableRecipe<Input>
 }

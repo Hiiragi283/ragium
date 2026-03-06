@@ -69,7 +69,6 @@ object RagiumConst {
 
     // Matter
     const val DUPLICATING = "duplicating"
-    const val FABRICATING = "fabricating"
 
     // Device
     const val ENCHANTING = "enchanting"
