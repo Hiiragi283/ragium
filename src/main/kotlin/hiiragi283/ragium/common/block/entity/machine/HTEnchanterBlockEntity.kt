@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
     HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ENCHANTER, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> {
+    override fun createHandler(): HTRecipeHandler<*, *> {
         TODO("Not yet implemented")
     }
 

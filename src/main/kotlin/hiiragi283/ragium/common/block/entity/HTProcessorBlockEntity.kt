@@ -2,8 +2,12 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.div
+import hiiragi283.core.api.function.andThen
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.base.HTProcessingRecipe
+import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
@@ -31,20 +35,24 @@ import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state) {
+    protected lateinit var recipeHandler: HTRecipeHandler<*, *>
+        private set
     protected lateinit var recipeComponent: HTRecipeComponent<*, *>
         private set
 
     override fun initializeVariables() {
         super.initializeVariables()
-        recipeComponent = createRecipeComponent()
+        recipeHandler = createHandler()
+        recipeComponent = HTRecipeComponent(this, recipeHandler)
     }
 
-    protected abstract fun createRecipeComponent(): HTRecipeComponent<*, *>
+    protected abstract fun createHandler(): HTRecipeHandler<*, *>
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4)) {
         widgetHolder += HTProgressWidget.createArrow(
@@ -56,7 +64,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     final override fun createFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
         val builder: HTBasicFluidTankHolder.Builder = HTBasicFluidTankHolder.builder(this)
-        createFluidTanks(builder, recipeComponent.createListener(listener))
+        createFluidTanks(builder, recipeHandler.createListener(listener))
         return builder.build()
     }
 
@@ -64,7 +72,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     final override fun createEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
         val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
-        createEnergyBattery(builder, recipeComponent.createListener(listener))
+        createEnergyBattery(builder, recipeHandler.createListener(listener))
         return builder.build()
     }
 
@@ -72,7 +80,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     final override fun createItemHandler(listener: HTContentListener): HTItemSlotHolder? {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
-        createItemSlots(builder, recipeComponent.createListener(listener))
+        createItemSlots(builder, recipeHandler.createListener(listener))
         return builder.build()
     }
 
@@ -82,7 +90,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     fun modifyTime(time: Int): Int = modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
 
-    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeComponent.tick(level, pos)
+    override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeHandler.tick(level, pos)
 
     //    Extension    //
 
@@ -131,6 +139,16 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
             if (isCreative()) return 0
             battery.currentEnergyPerTick = modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
             return battery.currentEnergyPerTick * modifyTime(time)
+        }
+
+        protected fun <INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>> createHandler(
+            lookup: HTRecipeLookup<INPUT, RECIPE, *>,
+            builderAction: HTRecipeHandler.Builder<INPUT, RECIPE>.() -> Unit,
+        ): HTRecipeHandler<INPUT, RECIPE> = HTRecipeHandler.create {
+            recipeFinder = lookup.createCache()::getFirstRecipe
+            maxProgressGetter = HTProcessingRecipe<INPUT>::time.andThen(::updateAndGetProgress)
+            progressGetter = { _, _ -> battery.consume() }
+            builderAction()
         }
 
         override fun setupMenu(widgetHolder: HTWidgetHolder) {

@@ -6,12 +6,12 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTChancedRecipe
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
@@ -19,8 +19,11 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(type, pos, state) {
+abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecipe<INPUT>>(
+    type: HTDeferredBlockEntityType<*>,
+    pos: BlockPos,
+    state: BlockState,
+) : HTProcessorBlockEntity.Energized(type, pos, state) {
     protected lateinit var outputSlot: HTBasicItemSlot
         private set
     protected lateinit var extraOutputSlots: List<HTBasicItemSlot>
@@ -61,24 +64,31 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     //    Processing    //
 
-    abstract inner class ChancedRecipeComponent<INPUT : RecipeInput, RECIPE : HTChancedRecipe<INPUT>>(
-        lookup: HTRecipeLookup<INPUT, RECIPE, *>,
-    ) : HTEnergizedRecipeComponent.Cached<INPUT, RECIPE>(lookup, this) {
-        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
-        private val extraOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(extraOutputSlots) }
+    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+    private val extraOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(extraOutputSlots) }
 
-        final override fun insertOutput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: INPUT,
-            recipe: RECIPE,
-        ) {
-            outputHandler.insert(recipe.assemble(input, level.registryAccess()))
-            recipe.assembleExtraItem(input, level).let(extraOutputHandler::insert)
+    final override fun createHandler(): HTRecipeHandler<*, *> = createHandler(getRecipeLookup()) {
+        inputFactory = ::createInput
+        canComplete = { level: ServerLevel, _, input: INPUT, recipe: RECIPE ->
+            recipe.assemble(input, level.registryAccess()).let(outputHandler::canInsert)
         }
-
-        // 副産物は余剰分が出ても無視される
-        final override fun canProgressRecipe(level: ServerLevel, input: INPUT, recipe: RECIPE): Boolean =
-            outputHandler.canInsert(recipe.assemble(input, level.registryAccess()))
+        onComplete = { level: ServerLevel, pos: BlockPos, input: INPUT, recipe: RECIPE ->
+            // outputs
+            recipe.assemble(input, level.registryAccess()).let(outputHandler::insert)
+            recipe.assembleExtraItem(input, level).let(extraOutputHandler::insert)
+            // input
+            this@HTChancedBlockEntity.onComplete(level, pos, input, recipe)
+        }
     }
+
+    protected abstract fun getRecipeLookup(): HTRecipeLookup<INPUT, out RECIPE, *>
+
+    protected abstract fun createInput(level: ServerLevel, pos: BlockPos): INPUT?
+
+    protected abstract fun onComplete(
+        level: ServerLevel,
+        pos: BlockPos,
+        input: INPUT,
+        recipe: RECIPE,
+    )
 }

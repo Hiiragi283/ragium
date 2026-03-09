@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -11,7 +12,6 @@ import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.block.entity.machine.base.HTChancedBlockEntity
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -28,7 +28,8 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTChancedBlockEntity(RagiumBlockEntityTypes.WASHER, pos, state) {
+class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
+    HTChancedBlockEntity<HTItemAndFluidRecipeInput, HTWashingRecipe>(RagiumBlockEntityTypes.WASHER, pos, state) {
     private lateinit var inputTank: HTBasicFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
@@ -70,31 +71,24 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTChancedBlockEnti
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
+    private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+    private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
 
-    private inner class RecipeComponent :
-        ChancedRecipeComponent<HTItemAndFluidRecipeInput, HTWashingRecipe>(
-            RagiumRecipeTypes.WASHING,
-        ) {
-        private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
-        private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
+    override fun getRecipeLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTWashingRecipe, *> = RagiumRecipeTypes.WASHING
 
-        override fun extractInput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: HTItemAndFluidRecipeInput,
-            recipe: HTWashingRecipe,
-        ) {
-            itemInputHandler.consume(recipe.getRequiredItemAmount(input))
-            fluidInputHandler.consume(recipe.getRequiredFluidAmount(input))
-        }
+    override fun createInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
+        createInput(itemInputHandler, fluidInputHandler)
 
-        override fun applyEffect() {
-            playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE)
-        }
+    override fun onComplete(
+        level: ServerLevel,
+        pos: BlockPos,
+        input: HTItemAndFluidRecipeInput,
+        recipe: HTWashingRecipe,
+    ) {
+        itemInputHandler.consume(recipe.getRequiredItemAmount(input))
+        fluidInputHandler.consume(recipe.getRequiredFluidAmount(input))
 
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
-            createInput(itemInputHandler, fluidInputHandler)
+        playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE)
     }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.washer

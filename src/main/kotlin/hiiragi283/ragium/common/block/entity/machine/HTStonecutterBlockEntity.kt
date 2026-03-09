@@ -6,7 +6,6 @@ import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.resource.IdToValue
 import hiiragi283.core.common.recipe.HTLookupRecipeCache
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
-import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemAndItemBlockEntity
 import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
@@ -23,7 +22,9 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemAndItemBlockEntity(RagiumBlockEntityTypes.AUTO_CHISEL, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RecipeLookup) {
+    override fun getLookup(): HTRecipeLookup<HTDoubleRecipeInput, out HTItemAndItemRecipe, *> = RecipeLookup
+
+    override fun playSound() {
         playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
     }
 

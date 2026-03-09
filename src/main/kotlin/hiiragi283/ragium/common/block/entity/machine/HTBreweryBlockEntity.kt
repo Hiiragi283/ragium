@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -15,8 +16,6 @@ import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
-import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -80,43 +79,25 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
+    private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
+    private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 
-    private inner class RecipeComponent :
-        HTEnergizedRecipeComponent.Cached<HTItemAndFluidRecipeInput, HCBrewingRecipe>(HTVanillaRecipeTypes.BREWING, this) {
-        private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
-        private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+    private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
-        private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
-
-        override fun insertOutput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: HTItemAndFluidRecipeInput,
-            recipe: HCBrewingRecipe,
-        ) {
-            recipe.assembleFluid(input, level.registryAccess()).let(fluidOutputHandler::insert)
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(HTVanillaRecipeTypes.BREWING) {
+        inputFactory = { _, _ -> createInput(itemInputHandler, fluidInputHandler) }
+        canComplete = { level: ServerLevel, _, input: HTItemAndFluidRecipeInput, recipe: HCBrewingRecipe ->
+            recipe.assembleFluid(input, level.registryAccess()).let(fluidOutputHandler::canInsert)
         }
-
-        override fun extractInput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: HTItemAndFluidRecipeInput,
-            recipe: HCBrewingRecipe,
-        ) {
+        onComplete = { level: ServerLevel, _, input: HTItemAndFluidRecipeInput, recipe: HCBrewingRecipe ->
+            // output
+            recipe.assembleFluid(input, level.registryAccess()).let(fluidOutputHandler::insert)
+            // input
             fluidInputHandler.consume(recipe.potionFrom)
             itemInputHandler.consume(recipe.ingredient)
-        }
 
-        override fun applyEffect() {
             playSound(SoundEvents.BREWING_STAND_BREW)
         }
-
-        override fun canProgressRecipe(level: ServerLevel, input: HTItemAndFluidRecipeInput, recipe: HCBrewingRecipe): Boolean =
-            recipe.assembleFluid(input, level.registryAccess()).let(fluidOutputHandler::canInsert)
-
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
-            createInput(itemInputHandler, fluidInputHandler)
     }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.brewery

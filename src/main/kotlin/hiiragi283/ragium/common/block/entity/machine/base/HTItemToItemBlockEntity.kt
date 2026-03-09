@@ -1,19 +1,18 @@
 package hiiragi283.ragium.common.block.entity.machine.base
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.block.entity.HTSoundPlayerBlockEntity
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.block.entity.component.HTEnergizedRecipeComponent
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
@@ -55,38 +54,25 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
 
     //    Processing    //
 
-    protected inner class RecipeComponent<RECIPE : HTItemToItemRecipe>(
-        lookup: HTRecipeLookup<SingleRecipeInput, RECIPE, *>,
-        private val user: HTSoundPlayerBlockEntity.User,
-    ) : HTEnergizedRecipeComponent.Cached<SingleRecipeInput, RECIPE>(lookup, this) {
-        private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
-        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+    private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun insertOutput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: SingleRecipeInput,
-            recipe: RECIPE,
-        ) {
-            outputHandler.insert(recipe.assemble(input, level.registryAccess()))
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(getLookup()) {
+        inputFactory = { _, _ -> createInput(inputHandler) }
+        canComplete = { level: ServerLevel, _, input: SingleRecipeInput, recipe: HTItemToItemRecipe ->
+            recipe.assemble(input, level.registryAccess()).let(outputHandler::canInsert)
         }
-
-        override fun extractInput(
-            level: ServerLevel,
-            pos: BlockPos,
-            input: SingleRecipeInput,
-            recipe: RECIPE,
-        ) {
+        onComplete = { level, _, input, recipe ->
+            // output
+            recipe.assemble(input, level.registryAccess()).let(outputHandler::insert)
+            // input
             inputHandler.consume(recipe.getRequiredAmount(input))
+
+            playSound()
         }
-
-        override fun applyEffect() {
-            user.playSound(this@HTItemToItemBlockEntity)
-        }
-
-        override fun canProgressRecipe(level: ServerLevel, input: SingleRecipeInput, recipe: RECIPE): Boolean =
-            outputHandler.canInsert(recipe.assemble(input, level.registryAccess()))
-
-        override fun createRecipeInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)
     }
+
+    protected abstract fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToItemRecipe, *>
+
+    protected abstract fun playSound()
 }

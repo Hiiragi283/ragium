@@ -1,10 +1,10 @@
 package hiiragi283.ragium.common.block.entity.device
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -38,7 +38,9 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
 
     //    Processing    //
 
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = TODO()
+    override fun createHandler(): HTRecipeHandler<*, *> {
+        TODO("Not yet implemented")
+    }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.device.planter
 }

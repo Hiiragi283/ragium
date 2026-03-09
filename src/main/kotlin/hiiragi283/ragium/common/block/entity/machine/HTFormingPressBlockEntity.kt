@@ -1,6 +1,8 @@
 package hiiragi283.ragium.common.block.entity.machine
 
-import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
+import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
+import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemAndItemBlockEntity
 import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
@@ -12,7 +14,9 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTFormingPressBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemAndItemBlockEntity(RagiumBlockEntityTypes.FORMING_PRESS, pos, state) {
-    override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent(RagiumRecipeTypes.PRESSING) {
+    override fun getLookup(): HTRecipeLookup<HTDoubleRecipeInput, out HTItemAndItemRecipe, *> = RagiumRecipeTypes.PRESSING
+
+    override fun playSound() {
         playSound(SoundEvents.ANVIL_HIT)
     }
 
