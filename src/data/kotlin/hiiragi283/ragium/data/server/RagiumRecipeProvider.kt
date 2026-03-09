@@ -10,7 +10,6 @@ import hiiragi283.ragium.data.server.recipe.RagiumEnchantingRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumMaterialRecipeProvider
-import hiiragi283.ragium.data.server.recipe.RagiumMatterRecipeProvider
 import hiiragi283.ragium.data.server.recipe.RagiumPlantingRecipeBuilder
 import hiiragi283.ragium.data.server.recipe.RagiumUtilitiesRecipeProvider
 import java.util.function.Consumer
@@ -23,7 +22,6 @@ class RagiumRecipeProvider(context: HTDataGenContext) : HTRecipeProvider(context
         consumer.accept(RagiumCoolRecipeProvider)
         consumer.accept(RagiumEnchantingRecipeProvider)
         consumer.accept(RagiumHeatRecipeProvider)
-        consumer.accept(RagiumMatterRecipeProvider)
         consumer.accept(RagiumPlantingRecipeBuilder)
 
         consumer.accept(RagiumMaterialRecipeProvider)

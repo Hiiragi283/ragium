@@ -1,0 +1,46 @@
+package hiiragi283.ragium.client.jei.category
+
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.integration.jei.addFluidIngredient
+import hiiragi283.core.api.integration.jei.addItemIngredient
+import hiiragi283.core.api.resource.IdToValue
+import hiiragi283.core.client.jei.category.base.HTLookupRecipeCategory
+import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
+import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
+import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
+import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
+import mezz.jei.api.helpers.IGuiHelper
+import mezz.jei.api.recipe.IFocusGroup
+
+class RagiumDuplicatingRecipeCategory(guiHelper: IGuiHelper) :
+    HTLookupRecipeCategory.Fake<RagiumDuplicatingRecipe>(guiHelper, RagiumJeiRecipeTypes.DUPLICATING) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: IdToValue<RagiumDuplicatingRecipe>, focuses: IFocusGroup) {
+        builder.addAnimatedRecipeArrow(recipe.second.time).setPosition(getPosition(3.25), getPosition(0))
+        builder.addRecipePlusSign().setPosition(getPosition(1) + 2, getPosition(0) + 2)
+    }
+
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RagiumDuplicatingRecipe, focuses: IFocusGroup) {
+        // inputs
+        builder
+            .addInputSlot(getPosition(0), getPosition(0))
+            .addItemIngredient(recipe.ingredient)
+            .setSlotBackground(HTBackgroundType.NONE)
+        builder
+            .addInputSlot(getPosition(2), getPosition(0))
+            .addFluidIngredient(false, recipe.defaultFluidIngredient)
+            .setSlotBackground(HTBackgroundType.INPUT)
+        // output
+        builder
+            .addOutputSlot(getPosition(5), getPosition(0))
+            .setSlotBackground(HTBackgroundType.OUTPUT)
+    }
+
+    override fun onDisplayedIngredientsUpdate(
+        recipe: IdToValue<RagiumDuplicatingRecipe>,
+        recipeSlots: List<IRecipeSlotDrawable>,
+        focuses: IFocusGroup,
+    ) {
+        recipeSlots[0].displayedItemStack.map(recipeSlots[2].createDisplayOverrides()::addItemStack)
+    }
+}

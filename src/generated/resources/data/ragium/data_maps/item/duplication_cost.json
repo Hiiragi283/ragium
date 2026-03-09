@@ -1,0 +1,17 @@
+{
+  "values": {
+    "#c:cobblestones": 1,
+    "#c:gravels": 2,
+    "#c:obsidians/crying": 512,
+    "#c:obsidians/normal": 64,
+    "#c:sands": 1,
+    "#c:stones": 1,
+    "#minecraft:dirt": 1,
+    "#minecraft:logs": 4,
+    "#minecraft:planks": 1,
+    "minecraft:enchanted_book": 1,
+    "minecraft:lingering_potion": 1,
+    "minecraft:potion": 1,
+    "minecraft:splash_potion": 1
+  }
+}

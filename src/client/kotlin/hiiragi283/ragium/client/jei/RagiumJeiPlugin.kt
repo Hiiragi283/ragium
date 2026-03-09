@@ -10,22 +10,20 @@ import hiiragi283.core.client.jei.extension.HTBasicItemToItemRecipeCategoryExten
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTDuplicatingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
+import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTEnchantedBookDuplicatingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPrintingRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTSimpleDuplicatingRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -86,10 +84,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         // Other
         @JvmStatic
-        lateinit var duplicating: HTDuplicatingRecipeCategory
-            private set
-
-        @JvmStatic
         lateinit var enchanting: HTEnchantingRecipeCategory
             private set
     }
@@ -119,10 +113,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         initItemAndItem(guiHelper, manager)
         initItemOrFluid(guiHelper, manager)
 
-        duplicating = HTDuplicatingRecipeCategory(guiHelper)
-        duplicating.addExtension(HTSimpleDuplicatingRecipeCategoryExtension)
-        duplicating.addExtension(HTEnchantedBookDuplicatingRecipeCategoryExtension(manager))
-
         enchanting = HTEnchantingRecipeCategory(guiHelper)
         enchanting.addExtension(HTHolderEnchantingRecipeCategoryExtension)
 
@@ -144,7 +134,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTMixingRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
             // Machine - Matter
-            duplicating,
+            RagiumDuplicatingRecipeCategory(guiHelper),
             // Device
             enchanting,
         )

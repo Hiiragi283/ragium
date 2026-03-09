@@ -9,7 +9,6 @@ import hiiragi283.core.common.registry.HTDeferredRecipeType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.recipe.HTDuplicatingRecipe
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
@@ -75,11 +74,6 @@ object RagiumRecipeTypes {
     @JvmField
     val WASHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
         REGISTER.registerType(RagiumConst.WASHING)
-
-    // Machine - Matter
-    @JvmField
-    val DUPLICATING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTDuplicatingRecipe> =
-        REGISTER.registerType(RagiumConst.DUPLICATING)
 
     // Device
     @JvmField

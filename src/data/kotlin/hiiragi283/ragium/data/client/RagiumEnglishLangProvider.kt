@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
+import hiiragi283.ragium.common.recipe.RagiumFakeRecipeTypes
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -117,7 +118,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.WASHING, "Washing")
 
-        add(RagiumRecipeTypes.DUPLICATING, "Duplicating")
+        add(RagiumFakeRecipeTypes.DUPLICATING, "Duplicating")
 
         add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
         add(RagiumRecipeTypes.PLANTING, "Planting")

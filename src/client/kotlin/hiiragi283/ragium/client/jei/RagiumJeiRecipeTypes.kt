@@ -7,8 +7,8 @@ import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
+import hiiragi283.core.api.recipe.viewer.HTFakeRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
-import hiiragi283.ragium.api.recipe.HTDuplicatingRecipe
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
@@ -16,6 +16,8 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
+import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
+import hiiragi283.ragium.common.recipe.RagiumFakeRecipeTypes
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -27,76 +29,84 @@ import net.minecraft.world.level.ItemLike
 
 object RagiumJeiRecipeTypes {
     @JvmStatic
-    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> processor(
+    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(
         recipeType: HTRecipeType.Managed<INPUT, RECIPE>,
         icon: ItemLike,
         width: Int = 18 * 8,
         height: Int = 18 * 3,
     ): HTHolderRecipeViewerType<INPUT, RECIPE> = HTHolderRecipeViewerType.create(recipeType, ItemStack(icon), HTBounds(0, 0, width, height))
 
+    @JvmStatic
+    private fun <INPUT : RecipeInput, RECIPE : Any> create(
+        recipeType: HTRecipeType.Fake<INPUT, RECIPE>,
+        icon: ItemLike,
+        width: Int,
+        height: Int = 18 * 1,
+    ): HTFakeRecipeViewerType<INPUT, RECIPE> = HTFakeRecipeViewerType.create(recipeType, ItemStack(icon), HTBounds(0, 0, width, height))
+
     // Machine - Basic
     @JvmField
     val ALLOYING: HTHolderRecipeViewerType<HTShapelessRecipeInput, HTAlloyingRecipe> =
-        processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
+        create(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
 
     @JvmField
     val COMPRESSING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
-        processor(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR, 18 * 4, 18 * 1)
+        create(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR, 18 * 4, 18 * 1)
 
     @JvmField
     val CUTTING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
-        processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 5, 18 * 1)
+        create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 5, 18 * 1)
 
     @JvmField
     val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        processor(RagiumRecipeTypes.PRINTING, RagiumBlocks.PRINTER, 18 * 6, 18 * 1)
+        create(RagiumRecipeTypes.PRINTING, RagiumBlocks.PRINTER, 18 * 6, 18 * 1)
 
     @JvmField
     val PRESSING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS, 18 * 6, 18 * 1)
+        create(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS, 18 * 6, 18 * 1)
 
     // Machine - Heat
     @JvmField
     val MELTING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        processor(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
+        create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
 
     @JvmField
     val PYROLYZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
+        create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
 
     @JvmField
     val REFINING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        processor(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
+        create(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
 
     // Machine - Cool
     @JvmField
     val FREEZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        processor(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
+        create(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
 
     // Machine - Chemical
     @JvmField
     val CANNING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        processor(RagiumRecipeTypes.CANNING, RagiumBlocks.CANNING_MACHINE)
+        create(RagiumRecipeTypes.CANNING, RagiumBlocks.CANNING_MACHINE)
 
     @JvmField
     val MIXING: HTHolderRecipeViewerType<HTChemicalRecipeInput, HTMixingRecipe> =
-        processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
+        create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
 
     @JvmField
     val WASHING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
-        processor(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
+        create(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
 
     // Machine - Matter
     @JvmField
-    val DUPLICATING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTDuplicatingRecipe> =
-        processor(RagiumRecipeTypes.DUPLICATING, RagiumBlocks.TANK, 18 * 6, 18 * 1)
+    val DUPLICATING: HTFakeRecipeViewerType<HTItemAndFluidRecipeInput, RagiumDuplicatingRecipe> =
+        create(RagiumFakeRecipeTypes.DUPLICATING, RagiumBlocks.TANK, 18 * 6)
 
     // Device
     @JvmField
     val ENCHANTING: HTHolderRecipeViewerType<HTEnchantingRecipe.Input, HTEnchantingRecipe> =
-        processor(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
+        create(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 
     @JvmField
     val PLANTING: HTHolderRecipeViewerType<HTPlantingRecipe.Input, HTPlantingRecipe> =
-        processor(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
+        create(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 }

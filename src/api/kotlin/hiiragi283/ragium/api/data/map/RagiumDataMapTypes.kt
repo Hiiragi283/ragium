@@ -55,6 +55,9 @@ object RagiumDataMapTypes {
 
     // Item
     @JvmField
+    val DUPLICATION_COST: DataMapType<Item, Int> = create("duplication_cost", Registries.ITEM, BiCodecs.POSITIVE_INT)
+
+    @JvmField
     val UPGRADE: DataMapType<Item, HTUpgradeData> = create("upgrade", Registries.ITEM, HTUpgradeData.CODEC)
 
     //    Extensions    //

@@ -23,9 +23,7 @@ import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
-import hiiragi283.ragium.common.data.recipe.HTDuplicatingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
@@ -75,8 +73,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             freezeMoltenToPrefix(event, entry, CommonParts.WIRE)
             // Chemical
             washCrushedOre(event, entry)
-            // Matter
-            duplicateBase(event, entry)
         }
     }
 
@@ -155,22 +151,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             result = resultCreator.create(plate, entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
             time = getTimeFromHardness(entry, time * 3) ?: (time * 3)
             recipeId suffix "_from_block"
-        }
-    }
-
-    //    Duplicating    //
-
-    @JvmStatic
-    private fun duplicateBase(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 素材のプロパティから材料を取得
-        val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
-        if (!event.isPresentTag(inputTag)) return
-        // 必要なマター量を取得
-        val matterValue: Int = entry[RagiumMaterialPropertyKeys.MATTER_VALUE] ?: return
-        // レシピを登録
-        HTDuplicatingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(inputTag)
-            requiredMatter = matterValue
         }
     }
 

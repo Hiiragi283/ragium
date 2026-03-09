@@ -6,6 +6,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
+import hiiragi283.ragium.common.recipe.RagiumFakeRecipeTypes
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -117,7 +118,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.WASHING, "洗浄")
 
-        add(RagiumRecipeTypes.DUPLICATING, "複製")
+        add(RagiumFakeRecipeTypes.DUPLICATING, "複製")
 
         add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
         add(RagiumRecipeTypes.PLANTING, "栽培")

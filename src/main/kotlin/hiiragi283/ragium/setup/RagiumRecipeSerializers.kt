@@ -7,7 +7,6 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
@@ -34,7 +33,6 @@ import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.HTSimpleDuplicatingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemAndItemRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
@@ -44,7 +42,6 @@ import hiiragi283.ragium.common.recipe.base.HTChemicalResult
 import hiiragi283.ragium.common.recipe.special.HTBookCloningRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
-import hiiragi283.ragium.common.recipe.special.HTEnchantedBookDuplicatingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPrintingRecipe
@@ -100,11 +97,6 @@ object RagiumRecipeSerializers {
     @JvmField
     val POTION_FILLING: RecipeSerializer<HTPotionFillingRecipe> =
         REGISTER.registerSerializer("potion_filling", MapBiCodecs.unit(HTPotionFillingRecipe))
-
-    // Duplicating
-    @JvmField
-    val BOOK_DUPLICATING: RecipeSerializer<HTEnchantedBookDuplicatingRecipe> =
-        REGISTER.registerSerializer("enchanted_book_duplicating", MapBiCodecs.unit(HTEnchantedBookDuplicatingRecipe))
 
     //    Machine    //
 
@@ -258,18 +250,6 @@ object RagiumRecipeSerializers {
             HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTWashingRecipe::extraResult),
             HTProcessingRecipe.timeCodec(),
             ::HTWashingRecipe,
-        ),
-    )
-
-    // Machine - Matter
-    @JvmField
-    val DUPLICATING: RecipeSerializer<HTSimpleDuplicatingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.DUPLICATING,
-        MapBiCodec.composite(
-            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSimpleDuplicatingRecipe::ingredient),
-            BiCodecs.POSITIVE_INT.fieldOf("required_matter").forGetter(HTSimpleDuplicatingRecipe::requiredMatter),
-            HTProcessingRecipe.timeCodec(),
-            ::HTSimpleDuplicatingRecipe,
         ),
     )
 

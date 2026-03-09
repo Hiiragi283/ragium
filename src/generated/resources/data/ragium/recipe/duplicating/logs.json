@@ -1,6 +1,0 @@
-{
-  "type": "ragium:duplicating",
-  "ingredient": "#minecraft:logs",
-  "required_matter": 4,
-  "time": 200
-}
