@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import net.minecraft.data.recipes.RecipeOutput
@@ -27,7 +27,7 @@ class HTPlantingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.PLANTING) 
     override fun getPrimalId(): ResourceLocation = crop.getId()
 
     override fun createRecipe(): HTPlantingRecipe = HTPlantingRecipe(
-        HTItemHolderLike.of(seed.asItem()),
+        seed.toItemLike(),
         soil,
         crop,
         time,

@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.recipe.special
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.resource.isOf
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
@@ -19,7 +20,7 @@ class HTPrintingRecipe(val ingredient: HTItemIngredient, val origin: HTItemHolde
     HTItemAndItemRecipe.Serializable {
     override fun testFirstItem(stack: ItemStack): Boolean = ingredient.test(stack)
 
-    override fun testSecondItem(stack: ItemStack): Boolean = stack.`is`(origin.getItemHolder())
+    override fun testSecondItem(stack: ItemStack): Boolean = origin.isOf(stack)
 
     override fun getRequiredAmount(input: HTDoubleRecipeInput): Pair<Int, Int> = 1 to 0
 

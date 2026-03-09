@@ -64,7 +64,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
     private inner class RecipeComponent :
-        HTEnergizedRecipeComponent.ProcessingCached<HTShapelessRecipeInput, HTAlloyingRecipe>(RagiumRecipeTypes.ALLOYING, this) {
+        HTEnergizedRecipeComponent.Cached<HTShapelessRecipeInput, HTAlloyingRecipe>(RagiumRecipeTypes.ALLOYING, this) {
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
         override fun insertOutput(

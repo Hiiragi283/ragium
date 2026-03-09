@@ -83,7 +83,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createRecipeComponent(): HTRecipeComponent<*, *> = RecipeComponent()
 
     private inner class RecipeComponent :
-        HTEnergizedRecipeComponent.ProcessingCached<HTItemAndFluidRecipeInput, HCBrewingRecipe>(HTVanillaRecipeTypes.BREWING, this) {
+        HTEnergizedRecipeComponent.Cached<HTItemAndFluidRecipeInput, HCBrewingRecipe>(HTVanillaRecipeTypes.BREWING, this) {
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 

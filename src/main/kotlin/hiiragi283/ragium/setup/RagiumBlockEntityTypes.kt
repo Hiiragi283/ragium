@@ -1,24 +1,24 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.core.api.registry.HTBlockHolderLike
 import hiiragi283.core.common.block.HTBlockWithEntity
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.core.common.capability.HTItemCapabilities
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTPlanterBlockEntity
-import hiiragi283.ragium.common.block.entity.enchant.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCanningMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFormingPressBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
@@ -129,7 +129,10 @@ object RagiumBlockEntityTypes {
     val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> =
         REGISTER.registerTick(RagiumConst.WASHER, ::HTWasherBlockEntity)
 
-    // Matter
+    // Misc
+    @JvmField
+    val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
 
     //    Device    //
 
@@ -137,11 +140,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
         REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
-
-    // Enchanting
-    @JvmField
-    val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
 
     //    Storage    //
 
@@ -182,7 +180,7 @@ object RagiumBlockEntityTypes {
     // Supported Blocks
     @JvmStatic
     private fun addSupportedBlocks(event: BlockEntityTypeAddBlocksEvent) {
-        for (holder: HTDeferredOnlyBlock<*> in RagiumBlocks.REGISTER.asBlockSequence()) {
+        for (holder: HTBlockHolderLike<*> in RagiumBlocks.REGISTER.asBlockSequence()) {
             val block: Block = holder.get()
             if (block is HTBlockWithEntity) {
                 event.modify(block.getBlockEntityType().get(), block)
@@ -214,10 +212,10 @@ object RagiumBlockEntityTypes {
         registerHandler(event, MIXER.get())
         registerHandler(event, WASHER.get())
 
+        registerHandler(event, ENCHANTER.get())
+
         // Device
         registerHandler(event, PLANTER.get())
-
-        registerHandler(event, ENCHANTER.get())
 
         // Storage
         registerHandler(event, BATTERY.get())

@@ -63,7 +63,7 @@ abstract class HTChancedBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     abstract inner class ChancedRecipeComponent<INPUT : RecipeInput, RECIPE : HTChancedRecipe<INPUT>>(
         lookup: HTRecipeLookup<INPUT, RECIPE, *>,
-    ) : HTEnergizedRecipeComponent.ProcessingCached<INPUT, RECIPE>(lookup, this) {
+    ) : HTEnergizedRecipeComponent.Cached<INPUT, RECIPE>(lookup, this) {
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
         private val extraOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(extraOutputSlots) }
 

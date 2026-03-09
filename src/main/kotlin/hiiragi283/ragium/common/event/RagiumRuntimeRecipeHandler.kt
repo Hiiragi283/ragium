@@ -5,9 +5,8 @@ import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.common.material.ColoredMaterials
-import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
@@ -168,8 +167,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
 
     @JvmStatic
     private fun cutBedToPlanks() {
-        for ((color: HTDefaultColor, bed: HTSimpleDeferredItem) in ColoredMaterials.BED) {
-            val wool: HTSimpleDeferredItem = ColoredMaterials.WOOL[color] ?: continue
+        for ((color: HTDefaultColor, bed: HTSimpleItemHolderLike) in ColoredMaterials.BED) {
+            val wool: HTSimpleItemHolderLike = ColoredMaterials.WOOL[color] ?: continue
             RagiumRecipeBuilder.cutting(output) {
                 ingredient = inputCreator.create(bed)
                 result = resultCreator.create(wool, 3)
@@ -182,8 +181,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
     //    Washing    //
 
     @JvmStatic
-    private fun washToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTItemHolderLike<*>>) {
-        for ((color: HTDefaultColor, colored: HTItemHolderLike<*>) in map) {
+    private fun washToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTSimpleItemHolderLike>) {
+        for ((color: HTDefaultColor, colored: HTSimpleItemHolderLike) in map) {
             val dye: HTFluidContent = HCFluids.getDye(color)
             // レシピを登録
             HTWashingRecipeBuilder.create(output) {

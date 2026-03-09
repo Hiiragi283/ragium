@@ -5,11 +5,11 @@ import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
-import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.core.common.storage.component.HTComponentHandler
 import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
@@ -60,27 +60,27 @@ object RagiumItems {
     //    Materials    //
 
     @JvmField
-    val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
+    val RAGI_ALLOY_COMPOUND: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
     @JvmField
-    val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
+    val CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("circuit_board")
 
     @JvmField
-    val PLATED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plated_circuit_board")
+    val PLATED_CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("plated_circuit_board")
 
     @JvmField
-    val PRINTED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("printed_circuit_board")
+    val PRINTED_CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("printed_circuit_board")
 
     @JvmField
-    val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")
+    val ELECTRIC_CIRCUIT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("electric_circuit")
 
     //    Foods    //
 
     @JvmField
-    val EMPTY_CAN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("empty_can")
+    val EMPTY_CAN: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("empty_can")
 
     @JvmField
-    val FOOD_CANS: Map<HTFoodCanType, HTSimpleDeferredItem> = HTFoodCanType.entries.associateWith { canType ->
+    val FOOD_CANS: Map<HTFoodCanType, HTSimpleItemHolderLike> = HTFoodCanType.entries.associateWith { canType ->
         val nutrition: Int = when (canType) {
             HTFoodCanType.FISH -> 5
             HTFoodCanType.FRUIT -> 4
@@ -111,23 +111,23 @@ object RagiumItems {
     //    Utilities    //
 
     @JvmField
-    val BLANK_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_disc")
+    val BLANK_DISC: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("blank_disc")
 
     @JvmField
-    val BLUEPRINT: HTSimpleDeferredItem = REGISTER.registerItem("blueprint", ::HTBlueprintItem) {
+    val BLUEPRINT: HTSimpleItemHolderLike = REGISTER.registerItem("blueprint", ::HTBlueprintItem) {
         it.stacksTo(1).component(RagiumDataComponents.BLUEPRINT_NUMBER, 0).description(RagiumTranslation.BLUEPRINT)
     }
 
     @JvmField
-    val LOCATION_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
+    val LOCATION_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
 
     @JvmField
-    val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
+    val LOOT_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
 
     //   Upgrades    //
 
     @JvmField
-    val UPGRADES: Map<RagiumUpgradeType, HTSimpleDeferredItem> = RagiumUpgradeType.entries.associateWith { type: RagiumUpgradeType ->
+    val UPGRADES: Map<RagiumUpgradeType, HTSimpleItemHolderLike> = RagiumUpgradeType.entries.associateWith { type: RagiumUpgradeType ->
         val color: HTDefaultColor = when (type.group) {
             RagiumUpgradeType.Group.CREATIVE -> HTDefaultColor.RED
             RagiumUpgradeType.Group.GENERATOR -> HTDefaultColor.PURPLE

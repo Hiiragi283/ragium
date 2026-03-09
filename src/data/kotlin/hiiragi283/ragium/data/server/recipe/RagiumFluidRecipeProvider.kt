@@ -7,6 +7,7 @@ import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -68,29 +69,29 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         }
         // Experience
         fillAndEmpty(
-            HTItemHolderLike.of(Items.GLASS_BOTTLE),
-            HTItemHolderLike.of(Items.EXPERIENCE_BOTTLE),
+            Items.GLASS_BOTTLE.toLike(),
+            Items.EXPERIENCE_BOTTLE.toLike(),
             HCFluids.EXPERIENCE,
             250,
         )
         // Honey Bottle
         fillAndEmpty(
-            HTItemHolderLike.of(Items.GLASS_BOTTLE),
-            HTItemHolderLike.of(Items.HONEY_BOTTLE),
+            Items.GLASS_BOTTLE.toLike(),
+            Items.HONEY_BOTTLE.toLike(),
             HCFluids.HONEY,
             250,
         )
         // Mushroom Stew
         fillAndEmpty(
-            HTItemHolderLike.of(Items.BOWL),
-            HTItemHolderLike.of(Items.MUSHROOM_STEW),
+            Items.BOWL.toLike(),
+            Items.MUSHROOM_STEW.toLike(),
             HCFluids.MUSHROOM_STEW,
             250,
         )
         // Dragon Breath
         fillAndEmpty(
-            HTItemHolderLike.of(Items.GLASS_BOTTLE),
-            HTItemHolderLike.of(Items.DRAGON_BREATH),
+            Items.GLASS_BOTTLE.toLike(),
+            Items.DRAGON_BREATH.toLike(),
             HCFluids.DRAGON_BREATH,
             250,
         )

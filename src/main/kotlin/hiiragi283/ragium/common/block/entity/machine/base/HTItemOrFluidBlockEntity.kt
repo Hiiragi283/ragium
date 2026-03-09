@@ -91,7 +91,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
     protected inner class RecipeComponent<RECIPE : HTItemOrFluidRecipe>(
         lookup: HTRecipeLookup<HTItemAndFluidRecipeInput, RECIPE, *>,
         private val user: HTSoundPlayerBlockEntity.User,
-    ) : HTEnergizedRecipeComponent.ProcessingCached<HTItemAndFluidRecipeInput, RECIPE>(lookup, this) {
+    ) : HTEnergizedRecipeComponent.Cached<HTItemAndFluidRecipeInput, RECIPE>(lookup, this) {
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 

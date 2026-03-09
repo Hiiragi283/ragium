@@ -4,9 +4,9 @@ import hiiragi283.core.api.data.lang.HTLangName
 import hiiragi283.core.api.data.lang.HTLangType
 import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.common.registry.HTSimpleDeferredItem
+import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.core.Holder
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 
@@ -38,11 +38,11 @@ enum class RagiumUpgradeType(val group: Group, private val enName: String, priva
     ITEM_CAPACITY(Group.STORAGE, "Item Capacity", "アイテム容量"),
     ;
 
-    override fun getId(): ResourceLocation = getItemHolder().id
+    private val delegate: HTSimpleItemHolderLike by lazy { RagiumItems.UPGRADES[this]!! }
 
-    override fun asItem(): Item = getItemHolder().asItem()
+    override fun get(): Item = delegate.get()
 
-    override fun getItemHolder(): HTSimpleDeferredItem = RagiumItems.UPGRADES[this]!!
+    override fun getHolder(): Holder<Item> = delegate.getHolder()
 
     override fun getTranslatedName(type: HTLangType): String = when (type) {
         HTLangTypes.JA_JP -> jpName

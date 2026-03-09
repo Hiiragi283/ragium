@@ -1,8 +1,8 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.registry.HTDeferredHolder
-import hiiragi283.core.common.registry.HTSimpleDeferredItem
+import hiiragi283.core.api.registry.HTSimpleHolderLikeDelegate
+import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.core.common.registry.register.HTDeferredCreativeTabRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.text.RagiumTranslation
@@ -17,13 +17,13 @@ object RagiumCreativeTabs {
     val REGISTER = HTDeferredCreativeTabRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val COMMON: HTDeferredHolder<CreativeModeTab, CreativeModeTab> = REGISTER.registerSimpleTab(
+    val COMMON: HTSimpleHolderLikeDelegate<CreativeModeTab> = REGISTER.registerSimpleTab(
         "common",
         RagiumTranslation.RAGIUM,
-        HTSimpleDeferredItem(CommonParts.INGOT.createId(RagiumMaterialKeys.RAGI_ALLOY)),
+        CommonParts.INGOT.createId(RagiumMaterialKeys.RAGI_ALLOY).toItemLike(),
     ) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
         // Items
-        HTDeferredCreativeTabRegister.addToDisplay(parameters, output, RagiumItems.REGISTER.asSequence())
+        HTDeferredCreativeTabRegister.addToDisplay(parameters, output, RagiumItems.REGISTER.asItemSequence())
         // Blocks
         HTDeferredCreativeTabRegister.addToDisplay(parameters, output, RagiumBlocks.REGISTER.asItemSequence())
         // Fluids

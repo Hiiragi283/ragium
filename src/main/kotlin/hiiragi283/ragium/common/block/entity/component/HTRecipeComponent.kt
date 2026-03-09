@@ -78,4 +78,9 @@ abstract class HTRecipeComponent<INPUT : Any, RECIPE : Any>(owner: HTBlockEntity
         val progress: Int = input.getInt(RagiumConst.PROGRESS) ?: return
         this.progress = progress
     }
+
+    //    Basic    //
+
+    abstract class Basic<INPUT : Any, RECIPE : Any>(owner: HTBlockEntity, override val progressHandler: ProgressHandler<RECIPE>) :
+        HTRecipeComponent<INPUT, RECIPE>(owner)
 }

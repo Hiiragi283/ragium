@@ -6,7 +6,6 @@ import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.tag.HTTagPrefix
@@ -67,12 +66,12 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     // Entity Type
     private fun mobHeads() {
         builder(RagiumDataMapTypes.MOB_HEAD)
-            .add(EntityType.SKELETON, HTItemHolderLike.of(Items.SKELETON_SKULL))
-            .add(EntityType.WITHER_SKELETON, HTItemHolderLike.of(Items.WITHER_SKELETON_SKULL))
-            .add(EntityType.ZOMBIE, HTItemHolderLike.of(Items.ZOMBIE_HEAD))
-            .add(EntityType.CREEPER, HTItemHolderLike.of(Items.CREEPER_HEAD))
-            .add(EntityType.ENDER_DRAGON, HTItemHolderLike.of(Items.DRAGON_HEAD))
-            .add(EntityType.PIGLIN, HTItemHolderLike.of(Items.PIGLIN_HEAD))
+            .add(EntityType.SKELETON, Items.SKELETON_SKULL.toLike())
+            .add(EntityType.WITHER_SKELETON, Items.WITHER_SKELETON_SKULL.toLike())
+            .add(EntityType.ZOMBIE, Items.ZOMBIE_HEAD.toLike())
+            .add(EntityType.CREEPER, Items.CREEPER_HEAD.toLike())
+            .add(EntityType.ENDER_DRAGON, Items.DRAGON_HEAD.toLike())
+            .add(EntityType.PIGLIN, Items.PIGLIN_HEAD.toLike())
     }
 
     // Fluid
@@ -146,10 +145,10 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(Tags.Items.OBSIDIANS_CRYING, 64 * 8, false)
             .add(Tags.Items.OBSIDIANS_NORMAL, 64, false)
             // Dynamic
-            .addHolder(HTItemHolderLike.of(Items.ENCHANTED_BOOK), 1)
-            .addHolder(HTItemHolderLike.of(Items.POTION), 1)
-            .addHolder(HTItemHolderLike.of(Items.SPLASH_POTION), 1)
-            .addHolder(HTItemHolderLike.of(Items.LINGERING_POTION), 1)
+            .addHolder(Items.ENCHANTED_BOOK.toLike(), 1)
+            .addHolder(Items.POTION.toLike(), 1)
+            .addHolder(Items.SPLASH_POTION.toLike(), 1)
+            .addHolder(Items.LINGERING_POTION.toLike(), 1)
     }
 
     private fun upgrade() {

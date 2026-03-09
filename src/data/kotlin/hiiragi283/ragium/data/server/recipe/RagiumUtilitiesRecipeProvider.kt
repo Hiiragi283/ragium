@@ -7,7 +7,6 @@ import hiiragi283.core.api.data.holder.HTIngredientHolder
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
@@ -16,6 +15,7 @@ import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.common.registry.HTDeferredBlockAndItem
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
@@ -230,7 +230,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
 
     @JvmStatic
     private fun variableStorage(
-        block: HTItemHolderLike<*>,
+        block: HTDeferredBlockAndItem<*, *>,
         top: HTMaterialLike,
         core: TagKey<Item>,
         component: DataComponentType<*>,
@@ -246,7 +246,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         }
         // Clear Component
         HTClearComponentRecipeBuilder.create(output) {
-            item = block
+            item = block.itemHolder
             targets += listOf(component)
         }
     }

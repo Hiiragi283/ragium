@@ -40,9 +40,9 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
             yield(RagiumBlocks.MIXER)
             yield(RagiumBlocks.WASHER)
 
-            yield(RagiumBlocks.PLANTER)
-
             yield(RagiumBlocks.ENCHANTER)
+
+            yield(RagiumBlocks.PLANTER)
 
             yield(RagiumBlocks.BATTERY)
             yield(RagiumBlocks.CRATE)

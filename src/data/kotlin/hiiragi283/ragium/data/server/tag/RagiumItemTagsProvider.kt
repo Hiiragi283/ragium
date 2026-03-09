@@ -81,12 +81,12 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.CANNING_MACHINE)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.WASHER)
+            // Misc
+            .add(RagiumBlocks.ENCHANTER)
         factory
             .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
             // Basic
             .add(RagiumBlocks.PLANTER)
-            // Enchanting
-            .add(RagiumBlocks.ENCHANTER)
 
         // Specific
         factory

@@ -6,7 +6,7 @@ import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.registry.HTSimpleHolderLikeDelegate
-import hiiragi283.core.api.registry.getHolderDataMap
+import hiiragi283.core.api.registry.getDataSequence
 import hiiragi283.core.api.resource.IdToValue
 import hiiragi283.core.common.recipe.HTLookupRecipeCache
 import hiiragi283.ragium.api.RagiumAPI
@@ -29,10 +29,8 @@ object RagiumFakeRecipeTypes {
         override fun createCache(): HTRecipeCache<HTItemAndFluidRecipeInput, RagiumDuplicatingRecipe> = HTLookupRecipeCache.forRecipe(this)
 
         override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<IdToValue<RagiumDuplicatingRecipe>> = context.access
-            .registryOrThrow(Registries.ITEM)
-            .asLookup()
-            .getHolderDataMap(RagiumDataMapTypes.DUPLICATION_COST)
-            .asSequence()
+            .lookupOrThrow(Registries.ITEM)
+            .getDataSequence(RagiumDataMapTypes.DUPLICATION_COST)
             .map { (holder: HTSimpleHolderLikeDelegate<Item>, matterValue: Int) ->
                 holder.getId() to RagiumDuplicatingRecipe(HTIngredientCreator.create(holder.get()), matterValue)
             }

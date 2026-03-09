@@ -58,7 +58,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
     protected inner class RecipeComponent<RECIPE : HTItemToItemRecipe>(
         lookup: HTRecipeLookup<SingleRecipeInput, RECIPE, *>,
         private val user: HTSoundPlayerBlockEntity.User,
-    ) : HTEnergizedRecipeComponent.ProcessingCached<SingleRecipeInput, RECIPE>(lookup, this) {
+    ) : HTEnergizedRecipeComponent.Cached<SingleRecipeInput, RECIPE>(lookup, this) {
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 

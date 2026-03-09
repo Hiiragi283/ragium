@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -108,7 +109,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             id(RagiumConst.PRINTING, "map"),
             HTPrintingRecipe(
                 inputCreator.create(Items.MAP),
-                HTItemHolderLike.of(Items.FILLED_MAP),
+                Items.FILLED_MAP.toLike(),
                 HTPrintingRecipe.CopyStrategy.ORIGIN,
             ),
         )
@@ -117,7 +118,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             id(RagiumConst.PRINTING, "disc"),
             HTPrintingRecipe(
                 inputCreator.create(Tags.Items.MUSIC_DISCS),
-                HTItemHolderLike.of(RagiumItems.BLANK_DISC),
+                RagiumItems.BLANK_DISC,
                 HTPrintingRecipe.CopyStrategy.INPUT,
             ),
         )

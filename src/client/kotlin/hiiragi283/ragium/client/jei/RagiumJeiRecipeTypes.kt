@@ -96,16 +96,16 @@ object RagiumJeiRecipeTypes {
     val WASHING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
         create(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
 
-    // Machine - Matter
+    // Machine - Misc
     @JvmField
     val DUPLICATING: HTFakeRecipeViewerType<HTItemAndFluidRecipeInput, RagiumDuplicatingRecipe> =
         create(RagiumFakeRecipeTypes.DUPLICATING, RagiumBlocks.TANK, 18 * 6)
 
-    // Device
     @JvmField
     val ENCHANTING: HTHolderRecipeViewerType<HTEnchantingRecipe.Input, HTEnchantingRecipe> =
         create(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
 
+    // Device
     @JvmField
     val PLANTING: HTHolderRecipeViewerType<HTPlantingRecipe.Input, HTPlantingRecipe> =
         create(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)

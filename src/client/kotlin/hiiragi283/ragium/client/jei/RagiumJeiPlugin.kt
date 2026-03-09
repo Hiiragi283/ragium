@@ -133,10 +133,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             canning,
             HTMixingRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
-            // Machine - Matter
+            // Machine - Misc
+            enchanting,
             RagiumDuplicatingRecipeCategory(guiHelper),
             // Device
-            enchanting,
         )
     }
 
@@ -199,10 +199,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.CANNING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
         registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
-        // Machine - Matter
+        // Machine - Misc
         registration.addRecipes(RagiumJeiRecipeTypes.DUPLICATING)
-        // Device
         registration.addRecipes(RagiumJeiRecipeTypes.ENCHANTING)
+        // Device
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
@@ -228,10 +228,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.CANNING,
             RagiumJeiRecipeTypes.MIXING,
             RagiumJeiRecipeTypes.WASHING,
-            // Machine - Matter
+            // Machine - Misc
+            RagiumJeiRecipeTypes.ENCHANTING,
             RagiumJeiRecipeTypes.DUPLICATING,
             // Device
-            RagiumJeiRecipeTypes.ENCHANTING,
             RagiumJeiRecipeTypes.PLANTING,
         )
     }

@@ -42,9 +42,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.WASHER, "Washer")
 
-        add(RagiumBlocks.PLANTER, "Planter")
-
         add(RagiumBlocks.ENCHANTER, "Enchanter")
+
+        add(RagiumBlocks.PLANTER, "Planter")
 
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
