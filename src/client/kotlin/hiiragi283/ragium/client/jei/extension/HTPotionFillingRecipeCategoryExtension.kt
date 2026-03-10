@@ -18,7 +18,7 @@ class HTPotionFillingRecipeCategoryExtension(val manager: IIngredientManager) :
     override fun <T : IIngredientAcceptor<T>> setInputFluid(recipe: HTPotionFillingRecipe, accessor: T) {
         accessor
             .addFluidStacks(
-                true,
+                false,
                 manager
                     .getAllIngredients(NeoForgeTypes.FLUID_STACK)
                     .filter { HTPotionHelper.getContents(it) != null },

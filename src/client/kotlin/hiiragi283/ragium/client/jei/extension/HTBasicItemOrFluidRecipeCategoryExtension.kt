@@ -10,7 +10,7 @@ import mezz.jei.api.gui.builder.IIngredientAcceptor
 
 class HTBasicItemOrFluidRecipeCategoryExtension<RECIPE : HTBasicItemOrFluidRecipe> : HTItemOrFluidRecipeCategoryExtension<RECIPE> {
     override fun <T : IIngredientAcceptor<T>> setInputFluid(recipe: RECIPE, accessor: T) {
-        accessor.addFluidIngredient(true, recipe.ingredient.getRight())
+        accessor.addFluidIngredient(false, recipe.ingredient.getRight())
     }
 
     override fun <T : IIngredientAcceptor<T>> setInputItem(recipe: RECIPE, accessor: T) {
@@ -22,6 +22,6 @@ class HTBasicItemOrFluidRecipeCategoryExtension<RECIPE : HTBasicItemOrFluidRecip
     }
 
     override fun <T : IIngredientAcceptor<T>> setOutputFluid(recipe: RECIPE, accessor: T) {
-        accessor.addFluidResult(true, recipe.result.getRight())
+        accessor.addFluidResult(false, recipe.result.getRight())
     }
 }

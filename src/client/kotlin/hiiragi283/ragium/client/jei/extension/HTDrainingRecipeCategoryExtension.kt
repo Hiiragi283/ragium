@@ -32,7 +32,7 @@ class HTDrainingRecipeCategoryExtension<RECIPE : HTItemOrFluidRecipe>(
     }
 
     override fun <T : IIngredientAcceptor<T>> setOutputFluid(recipe: RECIPE, accessor: T) {
-        accessor.addFluidStacks(true, listOf())
+        accessor.addFluidStacks(false, listOf())
     }
 
     override fun onDisplayedIngredientsUpdate(

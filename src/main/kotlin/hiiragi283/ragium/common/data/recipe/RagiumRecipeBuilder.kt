@@ -8,6 +8,7 @@ import hiiragi283.core.common.data.recipe.builder.HTItemToItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
+import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.ingredient.HTBluePrintIngredient
 import net.minecraft.data.recipes.RecipeOutput
 
@@ -22,6 +23,12 @@ data object RagiumRecipeBuilder {
     @JvmStatic
     inline fun cutting(output: RecipeOutput, builderAction: HTItemToChancedRecipeBuilder.() -> Unit) {
         HTItemToChancedRecipeBuilder(RagiumConst.CUTTING, ::HTCuttingRecipe).apply(builderAction).save(output)
+    }
+
+    @HTBuilderMarker
+    @JvmStatic
+    inline fun planting(output: RecipeOutput, builderAction: HTItemToChancedRecipeBuilder.() -> Unit) {
+        HTItemToChancedRecipeBuilder(RagiumConst.PLANTING, ::HTPlantingRecipe).apply(builderAction).save(output)
     }
 }
 

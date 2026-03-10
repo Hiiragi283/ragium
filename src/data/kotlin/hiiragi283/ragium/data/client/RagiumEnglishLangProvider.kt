@@ -29,13 +29,13 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
         add(RagiumBlocks.FORMING_PRESS, "Forming Press")
+        add(RagiumBlocks.PLANTER, "Planter")
         add(RagiumBlocks.PRINTER, "Printer")
 
+        add(RagiumBlocks.FREEZER, "Freezer")
         add(RagiumBlocks.MELTER, "Melter")
         add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
         add(RagiumBlocks.REFINERY, "Refinery")
-
-        add(RagiumBlocks.FREEZER, "Freezer")
 
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.CANNING_MACHINE, "Canning Machine")
@@ -43,8 +43,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.WASHER, "Washer")
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
-
-        add(RagiumBlocks.PLANTER, "Planter")
 
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")

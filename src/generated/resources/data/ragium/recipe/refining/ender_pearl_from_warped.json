@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:lava"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:dusts/warped_crystal"
+  },
+  "item_result": {
+    "id": "minecraft:ender_pearl"
+  },
+  "time": 200
+}

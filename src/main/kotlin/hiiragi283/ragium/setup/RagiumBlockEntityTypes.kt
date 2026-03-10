@@ -91,10 +91,18 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.FORMING_PRESS, ::HTFormingPressBlockEntity)
 
     @JvmField
+    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
+
+    @JvmField
     val PRINTER: HTDeferredBlockEntityType<HTPrinterBlockEntity> =
         REGISTER.registerTick(RagiumConst.PRINTER, ::HTPrinterBlockEntity)
 
-    // Heat
+    // Advanced
+    @JvmField
+    val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
+        REGISTER.registerTick(RagiumConst.FREEZER, ::HTFreezerBlockEntity)
+
     @JvmField
     val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
         REGISTER.registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
@@ -107,12 +115,7 @@ object RagiumBlockEntityTypes {
     val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> =
         REGISTER.registerTick(RagiumConst.REFINERY, ::HTRefineryBlockEntity)
 
-    // Cool
-    @JvmField
-    val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.FREEZER, ::HTFreezerBlockEntity)
-
-    // Chemical
+    // Elite
     @JvmField
     val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
         REGISTER.registerTick(RagiumConst.BREWERY, ::HTBreweryBlockEntity)
@@ -129,17 +132,12 @@ object RagiumBlockEntityTypes {
     val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> =
         REGISTER.registerTick(RagiumConst.WASHER, ::HTWasherBlockEntity)
 
-    // Misc
+    // Ultimate
     @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
         REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
 
     //    Device    //
-
-    // Basic
-    @JvmField
-    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
 
     //    Storage    //
 
@@ -199,13 +197,13 @@ object RagiumBlockEntityTypes {
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, ELECTRIC_FURNACE.get())
         registerHandler(event, FORMING_PRESS.get())
+        registerHandler(event, PLANTER.get())
         registerHandler(event, PRINTER.get())
 
+        registerHandler(event, FREEZER.get())
         registerHandler(event, MELTER.get())
         registerHandler(event, PYROLYZER.get())
         registerHandler(event, REFINERY.get())
-
-        registerHandler(event, FREEZER.get())
 
         registerHandler(event, BREWERY.get())
         registerHandler(event, CANNING_MACHINE.get())
@@ -215,7 +213,6 @@ object RagiumBlockEntityTypes {
         registerHandler(event, ENCHANTER.get())
 
         // Device
-        registerHandler(event, PLANTER.get())
 
         // Storage
         registerHandler(event, BATTERY.get())

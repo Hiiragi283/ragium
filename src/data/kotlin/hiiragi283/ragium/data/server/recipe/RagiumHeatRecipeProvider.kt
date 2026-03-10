@@ -12,7 +12,7 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponents
@@ -149,63 +149,63 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     @JvmStatic
     private fun melting() {
         // Water
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(Items.SNOW_BLOCK)
-            result += resultCreator.water(1000)
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(Items.SNOW_BLOCK)
+            result = resultCreator.water(1000)
             time = 20 * 5
             recipeId suffix "_from_snow_block"
         }
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(Items.SNOWBALL)
-            result += resultCreator.water(250)
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(Items.SNOWBALL)
+            result = resultCreator.water(250)
             time = 20
             recipeId suffix "_from_snowball"
         }
         // Lava
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES))
-            result += resultCreator.lava(125)
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES))
+            result = resultCreator.lava(125)
             time = 20 * 30
             recipeId suffix "_from_stones"
         }
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(Tags.Items.NETHERRACKS)
-            result += resultCreator.lava(125)
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(Tags.Items.NETHERRACKS)
+            result = resultCreator.lava(125)
             recipeId suffix "_from_netherrack"
         }
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(Items.MAGMA_BLOCK)
-            result += resultCreator.lava(250)
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(Items.MAGMA_BLOCK)
+            result = resultCreator.lava(250)
             recipeId suffix "_from_magma"
         }
         // Honey
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(Items.HONEY_BLOCK)
-            result += resultCreator.create(HCFluids.HONEY)
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(Items.HONEY_BLOCK)
+            result = resultCreator.create(HCFluids.HONEY)
             recipeId suffix "_from_block"
         }
 
         // Meat
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(Items.ROTTEN_FLESH)
-            result += resultCreator.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT)
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(Items.ROTTEN_FLESH)
+            result = resultCreator.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT)
             recipeId suffix "_from_rotten"
         }
         // Glass
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(Tags.Items.GLASS_PANES)
-            result += resultCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(Tags.Items.GLASS_PANES)
+            result = resultCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
             recipeId suffix "_from_pane"
         }
 
         // Eldritch
         for (i: Int in (0..4)) {
-            HTItemOrFluidRecipeBuilder.melting(output) {
-                ingredient += inputCreator.create(
+            HTMeltingRecipeBuilder.create(output) {
+                ingredient = inputCreator.create(
                     false,
                     Items.OMINOUS_BOTTLE,
                 ) { expect(DataComponents.OMINOUS_BOTTLE_AMPLIFIER, i) }
-                result += resultCreator.molten(HCMaterialKeys.ELDRITCH) { it * (i + 1) }
+                result = resultCreator.molten(HCMaterialKeys.ELDRITCH) { it * (i + 1) }
                 recipeId suffix "/$i"
             }
         }

@@ -4,6 +4,7 @@ import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
+import hiiragi283.core.api.data.tag.HTTagDependType
 import hiiragi283.core.api.data.tag.HTTagsProvider
 import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.getOrThrow
@@ -18,7 +19,6 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
@@ -54,11 +54,10 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         // Group
         factory
             .apply(RagiumTags.Items.GENERATOR_UPGRADABLE)
-            .addItem(Items.BARRIER) // TODO
         factory
             .apply(RagiumTags.Items.PROCESSOR_UPGRADABLE)
             .addTag(RagiumTags.Items.MACHINE_UPGRADABLE)
-            .addTag(RagiumTags.Items.DEVICE_UPGRADABLE)
+            .addTag(RagiumTags.Items.DEVICE_UPGRADABLE, HTTagDependType.OPTIONAL)
         factory
             .apply(RagiumTags.Items.MACHINE_UPGRADABLE)
             // Basic
@@ -69,24 +68,22 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.CUTTING_MACHINE)
             .add(RagiumBlocks.ELECTRIC_FURNACE)
             .add(RagiumBlocks.FORMING_PRESS)
+            .add(RagiumBlocks.PLANTER)
             .add(RagiumBlocks.PRINTER)
-            // Heat
+            // Advanced
+            .add(RagiumBlocks.FREEZER)
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.PYROLYZER)
             .add(RagiumBlocks.REFINERY)
-            // Cool
-            .add(RagiumBlocks.FREEZER)
-            // Chemical
+            // Elite
             .add(RagiumBlocks.BREWERY)
             .add(RagiumBlocks.CANNING_MACHINE)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.WASHER)
-            // Misc
+            // Ultimate
             .add(RagiumBlocks.ENCHANTER)
         factory
             .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
-            // Basic
-            .add(RagiumBlocks.PLANTER)
 
         // Specific
         factory
@@ -102,7 +99,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         // Storage
         factory
             .apply(RagiumTags.Items.ENERGY_CAPACITY_UPGRADABLE)
-            .addTag(RagiumTags.Items.GENERATOR_UPGRADABLE)
+            .addTag(RagiumTags.Items.GENERATOR_UPGRADABLE, HTTagDependType.OPTIONAL)
             .addTag(RagiumTags.Items.MACHINE_UPGRADABLE)
             // Storage
             .add(RagiumBlocks.BATTERY)

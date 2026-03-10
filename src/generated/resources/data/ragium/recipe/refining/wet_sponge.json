@@ -1,0 +1,14 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "fluids": "#c:water"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:sponge"
+  },
+  "item_result": {
+    "id": "minecraft:wet_sponge"
+  },
+  "time": 100
+}

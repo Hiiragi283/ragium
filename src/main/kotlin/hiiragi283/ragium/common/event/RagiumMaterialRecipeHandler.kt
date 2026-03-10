@@ -26,6 +26,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
@@ -185,9 +186,9 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val molten: HTFluidHolderLike<*> = event.getFirstHolder(HTFluidPart.MOLTEN, entry) ?: return
         // レシピを登録
-        HTItemOrFluidRecipeBuilder.melting(output) {
-            ingredient += inputCreator.create(prefix, entry)
-            result += resultCreator.create(molten, fluidAmount)
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(prefix, entry)
+            result = resultCreator.create(molten, fluidAmount)
             recipeId suffix "_from_${part.asPartName()}"
             time = getTimeFromMelting(entry, time) ?: return
         }

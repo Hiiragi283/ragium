@@ -95,10 +95,18 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.FORMING_PRESS, RagiumTranslation.FORMING_PRESS)
 
     @JvmField
+    val PLANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
+
+    @JvmField
     val PRINTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PRINTER, RagiumTranslation.PRINTER)
 
-    // Heat
+    // Advanced
+    @JvmField
+    val FREEZER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.FREEZER, RagiumTranslation.FREEZER)
+
     @JvmField
     val MELTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
@@ -111,12 +119,7 @@ object RagiumBlocks {
     val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY)
 
-    // Cool
-    @JvmField
-    val FREEZER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.FREEZER, RagiumTranslation.FREEZER)
-
-    // Chemical
+    // Elite
     @JvmField
     val BREWERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.BREWERY, RagiumTranslation.BREWERY)
@@ -133,17 +136,12 @@ object RagiumBlocks {
     val WASHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.WASHER, RagiumTranslation.WASHER)
 
-    // Misc
+    // Ultimate
     @JvmField
     val ENCHANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)
 
     //    Device    //
-
-    // Basic
-    @JvmField
-    val PLANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
 
     //    Storages    //
 

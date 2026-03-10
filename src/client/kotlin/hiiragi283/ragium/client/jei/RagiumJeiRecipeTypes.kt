@@ -13,8 +13,8 @@ import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
 import hiiragi283.ragium.common.recipe.RagiumFakeRecipeTypes
@@ -37,6 +37,13 @@ object RagiumJeiRecipeTypes {
     ): HTHolderRecipeViewerType<INPUT, RECIPE> = HTHolderRecipeViewerType.create(recipeType, ItemStack(icon), HTBounds(0, 0, width, height))
 
     @JvmStatic
+    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(
+        recipeType: HTRecipeType.Managed<INPUT, RECIPE>,
+        icon: ItemLike,
+        width: Int,
+    ): HTHolderRecipeViewerType<INPUT, RECIPE> = HTHolderRecipeViewerType.create(recipeType, ItemStack(icon), HTBounds(0, 0, width, 18 * 1))
+
+    @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Any> create(
         recipeType: HTRecipeType.Fake<INPUT, RECIPE>,
         icon: ItemLike,
@@ -51,42 +58,45 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val COMPRESSING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
-        create(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR, 18 * 4, 18 * 1)
+        create(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR, 18 * 4)
 
     @JvmField
     val CUTTING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
-        create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 5, 18 * 1)
+        create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 6)
+
+    @JvmField
+    val PLANTING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
+        create(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER, 18 * 6)
 
     @JvmField
     val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        create(RagiumRecipeTypes.PRINTING, RagiumBlocks.PRINTER, 18 * 6, 18 * 1)
+        create(RagiumRecipeTypes.PRINTING, RagiumBlocks.PRINTER, 18 * 6)
 
     @JvmField
     val PRESSING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        create(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS, 18 * 6, 18 * 1)
+        create(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS, 18 * 6)
 
     // Machine - Heat
     @JvmField
-    val MELTING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
+    val FREEZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
+        create(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER, 18 * 8)
+
+    @JvmField
+    val MELTING: HTHolderRecipeViewerType<SingleRecipeInput, HTMeltingRecipe> =
+        create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, 18 * 4)
 
     @JvmField
     val PYROLYZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
+        create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER, 18 * 8)
 
     @JvmField
     val REFINING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        create(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY)
+        create(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY, 18 * 8)
 
-    // Machine - Cool
-    @JvmField
-    val FREEZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        create(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
-
-    // Machine - Chemical
+    // Machine - Elite
     @JvmField
     val CANNING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        create(RagiumRecipeTypes.CANNING, RagiumBlocks.CANNING_MACHINE)
+        create(RagiumRecipeTypes.CANNING, RagiumBlocks.CANNING_MACHINE, 18 * 8)
 
     @JvmField
     val MIXING: HTHolderRecipeViewerType<HTChemicalRecipeInput, HTMixingRecipe> =
@@ -96,7 +106,7 @@ object RagiumJeiRecipeTypes {
     val WASHING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
         create(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
 
-    // Machine - Misc
+    // Machine - Ultimate
     @JvmField
     val DUPLICATING: HTFakeRecipeViewerType<HTItemAndFluidRecipeInput, RagiumDuplicatingRecipe> =
         create(RagiumFakeRecipeTypes.DUPLICATING, RagiumBlocks.TANK, 18 * 6)
@@ -104,9 +114,4 @@ object RagiumJeiRecipeTypes {
     @JvmField
     val ENCHANTING: HTHolderRecipeViewerType<HTEnchantingRecipe.Input, HTEnchantingRecipe> =
         create(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
-
-    // Device
-    @JvmField
-    val PLANTING: HTHolderRecipeViewerType<HTPlantingRecipe.Input, HTPlantingRecipe> =
-        create(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
 }

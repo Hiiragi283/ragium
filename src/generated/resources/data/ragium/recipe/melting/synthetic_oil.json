@@ -1,15 +1,15 @@
 {
   "type": "ragium:melting",
-  "fluid_result": {
-    "amount": 125,
-    "id": "ragium:synthetic_oil"
-  },
-  "item_ingredient": {
+  "ingredient": {
     "amount": 1,
     "items": [
       "#c:coal",
       "#c:dusts/coal"
     ]
+  },
+  "result": {
+    "amount": 125,
+    "id": "ragium:synthetic_oil"
   },
   "time": 200
 }

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/blue"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:paper"
+  },
+  "item_result": {
+    "id": "ragium:blueprint"
+  },
+  "time": 200
+}

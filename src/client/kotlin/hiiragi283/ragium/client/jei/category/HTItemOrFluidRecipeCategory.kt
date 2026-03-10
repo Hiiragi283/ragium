@@ -30,7 +30,9 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRec
     //    HTProcessingRecipeCategory    //
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemOrFluidRecipe.Serializable, focuses: IFocusGroup) {
-        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(1))
+        builder.addRecipePlusSign().setPosition(getPosition(1) + 2, getPosition(0) + 2)
+        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
+        builder.addRecipePlusSign().setPosition(getPosition(7) + 2, getPosition(0) + 2)
     }
 
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemOrFluidRecipe.Serializable, focuses: IFocusGroup) {
@@ -39,19 +41,19 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRec
 
         extension.setInputFluid(
             recipe1,
-            builder.addInputSlot(getPosition(0), getPosition(0)).setTankBackground(HTBackgroundType.EXTRA_INPUT),
+            builder.addInputSlot(getPosition(0), getPosition(0)).setSlotBackground(HTBackgroundType.EXTRA_INPUT),
         )
         extension.setInputItem(
             recipe1,
-            builder.addInputSlot(getPosition(1.5), getPosition(0.5)).setSlotBackground(HTBackgroundType.INPUT),
+            builder.addInputSlot(getPosition(2), getPosition(0)).setSlotBackground(HTBackgroundType.INPUT),
         )
         extension.setOutputItem(
             recipe1,
-            builder.addOutputSlot(getPosition(5), getPosition(1)).setSlotBackground(HTBackgroundType.OUTPUT),
+            builder.addOutputSlot(getPosition(5), getPosition(0)).setSlotBackground(HTBackgroundType.OUTPUT),
         )
         extension.setOutputFluid(
             recipe1,
-            builder.addOutputSlot(getPosition(6.5), getPosition(0)).setTankBackground(HTBackgroundType.EXTRA_OUTPUT),
+            builder.addOutputSlot(getPosition(7), getPosition(0)).setSlotBackground(HTBackgroundType.EXTRA_OUTPUT),
         )
     }
 

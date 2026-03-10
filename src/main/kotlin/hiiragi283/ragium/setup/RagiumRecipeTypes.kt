@@ -13,8 +13,8 @@ import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -37,6 +37,10 @@ object RagiumRecipeTypes {
         REGISTER.registerType(RagiumConst.CUTTING)
 
     @JvmField
+    val PLANTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
+        REGISTER.registerType(RagiumConst.PLANTING)
+
+    @JvmField
     val PRESSING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.PRESSING)
 
@@ -44,10 +48,13 @@ object RagiumRecipeTypes {
     val PRINTING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.PRINTING)
 
-    // Machine - Heat
+    // Machine - Advanced
     @JvmField
-    val MELTING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        REGISTER.registerType(RagiumConst.MELTING)
+    val FREEZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
+        REGISTER.registerType(RagiumConst.FREEZING)
+
+    @JvmField
+    val MELTING: HTDeferredRecipeType<SingleRecipeInput, HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
 
     @JvmField
     val PYROLYZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
@@ -57,12 +64,7 @@ object RagiumRecipeTypes {
     val REFINING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.REFINING)
 
-    // Machine - Cool
-    @JvmField
-    val FREEZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        REGISTER.registerType(RagiumConst.FREEZING)
-
-    // Machine - Chemical
+    // Machine - Elite
     @JvmField
     val CANNING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.CANNING)
@@ -75,12 +77,8 @@ object RagiumRecipeTypes {
     val WASHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
         REGISTER.registerType(RagiumConst.WASHING)
 
-    // Device
+    // Machine - Ultimate
     @JvmField
     val ENCHANTING: HTDeferredRecipeType<HTEnchantingRecipe.Input, HTEnchantingRecipe> =
         REGISTER.registerType(RagiumConst.ENCHANTING)
-
-    @JvmField
-    val PLANTING: HTDeferredRecipeType<HTPlantingRecipe.Input, HTPlantingRecipe> =
-        REGISTER.registerType(RagiumConst.PLANTING)
 }

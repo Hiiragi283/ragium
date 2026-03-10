@@ -151,7 +151,6 @@ object RagiumRecipeSerializers {
     )
 
     // Machine - Basic
-
     @JvmField
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> =
         REGISTER.registerSerializer(
@@ -175,12 +174,27 @@ object RagiumRecipeSerializers {
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, itemChanced(::HTCuttingRecipe))
 
     @JvmField
+    val PLANTING: RecipeSerializer<HTPlantingRecipe> =
+        REGISTER.registerSerializer(RagiumConst.PLANTING, itemChanced(::HTPlantingRecipe))
+
+    @JvmField
     val PRESSING: RecipeSerializer<HTPressingRecipe> = REGISTER.registerSerializer(RagiumConst.PRESSING, itemAndItem(::HTPressingRecipe))
 
-    // Machine - Heat
+    // Machine - Advanced
     @JvmField
-    val MELTING: RecipeSerializer<HTMeltingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.MELTING, itemOrFluid(::HTMeltingRecipe))
+    val FREEZING: RecipeSerializer<HTFreezingRecipe> =
+        REGISTER.registerSerializer(RagiumConst.FREEZING, itemOrFluid(::HTFreezingRecipe))
+
+    @JvmField
+    val MELTING: RecipeSerializer<HTMeltingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.MELTING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTMeltingRecipe::ingredient),
+            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTMeltingRecipe::result),
+            HTProcessingRecipe.timeCodec(),
+            ::HTMeltingRecipe,
+        ),
+    )
 
     @JvmField
     val PYROLYZING: RecipeSerializer<HTPyrolyzingRecipe> =
@@ -190,12 +204,7 @@ object RagiumRecipeSerializers {
     val REFINING: RecipeSerializer<HTRefiningRecipe> =
         REGISTER.registerSerializer(RagiumConst.REFINING, itemOrFluid(::HTRefiningRecipe))
 
-    // Machine - Cool
-    @JvmField
-    val FREEZING: RecipeSerializer<HTFreezingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.FREEZING, itemOrFluid(::HTFreezingRecipe))
-
-    // Machine - Chemical
+    // Machine - Elite
     @JvmStatic
     private fun chemIng(maxItem: Int, maxFluid: Int): MapBiCodec<RegistryFriendlyByteBuf, HTChemicalIngredient> = MapBiCodecs
         .ior(
@@ -253,7 +262,7 @@ object RagiumRecipeSerializers {
         ),
     )
 
-    // Device
+    // Machine - Ultimate
     @JvmField
     val HOLDER_ENCHANTING: RecipeSerializer<HTHolderEnchantingRecipe> = REGISTER.registerSerializer(
         "${RagiumConst.ENCHANTING}/holder",
@@ -261,18 +270,6 @@ object RagiumRecipeSerializers {
             HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTHolderEnchantingRecipe::ingredient),
             VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment").forGetter(HTHolderEnchantingRecipe::holder),
             ::HTHolderEnchantingRecipe,
-        ),
-    )
-
-    @JvmField
-    val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.PLANTING,
-        MapBiCodec.composite(
-            HTItemHolderLike.HOLDER_CODEC.fieldOf("seed").forGetter(HTPlantingRecipe::seed),
-            HTItemIngredient.UNSIZED_CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
-            HTItemResult.CODEC.fieldOf("crop").forGetter(HTPlantingRecipe::crop),
-            HTProcessingRecipe.timeCodec(),
-            ::HTPlantingRecipe,
         ),
     )
 }

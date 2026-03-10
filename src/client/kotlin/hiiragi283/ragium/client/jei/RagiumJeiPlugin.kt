@@ -13,6 +13,7 @@ import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
@@ -52,6 +53,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         lateinit var cutting: HTItemToChancedRecipeCategory
             private set
 
+        @JvmStatic
+        lateinit var planting: HTItemToChancedRecipeCategory
+            private set
+
         // ItemAndItem
         @JvmStatic
         lateinit var pressing: HTItemAndItemRecipeCategory
@@ -62,10 +67,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             private set
 
         // ItemOrFluid
-        @JvmStatic
-        lateinit var melting: HTItemOrFluidRecipeCategory
-            private set
-
         @JvmStatic
         lateinit var pyrolyzing: HTItemOrFluidRecipeCategory
             private set
@@ -99,6 +100,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         )
 
         registration.registerSubtypeInterpreter(
+            RagiumItems.BLUEPRINT.get(),
+            HTSubtypeInterpreter { stack: ItemStack, _ -> stack.get(RagiumDataComponents.BLUEPRINT_NUMBER) },
+        )
+        registration.registerSubtypeInterpreter(
             RagiumItems.LOOT_TICKET.get(),
             HTSubtypeInterpreter { stack: ItemStack, _ -> stack.get(RagiumDataComponents.LOOT_TICKET) },
         )
@@ -121,19 +126,19 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTAlloyingRecipeCategory(guiHelper),
             compressing,
             cutting,
+            planting,
             pressing,
             printing,
-            // Machine - Heat
-            melting,
+            // Machine - Advanced
+            freezing,
+            HTMeltingRecipeCategory(guiHelper),
             pyrolyzing,
             refining,
-            // Machine - Cool
-            freezing,
-            // Machine - Chemical
+            // Machine - Elite
             canning,
             HTMixingRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
-            // Machine - Misc
+            // Machine - Ultimate
             enchanting,
             RagiumDuplicatingRecipeCategory(guiHelper),
             // Device
@@ -148,8 +153,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
     private fun initItemToChanced(guiHelper: IGuiHelper, manager: IIngredientManager) {
         cutting = HTItemToChancedRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CUTTING)
+        planting = HTItemToChancedRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PLANTING)
 
         cutting.addExtension(HTBasicItemToChancedRecipeCategoryExtension())
+        planting.addExtension(HTBasicItemToChancedRecipeCategoryExtension())
     }
 
     private fun initItemAndItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
@@ -163,16 +170,14 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        melting = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CANNING)
-        pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING)
+        freezing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING)
+        pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
         refining = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.REFINING)
-        freezing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.MELTING)
-        canning = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
+        canning = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CANNING)
 
-        melting.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
+        freezing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         refining.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
-        freezing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
 
         canning.addExtension(HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, HTBucketDrainingRecipe::isFilledBucket))
@@ -187,19 +192,19 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING)
         registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING)
+        registration.addRecipes(RagiumJeiRecipeTypes.PLANTING)
         registration.addRecipes(RagiumJeiRecipeTypes.PRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.PRINTING)
-        // Machine - Heat
+        // Machine - Advanced
+        registration.addRecipes(RagiumJeiRecipeTypes.FREEZING)
         registration.addRecipes(RagiumJeiRecipeTypes.MELTING)
         registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING)
         registration.addRecipes(RagiumJeiRecipeTypes.REFINING)
-        // Machine - Cool
-        registration.addRecipes(RagiumJeiRecipeTypes.FREEZING)
-        // Machine - Chemical
+        // Machine - Elite
         registration.addRecipes(RagiumJeiRecipeTypes.CANNING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
         registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
-        // Machine - Misc
+        // Machine - Ultimate
         registration.addRecipes(RagiumJeiRecipeTypes.DUPLICATING)
         registration.addRecipes(RagiumJeiRecipeTypes.ENCHANTING)
         // Device
@@ -216,23 +221,22 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.ALLOYING,
             RagiumJeiRecipeTypes.COMPRESSING,
             RagiumJeiRecipeTypes.CUTTING,
+            RagiumJeiRecipeTypes.PLANTING,
             RagiumJeiRecipeTypes.PRESSING,
             RagiumJeiRecipeTypes.PRINTING,
-            // Machine - Heat
+            // Machine - Advanced
+            RagiumJeiRecipeTypes.FREEZING,
             RagiumJeiRecipeTypes.MELTING,
             RagiumJeiRecipeTypes.PYROLYZING,
             RagiumJeiRecipeTypes.REFINING,
-            // Machine - Cool
-            RagiumJeiRecipeTypes.FREEZING,
-            // Machine - Chemical
+            // Machine - Elite
             RagiumJeiRecipeTypes.CANNING,
             RagiumJeiRecipeTypes.MIXING,
             RagiumJeiRecipeTypes.WASHING,
-            // Machine - Misc
+            // Machine - Ultimate
             RagiumJeiRecipeTypes.ENCHANTING,
             RagiumJeiRecipeTypes.DUPLICATING,
             // Device
-            RagiumJeiRecipeTypes.PLANTING,
         )
     }
 }

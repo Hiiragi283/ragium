@@ -11,27 +11,24 @@ object RagiumConst {
     const val CUTTING_MACHINE = "cutting_machine"
     const val ELECTRIC_FURNACE = "electric_furnace"
     const val FORMING_PRESS = "forming_press"
+    const val PLANTER = "planter"
     const val PRINTER = "printer"
 
-    // Heat
+    // Advanced
+    const val FREEZER = "freezer"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
     const val REFINERY = "refinery"
 
-    // Cool
-    const val FREEZER = "freezer"
-
-    // Chemical
+    // Elite
     const val BREWERY = "brewery"
     const val CANNING_MACHINE = "canning_machine"
     const val MIXER = "mixer"
     const val WASHER = "washer"
 
-    // Matter
-
-    // Device
+    // Ultimate
+    const val MASS_DUPLICATOR = "mass_duplicator"
     const val ENCHANTER = "enchanter"
-    const val PLANTER = "planter"
 
     // Storage
     const val UNIVERSAL_CHEST = "universal_chest"
@@ -51,28 +48,22 @@ object RagiumConst {
     const val ALLOYING = "alloying"
     const val COMPRESSING = "compressing"
     const val CUTTING = "cutting"
+    const val PLANTING = "planting"
     const val PRESSING = "pressing"
     const val PRINTING = "printing"
 
-    // Heat
+    // Advanced
+    const val FREEZING = "freezing"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
     const val REFINING = "refining"
 
-    // Cool
-    const val FREEZING = "freezing"
-
-    // Chemical
+    // Elite
     const val CANNING = "canning"
     const val MIXING = "mixing"
     const val WASHING = "washing"
 
-    // Matter
+    // Ultimate
     const val DUPLICATING = "duplicating"
-
-    // Device
     const val ENCHANTING = "enchanting"
-    const val PLANTING = "planting"
-
-    // Serialization
 }

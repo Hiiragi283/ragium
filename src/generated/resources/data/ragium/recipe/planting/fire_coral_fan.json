@@ -1,10 +1,15 @@
 {
   "type": "ragium:planting",
-  "crop": {
-    "count": 3,
+  "extra_result": {
+    "chance": "1/3",
     "id": "minecraft:fire_coral_fan"
   },
-  "seed": "minecraft:fire_coral_fan",
-  "soil": "minecraft:fire_coral_block",
-  "time": 200
+  "ingredient": {
+    "amount": 1,
+    "items": "minecraft:fire_coral_fan"
+  },
+  "result": {
+    "id": "minecraft:fire_coral_fan"
+  },
+  "time": 100
 }

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "amount": 90,
+    "fluids": "#c:molten_eldritch"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:skeleton_skull"
+  },
+  "item_result": {
+    "id": "minecraft:wither_skeleton_skull"
+  },
+  "time": 200
+}
