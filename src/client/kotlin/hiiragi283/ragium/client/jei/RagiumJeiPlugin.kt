@@ -180,10 +180,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         refining.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
 
-        canning.addExtension(HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, HTBucketDrainingRecipe::isFilledBucket))
+        canning.addExtension(HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, 1000, HTBucketDrainingRecipe::isFilledBucket))
         canning.addExtension(HTBucketFillingRecipeCategoryExtension(manager))
 
-        canning.addExtension(HTDrainingRecipeCategoryExtension<HTPotionDrainingRecipe>(manager, HTPotionDrainingRecipe::isPotion))
+        canning.addExtension(HTDrainingRecipeCategoryExtension<HTPotionDrainingRecipe>(manager, 250, HTPotionDrainingRecipe::isPotion))
         canning.addExtension(HTPotionFillingRecipeCategoryExtension(manager))
     }
 

@@ -16,13 +16,12 @@ import net.neoforged.neoforge.fluids.FluidStack
 class HTPotionFillingRecipeCategoryExtension(val manager: IIngredientManager) :
     HTItemOrFluidRecipeCategoryExtension<HTPotionFillingRecipe> {
     override fun <T : IIngredientAcceptor<T>> setInputFluid(recipe: HTPotionFillingRecipe, accessor: T) {
-        accessor
-            .addFluidStacks(
-                false,
-                manager
-                    .getAllIngredients(NeoForgeTypes.FLUID_STACK)
-                    .filter { HTPotionHelper.getContents(it) != null },
-            )
+        manager
+            .getAllIngredients(NeoForgeTypes.FLUID_STACK)
+            .filter { HTPotionHelper.getContents(it) != null }
+            .map(FluidStack::copy)
+            .onEach { it.amount = 250 }
+            .let(accessor::addFluidStacks)
     }
 
     override fun <T : IIngredientAcceptor<T>> setInputItem(recipe: HTPotionFillingRecipe, accessor: T) {

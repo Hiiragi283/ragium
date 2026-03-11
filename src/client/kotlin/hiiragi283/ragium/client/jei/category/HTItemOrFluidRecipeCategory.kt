@@ -30,9 +30,9 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRec
     //    HTProcessingRecipeCategory    //
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemOrFluidRecipe.Serializable, focuses: IFocusGroup) {
-        builder.addRecipePlusSign().setPosition(getPosition(1) + 2, getPosition(0) + 2)
+        builder.addRecipePlus(getPosition(1))
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
-        builder.addRecipePlusSign().setPosition(getPosition(7) + 2, getPosition(0) + 2)
+        builder.addRecipePlus(getPosition(6))
     }
 
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemOrFluidRecipe.Serializable, focuses: IFocusGroup) {

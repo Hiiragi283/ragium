@@ -1,14 +1,11 @@
 package hiiragi283.ragium.data.server
 
 import hiiragi283.core.api.data.HTDataGenContext
-import hiiragi283.core.api.data.recipe.HTIngredientCreator
+import hiiragi283.core.api.data.map.HTDataMapProvider
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
-import hiiragi283.core.api.resource.HTIdLike
-import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.createCommonTag
 import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
@@ -17,7 +14,6 @@ import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EntityType
@@ -27,17 +23,9 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
-import net.neoforged.neoforge.common.data.DataMapProvider
 
-class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context.output, context.registries) {
-    private lateinit var provider: HolderLookup.Provider
-    private val inputCreator: HTIngredientCreator = HTIngredientCreator
-
-    override fun gather(provider: HolderLookup.Provider) {
-        this.provider = provider
-
-        furnaceFuels()
-
+class RagiumDataMapProvider(context: HTDataGenContext) : HTDataMapProvider(context) {
+    override fun gatherInternal() {
         fermentSources()
         mobHeads()
 
@@ -50,8 +38,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     //    Vanilla    //
-
-    private fun furnaceFuels() {}
 
     //    Ragium    //
 
@@ -145,10 +131,10 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
             .add(Tags.Items.OBSIDIANS_CRYING, 64 * 8, false)
             .add(Tags.Items.OBSIDIANS_NORMAL, 64, false)
             // Dynamic
-            .addHolder(Items.ENCHANTED_BOOK.toLike(), 1)
-            .addHolder(Items.POTION.toLike(), 1)
-            .addHolder(Items.SPLASH_POTION.toLike(), 1)
-            .addHolder(Items.LINGERING_POTION.toLike(), 1)
+            .addItem(Items.ENCHANTED_BOOK, 1)
+            .addItem(Items.POTION, 1)
+            .addItem(Items.SPLASH_POTION, 1)
+            .addItem(Items.LINGERING_POTION, 1)
     }
 
     private fun upgrade() {
@@ -219,13 +205,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : DataMapProvider(context
     }
 
     //    Extensions    //
-
-    private fun <T : Any, R : Any> Builder<T, R>.addHolder(holder: HTIdLike, value: T, vararg conditions: ICondition): Builder<T, R> =
-        add(holder.getId(), value, false, *conditions)
-
-    // Item
-    private fun <T : Any> Builder<T, Item>.add(prefix: HTTagPrefix, key: HTMaterialLike, value: T): Builder<T, Item> =
-        add(prefix.itemTagKey(key), value, false)
 
     // Fluid
     private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent, value: T): Builder<T, Fluid> = add(content.fluidTag, value, false)

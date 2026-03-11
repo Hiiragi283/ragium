@@ -73,7 +73,7 @@ object RagiumRecipeSerializers {
         RagiumConst.PRINTING,
         MapBiCodec.composite(
             HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTPrintingRecipe::ingredient),
-            HTItemHolderLike.HOLDER_CODEC.fieldOf("origin").forGetter(HTPrintingRecipe::origin),
+            HTItemHolderLike.CODEC.fieldOf("origin").forGetter(HTPrintingRecipe::origin),
             HTPrintingRecipe.CopyStrategy.CODEC
                 .fieldOf("copy_strategy")
                 .forGetter(HTPrintingRecipe::strategy),

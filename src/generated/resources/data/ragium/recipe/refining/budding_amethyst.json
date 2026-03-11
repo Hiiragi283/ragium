@@ -2,7 +2,7 @@
   "type": "ragium:refining",
   "fluid_ingredient": {
     "amount": 810,
-    "fluids": "#c:molten_eldritch"
+    "fluids": "#hiiragi_core:eldritch"
   },
   "item_ingredient": {
     "amount": 1,

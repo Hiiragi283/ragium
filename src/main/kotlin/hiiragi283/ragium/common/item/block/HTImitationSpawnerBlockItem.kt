@@ -43,7 +43,7 @@ class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Pr
                 createItemStack(
                     baseItem,
                     RagiumDataComponents.SPAWNER_MOB,
-                    HTSpawnerMob(holder),
+                    HTSpawnerMob.of(holder),
                 )
             }.forEach(context)
     }

@@ -5,14 +5,14 @@
     "items": {
       "type": "neoforge:components",
       "components": {
-        "minecraft:ominous_bottle_amplifier": 2
+        "minecraft:ominous_bottle_amplifier": 1
       },
       "items": "minecraft:ominous_bottle"
     }
   },
   "result": {
-    "amount": 270,
-    "id": "hiiragi_core:molten_eldritch"
+    "amount": 180,
+    "id": "hiiragi_core:ominous_flux"
   },
   "time": 200
 }

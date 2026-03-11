@@ -205,8 +205,8 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
                     false,
                     Items.OMINOUS_BOTTLE,
                 ) { expect(DataComponents.OMINOUS_BOTTLE_AMPLIFIER, i) }
-                result = resultCreator.molten(HCMaterialKeys.ELDRITCH) { it * (i + 1) }
-                recipeId suffix "/$i"
+                result = resultCreator.create(HCFluids.OMINOUS_FLUX, HTConst.INGOT_AMOUNT * (i + 1))
+                recipeId suffix "_$i"
             }
         }
     }

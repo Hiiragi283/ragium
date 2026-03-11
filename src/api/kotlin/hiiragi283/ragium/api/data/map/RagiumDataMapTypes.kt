@@ -3,6 +3,7 @@ package hiiragi283.ragium.api.data.map
 import com.mojang.serialization.Codec
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
@@ -34,7 +35,7 @@ object RagiumDataMapTypes {
 
     // Entity Type
     @JvmField
-    val MOB_HEAD: DataMapType<EntityType<*>, HTItemHolderLike<*>> = create(
+    val MOB_HEAD: DataMapType<EntityType<*>, HTSimpleItemHolderLike> = create(
         "mob_head",
         Registries.ENTITY_TYPE,
         HTItemHolderLike.HOLDER_CODEC,

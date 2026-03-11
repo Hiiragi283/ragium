@@ -17,7 +17,7 @@ import net.neoforged.neoforge.fluids.FluidUtil
 class HTBucketFillingRecipeCategoryExtension(val manager: IIngredientManager) :
     HTItemOrFluidRecipeCategoryExtension<HTBucketFillingRecipe> {
     override fun <T : IIngredientAcceptor<T>> setInputFluid(recipe: HTBucketFillingRecipe, accessor: T) {
-        accessor.addFluidStacks(false, manager.getAllIngredients(NeoForgeTypes.FLUID_STACK))
+        accessor.addFluidStacks(manager.getAllIngredients(NeoForgeTypes.FLUID_STACK))
     }
 
     override fun <T : IIngredientAcceptor<T>> setInputItem(recipe: HTBucketFillingRecipe, accessor: T) {

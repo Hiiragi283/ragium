@@ -1,10 +1,12 @@
 package hiiragi283.ragium.data.server.recipe
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
@@ -201,29 +203,34 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
     @JvmStatic
     private fun eldritchRefining() {
+        fun eldritch(multiplier: Int): HTFluidIngredient = inputCreator.create(
+            HiiragiCoreTags.Fluids.ELDRITCH,
+            HTConst.INGOT_AMOUNT * multiplier,
+        )
+
         // Obsidian -> Crying Obsidian
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(Tags.Items.OBSIDIANS_NORMAL)
-            ingredient += inputCreator.molten(HCMaterialKeys.ELDRITCH)
+            ingredient += eldritch(1)
             result += resultCreator.create(Items.CRYING_OBSIDIAN)
         }
         // Amethyst Block -> Budding Amethyst
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
-            ingredient += inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 9 }
+            ingredient += eldritch(9)
             result += resultCreator.create(Items.BUDDING_AMETHYST)
         }
         // Skeleton Skull -> Wither Skeleton Skull
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(Items.SKELETON_SKULL)
-            ingredient += inputCreator.molten(HCMaterialKeys.ELDRITCH)
+            ingredient += eldritch(1)
             result += resultCreator.create(Items.WITHER_SKELETON_SKULL)
         }
 
         // Trial Key -> Ominous Key
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(Items.TRIAL_KEY)
-            ingredient += inputCreator.molten(HCMaterialKeys.ELDRITCH) { it * 4 }
+            ingredient += eldritch(4)
             result += resultCreator.create(Items.OMINOUS_TRIAL_KEY)
         }
     }

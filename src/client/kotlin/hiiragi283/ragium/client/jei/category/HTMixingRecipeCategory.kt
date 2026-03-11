@@ -36,7 +36,7 @@ class HTMixingRecipeCategory(guiHelper: IGuiHelper) :
         for (i: Int in (0 until HTMixingRecipe.MAX_FLUID_INPUT)) {
             builder
                 .addInputSlot(getPosition(1 + i % 2), getPosition(2))
-                .addFluidIngredient(false, fluidIn?.getOrNull(i))
+                .addFluidIngredient(fluidIn?.getOrNull(i))
                 .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
         }
         // outputs
@@ -47,11 +47,11 @@ class HTMixingRecipeCategory(guiHelper: IGuiHelper) :
             .setSlotBackground(HTBackgroundType.OUTPUT)
         builder
             .addOutputSlot(getPosition(5.5), getPosition(2))
-            .addFluidResult(false, fluidOut?.getOrNull(0))
+            .addFluidResult(fluidOut?.getOrNull(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
         builder
             .addOutputSlot(getPosition(6.5), getPosition(2))
-            .addFluidResult(false, fluidOut?.getOrNull(1))
+            .addFluidResult(fluidOut?.getOrNull(1))
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
     }
 }

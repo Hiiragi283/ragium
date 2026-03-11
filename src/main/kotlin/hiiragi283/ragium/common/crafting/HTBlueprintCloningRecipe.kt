@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.crafting
 
-import hiiragi283.core.api.resource.isOf
 import hiiragi283.core.common.crafting.HTCustomRecipe
 import hiiragi283.core.common.crafting.ImmutableRecipeInput
 import hiiragi283.ragium.setup.RagiumDataComponents

@@ -17,7 +17,6 @@ import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
-import hiiragi283.ragium.common.recipe.RagiumFakeRecipeTypes
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -104,12 +103,12 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val WASHING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
-        create(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
+        create(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER, 18 * 8)
 
     // Machine - Ultimate
     @JvmField
     val DUPLICATING: HTFakeRecipeViewerType<HTItemAndFluidRecipeInput, RagiumDuplicatingRecipe> =
-        create(RagiumFakeRecipeTypes.DUPLICATING, RagiumBlocks.TANK, 18 * 6)
+        create(RagiumRecipeTypes.DUPLICATING, RagiumBlocks.TANK, 18 * 6)
 
     @JvmField
     val ENCHANTING: HTHolderRecipeViewerType<HTEnchantingRecipe.Input, HTEnchantingRecipe> =

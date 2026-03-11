@@ -17,7 +17,7 @@ class RagiumDuplicatingRecipeCategory(guiHelper: IGuiHelper) :
     HTLookupRecipeCategory.Fake<RagiumDuplicatingRecipe>(guiHelper, RagiumJeiRecipeTypes.DUPLICATING) {
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: IdToValue<RagiumDuplicatingRecipe>, focuses: IFocusGroup) {
         builder.addAnimatedRecipeArrow(recipe.second.time).setPosition(getPosition(3.25), getPosition(0))
-        builder.addRecipePlusSign().setPosition(getPosition(1) + 2, getPosition(0) + 2)
+        builder.addRecipePlus(getPosition(1))
     }
 
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RagiumDuplicatingRecipe, focuses: IFocusGroup) {
@@ -28,7 +28,7 @@ class RagiumDuplicatingRecipeCategory(guiHelper: IGuiHelper) :
             .setSlotBackground(HTBackgroundType.NONE)
         builder
             .addInputSlot(getPosition(2), getPosition(0))
-            .addFluidIngredient(false, recipe.defaultFluidIngredient)
+            .addFluidIngredient(recipe.defaultFluidIngredient)
             .setSlotBackground(HTBackgroundType.INPUT)
         // output
         builder

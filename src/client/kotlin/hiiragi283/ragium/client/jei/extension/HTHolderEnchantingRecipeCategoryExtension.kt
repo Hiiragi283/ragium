@@ -12,7 +12,7 @@ import net.minecraft.world.item.Items
 
 data object HTHolderEnchantingRecipeCategoryExtension : HTEnchantingRecipeCategoryExtension<HTHolderEnchantingRecipe> {
     override fun <T : IIngredientAcceptor<T>> setExpInput(recipe: HTHolderEnchantingRecipe, accessor: T) {
-        accessor.addFluidIngredient(true, HTIngredientCreator.create(HCFluids.EXPERIENCE, recipe.requiredExpAmount))
+        accessor.addFluidIngredient(HTIngredientCreator.create(HCFluids.EXPERIENCE, recipe.requiredExpAmount))
     }
 
     override fun <T : IIngredientAcceptor<T>> setBookInput(recipe: HTHolderEnchantingRecipe, accessor: T) {

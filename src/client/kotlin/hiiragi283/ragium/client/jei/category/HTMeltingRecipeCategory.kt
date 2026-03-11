@@ -26,7 +26,7 @@ class HTMeltingRecipeCategory(guiHelper: IGuiHelper) :
         // output
         builder
             .addOutputSlot(getPosition(3), getPosition(0))
-            .addFluidResult(false, recipe.result)
+            .addFluidResult(recipe.result)
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 }

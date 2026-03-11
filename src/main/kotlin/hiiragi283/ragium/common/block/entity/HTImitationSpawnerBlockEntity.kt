@@ -45,7 +45,7 @@ class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
     //    Spawner    //
 
     override fun setEntityId(entityType: EntityType<*>, random: RandomSource) {
-        spawnerMob = HTSpawnerMob(entityType)
+        spawnerMob = HTSpawnerMob.of(entityType)
         setChanged()
     }
 

@@ -16,26 +16,28 @@ import kotlin.jvm.optionals.getOrNull
 class HTWashingRecipeCategory(guiHelper: IGuiHelper) :
     HTProcessingRecipeCategory<HTWashingRecipe>(guiHelper, RagiumJeiRecipeTypes.WASHING) {
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTWashingRecipe, focuses: IFocusGroup) {
-        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(1))
+        builder.addRecipePlus(getPosition(1))
+        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
+        builder.addRecipePlus(getPosition(6))
     }
 
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTWashingRecipe, focuses: IFocusGroup) {
         // inputs
         builder
             .addInputSlot(getPosition(0), getPosition(0))
-            .addFluidIngredient(true, recipe.fluidIngredient)
-            .setTankBackground(HTBackgroundType.EXTRA_INPUT)
+            .addFluidIngredient(recipe.fluidIngredient)
+            .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
         builder
-            .addInputSlot(getPosition(1.5), getPosition(0.5))
+            .addInputSlot(getPosition(2), getPosition(0))
             .addItemIngredient(recipe.itemIngredient)
             .setSlotBackground(HTBackgroundType.INPUT)
         // outputs
         builder
-            .addOutputSlot(getPosition(5), getPosition(0.5))
+            .addOutputSlot(getPosition(5), getPosition(0))
             .addItemResult(recipe.result)
             .setSlotBackground(HTBackgroundType.OUTPUT)
         builder
-            .addOutputSlot(getPosition(5), getPosition(2))
+            .addOutputSlot(getPosition(7), getPosition(0))
             .addItemResult(recipe.extraResult.getOrNull())
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
     }

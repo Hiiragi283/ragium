@@ -29,7 +29,7 @@ class HTItemAndItemRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRec
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemAndItemRecipe.Serializable, focuses: IFocusGroup) {
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
-        builder.addRecipePlusSign().setPosition(getPosition(1) + 2, getPosition(0) + 2)
+        builder.addRecipePlus(getPosition(1))
     }
 
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemAndItemRecipe.Serializable, focuses: IFocusGroup) {

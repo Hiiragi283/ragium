@@ -32,7 +32,7 @@ class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
         // inputs
         extension.setExpInput(
             recipe1,
-            builder.addInputSlot(getPosition(0), getPosition(0)).setTankBackground(HTBackgroundType.EXTRA_INPUT),
+            builder.addInputSlot(getPosition(0), getPosition(0)).setSlotBackground(HTBackgroundType.EXTRA_INPUT),
         )
         extension.setBookInput(
             recipe1,
@@ -51,7 +51,7 @@ class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<HTEnchantingRecipe>, focuses: IFocusGroup) {
         builder.addRecipeArrow().setPosition(getPosition(4.75), getPosition(1))
-        builder.addRecipePlusSign().setPosition(getPosition(2.5) + 2, getPosition(0.5) + 2)
+        builder.addRecipePlus(getPosition(2.5), getPosition(0.5))
     }
 
     override fun onDisplayedIngredientsUpdate(

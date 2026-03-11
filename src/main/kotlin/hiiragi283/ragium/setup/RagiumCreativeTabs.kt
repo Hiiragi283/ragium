@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.registry.HTSimpleHolderLikeDelegate
+import hiiragi283.core.api.registry.HTSimpleHolderLike
 import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.core.common.registry.register.HTDeferredCreativeTabRegister
 import hiiragi283.ragium.api.RagiumAPI
@@ -17,7 +17,7 @@ object RagiumCreativeTabs {
     val REGISTER = HTDeferredCreativeTabRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val COMMON: HTSimpleHolderLikeDelegate<CreativeModeTab> = REGISTER.registerSimpleTab(
+    val COMMON: HTSimpleHolderLike<CreativeModeTab> = REGISTER.registerSimpleTab(
         "common",
         RagiumTranslation.RAGIUM,
         CommonParts.INGOT.createId(RagiumMaterialKeys.RAGI_ALLOY).toItemLike(),
