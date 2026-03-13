@@ -9,7 +9,7 @@ import hiiragi283.core.client.jei.extension.HTBasicItemToChancedRecipeCategoryEx
 import hiiragi283.core.client.jei.extension.HTBasicItemToItemRecipeCategoryExtension
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
@@ -18,7 +18,6 @@ import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
-import hiiragi283.ragium.client.jei.extension.HTBasicItemAndItemRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
@@ -59,10 +58,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             private set
 
         // ItemAndItem
-        @JvmStatic
-        lateinit var pressing: HTItemAndItemRecipeCategory
-            private set
-
         @JvmStatic
         lateinit var printing: HTItemAndItemRecipeCategory
             private set
@@ -120,11 +115,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         registration.addRecipeCategories(
             // Machine - Basic
-            HTAlloyingRecipeCategory(guiHelper),
+            HTCombiningRecipeCategory(3, guiHelper, RagiumJeiRecipeTypes.ALLOYING),
+            HTCombiningRecipeCategory(2, guiHelper, RagiumJeiRecipeTypes.ASSEMBLING),
             compressing,
             cutting,
             planting,
-            pressing,
             printing,
             // Machine - Advanced
             HTFreezingRecipeCategory(guiHelper),
@@ -157,10 +152,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun initItemAndItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        pressing = HTItemAndItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PRESSING)
         printing = HTItemAndItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PRINTING)
-
-        pressing.addExtension(HTBasicItemAndItemRecipeCategoryExtension())
 
         printing.addExtension(HTPrintingRecipeCategoryExtension)
         printing.addExtension(HTBookCopyingRecipeCategoryExtension)
@@ -189,10 +181,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     override fun registerRecipes(registration: IRecipeRegistration) {
         // Machine - Basic
         registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING)
+        registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING)
         registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING)
         registration.addRecipes(RagiumJeiRecipeTypes.PLANTING)
-        registration.addRecipes(RagiumJeiRecipeTypes.PRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.PRINTING)
         // Machine - Advanced
         registration.addRecipes(RagiumJeiRecipeTypes.FREEZING)
@@ -218,10 +210,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipeCatalysts(
             // Machine - Basic
             RagiumJeiRecipeTypes.ALLOYING,
+            RagiumJeiRecipeTypes.ASSEMBLING,
             RagiumJeiRecipeTypes.COMPRESSING,
             RagiumJeiRecipeTypes.CUTTING,
             RagiumJeiRecipeTypes.PLANTING,
-            RagiumJeiRecipeTypes.PRESSING,
             RagiumJeiRecipeTypes.PRINTING,
             // Machine - Advanced
             RagiumJeiRecipeTypes.FREEZING,

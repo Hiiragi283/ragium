@@ -73,7 +73,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.CRUSHER)
             .add(RagiumBlocks.CUTTING_MACHINE)
             .add(RagiumBlocks.ELECTRIC_FURNACE)
-            .add(RagiumBlocks.FORMING_PRESS)
             .add(RagiumBlocks.PLANTER)
             .add(RagiumBlocks.PRINTER)
             // Advanced

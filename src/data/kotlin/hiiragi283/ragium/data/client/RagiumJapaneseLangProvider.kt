@@ -27,7 +27,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
-        add(RagiumBlocks.FORMING_PRESS, "プレス機")
         add(RagiumBlocks.PLANTER, "栽培機")
         add(RagiumBlocks.PRINTER, "プリンター")
 
@@ -105,9 +104,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.PRESSING, "プレス加工")
         add(RagiumRecipeTypes.PRINTING, "印刷")
 
         add(RagiumRecipeTypes.MELTING, "溶融")
@@ -165,7 +164,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.CRUSHER, "アイテムを粉にする機械です。")
         add(RagiumTranslation.CUTTING_MACHINE, "原木や木製アイテムを木材に加工する機械です。")
         add(RagiumTranslation.ELECTRIC_FURNACE, "エネルギーでアイテムを焼く機械です。")
-        add(RagiumTranslation.FORMING_PRESS, "複数のアイテムを一つに固める機械です。")
 
         add(RagiumTranslation.MELTER, "アイテムを融かしたり，液体を加熱したりする機械です。")
         add(RagiumTranslation.PYROLYZER, "原木や石炭を木炭やコークスに加工する機械です。")

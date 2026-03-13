@@ -5,22 +5,33 @@ import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.HTSimpleHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
+import hiiragi283.core.api.registry.getDataSequence
+import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
+import hiiragi283.ragium.setup.RagiumFluids
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry
+import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
+import net.minecraft.world.level.block.Block
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
+import net.neoforged.neoforge.registries.datamaps.builtin.Oxidizable
+import net.neoforged.neoforge.registries.datamaps.builtin.Waxable
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
@@ -33,10 +44,13 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         cutWoodFromDefinition()
         cutBedToPlanks()
 
-        washToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
-        washToColor(ItemTags.BEDS, ColoredMaterials.BED)
-        washToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
-        washToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
+        waxing()
+        redox()
+
+        dyesToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
+        dyesToColor(ItemTags.BEDS, ColoredMaterials.BED)
+        dyesToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
+        dyesToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
     }
 
     //    Cutting    //
@@ -178,10 +192,66 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         }
     }
 
+    @JvmStatic
+    private fun waxing() {
+        provider
+            .lookupOrThrow(Registries.BLOCK)
+            .getDataSequence(NeoForgeDataMaps.WAXABLES)
+            .mapNotNull { (holder: HTSimpleHolderLike<Block>, waxable: Waxable) ->
+                val before: Block = holder.get()
+                if (ItemStack(before).isEmpty) return@mapNotNull null
+                val after: Block = waxable.waxed()
+                if (ItemStack(after).isEmpty) return@mapNotNull null
+                before.toItemLike() to after.toItemLike()
+            }.forEach { (before: HTSimpleItemHolderLike, after: HTSimpleItemHolderLike) ->
+                // レシピを登録
+                // Waxing
+
+                // Dis-waxing
+                RagiumRecipeBuilder.cutting(output) {
+                    ingredient = inputCreator.create(after)
+                    result = resultCreator.create(before)
+                    recipeId suffix "_from_${after.path}"
+                }
+            }
+    }
+
+    //    Refining    //
+
+    @JvmStatic
+    private fun redox() {
+        provider
+            .lookupOrThrow(Registries.BLOCK)
+            .getDataSequence(NeoForgeDataMaps.OXIDIZABLES)
+            .mapNotNull { (holder: HTSimpleHolderLike<Block>, oxidizable: Oxidizable) ->
+                val before: Block = holder.get()
+                if (ItemStack(before).isEmpty) return@mapNotNull null
+                val after: Block = oxidizable.nextOxidationStage()
+                if (ItemStack(after).isEmpty) return@mapNotNull null
+                before.toItemLike() to after.toItemLike()
+            }.forEach { (before: HTSimpleItemHolderLike, after: HTSimpleItemHolderLike) ->
+                // レシピを登録
+                // Oxidization
+                HTItemOrFluidRecipeBuilder.refining(output) {
+                    ingredient += inputCreator.create(before)
+                    ingredient += inputCreator.create(RagiumFluids.SULFUR_DIOXIDE, 250)
+                    result += resultCreator.create(after)
+                    recipeId suffix "_from_${before.path}"
+                }
+                // Reduction
+                HTItemOrFluidRecipeBuilder.refining(output) {
+                    ingredient += inputCreator.create(after)
+                    ingredient += inputCreator.create(RagiumFluids.NITROGEN, 250)
+                    result += resultCreator.create(before)
+                    recipeId suffix "_from_${after.path}"
+                }
+            }
+    }
+
     //    Washing    //
 
     @JvmStatic
-    private fun washToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTSimpleItemHolderLike>) {
+    private fun dyesToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTSimpleItemHolderLike>) {
         for ((color: HTDefaultColor, colored: HTSimpleItemHolderLike) in map) {
             val dye: HTFluidContent = HCFluids.getDye(color)
             // レシピを登録

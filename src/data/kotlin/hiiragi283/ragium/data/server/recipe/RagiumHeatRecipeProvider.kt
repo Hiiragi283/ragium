@@ -10,7 +10,7 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
@@ -29,54 +29,54 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     @JvmStatic
     private fun alloying() {
         // Netherite
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, VanillaMaterialKeys.NETHERITE, 2)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.GOLD), 4)
             ingredients += inputCreator.create(Items.NETHERITE_SCRAP, 4)
         }
 
         // Steel from Coal
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.STEEL)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON))
             ingredients += inputCreator.create(listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL).flatMap(::baseOrDust), 2)
             recipeId suffix "_from_coal"
         }
         // Steel from Coke
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.STEEL)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON))
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE))
             recipeId suffix "_from_coke"
         }
         // Invar
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.INVAR, 3)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON), 2)
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.NICKEL))
             conditions += CommonTagPrefixes.INGOT.itemTagKey(CommonMaterialKeys.INVAR)
         }
         // Electrum
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.ELECTRUM, 2)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.GOLD))
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.SILVER))
             conditions += CommonTagPrefixes.INGOT.itemTagKey(CommonMaterialKeys.ELECTRUM)
         }
         // Bronze
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.BRONZE, 4)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COPPER), 3)
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.TIN))
         }
         // Brass
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.BRASS, 2)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COPPER))
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.ZINC))
         }
         // Constantan
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.CONSTANTAN, 2)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COPPER))
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.NICKEL))
@@ -84,20 +84,20 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
         }
 
         // Amethyst + Lapis -> Azure Shard
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.GEM, HCMaterialKeys.AZURE, 2)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.AMETHYST))
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.LAPIS))
         }
         // Azure Shard + Iron -> Azure Steel
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, HCMaterialKeys.AZURE_STEEL)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON))
             ingredients += inputCreator.create(baseOrDust(HCMaterialKeys.AZURE), 2)
         }
 
         // Ambrosia
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.create(HCItems.AMBROSIA)
             ingredients += inputCreator.create(HCItems.IRIDESCENT_POWDER)
             ingredients += inputCreator.create(Items.HONEY_BLOCK, 64)
@@ -105,19 +105,19 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
         }
 
         // Raginite + Copper -> Ragi-Alloy
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COPPER))
             ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGINITE), 2)
         }
         // Ragi-Alloy + Glowstone -> Adv Ragi-Alloy
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
             ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGI_ALLOY))
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.GLOWSTONE), 2)
         }
         // Raginite + Diamond -> Ragi-Crystal
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.DIAMOND))
             ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGINITE), 8)
@@ -191,7 +191,7 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
         }
 
         // Cinnabar -> Mercury
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.create(RagiumFluids.MERCURY.bucketHolder)
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.CINNABAR), 8)
             ingredients += inputCreator.create(Tags.Items.BUCKETS_EMPTY)

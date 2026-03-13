@@ -1,0 +1,17 @@
+{
+  "type": "ragium:assembling",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": "ragium:printed_circuit_board"
+    },
+    {
+      "amount": 1,
+      "items": "#c:plates/silicon"
+    }
+  ],
+  "result": {
+    "id": "ragium:electric_circuit"
+  },
+  "time": 200
+}

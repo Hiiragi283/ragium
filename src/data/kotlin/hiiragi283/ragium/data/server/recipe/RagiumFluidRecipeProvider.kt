@@ -90,7 +90,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             HCFluids.DRAGON_BREATH,
             250,
         )
-        
+
         // Mercury
         fillAndEmpty(
             Items.GLASS_BOTTLE.toLike(),

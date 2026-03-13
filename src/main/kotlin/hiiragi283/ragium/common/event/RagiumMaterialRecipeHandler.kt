@@ -24,8 +24,8 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
+import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
@@ -222,10 +222,10 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val gear: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.GEAR, entry) ?: return
         // レシピを登録
-        HTItemAndItemRecipeBuilder.pressing(output) {
-            first = inputCreator.create(inputTag, 4)
-            second = getBlueprint(CommonTagPrefixes.GEAR)
+        HTCombiningRecipeBuilder.assembling(output) {
             result = resultCreator.create(gear)
+            ingredients += inputCreator.create(inputTag, 4)
+            ingredients += getBlueprint(CommonTagPrefixes.GEAR)
             time = getTimeFromHardness(entry, time) ?: return
         }
     }
@@ -247,10 +247,10 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
         // レシピを登録
-        HTItemAndItemRecipeBuilder.pressing(output) {
-            first = inputCreator.create(inputPrefix, entry)
-            second = getBlueprint(CommonTagPrefixes.PLATE)
+        HTCombiningRecipeBuilder.assembling(output) {
             result = resultCreator.create(plate)
+            ingredients += inputCreator.create(inputPrefix, entry)
+            ingredients += getBlueprint(CommonTagPrefixes.PLATE)
             time = getTimeFromHardness(entry, time) ?: return
         }
     }
@@ -309,10 +309,10 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val wire: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.WIRE, entry) ?: return
         // レシピを登録
-        HTItemAndItemRecipeBuilder.pressing(output) {
-            first = inputCreator.create(inputTag)
-            second = getBlueprint(CommonTagPrefixes.WIRE)
+        HTCombiningRecipeBuilder.assembling(output) {
             result = resultCreator.create(wire, 2)
+            ingredients += inputCreator.create(inputTag)
+            ingredients += getBlueprint(CommonTagPrefixes.WIRE)
             time = getTimeFromHardness(entry, time) ?: return
         }
     }

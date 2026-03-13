@@ -27,7 +27,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
-        add(RagiumBlocks.FORMING_PRESS, "Forming Press")
         add(RagiumBlocks.PLANTER, "Planter")
         add(RagiumBlocks.PRINTER, "Printer")
 
@@ -105,9 +104,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
-        add(RagiumRecipeTypes.PRESSING, "Pressing")
         add(RagiumRecipeTypes.PRINTING, "Printing")
 
         add(RagiumRecipeTypes.MELTING, "Melting")
@@ -165,7 +164,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.CRUSHER, "A machine which crushes item into dust.")
         add(RagiumTranslation.CUTTING_MACHINE, "A machine which converts log or wooden items into planks.")
         add(RagiumTranslation.ELECTRIC_FURNACE, "A machine which smelts item by using energy.")
-        add(RagiumTranslation.FORMING_PRESS, "A machine which combines multiple items into one.")
 
         add(RagiumTranslation.MELTER, "A machine which melts item or heats up fluid.")
         add(RagiumTranslation.PYROLYZER, "A machine which converts log or coal into charcoal or coal coke.")

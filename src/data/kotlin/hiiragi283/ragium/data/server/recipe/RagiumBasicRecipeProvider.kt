@@ -9,7 +9,7 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
 import hiiragi283.ragium.common.recipe.special.HTBookCloningRecipe
@@ -82,10 +82,10 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun pressing() {
         // Sawdust -> Particle Board
-        HTItemAndItemRecipeBuilder.pressing(output) {
-            first = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 2)
-            second = inputCreator.blueprint(5)
+        HTCombiningRecipeBuilder.assembling(output) {
             result = resultCreator.create(HCItems.PARTICLE_BOARD)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 2)
+            ingredients += inputCreator.blueprint(5)
         }
     }
 

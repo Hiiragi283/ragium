@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
@@ -43,6 +44,10 @@ object RagiumRecipeTypes {
         REGISTER.registerType(RagiumConst.ALLOYING)
 
     @JvmField
+    val ASSEMBLING: HTDeferredRecipeType<HTShapelessRecipeInput, HTAssemblingRecipe> =
+        REGISTER.registerType(RagiumConst.ASSEMBLING)
+
+    @JvmField
     val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.COMPRESSING)
 
@@ -53,10 +58,6 @@ object RagiumRecipeTypes {
     @JvmField
     val PLANTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.PLANTING)
-
-    @JvmField
-    val PRESSING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        REGISTER.registerType(RagiumConst.PRESSING)
 
     @JvmField
     val PRINTING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =

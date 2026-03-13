@@ -10,7 +10,6 @@ object RagiumConst {
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"
     const val ELECTRIC_FURNACE = "electric_furnace"
-    const val FORMING_PRESS = "forming_press"
     const val PLANTER = "planter"
     const val PRINTER = "printer"
 
@@ -46,10 +45,10 @@ object RagiumConst {
 
     // Basic
     const val ALLOYING = "alloying"
+    const val ASSEMBLING = "assembling"
     const val COMPRESSING = "compressing"
     const val CUTTING = "cutting"
     const val PLANTING = "planting"
-    const val PRESSING = "pressing"
     const val PRINTING = "printing"
 
     // Advanced

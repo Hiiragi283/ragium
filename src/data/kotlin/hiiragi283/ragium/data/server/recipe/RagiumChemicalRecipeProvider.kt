@@ -14,7 +14,7 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -163,7 +163,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun rubber() {
         // Raw Rubber + Sulfur -> Rubber
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 2)
             ingredients += inputCreator.create(HCItems.RAW_RUBBER)
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
@@ -337,13 +337,13 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun silicon() {
         // Quartz + Coal -> Crude Silicon
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.create(RagiumItems.CRUDE_SILICON)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.QUARTZ))
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL), 2)
         }
         // Quartz + Coal Coke -> Crude Silicon
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.create(RagiumItems.CRUDE_SILICON)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.QUARTZ))
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE))
@@ -357,12 +357,29 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.SILICON)
         }
         // Refined Silicon + Plastic -> Circuit Board
-        HTCombineItemRecipeBuilder.alloying(output) {
+        HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.create(RagiumItems.CIRCUIT_BOARD)
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SILICON)
             ingredients += inputCreator.create(HiiragiCoreTags.Items.PLASTICS)
         }
-        // Silicon Plate + XX Wire -> Circuit Parts
+        // Circuit Board + Gold -> Plated
+        HTCombiningRecipeBuilder.assembling(output) {
+            result = resultCreator.create(RagiumItems.PLATED_CIRCUIT_BOARD)
+            ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
+            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.GOLD)
+        }
+        // Plated + Sulfuric Acid -> Printed
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(RagiumItems.PLATED_CIRCUIT_BOARD)
+            ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)
+            result += resultCreator.create(RagiumItems.PRINTED_CIRCUIT_BOARD)
+        }
+        // Printed + -> Electric Circuit
+        HTCombiningRecipeBuilder.assembling(output) {
+            result = resultCreator.create(RagiumItems.ELECTRIC_CIRCUIT)
+            ingredients += inputCreator.create(RagiumItems.PRINTED_CIRCUIT_BOARD)
+            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.SILICON)
+        }
     }
 
     //    The End    //
