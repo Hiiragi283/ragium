@@ -18,7 +18,6 @@ import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
-import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
@@ -31,6 +30,8 @@ import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
+import hiiragi283.ragium.setup.RagiumFluids
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
@@ -89,6 +90,14 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             HCFluids.DRAGON_BREATH,
             250,
         )
+        
+        // Mercury
+        fillAndEmpty(
+            Items.GLASS_BOTTLE.toLike(),
+            RagiumItems.MERCURY_BOTTLE,
+            RagiumFluids.MERCURY,
+            250,
+        )
     }
 
     @JvmStatic
@@ -124,14 +133,6 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
             fluidResults += resultCreator.molten(HCMaterialKeys.ELDRITCH)
-        }
-        // Latex + Sulfur + Carbon -> Rubber
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(HCItems.RAW_RUBBER)
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
-
-            itemResults += resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 4)
         }
     }
 

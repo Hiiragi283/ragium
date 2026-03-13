@@ -66,6 +66,21 @@ object RagiumItems {
     val CRUDE_SILICON: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("crude_silicon")
 
     @JvmField
+    val CRYO_CHARGE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("cryo_charge")
+
+    //    Parts    //
+
+    // Basic
+
+    // Advanced
+    @JvmField
+    val MERCURY_BOTTLE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("mercury_bottle")
+
+    @JvmField
+    val THERMOMETER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("thermometer")
+
+    // Elite
+    @JvmField
     val CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("circuit_board")
 
     @JvmField
@@ -76,9 +91,6 @@ object RagiumItems {
 
     @JvmField
     val ELECTRIC_CIRCUIT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("electric_circuit")
-
-    @JvmField
-    val CRYO_CHARGE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("cryo_charge")
 
     //    Foods    //
 

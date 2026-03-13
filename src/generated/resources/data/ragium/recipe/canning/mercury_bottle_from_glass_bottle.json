@@ -1,0 +1,15 @@
+{
+  "type": "ragium:canning",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:mercury"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:glass_bottle"
+  },
+  "item_result": {
+    "id": "ragium:mercury_bottle"
+  },
+  "time": 100
+}

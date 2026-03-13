@@ -7,6 +7,7 @@ import hiiragi283.core.api.data.holder.HTIngredientHolder
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialLike
+import hiiragi283.core.api.registry.getBucket
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
@@ -24,6 +25,7 @@ import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.tags.ItemTags
@@ -36,6 +38,8 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
+        parts()
+
         // Blueprint
         HTShapelessRecipeBuilder.create(output) {
             ingredients += Items.PAPER
@@ -68,6 +72,40 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         machines()
         devices()
         storages()
+    }
+
+    @JvmStatic
+    private fun parts() {
+        // Mercury Bottle <-> Mercury Bucket
+        HTShapelessRecipeBuilder.create(output) {
+            repeat(4) {
+                ingredients += RagiumItems.MERCURY_BOTTLE
+            }
+            ingredients += Tags.Items.BUCKETS_EMPTY
+            resultStack += RagiumFluids.MERCURY.getBucket()
+            recipeId suffix "_from_bottles"
+        }
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += RagiumFluids.MERCURY.bucketTag
+            repeat(4) {
+                ingredients += Items.GLASS_BOTTLE
+            }
+            resultStack += RagiumItems.MERCURY_BOTTLE to 4
+            recipeId suffix "_from_bucket"
+        }
+        // Thermometer
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                " AB",
+                "ACA",
+                "DA ",
+            )
+            define('A') += Tags.Items.GLASS_PANES_COLORLESS
+            define('B') += Tags.Items.DYES_RED
+            define('C') += RagiumItems.MERCURY_BOTTLE
+            define('D') += CommonTagPrefixes.PLATE to VanillaMaterialKeys.COPPER
+            resultStack += RagiumItems.THERMOMETER
+        }
     }
 
     //    Machine    //
@@ -121,9 +159,9 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 "BCB",
                 "DDD",
             )
-            define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.ADVANCED_RAGI_ALLOY
+            define('A') += CommonTagPrefixes.INGOT to material
             define('B').let(consumer)
-            define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON
+            define('C') += RagiumItems.THERMOMETER
             define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
             resultStack += block
         }
@@ -139,7 +177,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             )
             define('A') += CommonTagPrefixes.PLATE to RagiumMaterialKeys.STAINLESS_STEEL
             define('B').let(consumer)
-            define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.GOLD
+            define('C') += RagiumItems.ELECTRIC_CIRCUIT
             define('D') += CommonTagPrefixes.PLATE to CommonMaterialKeys.CARBON
             resultStack += block
         }

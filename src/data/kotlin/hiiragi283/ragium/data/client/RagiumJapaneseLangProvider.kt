@@ -70,6 +70,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         addFluid(RagiumFluids.NAOH_SOLUTION, "スライム溶液")
 
+        addFluid(RagiumFluids.MERCURY, "水銀")
+
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumFluids.FUEL, "燃料")
@@ -82,16 +84,17 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.SULFURIC_ACID, "ブレイズ酸")
 
         addFluid(RagiumFluids.HELIUM, "エンドストーンガス")
-
-        addFluid(RagiumFluids.RAGI_MATTER, "ラギマター")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.CRUDE_SILICON, "粗生シリコン")
+        add(RagiumItems.CRYO_CHARGE, "クライオチャージ")
+
+        add(RagiumItems.MERCURY_BOTTLE, "水銀入り瓶")
+        add(RagiumItems.THERMOMETER, "温度計")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.PLATED_CIRCUIT_BOARD, "鍍金された回路基板")
         add(RagiumItems.PRINTED_CIRCUIT_BOARD, "刻印された回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
-        add(RagiumItems.CRYO_CHARGE, "クライオチャージ")
 
         add(RagiumItems.EMPTY_CAN, "空の缶詰")
 

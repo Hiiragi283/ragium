@@ -3,25 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/stainless_steel"
+      "tag": "c:glass_panes/colorless"
     },
     "B": {
-      "item": "minecraft:cauldron"
+      "tag": "c:dyes/red"
     },
     "C": {
-      "item": "ragium:electric_circuit"
+      "item": "ragium:mercury_bottle"
     },
     "D": {
-      "tag": "c:plates/carbon"
+      "tag": "c:plates/copper"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DDD"
+    " AB",
+    "ACA",
+    "DA "
   ],
   "result": {
     "count": 1,
-    "id": "ragium:washer"
+    "id": "ragium:thermometer"
   }
 }

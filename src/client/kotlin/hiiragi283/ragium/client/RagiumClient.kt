@@ -105,6 +105,7 @@ data object RagiumClient : HTClientMod() {
         event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
 
         event.dull(RagiumFluids.NAOH_SOLUTION, Color(0x99cc00))
+        event.dull(RagiumFluids.MERCURY, Color(0xcc99cc))
         // Nether
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
         event.clear(RagiumFluids.NAPHTHA, Color(0xff6600))
@@ -121,8 +122,6 @@ data object RagiumClient : HTClientMod() {
 
         event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
         event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
-
-        event.clear(RagiumFluids.RAGI_MATTER, Color(0xff6699))
     }
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {

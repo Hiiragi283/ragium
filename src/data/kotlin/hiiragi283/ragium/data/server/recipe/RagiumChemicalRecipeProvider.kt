@@ -51,6 +51,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         coal()
         breeze()
         slime()
+        rubber()
     }
 
     @JvmStatic
@@ -156,6 +157,24 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             itemResults += resultCreator.create(Items.MAGMA_CREAM)
             fluidResults += resultCreator.water(2000)
             recipeId replace id("magma_cream_from_neutralization")
+        }
+    }
+
+    @JvmStatic
+    private fun rubber() {
+        // Raw Rubber + Sulfur -> Rubber
+        HTCombineItemRecipeBuilder.alloying(output) {
+            result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 2)
+            ingredients += inputCreator.create(HCItems.RAW_RUBBER)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+        }
+        // Raw Rubber + Sulfur + Carbon -> Rubber
+        HTChemicalRecipeBuilder.mixing(output) {
+            itemIngredients += inputCreator.create(HCItems.RAW_RUBBER)
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
+
+            itemResults += resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 4)
         }
     }
 
@@ -337,6 +356,13 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
             result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.SILICON)
         }
+        // Refined Silicon + Plastic -> Circuit Board
+        HTCombineItemRecipeBuilder.alloying(output) {
+            result = resultCreator.create(RagiumItems.CIRCUIT_BOARD)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SILICON)
+            ingredients += inputCreator.create(HiiragiCoreTags.Items.PLASTICS)
+        }
+        // Silicon Plate + XX Wire -> Circuit Parts
     }
 
     //    The End    //

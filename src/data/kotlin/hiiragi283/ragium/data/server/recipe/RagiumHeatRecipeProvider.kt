@@ -4,7 +4,6 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -14,7 +13,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
@@ -123,25 +122,6 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.DIAMOND))
             ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGINITE), 8)
         }
-
-        // Quartz + Plastic -> Circuit Board
-        HTCombineItemRecipeBuilder.alloying(output) {
-            result = resultCreator.create(RagiumItems.CIRCUIT_BOARD)
-            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.QUARTZ)
-            ingredients += inputCreator.create(HiiragiCoreTags.Items.PLASTICS)
-        }
-        // Circuit Board + Gold Plate -> Plated
-        HTCombineItemRecipeBuilder.alloying(output) {
-            result = resultCreator.create(RagiumItems.PLATED_CIRCUIT_BOARD)
-            ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
-            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.GOLD)
-        }
-        // Rubber + Sulfur -> Rubber
-        HTCombineItemRecipeBuilder.alloying(output) {
-            result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 2)
-            ingredients += inputCreator.create(HCItems.RAW_RUBBER)
-            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
-        }
     }
 
     //    Melting    //
@@ -208,6 +188,18 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
                 result = resultCreator.create(HCFluids.OMINOUS_FLUX, HTConst.INGOT_AMOUNT * (i + 1))
                 recipeId suffix "_$i"
             }
+        }
+
+        // Cinnabar -> Mercury
+        HTCombineItemRecipeBuilder.alloying(output) {
+            result = resultCreator.create(RagiumFluids.MERCURY.bucketHolder)
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.CINNABAR), 8)
+            ingredients += inputCreator.create(Tags.Items.BUCKETS_EMPTY)
+        }
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(baseOrDust(CommonMaterialKeys.CINNABAR))
+            result = resultCreator.create(RagiumFluids.MERCURY, 125)
+            recipeId suffix "_from_cinnabar"
         }
     }
 }

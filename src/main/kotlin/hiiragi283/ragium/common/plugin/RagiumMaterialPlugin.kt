@@ -179,7 +179,6 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
         provider.getBuilder(CommonMaterialKeys.SILICON).apply {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
 
-            addBlockPrefixes(CommonParts.BLOCK)
             addItemPrefixes(CommonParts.DUST, CommonParts.INGOT, CommonParts.PLATE)
         }
         // Matter Value

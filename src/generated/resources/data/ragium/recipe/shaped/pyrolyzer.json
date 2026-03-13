@@ -9,7 +9,7 @@
       "item": "minecraft:nether_bricks"
     },
     "C": {
-      "tag": "c:gears/iron"
+      "item": "ragium:thermometer"
     },
     "D": {
       "tag": "c:ingots/steel"

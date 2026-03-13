@@ -5,14 +5,14 @@ import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.ragium.api.RagiumRegistries
-import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 
 class RagiumDuplicatingRecipe(val ingredient: HTItemIngredient, val requiredMatter: Int) : HTProcessingRecipe<HTItemAndFluidRecipeInput> {
     val defaultFluidIngredient: HTFluidIngredient by lazy {
-        HTIngredientCreator.create(RagiumFluids.RAGI_MATTER, requiredMatter)
+        HTIngredientCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, requiredMatter)
     }
 
     override fun test(input: HTItemAndFluidRecipeInput): Boolean {
@@ -26,7 +26,7 @@ class RagiumDuplicatingRecipe(val ingredient: HTItemIngredient, val requiredMatt
         val extraAmount: Int = RagiumRegistries.DUPLICATION_MODIFIER
             .filter { it.test(itemStack) }
             .sumOf { it.calculateExtraAmount(itemStack) }
-        return HTIngredientCreator.create(RagiumFluids.RAGI_MATTER, requiredMatter + extraAmount)
+        return HTIngredientCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, requiredMatter + extraAmount)
     }
 
     override fun assemble(input: HTItemAndFluidRecipeInput, registries: HolderLookup.Provider): ItemStack = input.item.copyWithCount(1)

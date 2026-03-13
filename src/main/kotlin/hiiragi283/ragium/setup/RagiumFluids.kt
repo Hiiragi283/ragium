@@ -67,6 +67,10 @@ object RagiumFluids {
     @JvmField
     val NAOH_SOLUTION: HTFluidContent = REGISTER.registerFlowing("sodium_hydroxide_solution") { properties = liquid() }
 
+    // Hg
+    @JvmField
+    val MERCURY: HTFluidContent = REGISTER.registerVirtual("mercury") { properties = liquid() }
+
     //    Nether    //
 
     // C
@@ -127,9 +131,6 @@ object RagiumFluids {
     // O
     @JvmField
     val OXYGEN: HTFluidContent = REGISTER.registerVirtual("oxygen") { properties = gas() }
-
-    @JvmField
-    val RAGI_MATTER: HTFluidContent = REGISTER.registerVirtual("ragi_matter") { properties = gas() }
 
     //    Extensions    //
 

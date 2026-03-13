@@ -70,6 +70,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         addFluid(RagiumFluids.NAOH_SOLUTION, "Slime Solution")
 
+        addFluid(RagiumFluids.MERCURY, "Mercury")
+
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
         addFluid(RagiumFluids.FUEL, "Fuel")
@@ -82,16 +84,17 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.SULFURIC_ACID, "Blaze Acid")
 
         addFluid(RagiumFluids.HELIUM, "End Stone Gas")
-
-        addFluid(RagiumFluids.RAGI_MATTER, "Ragi-Matter")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
+        add(RagiumItems.CRYO_CHARGE, "Cryo-Charge")
+
+        add(RagiumItems.MERCURY_BOTTLE, "Mercury Bottle")
+        add(RagiumItems.THERMOMETER, "Thermometer")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
         add(RagiumItems.PLATED_CIRCUIT_BOARD, "Plated Circuit Board")
         add(RagiumItems.PRINTED_CIRCUIT_BOARD, "Printed Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
-        add(RagiumItems.CRYO_CHARGE, "Cryo-Charge")
 
         add(RagiumItems.EMPTY_CAN, "Empty Can")
 
