@@ -122,11 +122,9 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredient = inputCreator.create(Items.WIND_CHARGE)
             result = resultCreator.create(RagiumFluids.NITROGEN, 125)
         }
-        // N2 -> liq N2
-        HTItemOrFluidRecipeBuilder.freezing(output) {
-            ingredient += inputCreator.create(RagiumFluids.NITROGEN)
-            result += resultCreator.create(RagiumFluids.LIQUID_NITROGEN, 100)
-        }
+        // Wind Charge + Blue Ice -> Cryo-Charge
+
+        // Cryo-Charge -> liq N2
     }
 
     @JvmStatic

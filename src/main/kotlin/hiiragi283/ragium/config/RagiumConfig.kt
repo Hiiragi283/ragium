@@ -95,7 +95,6 @@ object RagiumConfig {
             val melter: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.MELTER,
-                RagiumFluidConfigType.FIRST_INPUT,
                 RagiumFluidConfigType.FIRST_OUTPUT,
             )
 
@@ -121,7 +120,6 @@ object RagiumConfig {
                 builder,
                 RagiumConst.FREEZER,
                 RagiumFluidConfigType.FIRST_INPUT,
-                RagiumFluidConfigType.FIRST_OUTPUT,
             )
 
             // Chemical

@@ -22,6 +22,7 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
@@ -154,10 +155,10 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             }
             // Liquid Dye -> Dye
             val dye: HTSimpleItemHolderLike = ColoredMaterials.DYE[color] ?: continue
-            HTItemOrFluidRecipeBuilder.freezing(output) {
-                ingredient += inputCreator.create(content, 250)
-                ingredient += inputCreator.blueprint(0)
-                result += resultCreator.create(dye)
+            HTFreezingRecipeBuilder.create(output) {
+                itemIngredient = inputCreator.blueprint(0)
+                fluidIngredient = inputCreator.create(content, 250)
+                result = resultCreator.create(dye)
             }
         }
 

@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
@@ -77,7 +78,7 @@ object RagiumJeiRecipeTypes {
 
     // Machine - Heat
     @JvmField
-    val FREEZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
+    val FREEZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTFreezingRecipe> =
         create(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER, 18 * 8)
 
     @JvmField
@@ -86,7 +87,7 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val PYROLYZING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER, 18 * 8)
+        create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER, 18 * 6)
 
     @JvmField
     val REFINING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =

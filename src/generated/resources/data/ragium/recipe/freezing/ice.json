@@ -3,7 +3,13 @@
   "fluid_ingredient": {
     "fluids": "#c:water"
   },
-  "item_result": {
+  "item_ingredient": {
+    "items": {
+      "type": "ragium:blue_print",
+      "number": 0
+    }
+  },
+  "result": {
     "id": "minecraft:ice"
   },
   "time": 200

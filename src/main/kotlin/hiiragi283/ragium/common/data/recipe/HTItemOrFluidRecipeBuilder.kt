@@ -11,7 +11,6 @@ import hiiragi283.core.api.util.Ior
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.holder.HTIorHolder
 import hiiragi283.ragium.common.recipe.HTCanningRecipe
-import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
@@ -27,12 +26,6 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
                 .apply { time /= 2 }
                 .apply(builderAction)
                 .save(output)
-        }
-
-        @HTBuilderMarker
-        @JvmStatic
-        inline fun freezing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
-            HTItemOrFluidRecipeBuilder(RagiumConst.FREEZING, ::HTFreezingRecipe).apply(builderAction).save(output)
         }
 
         @HTBuilderMarker

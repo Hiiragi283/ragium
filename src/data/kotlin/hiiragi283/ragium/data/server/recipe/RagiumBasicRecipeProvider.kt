@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.ColoredMaterials
@@ -94,7 +94,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun printing() {
         // Banner
-        for ((_, banner: HTItemHolderLike<*>) in ColoredMaterials.BANNER) {
+        for ((_, banner: HTSimpleItemHolderLike) in ColoredMaterials.BANNER) {
             save(
                 banner.getId().withPrefix("${RagiumConst.PRINTING}/"),
                 HTPrintingRecipe(

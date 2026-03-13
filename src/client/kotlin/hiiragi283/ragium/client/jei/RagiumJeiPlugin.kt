@@ -11,6 +11,7 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
@@ -76,10 +77,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             private set
 
         @JvmStatic
-        lateinit var freezing: HTItemOrFluidRecipeCategory
-            private set
-
-        @JvmStatic
         lateinit var canning: HTItemOrFluidRecipeCategory
             private set
 
@@ -130,7 +127,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             pressing,
             printing,
             // Machine - Advanced
-            freezing,
+            HTFreezingRecipeCategory(guiHelper),
             HTMeltingRecipeCategory(guiHelper),
             pyrolyzing,
             refining,
@@ -170,21 +167,23 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        freezing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.FREEZING)
         pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
         refining = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.REFINING)
         canning = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CANNING)
 
-        freezing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         refining.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
 
-        canning.addExtension(HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, 1000, HTBucketDrainingRecipe::isFilledBucket))
-        canning.addExtension(HTBucketFillingRecipeCategoryExtension(manager))
+        HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, 1000, HTBucketDrainingRecipe::isFilledBucket)
+            .let(canning::addExtension)
+        HTBucketFillingRecipeCategoryExtension(manager)
+            .let(canning::addExtension)
 
-        canning.addExtension(HTDrainingRecipeCategoryExtension<HTPotionDrainingRecipe>(manager, 250, HTPotionDrainingRecipe::isPotion))
-        canning.addExtension(HTPotionFillingRecipeCategoryExtension(manager))
+        HTDrainingRecipeCategoryExtension<HTPotionDrainingRecipe>(manager, 250, HTPotionDrainingRecipe::isPotion)
+            .let(canning::addExtension)
+        HTPotionFillingRecipeCategoryExtension(manager)
+            .let(canning::addExtension)
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {

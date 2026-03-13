@@ -1,10 +1,14 @@
 package hiiragi283.ragium.common.item
 
+import hiiragi283.core.api.item.HTSubCreativeTabContents
+import hiiragi283.core.api.item.createItemStack
+import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.text.Text
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumItems
 import io.netty.buffer.ByteBuf
 import net.minecraft.world.entity.SlotAccess
 import net.minecraft.world.entity.player.Player
@@ -14,7 +18,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
-class HTBlueprintItem(properties: Properties) : Item(properties) {
+class HTBlueprintItem(properties: Properties) : Item(properties), HTSubCreativeTabContents {
     companion object {
         const val MAX_NUMBER = 7
 
@@ -53,4 +57,14 @@ class HTBlueprintItem(properties: Properties) : Item(properties) {
     ) {
         tooltips += RagiumTranslation.BLUEPRINT_NUMBER.translate(stack.getOrDefault(RagiumDataComponents.BLUEPRINT_NUMBER, 0))
     }
+
+    //    HTSubCreativeTabContents    //
+    
+    override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
+        RANGE
+            .map { createItemStack(RagiumItems.BLUEPRINT, RagiumDataComponents.BLUEPRINT_NUMBER, it) }
+            .forEach(context)
+    }
+
+    override fun shouldAddDefault(): Boolean = false
 }

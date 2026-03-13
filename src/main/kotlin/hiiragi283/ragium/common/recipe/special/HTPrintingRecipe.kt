@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.recipe.special
 
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
-import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTPrintingRecipe(val ingredient: HTItemIngredient, val origin: HTItemHolderLike<*>, val strategy: CopyStrategy) :
+class HTPrintingRecipe(val ingredient: HTItemIngredient, val origin: HTSimpleItemHolderLike, val strategy: CopyStrategy) :
     HTItemAndItemRecipe.Serializable {
     override fun testFirstItem(stack: ItemStack): Boolean = ingredient.test(stack)
 

@@ -1,10 +1,13 @@
 {
   "type": "ragium:freezing",
+  "fluid_ingredient": {
+    "fluids": "#c:water"
+  },
   "item_ingredient": {
     "amount": 6,
     "items": "minecraft:packed_ice"
   },
-  "item_result": {
+  "result": {
     "id": "minecraft:blue_ice"
   },
   "time": 200

@@ -1,16 +1,17 @@
 {
   "type": "ragium:freezing",
   "fluid_ingredient": {
-    "fluids": "#c:honey"
+    "amount": 250,
+    "fluids": "#c:lava"
   },
   "item_ingredient": {
     "items": {
       "type": "ragium:blue_print",
-      "number": 0
+      "number": 1
     }
   },
   "result": {
-    "id": "minecraft:honey_block"
+    "id": "minecraft:magma_block"
   },
   "time": 200
 }

@@ -24,6 +24,7 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
+import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemAndItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
@@ -164,12 +165,12 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         if (!event.isPresentTag(HTFluidPart.MOLTEN, entry)) return
         // レシピを登録
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
-        HTItemOrFluidRecipeBuilder.freezing(output) {
-            ingredient += inputCreator.create(HTFluidPart.MOLTEN, entry) {
+        HTFreezingRecipeBuilder.create(output) {
+            itemIngredient = getBlueprint(prefix)
+            fluidIngredient = inputCreator.create(HTFluidPart.MOLTEN, entry) {
                 part.getScaledAmount(it, entry).toInt()
             }
-            ingredient += getBlueprint(prefix)
-            result += resultCreator.create(resultItem)
+            result = resultCreator.create(resultItem)
             recipeId suffix "_from_molten"
         }
     }

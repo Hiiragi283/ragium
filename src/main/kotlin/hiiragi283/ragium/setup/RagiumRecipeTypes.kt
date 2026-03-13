@@ -22,6 +22,7 @@ import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
@@ -63,7 +64,7 @@ object RagiumRecipeTypes {
 
     // Machine - Advanced
     @JvmField
-    val FREEZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
+    val FREEZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTFreezingRecipe> =
         REGISTER.registerType(RagiumConst.FREEZING)
 
     @JvmField

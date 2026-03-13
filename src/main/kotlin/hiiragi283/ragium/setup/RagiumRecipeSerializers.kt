@@ -73,7 +73,7 @@ object RagiumRecipeSerializers {
         RagiumConst.PRINTING,
         MapBiCodec.composite(
             HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTPrintingRecipe::ingredient),
-            HTItemHolderLike.CODEC.fieldOf("origin").forGetter(HTPrintingRecipe::origin),
+            HTItemHolderLike.HOLDER_CODEC.fieldOf("origin").forGetter(HTPrintingRecipe::origin),
             HTPrintingRecipe.CopyStrategy.CODEC
                 .fieldOf("copy_strategy")
                 .forGetter(HTPrintingRecipe::strategy),
@@ -182,8 +182,16 @@ object RagiumRecipeSerializers {
 
     // Machine - Advanced
     @JvmField
-    val FREEZING: RecipeSerializer<HTFreezingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.FREEZING, itemOrFluid(::HTFreezingRecipe))
+    val FREEZING: RecipeSerializer<HTFreezingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.FREEZING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTFreezingRecipe::itemIngredient),
+            HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTFreezingRecipe::fluidIngredient),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTFreezingRecipe::result),
+            HTProcessingRecipe.timeCodec(),
+            ::HTFreezingRecipe,
+        ),
+    )
 
     @JvmField
     val MELTING: RecipeSerializer<HTMeltingRecipe> = REGISTER.registerSerializer(
