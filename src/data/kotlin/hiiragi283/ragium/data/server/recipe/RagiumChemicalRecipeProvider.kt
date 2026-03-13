@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
@@ -13,6 +14,7 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -168,6 +170,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         ghast()
         explosive()
         blaze()
+        silicon()
     }
 
     @JvmStatic
@@ -309,6 +312,30 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             fluidIngredients += inputCreator.create(RagiumFluids.SULFUR_DIOXIDE)
             fluidIngredients += inputCreator.water()
             fluidResults += resultCreator.create(RagiumFluids.SULFURIC_ACID)
+        }
+    }
+
+    @JvmStatic
+    private fun silicon() {
+        // Quartz + Coal -> Crude Silicon
+        HTCombineItemRecipeBuilder.alloying(output) {
+            result = resultCreator.create(RagiumItems.CRUDE_SILICON)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.QUARTZ))
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL), 2)
+        }
+        // Quartz + Coal Coke -> Crude Silicon
+        HTCombineItemRecipeBuilder.alloying(output) {
+            result = resultCreator.create(RagiumItems.CRUDE_SILICON)
+            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.QUARTZ))
+            ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE))
+            recipeId suffix "_with_coal_coke"
+        }
+
+        // Crude Silicon + Sulfuric Acid -> Refined Silicon
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(HiiragiCoreTags.Items.SILICON)
+            ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
+            result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.SILICON)
         }
     }
 

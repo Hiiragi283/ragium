@@ -12,12 +12,14 @@ import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPart
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.getBucketHolder
+import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
@@ -47,6 +49,10 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .apply(Tags.Items.FOODS_COOKED_MEAT)
             .add(items.getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT))
         // Others
+        factory
+            .apply(HiiragiCoreTags.Items.SILICON)
+            .add(RagiumItems.CRUDE_SILICON)
+
         upgradeTargets(factory)
     }
 

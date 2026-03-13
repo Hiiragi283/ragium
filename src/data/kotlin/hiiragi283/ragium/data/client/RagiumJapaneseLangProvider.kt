@@ -86,6 +86,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.RAGI_MATTER, "ラギマター")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        add(RagiumItems.CRUDE_SILICON, "粗生シリコン")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
         add(RagiumItems.PLATED_CIRCUIT_BOARD, "鍍金された回路基板")
         add(RagiumItems.PRINTED_CIRCUIT_BOARD, "刻印された回路基板")

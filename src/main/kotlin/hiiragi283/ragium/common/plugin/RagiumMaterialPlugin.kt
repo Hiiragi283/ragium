@@ -174,10 +174,15 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
     @JvmStatic
     private fun existing(provider: HTMaterialPlugin.MaterialProvider) {
-        provider.getBuilder(VanillaMaterialKeys.WOOD).apply {
-            addItemPrefixes(RagiumParts.pellet)
-        }
+        provider.getBuilder(VanillaMaterialKeys.WOOD).addItemPrefixes(RagiumParts.pellet)
 
+        provider.getBuilder(CommonMaterialKeys.SILICON).apply {
+            setDefaultPart(HTDefaultPart.Prefixed.INGOT)
+
+            addBlockPrefixes(CommonParts.BLOCK)
+            addItemPrefixes(CommonParts.DUST, CommonParts.INGOT, CommonParts.PLATE)
+        }
+        // Matter Value
         provider.getBuilder(VanillaMaterialKeys.AMETHYST)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 32
 
         provider.getBuilder(VanillaMaterialKeys.COPPER)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 256 / 2

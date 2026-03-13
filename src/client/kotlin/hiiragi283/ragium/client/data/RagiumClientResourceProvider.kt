@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.HTDynamicResourceProvider
 import hiiragi283.core.api.resource.itemId
 import hiiragi283.core.api.resource.toId
+import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumItems
 import net.mehvahdjukaar.moonlight.api.events.AfterLanguageLoadEvent
@@ -16,6 +17,11 @@ data object RagiumClientResourceProvider : HTDynamicResourceProvider.Client(Ragi
 
     override fun regenerateDynamicAssets(executor: Consumer<ResourceGenTask>) {
         // Texture
+        resprite(
+            RagiumItems.CRUDE_SILICON.itemId,
+            HTConst.MINECRAFT.toId(HTConst.ITEM, "light_gray_dye.png"),
+            CommonMaterialKeys.SILICON,
+        ).let(executor::accept)
         resprite(
             RagiumItems.CRYO_CHARGE.itemId,
             HTConst.MINECRAFT.toId(HTConst.ITEM, "wind_charge.png"),
