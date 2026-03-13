@@ -1,18 +1,12 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
-import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -21,9 +15,7 @@ import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.MIXER, pos, state) {
@@ -52,7 +44,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
     private lateinit var outputSlot: HTBasicItemSlot
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        inputSlots = List(HTMixingRecipe.MAX_ITEM_INPUT) {
+        inputSlots = List(2) {
             builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
         }
 
@@ -64,18 +56,7 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
     private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
     private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        RagiumRecipeTypes.MIXING,
-        { _, _ ->
-            val itemMap: Map<HTItemResourceType, Int> = HTShapelessRecipeHelper.createMap(inputSlots)
-            val fluidMap: Map<HTFluidResourceType, Int> = HTShapelessRecipeHelper.createMap(inputTanks)
-            if (itemMap.isEmpty() && fluidMap.isEmpty()) null else HTChemicalRecipeInput(itemMap, fluidMap)
-        },
-        {
-            onComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTChemicalRecipeInput, HTMixingRecipe> ->
-            }
-        },
-    )
+    override fun createHandler(): HTRecipeHandler<*, *> = TODO()
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.mixer
 }

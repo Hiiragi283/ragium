@@ -17,7 +17,7 @@ class HTCombiningRecipeCategory<RECIPE : HTCombiningRecipe>(
     recipeType: HTHolderRecipeViewerType<*, RECIPE>,
 ) : HTProcessingRecipeCategory<RECIPE>(guiHelper, recipeType) {
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RECIPE, focuses: IFocusGroup) {
-        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(maxInputs + 0.25), getPosition(1))
+        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(maxInputs + 0.25), getPosition(0))
     }
 
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RECIPE, focuses: IFocusGroup) {

@@ -13,10 +13,10 @@ import hiiragi283.core.setup.HCBlocks
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
-import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
@@ -90,21 +90,21 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // Coal + Water -> Synthetic Gas
-        HTChemicalRecipeBuilder.mixing(output) {
+        HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
             itemIngredients += inputCreator.create(Items.BLAZE_POWDER, amount = 0)
             fluidIngredients += inputCreator.water()
 
-            fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
+            result += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
             recipeId suffix "_from_coal"
         }
         // Synthetic Gas + H2O -> CO2 + 2x H2
-        HTChemicalRecipeBuilder.mixing(output) {
+        HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM, amount = 0)
             fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
             fluidIngredients += inputCreator.water()
 
-            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 2000)
+            result += resultCreator.create(RagiumFluids.HYDROGEN, 2000)
             recipeId replace RagiumAPI.id("water_gas_shift_reaction")
         }
         // Coal -> Synthetic Oil
@@ -151,11 +151,11 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result += resultCreator.create(RagiumFluids.NAOH_SOLUTION)
         }
         // H2SO4 + 2x NaOH aq -> Na2SO4 + 2x H2O
-        HTChemicalRecipeBuilder.mixing(output) {
+        HTMixingRecipeBuilder.create(output) {
             fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID)
             fluidIngredients += inputCreator.create(RagiumFluids.NAOH_SOLUTION)
-            itemResults += resultCreator.create(Items.MAGMA_CREAM)
-            fluidResults += resultCreator.water(2000)
+            result += resultCreator.create(Items.MAGMA_CREAM)
+            result += resultCreator.water(2000)
             recipeId replace id("magma_cream_from_neutralization")
         }
     }
@@ -169,13 +169,13 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
         }
         // Raw Rubber + Sulfur + Carbon -> Rubber
-        HTChemicalRecipeBuilder.mixing(output) {
+        /*HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(HCItems.RAW_RUBBER)
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
 
-            itemResults += resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 4)
-        }
+            result += resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 4)
+        }*/
     }
 
     //    Nether    //
@@ -238,12 +238,12 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // CH4 + H2O -> Synthetic Gas
-        HTChemicalRecipeBuilder.mixing(output) {
+        HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL, amount = 0)
             fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
             fluidIngredients += inputCreator.water()
 
-            fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 2000)
+            result += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 2000)
             recipeId suffix "_from_methane"
         }
     }
@@ -289,10 +289,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Soul Soil -> KNO3
 
         // 2x KNO3 + H2SO4 -> 2x HNO3 + K2SO4
-        HTChemicalRecipeBuilder.mixing(output) {
+        HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER, 2)
             fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID)
-            fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID, 2000)
+            result += resultCreator.create(RagiumFluids.NITRIC_ACID, 2000)
             recipeId suffix "_from_saltpeter"
         }
 
@@ -302,20 +302,20 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE)
         }
         // NO2 + H2O -> HNO3
-        HTChemicalRecipeBuilder.mixing(output) {
+        HTMixingRecipeBuilder.create(output) {
             fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN_DIOXIDE)
             fluidIngredients += inputCreator.water()
-            fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID)
+            result += resultCreator.create(RagiumFluids.NITRIC_ACID)
         }
     }
 
     @JvmStatic
     private fun explosive() {
         // HNO3 + H2SO4 -> Mixture Acid
-        HTChemicalRecipeBuilder.mixing(output) {
+        HTMixingRecipeBuilder.create(output) {
             fluidIngredients += inputCreator.create(RagiumFluids.NITRIC_ACID, 500)
             fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
-            fluidResults += resultCreator.create(RagiumFluids.MIXTURE_ACID)
+            result += resultCreator.create(RagiumFluids.MIXTURE_ACID)
         }
     }
 
@@ -327,10 +327,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result += resultCreator.create(RagiumFluids.SULFUR_DIOXIDE)
         }
         // SO2 + H2O -> H2SO4
-        HTChemicalRecipeBuilder.mixing(output) {
+        HTMixingRecipeBuilder.create(output) {
             fluidIngredients += inputCreator.create(RagiumFluids.SULFUR_DIOXIDE)
             fluidIngredients += inputCreator.water()
-            fluidResults += resultCreator.create(RagiumFluids.SULFURIC_ACID)
+            result += resultCreator.create(RagiumFluids.SULFURIC_ACID)
         }
     }
 

@@ -94,7 +94,7 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val MIXING: HTHolderRecipeViewerType<HTChemicalRecipeInput, HTMixingRecipe> =
-        create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 8, 18 * 3)
+        create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 8)
 
     @JvmField
     val WASHING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
