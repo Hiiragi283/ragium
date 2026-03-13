@@ -6,6 +6,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
@@ -57,20 +58,23 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
     private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(getLookup()) {
-        inputFactory = { _, _ -> createInput(inputHandler) }
-        canComplete = { level: ServerLevel, _, input: SingleRecipeInput, recipe: HTItemToItemRecipe ->
-            recipe.assemble(input, level.registryAccess()).let(outputHandler::canInsert)
-        }
-        onComplete = { level, _, input, recipe ->
-            // output
-            recipe.assemble(input, level.registryAccess()).let(outputHandler::insert)
-            // input
-            inputHandler.consume(recipe.getRequiredAmount(input))
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
+        getLookup(),
+        { _, _ -> createInput(inputHandler) },
+        {
+            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<SingleRecipeInput, out HTItemToItemRecipe> ->
+                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+            }
+            onComplete = { level, _, recipe: HTHandledRecipe<SingleRecipeInput, out HTItemToItemRecipe> ->
+                // output
+                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+                // input
+                inputHandler.consume(recipe.map(HTItemToItemRecipe::getRequiredAmount))
 
-            playSound()
-        }
-    }
+                playSound()
+            }
+        },
+    )
 
     protected abstract fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToItemRecipe, *>
 

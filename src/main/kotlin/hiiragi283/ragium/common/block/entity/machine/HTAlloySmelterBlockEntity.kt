@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.storage.item.HTItemResourceType
@@ -62,23 +63,27 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(RagiumRecipeTypes.ALLOYING) {
-        inputFactory = { _, _ ->
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
+        RagiumRecipeTypes.ALLOYING,
+        { _, _ ->
             val map: Map<HTItemResourceType, Int> = HTShapelessRecipeHelper.createMap(inputSlots)
             if (map.isEmpty()) null else HTShapelessRecipeInput(map)
-        }
-        canComplete = { level: ServerLevel, _, input: HTShapelessRecipeInput, recipe: HTAlloyingRecipe ->
-            recipe.assemble(input, level.registryAccess()).let(outputHandler::canInsert)
-        }
-        onComplete = { level, _, input, recipe ->
-            // output
-            recipe.assemble(input, level.registryAccess()).let(outputHandler::insert)
-            // input
-            HTShapelessRecipeHelper.shapelessConsume(recipe.ingredients, inputSlots)
+        },
+        {
+            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTShapelessRecipeInput, HTAlloyingRecipe> ->
+                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+            }
+            onComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTShapelessRecipeInput, HTAlloyingRecipe> ->
+                // output
+                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+                // input
+                val recipe: HTAlloyingRecipe = recipe.recipe
+                HTShapelessRecipeHelper.shapelessConsume(recipe.ingredients, inputSlots)
 
-            playSound(SoundEvents.FIRE_EXTINGUISH)
-        }
-    }
+                playSound(SoundEvents.FIRE_EXTINGUISH)
+            }
+        },
+    )
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.alloySmelter
 }

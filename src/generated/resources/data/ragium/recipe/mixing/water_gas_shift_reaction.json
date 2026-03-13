@@ -2,9 +2,11 @@
   "type": "ragium:mixing",
   "fluid_ingredient": [
     {
+      "amount": 1000,
       "fluids": "#c:synthetic_gas"
     },
     {
+      "amount": 1000,
       "fluids": "#c:water"
     }
   ],

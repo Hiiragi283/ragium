@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
@@ -51,21 +52,25 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(RagiumRecipeTypes.FREEZING) {
-        inputFactory = { _, _ -> createInput(itemInputHandler, fluidInputHandler) }
-        canComplete = { level: ServerLevel, _, input: HTItemAndFluidRecipeInput, recipe: HTFreezingRecipe ->
-            recipe.assemble(input, level.registryAccess()).let(outputHandler::canInsert)
-        }
-        onComplete = { level, _, input, recipe ->
-            // output
-            recipe.assemble(input, level.registryAccess()).let(outputHandler::insert)
-            // input
-            fluidInputHandler.consume(recipe.fluidIngredient)
-            itemInputHandler.consume(recipe.itemIngredient)
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
+        RagiumRecipeTypes.FREEZING,
+        { _, _ -> createInput(itemInputHandler, fluidInputHandler) },
+        {
+            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTFreezingRecipe> ->
+                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+            }
+            onComplete = { level, _, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTFreezingRecipe> ->
+                // output
+                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+                // input
+                val recipe: HTFreezingRecipe = recipe.recipe
+                fluidInputHandler.consume(recipe.fluidIngredient)
+                itemInputHandler.consume(recipe.itemIngredient)
 
-            playSound(SoundEvents.GLASS_HIT)
-        }
-    }
+                playSound(SoundEvents.GLASS_HIT)
+            }
+        },
+    )
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.freezer
 }

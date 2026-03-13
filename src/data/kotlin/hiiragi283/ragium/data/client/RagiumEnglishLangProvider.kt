@@ -90,6 +90,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.PLATED_CIRCUIT_BOARD, "Plated Circuit Board")
         add(RagiumItems.PRINTED_CIRCUIT_BOARD, "Printed Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
+        add(RagiumItems.CRYO_CHARGE, "Cryo-Charge")
 
         add(RagiumItems.EMPTY_CAN, "Empty Can")
 

@@ -5,7 +5,9 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.assembleFluid
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -93,27 +95,32 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
     private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
     private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(getLookup()) {
-        inputFactory = { _, _ -> createInput(itemInputHandler, fluidInputHandler) }
-        canComplete = { level: ServerLevel, _, input: HTItemAndFluidRecipeInput, recipe: HTItemOrFluidRecipe ->
-            val access: RegistryAccess = level.registryAccess()
-            val bool1: Boolean = itemOutputHandler.canInsert(recipe.assemble(input, access))
-            val bool2: Boolean = fluidOutputHandler.canInsert(recipe.assembleFluid(input, access))
-            bool1 && bool2
-        }
-        onComplete = { level: ServerLevel, _, input: HTItemAndFluidRecipeInput, recipe: HTItemOrFluidRecipe ->
-            // output
-            val access: RegistryAccess = level.registryAccess()
-            itemOutputHandler.insert(recipe.assemble(input, access))
-            fluidOutputHandler.insert(recipe.assembleFluid(input, access))
-            // input
-            val (itemAmount: Int?, fluidAmount: Int?) = recipe.getRequiredAmount(input).toPair()
-            fluidInputHandler.consume(fluidAmount ?: 0)
-            itemInputHandler.consume(itemAmount ?: 0)
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
+        getLookup(),
+        { _, _ -> createInput(itemInputHandler, fluidInputHandler) },
+        {
+            canComplete =
+                { level: ServerLevel, _, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe> ->
+                    val access: RegistryAccess = level.registryAccess()
+                    val bool1: Boolean = itemOutputHandler.canInsert(recipe.assemble(access))
+                    val bool2: Boolean = fluidOutputHandler.canInsert(recipe.assembleFluid(access))
+                    bool1 && bool2
+                }
+            onComplete =
+                { level: ServerLevel, _, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe> ->
+                    // output
+                    val access: RegistryAccess = level.registryAccess()
+                    itemOutputHandler.insert(recipe.assemble(access))
+                    fluidOutputHandler.insert(recipe.assembleFluid(access))
+                    // input
+                    val (itemAmount: Int?, fluidAmount: Int?) = recipe.map(HTItemOrFluidRecipe::getRequiredAmount).toPair()
+                    fluidInputHandler.consume(fluidAmount ?: 0)
+                    itemInputHandler.consume(itemAmount ?: 0)
 
-            playSound()
-        }
-    }
+                    playSound()
+                }
+        },
+    )
 
     protected abstract fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe, *>
 

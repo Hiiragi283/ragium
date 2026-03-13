@@ -5,8 +5,11 @@ import hiiragi283.core.api.div
 import hiiragi283.core.api.function.andThen
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.base.HTProcessingRecipe
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
@@ -43,7 +46,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     HTMachineBlockEntity(type, pos, state) {
     protected lateinit var recipeHandler: HTRecipeHandler<*, *>
         private set
-    protected lateinit var recipeComponent: HTRecipeComponent<*, *>
+    protected lateinit var recipeComponent: HTRecipeComponent
         private set
 
     override fun initializeVariables() {
@@ -142,11 +145,36 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         }
 
         protected fun <INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>> createHandler(
+            inputFactory: (ServerLevel, BlockPos) -> INPUT?,
+            cacheProvider: () -> HTRecipeCache<INPUT, RECIPE>,
+            builderAction: HTProgressHandler.Builder<HTHandledRecipe<INPUT, RECIPE>>.() -> Unit,
+        ): HTRecipeHandler<INPUT, RECIPE> = HTProgressHandler.create {
+            recipeFinder = finder@{ level: ServerLevel, pos: BlockPos ->
+                val input: INPUT = inputFactory(level, pos) ?: return@finder null
+                val recipe: RECIPE = cacheProvider().getFirstRecipe(input, level) ?: return@finder null
+                HTHandledRecipe.create(input, recipe)
+            }
+            maxProgressGetter = HTHandledRecipe<INPUT, RECIPE>::recipe
+                .andThen(HTProcessingRecipe<INPUT>::time)
+                .andThen(::updateAndGetProgress)
+            progressGetter = { _, _ -> battery.consume() }
+            builderAction()
+        }
+
+        protected fun <INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>> createHandler(
             lookup: HTRecipeLookup<INPUT, RECIPE, *>,
-            builderAction: HTRecipeHandler.Builder<INPUT, RECIPE>.() -> Unit,
-        ): HTRecipeHandler<INPUT, RECIPE> = HTRecipeHandler.create {
-            recipeFinder = lookup.createCache()::getFirstRecipe
-            maxProgressGetter = HTProcessingRecipe<INPUT>::time.andThen(::updateAndGetProgress)
+            inputFactory: HTProgressHandler.LevelFunction<INPUT?>,
+            builderAction: HTProgressHandler.Builder<HTHandledRecipe<INPUT, RECIPE>>.() -> Unit,
+        ): HTRecipeHandler<INPUT, RECIPE> = HTProgressHandler.create {
+            val cache: HTRecipeCache<INPUT, RECIPE> = lookup.createCache()
+            recipeFinder = finder@{ level: ServerLevel, pos: BlockPos ->
+                val input: INPUT = inputFactory.apply(level, pos) ?: return@finder null
+                val recipe: RECIPE = cache.getFirstRecipe(input, level) ?: return@finder null
+                HTHandledRecipe.create(input, recipe)
+            }
+            maxProgressGetter = HTHandledRecipe<INPUT, RECIPE>::recipe
+                .andThen(HTProcessingRecipe<INPUT>::time)
+                .andThen(::updateAndGetProgress)
             progressGetter = { _, _ -> battery.consume() }
             builderAction()
         }

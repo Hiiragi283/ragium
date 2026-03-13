@@ -5,6 +5,7 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -79,14 +80,9 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
         createInput(itemInputHandler, fluidInputHandler)
 
-    override fun onComplete(
-        level: ServerLevel,
-        pos: BlockPos,
-        input: HTItemAndFluidRecipeInput,
-        recipe: HTWashingRecipe,
-    ) {
-        itemInputHandler.consume(recipe.getRequiredItemAmount(input))
-        fluidInputHandler.consume(recipe.getRequiredFluidAmount(input))
+    override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, out HTWashingRecipe>) {
+        itemInputHandler.consume(recipe.map(HTWashingRecipe::getRequiredItemAmount))
+        fluidInputHandler.consume(recipe.map(HTWashingRecipe::getRequiredItemAmount))
 
         playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE)
     }

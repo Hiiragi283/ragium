@@ -90,6 +90,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.PLATED_CIRCUIT_BOARD, "鍍金された回路基板")
         add(RagiumItems.PRINTED_CIRCUIT_BOARD, "刻印された回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
+        add(RagiumItems.CRYO_CHARGE, "クライオチャージ")
 
         add(RagiumItems.EMPTY_CAN, "空の缶詰")
 

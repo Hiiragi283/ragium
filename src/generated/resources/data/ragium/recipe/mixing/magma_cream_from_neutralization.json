@@ -2,9 +2,11 @@
   "type": "ragium:mixing",
   "fluid_ingredient": [
     {
+      "amount": 1000,
       "fluids": "#c:sulfuric_acid"
     },
     {
+      "amount": 1000,
       "fluids": "#c:sodium_hydroxide_solution"
     }
   ],

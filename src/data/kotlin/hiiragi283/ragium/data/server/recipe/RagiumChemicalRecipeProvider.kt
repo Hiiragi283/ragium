@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -16,6 +17,7 @@ import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 
@@ -122,9 +124,19 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredient = inputCreator.create(Items.WIND_CHARGE)
             result = resultCreator.create(RagiumFluids.NITROGEN, 125)
         }
-        // Wind Charge + Blue Ice -> Cryo-Charge
-
+        // Cryo-Charge
+        HTShapedRecipeBuilder.create(output) {
+            cross8()
+            define('A') += Items.PACKED_ICE
+            define('B') += Items.BLUE_ICE
+            define('C') += CommonTagPrefixes.DUST to VanillaMaterialKeys.BREEZE
+            resultStack += RagiumItems.CRYO_CHARGE
+        }
         // Cryo-Charge -> liq N2
+        HTMeltingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumItems.CRYO_CHARGE)
+            result = resultCreator.create(RagiumFluids.LIQUID_NITROGEN, 125)
+        }
     }
 
     @JvmStatic

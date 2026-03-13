@@ -1,7 +1,9 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.assembleFluid
 import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
@@ -44,20 +46,23 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
     private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(RagiumRecipeTypes.MELTING) {
-        inputFactory = { _, _ -> createInput(inputHandler) }
-        canComplete = { level: ServerLevel, _, input: SingleRecipeInput, recipe: HTMeltingRecipe ->
-            recipe.assembleFluid(input, level.registryAccess()).let(outputHandler::canInsert)
-        }
-        onComplete = { level, _, input, recipe ->
-            // output
-            recipe.assembleFluid(input, level.registryAccess()).let(outputHandler::insert)
-            // input
-            inputHandler.consume(recipe.ingredient)
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
+        RagiumRecipeTypes.MELTING,
+        { _, _ -> createInput(inputHandler) },
+        {
+            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<SingleRecipeInput, HTMeltingRecipe> ->
+                recipe.assembleFluid(level.registryAccess()).let(outputHandler::canInsert)
+            }
+            onComplete = { level, _, recipe: HTHandledRecipe<SingleRecipeInput, HTMeltingRecipe> ->
+                // output
+                recipe.assembleFluid(level.registryAccess()).let(outputHandler::insert)
+                // input
+                inputHandler.consume(recipe.recipe.ingredient)
 
-            playSound(SoundEvents.LAVA_POP)
-        }
-    }
+                playSound(SoundEvents.LAVA_POP)
+            }
+        },
+    )
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.melter
 }

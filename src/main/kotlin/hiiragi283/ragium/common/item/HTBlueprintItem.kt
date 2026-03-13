@@ -18,7 +18,9 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
-class HTBlueprintItem(properties: Properties) : Item(properties), HTSubCreativeTabContents {
+class HTBlueprintItem(properties: Properties) :
+    Item(properties),
+    HTSubCreativeTabContents {
     companion object {
         const val MAX_NUMBER = 7
 
@@ -59,7 +61,7 @@ class HTBlueprintItem(properties: Properties) : Item(properties), HTSubCreativeT
     }
 
     //    HTSubCreativeTabContents    //
-    
+
     override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
         RANGE
             .map { createItemStack(RagiumItems.BLUEPRINT, RagiumDataComponents.BLUEPRINT_NUMBER, it) }

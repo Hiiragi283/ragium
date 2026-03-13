@@ -5,6 +5,7 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -69,22 +70,25 @@ abstract class HTItemAndItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
     private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(getLookup()) {
-        inputFactory = { _, _ -> createInput(inputHandler, catalystHandler) }
-        canComplete = { level: ServerLevel, _, input: HTDoubleRecipeInput, recipe: HTItemAndItemRecipe ->
-            recipe.assemble(input, level.registryAccess()).let(outputHandler::canInsert)
-        }
-        onComplete = { level: ServerLevel, _, input: HTDoubleRecipeInput, recipe: HTItemAndItemRecipe ->
-            // output
-            recipe.assemble(input, level.registryAccess()).let(outputHandler::insert)
-            // input
-            val (inputCount: Int, catalystCount: Int) = recipe.getRequiredAmount(input)
-            inputHandler.consume(inputCount)
-            catalystHandler.consume(catalystCount)
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
+        getLookup(),
+        { _, _ -> createInput(inputHandler, catalystHandler) },
+        {
+            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTDoubleRecipeInput, out HTItemAndItemRecipe> ->
+                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+            }
+            onComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTDoubleRecipeInput, out HTItemAndItemRecipe> ->
+                // output
+                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+                // input
+                val (inputCount: Int, catalystCount: Int) = recipe.map(HTItemAndItemRecipe::getRequiredAmount)
+                inputHandler.consume(inputCount)
+                catalystHandler.consume(catalystCount)
 
-            playSound()
-        }
-    }
+                playSound()
+            }
+        },
+    )
 
     protected abstract fun getLookup(): HTRecipeLookup<HTDoubleRecipeInput, out HTItemAndItemRecipe, *>
 

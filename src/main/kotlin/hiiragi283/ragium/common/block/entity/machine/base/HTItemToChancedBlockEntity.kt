@@ -5,6 +5,7 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTItemToChancedRecipe
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -58,13 +59,12 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
 
     override fun createInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)
 
-    override fun onComplete(
+    final override fun onComplete(
         level: ServerLevel,
         pos: BlockPos,
-        input: SingleRecipeInput,
-        recipe: HTItemToChancedRecipe,
+        recipe: HTHandledRecipe<SingleRecipeInput, out HTItemToChancedRecipe>,
     ) {
-        inputHandler.consume(recipe.getRequiredAmount(input))
+        inputHandler.consume(recipe.map(HTItemToChancedRecipe::getRequiredAmount))
         playSound()
     }
 

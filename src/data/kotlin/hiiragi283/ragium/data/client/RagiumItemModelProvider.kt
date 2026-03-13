@@ -22,6 +22,8 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
     override fun registerModels() {
         existingFileHelper.trackGenerated(wireOverlay, TEXTURE)
 
+        trackItem(RagiumItems.CRYO_CHARGE)
+
         buildList {
             addAll(RagiumItems.REGISTER.asSequence())
 
