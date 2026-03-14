@@ -13,20 +13,22 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidUtil
 
 data class HTBucketInteractingRecipe(val fluid: HTSimpleFluidHolderLike) : HTTankInteractingRecipe {
-    private val ingredient: HTFluidIngredient = HTIngredientCreator.create(fluid.get(), HTConst.DEFAULT_FLUID_AMOUNT)
+    override val amount: Int = HTConst.DEFAULT_FLUID_AMOUNT
+    private val ingredient: HTFluidIngredient = HTIngredientCreator.create(fluid.get(), amount)
 
-    override fun emptyContainer(container: ItemStack): Pair<ItemStack, FluidStack> {
-        val fluidStack: FluidStack = FluidUtil.getFluidContained(container).orElse(FluidStack.EMPTY)
-        return when {
-            ingredient.test(fluidStack) -> container.craftingRemainingItem to fluidStack
-            else -> ItemStack.EMPTY to FluidStack.EMPTY
-        }
-    }
+    override fun canEmptyContainer(container: ItemStack): Boolean = FluidUtil
+        .getFluidContained(container)
+        .map { stack: FluidStack ->
+            ingredient.test(stack) && FluidUtil.getFilledBucket(stack).`is`(container.item)
+        }.orElse(false)
 
-    override fun fillContainer(container: ItemStack, fluidStack: FluidStack): ItemStack = when {
-        container.`is`(Tags.Items.BUCKETS_EMPTY) && ingredient.test(fluidStack) -> FluidUtil.getFilledBucket(fluidStack)
-        else -> ItemStack.EMPTY
-    }
+    override fun emptyContainer(container: ItemStack): Pair<ItemStack, FluidStack> =
+        container.craftingRemainingItem to FluidUtil.getFluidContained(container).orElse(FluidStack.EMPTY)
+
+    override fun canFillContainer(container: ItemStack, fluidStack: FluidStack): Boolean =
+        container.`is`(Tags.Items.BUCKETS_EMPTY) && ingredient.test(fluidStack)
+
+    override fun fillContainer(container: ItemStack, fluidStack: FluidStack): ItemStack = FluidUtil.getFilledBucket(fluidStack)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BUCKET_INTERACTION
 }

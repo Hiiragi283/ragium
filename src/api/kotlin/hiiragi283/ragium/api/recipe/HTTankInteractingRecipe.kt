@@ -17,7 +17,13 @@ interface HTTankInteractingRecipe : HTSerializableRecipe<RecipeInput> {
             HTDeferredRecipeType(RagiumAPI.id(RagiumConst.TANK_INTERACTION))
     }
 
+    val amount: Int
+
+    fun canEmptyContainer(container: ItemStack): Boolean
+
     fun emptyContainer(container: ItemStack): Pair<ItemStack, FluidStack>
+
+    fun canFillContainer(container: ItemStack, fluidStack: FluidStack): Boolean
 
     fun fillContainer(container: ItemStack, fluidStack: FluidStack): ItemStack
 

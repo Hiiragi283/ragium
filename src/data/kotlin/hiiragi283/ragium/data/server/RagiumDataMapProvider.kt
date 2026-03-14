@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.server
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.map.HTDataMapProvider
 import hiiragi283.core.api.fraction
+import hiiragi283.core.api.item.alchemy.HTBottleType
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
@@ -132,9 +133,9 @@ class RagiumDataMapProvider(context: HTDataGenContext) : HTDataMapProvider(conte
             .add(Tags.Items.OBSIDIANS_NORMAL, 64, false)
             // Dynamic
             .addItem(Items.ENCHANTED_BOOK, 1)
-            .addItem(Items.POTION, 1)
-            .addItem(Items.SPLASH_POTION, 1)
-            .addItem(Items.LINGERING_POTION, 1)
+            .addItem(HTBottleType.DEFAULT, 1)
+            .addItem(HTBottleType.SPLASH, 1)
+            .addItem(HTBottleType.LINGERING, 1)
     }
 
     private fun upgrade() {

@@ -1,0 +1,8 @@
+{
+  "type": "ragium:tank_interaction",
+  "amount": 1000,
+  "empty_container": "minecraft:sponge",
+  "filled_container": "minecraft:wet_sponge",
+  "fluid": "minecraft:water",
+  "fluid_tag": "#c:water"
+}

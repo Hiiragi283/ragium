@@ -44,7 +44,7 @@ class HTTankInteractionRecipeCategory(guiHelper: IGuiHelper) :
             builder
                 .addSlot(RecipeIngredientRole.CATALYST)
                 .setPosition(getPosition(2), getPosition(0))
-                .setFluidRenderer(extension.getTankCapacity(recipe1), false, 16, 18 * 3 - 2)
+                .setFluidRenderer(recipe1.amount.toLong(), false, 16, 18 * 3 - 2)
                 .setTankBackground(HTBackgroundType.NONE),
         )
         // outputs

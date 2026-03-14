@@ -23,6 +23,7 @@ import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryEx
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketInteractionRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTPotionBottleInteractionRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPrintingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTSimpleTankInteractionRecipeCategoryExtension
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -106,6 +107,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         tankInteraction = HTTankInteractionRecipeCategory(guiHelper)
         tankInteraction.addExtension(HTSimpleTankInteractionRecipeCategoryExtension)
         tankInteraction.addExtension(HTBucketInteractionRecipeCategoryExtension(manager))
+        tankInteraction.addExtension(HTPotionBottleInteractionRecipeCategoryExtension(manager))
 
         initItemToItem(guiHelper, manager)
         initItemToChanced(guiHelper, manager)

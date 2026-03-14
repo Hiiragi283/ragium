@@ -1,6 +1,5 @@
 package hiiragi283.ragium.client.jei.extension
 
-import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.integration.jei.addFluidStacks
 import hiiragi283.core.api.registry.isOf
 import hiiragi283.core.api.registry.toStack
@@ -16,16 +15,17 @@ import net.minecraft.world.item.Items
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidUtil
 
-class HTBucketInteractionRecipeCategoryExtension(private val manager: IIngredientManager) :
+data class HTBucketInteractionRecipeCategoryExtension(private val manager: IIngredientManager) :
     HTTankInteractingRecipeCategoryExtension<HTBucketInteractingRecipe> {
-    private fun getFluid(recipe: HTBucketInteractingRecipe): FluidStack = recipe.fluid.toStack(HTConst.DEFAULT_FLUID_AMOUNT)
-
     override fun <T : IIngredientAcceptor<T>> setEmptyContainer(recipe: HTBucketInteractingRecipe, accessor: T) {
         accessor.addItemLike(Items.BUCKET)
     }
 
     override fun <T : IIngredientAcceptor<T>> setFilledContainer(recipe: HTBucketInteractingRecipe, accessor: T) {
-        recipe.let(::getFluid).let(FluidUtil::getFilledBucket).let(accessor::addItemStack)
+        recipe.fluid
+            .toStack(recipe.amount)
+            .let(FluidUtil::getFilledBucket)
+            .let(accessor::addItemStack)
     }
 
     override fun <T : IIngredientAcceptor<T>> setFluid(recipe: HTBucketInteractingRecipe, accessor: T) {
@@ -43,9 +43,6 @@ class HTBucketInteractionRecipeCategoryExtension(private val manager: IIngredien
         if (fluidStack.isEmpty) return
         val bucket: ItemStack = FluidUtil.getFilledBucket(fluidStack)
         if (bucket.isEmpty) return
-
         filledSlot.createDisplayOverrides().addItemStack(bucket)
     }
-
-    override fun getTankCapacity(recipe: HTBucketInteractingRecipe): Long = HTConst.DEFAULT_FLUID_AMOUNT.toLong()
 }

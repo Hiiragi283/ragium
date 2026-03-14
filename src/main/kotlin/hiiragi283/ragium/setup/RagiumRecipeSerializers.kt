@@ -39,6 +39,7 @@ import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTCombiningRecipe
 import hiiragi283.ragium.common.recipe.special.HTBookCloningRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketInteractingRecipe
+import hiiragi283.ragium.common.recipe.special.HTPotionBottleInteractionRecipe
 import hiiragi283.ragium.common.recipe.special.HTPrintingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -92,12 +93,19 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val BUCKET_INTERACTION: RecipeSerializer<HTBucketInteractingRecipe> = REGISTER.registerSerializer(
-        "bucket_interaction",
+        "${RagiumConst.TANK_INTERACTION}/bucket",
         MapBiCodec.composite(
             VanillaBiCodecs.holderLike(Registries.FLUID).fieldOf(HTConst.FLUID).forGetter(HTBucketInteractingRecipe::fluid),
             ::HTBucketInteractingRecipe,
         ),
     )
+
+    @JvmField
+    val POTION_BOTTLE_INTERACTION: RecipeSerializer<HTPotionBottleInteractionRecipe> =
+        REGISTER.registerSerializer(
+            "${RagiumConst.TANK_INTERACTION}/potion_bottle",
+            MapBiCodecs.unit(HTPotionBottleInteractionRecipe),
+        )
 
     //    Machine    //
 

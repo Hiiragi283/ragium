@@ -28,7 +28,7 @@ abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     private var oldScale: Fraction = Fraction.ZERO
 
-    final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 保持する量の変化があれば更新させる
         val scale: Fraction = getAmountView().getLevelAsFraction()
         if (scale != this.oldScale) {

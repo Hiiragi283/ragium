@@ -12,8 +12,6 @@ interface HTTankInteractingRecipeCategoryExtension<RECIPE : HTTankInteractingRec
 
     fun <T : IIngredientAcceptor<T>> setFluid(recipe: RECIPE, accessor: T) {}
 
-    fun getTankCapacity(recipe: RECIPE): Long
-
     fun onDisplayedIngredientsUpdate(
         recipe: RECIPE,
         emptySlot: IRecipeSlotDrawable,

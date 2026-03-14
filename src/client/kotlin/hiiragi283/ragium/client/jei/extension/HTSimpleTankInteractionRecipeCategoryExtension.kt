@@ -26,6 +26,4 @@ data object HTSimpleTankInteractionRecipeCategoryExtension : HTTankInteractingRe
         fluids += recipe.fluid.getHolder(BuiltInRegistries.FLUID::getHolderOrThrow)
         accessor.addIngredients(NeoForgeTypes.FLUID_STACK, fluids.map { FluidStack(it, recipe.amount) })
     }
-
-    override fun getTankCapacity(recipe: HTSimpleTankInteractingRecipe): Long = recipe.amount.toLong()
 }
