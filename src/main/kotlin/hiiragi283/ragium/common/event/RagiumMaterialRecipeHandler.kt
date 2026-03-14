@@ -4,6 +4,7 @@ import hiiragi283.core.api.component1
 import hiiragi283.core.api.component2
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
+import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialManager
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTFluidPart
@@ -18,10 +19,12 @@ import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.property.getOrDefault
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
+import hiiragi283.core.api.times
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
@@ -31,10 +34,13 @@ import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
+import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.TagKey
+import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import org.apache.commons.lang3.math.Fraction
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
@@ -284,6 +290,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val dust: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.DUST, entry) ?: return
         // レシピを登録
+        // 水 -> 主産物 + 副産物
         HTWashingRecipeBuilder.create(output) {
             // 材料
             itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
@@ -295,7 +302,36 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
                 ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
                 ?.let(extraResult::plusAssign)
 
-            recipeId suffix "_from_crushed_ore"
+            recipeId suffix "_from_crushed_ore/water"
+        }
+        // 硫酸 -> 1.5x 主産物
+        HTWashingRecipeBuilder.create(output) {
+            // 材料
+            itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
+            fluidIngredient = inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)
+            // 主産物
+            val outputCount: Int = CommonParts.CRUSHED_ORE
+                .getScaledAmount(fraction(3, 2), entry)
+                .toFloat()
+                .let(Mth::ceil)
+            this.result = resultCreator.create(dust, outputCount)
+
+            recipeId suffix "_from_crushed_ore/sulfuric_acid"
+        }
+        // 水銀 -> 副産物 100%
+        HTWashingRecipeBuilder.create(output) {
+            val (baseResult: HTItemResult, chance: Fraction) = entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
+                ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
+                ?: return
+            if (chance == Fraction.ZERO) return
+            val inputAmount: Fraction = 250 * chance.invert()
+            // 材料
+            itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
+            fluidIngredient = inputCreator.create(RagiumFluids.MERCURY, inputAmount.toInt())
+            // 主産物
+            this.result = baseResult
+
+            recipeId suffix "_from_crushed_ore/mercury"
         }
     }
 

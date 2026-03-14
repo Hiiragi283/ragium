@@ -38,11 +38,10 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         frontMachineBlock(RagiumBlocks.ELECTRIC_FURNACE, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.PRINTER, RagiumConst.MACHINE, basic)
 
+        frontMachineBlock(RagiumBlocks.FREEZER, RagiumConst.MACHINE, cool)
         frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)
         frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, heat)
-        frontMachineBlock(RagiumBlocks.REFINERY, RagiumConst.MACHINE, heat)
-
-        frontMachineBlock(RagiumBlocks.FREEZER, RagiumConst.MACHINE, cool)
+        machineBlock(RagiumBlocks.REFINERY, ModelFile.ExistingModelFile(RagiumBlocks.REFINERY.blockId, fileHelper))
 
         frontMachineBlock(RagiumBlocks.BREWERY, RagiumConst.MACHINE, chemical)
         frontMachineBlock(RagiumBlocks.CANNING_MACHINE, RagiumConst.MACHINE, chemical)
@@ -67,6 +66,18 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
     }
 
     //    Extensions    //
+
+    private fun machineBlock(block: HTHolderLike<Block, *>, model: ModelFile) {
+        getVariantBuilder(block.get())
+            .forAllStates { state: BlockState ->
+                ConfiguredModel
+                    .builder()
+                    .modelFile(model)
+                    .rotationY(state.getValue(HTHorizontalEntityBlock.FACING).getRotationY())
+                    .build()
+            }
+        itemModels().simpleBlockItem(block.getId())
+    }
 
     private fun machineBlock(block: HTHolderLike<Block, *>, inactive: ModelFile, active: ModelFile) {
         getVariantBuilder(block.get())
