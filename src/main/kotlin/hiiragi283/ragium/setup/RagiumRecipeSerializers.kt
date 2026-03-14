@@ -33,11 +33,12 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.HTTankInteractingRecipe
+import hiiragi283.ragium.common.recipe.HTSimpleTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTCombiningRecipe
 import hiiragi283.ragium.common.recipe.special.HTBookCloningRecipe
+import hiiragi283.ragium.common.recipe.special.HTBucketInteractingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPrintingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -49,19 +50,6 @@ object RagiumRecipeSerializers {
     val REGISTER = HTDeferredRecipeSerializerRegister(RagiumAPI.MOD_ID)
 
     //    Custom    //
-
-    @JvmField
-    val TANK_INTERACTING: RecipeSerializer<HTTankInteractingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.TANK_INTERACTION,
-        MapBiCodec.composite(
-            HTItemHolderLike.HOLDER_CODEC.fieldOf("empty_container").forGetter(HTTankInteractingRecipe::emptyContainer),
-            HTItemHolderLike.HOLDER_CODEC.fieldOf("filled_container").forGetter(HTTankInteractingRecipe::filledContainer),
-            VanillaBiCodecs.holderLike(Registries.FLUID).fieldOf(HTConst.FLUID).forGetter(HTTankInteractingRecipe::fluid),
-            BiCodecs.NON_NEGATIVE_INT.fieldOf(HTConst.AMOUNT).forGetter(HTTankInteractingRecipe::amount),
-            VanillaBiCodecs.tagKey(Registries.FLUID, true).optionalFieldOf("fluid_tag").forGetter(HTTankInteractingRecipe::fluidTag),
-            ::HTTankInteractingRecipe,
-        ),
-    )
 
     // Crafting
     @JvmField
@@ -85,6 +73,29 @@ object RagiumRecipeSerializers {
                 .fieldOf("copy_strategy")
                 .forGetter(HTPrintingRecipe::strategy),
             ::HTPrintingRecipe,
+        ),
+    )
+
+    // Tank Interaction
+    @JvmField
+    val TANK_INTERACTING: RecipeSerializer<HTSimpleTankInteractingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.TANK_INTERACTION,
+        MapBiCodec.composite(
+            HTItemHolderLike.HOLDER_CODEC.fieldOf("empty_container").forGetter(HTSimpleTankInteractingRecipe::emptyContainer),
+            HTItemHolderLike.HOLDER_CODEC.fieldOf("filled_container").forGetter(HTSimpleTankInteractingRecipe::filledContainer),
+            VanillaBiCodecs.holderLike(Registries.FLUID).fieldOf(HTConst.FLUID).forGetter(HTSimpleTankInteractingRecipe::fluid),
+            BiCodecs.NON_NEGATIVE_INT.fieldOf(HTConst.AMOUNT).forGetter(HTSimpleTankInteractingRecipe::amount),
+            VanillaBiCodecs.tagKey(Registries.FLUID, true).optionalFieldOf("fluid_tag").forGetter(HTSimpleTankInteractingRecipe::fluidTag),
+            ::HTSimpleTankInteractingRecipe,
+        ),
+    )
+
+    @JvmField
+    val BUCKET_INTERACTION: RecipeSerializer<HTBucketInteractingRecipe> = REGISTER.registerSerializer(
+        "bucket_interaction",
+        MapBiCodec.composite(
+            VanillaBiCodecs.holderLike(Registries.FLUID).fieldOf(HTConst.FLUID).forGetter(HTBucketInteractingRecipe::fluid),
+            ::HTBucketInteractingRecipe,
         ),
     )
 

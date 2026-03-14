@@ -21,8 +21,10 @@ import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTBucketInteractionRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPrintingRecipeCategoryExtension
+import hiiragi283.ragium.client.jei.extension.HTSimpleTankInteractionRecipeCategoryExtension
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -39,6 +41,10 @@ import net.minecraft.world.item.ItemStack
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     companion object {
+        @JvmStatic
+        lateinit var tankInteraction: HTTankInteractionRecipeCategory
+            private set
+
         // ItemToItem
         @JvmStatic
         lateinit var compressing: HTItemToItemRecipeCategory
@@ -97,6 +103,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         val guiHelper: IGuiHelper = registration.jeiHelpers.guiHelper
         val manager: IIngredientManager = registration.jeiHelpers.ingredientManager
 
+        tankInteraction = HTTankInteractionRecipeCategory(guiHelper)
+        tankInteraction.addExtension(HTSimpleTankInteractionRecipeCategoryExtension)
+        tankInteraction.addExtension(HTBucketInteractionRecipeCategoryExtension(manager))
+
         initItemToItem(guiHelper, manager)
         initItemToChanced(guiHelper, manager)
         initItemAndItem(guiHelper, manager)
@@ -106,7 +116,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         enchanting.addExtension(HTHolderEnchantingRecipeCategoryExtension)
 
         registration.addRecipeCategories(
-            HTTankInteractionRecipeCategory(guiHelper),
+            tankInteraction,
             // Machine - Basic
             HTCombiningRecipeCategory(3, guiHelper, RagiumJeiRecipeTypes.ALLOYING),
             HTCombiningRecipeCategory(2, guiHelper, RagiumJeiRecipeTypes.ASSEMBLING),

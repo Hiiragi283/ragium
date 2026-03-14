@@ -7,7 +7,7 @@ import hiiragi283.core.api.registry.HTSimpleFluidHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.util.wrapOptional
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.recipe.HTTankInteractingRecipe
+import hiiragi283.ragium.common.recipe.HTSimpleTankInteractingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -35,7 +35,7 @@ class HTTankInteractingRecipeBuilder : HTRecipeBuilder(RagiumConst.TANK_INTERACT
 
     override fun getPrimalId(): ResourceLocation = filledContainer.getId()
 
-    override fun createRecipe(): HTTankInteractingRecipe = HTTankInteractingRecipe(
+    override fun createRecipe(): HTSimpleTankInteractingRecipe = HTSimpleTankInteractingRecipe(
         emptyContainer,
         filledContainer,
         fluid,

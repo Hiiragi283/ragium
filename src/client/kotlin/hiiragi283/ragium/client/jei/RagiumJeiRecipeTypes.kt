@@ -12,12 +12,12 @@ import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
+import hiiragi283.ragium.api.recipe.HTTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.HTTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput

@@ -5,20 +5,24 @@ import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.HTSimpleFluidHolderLike
 import hiiragi283.core.api.registry.HTSimpleHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.registry.getDataSequence
 import hiiragi283.core.api.registry.toItemLike
+import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
+import hiiragi283.ragium.common.recipe.special.HTBucketInteractingRecipe
 import hiiragi283.ragium.setup.RagiumFluids
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
@@ -27,6 +31,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps
@@ -46,6 +51,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
 
         waxing()
         redox()
+
+        bucketInteraction()
 
         dyesToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
         dyesToColor(ItemTags.BEDS, ColoredMaterials.BED)
@@ -245,6 +252,23 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                     result += resultCreator.create(before)
                     recipeId suffix "_from_${after.path}"
                 }
+            }
+    }
+
+    //    Tank Interaction    //
+
+    @JvmStatic
+    private fun bucketInteraction() {
+        provider
+            .lookupOrThrow(Registries.FLUID)
+            .filterElements { fluid: Fluid -> fluid.isSource(fluid.defaultFluidState()) }
+            .listElements()
+            .map(Holder<Fluid>::toLike)
+            .forEach { holder: HTSimpleFluidHolderLike ->
+                save(
+                    holder.getId().withPrefix("bucket_interaction"),
+                    HTBucketInteractingRecipe(holder),
+                )
             }
     }
 
