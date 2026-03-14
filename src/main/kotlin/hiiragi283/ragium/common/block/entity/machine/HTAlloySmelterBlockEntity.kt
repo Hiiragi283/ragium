@@ -43,7 +43,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         // slots
         inputSlots
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->
-                HTItemSlotWidget(
+                HTItemSlotWidget.container(
                     slot,
                     HTSlotHelper.getSlotPosX(index + 1),
                     HTSlotHelper.getSlotPosY(0.5),
@@ -51,7 +51,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
                 )
             }.forEach(widgetHolder::addWidget)
 
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6.5),
             HTSlotHelper.getSlotPosY(1),

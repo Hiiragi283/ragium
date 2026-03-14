@@ -1,12 +1,9 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.gui.HTSlotHelper
-import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.serialization.value.HTValueSerializable
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.HTMutableFluidTank
-import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
@@ -16,11 +13,7 @@ class HTCreativeTankBlockEntity(pos: BlockPos, state: BlockState) : HTTankBlockE
 
     override fun createTank(listener: HTContentListener): HTMutableFluidTank = CreativeFluidTank()
 
-    override fun setupMenu(widgetHolder: HTWidgetHolder) {
-        widgetHolder.rows = 1
-
-        widgetHolder += HTFluidWidget.createSlot(tank, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0)).setGhost()
-    }
+    override fun isCreative(): Boolean = true
 
     private inner class CreativeFluidTank :
         HTMutableFluidTank(),

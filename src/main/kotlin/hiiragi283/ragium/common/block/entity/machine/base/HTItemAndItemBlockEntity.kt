@@ -43,20 +43,20 @@ abstract class HTItemAndItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // slots
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             catalystSlot,
             HTSlotHelper.getSlotPosX(4.25),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.EXTRA_INPUT,
         )
 
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),

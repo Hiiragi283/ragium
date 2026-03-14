@@ -60,7 +60,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // inputs
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
@@ -73,7 +73,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
                 HTSlotHelper.getSlotPosY(0),
             ).setBackground(HTBackgroundType.EXTRA_INPUT)
         // outputs
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),

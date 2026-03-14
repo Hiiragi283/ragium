@@ -5,7 +5,6 @@ import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.util.Ior
 import hiiragi283.ragium.api.recipe.FluidAmount
 import hiiragi283.ragium.api.recipe.ItemAmount
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -26,7 +25,7 @@ data object HTBucketFillingRecipe : HTCustomCanningRecipe() {
     override fun getRequiredAmount(input: HTItemAndFluidRecipeInput): Ior<ItemAmount, FluidAmount> =
         Ior.Both(1, HTConst.DEFAULT_FLUID_AMOUNT)
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BUCKET_FILLING
+    override fun getSerializer(): RecipeSerializer<*> = TODO()
 
     override fun assembleFluid(input: HTItemAndFluidRecipeInput, registries: HolderLookup.Provider): FluidStack = FluidStack.EMPTY
 }

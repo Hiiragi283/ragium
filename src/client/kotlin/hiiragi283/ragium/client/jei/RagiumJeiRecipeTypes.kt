@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.HTTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
@@ -44,6 +45,10 @@ object RagiumJeiRecipeTypes {
         width: Int,
         height: Int = 18 * 1,
     ): HTFakeRecipeViewerType<INPUT, RECIPE> = HTFakeRecipeViewerType.create(recipeType, ItemStack(icon), HTBounds(0, 0, width, height))
+
+    @JvmField
+    val TANK_INTERACTION: HTHolderRecipeViewerType<RecipeInput, HTTankInteractingRecipe> =
+        create(RagiumRecipeTypes.TANK_INTERACTION, RagiumBlocks.TANK, 18 * 5, 18 * 3)
 
     // Machine - Basic
     @JvmField
@@ -88,10 +93,6 @@ object RagiumJeiRecipeTypes {
         create(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY, 18 * 8)
 
     // Machine - Elite
-    @JvmField
-    val CANNING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        create(RagiumRecipeTypes.CANNING, RagiumBlocks.CANNING_MACHINE, 18 * 8)
-
     @JvmField
     val MIXING: HTHolderRecipeViewerType<HTChemicalRecipeInput, HTMixingRecipe> =
         create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 8)

@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTCanningMachineBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.CANNING_MACHINE, pos, state) {
-    override fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe, *> = RagiumRecipeTypes.CANNING
+    override fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe, *> = RagiumRecipeTypes.REFINING // TODO
 
     override fun playSound() {
         playSound(SoundEvents.BOTTLE_FILL)

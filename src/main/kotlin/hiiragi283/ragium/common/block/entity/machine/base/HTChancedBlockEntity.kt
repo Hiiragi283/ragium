@@ -45,7 +45,7 @@ abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecip
 
     protected fun addTripleOutputs(widgetHolder: HTWidgetHolder) {
         // slots
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
@@ -54,7 +54,7 @@ abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecip
 
         for (i: Int in extraOutputSlots.indices) {
             val slot: HTBasicItemSlot = extraOutputSlots[i]
-            widgetHolder += HTItemSlotWidget(
+            widgetHolder += HTItemSlotWidget.container(
                 slot,
                 HTSlotHelper.getSlotPosX(7.5),
                 HTSlotHelper.getSlotPosY(i),

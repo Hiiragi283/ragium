@@ -4,11 +4,9 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -19,108 +17,24 @@ import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTTankInteractingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
-import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
-import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
-import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        canning()
         mixing()
         refining()
+        tankInteraction()
         washing()
-    }
-
-    //    Canning    //
-
-    @JvmStatic
-    private fun canning() {
-        save(id(RagiumConst.CANNING, "bucket_draining"), HTBucketDrainingRecipe)
-        save(id(RagiumConst.CANNING, "bucket_filling"), HTBucketFillingRecipe)
-
-        save(id(RagiumConst.CANNING, "potion_draining"), HTPotionDrainingRecipe)
-        save(id(RagiumConst.CANNING, "potion_filling"), HTPotionFillingRecipe)
-
-        // Water Bottle
-        HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(Items.GLASS_BOTTLE)
-            ingredient += inputCreator.water(250)
-            result += resultCreator.create(HTPotionHelper.createPotion(Items.POTION, Potions.WATER))
-            time /= 4
-            recipeId replace id("water_bottle")
-        }
-        // Experience
-        fillAndEmpty(
-            Items.GLASS_BOTTLE.toLike(),
-            Items.EXPERIENCE_BOTTLE.toLike(),
-            HCFluids.EXPERIENCE,
-            250,
-        )
-        // Honey Bottle
-        fillAndEmpty(
-            Items.GLASS_BOTTLE.toLike(),
-            Items.HONEY_BOTTLE.toLike(),
-            HCFluids.HONEY,
-            250,
-        )
-        // Mushroom Stew
-        fillAndEmpty(
-            Items.BOWL.toLike(),
-            Items.MUSHROOM_STEW.toLike(),
-            HCFluids.MUSHROOM_STEW,
-            250,
-        )
-        // Dragon Breath
-        fillAndEmpty(
-            Items.GLASS_BOTTLE.toLike(),
-            Items.DRAGON_BREATH.toLike(),
-            HCFluids.DRAGON_BREATH,
-            250,
-        )
-
-        // Mercury
-        fillAndEmpty(
-            Items.GLASS_BOTTLE.toLike(),
-            RagiumItems.MERCURY_BOTTLE,
-            RagiumFluids.MERCURY,
-            250,
-        )
-    }
-
-    @JvmStatic
-    private fun fillAndEmpty(
-        empty: HTItemHolderLike<*>,
-        filled: HTItemHolderLike<*>,
-        fluid: HTFluidContent,
-        amount: Int,
-    ) {
-        // Empty -> Filled
-        HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(empty)
-            ingredient += inputCreator.create(fluid, amount)
-            result += resultCreator.create(filled)
-            recipeId suffix "_from_${empty.path}"
-        }
-        // Filled -> Empty
-        HTItemOrFluidRecipeBuilder.canning(output) {
-            ingredient += inputCreator.create(filled)
-            result += resultCreator.create(empty)
-            result += resultCreator.create(fluid, amount)
-            recipeId suffix "_from_${filled.path}"
-        }
     }
 
     //    Mixing    //
@@ -237,10 +151,63 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         }
     }
 
+    //    Tank Interaction    //
+
+    @JvmStatic
+    private fun tankInteraction() {
+        // Experience
+        tankInteraction(
+            Items.GLASS_BOTTLE.toLike(),
+            Items.EXPERIENCE_BOTTLE.toLike(),
+            HCFluids.EXPERIENCE,
+        )
+        // Honey Bottle
+        tankInteraction(
+            Items.GLASS_BOTTLE.toLike(),
+            Items.HONEY_BOTTLE.toLike(),
+            HCFluids.HONEY,
+        )
+        // Mushroom Stew
+        tankInteraction(
+            Items.BOWL.toLike(),
+            Items.MUSHROOM_STEW.toLike(),
+            HCFluids.MUSHROOM_STEW,
+        )
+        // Dragon Breath
+        tankInteraction(
+            Items.GLASS_BOTTLE.toLike(),
+            Items.DRAGON_BREATH.toLike(),
+            HCFluids.DRAGON_BREATH,
+        )
+
+        // Mercury
+        tankInteraction(
+            Items.GLASS_BOTTLE.toLike(),
+            RagiumItems.MERCURY_BOTTLE,
+            RagiumFluids.MERCURY,
+        )
+    }
+
+    @JvmStatic
+    private fun tankInteraction(
+        empty: HTSimpleItemHolderLike,
+        filled: HTSimpleItemHolderLike,
+        content: HTFluidContent,
+        amount: Int = 250,
+    ) {
+        HTTankInteractingRecipeBuilder.create(output) {
+            this.emptyContainer = empty
+            this.filledContainer = filled
+            this.fluid = content
+            this.amount = amount
+            this.fluidTag = content.fluidTag
+        }
+    }
+
     //    Washing    //
 
     @JvmStatic
-    fun washing() {
+    private fun washing() {
         // Gravel + Water -> Flint
         HTWashingRecipeBuilder.create(output) {
             itemIngredient = inputCreator.create(Tags.Items.GRAVELS)

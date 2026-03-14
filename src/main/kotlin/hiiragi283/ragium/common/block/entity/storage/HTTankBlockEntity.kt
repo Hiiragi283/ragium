@@ -1,18 +1,30 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.amount.HTAmountView
+import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.api.storage.fluid.HTMutableFluidTank
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
+import hiiragi283.core.api.storage.holder.HTItemSlotHolder
+import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.common.capability.HTFluidCapabilities
+import hiiragi283.core.common.gui.widget.HTFluidWidget
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
+import java.util.function.Predicate
 
 /**
  * @see mekanism.common.tile.TileEntityFluidTank
@@ -34,4 +46,74 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         HTVariableFluidTank.create(listener) { HTUpgradeHelper.getFluidCapacity(this, RagiumConfig.COMMON.tankCapacity.asInt) }
 
     final override fun getAmountView(): HTAmountView = tank
+
+    lateinit var drainInputSlot: HTBasicItemSlot
+        private set
+    lateinit var drainOutputSlot: HTBasicItemSlot
+        private set
+
+    lateinit var fillInputSlot: HTBasicItemSlot
+        private set
+    lateinit var fillOutputSlot: HTBasicItemSlot
+        private set
+
+    final override fun createItemHandler(listener: HTContentListener): HTItemSlotHolder? {
+        val builder = HTBasicItemSlotHolder.Builder(this)
+        drainInputSlot = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTBasicItemSlot.input(
+                listener,
+                canInsert = Predicate { resource: HTItemResourceType ->
+                    HTFluidCapabilities.getFluidViews(resource).any { it.getResource() != null }
+                },
+            ),
+        )
+        drainOutputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
+
+        fillInputSlot = builder.addSlot(
+            HTSlotInfo.INPUT,
+            HTBasicItemSlot.input(
+                listener,
+                canInsert = Predicate { resource: HTItemResourceType ->
+                    HTFluidCapabilities.getFluidViews(resource).all(HTFluidView::isEmpty)
+                },
+            ),
+        )
+        fillOutputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
+        return builder.build()
+    }
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        // slot
+        widgetHolder += HTItemSlotWidget.container(
+            drainInputSlot,
+            HTSlotHelper.getSlotPosX(1.5),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+        )
+        widgetHolder += HTItemSlotWidget.container(
+            drainOutputSlot,
+            HTSlotHelper.getSlotPosX(1.5),
+            HTSlotHelper.getSlotPosY(2),
+            HTBackgroundType.OUTPUT,
+        )
+
+        widgetHolder += HTItemSlotWidget.container(
+            fillInputSlot,
+            HTSlotHelper.getSlotPosX(6.5),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+        )
+        widgetHolder += HTItemSlotWidget.container(
+            fillOutputSlot,
+            HTSlotHelper.getSlotPosX(6.5),
+            HTSlotHelper.getSlotPosY(2),
+            HTBackgroundType.OUTPUT,
+        )
+        // tank
+        val fluidWidget: HTFluidWidget =
+            HTFluidWidget.createTank(tank, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0))
+        if (isCreative()) fluidWidget.setGhost()
+        widgetHolder += fluidWidget
+    }
 }

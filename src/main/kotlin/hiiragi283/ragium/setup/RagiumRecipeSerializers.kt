@@ -7,6 +7,7 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
@@ -23,7 +24,6 @@ import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
-import hiiragi283.ragium.common.recipe.HTCanningRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
@@ -33,14 +33,11 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
+import hiiragi283.ragium.common.recipe.HTTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTCombiningRecipe
 import hiiragi283.ragium.common.recipe.special.HTBookCloningRecipe
-import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
-import hiiragi283.ragium.common.recipe.special.HTBucketFillingRecipe
-import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
-import hiiragi283.ragium.common.recipe.special.HTPotionFillingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPrintingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -52,6 +49,19 @@ object RagiumRecipeSerializers {
     val REGISTER = HTDeferredRecipeSerializerRegister(RagiumAPI.MOD_ID)
 
     //    Custom    //
+
+    @JvmField
+    val TANK_INTERACTING: RecipeSerializer<HTTankInteractingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.TANK_INTERACTION,
+        MapBiCodec.composite(
+            HTItemHolderLike.HOLDER_CODEC.fieldOf("empty_container").forGetter(HTTankInteractingRecipe::emptyContainer),
+            HTItemHolderLike.HOLDER_CODEC.fieldOf("filled_container").forGetter(HTTankInteractingRecipe::filledContainer),
+            VanillaBiCodecs.holderLike(Registries.FLUID).fieldOf(HTConst.FLUID).forGetter(HTTankInteractingRecipe::fluid),
+            BiCodecs.NON_NEGATIVE_INT.fieldOf(HTConst.AMOUNT).forGetter(HTTankInteractingRecipe::amount),
+            VanillaBiCodecs.tagKey(Registries.FLUID, true).optionalFieldOf("fluid_tag").forGetter(HTTankInteractingRecipe::fluidTag),
+            ::HTTankInteractingRecipe,
+        ),
+    )
 
     // Crafting
     @JvmField
@@ -77,23 +87,6 @@ object RagiumRecipeSerializers {
             ::HTPrintingRecipe,
         ),
     )
-
-    // Canning
-    @JvmField
-    val BUCKET_DRAINING: RecipeSerializer<HTBucketDrainingRecipe> =
-        REGISTER.registerSerializer("bucket_draining", MapBiCodecs.unit(HTBucketDrainingRecipe))
-
-    @JvmField
-    val BUCKET_FILLING: RecipeSerializer<HTBucketFillingRecipe> =
-        REGISTER.registerSerializer("bucket_filling", MapBiCodecs.unit(HTBucketFillingRecipe))
-
-    @JvmField
-    val POTION_DRAINING: RecipeSerializer<HTPotionDrainingRecipe> =
-        REGISTER.registerSerializer("potion_draining", MapBiCodecs.unit(HTPotionDrainingRecipe))
-
-    @JvmField
-    val POTION_FILLING: RecipeSerializer<HTPotionFillingRecipe> =
-        REGISTER.registerSerializer("potion_filling", MapBiCodecs.unit(HTPotionFillingRecipe))
 
     //    Machine    //
 
@@ -206,10 +199,6 @@ object RagiumRecipeSerializers {
         REGISTER.registerSerializer(RagiumConst.REFINING, itemOrFluid(::HTRefiningRecipe))
 
     // Machine - Elite
-    @JvmField
-    val CANNING: RecipeSerializer<HTCanningRecipe> =
-        REGISTER.registerSerializer(RagiumConst.CANNING, itemOrFluid(::HTCanningRecipe))
-
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MIXING,

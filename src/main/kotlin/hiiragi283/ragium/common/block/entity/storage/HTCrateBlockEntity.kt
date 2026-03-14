@@ -1,9 +1,13 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.HTMutableItemSlot
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -31,4 +35,17 @@ open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos,
         HTVariableItemSlot.create(listener, { HTUpgradeHelper.getItemCapacity(this, RagiumConfig.COMMON.crateCapacity.asInt) })
 
     final override fun getAmountView(): HTAmountView = slot
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        widgetHolder.rows = 1
+
+        val itemWidget: HTItemSlotWidget = HTItemSlotWidget.fake(
+            slot,
+            HTSlotHelper.getSlotPosX(4),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.NONE,
+        )
+        if (isCreative()) itemWidget.setGhost()
+        widgetHolder += itemWidget
+    }
 }

@@ -59,7 +59,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // inputs
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),

@@ -43,6 +43,8 @@ object RagiumConst {
 
     //    Recipes    //
 
+    const val TANK_INTERACTION = "tank_interaction"
+
     // Basic
     const val ALLOYING = "alloying"
     const val ASSEMBLING = "assembling"
@@ -58,7 +60,6 @@ object RagiumConst {
     const val REFINING = "refining"
 
     // Elite
-    const val CANNING = "canning"
     const val MIXING = "mixing"
     const val WASHING = "washing"
 

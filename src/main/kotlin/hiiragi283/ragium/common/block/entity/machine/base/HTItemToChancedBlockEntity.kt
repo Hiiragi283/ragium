@@ -30,20 +30,20 @@ abstract class HTItemToChancedBlockEntity(type: HTDeferredBlockEntityType<*>, po
         // progress
         addProgressBar(widgetHolder)
         // slots
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
 
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.OUTPUT,
         )
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             extraOutputSlots[0],
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(2),

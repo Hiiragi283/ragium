@@ -16,17 +16,13 @@ import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTTankInteractionRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTBucketFillingRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTDrainingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTPotionFillingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPrintingRecipeCategoryExtension
-import hiiragi283.ragium.common.recipe.special.HTBucketDrainingRecipe
-import hiiragi283.ragium.common.recipe.special.HTPotionDrainingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -71,10 +67,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         lateinit var refining: HTItemOrFluidRecipeCategory
             private set
 
-        @JvmStatic
-        lateinit var canning: HTItemOrFluidRecipeCategory
-            private set
-
         // Other
         @JvmStatic
         lateinit var enchanting: HTEnchantingRecipeCategory
@@ -114,6 +106,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         enchanting.addExtension(HTHolderEnchantingRecipeCategoryExtension)
 
         registration.addRecipeCategories(
+            HTTankInteractionRecipeCategory(guiHelper),
             // Machine - Basic
             HTCombiningRecipeCategory(3, guiHelper, RagiumJeiRecipeTypes.ALLOYING),
             HTCombiningRecipeCategory(2, guiHelper, RagiumJeiRecipeTypes.ASSEMBLING),
@@ -127,7 +120,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             pyrolyzing,
             refining,
             // Machine - Elite
-            canning,
             HTMixingRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
             // Machine - Ultimate
@@ -161,24 +153,13 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
         pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
         refining = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.REFINING)
-        canning = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CANNING)
 
         pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         refining.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
-        canning.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
-
-        HTDrainingRecipeCategoryExtension<HTBucketDrainingRecipe>(manager, 1000, HTBucketDrainingRecipe::isFilledBucket)
-            .let(canning::addExtension)
-        HTBucketFillingRecipeCategoryExtension(manager)
-            .let(canning::addExtension)
-
-        HTDrainingRecipeCategoryExtension<HTPotionDrainingRecipe>(manager, 250, HTPotionDrainingRecipe::isPotion)
-            .let(canning::addExtension)
-        HTPotionFillingRecipeCategoryExtension(manager)
-            .let(canning::addExtension)
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
+        registration.addRecipes(RagiumJeiRecipeTypes.TANK_INTERACTION)
         // Machine - Basic
         registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING)
         registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING)
@@ -192,7 +173,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING)
         registration.addRecipes(RagiumJeiRecipeTypes.REFINING)
         // Machine - Elite
-        registration.addRecipes(RagiumJeiRecipeTypes.CANNING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
         registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
         // Machine - Ultimate
@@ -208,6 +188,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipeCatalyst(RagiumBlocks.ELECTRIC_FURNACE, RecipeTypes.SMELTING)
 
         registration.addRecipeCatalysts(
+            RagiumJeiRecipeTypes.TANK_INTERACTION,
             // Machine - Basic
             RagiumJeiRecipeTypes.ALLOYING,
             RagiumJeiRecipeTypes.ASSEMBLING,
@@ -221,7 +202,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.PYROLYZING,
             RagiumJeiRecipeTypes.REFINING,
             // Machine - Elite
-            RagiumJeiRecipeTypes.CANNING,
             RagiumJeiRecipeTypes.MIXING,
             RagiumJeiRecipeTypes.WASHING,
             // Machine - Ultimate

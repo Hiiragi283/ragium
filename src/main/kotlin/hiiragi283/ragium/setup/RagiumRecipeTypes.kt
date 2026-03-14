@@ -26,17 +26,23 @@ import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.HTTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
 object RagiumRecipeTypes {
     @JvmField
     val REGISTER = HTDeferredRecipeTypeRegister(RagiumAPI.MOD_ID)
+
+    @JvmField
+    val TANK_INTERACTION: HTDeferredRecipeType<RecipeInput, HTTankInteractingRecipe> =
+        REGISTER.registerType(RagiumConst.TANK_INTERACTION)
 
     // Machine - Basic
     @JvmField
@@ -80,10 +86,6 @@ object RagiumRecipeTypes {
         REGISTER.registerType(RagiumConst.REFINING)
 
     // Machine - Elite
-    @JvmField
-    val CANNING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe.Serializable> =
-        REGISTER.registerType(RagiumConst.CANNING)
-
     @JvmField
     val MIXING: HTDeferredRecipeType<HTChemicalRecipeInput, HTMixingRecipe> =
         REGISTER.registerType(RagiumConst.MIXING)

@@ -60,7 +60,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
                 HTSlotHelper.getSlotPosY(0),
             ).setBackground(HTBackgroundType.INPUT)
         // slots
-        widgetHolder += HTItemSlotWidget(
+        widgetHolder += HTItemSlotWidget.container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
