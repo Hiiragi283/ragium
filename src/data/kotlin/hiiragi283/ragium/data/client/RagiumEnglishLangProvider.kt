@@ -36,7 +36,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.REFINERY, "Refinery")
 
         add(RagiumBlocks.BREWERY, "Brewery")
-        add(RagiumBlocks.CANNING_MACHINE, "Canning Machine")
         add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.WASHER, "Washer")
 

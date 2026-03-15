@@ -83,7 +83,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         }
 
         waterRefining()
-
+        expRefining()
         eldritchRefining()
     }
 
@@ -119,6 +119,38 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             ingredient += inputCreator.water(125)
             result += resultCreator.create(Items.PAPER)
             time /= 2
+        }
+    }
+
+    @JvmStatic
+    private fun expRefining() {
+        // Quartz Block -> Ghast Tear
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ)
+            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 500)
+            result += resultCreator.create(Items.GHAST_TEAR)
+            recipeId suffix "_from_quartz"
+        }
+        // Sulfur Dust -> Blaze Powder
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 250)
+            result += resultCreator.create(Items.BLAZE_POWDER)
+            recipeId suffix "_from_sulfur"
+        }
+        // Leather -> Phantom Membrane
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(Tags.Items.LEATHERS)
+            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 250)
+            result += resultCreator.create(Items.PHANTOM_MEMBRANE)
+            recipeId suffix "_from_leather"
+        }
+        // Snowball -> Wind Charge
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(Items.SNOWBALL)
+            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 250)
+            result += resultCreator.create(Items.WIND_CHARGE)
+            recipeId suffix "_from_snowball"
         }
     }
 

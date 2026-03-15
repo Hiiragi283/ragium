@@ -7,7 +7,6 @@ import hiiragi283.core.api.data.holder.HTIngredientHolder
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.registry.getBucket
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
@@ -128,7 +127,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         advanced(RagiumBlocks.REFINERY, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.IRON_BARS }
         // Elite
         elite(RagiumBlocks.BREWERY) { it += Items.BREWING_STAND }
-        elite(RagiumBlocks.CANNING_MACHINE) { it += Items.GLASS_BOTTLE }
         elite(RagiumBlocks.MIXER) { it += RagiumBlocks.TANK }
         elite(RagiumBlocks.WASHER) { it += Items.CAULDRON }
         // Ultimate

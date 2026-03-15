@@ -11,7 +11,6 @@ import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPart
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.getBucketHolder
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
@@ -28,10 +27,10 @@ import java.util.concurrent.CompletableFuture
 class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
     HTItemTagsProvider(RagiumAPI.MOD_ID, blockTags, context) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Item>) {
-        val items: HTMaterialContents<HTPart, Item> = HiiragiCoreAccess.INSTANCE.registeredContents.items
+        val items: HTMaterialContents<HTPart, HTMaterialContents.ItemEntry> = HiiragiCoreAccess.INSTANCE.registeredContents.items
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
-            addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.getBucketHolder())
+            addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.getBucket())
         }
         // Foods
         factory
@@ -82,7 +81,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.REFINERY)
             // Elite
             .add(RagiumBlocks.BREWERY)
-            .add(RagiumBlocks.CANNING_MACHINE)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.WASHER)
             // Ultimate
@@ -113,7 +111,6 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             // Generator
             // Machine
             .add(RagiumBlocks.BREWERY)
-            .add(RagiumBlocks.CANNING_MACHINE)
             .add(RagiumBlocks.FREEZER)
             .add(RagiumBlocks.MELTER)
             .add(RagiumBlocks.MIXER)

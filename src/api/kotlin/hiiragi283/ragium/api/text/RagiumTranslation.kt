@@ -43,7 +43,6 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     FREEZER("description", RagiumConst.FREEZER),
 
     BREWERY("description", RagiumConst.BREWERY),
-    CANNING_MACHINE("description", RagiumConst.CANNING_MACHINE),
     MIXER("description", RagiumConst.MIXER),
     WASHER("description", RagiumConst.WASHER),
 

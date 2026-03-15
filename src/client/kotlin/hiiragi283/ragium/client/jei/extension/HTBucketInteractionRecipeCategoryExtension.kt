@@ -1,8 +1,6 @@
 package hiiragi283.ragium.client.jei.extension
 
 import hiiragi283.core.api.integration.jei.addFluidStacks
-import hiiragi283.core.api.registry.isOf
-import hiiragi283.core.api.registry.toStack
 import hiiragi283.ragium.api.integration.jei.HTTankInteractingRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.special.HTBucketInteractingRecipe
 import mezz.jei.api.gui.builder.IIngredientAcceptor

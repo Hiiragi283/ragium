@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.recipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.registry.HTSimpleFluidHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
-import hiiragi283.core.api.registry.toStack
 import hiiragi283.ragium.api.recipe.HTTankInteractingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import net.minecraft.tags.TagKey

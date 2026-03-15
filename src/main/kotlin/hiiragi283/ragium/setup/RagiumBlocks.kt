@@ -121,10 +121,6 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.BREWERY, RagiumTranslation.BREWERY)
 
     @JvmField
-    val CANNING_MACHINE: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.CANNING_MACHINE, RagiumTranslation.CANNING_MACHINE)
-
-    @JvmField
     val MIXER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
 

@@ -129,14 +129,6 @@ object RagiumConfig {
             )
 
             @JvmField
-            val canningMachine: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.CANNING_MACHINE,
-                RagiumFluidConfigType.FIRST_INPUT,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-            )
-
-            @JvmField
             val mixer: HTMachineConfig = HTMachineConfig.createSimple(
                 builder,
                 RagiumConst.MIXER,

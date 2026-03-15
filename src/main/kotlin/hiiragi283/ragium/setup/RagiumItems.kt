@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
@@ -162,10 +161,6 @@ object RagiumItems {
     private fun modifyComponents(event: ModifyDefaultComponentsEvent) {
         fun <T : Any> modify(item: ItemLike, type: DataComponentType<T>, value: T) {
             event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
-        }
-
-        fun <T : Any> modify(entry: HTMaterialContents.Entry<out ItemLike>, type: DataComponentType<T>, value: T) {
-            modify(entry.get(), type, value)
         }
 
         with(HiiragiCoreAccess.INSTANCE.registeredContents.items) {

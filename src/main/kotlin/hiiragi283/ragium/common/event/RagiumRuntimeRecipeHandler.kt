@@ -9,6 +9,7 @@ import hiiragi283.core.api.registry.HTSimpleFluidHolderLike
 import hiiragi283.core.api.registry.HTSimpleHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.registry.getDataSequence
+import hiiragi283.core.api.registry.toFluidLike
 import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.common.material.ColoredMaterials
@@ -264,6 +265,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             .filterElements { fluid: Fluid -> fluid.isSource(fluid.defaultFluidState()) }
             .listElements()
             .map(Holder<Fluid>::toLike)
+            .map(HTSimpleHolderLike<Fluid>::toFluidLike)
             .forEach { holder: HTSimpleFluidHolderLike ->
                 save(
                     holder.getId().withPrefix("bucket_interaction"),

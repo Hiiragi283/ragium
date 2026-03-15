@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:experience"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:snowball"
+  },
+  "item_result": {
+    "id": "minecraft:wind_charge"
+  },
+  "time": 200
+}

@@ -21,7 +21,6 @@ object RagiumConst {
 
     // Elite
     const val BREWERY = "brewery"
-    const val CANNING_MACHINE = "canning_machine"
     const val MIXER = "mixer"
     const val WASHER = "washer"
 

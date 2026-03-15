@@ -15,11 +15,14 @@ typealias FluidAmount = Int
 interface HTItemOrFluidRecipe :
     HTProcessingRecipe<HTItemAndFluidRecipeInput>,
     HTFluidRecipe<HTItemAndFluidRecipeInput> {
-    override fun test(input: HTItemAndFluidRecipeInput): Boolean = getPredicate().fold(
-        { it.test(input.item) && input.fluid.isEmpty },
-        { it.test(input.fluid) && input.item.isEmpty },
-        { item: Predicate<ItemStack>, fluid: Predicate<FluidStack> -> item.test(input.item) && fluid.test(input.fluid) },
-    )
+    override fun test(input: HTItemAndFluidRecipeInput): Boolean {
+        val (item: ItemStack, fluid: FluidStack) = input
+        return getPredicate().fold(
+            { it.test(item) && fluid.isEmpty },
+            { it.test(fluid) && item.isEmpty },
+            { itemPre: Predicate<ItemStack>, fluidPre: Predicate<FluidStack> -> itemPre.test(item) && fluidPre.test(fluid) },
+        )
+    }
 
     fun getPredicate(): Ior<Predicate<ItemStack>, Predicate<FluidStack>>
 

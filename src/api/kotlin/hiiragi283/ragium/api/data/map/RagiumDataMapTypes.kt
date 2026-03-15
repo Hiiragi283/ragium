@@ -35,11 +35,8 @@ object RagiumDataMapTypes {
 
     // Entity Type
     @JvmField
-    val MOB_HEAD: DataMapType<EntityType<*>, HTSimpleItemHolderLike> = create(
-        "mob_head",
-        Registries.ENTITY_TYPE,
-        HTItemHolderLike.HOLDER_CODEC,
-    )
+    val MOB_HEAD: DataMapType<EntityType<*>, HTSimpleItemHolderLike> =
+        create("mob_head", Registries.ENTITY_TYPE, HTItemHolderLike.CODEC)
 
     // Fluid
     @JvmField
