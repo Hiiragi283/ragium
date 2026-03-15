@@ -27,7 +27,6 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
             yield(RagiumBlocks.CUTTING_MACHINE)
             yield(RagiumBlocks.ELECTRIC_FURNACE)
             yield(RagiumBlocks.PLANTER)
-            yield(RagiumBlocks.PRINTER)
 
             yield(RagiumBlocks.FREEZER)
             yield(RagiumBlocks.MELTER)

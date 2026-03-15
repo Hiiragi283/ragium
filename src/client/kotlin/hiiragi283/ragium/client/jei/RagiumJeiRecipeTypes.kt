@@ -4,13 +4,11 @@ import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.recipe.HTItemToChancedRecipe
 import hiiragi283.core.api.recipe.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.HTRecipeType
-import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTFakeRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
-import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.api.recipe.HTTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -70,10 +68,6 @@ object RagiumJeiRecipeTypes {
     @JvmField
     val PLANTING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
         create(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER, 18 * 6)
-
-    @JvmField
-    val PRINTING: HTHolderRecipeViewerType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        create(RagiumRecipeTypes.PRINTING, RagiumBlocks.PRINTER, 18 * 6)
 
     // Machine - Heat
     @JvmField

@@ -6,7 +6,6 @@ import hiiragi283.core.api.recipe.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.HTRecipeType
-import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.registry.HTSimpleHolderLike
@@ -19,7 +18,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
-import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.api.recipe.HTTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -64,10 +62,6 @@ object RagiumRecipeTypes {
     @JvmField
     val PLANTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =
         REGISTER.registerType(RagiumConst.PLANTING)
-
-    @JvmField
-    val PRINTING: HTDeferredRecipeType<HTDoubleRecipeInput, HTItemAndItemRecipe.Serializable> =
-        REGISTER.registerType(RagiumConst.PRINTING)
 
     // Machine - Advanced
     @JvmField

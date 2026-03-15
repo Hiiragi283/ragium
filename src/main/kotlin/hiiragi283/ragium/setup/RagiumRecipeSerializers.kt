@@ -38,10 +38,8 @@ import hiiragi283.ragium.common.recipe.HTSimpleTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTCombiningRecipe
-import hiiragi283.ragium.common.recipe.special.HTBookCloningRecipe
 import hiiragi283.ragium.common.recipe.special.HTBucketInteractingRecipe
 import hiiragi283.ragium.common.recipe.special.HTPotionBottleInteractionRecipe
-import hiiragi283.ragium.common.recipe.special.HTPrintingRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -58,24 +56,6 @@ object RagiumRecipeSerializers {
     val BLUEPRINT_CLONING: SimpleCraftingRecipeSerializer<HTBlueprintCloningRecipe> = REGISTER.registerSerializer(
         "blueprint_cloning",
         SimpleCraftingRecipeSerializer(::HTBlueprintCloningRecipe),
-    )
-
-    // Printing
-    @JvmField
-    val BOOK_CLONING: RecipeSerializer<HTBookCloningRecipe> =
-        REGISTER.registerSerializer("book_cloning", MapBiCodecs.unit(HTBookCloningRecipe))
-
-    @JvmField
-    val PRINTING: RecipeSerializer<HTPrintingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.PRINTING,
-        MapBiCodec.composite(
-            HTItemIngredient.UNSIZED_CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTPrintingRecipe::ingredient),
-            HTItemHolderLike.CODEC.fieldOf("origin").forGetter(HTPrintingRecipe::origin),
-            HTPrintingRecipe.CopyStrategy.CODEC
-                .fieldOf("copy_strategy")
-                .forGetter(HTPrintingRecipe::strategy),
-            ::HTPrintingRecipe,
-        ),
     )
 
     // Tank Interaction

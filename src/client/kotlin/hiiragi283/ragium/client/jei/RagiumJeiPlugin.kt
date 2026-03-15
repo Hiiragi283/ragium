@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTItemAndItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
@@ -20,11 +19,9 @@ import hiiragi283.ragium.client.jei.category.HTTankInteractionRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTBookCopyingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTBucketInteractionRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTPotionBottleInteractionRecipeCategoryExtension
-import hiiragi283.ragium.client.jei.extension.HTPrintingRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTSimpleTankInteractionRecipeCategoryExtension
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -58,11 +55,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         @JvmStatic
         lateinit var planting: HTItemToChancedRecipeCategory
-            private set
-
-        // ItemAndItem
-        @JvmStatic
-        lateinit var printing: HTItemAndItemRecipeCategory
             private set
 
         // ItemOrFluid
@@ -111,7 +103,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         initItemToItem(guiHelper, manager)
         initItemToChanced(guiHelper, manager)
-        initItemAndItem(guiHelper, manager)
         initItemOrFluid(guiHelper, manager)
 
         enchanting = HTEnchantingRecipeCategory(guiHelper)
@@ -125,7 +116,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             compressing,
             cutting,
             planting,
-            printing,
             // Machine - Advanced
             HTFreezingRecipeCategory(guiHelper),
             HTMeltingRecipeCategory(guiHelper),
@@ -155,13 +145,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         planting.addExtension(HTBasicItemToChancedRecipeCategoryExtension())
     }
 
-    private fun initItemAndItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        printing = HTItemAndItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PRINTING)
-
-        printing.addExtension(HTPrintingRecipeCategoryExtension)
-        printing.addExtension(HTBookCopyingRecipeCategoryExtension)
-    }
-
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
         pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
         refining = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.REFINING)
@@ -178,7 +161,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING)
         registration.addRecipes(RagiumJeiRecipeTypes.PLANTING)
-        registration.addRecipes(RagiumJeiRecipeTypes.PRINTING)
         // Machine - Advanced
         registration.addRecipes(RagiumJeiRecipeTypes.FREEZING)
         registration.addRecipes(RagiumJeiRecipeTypes.MELTING)
@@ -207,7 +189,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.COMPRESSING,
             RagiumJeiRecipeTypes.CUTTING,
             RagiumJeiRecipeTypes.PLANTING,
-            RagiumJeiRecipeTypes.PRINTING,
             // Machine - Advanced
             RagiumJeiRecipeTypes.FREEZING,
             RagiumJeiRecipeTypes.MELTING,

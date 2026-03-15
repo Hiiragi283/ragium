@@ -1,18 +1,30 @@
 package hiiragi283.ragium.common.block.entity.machine
 
+import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.base.HTProcessingRecipe
+import hiiragi283.core.api.recipe.handler.HTHandledRecipe
+import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.resource.IdToValue
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.HTLookupRecipeCache
-import hiiragi283.ragium.api.recipe.HTItemAndItemRecipe
-import hiiragi283.ragium.common.block.entity.machine.base.HTItemAndItemBlockEntity
+import hiiragi283.core.common.recipe.handler.HTItemInputHandler
+import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
+import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTMachineConfig
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.mixin.SingleItemRecipeAccessor
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -21,12 +33,68 @@ import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
 
 class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemAndItemBlockEntity(RagiumBlockEntityTypes.AUTO_CHISEL, pos, state) {
-    override fun getLookup(): HTRecipeLookup<HTDoubleRecipeInput, out HTItemAndItemRecipe, *> = RecipeLookup
+    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.AUTO_CHISEL, pos, state) {
+    private lateinit var inputSlot: HTBasicItemSlot
+    private lateinit var catalystSlot: HTBasicItemSlot
+    private lateinit var outputSlot: HTBasicItemSlot
 
-    override fun playSound() {
-        playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
+    override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
+        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
+
+        catalystSlot = builder.addSlot(HTSlotInfo.EXTRA_INPUT, HTBasicItemSlot.input(listener))
+
+        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
+
+    override fun setupMenu(widgetHolder: HTWidgetHolder) {
+        super.setupMenu(widgetHolder)
+        // progress
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
+        // slots
+        widgetHolder += HTItemSlotWidget.container(
+            inputSlot,
+            HTSlotHelper.getSlotPosX(2.5),
+            HTSlotHelper.getSlotPosY(1),
+            HTBackgroundType.INPUT,
+        )
+        widgetHolder += HTItemSlotWidget.container(
+            catalystSlot,
+            HTSlotHelper.getSlotPosX(4.25),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.EXTRA_INPUT,
+        )
+
+        widgetHolder += HTItemSlotWidget.container(
+            outputSlot,
+            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosY(1),
+            HTBackgroundType.OUTPUT,
+        )
+    }
+
+    //    Processing    //
+
+    private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+    private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
+    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
+        RecipeLookup,
+        { _, _ -> createInput(inputHandler, catalystHandler) },
+        {
+            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTDoubleRecipeInput, WrappedRecipe> ->
+                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+            }
+            onComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTDoubleRecipeInput, WrappedRecipe> ->
+                // output
+                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+                // input
+                inputHandler.consume(1)
+
+                playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
+            }
+        },
+    )
 
     private data object RecipeLookup : HTRecipeLookup.Fake<HTDoubleRecipeInput, WrappedRecipe> {
         override fun createCache(): HTRecipeCache<HTDoubleRecipeInput, WrappedRecipe> = HTLookupRecipeCache.forRecipe(this)
@@ -37,17 +105,18 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
             }
     }
 
-    private class WrappedRecipe(private val accessor: SingleItemRecipeAccessor) : HTItemAndItemRecipe {
+    private class WrappedRecipe(private val accessor: SingleItemRecipeAccessor) : HTProcessingRecipe<HTDoubleRecipeInput> {
         override val time: Int = 5
 
-        override fun testFirstItem(stack: ItemStack): Boolean = accessor.ingredient.test(stack)
-
-        override fun testSecondItem(stack: ItemStack): Boolean = ItemStack.isSameItemSameComponents(accessor.result, stack)
-
-        override fun getRequiredAmount(input: HTDoubleRecipeInput): Pair<Int, Int> = 1 to 0
+        override fun test(input: HTDoubleRecipeInput): Boolean {
+            val (first: ItemStack, second: ItemStack) = input
+            return accessor.ingredient.test(first) && ItemStack.isSameItemSameComponents(accessor.result, second)
+        }
 
         override fun assemble(input: HTDoubleRecipeInput, registries: HolderLookup.Provider): ItemStack = accessor.result.copy()
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.autoChisel
+    override fun getConfig(): HTMachineConfig {
+        TODO("Not yet implemented")
+    }
 }

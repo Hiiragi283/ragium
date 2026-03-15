@@ -84,9 +84,6 @@ object RagiumConfig {
             @JvmField
             val electricFurnace: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ELECTRIC_FURNACE)
 
-            @JvmField
-            val printer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.PRINTER)
-
             // Heat
             @JvmField
             val melter: HTMachineConfig = HTMachineConfig.createSimple(

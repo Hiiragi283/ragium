@@ -22,7 +22,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTPrinterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTStonecutterBlockEntity
@@ -87,10 +86,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
         REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
-
-    @JvmField
-    val PRINTER: HTDeferredBlockEntityType<HTPrinterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.PRINTER, ::HTPrinterBlockEntity)
 
     // Advanced
     @JvmField
@@ -187,7 +182,6 @@ object RagiumBlockEntityTypes {
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, ELECTRIC_FURNACE.get())
         registerHandler(event, PLANTER.get())
-        registerHandler(event, PRINTER.get())
 
         registerHandler(event, FREEZER.get())
         registerHandler(event, MELTER.get())

@@ -28,7 +28,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
         add(RagiumBlocks.PLANTER, "栽培機")
-        add(RagiumBlocks.PRINTER, "プリンター")
 
         add(RagiumBlocks.FREEZER, "冷却機")
         add(RagiumBlocks.MELTER, "溶融炉")
@@ -82,6 +81,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.SULFURIC_ACID, "ブレイズ酸")
 
         addFluid(RagiumFluids.HELIUM, "エンドストーンガス")
+
+        addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.OXYGEN, "酸素")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.CRUDE_SILICON, "粗生シリコン")
@@ -108,7 +110,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.PRINTING, "印刷")
 
         add(RagiumRecipeTypes.MELTING, "溶融")
         add(RagiumRecipeTypes.PYROLYZING, "熱分解")

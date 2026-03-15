@@ -94,10 +94,6 @@ object RagiumBlocks {
     val PLANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
 
-    @JvmField
-    val PRINTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.PRINTER, RagiumTranslation.PRINTER)
-
     // Advanced
     @JvmField
     val FREEZER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =

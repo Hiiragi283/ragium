@@ -1,6 +1,0 @@
-{
-  "type": "ragium:printing",
-  "copy_strategy": "origin",
-  "ingredient": "minecraft:map",
-  "origin": "minecraft:filled_map"
-}

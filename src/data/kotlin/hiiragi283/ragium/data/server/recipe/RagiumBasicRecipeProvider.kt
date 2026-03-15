@@ -1,23 +1,15 @@
 package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.registry.HTSimpleItemHolderLike
-import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
-import hiiragi283.ragium.common.recipe.special.HTBookCloningRecipe
-import hiiragi283.ragium.common.recipe.special.HTPrintingRecipe
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.common.Tags
 
 object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
@@ -26,7 +18,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         crushing()
         cutting()
         pressing()
-        printing()
     }
 
     //    Bending    //
@@ -91,8 +82,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
     //    Printing    //
 
-    @JvmStatic
-    private fun printing() {
+    /*private fun printing() {
         // Banner
         for ((_, banner: HTSimpleItemHolderLike) in ColoredMaterials.BANNER) {
             save(
@@ -125,5 +115,5 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
         // Writable Book -> Written Book
         save(id(RagiumConst.PRINTING, "book_cloning"), HTBookCloningRecipe)
-    }
+    }*/
 }

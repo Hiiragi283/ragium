@@ -36,7 +36,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         frontMachineBlock(RagiumBlocks.CRUSHER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CUTTING_MACHINE, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.ELECTRIC_FURNACE, RagiumConst.MACHINE, basic)
-        frontMachineBlock(RagiumBlocks.PRINTER, RagiumConst.MACHINE, basic)
 
         frontMachineBlock(RagiumBlocks.FREEZER, RagiumConst.MACHINE, cool)
         frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)

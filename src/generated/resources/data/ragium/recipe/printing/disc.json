@@ -1,6 +1,0 @@
-{
-  "type": "ragium:printing",
-  "copy_strategy": "input",
-  "ingredient": "#c:music_discs",
-  "origin": "ragium:blank_disc"
-}

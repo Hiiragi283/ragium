@@ -11,7 +11,6 @@ object RagiumConst {
     const val CUTTING_MACHINE = "cutting_machine"
     const val ELECTRIC_FURNACE = "electric_furnace"
     const val PLANTER = "planter"
-    const val PRINTER = "printer"
 
     // Advanced
     const val FREEZER = "freezer"
@@ -50,7 +49,6 @@ object RagiumConst {
     const val COMPRESSING = "compressing"
     const val CUTTING = "cutting"
     const val PLANTING = "planting"
-    const val PRINTING = "printing"
 
     // Advanced
     const val FREEZING = "freezing"
