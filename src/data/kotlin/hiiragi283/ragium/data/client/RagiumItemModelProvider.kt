@@ -22,13 +22,18 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
     override fun registerModels() {
         existingFileHelper.trackGenerated(wireOverlay, TEXTURE)
 
-        trackItem(RagiumItems.CRUDE_SILICON)
+        trackItem(RagiumItems.CARBON_COMPOUND)
         trackItem(RagiumItems.CRYO_CHARGE)
+
+        trackItem(RagiumItems.CRUDE_SILICON)
+        trackItem(RagiumItems.SMOKELESS_POWDER)
 
         buildList {
             addAll(RagiumItems.REGISTER.asSequence())
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.NITROGLYCERIN)
+            remove(RagiumItems.NITROCELLULOSE)
 
             removeAll(RagiumItems.FOOD_CANS.values)
 
@@ -40,6 +45,13 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         // Materials
         existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { item: HTIdLike ->
             layeredItem(item, HTConst.MINECRAFT.toId(HTConst.ITEM, "copper_ingot"), item.itemId)
+        }
+        val explosiveOverlay: ResourceLocation = RagiumAPI.id(HTConst.ITEM, "explosive_overlay")
+        existTexture(RagiumItems.GLYCEROL_DROP) { item: HTIdLike ->
+            layeredItem(RagiumItems.NITROGLYCERIN, item.itemId, explosiveOverlay)
+        }
+        existTexture(RagiumItems.NITROCELLULOSE, HTConst.MINECRAFT.toId(HTConst.ITEM, "map")) { item: HTIdLike, id: ResourceLocation ->
+            layeredItem(item, id, explosiveOverlay)
         }
         // Foods
         for ((canType: HTFoodCanType, item: HTIdLike) in RagiumItems.FOOD_CANS) {

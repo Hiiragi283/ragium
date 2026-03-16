@@ -18,14 +18,25 @@ data object RagiumClientResourceProvider : HTDynamicResourceProvider.Client(Ragi
     override fun regenerateDynamicAssets(executor: Consumer<ResourceGenTask>) {
         // Texture
         resprite(
-            RagiumItems.CRUDE_SILICON.itemId,
-            HTConst.MINECRAFT.toId(HTConst.ITEM, "light_gray_dye.png"),
-            CommonMaterialKeys.SILICON,
+            RagiumItems.CARBON_COMPOUND.itemId,
+            HTConst.MINECRAFT.toId(HTConst.ITEM, "gunpowder"),
+            CommonMaterialKeys.CARBON,
         ).let(executor::accept)
         resprite(
             RagiumItems.CRYO_CHARGE.itemId,
-            HTConst.MINECRAFT.toId(HTConst.ITEM, "wind_charge.png"),
+            HTConst.MINECRAFT.toId(HTConst.ITEM, "wind_charge"),
             Blocks.BLUE_ICE,
+        ).let(executor::accept)
+
+        resprite(
+            RagiumItems.CRUDE_SILICON.itemId,
+            HTConst.MINECRAFT.toId(HTConst.ITEM, "light_gray_dye"),
+            CommonMaterialKeys.SILICON,
+        ).let(executor::accept)
+        resprite(
+            RagiumItems.SMOKELESS_POWDER.itemId,
+            HTConst.MINECRAFT.toId(HTConst.ITEM, "gunpowder"),
+            Blocks.TUFF,
         ).let(executor::accept)
     }
 }

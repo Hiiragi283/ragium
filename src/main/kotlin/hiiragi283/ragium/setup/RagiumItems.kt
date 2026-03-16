@@ -58,14 +58,31 @@ object RagiumItems {
 
     //    Materials    //
 
+    // Overworld
     @JvmField
     val RAGI_ALLOY_COMPOUND: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
     @JvmField
-    val CRUDE_SILICON: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("crude_silicon")
+    val CARBON_COMPOUND: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("carbon_compound")
 
     @JvmField
     val CRYO_CHARGE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("cryo_charge")
+
+    // Nether
+    @JvmField
+    val CRUDE_SILICON: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("crude_silicon")
+
+    @JvmField
+    val GLYCEROL_DROP: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("glycerol_drop")
+
+    @JvmField
+    val NITROGLYCERIN: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("nitroglycerin")
+
+    @JvmField
+    val NITROCELLULOSE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("nitrocellulose")
+
+    @JvmField
+    val SMOKELESS_POWDER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("smokeless_powder")
 
     //    Parts    //
 

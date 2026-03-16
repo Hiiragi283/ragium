@@ -8,6 +8,7 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -20,6 +21,7 @@ import hiiragi283.ragium.common.data.recipe.HTElectrolyzingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
@@ -180,14 +182,19 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredients += inputCreator.create(HCItems.RAW_RUBBER)
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
         }
+        // Carbon Compound
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.CARBON
+            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.SULFUR
+            resultStack += RagiumItems.CARBON_COMPOUND
+        }
         // Raw Rubber + Sulfur + Carbon -> Rubber
-        /*HTMixingRecipeBuilderN.create(output) {
-            itemIngredient = inputCreator.create(HCItems.RAW_RUBBER)
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
-
-            result += resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 4)
-        }*/
+        HTCombiningRecipeBuilder.alloying(output) {
+            result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 3)
+            ingredients += inputCreator.create(HCItems.RAW_RUBBER)
+            ingredients += inputCreator.create(RagiumItems.CARBON_COMPOUND)
+            recipeId suffix "_with_carbon"
+        }
     }
 
     //    Nether    //
@@ -304,6 +311,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTMixingRecipeBuilder.create(output) {
             itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER, 2)
             fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID)
+            result += resultCreator.create(Items.MAGMA_CREAM)
             result += resultCreator.create(RagiumFluids.NITRIC_ACID, 2000)
             recipeId suffix "_from_saltpeter"
         }
@@ -336,7 +344,40 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     }
 
     @JvmStatic
-    private fun explosive() {}
+    private fun explosive() {
+        // Carbon Compound + Saltpeter -> Gunpowder
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += RagiumItems.CARBON_COMPOUND
+            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.SALTPETER
+            resultStack += Items.GUNPOWDER
+            recipeId suffix "_from_carbon_compound"
+        }
+        
+        // HNO3 + Paper -> Nitrocellulose
+        HTWashingRecipeBuilder.create(output) {
+            itemIngredient = inputCreator.create(Items.PAPER)
+            fluidIngredient = inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
+            result = resultCreator.create(RagiumItems.NITROCELLULOSE)
+        }
+        // HNO3 + Glycerol -> Nitroglycerin
+        HTWashingRecipeBuilder.create(output) {
+            itemIngredient = inputCreator.create(RagiumItems.GLYCEROL_DROP)
+            fluidIngredient = inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
+            result = resultCreator.create(RagiumItems.NITROGLYCERIN)
+        }
+        // Nitrocellulose + Nitroglycerin -> Smokeless Powder
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += RagiumItems.NITROCELLULOSE
+            ingredients += RagiumItems.NITROGLYCERIN
+            resultStack += RagiumItems.SMOKELESS_POWDER
+        }
+        // Smokeless -> 4x Gunpowder
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += RagiumItems.SMOKELESS_POWDER
+            resultStack += Items.GUNPOWDER to 4
+            recipeId suffix "_from_smokeless"
+        }
+    }
 
     @JvmStatic
     private fun blaze() {

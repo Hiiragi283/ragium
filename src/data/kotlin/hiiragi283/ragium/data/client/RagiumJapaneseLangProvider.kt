@@ -88,8 +88,14 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.HELIUM, "ヘリウム")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.CRUDE_SILICON, "粗生シリコン")
+        add(RagiumItems.CARBON_COMPOUND, "炭素混合物")
         add(RagiumItems.CRYO_CHARGE, "クライオチャージ")
+
+        add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
+        add(RagiumItems.GLYCEROL_DROP, "グリセロール")
+        add(RagiumItems.NITROGLYCERIN, "ニトログリセリン")
+        add(RagiumItems.NITROCELLULOSE, "ニトロセルロース")
+        add(RagiumItems.SMOKELESS_POWDER, "無煙火薬")
 
         add(RagiumItems.MERCURY_BOTTLE, "水銀入り瓶")
         add(RagiumItems.THERMOMETER, "温度計")

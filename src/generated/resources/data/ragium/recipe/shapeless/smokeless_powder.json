@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:nitrocellulose"
+    },
+    {
+      "item": "ragium:nitroglycerin"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:smokeless_powder"
+  }
+}
