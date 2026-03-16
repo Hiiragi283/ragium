@@ -27,6 +27,7 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
+import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
@@ -200,17 +201,26 @@ object RagiumRecipeSerializers {
 
     // Machine - Elite
     @JvmField
+    val ELECTROLYZING: RecipeSerializer<HTElectrolyzingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.ELECTROLYZING,
+        MapBiCodec.composite(
+            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTElectrolyzingRecipe::ingredient),
+            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTElectrolyzingRecipe::result),
+            COMPLEX_RESULT.forGetter(HTElectrolyzingRecipe::extraResult),
+            HTProcessingRecipe.timeCodec(),
+            ::HTElectrolyzingRecipe,
+        ),
+    )
+
+    @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MIXING,
         MapBiCodec.composite(
-            HTItemIngredient.CODEC
-                .listOf(0, HTMixingRecipe.MAX_ITEM_INPUT)
-                .optionalFieldOf(HTConst.ITEM_INGREDIENT, listOf())
-                .forGetter(HTMixingRecipe::itemIngredients),
-            HTFluidIngredient.CODEC
-                .listOf(1, HTMixingRecipe.MAX_FLUID_INPUT)
-                .fieldOf(HTConst.FLUID_INGREDIENT)
-                .forGetter(HTMixingRecipe::fluidIngredients),
+            MapBiCodecs
+                .ior(
+                    HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT),
+                    HTFluidIngredient.CODEC.listOf(1, HTMixingRecipe.MAX_FLUID_INPUT).fieldOf(HTConst.FLUID_INGREDIENT),
+                ).forGetter(HTMixingRecipe::ingredient),
             COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
             HTProcessingRecipe.timeCodec(),
             ::HTMixingRecipe,

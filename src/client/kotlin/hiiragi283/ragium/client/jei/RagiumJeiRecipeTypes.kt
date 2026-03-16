@@ -6,6 +6,7 @@ import hiiragi283.core.api.recipe.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
+import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTFakeRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
@@ -13,6 +14,7 @@ import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.api.recipe.HTTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
@@ -88,8 +90,12 @@ object RagiumJeiRecipeTypes {
 
     // Machine - Elite
     @JvmField
+    val ELECTROLYZING: HTHolderRecipeViewerType<HTSingleFluidRecipeInput, HTElectrolyzingRecipe> =
+        create(RagiumRecipeTypes.ELECTROLYZING, RagiumBlocks.MIXER, 18 * 7)
+
+    @JvmField
     val MIXING: HTHolderRecipeViewerType<HTChemicalRecipeInput, HTMixingRecipe> =
-        create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 8)
+        create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 9)
 
     @JvmField
     val WASHING: HTHolderRecipeViewerType<HTItemAndFluidRecipeInput, HTWashingRecipe> =

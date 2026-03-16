@@ -128,6 +128,9 @@ object RagiumFluids {
     @JvmField
     val HYDROGEN: HTFluidContent = REGISTER.registerVirtual("hydrogen") { properties = gas() }
 
+    @JvmField
+    val STEAM: HTFluidContent = REGISTER.registerVirtual("steam") { properties = gas().temperature(400) }
+
     // O
     @JvmField
     val OXYGEN: HTFluidContent = REGISTER.registerVirtual("oxygen") { properties = gas() }

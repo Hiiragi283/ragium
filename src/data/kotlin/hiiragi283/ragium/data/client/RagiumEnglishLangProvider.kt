@@ -83,6 +83,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.HELIUM, "End Stone Gas")
 
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluids.STEAM, "Steam")
         addFluid(RagiumFluids.OXYGEN, "Oxygen")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
@@ -117,6 +118,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         add(RagiumRecipeTypes.FREEZING, "Freezing")
 
+        add(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
         add(RagiumRecipeTypes.MIXING, "Mixing")
         add(RagiumRecipeTypes.WASHING, "Washing")
 

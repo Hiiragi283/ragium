@@ -10,11 +10,9 @@
     "amount": 2000,
     "id": "ragium:nitric_acid"
   },
-  "item_ingredient": [
-    {
-      "amount": 2,
-      "items": "#c:dusts/saltpeter"
-    }
-  ],
+  "item_ingredient": {
+    "amount": 2,
+    "items": "#c:dusts/saltpeter"
+  },
   "time": 200
 }

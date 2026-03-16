@@ -14,10 +14,8 @@
     "amount": 2000,
     "id": "ragium:synthetic_gas"
   },
-  "item_ingredient": [
-    {
-      "items": "#c:dusts/nickel"
-    }
-  ],
+  "item_ingredient": {
+    "items": "#c:dusts/nickel"
+  },
   "time": 200
 }

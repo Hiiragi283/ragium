@@ -120,6 +120,7 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.HELIUM, Color(0xffff99))
 
         event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
+        event.clear(RagiumFluids.STEAM, Color(0xcccccc))
         event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
     }
 

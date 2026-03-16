@@ -83,6 +83,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.HELIUM, "エンドストーンガス")
 
         addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.STEAM, "蒸気")
         addFluid(RagiumFluids.OXYGEN, "酸素")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
@@ -117,6 +118,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         add(RagiumRecipeTypes.FREEZING, "冷却")
 
+        add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
         add(RagiumRecipeTypes.MIXING, "混合")
         add(RagiumRecipeTypes.WASHING, "洗浄")
 

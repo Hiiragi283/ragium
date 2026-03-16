@@ -15,14 +15,12 @@ import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTTankInteractingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
@@ -36,23 +34,9 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        mixing()
         refining()
         tankInteraction()
         washing()
-    }
-
-    //    Mixing    //
-
-    @JvmStatic
-    private fun mixing() {
-        // Eldritch Flux
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
-            result += resultCreator.molten(HCMaterialKeys.ELDRITCH)
-        }
     }
 
     //    Refining    //

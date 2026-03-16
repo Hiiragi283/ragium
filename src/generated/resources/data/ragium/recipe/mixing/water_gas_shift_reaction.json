@@ -14,10 +14,8 @@
     "amount": 2000,
     "id": "ragium:hydrogen"
   },
-  "item_ingredient": [
-    {
-      "items": "#c:dusts/platinum"
-    }
-  ],
+  "item_ingredient": {
+    "items": "#c:dusts/platinum"
+  },
   "time": 200
 }

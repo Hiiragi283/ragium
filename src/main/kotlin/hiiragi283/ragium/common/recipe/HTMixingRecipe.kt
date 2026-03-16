@@ -18,22 +18,20 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTMixingRecipe(
-    val itemIngredients: List<HTItemIngredient>,
-    val fluidIngredients: List<HTFluidIngredient>,
+    val ingredient: Ior<HTItemIngredient, List<HTFluidIngredient>>,
     val result: Ior<HTItemResult, HTFluidResult>,
     override val time: Int,
 ) : HTProcessingRecipe.Serializable<HTChemicalRecipeInput>,
     HTFluidRecipe<HTChemicalRecipeInput> {
     companion object {
         const val MAX_FLUID_INPUT = 2
-        const val MAX_ITEM_INPUT = 2
     }
 
-    override fun test(input: HTChemicalRecipeInput): Boolean {
-        val bool1: Boolean = itemIngredients.isEmpty() || HTShapelessRecipeHelper.shapelessMatch(itemIngredients, input.items).isNotEmpty()
-        val bool2: Boolean = HTShapelessRecipeHelper.shapelessMatch(fluidIngredients, input.fluids).isNotEmpty()
-        return bool1 && bool2
-    }
+    override fun test(input: HTChemicalRecipeInput): Boolean = ingredient.map(
+        { HTShapelessRecipeHelper.shapelessMatch(listOf(it), input.items).isNotEmpty() },
+        { HTShapelessRecipeHelper.shapelessMatch(it, input.fluids).isNotEmpty() },
+        { item: Boolean, fluid: Boolean -> item && fluid },
+    )
 
     override fun assemble(input: HTChemicalRecipeInput, registries: HolderLookup.Provider): ItemStack =
         result.getLeft()?.getStackResult(registries)?.value() ?: ItemStack.EMPTY

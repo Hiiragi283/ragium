@@ -242,14 +242,14 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 // Oxidization
                 HTItemOrFluidRecipeBuilder.refining(output) {
                     ingredient += inputCreator.create(before)
-                    ingredient += inputCreator.create(RagiumFluids.SULFUR_DIOXIDE, 250)
+                    ingredient += inputCreator.create(RagiumFluids.OXYGEN, 250)
                     result += resultCreator.create(after)
                     recipeId suffix "_from_${before.path}"
                 }
                 // Reduction
                 HTItemOrFluidRecipeBuilder.refining(output) {
                     ingredient += inputCreator.create(after)
-                    ingredient += inputCreator.create(RagiumFluids.NITROGEN, 250)
+                    ingredient += inputCreator.create(RagiumFluids.HYDROGEN, 250)
                     result += resultCreator.create(before)
                     recipeId suffix "_from_${after.path}"
                 }

@@ -20,6 +20,7 @@ object RagiumConst {
 
     // Elite
     const val BREWERY = "brewery"
+    const val ELECTROLYZER = "electrolyzer"
     const val MIXER = "mixer"
     const val WASHER = "washer"
 
@@ -57,6 +58,7 @@ object RagiumConst {
     const val REFINING = "refining"
 
     // Elite
+    const val ELECTROLYZING = "electrolyzing"
     const val MIXING = "mixing"
     const val WASHING = "washing"
 

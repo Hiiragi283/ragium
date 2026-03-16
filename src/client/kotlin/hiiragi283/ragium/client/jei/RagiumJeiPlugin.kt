@@ -10,6 +10,7 @@ import hiiragi283.core.client.jei.extension.HTBasicItemToItemRecipeCategoryExten
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTElectrolyzingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
@@ -122,6 +123,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             pyrolyzing,
             refining,
             // Machine - Elite
+            HTElectrolyzingRecipeCategory(guiHelper),
             HTMixingRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
             // Machine - Ultimate
@@ -167,6 +169,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING)
         registration.addRecipes(RagiumJeiRecipeTypes.REFINING)
         // Machine - Elite
+        registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
         registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
         // Machine - Ultimate
@@ -195,6 +198,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.PYROLYZING,
             RagiumJeiRecipeTypes.REFINING,
             // Machine - Elite
+            RagiumJeiRecipeTypes.ELECTROLYZING,
             RagiumJeiRecipeTypes.MIXING,
             RagiumJeiRecipeTypes.WASHING,
             // Machine - Ultimate
