@@ -1,5 +1,6 @@
 {
   "values": [
+    "#c:ammonia",
     "#c:helium",
     "#c:hydrogen",
     "#c:methane",
@@ -8,6 +9,7 @@
     "#c:oxygen",
     "#c:steam",
     "#c:sulfur_dioxide",
+    "#c:sulfur_trioxide",
     "#c:synthetic_gas"
   ]
 }

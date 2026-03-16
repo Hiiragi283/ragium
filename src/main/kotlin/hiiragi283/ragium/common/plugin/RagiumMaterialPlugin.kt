@@ -77,7 +77,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
             setName("Petroleum Coke", "石油コークス")
             setTextureSet("fuel")
-            put(HTMaterialPropertyKeys.FUEL_TIME, 20 * 10 * 12)
+            put(HTMaterialPropertyKeys.FUEL_TIME, 20 * 10 * 6)
         }
     }
 

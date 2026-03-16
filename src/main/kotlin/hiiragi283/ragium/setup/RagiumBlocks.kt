@@ -109,7 +109,7 @@ object RagiumBlocks {
 
     @JvmField
     val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY)
+        registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY, machine().noOcclusion())
 
     // Elite
     @JvmField

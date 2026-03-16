@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "ragium:block/glycerol"
+      "model": "ragium:block/ammonia"
     }
   }
 }

@@ -36,7 +36,7 @@ class HTTankInteractionRecipeCategory(guiHelper: IGuiHelper) :
         )
         extension.setFilledContainer(
             recipe1,
-            builder.addInputSlot().setPosition(getPosition(4), getPosition(0)).setSlotBackground(HTBackgroundType.INPUT),
+            builder.addInputSlot().setPosition(getPosition(4), getPosition(0)).setSlotBackground(HTBackgroundType.EXTRA_INPUT),
         )
         // fluid
         extension.setFluid(
@@ -54,7 +54,7 @@ class HTTankInteractionRecipeCategory(guiHelper: IGuiHelper) :
         )
         extension.setEmptyContainer(
             recipe1,
-            builder.addOutputSlot().setPosition(getPosition(4), getPosition(2)).setSlotBackground(HTBackgroundType.OUTPUT),
+            builder.addOutputSlot().setPosition(getPosition(4), getPosition(2)).setSlotBackground(HTBackgroundType.EXTRA_OUTPUT),
         )
     }
 

@@ -3,16 +3,19 @@
   "fluid_ingredient": [
     {
       "amount": 3000,
-      "fluids": "#c:nitrogen_dioxide"
+      "fluids": "#c:hydrogen"
     },
     {
       "amount": 1000,
-      "fluids": "#c:water"
+      "fluids": "#c:nitrogen"
     }
   ],
   "fluid_result": {
     "amount": 2000,
-    "id": "ragium:nitric_acid"
+    "id": "ragium:ammonia"
+  },
+  "item_ingredient": {
+    "items": "#c:dusts/iron"
   },
   "time": 200
 }

@@ -10,6 +10,8 @@ import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.data.tank.HTTankInteraction
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.TagKey
@@ -49,12 +51,13 @@ class HTSimpleTankInteraction(
 
     override fun type(): MapCodec<HTSimpleTankInteraction> = CODEC
 
-    override fun canEmptyContainer(container: ItemStack): Boolean = filledContainer.isOf(container)
+    override fun canEmptyContainer(container: HTItemResourceType): Boolean = filledContainer.isOf(container)
 
-    override fun emptyContainer(container: ItemStack): Pair<ItemStack, FluidStack> = emptyContainer.toStack() to fluid.toStack(amount)
+    override fun emptyContainer(container: HTItemResourceType): Pair<ItemStack, FluidStack> =
+        emptyContainer.toStack() to fluid.toStack(amount)
 
-    override fun canFillContainer(container: ItemStack, fluidStack: FluidStack): Boolean =
-        emptyContainer.isOf(container) && ingredient.test(fluidStack)
+    override fun canFillContainer(container: HTItemResourceType, fluidStack: HTFluidResourceType): Boolean =
+        emptyContainer.isOf(container) && ingredient.test(fluidStack, amount)
 
-    override fun fillContainer(container: ItemStack, fluidStack: FluidStack): ItemStack = filledContainer.toStack()
+    override fun fillContainer(container: HTItemResourceType, fluidStack: HTFluidResourceType): ItemStack = filledContainer.toStack()
 }

@@ -5,6 +5,8 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.item.alchemy.HTBottleType
 import hiiragi283.core.api.item.alchemy.HTPotionContents
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.util.HCPotionFluidHelper
 import hiiragi283.ragium.api.data.tank.HTTankInteraction
 import net.minecraft.world.item.ItemStack
@@ -19,24 +21,24 @@ data object HTPotionTankInteraction : HTTankInteraction.Serializable {
 
     override val amount: Int = HTConst.DEFAULT_FLUID_AMOUNT / 4
 
-    override fun canEmptyContainer(container: ItemStack): Boolean {
-        val bool1: Boolean = HTBottleType.entries.any { container.`is`(it.asItem()) }
+    override fun canEmptyContainer(container: HTItemResourceType): Boolean {
+        val bool1: Boolean = HTBottleType.entries.any { container.isOf(it.asItem()) }
         val bool2: Boolean = HTPotionHelper.getContents(container) != null
         return bool1 && bool2
     }
 
-    override fun emptyContainer(container: ItemStack): Pair<ItemStack, FluidStack> {
+    override fun emptyContainer(container: HTItemResourceType): Pair<ItemStack, FluidStack> {
         val content: HTPotionContents = HTPotionHelper.getContents(container) ?: return ItemStack.EMPTY to FluidStack.EMPTY
         return ItemStack(Items.GLASS_BOTTLE) to HCPotionFluidHelper.createFluid(content, amount)
     }
 
-    override fun canFillContainer(container: ItemStack, fluidStack: FluidStack): Boolean {
-        if (!container.`is`(Items.GLASS_BOTTLE)) return false
+    override fun canFillContainer(container: HTItemResourceType, fluidStack: HTFluidResourceType): Boolean {
+        if (!container.isOf(Items.GLASS_BOTTLE)) return false
         val contents: HTPotionContents = HTPotionHelper.getContents(fluidStack) ?: return false
         return !contents.isEmpty
     }
 
-    override fun fillContainer(container: ItemStack, fluidStack: FluidStack): ItemStack = HTPotionHelper
+    override fun fillContainer(container: HTItemResourceType, fluidStack: HTFluidResourceType): ItemStack = HTPotionHelper
         .getContents(fluidStack)
         ?.let(HTPotionHelper::createPotion)
         ?: ItemStack.EMPTY

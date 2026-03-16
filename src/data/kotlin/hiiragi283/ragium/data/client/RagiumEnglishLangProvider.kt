@@ -52,18 +52,22 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
         // Fluid
+        addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
+        addFluid(RagiumFluids.STEAM, "Steam")
+
+        addFluid(RagiumFluids.OXYGEN, "Oxygen")
+
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
         addFluid(RagiumFluids.SYNTHETIC_GAS, "Synthetic Gas")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "Synthetic Oil")
 
-        addFluid(RagiumFluids.METHANE, "Biomass Gas")
+        addFluid(RagiumFluids.METHANE, "Methane")
+        addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
         addFluid(RagiumFluids.ETHANOL, "Ethanol")
-
         addFluid(RagiumFluids.BIOFUEL, "Biofuel")
-        addFluid(RagiumFluids.GLYCEROL, "Glycerol")
 
-        addFluid(RagiumFluids.NITROGEN, "Breeze Gas")
-        addFluid(RagiumFluids.LIQUID_NITROGEN, "Coolant")
+        addFluid(RagiumFluids.NITROGEN, "Nitrogen")
+        addFluid(RagiumFluids.LIQUID_NITROGEN, "Liquid Nitrogen")
 
         addFluid(RagiumFluids.NAOH_SOLUTION, "Slime Solution")
 
@@ -73,18 +77,15 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
         addFluid(RagiumFluids.FUEL, "Fuel")
 
-        addFluid(RagiumFluids.NITROGEN_DIOXIDE, "Ghast Gas")
-        addFluid(RagiumFluids.NITRIC_ACID, "Ghast Acid")
-        addFluid(RagiumFluids.MIXTURE_ACID, "Mixture Acid")
+        addFluid(RagiumFluids.NITROGEN_DIOXIDE, "Nitrogen Dioxide")
+        addFluid(RagiumFluids.AMMONIA, "Ammonia")
+        addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
 
-        addFluid(RagiumFluids.SULFUR_DIOXIDE, "Blaze Gas")
-        addFluid(RagiumFluids.SULFURIC_ACID, "Blaze Acid")
+        addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
+        addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
+        addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
 
-        addFluid(RagiumFluids.HELIUM, "End Stone Gas")
-
-        addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
-        addFluid(RagiumFluids.STEAM, "Steam")
-        addFluid(RagiumFluids.OXYGEN, "Oxygen")
+        addFluid(RagiumFluids.HELIUM, "Helium")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.CRUDE_SILICON, "Crude Silicon")

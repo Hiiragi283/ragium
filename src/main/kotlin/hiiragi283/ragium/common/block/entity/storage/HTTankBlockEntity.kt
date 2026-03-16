@@ -5,13 +5,12 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.amount.HTAmountView
+import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.api.storage.fluid.HTMutableFluidTank
-import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -82,9 +81,8 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
                     if (HTFluidCapabilities.getFluidViews(resource).any { it.getResource() != null }) {
                         return@Predicate true
                     } else {
-                        RagiumRecipeTypes.TANK_INTERACTION.findFirst(level) { recipe: HTTankInteraction ->
-                            recipe.canEmptyContainer(resource.toStack())
-                        } != null
+                        RagiumRecipeTypes.TANK_INTERACTION
+                            .findFirst(level) { recipe: HTTankInteraction -> recipe.canEmptyContainer(resource) } != null
                     }
                 },
             ),
@@ -161,7 +159,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     private fun drainContainer(): Boolean {
-        val filledContainer: ItemStack = drainInputHandler.getItemStack()
+        val filledContainer: HTItemResourceType = drainInputHandler.getResource() ?: return false
         val recipe: HTTankInteraction = RagiumRecipeTypes.TANK_INTERACTION
             .findFirst(level) { recipe: HTTankInteraction -> recipe.canEmptyContainer(filledContainer) }
             ?.second
@@ -179,14 +177,14 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     private fun fillContainer(): Boolean {
-        val emptyContainer: ItemStack = fillInputHandler.getItemStack()
-        val fluidStack: FluidStack = fluidInputHandler.getFluidStack()
+        val emptyContainer: HTItemResourceType = fillInputHandler.getResource() ?: return false
+        val fluid: HTFluidResourceType = fluidInputHandler.getResource() ?: return false
         val recipe: HTTankInteraction = RagiumRecipeTypes.TANK_INTERACTION
-            .findFirst(level) { recipe: HTTankInteraction -> recipe.canFillContainer(emptyContainer, fluidStack) }
+            .findFirst(level) { recipe: HTTankInteraction -> recipe.canFillContainer(emptyContainer, fluid) }
             ?.second
             ?: return false
 
-        val filledContainer: ItemStack = recipe.fillContainer(emptyContainer, fluidStack)
+        val filledContainer: ItemStack = recipe.fillContainer(emptyContainer, fluid)
         if (fillOutputHandler.canInsert(filledContainer)) {
             fillOutputHandler.insert(filledContainer)
             fillInputHandler.consume(1)

@@ -90,15 +90,19 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
         // Overworld
+        event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
+        event.clear(RagiumFluids.STEAM, Color(0xcccccc))
+
+        event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
+
         event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
         event.clear(RagiumFluids.SYNTHETIC_GAS, Color(0xffcc99))
         event.molten(RagiumFluids.SYNTHETIC_OIL, Color(0x333344))
 
         event.clear(RagiumFluids.METHANE, Color(0xcc9999))
-        event.dull(RagiumFluids.ETHANOL, Color(0x99cc66))
-        event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
+        event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
+        event.clear(RagiumFluids.ETHANOL, Color(0x99cc66))
         event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
-        event.clear(RagiumFluids.GLYCEROL, Color(0x66cc99))
 
         event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
         event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
@@ -110,18 +114,15 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.NAPHTHA, Color(0xff6600))
         event.clear(RagiumFluids.FUEL, Color(0xff9900))
 
-        event.clear(RagiumFluids.NITROGEN_DIOXIDE, Color(0x9999cc))
+        event.clear(RagiumFluids.NITROGEN_DIOXIDE, Color(0x3399cc))
+        event.clear(RagiumFluids.AMMONIA, Color(0x6699cc))
         event.dull(RagiumFluids.NITRIC_ACID, Color(0x9999cc))
-        event.dull(RagiumFluids.MIXTURE_ACID, Color(0xcc3300))
 
-        event.clear(RagiumFluids.SULFUR_DIOXIDE, Color(0xcccc00))
+        event.clear(RagiumFluids.SULFUR_DIOXIDE, Color(0xcc6600))
+        event.clear(RagiumFluids.SULFUR_TRIOXIDE, Color(0xcc9900))
         event.dull(RagiumFluids.SULFURIC_ACID, Color(0xcccc00))
         // The End
         event.clear(RagiumFluids.HELIUM, Color(0xffff99))
-
-        event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
-        event.clear(RagiumFluids.STEAM, Color(0xcccccc))
-        event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
     }
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {

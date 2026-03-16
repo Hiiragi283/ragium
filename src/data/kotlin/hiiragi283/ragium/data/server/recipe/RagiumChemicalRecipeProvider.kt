@@ -2,7 +2,9 @@ package hiiragi283.ragium.data.server.recipe
 
 import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
@@ -44,6 +46,9 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_with_nitrogen"
         }
     }
+
+    @JvmStatic
+    private fun catalyst(material: HTMaterialLike): HTItemIngredient = inputCreator.create(CommonTagPrefixes.DUST, material, 0)
 
     //    Overworld    //
 
@@ -107,7 +112,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // Synthetic Gas + H2O -> CO2 + 2x H2
         HTMixingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM, amount = 0)
+            itemIngredient = catalyst(CommonMaterialKeys.PLATINUM)
             fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
             fluidIngredients += inputCreator.water()
 
@@ -303,39 +308,58 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_from_saltpeter"
         }
 
+        // 3x H2 + N2 -> 2x NH3
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredient = catalyst(VanillaMaterialKeys.IRON)
+            fluidIngredients += inputCreator.create(RagiumFluids.HYDROGEN, 3000)
+            fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN)
+            result += resultCreator.create(RagiumFluids.AMMONIA, 2000)
+        }
+        // 4x NH3 + 7x O2 -> 4x NO2 + 6x H2O
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredient = catalyst(CommonMaterialKeys.PLATINUM)
+            fluidIngredients += inputCreator.create(RagiumFluids.AMMONIA, 4000)
+            fluidIngredients += inputCreator.create(RagiumFluids.OXYGEN, 7000)
+            result += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE, 4000)
+        }
         // Ghast Tear -> NO2
         HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
             ingredient += inputCreator.create(Items.GHAST_TEAR)
             result += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE)
         }
-        // NO2 + H2O -> HNO3
+        // 3x NO2 + H2O -> 2x HNO3 + NO
         HTMixingRecipeBuilder.create(output) {
-            fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN_DIOXIDE)
+            fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN_DIOXIDE, 3000)
             fluidIngredients += inputCreator.water()
-            result += resultCreator.create(RagiumFluids.NITRIC_ACID)
+            result += resultCreator.create(RagiumFluids.NITRIC_ACID, 2000)
         }
     }
 
     @JvmStatic
-    private fun explosive() {
-        // HNO3 + H2SO4 -> Mixture Acid
-        HTMixingRecipeBuilder.create(output) {
-            fluidIngredients += inputCreator.create(RagiumFluids.NITRIC_ACID, 500)
-            fluidIngredients += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
-            result += resultCreator.create(RagiumFluids.MIXTURE_ACID)
-        }
-    }
+    private fun explosive() {}
 
     @JvmStatic
     private fun blaze() {
-        // Blaze Powder -> SO2
+        // S -> SO2
         HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
-            ingredient += inputCreator.create(Items.BLAZE_POWDER)
+            ingredient += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             result += resultCreator.create(RagiumFluids.SULFUR_DIOXIDE)
         }
-        // SO2 + H2O -> H2SO4
+        // 2x SO2 + O2 -> 2x SO3
         HTMixingRecipeBuilder.create(output) {
+            itemIngredient = catalyst(VanillaMaterialKeys.IRON)
             fluidIngredients += inputCreator.create(RagiumFluids.SULFUR_DIOXIDE)
+            fluidIngredients += inputCreator.create(RagiumFluids.OXYGEN, 500)
+            result += resultCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
+        }
+        // Blaze Powder -> SO3
+        HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
+            ingredient += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.BLAZE)
+            result += resultCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
+        }
+        // SO3 + H2O -> H2SO4
+        HTMixingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
             fluidIngredients += inputCreator.water()
             result += resultCreator.create(RagiumFluids.SULFURIC_ACID)
         }

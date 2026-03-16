@@ -1,11 +1,11 @@
 {
   "type": "ragium:pyrolyzing",
   "fluid_result": {
-    "id": "ragium:sulfur_dioxide"
+    "id": "ragium:sulfur_trioxide"
   },
   "item_ingredient": {
     "amount": 1,
-    "items": "#c:dusts/sulfur"
+    "items": "#c:dusts/blaze"
   },
   "time": 600
 }

@@ -52,18 +52,22 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブクレート")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
+        addFluid(RagiumFluids.HYDROGEN, "水素")
+        addFluid(RagiumFluids.STEAM, "蒸気")
+
+        addFluid(RagiumFluids.OXYGEN, "酸素")
+
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
         addFluid(RagiumFluids.SYNTHETIC_GAS, "合成ガス")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "合成石油")
 
-        addFluid(RagiumFluids.METHANE, "バイオマスガス")
+        addFluid(RagiumFluids.METHANE, "メタン")
+        addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオマス")
         addFluid(RagiumFluids.ETHANOL, "エタノール")
-
         addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
-        addFluid(RagiumFluids.GLYCEROL, "グリセロール")
 
-        addFluid(RagiumFluids.NITROGEN, "ブリーズガス")
-        addFluid(RagiumFluids.LIQUID_NITROGEN, "冷却材")
+        addFluid(RagiumFluids.NITROGEN, "窒素")
+        addFluid(RagiumFluids.LIQUID_NITROGEN, "液体窒素")
 
         addFluid(RagiumFluids.NAOH_SOLUTION, "スライム溶液")
 
@@ -73,18 +77,15 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
         addFluid(RagiumFluids.FUEL, "燃料")
 
-        addFluid(RagiumFluids.NITROGEN_DIOXIDE, "ガストガス")
-        addFluid(RagiumFluids.NITRIC_ACID, "ガスト酸")
-        addFluid(RagiumFluids.MIXTURE_ACID, "混酸")
+        addFluid(RagiumFluids.NITROGEN_DIOXIDE, "二酸化窒素")
+        addFluid(RagiumFluids.AMMONIA, "アンモニア")
+        addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
 
-        addFluid(RagiumFluids.SULFUR_DIOXIDE, "ブレイズガス")
-        addFluid(RagiumFluids.SULFURIC_ACID, "ブレイズ酸")
+        addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
+        addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
+        addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
 
-        addFluid(RagiumFluids.HELIUM, "エンドストーンガス")
-
-        addFluid(RagiumFluids.HYDROGEN, "水素")
-        addFluid(RagiumFluids.STEAM, "蒸気")
-        addFluid(RagiumFluids.OXYGEN, "酸素")
+        addFluid(RagiumFluids.HELIUM, "ヘリウム")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
         add(RagiumItems.CRUDE_SILICON, "粗生シリコン")
