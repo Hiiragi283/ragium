@@ -54,6 +54,7 @@ data object Ragium : HTCommonMod() {
 
     override fun registerRegistries(event: NewRegistryEvent) {
         event.register(RagiumRegistries.DUPLICATION_MODIFIER)
+        event.register(RagiumRegistries.TANK_INTERACTION_TYPE)
     }
 
     override fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {

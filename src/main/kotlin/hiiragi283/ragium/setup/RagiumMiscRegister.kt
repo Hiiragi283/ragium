@@ -1,7 +1,11 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.resource.toId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumRegistries
+import hiiragi283.ragium.common.data.tank.HTPotionTankInteraction
+import hiiragi283.ragium.common.data.tank.HTSimpleTankInteraction
 import hiiragi283.ragium.common.recipe.ingredient.HTBluePrintIngredient
 import hiiragi283.ragium.common.recipe.modifier.HTEnchantmentDuplicationModifier
 import hiiragi283.ragium.common.recipe.modifier.HTPotionDuplicationModifier
@@ -20,6 +24,11 @@ object RagiumMiscRegister {
         event.register(RagiumRegistries.Keys.DUPLICATION_MODIFIER) { helper ->
             helper.register(RagiumAPI.id("enchantment"), HTEnchantmentDuplicationModifier)
             helper.register(RagiumAPI.id("potion"), HTPotionDuplicationModifier)
+        }
+        // Tank Interaction Type
+        event.register(RagiumRegistries.Keys.TANK_INTERACTION_TYPE) { helper ->
+            helper.register(HTConst.MINECRAFT.toId("simple"), HTSimpleTankInteraction.CODEC)
+            helper.register(HTConst.MINECRAFT.toId("potion"), HTPotionTankInteraction.CODEC)
         }
     }
 }

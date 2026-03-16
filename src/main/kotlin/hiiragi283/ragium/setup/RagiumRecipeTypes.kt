@@ -18,9 +18,10 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.api.data.tank.HTTankInteraction
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
-import hiiragi283.ragium.api.recipe.HTTankInteractingRecipe
+import hiiragi283.ragium.common.data.tank.HTTankInteractionDataLoader
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
@@ -41,8 +42,16 @@ object RagiumRecipeTypes {
     val REGISTER = HTDeferredRecipeTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmField
-    val TANK_INTERACTION: HTDeferredRecipeType<RecipeInput, HTTankInteractingRecipe> =
-        REGISTER.registerType(RagiumConst.TANK_INTERACTION)
+    val TANK_INTERACTION: HTRecipeType.Fake<RecipeInput, HTTankInteraction> = object : HTRecipeType.Fake<RecipeInput, HTTankInteraction> {
+        override fun getId(): ResourceLocation = RagiumAPI.id(RagiumConst.TANK_INTERACTION)
+
+        override fun createCache(): HTRecipeCache<RecipeInput, HTTankInteraction> = throw UnsupportedOperationException()
+
+        override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<IdToValue<HTTankInteraction>> =
+            HTTankInteractionDataLoader.interactionMap
+                .asSequence()
+                .map { (key: ResourceLocation, value: HTTankInteraction.Serializable) -> key to value }
+    }
 
     // Machine - Basic
     @JvmField

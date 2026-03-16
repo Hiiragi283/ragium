@@ -1,34 +1,34 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.resource.IdToValue
 import hiiragi283.core.client.jei.category.base.HTLookupRecipeCategory
-import hiiragi283.ragium.api.integration.jei.HTTankInteractingRecipeCategoryExtension
-import hiiragi283.ragium.api.recipe.HTTankInteractingRecipe
+import hiiragi283.ragium.api.data.tank.HTTankInteraction
+import hiiragi283.ragium.api.integration.jei.HTTankInteractionCategoryExtension
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.RecipeIngredientRole
-import net.minecraft.world.item.crafting.RecipeHolder
 
 class HTTankInteractionRecipeCategory(guiHelper: IGuiHelper) :
-    HTLookupRecipeCategory.Managed<HTTankInteractingRecipe>(guiHelper, RagiumJeiRecipeTypes.TANK_INTERACTION) {
-    private val extensions: MutableMap<Class<out HTTankInteractingRecipe>, HTTankInteractingRecipeCategoryExtension<*>> = hashMapOf()
+    HTLookupRecipeCategory.Fake<HTTankInteraction>(guiHelper, RagiumJeiRecipeTypes.TANK_INTERACTION) {
+    private val extensions: MutableMap<Class<out HTTankInteraction>, HTTankInteractionCategoryExtension<*>> = hashMapOf()
 
-    inline fun <reified RECIPE : HTTankInteractingRecipe> addExtension(extension: HTTankInteractingRecipeCategoryExtension<RECIPE>) {
+    inline fun <reified RECIPE : HTTankInteraction> addExtension(extension: HTTankInteractionCategoryExtension<RECIPE>) {
         this.addExtension(RECIPE::class.java, extension)
     }
 
-    fun <RECIPE : HTTankInteractingRecipe> addExtension(clazz: Class<RECIPE>, extension: HTTankInteractingRecipeCategoryExtension<RECIPE>) {
+    fun <RECIPE : HTTankInteraction> addExtension(clazz: Class<RECIPE>, extension: HTTankInteractionCategoryExtension<RECIPE>) {
         extensions[clazz] = extension
     }
 
     //    HTLookupRecipeCategory    //
 
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTTankInteractingRecipe, focuses: IFocusGroup) {
-        val (recipe1: HTTankInteractingRecipe, extension: HTTankInteractingRecipeCategoryExtension<HTTankInteractingRecipe>) =
-            getExtension<HTTankInteractingRecipe>(recipe) ?: return
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTTankInteraction, focuses: IFocusGroup) {
+        val (recipe1: HTTankInteraction, extension: HTTankInteractionCategoryExtension<HTTankInteraction>) =
+            getExtension<HTTankInteraction>(recipe) ?: return
         // inputs
         extension.setEmptyContainer(
             recipe1,
@@ -59,12 +59,12 @@ class HTTankInteractionRecipeCategory(guiHelper: IGuiHelper) :
     }
 
     override fun onDisplayedIngredientsUpdate(
-        recipe: RecipeHolder<HTTankInteractingRecipe>,
+        recipe: IdToValue<HTTankInteraction>,
         recipeSlots: List<IRecipeSlotDrawable>,
         focuses: IFocusGroup,
     ) {
-        val (recipe1: HTTankInteractingRecipe, extension: HTTankInteractingRecipeCategoryExtension<HTTankInteractingRecipe>) =
-            getExtension<HTTankInteractingRecipe>(recipe.value()) ?: return
+        val (recipe1: HTTankInteraction, extension: HTTankInteractionCategoryExtension<HTTankInteraction>) =
+            getExtension<HTTankInteraction>(recipe.second) ?: return
         extension.onDisplayedIngredientsUpdate(
             recipe1,
             recipeSlots[0],
@@ -81,18 +81,17 @@ class HTTankInteractionRecipeCategory(guiHelper: IGuiHelper) :
         )
     }
 
-    override fun isHandled(recipe: RecipeHolder<HTTankInteractingRecipe>): Boolean =
-        getExtension<HTTankInteractingRecipe>(recipe.value()) != null
+    override fun isHandled(recipe: IdToValue<HTTankInteraction>): Boolean = getExtension<HTTankInteraction>(recipe.second) != null
 
     @Suppress("UNCHECKED_CAST")
-    private fun <RECIPE : HTTankInteractingRecipe> getExtension(
-        recipe: HTTankInteractingRecipe,
-    ): Pair<RECIPE, HTTankInteractingRecipeCategoryExtension<RECIPE>>? {
-        val extension: HTTankInteractingRecipeCategoryExtension<RECIPE> =
-            (extensions[recipe::class.java] as? HTTankInteractingRecipeCategoryExtension<RECIPE>) ?: run {
-                for ((clazz: Class<out HTTankInteractingRecipe>, extension: HTTankInteractingRecipeCategoryExtension<*>) in extensions) {
+    private fun <RECIPE : HTTankInteraction> getExtension(
+        recipe: HTTankInteraction,
+    ): Pair<RECIPE, HTTankInteractionCategoryExtension<RECIPE>>? {
+        val extension: HTTankInteractionCategoryExtension<RECIPE> =
+            (extensions[recipe::class.java] as? HTTankInteractionCategoryExtension<RECIPE>) ?: run {
+                for ((clazz: Class<out HTTankInteraction>, extension: HTTankInteractionCategoryExtension<*>) in extensions) {
                     if (clazz.isInstance(recipe)) {
-                        return@run extension as? HTTankInteractingRecipeCategoryExtension<RECIPE>
+                        return@run extension as? HTTankInteractionCategoryExtension<RECIPE>
                     }
                 }
                 null

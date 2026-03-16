@@ -5,26 +5,24 @@ import hiiragi283.core.api.item.alchemy.HTBottleType
 import hiiragi283.core.api.item.alchemy.HTPotionContents
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.util.HCPotionFluidHelper
-import hiiragi283.ragium.api.integration.jei.HTTankInteractingRecipeCategoryExtension
-import hiiragi283.ragium.common.recipe.special.HTPotionBottleInteractionRecipe
+import hiiragi283.ragium.api.integration.jei.HTTankInteractionCategoryExtension
+import hiiragi283.ragium.common.data.tank.HTPotionTankInteraction
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.neoforge.NeoForgeTypes
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.runtime.IIngredientManager
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.fluids.FluidStack
 import kotlin.streams.asSequence
 
-data class HTPotionBottleInteractionRecipeCategoryExtension(private val manager: IIngredientManager) :
-    HTTankInteractingRecipeCategoryExtension<HTPotionBottleInteractionRecipe> {
-    override fun <T : IIngredientAcceptor<T>> setEmptyContainer(recipe: HTPotionBottleInteractionRecipe, accessor: T) {
+object HTPotionTankInteractionCategoryExtension : HTTankInteractionCategoryExtension<HTPotionTankInteraction> {
+    override fun <T : IIngredientAcceptor<T>> setEmptyContainer(recipe: HTPotionTankInteraction, accessor: T) {
         accessor.addItemLike(Items.GLASS_BOTTLE)
     }
 
-    override fun <T : IIngredientAcceptor<T>> setFluid(recipe: HTPotionBottleInteractionRecipe, accessor: T) {
+    override fun <T : IIngredientAcceptor<T>> setFluid(recipe: HTPotionTankInteraction, accessor: T) {
         val stacks: List<FluidStack> = BuiltInRegistries.POTION
             .holders()
             .asSequence()
@@ -35,7 +33,7 @@ data class HTPotionBottleInteractionRecipeCategoryExtension(private val manager:
     }
 
     override fun onDisplayedIngredientsUpdate(
-        recipe: HTPotionBottleInteractionRecipe,
+        recipe: HTPotionTankInteraction,
         emptySlot: IRecipeSlotDrawable,
         filledSlot: IRecipeSlotDrawable,
         fluidSlot: IRecipeSlotDrawable,

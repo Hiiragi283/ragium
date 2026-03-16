@@ -1,18 +1,22 @@
-package hiiragi283.ragium.common.recipe.special
+package hiiragi283.ragium.common.data.tank
 
+import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.item.alchemy.HTBottleType
 import hiiragi283.core.api.item.alchemy.HTPotionContents
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.util.HCPotionFluidHelper
-import hiiragi283.ragium.api.recipe.HTTankInteractingRecipe
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
+import hiiragi283.ragium.api.data.tank.HTTankInteraction
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.RecipeSerializer
 import net.neoforged.neoforge.fluids.FluidStack
 
-data object HTPotionBottleInteractionRecipe : HTTankInteractingRecipe {
+data object HTPotionTankInteraction : HTTankInteraction.Serializable {
+    @JvmField
+    val CODEC: MapCodec<HTPotionTankInteraction> = MapCodec.unit { HTPotionTankInteraction }
+
+    override fun type(): MapCodec<HTPotionTankInteraction> = CODEC
+
     override val amount: Int = HTConst.DEFAULT_FLUID_AMOUNT / 4
 
     override fun canEmptyContainer(container: ItemStack): Boolean {
@@ -36,6 +40,4 @@ data object HTPotionBottleInteractionRecipe : HTTankInteractingRecipe {
         .getContents(fluidStack)
         ?.let(HTPotionHelper::createPotion)
         ?: ItemStack.EMPTY
-
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.POTION_BOTTLE_INTERACTION
 }

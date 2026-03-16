@@ -7,10 +7,7 @@ import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
-import hiiragi283.core.api.registry.VanillaFluidContents
-import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.ColoredMaterials
@@ -18,24 +15,17 @@ import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTTankInteractingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.recipe.special.HTPotionBottleInteractionRecipe
-import hiiragi283.ragium.setup.RagiumFluids
-import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         refining()
-        tankInteraction()
         washing()
     }
 
@@ -169,44 +159,6 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             ingredient += inputCreator.create(Items.TRIAL_KEY)
             ingredient += eldritch(4)
             result += resultCreator.create(Items.OMINOUS_TRIAL_KEY)
-        }
-    }
-
-    //    Tank Interaction    //
-
-    @JvmStatic
-    private fun tankInteraction() {
-        val glassBottle: HTItemHolderLike<Item> = Items.GLASS_BOTTLE.toLike()
-        // Experience
-        tankInteraction(glassBottle, Items.EXPERIENCE_BOTTLE.toLike(), HCFluids.EXPERIENCE)
-        // Honey Bottle
-        tankInteraction(glassBottle, Items.HONEY_BOTTLE.toLike(), HCFluids.HONEY)
-        // Mushroom Stew
-        tankInteraction(Items.BOWL.toLike(), Items.MUSHROOM_STEW.toLike(), HCFluids.MUSHROOM_STEW)
-        // Dragon Breath
-        tankInteraction(glassBottle, Items.DRAGON_BREATH.toLike(), HCFluids.DRAGON_BREATH)
-        // Potion Bottle
-        save(id(RagiumConst.TANK_INTERACTION, "potion_bottle"), HTPotionBottleInteractionRecipe)
-        // Mercury
-        tankInteraction(glassBottle, RagiumItems.MERCURY_BOTTLE, RagiumFluids.MERCURY)
-
-        // Sponge
-        tankInteraction(Items.SPONGE.toLike(), Items.WET_SPONGE.toLike(), VanillaFluidContents.WATER, HTConst.DEFAULT_FLUID_AMOUNT)
-    }
-
-    @JvmStatic
-    private fun tankInteraction(
-        empty: HTSimpleItemHolderLike,
-        filled: HTSimpleItemHolderLike,
-        content: HTFluidContent,
-        amount: Int = 250,
-    ) {
-        HTTankInteractingRecipeBuilder.create(output) {
-            this.emptyContainer = empty
-            this.filledContainer = filled
-            this.fluid = content
-            this.amount = amount
-            this.fluidTag = content.fluidTag
         }
     }
 

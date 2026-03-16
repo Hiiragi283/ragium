@@ -6,9 +6,6 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.registry.HTFluidHolderLike
-import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
@@ -35,12 +32,9 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.HTSimpleTankInteractingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.base.HTCombiningRecipe
-import hiiragi283.ragium.common.recipe.special.HTBucketInteractingRecipe
-import hiiragi283.ragium.common.recipe.special.HTPotionBottleInteractionRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -58,36 +52,6 @@ object RagiumRecipeSerializers {
         "blueprint_cloning",
         SimpleCraftingRecipeSerializer(::HTBlueprintCloningRecipe),
     )
-
-    // Tank Interaction
-    @JvmField
-    val TANK_INTERACTING: RecipeSerializer<HTSimpleTankInteractingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.TANK_INTERACTION,
-        MapBiCodec.composite(
-            HTItemHolderLike.CODEC.fieldOf("empty_container").forGetter(HTSimpleTankInteractingRecipe::emptyContainer),
-            HTItemHolderLike.CODEC.fieldOf("filled_container").forGetter(HTSimpleTankInteractingRecipe::filledContainer),
-            HTFluidHolderLike.CODEC.fieldOf(HTConst.FLUID).forGetter(HTSimpleTankInteractingRecipe::fluid),
-            BiCodecs.NON_NEGATIVE_INT.fieldOf(HTConst.AMOUNT).forGetter(HTSimpleTankInteractingRecipe::amount),
-            VanillaBiCodecs.tagKey(Registries.FLUID, true).optionalFieldOf("fluid_tag").forGetter(HTSimpleTankInteractingRecipe::fluidTag),
-            ::HTSimpleTankInteractingRecipe,
-        ),
-    )
-
-    @JvmField
-    val BUCKET_INTERACTION: RecipeSerializer<HTBucketInteractingRecipe> = REGISTER.registerSerializer(
-        "${RagiumConst.TANK_INTERACTION}/bucket",
-        MapBiCodec.composite(
-            HTFluidHolderLike.CODEC.fieldOf(HTConst.FLUID).forGetter(HTBucketInteractingRecipe::fluid),
-            ::HTBucketInteractingRecipe,
-        ),
-    )
-
-    @JvmField
-    val POTION_BOTTLE_INTERACTION: RecipeSerializer<HTPotionBottleInteractionRecipe> =
-        REGISTER.registerSerializer(
-            "${RagiumConst.TANK_INTERACTION}/potion_bottle",
-            MapBiCodecs.unit(HTPotionBottleInteractionRecipe),
-        )
 
     //    Machine    //
 
