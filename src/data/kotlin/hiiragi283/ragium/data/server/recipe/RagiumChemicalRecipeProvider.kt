@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
@@ -422,41 +423,45 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE))
             recipeId suffix "_with_coal_coke"
         }
-
         // Crude Silicon + Sulfuric Acid -> Refined Silicon
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(HiiragiCoreTags.Items.SILICON)
             ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
             result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.SILICON)
         }
-        // Refined Silicon + Plastic -> Circuit Board
+        
+        // Quartz Dust + Gold Plate + Plastic -> Circuit Board
         HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.create(RagiumItems.CIRCUIT_BOARD)
-            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SILICON)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.QUARTZ)
+            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.GOLD)
             ingredients += inputCreator.create(HiiragiCoreTags.Items.PLASTICS)
         }
-        // Circuit Board + Gold -> Plated
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(RagiumItems.PLATED_CIRCUIT_BOARD)
-            ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
-            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.GOLD)
+        // Silicon -> Silicon Wafer
+        HTCombiningRecipeBuilder.alloying(output) {
+            result = resultCreator.create(RagiumItems.SILICON_WAFER)
+            ingredients += inputCreator.create(HiiragiCoreTags.Items.SILICON, 4)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGI_CRYSTAL)
+            recipeId suffix "_from_crude_silicon"
+            time *= 3
         }
-        // Plated + Sulfuric Acid -> Printed
-        HTItemOrFluidRecipeBuilder.refining(output) {
-            ingredient += inputCreator.create(RagiumItems.PLATED_CIRCUIT_BOARD)
-            ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)
-            result += resultCreator.create(RagiumItems.PRINTED_CIRCUIT_BOARD)
+        HTCombiningRecipeBuilder.alloying(output) {
+            result = resultCreator.create(RagiumItems.SILICON_WAFER)
+            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.SILICON)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGI_CRYSTAL)
+            recipeId suffix "_from_refined_silicon"
+            time *= 3
         }
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(RagiumItems.PRINTED_CIRCUIT_BOARD)
-            ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
-            ingredients += inputCreator.create(CommonTagPrefixes.WIRE, VanillaMaterialKeys.GOLD)
+        // Silicon Wafer -> Circuit Chip
+        RagiumRecipeBuilder.cutting(output) {
+            ingredient = inputCreator.create(RagiumItems.SILICON_WAFER)
+            result = resultCreator.create(RagiumItems.CIRCUIT_CHIP, 4)
         }
-        // Printed + -> Electric Circuit
+        // Circuit Board + Circuit chip -> Electric Circuit
         HTCombiningRecipeBuilder.assembling(output) {
             result = resultCreator.create(RagiumItems.ELECTRIC_CIRCUIT)
-            ingredients += inputCreator.create(RagiumItems.PRINTED_CIRCUIT_BOARD)
-            ingredients += inputCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.SILICON)
+            ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
+            ingredients += inputCreator.create(RagiumItems.CIRCUIT_CHIP, 2)
         }
     }
 

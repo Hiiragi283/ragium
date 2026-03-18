@@ -3,11 +3,11 @@
   "ingredient": [
     {
       "amount": 1,
-      "items": "ragium:printed_circuit_board"
+      "items": "ragium:circuit_board"
     },
     {
-      "amount": 1,
-      "items": "#c:plates/silicon"
+      "amount": 2,
+      "items": "ragium:circuit_chip"
     }
   ],
   "result": {

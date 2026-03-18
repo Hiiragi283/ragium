@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "ragium:item/printed_circuit_board"
+    "layer0": "ragium:item/silicon_wafer"
   }
 }

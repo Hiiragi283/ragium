@@ -122,9 +122,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         add(RagiumItems.MERCURY_BOTTLE, "Mercury Bottle")
         add(RagiumItems.THERMOMETER, "Thermometer")
+        add(RagiumItems.SILICON_WAFER, "Silicon Wafer")
+        add(RagiumItems.CIRCUIT_CHIP, "Circuit Chip")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        add(RagiumItems.PLATED_CIRCUIT_BOARD, "Plated Circuit Board")
-        add(RagiumItems.PRINTED_CIRCUIT_BOARD, "Printed Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
 
         add(RagiumItems.ARTIFICIAL_ARTIFACT, "Artificial Artifact")

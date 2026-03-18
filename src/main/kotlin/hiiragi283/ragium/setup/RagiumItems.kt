@@ -97,13 +97,13 @@ object RagiumItems {
 
     // Elite
     @JvmField
+    val SILICON_WAFER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("silicon_wafer")
+
+    @JvmField
+    val CIRCUIT_CHIP: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("circuit_chip")
+
+    @JvmField
     val CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("circuit_board")
-
-    @JvmField
-    val PLATED_CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("plated_circuit_board")
-
-    @JvmField
-    val PRINTED_CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("printed_circuit_board")
 
     @JvmField
     val ELECTRIC_CIRCUIT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("electric_circuit")

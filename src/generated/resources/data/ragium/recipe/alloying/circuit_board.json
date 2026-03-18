@@ -3,7 +3,11 @@
   "ingredient": [
     {
       "amount": 1,
-      "items": "#c:dusts/silicon"
+      "items": "#c:dusts/quartz"
+    },
+    {
+      "amount": 1,
+      "items": "#c:plates/gold"
     },
     {
       "amount": 1,

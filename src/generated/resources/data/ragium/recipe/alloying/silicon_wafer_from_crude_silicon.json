@@ -1,0 +1,17 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 4,
+      "items": "#c:silicon"
+    },
+    {
+      "amount": 1,
+      "items": "#c:dusts/ragi_crystal"
+    }
+  ],
+  "result": {
+    "id": "ragium:silicon_wafer"
+  },
+  "time": 600
+}

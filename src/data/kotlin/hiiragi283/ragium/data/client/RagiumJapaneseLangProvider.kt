@@ -122,9 +122,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         add(RagiumItems.MERCURY_BOTTLE, "水銀入り瓶")
         add(RagiumItems.THERMOMETER, "温度計")
+        add(RagiumItems.SILICON_WAFER, "シリコンウェハ")
+        add(RagiumItems.CIRCUIT_CHIP, "回路チップ")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
-        add(RagiumItems.PLATED_CIRCUIT_BOARD, "鍍金された回路基板")
-        add(RagiumItems.PRINTED_CIRCUIT_BOARD, "刻印された回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
 
         add(RagiumItems.ARTIFICIAL_ARTIFACT, "人工遺物")
