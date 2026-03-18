@@ -137,8 +137,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
 
         // Recipe
-        add(RagiumRecipeTypes.TANK_INTERACTION, "タンクとの相互作用")
-
         add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.ASSEMBLING, "組立")
         add(RagiumRecipeTypes.COMPRESSING, "圧縮")

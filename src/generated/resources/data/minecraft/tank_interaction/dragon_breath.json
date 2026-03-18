@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:simple",
-  "amount": 250,
-  "empty_container": "minecraft:glass_bottle",
-  "filled_container": "minecraft:dragon_breath",
-  "fluid": "hiiragi_core:dragon_breath",
-  "fluid_tag": "#c:dragon_breath"
-}

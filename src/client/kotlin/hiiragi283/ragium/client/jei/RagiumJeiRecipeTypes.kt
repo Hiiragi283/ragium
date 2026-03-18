@@ -9,7 +9,6 @@ import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTFakeRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
-import hiiragi283.ragium.api.data.tank.HTTankInteraction
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -45,10 +44,6 @@ object RagiumJeiRecipeTypes {
         width: Int,
         height: Int = 18 * 1,
     ): HTFakeRecipeViewerType<INPUT, RECIPE> = HTFakeRecipeViewerType.create(recipeType, ItemStack(icon), HTBounds(0, 0, width, height))
-
-    @JvmField
-    val TANK_INTERACTION: HTFakeRecipeViewerType<RecipeInput, HTTankInteraction> =
-        create(RagiumRecipeTypes.TANK_INTERACTION, RagiumBlocks.TANK, 18 * 5, 18 * 3)
 
     // Machine - Basic
     @JvmField

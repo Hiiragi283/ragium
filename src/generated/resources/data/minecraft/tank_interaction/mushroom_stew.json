@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:simple",
-  "amount": 250,
-  "empty_container": "minecraft:bowl",
-  "filled_container": "minecraft:mushroom_stew",
-  "fluid": "hiiragi_core:mushroom_stew",
-  "fluid_tag": "#c:mushroom_stew"
-}

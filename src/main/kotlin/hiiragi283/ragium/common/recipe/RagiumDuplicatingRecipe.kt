@@ -6,7 +6,6 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.ragium.api.RagiumRegistries
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 
@@ -23,9 +22,10 @@ class RagiumDuplicatingRecipe(val ingredient: HTItemIngredient, val requiredMatt
 
     private fun createFluidIngredient(input: HTItemAndFluidRecipeInput): HTFluidIngredient {
         val itemStack: ItemStack = input.item
-        val extraAmount: Int = RagiumRegistries.DUPLICATION_MODIFIER
-            .filter { it.test(itemStack) }
-            .sumOf { it.calculateExtraAmount(itemStack) }
+        val extraAmount = 0
+        // RagiumRegistries.DUPLICATION_MODIFIER
+        // .filter { it.test(itemStack) }
+        // .sumOf { it.calculateExtraAmount(itemStack) }
         return HTIngredientCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, requiredMatter + extraAmount)
     }
 

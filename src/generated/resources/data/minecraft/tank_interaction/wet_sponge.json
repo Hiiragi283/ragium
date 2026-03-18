@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:simple",
-  "amount": 1000,
-  "empty_container": "minecraft:sponge",
-  "filled_container": "minecraft:wet_sponge",
-  "fluid": "minecraft:water",
-  "fluid_tag": "#c:water"
-}

@@ -3,7 +3,6 @@ package hiiragi283.ragium
 import hiiragi283.core.api.mod.HTCommonMod
 import hiiragi283.core.common.data.HCServerResourceProvider
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.RagiumRegistries
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.common.data.RagiumServerResourceProvider
 import hiiragi283.ragium.config.RagiumConfig
@@ -23,7 +22,6 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
-import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 
 @Mod(RagiumAPI.MOD_ID)
@@ -50,11 +48,6 @@ data object Ragium : HTCommonMod() {
         RegHelper.registerDynamicResourceProvider(RagiumServerResourceProvider)
 
         RagiumAPI.LOGGER.info("Ragium loaded")
-    }
-
-    override fun registerRegistries(event: NewRegistryEvent) {
-        event.register(RagiumRegistries.DUPLICATION_MODIFIER)
-        event.register(RagiumRegistries.TANK_INTERACTION_TYPE)
     }
 
     override fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {

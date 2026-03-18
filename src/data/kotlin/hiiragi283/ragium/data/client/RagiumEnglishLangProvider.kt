@@ -137,8 +137,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
 
         // Recipe
-        add(RagiumRecipeTypes.TANK_INTERACTION, "Tank Interaction")
-
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
         add(RagiumRecipeTypes.COMPRESSING, "Compressing")

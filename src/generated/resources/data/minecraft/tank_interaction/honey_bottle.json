@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:simple",
-  "amount": 250,
-  "empty_container": "minecraft:glass_bottle",
-  "filled_container": "minecraft:honey_bottle",
-  "fluid": "hiiragi_core:honey",
-  "fluid_tag": "#c:honey"
-}
