@@ -25,7 +25,10 @@ class HTCreativeTankBlockEntity(pos: BlockPos, state: BlockState) : HTTankBlockE
 
         override fun setAmount(amount: Int) {}
 
-        override fun getAmount(): Int = Int.MAX_VALUE
+        override fun getAmount(): Int = when {
+            fluid == null -> 0
+            else -> Int.MAX_VALUE
+        }
 
         override fun getResource(): HTFluidResourceType? = fluid
 

@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.data.tank
 
 import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.item.alchemy.BottledPotionContents
 import hiiragi283.core.api.item.alchemy.HTBottleType
-import hiiragi283.core.api.item.alchemy.HTPotionContents
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
@@ -28,13 +28,13 @@ data object HTPotionTankInteraction : HTTankInteraction.Serializable {
     }
 
     override fun emptyContainer(container: HTItemResourceType): Pair<ItemStack, FluidStack> {
-        val content: HTPotionContents = HTPotionHelper.getContents(container) ?: return ItemStack.EMPTY to FluidStack.EMPTY
+        val content: BottledPotionContents = HTPotionHelper.getContents(container) ?: return ItemStack.EMPTY to FluidStack.EMPTY
         return ItemStack(Items.GLASS_BOTTLE) to HCPotionFluidHelper.createFluid(content, amount)
     }
 
     override fun canFillContainer(container: HTItemResourceType, fluidStack: HTFluidResourceType): Boolean {
         if (!container.isOf(Items.GLASS_BOTTLE)) return false
-        val contents: HTPotionContents = HTPotionHelper.getContents(fluidStack) ?: return false
+        val contents: BottledPotionContents = HTPotionHelper.getContents(fluidStack) ?: return false
         return !contents.isEmpty
     }
 

@@ -1,8 +1,7 @@
 package hiiragi283.ragium.client.jei.extension
 
 import hiiragi283.core.api.integration.jei.addFluidStacks
-import hiiragi283.core.api.item.alchemy.HTBottleType
-import hiiragi283.core.api.item.alchemy.HTPotionContents
+import hiiragi283.core.api.item.alchemy.BottledPotionContents
 import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.util.HCPotionFluidHelper
 import hiiragi283.ragium.api.integration.jei.HTTankInteractionCategoryExtension
@@ -26,7 +25,7 @@ object HTPotionTankInteractionCategoryExtension : HTTankInteractionCategoryExten
         val stacks: List<FluidStack> = BuiltInRegistries.POTION
             .holders()
             .asSequence()
-            .map { HTPotionContents.of(it, HTBottleType.DEFAULT) }
+            .map(::BottledPotionContents)
             .map { HCPotionFluidHelper.createFluid(it, recipe.amount) }
             .toList()
         accessor.addFluidStacks(stacks, false)

@@ -6,11 +6,11 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.api.storage.fluid.HTMutableFluidTank
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -33,7 +33,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.fluids.FluidActionResult
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidUtil
 import java.util.function.Predicate
 
 /**
@@ -48,6 +50,10 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun createFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
         val builder = HTBasicFluidTankHolder.Builder(this)
+        val listener = HTContentListener {
+            checkRecipe = true
+            listener.onContentsChanged()
+        }
         tank = builder.addSlot(HTSlotInfo.BOTH, createTank(listener))
         return builder.build()
     }
@@ -57,14 +63,9 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     final override fun getAmountView(): HTAmountView = tank
 
-    lateinit var drainInputSlot: HTBasicItemSlot
+    lateinit var inputSlot: HTBasicItemSlot
         private set
-    lateinit var drainOutputSlot: HTBasicItemSlot
-        private set
-
-    lateinit var fillInputSlot: HTBasicItemSlot
-        private set
-    lateinit var fillOutputSlot: HTBasicItemSlot
+    lateinit var outputSlot: HTBasicItemSlot
         private set
 
     final override fun createItemHandler(listener: HTContentListener): HTItemSlotHolder? {
@@ -73,61 +74,43 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             listener.onContentsChanged()
         }
         val builder = HTBasicItemSlotHolder.Builder(this)
-        drainInputSlot = builder.addSlot(
+        inputSlot = builder.addSlot(
             HTSlotInfo.INPUT,
             HTBasicItemSlot.input(
                 listener,
                 canInsert = Predicate { resource: HTItemResourceType ->
-                    if (HTFluidCapabilities.getFluidViews(resource).any { it.getResource() != null }) {
+                    if (HTFluidCapabilities.hasCapability(resource)) {
                         return@Predicate true
                     } else {
-                        RagiumRecipeTypes.TANK_INTERACTION
-                            .findFirst(level) { recipe: HTTankInteraction -> recipe.canEmptyContainer(resource) } != null
+                        RagiumRecipeTypes.TANK_INTERACTION.findFirst(level) { recipe: HTTankInteraction ->
+                            if (recipe.canEmptyContainer(resource)) {
+                                return@findFirst true
+                            } else {
+                                val fluid: HTFluidResourceType = tank.getResource() ?: return@findFirst false
+                                recipe.canFillContainer(resource, fluid)
+                            }
+                        } != null
                     }
                 },
             ),
         )
-        drainOutputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
-
-        fillInputSlot = builder.addSlot(
-            HTSlotInfo.EXTRA_INPUT,
-            HTBasicItemSlot.input(
-                listener,
-                canInsert = Predicate { resource: HTItemResourceType ->
-                    HTFluidCapabilities.getFluidViews(resource).all(HTFluidView::isEmpty)
-                },
-            ),
-        )
-        fillOutputSlot = builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, HTBasicItemSlot.output(listener))
+        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
         return builder.build()
     }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         // slot
         widgetHolder += HTItemSlotWidget.container(
-            drainInputSlot,
+            inputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
         widgetHolder += HTItemSlotWidget.container(
-            drainOutputSlot,
+            outputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.OUTPUT,
-        )
-
-        widgetHolder += HTItemSlotWidget.container(
-            fillInputSlot,
-            HTSlotHelper.getSlotPosX(6.5),
-            HTSlotHelper.getSlotPosY(0),
-            HTBackgroundType.EXTRA_INPUT,
-        )
-        widgetHolder += HTItemSlotWidget.container(
-            fillOutputSlot,
-            HTSlotHelper.getSlotPosX(6.5),
-            HTSlotHelper.getSlotPosY(2),
-            HTBackgroundType.EXTRA_OUTPUT,
         )
         // tank
         val fluidWidget: HTFluidWidget =
@@ -140,12 +123,10 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     private var checkRecipe: Boolean = false
 
-    private val drainInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(drainInputSlot) }
-    private val fillInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(fillInputSlot) }
-    private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(tank) }
+    private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    private val drainOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(drainOutputSlot) }
-    private val fillOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(fillOutputSlot) }
+    private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(tank) }
     private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(tank) }
 
     override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
@@ -155,21 +136,22 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             val isFilled: Boolean = fillContainer()
             if (isDrained || isFilled) return true
         }
+        interactContainer()
         return super.onUpdateServer(level, pos, state)
     }
 
     private fun drainContainer(): Boolean {
-        val filledContainer: HTItemResourceType = drainInputHandler.getResource() ?: return false
+        val filledContainer: HTItemResourceType = inputHandler.getResource() ?: return false
         val recipe: HTTankInteraction = RagiumRecipeTypes.TANK_INTERACTION
             .findFirst(level) { recipe: HTTankInteraction -> recipe.canEmptyContainer(filledContainer) }
             ?.second
             ?: return false
 
         val (emptyContainer: ItemStack, fluidStack: FluidStack) = recipe.emptyContainer(filledContainer)
-        if (drainOutputHandler.canInsert(emptyContainer) && fluidOutputHandler.canInsert(fluidStack)) {
-            drainOutputHandler.insert(emptyContainer)
+        if (outputHandler.canInsert(emptyContainer) && fluidOutputHandler.canInsert(fluidStack)) {
+            outputHandler.insert(emptyContainer)
             fluidOutputHandler.insert(fluidStack)
-            drainInputHandler.consume(1)
+            inputHandler.consume(1)
             return true
         } else {
             return false
@@ -177,7 +159,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     private fun fillContainer(): Boolean {
-        val emptyContainer: HTItemResourceType = fillInputHandler.getResource() ?: return false
+        val emptyContainer: HTItemResourceType = inputHandler.getResource() ?: return false
         val fluid: HTFluidResourceType = fluidInputHandler.getResource() ?: return false
         val recipe: HTTankInteraction = RagiumRecipeTypes.TANK_INTERACTION
             .findFirst(level) { recipe: HTTankInteraction -> recipe.canFillContainer(emptyContainer, fluid) }
@@ -185,13 +167,34 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
             ?: return false
 
         val filledContainer: ItemStack = recipe.fillContainer(emptyContainer, fluid)
-        if (fillOutputHandler.canInsert(filledContainer)) {
-            fillOutputHandler.insert(filledContainer)
-            fillInputHandler.consume(1)
+        if (outputHandler.canInsert(filledContainer)) {
+            outputHandler.insert(filledContainer)
+            inputHandler.consume(1)
             fluidInputHandler.consume(recipe.amount)
             return true
         } else {
             return false
+        }
+    }
+
+    private fun interactContainer() {
+        // Fill
+        var fillResult: FluidActionResult = FluidUtil.tryFillContainer(inputHandler.getItemStack(), this, tank.getCapacity(), null, false)
+        if (fillResult.isSuccess) {
+            if (outputHandler.canInsert(fillResult.result)) {
+                fillResult = FluidUtil.tryFillContainer(inputHandler.getItemStack(), this, tank.getCapacity(), null, true)
+                outputHandler.insert(fillResult.result)
+                inputHandler.consume(1)
+            }
+        }
+        // Empty
+        var emptyResult: FluidActionResult = FluidUtil.tryEmptyContainer(inputHandler.getItemStack(), this, tank.getCapacity(), null, false)
+        if (emptyResult.isSuccess) {
+            if (outputHandler.canInsert(emptyResult.result)) {
+                emptyResult = FluidUtil.tryEmptyContainer(inputHandler.getItemStack(), this, tank.getCapacity(), null, true)
+                outputHandler.insert(emptyResult.result)
+                inputHandler.consume(1)
+            }
         }
     }
 }
