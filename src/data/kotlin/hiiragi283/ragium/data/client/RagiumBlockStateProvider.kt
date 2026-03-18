@@ -62,6 +62,9 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         simpleBlockAndItem(RagiumBlocks.VOID_TANK, tankFactory)
         altModelBlock(RagiumBlocks.CREATIVE_TANK, id = RagiumBlocks.TANK.blockId)
 
+        altModelBlock(RagiumBlocks.CRATE)
+        altModelBlock(RagiumBlocks.CREATIVE_CRATE, id = RagiumBlocks.CRATE.blockId)
+
         layeredBlock(
             RagiumBlocks.UNIVERSAL_CHEST,
             HTConst.MINECRAFT.toId("block", "white_concrete"),

@@ -39,13 +39,13 @@ open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos,
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         widgetHolder.rows = 1
 
-        val itemWidget: HTItemSlotWidget = HTItemSlotWidget.fake(
-            slot,
-            HTSlotHelper.getSlotPosX(4),
-            HTSlotHelper.getSlotPosY(0),
-            HTBackgroundType.NONE,
-        )
-        if (isCreative()) itemWidget.setGhost()
-        widgetHolder += itemWidget
+        widgetHolder += createSlotWidget()
     }
+
+    protected open fun createSlotWidget(): HTItemSlotWidget = HTItemSlotWidget.container(
+        slot,
+        HTSlotHelper.getSlotPosX(4),
+        HTSlotHelper.getSlotPosY(0),
+        HTBackgroundType.NONE,
+    )
 }

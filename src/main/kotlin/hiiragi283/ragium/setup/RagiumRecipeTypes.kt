@@ -2,7 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.recipe.HTItemToChancedRecipe
- import hiiragi283.core.api.recipe.HTRecipeCache
+import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput

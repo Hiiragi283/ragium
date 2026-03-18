@@ -11,6 +11,7 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.data.RagiumClientResourceProvider
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
+import hiiragi283.ragium.client.render.block.HTCrateRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.client.render.block.HTTankRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
@@ -129,6 +130,9 @@ data object RagiumClient : HTClientMod() {
         // Block Entity
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankRenderer)
+
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CRATE.get(), ::HTCrateRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_CRATE.get(), ::HTCrateRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.IMITATION_SPAWNER.get(), ::HTImitationSpawnerRenderer)
     }

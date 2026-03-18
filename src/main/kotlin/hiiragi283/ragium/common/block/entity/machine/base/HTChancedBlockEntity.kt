@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
+import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.state.BlockState
@@ -74,8 +75,11 @@ abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecip
         }
         onComplete = { level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<INPUT, out RECIPE> ->
             // outputs
-            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
-            // recipe.assembleExtraItem(input, level).let(extraOutputHandler::insert)
+            val access: RegistryAccess = level.registryAccess()
+            recipe.assemble(access).let(outputHandler::insert)
+            recipe
+                .map { recipeIn: RECIPE, input: INPUT -> recipeIn.assemble(input, access) }
+                .let(extraOutputHandler::insert)
             // input
             this@HTChancedBlockEntity.onComplete(level, pos, recipe)
         }
