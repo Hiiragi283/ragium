@@ -10,7 +10,7 @@ import hiiragi283.core.client.data.HCClientResourceProvider
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.data.RagiumClientResourceProvider
-import hiiragi283.ragium.client.gui.widget.HTEnergyBarWidgetRenderer
+import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
 import hiiragi283.ragium.client.render.block.HTTankRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
@@ -46,7 +46,7 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
-        event.register(RagiumWidgetTypes.ENERGY_BAR.get(), ::HTEnergyBarWidgetRenderer)
+        event.register(RagiumWidgetTypes.ENERGY_SLOT.get(), ::HTEnergySlotWidgetRenderer)
     }
 
     override fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {

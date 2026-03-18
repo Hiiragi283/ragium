@@ -17,9 +17,11 @@ import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
+import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.mixin.SingleItemRecipeAccessor
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -48,6 +50,7 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
+        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(2))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // slots
@@ -116,7 +119,5 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
         override fun assemble(input: HTDoubleRecipeInput, registries: HolderLookup.Provider): ItemStack = accessor.result.copy()
     }
 
-    override fun getConfig(): HTMachineConfig {
-        TODO("Not yet implemented")
-    }
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.autoChisel
 }

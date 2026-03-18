@@ -6,6 +6,7 @@ import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.client.RagiumItemModelProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseLangProvider
+import hiiragi283.ragium.data.client.RagiumSpriteSourceProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
 import hiiragi283.ragium.data.server.RagiumTankInteractionProvider
@@ -42,7 +43,7 @@ object RagiumDatagen {
         client.addProvider(::RagiumEnglishLangProvider)
         client.addProvider(::RagiumJapaneseLangProvider)
 
-        // client.addProvider(::RagiumTextureProvider)
+        client.addProvider(::RagiumSpriteSourceProvider)
 
         client.addProvider(::RagiumBlockStateProvider)
         client.addProvider(::RagiumItemModelProvider)

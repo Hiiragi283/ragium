@@ -9,16 +9,16 @@ import hiiragi283.core.api.storage.energy.HTEnergyBattery
 import hiiragi283.core.common.gui.sync.HTIntSyncSlot
 import hiiragi283.ragium.setup.RagiumWidgetTypes
 
-class HTEnergyBarWidget(
+class HTEnergySlotWidget(
     private val view: HTEnergyBattery,
     private val syncSlot: HTIntSyncSlot,
     x: Int,
     y: Int,
-) : HTAbstractWidget(x, y, 7, 18 * 3 - 2),
+) : HTAbstractWidget(x, y, 18, 18),
     HTAmountView by view {
     constructor(view: HTEnergyBattery.Basic, x: Int, y: Int) : this(view, HTIntSyncSlot.create(view), x, y)
 
-    override fun getType(): HTWidgetType<HTEnergyBarWidget> = RagiumWidgetTypes.ENERGY_BAR.get()
+    override fun getType(): HTWidgetType<HTEnergySlotWidget> = RagiumWidgetTypes.ENERGY_SLOT.get()
 
     override fun setupHolder(widgetHolder: HTWidgetHolder) {
         widgetHolder.track(syncSlot, HTSyncType.S2C)

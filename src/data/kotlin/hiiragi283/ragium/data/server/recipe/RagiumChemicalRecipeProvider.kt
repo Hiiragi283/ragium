@@ -429,7 +429,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
             result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.SILICON)
         }
-        
+
         // Quartz Dust + Gold Plate + Plastic -> Circuit Board
         HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.create(RagiumItems.CIRCUIT_BOARD)

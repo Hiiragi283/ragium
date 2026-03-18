@@ -30,7 +30,6 @@ import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
-import hiiragi283.ragium.common.gui.widget.HTEnergyBarWidget
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -177,12 +176,6 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
                 .andThen(::updateAndGetProgress)
             progressGetter = { _, _ -> battery.consume() }
             builderAction()
-        }
-
-        override fun setupMenu(widgetHolder: HTWidgetHolder) {
-            super.setupMenu(widgetHolder)
-            // energy bar
-            widgetHolder += HTEnergyBarWidget(battery, HTSlotHelper.getSlotPosX(0), HTSlotHelper.getSlotPosY(0))
         }
     }
 }
