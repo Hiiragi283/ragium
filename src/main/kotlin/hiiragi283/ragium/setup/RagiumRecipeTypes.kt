@@ -21,7 +21,7 @@ import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.data.tank.HTTankInteraction
 import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
-import hiiragi283.ragium.common.data.tank.HTTankInteractionDataLoader
+import hiiragi283.ragium.common.event.RagiumEventHandler
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
@@ -48,7 +48,7 @@ object RagiumRecipeTypes {
         override fun createCache(): HTRecipeCache<RecipeInput, HTTankInteraction> = throw UnsupportedOperationException()
 
         override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<IdToValue<HTTankInteraction>> =
-            HTTankInteractionDataLoader.interactionMap
+            RagiumEventHandler.tankInteractionMap
                 .asSequence()
                 .map { (key: ResourceLocation, value: HTTankInteraction.Serializable) -> key to value }
     }
