@@ -1,0 +1,34 @@
+{
+  "parent": "ragium:refined_silicon",
+  "criteria": {
+    "has_electric_circuit": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:electric_circuit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.electric_circuit.desc"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "ragium:electric_circuit"
+    },
+    "title": {
+      "translate": "advancements.ragium.electric_circuit.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_electric_circuit"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:refinery",
+  "criteria": {
+    "has_plastic": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:plastics"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.plastic.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hiiragi_core:plastic_plate"
+    },
+    "title": {
+      "translate": "advancements.ragium.plastic.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_plastic"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

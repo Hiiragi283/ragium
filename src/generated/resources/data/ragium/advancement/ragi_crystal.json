@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:advanced_ragi_alloy",
+  "criteria": {
+    "has_ragi_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gems/ragi_crystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.ragi_crystal.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:ragi_crystal_gem"
+    },
+    "title": {
+      "translate": "advancements.ragium.ragi_crystal.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_ragi_crystal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

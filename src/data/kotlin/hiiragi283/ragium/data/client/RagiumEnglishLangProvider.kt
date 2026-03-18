@@ -7,6 +7,7 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.data.server.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
@@ -17,6 +18,26 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
     override fun addTranslations() {
         RagiumCommonTranslation.addTranslations(this)
 
+        // Advancement
+        add(RagiumAdvancementKeys.ROOT, "Ragium", "Welcome to Ragium!")
+
+        add(RagiumAdvancementKeys.RAGI_ALLOY, "0xFF003f", "Get Ragi-Alloy Ingot")
+        add(RagiumAdvancementKeys.ALLOY_SMELTER, "Al-Chemistry", "Get Alloy Smelter")
+
+        add(RagiumAdvancementKeys.THERMOMETER, "Heat And Cool", "Get Thermometer")
+        add(RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY, "Maybe Red", "Get Advanced Ragi-Alloy Ingot")
+        add(RagiumAdvancementKeys.REFINERY, "A BC is DEFinitely Good", "Get Refinery")
+        add(RagiumAdvancementKeys.PLASTIC, "Plus-TiC", "Get Plastic Sheet")
+        add(RagiumAdvancementKeys.REFINED_SILICON, "Refined Silicon", "Get Silicon Dust")
+        add(RagiumAdvancementKeys.PYROLYZER, "Electric Coke Oven", "Get Pyrolyzer")
+        add(RagiumAdvancementKeys.CRIMSON_CRYSTAL, "Chao!", "Get Crimson Crystal")
+        add(RagiumAdvancementKeys.WARPED_CRYSTAL, "Stabilized Warp", "Get Warped Crystal")
+
+        add(RagiumAdvancementKeys.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
+        add(RagiumAdvancementKeys.STAINLESS_STEEL, "Not a HV Age", "Get Stainless Steel Ingot")
+        add(RagiumAdvancementKeys.ELECTRIC_CIRCUIT, "PCB: Pretty Cool Board", "Get Electric Circuit")
+        add(RagiumAdvancementKeys.BREWERY, "Automatic Brewing", "Get Brewery")
+        add(RagiumAdvancementKeys.MIXER, "Best Match!", "Get Mixer")
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "Bone with Meat")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
@@ -103,6 +124,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.PLATED_CIRCUIT_BOARD, "Plated Circuit Board")
         add(RagiumItems.PRINTED_CIRCUIT_BOARD, "Printed Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
+
+        add(RagiumItems.ARTIFICIAL_ARTIFACT, "Artificial Artifact")
 
         add(RagiumItems.EMPTY_CAN, "Empty Can")
 

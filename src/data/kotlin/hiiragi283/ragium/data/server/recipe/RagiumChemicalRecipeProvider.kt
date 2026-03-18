@@ -27,6 +27,7 @@ import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.neoforged.neoforge.common.Tags
 
 object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
@@ -352,7 +353,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             resultStack += Items.GUNPOWDER
             recipeId suffix "_from_carbon_compound"
         }
-        
+
         // HNO3 + Paper -> Nitrocellulose
         HTWashingRecipeBuilder.create(output) {
             itemIngredient = inputCreator.create(Items.PAPER)
@@ -446,6 +447,11 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)
             result += resultCreator.create(RagiumItems.PRINTED_CIRCUIT_BOARD)
         }
+        HTCombiningRecipeBuilder.assembling(output) {
+            result = resultCreator.create(RagiumItems.PRINTED_CIRCUIT_BOARD)
+            ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
+            ingredients += inputCreator.create(CommonTagPrefixes.WIRE, VanillaMaterialKeys.GOLD)
+        }
         // Printed + -> Electric Circuit
         HTCombiningRecipeBuilder.assembling(output) {
             result = resultCreator.create(RagiumItems.ELECTRIC_CIRCUIT)
@@ -458,12 +464,41 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     private fun end() {
+        eldritch()
+        helium()
+    }
+
+    @JvmStatic
+    private fun eldritch() {
         // Eldritch Flux
         HTMixingRecipeBuilder.create(output) {
             itemIngredient = inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
             result += resultCreator.molten(HCMaterialKeys.ELDRITCH)
+        }
+        // Artificial Artifact
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "ABC",
+                "DED",
+                "CBA",
+            )
+            define('A') += Items.CONDUIT
+            define('B') += Items.BUDDING_AMETHYST
+            define('C') += Items.HEAVY_CORE
+            define('D') += Items.CRYING_OBSIDIAN
+            define('E') += Items.NETHER_STAR
+            resultStack += RagiumItems.ARTIFICIAL_ARTIFACT
+        }
+    }
+
+    @JvmStatic
+    private fun helium() {
+        // End Stone -> Helium
+        pyrolyzing {
+            ingredient += inputCreator.create(Tags.Items.END_STONES, 4)
+            result += resultCreator.create(RagiumFluids.HELIUM, 500)
         }
     }
 }

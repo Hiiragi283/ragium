@@ -14,6 +14,7 @@ import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
@@ -159,6 +160,13 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             ingredient += inputCreator.create(Items.TRIAL_KEY)
             ingredient += eldritch(4)
             result += resultCreator.create(Items.OMINOUS_TRIAL_KEY)
+        }
+
+        // Wither Doll -> Wither Star
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(HCItems.WITHER_DOLL)
+            ingredient += eldritch(4)
+            result += resultCreator.create(HCItems.WITHER_STAR)
         }
     }
 

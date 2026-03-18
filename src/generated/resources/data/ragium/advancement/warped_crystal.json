@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:pyrolyzer",
+  "criteria": {
+    "has_warped_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gems/warped_crystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.warped_crystal.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hiiragi_core:warped_crystal_gem"
+    },
+    "title": {
+      "translate": "advancements.ragium.warped_crystal.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_warped_crystal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

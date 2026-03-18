@@ -1,0 +1,17 @@
+{
+  "type": "ragium:assembling",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": "ragium:circuit_board"
+    },
+    {
+      "amount": 1,
+      "items": "#c:wires/gold"
+    }
+  ],
+  "result": {
+    "id": "ragium:printed_circuit_board"
+  },
+  "time": 200
+}

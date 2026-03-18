@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:electric_circuit",
+  "criteria": {
+    "has_mixer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:mixer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.mixer.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:mixer"
+    },
+    "title": {
+      "translate": "advancements.ragium.mixer.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_mixer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -108,6 +108,10 @@ object RagiumItems {
     @JvmField
     val ELECTRIC_CIRCUIT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("electric_circuit")
 
+    // Ultimate
+    @JvmField
+    val ARTIFICIAL_ARTIFACT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("artificial_artifact")
+
     //    Foods    //
 
     @JvmField

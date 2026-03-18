@@ -19,12 +19,10 @@ import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.property.getOrDefault
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
-import hiiragi283.core.api.times
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
@@ -40,7 +38,6 @@ import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import org.apache.commons.lang3.math.Fraction
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
@@ -319,7 +316,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             recipeId suffix "_from_crushed_ore/sulfuric_acid"
         }
         // 水銀 -> 副産物 100%
-        HTWashingRecipeBuilder.create(output) {
+        /*HTWashingRecipeBuilder.create(output) {
             val (baseResult: HTItemResult, chance: Fraction) = entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
                 ?: return
@@ -332,7 +329,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             this.result = baseResult
 
             recipeId suffix "_from_crushed_ore/mercury"
-        }
+        }*/
     }
 
     //    Wiring    //

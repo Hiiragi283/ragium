@@ -200,7 +200,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             .holders()
             .filter { holder: Holder<Fluid> ->
                 val fluid: Fluid = holder.value()
-                fluid.isSource(fluid.defaultFluidState())
+                fluid.isSource(fluid.defaultFluidState()) && !fluid.bucket.let(::ItemStack).isEmpty
             }.map(Holder<Fluid>::toLike)
             .map(HTSimpleHolderLike<Fluid>::toFluidLike)
             .map { holder: HTFluidHolderLike<Fluid> ->
