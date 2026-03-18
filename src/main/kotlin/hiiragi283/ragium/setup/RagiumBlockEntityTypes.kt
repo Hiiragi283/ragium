@@ -31,9 +31,9 @@ import hiiragi283.ragium.common.block.entity.storage.HTCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeCrateBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTCreativeTankBlockEntity
-import hiiragi283.ragium.common.block.entity.storage.HTResonantInterfaceBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
+import hiiragi283.ragium.common.block.entity.storage.HTVoidTankBlockEntity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
@@ -127,6 +127,11 @@ object RagiumBlockEntityTypes {
     //    Storage    //
 
     @JvmField
+    val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> =
+        REGISTER.registerType(RagiumConst.UNIVERSAL_CHEST, ::HTUniversalChestBlockEntity)
+
+    // variable
+    @JvmField
     val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity> =
         REGISTER.registerTick("battery", ::HTBatteryBlockEntity)
 
@@ -138,14 +143,12 @@ object RagiumBlockEntityTypes {
     val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> =
         REGISTER.registerTick("tank", ::HTTankBlockEntity)
 
+    // Void
     @JvmField
-    val RESONANT_INTERFACE: HTDeferredBlockEntityType<HTResonantInterfaceBlockEntity> =
-        REGISTER.registerType("resonant_interface", ::HTResonantInterfaceBlockEntity)
+    val VOID_TANK: HTDeferredBlockEntityType<HTVoidTankBlockEntity> =
+        REGISTER.registerTick("void_tank", ::HTVoidTankBlockEntity)
 
-    @JvmField
-    val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> =
-        REGISTER.registerType(RagiumConst.UNIVERSAL_CHEST, ::HTUniversalChestBlockEntity)
-
+    // Creative
     @JvmField
     val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
         REGISTER.registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
@@ -197,19 +200,17 @@ object RagiumBlockEntityTypes {
         // Device
 
         // Storage
+        HTItemCapabilities.registerBlockEntity(event, UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)
+
         registerHandler(event, BATTERY.get())
         registerHandler(event, CRATE.get())
         registerHandler(event, TANK.get())
 
+        registerHandler(event, VOID_TANK.get())
+
         registerHandler(event, CREATIVE_BATTERY.get())
         registerHandler(event, CREATIVE_CRATE.get())
         registerHandler(event, CREATIVE_TANK.get())
-
-        HTItemCapabilities.registerBlockEntity(event, UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)
-
-        HTItemCapabilities.registerBlockEntity(event, RESONANT_INTERFACE.get(), HTResonantInterfaceBlockEntity::getItemHandler)
-        HTItemCapabilities.registerBlockEntity(event, RESONANT_INTERFACE.get(), HTResonantInterfaceBlockEntity::getItemHandler)
-        HTItemCapabilities.registerBlockEntity(event, RESONANT_INTERFACE.get(), HTResonantInterfaceBlockEntity::getItemHandler)
     }
 
     @JvmStatic

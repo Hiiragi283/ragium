@@ -61,11 +61,13 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         add(RagiumBlocks.ENCHANTER, "Enchanter")
 
+        add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
+
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
         add(RagiumBlocks.TANK, "Variable Tank")
-        add(RagiumBlocks.RESONANT_INTERFACE, "Resonant Interface")
-        add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
+
+        add(RagiumBlocks.VOID_TANK, "Void Tank")
 
         add(RagiumBlocks.IMITATION_SPAWNER, "Imitation Spawner")
 

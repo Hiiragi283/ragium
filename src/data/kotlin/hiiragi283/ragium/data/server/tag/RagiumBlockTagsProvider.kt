@@ -39,11 +39,13 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
 
             yield(RagiumBlocks.ENCHANTER)
 
+            yield(RagiumBlocks.UNIVERSAL_CHEST)
+
             yield(RagiumBlocks.BATTERY)
             yield(RagiumBlocks.CRATE)
             yield(RagiumBlocks.TANK)
-            yield(RagiumBlocks.RESONANT_INTERFACE)
-            yield(RagiumBlocks.UNIVERSAL_CHEST)
+
+            yield(RagiumBlocks.VOID_TANK)
 
             yield(RagiumBlocks.IMITATION_SPAWNER)
 

@@ -3,9 +3,7 @@
 	"credit": "Made by Hiiragi Russell Tsubasa",
     "render_type": "minecraft:cutout",
 	"textures": {
-		"0": "ragium:block/tank_side",
-		"1": "ragium:block/tank_top",
-		"particle": "ragium:block/tank_side"
+		"particle": "#side"
 	},
 	"elements": [
 		{
@@ -13,12 +11,12 @@
 			"to": [14, 16, 14],
 			"rotation": {"angle": 0, "axis": "y", "origin": [2, 0, 2]},
 			"faces": {
-				"north": {"uv": [2, 0, 14, 16], "texture": "#0"},
-				"east": {"uv": [2, 0, 14, 16], "texture": "#0"},
-				"south": {"uv": [2, 0, 14, 16], "texture": "#0"},
-				"west": {"uv": [2, 0, 14, 16], "texture": "#0"},
-				"up": {"uv": [2, 2, 14, 14], "texture": "#1"},
-				"down": {"uv": [2, 2, 14, 14], "texture": "#1"}
+				"north": {"uv": [2, 0, 14, 16], "texture": "#side"},
+				"east": {"uv": [2, 0, 14, 16], "texture": "#side"},
+				"south": {"uv": [2, 0, 14, 16], "texture": "#side"},
+				"west": {"uv": [2, 0, 14, 16], "texture": "#side"},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#top"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#top"}
 			}
 		}
 	],

@@ -26,11 +26,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:resonant_interface"
+          "name": "ragium:void_tank"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/resonant_interface"
+  "random_sequence": "ragium:blocks/void_tank"
 }

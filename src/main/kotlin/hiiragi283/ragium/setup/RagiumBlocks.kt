@@ -17,14 +17,12 @@ import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
-import hiiragi283.ragium.common.block.storage.HTResonantInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
 import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTImitationSpawnerBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
-import hiiragi283.ragium.common.item.block.HTResonantInterfaceBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
 import net.minecraft.world.food.Foods
@@ -134,6 +132,15 @@ object RagiumBlocks {
     //    Storages    //
 
     @JvmField
+    val UNIVERSAL_CHEST: HTDeferredBlockAndItem<HTUniversalChestBlock, HTUniversalChestBlockItem> = REGISTER.register(
+        RagiumConst.UNIVERSAL_CHEST,
+        machine(),
+        ::HTUniversalChestBlock,
+        ::HTUniversalChestBlockItem,
+    ) { it.component(HCDataComponents.COLOR, HTDefaultColor.WHITE) }
+
+    // Variable
+    @JvmField
     val BATTERY: HTDeferredBlockAndItem<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
         "battery",
         machine().noOcclusion(),
@@ -157,35 +164,16 @@ object RagiumBlocks {
         ::HTTankBlockItem,
     )
 
+    // Void
     @JvmField
-    val RESONANT_INTERFACE: HTDeferredBlockAndItem<HTResonantInterfaceBlock, HTResonantInterfaceBlockItem> = REGISTER.register(
-        "resonant_interface",
-        machine(),
-        ::HTResonantInterfaceBlock,
-        ::HTResonantInterfaceBlockItem,
+    val VOID_TANK: HTDeferredBlockAndItem<HTTankBlock, HTTankBlockItem> = REGISTER.register(
+        "void_tank",
+        machine().noOcclusion(),
+        ::HTTankBlock.partially1(RagiumBlockEntityTypes.VOID_TANK),
+        ::HTTankBlockItem,
     )
 
-    @JvmField
-    val UNIVERSAL_CHEST: HTDeferredBlockAndItem<HTUniversalChestBlock, HTUniversalChestBlockItem> = REGISTER.register(
-        RagiumConst.UNIVERSAL_CHEST,
-        machine(),
-        ::HTUniversalChestBlock,
-        ::HTUniversalChestBlockItem,
-    ) { it.component(HCDataComponents.COLOR, HTDefaultColor.WHITE) }
-
-    //    Utilities    //
-
-    @JvmField
-    val IMITATION_SPAWNER: HTDeferredBlockAndItem<HTImitationSpawnerBlock, HTImitationSpawnerBlockItem> =
-        REGISTER.register(
-            "imitation_spawner",
-            copyOf(Blocks.SPAWNER),
-            ::HTImitationSpawnerBlock,
-            ::HTImitationSpawnerBlockItem,
-        )
-
-    //    Creatives    //
-
+    // Creative
     @JvmField
     val CREATIVE_BATTERY: HTDeferredBlockAndItem<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
         "creative_battery",
@@ -209,6 +197,17 @@ object RagiumBlocks {
         ::HTTankBlock.partially1(RagiumBlockEntityTypes.CREATIVE_TANK),
         ::HTTankBlockItem,
     )
+
+    //    Utilities    //
+
+    @JvmField
+    val IMITATION_SPAWNER: HTDeferredBlockAndItem<HTImitationSpawnerBlock, HTImitationSpawnerBlockItem> =
+        REGISTER.register(
+            "imitation_spawner",
+            copyOf(Blocks.SPAWNER),
+            ::HTImitationSpawnerBlock,
+            ::HTImitationSpawnerBlockItem,
+        )
 
     //    Extensions    //
 

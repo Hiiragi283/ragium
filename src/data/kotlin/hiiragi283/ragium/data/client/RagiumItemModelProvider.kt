@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTItemModelProvider
+import hiiragi283.core.api.data.model.withExistingParent
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.itemId
@@ -59,7 +60,7 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         }
         // Utilities
         existTexture(RagiumItems.BLANK_DISC) { item: HTIdLike ->
-            withExistingParent(item.path, HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
+            withExistingParent(item, HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
                 .texture("layer0", item.itemId)
         }
         existTexture(RagiumItems.BLUEPRINT) { item: HTIdLike ->

@@ -20,9 +20,9 @@
     "ragium:planter",
     "ragium:pyrolyzer",
     "ragium:refinery",
-    "ragium:resonant_interface",
     "ragium:tank",
     "ragium:universal_chest",
+    "ragium:void_tank",
     "ragium:washer"
   ]
 }

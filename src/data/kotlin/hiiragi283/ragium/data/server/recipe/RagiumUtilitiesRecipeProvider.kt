@@ -209,7 +209,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             Tags.Items.BUCKETS_EMPTY,
             HCDataComponents.FLUID,
         )
-        // Resonant Interface
         // Universal Chest
         HTShapedRecipeBuilder.create(output) {
             hollow8()

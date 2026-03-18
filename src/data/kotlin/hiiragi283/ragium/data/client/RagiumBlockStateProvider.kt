@@ -3,8 +3,11 @@ package hiiragi283.ragium.data.client
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTBlockStateProvider
-import hiiragi283.core.api.registry.HTBlockHolderLike
+import hiiragi283.core.api.data.model.existsTexture
+import hiiragi283.core.api.data.model.fixedBlockTexture
+import hiiragi283.core.api.data.model.withExistingParent
 import hiiragi283.core.api.registry.HTHolderLike
+import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.blockId
 import hiiragi283.core.api.resource.toId
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
@@ -15,12 +18,10 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.LayeredCauldronBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
-import net.neoforged.neoforge.client.model.generators.ModelProvider
 
 class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider(RagiumAPI.MOD_ID, context) {
     val basic = "basic"
@@ -40,14 +41,25 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         frontMachineBlock(RagiumBlocks.FREEZER, RagiumConst.MACHINE, cool)
         frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)
         frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, heat)
-        machineBlock(RagiumBlocks.REFINERY, ModelFile.ExistingModelFile(RagiumBlocks.REFINERY.blockId, fileHelper))
+        machineBlock(RagiumBlocks.REFINERY, models().getExistingFile(RagiumBlocks.REFINERY.blockId))
 
         frontMachineBlock(RagiumBlocks.BREWERY, RagiumConst.MACHINE, chemical)
         frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)
 
         // Storage
-        altModelBlock(RagiumBlocks.TANK)
+        val tankFactory: (HTIdLike) -> Array<ConfiguredModel> = { block: HTIdLike ->
+            ConfiguredModel
+                .builder()
+                .modelFile(
+                    models()
+                        .withExistingParent(block, RagiumAPI.id(HTConst.BLOCK, "tank_template"))
+                        .fixedBlockTexture("side", block)
+                        .fixedBlockTexture("top", block),
+                ).build()
+        }
+        simpleBlockAndItem(RagiumBlocks.TANK, tankFactory)
+        simpleBlockAndItem(RagiumBlocks.VOID_TANK, tankFactory)
         altModelBlock(RagiumBlocks.CREATIVE_TANK, id = RagiumBlocks.TANK.blockId)
 
         layeredBlock(
@@ -124,7 +136,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
             .texture("top", top)
             .texture("side", side)
             .texture("bottom", bottom)
-        if (fileHelper.exists(front, ModelProvider.TEXTURE)) {
+        if (models().existsTexture(front)) {
             inactive.texture("front", front)
         }
         // active
@@ -134,22 +146,9 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
             .texture("side", side)
             .texture("bottom", bottom)
         val frontActive: ResourceLocation = front.withSuffix("_active")
-        if (fileHelper.exists(frontActive, ModelProvider.TEXTURE)) {
+        if (models().existsTexture(frontActive)) {
             active.texture("front", frontActive)
         }
         return inactive to active
-    }
-
-    private fun cauldronBlock(block: HTBlockHolderLike<*>) {
-        registerVariants(block) { _, state: BlockState ->
-            val suffix: String = when (val level: Int = state.getValue(LayeredCauldronBlock.LEVEL)) {
-                3 -> "_full"
-                else -> "_level$level"
-            }
-            ConfiguredModel
-                .builder()
-                .modelFile(ModelFile.UncheckedModelFile(HTConst.MINECRAFT.toId("block/water_cauldron").withSuffix(suffix)))
-                .build()
-        }
     }
 }

@@ -61,11 +61,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
 
+        add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
+
         add(RagiumBlocks.BATTERY, "可変バッテリー")
         add(RagiumBlocks.CRATE, "可変クレート")
         add(RagiumBlocks.TANK, "可変タンク")
-        add(RagiumBlocks.RESONANT_INTERFACE, "共振インターフェース")
-        add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
+
+        add(RagiumBlocks.VOID_TANK, "消滅タンク")
 
         add(RagiumBlocks.IMITATION_SPAWNER, "スポナーの模造品")
 
