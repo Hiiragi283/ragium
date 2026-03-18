@@ -49,15 +49,13 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
         for (entry: HTMaterialManager.Entry in materialManager) {
             // Basic
-            compressDustToPellet(event, entry)
+            assembleBaseToGear(event, entry)
+            assembleBaseToPlate(event, entry)
+            assembleBaseToWire(event, entry)
+            assembleDustToPellet(event, entry)
 
             cutBaseToRod(event, entry)
             cutBlockToPlate(event, entry)
-
-            pressBaseToGear(event, entry)
-            pressBaseToPlate(event, entry)
-
-            wireBaseToWire(event, entry)
             // Heat
             meltPrefixToMolten(event, entry, CommonParts.DUST)
             meltPrefixToMolten(event, entry, CommonParts.GEM)
@@ -99,27 +97,84 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         CommonTagPrefixes.PLATE -> 5
         CommonTagPrefixes.ROD -> 6
         CommonTagPrefixes.WIRE -> 7
+        RagiumTagPrefixes.PELLET -> 8
         else -> error("Cannot define blueprint for prefix: $prefix")
     }.let(inputCreator::blueprint)
 
-    //    Compressing    //
+    //    Assembling    //
 
     @JvmStatic
-    private fun compressDustToPellet(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+    private fun assembleBaseToGear(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 素材のプロパティから材料を取得
+        val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
+        if (!event.isPresentTag(inputTag)) return
+        // 完成品を取得
+        val gear: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.GEAR, entry) ?: return
+        // レシピを登録
+        HTCombiningRecipeBuilder.assembling(output) {
+            result = resultCreator.create(gear)
+            ingredients += inputCreator.create(inputTag, 4)
+            ingredients += getBlueprint(CommonTagPrefixes.GEAR)
+            time = getTimeFromHardness(entry, time) ?: return
+        }
+    }
+
+    @JvmStatic
+    private fun assembleBaseToPlate(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 基本アイテムがインゴットの素材を除外
+        val inputPrefix: HTTagPrefix? = when (entry.getDefaultPart()) {
+            HTDefaultPart.Prefixed.FUEL -> null
+            HTDefaultPart.Prefixed.GEM -> null
+            HTDefaultPart.Prefixed.INGOT -> CommonTagPrefixes.INGOT
+            HTDefaultPart.Prefixed.PEARL -> null
+            is HTDefaultPart.BuiltIn -> CommonTagPrefixes.DUST
+            null -> CommonTagPrefixes.DUST
+        }
+        if (inputPrefix == null) return
+        // 材料が存在するか判定
+        if (!event.isPresentTag(inputPrefix, entry)) return
+        // 完成品を取得
+        val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
+        // レシピを登録
+        HTCombiningRecipeBuilder.assembling(output) {
+            result = resultCreator.create(plate)
+            ingredients += inputCreator.create(inputPrefix, entry)
+            ingredients += getBlueprint(CommonTagPrefixes.PLATE)
+            time = getTimeFromHardness(entry, time) ?: return
+        }
+    }
+
+    @JvmStatic
+    private fun assembleBaseToWire(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 材料が存在するか判定
+        val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
+        if (!event.isPresentTag(inputTag)) return
+        // 完成品を取得
+        val wire: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.WIRE, entry) ?: return
+        // レシピを登録
+        HTCombiningRecipeBuilder.assembling(output) {
+            result = resultCreator.create(wire, 2)
+            ingredients += inputCreator.create(inputTag)
+            ingredients += getBlueprint(CommonTagPrefixes.WIRE)
+            time = getTimeFromHardness(entry, time) ?: return
+        }
+    }
+
+    @JvmStatic
+    private fun assembleDustToPellet(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
         // 材料が存在するか判定
         val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART).tagPrefix ?: return
         if (!event.isPresentTag(crushedPrefix, entry)) return
         // 完成品を取得
         val pellet: HTItemHolderLike<*> = event.getFirstHolder(RagiumTagPrefixes.PELLET, entry) ?: return
         // レシピを登録
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(crushedPrefix, entry, 8)
+        HTCombiningRecipeBuilder.assembling(output) {
             result = resultCreator.create(pellet)
+            ingredients += inputCreator.create(crushedPrefix, entry, 8)
+            ingredients += getBlueprint(RagiumTagPrefixes.PELLET)
             recipeId suffix "_from_dust"
         }
     }
-
-    //    Crushing    //
 
     //    Cutting    //
 
@@ -215,49 +270,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         }
     }*/
 
-    //    Pressing    //
-
-    @JvmStatic
-    private fun pressBaseToGear(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 素材のプロパティから材料を取得
-        val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
-        if (!event.isPresentTag(inputTag)) return
-        // 完成品を取得
-        val gear: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.GEAR, entry) ?: return
-        // レシピを登録
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(gear)
-            ingredients += inputCreator.create(inputTag, 4)
-            ingredients += getBlueprint(CommonTagPrefixes.GEAR)
-            time = getTimeFromHardness(entry, time) ?: return
-        }
-    }
-
-    @JvmStatic
-    private fun pressBaseToPlate(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 基本アイテムがインゴットの素材を除外
-        val inputPrefix: HTTagPrefix? = when (entry.getDefaultPart()) {
-            HTDefaultPart.Prefixed.FUEL -> null
-            HTDefaultPart.Prefixed.GEM -> null
-            HTDefaultPart.Prefixed.INGOT -> CommonTagPrefixes.INGOT
-            HTDefaultPart.Prefixed.PEARL -> null
-            is HTDefaultPart.BuiltIn -> CommonTagPrefixes.DUST
-            null -> CommonTagPrefixes.DUST
-        }
-        if (inputPrefix == null) return
-        // 材料が存在するか判定
-        if (!event.isPresentTag(inputPrefix, entry)) return
-        // 完成品を取得
-        val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
-        // レシピを登録
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(plate)
-            ingredients += inputCreator.create(inputPrefix, entry)
-            ingredients += getBlueprint(CommonTagPrefixes.PLATE)
-            time = getTimeFromHardness(entry, time) ?: return
-        }
-    }
-
     //    Refining    //
 
     @JvmStatic
@@ -330,23 +342,5 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
             recipeId suffix "_from_crushed_ore/mercury"
         }*/
-    }
-
-    //    Wiring    //
-
-    @JvmStatic
-    private fun wireBaseToWire(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 材料が存在するか判定
-        val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
-        if (!event.isPresentTag(inputTag)) return
-        // 完成品を取得
-        val wire: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.WIRE, entry) ?: return
-        // レシピを登録
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(wire, 2)
-            ingredients += inputCreator.create(inputTag)
-            ingredients += getBlueprint(CommonTagPrefixes.WIRE)
-            time = getTimeFromHardness(entry, time) ?: return
-        }
     }
 }

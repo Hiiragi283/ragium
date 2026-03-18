@@ -29,8 +29,8 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
 
     // Blocks - Machine
     ALLOY_SMELTER("description", RagiumConst.ALLOY_SMELTER),
+    ASSEMBLER("description", RagiumConst.ASSEMBLER),
     AUTO_CHISEL("description", RagiumConst.AUTO_CHISEL),
-    COMPRESSOR("description", RagiumConst.COMPRESSOR),
     CRUSHER("description", RagiumConst.CRUSHER),
     CUTTING_MACHINE("description", RagiumConst.CUTTING_MACHINE),
     ELECTRIC_FURNACE("description", RagiumConst.ELECTRIC_FURNACE),

@@ -69,12 +69,12 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
 
     @JvmField
-    val AUTO_CHISEL: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.AUTO_CHISEL, RagiumTranslation.AUTO_CHISEL)
+    val ASSEMBLER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.ASSEMBLER, RagiumTranslation.ASSEMBLER)
 
     @JvmField
-    val COMPRESSOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.COMPRESSOR, RagiumTranslation.COMPRESSOR)
+    val AUTO_CHISEL: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.AUTO_CHISEL, RagiumTranslation.AUTO_CHISEL)
 
     @JvmField
     val CRUSHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =

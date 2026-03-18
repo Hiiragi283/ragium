@@ -43,8 +43,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
+        add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.AUTO_CHISEL, "Auto Chisel")
-        add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
@@ -139,7 +139,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "Alloying")
         add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
-        add(RagiumRecipeTypes.COMPRESSING, "Compressing")
         add(RagiumRecipeTypes.CUTTING, "Cutting")
 
         add(RagiumRecipeTypes.MELTING, "Melting")
@@ -193,7 +192,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.GUI_SLOT_NONE, "%s: None")
 
         add(RagiumTranslation.ALLOY_SMELTER, "A machine which combines multiple items into one.")
-        add(RagiumTranslation.COMPRESSOR, "A machine which compresses item.")
         add(RagiumTranslation.CRUSHER, "A machine which crushes item into dust.")
         add(RagiumTranslation.CUTTING_MACHINE, "A machine which converts log or wooden items into planks.")
         add(RagiumTranslation.ELECTRIC_FURNACE, "A machine which smelts item by using energy.")

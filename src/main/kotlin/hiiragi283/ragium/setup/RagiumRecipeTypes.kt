@@ -2,8 +2,7 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.recipe.HTItemToChancedRecipe
-import hiiragi283.core.api.recipe.HTItemToItemRecipe
-import hiiragi283.core.api.recipe.HTRecipeCache
+ import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
@@ -46,10 +45,6 @@ object RagiumRecipeTypes {
     @JvmField
     val ASSEMBLING: HTDeferredRecipeType<HTShapelessRecipeInput, HTAssemblingRecipe> =
         REGISTER.registerType(RagiumConst.ASSEMBLING)
-
-    @JvmField
-    val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
-        REGISTER.registerType(RagiumConst.COMPRESSING)
 
     @JvmField
     val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =

@@ -5,8 +5,8 @@ object RagiumConst {
 
     // Basic
     const val ALLOY_SMELTER = "alloy_smelter"
+    const val ASSEMBLER = "assembler"
     const val AUTO_CHISEL = "auto_chisel"
-    const val COMPRESSOR = "compressor"
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"
     const val ELECTRIC_FURNACE = "electric_furnace"
@@ -47,7 +47,6 @@ object RagiumConst {
     // Basic
     const val ALLOYING = "alloying"
     const val ASSEMBLING = "assembling"
-    const val COMPRESSING = "compressing"
     const val CUTTING = "cutting"
     const val PLANTING = "planting"
 

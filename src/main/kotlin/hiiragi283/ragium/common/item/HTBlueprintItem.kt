@@ -22,7 +22,7 @@ class HTBlueprintItem(properties: Properties) :
     Item(properties),
     HTSubCreativeTabContents {
     companion object {
-        const val MAX_NUMBER = 7
+        const val MAX_NUMBER = 9
 
         @JvmField
         val RANGE: IntRange = 0..MAX_NUMBER

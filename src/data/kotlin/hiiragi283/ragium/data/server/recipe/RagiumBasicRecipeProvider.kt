@@ -13,26 +13,21 @@ import net.minecraft.world.item.Items
 
 object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        bending()
-        compressing()
+        assembling()
         crushing()
         cutting()
         pressing()
     }
 
-    //    Bending    //
-
-    @JvmStatic
-    private fun bending() {}
-
     //    Compressing    //
 
     @JvmStatic
-    private fun compressing() {
+    private fun assembling() {
         // Sculk Vein -> Sculk
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(Items.SCULK_VEIN, 8)
+        HTCombiningRecipeBuilder.assembling(output) {
             result = resultCreator.create(Items.SCULK)
+            ingredients += inputCreator.create(Items.SCULK_VEIN, 8)
+            ingredients += inputCreator.blueprint(0)
         }
     }
 

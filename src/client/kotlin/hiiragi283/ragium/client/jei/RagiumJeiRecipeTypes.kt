@@ -2,7 +2,6 @@ package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.recipe.HTItemToChancedRecipe
-import hiiragi283.core.api.recipe.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
@@ -52,11 +51,7 @@ object RagiumJeiRecipeTypes {
 
     @JvmField
     val ASSEMBLING: HTHolderRecipeViewerType<HTShapelessRecipeInput, HTAssemblingRecipe> =
-        create(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ALLOY_SMELTER, 18 * 5)
-
-    @JvmField
-    val COMPRESSING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToItemRecipe.Serializable> =
-        create(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR, 18 * 4)
+        create(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER, 18 * 5)
 
     @JvmField
     val CUTTING: HTHolderRecipeViewerType<SingleRecipeInput, HTItemToChancedRecipe.Serializable> =

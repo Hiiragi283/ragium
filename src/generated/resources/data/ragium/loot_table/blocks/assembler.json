@@ -26,11 +26,11 @@
               "source": "block_entity"
             }
           ],
-          "name": "ragium:compressor"
+          "name": "ragium:assembler"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "ragium:blocks/compressor"
+  "random_sequence": "ragium:blocks/assembler"
 }

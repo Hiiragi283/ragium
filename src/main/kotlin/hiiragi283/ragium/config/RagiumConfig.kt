@@ -62,10 +62,10 @@ object RagiumConfig {
             val alloySmelter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ALLOY_SMELTER)
 
             @JvmField
-            val autoChisel: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.AUTO_CHISEL)
+            val assembler: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ASSEMBLER)
 
             @JvmField
-            val compressor: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.COMPRESSOR)
+            val autoChisel: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.AUTO_CHISEL)
 
             @JvmField
             val crusher: HTMachineConfig = HTMachineConfig.createSimple(

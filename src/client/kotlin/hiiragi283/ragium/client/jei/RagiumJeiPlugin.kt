@@ -4,9 +4,7 @@ import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.client.jei.HCJeiRecipeTypes
 import hiiragi283.core.client.jei.category.HTItemToChancedRecipeCategory
-import hiiragi283.core.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.core.client.jei.extension.HTBasicItemToChancedRecipeCategoryExtension
-import hiiragi283.core.client.jei.extension.HTBasicItemToItemRecipeCategoryExtension
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
@@ -36,11 +34,6 @@ import net.minecraft.world.item.ItemStack
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     companion object {
-        // ItemToItem
-        @JvmStatic
-        lateinit var compressing: HTItemToItemRecipeCategory
-            private set
-
         // ItemToChanced
         @JvmStatic
         lateinit var cutting: HTItemToChancedRecipeCategory
@@ -89,7 +82,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         val guiHelper: IGuiHelper = registration.jeiHelpers.guiHelper
         val manager: IIngredientManager = registration.jeiHelpers.ingredientManager
 
-        initItemToItem(guiHelper, manager)
         initItemToChanced(guiHelper, manager)
         initItemOrFluid(guiHelper, manager)
 
@@ -100,7 +92,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Basic
             HTCombiningRecipeCategory(3, guiHelper, RagiumJeiRecipeTypes.ALLOYING),
             HTCombiningRecipeCategory(2, guiHelper, RagiumJeiRecipeTypes.ASSEMBLING),
-            compressing,
             cutting,
             planting,
             // Machine - Advanced
@@ -117,12 +108,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumDuplicatingRecipeCategory(guiHelper),
             // Device
         )
-    }
-
-    private fun initItemToItem(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        compressing = HTItemToItemRecipeCategory(guiHelper, RagiumJeiRecipeTypes.COMPRESSING)
-
-        compressing.addExtension(HTBasicItemToItemRecipeCategoryExtension())
     }
 
     private fun initItemToChanced(guiHelper: IGuiHelper, manager: IIngredientManager) {
@@ -145,7 +130,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Machine - Basic
         registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING)
         registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING)
-        registration.addRecipes(RagiumJeiRecipeTypes.COMPRESSING)
         registration.addRecipes(RagiumJeiRecipeTypes.CUTTING)
         registration.addRecipes(RagiumJeiRecipeTypes.PLANTING)
         // Machine - Advanced
@@ -179,7 +163,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Basic
             RagiumJeiRecipeTypes.ALLOYING,
             RagiumJeiRecipeTypes.ASSEMBLING,
-            RagiumJeiRecipeTypes.COMPRESSING,
             RagiumJeiRecipeTypes.CUTTING,
             RagiumJeiRecipeTypes.PLANTING,
             // Machine - Advanced

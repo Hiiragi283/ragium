@@ -43,8 +43,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
 
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
+        add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.AUTO_CHISEL, "自動石切台")
-        add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
@@ -139,7 +139,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         // Recipe
         add(RagiumRecipeTypes.ALLOYING, "合金")
         add(RagiumRecipeTypes.ASSEMBLING, "組立")
-        add(RagiumRecipeTypes.COMPRESSING, "圧縮")
         add(RagiumRecipeTypes.CUTTING, "切断")
 
         add(RagiumRecipeTypes.MELTING, "溶融")
@@ -193,7 +192,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.GUI_SLOT_NONE, "%s: なし")
 
         add(RagiumTranslation.ALLOY_SMELTER, "複数のアイテムを一つに焼き上げる機械です。")
-        add(RagiumTranslation.COMPRESSOR, "アイテムを圧縮する機械です。")
         add(RagiumTranslation.CRUSHER, "アイテムを粉にする機械です。")
         add(RagiumTranslation.CUTTING_MACHINE, "原木や木製アイテムを木材に加工する機械です。")
         add(RagiumTranslation.ELECTRIC_FURNACE, "エネルギーでアイテムを焼く機械です。")
