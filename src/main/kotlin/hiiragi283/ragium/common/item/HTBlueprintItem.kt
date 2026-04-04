@@ -28,7 +28,7 @@ class HTBlueprintItem(properties: Properties) :
         val RANGE: IntRange = 0..MAX_NUMBER
 
         @JvmField
-        val RANGE_CODEC: BiCodec<ByteBuf, Int> = BiCodecs.intRange(0, MAX_NUMBER)
+        val RANGE_CODEC: BiCodec<ByteBuf, Int> = BiCodecs.intRange(RANGE)
     }
 
     override fun overrideOtherStackedOnMe(

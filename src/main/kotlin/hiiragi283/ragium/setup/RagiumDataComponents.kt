@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import com.google.common.primitives.Ints
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.storage.attachments.HTAttachedItems
@@ -11,6 +12,7 @@ import hiiragi283.ragium.common.item.HTBlueprintItem
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import org.apache.commons.lang3.math.Fraction
+import java.util.function.IntSupplier
 
 object RagiumDataComponents {
     @JvmField
@@ -18,6 +20,12 @@ object RagiumDataComponents {
 
     @JvmField
     val ANTI_GRAVITY: DataComponentType<Boolean> = REGISTER.registerType("anti_gravity", BiCodec.BOOL)
+
+    @JvmField
+    val CAPACITY_SCALE: DataComponentType<Int> = REGISTER.registerType("capacity_scale", BiCodecs.POSITIVE_INT)
+
+    @JvmStatic
+    fun getCapacity(base: IntSupplier, scale: Int): Int = Ints.saturatedCast(base.asInt * scale.toLong())
 
     @JvmField
     val CHARGE_POWER: DataComponentType<Fraction> = REGISTER.registerType("charge_power", BiCodecs.NON_NEGATIVE_FRACTION)

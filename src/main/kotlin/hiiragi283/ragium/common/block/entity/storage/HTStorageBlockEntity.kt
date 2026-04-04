@@ -5,6 +5,7 @@ import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.util.HTStackSlotHelper
 import hiiragi283.ragium.common.block.entity.HTUpgradableBlockEntity
+import hiiragi283.ragium.common.block.entity.component.HTStorageCapacityComponent
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
@@ -13,6 +14,14 @@ import org.apache.commons.lang3.math.Fraction
 
 abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTUpgradableBlockEntity(type, pos, state) {
+    protected lateinit var capacityComponent: HTStorageCapacityComponent
+        private set
+
+    override fun initializeVariables() {
+        super.initializeVariables()
+        capacityComponent = HTStorageCapacityComponent(this)
+    }
+
     protected abstract fun getAmountView(): HTAmountView
 
     final override fun markDirtyComparator() {

@@ -19,9 +19,8 @@
                 "minecraft:enchantments",
                 "minecraft:hide_additional_tooltip",
                 "ragium:machine_upgrades",
-                "hiiragi_core:energy",
-                "hiiragi_core:fluid",
-                "hiiragi_core:item"
+                "ragium:capacity_scale",
+                "hiiragi_core:energy"
               ],
               "source": "block_entity"
             }

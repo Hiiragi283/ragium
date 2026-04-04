@@ -9,7 +9,6 @@ import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.HTMutableItemSlot
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.common.storge.item.HTVariableItemSlot
@@ -32,7 +31,7 @@ open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos,
     }
 
     protected open fun createSlot(listener: HTContentListener): HTMutableItemSlot =
-        HTVariableItemSlot.create(listener, { HTUpgradeHelper.getItemCapacity(this, RagiumConfig.COMMON.crateCapacity.asInt) })
+        HTVariableItemSlot.create(listener, { capacityComponent.getCapacity(RagiumConfig.COMMON.crateCapacity) })
 
     final override fun getAmountView(): HTAmountView = slot
 

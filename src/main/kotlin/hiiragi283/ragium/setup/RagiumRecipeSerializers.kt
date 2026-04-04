@@ -16,6 +16,7 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegist
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTBlueprintCloningRecipe
+import hiiragi283.ragium.common.crafting.HTStorageCombiningRecipe
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -48,6 +49,12 @@ object RagiumRecipeSerializers {
     val BLUEPRINT_CLONING: SimpleCraftingRecipeSerializer<HTBlueprintCloningRecipe> = REGISTER.registerSerializer(
         "blueprint_cloning",
         SimpleCraftingRecipeSerializer(::HTBlueprintCloningRecipe),
+    )
+
+    @JvmField
+    val STORAGE_COMBINING: SimpleCraftingRecipeSerializer<HTStorageCombiningRecipe> = REGISTER.registerSerializer(
+        "storage_combining",
+        SimpleCraftingRecipeSerializer(::HTStorageCombiningRecipe),
     )
 
     //    Machine    //

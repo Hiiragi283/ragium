@@ -77,7 +77,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
     private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
 
-    override fun getRecipeLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTWashingRecipe, *> = RagiumRecipeTypes.WASHING
+    override fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTWashingRecipe, *> = RagiumRecipeTypes.WASHING
 
     override fun createInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
         createInput(itemInputHandler, fluidInputHandler)

@@ -4,9 +4,12 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
@@ -61,16 +64,34 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
+    //    Serialize    //
+
+    private lateinit var cache: HTRecipeCache<HTShapelessRecipeInput, HTAlloyingRecipe>
+
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        cache.serialize(output)
+    }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        cache.deserialize(input)
+    }
+
     //    Processing    //
 
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
+    override fun initRecipeCache() {
+        cache = RagiumRecipeTypes.ALLOYING.createCache()
+    }
+
     override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        RagiumRecipeTypes.ALLOYING,
         { _, _ ->
             val map: Map<HTItemResourceType, Int> = HTShapelessRecipeHelper.createMap(inputSlots)
             if (map.isEmpty()) null else HTShapelessRecipeInput(map)
         },
+        cache,
         {
             canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTShapelessRecipeInput, HTAlloyingRecipe> ->
                 recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)

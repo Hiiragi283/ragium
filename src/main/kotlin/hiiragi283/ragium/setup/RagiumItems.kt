@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
-import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.item.HTBlueprintItem
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
@@ -40,6 +39,7 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import java.util.function.IntSupplier
 
 /**
  * @see hiiragi283.core.setup.HCItems
@@ -196,8 +196,7 @@ object RagiumItems {
         HTFluidCapabilities.registerItem(
             event,
             { context: HTComponentHandler.ContainerContext ->
-                val capacity: Int = HTUpgradeHelper.getFluidCapacity(context.attachedTo, RagiumConfig.COMMON.tankCapacity.asInt)
-                HTComponentFluidTank.create(capacity, context)
+                HTComponentFluidTank.create(context, getCapacity(context, RagiumConfig.COMMON.tankCapacity))
             },
             RagiumBlocks.TANK,
             RagiumBlocks.CREATIVE_TANK,
@@ -207,8 +206,7 @@ object RagiumItems {
         HTEnergyCapabilities.registerItem(
             event,
             { context: HTComponentHandler.ContainerContext ->
-                val capacity: Int = HTUpgradeHelper.getEnergyCapacity(context.attachedTo, RagiumConfig.COMMON.batteryCapacity.asInt)
-                HTComponentEnergyBattery.create(context, capacity)
+                HTComponentEnergyBattery.create(context, getCapacity(context, RagiumConfig.COMMON.tankCapacity))
             },
             RagiumBlocks.BATTERY,
         )
@@ -245,6 +243,10 @@ object RagiumItems {
             RagiumBlocks.CREATIVE_TANK,
         )
     }
+
+    @JvmStatic
+    private fun getCapacity(context: HTComponentHandler.ContainerContext, base: IntSupplier): Int =
+        RagiumDataComponents.getCapacity(base, context.getOrDefault(RagiumDataComponents.CAPACITY_SCALE, 1))
 
     //    Extensions    //
 

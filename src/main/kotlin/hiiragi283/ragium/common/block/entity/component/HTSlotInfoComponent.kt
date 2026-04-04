@@ -5,7 +5,7 @@ import hiiragi283.core.api.function.nextEntry
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
-import hiiragi283.core.api.serialization.component.HTComponentInput
+import hiiragi283.core.api.serialization.component.DataComponentGetter
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.serialization.value.read
@@ -52,7 +52,7 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
         input.read(RagiumConst.SLOT_INFO, CONFIG_CODEC)?.let(slotInfoCache::putAll)
     }
 
-    override fun applyComponents(input: HTComponentInput) {}
+    override fun applyComponents(input: DataComponentGetter) {}
 
     override fun collectComponents(builder: DataComponentMap.Builder) {}
 

@@ -5,7 +5,7 @@ import hiiragi283.core.api.component1
 import hiiragi283.core.api.component2
 import hiiragi283.core.api.fixedFraction
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
-import hiiragi283.core.api.serialization.component.HTComponentSerializable
+import hiiragi283.core.api.serialization.component.DataComponentSerializable
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.block.entity.HTBlockEntity
@@ -15,7 +15,7 @@ import org.apache.commons.lang3.math.Fraction
 
 class HTRecipeComponent(owner: HTBlockEntity, private val handler: HTRecipeHandler<*, *>) :
     HTBlockEntityComponent,
-    HTComponentSerializable.Empty {
+    DataComponentSerializable.Empty {
     init {
         owner.addComponent(this)
     }

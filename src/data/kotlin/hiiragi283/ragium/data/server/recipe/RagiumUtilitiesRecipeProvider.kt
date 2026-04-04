@@ -20,6 +20,7 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.crafting.HTBlueprintCloningRecipe
+import hiiragi283.ragium.common.crafting.HTStorageCombiningRecipe
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -188,6 +189,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
 
     @JvmStatic
     private fun storages() {
+        save(id(HTConst.SHAPELESS, "storage_combining"), HTStorageCombiningRecipe(CraftingBookCategory.MISC))
         // Battery
         variableStorage(
             RagiumBlocks.BATTERY,

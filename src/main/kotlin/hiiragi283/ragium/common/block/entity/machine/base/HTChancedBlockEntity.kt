@@ -5,9 +5,12 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTChancedRecipe
+import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -64,12 +67,30 @@ abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecip
         }
     }
 
+    //    Serialize    //
+
+    private lateinit var cache: HTRecipeCache<INPUT, out RECIPE>
+
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        cache.serialize(output)
+    }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        cache.deserialize(input)
+    }
+
     //    Processing    //
 
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
     private val extraOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(extraOutputSlots) }
 
-    final override fun createHandler(): HTRecipeHandler<*, *> = createHandler(getRecipeLookup(), ::createInput) {
+    final override fun initRecipeCache() {
+        cache = getLookup().createCache()
+    }
+
+    final override fun createHandler(): HTRecipeHandler<*, *> = createHandler(::createInput, cache) {
         canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<INPUT, out RECIPE> ->
             recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
         }
@@ -78,14 +99,14 @@ abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecip
             val access: RegistryAccess = level.registryAccess()
             recipe.assemble(access).let(outputHandler::insert)
             recipe
-                .map { recipeIn: RECIPE, input: INPUT -> recipeIn.assemble(input, access) }
+                .map(level, HTChancedRecipe<INPUT>::assembleExtraItem)
                 .let(extraOutputHandler::insert)
             // input
             this@HTChancedBlockEntity.onComplete(level, pos, recipe)
         }
     }
 
-    protected abstract fun getRecipeLookup(): HTRecipeLookup<INPUT, out RECIPE, *>
+    protected abstract fun getLookup(): HTRecipeLookup<INPUT, out RECIPE, *>
 
     protected abstract fun createInput(level: ServerLevel, pos: BlockPos): INPUT?
 

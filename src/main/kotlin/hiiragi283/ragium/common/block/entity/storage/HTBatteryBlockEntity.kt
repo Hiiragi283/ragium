@@ -19,7 +19,6 @@ import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.setup.HCRecipeTypes
-import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.energy.HTVariableEnergyBattery
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
@@ -53,9 +52,8 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
         return builder.build()
     }
 
-    protected open fun createBattery(listener: HTContentListener): HTEnergyBattery.Basic = HTVariableEnergyBattery.create(listener) {
-        HTUpgradeHelper.getEnergyCapacity(this, RagiumConfig.COMMON.batteryCapacity.asInt)
-    }
+    protected open fun createBattery(listener: HTContentListener): HTEnergyBattery.Basic =
+        HTVariableEnergyBattery.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.batteryCapacity) }
 
     final override fun getAmountView(): HTAmountView = battery
 

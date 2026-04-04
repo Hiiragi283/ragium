@@ -11,6 +11,8 @@ import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.resource.IdToValue
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.HTLookupRecipeCache
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
@@ -43,28 +45,28 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
 
-        catalystSlot = builder.addSlot(HTSlotInfo.EXTRA_INPUT, HTBasicItemSlot.input(listener))
+        catalystSlot = builder.addSlot(HTSlotInfo.NONE, HTBasicItemSlot.input(listener))
 
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(2))
+        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // slots
         widgetHolder += HTItemSlotWidget.container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
-            HTSlotHelper.getSlotPosY(1),
+            HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
         widgetHolder += HTItemSlotWidget.container(
             catalystSlot,
-            HTSlotHelper.getSlotPosX(4.25),
-            HTSlotHelper.getSlotPosY(0),
-            HTBackgroundType.EXTRA_INPUT,
+            HTSlotHelper.getSlotPosX(2.5),
+            HTSlotHelper.getSlotPosY(2),
+            HTBackgroundType.NONE,
         )
 
         widgetHolder += HTItemSlotWidget.container(
@@ -75,15 +77,33 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
+    //    Serialize    //
+
+    private lateinit var cache: HTRecipeCache<HTDoubleRecipeInput, WrappedRecipe>
+
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        cache.serialize(output)
+    }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        cache.deserialize(input)
+    }
+
     //    Processing    //
 
     private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
+    override fun initRecipeCache() {
+        cache = RecipeLookup.createCache()
+    }
+
     override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        RecipeLookup,
         { _, _ -> createInput(inputHandler, catalystHandler) },
+        cache,
         {
             canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTDoubleRecipeInput, WrappedRecipe> ->
                 recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)

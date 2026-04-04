@@ -5,7 +5,10 @@ import hiiragi283.core.api.registry.HTBlockHolderLike
 import hiiragi283.core.common.block.HTBlockWithEntity
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
+import hiiragi283.ragium.common.block.storage.HTBatteryBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTStorageBlock
+import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.HolderLookup
@@ -34,12 +37,13 @@ class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTa
                             include(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
 
                             include(RagiumDataComponents.MACHINE_UPGRADES)
-
-                            include(HCDataComponents.ENERGY)
-                            include(HCDataComponents.FLUID)
-                            include(HCDataComponents.ITEM)
                             when (block) {
-                                is HTImitationSpawnerBlock -> include(RagiumDataComponents.SPAWNER_MOB)
+                                is HTStorageBlock -> include(RagiumDataComponents.CAPACITY_SCALE)
+                            }
+                            when (block) {
+                                is HTBatteryBlock -> include(HCDataComponents.ENERGY)
+                                is HTCrateBlock -> include(HCDataComponents.ITEM)
+                                is HTTankBlock -> include(HCDataComponents.FLUID)
                             }
                         }
                     } else {

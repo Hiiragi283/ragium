@@ -4,11 +4,14 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.handler.assembleFluid
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
@@ -89,6 +92,20 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             ).setBackground(HTBackgroundType.EXTRA_OUTPUT)
     }
 
+    //    Serialize    //
+
+    private lateinit var cache: HTRecipeCache<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe>
+
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        cache.serialize(output)
+    }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        cache.deserialize(input)
+    }
+
     //    Processing    //
 
     private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
@@ -97,9 +114,13 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
     private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
     private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        getLookup(),
+    final override fun initRecipeCache() {
+        cache = getLookup().createCache()
+    }
+
+    final override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
         { _, _ -> createInput(itemInputHandler, fluidInputHandler) },
+        cache,
         {
             canComplete =
                 { level: ServerLevel, _, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe> ->

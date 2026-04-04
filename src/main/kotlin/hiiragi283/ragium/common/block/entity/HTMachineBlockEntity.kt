@@ -22,7 +22,7 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     fun isActive(): Boolean = isActive(this.blockState)
 
-    fun isActive(state: BlockState): Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElse(false)
+    fun isActive(state: BlockState): Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElseGet { false }
 
     open fun setupMenu(widgetHolder: HTWidgetHolder) {}
 

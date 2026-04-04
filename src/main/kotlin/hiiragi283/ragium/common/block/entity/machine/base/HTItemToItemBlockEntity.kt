@@ -5,9 +5,12 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTItemToItemRecipe
+import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
@@ -61,8 +64,8 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
     override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        getLookup(),
         { _, _ -> createInput(inputHandler) },
+        { getCache() },
         {
             canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<SingleRecipeInput, out HTItemToItemRecipe> ->
                 recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
@@ -78,7 +81,34 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
         },
     )
 
-    protected abstract fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToItemRecipe, *>
+    protected abstract fun getCache(): HTRecipeCache<SingleRecipeInput, out HTItemToItemRecipe>
 
     protected abstract fun playSound()
+
+    //    Simple    //
+
+    abstract class Simple(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+        HTItemToItemBlockEntity(type, pos, state) {
+        //    Serialize    //
+
+        private lateinit var cache: HTRecipeCache<SingleRecipeInput, out HTItemToItemRecipe>
+
+        override fun writeValue(output: HTValueOutput) {
+            super.writeValue(output)
+            cache.serialize(output)
+        }
+
+        override fun readValue(input: HTValueInput) {
+            super.readValue(input)
+            cache.deserialize(input)
+        }
+
+        final override fun initRecipeCache() {
+            cache = getCache()
+        }
+
+        final override fun getCache(): HTRecipeCache<SingleRecipeInput, out HTItemToItemRecipe> = getLookup().createCache()
+
+        protected abstract fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToItemRecipe, *>
+    }
 }

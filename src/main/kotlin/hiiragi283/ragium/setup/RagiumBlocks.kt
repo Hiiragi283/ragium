@@ -26,6 +26,7 @@ import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
 import net.minecraft.world.food.Foods
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
@@ -146,7 +147,7 @@ object RagiumBlocks {
         machine().noOcclusion(),
         ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.BATTERY),
         ::HTBatteryBlockItem,
-    )
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
 
     @JvmField
     val CRATE: HTDeferredBlockAndItem<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
@@ -154,7 +155,7 @@ object RagiumBlocks {
         machine().noOcclusion(),
         ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CRATE),
         ::HTCrateBlockItem,
-    )
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
 
     @JvmField
     val TANK: HTDeferredBlockAndItem<HTTankBlock, HTTankBlockItem> = REGISTER.register(
@@ -162,7 +163,7 @@ object RagiumBlocks {
         machine().noOcclusion(),
         ::HTTankBlock.partially1(RagiumBlockEntityTypes.TANK),
         ::HTTankBlockItem,
-    )
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
 
     // Void
     @JvmField

@@ -17,7 +17,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToChancedBl
         playSound(SoundEvents.GRINDSTONE_USE)
     }
 
-    override fun getRecipeLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToChancedRecipe, *> = HCRecipeTypes.CRUSHING
+    override fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToChancedRecipe, *> = HCRecipeTypes.CRUSHING
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.crusher
 }

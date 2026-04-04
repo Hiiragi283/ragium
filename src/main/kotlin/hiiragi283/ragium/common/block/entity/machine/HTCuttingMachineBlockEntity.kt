@@ -18,7 +18,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
     }
 
-    override fun getRecipeLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToChancedRecipe, *> = RagiumRecipeTypes.CUTTING
+    override fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToChancedRecipe, *> = RagiumRecipeTypes.CUTTING
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.cuttingMachine
 }

@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.component
 
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
-import hiiragi283.core.api.serialization.component.HTComponentInput
+import hiiragi283.core.api.serialization.component.DataComponentGetter
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.HTStoragePredicates
@@ -47,7 +47,7 @@ class HTMachineUpgradeComponent(private val owner: HTBlockEntity) :
         HTCapabilityCodec.ITEM.loadFrom(input.childOrEmpty("upgrades"), upgradeSlots)
     }
 
-    override fun applyComponents(input: HTComponentInput) {
+    override fun applyComponents(input: DataComponentGetter) {
         input.use(RagiumDataComponents.MACHINE_UPGRADES) { contents: HTAttachedItems ->
             for (i: Int in contents.indices) {
                 upgradeSlots.getOrNull(i)?.setStack(contents[i])

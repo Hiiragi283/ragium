@@ -4,11 +4,13 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.handler.assembleFluid
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.client.jei.HTWidgetContainerJeiHandler.onComplete
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.HCBrewingRecipe
@@ -73,13 +75,27 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
                 HTSlotHelper.getSlotPosX(1),
                 HTSlotHelper.getSlotPosY(0),
             ).setBackground(HTBackgroundType.EXTRA_INPUT)
-        // outputs
+        // output
         widgetHolder += HTFluidWidget
             .createTank(
                 outputTank,
                 HTSlotHelper.getSlotPosX(7.5),
                 HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.EXTRA_OUTPUT)
+            ).setBackground(HTBackgroundType.OUTPUT)
+    }
+
+    //    Serialize    //
+
+    private lateinit var cache: HTRecipeCache<HTItemAndFluidRecipeInput, HCBrewingRecipe>
+
+    override fun writeValue(output: HTValueOutput) {
+        super.writeValue(output)
+        cache.serialize(output)
+    }
+
+    override fun readValue(input: HTValueInput) {
+        super.readValue(input)
+        cache.deserialize(input)
     }
 
     //    Processing    //
@@ -89,9 +105,13 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
 
     private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
+    override fun initRecipeCache() {
+        cache = HTVanillaRecipeTypes.BREWING.createCache()
+    }
+
     override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        HTVanillaRecipeTypes.BREWING,
         { _, _ -> createInput(itemInputHandler, fluidInputHandler) },
+        cache,
         {
             canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HCBrewingRecipe> ->
                 recipe.assembleFluid(level.registryAccess()).let(fluidOutputHandler::canInsert)
