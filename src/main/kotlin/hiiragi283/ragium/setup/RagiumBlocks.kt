@@ -25,6 +25,7 @@ import hiiragi283.ragium.common.item.block.HTImitationSpawnerBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
+import net.minecraft.util.Unit
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
@@ -181,7 +182,7 @@ object RagiumBlocks {
         machine().noOcclusion(),
         ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.CREATIVE_BATTERY),
         ::HTBatteryBlockItem,
-    )
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CREATIVE_STORAGE, Unit.INSTANCE) }
 
     @JvmField
     val CREATIVE_CRATE: HTDeferredBlockAndItem<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
@@ -189,7 +190,7 @@ object RagiumBlocks {
         machine().noOcclusion(),
         ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CREATIVE_CRATE),
         ::HTCrateBlockItem,
-    )
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CREATIVE_STORAGE, Unit.INSTANCE) }
 
     @JvmField
     val CREATIVE_TANK: HTDeferredBlockAndItem<HTTankBlock, HTTankBlockItem> = REGISTER.register(
@@ -197,7 +198,7 @@ object RagiumBlocks {
         machine().noOcclusion(),
         ::HTTankBlock.partially1(RagiumBlockEntityTypes.CREATIVE_TANK),
         ::HTTankBlockItem,
-    )
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CREATIVE_STORAGE, Unit.INSTANCE) }
 
     //    Utilities    //
 

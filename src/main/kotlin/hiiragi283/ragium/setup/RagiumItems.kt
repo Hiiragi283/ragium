@@ -5,7 +5,6 @@ import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
@@ -15,9 +14,7 @@ import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
 import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.capability.RagiumCapabilities
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
 import hiiragi283.ragium.common.item.HTBlueprintItem
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
@@ -26,17 +23,14 @@ import hiiragi283.ragium.common.item.HTUpgradeItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.storge.energy.HTInfiniteEnergyBattery
 import hiiragi283.ragium.common.storge.fluid.HTInfiniteComponentFluidTank
-import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
@@ -216,38 +210,6 @@ object RagiumItems {
             event,
             { _: HTComponentHandler.ContainerContext -> HTInfiniteEnergyBattery },
             RagiumBlocks.BATTERY,
-        )
-
-        // Upgrade
-        for (item: Item in BuiltInRegistries.ITEM) {
-            // Data-Based for all items
-            event.registerItem(
-                RagiumCapabilities.UPGRADABLE_ITEM,
-                { stack: ItemStack, _: Void? ->
-                    if (stack.has(RagiumDataComponents.MACHINE_UPGRADES)) {
-                        HTComponentUpgradeHandler(stack)
-                    } else {
-                        null
-                    }
-                },
-                item,
-            )
-        }
-
-        event.registerItem(
-            RagiumCapabilities.UPGRADABLE_ITEM,
-            { _, _ ->
-                object : HTUpgradeHandler {
-                    override fun getUpgrades(): List<HTItemResourceType> = listOf()
-
-                    override fun isValidUpgrade(upgrade: HTItemResourceType): Boolean = false
-
-                    override fun isCreative(): Boolean = true
-                }
-            },
-            RagiumBlocks.CREATIVE_BATTERY,
-            RagiumBlocks.CREATIVE_CRATE,
-            RagiumBlocks.CREATIVE_TANK,
         )
     }
 

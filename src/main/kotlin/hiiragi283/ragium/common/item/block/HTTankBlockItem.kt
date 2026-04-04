@@ -6,7 +6,6 @@ import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.core.api.text.Text
 import hiiragi283.core.common.capability.HTFluidCapabilities
-import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
@@ -21,7 +20,7 @@ class HTTankBlockItem(block: HTTankBlock, properties: Properties) : HTStorageBlo
         tooltips: MutableList<Text>,
         flag: TooltipFlag,
     ) {
-        val isCreative: Boolean = HTUpgradeHelper.isCreative(stack)
+        val isCreative: Boolean = isCreative(stack)
         val view: HTFluidView = HTFluidCapabilities.getFluidView(stack, 0) ?: return
         // Fluid Name
         val resource: HTFluidResourceType? = view.getResource()

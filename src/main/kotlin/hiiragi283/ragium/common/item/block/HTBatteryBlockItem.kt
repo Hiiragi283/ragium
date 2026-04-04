@@ -5,7 +5,6 @@ import hiiragi283.core.api.storage.amount.HTAmountSlot
 import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.core.api.text.Text
 import hiiragi283.core.common.capability.HTEnergyCapabilities
-import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
@@ -20,7 +19,7 @@ class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStor
         tooltips: MutableList<Text>,
         flag: TooltipFlag,
     ) {
-        val isCreative: Boolean = HTUpgradeHelper.isCreative(stack)
+        val isCreative: Boolean = isCreative(stack)
         val view: HTAmountSlot = HTEnergyCapabilities.getBattery(stack) ?: return
         // Energy Amount
         val amount: Int = view.getAmount()
