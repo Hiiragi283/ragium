@@ -204,9 +204,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.MIXER, "複数のアイテムや液体を混ぜる機械です。")
         add(RagiumTranslation.WASHER, "砕いた鉱石と液体からアイテムを生産する機械です。")
 
-        add(RagiumTranslation.BATTERY, "アップグレードで容量を拡張可能なエネルギーストレージです。")
-        add(RagiumTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")
-        add(RagiumTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
+        add(RagiumTranslation.BATTERY, "クラフトで合体させることで容量を拡張可能なエネルギーストレージです。")
+        add(RagiumTranslation.CRATE, "クラフトで合体させることで容量を拡張可能なアイテムストレージです。")
+        add(RagiumTranslation.TANK, "クラフトで合体させることで容量を拡張可能な液体ストレージです。")
         add(RagiumTranslation.BUFFER, "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。")
         add(RagiumTranslation.UNIVERSAL_CHEST, "色ごとに中身を共有するチェストです。")
 

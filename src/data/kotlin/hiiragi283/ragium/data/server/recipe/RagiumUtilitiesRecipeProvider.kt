@@ -9,7 +9,6 @@ import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -25,9 +24,9 @@ import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -195,22 +194,12 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             RagiumBlocks.BATTERY,
             VanillaMaterialKeys.GOLD,
             CommonTagPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL),
-            HCDataComponents.ENERGY,
+            CommonTagPrefixes.STORAGE_BLOCK.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL),
         )
         // Crate
-        variableStorage(
-            RagiumBlocks.CRATE,
-            CommonMaterialKeys.PLASTIC,
-            Tags.Items.CHESTS,
-            HCDataComponents.ITEM,
-        )
+        variableStorage(RagiumBlocks.CRATE, CommonMaterialKeys.PLASTIC, Tags.Items.CHESTS)
         // Tank
-        variableStorage(
-            RagiumBlocks.TANK,
-            CommonMaterialKeys.RUBBER,
-            Tags.Items.BUCKETS_EMPTY,
-            HCDataComponents.FLUID,
-        )
+        variableStorage(RagiumBlocks.TANK, CommonMaterialKeys.RUBBER, Tags.Items.BUCKETS_EMPTY)
         // Universal Chest
         HTShapedRecipeBuilder.create(output) {
             hollow8()
@@ -234,7 +223,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         block: HTDeferredBlockAndItem<*, *>,
         top: HTMaterialLike,
         core: TagKey<Item>,
-        component: DataComponentType<*>,
+        largeCore: TagKey<Item> = core,
     ) {
         // Shaped
         HTShapedRecipeBuilder.create(output) {
@@ -245,10 +234,15 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             define('D') += core
             resultStack += block
         }
-        // Clear Component
-        HTClearComponentRecipeBuilder.create(output) {
-            item = block.itemHolder
-            targets += listOf(component)
+        // x10 Capacity
+        HTShapedRecipeBuilder.create(output) {
+            crossLayered()
+            define('A') += CommonTagPrefixes.STORAGE_BLOCK to RagiumMaterialKeys.RAGI_ALLOY
+            define('B') += CommonTagPrefixes.STORAGE_BLOCK to top
+            define('C') += Tags.Items.GLASS_BLOCKS
+            define('D') += largeCore
+            resultStack += createItemStack(block, RagiumDataComponents.CAPACITY_SCALE, 10)
+            recipeId prefix "larger_"
         }
     }
 

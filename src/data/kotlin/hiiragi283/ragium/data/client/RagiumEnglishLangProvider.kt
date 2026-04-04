@@ -204,9 +204,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.MIXER, "A machine which combines multiple items or fluids.")
         add(RagiumTranslation.WASHER, "A machine which producing item from crushed ore and fluid.")
 
-        add(RagiumTranslation.BATTERY, "A energy storage which capacity is extendable by upgrade.")
-        add(RagiumTranslation.CRATE, "A item storage which capacity is extendable by upgrade.")
-        add(RagiumTranslation.TANK, "A fluid storage which capacity is extendable by upgrade.")
+        add(RagiumTranslation.BATTERY, "A energy storage which capacity is extendable by crafting with others.")
+        add(RagiumTranslation.CRATE, "A item storage which capacity is extendable by crafting with others.")
+        add(RagiumTranslation.TANK, "A fluid storage which capacity is extendable by crafting with others.")
         add(RagiumTranslation.BUFFER, "A combined storage with 9 slots, 3 tanks, and 1 battery.")
         add(RagiumTranslation.UNIVERSAL_CHEST, "A chest which shares its containment with the same color.")
 

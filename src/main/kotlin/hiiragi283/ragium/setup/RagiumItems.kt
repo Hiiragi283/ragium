@@ -24,6 +24,8 @@ import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.item.HTUpgradeItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.common.storge.energy.HTInfiniteEnergyBattery
+import hiiragi283.ragium.common.storge.fluid.HTInfiniteComponentFluidTank
 import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
 import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.config.RagiumConfig
@@ -199,8 +201,8 @@ object RagiumItems {
                 HTComponentFluidTank.create(context, getCapacity(context, RagiumConfig.COMMON.tankCapacity))
             },
             RagiumBlocks.TANK,
-            RagiumBlocks.CREATIVE_TANK,
         )
+        HTFluidCapabilities.registerItem(event, ::HTInfiniteComponentFluidTank, RagiumBlocks.CREATIVE_TANK)
 
         // Energy
         HTEnergyCapabilities.registerItem(
@@ -208,6 +210,11 @@ object RagiumItems {
             { context: HTComponentHandler.ContainerContext ->
                 HTComponentEnergyBattery.create(context, getCapacity(context, RagiumConfig.COMMON.tankCapacity))
             },
+            RagiumBlocks.BATTERY,
+        )
+        HTEnergyCapabilities.registerItem(
+            event,
+            { _: HTComponentHandler.ContainerContext -> HTInfiniteEnergyBattery },
             RagiumBlocks.BATTERY,
         )
 
