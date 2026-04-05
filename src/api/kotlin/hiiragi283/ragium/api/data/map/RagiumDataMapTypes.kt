@@ -7,7 +7,6 @@ import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Registry
@@ -55,9 +54,6 @@ object RagiumDataMapTypes {
     @JvmField
     val DUPLICATION_COST: DataMapType<Item, Int> = create("duplication_cost", Registries.ITEM, BiCodecs.POSITIVE_INT)
 
-    @JvmField
-    val UPGRADE: DataMapType<Item, HTUpgradeData> = create("upgrade", Registries.ITEM, HTUpgradeData.CODEC)
-
     //    Extensions    //
 
     @JvmStatic
@@ -101,18 +97,6 @@ object RagiumDataMapTypes {
 
     @JvmStatic
     fun getFluidFertilizer(resource: HTFluidResourceType): Fraction? = resource.getData(FERTILIZER)
-
-    /**
-     * 指定した[stack]から，アップグレードのデータを取得します。
-     */
-    @JvmStatic
-    fun getUpgradeData(stack: ItemStack): HTUpgradeData? = stack.itemHolder.getData(UPGRADE)
-
-    /**
-     * 指定した[resource]から，アップグレードのデータを取得します。
-     */
-    @JvmStatic
-    fun getUpgradeData(resource: HTItemResourceType): HTUpgradeData? = resource.getData(UPGRADE)
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =

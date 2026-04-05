@@ -11,7 +11,6 @@ import hiiragi283.core.api.resource.itemId
 import hiiragi283.core.api.resource.toId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTFoodCanType
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
@@ -40,8 +39,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
 
             remove(RagiumItems.BLANK_DISC)
             remove(RagiumItems.BLUEPRINT)
-
-            removeAll(RagiumItems.UPGRADES.values)
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
         // Materials
         existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { item: HTIdLike ->
@@ -70,26 +67,8 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
                 HTConst.MINECRAFT.toId(HTConst.ITEM, "filled_map_markings"),
             )
         }
-        // Upgrades
-        registerUpgrades()
         // Buckets
         registerBuckets()
-    }
-
-    private fun registerUpgrades() {
-        for ((type: RagiumUpgradeType, item: HTIdLike) in RagiumItems.UPGRADES) {
-            val base: ResourceLocation = when (type.group) {
-                RagiumUpgradeType.Group.CREATIVE -> {
-                    existTexture(type::getId, ::basicItem)
-                    continue
-                }
-                else -> RagiumAPI.id("item", "upgrade", "${type.group.serializedName}_base")
-            }
-            val textureId: ResourceLocation = RagiumAPI.id("item", "upgrade", type.serializedName)
-            existTexture(item, textureId) { itemIn: HTIdLike, texId: ResourceLocation ->
-                layeredItem(itemIn, base, texId)
-            }
-        }
     }
 
     private fun registerBuckets() {

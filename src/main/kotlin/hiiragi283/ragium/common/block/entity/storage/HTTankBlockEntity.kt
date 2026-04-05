@@ -17,12 +17,12 @@ import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
-import hiiragi283.core.common.recipe.handler.HTItemInputHandler
-import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
+import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.setup.HCRecipeTypes
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder

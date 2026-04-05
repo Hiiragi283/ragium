@@ -11,8 +11,8 @@ import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
 import hiiragi283.core.api.util.Ior
 import hiiragi283.core.common.data.recipe.builder.HTItemToChancedRecipeBuilder
-import hiiragi283.core.common.recipe.base.HTBasicItemToChancedRecipe
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
+import hiiragi283.core.impl.recipe.HTBasicItemToChancedRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTBlueprintCloningRecipe

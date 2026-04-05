@@ -14,10 +14,10 @@ import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.recipe.handler.HTItemInputHandler
-import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
+import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.setup.HCRecipeTypes
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.energy.HTVariableEnergyBattery

@@ -7,9 +7,9 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTItemToChancedRecipe
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo

@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.RagiumConst
@@ -9,7 +8,6 @@ import net.minecraft.data.recipes.RecipeOutput
 
 class HTWashingRecipeBuilder : HTChancedRecipeBuilder(RagiumConst.WASHING) {
     companion object {
-        @HTBuilderMarker
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTWashingRecipeBuilder.() -> Unit) {
             HTWashingRecipeBuilder().apply(builderAction).save(output)

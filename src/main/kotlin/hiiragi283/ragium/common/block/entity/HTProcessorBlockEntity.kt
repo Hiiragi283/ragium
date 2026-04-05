@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.div
 import hiiragi283.core.api.function.andThen
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
@@ -22,12 +21,10 @@ import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.HTItemView
 import hiiragi283.core.api.storage.item.toStackOrEmpty
-import hiiragi283.core.api.times
 import hiiragi283.core.api.util.Ior
 import hiiragi283.core.api.util.toIor
 import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
@@ -92,7 +89,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     //    Ticking    //
 
-    fun modifyTime(time: Int): Int = modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
+    fun modifyTime(time: Int): Int = time // modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeHandler.tick(level, pos)
 
@@ -140,8 +137,9 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         }
 
         fun updateAndGetProgress(time: Int): Int {
-            if (isCreative()) return 0
-            battery.currentEnergyPerTick = modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
+            // if (isCreative()) return 0
+            battery.currentEnergyPerTick = battery.baseEnergyPerTick
+            // modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
             return battery.currentEnergyPerTick * modifyTime(time)
         }
 

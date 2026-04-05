@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.function.identityLeft
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
@@ -18,7 +17,6 @@ import net.minecraft.resources.ResourceLocation
 
 class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>) : HTProcessingRecipeBuilder(prefix) {
     companion object {
-        @HTBuilderMarker
         @JvmStatic
         inline fun pyrolyzing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
             HTItemOrFluidRecipeBuilder(RagiumConst.PYROLYZING, ::HTPyrolyzingRecipe)
@@ -27,7 +25,6 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
                 .save(output)
         }
 
-        @HTBuilderMarker
         @JvmStatic
         inline fun refining(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
             HTItemOrFluidRecipeBuilder(RagiumConst.REFINING, ::HTRefiningRecipe).apply(builderAction).save(output)

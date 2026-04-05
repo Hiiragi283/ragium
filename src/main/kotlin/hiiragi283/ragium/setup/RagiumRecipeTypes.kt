@@ -11,9 +11,9 @@ import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.registry.HTSimpleHolderLike
 import hiiragi283.core.api.registry.getDataSequence
 import hiiragi283.core.api.resource.IdToValue
-import hiiragi283.core.common.recipe.HTLookupRecipeCache
 import hiiragi283.core.common.registry.HTDeferredRecipeType
 import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
+import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes

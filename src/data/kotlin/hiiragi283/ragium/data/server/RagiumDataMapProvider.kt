@@ -2,23 +2,16 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.map.HTDataMapProvider
-import hiiragi283.core.api.fraction
 import hiiragi283.core.api.item.alchemy.HTBottleType
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.createCommonTag
-import hiiragi283.ragium.api.data.map.HTUpgradeData
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.tag.RagiumTags
-import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.core.registries.Registries
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
@@ -35,7 +28,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : HTDataMapProvider(conte
         combustionFuels()
 
         duplicationCost()
-        upgrade()
     }
 
     //    Vanilla    //
@@ -136,73 +128,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : HTDataMapProvider(conte
             .addItem(HTBottleType.DEFAULT, 1)
             .addItem(HTBottleType.SPLASH, 1)
             .addItem(HTBottleType.LINGERING, 1)
-    }
-
-    private fun upgrade() {
-        val builder: Builder<HTUpgradeData, Item> = builder(RagiumDataMapTypes.UPGRADE)
-        // components
-        // upgrades
-        val processor: HTItemIngredient = inputCreator.create(RagiumTags.Items.PROCESSOR_UPGRADABLE)
-
-        for (type: RagiumUpgradeType in RagiumUpgradeType.entries) {
-            val upgradeData: HTUpgradeData = when (type) {
-                // Creative
-                RagiumUpgradeType.CREATIVE -> HTUpgradeData.create {
-                    set(HTUpgradeKeys.IS_CREATIVE, 1)
-                }
-                // Generator
-                // Processor
-                RagiumUpgradeType.EFFICIENCY -> HTUpgradeData.create {
-                    set(HTUpgradeKeys.ENERGY_EFFICIENCY, fraction(5, 4))
-                    targetSet(processor)
-                }
-                RagiumUpgradeType.SPEED -> HTUpgradeData.create {
-                    set(HTUpgradeKeys.ENERGY_EFFICIENCY, fraction(4, 5))
-                    set(HTUpgradeKeys.SPEED, fraction(5, 4))
-                    targetSet(processor)
-                }
-                RagiumUpgradeType.HIGH_SPEED -> HTUpgradeData.create {
-                    set(HTUpgradeKeys.ENERGY_EFFICIENCY, fraction(2, 5))
-                    set(HTUpgradeKeys.SPEED, fraction(3, 2))
-                    targetSet(processor)
-                }
-                // Processor
-                RagiumUpgradeType.BLASTING -> HTUpgradeData.create {
-                    set(RagiumUpgradeKeys.BLASTING, 1)
-                    targetSet(inputCreator.create(RagiumTags.Items.SMELTING_UPGRADABLE))
-                    exclusiveSet(inputCreator.create(RagiumTags.Items.SMELTER_EXCLUSIVE))
-                }
-                RagiumUpgradeType.EFFICIENT_CRUSHING -> HTUpgradeData.create {
-                    set(RagiumUpgradeKeys.USE_LUBRICANT, 1)
-                    targetSet(inputCreator.create(RagiumTags.Items.EFFICIENT_CRUSHING_UPGRADABLE))
-                }
-                RagiumUpgradeType.EXTRA_VOIDING -> HTUpgradeData.create {
-                    set(RagiumUpgradeKeys.VOID_EXTRA, 1)
-                    targetSet(inputCreator.create(RagiumTags.Items.EXTRA_VOIDING_UPGRADABLE))
-                }
-                RagiumUpgradeType.SMOKING -> HTUpgradeData.create {
-                    set(RagiumUpgradeKeys.SMOKING, 1)
-                    targetSet(inputCreator.create(RagiumTags.Items.SMELTING_UPGRADABLE))
-                    exclusiveSet(inputCreator.create(RagiumTags.Items.SMELTER_EXCLUSIVE))
-                }
-                // Device
-
-                // Storage
-                RagiumUpgradeType.ENERGY_CAPACITY -> HTUpgradeData.create {
-                    set(HTUpgradeKeys.ENERGY_CAPACITY, 4)
-                    targetSet(inputCreator.create(RagiumTags.Items.ENERGY_CAPACITY_UPGRADABLE))
-                }
-                RagiumUpgradeType.FLUID_CAPACITY -> HTUpgradeData.create {
-                    set(HTUpgradeKeys.FLUID_CAPACITY, 4)
-                    targetSet(inputCreator.create(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE))
-                }
-                RagiumUpgradeType.ITEM_CAPACITY -> HTUpgradeData.create {
-                    set(HTUpgradeKeys.ENERGY_CAPACITY, 4)
-                    targetSet(inputCreator.create(RagiumTags.Items.ITEM_CAPACITY_UPGRADABLE))
-                }
-            }
-            builder.addHolder(type, upgradeData)
-        }
     }
 
     //    Extensions    //

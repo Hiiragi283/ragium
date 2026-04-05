@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.part.CommonParts
@@ -37,7 +36,6 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         end()
     }
 
-    @HTBuilderMarker
     @JvmStatic
     private inline fun pyrolyzing(builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
         // Without Nitrogen

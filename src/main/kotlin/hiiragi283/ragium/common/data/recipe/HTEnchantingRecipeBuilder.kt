@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTRecipeBuilder
 import hiiragi283.core.api.function.andThen
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -17,7 +16,6 @@ import net.minecraft.world.item.enchantment.Enchantment
 class HTEnchantingRecipeBuilder<ENCH : Any>(private val factory: Factory<ENCH, *>, private val idFactory: (ENCH) -> ResourceLocation) :
     HTRecipeBuilder(RagiumConst.ENCHANTING) {
     companion object {
-        @HTBuilderMarker
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTEnchantingRecipeBuilder<Holder<Enchantment>>.() -> Unit) {
             HTEnchantingRecipeBuilder(

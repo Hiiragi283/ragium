@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
@@ -13,7 +12,6 @@ import net.minecraft.resources.ResourceLocation
 
 class HTElectrolyzingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.ELECTROLYZING) {
     companion object {
-        @HTBuilderMarker
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTElectrolyzingRecipeBuilder.() -> Unit) {
             HTElectrolyzingRecipeBuilder().apply(builderAction).save(output)

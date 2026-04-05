@@ -12,10 +12,10 @@ import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.recipe.handler.HTFluidOutputHandler
-import hiiragi283.core.common.recipe.handler.HTItemInputHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe

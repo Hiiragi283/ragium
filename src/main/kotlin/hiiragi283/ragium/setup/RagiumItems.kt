@@ -1,6 +1,5 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.material.part.CommonParts
@@ -19,11 +18,9 @@ import hiiragi283.ragium.common.item.HTBlueprintItem
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
-import hiiragi283.ragium.common.item.HTUpgradeItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.storge.energy.HTInfiniteEnergyBattery
 import hiiragi283.ragium.common.storge.fluid.HTInfiniteComponentFluidTank
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
@@ -157,20 +154,6 @@ object RagiumItems {
 
     @JvmField
     val LOOT_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
-
-    //   Upgrades    //
-
-    @JvmField
-    val UPGRADES: Map<RagiumUpgradeType, HTSimpleItemHolderLike> = RagiumUpgradeType.entries.associateWith { type: RagiumUpgradeType ->
-        val color: HTDefaultColor = when (type.group) {
-            RagiumUpgradeType.Group.CREATIVE -> HTDefaultColor.RED
-            RagiumUpgradeType.Group.GENERATOR -> HTDefaultColor.PURPLE
-            RagiumUpgradeType.Group.PROCESSOR -> HTDefaultColor.LIGHT_BLUE
-            RagiumUpgradeType.Group.DEVICE -> HTDefaultColor.YELLOW
-            RagiumUpgradeType.Group.STORAGE -> HTDefaultColor.GREEN
-        }
-        REGISTER.registerItemWith("${type.serializedName}_upgrade", color, ::HTUpgradeItem)
-    }
 
     //    Event    //
 

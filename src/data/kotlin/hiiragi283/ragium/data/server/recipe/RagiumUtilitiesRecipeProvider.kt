@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.holder.HTIngredientHolder
@@ -328,7 +327,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         }
     }
 
-    @HTBuilderMarker
     @JvmStatic
     private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, consumer: (HTIngredientHolder.Multiple) -> Unit) {
         HTShapelessRecipeBuilder.create(output) {

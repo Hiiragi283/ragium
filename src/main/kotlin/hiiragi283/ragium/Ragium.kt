@@ -61,6 +61,5 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumDataMapTypes.FERTILIZER)
 
         event.register(RagiumDataMapTypes.DUPLICATION_COST)
-        event.register(RagiumDataMapTypes.UPGRADE)
     }
 }

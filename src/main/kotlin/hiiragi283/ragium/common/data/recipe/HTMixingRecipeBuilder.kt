@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.function.identityRight
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
@@ -16,7 +15,6 @@ import net.minecraft.resources.ResourceLocation
 
 class HTMixingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.MIXING) {
     companion object {
-        @HTBuilderMarker
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTMixingRecipeBuilder.() -> Unit) {
             HTMixingRecipeBuilder().apply(builderAction).save(output)

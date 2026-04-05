@@ -14,10 +14,10 @@ import hiiragi283.core.api.resource.IdToValue
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.recipe.HTLookupRecipeCache
-import hiiragi283.core.common.recipe.handler.HTItemInputHandler
-import hiiragi283.core.common.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.HTLookupRecipeCache
+import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
+import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder

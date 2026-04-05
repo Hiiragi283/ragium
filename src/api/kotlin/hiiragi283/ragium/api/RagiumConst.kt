@@ -42,8 +42,6 @@ object RagiumConst {
 
     //    Recipes    //
 
-    const val TANK_INTERACTION = "tank_interaction"
-
     // Basic
     const val ALLOYING = "alloying"
     const val ASSEMBLING = "assembling"
