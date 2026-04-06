@@ -139,7 +139,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
                     result = resultCreator.create(planks, 2)
-                    extraResult += resultCreator.create(Items.STICK) to fraction(1, 3)
+                    extraResult += resultCreator.create(Items.STICK, chance = fraction(1, 3))
                     recipeId suffix "_from_sign"
                 }
             }
@@ -148,7 +148,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
                     result = resultCreator.create(planks, 4)
-                    extraResult += resultCreator.create(Items.CHAIN) to fraction(1, 3)
+                    extraResult += resultCreator.create(Items.CHAIN, chance = fraction(1, 3))
                     recipeId suffix "_from_hanging_sign"
                 }
             }

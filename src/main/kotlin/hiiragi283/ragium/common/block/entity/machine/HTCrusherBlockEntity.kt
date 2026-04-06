@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.recipe.HTItemToChancedRecipe
 import hiiragi283.core.api.recipe.HTRecipeLookup
-import hiiragi283.core.setup.HCRecipeTypes
+import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToChancedBlockEntity
 import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
@@ -17,7 +17,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToChancedBl
         playSound(SoundEvents.GRINDSTONE_USE)
     }
 
-    override fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToChancedRecipe, *> = HCRecipeTypes.CRUSHING
+    override fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToChancedRecipe> = HCRecipeLookups.CRUSHING
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.crusher
 }

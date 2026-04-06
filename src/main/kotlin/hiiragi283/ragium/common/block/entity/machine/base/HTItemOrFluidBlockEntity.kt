@@ -17,6 +17,7 @@ import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
@@ -115,7 +116,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
     private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
     final override fun initRecipeCache() {
-        cache = getLookup().createCache()
+        cache = HTLookupRecipeCache.forRecipe(getLookup())
     }
 
     final override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
@@ -145,7 +146,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         },
     )
 
-    protected abstract fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe, *>
+    protected abstract fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe>
 
     protected abstract fun playSound()
 }

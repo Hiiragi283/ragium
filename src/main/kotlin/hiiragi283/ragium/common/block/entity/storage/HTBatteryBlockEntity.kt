@@ -5,7 +5,6 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTItemToItemRecipe
-import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.amount.HTAmountView
@@ -14,11 +13,12 @@ import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
-import hiiragi283.core.setup.HCRecipeTypes
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.energy.HTVariableEnergyBattery
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
@@ -94,7 +94,7 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
 
     private var checkRecipe: Boolean = false
 
-    private val cache: HTRecipeCache<SingleRecipeInput, HTItemToItemRecipe.Serializable> = HCRecipeTypes.CHARGING.createCache()
+    private val cache: HTLookupRecipeCache<SingleRecipeInput, HTItemToItemRecipe> = HTLookupRecipeCache.forRecipe(HCRecipeLookups.CHARGING)
     private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 

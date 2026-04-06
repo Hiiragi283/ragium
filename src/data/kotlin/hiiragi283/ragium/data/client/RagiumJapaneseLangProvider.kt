@@ -5,11 +5,11 @@ import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, RagiumAPI.MOD_ID, HTLangTypes.JA_JP) {
@@ -135,24 +135,22 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
 
         // Recipe
-        add(RagiumRecipeTypes.ALLOYING, "合金")
-        add(RagiumRecipeTypes.ASSEMBLING, "組立")
-        add(RagiumRecipeTypes.CUTTING, "切断")
+        add(RagiumRecipeLookups.ALLOYING, "合金")
+        add(RagiumRecipeLookups.ASSEMBLING, "組立")
+        add(RagiumRecipeLookups.CUTTING, "切断")
+        add(RagiumRecipeLookups.PLANTING, "栽培")
 
-        add(RagiumRecipeTypes.MELTING, "溶融")
-        add(RagiumRecipeTypes.PYROLYZING, "熱分解")
-        add(RagiumRecipeTypes.REFINING, "精製")
+        add(RagiumRecipeLookups.FREEZING, "冷却")
+        add(RagiumRecipeLookups.MELTING, "溶融")
+        add(RagiumRecipeLookups.PYROLYZING, "熱分解")
+        add(RagiumRecipeLookups.REFINING, "精製")
 
-        add(RagiumRecipeTypes.FREEZING, "冷却")
+        add(RagiumRecipeLookups.ELECTROLYZING, "電気分解")
+        add(RagiumRecipeLookups.MIXING, "混合")
+        add(RagiumRecipeLookups.WASHING, "洗浄")
 
-        add(RagiumRecipeTypes.ELECTROLYZING, "電気分解")
-        add(RagiumRecipeTypes.MIXING, "混合")
-        add(RagiumRecipeTypes.WASHING, "洗浄")
-
-        add(RagiumRecipeTypes.DUPLICATING, "複製")
-
-        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
-        add(RagiumRecipeTypes.PLANTING, "栽培")
+        add(RagiumRecipeLookups.DUPLICATING, "複製")
+        add(RagiumRecipeLookups.ENCHANTING, "エンチャント")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")

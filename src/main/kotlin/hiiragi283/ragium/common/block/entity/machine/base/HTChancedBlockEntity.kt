@@ -14,6 +14,7 @@ import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -87,7 +88,7 @@ abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecip
     private val extraOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(extraOutputSlots) }
 
     final override fun initRecipeCache() {
-        cache = getLookup().createCache()
+        cache = HTLookupRecipeCache.forRecipe(getLookup())
     }
 
     final override fun createHandler(): HTRecipeHandler<*, *> = createHandler(::createInput, cache) {
@@ -99,14 +100,14 @@ abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecip
             val access: RegistryAccess = level.registryAccess()
             recipe.assemble(access).let(outputHandler::insert)
             recipe
-                .map(level, HTChancedRecipe<INPUT>::assembleExtraItem)
+                .map(access, HTChancedRecipe<INPUT>::assembleExtraItem)
                 .let(extraOutputHandler::insert)
             // input
             this@HTChancedBlockEntity.onComplete(level, pos, recipe)
         }
     }
 
-    protected abstract fun getLookup(): HTRecipeLookup<INPUT, out RECIPE, *>
+    protected abstract fun getLookup(): HTRecipeLookup<INPUT, out RECIPE>
 
     protected abstract fun createInput(level: ServerLevel, pos: BlockPos): INPUT?
 

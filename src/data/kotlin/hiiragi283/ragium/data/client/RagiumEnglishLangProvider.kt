@@ -5,11 +5,11 @@ import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, RagiumAPI.MOD_ID, HTLangTypes.EN_US) {
@@ -135,24 +135,22 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
 
         // Recipe
-        add(RagiumRecipeTypes.ALLOYING, "Alloying")
-        add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
-        add(RagiumRecipeTypes.CUTTING, "Cutting")
+        add(RagiumRecipeLookups.ALLOYING, "Alloying")
+        add(RagiumRecipeLookups.ASSEMBLING, "Assembling")
+        add(RagiumRecipeLookups.CUTTING, "Cutting")
+        add(RagiumRecipeLookups.PLANTING, "Planting")
 
-        add(RagiumRecipeTypes.MELTING, "Melting")
-        add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
-        add(RagiumRecipeTypes.REFINING, "Refining")
+        add(RagiumRecipeLookups.FREEZING, "Freezing")
+        add(RagiumRecipeLookups.MELTING, "Melting")
+        add(RagiumRecipeLookups.PYROLYZING, "Pyrolyzing")
+        add(RagiumRecipeLookups.REFINING, "Refining")
 
-        add(RagiumRecipeTypes.FREEZING, "Freezing")
+        add(RagiumRecipeLookups.ELECTROLYZING, "Electrolyzing")
+        add(RagiumRecipeLookups.MIXING, "Mixing")
+        add(RagiumRecipeLookups.WASHING, "Washing")
 
-        add(RagiumRecipeTypes.ELECTROLYZING, "Electrolyzing")
-        add(RagiumRecipeTypes.MIXING, "Mixing")
-        add(RagiumRecipeTypes.WASHING, "Washing")
-
-        add(RagiumRecipeTypes.DUPLICATING, "Duplicating")
-
-        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
-        add(RagiumRecipeTypes.PLANTING, "Planting")
+        add(RagiumRecipeLookups.DUPLICATING, "Duplicating")
+        add(RagiumRecipeLookups.ENCHANTING, "Enchanting")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")

@@ -1,22 +1,22 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
+import hiiragi283.core.api.recipe.HTRecipeHolder
+import hiiragi283.core.api.recipe.viewer.HTLookupRecipeViewerType
+import hiiragi283.core.client.jei.category.base.HTLookupRecipeCategory
 import hiiragi283.ragium.api.integration.jei.HTItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
-import hiiragi283.ragium.client.jei.category.base.HTProcessingRecipeCategory
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import net.minecraft.world.item.crafting.RecipeHolder
 
 /**
  * @see mezz.jei.api.recipe.category.extensions.vanilla.smithing.IExtendableSmithingRecipeCategory
  */
-class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRecipeViewerType<*, HTItemOrFluidRecipe.Serializable>) :
-    HTProcessingRecipeCategory<HTItemOrFluidRecipe.Serializable>(guiHelper, recipeType) {
+class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTLookupRecipeViewerType<*, HTItemOrFluidRecipe>) :
+    HTLookupRecipeCategory<HTItemOrFluidRecipe>(guiHelper, recipeType) {
     private val extensions: MutableMap<Class<out HTItemOrFluidRecipe>, HTItemOrFluidRecipeCategoryExtension<*>> = hashMapOf()
 
     inline fun <reified RECIPE : HTItemOrFluidRecipe> addExtension(extension: HTItemOrFluidRecipeCategoryExtension<RECIPE>) {
@@ -29,13 +29,7 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRec
 
     //    HTProcessingRecipeCategory    //
 
-    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTItemOrFluidRecipe.Serializable, focuses: IFocusGroup) {
-        builder.addRecipePlus(getPosition(1))
-        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
-        builder.addRecipePlus(getPosition(6))
-    }
-
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemOrFluidRecipe.Serializable, focuses: IFocusGroup) {
+    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTItemOrFluidRecipe, focuses: IFocusGroup) {
         val (recipe1: HTItemOrFluidRecipe, extension: HTItemOrFluidRecipeCategoryExtension<HTItemOrFluidRecipe>) =
             getExtension<HTItemOrFluidRecipe>(recipe) ?: return
 
@@ -57,14 +51,19 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRec
         )
     }
 
+    override fun createRecipeExtrasImpl(builder: IRecipeExtrasBuilder, recipe: HTItemOrFluidRecipe, focuses: IFocusGroup) {
+        builder.addRecipePlus(getPosition(1))
+        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
+        builder.addRecipePlus(getPosition(6))
+    }
+
     override fun onDisplayedIngredientsUpdate(
-        recipe: RecipeHolder<HTItemOrFluidRecipe.Serializable>,
+        recipe: HTRecipeHolder<HTItemOrFluidRecipe>,
         recipeSlots: List<IRecipeSlotDrawable>,
         focuses: IFocusGroup,
     ) {
         val (recipe1: HTItemOrFluidRecipe, extension: HTItemOrFluidRecipeCategoryExtension<HTItemOrFluidRecipe>) =
-            getExtension<HTItemOrFluidRecipe>(recipe.value())
-                ?: return
+            getExtension<HTItemOrFluidRecipe>(recipe.recipe) ?: return
         extension.onDisplayedIngredientsUpdate(
             recipe1,
             recipeSlots[0],
@@ -75,8 +74,7 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTHolderRec
         )
     }
 
-    override fun isHandled(recipe: RecipeHolder<HTItemOrFluidRecipe.Serializable>): Boolean =
-        getExtension<HTItemOrFluidRecipe>(recipe.value()) != null
+    override fun isHandled(recipe: HTRecipeHolder<HTItemOrFluidRecipe>): Boolean = getExtension<HTItemOrFluidRecipe>(recipe.recipe) != null
 
     @Suppress("UNCHECKED_CAST")
     private fun <RECIPE : HTItemOrFluidRecipe> getExtension(

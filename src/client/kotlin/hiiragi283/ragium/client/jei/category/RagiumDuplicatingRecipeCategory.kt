@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.jei.category
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addFluidIngredient
 import hiiragi283.core.api.integration.jei.addItemIngredient
-import hiiragi283.core.api.resource.IdToValue
+import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.client.jei.category.base.HTLookupRecipeCategory
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
@@ -14,12 +14,7 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class RagiumDuplicatingRecipeCategory(guiHelper: IGuiHelper) :
-    HTLookupRecipeCategory.Fake<RagiumDuplicatingRecipe>(guiHelper, RagiumJeiRecipeTypes.DUPLICATING) {
-    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: IdToValue<RagiumDuplicatingRecipe>, focuses: IFocusGroup) {
-        builder.addAnimatedRecipeArrow(recipe.second.time).setPosition(getPosition(3.25), getPosition(0))
-        builder.addRecipePlus(getPosition(1))
-    }
-
+    HTLookupRecipeCategory<RagiumDuplicatingRecipe>(guiHelper, RagiumJeiRecipeTypes.DUPLICATING) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RagiumDuplicatingRecipe, focuses: IFocusGroup) {
         // inputs
         builder
@@ -36,8 +31,13 @@ class RagiumDuplicatingRecipeCategory(guiHelper: IGuiHelper) :
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 
+    override fun createRecipeExtrasImpl(builder: IRecipeExtrasBuilder, recipe: RagiumDuplicatingRecipe, focuses: IFocusGroup) {
+        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
+        builder.addRecipePlus(getPosition(1))
+    }
+
     override fun onDisplayedIngredientsUpdate(
-        recipe: IdToValue<RagiumDuplicatingRecipe>,
+        recipe: HTRecipeHolder<RagiumDuplicatingRecipe>,
         recipeSlots: List<IRecipeSlotDrawable>,
         focuses: IFocusGroup,
     ) {

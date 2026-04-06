@@ -14,11 +14,13 @@ import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -27,7 +29,6 @@ import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -91,7 +92,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
     private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
     override fun initRecipeCache() {
-        cache = RagiumRecipeTypes.MELTING.createCache()
+        cache = HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.MELTING)
     }
 
     override fun createHandler(): HTRecipeHandler<*, *> = createHandler(

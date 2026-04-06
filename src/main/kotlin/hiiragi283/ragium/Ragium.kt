@@ -5,6 +5,7 @@ import hiiragi283.core.common.data.HCServerResourceProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.common.data.RagiumServerResourceProvider
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -22,6 +23,7 @@ import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 
 @Mod(RagiumAPI.MOD_ID)
@@ -61,5 +63,9 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumDataMapTypes.FERTILIZER)
 
         event.register(RagiumDataMapTypes.DUPLICATION_COST)
+    }
+
+    override fun commonSetup(event: FMLCommonSetupEvent) {
+        event.enqueueWork(RagiumRecipeLookups::init)
     }
 }

@@ -14,6 +14,7 @@ import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
@@ -107,8 +108,8 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
             cache = getCache()
         }
 
-        final override fun getCache(): HTRecipeCache<SingleRecipeInput, out HTItemToItemRecipe> = getLookup().createCache()
+        final override fun getCache(): HTRecipeCache<SingleRecipeInput, out HTItemToItemRecipe> = HTLookupRecipeCache.forRecipe(getLookup())
 
-        protected abstract fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToItemRecipe, *>
+        protected abstract fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTItemToItemRecipe>
     }
 }

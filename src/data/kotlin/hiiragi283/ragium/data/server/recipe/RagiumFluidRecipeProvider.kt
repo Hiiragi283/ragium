@@ -179,7 +179,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             itemIngredient = inputCreator.create(Tags.Items.GRAVELS)
             fluidIngredient = inputCreator.water(250)
             result = resultCreator.create(Items.FLINT)
-            extraResult += resultCreator.create(Items.FLINT) to fraction(1, 3)
+            extraResult += resultCreator.create(Items.FLINT, chance = fraction(1, 3))
             time = 20 * 5
         }
 

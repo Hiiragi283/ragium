@@ -17,6 +17,7 @@ import hiiragi283.core.common.recipe.HCBrewingRecipe
 import hiiragi283.core.common.recipe.HTVanillaRecipeTypes
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
@@ -106,7 +107,7 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) :
     private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
     override fun initRecipeCache() {
-        cache = HTVanillaRecipeTypes.BREWING.createCache()
+        cache = HTLookupRecipeCache.forRecipe(HTVanillaRecipeTypes.BREWING)
     }
 
     override fun createHandler(): HTRecipeHandler<*, *> = createHandler(

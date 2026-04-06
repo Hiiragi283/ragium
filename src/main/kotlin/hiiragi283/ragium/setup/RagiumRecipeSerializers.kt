@@ -86,7 +86,7 @@ object RagiumRecipeSerializers {
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
         HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTBasicItemToChancedRecipe::ingredient),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTBasicItemToChancedRecipe::result),
-        HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTBasicItemToChancedRecipe::extraResult),
+        HTItemResult.CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTBasicItemToChancedRecipe::extraResult),
         HTProcessingRecipe.timeCodec(),
         factory::create,
     )
@@ -188,7 +188,7 @@ object RagiumRecipeSerializers {
             HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTWashingRecipe::itemIngredient),
             HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTWashingRecipe::fluidIngredient),
             HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTWashingRecipe::result),
-            HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTWashingRecipe::extraResult),
+            HTItemResult.CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTWashingRecipe::extraResult),
             HTProcessingRecipe.timeCodec(),
             ::HTWashingRecipe,
         ),

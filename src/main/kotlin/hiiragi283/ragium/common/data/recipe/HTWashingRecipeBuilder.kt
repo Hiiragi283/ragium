@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.common.data.recipe.builder.HTChancedRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import net.minecraft.data.recipes.RecipeOutput

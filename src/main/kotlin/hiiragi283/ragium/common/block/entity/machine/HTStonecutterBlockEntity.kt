@@ -5,12 +5,12 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeCache
+import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
-import hiiragi283.core.api.resource.IdToValue
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -31,7 +31,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
@@ -98,7 +97,7 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
     override fun initRecipeCache() {
-        cache = RecipeLookup.createCache()
+        cache = HTLookupRecipeCache.forRecipe(RecipeLookup)
     }
 
     override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
@@ -119,12 +118,10 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
         },
     )
 
-    private data object RecipeLookup : HTRecipeLookup.Fake<HTDoubleRecipeInput, WrappedRecipe> {
-        override fun createCache(): HTRecipeCache<HTDoubleRecipeInput, WrappedRecipe> = HTLookupRecipeCache.forRecipe(this)
-
-        override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<IdToValue<WrappedRecipe>> =
-            context.getAllRecipes(RecipeType.STONECUTTING).map { holder: RecipeHolder<StonecutterRecipe> ->
-                holder.id() to WrappedRecipe(holder.value() as SingleItemRecipeAccessor)
+    private data object RecipeLookup : HTRecipeLookup<HTDoubleRecipeInput, WrappedRecipe> {
+        override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<WrappedRecipe>> =
+            context.getAllRecipes(RecipeType.STONECUTTING).map { holder: HTRecipeHolder<StonecutterRecipe> ->
+                holder.mapRecipe { recipe: StonecutterRecipe -> WrappedRecipe(recipe as SingleItemRecipeAccessor) }
             }
     }
 

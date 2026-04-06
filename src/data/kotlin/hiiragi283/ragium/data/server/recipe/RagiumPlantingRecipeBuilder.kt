@@ -28,7 +28,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     private inline fun planting(seed: HTItemHolderLike<*>, seedChance: Fraction, builderAction: HTItemToChancedRecipeBuilder.() -> Unit) {
         RagiumRecipeBuilder.planting(output) {
             ingredient = inputCreator.create(seed)
-            extraResult += resultCreator.create(seed) to seedChance
+            extraResult += resultCreator.create(seed, chance = seedChance)
             builderAction()
         }
     }

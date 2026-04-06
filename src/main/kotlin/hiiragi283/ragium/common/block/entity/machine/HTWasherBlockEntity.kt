@@ -16,6 +16,7 @@ import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.ragium.common.block.entity.machine.base.HTChancedBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -24,7 +25,6 @@ import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -77,7 +77,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
     private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
 
-    override fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTWashingRecipe, *> = RagiumRecipeTypes.WASHING
+    override fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTWashingRecipe> = RagiumRecipeLookups.WASHING
 
     override fun createInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
         createInput(itemInputHandler, fluidInputHandler)

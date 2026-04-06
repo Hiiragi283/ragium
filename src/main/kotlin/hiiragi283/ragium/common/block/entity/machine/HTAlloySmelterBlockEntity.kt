@@ -13,17 +13,18 @@ import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
@@ -83,7 +84,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
     override fun initRecipeCache() {
-        cache = RagiumRecipeTypes.ALLOYING.createCache()
+        cache = HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.ALLOYING)
     }
 
     override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
