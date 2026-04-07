@@ -6,7 +6,7 @@
   },
   "item_ingredient": {
     "items": {
-      "type": "ragium:blue_print",
+      "type": "hiiragi_core:blue_print",
       "number": 1
     }
   },

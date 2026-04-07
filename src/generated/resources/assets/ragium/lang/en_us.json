@@ -116,7 +116,6 @@
   "item.ragium.artificial_artifact": "Artificial Artifact",
   "item.ragium.biofuel_bucket": "Biofuel Bucket",
   "item.ragium.blank_disc": "Blank Disc",
-  "item.ragium.blueprint": "Blueprint",
   "item.ragium.carbon_compound": "Carbon Compound",
   "item.ragium.circuit_board": "Circuit Board",
   "item.ragium.circuit_chip": "Circuit Chip",
@@ -238,7 +237,5 @@
   "tooltip.ragium.blast_power": "Power: %1$s",
   "tooltip.ragium.block_pos": "Position: [%1$s, %2$s, %3$s]",
   "tooltip.ragium.dimension": "Dimension: %1$s",
-  "tooltip.ragium.loot_table_id": "Loot Table: %1$s",
-  "tooltip.ragium.upgrade.exclusive": "Conflicting Upgrades: %1$s",
-  "tooltip.ragium.upgrade.target": "Upgrade Targets: %1$s"
+  "tooltip.ragium.loot_table_id": "Loot Table: %1$s"
 }

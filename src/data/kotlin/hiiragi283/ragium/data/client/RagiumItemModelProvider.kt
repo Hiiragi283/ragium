@@ -38,7 +38,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
             removeAll(RagiumItems.FOOD_CANS.values)
 
             remove(RagiumItems.BLANK_DISC)
-            remove(RagiumItems.BLUEPRINT)
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
         // Materials
         existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { item: HTIdLike ->
@@ -59,13 +58,6 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         existTexture(RagiumItems.BLANK_DISC) { item: HTIdLike ->
             withExistingParent(item, HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
                 .texture("layer0", item.itemId)
-        }
-        existTexture(RagiumItems.BLUEPRINT) { item: HTIdLike ->
-            layeredItem(
-                item,
-                item.itemId,
-                HTConst.MINECRAFT.toId(HTConst.ITEM, "filled_map_markings"),
-            )
         }
         // Buckets
         registerBuckets()

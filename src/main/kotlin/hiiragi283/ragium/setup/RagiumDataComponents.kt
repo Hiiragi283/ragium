@@ -7,7 +7,6 @@ import hiiragi283.core.common.registry.register.HTDeferredDataComponentRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
-import hiiragi283.ragium.common.item.HTBlueprintItem
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
 import net.minecraft.util.Unit
@@ -26,9 +25,6 @@ object RagiumDataComponents {
 
     @JvmField
     val CHARGE_POWER: DataComponentType<Fraction> = REGISTER.registerType("charge_power", BiCodecs.NON_NEGATIVE_FRACTION)
-
-    @JvmField
-    val BLUEPRINT_NUMBER: DataComponentType<Int> = REGISTER.registerType("blueprint_number", HTBlueprintItem.RANGE_CODEC)
 
     @JvmField
     val CREATIVE_STORAGE: DataComponentType<Unit> = REGISTER.registerFlag("creative_storage")

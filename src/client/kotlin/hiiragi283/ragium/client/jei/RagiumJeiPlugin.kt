@@ -73,10 +73,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         )
 
         registration.registerSubtypeInterpreter(
-            RagiumItems.BLUEPRINT.get(),
-            HTSubtypeInterpreter { stack: ItemStack, _ -> stack.get(RagiumDataComponents.BLUEPRINT_NUMBER) },
-        )
-        registration.registerSubtypeInterpreter(
             RagiumItems.LOOT_TICKET.get(),
             HTSubtypeInterpreter { stack: ItemStack, _ -> stack.get(RagiumDataComponents.LOOT_TICKET) },
         )

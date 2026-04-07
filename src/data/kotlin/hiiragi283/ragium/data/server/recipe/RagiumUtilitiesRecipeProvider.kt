@@ -16,8 +16,8 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.common.registry.HTDeferredBlockAndItem
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.crafting.HTBlueprintCloningRecipe
 import hiiragi283.ragium.common.crafting.HTStorageCombiningRecipe
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
@@ -39,20 +39,12 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         parts()
 
         // Blueprint
-        HTShapelessRecipeBuilder.create(output) {
-            ingredients += Items.PAPER
-            ingredients += Tags.Items.DYES_WHITE
-            ingredients += Tags.Items.DYES_BLUE
-            resultStack += RagiumItems.BLUEPRINT
-        }
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(Items.PAPER)
             ingredient += inputCreator.create(HCFluids.getDye(HTDefaultColor.BLUE), 250)
 
-            result += resultCreator.create(RagiumItems.BLUEPRINT)
+            result += resultCreator.create(HCItems.BLUEPRINT)
         }
-
-        save(id(HTConst.SHAPELESS, "blueprint_cloning"), HTBlueprintCloningRecipe(CraftingBookCategory.MISC))
         // Blank Disc
         HTShapedRecipeBuilder.create(output) {
             pattern(

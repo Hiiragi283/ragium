@@ -177,7 +177,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             planting(plant, Fraction.ZERO) {
                 addition = soil.map(
                     { tagKeys: List<TagKey<Item>> -> inputCreator.create(tagKeys, amount = 0) },
-                    { item: Item -> inputCreator.create(item, amount = 0) }
+                    { item: Item -> inputCreator.create(item, amount = 0) },
                 )
                 results += resultCreator.create(plant, 4)
             }

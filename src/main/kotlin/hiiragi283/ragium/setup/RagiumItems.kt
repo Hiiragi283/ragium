@@ -13,8 +13,6 @@ import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
 import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.item.HTBlueprintItem
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
@@ -143,11 +141,6 @@ object RagiumItems {
 
     @JvmField
     val BLANK_DISC: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("blank_disc")
-
-    @JvmField
-    val BLUEPRINT: HTSimpleItemHolderLike = REGISTER.registerItem("blueprint", ::HTBlueprintItem) {
-        it.stacksTo(1).component(RagiumDataComponents.BLUEPRINT_NUMBER, 0).description(RagiumTranslation.BLUEPRINT)
-    }
 
     @JvmField
     val LOCATION_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)

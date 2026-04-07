@@ -116,7 +116,6 @@
   "item.ragium.artificial_artifact": "人工遺物",
   "item.ragium.biofuel_bucket": "バイオ燃料入りバケツ",
   "item.ragium.blank_disc": "空のレコード",
-  "item.ragium.blueprint": "青写真",
   "item.ragium.carbon_compound": "炭素混合物",
   "item.ragium.circuit_board": "回路基板",
   "item.ragium.circuit_chip": "回路チップ",
@@ -238,7 +237,5 @@
   "tooltip.ragium.blast_power": "威力: %1$s",
   "tooltip.ragium.block_pos": "座標: [%1$s, %2$s, %3$s]",
   "tooltip.ragium.dimension": "次元: %1$s",
-  "tooltip.ragium.loot_table_id": "ルートテーブル: %1$s",
-  "tooltip.ragium.upgrade.exclusive": "競合するアップグレード: %1$s",
-  "tooltip.ragium.upgrade.target": "アップグレードの対象: %1$s"
+  "tooltip.ragium.loot_table_id": "ルートテーブル: %1$s"
 }
