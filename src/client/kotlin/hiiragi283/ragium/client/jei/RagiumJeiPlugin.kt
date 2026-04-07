@@ -3,18 +3,19 @@ package hiiragi283.ragium.client.jei
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.client.jei.HCJeiRecipeTypes
-import hiiragi283.core.client.jei.category.HTItemToChancedRecipeCategory
-import hiiragi283.core.client.jei.extension.HTBasicItemToChancedRecipeCategoryExtension
+import hiiragi283.core.client.jei.category.base.HTSingleMultiOutputRecipeCategory
+import hiiragi283.core.client.jei.extension.HTBasicSingleMultiOutputRecipeCategoryExtension
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTElectrolyzingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTPlantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
@@ -34,13 +35,13 @@ import net.minecraft.world.item.ItemStack
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     companion object {
-        // ItemToChanced
+        // SingleMultiOutput
         @JvmStatic
-        lateinit var cutting: HTItemToChancedRecipeCategory
+        lateinit var cutting: HTSingleMultiOutputRecipeCategory
             private set
 
         @JvmStatic
-        lateinit var planting: HTItemToChancedRecipeCategory
+        lateinit var planting: HTSingleMultiOutputRecipeCategory
             private set
 
         // ItemOrFluid
@@ -102,7 +103,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Elite
             HTElectrolyzingRecipeCategory(guiHelper),
             HTMixingRecipeCategory(guiHelper),
-            HTWashingRecipeCategory(guiHelper),
+            // HTWashingRecipeCategory(guiHelper),
             // Machine - Ultimate
             enchanting,
             RagiumDuplicatingRecipeCategory(guiHelper),
@@ -111,11 +112,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun initItemToChanced(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        cutting = HTItemToChancedRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CUTTING)
-        planting = HTItemToChancedRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PLANTING)
+        cutting = HTCuttingRecipeCategory(guiHelper)
+        planting = HTPlantingRecipeCategory(guiHelper)
 
-        cutting.addExtension(HTBasicItemToChancedRecipeCategoryExtension())
-        planting.addExtension(HTBasicItemToChancedRecipeCategoryExtension())
+        cutting.addExtension(HTBasicSingleMultiOutputRecipeCategoryExtension())
+        planting.addExtension(HTBasicSingleMultiOutputRecipeCategoryExtension())
     }
 
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
@@ -140,7 +141,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Machine - Elite
         registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
-        registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
+        // registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
         // Machine - Ultimate
         registration.addRecipes(RagiumJeiRecipeTypes.DUPLICATING)
         registration.addRecipes(RagiumJeiRecipeTypes.ENCHANTING)
@@ -173,7 +174,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Elite
             RagiumJeiRecipeTypes.ELECTROLYZING,
             RagiumJeiRecipeTypes.MIXING,
-            RagiumJeiRecipeTypes.WASHING,
+            // RagiumJeiRecipeTypes.WASHING,
             // Machine - Ultimate
             RagiumJeiRecipeTypes.ENCHANTING,
             RagiumJeiRecipeTypes.DUPLICATING,

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.recipe.HTItemToChancedRecipe
+import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
 import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -28,10 +28,10 @@ object RagiumRecipeTypes {
     val ASSEMBLING: Supplier<RecipeType<HTAssemblingRecipe>> = REGISTER.registerType(RagiumConst.ASSEMBLING)
 
     @JvmField
-    val CUTTING: Supplier<RecipeType<HTItemToChancedRecipe.Serializable>> = REGISTER.registerType(RagiumConst.CUTTING)
+    val CUTTING: Supplier<RecipeType<HTSingleMultiOutputRecipe.Serializable>> = REGISTER.registerType(RagiumConst.CUTTING)
 
     @JvmField
-    val PLANTING: Supplier<RecipeType<HTItemToChancedRecipe.Serializable>> = REGISTER.registerType(RagiumConst.PLANTING)
+    val PLANTING: Supplier<RecipeType<HTSingleMultiOutputRecipe.Serializable>> = REGISTER.registerType(RagiumConst.PLANTING)
 
     // Machine - Advanced
     @JvmField

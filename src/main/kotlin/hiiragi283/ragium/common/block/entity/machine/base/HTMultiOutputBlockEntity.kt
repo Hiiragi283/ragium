@@ -1,17 +1,13 @@
 package hiiragi283.ragium.common.block.entity.machine.base
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.gui.HTSlotHelper
-import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTChancedRecipe
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.base.HTMultiOutputRecipe
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.HTLookupRecipeCache
@@ -20,53 +16,27 @@ import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
-import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecipe<INPUT>>(
+abstract class HTMultiOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOutputRecipe<INPUT>>(
     type: HTDeferredBlockEntityType<*>,
     pos: BlockPos,
     state: BlockState,
 ) : HTProcessorBlockEntity.Energized(type, pos, state) {
-    protected lateinit var outputSlot: HTBasicItemSlot
-        private set
-    protected lateinit var extraOutputSlots: List<HTBasicItemSlot>
+    protected lateinit var outputSlots: List<HTBasicItemSlot>
         private set
 
     final override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
         createInputSlots(builder, listener)
 
-        outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
-        extraOutputSlots = List(getOutputSlotSize()) {
-            builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, HTBasicItemSlot.output(listener))
-        }
+        outputSlots = List(getOutputSlotSize()) { builder.addSlot(HTSlotInfo.EXTRA_OUTPUT, HTBasicItemSlot.output(listener)) }
     }
 
     protected abstract fun createInputSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener)
 
     protected abstract fun getOutputSlotSize(): Int
-
-    protected fun addTripleOutputs(widgetHolder: HTWidgetHolder) {
-        // slots
-        widgetHolder += HTItemSlotWidget.container(
-            outputSlot,
-            HTSlotHelper.getSlotPosX(6),
-            HTSlotHelper.getSlotPosY(1),
-            HTBackgroundType.OUTPUT,
-        )
-
-        for (i: Int in extraOutputSlots.indices) {
-            val slot: HTBasicItemSlot = extraOutputSlots[i]
-            widgetHolder += HTItemSlotWidget.container(
-                slot,
-                HTSlotHelper.getSlotPosX(7.5),
-                HTSlotHelper.getSlotPosY(i),
-                HTBackgroundType.EXTRA_OUTPUT,
-            )
-        }
-    }
 
     //    Serialize    //
 
@@ -84,26 +54,25 @@ abstract class HTChancedBlockEntity<INPUT : RecipeInput, RECIPE : HTChancedRecip
 
     //    Processing    //
 
-    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
-    private val extraOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(extraOutputSlots) }
+    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
 
     final override fun initRecipeCache() {
         cache = HTLookupRecipeCache.forRecipe(getLookup())
     }
 
-    final override fun createHandler(): HTRecipeHandler<*, *> = createHandler(::createInput, cache) {
-        canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<INPUT, out RECIPE> ->
-            recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(::createInput, cache) {
+        canComplete = canComplete@{ level: ServerLevel, _, recipe: HTHandledRecipe<INPUT, out RECIPE> ->
+            recipe
+                .map(level.registryAccess(), HTMultiOutputRecipe<INPUT>::assembleItems)
+                .all(outputHandler::canInsert)
         }
         onComplete = { level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<INPUT, out RECIPE> ->
             // outputs
-            val access: RegistryAccess = level.registryAccess()
-            recipe.assemble(access).let(outputHandler::insert)
             recipe
-                .map(access, HTChancedRecipe<INPUT>::assembleExtraItem)
-                .let(extraOutputHandler::insert)
+                .map(level.registryAccess(), HTMultiOutputRecipe<INPUT>::assembleItems)
+                .forEach(outputHandler::insert)
             // input
-            this@HTChancedBlockEntity.onComplete(level, pos, recipe)
+            this@HTMultiOutputBlockEntity.onComplete(level, pos, recipe)
         }
     }
 

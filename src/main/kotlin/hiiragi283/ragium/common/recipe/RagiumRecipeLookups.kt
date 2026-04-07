@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.function.identity
-import hiiragi283.core.api.recipe.HTItemToChancedRecipe
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.HTRecipeLookup
+import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
@@ -34,10 +34,10 @@ data object RagiumRecipeLookups {
     val ASSEMBLING: HTRecipeTypeImpl<HTShapelessRecipeInput, HTAssemblingRecipe> = create(RagiumConst.ASSEMBLING)
 
     @JvmField
-    val CUTTING: HTRecipeTypeImpl<SingleRecipeInput, HTItemToChancedRecipe> = create(RagiumConst.CUTTING)
+    val CUTTING: HTRecipeTypeImpl<SingleRecipeInput, HTSingleMultiOutputRecipe> = create(RagiumConst.CUTTING)
 
     @JvmField
-    val PLANTING: HTRecipeTypeImpl<SingleRecipeInput, HTItemToChancedRecipe> = create(RagiumConst.PLANTING)
+    val PLANTING: HTRecipeTypeImpl<SingleRecipeInput, HTSingleMultiOutputRecipe> = create(RagiumConst.PLANTING)
 
     // Machine - Advanced
     @JvmField

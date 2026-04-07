@@ -4,7 +4,7 @@
     "amount": 1,
     "items": "#minecraft:wooden_slabs"
   },
-  "result": {
+  "results": {
     "count": 2,
     "id": "minecraft:stick"
   },

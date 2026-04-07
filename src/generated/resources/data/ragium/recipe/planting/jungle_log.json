@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/6",
-    "id": "minecraft:jungle_sapling"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:jungle_sapling"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:jungle_log"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:jungle_log"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:jungle_sapling"
+    }
+  ],
   "time": 100
 }

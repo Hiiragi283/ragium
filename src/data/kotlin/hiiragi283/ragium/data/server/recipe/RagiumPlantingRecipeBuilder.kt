@@ -4,7 +4,7 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.toItemLike
-import hiiragi283.core.common.data.recipe.builder.HTItemToChancedRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTSingleMultiOutputRecipeBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import net.minecraft.world.item.Item
@@ -20,16 +20,20 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     }
 
     @JvmStatic
-    private inline fun planting(seed: ItemLike, seedChance: Fraction, builderAction: HTItemToChancedRecipeBuilder.() -> Unit) {
+    private inline fun planting(seed: ItemLike, seedChance: Fraction, builderAction: HTSingleMultiOutputRecipeBuilder.() -> Unit) {
         planting(seed.toItemLike(), seedChance, builderAction)
     }
 
     @JvmStatic
-    private inline fun planting(seed: HTItemHolderLike<*>, seedChance: Fraction, builderAction: HTItemToChancedRecipeBuilder.() -> Unit) {
+    private inline fun planting(
+        seed: HTItemHolderLike<*>,
+        seedChance: Fraction,
+        builderAction: HTSingleMultiOutputRecipeBuilder.() -> Unit,
+    ) {
         RagiumRecipeBuilder.planting(output) {
             ingredient = inputCreator.create(seed)
-            extraResult += resultCreator.create(seed, chance = seedChance)
             builderAction()
+            results += resultCreator.create(seed, chance = seedChance)
         }
     }
 
@@ -37,53 +41,53 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     private fun crops() {
         // Wheat
         planting(Items.WHEAT_SEEDS, fraction(1, 3)) {
-            result = resultCreator.create(Items.WHEAT)
+            results += resultCreator.create(Items.WHEAT)
         }
         // Beetroot
         planting(Items.BEETROOT_SEEDS, fraction(1, 3)) {
-            result = resultCreator.create(Items.BEETROOT, 3)
+            results += resultCreator.create(Items.BEETROOT, 3)
         }
 
         // Carrot, Potato, Berries
         for (seed: Item in listOf(Items.CARROT, Items.POTATO, Items.SWEET_BERRIES, Items.GLOW_BERRIES)) {
             planting(seed, fraction(1, 3)) {
-                result = resultCreator.create(seed, 3)
+                results += resultCreator.create(seed, 3)
             }
         }
 
         // Melon
         planting(Items.MELON_SEEDS, fraction(1, 3)) {
-            result = resultCreator.create(Items.MELON)
+            results += resultCreator.create(Items.MELON)
         }
         // Pumpkin
         planting(Items.PUMPKIN_SEEDS, fraction(1, 3)) {
-            result = resultCreator.create(Items.PUMPKIN)
+            results += resultCreator.create(Items.PUMPKIN)
         }
 
         // Cactus, Sugar Cane
         for (item: Item in listOf(Items.CACTUS, Items.SUGAR_CANE)) {
             planting(item, fraction(1, 3)) {
-                result = resultCreator.create(item, 3)
+                results += resultCreator.create(item, 3)
             }
         }
 
         // Apple
         planting(Items.APPLE, fraction(1, 3)) {
-            result = resultCreator.create(Items.APPLE, 3)
+            results += resultCreator.create(Items.APPLE, 3)
         }
         // Cocoa Beans
         planting(Items.COCOA_BEANS, fraction(1, 3)) {
-            result = resultCreator.create(Items.COCOA_BEANS, 3)
+            results += resultCreator.create(Items.COCOA_BEANS, 3)
         }
         // Nether Wart
         planting(Items.NETHER_WART, fraction(1, 3)) {
-            result = resultCreator.create(Items.NETHER_WART, 3)
+            results += resultCreator.create(Items.NETHER_WART, 3)
         }
 
         // Mushrooms
         for (item: Item in listOf(Items.RED_MUSHROOM, Items.BROWN_MUSHROOM)) {
             planting(item, fraction(1, 3)) {
-                result = resultCreator.create(item, 3)
+                results += resultCreator.create(item, 3)
             }
         }
     }
@@ -105,7 +109,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             Items.CHORUS_FLOWER to Items.CHORUS_FRUIT,
         ).forEach { (sapling: Item, log: Item) ->
             planting(sapling, fraction(1, 6)) {
-                result = resultCreator.create(log, 6)
+                results += resultCreator.create(log, 6)
             }
         }
     }
@@ -129,12 +133,12 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             Items.HORN_CORAL_FAN,
         ).forEach { crop: Item ->
             planting(crop, fraction(1, 3)) {
-                result = resultCreator.create(crop)
+                results += resultCreator.create(crop)
             }
         }
 
         planting(Items.KELP, fraction(1, 3)) {
-            result = resultCreator.create(Items.KELP, 6)
+            results += resultCreator.create(Items.KELP, 6)
         }
     }
 }

@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/6",
-    "id": "minecraft:crimson_fungus"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:crimson_fungus"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:crimson_stem"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:crimson_stem"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:crimson_fungus"
+    }
+  ],
   "time": 100
 }

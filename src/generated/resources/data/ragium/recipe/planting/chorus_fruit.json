@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/6",
-    "id": "minecraft:chorus_flower"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:chorus_flower"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:chorus_fruit"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:chorus_fruit"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:chorus_flower"
+    }
+  ],
   "time": 100
 }

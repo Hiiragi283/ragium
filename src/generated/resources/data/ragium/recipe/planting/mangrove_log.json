@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/6",
-    "id": "minecraft:mangrove_propagule"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:mangrove_propagule"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:mangrove_log"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:mangrove_log"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:mangrove_propagule"
+    }
+  ],
   "time": 100
 }

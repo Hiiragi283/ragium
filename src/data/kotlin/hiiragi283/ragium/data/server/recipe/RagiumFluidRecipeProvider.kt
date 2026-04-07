@@ -17,8 +17,8 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemFluidMultiOutputRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.world.item.Items
@@ -175,19 +175,19 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun washing() {
         // Gravel + Water -> Flint
-        HTWashingRecipeBuilder.create(output) {
+        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
             itemIngredient = inputCreator.create(Tags.Items.GRAVELS)
             fluidIngredient = inputCreator.water(250)
-            result = resultCreator.create(Items.FLINT)
-            extraResult += resultCreator.create(Items.FLINT, chance = fraction(1, 3))
+            results += resultCreator.create(Items.FLINT)
+            results += resultCreator.create(Items.FLINT, chance = fraction(1, 3))
             time = 20 * 5
         }
 
         // Ash + Water -> Carbon
-        HTWashingRecipeBuilder.create(output) {
+        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
             itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH, 4)
             fluidIngredient = inputCreator.water(250)
-            result = resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
+            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
             time = 20 * 5
         }
     }

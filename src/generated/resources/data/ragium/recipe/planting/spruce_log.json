@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/6",
-    "id": "minecraft:spruce_sapling"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:spruce_sapling"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:spruce_log"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:spruce_log"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:spruce_sapling"
+    }
+  ],
   "time": 100
 }

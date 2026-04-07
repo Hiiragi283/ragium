@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/6",
-    "id": "minecraft:warped_fungus"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:warped_fungus"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:warped_stem"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:warped_stem"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:warped_fungus"
+    }
+  ],
   "time": 100
 }

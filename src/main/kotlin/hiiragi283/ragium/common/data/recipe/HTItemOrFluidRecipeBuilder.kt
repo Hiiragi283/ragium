@@ -11,7 +11,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.holder.HTIorHolder
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.common.recipe.base.HTBasicItemOrFluidRecipe
+import hiiragi283.ragium.impl.recipe.HTBasicItemOrFluidRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 

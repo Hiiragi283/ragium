@@ -4,7 +4,7 @@
     "amount": 1,
     "items": "ragium:silicon_wafer"
   },
-  "result": {
+  "results": {
     "count": 4,
     "id": "ragium:circuit_chip"
   },

@@ -1,15 +1,17 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/3",
-    "id": "minecraft:vine"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:vine"
   },
-  "result": {
-    "id": "minecraft:vine"
-  },
+  "results": [
+    {
+      "id": "minecraft:vine"
+    },
+    {
+      "chance": "1/3",
+      "id": "minecraft:vine"
+    }
+  ],
   "time": 100
 }

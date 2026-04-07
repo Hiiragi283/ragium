@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/6",
-    "id": "minecraft:dark_oak_sapling"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:dark_oak_sapling"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:dark_oak_log"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:dark_oak_log"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:dark_oak_sapling"
+    }
+  ],
   "time": 100
 }

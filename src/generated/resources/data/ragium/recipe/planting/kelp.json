@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/3",
-    "id": "minecraft:kelp"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:kelp"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:kelp"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:kelp"
+    },
+    {
+      "chance": "1/3",
+      "id": "minecraft:kelp"
+    }
+  ],
   "time": 100
 }

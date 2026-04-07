@@ -6,7 +6,7 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
-import hiiragi283.ragium.common.recipe.base.HTCombiningRecipe
+import hiiragi283.ragium.impl.recipe.HTCombiningRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 

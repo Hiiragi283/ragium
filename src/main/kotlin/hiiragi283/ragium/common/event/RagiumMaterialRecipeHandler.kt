@@ -27,9 +27,9 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemFluidMultiOutputRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.blueprint
 import hiiragi283.ragium.setup.RagiumFluids
@@ -193,7 +193,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // レシピを登録
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(inputTag, inputCount)
-            result = resultCreator.create(rod, outputCount)
+            results += resultCreator.create(rod, outputCount)
             time = getTimeFromHardness(entry, time * 3) ?: return
             recipeId suffix "_from_${defaultPart.getSuffix()}"
         }
@@ -208,7 +208,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // レシピを登録
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, entry)
-            result = resultCreator.create(plate, entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
+            results += resultCreator.create(plate, entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
             time = getTimeFromHardness(entry, time * 3) ?: (time * 3)
             recipeId suffix "_from_block"
         }
@@ -300,21 +300,21 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         val dust: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.DUST, entry) ?: return
         // レシピを登録
         // 水 -> 主産物 + 副産物
-        HTWashingRecipeBuilder.create(output) {
+        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
             // 材料
             itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
             fluidIngredient = inputCreator.water(250)
             // 主産物
-            this.result = resultCreator.create(dust, CommonParts.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
+            results += resultCreator.create(dust, CommonParts.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
             // 副産物
             entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
-                ?.let(extraResult::plusAssign)
+                ?.let(results::add)
 
             recipeId suffix "_from_crushed_ore/water"
         }
         // 硫酸 -> 1.5x 主産物
-        HTWashingRecipeBuilder.create(output) {
+        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
             // 材料
             itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
             fluidIngredient = inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)
@@ -323,7 +323,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
                 .getScaledAmount(fraction(3, 2), entry)
                 .toFloat()
                 .let(Mth::ceil)
-            this.result = resultCreator.create(dust, outputCount)
+            results += resultCreator.create(dust, outputCount)
 
             recipeId suffix "_from_crushed_ore/sulfuric_acid"
         }

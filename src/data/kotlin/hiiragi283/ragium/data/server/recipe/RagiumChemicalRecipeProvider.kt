@@ -17,10 +17,10 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTElectrolyzingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemFluidMultiOutputRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTWashingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
@@ -354,16 +354,16 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // HNO3 + Paper -> Nitrocellulose
-        HTWashingRecipeBuilder.create(output) {
+        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
             itemIngredient = inputCreator.create(Items.PAPER)
             fluidIngredient = inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
-            result = resultCreator.create(RagiumItems.NITROCELLULOSE)
+            results += resultCreator.create(RagiumItems.NITROCELLULOSE)
         }
         // HNO3 + Glycerol -> Nitroglycerin
-        HTWashingRecipeBuilder.create(output) {
+        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
             itemIngredient = inputCreator.create(RagiumItems.GLYCEROL_DROP)
             fluidIngredient = inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
-            result = resultCreator.create(RagiumItems.NITROGLYCERIN)
+            results += resultCreator.create(RagiumItems.NITROGLYCERIN)
         }
         // Nitrocellulose + Nitroglycerin -> Smokeless Powder
         HTShapelessRecipeBuilder.create(output) {
@@ -453,7 +453,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Silicon Wafer -> Circuit Chip
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(RagiumItems.SILICON_WAFER)
-            result = resultCreator.create(RagiumItems.CIRCUIT_CHIP, 4)
+            results += resultCreator.create(RagiumItems.CIRCUIT_CHIP, 4)
         }
         // Circuit Board + Circuit chip -> Electric Circuit
         HTCombiningRecipeBuilder.assembling(output) {

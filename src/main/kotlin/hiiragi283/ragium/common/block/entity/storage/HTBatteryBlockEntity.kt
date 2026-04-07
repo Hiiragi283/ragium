@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTItemToItemRecipe
+import hiiragi283.core.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.amount.HTAmountView
@@ -94,7 +94,7 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
 
     private var checkRecipe: Boolean = false
 
-    private val cache: HTLookupRecipeCache<SingleRecipeInput, HTItemToItemRecipe> = HTLookupRecipeCache.forRecipe(HCRecipeLookups.CHARGING)
+    private val cache: HTLookupRecipeCache<SingleRecipeInput, HTSingleItemRecipe> = HTLookupRecipeCache.forRecipe(HCRecipeLookups.CHARGING)
     private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
@@ -111,7 +111,7 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
         val stack: ItemStack = inputHandler.getItemStack()
         if (stack.isEmpty) return false
         val input = SingleRecipeInput(stack)
-        val recipe: HTItemToItemRecipe = cache.getFirstRecipe(input, level) ?: return false
+        val recipe: HTSingleItemRecipe = cache.getFirstRecipe(input, level) ?: return false
 
         val result: ItemStack = recipe.assemble(input, level.registryAccess())
         if (!outputHandler.canInsert(result)) return false

@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/6",
-    "id": "minecraft:birch_sapling"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:birch_sapling"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:birch_log"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:birch_log"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:birch_sapling"
+    }
+  ],
   "time": 100
 }

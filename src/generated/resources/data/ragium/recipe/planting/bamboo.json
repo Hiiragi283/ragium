@@ -1,16 +1,18 @@
 {
   "type": "ragium:planting",
-  "extra_result": {
-    "chance": "1/6",
-    "id": "minecraft:bamboo"
-  },
   "ingredient": {
     "amount": 1,
     "items": "minecraft:bamboo"
   },
-  "result": {
-    "count": 6,
-    "id": "minecraft:bamboo"
-  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:bamboo"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:bamboo"
+    }
+  ],
   "time": 100
 }
