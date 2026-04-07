@@ -16,7 +16,6 @@ import hiiragi283.core.api.material.property.HTExtraOreResultMap
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.material.property.getDefaultPart
-import hiiragi283.core.api.property.HTPropertyMap
 import hiiragi283.core.api.property.getOrDefault
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.HTFluidHolderLike
@@ -24,9 +23,10 @@ import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.data.recipe.blueprint
+import hiiragi283.core.common.data.recipe.builder.HTDoubleMultiOutputRecipeBuilder
+import hiiragi283.core.common.event.HCRuntimeRecipeHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
-import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemFluidMultiOutputRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
@@ -49,13 +49,10 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
         for (entry: HTMaterialManager.Entry in materialManager) {
             // Basic
-            assembleBaseToGear(event, entry)
-            assembleBaseToPlate(event, entry)
-            assembleBaseToWire(event, entry)
-            assembleDustToPellet(event, entry)
-
             cutBaseToRod(event, entry)
             cutBlockToPlate(event, entry)
+
+            forgeDustToPellet(event, entry)
             // Heat
             meltPrefixToMolten(event, entry, CommonParts.DUST)
             meltPrefixToMolten(event, entry, CommonParts.GEM)
@@ -80,100 +77,11 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
     }
 
     @JvmStatic
-    private fun getTimeFromHardness(propertyMap: HTPropertyMap, time: Int = 20 * 10): Int? =
-        (propertyMap.getOrDefault(HTMaterialPropertyKeys.HARDNESS) * time)?.toInt()
-
-    @JvmStatic
-    private fun getTimeFromMelting(propertyMap: HTPropertyMap, time: Int = 20 * 10): Int? =
-        (propertyMap.getOrDefault(HTMaterialPropertyKeys.MELTING_POINT) * time)?.toInt()
-
-    @JvmStatic
-    private fun getBlueprint(prefix: HTTagPrefix): HTItemIngredient = when (prefix) {
-        CommonTagPrefixes.DUST -> 0
-        CommonTagPrefixes.INGOT -> 1
-        CommonTagPrefixes.GEM -> 2
-        CommonTagPrefixes.PEARL -> 3
-        CommonTagPrefixes.GEAR -> 4
-        CommonTagPrefixes.PLATE -> 5
-        CommonTagPrefixes.ROD -> 6
-        CommonTagPrefixes.WIRE -> 7
-        RagiumTagPrefixes.PELLET -> 8
-        else -> error("Cannot define blueprint for prefix: $prefix")
-    }.let(inputCreator::blueprint)
-
-    //    Assembling    //
-
-    @JvmStatic
-    private fun assembleBaseToGear(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 素材のプロパティから材料を取得
-        val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
-        if (!event.isPresentTag(inputTag)) return
-        // 完成品を取得
-        val gear: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.GEAR, entry) ?: return
-        // レシピを登録
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(gear)
-            ingredients += inputCreator.create(inputTag, 4)
-            ingredients += getBlueprint(CommonTagPrefixes.GEAR)
-            time = getTimeFromHardness(entry, time) ?: return
-        }
-    }
-
-    @JvmStatic
-    private fun assembleBaseToPlate(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 基本アイテムがインゴットの素材を除外
-        val inputPrefix: HTTagPrefix? = when (entry.getDefaultPart()) {
-            HTDefaultPart.Prefixed.FUEL -> null
-            HTDefaultPart.Prefixed.GEM -> null
-            HTDefaultPart.Prefixed.INGOT -> CommonTagPrefixes.INGOT
-            HTDefaultPart.Prefixed.PEARL -> null
-            is HTDefaultPart.BuiltIn -> CommonTagPrefixes.DUST
-            null -> CommonTagPrefixes.DUST
-        }
-        if (inputPrefix == null) return
-        // 材料が存在するか判定
-        if (!event.isPresentTag(inputPrefix, entry)) return
-        // 完成品を取得
-        val plate: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
-        // レシピを登録
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(plate)
-            ingredients += inputCreator.create(inputPrefix, entry)
-            ingredients += getBlueprint(CommonTagPrefixes.PLATE)
-            time = getTimeFromHardness(entry, time) ?: return
-        }
-    }
-
-    @JvmStatic
-    private fun assembleBaseToWire(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 材料が存在するか判定
-        val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: return
-        if (!event.isPresentTag(inputTag)) return
-        // 完成品を取得
-        val wire: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.WIRE, entry) ?: return
-        // レシピを登録
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(wire, 2)
-            ingredients += inputCreator.create(inputTag)
-            ingredients += getBlueprint(CommonTagPrefixes.WIRE)
-            time = getTimeFromHardness(entry, time) ?: return
-        }
-    }
-
-    @JvmStatic
-    private fun assembleDustToPellet(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 材料が存在するか判定
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART).tagPrefix ?: return
-        if (!event.isPresentTag(crushedPrefix, entry)) return
-        // 完成品を取得
-        val pellet: HTItemHolderLike<*> = event.getFirstHolder(RagiumTagPrefixes.PELLET, entry) ?: return
-        // レシピを登録
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(pellet)
-            ingredients += inputCreator.create(crushedPrefix, entry, 8)
-            ingredients += getBlueprint(RagiumTagPrefixes.PELLET)
-            recipeId suffix "_from_dust"
-        }
+    private fun getBlueprint(prefix: HTTagPrefix): HTItemIngredient {
+        return when (prefix) {
+            RagiumTagPrefixes.PELLET -> 8
+            else -> return HCRuntimeRecipeHandler.getBlueprint(prefix)
+        }.let(inputCreator::blueprint)
     }
 
     //    Cutting    //
@@ -194,7 +102,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(inputTag, inputCount)
             results += resultCreator.create(rod, outputCount)
-            time = getTimeFromHardness(entry, time * 3) ?: return
+            time = HCRuntimeRecipeHandler.getTimeFromHardness(entry, time * 3) ?: return
             recipeId suffix "_from_${defaultPart.getSuffix()}"
         }
     }
@@ -209,8 +117,26 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, entry)
             results += resultCreator.create(plate, entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
-            time = getTimeFromHardness(entry, time * 3) ?: (time * 3)
+            time = HCRuntimeRecipeHandler.getTimeFromHardness(entry, time * 3) ?: (time * 3)
             recipeId suffix "_from_block"
+        }
+    }
+
+    //    Forging    //
+
+    @JvmStatic
+    private fun forgeDustToPellet(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 材料が存在するか判定
+        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART).tagPrefix ?: return
+        if (!event.isPresentTag(crushedPrefix, entry)) return
+        // 完成品を取得
+        val pellet: HTItemHolderLike<*> = event.getFirstHolder(RagiumTagPrefixes.PELLET, entry) ?: return
+        // レシピを登録
+        HTDoubleMultiOutputRecipeBuilder.forging(output) {
+            base = inputCreator.create(crushedPrefix, entry, 8)
+            addition = getBlueprint(RagiumTagPrefixes.PELLET)
+            results += resultCreator.create(pellet)
+            recipeId suffix "_from_dust"
         }
     }
 
@@ -249,7 +175,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             ingredient = inputCreator.create(prefix, entry)
             result = resultCreator.create(molten, fluidAmount)
             recipeId suffix "_from_${part.asPartName()}"
-            time = getTimeFromMelting(entry, time) ?: return
+            time = HCRuntimeRecipeHandler.getTimeFromMelting(entry, time) ?: return
         }
     }
 

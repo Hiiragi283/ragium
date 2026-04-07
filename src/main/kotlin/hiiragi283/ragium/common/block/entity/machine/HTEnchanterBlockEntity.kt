@@ -14,5 +14,5 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) :
         TODO("Not yet implemented")
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.device.enchanter
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.enchanter
 }

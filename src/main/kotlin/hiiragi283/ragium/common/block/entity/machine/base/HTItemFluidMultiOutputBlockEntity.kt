@@ -13,7 +13,6 @@ import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
-import hiiragi283.ragium.config.RagiumFluidConfigType
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
@@ -25,7 +24,7 @@ abstract class HTItemFluidMultiOutputBlockEntity(type: HTDeferredBlockEntityType
     final override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
         inputTank = builder.addSlot(
             HTSlotInfo.INPUT,
-            HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)),
+            HTVariableFluidTank.input(listener, getTankCapacity()),
         )
     }
 

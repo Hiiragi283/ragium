@@ -205,9 +205,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.BUFFER, "A combined storage with 9 slots, 3 tanks, and 1 battery.")
         add(RagiumTranslation.UNIVERSAL_CHEST, "A chest which shares its containment with the same color.")
 
-        add(RagiumTranslation.BLUEPRINT, "Right click on GUI to cycle number")
-        add(RagiumTranslation.BLUEPRINT_NUMBER, $$"Number: %1$s")
-
         add(RagiumTranslation.TOOLTIP_BLOCK_POS, $$"Position: [%1$s, %2$s, %3$s]")
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")

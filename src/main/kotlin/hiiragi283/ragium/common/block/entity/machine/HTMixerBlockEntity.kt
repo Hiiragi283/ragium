@@ -13,7 +13,6 @@ import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTMachineConfig
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.config.RagiumFluidConfigType
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
@@ -26,17 +25,17 @@ class HTMixerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEnt
         inputTanks = listOf(
             builder.addSlot(
                 HTSlotInfo.INPUT,
-                HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.FIRST_INPUT)),
+                HTVariableFluidTank.input(listener, getTankCapacity()),
             ),
             builder.addSlot(
                 HTSlotInfo.INPUT,
-                HTVariableFluidTank.input(listener, getTankCapacity(RagiumFluidConfigType.SECOND_INPUT)),
+                HTVariableFluidTank.input(listener, getTankCapacity()),
             ),
         )
 
         outputTank = builder.addSlot(
             HTSlotInfo.OUTPUT,
-            HTVariableFluidTank.output(listener, getTankCapacity(RagiumFluidConfigType.FIRST_OUTPUT)),
+            HTVariableFluidTank.output(listener, getTankCapacity()),
         )
     }
 

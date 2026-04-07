@@ -57,6 +57,9 @@ object RagiumConfig {
         }
 
         class Machine(builder: ModConfigSpec.Builder) {
+            @JvmField
+            val tankCapacity: ModConfigSpec.IntValue = builder.definePositiveInt("tank_capacity", 8000)
+
             // Basic
             @JvmField
             val alloySmelter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ALLOY_SMELTER)
@@ -68,92 +71,46 @@ object RagiumConfig {
             val autoChisel: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.AUTO_CHISEL)
 
             @JvmField
-            val crusher: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.CRUSHER,
-                RagiumFluidConfigType.FIRST_INPUT,
-            )
+            val crusher: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.CRUSHER)
 
             @JvmField
-            val cuttingMachine: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.CUTTING_MACHINE,
-                RagiumFluidConfigType.FIRST_INPUT,
-            )
+            val cuttingMachine: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.CUTTING_MACHINE)
 
             @JvmField
             val electricFurnace: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ELECTRIC_FURNACE)
 
-            // Heat
+            // Advanced
             @JvmField
-            val melter: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.MELTER,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-            )
+            val freezer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FREEZER)
 
             @JvmField
-            val pyrolyzer: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.PYROLYZER,
-                RagiumFluidConfigType.FIRST_INPUT,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-            )
+            val melter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.MELTER)
 
             @JvmField
-            val refinery: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.REFINERY,
-                RagiumFluidConfigType.FIRST_INPUT,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-            )
-
-            // Cool
-            @JvmField
-            val freezer: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.FREEZER,
-                RagiumFluidConfigType.FIRST_INPUT,
-            )
-
-            // Chemical
-            @JvmField
-            val brewery: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.BREWERY,
-                RagiumFluidConfigType.FIRST_INPUT,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-            )
+            val pyrolyzer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.PYROLYZER)
 
             @JvmField
-            val mixer: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.MIXER,
-                RagiumFluidConfigType.FIRST_INPUT,
-                RagiumFluidConfigType.SECOND_INPUT,
-                RagiumFluidConfigType.THIRD_INPUT,
-                RagiumFluidConfigType.FIRST_OUTPUT,
-                RagiumFluidConfigType.SECOND_OUTPUT,
-            )
+            val refinery: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.REFINERY)
+
+            // Elite
+            @JvmField
+            val brewery: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.BREWERY)
 
             @JvmField
-            val washer: HTMachineConfig = HTMachineConfig.createSimple(
-                builder,
-                RagiumConst.WASHER,
-                RagiumFluidConfigType.FIRST_INPUT,
-            )
+            val mixer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.MIXER)
 
-            // Matter
+            @JvmField
+            val washer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.WASHER)
+
+            // Ultimate
+            @JvmField
+            val enchanter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.ENCHANTER)
         }
 
         class Device(builder: ModConfigSpec.Builder) {
             // Basic
             @JvmField
-            val planter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.PLANTER, RagiumFluidConfigType.FIRST_INPUT)
-
-            // Enchanting
-            @JvmField
-            val enchanter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.ENCHANTER, RagiumFluidConfigType.FIRST_INPUT)
+            val planter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.PLANTER)
         }
     }
 }
