@@ -6,7 +6,7 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
 import net.minecraft.core.Holder
 import net.minecraft.data.recipes.RecipeOutput

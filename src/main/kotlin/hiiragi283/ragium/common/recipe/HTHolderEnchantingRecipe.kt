@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.recipe
 
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.util.HTExperienceHelper
-import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.Holder

@@ -5,7 +5,7 @@ import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.viewer.HTLookupRecipeViewerType
 import hiiragi283.core.client.jei.category.base.HTLookupRecipeCategory
 import hiiragi283.ragium.api.integration.jei.HTItemOrFluidRecipeCategoryExtension
-import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemOrFluidRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder

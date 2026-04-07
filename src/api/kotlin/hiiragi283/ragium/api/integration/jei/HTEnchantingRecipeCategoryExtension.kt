@@ -1,6 +1,6 @@
 package hiiragi283.ragium.api.integration.jei
 
-import hiiragi283.ragium.api.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.recipe.IFocusGroup

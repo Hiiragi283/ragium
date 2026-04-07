@@ -6,9 +6,9 @@ import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.util.Ior
-import hiiragi283.ragium.api.recipe.FluidAmount
-import hiiragi283.ragium.api.recipe.HTItemOrFluidRecipe
-import hiiragi283.ragium.api.recipe.ItemAmount
+import hiiragi283.ragium.api.recipe.base.FluidAmount
+import hiiragi283.ragium.api.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.ragium.api.recipe.base.ItemAmount
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack

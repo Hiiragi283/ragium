@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.recipe
+package hiiragi283.ragium.api.recipe.base
 
 import hiiragi283.core.api.recipe.base.HTFluidRecipe
 import hiiragi283.core.api.recipe.base.HTProcessingRecipe
