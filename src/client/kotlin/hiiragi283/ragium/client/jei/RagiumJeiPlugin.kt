@@ -3,7 +3,9 @@ package hiiragi283.ragium.client.jei
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.client.jei.HCJeiRecipeTypes
+import hiiragi283.core.client.jei.category.base.HTDoubleMultiOutputRecipeCategory
 import hiiragi283.core.client.jei.category.base.HTSingleMultiOutputRecipeCategory
+import hiiragi283.core.client.jei.extension.HTBasicDoubleMultiOutputRecipeCategoryExtension
 import hiiragi283.core.client.jei.extension.HTBasicSingleMultiOutputRecipeCategoryExtension
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
@@ -40,8 +42,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         lateinit var cutting: HTSingleMultiOutputRecipeCategory
             private set
 
+        // DoubleMultiOutput
         @JvmStatic
-        lateinit var planting: HTSingleMultiOutputRecipeCategory
+        lateinit var planting: HTDoubleMultiOutputRecipeCategory
             private set
 
         // ItemOrFluid
@@ -83,7 +86,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         val guiHelper: IGuiHelper = registration.jeiHelpers.guiHelper
         val manager: IIngredientManager = registration.jeiHelpers.ingredientManager
 
-        initItemToChanced(guiHelper, manager)
+        initSingleMultiOutput(guiHelper, manager)
+        initDoubleMultiOutput(guiHelper, manager)
         initItemOrFluid(guiHelper, manager)
 
         enchanting = HTEnchantingRecipeCategory(guiHelper)
@@ -111,12 +115,16 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         )
     }
 
-    private fun initItemToChanced(guiHelper: IGuiHelper, manager: IIngredientManager) {
+    private fun initSingleMultiOutput(guiHelper: IGuiHelper, manager: IIngredientManager) {
         cutting = HTCuttingRecipeCategory(guiHelper)
-        planting = HTPlantingRecipeCategory(guiHelper)
 
         cutting.addExtension(HTBasicSingleMultiOutputRecipeCategoryExtension())
-        planting.addExtension(HTBasicSingleMultiOutputRecipeCategoryExtension())
+    }
+
+    private fun initDoubleMultiOutput(guiHelper: IGuiHelper, manager: IIngredientManager) {
+        planting = HTPlantingRecipeCategory(guiHelper)
+
+        planting.addExtension(HTBasicDoubleMultiOutputRecipeCategoryExtension())
     }
 
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {

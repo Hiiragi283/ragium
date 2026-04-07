@@ -1,6 +1,9 @@
 {
   "type": "ragium:planting",
-  "ingredient": {
+  "addition": {
+    "items": "#minecraft:dirt"
+  },
+  "base": {
     "amount": 1,
     "items": "minecraft:jungle_sapling"
   },

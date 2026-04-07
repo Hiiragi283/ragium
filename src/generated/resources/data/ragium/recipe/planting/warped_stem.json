@@ -1,6 +1,9 @@
 {
   "type": "ragium:planting",
-  "ingredient": {
+  "addition": {
+    "items": "minecraft:warped_nylium"
+  },
+  "base": {
     "amount": 1,
     "items": "minecraft:warped_fungus"
   },

@@ -1,7 +1,7 @@
 {
   "type": "ragium:planting",
   "addition": {
-    "items": "minecraft:farmland"
+    "items": "minecraft:mycelium"
   },
   "base": {
     "amount": 1,
@@ -9,7 +9,7 @@
   },
   "results": [
     {
-      "count": 3,
+      "count": 5,
       "id": "minecraft:brown_mushroom"
     },
     {

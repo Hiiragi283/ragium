@@ -128,7 +128,7 @@ object RagiumRecipeSerializers {
     @JvmField
     val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
         RagiumConst.PLANTING,
-        HCRecipeSerializers.singleItemToMulti(HTPlantingRecipe.OUTPUT_RANGE, ::HTPlantingRecipe),
+        HCRecipeSerializers.doubleItemToMulti(HTPlantingRecipe.OUTPUT_RANGE, ::HTPlantingRecipe),
     )
 
     // Machine - Advanced

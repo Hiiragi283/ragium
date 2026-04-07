@@ -1,17 +1,15 @@
 {
   "type": "ragium:planting",
-  "ingredient": {
+  "addition": {
+    "items": "minecraft:brain_coral_block"
+  },
+  "base": {
     "amount": 1,
     "items": "minecraft:brain_coral"
   },
-  "results": [
-    {
-      "id": "minecraft:brain_coral"
-    },
-    {
-      "chance": "1/3",
-      "id": "minecraft:brain_coral"
-    }
-  ],
+  "results": {
+    "count": 4,
+    "id": "minecraft:brain_coral"
+  },
   "time": 100
 }

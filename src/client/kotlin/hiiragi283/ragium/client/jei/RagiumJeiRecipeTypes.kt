@@ -2,7 +2,9 @@ package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.recipe.HTRecipeType
+import hiiragi283.core.api.recipe.base.HTDoubleMultiOutputRecipe
 import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
+import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
@@ -48,8 +50,8 @@ object RagiumJeiRecipeTypes {
         create(RagiumRecipeLookups.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 5, 18 * 2)
 
     @JvmField
-    val PLANTING: HTLookupRecipeViewerType<SingleRecipeInput, HTSingleMultiOutputRecipe> =
-        create(RagiumRecipeLookups.PLANTING, RagiumBlocks.PLANTER, 18 * 5, 18 * 2)
+    val PLANTING: HTLookupRecipeViewerType<HTDoubleRecipeInput, HTDoubleMultiOutputRecipe> =
+        create(RagiumRecipeLookups.PLANTING, RagiumBlocks.PLANTER, 18 * 6, 18 * 3)
 
     // Machine - Heat
     @JvmField

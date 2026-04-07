@@ -1,6 +1,9 @@
 {
   "type": "ragium:planting",
-  "ingredient": {
+  "addition": {
+    "items": "minecraft:farmland"
+  },
+  "base": {
     "amount": 1,
     "items": "minecraft:wheat_seeds"
   },

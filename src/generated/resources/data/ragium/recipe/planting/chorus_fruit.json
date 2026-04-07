@@ -1,6 +1,9 @@
 {
   "type": "ragium:planting",
-  "ingredient": {
+  "addition": {
+    "items": "#c:end_stones"
+  },
+  "base": {
     "amount": 1,
     "items": "minecraft:chorus_flower"
   },

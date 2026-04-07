@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.common.data.recipe.builder.HTDoubleMultiOutputRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTSingleMultiOutputRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -16,8 +17,8 @@ data object RagiumRecipeBuilder {
     }
 
     @JvmStatic
-    inline fun planting(output: RecipeOutput, builderAction: HTSingleMultiOutputRecipeBuilder.() -> Unit) {
-        HTSingleMultiOutputRecipeBuilder(RagiumConst.PLANTING, ::HTPlantingRecipe).apply(builderAction).save(output)
+    inline fun planting(output: RecipeOutput, builderAction: HTDoubleMultiOutputRecipeBuilder.() -> Unit) {
+        HTDoubleMultiOutputRecipeBuilder(RagiumConst.PLANTING, ::HTPlantingRecipe).apply(builderAction).save(output)
     }
 }
 

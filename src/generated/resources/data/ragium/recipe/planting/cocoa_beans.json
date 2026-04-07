@@ -1,6 +1,9 @@
 {
   "type": "ragium:planting",
-  "ingredient": {
+  "addition": {
+    "items": "#minecraft:jungle_logs"
+  },
+  "base": {
     "amount": 1,
     "items": "minecraft:cocoa_beans"
   },

@@ -1,6 +1,9 @@
 {
   "type": "ragium:planting",
-  "ingredient": {
+  "addition": {
+    "items": "#c:sands"
+  },
+  "base": {
     "amount": 1,
     "items": "minecraft:cactus"
   },
