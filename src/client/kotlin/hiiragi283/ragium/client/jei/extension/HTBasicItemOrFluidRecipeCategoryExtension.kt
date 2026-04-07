@@ -4,7 +4,6 @@ import hiiragi283.core.api.integration.jei.addFluidIngredient
 import hiiragi283.core.api.integration.jei.addFluidResult
 import hiiragi283.core.api.integration.jei.addItemIngredient
 import hiiragi283.core.api.integration.jei.addItemResult
-import hiiragi283.ragium.api.integration.jei.HTItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.impl.recipe.HTBasicItemOrFluidRecipe
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 

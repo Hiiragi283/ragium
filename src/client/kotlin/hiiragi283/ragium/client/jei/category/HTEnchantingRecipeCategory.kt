@@ -3,9 +3,9 @@ package hiiragi283.ragium.client.jei.category
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.client.jei.category.base.HTLookupRecipeCategory
-import hiiragi283.ragium.api.integration.jei.HTEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
+import hiiragi283.ragium.client.jei.extension.HTEnchantingRecipeCategoryExtension
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder

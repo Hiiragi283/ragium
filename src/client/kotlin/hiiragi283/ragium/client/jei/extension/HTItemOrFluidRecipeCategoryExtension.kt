@@ -1,4 +1,4 @@
-package hiiragi283.ragium.api.integration.jei
+package hiiragi283.ragium.client.jei.extension
 
 import hiiragi283.ragium.api.recipe.base.HTItemOrFluidRecipe
 import mezz.jei.api.gui.builder.IIngredientAcceptor

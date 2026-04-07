@@ -5,7 +5,6 @@ import hiiragi283.core.api.integration.jei.addFluidIngredient
 import hiiragi283.core.api.integration.jei.addItemIngredient
 import hiiragi283.core.api.item.createEnchantedBook
 import hiiragi283.core.setup.HCFluids
-import hiiragi283.ragium.api.integration.jei.HTEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
 import mezz.jei.api.gui.builder.IIngredientAcceptor
 import net.minecraft.world.item.Items
