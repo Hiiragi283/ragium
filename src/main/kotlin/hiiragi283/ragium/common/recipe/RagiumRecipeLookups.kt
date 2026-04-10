@@ -19,7 +19,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemFluidMultiOutputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -63,7 +62,7 @@ data object RagiumRecipeLookups {
     val MIXING: HTRecipeTypeImpl<HTChemicalRecipeInput, HTMixingRecipe> = create(RagiumConst.MIXING)
 
     @JvmField
-    val WASHING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTItemFluidMultiOutputRecipe> = create(RagiumConst.WASHING)
+    val WASHING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTWashingRecipe> = create(RagiumConst.WASHING)
 
     // Machine - Ultimate
     @JvmField

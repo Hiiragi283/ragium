@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.recipe.base.HTSerializableRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
-import hiiragi283.ragium.impl.recipe.HTCombiningRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -28,7 +28,7 @@ class HTCombiningRecipeBuilder(prefix: String, private val factory: Factory<*>) 
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
-    override fun createRecipe(): HTCombiningRecipe = factory.create(
+    override fun createRecipe(): HTSerializableRecipe<*> = factory.create(
         ingredients,
         result,
         time,
@@ -36,7 +36,7 @@ class HTCombiningRecipeBuilder(prefix: String, private val factory: Factory<*>) 
 
     //    Factory    //
 
-    fun interface Factory<RECIPE : HTCombiningRecipe> {
+    fun interface Factory<RECIPE : HTSerializableRecipe<*>> {
         fun create(ingredients: List<HTItemIngredient>, result: HTItemResult, time: Int): RECIPE
     }
 }

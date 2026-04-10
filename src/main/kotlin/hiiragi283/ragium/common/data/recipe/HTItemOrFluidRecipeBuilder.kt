@@ -2,6 +2,7 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.function.identityLeft
+import hiiragi283.core.api.recipe.base.HTSerializableRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
@@ -11,7 +12,6 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.holder.HTIorHolder
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
-import hiiragi283.ragium.impl.recipe.HTBasicItemOrFluidRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
@@ -36,7 +36,7 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
 
     override fun getPrimalId(): ResourceLocation = result.toIor().map(HTItemResult::getId, HTFluidResult::getId, identityLeft())
 
-    override fun createRecipe(): HTBasicItemOrFluidRecipe = factory.create(
+    override fun createRecipe(): HTSerializableRecipe<*> = factory.create(
         ingredient.toIor(),
         result.toIor(),
         time,
@@ -44,7 +44,7 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
 
     //    Factory    //
 
-    fun interface Factory<RECIPE : HTBasicItemOrFluidRecipe> {
+    fun interface Factory<RECIPE : HTSerializableRecipe<*>> {
         fun create(ingredient: Ior<HTItemIngredient, HTFluidIngredient>, result: Ior<HTItemResult, HTFluidResult>, time: Int): RECIPE
     }
 }

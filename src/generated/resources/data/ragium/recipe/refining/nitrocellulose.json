@@ -1,5 +1,5 @@
 {
-  "type": "ragium:washing",
+  "type": "ragium:refining",
   "fluid_ingredient": {
     "amount": 250,
     "fluids": "#c:nitric_acid"
@@ -8,7 +8,7 @@
     "amount": 1,
     "items": "minecraft:paper"
   },
-  "results": {
+  "item_result": {
     "id": "ragium:nitrocellulose"
   },
   "time": 200

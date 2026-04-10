@@ -28,7 +28,6 @@ import hiiragi283.core.common.event.HCRuntimeRecipeHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemFluidMultiOutputRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -226,10 +225,9 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         val dust: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.DUST, entry) ?: return
         // レシピを登録
         // 水 -> 主産物 + 副産物
-        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
+        RagiumRecipeBuilder.washing(output) {
             // 材料
-            itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
-            fluidIngredient = inputCreator.water(250)
+            ingredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
             // 主産物
             results += resultCreator.create(dust, CommonParts.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
             // 副産物
@@ -240,16 +238,16 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             recipeId suffix "_from_crushed_ore/water"
         }
         // 硫酸 -> 1.5x 主産物
-        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
+        HTItemOrFluidRecipeBuilder.refining(output) {
             // 材料
-            itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
-            fluidIngredient = inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)
+            ingredient += inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
+            ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)
             // 主産物
             val outputCount: Int = CommonParts.CRUSHED_ORE
                 .getScaledAmount(fraction(3, 2), entry)
                 .toFloat()
                 .let(Mth::ceil)
-            results += resultCreator.create(dust, outputCount)
+            result += resultCreator.create(dust, outputCount)
 
             recipeId suffix "_from_crushed_ore/sulfuric_acid"
         }

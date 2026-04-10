@@ -1,5 +1,5 @@
 {
-  "type": "ragium:washing",
+  "type": "ragium:refining",
   "fluid_ingredient": {
     "amount": 250,
     "fluids": "#c:nitric_acid"
@@ -8,7 +8,7 @@
     "amount": 1,
     "items": "ragium:glycerol_drop"
   },
-  "results": {
+  "item_result": {
     "id": "ragium:nitroglycerin"
   },
   "time": 200

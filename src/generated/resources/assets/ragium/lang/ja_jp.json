@@ -92,8 +92,6 @@
   "constants.ragium.mod_name": "ラギウム",
   "description.ragium.alloy_smelter": "複数のアイテムを一つに焼き上げる機械です。",
   "description.ragium.battery": "クラフトで合体させることで容量を拡張可能なエネルギーストレージです。",
-  "description.ragium.blueprint": "GUI上で右クリックすると番号を変えられます。",
-  "description.ragium.blueprint.number": "番号: %1$s",
   "description.ragium.buffer": "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。",
   "description.ragium.crate": "クラフトで合体させることで容量を拡張可能なアイテムストレージです。",
   "description.ragium.crusher": "アイテムを粉にする機械です。",

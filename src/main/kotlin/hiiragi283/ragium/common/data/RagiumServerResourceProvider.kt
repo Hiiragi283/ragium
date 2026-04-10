@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.data
 
-import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.HTDynamicResourceProvider
 import hiiragi283.core.api.data.map.HTDataMapGenTask
 import hiiragi283.core.api.material.HTMaterialManager
@@ -15,11 +14,10 @@ import java.util.function.Consumer
 
 data object RagiumServerResourceProvider : HTDynamicResourceProvider.Server(RagiumAPI.MOD_ID) {
     override fun regenerateDynamicAssets(executor: Consumer<ResourceGenTask>) {
-        val materialManager: HTMaterialManager = HiiragiCoreAccess.INSTANCE.materialManager
         // Data Map
         executor.accept(object : HTDataMapGenTask<Int, Item>(RagiumDataMapTypes.DUPLICATION_COST) {
             override fun gather() {
-                for (entry: HTMaterialManager.Entry in materialManager) {
+                for (entry: HTMaterialManager.Entry in HTMaterialManager.getInstance()) {
                     // 素材のプロパティから材料を取得
                     val inputTag: TagKey<Item> = entry.getDefaultPart(entry) ?: continue
                     // 必要なマター量を取得

@@ -10,7 +10,6 @@ import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTLookupRecipeViewerType
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemFluidMultiOutputRecipe
 import hiiragi283.ragium.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
@@ -18,6 +17,7 @@ import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
@@ -80,8 +80,8 @@ object RagiumJeiRecipeTypes {
         create(RagiumRecipeLookups.MIXING, RagiumBlocks.MIXER, 18 * 9)
 
     @JvmField
-    val WASHING: HTLookupRecipeViewerType<HTItemAndFluidRecipeInput, HTItemFluidMultiOutputRecipe> =
-        create(RagiumRecipeLookups.WASHING, RagiumBlocks.WASHER, 18 * 8)
+    val WASHING: HTLookupRecipeViewerType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
+        create(RagiumRecipeLookups.WASHING, RagiumBlocks.WASHER, 18 * 7, 18 * 3)
 
     // Machine - Ultimate
     @JvmField

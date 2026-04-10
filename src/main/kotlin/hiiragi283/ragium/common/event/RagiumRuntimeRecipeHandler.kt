@@ -12,7 +12,6 @@ import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTItemFluidMultiOutputRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
@@ -255,10 +254,10 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         for ((color: HTDefaultColor, colored: HTSimpleItemHolderLike) in map) {
             val dye: HTFluidContent = HCFluids.getDye(color)
             // レシピを登録
-            HTItemFluidMultiOutputRecipeBuilder.washing(output) {
-                itemIngredient = inputCreator.create(inputTag)
-                fluidIngredient = inputCreator.create(dye, 250)
-                results += resultCreator.create(colored)
+            HTItemOrFluidRecipeBuilder.refining(output) {
+                ingredient += inputCreator.create(inputTag)
+                ingredient += inputCreator.create(dye, 250)
+                result += resultCreator.create(colored)
                 time /= 2
             }
         }

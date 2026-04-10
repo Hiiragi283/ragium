@@ -2,11 +2,11 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.recipe.builder.HTRecipeBuilder
 import hiiragi283.core.api.function.andThen
+import hiiragi283.core.api.recipe.base.HTSerializableRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
 import net.minecraft.core.Holder
 import net.minecraft.data.recipes.RecipeOutput
@@ -31,11 +31,11 @@ class HTEnchantingRecipeBuilder<ENCH : Any>(private val factory: Factory<ENCH, *
 
     override fun getPrimalId(): ResourceLocation = idFactory(enchantment)
 
-    override fun createRecipe(): HTEnchantingRecipe = factory.create(ingredient, enchantment)
+    override fun createRecipe(): HTSerializableRecipe<*> = factory.create(ingredient, enchantment)
 
     //    Factory    //
 
-    fun interface Factory<ENCH : Any, RECIPE : HTEnchantingRecipe> {
+    fun interface Factory<ENCH : Any, RECIPE : HTSerializableRecipe<*>> {
         fun create(ingredient: HTItemIngredient, enchantment: ENCH): RECIPE
     }
 }

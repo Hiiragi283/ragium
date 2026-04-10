@@ -16,7 +16,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTStorageCombiningRecipe
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemFluidMultiOutputRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
@@ -30,7 +29,6 @@ import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.ragium.impl.recipe.HTBasicItemFluidMultiOutputRecipe
 import hiiragi283.ragium.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.impl.recipe.HTCombiningRecipe
 import net.minecraft.core.registries.Registries
@@ -70,21 +68,6 @@ object RagiumRecipeSerializers {
             .fieldOf(HTConst.INGREDIENT)
             .forGetter(HTCombiningRecipe::ingredients),
         HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCombiningRecipe::result),
-        HTProcessingRecipe.timeCodec(),
-        factory::create,
-    )
-
-    @JvmStatic
-    fun <RECIPE : HTBasicItemFluidMultiOutputRecipe> itemFluidToMulti(
-        outputRange: IntRange,
-        factory: HTItemFluidMultiOutputRecipeBuilder.Factory<RECIPE>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTBasicItemFluidMultiOutputRecipe::itemIngredient),
-        HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTBasicItemFluidMultiOutputRecipe::fluidIngredient),
-        HTItemResult.CODEC
-            .listOrElement(outputRange)
-            .fieldOf(HTConst.RESULTS)
-            .forGetter(HTBasicItemFluidMultiOutputRecipe::results),
         HTProcessingRecipe.timeCodec(),
         factory::create,
     )
@@ -185,8 +168,15 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val WASHING: RecipeSerializer<HTWashingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.WASHING, itemFluidToMulti(HTWashingRecipe.OUTPUT_RANGE, ::HTWashingRecipe))
+    val WASHING: RecipeSerializer<HTWashingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.WASHING,
+        HCRecipeSerializers.singleItemToMulti(
+            HTWashingRecipe.OUTPUT_RANGE,
+            HTWashingRecipe::ingredient,
+            HTWashingRecipe::results,
+            ::HTWashingRecipe,
+        ),
+    )
 
     // Machine - Ultimate
     @JvmField

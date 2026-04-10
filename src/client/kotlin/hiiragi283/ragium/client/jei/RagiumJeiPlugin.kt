@@ -18,6 +18,7 @@ import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTPlantingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
@@ -103,7 +104,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Elite
             HTElectrolyzingRecipeCategory(guiHelper),
             HTMixingRecipeCategory(guiHelper),
-            // HTWashingRecipeCategory(guiHelper),
+            HTWashingRecipeCategory(guiHelper),
             // Machine - Ultimate
             enchanting,
             RagiumDuplicatingRecipeCategory(guiHelper),
@@ -145,7 +146,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // Machine - Elite
         registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
-        // registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
+        registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
         // Machine - Ultimate
         registration.addRecipes(RagiumJeiRecipeTypes.DUPLICATING)
         registration.addRecipes(RagiumJeiRecipeTypes.ENCHANTING)
@@ -178,7 +179,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Elite
             RagiumJeiRecipeTypes.ELECTROLYZING,
             RagiumJeiRecipeTypes.MIXING,
-            // RagiumJeiRecipeTypes.WASHING,
+            RagiumJeiRecipeTypes.WASHING,
             // Machine - Ultimate
             RagiumJeiRecipeTypes.ENCHANTING,
             RagiumJeiRecipeTypes.DUPLICATING,

@@ -17,7 +17,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTElectrolyzingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemFluidMultiOutputRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
@@ -354,16 +353,16 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // HNO3 + Paper -> Nitrocellulose
-        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
-            itemIngredient = inputCreator.create(Items.PAPER)
-            fluidIngredient = inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
-            results += resultCreator.create(RagiumItems.NITROCELLULOSE)
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(Items.PAPER)
+            ingredient += inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
+            result += resultCreator.create(RagiumItems.NITROCELLULOSE)
         }
         // HNO3 + Glycerol -> Nitroglycerin
-        HTItemFluidMultiOutputRecipeBuilder.washing(output) {
-            itemIngredient = inputCreator.create(RagiumItems.GLYCEROL_DROP)
-            fluidIngredient = inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
-            results += resultCreator.create(RagiumItems.NITROGLYCERIN)
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(RagiumItems.GLYCEROL_DROP)
+            ingredient += inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
+            result += resultCreator.create(RagiumItems.NITROGLYCERIN)
         }
         // Nitrocellulose + Nitroglycerin -> Smokeless Powder
         HTShapelessRecipeBuilder.create(output) {
