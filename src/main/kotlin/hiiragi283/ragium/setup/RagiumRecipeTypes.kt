@@ -49,6 +49,9 @@ object RagiumRecipeTypes {
 
     // Machine - Elite
     @JvmField
+    val CHEMICAL_WASHING: Supplier<RecipeType<HTItemOrFluidRecipe.Serializable>> = REGISTER.registerType(RagiumConst.CHEMICAL_WASHING)
+
+    @JvmField
     val ELECTROLYZING: Supplier<RecipeType<HTElectrolyzingRecipe>> = REGISTER.registerType(RagiumConst.ELECTROLYZING)
 
     @JvmField

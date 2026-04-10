@@ -158,7 +158,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun slime() {
         // Slimeball + H2O -> NaOH aq
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(Items.SLIME_BALL)
             ingredient += inputCreator.water()
             result += resultCreator.create(RagiumFluids.NAOH_SOLUTION)
@@ -249,7 +249,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_from_naphtha"
         }
         // Polymer Resin + Water -> Plastic
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.water(250)
             ingredient += inputCreator.create(HCItems.POLYMER_RESIN)
             result += resultCreator.material(CommonParts.PLATE, CommonMaterialKeys.PLASTIC, 2)
@@ -275,7 +275,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_from_crimson_stem"
         }
         // Crimson Dust + Lava -> Blaze Powder
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL)
             ingredient += inputCreator.lava(250)
 
@@ -293,7 +293,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_from_warped_stem"
         }
         // Warped Dust + Lava -> Ender Pearl
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL)
             ingredient += inputCreator.lava(250)
 
@@ -353,13 +353,13 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // HNO3 + Paper -> Nitrocellulose
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(Items.PAPER)
             ingredient += inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
             result += resultCreator.create(RagiumItems.NITROCELLULOSE)
         }
         // HNO3 + Glycerol -> Nitroglycerin
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(RagiumItems.GLYCEROL_DROP)
             ingredient += inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
             result += resultCreator.create(RagiumItems.NITROGLYCERIN)

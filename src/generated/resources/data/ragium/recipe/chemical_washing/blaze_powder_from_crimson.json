@@ -1,15 +1,15 @@
 {
-  "type": "ragium:refining",
+  "type": "ragium:chemical_washing",
   "fluid_ingredient": {
     "amount": 250,
     "fluids": "#c:lava"
   },
   "item_ingredient": {
     "amount": 1,
-    "items": "#c:dusts/warped_crystal"
+    "items": "#c:dusts/crimson_crystal"
   },
   "item_result": {
-    "id": "minecraft:ender_pearl"
+    "id": "minecraft:blaze_powder"
   },
   "time": 200
 }

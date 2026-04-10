@@ -144,6 +144,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeLookups.PYROLYZING, "熱分解")
         add(RagiumRecipeLookups.REFINING, "精製")
 
+        add(RagiumRecipeLookups.CHEMICAL_WASHING, "化学洗浄")
         add(RagiumRecipeLookups.ELECTROLYZING, "電気分解")
         add(RagiumRecipeLookups.MIXING, "混合")
         add(RagiumRecipeLookups.WASHING, "洗浄")

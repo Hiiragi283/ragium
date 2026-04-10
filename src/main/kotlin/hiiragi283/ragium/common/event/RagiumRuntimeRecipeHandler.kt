@@ -231,14 +231,14 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             }.forEach { (before: HTSimpleItemHolderLike, after: HTSimpleItemHolderLike) ->
                 // レシピを登録
                 // Oxidization
-                HTItemOrFluidRecipeBuilder.refining(output) {
+                HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
                     ingredient += inputCreator.create(before)
                     ingredient += inputCreator.create(RagiumFluids.OXYGEN, 250)
                     result += resultCreator.create(after)
                     recipeId suffix "_from_${before.path}"
                 }
                 // Reduction
-                HTItemOrFluidRecipeBuilder.refining(output) {
+                HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
                     ingredient += inputCreator.create(after)
                     ingredient += inputCreator.create(RagiumFluids.HYDROGEN, 250)
                     result += resultCreator.create(before)

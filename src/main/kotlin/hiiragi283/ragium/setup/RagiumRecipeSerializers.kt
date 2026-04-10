@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
@@ -140,6 +141,10 @@ object RagiumRecipeSerializers {
         REGISTER.registerSerializer(RagiumConst.REFINING, itemOrFluid(::HTRefiningRecipe))
 
     // Machine - Elite
+    @JvmField
+    val CHEMICAL_WASHING: RecipeSerializer<HTChemicalWashingRecipe> =
+        REGISTER.registerSerializer(RagiumConst.CHEMICAL_WASHING, itemOrFluid(::HTChemicalWashingRecipe))
+
     @JvmField
     val ELECTROLYZING: RecipeSerializer<HTElectrolyzingRecipe> = REGISTER.registerSerializer(
         RagiumConst.ELECTROLYZING,

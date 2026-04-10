@@ -208,7 +208,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // レシピを登録
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(crushedPrefix, entry)
-            ingredient += inputCreator.water(125)
+            ingredient += inputCreator.create(RagiumFluids.STEAM, 250)
             result += resultCreator.create(resultItem)
             time /= 2
             recipeId suffix "from_${crushedPart.asPartName()}"
@@ -238,7 +238,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             recipeId suffix "_from_crushed_ore/water"
         }
         // 硫酸 -> 1.5x 主産物
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
             // 材料
             ingredient += inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
             ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)

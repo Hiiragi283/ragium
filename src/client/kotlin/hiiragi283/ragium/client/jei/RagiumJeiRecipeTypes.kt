@@ -72,6 +72,10 @@ object RagiumJeiRecipeTypes {
 
     // Machine - Elite
     @JvmField
+    val CHEMICAL_WASHING: HTLookupRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> =
+        create(RagiumRecipeLookups.CHEMICAL_WASHING, RagiumBlocks.REFINERY, 18 * 8)
+
+    @JvmField
     val ELECTROLYZING: HTLookupRecipeViewerType<HTSingleFluidRecipeInput, HTElectrolyzingRecipe> =
         create(RagiumRecipeLookups.ELECTROLYZING, RagiumBlocks.MIXER, 18 * 7)
 

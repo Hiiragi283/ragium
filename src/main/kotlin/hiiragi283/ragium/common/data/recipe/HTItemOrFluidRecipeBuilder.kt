@@ -10,6 +10,7 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.util.Ior
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.data.holder.HTIorHolder
+import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.minecraft.data.recipes.RecipeOutput
@@ -17,6 +18,11 @@ import net.minecraft.resources.ResourceLocation
 
 class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>) : HTProcessingRecipeBuilder(prefix) {
     companion object {
+        @JvmStatic
+        inline fun chemicalWashing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
+            HTItemOrFluidRecipeBuilder(RagiumConst.CHEMICAL_WASHING, ::HTChemicalWashingRecipe).apply(builderAction).save(output)
+        }
+
         @JvmStatic
         inline fun pyrolyzing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
             HTItemOrFluidRecipeBuilder(RagiumConst.PYROLYZING, ::HTPyrolyzingRecipe)

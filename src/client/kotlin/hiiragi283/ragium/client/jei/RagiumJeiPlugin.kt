@@ -57,6 +57,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         lateinit var refining: HTItemOrFluidRecipeCategory
             private set
 
+        @JvmStatic
+        lateinit var chemicalWashing: HTItemOrFluidRecipeCategory
+            private set
+
         // Other
         @JvmStatic
         lateinit var enchanting: HTEnchantingRecipeCategory
@@ -102,6 +106,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             pyrolyzing,
             refining,
             // Machine - Elite
+            chemicalWashing,
             HTElectrolyzingRecipeCategory(guiHelper),
             HTMixingRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
@@ -127,9 +132,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
         pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
         refining = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.REFINING)
+        chemicalWashing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CHEMICAL_WASHING)
 
         pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         refining.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
+        chemicalWashing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
@@ -144,6 +151,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING)
         registration.addRecipes(RagiumJeiRecipeTypes.REFINING)
         // Machine - Elite
+        registration.addRecipes(RagiumJeiRecipeTypes.CHEMICAL_WASHING)
         registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING)
         registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
         registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
@@ -177,6 +185,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumJeiRecipeTypes.PYROLYZING,
             RagiumJeiRecipeTypes.REFINING,
             // Machine - Elite
+            RagiumJeiRecipeTypes.CHEMICAL_WASHING,
             RagiumJeiRecipeTypes.ELECTROLYZING,
             RagiumJeiRecipeTypes.MIXING,
             RagiumJeiRecipeTypes.WASHING,
