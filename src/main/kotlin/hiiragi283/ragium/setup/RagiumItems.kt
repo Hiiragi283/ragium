@@ -18,6 +18,7 @@ import hiiragi283.ragium.common.item.HTLootTicketItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.storge.energy.HTInfiniteEnergyBattery
 import hiiragi283.ragium.common.storge.fluid.HTInfiniteItemFluidTank
+import hiiragi283.ragium.common.storge.fluid.HTVoidItemFluidTank
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
@@ -172,6 +173,7 @@ object RagiumItems {
             },
             RagiumBlocks.TANK,
         )
+        HTFluidCapabilities.registerItemTank(event, ::HTVoidItemFluidTank, RagiumBlocks.VOID_TANK)
         HTFluidCapabilities.registerItemTank(event, ::HTInfiniteItemFluidTank, RagiumBlocks.CREATIVE_TANK)
 
         // Energy

@@ -11,15 +11,16 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.data.RagiumClientResourceProvider
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
+import hiiragi283.ragium.client.render.HTTankRenderer
 import hiiragi283.ragium.client.render.block.HTCrateRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
-import hiiragi283.ragium.client.render.block.HTTankRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumWidgetTypes
 import net.mehvahdjukaar.moonlight.api.platform.RegHelper
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
@@ -31,6 +32,7 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
 import java.awt.Color
@@ -90,6 +92,18 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
+        registerFluidExtensions(event)
+
+        event.registerItem(
+            object : IClientItemExtensions {
+                override fun getCustomRenderer(): BlockEntityWithoutLevelRenderer = HTTankRenderer.ItemRenderer
+            },
+            RagiumBlocks.TANK.asItem(),
+            RagiumBlocks.CREATIVE_TANK.asItem(),
+        )
+    }
+
+    private fun registerFluidExtensions(event: RegisterClientExtensionsEvent) {
         // Overworld
         event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
         event.clear(RagiumFluids.STEAM, Color(0xcccccc))
@@ -128,8 +142,8 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         // Block Entity
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankRenderer)
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), HTTankRenderer::BlockRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), HTTankRenderer::BlockRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CRATE.get(), ::HTCrateRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_CRATE.get(), ::HTCrateRenderer)

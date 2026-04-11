@@ -58,12 +58,13 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
                         .fixedBlockTexture("top", block),
                 ).build()
         }
-        simpleBlockAndItem(RagiumBlocks.TANK, tankFactory)
+        simpleBlockAndItem(RagiumBlocks.TANK, tankFactory, itemFactory = { builtIn })
         simpleBlockAndItem(RagiumBlocks.VOID_TANK, tankFactory)
-        altModelBlock(RagiumBlocks.CREATIVE_TANK, id = RagiumBlocks.TANK.blockId)
+        simpleBlockAndItem(RagiumBlocks.CREATIVE_TANK, models().getExistingFile(RagiumBlocks.TANK.blockId), builtIn)
 
-        altModelBlock(RagiumBlocks.CRATE)
-        altModelBlock(RagiumBlocks.CREATIVE_CRATE, id = RagiumBlocks.CRATE.blockId)
+        val crateModel: ModelFile.ExistingModelFile = models().getExistingFile(RagiumBlocks.CRATE.blockId)
+        simpleBlockAndItem(RagiumBlocks.CRATE, crateModel, builtIn)
+        simpleBlockAndItem(RagiumBlocks.CREATIVE_CRATE, crateModel, builtIn)
 
         layeredBlock(
             RagiumBlocks.UNIVERSAL_CHEST,
