@@ -41,7 +41,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         // Blueprint
         HTItemOrFluidRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(Items.PAPER)
-            ingredient += inputCreator.create(HCFluids.getDye(HTDefaultColor.BLUE), 250)
+            ingredient += inputCreator.create(HCFluids.DyeContents[HTDefaultColor.BLUE], 250)
 
             result += resultCreator.create(HCItems.BLUEPRINT)
         }

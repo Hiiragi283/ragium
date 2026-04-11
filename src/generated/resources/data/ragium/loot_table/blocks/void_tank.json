@@ -18,7 +18,6 @@
                 "minecraft:custom_name",
                 "minecraft:enchantments",
                 "minecraft:hide_additional_tooltip",
-                "ragium:machine_upgrades",
                 "ragium:capacity_scale",
                 "hiiragi_core:fluid"
               ],

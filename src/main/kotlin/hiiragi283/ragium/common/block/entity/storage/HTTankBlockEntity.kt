@@ -9,7 +9,6 @@ import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.fluid.HTMutableFluidTank
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.HTItemResourceType
@@ -24,6 +23,8 @@ import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.impl.storage.fluid.HTFluidStackResourceSlot
+import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -31,12 +32,14 @@ import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidActionResult
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidUtil
+import net.neoforged.neoforge.fluids.SimpleFluidContent
 import java.util.function.Predicate
 
 /**
@@ -46,7 +49,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     HTStorageBlockEntity(type, pos, state) {
     constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.TANK, pos, state)
 
-    lateinit var tank: HTMutableFluidTank
+    lateinit var tank: HTFluidStackResourceSlot
         private set
 
     final override fun createFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
@@ -59,7 +62,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         return builder.build()
     }
 
-    protected open fun createTank(listener: HTContentListener): HTMutableFluidTank =
+    protected open fun createTank(listener: HTContentListener): HTFluidStackResourceSlot =
         HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
 
     final override fun getAmountView(): HTAmountView = tank
@@ -125,6 +128,19 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     //    Sync    //
+
+    override fun applyImplicitComponents(componentInput: DataComponentInput) {
+        super.applyImplicitComponents(componentInput)
+        componentInput.get(HCDataComponents.FLUID)?.copy()?.let(tank::setStack)
+    }
+
+    override fun collectImplicitComponents(builder: DataComponentMap.Builder) {
+        super.collectImplicitComponents(builder)
+        val content: SimpleFluidContent = tank.getStack().let(SimpleFluidContent::copyOf)
+        if (!content.isEmpty) {
+            builder.set(HCDataComponents.FLUID, content)
+        }
+    }
 
     override fun initReducedUpdateTag(output: HTValueOutput) {
         super.initReducedUpdateTag(output)

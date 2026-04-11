@@ -2,7 +2,6 @@ package hiiragi283.ragium.setup
 
 import com.google.common.primitives.Ints
 import hiiragi283.core.api.serialization.codec.BiCodecs
-import hiiragi283.core.api.storage.attachments.HTAttachedItems
 import hiiragi283.core.common.registry.register.HTDeferredDataComponentRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
@@ -31,9 +30,6 @@ object RagiumDataComponents {
 
     @JvmField
     val LOOT_TICKET: DataComponentType<HTLootTicketTargets> = REGISTER.registerType("loot_ticket", HTLootTicketTargets.CODEC)
-
-    @JvmField
-    val MACHINE_UPGRADES: DataComponentType<HTAttachedItems> = REGISTER.registerType("machine_upgrades", HTAttachedItems.CODEC)
 
     @JvmField
     val SPAWNER_MOB: DataComponentType<HTSpawnerMob> = REGISTER.registerType("spawner_mob", HTSpawnerMob.CODEC)

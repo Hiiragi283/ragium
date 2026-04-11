@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.event
 
 import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.VanillaColoredContents
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
@@ -8,7 +9,6 @@ import hiiragi283.core.api.registry.HTSimpleHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.registry.getDataSequence
 import hiiragi283.core.api.registry.toItemLike
-import hiiragi283.core.common.material.ColoredMaterials
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -171,8 +171,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
 
     @JvmStatic
     private fun cutBedToPlanks() {
-        for ((color: HTDefaultColor, bed: HTSimpleItemHolderLike) in ColoredMaterials.BED) {
-            val wool: HTSimpleItemHolderLike = ColoredMaterials.WOOL[color] ?: continue
+        for ((color: HTDefaultColor, bed: HTSimpleItemHolderLike) in VanillaColoredContents.BED) {
+            val wool: HTSimpleItemHolderLike = VanillaColoredContents.WOOL[color] ?: continue
             RagiumRecipeBuilder.cutting(output) {
                 ingredient = inputCreator.create(bed)
                 results += resultCreator.create(wool, 3)

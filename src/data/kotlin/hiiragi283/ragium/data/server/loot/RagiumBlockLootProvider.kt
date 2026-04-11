@@ -35,14 +35,12 @@ class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTa
                             include(DataComponents.CUSTOM_NAME)
                             include(DataComponents.ENCHANTMENTS)
                             include(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
-
-                            include(RagiumDataComponents.MACHINE_UPGRADES)
                             when (block) {
                                 is HTStorageBlock -> include(RagiumDataComponents.CAPACITY_SCALE)
                             }
                             when (block) {
                                 is HTBatteryBlock -> include(HCDataComponents.ENERGY)
-                                is HTCrateBlock -> include(HCDataComponents.ITEM)
+                                is HTCrateBlock -> include(DataComponents.CONTAINER)
                                 is HTTankBlock -> include(HCDataComponents.FLUID)
                             }
                         }
