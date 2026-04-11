@@ -4,13 +4,11 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTSimpleHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.registry.getDataSequence
 import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.core.common.material.ColoredMaterials
-import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -19,8 +17,6 @@ import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry
 import net.minecraft.core.registries.Registries
-import net.minecraft.tags.ItemTags
-import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -45,11 +41,6 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
 
         waxing()
         redox()
-
-        dyesToColor(ItemTags.BANNERS, ColoredMaterials.BANNER)
-        dyesToColor(ItemTags.BEDS, ColoredMaterials.BED)
-        dyesToColor(ItemTags.WOOL_CARPETS, ColoredMaterials.CARPET)
-        dyesToColor(ItemTags.WOOL, ColoredMaterials.WOOL)
     }
 
     //    Cutting    //
@@ -245,21 +236,5 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                     recipeId suffix "_from_${after.path}"
                 }
             }
-    }
-
-    //    Washing    //
-
-    @JvmStatic
-    private fun dyesToColor(inputTag: TagKey<Item>, map: Map<HTDefaultColor, HTSimpleItemHolderLike>) {
-        for ((color: HTDefaultColor, colored: HTSimpleItemHolderLike) in map) {
-            val dye: HTFluidContent = HCFluids.getDye(color)
-            // レシピを登録
-            HTItemOrFluidRecipeBuilder.refining(output) {
-                ingredient += inputCreator.create(inputTag)
-                ingredient += inputCreator.create(dye, 250)
-                result += resultCreator.create(colored)
-                time /= 2
-            }
-        }
     }
 }

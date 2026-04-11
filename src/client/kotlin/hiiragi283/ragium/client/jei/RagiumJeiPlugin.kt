@@ -3,9 +3,11 @@ package hiiragi283.ragium.client.jei
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.client.jei.HCJeiRecipeTypes
+import hiiragi283.core.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.core.client.jei.category.base.HTDoubleMultiOutputRecipeCategory
 import hiiragi283.core.client.jei.category.base.HTSingleMultiOutputRecipeCategory
 import hiiragi283.core.client.jei.extension.HTBasicDoubleMultiOutputRecipeCategoryExtension
+import hiiragi283.core.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.core.client.jei.extension.HTBasicSingleMultiOutputRecipeCategoryExtension
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
@@ -14,13 +16,11 @@ import hiiragi283.ragium.client.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTElectrolyzingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTPlantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
-import hiiragi283.ragium.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents

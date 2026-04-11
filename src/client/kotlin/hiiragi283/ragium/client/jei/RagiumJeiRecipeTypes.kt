@@ -3,6 +3,7 @@ package hiiragi283.ragium.client.jei
 import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.base.HTDoubleMultiOutputRecipe
+import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
@@ -10,7 +11,6 @@ import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.api.recipe.viewer.HTLookupRecipeViewerType
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
