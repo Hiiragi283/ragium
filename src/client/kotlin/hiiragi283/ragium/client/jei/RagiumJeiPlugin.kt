@@ -22,6 +22,7 @@ import hiiragi283.ragium.client.jei.category.HTPlantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.client.jei.category.RagiumDuplicatingRecipeCategory
 import hiiragi283.ragium.client.jei.extension.HTHolderEnchantingRecipeCategoryExtension
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -96,8 +97,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         registration.addRecipeCategories(
             // Machine - Basic
-            HTCombiningRecipeCategory(3, guiHelper, RagiumJeiRecipeTypes.ALLOYING),
-            HTCombiningRecipeCategory(2, guiHelper, RagiumJeiRecipeTypes.ASSEMBLING),
+            HTCombiningRecipeCategory(3, guiHelper, RagiumRecipeViewerTypes.ALLOYING),
+            HTCombiningRecipeCategory(2, guiHelper, RagiumRecipeViewerTypes.ASSEMBLING),
             cutting,
             planting,
             // Machine - Advanced
@@ -130,9 +131,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     private fun initItemOrFluid(guiHelper: IGuiHelper, manager: IIngredientManager) {
-        pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.PYROLYZING)
-        refining = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.REFINING)
-        chemicalWashing = HTItemOrFluidRecipeCategory(guiHelper, RagiumJeiRecipeTypes.CHEMICAL_WASHING)
+        pyrolyzing = HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PYROLYZING)
+        refining = HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.REFINING)
+        chemicalWashing = HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_WASHING)
 
         pyrolyzing.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
         refining.addExtension(HTBasicItemOrFluidRecipeCategoryExtension())
@@ -141,23 +142,23 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
     override fun registerRecipes(registration: IRecipeRegistration) {
         // Machine - Basic
-        registration.addRecipes(RagiumJeiRecipeTypes.ALLOYING)
-        registration.addRecipes(RagiumJeiRecipeTypes.ASSEMBLING)
-        registration.addRecipes(RagiumJeiRecipeTypes.CUTTING)
-        registration.addRecipes(RagiumJeiRecipeTypes.PLANTING)
+        registration.addRecipes(RagiumRecipeViewerTypes.ALLOYING)
+        registration.addRecipes(RagiumRecipeViewerTypes.ASSEMBLING)
+        registration.addRecipes(RagiumRecipeViewerTypes.CUTTING)
+        registration.addRecipes(RagiumRecipeViewerTypes.PLANTING)
         // Machine - Advanced
-        registration.addRecipes(RagiumJeiRecipeTypes.FREEZING)
-        registration.addRecipes(RagiumJeiRecipeTypes.MELTING)
-        registration.addRecipes(RagiumJeiRecipeTypes.PYROLYZING)
-        registration.addRecipes(RagiumJeiRecipeTypes.REFINING)
+        registration.addRecipes(RagiumRecipeViewerTypes.FREEZING)
+        registration.addRecipes(RagiumRecipeViewerTypes.MELTING)
+        registration.addRecipes(RagiumRecipeViewerTypes.PYROLYZING)
+        registration.addRecipes(RagiumRecipeViewerTypes.REFINING)
         // Machine - Elite
-        registration.addRecipes(RagiumJeiRecipeTypes.CHEMICAL_WASHING)
-        registration.addRecipes(RagiumJeiRecipeTypes.ELECTROLYZING)
-        registration.addRecipes(RagiumJeiRecipeTypes.MIXING)
-        registration.addRecipes(RagiumJeiRecipeTypes.WASHING)
+        registration.addRecipes(RagiumRecipeViewerTypes.CHEMICAL_WASHING)
+        registration.addRecipes(RagiumRecipeViewerTypes.ELECTROLYZING)
+        registration.addRecipes(RagiumRecipeViewerTypes.MIXING)
+        registration.addRecipes(RagiumRecipeViewerTypes.WASHING)
         // Machine - Ultimate
-        registration.addRecipes(RagiumJeiRecipeTypes.DUPLICATING)
-        registration.addRecipes(RagiumJeiRecipeTypes.ENCHANTING)
+        registration.addRecipes(RagiumRecipeViewerTypes.DUPLICATING)
+        registration.addRecipes(RagiumRecipeViewerTypes.ENCHANTING)
         // Device
     }
 
@@ -182,23 +183,23 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         registration.addRecipeCatalysts(
             // Machine - Basic
-            RagiumJeiRecipeTypes.ALLOYING,
-            RagiumJeiRecipeTypes.ASSEMBLING,
-            RagiumJeiRecipeTypes.CUTTING,
-            RagiumJeiRecipeTypes.PLANTING,
+            RagiumRecipeViewerTypes.ALLOYING,
+            RagiumRecipeViewerTypes.ASSEMBLING,
+            RagiumRecipeViewerTypes.CUTTING,
+            RagiumRecipeViewerTypes.PLANTING,
             // Machine - Advanced
-            RagiumJeiRecipeTypes.FREEZING,
-            RagiumJeiRecipeTypes.MELTING,
-            RagiumJeiRecipeTypes.PYROLYZING,
-            RagiumJeiRecipeTypes.REFINING,
+            RagiumRecipeViewerTypes.FREEZING,
+            RagiumRecipeViewerTypes.MELTING,
+            RagiumRecipeViewerTypes.PYROLYZING,
+            RagiumRecipeViewerTypes.REFINING,
             // Machine - Elite
-            RagiumJeiRecipeTypes.CHEMICAL_WASHING,
-            RagiumJeiRecipeTypes.ELECTROLYZING,
-            RagiumJeiRecipeTypes.MIXING,
-            RagiumJeiRecipeTypes.WASHING,
+            RagiumRecipeViewerTypes.CHEMICAL_WASHING,
+            RagiumRecipeViewerTypes.ELECTROLYZING,
+            RagiumRecipeViewerTypes.MIXING,
+            RagiumRecipeViewerTypes.WASHING,
             // Machine - Ultimate
-            RagiumJeiRecipeTypes.ENCHANTING,
-            RagiumJeiRecipeTypes.DUPLICATING,
+            RagiumRecipeViewerTypes.ENCHANTING,
+            RagiumRecipeViewerTypes.DUPLICATING,
             // Device
         )
     }

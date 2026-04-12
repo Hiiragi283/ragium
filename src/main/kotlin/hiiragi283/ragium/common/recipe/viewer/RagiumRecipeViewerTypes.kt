@@ -1,4 +1,4 @@
-package hiiragi283.ragium.client.jei
+package hiiragi283.ragium.common.recipe.viewer
 
 import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.recipe.HTRecipeType
@@ -27,7 +27,7 @@ import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.ItemLike
 
-object RagiumJeiRecipeTypes {
+object RagiumRecipeViewerTypes {
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Any> create(
         recipeType: HTRecipeType<INPUT, RECIPE>,

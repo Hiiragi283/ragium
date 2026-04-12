@@ -4,8 +4,8 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.category.HTLookupRecipeCategory
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
-import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.client.jei.extension.HTEnchantingRecipeCategoryExtension
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -13,7 +13,7 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
-    HTLookupRecipeCategory<HTEnchantingRecipe>(guiHelper, RagiumJeiRecipeTypes.ENCHANTING) {
+    HTLookupRecipeCategory<HTEnchantingRecipe>(guiHelper, RagiumRecipeViewerTypes.ENCHANTING) {
     private val extensions: MutableMap<Class<out HTEnchantingRecipe>, HTEnchantingRecipeCategoryExtension<*>> = hashMapOf()
 
     inline fun <reified RECIPE : HTEnchantingRecipe> addExtension(extension: HTEnchantingRecipeCategoryExtension<RECIPE>) {

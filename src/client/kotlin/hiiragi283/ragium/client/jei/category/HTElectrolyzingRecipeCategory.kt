@@ -5,15 +5,15 @@ import hiiragi283.core.api.integration.jei.addFluidIngredient
 import hiiragi283.core.api.integration.jei.addFluidResult
 import hiiragi283.core.api.integration.jei.addItemResult
 import hiiragi283.core.api.integration.jei.category.HTLookupRecipeCategory
-import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class HTElectrolyzingRecipeCategory(guiHelper: IGuiHelper) :
-    HTLookupRecipeCategory<HTElectrolyzingRecipe>(guiHelper, RagiumJeiRecipeTypes.ELECTROLYZING) {
+    HTLookupRecipeCategory<HTElectrolyzingRecipe>(guiHelper, RagiumRecipeViewerTypes.ELECTROLYZING) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTElectrolyzingRecipe, focuses: IFocusGroup) {
         // input
         builder

@@ -5,8 +5,8 @@ import hiiragi283.core.api.integration.jei.addFluidIngredient
 import hiiragi283.core.api.integration.jei.addItemIngredient
 import hiiragi283.core.api.integration.jei.category.HTLookupRecipeCategory
 import hiiragi283.core.api.recipe.HTRecipeHolder
-import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.IRecipeSlotDrawable
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -14,7 +14,7 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class RagiumDuplicatingRecipeCategory(guiHelper: IGuiHelper) :
-    HTLookupRecipeCategory<RagiumDuplicatingRecipe>(guiHelper, RagiumJeiRecipeTypes.DUPLICATING) {
+    HTLookupRecipeCategory<RagiumDuplicatingRecipe>(guiHelper, RagiumRecipeViewerTypes.DUPLICATING) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RagiumDuplicatingRecipe, focuses: IFocusGroup) {
         // inputs
         builder

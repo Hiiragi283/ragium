@@ -6,8 +6,8 @@ import hiiragi283.core.api.integration.jei.addItemIngredient
 import hiiragi283.core.api.integration.jei.addItemResult
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.client.jei.category.base.HTMultiOutputRecipeCategory
-import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -15,7 +15,7 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class HTWashingRecipeCategory(guiHelper: IGuiHelper) :
-    HTMultiOutputRecipeCategory<HTWashingRecipe>(guiHelper, RagiumJeiRecipeTypes.WASHING, 4) {
+    HTMultiOutputRecipeCategory<HTWashingRecipe>(guiHelper, RagiumRecipeViewerTypes.WASHING, 4) {
     override fun getOutputPos(index: Int): Pair<Int, Int> = getPosition(5 + index % 2) to getPosition(0.5 + index / 2)
 
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTWashingRecipe, focuses: IFocusGroup) {

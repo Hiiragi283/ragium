@@ -4,15 +4,15 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addFluidResult
 import hiiragi283.core.api.integration.jei.addItemIngredient
 import hiiragi283.core.api.integration.jei.category.HTLookupRecipeCategory
-import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class HTMeltingRecipeCategory(guiHelper: IGuiHelper) :
-    HTLookupRecipeCategory<HTMeltingRecipe>(guiHelper, RagiumJeiRecipeTypes.MELTING) {
+    HTLookupRecipeCategory<HTMeltingRecipe>(guiHelper, RagiumRecipeViewerTypes.MELTING) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTMeltingRecipe, focuses: IFocusGroup) {
         // input
         builder

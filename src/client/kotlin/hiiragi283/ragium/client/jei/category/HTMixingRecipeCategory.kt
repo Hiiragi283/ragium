@@ -8,14 +8,14 @@ import hiiragi283.core.api.integration.jei.addItemResult
 import hiiragi283.core.api.integration.jei.category.HTLookupRecipeCategory
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.ragium.client.jei.RagiumJeiRecipeTypes
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTMixingRecipeCategory(guiHelper: IGuiHelper) : HTLookupRecipeCategory<HTMixingRecipe>(guiHelper, RagiumJeiRecipeTypes.MIXING) {
+class HTMixingRecipeCategory(guiHelper: IGuiHelper) : HTLookupRecipeCategory<HTMixingRecipe>(guiHelper, RagiumRecipeViewerTypes.MIXING) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTMixingRecipe, focuses: IFocusGroup) {
         // inputs
         val (item: HTItemIngredient?, fluids: List<HTFluidIngredient>?) = recipe.ingredient.toPair()
