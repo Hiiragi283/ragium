@@ -1,3 +1,4 @@
+import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.slf4j.event.Level
@@ -10,6 +11,7 @@ plugins {
     alias(libs.plugins.ktlint)
 
     alias(libs.plugins.axion.release)
+    alias(libs.plugins.maven.publish)
 }
 
 val modId = "ragium"
@@ -273,8 +275,7 @@ val generateModMetadata: TaskProvider<ProcessResources> = tasks.register("genera
         "mod_license" to "MPL-2.0",
         "mod_version" to version.toString(),
         "mod_authors" to "Hiiragi283",
-        "mod_description" to
-            "Ragium is a tech mod based on vanilla materials. This mod aims to expand vanilla features and automate many work.",
+        "mod_description" to "A simple tech mod for vanilla expansion and automation",
     )
     inputs.properties(replaceProperties)
     expand(replaceProperties)
@@ -290,19 +291,37 @@ sourceSets.main
 // To avoid having to run "generateModMetadata" manually, make it run on every project reload
 neoForge.ideSyncTask(generateModMetadata)
 
-// Example configuration to allow publishing using the maven-publish plugin
-/*publishing {
-    publications {
-        register("mavenJava", MavenPublication) {
-            from(components.java)
+pluginManager.withPlugin("com.vanniktech.maven.publish") {
+    extensions.configure<MavenPublishBaseExtension> {
+        publishToMavenCentral()
+        signAllPublications()
+        pom {
+            name = "Ragium"
+            description = "A simple tech mod for vanilla expansion and automation"
+            inceptionYear = "2026"
+            url = "https://github.com/Hiiragi283/ragium"
+            scm {
+                connection = "scm:git:git://github.com/Hiiragi283/ragium.git"
+                developerConnection = "scm:git:git://github.com/Hiiragi283/ragium.git"
+                url = "https://github.com/Hiiragi283/ragium"
+            }
+            licenses {
+                license {
+                    name = "MPL-2.0"
+                    url = "https://www.mozilla.org/en-US/MPL/2.0/"
+                }
+            }
+            developers {
+                developer {
+                    id = "hiiragi283"
+                    name = "Hiiragi Tsubasa"
+                    email = "silvengater@gmail.com"
+                    url = "https://github.com/Hiiragi283/"
+                }
+            }
         }
     }
-    repositories {
-        maven {
-            url("file://${project.projectDir}/repo")
-        }
-    }
-}*/
+}
 
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
 idea {
