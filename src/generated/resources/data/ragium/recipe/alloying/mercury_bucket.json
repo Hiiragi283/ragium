@@ -1,0 +1,20 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 8,
+      "items": [
+        "#c:dusts/cinnabar",
+        "#c:gems/cinnabar"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": "#c:buckets/empty"
+    }
+  ],
+  "result": {
+    "id": "ragium:mercury_bucket"
+  },
+  "time": 200
+}

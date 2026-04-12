@@ -5,50 +5,67 @@ import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.data.server.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, RagiumAPI.MOD_ID, HTLangTypes.EN_US) {
     override fun addTranslations() {
         RagiumCommonTranslation.addTranslations(this)
 
+        // Advancement
+        add(RagiumAdvancementKeys.ROOT, "Ragium", "Welcome to Ragium!")
+
+        add(RagiumAdvancementKeys.RAGI_ALLOY, "0xFF003f", "Get Ragi-Alloy Ingot")
+        add(RagiumAdvancementKeys.ALLOY_SMELTER, "Al-Chemistry", "Get Alloy Smelter")
+
+        add(RagiumAdvancementKeys.THERMOMETER, "Heat And Cool", "Get Thermometer")
+        add(RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY, "Maybe Red", "Get Advanced Ragi-Alloy Ingot")
+        add(RagiumAdvancementKeys.REFINERY, "A BC is DEFinitely Good", "Get Refinery")
+        add(RagiumAdvancementKeys.PLASTIC, "Plus-TiC", "Get Plastic Sheet")
+        add(RagiumAdvancementKeys.REFINED_SILICON, "Refined Silicon", "Get Silicon Dust")
+        add(RagiumAdvancementKeys.PYROLYZER, "Electric Coke Oven", "Get Pyrolyzer")
+        add(RagiumAdvancementKeys.CRIMSON_CRYSTAL, "Chao!", "Get Crimson Crystal")
+        add(RagiumAdvancementKeys.WARPED_CRYSTAL, "Stabilized Warp", "Get Warped Crystal")
+
+        add(RagiumAdvancementKeys.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
+        add(RagiumAdvancementKeys.STAINLESS_STEEL, "Not a HV Age", "Get Stainless Steel Ingot")
+        add(RagiumAdvancementKeys.ELECTRIC_CIRCUIT, "PCB: Pretty Cool Board", "Get Electric Circuit")
+        add(RagiumAdvancementKeys.BREWERY, "Automatic Brewing", "Get Brewery")
+        add(RagiumAdvancementKeys.MIXER, "Best Match!", "Get Mixer")
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "Bone with Meat")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
 
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
-        add(RagiumBlocks.BENDING_MACHINE, "Bending Machine")
-        add(RagiumBlocks.COMPRESSOR, "Compressor")
+        add(RagiumBlocks.ASSEMBLER, "Assembler")
+        add(RagiumBlocks.AUTO_CHISEL, "Auto Chisel")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")
-        add(RagiumBlocks.FORMING_PRESS, "Forming Press")
-        add(RagiumBlocks.LATHE, "Lathe")
-        add(RagiumBlocks.WIREMILL, "Wiremill")
-
-        add(RagiumBlocks.MELTER, "Melter")
-        add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
+        add(RagiumBlocks.PLANTER, "Planter")
 
         add(RagiumBlocks.FREEZER, "Freezer")
+        add(RagiumBlocks.MELTER, "Melter")
+        add(RagiumBlocks.PYROLYZER, "Pyrolyzer")
+        add(RagiumBlocks.REFINERY, "Refinery")
 
-        add(RagiumBlocks.CANNING_MACHINE, "Canning Machine")
+        add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.MIXER, "Mixer")
         add(RagiumBlocks.WASHER, "Washer")
 
-        add(RagiumBlocks.PLANTER, "Planter")
-
         add(RagiumBlocks.ENCHANTER, "Enchanter")
+
+        add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
 
         add(RagiumBlocks.BATTERY, "Variable Battery")
         add(RagiumBlocks.CRATE, "Variable Crate")
         add(RagiumBlocks.TANK, "Variable Tank")
-        add(RagiumBlocks.RESONANT_INTERFACE, "Resonant Interface")
-        add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
+
+        add(RagiumBlocks.VOID_TANK, "Void Tank")
 
         add(RagiumBlocks.IMITATION_SPAWNER, "Imitation Spawner")
 
@@ -56,87 +73,87 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
         // Fluid
-        addFluid(RagiumFluids.AIR, "Air")
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
-        addFluid(RagiumFluids.LIQUID_HYDROGEN, "Liquid Hydrogen")
-        addFluid(RagiumFluids.HELIUM, "Helium")
-        addFluid(RagiumFluids.CARBON_DIOXIDE, "Carbon Dioxide")
-        addFluid(RagiumFluids.NITROGEN, "Nitrogen")
-        addFluid(RagiumFluids.LIQUID_NITROGEN, "Liquid Nitrogen")
-        addFluid(RagiumFluids.AMMONIA, "Ammonia")
-        addFluid(RagiumFluids.OXYGEN, "Oxygen")
-        addFluid(RagiumFluids.LIQUID_OXYGEN, "Liquid Oxygen")
+        addFluid(RagiumFluids.STEAM, "Steam")
 
-        addFluid(RagiumFluids.ROCKET_FUEL, "Rocket Fuel")
-        addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
-        addFluid(RagiumFluids.MIXTURE_ACID, "Mixture Acid")
-        addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
+        addFluid(RagiumFluids.OXYGEN, "Oxygen")
 
         addFluid(RagiumFluids.CREOSOTE, "Creosote")
         addFluid(RagiumFluids.SYNTHETIC_GAS, "Synthetic Gas")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "Synthetic Oil")
 
+        addFluid(RagiumFluids.METHANE, "Methane")
+        addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
+        addFluid(RagiumFluids.ETHANOL, "Ethanol")
+        addFluid(RagiumFluids.BIOFUEL, "Biofuel")
+
+        addFluid(RagiumFluids.NITROGEN, "Nitrogen")
+        addFluid(RagiumFluids.LIQUID_NITROGEN, "Liquid Nitrogen")
+
+        addFluid(RagiumFluids.NAOH_SOLUTION, "Slime Solution")
+
+        addFluid(RagiumFluids.MERCURY, "Mercury")
+
         addFluid(RagiumFluids.CRUDE_OIL, "Crude Oil")
         addFluid(RagiumFluids.NAPHTHA, "Naphtha")
-        addFluid(RagiumFluids.RESIDUE_OIL, "Residue Oil")
-
-        addFluid(RagiumFluids.METHANE, "Methane")
-        addFluid(RagiumFluids.ETHYLENE, "Ethylene")
-        addFluid(RagiumFluids.BUTADIENE, "Butadiene")
-
-        addFluid(RagiumFluids.METHANOL, "Methanol")
-        addFluid(RagiumFluids.ETHANOL, "Ethanol")
-
         addFluid(RagiumFluids.FUEL, "Fuel")
-        addFluid(RagiumFluids.LUBRICANT, "Lubricant")
 
-        addFluid(RagiumFluids.SUNFLOWER_OIL, "Sunflower Oil")
-        addFluid(RagiumFluids.BIOFUEL, "Biofuel")
-        addFluid(RagiumFluids.GLYCEROL, "Glycerol")
+        addFluid(RagiumFluids.NITROGEN_DIOXIDE, "Nitrogen Dioxide")
+        addFluid(RagiumFluids.AMMONIA, "Ammonia")
+        addFluid(RagiumFluids.NITRIC_ACID, "Nitric Acid")
 
-        addFluid(RagiumFluids.RAGI_MATTER, "Ragi-Matter")
+        addFluid(RagiumFluids.SULFUR_DIOXIDE, "Sulfur Dioxide")
+        addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
+        addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
 
+        addFluid(RagiumFluids.HELIUM, "Helium")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
+        add(RagiumItems.CARBON_COMPOUND, "Carbon Compound")
+        add(RagiumItems.CRYO_CHARGE, "Cryo-Charge")
+
+        add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
+        add(RagiumItems.GLYCEROL_DROP, "Glycerol")
+        add(RagiumItems.NITROGLYCERIN, "Nitroglycerin")
+        add(RagiumItems.NITROCELLULOSE, "Nitrocellulose")
+        add(RagiumItems.SMOKELESS_POWDER, "Smokeless Powder")
+
+        add(RagiumItems.MERCURY_BOTTLE, "Mercury Bottle")
+        add(RagiumItems.THERMOMETER, "Thermometer")
+        add(RagiumItems.SILICON_WAFER, "Silicon Wafer")
+        add(RagiumItems.CIRCUIT_CHIP, "Circuit Chip")
         add(RagiumItems.CIRCUIT_BOARD, "Circuit Board")
-        add(RagiumItems.PLATED_CIRCUIT_BOARD, "Plated Circuit Board")
-        add(RagiumItems.PRINTED_CIRCUIT_BOARD, "Printed Circuit Board")
         add(RagiumItems.ELECTRIC_CIRCUIT, "Electric Circuit")
 
-        add(RagiumItems.MOLASSES, "Molasses")
+        add(RagiumItems.ARTIFICIAL_ARTIFACT, "Artificial Artifact")
+
         add(RagiumItems.EMPTY_CAN, "Empty Can")
 
         add(RagiumItems.BLANK_DISC, "Blank Disc")
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
-        add(RagiumItems.POTION_DROP, "Potion Drop")
 
         // Recipe
-        add(RagiumRecipeTypes.ALLOYING, "Alloying")
-        add(RagiumRecipeTypes.BENDING, "Bending")
-        add(RagiumRecipeTypes.COMPRESSING, "Compressing")
-        add(RagiumRecipeTypes.CRUSHING, "Crushing")
-        add(RagiumRecipeTypes.CUTTING, "Cutting")
-        add(RagiumRecipeTypes.LATHING, "Lathing")
-        add(RagiumRecipeTypes.PRESSING, "Pressing")
-        add(RagiumRecipeTypes.WIRING, "Wiring")
+        add(RagiumRecipeLookups.ALLOYING, "Alloying")
+        add(RagiumRecipeLookups.ASSEMBLING, "Assembling")
+        add(RagiumRecipeLookups.CUTTING, "Cutting")
+        add(RagiumRecipeLookups.PLANTING, "Planting")
 
-        add(RagiumRecipeTypes.DISTILLING, "Distilling")
-        add(RagiumRecipeTypes.MELTING, "Melting")
-        add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
+        add(RagiumRecipeLookups.FREEZING, "Freezing")
+        add(RagiumRecipeLookups.MELTING, "Melting")
+        add(RagiumRecipeLookups.PYROLYZING, "Pyrolyzing")
+        add(RagiumRecipeLookups.REFINING, "Refining")
 
-        add(RagiumRecipeTypes.FREEZING, "Freezing")
+        add(RagiumRecipeLookups.CHEMICAL_WASHING, "Chemical Washing")
+        add(RagiumRecipeLookups.ELECTROLYZING, "Electrolyzing")
+        add(RagiumRecipeLookups.MIXING, "Mixing")
+        add(RagiumRecipeLookups.WASHING, "Washing")
 
-        add(RagiumRecipeTypes.CANNING, "Canning")
-        add(RagiumRecipeTypes.MIXING, "Mixing")
-        add(RagiumRecipeTypes.WASHING, "Washing")
-
-        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
-        add(RagiumRecipeTypes.PLANTING, "Planting")
+        add(RagiumRecipeLookups.DUPLICATING, "Duplicating")
+        add(RagiumRecipeLookups.ENCHANTING, "Enchanting")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")
-        add(RagiumTags.Items.MOLDS, "Molds")
 
         add(RagiumTags.Items.GENERATOR_UPGRADABLE, "Generators")
         add(RagiumTags.Items.PROCESSOR_UPGRADABLE, "Processors")
@@ -171,13 +188,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.GUI_SLOT_NONE, "%s: None")
 
         add(RagiumTranslation.ALLOY_SMELTER, "A machine which combines multiple items into one.")
-        add(RagiumTranslation.BENDING_MACHINE, "A machine which converts ingot into plate.")
-        add(RagiumTranslation.COMPRESSOR, "A machine which compresses item.")
         add(RagiumTranslation.CRUSHER, "A machine which crushes item into dust.")
         add(RagiumTranslation.CUTTING_MACHINE, "A machine which converts log or wooden items into planks.")
         add(RagiumTranslation.ELECTRIC_FURNACE, "A machine which smelts item by using energy.")
-        add(RagiumTranslation.FORMING_PRESS, "A machine which combines multiple items into one.")
-        add(RagiumTranslation.LATHE, "A machine which converts gem or ingot into rod.")
 
         add(RagiumTranslation.MELTER, "A machine which melts item or heats up fluid.")
         add(RagiumTranslation.PYROLYZER, "A machine which converts log or coal into charcoal or coal coke.")
@@ -187,9 +200,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.MIXER, "A machine which combines multiple items or fluids.")
         add(RagiumTranslation.WASHER, "A machine which producing item from crushed ore and fluid.")
 
-        add(RagiumTranslation.BATTERY, "A energy storage which capacity is extendable by upgrade.")
-        add(RagiumTranslation.CRATE, "A item storage which capacity is extendable by upgrade.")
-        add(RagiumTranslation.TANK, "A fluid storage which capacity is extendable by upgrade.")
+        add(RagiumTranslation.BATTERY, "A energy storage which capacity is extendable by crafting with others.")
+        add(RagiumTranslation.CRATE, "A item storage which capacity is extendable by crafting with others.")
+        add(RagiumTranslation.TANK, "A fluid storage which capacity is extendable by crafting with others.")
         add(RagiumTranslation.BUFFER, "A combined storage with 9 slots, 3 tanks, and 1 battery.")
         add(RagiumTranslation.UNIVERSAL_CHEST, "A chest which shares its containment with the same color.")
 
@@ -197,23 +210,5 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
-        add(RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE, $$"Conflicting Upgrades: %1$s")
-        add(RagiumTranslation.TOOLTIP_UPGRADE_TARGET, $$"Upgrade Targets: %1$s")
-        // Upgrade
-        add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- Base Multiplier: %1$s")
-        add(HTUpgradeKeys.IS_CREATIVE, "- Creative")
-
-        add(HTUpgradeKeys.ENERGY_EFFICIENCY, $$"- Energy Efficiency: %1$s")
-        add(HTUpgradeKeys.ENERGY_GENERATION, $$"- Energy Generation: %1$s")
-        add(HTUpgradeKeys.SPEED, $$"- Speed: %1$s")
-
-        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- Energy Capacity: %1$s")
-        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- Fluid Capacity: %1$s")
-        add(HTUpgradeKeys.ITEM_CAPACITY, $$"- Item Capacity: %1$s")
-
-        add(RagiumUpgradeKeys.BLASTING, "- Only process Blasting Recipes")
-        add(RagiumUpgradeKeys.SMOKING, "- Only process Smoking Recipes")
-        add(RagiumUpgradeKeys.VOID_EXTRA, "- Extra output disabled")
-        add(RagiumUpgradeKeys.USE_LUBRICANT, "- Use lubricant per operation")
     }
 }

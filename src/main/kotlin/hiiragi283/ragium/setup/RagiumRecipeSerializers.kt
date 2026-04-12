@@ -1,55 +1,41 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.serialization.codec.BiCodec
-import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.core.api.serialization.codec.MapBiCodecs
 import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.core.api.util.Ior
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
+import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
+import hiiragi283.core.setup.HCRecipeSerializers
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.crafting.HTPotionBucketRecipe
-import hiiragi283.ragium.common.data.recipe.HTChemicalRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTCombineItemRecipeBuilder
+import hiiragi283.ragium.common.crafting.HTStorageCombiningRecipe
+import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemToChancedRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTSingleRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBendingRecipe
-import hiiragi283.ragium.common.recipe.HTCanningRecipe
-import hiiragi283.ragium.common.recipe.HTCompressingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
+import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTDistillingRecipe
-import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
-import hiiragi283.ragium.common.recipe.HTLathingRecipe
+import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.ragium.common.recipe.HTWiringRecipe
-import hiiragi283.ragium.common.recipe.base.HTChemicalIngredient
-import hiiragi283.ragium.common.recipe.base.HTChemicalRecipe
-import hiiragi283.ragium.common.recipe.base.HTChemicalResult
-import hiiragi283.ragium.common.recipe.base.HTCombineItemRecipe
-import hiiragi283.ragium.common.recipe.base.HTItemOrFluidRecipe
-import hiiragi283.ragium.common.recipe.base.HTItemToChancedRecipe
-import hiiragi283.ragium.common.recipe.base.HTSingleProcessingRecipe
+import hiiragi283.ragium.impl.recipe.HTCombiningRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer
-import net.minecraft.world.item.enchantment.ItemEnchantments
 
 object RagiumRecipeSerializers {
     @JvmField
@@ -57,159 +43,131 @@ object RagiumRecipeSerializers {
 
     //    Custom    //
 
+    // Crafting
     @JvmField
-    val POTION_BUCKET: SimpleCraftingRecipeSerializer<HTPotionBucketRecipe> =
-        REGISTER.registerSerializer("potion_bucket", SimpleCraftingRecipeSerializer(::HTPotionBucketRecipe))
+    val STORAGE_COMBINING: SimpleCraftingRecipeSerializer<HTStorageCombiningRecipe> = REGISTER.registerSerializer(
+        "storage_combining",
+        SimpleCraftingRecipeSerializer(::HTStorageCombiningRecipe),
+    )
 
     //    Machine    //
 
     @JvmStatic
-    private fun <RECIPE : HTCombineItemRecipe> combine(
-        factory: HTCombineItemRecipeBuilder.Factory<RECIPE>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
-        HTItemIngredient.CODEC
-            .listOf(2, 3)
-            .fieldOf(HTConst.INGREDIENT)
-            .forGetter(HTCombineItemRecipe::ingredients),
-        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCombineItemRecipe::result),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTCombineItemRecipe::parameters),
-        factory::create,
-    )
+    private val COMPLEX_RESULT: MapBiCodec<RegistryFriendlyByteBuf, Ior<HTItemResult, HTFluidResult>> = MapBiCodecs
+        .ior(
+            HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT),
+            HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT),
+        )
 
     @JvmStatic
-    private fun <R : HTItemToChancedRecipe> itemChanced(
-        factory: HTItemToChancedRecipeBuilder.Factory<R>,
+    private fun <R : HTCombiningRecipe> combine(
+        inputRange: IntRange,
+        factory: HTCombiningRecipeBuilder.Factory<R>,
     ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTItemToChancedRecipe::ingredient),
-        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTItemToChancedRecipe::result),
-        HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTItemToChancedRecipe::extraResult),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTItemToChancedRecipe::parameters),
+        HTItemIngredient.CODEC
+            .listOf(inputRange)
+            .fieldOf(HTConst.INGREDIENT)
+            .forGetter(HTCombiningRecipe::ingredients),
+        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCombiningRecipe::result),
+        HTProcessingRecipe.timeCodec(),
         factory::create,
     )
 
     @JvmStatic
-    private fun <RECIPE : HTItemOrFluidRecipe> itemOrFluid(
+    private fun <RECIPE : HTBasicItemOrFluidRecipe> itemOrFluid(
         factory: HTItemOrFluidRecipeBuilder.Factory<RECIPE>,
     ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
         MapBiCodecs
             .ior(
                 HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT),
                 HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT),
-            ).forGetter(HTItemOrFluidRecipe::ingredient),
-        MapBiCodecs
-            .ior(
-                HTItemResult.CODEC.fieldOf(HTConst.ITEM_RESULT),
-                HTFluidResult.CODEC.fieldOf(HTConst.FLUID_RESULT),
-            ).forGetter(HTItemOrFluidRecipe::result),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTItemOrFluidRecipe::parameters),
-        factory::create,
-    )
-
-    @JvmStatic
-    private fun <R : HTSingleProcessingRecipe.ItemToItem> itemToItem(
-        factory: HTSingleRecipeBuilder.Factory<HTItemIngredient, HTItemResult, R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTSingleProcessingRecipe.ItemToItem::ingredient),
-        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTSingleProcessingRecipe.ItemToItem::result),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTSingleProcessingRecipe.ItemToItem::parameters),
+            ).forGetter(HTBasicItemOrFluidRecipe::ingredient),
+        COMPLEX_RESULT.forGetter(HTBasicItemOrFluidRecipe::result),
+        HTProcessingRecipe.timeCodec(),
         factory::create,
     )
 
     // Machine - Basic
-
     @JvmField
     val ALLOYING: RecipeSerializer<HTAlloyingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.ALLOYING, combine(::HTAlloyingRecipe))
+        REGISTER.registerSerializer(RagiumConst.ALLOYING, combine(2..3, ::HTAlloyingRecipe))
 
     @JvmField
-    val BENDING: RecipeSerializer<HTBendingRecipe> = REGISTER.registerSerializer(RagiumConst.BENDING, itemToItem(::HTBendingRecipe))
+    val ASSEMBLING: RecipeSerializer<HTAssemblingRecipe> =
+        REGISTER.registerSerializer(RagiumConst.ASSEMBLING, combine(2..2, ::HTAssemblingRecipe))
 
     @JvmField
-    val COMPRESSING: RecipeSerializer<HTCompressingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.COMPRESSING, itemToItem(::HTCompressingRecipe))
+    val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.CUTTING,
+        HCRecipeSerializers.singleItemToMulti(HTCuttingRecipe.OUTPUT_RANGE, ::HTCuttingRecipe),
+    )
 
     @JvmField
-    val CRUSHING: RecipeSerializer<HTCrushingRecipe> = REGISTER.registerSerializer(RagiumConst.CRUSHING, itemChanced(::HTCrushingRecipe))
+    val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.PLANTING,
+        HCRecipeSerializers.doubleItemToMulti(HTPlantingRecipe.OUTPUT_RANGE, ::HTPlantingRecipe),
+    )
 
+    // Machine - Advanced
     @JvmField
-    val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, itemChanced(::HTCuttingRecipe))
-
-    @JvmField
-    val LATHING: RecipeSerializer<HTLathingRecipe> = REGISTER.registerSerializer(RagiumConst.LATHING, itemToItem(::HTLathingRecipe))
-
-    @JvmField
-    val PRESSING: RecipeSerializer<HTPressingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.PRESSING, combine(::HTPressingRecipe))
-
-    @JvmField
-    val WIRING: RecipeSerializer<HTWiringRecipe> = REGISTER.registerSerializer(RagiumConst.WIRING, itemToItem(::HTWiringRecipe))
-
-    // Machine - Heat
-    @JvmField
-    val DISTILLING: RecipeSerializer<HTDistillingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.DISTILLING,
+    val FREEZING: RecipeSerializer<HTFreezingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.FREEZING,
         MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTDistillingRecipe::ingredient),
-            chemRes(HTDistillingRecipe.MAX_ITEM_OUTPUT, HTDistillingRecipe.MAX_FLUID_OUTPUT).forGetter(HTDistillingRecipe::results),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTDistillingRecipe::parameters),
-            ::HTDistillingRecipe,
+            HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTFreezingRecipe::itemIngredient),
+            HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTFreezingRecipe::fluidIngredient),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTFreezingRecipe::result),
+            HTProcessingRecipe.timeCodec(),
+            ::HTFreezingRecipe,
         ),
     )
 
     @JvmField
-    val MELTING: RecipeSerializer<HTMeltingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.MELTING, itemOrFluid(::HTMeltingRecipe))
+    val MELTING: RecipeSerializer<HTMeltingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.MELTING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTMeltingRecipe::ingredient),
+            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTMeltingRecipe::result),
+            HTProcessingRecipe.timeCodec(),
+            ::HTMeltingRecipe,
+        ),
+    )
 
     @JvmField
     val PYROLYZING: RecipeSerializer<HTPyrolyzingRecipe> =
         REGISTER.registerSerializer(RagiumConst.PYROLYZING, itemOrFluid(::HTPyrolyzingRecipe))
 
-    // Machine - Cool
     @JvmField
-    val FREEZING: RecipeSerializer<HTFreezingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.FREEZING, itemOrFluid(::HTFreezingRecipe))
+    val REFINING: RecipeSerializer<HTRefiningRecipe> =
+        REGISTER.registerSerializer(RagiumConst.REFINING, itemOrFluid(::HTRefiningRecipe))
 
-    // Machine - Chemical
-    @JvmStatic
-    private fun chemIng(maxItem: Int, maxFluid: Int): MapBiCodec<RegistryFriendlyByteBuf, HTChemicalIngredient> = MapBiCodecs
-        .ior(
-            HTItemIngredient.CODEC.listOf(0, maxItem).optionalFieldOf(HTConst.ITEM_INGREDIENT, listOf()),
-            HTFluidIngredient.CODEC.listOf(0, maxFluid).optionalFieldOf(HTConst.FLUID_INGREDIENT, listOf()),
-        )
+    // Machine - Elite
+    @JvmField
+    val CHEMICAL_WASHING: RecipeSerializer<HTChemicalWashingRecipe> =
+        REGISTER.registerSerializer(RagiumConst.CHEMICAL_WASHING, itemOrFluid(::HTChemicalWashingRecipe))
 
-    @JvmStatic
-    private fun chemRes(maxItem: Int, maxFluid: Int): MapBiCodec<RegistryFriendlyByteBuf, HTChemicalResult> = MapBiCodecs
-        .ior(
-            HTItemResult.CODEC.listOrElement(0, maxItem).optionalFieldOf(HTConst.ITEM_RESULT, listOf()),
-            HTFluidResult.CODEC.listOrElement(0, maxFluid).optionalFieldOf(HTConst.FLUID_RESULT, listOf()),
-        )
-
-    @JvmStatic
-    private fun <RECIPE : HTChemicalRecipe> chemical(
-        maxItemIn: Int,
-        maxFluidIn: Int,
-        maxItemOut: Int,
-        maxFluidOut: Int,
-        factory: HTChemicalRecipeBuilder.Factory<RECIPE>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
-        chemIng(maxItemIn, maxFluidIn).forGetter(HTChemicalRecipe::ingredients),
-        chemRes(maxItemOut, maxFluidOut).forGetter(HTChemicalRecipe::results),
-        HTProcessingRecipe.SubParameters.CODEC.forGetter(HTChemicalRecipe::parameters),
-        factory::create,
+    @JvmField
+    val ELECTROLYZING: RecipeSerializer<HTElectrolyzingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.ELECTROLYZING,
+        MapBiCodec.composite(
+            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTElectrolyzingRecipe::ingredient),
+            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTElectrolyzingRecipe::result),
+            COMPLEX_RESULT.forGetter(HTElectrolyzingRecipe::extraResult),
+            HTProcessingRecipe.timeCodec(),
+            ::HTElectrolyzingRecipe,
+        ),
     )
-
-    @JvmField
-    val CANNING: RecipeSerializer<HTCanningRecipe> =
-        REGISTER.registerSerializer(RagiumConst.CANNING, itemOrFluid(::HTCanningRecipe))
 
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MIXING,
-        chemical(
-            HTMixingRecipe.MAX_ITEM_INPUT,
-            HTMixingRecipe.MAX_FLUID_INPUT,
-            HTMixingRecipe.MAX_ITEM_OUTPUT,
-            HTMixingRecipe.MAX_FLUID_OUTPUT,
+        MapBiCodec.composite(
+            MapBiCodecs
+                .ior(
+                    HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT),
+                    HTFluidIngredient.CODEC.listOf(1, HTMixingRecipe.MAX_FLUID_INPUT).fieldOf(HTConst.FLUID_INGREDIENT),
+                ).forGetter(HTMixingRecipe::ingredient),
+            COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
+            HTProcessingRecipe.timeCodec(),
             ::HTMixingRecipe,
         ),
     )
@@ -217,46 +175,22 @@ object RagiumRecipeSerializers {
     @JvmField
     val WASHING: RecipeSerializer<HTWashingRecipe> = REGISTER.registerSerializer(
         RagiumConst.WASHING,
-        MapBiCodec.composite(
-            HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTWashingRecipe::itemIngredient),
-            HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTWashingRecipe::fluidIngredient),
-            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTWashingRecipe::result),
-            HTItemResult.CHANCED_CODEC.optionalFieldOf(HTConst.EXTRA_RESULT).forGetter(HTWashingRecipe::extraResult),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTWashingRecipe::parameters),
+        HCRecipeSerializers.singleItemToMulti(
+            HTWashingRecipe.OUTPUT_RANGE,
+            HTWashingRecipe::ingredient,
+            HTWashingRecipe::results,
             ::HTWashingRecipe,
         ),
     )
 
-    // Machine - Matter
-
-    // Device
+    // Machine - Ultimate
     @JvmField
-    val ENCHANTING: RecipeSerializer<HTEnchantingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.ENCHANTING,
+    val HOLDER_ENCHANTING: RecipeSerializer<HTHolderEnchantingRecipe> = REGISTER.registerSerializer(
+        "${RagiumConst.ENCHANTING}/holder",
         MapBiCodec.composite(
-            HTItemIngredient.UNSIZED_CODEC.fieldOf("book").forGetter(HTEnchantingRecipe::book),
-            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTEnchantingRecipe::ingredient),
-            BiCodecs
-                .either(
-                    VanillaBiCodecs.holder(Registries.ENCHANTMENT),
-                    BiCodec.of(ItemEnchantments.CODEC, ItemEnchantments.STREAM_CODEC),
-                    true,
-                ).fieldOf("enchantment")
-                .forGetter(HTEnchantingRecipe::contents),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTEnchantingRecipe::parameters),
-            ::HTEnchantingRecipe,
-        ),
-    )
-
-    @JvmField
-    val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.PLANTING,
-        MapBiCodec.composite(
-            HTItemHolderLike.HOLDER_CODEC.fieldOf("seed").forGetter(HTPlantingRecipe::seed),
-            HTItemIngredient.UNSIZED_CODEC.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
-            HTItemResult.CODEC.fieldOf("crop").forGetter(HTPlantingRecipe::crop),
-            HTProcessingRecipe.SubParameters.CODEC.forGetter(HTPlantingRecipe::parameters),
-            ::HTPlantingRecipe,
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTHolderEnchantingRecipe::ingredient),
+            VanillaBiCodecs.holder(Registries.ENCHANTMENT).fieldOf("enchantment").forGetter(HTHolderEnchantingRecipe::holder),
+            ::HTHolderEnchantingRecipe,
         ),
     )
 }

@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:mending",
   "ingredient": {
     "amount": 1,
     "items": "#c:nether_stars"
-  },
-  "time": 200
+  }
 }

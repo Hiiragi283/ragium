@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:conduit"
+    },
+    "B": {
+      "item": "minecraft:budding_amethyst"
+    },
+    "C": {
+      "item": "minecraft:heavy_core"
+    },
+    "D": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "E": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "pattern": [
+    "ABC",
+    "DED",
+    "CBA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:artificial_artifact"
+  }
+}

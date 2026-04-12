@@ -1,0 +1,17 @@
+{
+  "type": "ragium:freezing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:lava"
+  },
+  "item_ingredient": {
+    "items": {
+      "type": "hiiragi_core:blue_print",
+      "number": 1
+    }
+  },
+  "result": {
+    "id": "minecraft:magma_block"
+  },
+  "time": 200
+}

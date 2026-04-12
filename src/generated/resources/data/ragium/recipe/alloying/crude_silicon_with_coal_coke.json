@@ -1,0 +1,23 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/quartz",
+        "#c:gems/quartz"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:coal_coke",
+        "#c:dusts/coal_coke"
+      ]
+    }
+  ],
+  "result": {
+    "id": "ragium:crude_silicon"
+  },
+  "time": 200
+}

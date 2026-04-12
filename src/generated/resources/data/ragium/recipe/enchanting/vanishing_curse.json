@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:vanishing_curse",
   "ingredient": {
     "amount": 1,
     "items": "#c:cobblestones"
-  },
-  "time": 200
+  }
 }

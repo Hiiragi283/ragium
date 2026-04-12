@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "amount": 1,
+    "items": "ragium:cryo_charge"
+  },
+  "result": {
+    "amount": 125,
+    "id": "ragium:liquid_nitrogen"
+  },
+  "time": 200
+}

@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "amount": 360,
+    "fluids": "#hiiragi_core:eldritch"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:trial_key"
+  },
+  "item_result": {
+    "id": "minecraft:ominous_trial_key"
+  },
+  "time": 200
+}

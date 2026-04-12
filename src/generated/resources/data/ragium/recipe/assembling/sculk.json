@@ -1,0 +1,19 @@
+{
+  "type": "ragium:assembling",
+  "ingredient": [
+    {
+      "amount": 8,
+      "items": "minecraft:sculk_vein"
+    },
+    {
+      "items": {
+        "type": "hiiragi_core:blue_print",
+        "number": 0
+      }
+    }
+  ],
+  "result": {
+    "id": "minecraft:sculk"
+  },
+  "time": 200
+}

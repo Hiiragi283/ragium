@@ -1,0 +1,116 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made by Hiiragi Russell Tsubasa",
+    "render_type": "minecraft:cutout",
+	"textures": {
+		"side": "ragium:block/battery_side",
+		"particle": "ragium:block/battery_side",
+		"inner": "ragium:block/battery_inner"
+	},
+	"elements": [
+		{
+			"name": "outer",
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#side"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#side"}
+			}
+		},
+		{
+			"name": "innerU",
+			"from": [0, 4, 0],
+			"to": [16, 4, 16],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 8]},
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"down": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#inner"}
+			}
+		},
+		{
+			"name": "innerD",
+			"from": [0, 12, 0],
+			"to": [16, 12, 16],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 8]},
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#inner"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#inner"}
+			}
+		},
+		{
+			"name": "innerN",
+			"from": [0, 0, 4],
+			"to": [16, 16, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#inner"}
+			}
+		},
+		{
+			"name": "innerE",
+			"from": [12, 0, 0],
+			"to": [12, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#inner"}
+			}
+		},
+		{
+			"name": "innerS",
+			"from": [0, 0, 12],
+			"to": [16, 16, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#inner"}
+			}
+		},
+		{
+			"name": "innerW",
+			"from": [4, 0, 0],
+			"to": [4, 16, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#inner"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, -135, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, -135, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	}
+}

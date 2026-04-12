@@ -1,6 +1,13 @@
 {
   "values": [
-    "ragium:ethanol",
-    "ragium:methanol"
+    {
+      "id": "#c:alcohol",
+      "required": false
+    },
+    {
+      "id": "#c:bioethanol",
+      "required": false
+    },
+    "#c:ethanol"
   ]
 }

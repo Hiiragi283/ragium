@@ -1,13 +1,18 @@
 {
   "type": "ragium:planting",
-  "crop": {
-    "count": 3,
+  "addition": {
+    "items": [
+      "#c:gravels",
+      "#c:sands"
+    ]
+  },
+  "base": {
+    "amount": 1,
+    "items": "minecraft:sea_pickle"
+  },
+  "results": {
+    "count": 4,
     "id": "minecraft:sea_pickle"
   },
-  "seed": "minecraft:sea_pickle",
-  "soil": [
-    "#c:gravels",
-    "#c:sands"
-  ],
-  "time": 200
+  "time": 100
 }

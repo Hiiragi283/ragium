@@ -1,5 +1,9 @@
 {
   "values": [
-    "ragium:biofuel"
+    {
+      "id": "#c:biodiesel",
+      "required": false
+    },
+    "#c:biofuel"
   ]
 }

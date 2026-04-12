@@ -1,10 +1,21 @@
 {
   "type": "ragium:planting",
-  "crop": {
-    "count": 6,
-    "id": "minecraft:birch_log"
+  "addition": {
+    "items": "#minecraft:dirt"
   },
-  "seed": "minecraft:birch_sapling",
-  "soil": "#minecraft:dirt",
-  "time": 200
+  "base": {
+    "amount": 1,
+    "items": "minecraft:birch_sapling"
+  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:birch_log"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:birch_sapling"
+    }
+  ],
+  "time": 100
 }

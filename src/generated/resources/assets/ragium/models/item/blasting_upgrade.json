@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "ragium:item/upgrade/processor_base",
-    "layer1": "ragium:item/upgrade/blasting"
-  }
-}

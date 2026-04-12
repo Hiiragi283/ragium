@@ -1,6 +1,7 @@
 {
   "type": "ragium:pyrolyzing",
   "fluid_ingredient": {
+    "amount": 1000,
     "fluids": "#c:nitrogen"
   },
   "fluid_result": {
@@ -9,7 +10,7 @@
   },
   "item_ingredient": {
     "amount": 8,
-    "items": "hiiragi_core:compressed_sawdust"
+    "items": "#c:pellets/wood"
   },
   "item_result": {
     "count": 8,

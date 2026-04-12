@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:fire_aspect",
   "ingredient": {
     "amount": 32,
     "items": "minecraft:blaze_powder"
-  },
-  "time": 200
+  }
 }

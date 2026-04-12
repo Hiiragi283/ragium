@@ -1,48 +1,28 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.HTBuilderMarker
 import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
 import hiiragi283.core.api.function.identityLeft
-import hiiragi283.core.api.monad.Ior
-import hiiragi283.core.api.monad.toIorOrThrow
-import hiiragi283.core.api.recipe.HTProcessingRecipe
+import hiiragi283.core.api.recipe.base.HTSerializableRecipe
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.util.Ior
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.recipe.HTCanningRecipe
-import hiiragi283.ragium.common.recipe.HTFreezingRecipe
-import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.data.holder.HTIorHolder
+import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
-import hiiragi283.ragium.common.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
 class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>) : HTProcessingRecipeBuilder(prefix) {
     companion object {
-        @HTBuilderMarker
         @JvmStatic
-        inline fun canning(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
-            HTItemOrFluidRecipeBuilder(RagiumConst.CANNING, ::HTCanningRecipe)
-                .apply { time /= 2 }
-                .apply(builderAction)
-                .save(output)
+        inline fun chemicalWashing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
+            HTItemOrFluidRecipeBuilder(RagiumConst.CHEMICAL_WASHING, ::HTChemicalWashingRecipe).apply(builderAction).save(output)
         }
 
-        @HTBuilderMarker
-        @JvmStatic
-        inline fun freezing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
-            HTItemOrFluidRecipeBuilder(RagiumConst.FREEZING, ::HTFreezingRecipe).apply(builderAction).save(output)
-        }
-
-        @HTBuilderMarker
-        @JvmStatic
-        inline fun melting(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
-            HTItemOrFluidRecipeBuilder(RagiumConst.MELTING, ::HTMeltingRecipe).apply(builderAction).save(output)
-        }
-
-        @HTBuilderMarker
         @JvmStatic
         inline fun pyrolyzing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
             HTItemOrFluidRecipeBuilder(RagiumConst.PYROLYZING, ::HTPyrolyzingRecipe)
@@ -50,45 +30,27 @@ class HTItemOrFluidRecipeBuilder(prefix: String, private val factory: Factory<*>
                 .apply(builderAction)
                 .save(output)
         }
+
+        @JvmStatic
+        inline fun refining(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
+            HTItemOrFluidRecipeBuilder(RagiumConst.REFINING, ::HTRefiningRecipe).apply(builderAction).save(output)
+        }
     }
 
-    val ingredient: IorHolder<HTItemIngredient, HTFluidIngredient> = IorHolder()
-    val result: IorHolder<HTItemResult, HTFluidResult> = IorHolder()
-
-    inner class IorHolder<ITEM : Any, FLUID : Any> {
-        private var item: ITEM? = null
-        private var fluid: FLUID? = null
-
-        @JvmName("setItem")
-        operator fun plusAssign(left: ITEM) {
-            check(this.item == null) { "Item value has already initialized" }
-            this.item = left
-        }
-
-        @JvmName("setFluid")
-        operator fun plusAssign(right: FLUID) {
-            check(this.fluid == null) { "Fluid value has already initialized" }
-            this.fluid = right
-        }
-
-        fun toIor(): Ior<ITEM, FLUID> = (item to fluid).toIorOrThrow()
-    }
+    val ingredient: HTIorHolder<HTItemIngredient, HTFluidIngredient> = HTIorHolder()
+    val result: HTIorHolder<HTItemResult, HTFluidResult> = HTIorHolder()
 
     override fun getPrimalId(): ResourceLocation = result.toIor().map(HTItemResult::getId, HTFluidResult::getId, identityLeft())
 
-    override fun createRecipe(): HTItemOrFluidRecipe = factory.create(
+    override fun createRecipe(): HTSerializableRecipe<*> = factory.create(
         ingredient.toIor(),
         result.toIor(),
-        subParameters(),
+        time,
     )
 
     //    Factory    //
 
-    fun interface Factory<RECIPE : HTItemOrFluidRecipe> {
-        fun create(
-            ingredient: Ior<HTItemIngredient, HTFluidIngredient>,
-            result: Ior<HTItemResult, HTFluidResult>,
-            parameters: HTProcessingRecipe.SubParameters,
-        ): RECIPE
+    fun interface Factory<RECIPE : HTSerializableRecipe<*>> {
+        fun create(ingredient: Ior<HTItemIngredient, HTFluidIngredient>, result: Ior<HTItemResult, HTFluidResult>, time: Int): RECIPE
     }
 }

@@ -4,7 +4,8 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.util.HTStackSlotHelper
-import hiiragi283.ragium.common.block.entity.HTUpgradableBlockEntity
+import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
+import hiiragi283.ragium.common.block.entity.component.HTStorageCapacityComponent
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
@@ -12,7 +13,17 @@ import net.minecraft.world.level.block.state.BlockState
 import org.apache.commons.lang3.math.Fraction
 
 abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTUpgradableBlockEntity(type, pos, state) {
+    HTConfigurableBlockEntity(type, pos, state) {
+    protected lateinit var capacityComponent: HTStorageCapacityComponent
+        private set
+
+    override fun initializeVariables() {
+        super.initializeVariables()
+        capacityComponent = HTStorageCapacityComponent(this)
+    }
+
+    protected open fun isCreative(): Boolean = false
+
     protected abstract fun getAmountView(): HTAmountView
 
     final override fun markDirtyComparator() {
@@ -28,7 +39,7 @@ abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
 
     private var oldScale: Fraction = Fraction.ZERO
 
-    final override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
+    override fun onUpdateServer(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean {
         // 保持する量の変化があれば更新させる
         val scale: Fraction = getAmountView().getLevelAsFraction()
         if (scale != this.oldScale) {

@@ -5,50 +5,67 @@ import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.api.upgrade.HTUpgradeKeys
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeKeys
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.data.server.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, RagiumAPI.MOD_ID, HTLangTypes.JA_JP) {
     override fun addTranslations() {
         RagiumCommonTranslation.addTranslations(this)
 
+        // Advancement
+        add(RagiumAdvancementKeys.ROOT, "Ragium", "Welcome to ようこそRagiumパーク！")
+
+        add(RagiumAdvancementKeys.RAGI_ALLOY, "0xFF003F", "ラギ合金インゴットを手に入れる")
+        add(RagiumAdvancementKeys.ALLOY_SMELTER, "アル-ケミストリー", "合金炉を手に入れる")
+
+        add(RagiumAdvancementKeys.THERMOMETER, "Heat And Cool", "温度計を手に入れる")
+        add(RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY, "多分赤色", "発展ラギ合金インゴットを手に入れる")
+        add(RagiumAdvancementKeys.REFINERY, "かなりリファイナリーだよこれ", "精製機を手に入れる")
+        add(RagiumAdvancementKeys.PLASTIC, "Plus-TiC", "プラスチックを手に入れる")
+        add(RagiumAdvancementKeys.REFINED_SILICON, "精製シリコン", "シリコンの粉を手に入れる")
+        add(RagiumAdvancementKeys.PYROLYZER, "電動コークス炉", "熱分解炉を手に入れる")
+        add(RagiumAdvancementKeys.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
+        add(RagiumAdvancementKeys.WARPED_CRYSTAL, "安定した歪み", "歪んだのクリスタルを手に入れる")
+
+        add(RagiumAdvancementKeys.RAGI_CRYSTAL, "エナジウムではない", "ラギクリスタリルを手に入れる")
+        add(RagiumAdvancementKeys.STAINLESS_STEEL, "HV時代ではない", "ステンレス鋼インゴットを手に入れる")
+        add(RagiumAdvancementKeys.ELECTRIC_CIRCUIT, "PCB: プリチーでカッコイイボード", "電子回路を手に入れる")
+        add(RagiumAdvancementKeys.BREWERY, "全自動醸造機", "醸造機を手に入れる")
+        add(RagiumAdvancementKeys.MIXER, "ベストマッチ！", "混合機を手に入れる")
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "骨付き肉ブロック")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
 
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
-        add(RagiumBlocks.BENDING_MACHINE, "圧延機")
-        add(RagiumBlocks.COMPRESSOR, "圧縮機")
+        add(RagiumBlocks.ASSEMBLER, "組立機")
+        add(RagiumBlocks.AUTO_CHISEL, "自動石切台")
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")
-        add(RagiumBlocks.FORMING_PRESS, "プレス機")
-        add(RagiumBlocks.LATHE, "旋盤機")
-        add(RagiumBlocks.WIREMILL, "ワイヤミル")
-
-        add(RagiumBlocks.MELTER, "溶融炉")
-        add(RagiumBlocks.PYROLYZER, "熱分解室")
+        add(RagiumBlocks.PLANTER, "栽培機")
 
         add(RagiumBlocks.FREEZER, "冷却機")
+        add(RagiumBlocks.MELTER, "溶融炉")
+        add(RagiumBlocks.PYROLYZER, "熱分解室")
+        add(RagiumBlocks.REFINERY, "精製室")
 
-        add(RagiumBlocks.CANNING_MACHINE, "缶詰機")
+        add(RagiumBlocks.BREWERY, "醸造機")
         add(RagiumBlocks.MIXER, "混合機")
         add(RagiumBlocks.WASHER, "洗浄機")
 
-        add(RagiumBlocks.PLANTER, "栽培機")
-
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
+
+        add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
 
         add(RagiumBlocks.BATTERY, "可変バッテリー")
         add(RagiumBlocks.CRATE, "可変クレート")
         add(RagiumBlocks.TANK, "可変タンク")
-        add(RagiumBlocks.RESONANT_INTERFACE, "共振インターフェース")
-        add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
+
+        add(RagiumBlocks.VOID_TANK, "消滅タンク")
 
         add(RagiumBlocks.IMITATION_SPAWNER, "スポナーの模造品")
 
@@ -56,87 +73,87 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CREATIVE_CRATE, "クリエイティブクレート")
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
-        addFluid(RagiumFluids.AIR, "空気")
         addFluid(RagiumFluids.HYDROGEN, "水素")
-        addFluid(RagiumFluids.LIQUID_HYDROGEN, "液体水素")
-        addFluid(RagiumFluids.HELIUM, "ヘリウム")
-        addFluid(RagiumFluids.CARBON_DIOXIDE, "二酸化炭素")
-        addFluid(RagiumFluids.NITROGEN, "窒素")
-        addFluid(RagiumFluids.LIQUID_NITROGEN, "液体窒素")
-        addFluid(RagiumFluids.AMMONIA, "アンモニア")
-        addFluid(RagiumFluids.OXYGEN, "酸素")
-        addFluid(RagiumFluids.LIQUID_OXYGEN, "液体酸素")
+        addFluid(RagiumFluids.STEAM, "蒸気")
 
-        addFluid(RagiumFluids.ROCKET_FUEL, "ロケット燃料")
-        addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
-        addFluid(RagiumFluids.MIXTURE_ACID, "混酸")
-        addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
+        addFluid(RagiumFluids.OXYGEN, "酸素")
 
         addFluid(RagiumFluids.CREOSOTE, "クレオソート")
         addFluid(RagiumFluids.SYNTHETIC_GAS, "合成ガス")
-        addFluid(RagiumFluids.SYNTHETIC_OIL, "合成油")
+        addFluid(RagiumFluids.SYNTHETIC_OIL, "合成石油")
+
+        addFluid(RagiumFluids.METHANE, "メタン")
+        addFluid(RagiumFluids.CRUDE_BIO, "未加工バイオマス")
+        addFluid(RagiumFluids.ETHANOL, "エタノール")
+        addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
+
+        addFluid(RagiumFluids.NITROGEN, "窒素")
+        addFluid(RagiumFluids.LIQUID_NITROGEN, "液体窒素")
+
+        addFluid(RagiumFluids.NAOH_SOLUTION, "スライム溶液")
+
+        addFluid(RagiumFluids.MERCURY, "水銀")
 
         addFluid(RagiumFluids.CRUDE_OIL, "原油")
         addFluid(RagiumFluids.NAPHTHA, "ナフサ")
-        addFluid(RagiumFluids.RESIDUE_OIL, "残渣油")
-
-        addFluid(RagiumFluids.METHANE, "メタン")
-        addFluid(RagiumFluids.ETHYLENE, "エチレン")
-        addFluid(RagiumFluids.BUTADIENE, "ブタジエン")
-
-        addFluid(RagiumFluids.METHANOL, "メタノール")
-        addFluid(RagiumFluids.ETHANOL, "エタノール")
-
         addFluid(RagiumFluids.FUEL, "燃料")
-        addFluid(RagiumFluids.LUBRICANT, "潤滑油")
 
-        addFluid(RagiumFluids.SUNFLOWER_OIL, "ヒマワリ油")
-        addFluid(RagiumFluids.BIOFUEL, "バイオ燃料")
-        addFluid(RagiumFluids.GLYCEROL, "グリセロール")
+        addFluid(RagiumFluids.NITROGEN_DIOXIDE, "二酸化窒素")
+        addFluid(RagiumFluids.AMMONIA, "アンモニア")
+        addFluid(RagiumFluids.NITRIC_ACID, "硝酸")
 
-        addFluid(RagiumFluids.RAGI_MATTER, "ラギマター")
+        addFluid(RagiumFluids.SULFUR_DIOXIDE, "二酸化硫黄")
+        addFluid(RagiumFluids.SULFUR_TRIOXIDE, "三酸化硫黄")
+        addFluid(RagiumFluids.SULFURIC_ACID, "硫酸")
 
+        addFluid(RagiumFluids.HELIUM, "ヘリウム")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
+        add(RagiumItems.CARBON_COMPOUND, "炭素混合物")
+        add(RagiumItems.CRYO_CHARGE, "クライオチャージ")
+
+        add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
+        add(RagiumItems.GLYCEROL_DROP, "グリセロール")
+        add(RagiumItems.NITROGLYCERIN, "ニトログリセリン")
+        add(RagiumItems.NITROCELLULOSE, "ニトロセルロース")
+        add(RagiumItems.SMOKELESS_POWDER, "無煙火薬")
+
+        add(RagiumItems.MERCURY_BOTTLE, "水銀入り瓶")
+        add(RagiumItems.THERMOMETER, "温度計")
+        add(RagiumItems.SILICON_WAFER, "シリコンウェハ")
+        add(RagiumItems.CIRCUIT_CHIP, "回路チップ")
         add(RagiumItems.CIRCUIT_BOARD, "回路基板")
-        add(RagiumItems.PLATED_CIRCUIT_BOARD, "鍍金された回路基板")
-        add(RagiumItems.PRINTED_CIRCUIT_BOARD, "刻印された回路基板")
         add(RagiumItems.ELECTRIC_CIRCUIT, "電子回路")
 
-        add(RagiumItems.MOLASSES, "糖蜜")
+        add(RagiumItems.ARTIFICIAL_ARTIFACT, "人工遺物")
+
         add(RagiumItems.EMPTY_CAN, "空の缶詰")
 
         add(RagiumItems.BLANK_DISC, "空のレコード")
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
-        add(RagiumItems.POTION_DROP, "ポーションの雫")
 
         // Recipe
-        add(RagiumRecipeTypes.ALLOYING, "合金")
-        add(RagiumRecipeTypes.BENDING, "曲げ加工")
-        add(RagiumRecipeTypes.COMPRESSING, "圧縮")
-        add(RagiumRecipeTypes.CRUSHING, "粉砕")
-        add(RagiumRecipeTypes.CUTTING, "切断")
-        add(RagiumRecipeTypes.LATHING, "旋盤加工")
-        add(RagiumRecipeTypes.PRESSING, "プレス加工")
-        add(RagiumRecipeTypes.WIRING, "ワイヤ加工")
+        add(RagiumRecipeLookups.ALLOYING, "合金")
+        add(RagiumRecipeLookups.ASSEMBLING, "組立")
+        add(RagiumRecipeLookups.CUTTING, "切断")
+        add(RagiumRecipeLookups.PLANTING, "栽培")
 
-        add(RagiumRecipeTypes.DISTILLING, "蒸留")
-        add(RagiumRecipeTypes.MELTING, "溶融")
-        add(RagiumRecipeTypes.PYROLYZING, "熱分解")
+        add(RagiumRecipeLookups.FREEZING, "冷却")
+        add(RagiumRecipeLookups.MELTING, "溶融")
+        add(RagiumRecipeLookups.PYROLYZING, "熱分解")
+        add(RagiumRecipeLookups.REFINING, "精製")
 
-        add(RagiumRecipeTypes.FREEZING, "冷却")
+        add(RagiumRecipeLookups.CHEMICAL_WASHING, "化学洗浄")
+        add(RagiumRecipeLookups.ELECTROLYZING, "電気分解")
+        add(RagiumRecipeLookups.MIXING, "混合")
+        add(RagiumRecipeLookups.WASHING, "洗浄")
 
-        add(RagiumRecipeTypes.CANNING, "缶詰")
-        add(RagiumRecipeTypes.MIXING, "混合")
-        add(RagiumRecipeTypes.WASHING, "洗浄")
-
-        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
-        add(RagiumRecipeTypes.PLANTING, "栽培")
+        add(RagiumRecipeLookups.DUPLICATING, "複製")
+        add(RagiumRecipeLookups.ENCHANTING, "エンチャント")
 
         // Tag
         add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")
-        add(RagiumTags.Items.MOLDS, "鋳型")
 
         add(RagiumTags.Items.GENERATOR_UPGRADABLE, "発電機")
         add(RagiumTags.Items.PROCESSOR_UPGRADABLE, "処理装置")
@@ -171,13 +188,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.GUI_SLOT_NONE, "%s: なし")
 
         add(RagiumTranslation.ALLOY_SMELTER, "複数のアイテムを一つに焼き上げる機械です。")
-        add(RagiumTranslation.BENDING_MACHINE, "インゴットを板材に加工する機械です。")
-        add(RagiumTranslation.COMPRESSOR, "アイテムを圧縮する機械です。")
         add(RagiumTranslation.CRUSHER, "アイテムを粉にする機械です。")
         add(RagiumTranslation.CUTTING_MACHINE, "原木や木製アイテムを木材に加工する機械です。")
         add(RagiumTranslation.ELECTRIC_FURNACE, "エネルギーでアイテムを焼く機械です。")
-        add(RagiumTranslation.FORMING_PRESS, "複数のアイテムを一つに固める機械です。")
-        add(RagiumTranslation.LATHE, "宝石やインゴットを棒材に加工する機械です。")
 
         add(RagiumTranslation.MELTER, "アイテムを融かしたり，液体を加熱したりする機械です。")
         add(RagiumTranslation.PYROLYZER, "原木や石炭を木炭やコークスに加工する機械です。")
@@ -187,9 +200,9 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.MIXER, "複数のアイテムや液体を混ぜる機械です。")
         add(RagiumTranslation.WASHER, "砕いた鉱石と液体からアイテムを生産する機械です。")
 
-        add(RagiumTranslation.BATTERY, "アップグレードで容量を拡張可能なエネルギーストレージです。")
-        add(RagiumTranslation.CRATE, "アップグレードで容量を拡張可能なアイテムストレージです。")
-        add(RagiumTranslation.TANK, "アップグレードで容量を拡張可能な液体ストレージです。")
+        add(RagiumTranslation.BATTERY, "クラフトで合体させることで容量を拡張可能なエネルギーストレージです。")
+        add(RagiumTranslation.CRATE, "クラフトで合体させることで容量を拡張可能なアイテムストレージです。")
+        add(RagiumTranslation.TANK, "クラフトで合体させることで容量を拡張可能な液体ストレージです。")
         add(RagiumTranslation.BUFFER, "9つのスロット，3つのタンク，1つのバッテリーを併せ持つストレージです。")
         add(RagiumTranslation.UNIVERSAL_CHEST, "色ごとに中身を共有するチェストです。")
 
@@ -197,23 +210,5 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"威力: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"次元: %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"ルートテーブル: %1$s")
-        add(RagiumTranslation.TOOLTIP_UPGRADE_TARGET, $$"アップグレードの対象: %1$s")
-        add(RagiumTranslation.TOOLTIP_UPGRADE_EXCLUSIVE, $$"競合するアップグレード: %1$s")
-        // Upgrade
-        add(HTUpgradeKeys.BASE_MULTIPLIER, $$"- 基本倍率: %1$s")
-        add(HTUpgradeKeys.IS_CREATIVE, "- クリエイティブ")
-
-        add(HTUpgradeKeys.ENERGY_EFFICIENCY, $$"- エネルギー効率: %1$s")
-        add(HTUpgradeKeys.ENERGY_GENERATION, $$"- エネルギー生産率: %1$s")
-        add(HTUpgradeKeys.SPEED, $$"- 処理速度: %1$s")
-
-        add(HTUpgradeKeys.ENERGY_CAPACITY, $$"- エネルギー容量: %1$s")
-        add(HTUpgradeKeys.FLUID_CAPACITY, $$"- 液体容量: %1$s")
-        add(HTUpgradeKeys.ITEM_CAPACITY, $$"- アイテム容量: %1$s")
-
-        add(RagiumUpgradeKeys.BLASTING, "- 溶鉱炉レシピのみを処理")
-        add(RagiumUpgradeKeys.SMOKING, "- 燻製器レシピのみを処理")
-        add(RagiumUpgradeKeys.VOID_EXTRA, "- 追加の生産物を無効化")
-        add(RagiumUpgradeKeys.USE_LUBRICANT, "- 処理ごとに潤滑油を消費")
     }
 }

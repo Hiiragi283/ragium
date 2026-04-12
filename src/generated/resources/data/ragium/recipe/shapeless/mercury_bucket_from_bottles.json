@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ragium:mercury_bottle"
+    },
+    {
+      "item": "ragium:mercury_bottle"
+    },
+    {
+      "item": "ragium:mercury_bottle"
+    },
+    {
+      "item": "ragium:mercury_bottle"
+    },
+    {
+      "tag": "c:buckets/empty"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:mercury_bucket"
+  }
+}

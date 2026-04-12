@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:ragi_crystal",
+  "criteria": {
+    "has_stainless_steel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/stainless_steel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.stainless_steel.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:stainless_steel_ingot"
+    },
+    "title": {
+      "translate": "advancements.ragium.stainless_steel.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_stainless_steel"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

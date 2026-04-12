@@ -7,6 +7,11 @@ object RagiumMaterialKeys {
     @JvmStatic
     private fun create(path: String): HTMaterialKey = HTMaterialKey.of((RagiumAPI.id(path)))
 
+    //    Fuels    //
+
+    @JvmStatic
+    val PETROLEUM_COKE: HTMaterialKey = create("petroleum_coke")
+
     //    Minerals    //
 
     @JvmStatic

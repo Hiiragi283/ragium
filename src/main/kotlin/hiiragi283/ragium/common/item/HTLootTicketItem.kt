@@ -4,12 +4,12 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.text.Text
 import hiiragi283.core.util.HTItemDropHelper
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.advancements.CriteriaTriggers
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
@@ -69,7 +69,7 @@ class HTLootTicketItem(properties: Properties) :
     override fun appendHoverText(
         stack: ItemStack,
         context: TooltipContext,
-        tooltips: MutableList<Component>,
+        tooltips: MutableList<Text>,
         flag: TooltipFlag,
     ) {
         super.appendHoverText(stack, context, tooltips, flag)

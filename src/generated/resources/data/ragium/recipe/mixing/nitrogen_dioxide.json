@@ -1,0 +1,21 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": [
+    {
+      "amount": 4000,
+      "fluids": "#c:ammonia"
+    },
+    {
+      "amount": 7000,
+      "fluids": "#c:oxygen"
+    }
+  ],
+  "fluid_result": {
+    "amount": 4000,
+    "id": "ragium:nitrogen_dioxide"
+  },
+  "item_ingredient": {
+    "items": "#c:dusts/platinum"
+  },
+  "time": 200
+}

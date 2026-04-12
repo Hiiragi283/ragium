@@ -4,6 +4,8 @@ import hiiragi283.core.api.mod.HTCommonMod
 import hiiragi283.core.common.data.HCServerResourceProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
+import hiiragi283.ragium.common.data.RagiumServerResourceProvider
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -16,10 +18,12 @@ import hiiragi283.ragium.setup.RagiumMiscRegister
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import hiiragi283.ragium.setup.RagiumWidgetTypes
+import net.mehvahdjukaar.moonlight.api.platform.RegHelper
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.fml.config.ModConfig
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
 
 @Mod(RagiumAPI.MOD_ID)
@@ -43,6 +47,7 @@ data object Ragium : HTCommonMod() {
         container.registerConfig(ModConfig.Type.COMMON, RagiumConfig.COMMON_SPEC)
 
         HCServerResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
+        RegHelper.registerDynamicResourceProvider(RagiumServerResourceProvider)
 
         RagiumAPI.LOGGER.info("Ragium loaded")
     }
@@ -57,6 +62,10 @@ data object Ragium : HTCommonMod() {
         event.register(RagiumDataMapTypes.COMBUSTION_FUEL)
         event.register(RagiumDataMapTypes.FERTILIZER)
 
-        event.register(RagiumDataMapTypes.UPGRADE)
+        event.register(RagiumDataMapTypes.DUPLICATION_COST)
+    }
+
+    override fun commonSetup(event: FMLCommonSetupEvent) {
+        event.enqueueWork(RagiumRecipeLookups::init)
     }
 }

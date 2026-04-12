@@ -1,10 +1,21 @@
 {
   "type": "ragium:planting",
-  "crop": {
-    "count": 3,
-    "id": "minecraft:apple"
+  "addition": {
+    "items": "minecraft:oak_sapling"
   },
-  "seed": "minecraft:apple",
-  "soil": "minecraft:oak_sapling",
-  "time": 200
+  "base": {
+    "amount": 1,
+    "items": "minecraft:apple"
+  },
+  "results": [
+    {
+      "count": 3,
+      "id": "minecraft:apple"
+    },
+    {
+      "chance": "1/3",
+      "id": "minecraft:apple"
+    }
+  ],
+  "time": 100
 }

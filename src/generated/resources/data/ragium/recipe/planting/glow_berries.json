@@ -1,10 +1,21 @@
 {
   "type": "ragium:planting",
-  "crop": {
-    "count": 3,
-    "id": "minecraft:glow_berries"
+  "addition": {
+    "items": "minecraft:farmland"
   },
-  "seed": "minecraft:melon_seeds",
-  "soil": "minecraft:farmland",
-  "time": 200
+  "base": {
+    "amount": 1,
+    "items": "minecraft:glow_berries"
+  },
+  "results": [
+    {
+      "count": 3,
+      "id": "minecraft:glow_berries"
+    },
+    {
+      "chance": "1/3",
+      "id": "minecraft:glow_berries"
+    }
+  ],
+  "time": 100
 }

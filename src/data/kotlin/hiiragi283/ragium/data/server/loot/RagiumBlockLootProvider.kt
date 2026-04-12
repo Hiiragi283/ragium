@@ -3,10 +3,12 @@ package hiiragi283.ragium.data.server.loot
 import hiiragi283.core.api.data.loot.HTBlockLootTableProvider
 import hiiragi283.core.api.registry.HTBlockHolderLike
 import hiiragi283.core.common.block.HTBlockWithEntity
-import hiiragi283.core.common.registry.HTDeferredOnlyBlock
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
+import hiiragi283.ragium.common.block.storage.HTBatteryBlock
+import hiiragi283.ragium.common.block.storage.HTCrateBlock
+import hiiragi283.ragium.common.block.storage.HTStorageBlock
+import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.core.HolderLookup
@@ -24,7 +26,7 @@ class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTa
     override fun generate() {
         RagiumBlocks.REGISTER
             .asBlockSequence()
-            .map(HTDeferredOnlyBlock<*>::get)
+            .map(HTBlockHolderLike<*>::get)
             .forEach { block: Block ->
                 add(
                     block,
@@ -33,14 +35,13 @@ class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTa
                             include(DataComponents.CUSTOM_NAME)
                             include(DataComponents.ENCHANTMENTS)
                             include(DataComponents.HIDE_ADDITIONAL_TOOLTIP)
-
-                            include(RagiumDataComponents.MACHINE_UPGRADES)
-
-                            include(HCDataComponents.ENERGY)
-                            include(HCDataComponents.FLUID)
-                            include(HCDataComponents.ITEM)
                             when (block) {
-                                is HTImitationSpawnerBlock -> include(RagiumDataComponents.SPAWNER_MOB)
+                                is HTStorageBlock -> include(RagiumDataComponents.CAPACITY_SCALE)
+                            }
+                            when (block) {
+                                is HTBatteryBlock -> include(HCDataComponents.ENERGY)
+                                is HTCrateBlock -> include(DataComponents.CONTAINER)
+                                is HTTankBlock -> include(HCDataComponents.FLUID)
                             }
                         }
                     } else {

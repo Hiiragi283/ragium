@@ -2,7 +2,6 @@ package hiiragi283.ragium.client
 
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.event.HTRegisterWidgetRendererEvent
-import hiiragi283.core.api.item.alchemy.HTPotionHelper
 import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.world.getTypedBlockEntity
@@ -10,15 +9,19 @@ import hiiragi283.core.client.HTSimpleFluidExtensions
 import hiiragi283.core.client.data.HCClientResourceProvider
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.client.gui.widget.HTEnergyBarWidgetRenderer
+import hiiragi283.ragium.client.data.RagiumClientResourceProvider
+import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
+import hiiragi283.ragium.client.render.HTBatteryRenderer
+import hiiragi283.ragium.client.render.HTTankRenderer
+import hiiragi283.ragium.client.render.block.HTCrateRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
-import hiiragi283.ragium.client.render.block.HTTankRenderer
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
-import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumWidgetTypes
+import net.mehvahdjukaar.moonlight.api.platform.RegHelper
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
@@ -30,6 +33,7 @@ import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
 import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.model.DynamicFluidContainerModel
 import java.awt.Color
@@ -41,11 +45,12 @@ data object RagiumClient : HTClientMod() {
 
         HCClientResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
 
+        RegHelper.registerDynamicResourceProvider(RagiumClientResourceProvider)
         RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
-        event.register(RagiumWidgetTypes.ENERGY_BAR.get(), ::HTEnergyBarWidgetRenderer)
+        event.register(RagiumWidgetTypes.ENERGY_SLOT.get(), ::HTEnergySlotWidgetRenderer)
     }
 
     override fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
@@ -74,17 +79,6 @@ data object RagiumClient : HTClientMod() {
         for (item: ItemLike in RagiumFluids.REGISTER.asItemSequence()) {
             event.register(bucketColor, item)
         }
-        // Potion Drop
-        event.register(
-            { stack: ItemStack, tint: Int ->
-                if (tint == 0) {
-                    HTPotionHelper.getPotion(stack).color
-                } else {
-                    -1
-                }
-            },
-            RagiumItems.POTION_DROP,
-        )
         // Colored items
         event.register(
             { stack: ItemStack, tint: Int ->
@@ -99,51 +93,71 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
-        event.clear(RagiumFluids.AIR, Color(0xffffff))
-        event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
-        event.dull(RagiumFluids.LIQUID_HYDROGEN, Color(0x3333cc))
-        event.clear(RagiumFluids.HELIUM, Color(0xffff99))
-        event.clear(RagiumFluids.CARBON_DIOXIDE, Color(0x66cccc))
-        event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
-        event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
-        event.clear(RagiumFluids.AMMONIA, Color(0x666699))
-        event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
-        event.dull(RagiumFluids.LIQUID_OXYGEN, Color(0x00cccc))
+        registerFluidExtensions(event)
 
-        event.dull(RagiumFluids.ROCKET_FUEL, Color(0xccccff))
-        event.clear(RagiumFluids.NITRIC_ACID, Color(0x9999cc))
-        event.clear(RagiumFluids.MIXTURE_ACID, Color(0xcc3300))
-        event.clear(RagiumFluids.SULFURIC_ACID, Color(0xcccc00))
+        event.registerItem(
+            object : IClientItemExtensions {
+                override fun getCustomRenderer(): BlockEntityWithoutLevelRenderer = HTBatteryRenderer.ItemRenderer
+            },
+            RagiumBlocks.BATTERY.asItem(),
+            RagiumBlocks.CREATIVE_BATTERY.asItem(),
+        )
+        event.registerItem(
+            object : IClientItemExtensions {
+                override fun getCustomRenderer(): BlockEntityWithoutLevelRenderer = HTTankRenderer.ItemRenderer
+            },
+            RagiumBlocks.TANK.asItem(),
+            RagiumBlocks.CREATIVE_TANK.asItem(),
+        )
+    }
+
+    private fun registerFluidExtensions(event: RegisterClientExtensionsEvent) {
+        // Overworld
+        event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
+        event.clear(RagiumFluids.STEAM, Color(0xcccccc))
+
+        event.clear(RagiumFluids.OXYGEN, Color(0x00cccc))
 
         event.dull(RagiumFluids.CREOSOTE, Color(0x663333))
         event.clear(RagiumFluids.SYNTHETIC_GAS, Color(0xffcc99))
         event.molten(RagiumFluids.SYNTHETIC_OIL, Color(0x333344))
 
-        event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
-        event.dull(RagiumFluids.NAPHTHA, Color(0xcc6600))
-        event.molten(RagiumFluids.RESIDUE_OIL, Color(0x663366))
-
         event.clear(RagiumFluids.METHANE, Color(0xcc9999))
-        event.clear(RagiumFluids.ETHYLENE, Color(0x99cc99))
-        event.clear(RagiumFluids.BUTADIENE, Color(0x999966))
-
-        event.dull(RagiumFluids.METHANOL, Color(0xcc6699))
-        event.dull(RagiumFluids.ETHANOL, Color(0x99cc66))
-
-        event.clear(RagiumFluids.FUEL, Color(0xcccc00))
-        event.dull(RagiumFluids.LUBRICANT, Color(0xff6600))
-
-        event.clear(RagiumFluids.SUNFLOWER_OIL, Color(0xffff00))
+        event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
+        event.clear(RagiumFluids.ETHANOL, Color(0x99cc66))
         event.clear(RagiumFluids.BIOFUEL, Color(0x66cc00))
-        event.clear(RagiumFluids.GLYCEROL, Color(0x66cc99))
 
-        event.clear(RagiumFluids.RAGI_MATTER, Color(0xff6699))
+        event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
+        event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
+
+        event.dull(RagiumFluids.NAOH_SOLUTION, Color(0x99cc00))
+        event.dull(RagiumFluids.MERCURY, Color(0xcc99cc))
+        // Nether
+        event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
+        event.clear(RagiumFluids.NAPHTHA, Color(0xff6600))
+        event.clear(RagiumFluids.FUEL, Color(0xff9900))
+
+        event.clear(RagiumFluids.NITROGEN_DIOXIDE, Color(0x3399cc))
+        event.clear(RagiumFluids.AMMONIA, Color(0x6699cc))
+        event.dull(RagiumFluids.NITRIC_ACID, Color(0x9999cc))
+
+        event.clear(RagiumFluids.SULFUR_DIOXIDE, Color(0xcc6600))
+        event.clear(RagiumFluids.SULFUR_TRIOXIDE, Color(0xcc9900))
+        event.dull(RagiumFluids.SULFURIC_ACID, Color(0xcccc00))
+        // The End
+        event.clear(RagiumFluids.HELIUM, Color(0xffff99))
     }
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         // Block Entity
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), ::HTTankRenderer)
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), ::HTTankRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.BATTERY.get(), HTBatteryRenderer::BlockRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_BATTERY.get(), HTBatteryRenderer::BlockRenderer)
+
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CRATE.get(), ::HTCrateRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_CRATE.get(), ::HTCrateRenderer)
+
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), HTTankRenderer::BlockRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), HTTankRenderer::BlockRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.IMITATION_SPAWNER.get(), ::HTImitationSpawnerRenderer)
     }

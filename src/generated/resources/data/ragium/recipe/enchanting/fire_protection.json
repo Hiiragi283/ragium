@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:fire_protection",
   "ingredient": {
     "amount": 64,
     "items": "minecraft:magma_cream"
-  },
-  "time": 200
+  }
 }

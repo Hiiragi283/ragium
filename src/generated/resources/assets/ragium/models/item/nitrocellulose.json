@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "minecraft:item/map",
+    "layer1": "ragium:item/explosive_overlay"
+  }
+}

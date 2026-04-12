@@ -1,10 +1,21 @@
 {
   "type": "ragium:planting",
-  "crop": {
-    "count": 6,
-    "id": "minecraft:bamboo"
+  "addition": {
+    "items": "#minecraft:dirt"
   },
-  "seed": "minecraft:bamboo",
-  "soil": "#minecraft:dirt",
-  "time": 200
+  "base": {
+    "amount": 1,
+    "items": "minecraft:bamboo"
+  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:bamboo"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:bamboo"
+    }
+  ],
+  "time": 100
 }

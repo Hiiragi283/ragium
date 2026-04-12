@@ -1,0 +1,35 @@
+{
+  "criteria": {
+    "has_raginite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/raginite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/block/smooth_stone.png",
+    "description": {
+      "translate": "advancements.ragium.root.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:raginite_dust"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.ragium.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_raginite"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

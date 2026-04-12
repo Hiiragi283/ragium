@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "amount": 1,
+    "items": "minecraft:wind_charge"
+  },
+  "result": {
+    "amount": 125,
+    "id": "ragium:nitrogen"
+  },
+  "time": 200
+}

@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:refinery",
+  "criteria": {
+    "has_silicon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:dusts/silicon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.refined_silicon.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "hiiragi_core:silicon_dust"
+    },
+    "title": {
+      "translate": "advancements.ragium.refined_silicon.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_silicon"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

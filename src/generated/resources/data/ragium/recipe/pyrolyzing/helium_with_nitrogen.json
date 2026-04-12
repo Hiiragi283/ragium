@@ -1,0 +1,16 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:nitrogen"
+  },
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:helium"
+  },
+  "item_ingredient": {
+    "amount": 4,
+    "items": "#c:end_stones"
+  },
+  "time": 300
+}

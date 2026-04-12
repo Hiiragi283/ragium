@@ -1,0 +1,33 @@
+{
+  "parent": "ragium:thermometer",
+  "criteria": {
+    "has_pyrolyzer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ragium:pyrolyzer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.ragium.pyrolyzer.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "ragium:pyrolyzer"
+    },
+    "title": {
+      "translate": "advancements.ragium.pyrolyzer.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_pyrolyzer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

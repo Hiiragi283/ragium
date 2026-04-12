@@ -1,19 +1,19 @@
 {
   "values": [
     "ragium:alloy_smelter",
-    "ragium:bending_machine",
-    "ragium:canning_machine",
-    "ragium:compressor",
+    "ragium:assembler",
+    "ragium:auto_chisel",
+    "ragium:brewery",
     "ragium:crusher",
     "ragium:cutting_machine",
     "ragium:electric_furnace",
-    "ragium:forming_press",
+    "ragium:enchanter",
     "ragium:freezer",
-    "ragium:lathe",
     "ragium:melter",
     "ragium:mixer",
+    "ragium:planter",
     "ragium:pyrolyzer",
-    "ragium:washer",
-    "ragium:wiremill"
+    "ragium:refinery",
+    "ragium:washer"
   ]
 }

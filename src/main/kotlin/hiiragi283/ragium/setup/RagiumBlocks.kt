@@ -4,10 +4,10 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.function.partially2
 import hiiragi283.core.api.text.HTTranslation
-import hiiragi283.core.common.registry.HTBasicDeferredBlock
-import hiiragi283.core.common.registry.HTDeferredBlock
+import hiiragi283.core.common.registry.HTBasicDeferredBlockAndItem
+import hiiragi283.core.common.registry.HTDeferredBlockAndItem
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.registry.register.HTDeferredBlockRegister
+import hiiragi283.core.common.registry.register.HTDeferredBlockAndItemRegister
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -17,17 +17,17 @@ import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
-import hiiragi283.ragium.common.block.storage.HTResonantInterfaceBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
 import hiiragi283.ragium.common.item.block.HTBatteryBlockItem
 import hiiragi283.ragium.common.item.block.HTCrateBlockItem
 import hiiragi283.ragium.common.item.block.HTImitationSpawnerBlockItem
 import hiiragi283.ragium.common.item.block.HTMachineBlockItem
-import hiiragi283.ragium.common.item.block.HTResonantInterfaceBlockItem
 import hiiragi283.ragium.common.item.block.HTTankBlockItem
 import hiiragi283.ragium.common.item.block.HTUniversalChestBlockItem
+import net.minecraft.util.Unit
 import net.minecraft.world.food.Foods
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.SoundType
@@ -40,7 +40,7 @@ import net.neoforged.bus.api.IEventBus
  */
 object RagiumBlocks {
     @JvmField
-    val REGISTER = HTDeferredBlockRegister(RagiumAPI.MOD_ID)
+    val REGISTER = HTDeferredBlockAndItemRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
@@ -50,14 +50,14 @@ object RagiumBlocks {
     //    Materials    //
 
     @JvmField
-    val MEAT_BLOCK: HTBasicDeferredBlock<HTMeatBlock> = REGISTER.registerSimple(
+    val MEAT_BLOCK: HTBasicDeferredBlockAndItem<HTMeatBlock> = REGISTER.registerSimple(
         "meat_block",
         copyOf(Blocks.MUD).mapColor(MapColor.COLOR_RED),
         ::HTMeatBlock.partially1(Foods.BEEF),
     )
 
     @JvmField
-    val COOKED_MEAT_BLOCK: HTBasicDeferredBlock<HTMeatBlock> = REGISTER.registerSimple(
+    val COOKED_MEAT_BLOCK: HTBasicDeferredBlockAndItem<HTMeatBlock> = REGISTER.registerSimple(
         "cooked_meat_block",
         copyOf(Blocks.PACKED_MUD).mapColor(MapColor.COLOR_RED),
         ::HTMeatBlock.partially1(Foods.COOKED_BEEF),
@@ -67,160 +67,149 @@ object RagiumBlocks {
 
     // Basic
     @JvmField
-    val ALLOY_SMELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+    val ALLOY_SMELTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.ALLOY_SMELTER, RagiumTranslation.ALLOY_SMELTER)
 
     @JvmField
-    val BENDING_MACHINE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.BENDING_MACHINE, RagiumTranslation.BENDING_MACHINE)
+    val ASSEMBLER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.ASSEMBLER, RagiumTranslation.ASSEMBLER)
 
     @JvmField
-    val COMPRESSOR: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.COMPRESSOR, RagiumTranslation.COMPRESSOR)
+    val AUTO_CHISEL: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.AUTO_CHISEL, RagiumTranslation.AUTO_CHISEL)
 
     @JvmField
-    val CRUSHER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+    val CRUSHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.CRUSHER, RagiumTranslation.CRUSHER)
 
     @JvmField
-    val CUTTING_MACHINE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+    val CUTTING_MACHINE: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.CUTTING_MACHINE, RagiumTranslation.CUTTING_MACHINE)
 
     @JvmField
-    val ELECTRIC_FURNACE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+    val ELECTRIC_FURNACE: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.ELECTRIC_FURNACE, RagiumTranslation.ELECTRIC_FURNACE)
 
     @JvmField
-    val FORMING_PRESS: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.FORMING_PRESS, RagiumTranslation.FORMING_PRESS)
+    val PLANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
+
+    // Advanced
+    @JvmField
+    val FREEZER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.FREEZER, RagiumTranslation.FREEZER)
 
     @JvmField
-    val LATHE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.LATHE, RagiumTranslation.LATHE)
-
-    @JvmField
-    val WIREMILL: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.WIREMILL, RagiumTranslation.WIREMILL)
-
-    // Heat
-    @JvmField
-    val MELTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+    val MELTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MELTER, RagiumTranslation.MELTER)
 
     @JvmField
-    val PYROLYZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+    val PYROLYZER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
-    // Cool
     @JvmField
-    val FREEZER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.FREEZER, RagiumTranslation.FREEZER)
+    val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY, machine().noOcclusion())
 
-    // Chemical
+    // Elite
     @JvmField
-    val CANNING_MACHINE: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.CANNING_MACHINE, RagiumTranslation.CANNING_MACHINE)
+    val BREWERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.BREWERY, RagiumTranslation.BREWERY)
 
     @JvmField
-    val MIXER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+    val MIXER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
 
     @JvmField
-    val WASHER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
+    val WASHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.WASHER, RagiumTranslation.WASHER)
 
-    // Matter
+    // Ultimate
+    @JvmField
+    val ENCHANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)
 
     //    Device    //
-
-    // Basic
-    @JvmField
-    val PLANTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.PLANTER, RagiumTranslation.PLANTER)
-
-    // Enchanting
-    @JvmField
-    val ENCHANTER: HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)
 
     //    Storages    //
 
     @JvmField
-    val BATTERY: HTDeferredBlock<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
-        "battery",
-        machine().noOcclusion(),
-        ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.BATTERY),
-        ::HTBatteryBlockItem,
-    )
-
-    @JvmField
-    val CRATE: HTDeferredBlock<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
-        "crate",
-        machine().noOcclusion(),
-        ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CRATE),
-        ::HTCrateBlockItem,
-    )
-
-    @JvmField
-    val TANK: HTDeferredBlock<HTTankBlock, HTTankBlockItem> = REGISTER.register(
-        "tank",
-        machine().noOcclusion(),
-        ::HTTankBlock.partially1(RagiumBlockEntityTypes.TANK),
-        ::HTTankBlockItem,
-    )
-
-    @JvmField
-    val RESONANT_INTERFACE: HTDeferredBlock<HTResonantInterfaceBlock, HTResonantInterfaceBlockItem> = REGISTER.register(
-        "resonant_interface",
-        machine(),
-        ::HTResonantInterfaceBlock,
-        ::HTResonantInterfaceBlockItem,
-    )
-
-    @JvmField
-    val UNIVERSAL_CHEST: HTDeferredBlock<HTUniversalChestBlock, HTUniversalChestBlockItem> = REGISTER.register(
+    val UNIVERSAL_CHEST: HTDeferredBlockAndItem<HTUniversalChestBlock, HTUniversalChestBlockItem> = REGISTER.register(
         RagiumConst.UNIVERSAL_CHEST,
         machine(),
         ::HTUniversalChestBlock,
         ::HTUniversalChestBlockItem,
     ) { it.component(HCDataComponents.COLOR, HTDefaultColor.WHITE) }
 
+    // Variable
+    @JvmField
+    val BATTERY: HTDeferredBlockAndItem<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
+        "battery",
+        machine().noOcclusion(),
+        ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.BATTERY),
+        ::HTBatteryBlockItem,
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
+
+    @JvmField
+    val CRATE: HTDeferredBlockAndItem<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
+        "crate",
+        machine().noOcclusion(),
+        ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CRATE),
+        ::HTCrateBlockItem,
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
+
+    @JvmField
+    val TANK: HTDeferredBlockAndItem<HTTankBlock, HTTankBlockItem> = REGISTER.register(
+        "tank",
+        machine().noOcclusion(),
+        ::HTTankBlock.partially1(RagiumBlockEntityTypes.TANK),
+        ::HTTankBlockItem,
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
+
+    // Void
+    @JvmField
+    val VOID_TANK: HTDeferredBlockAndItem<HTTankBlock, HTTankBlockItem> = REGISTER.register(
+        "void_tank",
+        machine().noOcclusion(),
+        ::HTTankBlock.partially1(RagiumBlockEntityTypes.VOID_TANK),
+        ::HTTankBlockItem,
+    )
+
+    // Creative
+    @JvmField
+    val CREATIVE_BATTERY: HTDeferredBlockAndItem<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
+        "creative_battery",
+        machine().noOcclusion(),
+        ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.CREATIVE_BATTERY),
+        ::HTBatteryBlockItem,
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CREATIVE_STORAGE, Unit.INSTANCE) }
+
+    @JvmField
+    val CREATIVE_CRATE: HTDeferredBlockAndItem<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
+        "creative_crate",
+        machine().noOcclusion(),
+        ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CREATIVE_CRATE),
+        ::HTCrateBlockItem,
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CREATIVE_STORAGE, Unit.INSTANCE) }
+
+    @JvmField
+    val CREATIVE_TANK: HTDeferredBlockAndItem<HTTankBlock, HTTankBlockItem> = REGISTER.register(
+        "creative_tank",
+        machine().noOcclusion(),
+        ::HTTankBlock.partially1(RagiumBlockEntityTypes.CREATIVE_TANK),
+        ::HTTankBlockItem,
+    ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CREATIVE_STORAGE, Unit.INSTANCE) }
+
     //    Utilities    //
 
     @JvmField
-    val IMITATION_SPAWNER: HTDeferredBlock<HTImitationSpawnerBlock, HTImitationSpawnerBlockItem> =
+    val IMITATION_SPAWNER: HTDeferredBlockAndItem<HTImitationSpawnerBlock, HTImitationSpawnerBlockItem> =
         REGISTER.register(
             "imitation_spawner",
             copyOf(Blocks.SPAWNER),
             ::HTImitationSpawnerBlock,
             ::HTImitationSpawnerBlockItem,
         )
-
-    //    Creatives    //
-
-    @JvmField
-    val CREATIVE_BATTERY: HTDeferredBlock<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
-        "creative_battery",
-        machine().noOcclusion(),
-        ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.CREATIVE_BATTERY),
-        ::HTBatteryBlockItem,
-    )
-
-    @JvmField
-    val CREATIVE_CRATE: HTDeferredBlock<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
-        "creative_crate",
-        machine().noOcclusion(),
-        ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CREATIVE_CRATE),
-        ::HTCrateBlockItem,
-    )
-
-    @JvmField
-    val CREATIVE_TANK: HTDeferredBlock<HTTankBlock, HTTankBlockItem> = REGISTER.register(
-        "creative_tank",
-        machine().noOcclusion(),
-        ::HTTankBlock.partially1(RagiumBlockEntityTypes.CREATIVE_TANK),
-        ::HTTankBlockItem,
-    )
 
     //    Extensions    //
 
@@ -242,7 +231,7 @@ object RagiumBlocks {
         type: HTDeferredBlockEntityType<*>,
         translation: HTTranslation,
         properties: BlockBehaviour.Properties = machine(),
-    ): HTDeferredBlock<HTMachineBlock, HTMachineBlockItem> = REGISTER.register(
+    ): HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = REGISTER.register(
         type.path,
         properties,
         ::HTMachineBlock.partially2(translation, type),

@@ -1,10 +1,21 @@
 {
   "type": "ragium:planting",
-  "crop": {
-    "count": 6,
-    "id": "minecraft:cherry_log"
+  "addition": {
+    "items": "#minecraft:dirt"
   },
-  "seed": "minecraft:cherry_sapling",
-  "soil": "#minecraft:dirt",
-  "time": 200
+  "base": {
+    "amount": 1,
+    "items": "minecraft:cherry_sapling"
+  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:cherry_log"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:cherry_sapling"
+    }
+  ],
+  "time": 100
 }

@@ -1,10 +1,8 @@
 {
-  "type": "ragium:enchanting",
-  "book": "minecraft:book",
+  "type": "ragium:enchanting/holder",
   "enchantment": "minecraft:swift_sneak",
   "ingredient": {
     "amount": 16,
     "items": "#c:gems/echo"
-  },
-  "time": 200
+  }
 }

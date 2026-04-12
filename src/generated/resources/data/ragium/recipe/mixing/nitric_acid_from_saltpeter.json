@@ -2,6 +2,7 @@
   "type": "ragium:mixing",
   "fluid_ingredient": [
     {
+      "amount": 1000,
       "fluids": "#c:sulfuric_acid"
     }
   ],
@@ -9,11 +10,12 @@
     "amount": 2000,
     "id": "ragium:nitric_acid"
   },
-  "item_ingredient": [
-    {
-      "amount": 2,
-      "items": "#c:dusts/saltpeter"
-    }
-  ],
+  "item_ingredient": {
+    "amount": 2,
+    "items": "#c:dusts/saltpeter"
+  },
+  "item_result": {
+    "id": "minecraft:magma_cream"
+  },
   "time": 200
 }

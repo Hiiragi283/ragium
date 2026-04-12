@@ -1,6 +1,9 @@
 {
   "values": [
-    "#ragium:upgradable/device",
+    {
+      "id": "#ragium:upgradable/device",
+      "required": false
+    },
     "#ragium:upgradable/machine"
   ]
 }

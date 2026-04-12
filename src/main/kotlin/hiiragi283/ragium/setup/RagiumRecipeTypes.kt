@@ -1,31 +1,21 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
-import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
-import hiiragi283.core.common.registry.HTDeferredRecipeType
+import hiiragi283.core.api.recipe.base.HTDoubleMultiOutputRecipe
+import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
 import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBendingRecipe
-import hiiragi283.ragium.common.recipe.HTCanningRecipe
-import hiiragi283.ragium.common.recipe.HTCompressingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTDistillingRecipe
-import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
-import hiiragi283.ragium.common.recipe.HTLathingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.HTPlantingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
-import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.ragium.common.recipe.HTWiringRecipe
-import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
-import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.item.crafting.RecipeType
+import java.util.function.Supplier
 
 object RagiumRecipeTypes {
     @JvmField
@@ -33,59 +23,44 @@ object RagiumRecipeTypes {
 
     // Machine - Basic
     @JvmField
-    val ALLOYING: HTDeferredRecipeType<HTShapelessRecipeInput, HTAlloyingRecipe> = REGISTER.registerType(RagiumConst.ALLOYING)
+    val ALLOYING: Supplier<RecipeType<HTAlloyingRecipe>> = REGISTER.registerType(RagiumConst.ALLOYING)
 
     @JvmField
-    val BENDING: HTDeferredRecipeType<SingleRecipeInput, HTBendingRecipe> = REGISTER.registerType(RagiumConst.BENDING)
+    val ASSEMBLING: Supplier<RecipeType<HTAssemblingRecipe>> = REGISTER.registerType(RagiumConst.ASSEMBLING)
 
     @JvmField
-    val COMPRESSING: HTDeferredRecipeType<SingleRecipeInput, HTCompressingRecipe> = REGISTER.registerType(RagiumConst.COMPRESSING)
+    val CUTTING: Supplier<RecipeType<HTSingleMultiOutputRecipe.Serializable>> = REGISTER.registerType(RagiumConst.CUTTING)
 
     @JvmField
-    val CRUSHING: HTDeferredRecipeType<SingleRecipeInput, HTCrushingRecipe> = REGISTER.registerType(RagiumConst.CRUSHING)
+    val PLANTING: Supplier<RecipeType<HTDoubleMultiOutputRecipe.Serializable>> = REGISTER.registerType(RagiumConst.PLANTING)
+
+    // Machine - Advanced
+    @JvmField
+    val FREEZING: Supplier<RecipeType<HTFreezingRecipe>> = REGISTER.registerType(RagiumConst.FREEZING)
 
     @JvmField
-    val CUTTING: HTDeferredRecipeType<SingleRecipeInput, HTCuttingRecipe> = REGISTER.registerType(RagiumConst.CUTTING)
+    val MELTING: Supplier<RecipeType<HTMeltingRecipe>> = REGISTER.registerType(RagiumConst.MELTING)
 
     @JvmField
-    val LATHING: HTDeferredRecipeType<SingleRecipeInput, HTLathingRecipe> = REGISTER.registerType(RagiumConst.LATHING)
+    val PYROLYZING: Supplier<RecipeType<HTItemOrFluidRecipe.Serializable>> = REGISTER.registerType(RagiumConst.PYROLYZING)
 
     @JvmField
-    val PRESSING: HTDeferredRecipeType<HTShapelessRecipeInput, HTPressingRecipe> = REGISTER.registerType(RagiumConst.PRESSING)
+    val REFINING: Supplier<RecipeType<HTItemOrFluidRecipe.Serializable>> = REGISTER.registerType(RagiumConst.REFINING)
+
+    // Machine - Elite
+    @JvmField
+    val CHEMICAL_WASHING: Supplier<RecipeType<HTItemOrFluidRecipe.Serializable>> = REGISTER.registerType(RagiumConst.CHEMICAL_WASHING)
 
     @JvmField
-    val WIRING: HTDeferredRecipeType<SingleRecipeInput, HTWiringRecipe> = REGISTER.registerType(RagiumConst.WIRING)
-
-    // Machine - Heat
-    @JvmField
-    val DISTILLING: HTDeferredRecipeType<HTSingleFluidRecipeInput, HTDistillingRecipe> = REGISTER.registerType(RagiumConst.DISTILLING)
+    val ELECTROLYZING: Supplier<RecipeType<HTElectrolyzingRecipe>> = REGISTER.registerType(RagiumConst.ELECTROLYZING)
 
     @JvmField
-    val MELTING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
+    val MIXING: Supplier<RecipeType<HTMixingRecipe>> = REGISTER.registerType(RagiumConst.MIXING)
 
     @JvmField
-    val PYROLYZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTPyrolyzingRecipe> = REGISTER.registerType(RagiumConst.PYROLYZING)
+    val WASHING: Supplier<RecipeType<HTWashingRecipe>> = REGISTER.registerType(RagiumConst.WASHING)
 
-    // Machine - Cool
+    // Machine - Ultimate
     @JvmField
-    val FREEZING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTFreezingRecipe> = REGISTER.registerType(RagiumConst.FREEZING)
-
-    // Machine - Chemical
-    @JvmField
-    val CANNING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTCanningRecipe> = REGISTER.registerType(RagiumConst.CANNING)
-
-    @JvmField
-    val MIXING: HTDeferredRecipeType<HTChemicalRecipeInput, HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
-
-    @JvmField
-    val WASHING: HTDeferredRecipeType<HTItemAndFluidRecipeInput, HTWashingRecipe> = REGISTER.registerType(RagiumConst.WASHING)
-
-    // Machine - Matter
-
-    // Device
-    @JvmField
-    val ENCHANTING: HTDeferredRecipeType<HTEnchantingRecipe.Input, HTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
-
-    @JvmField
-    val PLANTING: HTDeferredRecipeType<HTPlantingRecipe.Input, HTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
+    val ENCHANTING: Supplier<RecipeType<HTEnchantingRecipe>> = REGISTER.registerType(RagiumConst.ENCHANTING)
 }

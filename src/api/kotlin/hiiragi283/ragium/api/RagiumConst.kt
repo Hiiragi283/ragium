@@ -5,36 +5,28 @@ object RagiumConst {
 
     // Basic
     const val ALLOY_SMELTER = "alloy_smelter"
-    const val BENDING_MACHINE = "bending_machine"
-    const val COMPRESSOR = "compressor"
+    const val ASSEMBLER = "assembler"
+    const val AUTO_CHISEL = "auto_chisel"
     const val CRUSHER = "crusher"
     const val CUTTING_MACHINE = "cutting_machine"
     const val ELECTRIC_FURNACE = "electric_furnace"
-    const val FORMING_PRESS = "forming_press"
-    const val LATHE = "lathe"
-    const val WIREMILL = "wiremill"
+    const val PLANTER = "planter"
 
-    // Heat
-    const val DISTILLATION_TOWER = "distillation_tower"
+    // Advanced
+    const val FREEZER = "freezer"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
+    const val REFINERY = "refinery"
 
-    // Cool
-    const val FREEZER = "freezer"
-
-    // Chemical
+    // Elite
     const val BREWERY = "brewery"
-    const val CANNING_MACHINE = "canning_machine"
-    const val CENTRIFUGE = "centrifuge"
     const val ELECTROLYZER = "electrolyzer"
     const val MIXER = "mixer"
     const val WASHER = "washer"
 
-    // Matter
-
-    // Device
+    // Ultimate
+    const val MASS_DUPLICATOR = "mass_duplicator"
     const val ENCHANTER = "enchanter"
-    const val PLANTER = "planter"
 
     // Storage
     const val UNIVERSAL_CHEST = "universal_chest"
@@ -52,37 +44,23 @@ object RagiumConst {
 
     // Basic
     const val ALLOYING = "alloying"
-    const val BENDING = "bending"
-    const val CRUSHING = "crushing"
+    const val ASSEMBLING = "assembling"
     const val CUTTING = "cutting"
-    const val LATHING = "lathing"
-    const val PRESSING = "pressing"
-    const val WIRING = "wiring"
+    const val PLANTING = "planting"
 
-    // Heat
-    const val DISTILLING = "distilling"
+    // Advanced
+    const val FREEZING = "freezing"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
+    const val REFINING = "refining"
 
-    // Cool
-    const val FREEZING = "freezing"
-
-    // Chemical
-    const val CANNING = "canning"
-    const val CENTRIFUGING = "centrifuging"
+    // Elite
+    const val CHEMICAL_WASHING = "chemical_washing"
     const val ELECTROLYZING = "electrolyzing"
     const val MIXING = "mixing"
     const val WASHING = "washing"
 
-    // Matter
+    // Ultimate
     const val DUPLICATING = "duplicating"
-    const val FABRICATING = "fabricating"
-
-    // Device
-    const val BREWING = "brewing"
-    const val COMPRESSING = "compressing"
     const val ENCHANTING = "enchanting"
-    const val PLANTING = "planting"
-
-    // Serialization
 }

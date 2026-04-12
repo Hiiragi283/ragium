@@ -6,8 +6,11 @@ import hiiragi283.ragium.data.client.RagiumBlockStateProvider
 import hiiragi283.ragium.data.client.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.client.RagiumItemModelProvider
 import hiiragi283.ragium.data.client.RagiumJapaneseLangProvider
+import hiiragi283.ragium.data.client.RagiumSpriteSourceProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
+import hiiragi283.ragium.data.server.RagiumTankInteractionProvider
+import hiiragi283.ragium.data.server.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
@@ -26,6 +29,7 @@ object RagiumDatagen {
         server.addLootTables(
             ::RagiumBlockLootProvider to LootContextParamSets.BLOCK,
         )
+        server.addAdvancements(RagiumAdvancementProvider)
 
         server.addProvider(::RagiumRecipeProvider)
 
@@ -33,11 +37,13 @@ object RagiumDatagen {
         server.addBlockAndItemTags(::RagiumBlockTagsProvider, ::RagiumItemTagsProvider)
 
         server.addProvider(::RagiumDataMapProvider)
+
+        server.addProvider(::RagiumTankInteractionProvider)
         // Client
         client.addProvider(::RagiumEnglishLangProvider)
         client.addProvider(::RagiumJapaneseLangProvider)
 
-        // client.addProvider(::RagiumTextureProvider)
+        client.addProvider(::RagiumSpriteSourceProvider)
 
         client.addProvider(::RagiumBlockStateProvider)
         client.addProvider(::RagiumItemModelProvider)

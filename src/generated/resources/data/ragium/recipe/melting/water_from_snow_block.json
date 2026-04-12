@@ -1,11 +1,11 @@
 {
   "type": "ragium:melting",
-  "fluid_result": {
-    "id": "minecraft:water"
-  },
-  "item_ingredient": {
+  "ingredient": {
     "amount": 1,
     "items": "minecraft:snow_block"
+  },
+  "result": {
+    "id": "minecraft:water"
   },
   "time": 100
 }

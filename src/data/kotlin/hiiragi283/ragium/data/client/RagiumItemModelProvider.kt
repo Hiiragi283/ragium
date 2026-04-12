@@ -4,14 +4,13 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTItemModelProvider
+import hiiragi283.core.api.data.model.withExistingParent
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.itemId
 import hiiragi283.core.api.resource.toId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTFoodCanType
-import hiiragi283.ragium.common.item.HTMoldType
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
@@ -23,22 +22,33 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
     override fun registerModels() {
         existingFileHelper.trackGenerated(wireOverlay, TEXTURE)
 
+        trackItem(RagiumItems.CARBON_COMPOUND)
+        trackItem(RagiumItems.CRYO_CHARGE)
+
+        trackItem(RagiumItems.CRUDE_SILICON)
+        trackItem(RagiumItems.SMOKELESS_POWDER)
+
         buildList {
             addAll(RagiumItems.REGISTER.asSequence())
 
             remove(RagiumItems.RAGI_ALLOY_COMPOUND)
+            remove(RagiumItems.NITROGLYCERIN)
+            remove(RagiumItems.NITROCELLULOSE)
 
             removeAll(RagiumItems.FOOD_CANS.values)
 
-            removeAll(RagiumItems.MOLDS.values)
             remove(RagiumItems.BLANK_DISC)
-            remove(RagiumItems.POTION_DROP)
-
-            removeAll(RagiumItems.UPGRADES.values)
         }.forEach { item: HTIdLike -> existTexture(item, ::basicItem) }
         // Materials
-        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { item ->
+        existTexture(RagiumItems.RAGI_ALLOY_COMPOUND) { item: HTIdLike ->
             layeredItem(item, HTConst.MINECRAFT.toId(HTConst.ITEM, "copper_ingot"), item.itemId)
+        }
+        val explosiveOverlay: ResourceLocation = RagiumAPI.id(HTConst.ITEM, "explosive_overlay")
+        existTexture(RagiumItems.GLYCEROL_DROP) { item: HTIdLike ->
+            layeredItem(RagiumItems.NITROGLYCERIN, item.itemId, explosiveOverlay)
+        }
+        existTexture(RagiumItems.NITROCELLULOSE, HTConst.MINECRAFT.toId(HTConst.ITEM, "map")) { item: HTIdLike, id: ResourceLocation ->
+            layeredItem(item, id, explosiveOverlay)
         }
         // Foods
         for ((canType: HTFoodCanType, item: HTIdLike) in RagiumItems.FOOD_CANS) {
@@ -46,41 +56,17 @@ class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(R
         }
         // Utilities
         existTexture(RagiumItems.BLANK_DISC) { item: HTIdLike ->
-            withExistingParent(item.path, HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
+            withExistingParent(item, HTConst.MINECRAFT.toId(HTConst.ITEM, "template_music_disc"))
                 .texture("layer0", item.itemId)
         }
-        layeredItem(RagiumItems.POTION_DROP, HTConst.MINECRAFT.toId(HTConst.ITEM, "ghast_tear"))
-
-        for ((moldType: HTMoldType, item: HTIdLike) in RagiumItems.MOLDS) {
-            existTexture(item, RagiumAPI.id(HTConst.ITEM, "mold", moldType.serializedName), ::layeredItem)
-        }
-        // Upgrades
-        registerUpgrades()
         // Buckets
         registerBuckets()
-    }
-
-    private fun registerUpgrades() {
-        for ((type: RagiumUpgradeType, item: HTIdLike) in RagiumItems.UPGRADES) {
-            val base: ResourceLocation = when (type.group) {
-                RagiumUpgradeType.Group.CREATIVE -> {
-                    existTexture(type::getId, ::basicItem)
-                    continue
-                }
-                else -> RagiumAPI.id("item", "upgrade", "${type.group.serializedName}_base")
-            }
-            val textureId: ResourceLocation = RagiumAPI.id("item", "upgrade", type.serializedName)
-            existTexture(item, textureId) { itemIn: HTIdLike, texId: ResourceLocation ->
-                layeredItem(itemIn, base, texId)
-            }
-        }
     }
 
     private fun registerBuckets() {
         val dripFluids: List<HTFluidContent> = buildList {
             // Oil
             add(RagiumFluids.CRUDE_OIL)
-            add(RagiumFluids.LUBRICANT)
             // Organic
             add(RagiumFluids.CREOSOTE)
             add(RagiumFluids.SYNTHETIC_OIL)

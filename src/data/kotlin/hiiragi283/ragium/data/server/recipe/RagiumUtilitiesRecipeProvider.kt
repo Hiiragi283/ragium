@@ -1,30 +1,31 @@
 package hiiragi283.ragium.data.server.recipe
 
-import hiiragi283.core.api.HTBuilderMarker
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.data.holder.HTIngredientHolder
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.common.data.recipe.builder.HTClearComponentRecipeBuilder
+import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
-import hiiragi283.core.common.data.recipe.builder.HTStonecuttingRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.common.registry.HTDeferredBlockAndItem
 import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.tag.RagiumTags
-import hiiragi283.ragium.common.crafting.HTPotionBucketRecipe
-import hiiragi283.ragium.common.item.HTMoldType
+import hiiragi283.ragium.common.crafting.HTStorageCombiningRecipe
+import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumDataComponents
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
-import net.minecraft.core.component.DataComponentType
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -35,44 +36,66 @@ import net.neoforged.neoforge.common.Tags
 
 object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
-        // Molds
+        parts()
+
+        // Blueprint
+        HTItemOrFluidRecipeBuilder.refining(output) {
+            ingredient += inputCreator.create(Items.PAPER)
+            ingredient += inputCreator.create(HCFluids.DyeContents[HTDefaultColor.BLUE], 250)
+
+            result += resultCreator.create(HCItems.BLUEPRINT)
+        }
+        // Blank Disc
         HTShapedRecipeBuilder.create(output) {
-            storage4()
-            define('A') += CommonTagPrefixes.PLATE to CommonMaterialKeys.STEEL
-            resultStack += HTMoldType.BLANK
+            pattern(
+                " A ",
+                "A A",
+                " A ",
+            )
+            define('A') += HiiragiCoreTags.Items.PLASTICS
+            resultStack += RagiumItems.BLANK_DISC
         }
 
-        for (moldType: HTMoldType in HTMoldType.entries) {
-            HTStonecuttingRecipeBuilder.create(output) {
-                ingredient += RagiumTags.Items.MOLDS
-                resultStack += moldType
-            }
-        }
-
-        // Location Ticket
-        HTShapedRecipeBuilder.create(output) {
-            hollow8()
-            define('A') += Items.PAPER
-            define('B') += CommonTagPrefixes.PEARL to VanillaMaterialKeys.ENDER
-            resultStack += RagiumItems.LOCATION_TICKET to 8
-            recipeId suffix "_with_ender"
-        }
-
-        HTShapedRecipeBuilder.create(output) {
-            hollow8()
-            define('A') += Items.PAPER
-            define('B') += CommonTagPrefixes.GEM to HCMaterialKeys.WARPED_CRYSTAL
-            resultStack += RagiumItems.LOCATION_TICKET to 8
-            recipeId suffix "_with_warped"
-        }
         // Loot Ticket
         lootTickets()
-        // Potion Drop -> Potion
-        save(id("shapeless/potion_bucket"), HTPotionBucketRecipe(CraftingBookCategory.MISC))
 
         machines()
         devices()
         storages()
+    }
+
+    @JvmStatic
+    private fun parts() {
+        // Mercury Bottle <-> Mercury Bucket
+        HTShapelessRecipeBuilder.create(output) {
+            repeat(4) {
+                ingredients += RagiumItems.MERCURY_BOTTLE
+            }
+            ingredients += Tags.Items.BUCKETS_EMPTY
+            resultStack += RagiumFluids.MERCURY.getBucket()
+            recipeId suffix "_from_bottles"
+        }
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += RagiumFluids.MERCURY.bucketTag
+            repeat(4) {
+                ingredients += Items.GLASS_BOTTLE
+            }
+            resultStack += RagiumItems.MERCURY_BOTTLE to 4
+            recipeId suffix "_from_bucket"
+        }
+        // Thermometer
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                " AB",
+                "ACA",
+                "DA ",
+            )
+            define('A') += Tags.Items.GLASS_PANES_COLORLESS
+            define('B') += Tags.Items.DYES_RED
+            define('C') += RagiumItems.MERCURY_BOTTLE
+            define('D') += CommonTagPrefixes.PLATE to VanillaMaterialKeys.COPPER
+            resultStack += RagiumItems.THERMOMETER
+        }
     }
 
     //    Machine    //
@@ -81,24 +104,22 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     private fun machines() {
         // Basic
         basic(RagiumBlocks.ALLOY_SMELTER) { it += Items.FURNACE }
-        basic(RagiumBlocks.BENDING_MACHINE) { it += ItemTags.ANVIL }
-        basic(RagiumBlocks.COMPRESSOR) { it += Items.PISTON }
+        basic(RagiumBlocks.ASSEMBLER) { it += Items.CRAFTER }
+        basic(RagiumBlocks.AUTO_CHISEL) { it += Items.STONECUTTER }
         basic(RagiumBlocks.CRUSHER) { it += CommonTagPrefixes.GEM to VanillaMaterialKeys.DIAMOND }
         basic(RagiumBlocks.CUTTING_MACHINE) { it += Items.IRON_AXE }
         basic(RagiumBlocks.ELECTRIC_FURNACE) { it += Items.FURNACE }
-        basic(RagiumBlocks.FORMING_PRESS) { it += Items.PISTON }
-        basic(RagiumBlocks.LATHE) { it += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON }
-        basic(RagiumBlocks.WIREMILL) { it += CommonTagPrefixes.ROD to VanillaMaterialKeys.IRON }
+        basic(RagiumBlocks.PLANTER) { it += Tags.Items.GLASS_BLOCKS }
         // Heat
+        advanced(RagiumBlocks.FREEZER, HCMaterialKeys.AZURE_STEEL) { it += Items.SNOW_BLOCK }
         advanced(RagiumBlocks.MELTER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.BLAST_FURNACE }
         advanced(RagiumBlocks.PYROLYZER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.NETHER_BRICKS }
-        // Cool
-        advanced(RagiumBlocks.FREEZER, HCMaterialKeys.AZURE_STEEL) { it += Items.SNOW_BLOCK }
-        // Chemical
-        chemical(RagiumBlocks.CANNING_MACHINE) { it += Items.GLASS_BOTTLE }
-        chemical(RagiumBlocks.MIXER) { it += RagiumBlocks.TANK }
-        chemical(RagiumBlocks.WASHER) { it += Items.CAULDRON }
-        // Matter
+        advanced(RagiumBlocks.REFINERY, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.IRON_BARS }
+        // Elite
+        elite(RagiumBlocks.BREWERY) { it += Items.BREWING_STAND }
+        elite(RagiumBlocks.MIXER) { it += RagiumBlocks.TANK }
+        elite(RagiumBlocks.WASHER) { it += Items.CAULDRON }
+        // Ultimate
     }
 
     @JvmStatic
@@ -127,14 +148,14 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             )
             define('A') += CommonTagPrefixes.INGOT to material
             define('B').let(consumer)
-            define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON
+            define('C') += RagiumItems.THERMOMETER
             define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
             resultStack += block
         }
     }
 
     @JvmStatic
-    private fun chemical(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+    private fun elite(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
         HTShapedRecipeBuilder.create(output) {
             pattern(
                 "AAA",
@@ -143,7 +164,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             )
             define('A') += CommonTagPrefixes.PLATE to RagiumMaterialKeys.STAINLESS_STEEL
             define('B').let(consumer)
-            define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.GOLD
+            define('C') += RagiumItems.ELECTRIC_CIRCUIT
             define('D') += CommonTagPrefixes.PLATE to CommonMaterialKeys.CARBON
             resultStack += block
         }
@@ -152,68 +173,24 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     //    Device    //
 
     @JvmStatic
-    private fun devices() {
-        // Basic
-        fun basic(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
-            HTShapedRecipeBuilder.create(output) {
-                pattern(
-                    "AAA",
-                    "BCB",
-                    "DDD",
-                )
-                define('A') += CommonTagPrefixes.INGOT to HCMaterialKeys.AZURE_STEEL
-                define('B').let(consumer)
-                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.IRON
-                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
-                resultStack += block
-            }
-        }
-
-        basic(RagiumBlocks.PLANTER) { it += Tags.Items.GLASS_BLOCKS }
-
-        // Enchanting
-        fun enchanting(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
-            HTShapedRecipeBuilder.create(output) {
-                pattern(
-                    "AAA",
-                    "BCB",
-                    "DDD",
-                )
-                define('A') += CommonTagPrefixes.INGOT to CommonMaterialKeys.CARBON
-                define('B').let(consumer)
-                define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.DIAMOND
-                define('D') += CommonTagPrefixes.INGOT to CommonMaterialKeys.STEEL
-                resultStack += block
-            }
-        }
-    }
+    private fun devices() {}
 
     //    Storage    //
 
     @JvmStatic
     private fun storages() {
+        save(id(HTConst.SHAPELESS, "storage_combining"), HTStorageCombiningRecipe(CraftingBookCategory.MISC))
         // Battery
         variableStorage(
             RagiumBlocks.BATTERY,
             VanillaMaterialKeys.GOLD,
             CommonTagPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL),
-            HCDataComponents.ENERGY,
+            CommonTagPrefixes.STORAGE_BLOCK.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL),
         )
         // Crate
-        variableStorage(
-            RagiumBlocks.CRATE,
-            CommonMaterialKeys.PLASTIC,
-            Tags.Items.CHESTS,
-            HCDataComponents.ITEM,
-        )
+        variableStorage(RagiumBlocks.CRATE, CommonMaterialKeys.PLASTIC, Tags.Items.CHESTS)
         // Tank
-        variableStorage(
-            RagiumBlocks.TANK,
-            CommonMaterialKeys.RUBBER,
-            Tags.Items.BUCKETS_EMPTY,
-            HCDataComponents.FLUID,
-        )
-        // Resonant Interface
+        variableStorage(RagiumBlocks.TANK, CommonMaterialKeys.RUBBER, Tags.Items.BUCKETS_EMPTY)
         // Universal Chest
         HTShapedRecipeBuilder.create(output) {
             hollow8()
@@ -234,10 +211,10 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
 
     @JvmStatic
     private fun variableStorage(
-        block: HTItemHolderLike<*>,
+        block: HTDeferredBlockAndItem<*, *>,
         top: HTMaterialLike,
         core: TagKey<Item>,
-        component: DataComponentType<*>,
+        largeCore: TagKey<Item> = core,
     ) {
         // Shaped
         HTShapedRecipeBuilder.create(output) {
@@ -248,10 +225,15 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             define('D') += core
             resultStack += block
         }
-        // Clear Component
-        HTClearComponentRecipeBuilder.create(output) {
-            item = block
-            targets += listOf(component)
+        // x10 Capacity
+        HTShapedRecipeBuilder.create(output) {
+            crossLayered()
+            define('A') += CommonTagPrefixes.STORAGE_BLOCK to RagiumMaterialKeys.RAGI_ALLOY
+            define('B') += CommonTagPrefixes.STORAGE_BLOCK to top
+            define('C') += Tags.Items.GLASS_BLOCKS
+            define('D') += largeCore
+            resultStack += createItemStack(block, RagiumDataComponents.CAPACITY_SCALE, 10)
+            recipeId prefix "larger_"
         }
     }
 
@@ -337,7 +319,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         }
     }
 
-    @HTBuilderMarker
     @JvmStatic
     private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, consumer: (HTIngredientHolder.Multiple) -> Unit) {
         HTShapelessRecipeBuilder.create(output) {

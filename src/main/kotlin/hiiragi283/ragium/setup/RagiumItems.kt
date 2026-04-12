@@ -1,36 +1,28 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.item.HTPotionBasedItem
-import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
-import hiiragi283.core.common.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
-import hiiragi283.core.common.storage.component.HTComponentHandler
-import hiiragi283.core.common.storage.energy.HTComponentEnergyBattery
-import hiiragi283.core.common.storage.fluid.HTComponentFluidTank
+import hiiragi283.core.common.storage.energy.HTBasicItemEnergyBattery
+import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.api.capability.RagiumCapabilities
-import hiiragi283.ragium.api.upgrade.HTUpgradeHandler
-import hiiragi283.ragium.api.upgrade.HTUpgradeHelper
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
-import hiiragi283.ragium.common.item.HTMoldType
-import hiiragi283.ragium.common.item.HTUpgradeItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
-import hiiragi283.ragium.common.upgrade.HTComponentUpgradeHandler
-import hiiragi283.ragium.common.upgrade.RagiumUpgradeType
+import hiiragi283.ragium.common.storge.energy.HTInfiniteEnergyBattery
+import hiiragi283.ragium.common.storge.fluid.HTInfiniteItemFluidTank
+import hiiragi283.ragium.common.storge.fluid.HTVoidItemFluidTank
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.component.DataComponents
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
@@ -39,6 +31,7 @@ import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
+import java.util.function.IntSupplier
 
 /**
  * @see hiiragi283.core.setup.HCItems
@@ -57,31 +50,67 @@ object RagiumItems {
 
     //    Materials    //
 
+    // Overworld
     @JvmField
-    val RAGI_ALLOY_COMPOUND: HTSimpleDeferredItem = REGISTER.registerSimpleItem("ragi_alloy_compound")
+    val RAGI_ALLOY_COMPOUND: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
     @JvmField
-    val CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("circuit_board")
+    val CARBON_COMPOUND: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("carbon_compound")
 
     @JvmField
-    val PLATED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("plated_circuit_board")
+    val CRYO_CHARGE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("cryo_charge")
+
+    // Nether
+    @JvmField
+    val CRUDE_SILICON: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("crude_silicon")
 
     @JvmField
-    val PRINTED_CIRCUIT_BOARD: HTSimpleDeferredItem = REGISTER.registerSimpleItem("printed_circuit_board")
+    val GLYCEROL_DROP: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("glycerol_drop")
 
     @JvmField
-    val ELECTRIC_CIRCUIT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("electric_circuit")
+    val NITROGLYCERIN: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("nitroglycerin")
+
+    @JvmField
+    val NITROCELLULOSE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("nitrocellulose")
+
+    @JvmField
+    val SMOKELESS_POWDER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("smokeless_powder")
+
+    //    Parts    //
+
+    // Basic
+
+    // Advanced
+    @JvmField
+    val MERCURY_BOTTLE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("mercury_bottle")
+
+    @JvmField
+    val THERMOMETER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("thermometer")
+
+    // Elite
+    @JvmField
+    val SILICON_WAFER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("silicon_wafer")
+
+    @JvmField
+    val CIRCUIT_CHIP: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("circuit_chip")
+
+    @JvmField
+    val CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("circuit_board")
+
+    @JvmField
+    val ELECTRIC_CIRCUIT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("electric_circuit")
+
+    // Ultimate
+    @JvmField
+    val ARTIFICIAL_ARTIFACT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("artificial_artifact")
 
     //    Foods    //
 
     @JvmField
-    val MOLASSES: HTSimpleDeferredItem = REGISTER.registerSimpleItem("molasses")
+    val EMPTY_CAN: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("empty_can")
 
     @JvmField
-    val EMPTY_CAN: HTSimpleDeferredItem = REGISTER.registerSimpleItem("empty_can")
-
-    @JvmField
-    val FOOD_CANS: Map<HTFoodCanType, HTSimpleDeferredItem> = HTFoodCanType.entries.associateWith { canType ->
+    val FOOD_CANS: Map<HTFoodCanType, HTSimpleItemHolderLike> = HTFoodCanType.entries.associateWith { canType ->
         val nutrition: Int = when (canType) {
             HTFoodCanType.FISH -> 5
             HTFoodCanType.FRUIT -> 4
@@ -109,40 +138,16 @@ object RagiumItems {
         }
     }
 
-    //    Molds    //
-
-    @JvmField
-    val MOLDS: Map<HTMoldType, HTSimpleDeferredItem> = HTMoldType.entries.associateWith { moldType: HTMoldType ->
-        REGISTER.registerSimpleItem("${moldType.serializedName}_mold")
-    }
-
     //    Utilities    //
 
     @JvmField
-    val BLANK_DISC: HTSimpleDeferredItem = REGISTER.registerSimpleItem("blank_disc")
+    val BLANK_DISC: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("blank_disc")
 
     @JvmField
-    val LOCATION_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
+    val LOCATION_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
 
     @JvmField
-    val LOOT_TICKET: HTSimpleDeferredItem = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
-
-    @JvmField
-    val POTION_DROP: HTSimpleDeferredItem = REGISTER.registerItem("potion_drop", ::HTPotionBasedItem)
-
-    //   Upgrades    //
-
-    @JvmField
-    val UPGRADES: Map<RagiumUpgradeType, HTSimpleDeferredItem> = RagiumUpgradeType.entries.associateWith { type: RagiumUpgradeType ->
-        val color: HTDefaultColor = when (type.group) {
-            RagiumUpgradeType.Group.CREATIVE -> HTDefaultColor.RED
-            RagiumUpgradeType.Group.GENERATOR -> HTDefaultColor.PURPLE
-            RagiumUpgradeType.Group.PROCESSOR -> HTDefaultColor.LIGHT_BLUE
-            RagiumUpgradeType.Group.DEVICE -> HTDefaultColor.YELLOW
-            RagiumUpgradeType.Group.STORAGE -> HTDefaultColor.GREEN
-        }
-        REGISTER.registerItemWith("${type.serializedName}_upgrade", color, ::HTUpgradeItem)
-    }
+    val LOOT_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
 
     //    Event    //
 
@@ -153,66 +158,38 @@ object RagiumItems {
         }
 
         with(HiiragiCoreAccess.INSTANCE.registeredContents.items) {
-            modify(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
-            modify(getOrThrow(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
+            modify(getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
+            modify(getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
         }
     }
 
     @JvmStatic
     private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
         // Fluid
-        HTFluidCapabilities.registerItem(
+        HTFluidCapabilities.registerItemTank(
             event,
-            { context: HTComponentHandler.ContainerContext ->
-                val capacity: Int = HTUpgradeHelper.getFluidCapacity(context.attachedTo, RagiumConfig.COMMON.tankCapacity.asInt)
-                HTComponentFluidTank.create(capacity, context)
+            { container: ItemStack ->
+                HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity))
             },
             RagiumBlocks.TANK,
-            RagiumBlocks.CREATIVE_TANK,
         )
+        HTFluidCapabilities.registerItemTank(event, ::HTVoidItemFluidTank, RagiumBlocks.VOID_TANK)
+        HTFluidCapabilities.registerItemTank(event, ::HTInfiniteItemFluidTank, RagiumBlocks.CREATIVE_TANK)
 
         // Energy
-        HTEnergyCapabilities.registerItem(
+        HTEnergyCapabilities.registerItemEnergy(
             event,
-            { context: HTComponentHandler.ContainerContext ->
-                val capacity: Int = HTUpgradeHelper.getEnergyCapacity(context.attachedTo, RagiumConfig.COMMON.batteryCapacity.asInt)
-                HTComponentEnergyBattery.create(context, capacity)
+            { container: ItemStack ->
+                HTBasicItemEnergyBattery.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity))
             },
             RagiumBlocks.BATTERY,
         )
-
-        // Upgrade
-        for (item: Item in BuiltInRegistries.ITEM) {
-            // Data-Based for all items
-            event.registerItem(
-                RagiumCapabilities.UPGRADABLE_ITEM,
-                { stack: ItemStack, _: Void? ->
-                    if (stack.has(RagiumDataComponents.MACHINE_UPGRADES)) {
-                        HTComponentUpgradeHandler(stack)
-                    } else {
-                        null
-                    }
-                },
-                item,
-            )
-        }
-
-        event.registerItem(
-            RagiumCapabilities.UPGRADABLE_ITEM,
-            { _, _ ->
-                object : HTUpgradeHandler {
-                    override fun getUpgrades(): List<HTItemResourceType> = listOf()
-
-                    override fun isValidUpgrade(upgrade: HTItemResourceType): Boolean = false
-
-                    override fun isCreative(): Boolean = true
-                }
-            },
-            RagiumBlocks.CREATIVE_BATTERY,
-            RagiumBlocks.CREATIVE_CRATE,
-            RagiumBlocks.CREATIVE_TANK,
-        )
+        HTEnergyCapabilities.registerItemEnergy(event, { HTInfiniteEnergyBattery }, RagiumBlocks.CREATIVE_BATTERY)
     }
+
+    @JvmStatic
+    private fun getCapacity(context: ItemStack, base: IntSupplier): Int =
+        RagiumDataComponents.getCapacity(base, context.getOrDefault(RagiumDataComponents.CAPACITY_SCALE, 1))
 
     //    Extensions    //
 

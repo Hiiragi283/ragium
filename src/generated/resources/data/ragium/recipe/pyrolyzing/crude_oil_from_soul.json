@@ -5,7 +5,7 @@
   },
   "item_ingredient": {
     "amount": 4,
-    "items": "#minecraft:soul_fire_base_blocks"
+    "items": "minecraft:soul_sand"
   },
   "item_result": {
     "count": 4,

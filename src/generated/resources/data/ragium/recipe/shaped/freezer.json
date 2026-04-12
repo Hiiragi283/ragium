@@ -9,7 +9,7 @@
       "item": "minecraft:snow_block"
     },
     "C": {
-      "tag": "c:gears/iron"
+      "item": "ragium:thermometer"
     },
     "D": {
       "tag": "c:ingots/steel"

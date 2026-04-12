@@ -1,10 +1,21 @@
 {
   "type": "ragium:planting",
-  "crop": {
-    "count": 6,
-    "id": "minecraft:chorus_fruit"
+  "addition": {
+    "items": "#c:end_stones"
   },
-  "seed": "minecraft:chorus_flower",
-  "soil": "#c:end_stones",
-  "time": 200
+  "base": {
+    "amount": 1,
+    "items": "minecraft:chorus_flower"
+  },
+  "results": [
+    {
+      "count": 6,
+      "id": "minecraft:chorus_fruit"
+    },
+    {
+      "chance": "1/6",
+      "id": "minecraft:chorus_flower"
+    }
+  ],
+  "time": 100
 }

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "ragium:item/glycerol_drop",
+    "layer1": "ragium:item/explosive_overlay"
+  }
+}

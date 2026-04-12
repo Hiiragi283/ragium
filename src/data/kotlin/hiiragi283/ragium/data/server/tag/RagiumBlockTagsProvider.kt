@@ -21,33 +21,31 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
         val pickaxe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_PICKAXE)
         sequence {
             yield(RagiumBlocks.ALLOY_SMELTER)
-            yield(RagiumBlocks.BENDING_MACHINE)
-            yield(RagiumBlocks.COMPRESSOR)
+            yield(RagiumBlocks.ASSEMBLER)
+            yield(RagiumBlocks.AUTO_CHISEL)
             yield(RagiumBlocks.CRUSHER)
             yield(RagiumBlocks.CUTTING_MACHINE)
             yield(RagiumBlocks.ELECTRIC_FURNACE)
-            yield(RagiumBlocks.FORMING_PRESS)
-            yield(RagiumBlocks.LATHE)
-            yield(RagiumBlocks.WIREMILL)
-
-            yield(RagiumBlocks.MELTER)
-            yield(RagiumBlocks.PYROLYZER)
+            yield(RagiumBlocks.PLANTER)
 
             yield(RagiumBlocks.FREEZER)
+            yield(RagiumBlocks.MELTER)
+            yield(RagiumBlocks.PYROLYZER)
+            yield(RagiumBlocks.REFINERY)
 
-            yield(RagiumBlocks.CANNING_MACHINE)
+            yield(RagiumBlocks.BREWERY)
             yield(RagiumBlocks.MIXER)
             yield(RagiumBlocks.WASHER)
 
-            yield(RagiumBlocks.PLANTER)
-
             yield(RagiumBlocks.ENCHANTER)
+
+            yield(RagiumBlocks.UNIVERSAL_CHEST)
 
             yield(RagiumBlocks.BATTERY)
             yield(RagiumBlocks.CRATE)
             yield(RagiumBlocks.TANK)
-            yield(RagiumBlocks.RESONANT_INTERFACE)
-            yield(RagiumBlocks.UNIVERSAL_CHEST)
+
+            yield(RagiumBlocks.VOID_TANK)
 
             yield(RagiumBlocks.IMITATION_SPAWNER)
 

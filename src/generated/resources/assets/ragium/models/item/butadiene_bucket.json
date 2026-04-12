@@ -1,6 +1,0 @@
-{
-  "parent": "neoforge:item/bucket",
-  "flip_gas": true,
-  "fluid": "ragium:butadiene",
-  "loader": "neoforge:fluid_container"
-}

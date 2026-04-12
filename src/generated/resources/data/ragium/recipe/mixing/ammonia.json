@@ -6,6 +6,7 @@
       "fluids": "#c:hydrogen"
     },
     {
+      "amount": 1000,
       "fluids": "#c:nitrogen"
     }
   ],
@@ -13,10 +14,8 @@
     "amount": 2000,
     "id": "ragium:ammonia"
   },
-  "item_ingredient": [
-    {
-      "items": "#c:dusts/iron"
-    }
-  ],
+  "item_ingredient": {
+    "items": "#c:dusts/iron"
+  },
   "time": 200
 }

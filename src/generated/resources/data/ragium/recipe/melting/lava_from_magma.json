@@ -1,12 +1,12 @@
 {
   "type": "ragium:melting",
-  "fluid_result": {
-    "amount": 250,
-    "id": "minecraft:lava"
-  },
-  "item_ingredient": {
+  "ingredient": {
     "amount": 1,
     "items": "minecraft:magma_block"
+  },
+  "result": {
+    "amount": 250,
+    "id": "minecraft:lava"
   },
   "time": 200
 }

@@ -1,119 +1,98 @@
 package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.gui.HTBounds
-import hiiragi283.core.api.integration.jei.type.HTHolderJeiRecipeType
 import hiiragi283.core.api.recipe.HTRecipeType
+import hiiragi283.core.api.recipe.base.HTDoubleMultiOutputRecipe
+import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
+import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.core.api.recipe.viewer.HTLookupRecipeViewerType
+import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
-import hiiragi283.ragium.common.recipe.HTBendingRecipe
-import hiiragi283.ragium.common.recipe.HTCanningRecipe
-import hiiragi283.ragium.common.recipe.HTCompressingRecipe
-import hiiragi283.ragium.common.recipe.HTCrushingRecipe
-import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTDistillingRecipe
-import hiiragi283.ragium.common.recipe.HTEnchantingRecipe
+import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
-import hiiragi283.ragium.common.recipe.HTLathingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.HTPlantingRecipe
-import hiiragi283.ragium.common.recipe.HTPressingRecipe
-import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.ragium.common.recipe.HTWiringRecipe
+import hiiragi283.ragium.common.recipe.RagiumDuplicatingRecipe
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
 import hiiragi283.ragium.setup.RagiumBlocks
-import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.Items
-import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.ItemLike
 
 object RagiumJeiRecipeTypes {
     @JvmStatic
-    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> processor(
+    private fun <INPUT : RecipeInput, RECIPE : Any> create(
         recipeType: HTRecipeType<INPUT, RECIPE>,
         icon: ItemLike,
-        width: Int = 18 * 8,
-        height: Int = 18 * 3,
-    ): HTHolderJeiRecipeType<INPUT, RECIPE> = HTHolderJeiRecipeType.create(recipeType, ItemStack(icon), HTBounds(0, 0, width, height))
+        width: Int,
+        height: Int = 18 * 1,
+    ): HTLookupRecipeViewerType<INPUT, RECIPE> = HTLookupRecipeViewerType.create(recipeType, ItemStack(icon), HTBounds(0, 0, width, height))
 
     // Machine - Basic
     @JvmField
-    val ALLOYING: HTHolderJeiRecipeType<HTShapelessRecipeInput, HTAlloyingRecipe> =
-        processor(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER)
+    val ALLOYING: HTLookupRecipeViewerType<HTShapelessRecipeInput, HTAlloyingRecipe> =
+        create(RagiumRecipeLookups.ALLOYING, RagiumBlocks.ALLOY_SMELTER, 18 * 6)
 
     @JvmField
-    val BENDING: HTHolderJeiRecipeType<SingleRecipeInput, HTBendingRecipe> =
-        processor(RagiumRecipeTypes.BENDING, RagiumBlocks.BENDING_MACHINE)
+    val ASSEMBLING: HTLookupRecipeViewerType<HTShapelessRecipeInput, HTAssemblingRecipe> =
+        create(RagiumRecipeLookups.ASSEMBLING, RagiumBlocks.ASSEMBLER, 18 * 5)
 
     @JvmField
-    val COMPRESSING: HTHolderJeiRecipeType<SingleRecipeInput, HTCompressingRecipe> =
-        processor(RagiumRecipeTypes.COMPRESSING, RagiumBlocks.COMPRESSOR)
+    val CUTTING: HTLookupRecipeViewerType<SingleRecipeInput, HTSingleMultiOutputRecipe> =
+        create(RagiumRecipeLookups.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 5, 18 * 2)
 
     @JvmField
-    val CRUSHING: HTHolderJeiRecipeType<SingleRecipeInput, HTCrushingRecipe> =
-        processor(RagiumRecipeTypes.CRUSHING, RagiumBlocks.CRUSHER)
-
-    @JvmField
-    val CUTTING: HTHolderJeiRecipeType<SingleRecipeInput, HTCuttingRecipe> =
-        processor(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE)
-
-    @JvmField
-    val LATHING: HTHolderJeiRecipeType<SingleRecipeInput, HTLathingRecipe> =
-        processor(RagiumRecipeTypes.LATHING, RagiumBlocks.LATHE)
-
-    @JvmField
-    val PRESSING: HTHolderJeiRecipeType<HTShapelessRecipeInput, HTPressingRecipe> =
-        processor(RagiumRecipeTypes.PRESSING, RagiumBlocks.FORMING_PRESS)
-
-    @JvmField
-    val WIRING: HTHolderJeiRecipeType<SingleRecipeInput, HTWiringRecipe> =
-        processor(RagiumRecipeTypes.WIRING, RagiumBlocks.WIREMILL)
+    val PLANTING: HTLookupRecipeViewerType<HTDoubleRecipeInput, HTDoubleMultiOutputRecipe> =
+        create(RagiumRecipeLookups.PLANTING, RagiumBlocks.PLANTER, 18 * 6, 18 * 3)
 
     // Machine - Heat
     @JvmField
-    val DISTILLING: HTHolderJeiRecipeType<HTSingleFluidRecipeInput, HTDistillingRecipe> =
-        processor(RagiumRecipeTypes.DISTILLING, Items.FIREWORK_STAR, height = 18 * 1)
+    val FREEZING: HTLookupRecipeViewerType<HTItemAndFluidRecipeInput, HTFreezingRecipe> =
+        create(RagiumRecipeLookups.FREEZING, RagiumBlocks.FREEZER, 18 * 6)
 
     @JvmField
-    val MELTING: HTHolderJeiRecipeType<HTItemAndFluidRecipeInput, HTMeltingRecipe> =
-        processor(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER)
+    val MELTING: HTLookupRecipeViewerType<SingleRecipeInput, HTMeltingRecipe> =
+        create(RagiumRecipeLookups.MELTING, RagiumBlocks.MELTER, 18 * 4)
 
     @JvmField
-    val PYROLYZING: HTHolderJeiRecipeType<HTItemAndFluidRecipeInput, HTPyrolyzingRecipe> =
-        processor(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER)
-
-    // Machine - Cool
-    @JvmField
-    val FREEZING: HTHolderJeiRecipeType<HTItemAndFluidRecipeInput, HTFreezingRecipe> =
-        processor(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER)
-
-    // Machine - Chemical
-    @JvmField
-    val CANNING: HTHolderJeiRecipeType<HTItemAndFluidRecipeInput, HTCanningRecipe> =
-        processor(RagiumRecipeTypes.CANNING, RagiumBlocks.CANNING_MACHINE)
+    val PYROLYZING: HTLookupRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> =
+        create(RagiumRecipeLookups.PYROLYZING, RagiumBlocks.PYROLYZER, 18 * 8)
 
     @JvmField
-    val MIXING: HTHolderJeiRecipeType<HTChemicalRecipeInput, HTMixingRecipe> =
-        processor(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER)
+    val REFINING: HTLookupRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> =
+        create(RagiumRecipeLookups.REFINING, RagiumBlocks.REFINERY, 18 * 8)
+
+    // Machine - Elite
+    @JvmField
+    val CHEMICAL_WASHING: HTLookupRecipeViewerType<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> =
+        create(RagiumRecipeLookups.CHEMICAL_WASHING, RagiumBlocks.REFINERY, 18 * 8)
 
     @JvmField
-    val WASHING: HTHolderJeiRecipeType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
-        processor(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER)
-
-    // Machine - Matter
-
-    // Device
-    @JvmField
-    val ENCHANTING: HTHolderJeiRecipeType<HTEnchantingRecipe.Input, HTEnchantingRecipe> =
-        processor(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER)
+    val ELECTROLYZING: HTLookupRecipeViewerType<HTSingleFluidRecipeInput, HTElectrolyzingRecipe> =
+        create(RagiumRecipeLookups.ELECTROLYZING, RagiumBlocks.MIXER, 18 * 7)
 
     @JvmField
-    val PLANTING: HTHolderJeiRecipeType<HTPlantingRecipe.Input, HTPlantingRecipe> =
-        processor(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER)
+    val MIXING: HTLookupRecipeViewerType<HTChemicalRecipeInput, HTMixingRecipe> =
+        create(RagiumRecipeLookups.MIXING, RagiumBlocks.MIXER, 18 * 9)
+
+    @JvmField
+    val WASHING: HTLookupRecipeViewerType<HTItemAndFluidRecipeInput, HTWashingRecipe> =
+        create(RagiumRecipeLookups.WASHING, RagiumBlocks.WASHER, 18 * 7, 18 * 3)
+
+    // Machine - Ultimate
+    @JvmField
+    val DUPLICATING: HTLookupRecipeViewerType<HTItemAndFluidRecipeInput, RagiumDuplicatingRecipe> =
+        create(RagiumRecipeLookups.DUPLICATING, RagiumBlocks.TANK, 18 * 6)
+
+    @JvmField
+    val ENCHANTING: HTLookupRecipeViewerType<HTEnchantingRecipe.Input, HTEnchantingRecipe> =
+        create(RagiumRecipeLookups.ENCHANTING, RagiumBlocks.ENCHANTER, 18 * 8)
 }

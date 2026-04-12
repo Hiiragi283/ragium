@@ -17,4 +17,6 @@ class HTCreativeBatteryBlockEntity(pos: BlockPos, state: BlockState) :
 
             override fun getCapacity(): Int = Int.MAX_VALUE
         }
+
+    override fun isCreative(): Boolean = true
 }

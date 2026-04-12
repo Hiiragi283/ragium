@@ -24,6 +24,7 @@ object RagiumTags {
     //    Fluids    //
 
     object Fluids {
+        // Common
         @JvmField
         val ALCOHOL: TagKey<Fluid> = common("alcohol")
 
@@ -45,9 +46,6 @@ object RagiumTags {
     object Items {
         @JvmField
         val FOODS_CAN: TagKey<Item> = common("foods", "can")
-
-        @JvmField
-        val MOLDS: TagKey<Item> = mod("molds")
 
         // Upgrade Target
         @JvmField

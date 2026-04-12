@@ -10,7 +10,7 @@
     },
     {
       "amount": 4,
-      "items": "#c:scraps/netherite"
+      "items": "minecraft:netherite_scrap"
     }
   ],
   "result": {

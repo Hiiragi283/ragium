@@ -9,7 +9,7 @@
       "item": "minecraft:cauldron"
     },
     "C": {
-      "tag": "c:gears/gold"
+      "item": "ragium:electric_circuit"
     },
     "D": {
       "tag": "c:plates/carbon"

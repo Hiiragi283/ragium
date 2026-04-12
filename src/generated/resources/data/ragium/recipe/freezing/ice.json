@@ -1,9 +1,16 @@
 {
   "type": "ragium:freezing",
   "fluid_ingredient": {
+    "amount": 1000,
     "fluids": "#c:water"
   },
-  "item_result": {
+  "item_ingredient": {
+    "items": {
+      "type": "hiiragi_core:blue_print",
+      "number": 0
+    }
+  },
+  "result": {
     "id": "minecraft:ice"
   },
   "time": 200

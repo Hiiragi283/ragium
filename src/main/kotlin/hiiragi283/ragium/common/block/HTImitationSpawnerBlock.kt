@@ -22,11 +22,11 @@ class HTImitationSpawnerBlock(properties: Properties) :
 
         @JvmStatic
         fun createStack(entityType: EntityType<*>): ItemStack =
-            createItemStack(RagiumBlocks.IMITATION_SPAWNER, RagiumDataComponents.SPAWNER_MOB, HTSpawnerMob(entityType))
+            createItemStack(RagiumBlocks.IMITATION_SPAWNER, RagiumDataComponents.SPAWNER_MOB, HTSpawnerMob.of(entityType))
 
         @JvmStatic
         fun createStack(holder: Holder<EntityType<*>>): ItemStack =
-            createItemStack(RagiumBlocks.IMITATION_SPAWNER, RagiumDataComponents.SPAWNER_MOB, HTSpawnerMob(holder))
+            createItemStack(RagiumBlocks.IMITATION_SPAWNER, RagiumDataComponents.SPAWNER_MOB, HTSpawnerMob.of(holder))
     }
 
     override fun getBlockEntityType(): HTDeferredBlockEntityType<*> = RagiumBlockEntityTypes.IMITATION_SPAWNER

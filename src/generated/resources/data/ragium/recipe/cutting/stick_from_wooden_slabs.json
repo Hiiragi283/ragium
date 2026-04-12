@@ -1,0 +1,12 @@
+{
+  "type": "ragium:cutting",
+  "ingredient": {
+    "amount": 1,
+    "items": "#minecraft:wooden_slabs"
+  },
+  "results": {
+    "count": 2,
+    "id": "minecraft:stick"
+  },
+  "time": 100
+}

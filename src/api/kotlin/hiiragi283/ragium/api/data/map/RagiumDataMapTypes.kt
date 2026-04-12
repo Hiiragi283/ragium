@@ -3,10 +3,10 @@ package hiiragi283.ragium.api.data.map
 import com.mojang.serialization.Codec
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
+import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Registry
@@ -34,11 +34,8 @@ object RagiumDataMapTypes {
 
     // Entity Type
     @JvmField
-    val MOB_HEAD: DataMapType<EntityType<*>, HTItemHolderLike<*>> = create(
-        "mob_head",
-        Registries.ENTITY_TYPE,
-        HTItemHolderLike.HOLDER_CODEC,
-    )
+    val MOB_HEAD: DataMapType<EntityType<*>, HTSimpleItemHolderLike> =
+        create("mob_head", Registries.ENTITY_TYPE, HTItemHolderLike.CODEC)
 
     // Fluid
     @JvmField
@@ -55,7 +52,7 @@ object RagiumDataMapTypes {
 
     // Item
     @JvmField
-    val UPGRADE: DataMapType<Item, HTUpgradeData> = create("upgrade", Registries.ITEM, HTUpgradeData.CODEC)
+    val DUPLICATION_COST: DataMapType<Item, Int> = create("duplication_cost", Registries.ITEM, BiCodecs.POSITIVE_INT)
 
     //    Extensions    //
 
@@ -100,18 +97,6 @@ object RagiumDataMapTypes {
 
     @JvmStatic
     fun getFluidFertilizer(resource: HTFluidResourceType): Fraction? = resource.getData(FERTILIZER)
-
-    /**
-     * 指定した[stack]から，アップグレードのデータを取得します。
-     */
-    @JvmStatic
-    fun getUpgradeData(stack: ItemStack): HTUpgradeData? = stack.itemHolder.getData(UPGRADE)
-
-    /**
-     * 指定した[resource]から，アップグレードのデータを取得します。
-     */
-    @JvmStatic
-    fun getUpgradeData(resource: HTItemResourceType): HTUpgradeData? = resource.getData(UPGRADE)
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =

@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:storage_blocks/ragi_alloy"
+    },
+    "B": {
+      "tag": "c:storage_blocks/rubber"
+    },
+    "C": {
+      "tag": "c:glass_blocks"
+    },
+    "D": {
+      "tag": "c:buckets/empty"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "ABA"
+  ],
+  "result": {
+    "components": {
+      "ragium:capacity_scale": 10
+    },
+    "count": 1,
+    "id": "ragium:tank"
+  }
+}
