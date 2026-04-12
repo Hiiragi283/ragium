@@ -8,6 +8,8 @@ plugins {
     kotlin("jvm") version "2.2.20"
     alias(libs.plugins.neo.moddev)
 
+    alias(libs.plugins.dokka.asProvider())
+    alias(libs.plugins.dokka.javadoc)
     alias(libs.plugins.ktlint)
 
     alias(libs.plugins.axion.release)
@@ -383,5 +385,13 @@ ktlint {
     filter {
         exclude("**/generated/**")
         include("**/kotlin/**")
+    }
+}
+
+dokka {
+    dokkaSourceSets {
+        configureEach {
+            sourceRoots.from(apiModule.kotlin.srcDirs, clientModule.kotlin.srcDirs)
+        }
     }
 }
