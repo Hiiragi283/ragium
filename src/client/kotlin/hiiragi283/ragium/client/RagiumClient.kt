@@ -152,10 +152,10 @@ data object RagiumClient : HTClientMod() {
         // Block Entity
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.BATTERY.get(), HTBatteryRenderer::BlockRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_BATTERY.get(), HTBatteryRenderer::BlockRenderer)
-        
+
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CRATE.get(), ::HTCrateRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_CRATE.get(), ::HTCrateRenderer)
-        
+
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), HTTankRenderer::BlockRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), HTTankRenderer::BlockRenderer)
 

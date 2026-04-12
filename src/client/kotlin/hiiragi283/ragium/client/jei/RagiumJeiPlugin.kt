@@ -2,13 +2,13 @@ package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
-import hiiragi283.core.client.jei.HCJeiRecipeTypes
 import hiiragi283.core.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.core.client.jei.category.base.HTDoubleMultiOutputRecipeCategory
 import hiiragi283.core.client.jei.category.base.HTSingleMultiOutputRecipeCategory
 import hiiragi283.core.client.jei.extension.HTBasicDoubleMultiOutputRecipeCategoryExtension
 import hiiragi283.core.client.jei.extension.HTBasicItemOrFluidRecipeCategoryExtension
 import hiiragi283.core.client.jei.extension.HTBasicSingleMultiOutputRecipeCategoryExtension
+import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
@@ -163,13 +163,20 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
         registration.addRecipeCatalysts(
-            getRecipeType(HCJeiRecipeTypes.TANK_INTERACTION),
+            getRecipeType(HCRecipeViewerTypes.CHARGING),
+            RagiumBlocks.BATTERY,
+            RagiumBlocks.CREATIVE_BATTERY,
+        )
+        registration.addRecipeCatalysts(
+            getRecipeType(HCRecipeViewerTypes.TANK_INTERACTION),
             RagiumBlocks.TANK,
             RagiumBlocks.VOID_TANK,
             RagiumBlocks.CREATIVE_TANK,
         )
-        registration.addRecipeCatalysts(getRecipeType(HCJeiRecipeTypes.BREWING), RagiumBlocks.BREWERY)
-        registration.addRecipeCatalysts(getRecipeType(HCJeiRecipeTypes.CRUSHING), RagiumBlocks.CRUSHER)
+
+        registration.addRecipeCatalysts(getRecipeType(HCRecipeViewerTypes.BREWING), RagiumBlocks.BREWERY)
+        registration.addRecipeCatalysts(getRecipeType(HCRecipeViewerTypes.CRUSHING), RagiumBlocks.CRUSHER)
+
         registration.addRecipeCatalysts(RecipeTypes.SMELTING, RagiumBlocks.ELECTRIC_FURNACE)
         registration.addRecipeCatalysts(RecipeTypes.STONECUTTING, RagiumBlocks.AUTO_CHISEL)
 

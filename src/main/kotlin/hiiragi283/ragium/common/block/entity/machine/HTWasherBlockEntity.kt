@@ -1,15 +1,20 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.HTBackgroundType
+import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.common.gui.widget.HTFluidWidget
+import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.ragium.common.block.entity.machine.base.HTMultiOutputBlockEntity
+import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -45,6 +50,32 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
+        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
+        // progress
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
+        // inputs
+        widgetHolder += HTItemSlotWidget.container(
+            inputSlot,
+            HTSlotHelper.getSlotPosX(2.5),
+            HTSlotHelper.getSlotPosY(0.5),
+            HTBackgroundType.INPUT,
+        )
+        widgetHolder += HTFluidWidget
+            .createTank(
+                inputTank,
+                HTSlotHelper.getSlotPosX(1),
+                HTSlotHelper.getSlotPosY(0),
+            ).setBackground(HTBackgroundType.EXTRA_INPUT)
+        // outputs
+        outputSlots
+            .mapIndexed { index: Int, slot: HTBasicItemSlot ->
+                HTItemSlotWidget.container(
+                    slot,
+                    HTSlotHelper.getSlotPosX(6 + index % 2),
+                    HTSlotHelper.getSlotPosY(0.5 + index / 2),
+                    HTBackgroundType.OUTPUT,
+                )
+            }.forEach(widgetHolder::addWidget)
     }
 
     //    Processing    //

@@ -86,7 +86,7 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         simpleBlockAndItem(base, model, builtIn)
         simpleBlockAndItem(creative, model, builtIn)
     }
-    
+
     private fun machineBlock(block: HTHolderLike<Block, *>, model: ModelFile) {
         getVariantBuilder(block.get())
             .forAllStates { state: BlockState ->
