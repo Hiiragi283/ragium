@@ -180,7 +180,7 @@ object RagiumItems {
         HTEnergyCapabilities.registerItemEnergy(
             event,
             { container: ItemStack ->
-                HTBasicItemEnergyBattery.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity))
+                HTBasicItemEnergyBattery.create(container, getCapacity(container, RagiumConfig.COMMON.batteryCapacity))
             },
             RagiumBlocks.BATTERY,
         )
