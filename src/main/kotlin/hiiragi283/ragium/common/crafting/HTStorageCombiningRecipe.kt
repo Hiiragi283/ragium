@@ -29,8 +29,7 @@ class HTStorageCombiningRecipe(category: CraftingBookCategory) : HTCustomRecipe(
             }
             // 最初の液体を基準に合体させる
             HTFluidCapabilities
-                .getFluidViews(stack)
-                .firstOrNull()
+                .getFirstTank(stack)
                 ?.let { view: HTFluidView ->
                     val resourceIn: HTFluidResourceType = view.getResource() ?: return@let
                     when {
@@ -58,8 +57,7 @@ class HTStorageCombiningRecipe(category: CraftingBookCategory) : HTCustomRecipe(
             }
             // 最初の液体を基準に合体させる
             HTFluidCapabilities
-                .getFluidViews(stack)
-                .firstOrNull()
+                .getFirstTank(stack)
                 ?.let { view: HTFluidView ->
                     val resourceIn: HTFluidResourceType = view.getResource() ?: return@let
                     when (fluidResource) {

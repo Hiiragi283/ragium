@@ -21,7 +21,7 @@ class HTTankBlockItem(block: HTTankBlock, properties: Properties) : HTStorageBlo
         flag: TooltipFlag,
     ) {
         val isCreative: Boolean = isCreative(stack)
-        val view: HTFluidView = HTFluidCapabilities.getFluidView(stack, 0) ?: return
+        val view: HTFluidView = HTFluidCapabilities.getFirstTank(stack) ?: return
         // Fluid Name
         val resource: HTFluidResourceType? = view.getResource()
         when {

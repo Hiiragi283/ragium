@@ -41,10 +41,9 @@ data object HTTankRenderer {
         if (level <= 0f) return
         poseStack.pushPose()
         poseStack.translate(2.5f / 16f, 0f, 2.5f / 16f)
-        if (resource.fluidType().isLighterThanAir) {
-            poseStack.translate(0f, 1f - (level / 2f), 0f)
+        if (!resource.fluidType().isLighterThanAir) {
+            poseStack.scale(11 / 16f, level, 11 / 16f)
         }
-        poseStack.scale(11 / 16f, level, 11 / 16f)
         HTSpriteRenderHelper.drawFluidBox(
             poseStack,
             bufferSource.getBuffer(Sheets.translucentCullBlockSheet()),
@@ -82,7 +81,7 @@ data object HTTankRenderer {
             packedLight: Int,
             packedOverlay: Int,
         ) {
-            val view: HTFluidView = HTFluidCapabilities.getFluidView(stack, 0) ?: return
+            val view: HTFluidView = HTFluidCapabilities.getFirstTank(stack) ?: return
             renderFluid(view, poseStack, buffer, packedLight, packedOverlay)
             renderBlockItem(stack, displayContext, poseStack, buffer, packedLight, packedOverlay)
         }

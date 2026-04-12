@@ -184,11 +184,7 @@ object RagiumItems {
             },
             RagiumBlocks.BATTERY,
         )
-        HTEnergyCapabilities.registerItemEnergy(
-            event,
-            { HTInfiniteEnergyBattery },
-            RagiumBlocks.BATTERY,
-        )
+        HTEnergyCapabilities.registerItemEnergy(event, { HTInfiniteEnergyBattery }, RagiumBlocks.CREATIVE_BATTERY)
     }
 
     @JvmStatic

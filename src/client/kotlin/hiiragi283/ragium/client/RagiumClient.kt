@@ -11,6 +11,7 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.data.RagiumClientResourceProvider
 import hiiragi283.ragium.client.gui.widget.HTEnergySlotWidgetRenderer
+import hiiragi283.ragium.client.render.HTBatteryRenderer
 import hiiragi283.ragium.client.render.HTTankRenderer
 import hiiragi283.ragium.client.render.block.HTCrateRenderer
 import hiiragi283.ragium.client.render.block.HTImitationSpawnerRenderer
@@ -96,6 +97,13 @@ data object RagiumClient : HTClientMod() {
 
         event.registerItem(
             object : IClientItemExtensions {
+                override fun getCustomRenderer(): BlockEntityWithoutLevelRenderer = HTBatteryRenderer.ItemRenderer
+            },
+            RagiumBlocks.BATTERY.asItem(),
+            RagiumBlocks.CREATIVE_BATTERY.asItem(),
+        )
+        event.registerItem(
+            object : IClientItemExtensions {
                 override fun getCustomRenderer(): BlockEntityWithoutLevelRenderer = HTTankRenderer.ItemRenderer
             },
             RagiumBlocks.TANK.asItem(),
@@ -142,11 +150,14 @@ data object RagiumClient : HTClientMod() {
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
         // Block Entity
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), HTTankRenderer::BlockRenderer)
-        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), HTTankRenderer::BlockRenderer)
-
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.BATTERY.get(), HTBatteryRenderer::BlockRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_BATTERY.get(), HTBatteryRenderer::BlockRenderer)
+        
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CRATE.get(), ::HTCrateRenderer)
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_CRATE.get(), ::HTCrateRenderer)
+        
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.TANK.get(), HTTankRenderer::BlockRenderer)
+        event.registerBlockEntityRenderer(RagiumBlockEntityTypes.CREATIVE_TANK.get(), HTTankRenderer::BlockRenderer)
 
         event.registerBlockEntityRenderer(RagiumBlockEntityTypes.IMITATION_SPAWNER.get(), ::HTImitationSpawnerRenderer)
     }

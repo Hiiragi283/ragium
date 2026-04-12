@@ -6,6 +6,7 @@ import hiiragi283.core.api.data.model.HTBlockStateProvider
 import hiiragi283.core.api.data.model.existsTexture
 import hiiragi283.core.api.data.model.fixedBlockTexture
 import hiiragi283.core.api.data.model.withExistingParent
+import hiiragi283.core.api.registry.HTBlockHolderLike
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.blockId
@@ -48,6 +49,9 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)
 
         // Storage
+        variableBlock(RagiumBlocks.BATTERY, RagiumBlocks.CREATIVE_BATTERY)
+        variableBlock(RagiumBlocks.CRATE, RagiumBlocks.CREATIVE_CRATE)
+
         val tankFactory: (HTIdLike) -> Array<ConfiguredModel> = { block: HTIdLike ->
             ConfiguredModel
                 .builder()
@@ -61,10 +65,6 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         simpleBlockAndItem(RagiumBlocks.TANK, tankFactory, itemFactory = { builtIn })
         simpleBlockAndItem(RagiumBlocks.VOID_TANK, tankFactory)
         simpleBlockAndItem(RagiumBlocks.CREATIVE_TANK, models().getExistingFile(RagiumBlocks.TANK.blockId), builtIn)
-
-        val crateModel: ModelFile.ExistingModelFile = models().getExistingFile(RagiumBlocks.CRATE.blockId)
-        simpleBlockAndItem(RagiumBlocks.CRATE, crateModel, builtIn)
-        simpleBlockAndItem(RagiumBlocks.CREATIVE_CRATE, crateModel, builtIn)
 
         layeredBlock(
             RagiumBlocks.UNIVERSAL_CHEST,
@@ -81,6 +81,12 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
 
     //    Extensions    //
 
+    private fun variableBlock(base: HTBlockHolderLike<*>, creative: HTBlockHolderLike<*>) {
+        val model: ModelFile.ExistingModelFile = models().getExistingFile(base.blockId)
+        simpleBlockAndItem(base, model, builtIn)
+        simpleBlockAndItem(creative, model, builtIn)
+    }
+    
     private fun machineBlock(block: HTHolderLike<Block, *>, model: ModelFile) {
         getVariantBuilder(block.get())
             .forAllStates { state: BlockState ->
