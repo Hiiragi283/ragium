@@ -18,7 +18,8 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.crafting.HTStorageCombiningRecipe
+import hiiragi283.ragium.common.crafting.HTBatteryCombiningRecipe
+import hiiragi283.ragium.common.crafting.HTTankCombiningRecipe
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -179,7 +180,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
 
     @JvmStatic
     private fun storages() {
-        save(id(HTConst.SHAPELESS, "storage_combining"), HTStorageCombiningRecipe(CraftingBookCategory.MISC))
         // Battery
         variableStorage(
             RagiumBlocks.BATTERY,
@@ -187,10 +187,12 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             CommonTagPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL),
             CommonTagPrefixes.STORAGE_BLOCK.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL),
         )
+        save(id(HTConst.SHAPELESS, "combining", "battery"), HTBatteryCombiningRecipe(CraftingBookCategory.MISC))
         // Crate
         variableStorage(RagiumBlocks.CRATE, CommonMaterialKeys.PLASTIC, Tags.Items.CHESTS)
         // Tank
         variableStorage(RagiumBlocks.TANK, CommonMaterialKeys.RUBBER, Tags.Items.BUCKETS_EMPTY)
+        save(id(HTConst.SHAPELESS, "combining", "tank"), HTTankCombiningRecipe(CraftingBookCategory.MISC))
         // Universal Chest
         HTShapedRecipeBuilder.create(output) {
             hollow8()

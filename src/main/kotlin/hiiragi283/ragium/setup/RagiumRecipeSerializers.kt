@@ -15,7 +15,8 @@ import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.core.setup.HCRecipeSerializers
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.crafting.HTStorageCombiningRecipe
+import hiiragi283.ragium.common.crafting.HTBatteryCombiningRecipe
+import hiiragi283.ragium.common.crafting.HTTankCombiningRecipe
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -45,9 +46,15 @@ object RagiumRecipeSerializers {
 
     // Crafting
     @JvmField
-    val STORAGE_COMBINING: SimpleCraftingRecipeSerializer<HTStorageCombiningRecipe> = REGISTER.registerSerializer(
-        "storage_combining",
-        SimpleCraftingRecipeSerializer(::HTStorageCombiningRecipe),
+    val BATTERY_COMBINING: SimpleCraftingRecipeSerializer<HTBatteryCombiningRecipe> = REGISTER.registerSerializer(
+        "battery_combining",
+        SimpleCraftingRecipeSerializer(::HTBatteryCombiningRecipe),
+    )
+
+    @JvmField
+    val TANK_COMBINING: SimpleCraftingRecipeSerializer<HTTankCombiningRecipe> = REGISTER.registerSerializer(
+        "tank_combining",
+        SimpleCraftingRecipeSerializer(::HTTankCombiningRecipe),
     )
 
     //    Machine    //
