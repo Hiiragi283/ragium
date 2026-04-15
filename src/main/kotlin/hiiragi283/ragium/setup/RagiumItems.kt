@@ -7,6 +7,7 @@ import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
+import hiiragi283.core.common.item.HTCreativeItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.core.common.storage.energy.HTBasicItemEnergyBattery
 import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
@@ -148,6 +149,11 @@ object RagiumItems {
 
     @JvmField
     val LOOT_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
+
+    //    End Game    //
+
+    @JvmField
+    val RAGI_MATTER: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_matter", ::HTCreativeItem)
 
     //    Event    //
 

@@ -133,6 +133,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
         add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
 
+        add(RagiumItems.RAGI_MATTER, "Ragi-Matter")
         // Recipe
         add(RagiumRecipeLookups.ALLOYING, "Alloying")
         add(RagiumRecipeLookups.ASSEMBLING, "Assembling")
