@@ -19,7 +19,7 @@ class HTBatteryCombiningRecipe(category: CraftingBookCategory) : HTCustomRecipe(
     override fun matches(input: ImmutableRecipeInput, level: Level): Boolean {
         for (stack: ItemStack in input) {
             if (stack.isEmpty) continue
-            if (!stack.`is`(RagiumBlocks.BATTERY.asItem())) return false
+            if (!RagiumBlocks.BATTERY.isOf(stack)) return false
         }
         return true
     }

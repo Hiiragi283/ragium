@@ -1,0 +1,11 @@
+{
+  "type": "hiiragi_core:filling",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:mercury"
+  },
+  "item_ingredient": "minecraft:glass_bottle",
+  "result": {
+    "id": "ragium:mercury_bottle"
+  }
+}

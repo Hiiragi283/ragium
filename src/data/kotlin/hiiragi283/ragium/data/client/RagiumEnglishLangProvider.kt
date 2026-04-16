@@ -150,7 +150,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeLookups.MIXING, "Mixing")
         add(RagiumRecipeLookups.WASHING, "Washing")
 
-        add(RagiumRecipeLookups.DUPLICATING, "Duplicating")
         add(RagiumRecipeLookups.ENCHANTING, "Enchanting")
 
         // Tag

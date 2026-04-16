@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:simple",
-  "amount": 250,
-  "empty_container": "minecraft:glass_bottle",
-  "filled_container": "ragium:mercury_bottle",
-  "fluid": "ragium:mercury",
-  "fluid_tag": "#c:mercury"
-}

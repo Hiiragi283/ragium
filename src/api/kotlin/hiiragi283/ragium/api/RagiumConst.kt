@@ -25,7 +25,7 @@ object RagiumConst {
     const val WASHER = "washer"
 
     // Ultimate
-    const val MASS_DUPLICATOR = "mass_duplicator"
+    const val MASS_FABRICATOR = "mass_fabricator"
     const val ENCHANTER = "enchanter"
 
     // Storage
@@ -61,6 +61,5 @@ object RagiumConst {
     const val WASHING = "washing"
 
     // Ultimate
-    const val DUPLICATING = "duplicating"
     const val ENCHANTING = "enchanting"
 }

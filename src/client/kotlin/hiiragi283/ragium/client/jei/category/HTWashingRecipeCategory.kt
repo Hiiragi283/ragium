@@ -4,20 +4,18 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addFluidIngredient
 import hiiragi283.core.api.integration.jei.addItemIngredient
 import hiiragi283.core.api.integration.jei.addItemResult
+import hiiragi283.core.api.integration.jei.category.HTHolderRecipeCategory
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.client.jei.category.base.HTMultiOutputRecipeCategory
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class HTWashingRecipeCategory(guiHelper: IGuiHelper) :
-    HTMultiOutputRecipeCategory<HTWashingRecipe>(guiHelper, RagiumRecipeViewerTypes.WASHING, 4) {
-    override fun getOutputPos(index: Int): Pair<Int, Int> = getPosition(5 + index % 2) to getPosition(0.5 + index / 2)
-
+    HTHolderRecipeCategory.Registered<HTWashingRecipe>(guiHelper, RagiumRecipeViewerTypes.WASHING, RagiumRecipeSerializers.WASHING) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTWashingRecipe, focuses: IFocusGroup) {
         // inputs
         val water: HTFluidIngredient = HTWashingRecipe.WATER_INGREDIENT
@@ -32,12 +30,15 @@ class HTWashingRecipeCategory(guiHelper: IGuiHelper) :
             .addItemIngredient(recipe.ingredient)
             .setSlotBackground(HTBackgroundType.INPUT)
         // outputs
-        addOutputSlots(builder) { index: Int, builder: IRecipeSlotBuilder ->
-            recipe.results.getOrNull(index)?.let(builder::addItemResult)
+        repeat(4) { index: Int ->
+            builder
+                .addOutputSlot(getPosition(3 + index % 2), getPosition(0 + index / 2))
+                .addItemResult(recipe.results.getOrNull(index))
+                .setSlotBackground(HTBackgroundType.OUTPUT)
         }
     }
 
-    override fun createRecipeExtrasImpl(builder: IRecipeExtrasBuilder, recipe: HTWashingRecipe, focuses: IFocusGroup) {
+    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTWashingRecipe, focuses: IFocusGroup) {
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(1))
         builder.addRecipePlus(getPosition(1), getPosition(1))
     }

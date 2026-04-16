@@ -2,7 +2,6 @@ package hiiragi283.ragium.data.server
 
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.map.HTDataMapProvider
-import hiiragi283.core.api.item.alchemy.HTBottleType
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.createCommonTag
@@ -10,7 +9,6 @@ import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.core.registries.Registries
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks
@@ -26,8 +24,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : HTDataMapProvider(conte
         coolants()
         magmaticFuels()
         combustionFuels()
-
-        duplicationCost()
     }
 
     //    Vanilla    //
@@ -103,31 +99,6 @@ class RagiumDataMapProvider(context: HTDataGenContext) : HTDataMapProvider(conte
             .add(RagiumTags.Fluids.DIESEL, high, false)
             // highest
             .add("high_power_biodiesel", highest)
-    }
-
-    // Item
-    private fun duplicationCost() {
-        builder(RagiumDataMapTypes.DUPLICATION_COST)
-            // Wood
-            .add(ItemTags.LOGS, 4, false)
-            .add(ItemTags.PLANKS, 1, false)
-            // Stone
-            .add(Tags.Items.STONES, 1, false)
-            .add(Tags.Items.COBBLESTONES, 1, false)
-            // Dirt
-            .add(ItemTags.DIRT, 1, false)
-            // Gravel
-            .add(Tags.Items.GRAVELS, 2, false)
-            // Sand
-            .add(Tags.Items.SANDS, 1, false)
-            // Obsidian
-            .add(Tags.Items.OBSIDIANS_CRYING, 64 * 8, false)
-            .add(Tags.Items.OBSIDIANS_NORMAL, 64, false)
-            // Dynamic
-            .addItem(Items.ENCHANTED_BOOK, 1)
-            .addItem(HTBottleType.DEFAULT, 1)
-            .addItem(HTBottleType.SPLASH, 1)
-            .addItem(HTBottleType.LINGERING, 1)
     }
 
     //    Extensions    //

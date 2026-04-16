@@ -14,7 +14,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Block
@@ -49,10 +48,6 @@ object RagiumDataMapTypes {
 
     @JvmField
     val FERTILIZER: DataMapType<Fluid, Fraction> = create("fertilizer", Registries.FLUID, BiCodecs.POSITIVE_FRACTION)
-
-    // Item
-    @JvmField
-    val DUPLICATION_COST: DataMapType<Item, Int> = create("duplication_cost", Registries.ITEM, BiCodecs.POSITIVE_INT)
 
     //    Extensions    //
 

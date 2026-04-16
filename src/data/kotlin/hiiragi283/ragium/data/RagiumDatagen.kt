@@ -9,7 +9,6 @@ import hiiragi283.ragium.data.client.RagiumJapaneseLangProvider
 import hiiragi283.ragium.data.client.RagiumSpriteSourceProvider
 import hiiragi283.ragium.data.server.RagiumDataMapProvider
 import hiiragi283.ragium.data.server.RagiumRecipeProvider
-import hiiragi283.ragium.data.server.RagiumTankInteractionProvider
 import hiiragi283.ragium.data.server.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
@@ -37,8 +36,6 @@ object RagiumDatagen {
         server.addBlockAndItemTags(::RagiumBlockTagsProvider, ::RagiumItemTagsProvider)
 
         server.addProvider(::RagiumDataMapProvider)
-
-        server.addProvider(::RagiumTankInteractionProvider)
         // Client
         client.addProvider(::RagiumEnglishLangProvider)
         client.addProvider(::RagiumJapaneseLangProvider)

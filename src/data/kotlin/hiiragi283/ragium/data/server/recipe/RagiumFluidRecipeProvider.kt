@@ -12,6 +12,7 @@ import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.blueprint
+import hiiragi283.core.common.data.recipe.builder.HTTankInteractionRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
@@ -21,6 +22,8 @@ import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.setup.RagiumFluids
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -28,6 +31,8 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     override fun buildRecipeInternal() {
         refining()
         washing()
+
+        tankInteraction()
     }
 
     //    Refining    //
@@ -187,6 +192,23 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH, 4)
             results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
             time = 20 * 5
+        }
+    }
+
+    //    Tank Interaction    //
+
+    @JvmStatic
+    private fun tankInteraction() {
+        HTTankInteractionRecipeBuilder.emptying(output) {
+            ingredient = inputCreator.create(RagiumItems.MERCURY_BOTTLE)
+            fluidResult = resultCreator.create(RagiumFluids.MERCURY, 250)
+            itemResult = resultCreator.create(Items.GLASS_BOTTLE)
+        }
+
+        HTTankInteractionRecipeBuilder.filling(output) {
+            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
+            fluidIngredient = inputCreator.create(RagiumFluids.MERCURY, 250)
+            itemResult = resultCreator.create(RagiumItems.MERCURY_BOTTLE)
         }
     }
 }
