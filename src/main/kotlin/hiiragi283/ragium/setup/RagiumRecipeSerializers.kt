@@ -24,10 +24,11 @@ import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
+import hiiragi283.ragium.common.recipe.HTFluidMixingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
+import hiiragi283.ragium.common.recipe.HTItemMixingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -165,18 +166,43 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
-    val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.MIXING,
-        MapBiCodec.composite(
-            MapBiCodecs
-                .ior(
-                    HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT),
-                    HTFluidIngredient.CODEC.listOf(1, HTMixingRecipe.MAX_FLUID_INPUT).fieldOf(HTConst.FLUID_INGREDIENT),
-                ).forGetter(HTMixingRecipe::ingredient),
-            COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
-            HTProcessingRecipe.timeCodec(),
-            ::HTMixingRecipe,
-        ),
+    val FLUID_MIXING: RecipeSerializer<HTFluidMixingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.FLUID_MIXING,
+        MapBiCodec
+            .composite(
+                HTItemIngredient.CODEC.optionalFieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTFluidMixingRecipe::itemIngredient),
+                HTFluidIngredient.CODEC
+                    .listOrElement(1, 2)
+                    .fieldOf(HTConst.FLUID_INGREDIENT)
+                    .forGetter(HTFluidMixingRecipe::fluidIngredients),
+                HTFluidResult.CODEC
+                    .listOrElement(1, 2)
+                    .fieldOf(HTConst.FLUID_RESULT)
+                    .forGetter(HTFluidMixingRecipe::results),
+                HTProcessingRecipe.timeCodec(),
+                ::HTFluidMixingRecipe,
+            ).validate { recipe: HTFluidMixingRecipe ->
+                if (recipe.itemIngredient.isEmpty && recipe.fluidIngredients.size == 1) {
+                    error("Fluid Mixing recipe required two fluid ingredients, or item and fluid ingredients")
+                }
+                recipe
+            },
+    )
+
+    @JvmField
+    val ITEM_MIXING: RecipeSerializer<HTItemMixingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.ITEM_MIXING,
+        MapBiCodec
+            .composite(
+                HTItemIngredient.CODEC
+                    .listOf(2, 2)
+                    .fieldOf(HTConst.ITEM_INGREDIENT)
+                    .forGetter(HTItemMixingRecipe::itemIngredients),
+                HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTItemMixingRecipe::fluidIngredient),
+                COMPLEX_RESULT.forGetter(HTItemMixingRecipe::result),
+                HTProcessingRecipe.timeCodec(),
+                ::HTItemMixingRecipe,
+            ),
     )
 
     @JvmField

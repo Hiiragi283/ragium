@@ -32,7 +32,7 @@ class HTWashingRecipeCategory(guiHelper: IGuiHelper) :
         // outputs
         repeat(4) { index: Int ->
             builder
-                .addOutputSlot(getPosition(3 + index % 2), getPosition(0 + index / 2))
+                .addOutputSlot(getPosition(5 + index % 2), getPosition(0.5 + index / 2))
                 .addItemResult(recipe.results.getOrNull(index))
                 .setSlotBackground(HTBackgroundType.OUTPUT)
         }

@@ -7,12 +7,12 @@ import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import net.minecraft.world.item.crafting.RecipeType
 import java.util.function.Supplier
@@ -55,7 +55,7 @@ object RagiumRecipeTypes {
     val ELECTROLYZING: Supplier<RecipeType<HTElectrolyzingRecipe>> = REGISTER.registerType(RagiumConst.ELECTROLYZING)
 
     @JvmField
-    val MIXING: Supplier<RecipeType<HTMixingRecipe>> = REGISTER.registerType(RagiumConst.MIXING)
+    val MIXING: Supplier<RecipeType<HTMixingRecipe.Serializable>> = REGISTER.registerType(RagiumConst.MIXING)
 
     @JvmField
     val WASHING: Supplier<RecipeType<HTWashingRecipe>> = REGISTER.registerType(RagiumConst.WASHING)

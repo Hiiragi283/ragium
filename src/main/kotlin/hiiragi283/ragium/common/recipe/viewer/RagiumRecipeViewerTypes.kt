@@ -10,6 +10,7 @@ import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.HTLookupRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.HTSimpleRecipeViewerType
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
@@ -17,7 +18,6 @@ import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
-import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -92,8 +92,8 @@ object RagiumRecipeViewerTypes {
         simple(RagiumRecipeLookups.ELECTROLYZING, RagiumBlocks.MIXER, 18 * 7)
 
     @JvmField
-    val MIXING: HTHolderRecipeViewerType<HTMixingRecipe> =
-        simple(RagiumRecipeLookups.MIXING, RagiumBlocks.MIXER, 18 * 9)
+    val MIXING: HTLookupRecipeViewerType<HTMixingRecipe, HTViewerMixingRecipe> =
+        lookup(RagiumRecipeLookups.MIXING, RagiumBlocks.MIXER, 18 * 6, 18 * 2)
 
     @JvmField
     val WASHING: HTHolderRecipeViewerType<HTWashingRecipe> =

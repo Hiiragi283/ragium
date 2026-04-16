@@ -14,7 +14,8 @@ import hiiragi283.core.impl.recipe.addProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
-import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
+import hiiragi283.ragium.api.recipe.input.HTMixingRecipeInput
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
@@ -54,7 +55,7 @@ data object RagiumRecipeLookups {
     val ELECTROLYZING: HTRecipeTypeImpl<HTSingleFluidRecipeInput, HTElectrolyzingRecipe> = create(RagiumConst.ELECTROLYZING)
 
     @JvmField
-    val MIXING: HTRecipeTypeImpl<HTChemicalRecipeInput, HTMixingRecipe> = create(RagiumConst.MIXING)
+    val MIXING: HTRecipeTypeImpl<HTMixingRecipeInput, HTMixingRecipe> = create(RagiumConst.MIXING)
 
     @JvmField
     val WASHING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTWashingRecipe> = create(RagiumConst.WASHING)

@@ -1,9 +1,9 @@
 {
-  "type": "ragium:mixing",
+  "type": "ragium:fluid_mixing",
   "fluid_ingredient": [
     {
       "amount": 1000,
-      "fluids": "#c:methane"
+      "fluids": "#c:synthetic_gas"
     },
     {
       "amount": 1000,
@@ -12,10 +12,10 @@
   ],
   "fluid_result": {
     "amount": 2000,
-    "id": "ragium:synthetic_gas"
+    "id": "ragium:hydrogen"
   },
   "item_ingredient": {
-    "items": "#c:dusts/nickel"
+    "items": "#c:dusts/platinum"
   },
   "time": 200
 }

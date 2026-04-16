@@ -4,16 +4,22 @@ import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.api.integration.jei.JeiRecipeType
+import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
+import hiiragi283.ragium.common.recipe.HTFluidMixingRecipe
+import hiiragi283.ragium.common.recipe.HTItemMixingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.viewer.HTViewerMixingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -60,6 +66,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeSerializers.PYROLYZING),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.REFINING, RagiumRecipeSerializers.REFINING),
             // Machine - Elite
+            HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeSerializers.CHEMICAL_WASHING),
+            HTMixingRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
             // Machine - Ultimate
             // Device
@@ -78,9 +86,37 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.REFINING, RagiumRecipeLookups.REFINING)
         // Machine - Elite
-        // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeLookups.CHEMICAL_WASHING)
+        HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeLookups.CHEMICAL_WASHING)
         // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.ELECTROLYZING, RagiumRecipeLookups.ELECTROLYZING)
-        // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.MIXING, RagiumRecipeLookups.MIXING)
+        HTJeiRecipeHelper.addHolderRecipes(
+            registration,
+            RagiumRecipeViewerTypes.MIXING,
+            RagiumRecipeLookups.MIXING
+                .getAllRecipes()
+                .mapNotNull { holder: HTRecipeHolder<HTMixingRecipe> ->
+                    holder.mapRecipeOrNull { recipe: HTMixingRecipe ->
+                        when (recipe) {
+                            is HTItemMixingRecipe ->
+                                HTViewerMixingRecipe(
+                                    recipe.itemIngredients,
+                                    listOf(recipe.fluidIngredient),
+                                    listOfNotNull(recipe.result.getLeft()),
+                                    listOfNotNull(recipe.result.getRight()),
+                                    recipe.time,
+                                )
+                            is HTFluidMixingRecipe ->
+                                HTViewerMixingRecipe(
+                                    recipe.itemIngredient.stream().toList(),
+                                    recipe.fluidIngredients,
+                                    emptyList(),
+                                    recipe.results,
+                                    recipe.time,
+                                )
+                            else -> null
+                        }
+                    }
+                },
+        )
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.WASHING, RagiumRecipeLookups.WASHING)
         // Machine - Ultimate
         // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.DUPLICATING, RagiumRecipeLookups.DUPLICATING)

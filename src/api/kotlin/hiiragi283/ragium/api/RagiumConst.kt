@@ -57,8 +57,11 @@ object RagiumConst {
     // Elite
     const val CHEMICAL_WASHING = "chemical_washing"
     const val ELECTROLYZING = "electrolyzing"
-    const val MIXING = "mixing"
     const val WASHING = "washing"
+
+    const val MIXING = "mixing"
+    const val FLUID_MIXING = "fluid_mixing"
+    const val ITEM_MIXING = "item_mixing"
 
     // Ultimate
     const val ENCHANTING = "enchanting"
