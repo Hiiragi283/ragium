@@ -162,5 +162,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.ENCHANTING,
             // Device
         )
+
+        registration.addRecipeCatalysts(getRecipeType(RagiumRecipeViewerTypes.MIXING), RagiumBlocks.FLUID_MIXER)
     }
 }

@@ -18,6 +18,7 @@ import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.registry.HTDeferredBlockAndItem
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -159,7 +160,13 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
             criteria["has_electric_circuit"] = { predicates += { of(RagiumItems.ELECTRIC_CIRCUIT) } }
         }
         createSimple(RagiumAdvancementKeys.BREWERY, RagiumAdvancementKeys.ELECTRIC_CIRCUIT, RagiumBlocks.BREWERY)
-        createSimple(RagiumAdvancementKeys.MIXER, RagiumAdvancementKeys.ELECTRIC_CIRCUIT, RagiumBlocks.MIXER)
+        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.MIXER) {
+            parent = RagiumAdvancementKeys.ELECTRIC_CIRCUIT
+            display {
+                iconStack += RagiumBlocks.MIXER
+            }
+            criteria["has_${RagiumConst.MIXER}"] = { predicates += { of(RagiumBlocks.FLUID_MIXER, RagiumBlocks.MIXER) } }
+        }
     }
 
     @JvmStatic

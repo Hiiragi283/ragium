@@ -6,7 +6,7 @@
       "tag": "c:plates/stainless_steel"
     },
     "B": {
-      "item": "minecraft:cauldron"
+      "item": "ragium:tank"
     },
     "C": {
       "item": "ragium:electric_circuit"
@@ -22,6 +22,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:mixer"
+    "id": "ragium:fluid_mixer"
   }
 }

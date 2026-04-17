@@ -27,6 +27,25 @@ class HTItemMixingRecipe(
     override fun assembleItems(input: HTMixingRecipeInput, registries: HolderLookup.Provider): List<ItemStack> =
         listOfNotNull(result.getLeft()?.getStackOrEmpty(registries))
 
+    override fun getRequiredAmounts(input: HTMixingRecipeInput): HTMixingRecipe.RequiredAmounts {
+        val (firstItem: ItemStack, secondItem: ItemStack, firstFluid: FluidStack, _: FluidStack) = input
+        val amounts = IntArray(4) { 0 }
+        // first fluid
+        if (fluidIngredient.test(firstFluid)) {
+            amounts[2] = fluidIngredient.amount
+        }
+        // items
+        val (firstItemIng: HTItemIngredient, secondItemIng: HTItemIngredient) = itemIngredients
+        if (firstItemIng.test(firstItem) && secondItemIng.test(secondItem)) {
+            amounts[0] = firstItemIng.amount
+            amounts[1] = secondItemIng.amount
+        } else if (firstItemIng.test(secondItem) && secondItemIng.test(firstItem)) {
+            amounts[1] = firstItemIng.amount
+            amounts[0] = secondItemIng.amount
+        }
+        return HTMixingRecipe.RequiredAmounts(amounts)
+    }
+
     override fun test(input: HTMixingRecipeInput): Boolean {
         val (firstItem: ItemStack, secondItem: ItemStack, firstFluid: FluidStack, _: FluidStack) = input
         return when {

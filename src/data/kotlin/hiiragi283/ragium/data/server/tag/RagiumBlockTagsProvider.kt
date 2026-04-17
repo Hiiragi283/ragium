@@ -34,6 +34,7 @@ class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGe
             yield(RagiumBlocks.REFINERY)
 
             yield(RagiumBlocks.BREWERY)
+            yield(RagiumBlocks.FLUID_MIXER)
             yield(RagiumBlocks.MIXER)
             yield(RagiumBlocks.WASHER)
 

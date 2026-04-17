@@ -89,7 +89,7 @@ object RagiumRecipeViewerTypes {
 
     @JvmField
     val ELECTROLYZING: HTHolderRecipeViewerType<HTElectrolyzingRecipe> =
-        simple(RagiumRecipeLookups.ELECTROLYZING, RagiumBlocks.MIXER, 18 * 7)
+        simple(RagiumRecipeLookups.ELECTROLYZING, RagiumBlocks.FLUID_MIXER, 18 * 7)
 
     @JvmField
     val MIXING: HTLookupRecipeViewerType<HTMixingRecipe, HTViewerMixingRecipe> =

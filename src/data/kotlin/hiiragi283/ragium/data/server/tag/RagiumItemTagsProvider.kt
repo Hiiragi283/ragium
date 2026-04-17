@@ -80,6 +80,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.REFINERY)
             // Elite
             .add(RagiumBlocks.BREWERY)
+            .add(RagiumBlocks.FLUID_MIXER)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.WASHER)
             // Ultimate
@@ -112,6 +113,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.BREWERY)
             .add(RagiumBlocks.FREEZER)
             .add(RagiumBlocks.MELTER)
+            .add(RagiumBlocks.FLUID_MIXER)
             .add(RagiumBlocks.MIXER)
             .add(RagiumBlocks.PYROLYZER)
             .add(RagiumBlocks.WASHER)

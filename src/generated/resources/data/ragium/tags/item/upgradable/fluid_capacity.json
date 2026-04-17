@@ -1,6 +1,7 @@
 {
   "values": [
     "ragium:brewery",
+    "ragium:fluid_mixer",
     "ragium:freezer",
     "ragium:melter",
     "ragium:mixer",

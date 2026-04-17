@@ -115,11 +115,21 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         advanced(RagiumBlocks.FREEZER, HCMaterialKeys.AZURE_STEEL) { it += Items.SNOW_BLOCK }
         advanced(RagiumBlocks.MELTER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.BLAST_FURNACE }
         advanced(RagiumBlocks.PYROLYZER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.NETHER_BRICKS }
-        advanced(RagiumBlocks.REFINERY, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { it += Items.IRON_BARS }
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "ABA",
+                "BCB",
+            )
+            define('A') += RagiumItems.THERMOMETER
+            define('B') += Tags.Items.GLASS_BLOCKS
+            define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.DIAMOND
+            resultStack += RagiumBlocks.REFINERY
+        }
         // Elite
         elite(RagiumBlocks.BREWERY) { it += Items.BREWING_STAND }
-        elite(RagiumBlocks.MIXER) { it += RagiumBlocks.TANK }
-        elite(RagiumBlocks.WASHER) { it += Items.CAULDRON }
+        elite(RagiumBlocks.FLUID_MIXER) { it += RagiumBlocks.TANK }
+        elite(RagiumBlocks.MIXER) { it += Items.CAULDRON }
+        elite(RagiumBlocks.WASHER) { it += Items.IRON_BARS }
         // Ultimate
     }
 

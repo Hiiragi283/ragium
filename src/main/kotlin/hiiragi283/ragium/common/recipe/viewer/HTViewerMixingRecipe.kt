@@ -46,6 +46,8 @@ data class HTViewerMixingRecipe(
         )
     }
 
+    override fun getRequiredAmounts(input: HTMixingRecipeInput): HTMixingRecipe.RequiredAmounts = HTMixingRecipe.RequiredAmounts.EMPTY
+
     override fun assembleFluids(input: HTMixingRecipeInput, registries: HolderLookup.Provider): List<FluidStack> = emptyList()
 
     override fun assembleItems(input: HTMixingRecipeInput, registries: HolderLookup.Provider): List<ItemStack> = emptyList()
