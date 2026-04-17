@@ -5,6 +5,7 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.common.fluid.HTExplosiveFluidType
 import hiiragi283.core.common.registry.register.HTFluidContentRegister
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.fluid.HTCreativeFluidType
 import hiiragi283.ragium.common.fluid.HTLiquidGasFluidType
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
@@ -133,7 +134,13 @@ object RagiumFluids {
     @JvmField
     val HELIUM: HTFluidContent = REGISTER.registerVirtual("helium") { properties = gas() }
 
-    //    Misc    //
+    //    End Game    //
+
+    @JvmField
+    val RAGI_MATTER: HTFluidContent = REGISTER.registerFlowing("ragi_matter") {
+        properties = liquid()
+        typeFactory = ::HTCreativeFluidType
+    }
 
     //    Extensions    //
 
@@ -147,7 +154,12 @@ object RagiumFluids {
     private fun liquid(): FluidType.Properties = create(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
 
     @JvmStatic
-    private fun gas(): FluidType.Properties = liquid().density(-1000)
+    private fun gas(): FluidType.Properties = liquid()
+        .canPushEntity(false)
+        .canSwim(false)
+        .fallDistanceModifier(1f)
+        .supportsBoating(false)
+        .density(-1000)
 
     @JvmStatic
     private fun molten(): FluidType.Properties = create(SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA)

@@ -1,0 +1,12 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "amount": 1,
+    "items": "ragium:ragi_matter"
+  },
+  "result": {
+    "amount": 125,
+    "id": "ragium:ragi_matter"
+  },
+  "time": 200
+}

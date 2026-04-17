@@ -146,6 +146,8 @@ data object RagiumClient : HTClientMod() {
         event.dull(RagiumFluids.SULFURIC_ACID, Color(0xcccc00))
         // The End
         event.clear(RagiumFluids.HELIUM, Color(0xffff99))
+        // End Game
+        event.clear(RagiumFluids.RAGI_MATTER, Color(0xff0033))
     }
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
