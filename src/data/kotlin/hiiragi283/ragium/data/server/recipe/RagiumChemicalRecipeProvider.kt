@@ -15,6 +15,7 @@ import hiiragi283.core.setup.HCBlocks
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
+import hiiragi283.ragium.common.data.recipe.HTAssemblingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTElectrolyzingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidMixingRecipeBuilder
@@ -455,7 +456,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             results += resultCreator.create(RagiumItems.CIRCUIT_CHIP, 4)
         }
         // Circuit Board + Circuit chip -> Electric Circuit
-        HTCombiningRecipeBuilder.assembling(output) {
+        HTAssemblingRecipeBuilder.create(output) {
             result = resultCreator.create(RagiumItems.ELECTRIC_CIRCUIT)
             ingredients += inputCreator.create(RagiumItems.CIRCUIT_BOARD)
             ingredients += inputCreator.create(RagiumItems.CIRCUIT_CHIP, 2)

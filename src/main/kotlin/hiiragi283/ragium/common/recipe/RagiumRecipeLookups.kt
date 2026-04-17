@@ -26,7 +26,7 @@ data object RagiumRecipeLookups {
     val ALLOYING: HTRecipeTypeImpl<HTShapelessRecipeInput, HTAlloyingRecipe> = create(RagiumConst.ALLOYING)
 
     @JvmField
-    val ASSEMBLING: HTRecipeTypeImpl<HTShapelessRecipeInput, HTAssemblingRecipe> = create(RagiumConst.ASSEMBLING)
+    val ASSEMBLING: HTRecipeTypeImpl<HTDoubleRecipeInput, HTAssemblingRecipe> = create(RagiumConst.ASSEMBLING)
 
     @JvmField
     val CUTTING: HTRecipeTypeImpl<SingleRecipeInput, HTSingleMultiOutputRecipe> = create(RagiumConst.CUTTING)

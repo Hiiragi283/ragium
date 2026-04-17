@@ -6,7 +6,7 @@ import hiiragi283.core.common.data.recipe.blueprint
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTAssemblingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
@@ -24,7 +24,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun assembling() {
         // Sculk Vein -> Sculk
-        HTCombiningRecipeBuilder.assembling(output) {
+        HTAssemblingRecipeBuilder.create(output) {
             result = resultCreator.create(Items.SCULK)
             ingredients += inputCreator.create(Items.SCULK_VEIN, 8)
             ingredients += inputCreator.blueprint(0)
@@ -68,7 +68,7 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun pressing() {
         // Sawdust -> Particle Board
-        HTCombiningRecipeBuilder.assembling(output) {
+        HTAssemblingRecipeBuilder.create(output) {
             result = resultCreator.create(HCItems.PARTICLE_BOARD)
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 2)
             ingredients += inputCreator.blueprint(5)

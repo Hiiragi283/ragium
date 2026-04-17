@@ -101,8 +101,18 @@ object RagiumRecipeSerializers {
         REGISTER.registerSerializer(RagiumConst.ALLOYING, combine(2..3, ::HTAlloyingRecipe))
 
     @JvmField
-    val ASSEMBLING: RecipeSerializer<HTAssemblingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.ASSEMBLING, combine(2..2, ::HTAssemblingRecipe))
+    val ASSEMBLING: RecipeSerializer<HTAssemblingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.ASSEMBLING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC
+                .listOf(2, 2)
+                .fieldOf(HTConst.INGREDIENT)
+                .forGetter(HTAssemblingRecipe::itemIngredients),
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAssemblingRecipe::result),
+            HTProcessingRecipe.timeCodec(),
+            ::HTAssemblingRecipe,
+        ),
+    )
 
     @JvmField
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(

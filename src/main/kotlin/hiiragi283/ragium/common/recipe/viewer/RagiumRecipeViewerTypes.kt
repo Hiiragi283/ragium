@@ -55,7 +55,7 @@ object RagiumRecipeViewerTypes {
 
     @JvmField
     val ASSEMBLING: HTHolderRecipeViewerType<HTAssemblingRecipe> =
-        simple(RagiumRecipeLookups.ASSEMBLING, RagiumBlocks.ASSEMBLER, 18 * 5)
+        simple(RagiumRecipeLookups.ASSEMBLING, RagiumBlocks.ASSEMBLER, 18 * 6)
 
     @JvmField
     val CUTTING: HTLookupRecipeViewerType<HTSingleMultiOutputRecipe, HTCuttingRecipe> =
