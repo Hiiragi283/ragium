@@ -127,6 +127,16 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         }
         // Elite
         elite(RagiumBlocks.BREWERY) { it += Items.BREWING_STAND }
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "ABA",
+                "BCB",
+            )
+            define('A') += RagiumItems.ELECTRIC_CIRCUIT
+            define('B') += Tags.Items.GLASS_BLOCKS_TINTED
+            define('C') += CommonTagPrefixes.GEAR to RagiumMaterialKeys.STAINLESS_STEEL
+            resultStack += RagiumBlocks.CHEMICAL_WASHER
+        }
         elite(RagiumBlocks.FLUID_MIXER) { it += RagiumBlocks.TANK }
         elite(RagiumBlocks.MIXER) { it += Items.CAULDRON }
         elite(RagiumBlocks.WASHER) { it += Items.IRON_BARS }

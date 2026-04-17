@@ -2,8 +2,7 @@
   "credit": "Made by Hiiragi Russell Tsubasa",
   "render_type": "minecraft:cutout",
   "textures": {
-    "all": "ragium:block/refinery",
-    "particle": "ragium:block/refinery"
+    "particle": "#all"
   },
   "elements": [
     {

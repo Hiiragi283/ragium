@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,is_active=false": {
+      "model": "ragium:block/chemical_washer",
+      "y": 90
+    },
+    "facing=east,is_active=true": {
+      "model": "ragium:block/chemical_washer",
+      "y": 90
+    },
+    "facing=north,is_active=false": {
+      "model": "ragium:block/chemical_washer"
+    },
+    "facing=north,is_active=true": {
+      "model": "ragium:block/chemical_washer"
+    },
+    "facing=south,is_active=false": {
+      "model": "ragium:block/chemical_washer",
+      "y": 180
+    },
+    "facing=south,is_active=true": {
+      "model": "ragium:block/chemical_washer",
+      "y": 180
+    },
+    "facing=west,is_active=false": {
+      "model": "ragium:block/chemical_washer",
+      "y": 270
+    },
+    "facing=west,is_active=true": {
+      "model": "ragium:block/chemical_washer",
+      "y": 270
+    }
+  }
+}

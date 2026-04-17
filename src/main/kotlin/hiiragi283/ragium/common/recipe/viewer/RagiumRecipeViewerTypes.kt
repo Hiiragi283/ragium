@@ -85,7 +85,7 @@ object RagiumRecipeViewerTypes {
     // Machine - Elite
     @JvmField
     val CHEMICAL_WASHING: HTLookupRecipeViewerType<HTItemOrFluidRecipe, HTChemicalWashingRecipe> =
-        lookup(RagiumRecipeLookups.CHEMICAL_WASHING, RagiumBlocks.REFINERY, 18 * 8)
+        lookup(RagiumRecipeLookups.CHEMICAL_WASHING, RagiumBlocks.CHEMICAL_WASHER, 18 * 8)
 
     @JvmField
     val ELECTROLYZING: HTHolderRecipeViewerType<HTElectrolyzingRecipe> =

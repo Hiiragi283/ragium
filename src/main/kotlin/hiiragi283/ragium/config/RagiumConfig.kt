@@ -94,6 +94,9 @@ object RagiumConfig {
 
             // Elite
             @JvmField
+            val chemicalWasher: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.CHEMICAL_WASHER)
+
+            @JvmField
             val brewery: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.BREWERY)
 
             @JvmField

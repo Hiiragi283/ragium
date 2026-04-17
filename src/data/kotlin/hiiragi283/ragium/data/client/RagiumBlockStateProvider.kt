@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.client
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTBlockStateProvider
+import hiiragi283.core.api.data.model.blockTexture
 import hiiragi283.core.api.data.model.existsTexture
 import hiiragi283.core.api.data.model.fixedBlockTexture
 import hiiragi283.core.api.data.model.withExistingParent
@@ -42,10 +43,11 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         frontMachineBlock(RagiumBlocks.FREEZER, RagiumConst.MACHINE, cool)
         frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)
         frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, heat)
-        machineBlock(RagiumBlocks.REFINERY, models().getExistingFile(RagiumBlocks.REFINERY.blockId))
+        refineryBlock(RagiumBlocks.REFINERY)
 
         val mixerFront: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, RagiumConst.MACHINE, RagiumConst.MIXER)
         frontMachineBlock(RagiumBlocks.BREWERY, RagiumConst.MACHINE, chemical)
+        refineryBlock(RagiumBlocks.CHEMICAL_WASHER)
         frontMachineBlock(RagiumBlocks.FLUID_MIXER, RagiumConst.MACHINE, chemical, mixerFront)
         frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)
@@ -99,6 +101,15 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
                     .build()
             }
         itemModels().simpleBlockItem(block.getId())
+    }
+
+    private fun refineryBlock(block: HTHolderLike<Block, *>) {
+        machineBlock(
+            block,
+            models()
+                .withExistingParent(block, RagiumAPI.id(HTConst.BLOCK, "refinery_template"))
+                .blockTexture("all", block),
+        )
     }
 
     private fun machineBlock(block: HTHolderLike<Block, *>, inactive: ModelFile, active: ModelFile) {

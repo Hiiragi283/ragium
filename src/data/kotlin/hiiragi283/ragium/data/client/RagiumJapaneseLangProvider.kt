@@ -54,6 +54,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.REFINERY, "精製室")
 
         add(RagiumBlocks.BREWERY, "醸造機")
+        add(RagiumBlocks.CHEMICAL_WASHER, "化学洗浄機")
         add(RagiumBlocks.FLUID_MIXER, "液体混合機")
         add(RagiumBlocks.MIXER, "混合機")
         add(RagiumBlocks.WASHER, "洗浄機")
