@@ -481,6 +481,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
             results += resultCreator.molten(HCMaterialKeys.ELDRITCH)
         }
+
         // Artificial Artifact
         HTShapedRecipeBuilder.create(output) {
             cross8()
@@ -488,6 +489,31 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             define('B') += RagiumItems.ELECTRIC_CIRCUIT
             define('C') += CommonTagPrefixes.PEARL to HCMaterialKeys.ELDRITCH
             resultStack += RagiumItems.ARTIFICIAL_ARTIFACT
+        }
+        // Reinforced Deepslate
+        HTShapedRecipeBuilder.create(output) {
+            hollow8()
+            define('A') += Items.DEEPSLATE
+            define('B') += RagiumItems.ARTIFICIAL_ARTIFACT
+            resultStack += Items.REINFORCED_DEEPSLATE to 8
+        }
+        // Heavy Core
+        HTShapedRecipeBuilder.create(output) {
+            hollow8()
+            define('A') += CommonTagPrefixes.INGOT to VanillaMaterialKeys.NETHERITE
+            define('B') += RagiumItems.ARTIFICIAL_ARTIFACT
+            resultStack += Items.HEAVY_CORE
+        }
+        // Elytra
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "ABA",
+                "A A",
+                "A A",
+            )
+            define('A') += HiiragiCoreTags.Items.PLASTICS
+            define('B') += RagiumItems.ARTIFICIAL_ARTIFACT
+            resultStack += Items.ELYTRA
         }
     }
 
@@ -504,6 +530,23 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     private fun endGame() {
+        matter()
+        iridescent()
+    }
+
+    @JvmStatic
+    private fun matter() {
+        // Liquid Ragi-Matter
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+            ingredient += inputCreator.create(RagiumItems.RAGI_MATTER)
+            ingredient += inputCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, 250)
+            result += resultCreator.create(RagiumFluids.RAGI_MATTER, 250)
+            time *= 10
+        }
+    }
+
+    @JvmStatic
+    private fun iridescent() {
         // Iridescent Powder
         HTShapedRecipeBuilder.create(output) {
             crossLayered()

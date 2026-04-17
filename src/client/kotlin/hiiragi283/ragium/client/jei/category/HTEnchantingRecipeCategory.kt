@@ -36,7 +36,7 @@ class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
         // output
         builder
             .addOutputSlot(getPosition(7), getPosition(1))
-            .addItemStacks(recipe.results)
+            .addItemStack(recipe.result)
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 

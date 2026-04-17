@@ -226,7 +226,7 @@ object RagiumRecipeSerializers {
         ),
     )
 
-    // Machine - Ultimate
+    // Device - Ultimate
     @JvmField
     val HOLDER_ENCHANTING: RecipeSerializer<HTHolderEnchantingRecipe> = REGISTER.registerSerializer(
         "${RagiumConst.ENCHANTING}/holder",

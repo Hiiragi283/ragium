@@ -13,7 +13,7 @@ class HTViewerEnchantingRecipe(
     val supportedItems: List<ItemStack>,
     ingredient: HTItemIngredient,
     override val requiredExpAmount: Int,
-    val results: List<ItemStack>,
+    val result: ItemStack,
 ) : HTBasicEnchantingRecipe(ingredient) {
     companion object {
         @JvmField
@@ -24,10 +24,7 @@ class HTViewerEnchantingRecipe(
                 .forGetter(HTViewerEnchantingRecipe::supportedItems),
             HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTViewerEnchantingRecipe::ingredient),
             BiCodecs.NON_NEGATIVE_INT.fieldOf("required_exp_cost").forGetter(HTViewerEnchantingRecipe::requiredExpAmount),
-            VanillaBiCodecs.ITEM_STACK
-                .listOf()
-                .fieldOf(HTConst.RESULTS)
-                .forGetter(HTViewerEnchantingRecipe::results),
+            VanillaBiCodecs.ITEM_STACK.fieldOf(HTConst.RESULT).forGetter(HTViewerEnchantingRecipe::result),
             ::HTViewerEnchantingRecipe,
         )
     }

@@ -4,6 +4,7 @@ import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.api.integration.jei.JeiRecipeType
+import hiiragi283.core.api.item.createEnchantedBook
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.setup.HCDataComponents
@@ -26,7 +27,6 @@ import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.viewer.HTViewerEnchantingRecipe
 import hiiragi283.ragium.common.recipe.viewer.HTViewerMixingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
-import hiiragi283.ragium.impl.recipe.HTBasicEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -135,21 +135,16 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 .getAllRecipes()
                 .mapNotNull { holder: HTRecipeHolder<HTEnchantingRecipe> ->
                     holder.mapRecipeOrNull { recipe: HTEnchantingRecipe ->
-                        if (recipe is HTBasicEnchantingRecipe) {
-                            val stacks: List<ItemStack> = when (recipe) {
-                                is HTHolderEnchantingRecipe ->
-                                    manager.allItemStacks
-                                        .filter { it.supportsEnchantment(recipe.holder) }
-                                else -> return@mapRecipeOrNull null
+                        when (recipe) {
+                            is HTHolderEnchantingRecipe -> {
+                                HTViewerEnchantingRecipe(
+                                    manager.allItemStacks.filter { it.supportsEnchantment(recipe.holder) },
+                                    recipe.ingredient,
+                                    recipe.requiredExpAmount,
+                                    createEnchantedBook(recipe.holder),
+                                )
                             }
-                            HTViewerEnchantingRecipe(
-                                stacks,
-                                recipe.ingredient,
-                                recipe.requiredExpAmount,
-                                stacks.map(recipe::applyEnchantment),
-                            )
-                        } else {
-                            null
+                            else -> null
                         }
                     }
                 },

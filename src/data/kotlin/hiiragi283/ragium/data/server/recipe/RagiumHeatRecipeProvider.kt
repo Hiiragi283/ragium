@@ -13,7 +13,6 @@ import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
-import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
@@ -192,12 +191,6 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             ingredient = inputCreator.create(baseOrDust(CommonMaterialKeys.CINNABAR))
             result = resultCreator.create(RagiumFluids.MERCURY, 125)
             recipeId suffix "_from_cinnabar"
-        }
-        // Ragi-Matter
-        HTMeltingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(RagiumItems.RAGI_MATTER)
-            result = resultCreator.create(RagiumFluids.RAGI_MATTER, 125)
-            time *= 10
         }
     }
 }
