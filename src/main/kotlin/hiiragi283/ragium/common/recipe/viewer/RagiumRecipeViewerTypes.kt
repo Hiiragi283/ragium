@@ -101,6 +101,6 @@ object RagiumRecipeViewerTypes {
 
     // Machine - Ultimate
     @JvmField
-    val ENCHANTING: HTHolderRecipeViewerType<HTEnchantingRecipe> =
-        simple(RagiumRecipeLookups.ENCHANTING, RagiumBlocks.ENCHANTER, 18 * 8)
+    val ENCHANTING: HTLookupRecipeViewerType<HTEnchantingRecipe, HTViewerEnchantingRecipe> =
+        lookup(RagiumRecipeLookups.ENCHANTING, RagiumBlocks.ENCHANTER, 18 * 8, 18 * 3)
 }

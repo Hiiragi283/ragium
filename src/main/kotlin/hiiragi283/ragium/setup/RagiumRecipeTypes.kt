@@ -62,5 +62,5 @@ object RagiumRecipeTypes {
 
     // Machine - Ultimate
     @JvmField
-    val ENCHANTING: Supplier<RecipeType<HTEnchantingRecipe>> = REGISTER.registerType(RagiumConst.ENCHANTING)
+    val ENCHANTING: Supplier<RecipeType<HTEnchantingRecipe.Serializable>> = REGISTER.registerType(RagiumConst.ENCHANTING)
 }

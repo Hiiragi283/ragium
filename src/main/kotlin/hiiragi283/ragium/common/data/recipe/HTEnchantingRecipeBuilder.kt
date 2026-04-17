@@ -18,10 +18,8 @@ class HTEnchantingRecipeBuilder<ENCH : Any>(private val factory: Factory<ENCH, *
     companion object {
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTEnchantingRecipeBuilder<Holder<Enchantment>>.() -> Unit) {
-            HTEnchantingRecipeBuilder(
-                ::HTHolderEnchantingRecipe,
-                Holder<Enchantment>::toLike.andThen(HTIdLike::getId),
-            ).apply(builderAction)
+            HTEnchantingRecipeBuilder(::HTHolderEnchantingRecipe, Holder<Enchantment>::toLike.andThen(HTIdLike::getId))
+                .apply(builderAction)
                 .save(output)
         }
     }

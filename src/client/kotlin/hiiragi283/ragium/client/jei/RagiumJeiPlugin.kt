@@ -8,20 +8,25 @@ import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.client.jei.category.HTAssemblingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTCuttingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.common.recipe.HTFluidMixingRecipe
+import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTItemMixingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.viewer.HTViewerEnchantingRecipe
 import hiiragi283.ragium.common.recipe.viewer.HTViewerMixingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.impl.recipe.HTBasicEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -33,6 +38,7 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
+import mezz.jei.api.runtime.IIngredientManager
 import net.minecraft.world.item.ItemStack
 
 @JeiPlugin
@@ -71,6 +77,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeSerializers.CHEMICAL_WASHING),
             HTMixingRecipeCategory(guiHelper),
             // Machine - Ultimate
+            HTEnchantingRecipeCategory(guiHelper),
             // Device
         )
     }
@@ -120,8 +127,33 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                 },
         )
         // Machine - Ultimate
-        // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.DUPLICATING, RagiumRecipeLookups.DUPLICATING)
-        // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.ENCHANTING, RagiumRecipeLookups.ENCHANTING)
+        val manager: IIngredientManager = registration.ingredientManager
+        HTJeiRecipeHelper.addHolderRecipes(
+            registration,
+            RagiumRecipeViewerTypes.ENCHANTING,
+            RagiumRecipeLookups.ENCHANTING
+                .getAllRecipes()
+                .mapNotNull { holder: HTRecipeHolder<HTEnchantingRecipe> ->
+                    holder.mapRecipeOrNull { recipe: HTEnchantingRecipe ->
+                        if (recipe is HTBasicEnchantingRecipe) {
+                            val stacks: List<ItemStack> = when (recipe) {
+                                is HTHolderEnchantingRecipe ->
+                                    manager.allItemStacks
+                                        .filter { it.supportsEnchantment(recipe.holder) }
+                                else -> return@mapRecipeOrNull null
+                            }
+                            HTViewerEnchantingRecipe(
+                                stacks,
+                                recipe.ingredient,
+                                recipe.requiredExpAmount,
+                                stacks.map(recipe::applyEnchantment),
+                            )
+                        } else {
+                            null
+                        }
+                    }
+                },
+        )
         // Device
     }
 
