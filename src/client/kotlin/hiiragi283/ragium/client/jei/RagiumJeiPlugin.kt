@@ -183,7 +183,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.WASHING,
             // Machine - Elite
             RagiumRecipeViewerTypes.CHEMICAL_WASHING,
-            RagiumRecipeViewerTypes.ELECTROLYZING,
             RagiumRecipeViewerTypes.MIXING,
             // Device - Ultimate
             RagiumRecipeViewerTypes.ENCHANTING,

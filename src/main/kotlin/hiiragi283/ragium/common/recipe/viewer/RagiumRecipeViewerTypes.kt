@@ -15,7 +15,6 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -90,10 +89,6 @@ object RagiumRecipeViewerTypes {
     @JvmField
     val CHEMICAL_WASHING: HTLookupRecipeViewerType<HTItemOrFluidRecipe, HTChemicalWashingRecipe> =
         lookup(RagiumRecipeLookups.CHEMICAL_WASHING, RagiumBlocks.CHEMICAL_WASHER, 18 * 8)
-
-    @JvmField
-    val ELECTROLYZING: HTHolderRecipeViewerType<HTElectrolyzingRecipe> =
-        simple(RagiumRecipeLookups.ELECTROLYZING, RagiumBlocks.FLUID_MIXER, 18 * 7)
 
     @JvmField
     val MIXING: HTLookupRecipeViewerType<HTMixingRecipe, HTViewerMixingRecipe> =

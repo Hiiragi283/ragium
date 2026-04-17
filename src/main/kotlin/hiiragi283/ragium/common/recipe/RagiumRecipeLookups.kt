@@ -7,7 +7,6 @@ import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
-import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
 import hiiragi283.core.impl.recipe.HTRecipeTypeImpl
 import hiiragi283.core.impl.recipe.HTRecipeTypeManager
 import hiiragi283.core.impl.recipe.addProvider
@@ -55,9 +54,6 @@ data object RagiumRecipeLookups {
     val CHEMICAL_WASHING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> = create(RagiumConst.CHEMICAL_WASHING)
 
     @JvmField
-    val ELECTROLYZING: HTRecipeTypeImpl<HTSingleFluidRecipeInput, HTElectrolyzingRecipe> = create(RagiumConst.ELECTROLYZING)
-
-    @JvmField
     val MIXING: HTRecipeTypeImpl<HTMixingRecipeInput, HTMixingRecipe> = create(RagiumConst.MIXING)
 
     // Machine - Ultimate
@@ -82,7 +78,6 @@ data object RagiumRecipeLookups {
         WASHING.addProvider(RagiumRecipeTypes.WASHING.get(), identity())
 
         CHEMICAL_WASHING.addProvider(RagiumRecipeTypes.CHEMICAL_WASHING.get(), identity())
-        ELECTROLYZING.addProvider(RagiumRecipeTypes.ELECTROLYZING.get(), identity())
         MIXING.addProvider(RagiumRecipeTypes.MIXING.get(), identity())
 
         ENCHANTING.addProvider(RagiumRecipeTypes.ENCHANTING.get(), identity())

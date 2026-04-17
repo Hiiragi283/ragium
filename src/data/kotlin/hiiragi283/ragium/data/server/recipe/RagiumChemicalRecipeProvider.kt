@@ -17,7 +17,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTAssemblingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTElectrolyzingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFluidMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
@@ -63,10 +62,12 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         rubber()
 
         // 2x H2O -> 2x H2 + O2
-        HTElectrolyzingRecipeBuilder.create(output) {
-            ingredient = inputCreator.water()
-            result = resultCreator.create(RagiumFluids.HYDROGEN)
-            extraResult += resultCreator.create(RagiumFluids.OXYGEN, 500)
+        HTFluidMixingRecipeBuilder.create(output) {
+            fluidIngredients += inputCreator.water()
+            itemIngredient = inputCreator.create(Items.HEART_OF_THE_SEA, amount = 0)
+            results += resultCreator.create(RagiumFluids.HYDROGEN)
+            results += resultCreator.create(RagiumFluids.OXYGEN, 500)
+            recipeId suffix "_from_water"
         }
     }
 

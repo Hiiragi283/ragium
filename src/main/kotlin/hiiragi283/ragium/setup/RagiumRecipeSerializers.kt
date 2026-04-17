@@ -23,7 +23,6 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTElectrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTFluidMixingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
@@ -162,18 +161,6 @@ object RagiumRecipeSerializers {
     @JvmField
     val CHEMICAL_WASHING: RecipeSerializer<HTChemicalWashingRecipe> =
         REGISTER.registerSerializer(RagiumConst.CHEMICAL_WASHING, itemOrFluid(::HTChemicalWashingRecipe))
-
-    @JvmField
-    val ELECTROLYZING: RecipeSerializer<HTElectrolyzingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.ELECTROLYZING,
-        MapBiCodec.composite(
-            HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTElectrolyzingRecipe::ingredient),
-            HTFluidResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTElectrolyzingRecipe::result),
-            COMPLEX_RESULT.forGetter(HTElectrolyzingRecipe::extraResult),
-            HTProcessingRecipe.timeCodec(),
-            ::HTElectrolyzingRecipe,
-        ),
-    )
 
     @JvmField
     val FLUID_MIXING: RecipeSerializer<HTFluidMixingRecipe> = REGISTER.registerSerializer(

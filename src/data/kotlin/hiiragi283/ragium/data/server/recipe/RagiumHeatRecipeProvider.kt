@@ -13,7 +13,6 @@ import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
@@ -167,18 +166,6 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             ingredient = inputCreator.create(Tags.Items.GLASS_PANES)
             result = resultCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
             recipeId suffix "_from_pane"
-        }
-
-        // Eldritch
-        for (i: Int in (0..4)) {
-            HTMeltingRecipeBuilder.create(output) {
-                ingredient = inputCreator.create(
-                    false,
-                    Items.OMINOUS_BOTTLE,
-                ) { expect(DataComponents.OMINOUS_BOTTLE_AMPLIFIER, i) }
-                result = resultCreator.create(HCFluids.OMINOUS_FLUX, HTConst.INGOT_AMOUNT * (i + 1))
-                recipeId suffix "_$i"
-            }
         }
 
         // Cinnabar -> Mercury
