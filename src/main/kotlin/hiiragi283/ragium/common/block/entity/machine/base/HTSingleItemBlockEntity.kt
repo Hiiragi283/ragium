@@ -8,7 +8,7 @@ import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -61,26 +61,32 @@ abstract class HTSingleItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
 
     //    Processing    //
 
-    private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
-    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+    private inner class ProgressHandlerImpl : ProgressHandler<SingleRecipeInput, HTSingleItemRecipe>() {
+        private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        { _, _ -> createInput(inputHandler) },
-        { getCache() },
-        {
-            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<SingleRecipeInput, out HTSingleItemRecipe> ->
-                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
-            }
-            onComplete = { level, _, recipe: HTHandledRecipe<SingleRecipeInput, out HTSingleItemRecipe> ->
-                // output
-                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
-                // input
-                inputHandler.consume(recipe.map(HTSingleItemRecipe::getRequiredAmount))
+        override fun createInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)
 
-                playSound()
-            }
-        },
-    )
+        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: SingleRecipeInput): HTSingleItemRecipe? =
+            getCache().getFirstRecipe(input, level)
+
+        override fun canComplete(
+            level: ServerLevel,
+            pos: BlockPos,
+            recipe: HTHandledRecipe<SingleRecipeInput, HTSingleItemRecipe>,
+        ): Boolean = recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<SingleRecipeInput, HTSingleItemRecipe>) {
+            // output
+            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            // input
+            inputHandler.consume(recipe.map(HTSingleItemRecipe::getRequiredAmount))
+
+            playSound()
+        }
+    }
+
+    final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     protected abstract fun getCache(): HTRecipeCache<SingleRecipeInput, out HTSingleItemRecipe>
 
@@ -92,7 +98,7 @@ abstract class HTSingleItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
         HTSingleItemBlockEntity(type, pos, state) {
         //    Serialize    //
 
-        private lateinit var cache: HTRecipeCache<SingleRecipeInput, out HTSingleItemRecipe>
+        private val cache: HTRecipeCache<SingleRecipeInput, out HTSingleItemRecipe> = getCache()
 
         override fun writeValue(output: HTValueOutput) {
             super.writeValue(output)
@@ -102,10 +108,6 @@ abstract class HTSingleItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
         override fun readValue(input: HTValueInput) {
             super.readValue(input)
             cache.deserialize(input)
-        }
-
-        final override fun initRecipeCache() {
-            cache = getCache()
         }
 
         final override fun getCache(): HTRecipeCache<SingleRecipeInput, out HTSingleItemRecipe> = HTLookupRecipeCache.forRecipe(getLookup())

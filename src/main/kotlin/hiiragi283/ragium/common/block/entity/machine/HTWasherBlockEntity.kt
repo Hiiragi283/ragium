@@ -6,6 +6,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
@@ -85,13 +86,19 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTWashingRecipe> = RagiumRecipeLookups.WASHING
 
-    override fun createInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
-        createInput(itemInputHandler, fluidInputHandler)
+    override fun createHandler(): HTProgressHandler<*> = object : MultiOutputProgressHandler() {
+        override fun completeInput(
+            level: ServerLevel,
+            pos: BlockPos,
+            recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTWashingRecipe>,
+        ) {
+            itemInputHandler.consume(recipe.recipe.ingredient)
+            fluidInputHandler.consume(HTWashingRecipe.WATER_INGREDIENT)
+            playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE)
+        }
 
-    override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, out HTWashingRecipe>) {
-        itemInputHandler.consume(recipe.recipe.ingredient)
-        fluidInputHandler.consume(HTWashingRecipe.WATER_INGREDIENT)
-        playSound(SoundEvents.BUBBLE_COLUMN_UPWARDS_INSIDE)
+        override fun createInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
+            createInput(itemInputHandler, fluidInputHandler)
     }
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.washer

@@ -6,7 +6,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.handler.assembleFluid
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
@@ -73,7 +73,8 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
 
     //    Serialize    //
 
-    private lateinit var cache: HTRecipeCache<SingleRecipeInput, HTMeltingRecipe>
+    private val cache: HTRecipeCache<SingleRecipeInput, HTMeltingRecipe> =
+        HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.MELTING)
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
@@ -87,30 +88,29 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
 
     //    Processing    //
 
-    private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
-    private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
+    private inner class ProgressHandlerImpl : ProgressHandler<SingleRecipeInput, HTMeltingRecipe>() {
+        private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+        private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
-    override fun initRecipeCache() {
-        cache = HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.MELTING)
+        override fun createInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)
+
+        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: SingleRecipeInput): HTMeltingRecipe? =
+            cache.getFirstRecipe(input, level)
+
+        override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<SingleRecipeInput, HTMeltingRecipe>): Boolean =
+            recipe.assembleFluid(level.registryAccess()).let(outputHandler::canInsert)
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<SingleRecipeInput, HTMeltingRecipe>) {
+            // output
+            recipe.assembleFluid(level.registryAccess()).let(outputHandler::insert)
+            // input
+            inputHandler.consume(recipe.recipe.ingredient)
+
+            playSound(SoundEvents.LAVA_POP)
+        }
     }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        { _, _ -> createInput(inputHandler) },
-        cache,
-        {
-            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<SingleRecipeInput, HTMeltingRecipe> ->
-                recipe.assembleFluid(level.registryAccess()).let(outputHandler::canInsert)
-            }
-            onComplete = { level, _, recipe: HTHandledRecipe<SingleRecipeInput, HTMeltingRecipe> ->
-                // output
-                recipe.assembleFluid(level.registryAccess()).let(outputHandler::insert)
-                // input
-                inputHandler.consume(recipe.recipe.ingredient)
-
-                playSound(SoundEvents.LAVA_POP)
-            }
-        },
-    )
+    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.melter
 }

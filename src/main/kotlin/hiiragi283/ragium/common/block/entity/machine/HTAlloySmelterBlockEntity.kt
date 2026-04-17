@@ -6,7 +6,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
@@ -67,7 +67,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Serialize    //
 
-    private lateinit var cache: HTRecipeCache<HTShapelessRecipeInput, HTAlloyingRecipe>
+    private val cache: HTRecipeCache<HTShapelessRecipeInput, HTAlloyingRecipe> = HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.ALLOYING)
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
@@ -81,33 +81,35 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+    private inner class ProgressHandlerImpl : ProgressHandler<HTShapelessRecipeInput, HTAlloyingRecipe>() {
+        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun initRecipeCache() {
-        cache = HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.ALLOYING)
+        override fun createInput(level: ServerLevel, pos: BlockPos): HTShapelessRecipeInput? {
+            val map: Map<HTItemResourceType, Int> = HTShapelessRecipeHelper.createMap(inputSlots)
+            return HTShapelessRecipeInput(map).takeUnless(HTShapelessRecipeInput::isEmpty)
+        }
+
+        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: HTShapelessRecipeInput): HTAlloyingRecipe? =
+            cache.getFirstRecipe(input, level)
+
+        override fun canComplete(
+            level: ServerLevel,
+            pos: BlockPos,
+            recipe: HTHandledRecipe<HTShapelessRecipeInput, HTAlloyingRecipe>,
+        ): Boolean = recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTShapelessRecipeInput, HTAlloyingRecipe>) {
+            // output
+            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            // input
+            val recipe: HTAlloyingRecipe = recipe.recipe
+            HTShapelessRecipeHelper.shapelessConsume(recipe.ingredients, inputSlots)
+
+            playSound(SoundEvents.FIRE_EXTINGUISH)
+        }
     }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        { _, _ ->
-            val map: Map<HTItemResourceType, Int> = HTShapelessRecipeHelper.createMap(inputSlots)
-            if (map.isEmpty()) null else HTShapelessRecipeInput(map)
-        },
-        cache,
-        {
-            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTShapelessRecipeInput, HTAlloyingRecipe> ->
-                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
-            }
-            onComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTShapelessRecipeInput, HTAlloyingRecipe> ->
-                // output
-                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
-                // input
-                val recipe: HTAlloyingRecipe = recipe.recipe
-                HTShapelessRecipeHelper.shapelessConsume(recipe.ingredients, inputSlots)
-
-                playSound(SoundEvents.FIRE_EXTINGUISH)
-            }
-        },
-    )
+    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.alloySmelter
 }

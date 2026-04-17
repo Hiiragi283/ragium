@@ -6,7 +6,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
@@ -83,7 +83,8 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Serialize    //
 
-    private lateinit var cache: HTRecipeCache<HTItemAndFluidRecipeInput, HTFreezingRecipe>
+    private val cache: HTRecipeCache<HTItemAndFluidRecipeInput, HTFreezingRecipe> =
+        HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.FREEZING)
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
@@ -97,34 +98,37 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
-    private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+    private inner class ProgressHandlerImpl : ProgressHandler<HTItemAndFluidRecipeInput, HTFreezingRecipe>() {
+        private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
+        private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 
-    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun initRecipeCache() {
-        cache = HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.FREEZING)
+        override fun createInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
+            createInput(itemInputHandler, fluidInputHandler)
+
+        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: HTItemAndFluidRecipeInput): HTFreezingRecipe? =
+            cache.getFirstRecipe(input, level)
+
+        override fun canComplete(
+            level: ServerLevel,
+            pos: BlockPos,
+            recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTFreezingRecipe>,
+        ): Boolean = recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTFreezingRecipe>) {
+            // output
+            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            // input
+            val recipe: HTFreezingRecipe = recipe.recipe
+            fluidInputHandler.consume(recipe.fluidIngredient)
+            itemInputHandler.consume(recipe.itemIngredient)
+
+            playSound(SoundEvents.GLASS_HIT)
+        }
     }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        { _, _ -> createInput(itemInputHandler, fluidInputHandler) },
-        cache,
-        {
-            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTFreezingRecipe> ->
-                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
-            }
-            onComplete = { level, _, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTFreezingRecipe> ->
-                // output
-                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
-                // input
-                val recipe: HTFreezingRecipe = recipe.recipe
-                fluidInputHandler.consume(recipe.fluidIngredient)
-                itemInputHandler.consume(recipe.itemIngredient)
-
-                playSound(SoundEvents.GLASS_HIT)
-            }
-        },
-    )
+    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.freezer
 }

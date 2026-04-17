@@ -6,16 +6,15 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeHolder
-import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.api.serialization.value.HTValueSerializable
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
@@ -33,6 +32,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.StonecutterRecipe
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
@@ -78,7 +78,31 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Serialize    //
 
-    private lateinit var cache: HTRecipeCache<HTDoubleRecipeInput, WrappedRecipe>
+    private val cache: HTRecipeCache<HTDoubleRecipeInput, WrappedRecipe> = object :
+        HTRecipeCache<HTDoubleRecipeInput, WrappedRecipe>,
+        HTValueSerializable.Empty {
+        private var lastRecipe: HTRecipeHolder<WrappedRecipe>? = null
+
+        override fun getFirstRecipe(input: HTDoubleRecipeInput, level: Level): WrappedRecipe? {
+            var holder: HTRecipeHolder<WrappedRecipe>? = null
+            if (lastRecipe != null) {
+                if (lastRecipe!!.recipe.test(input)) {
+                    holder = lastRecipe
+                } else {
+                    lastRecipe = null
+                    return null
+                }
+            } else {
+                holder = level.recipeManager
+                    .getAllRecipesFor(RecipeType.STONECUTTING)
+                    .map(HTRecipeHolder.Companion::from)
+                    .map { holder: HTRecipeHolder<StonecutterRecipe> -> holder.mapRecipe { WrappedRecipe(it as SingleItemRecipeAccessor) } }
+                    .firstOrNull { (_, recipe: WrappedRecipe) -> recipe.test(input) }
+            }
+            lastRecipe = holder
+            return holder?.recipe
+        }
+    }
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
@@ -92,38 +116,30 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
-    private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
-    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+    private inner class ProgressHandlerImpl : ProgressHandler<HTDoubleRecipeInput, WrappedRecipe>() {
+        private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+        private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
+        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun initRecipeCache() {
-        cache = HTLookupRecipeCache.forRecipe(RecipeLookup)
+        override fun createInput(level: ServerLevel, pos: BlockPos): HTDoubleRecipeInput? = createInput(inputHandler, catalystHandler)
+
+        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: HTDoubleRecipeInput): WrappedRecipe? =
+            cache.getFirstRecipe(input, level)
+
+        override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTDoubleRecipeInput, WrappedRecipe>): Boolean =
+            recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTDoubleRecipeInput, WrappedRecipe>) {
+            // output
+            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            // input
+            inputHandler.consume(1)
+            // sound
+            playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
+        }
     }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        { _, _ -> createInput(inputHandler, catalystHandler) },
-        cache,
-        {
-            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTDoubleRecipeInput, WrappedRecipe> ->
-                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
-            }
-            onComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTDoubleRecipeInput, WrappedRecipe> ->
-                // output
-                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
-                // input
-                inputHandler.consume(1)
-
-                playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
-            }
-        },
-    )
-
-    private data object RecipeLookup : HTRecipeLookup<HTDoubleRecipeInput, WrappedRecipe> {
-        override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<WrappedRecipe>> =
-            context.getAllRecipes(RecipeType.STONECUTTING).map { holder: HTRecipeHolder<StonecutterRecipe> ->
-                holder.mapRecipe { recipe: StonecutterRecipe -> WrappedRecipe(recipe as SingleItemRecipeAccessor) }
-            }
-    }
+    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     private class WrappedRecipe(private val accessor: SingleItemRecipeAccessor) : HTProcessingRecipe<HTDoubleRecipeInput> {
         override val time: Int = 5

@@ -1,10 +1,9 @@
 package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.function.andThen
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTRecipeCache
+import hiiragi283.core.api.recipe.HTRecipe
 import hiiragi283.core.api.recipe.base.HTProcessingRecipe
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
@@ -39,21 +38,18 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTMachineBlockEntity(type, pos, state) {
-    protected lateinit var recipeHandler: HTRecipeHandler<*, *>
+    protected lateinit var recipeHandler: HTProgressHandler<*>
         private set
     protected lateinit var recipeComponent: HTRecipeComponent
         private set
 
     override fun initializeVariables() {
         super.initializeVariables()
-        initRecipeCache()
         recipeHandler = createHandler()
         recipeComponent = HTRecipeComponent(this, recipeHandler)
     }
 
-    protected open fun initRecipeCache() {}
-
-    protected abstract fun createHandler(): HTRecipeHandler<*, *>
+    protected abstract fun createHandler(): HTProgressHandler<*>
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4)) {
         widgetHolder += HTProgressWidget.createArrow(
@@ -125,6 +121,20 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         }
     }
 
+    //    RecipeHandler    //
+
+    abstract class RecipeHandler<INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>> : HTRecipeHandler<INPUT, RECIPE>() {
+        final override fun findRecipe(level: ServerLevel, pos: BlockPos): HTHandledRecipe<INPUT, RECIPE>? {
+            val input: INPUT = createInput(level, pos) ?: return null
+            val recipe: RECIPE = findRecipe(level, pos, input) ?: return null
+            return HTHandledRecipe.create(input, recipe)
+        }
+
+        protected abstract fun createInput(level: ServerLevel, pos: BlockPos): INPUT?
+
+        protected abstract fun findRecipe(level: ServerLevel, pos: BlockPos, input: INPUT): RECIPE?
+    }
+
     //    Energized    //
 
     abstract class Energized(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
@@ -143,27 +153,12 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
             return battery.currentEnergyPerTick * modifyTime(time)
         }
 
-        protected fun <INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>> createHandler(
-            inputFactory: (ServerLevel, BlockPos) -> INPUT?,
-            cache: HTRecipeCache<INPUT, RECIPE>,
-            builderAction: HTProgressHandler.Builder<HTHandledRecipe<INPUT, RECIPE>>.() -> Unit,
-        ): HTRecipeHandler<INPUT, RECIPE> = createHandler(inputFactory, { cache }, builderAction)
+        //    ProgressHandler    //
 
-        protected fun <INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>> createHandler(
-            inputFactory: (ServerLevel, BlockPos) -> INPUT?,
-            cacheProvider: () -> HTRecipeCache<INPUT, RECIPE>,
-            builderAction: HTProgressHandler.Builder<HTHandledRecipe<INPUT, RECIPE>>.() -> Unit,
-        ): HTRecipeHandler<INPUT, RECIPE> = HTProgressHandler.create {
-            recipeFinder = finder@{ level: ServerLevel, pos: BlockPos ->
-                val input: INPUT = inputFactory(level, pos) ?: return@finder null
-                val recipe: RECIPE = cacheProvider().getFirstRecipe(input, level) ?: return@finder null
-                HTHandledRecipe.create(input, recipe)
-            }
-            maxProgressGetter = HTHandledRecipe<INPUT, RECIPE>::recipe
-                .andThen(HTProcessingRecipe<INPUT>::time)
-                .andThen(::updateAndGetProgress)
-            progressGetter = { _, _ -> battery.consume() }
-            builderAction()
+        abstract inner class ProgressHandler<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>> : RecipeHandler<INPUT, RECIPE>() {
+            final override fun getMaxProgress(recipe: HTHandledRecipe<INPUT, RECIPE>): Int = recipe.recipe.time.let(::updateAndGetProgress)
+
+            final override fun getProgress(level: ServerLevel, pos: BlockPos): Int = battery.consume()
         }
     }
 }

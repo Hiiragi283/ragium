@@ -6,6 +6,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -45,18 +46,22 @@ abstract class HTSingleMultiOutputBlockEntity(type: HTDeferredBlockEntityType<*>
 
     //    Processing    //
 
-    private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+    private inner class ProgressHandlerImpl : MultiOutputProgressHandler() {
+        private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 
-    final override fun createInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)
+        override fun createInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)
 
-    final override fun onComplete(
-        level: ServerLevel,
-        pos: BlockPos,
-        recipe: HTHandledRecipe<SingleRecipeInput, out HTSingleMultiOutputRecipe>,
-    ) {
-        inputHandler.consume(recipe.map(HTSingleMultiOutputRecipe::getRequiredAmount))
-        playSound()
+        override fun completeInput(
+            level: ServerLevel,
+            pos: BlockPos,
+            recipe: HTHandledRecipe<SingleRecipeInput, HTSingleMultiOutputRecipe>,
+        ) {
+            inputHandler.consume(recipe.map(HTSingleMultiOutputRecipe::getRequiredAmount))
+            playSound()
+        }
     }
+
+    final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     protected abstract fun playSound()
 }

@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.machine
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
@@ -52,7 +52,8 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Serialize    //
 
-    private lateinit var cache: HTRecipeCache<HTDoubleRecipeInput, HTAssemblingRecipe>
+    private val cache: HTRecipeCache<HTDoubleRecipeInput, HTAssemblingRecipe> =
+        HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.ASSEMBLING)
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
@@ -66,33 +67,35 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    private val leftInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(leftInputSlot) }
-    private val rightInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(rightInputSlot) }
-    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+    private inner class ProgressHandlerImpl : ProgressHandler<HTDoubleRecipeInput, HTAssemblingRecipe>() {
+        private val leftInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(leftInputSlot) }
+        private val rightInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(rightInputSlot) }
+        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-    override fun initRecipeCache() {
-        cache = HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.ASSEMBLING)
+        override fun createInput(level: ServerLevel, pos: BlockPos): HTDoubleRecipeInput? = createInput(leftInputHandler, rightInputHandler)
+
+        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: HTDoubleRecipeInput): HTAssemblingRecipe? =
+            cache.getFirstRecipe(input, level)
+
+        override fun canComplete(
+            level: ServerLevel,
+            pos: BlockPos,
+            recipe: HTHandledRecipe<HTDoubleRecipeInput, HTAssemblingRecipe>,
+        ): Boolean = recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTDoubleRecipeInput, HTAssemblingRecipe>) {
+            // output
+            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            // input
+            val recipe: HTAssemblingRecipe = recipe.recipe
+            leftInputHandler.consume(recipe.itemIngredients[0])
+            rightInputHandler.consume(recipe.itemIngredients[1])
+            // sound
+            playSound(SoundEvents.CRAFTER_CRAFT)
+        }
     }
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        { _, _ -> createInput(leftInputHandler, rightInputHandler) },
-        cache,
-        {
-            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTDoubleRecipeInput, HTAssemblingRecipe> ->
-                recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
-            }
-            onComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTDoubleRecipeInput, HTAssemblingRecipe> ->
-                // output
-                recipe.assemble(level.registryAccess()).let(outputHandler::insert)
-                // input
-                val recipe: HTAssemblingRecipe = recipe.recipe
-                leftInputHandler.consume(recipe.itemIngredients[0])
-                rightInputHandler.consume(recipe.itemIngredients[1])
-                // sound
-                playSound(SoundEvents.CRAFTER_CRAFT)
-            }
-        },
-    )
+    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.assembler
 }

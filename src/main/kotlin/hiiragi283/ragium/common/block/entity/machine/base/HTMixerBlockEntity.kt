@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine.base
 
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -24,7 +24,8 @@ abstract class HTMixerBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
     HTProcessorBlockEntity.Energized(type, pos, state) {
     //    Serialize    //
 
-    private lateinit var cache: HTLookupRecipeCache<HTMixingRecipeInput, HTMixingRecipe>
+    private val cache: HTLookupRecipeCache<HTMixingRecipeInput, HTMixingRecipe> =
+        HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.MIXING)
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
@@ -38,39 +39,44 @@ abstract class HTMixerBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
 
     //    Processing    //
 
-    private val itemOutputHandler: HTItemOutputHandler by lazy { createItemOutputs() }
-    private val fluidOutputHandler: HTFluidOutputHandler by lazy { createFluidOutputs() }
+    private inner class ProgressHandlerImpl : ProgressHandler<HTMixingRecipeInput, HTMixingRecipe>() {
+        private val itemOutputHandler: HTItemOutputHandler by lazy { createItemOutputs() }
+        private val fluidOutputHandler: HTFluidOutputHandler by lazy { createFluidOutputs() }
+
+        override fun createInput(level: ServerLevel, pos: BlockPos): HTMixingRecipeInput? =
+            createInput().takeUnless(HTMixingRecipeInput::isEmpty)
+
+        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: HTMixingRecipeInput): HTMixingRecipe? =
+            cache.getFirstRecipe(input, level)
+
+        override fun canComplete(
+            level: ServerLevel,
+            pos: BlockPos,
+            recipe: HTHandledRecipe<HTMixingRecipeInput, HTMixingRecipe>,
+        ): Boolean {
+            val access: RegistryAccess = level.registryAccess()
+            val bool1: Boolean = recipe.map(access, HTMixingRecipe::assembleItems).all(itemOutputHandler::canInsert)
+            val bool2: Boolean = recipe.map(access, HTMixingRecipe::assembleFluids).all(fluidOutputHandler::canInsert)
+            return bool1 && bool2
+        }
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTMixingRecipeInput, HTMixingRecipe>) {
+            val access: RegistryAccess = level.registryAccess()
+            // outputs
+            recipe.map(access, HTMixingRecipe::assembleItems).forEach(itemOutputHandler::insert)
+            recipe.map(access, HTMixingRecipe::assembleFluids).forEach(fluidOutputHandler::insert)
+            // inputs
+            recipe.map(HTMixingRecipe::getRequiredAmounts).let(::consumeInputs)
+            // sound
+            playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE)
+        }
+    }
+
+    final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     protected abstract fun createItemOutputs(): HTItemOutputHandler
 
     protected abstract fun createFluidOutputs(): HTFluidOutputHandler
-
-    override fun initRecipeCache() {
-        cache = HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.MIXING)
-    }
-
-    final override fun createHandler(): HTRecipeHandler<*, *> = createHandler(
-        { _, _ -> createInput().takeUnless(HTMixingRecipeInput::isEmpty) },
-        cache,
-        {
-            canComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTMixingRecipeInput, HTMixingRecipe> ->
-                val access: RegistryAccess = level.registryAccess()
-                val bool1: Boolean = recipe.map(access, HTMixingRecipe::assembleItems).all(itemOutputHandler::canInsert)
-                val bool2: Boolean = recipe.map(access, HTMixingRecipe::assembleFluids).all(fluidOutputHandler::canInsert)
-                bool1 && bool2
-            }
-            onComplete = { level: ServerLevel, _, recipe: HTHandledRecipe<HTMixingRecipeInput, HTMixingRecipe> ->
-                val access: RegistryAccess = level.registryAccess()
-                // outputs
-                recipe.map(access, HTMixingRecipe::assembleItems).forEach(itemOutputHandler::insert)
-                recipe.map(access, HTMixingRecipe::assembleFluids).forEach(fluidOutputHandler::insert)
-                // inputs
-                recipe.map(HTMixingRecipe::getRequiredAmounts).let(::consumeInputs)
-                // sound
-                playSound(SoundEvents.BUBBLE_COLUMN_WHIRLPOOL_INSIDE)
-            }
-        },
-    )
 
     protected abstract fun createInput(): HTMixingRecipeInput
 

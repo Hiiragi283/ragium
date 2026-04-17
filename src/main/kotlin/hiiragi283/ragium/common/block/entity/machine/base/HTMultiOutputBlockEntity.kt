@@ -5,7 +5,6 @@ import hiiragi283.core.api.recipe.HTRecipeCache
 import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.base.HTMultiOutputRecipe
 import hiiragi283.core.api.recipe.handler.HTHandledRecipe
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -40,7 +39,7 @@ abstract class HTMultiOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOut
 
     //    Serialize    //
 
-    private lateinit var cache: HTRecipeCache<INPUT, out RECIPE>
+    private val cache: HTRecipeCache<INPUT, out RECIPE> = HTLookupRecipeCache.forRecipe(getLookup())
 
     override fun writeValue(output: HTValueOutput) {
         super.writeValue(output)
@@ -54,31 +53,26 @@ abstract class HTMultiOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOut
 
     //    Processing    //
 
-    private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
+    protected abstract inner class MultiOutputProgressHandler : ProgressHandler<INPUT, RECIPE>() {
+        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
 
-    final override fun initRecipeCache() {
-        cache = HTLookupRecipeCache.forRecipe(getLookup())
-    }
+        final override fun findRecipe(level: ServerLevel, pos: BlockPos, input: INPUT): RECIPE? = cache.getFirstRecipe(input, level)
 
-    override fun createHandler(): HTRecipeHandler<*, *> = createHandler(::createInput, cache) {
-        canComplete = canComplete@{ level: ServerLevel, _, recipe: HTHandledRecipe<INPUT, out RECIPE> ->
-            recipe
-                .map(level.registryAccess(), HTMultiOutputRecipe<INPUT>::assembleItems)
-                .all(outputHandler::canInsert)
-        }
-        onComplete = { level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<INPUT, out RECIPE> ->
+        final override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<INPUT, RECIPE>): Boolean = recipe
+            .map(level.registryAccess(), HTMultiOutputRecipe<INPUT>::assembleItems)
+            .all(outputHandler::canInsert)
+
+        final override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<INPUT, RECIPE>) {
             // outputs
             recipe
                 .map(level.registryAccess(), HTMultiOutputRecipe<INPUT>::assembleItems)
                 .forEach(outputHandler::insert)
             // input
-            this@HTMultiOutputBlockEntity.onComplete(level, pos, recipe)
+            completeInput(level, pos, recipe)
         }
+
+        protected abstract fun completeInput(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<INPUT, RECIPE>)
     }
 
     protected abstract fun getLookup(): HTRecipeLookup<INPUT, out RECIPE>
-
-    protected abstract fun createInput(level: ServerLevel, pos: BlockPos): INPUT?
-
-    protected abstract fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<INPUT, out RECIPE>)
 }
