@@ -82,6 +82,10 @@ object RagiumRecipeViewerTypes {
     val REFINING: HTLookupRecipeViewerType<HTItemOrFluidRecipe, HTRefiningRecipe> =
         lookup(RagiumRecipeLookups.REFINING, RagiumBlocks.REFINERY, 18 * 8)
 
+    @JvmField
+    val WASHING: HTHolderRecipeViewerType<HTWashingRecipe> =
+        simple(RagiumRecipeLookups.WASHING, RagiumBlocks.WASHER, 18 * 7, 18 * 3)
+
     // Machine - Elite
     @JvmField
     val CHEMICAL_WASHING: HTLookupRecipeViewerType<HTItemOrFluidRecipe, HTChemicalWashingRecipe> =
@@ -94,10 +98,6 @@ object RagiumRecipeViewerTypes {
     @JvmField
     val MIXING: HTLookupRecipeViewerType<HTMixingRecipe, HTViewerMixingRecipe> =
         lookup(RagiumRecipeLookups.MIXING, RagiumBlocks.MIXER, 18 * 6, 18 * 2)
-
-    @JvmField
-    val WASHING: HTHolderRecipeViewerType<HTWashingRecipe> =
-        simple(RagiumRecipeLookups.WASHING, RagiumBlocks.WASHER, 18 * 7, 18 * 3)
 
     // Machine - Ultimate
     @JvmField

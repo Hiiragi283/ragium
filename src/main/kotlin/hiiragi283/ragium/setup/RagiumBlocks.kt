@@ -111,6 +111,10 @@ object RagiumBlocks {
     val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY, machine().noOcclusion())
 
+    @JvmField
+    val WASHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.WASHER, RagiumTranslation.WASHER)
+
     // Elite
     @JvmField
     val BREWERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
@@ -127,10 +131,6 @@ object RagiumBlocks {
     @JvmField
     val MIXER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
-
-    @JvmField
-    val WASHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.WASHER, RagiumTranslation.WASHER)
 
     // Ultimate
     @JvmField

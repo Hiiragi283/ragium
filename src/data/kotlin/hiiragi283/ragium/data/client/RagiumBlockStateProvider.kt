@@ -44,13 +44,13 @@ class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider
         frontMachineBlock(RagiumBlocks.MELTER, RagiumConst.MACHINE, heat)
         frontMachineBlock(RagiumBlocks.PYROLYZER, RagiumConst.MACHINE, heat)
         refineryBlock(RagiumBlocks.REFINERY)
+        frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, cool)
 
         val mixerFront: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, RagiumConst.MACHINE, RagiumConst.MIXER)
         frontMachineBlock(RagiumBlocks.BREWERY, RagiumConst.MACHINE, chemical)
         refineryBlock(RagiumBlocks.CHEMICAL_WASHER)
         frontMachineBlock(RagiumBlocks.FLUID_MIXER, RagiumConst.MACHINE, chemical, mixerFront)
         frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
-        frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, chemical)
 
         // Storage
         variableBlock(RagiumBlocks.BATTERY, RagiumBlocks.CREATIVE_BATTERY)

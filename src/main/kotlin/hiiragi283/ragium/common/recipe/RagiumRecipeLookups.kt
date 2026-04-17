@@ -47,6 +47,9 @@ data object RagiumRecipeLookups {
     @JvmField
     val REFINING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> = create(RagiumConst.REFINING)
 
+    @JvmField
+    val WASHING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTWashingRecipe> = create(RagiumConst.WASHING)
+
     // Machine - Elite
     @JvmField
     val CHEMICAL_WASHING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> = create(RagiumConst.CHEMICAL_WASHING)
@@ -56,9 +59,6 @@ data object RagiumRecipeLookups {
 
     @JvmField
     val MIXING: HTRecipeTypeImpl<HTMixingRecipeInput, HTMixingRecipe> = create(RagiumConst.MIXING)
-
-    @JvmField
-    val WASHING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTWashingRecipe> = create(RagiumConst.WASHING)
 
     // Machine - Ultimate
     @JvmField
@@ -79,11 +79,11 @@ data object RagiumRecipeLookups {
         MELTING.addProvider(RagiumRecipeTypes.MELTING.get(), identity())
         PYROLYZING.addProvider(RagiumRecipeTypes.PYROLYZING.get(), identity())
         REFINING.addProvider(RagiumRecipeTypes.REFINING.get(), identity())
+        WASHING.addProvider(RagiumRecipeTypes.WASHING.get(), identity())
 
         CHEMICAL_WASHING.addProvider(RagiumRecipeTypes.CHEMICAL_WASHING.get(), identity())
         ELECTROLYZING.addProvider(RagiumRecipeTypes.ELECTROLYZING.get(), identity())
         MIXING.addProvider(RagiumRecipeTypes.MIXING.get(), identity())
-        WASHING.addProvider(RagiumRecipeTypes.WASHING.get(), identity())
 
         ENCHANTING.addProvider(RagiumRecipeTypes.ENCHANTING.get(), identity())
     }

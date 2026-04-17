@@ -41,10 +41,10 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     REFINERY(HTConst.DESCRIPTION, RagiumConst.REFINERY),
 
     FREEZER(HTConst.DESCRIPTION, RagiumConst.FREEZER),
+    WASHER(HTConst.DESCRIPTION, RagiumConst.WASHER),
 
     BREWERY(HTConst.DESCRIPTION, RagiumConst.BREWERY),
     MIXER(HTConst.DESCRIPTION, RagiumConst.MIXER),
-    WASHER(HTConst.DESCRIPTION, RagiumConst.WASHER),
 
     // Blocks - Device
     PLANTER(HTConst.DESCRIPTION, "planter"),

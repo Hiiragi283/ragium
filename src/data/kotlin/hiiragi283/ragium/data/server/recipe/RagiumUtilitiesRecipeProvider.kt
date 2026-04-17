@@ -125,6 +125,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.DIAMOND
             resultStack += RagiumBlocks.REFINERY
         }
+        advanced(RagiumBlocks.WASHER, HCMaterialKeys.AZURE_STEEL) { it += Items.IRON_BARS }
         // Elite
         elite(RagiumBlocks.BREWERY) { it += Items.BREWING_STAND }
         HTShapedRecipeBuilder.create(output) {
@@ -138,8 +139,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             resultStack += RagiumBlocks.CHEMICAL_WASHER
         }
         elite(RagiumBlocks.FLUID_MIXER) { it += RagiumBlocks.TANK }
-        elite(RagiumBlocks.MIXER) { it += Items.CAULDRON }
-        elite(RagiumBlocks.WASHER) { it += Items.IRON_BARS }
+        elite(RagiumBlocks.MIXER) { it += Items.COPPER_GRATE }
         // Ultimate
     }
 

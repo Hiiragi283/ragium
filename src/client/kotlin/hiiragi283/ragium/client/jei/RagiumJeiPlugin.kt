@@ -65,10 +65,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTMeltingRecipeCategory(guiHelper),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeSerializers.PYROLYZING),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.REFINING, RagiumRecipeSerializers.REFINING),
+            HTWashingRecipeCategory(guiHelper),
             // Machine - Elite
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeSerializers.CHEMICAL_WASHING),
             HTMixingRecipeCategory(guiHelper),
-            HTWashingRecipeCategory(guiHelper),
             // Machine - Ultimate
             // Device
         )
@@ -85,6 +85,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.MELTING, RagiumRecipeLookups.MELTING)
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.REFINING, RagiumRecipeLookups.REFINING)
+        HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.WASHING, RagiumRecipeLookups.WASHING)
         // Machine - Elite
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeLookups.CHEMICAL_WASHING)
         // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.ELECTROLYZING, RagiumRecipeLookups.ELECTROLYZING)
@@ -117,7 +118,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                     }
                 },
         )
-        HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.WASHING, RagiumRecipeLookups.WASHING)
         // Machine - Ultimate
         // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.DUPLICATING, RagiumRecipeLookups.DUPLICATING)
         // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.ENCHANTING, RagiumRecipeLookups.ENCHANTING)
@@ -153,11 +153,11 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.MELTING,
             RagiumRecipeViewerTypes.PYROLYZING,
             RagiumRecipeViewerTypes.REFINING,
+            RagiumRecipeViewerTypes.WASHING,
             // Machine - Elite
             RagiumRecipeViewerTypes.CHEMICAL_WASHING,
             RagiumRecipeViewerTypes.ELECTROLYZING,
             RagiumRecipeViewerTypes.MIXING,
-            RagiumRecipeViewerTypes.WASHING,
             // Machine - Ultimate
             RagiumRecipeViewerTypes.ENCHANTING,
             // Device

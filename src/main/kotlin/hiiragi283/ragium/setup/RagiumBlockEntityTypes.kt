@@ -106,6 +106,10 @@ object RagiumBlockEntityTypes {
     val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> =
         REGISTER.registerTick(RagiumConst.REFINERY, ::HTRefineryBlockEntity)
 
+    @JvmField
+    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> =
+        REGISTER.registerTick(RagiumConst.WASHER, ::HTWasherBlockEntity)
+
     // Elite
     @JvmField
     val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
@@ -122,10 +126,6 @@ object RagiumBlockEntityTypes {
     @JvmField
     val MIXER: HTDeferredBlockEntityType<HTItemMixerBlockEntity> =
         REGISTER.registerTick(RagiumConst.MIXER, ::HTItemMixerBlockEntity)
-
-    @JvmField
-    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> =
-        REGISTER.registerTick(RagiumConst.WASHER, ::HTWasherBlockEntity)
 
     // Ultimate
     @JvmField

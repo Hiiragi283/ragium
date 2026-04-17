@@ -47,6 +47,9 @@ object RagiumRecipeTypes {
     @JvmField
     val REFINING: Supplier<RecipeType<HTItemOrFluidRecipe.Serializable>> = REGISTER.registerType(RagiumConst.REFINING)
 
+    @JvmField
+    val WASHING: Supplier<RecipeType<HTWashingRecipe>> = REGISTER.registerType(RagiumConst.WASHING)
+
     // Machine - Elite
     @JvmField
     val CHEMICAL_WASHING: Supplier<RecipeType<HTItemOrFluidRecipe.Serializable>> = REGISTER.registerType(RagiumConst.CHEMICAL_WASHING)
@@ -56,9 +59,6 @@ object RagiumRecipeTypes {
 
     @JvmField
     val MIXING: Supplier<RecipeType<HTMixingRecipe.Serializable>> = REGISTER.registerType(RagiumConst.MIXING)
-
-    @JvmField
-    val WASHING: Supplier<RecipeType<HTWashingRecipe>> = REGISTER.registerType(RagiumConst.WASHING)
 
     // Machine - Ultimate
     @JvmField
