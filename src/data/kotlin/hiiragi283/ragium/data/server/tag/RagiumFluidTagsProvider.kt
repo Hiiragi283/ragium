@@ -29,5 +29,7 @@ class RagiumFluidTagsProvider(context: HTDataGenContext) : HTFluidTagsProvider(R
             .apply(RagiumTags.Fluids.DIESEL)
             .addContentTag(RagiumFluids.FUEL)
             .addTag(commonTag("diesel"), HTTagDependType.OPTIONAL)
+
+        factory.apply(RagiumTags.Fluids.IS_MATTER).addContentTag(RagiumFluids.RAGI_MATTER)
     }
 }

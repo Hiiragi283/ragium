@@ -41,5 +41,5 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
         TODO("Not yet implemented")
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.device.planter
+    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.planter
 }

@@ -62,7 +62,7 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
         factory
             .apply(RagiumTags.Items.PROCESSOR_UPGRADABLE)
             .addTag(RagiumTags.Items.MACHINE_UPGRADABLE)
-            .addTag(RagiumTags.Items.DEVICE_UPGRADABLE, HTTagDependType.OPTIONAL)
+            .addTag(RagiumTags.Items.DEVICE_UPGRADABLE)
         factory
             .apply(RagiumTags.Items.MACHINE_UPGRADABLE)
             // Basic
@@ -85,9 +85,10 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             .add(RagiumBlocks.FLUID_MIXER)
             .add(RagiumBlocks.MIXER)
             // Ultimate
-            .add(RagiumBlocks.ENCHANTER)
+            .add(RagiumBlocks.FLUID_DUPLICATOR)
         factory
             .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
+            .add(RagiumBlocks.ENCHANTER)
 
         // Specific
         factory
@@ -112,14 +113,16 @@ class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, con
             // Generator
             // Machine
             .add(RagiumBlocks.BREWERY)
+            .add(RagiumBlocks.FLUID_DUPLICATOR)
+            .add(RagiumBlocks.FLUID_MIXER)
             .add(RagiumBlocks.FREEZER)
             .add(RagiumBlocks.MELTER)
-            .add(RagiumBlocks.FLUID_MIXER)
             .add(RagiumBlocks.MIXER)
+            .add(RagiumBlocks.PLANTER)
             .add(RagiumBlocks.PYROLYZER)
             .add(RagiumBlocks.WASHER)
             // Device
-            .add(RagiumBlocks.PLANTER)
+            .add(RagiumBlocks.ENCHANTER)
             // Storage
             .add(RagiumBlocks.TANK)
         factory

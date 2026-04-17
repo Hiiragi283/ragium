@@ -100,6 +100,8 @@ object RagiumRecipeViewerTypes {
         lookup(RagiumRecipeLookups.MIXING, RagiumBlocks.MIXER, 18 * 6, 18 * 2)
 
     // Machine - Ultimate
+
+    // Device - Ultimate
     @JvmField
     val ENCHANTING: HTLookupRecipeViewerType<HTEnchantingRecipe, HTViewerEnchantingRecipe> =
         lookup(RagiumRecipeLookups.ENCHANTING, RagiumBlocks.ENCHANTER, 18 * 8, 18 * 3)

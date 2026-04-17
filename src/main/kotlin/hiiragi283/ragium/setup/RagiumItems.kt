@@ -28,6 +28,7 @@ import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
@@ -86,7 +87,7 @@ object RagiumItems {
     val MERCURY_BOTTLE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("mercury_bottle")
 
     @JvmField
-    val THERMOMETER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("thermometer")
+    val THERMOMETER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("thermometer") { it.rarity(Rarity.UNCOMMON) }
 
     // Elite
     @JvmField
@@ -99,11 +100,11 @@ object RagiumItems {
     val CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("circuit_board")
 
     @JvmField
-    val ELECTRIC_CIRCUIT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("electric_circuit")
+    val ELECTRIC_CIRCUIT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("electric_circuit") { it.rarity(Rarity.RARE) }
 
     // Ultimate
     @JvmField
-    val ARTIFICIAL_ARTIFACT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("artificial_artifact")
+    val ARTIFICIAL_ARTIFACT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("artificial_artifact") { it.rarity(Rarity.EPIC) }
 
     //    Foods    //
 

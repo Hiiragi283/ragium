@@ -39,7 +39,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "Bone with Meat")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
-
+        // Machine
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.AUTO_CHISEL, "Auto Chisel")
@@ -59,8 +59,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.FLUID_MIXER, "Fluid Mixer")
         add(RagiumBlocks.MIXER, "Mixer")
 
+        add(RagiumBlocks.FLUID_DUPLICATOR, "Fluid Duplicator")
+        // Device
         add(RagiumBlocks.ENCHANTER, "Enchanter")
-
+        // Storage
         add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
 
         add(RagiumBlocks.BATTERY, "Variable Battery")

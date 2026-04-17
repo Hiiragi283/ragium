@@ -79,6 +79,9 @@ object RagiumConfig {
             @JvmField
             val electricFurnace: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.ELECTRIC_FURNACE)
 
+            @JvmField
+            val planter: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.PLANTER)
+
             // Advanced
             @JvmField
             val freezer: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FREEZER)
@@ -107,13 +110,9 @@ object RagiumConfig {
 
             // Ultimate
             @JvmField
-            val enchanter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.ENCHANTER)
+            val fluidDuplicator: HTMachineConfig = HTMachineConfig.createSimple(builder, RagiumConst.FLUID_DUPLICATOR)
         }
 
-        class Device(builder: ModConfigSpec.Builder) {
-            // Basic
-            @JvmField
-            val planter: HTMachineConfig = HTMachineConfig.createDevice(builder, RagiumConst.PLANTER)
-        }
+        class Device(builder: ModConfigSpec.Builder)
     }
 }

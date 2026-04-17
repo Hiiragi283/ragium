@@ -76,7 +76,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Elite
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeSerializers.CHEMICAL_WASHING),
             HTMixingRecipeCategory(guiHelper),
-            // Machine - Ultimate
+            // Device - Ultimate
             HTEnchantingRecipeCategory(guiHelper),
             // Device
         )
@@ -126,7 +126,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                     }
                 },
         )
-        // Machine - Ultimate
+        // Device - Ultimate
         val manager: IIngredientManager = registration.ingredientManager
         HTJeiRecipeHelper.addHolderRecipes(
             registration,
@@ -154,7 +154,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                     }
                 },
         )
-        // Device
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
@@ -191,9 +190,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.CHEMICAL_WASHING,
             RagiumRecipeViewerTypes.ELECTROLYZING,
             RagiumRecipeViewerTypes.MIXING,
-            // Machine - Ultimate
+            // Device - Ultimate
             RagiumRecipeViewerTypes.ENCHANTING,
-            // Device
         )
 
         registration.addRecipeCatalysts(getRecipeType(RagiumRecipeViewerTypes.MIXING), RagiumBlocks.FLUID_MIXER)

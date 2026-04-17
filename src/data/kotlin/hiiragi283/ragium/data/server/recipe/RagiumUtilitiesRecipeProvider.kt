@@ -141,6 +141,16 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         elite(RagiumBlocks.FLUID_MIXER) { it += RagiumBlocks.TANK }
         elite(RagiumBlocks.MIXER) { it += Items.COPPER_GRATE }
         // Ultimate
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "ABA",
+                "BCB",
+            )
+            define('A') += RagiumItems.ARTIFICIAL_ARTIFACT
+            define('B') += RagiumBlocks.TANK
+            define('C') += CommonTagPrefixes.GEAR to VanillaMaterialKeys.NETHERITE
+            resultStack += RagiumBlocks.FLUID_DUPLICATOR
+        }
     }
 
     @JvmStatic

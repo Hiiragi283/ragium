@@ -19,6 +19,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChemicalWasherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTFluidDuplicatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFluidMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
@@ -129,10 +130,15 @@ object RagiumBlockEntityTypes {
 
     // Ultimate
     @JvmField
-    val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
+    val FLUID_DUPLICATOR: HTDeferredBlockEntityType<HTFluidDuplicatorBlockEntity> =
+        REGISTER.registerTick(RagiumConst.FLUID_DUPLICATOR, ::HTFluidDuplicatorBlockEntity)
 
     //    Device    //
+
+    // Ultimate
+    @JvmField
+    val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
+        REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
 
     //    Storage    //
 
@@ -207,9 +213,10 @@ object RagiumBlockEntityTypes {
         registerHandler(event, MIXER.get())
         registerHandler(event, WASHER.get())
 
-        registerHandler(event, ENCHANTER.get())
+        registerHandler(event, FLUID_DUPLICATOR.get())
 
         // Device
+        registerHandler(event, ENCHANTER.get())
 
         // Storage
         HTItemCapabilities.registerBlockEntity(event, UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)

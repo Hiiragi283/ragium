@@ -25,7 +25,6 @@ import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTMachineConfig
-import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -143,5 +142,5 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.enchanter
+    override fun getConfig(): HTMachineConfig = HTMachineConfig.EMPTY
 }

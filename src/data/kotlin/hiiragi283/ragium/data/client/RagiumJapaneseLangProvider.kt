@@ -39,7 +39,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "骨付き肉ブロック")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
-
+        // Machine
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.AUTO_CHISEL, "自動石切台")
@@ -59,8 +59,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.FLUID_MIXER, "液体混合機")
         add(RagiumBlocks.MIXER, "混合機")
 
+        add(RagiumBlocks.FLUID_DUPLICATOR, "液体複製機")
+        // Device
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
-
+        // Storage
         add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
 
         add(RagiumBlocks.BATTERY, "可変バッテリー")

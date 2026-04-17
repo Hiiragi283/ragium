@@ -134,10 +134,15 @@ object RagiumBlocks {
 
     // Ultimate
     @JvmField
-    val ENCHANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)
+    val FLUID_DUPLICATOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.FLUID_DUPLICATOR, RagiumTranslation.ENCHANTER, machine().noOcclusion())
 
     //    Device    //
+
+    // Ultimate
+    @JvmField
+    val ENCHANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)
 
     //    Storages    //
 
