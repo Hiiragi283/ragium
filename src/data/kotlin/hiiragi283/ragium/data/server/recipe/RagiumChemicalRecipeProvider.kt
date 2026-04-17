@@ -34,6 +34,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         overworld()
         nether()
         end()
+        endGame()
     }
 
     @JvmStatic
@@ -482,16 +483,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // Artificial Artifact
         HTShapedRecipeBuilder.create(output) {
-            pattern(
-                "ABC",
-                "DED",
-                "CBA",
-            )
-            define('A') += Items.CONDUIT
-            define('B') += Items.BUDDING_AMETHYST
-            define('C') += Items.HEAVY_CORE
-            define('D') += Items.CRYING_OBSIDIAN
-            define('E') += Items.NETHER_STAR
+            cross8()
+            define('A') += CommonTagPrefixes.NUGGET to VanillaMaterialKeys.NETHERITE
+            define('B') += RagiumItems.ELECTRIC_CIRCUIT
+            define('C') += CommonTagPrefixes.PEARL to HCMaterialKeys.ELDRITCH
             resultStack += RagiumItems.ARTIFICIAL_ARTIFACT
         }
     }
@@ -502,6 +497,29 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         pyrolyzing {
             ingredient += inputCreator.create(Tags.Items.END_STONES, 4)
             result += resultCreator.create(RagiumFluids.HELIUM, 500)
+        }
+    }
+
+    //    End Game    //
+
+    @JvmStatic
+    private fun endGame() {
+        // Iridescent Powder
+        HTShapedRecipeBuilder.create(output) {
+            crossLayered()
+            define('A') += RagiumItems.RAGI_MATTER
+            define('B') += Items.CONDUIT
+            define('C') += Items.HEAVY_CORE
+            define('D') += Tags.Items.NETHER_STARS
+            resultStack += HCItems.IRIDESCENT_POWDER
+        }
+
+        // Ambrosia
+        HTCombiningRecipeBuilder.alloying(output) {
+            result = resultCreator.create(HCItems.AMBROSIA)
+            ingredients += inputCreator.create(HCItems.IRIDESCENT_POWDER)
+            ingredients += inputCreator.create(Items.HONEY_BLOCK, 64)
+            ingredients += inputCreator.create(Items.ENCHANTED_GOLDEN_APPLE, 16)
         }
     }
 }

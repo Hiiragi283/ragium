@@ -8,7 +8,6 @@ import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
-import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
@@ -95,14 +94,6 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             result = resultCreator.material(CommonParts.INGOT, HCMaterialKeys.AZURE_STEEL)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.IRON))
             ingredients += inputCreator.create(baseOrDust(HCMaterialKeys.AZURE), 2)
-        }
-
-        // Ambrosia
-        HTCombiningRecipeBuilder.alloying(output) {
-            result = resultCreator.create(HCItems.AMBROSIA)
-            ingredients += inputCreator.create(HCItems.IRIDESCENT_POWDER)
-            ingredients += inputCreator.create(Items.HONEY_BLOCK, 64)
-            ingredients += inputCreator.create(Items.ENCHANTED_GOLDEN_APPLE, 16)
         }
 
         // Raginite + Copper -> Ragi-Alloy

@@ -3,22 +3,25 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:nuggets/netherite"
+      "item": "ragium:ragi_matter"
     },
     "B": {
-      "item": "ragium:electric_circuit"
+      "item": "minecraft:conduit"
     },
     "C": {
-      "tag": "c:eldritch_pearls"
+      "item": "minecraft:heavy_core"
+    },
+    "D": {
+      "tag": "c:nether_stars"
     }
   },
   "pattern": [
     "ABA",
-    "BCB",
+    "CDC",
     "ABA"
   ],
   "result": {
     "count": 1,
-    "id": "ragium:artificial_artifact"
+    "id": "hiiragi_core:iridescent_powder"
   }
 }
