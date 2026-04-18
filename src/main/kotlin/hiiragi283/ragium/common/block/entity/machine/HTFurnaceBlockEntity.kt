@@ -5,7 +5,7 @@ import hiiragi283.core.api.recipe.base.HTSingleItemRecipe
 import hiiragi283.core.common.recipe.HTVanillaRecipeTypes
 import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.ragium.common.block.entity.machine.base.HTSingleItemBlockEntity
-import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -23,5 +23,5 @@ class HTFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.FIRE_EXTINGUISH)
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.electricFurnace
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.electricFurnace
 }

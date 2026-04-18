@@ -25,7 +25,7 @@ import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
-import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -112,5 +112,5 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.melter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.melter
 }

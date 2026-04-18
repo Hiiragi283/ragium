@@ -12,7 +12,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnchanterBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
@@ -25,6 +24,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTItemMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTStonecutterBlockEntity

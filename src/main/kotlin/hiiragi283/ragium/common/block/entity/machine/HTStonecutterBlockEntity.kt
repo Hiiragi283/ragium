@@ -21,7 +21,7 @@ import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
-import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.mixin.SingleItemRecipeAccessor
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -152,5 +152,5 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
         override fun assemble(input: HTDoubleRecipeInput, registries: HolderLookup.Provider): ItemStack = accessor.result.copy()
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.autoChisel
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.autoChisel
 }

@@ -30,6 +30,7 @@ import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
@@ -145,6 +146,8 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         final override fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
             battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
         }
+
+        abstract fun getConfig(): HTEnergyConfig
 
         fun updateAndGetProgress(time: Int): Int {
             // if (isCreative()) return 0

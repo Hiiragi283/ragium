@@ -5,7 +5,7 @@ import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.common.recipe.HTVanillaRecipeTypes
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemOrFluidBlockEntity
-import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -19,5 +19,5 @@ class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBloc
         playSound(SoundEvents.BREWING_STAND_BREW)
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.brewery
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.brewery
 }

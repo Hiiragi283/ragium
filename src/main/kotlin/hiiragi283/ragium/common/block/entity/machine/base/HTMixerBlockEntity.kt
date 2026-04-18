@@ -12,7 +12,7 @@ import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.input.HTMixingRecipeInput
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
-import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.RegistryAccess
@@ -82,5 +82,5 @@ abstract class HTMixerBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
 
     protected abstract fun consumeInputs(amounts: HTMixingRecipe.RequiredAmounts)
 
-    final override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.mixer
+    final override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.mixer
 }

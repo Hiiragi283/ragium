@@ -7,15 +7,13 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import net.neoforged.neoforge.common.ModConfigSpec
 import java.util.function.IntSupplier
 
-class HTMachineConfig(private val capacity: IntSupplier, private val rate: IntSupplier) {
+@JvmRecord
+data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: IntSupplier) {
     fun getCapacity(): Int = capacity.asInt
 
     fun getUsage(): Int = rate.asInt
 
     companion object {
-        @JvmField
-        val EMPTY = HTMachineConfig({ 0 }, { 0 })
-
         @JvmStatic
         private fun energyCapacity(builder: ModConfigSpec.Builder, rate: Int): ModConfigSpec.IntValue = builder
             .translation(RagiumTranslation.CONFIG_ENERGY_CAPACITY)
@@ -27,27 +25,21 @@ class HTMachineConfig(private val capacity: IntSupplier, private val rate: IntSu
             .definePositiveInt("energy_rate", rate)
 
         @JvmStatic
-        fun create(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTMachineConfig {
+        fun create(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig {
             builder.translation("block.${RagiumAPI.MOD_ID}.$name").push(name)
-            return HTMachineConfig(
+            return HTEnergyConfig(
                 energyCapacity(builder, rate),
                 energyRate(builder, rate),
             ).apply { builder.pop() }
         }
 
         @JvmStatic
-        fun createSimple(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTMachineConfig {
+        fun createSimple(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig {
             builder.translation("block.${RagiumAPI.MOD_ID}.$name").push(name)
-            return HTMachineConfig(
+            return HTEnergyConfig(
                 energyCapacity(builder, rate),
                 energyRate(builder, rate),
             ).apply { builder.pop() }
-        }
-
-        @JvmStatic
-        fun createDevice(builder: ModConfigSpec.Builder, name: String): HTMachineConfig {
-            builder.translation("block.${RagiumAPI.MOD_ID}.$name").push(name)
-            return EMPTY.apply { builder.pop() }
         }
     }
 }

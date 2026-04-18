@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.block.entity.device
+package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.handler.HTRecipeHandler
@@ -9,13 +9,14 @@ import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
-import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
-class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.PLANTER, pos, state) {
+class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) :
+    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.PLANTER, pos, state) {
     private lateinit var inputTank: HTBasicFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
@@ -41,5 +42,5 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
         TODO("Not yet implemented")
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.planter
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.planter
 }

@@ -9,7 +9,7 @@ import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.machine.base.HTSingleMultiOutputBlockEntity
-import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -39,5 +39,5 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun getLookup(): HTRecipeLookup<SingleRecipeInput, out HTSingleMultiOutputRecipe> = HCRecipeLookups.CRUSHING
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.crusher
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.crusher
 }

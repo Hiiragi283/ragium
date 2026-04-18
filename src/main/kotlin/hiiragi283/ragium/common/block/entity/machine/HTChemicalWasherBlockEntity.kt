@@ -5,7 +5,7 @@ import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemOrFluidBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
-import hiiragi283.ragium.config.HTMachineConfig
+import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -20,5 +20,5 @@ class HTChemicalWasherBlockEntity(pos: BlockPos, state: BlockState) :
         playSound(SoundEvents.LAVA_POP)
     }
 
-    override fun getConfig(): HTMachineConfig = RagiumConfig.COMMON.machine.chemicalWasher
+    override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.chemicalWasher
 }
