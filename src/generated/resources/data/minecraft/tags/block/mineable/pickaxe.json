@@ -4,6 +4,7 @@
     "ragium:assembler",
     "ragium:auto_chisel",
     "ragium:battery",
+    "ragium:boiler",
     "ragium:brewery",
     "ragium:chemical_washer",
     "ragium:crate",

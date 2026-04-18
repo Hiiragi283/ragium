@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.tag
 import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
-import hiiragi283.core.api.data.tag.HTTagDependType
 import hiiragi283.core.api.data.tag.HTTagsProvider
 import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.getOrThrow
@@ -65,6 +64,8 @@ class RagiumItemTagsProvider(
         // Group
         factory
             .apply(RagiumTags.Items.GENERATOR_UPGRADABLE)
+            // Basic
+            .add(RagiumBlocks.BOILER)
         factory
             .apply(RagiumTags.Items.PROCESSOR_UPGRADABLE)
             .addTag(RagiumTags.Items.MACHINE_UPGRADABLE)
@@ -110,13 +111,14 @@ class RagiumItemTagsProvider(
         // Storage
         factory
             .apply(RagiumTags.Items.ENERGY_CAPACITY_UPGRADABLE)
-            .addTag(RagiumTags.Items.GENERATOR_UPGRADABLE, HTTagDependType.OPTIONAL)
+            .addTag(RagiumTags.Items.GENERATOR_UPGRADABLE)
             .addTag(RagiumTags.Items.MACHINE_UPGRADABLE)
             // Storage
             .add(RagiumBlocks.BATTERY)
         factory
             .apply(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE)
             // Generator
+            .add(RagiumBlocks.BOILER)
             // Machine
             .add(RagiumBlocks.BREWERY)
             .add(RagiumBlocks.FLUID_DUPLICATOR)

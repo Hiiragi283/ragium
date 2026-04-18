@@ -15,6 +15,7 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.HTMeatBlock
+import hiiragi283.ragium.common.block.generator.HTBoilerBlock
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.common.block.storage.HTCrateBlock
 import hiiragi283.ragium.common.block.storage.HTTankBlock
@@ -62,6 +63,13 @@ object RagiumBlocks {
         copyOf(Blocks.PACKED_MUD).mapColor(MapColor.COLOR_RED),
         ::HTMeatBlock.partially1(Foods.COOKED_BEEF),
     )
+
+    //    Generator    //
+
+    // Basic
+    @JvmField
+    val BOILER: HTDeferredBlockAndItem<HTBoilerBlock, HTMachineBlockItem> =
+        REGISTER.register(RagiumConst.BOILER, machine(), ::HTBoilerBlock, ::HTMachineBlockItem)
 
     //    Machine    //
 

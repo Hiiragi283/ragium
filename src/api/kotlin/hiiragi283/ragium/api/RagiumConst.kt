@@ -3,7 +3,10 @@ package hiiragi283.ragium.api
 object RagiumConst {
     //    Blocks    //
 
-    // Basic
+    // Generator - Basic
+    const val BOILER = "boiler"
+
+    // Machine - Basic
     const val ALLOY_SMELTER = "alloy_smelter"
     const val ASSEMBLER = "assembler"
     const val AUTO_CHISEL = "auto_chisel"
@@ -12,20 +15,20 @@ object RagiumConst {
     const val ELECTRIC_FURNACE = "electric_furnace"
     const val PLANTER = "planter"
 
-    // Advanced
+    // Machine - Advanced
     const val FREEZER = "freezer"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
     const val REFINERY = "refinery"
 
-    // Elite
+    // Machine - Elite
     const val BREWERY = "brewery"
     const val CHEMICAL_WASHER = "chemical_washer"
     const val FLUID_MIXER = "fluid_mixer"
     const val MIXER = "mixer"
     const val WASHER = "washer"
 
-    // Ultimate
+    // Machine - Ultimate
     const val ENCHANTER = "enchanter"
     const val FLUID_DUPLICATOR = "fluid_duplicator"
     const val MASS_FABRICATOR = "mass_fabricator"

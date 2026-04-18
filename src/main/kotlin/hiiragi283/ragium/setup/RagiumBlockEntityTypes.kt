@@ -12,6 +12,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnchanterBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTBoilerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
@@ -58,6 +59,13 @@ object RagiumBlockEntityTypes {
     @JvmField
     val IMITATION_SPAWNER: HTDeferredBlockEntityType<HTImitationSpawnerBlockEntity> =
         REGISTER.registerType("imitation_spawner", ::HTImitationSpawnerBlockEntity)
+
+    //    Generator    //
+
+    // Basic
+    @JvmField
+    val BOILER: HTDeferredBlockEntityType<HTBoilerBlockEntity> =
+        REGISTER.registerTick(RagiumConst.BOILER, ::HTBoilerBlockEntity)
 
     //    Machine    //
 
@@ -193,6 +201,8 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
+        // Generator
+        registerHandler(event, BOILER.get())
         // Machine
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, ASSEMBLER.get())
@@ -214,7 +224,6 @@ object RagiumBlockEntityTypes {
         registerHandler(event, WASHER.get())
 
         registerHandler(event, FLUID_DUPLICATOR.get())
-
         // Device
         registerHandler(event, ENCHANTER.get())
 

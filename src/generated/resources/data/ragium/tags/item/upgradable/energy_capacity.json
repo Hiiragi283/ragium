@@ -1,9 +1,6 @@
 {
   "values": [
-    {
-      "id": "#ragium:upgradable/generator",
-      "required": false
-    },
+    "#ragium:upgradable/generator",
     "#ragium:upgradable/machine",
     "ragium:battery"
   ]

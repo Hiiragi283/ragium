@@ -27,6 +27,8 @@ class RagiumBlockTagsProvider(
 
         val pickaxe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_PICKAXE)
         sequence {
+            // Generator
+            yield(RagiumBlocks.BOILER)
             // Machine
             yield(RagiumBlocks.ALLOY_SMELTER)
             yield(RagiumBlocks.ASSEMBLER)

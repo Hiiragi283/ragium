@@ -1,5 +1,6 @@
 {
   "values": [
+    "ragium:boiler",
     "ragium:brewery",
     "ragium:enchanter",
     "ragium:fluid_duplicator",

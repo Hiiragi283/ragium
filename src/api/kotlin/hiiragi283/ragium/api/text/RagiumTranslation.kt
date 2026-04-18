@@ -28,6 +28,9 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     GUI_SLOT_EXTRA_OUTPUT(HTConst.GUI, "slot", "extra_output"),
     GUI_SLOT_NONE(HTConst.GUI, "slot", "none"),
 
+    // Blocks - Generator
+    BOILER(HTConst.DESCRIPTION, RagiumConst.BOILER),
+
     // Blocks - Machine
     ALLOY_SMELTER(HTConst.DESCRIPTION, RagiumConst.ALLOY_SMELTER),
     ASSEMBLER(HTConst.DESCRIPTION, RagiumConst.ASSEMBLER),

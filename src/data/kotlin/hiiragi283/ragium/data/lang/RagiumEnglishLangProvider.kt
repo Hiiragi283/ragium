@@ -39,6 +39,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "Bone with Meat")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
+        // Generator
+        add(RagiumBlocks.BOILER, "Boiler")
         // Machine
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.ASSEMBLER, "Assembler")
