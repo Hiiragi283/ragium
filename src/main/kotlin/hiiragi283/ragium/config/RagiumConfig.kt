@@ -19,7 +19,9 @@ object RagiumConfig {
     }
 
     class Common(builder: ModConfigSpec.Builder) {
-        // Processor
+        // Generator
+
+        // Machine
         @JvmField
         val machine: Machine
 
@@ -28,6 +30,9 @@ object RagiumConfig {
         val device: Device
 
         // Storage
+        @JvmField
+        val energyBarColor: ModConfigSpec.IntValue
+
         @JvmField
         val batteryCapacity: ModConfigSpec.IntValue
 
@@ -50,6 +55,7 @@ object RagiumConfig {
 
             // Storage
             builder.push("storage")
+            energyBarColor = builder.definePositiveInt("energy_bar_color", 0xFF0033, 0)
             batteryCapacity = builder.definePositiveInt("battery_capacity", 1_024_000)
             crateCapacity = builder.definePositiveInt("crate_capacity", 32 * 64)
             tankCapacity = builder.definePositiveInt("tank_capacity", 16000)

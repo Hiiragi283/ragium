@@ -74,11 +74,11 @@ abstract class HTSingleItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
             level: ServerLevel,
             pos: BlockPos,
             recipe: HTHandledRecipe<SingleRecipeInput, HTSingleItemRecipe>,
-        ): Boolean = recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+        ): Boolean = recipe.assemble(true).let(outputHandler::canInsert)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<SingleRecipeInput, HTSingleItemRecipe>) {
             // output
-            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            recipe.assemble(false).let(outputHandler::insert)
             // input
             inputHandler.consume(recipe.map(HTSingleItemRecipe::getRequiredAmount))
 

@@ -15,7 +15,7 @@
   ],
   "result": {
     "id": "ragium:ragi_alloy_ingot",
-    "tag": "c:ingots/ragi_alloy"
+    "tag": "#c:ingots/ragi_alloy"
   },
   "time": 200
 }

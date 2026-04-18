@@ -27,7 +27,7 @@
   ],
   "result": {
     "count": 2,
-    "tag": "c:ingots/constantan"
+    "tag": "#c:ingots/constantan"
   },
   "time": 200
 }

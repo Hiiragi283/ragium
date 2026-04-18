@@ -26,7 +26,6 @@ import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.mixin.SingleItemRecipeAccessor
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
@@ -127,11 +126,11 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
             cache.getFirstRecipe(input, level)
 
         override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTDoubleRecipeInput, WrappedRecipe>): Boolean =
-            recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+            recipe.assemble(true).let(outputHandler::canInsert)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTDoubleRecipeInput, WrappedRecipe>) {
             // output
-            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            recipe.assemble(false).let(outputHandler::insert)
             // input
             inputHandler.consume(1)
             // sound
@@ -149,7 +148,7 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
             return accessor.ingredient.test(first) && ItemStack.isSameItemSameComponents(accessor.result, second)
         }
 
-        override fun assemble(input: HTDoubleRecipeInput, registries: HolderLookup.Provider): ItemStack = accessor.result.copy()
+        override fun assemble(input: HTDoubleRecipeInput, preview: Boolean): ItemStack = accessor.result.copy()
     }
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.autoChisel

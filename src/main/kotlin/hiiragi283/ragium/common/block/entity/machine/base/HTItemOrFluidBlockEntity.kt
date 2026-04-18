@@ -30,7 +30,6 @@ import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
-import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
@@ -127,9 +126,8 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             pos: BlockPos,
             recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe>,
         ): Boolean {
-            val access: RegistryAccess = level.registryAccess()
-            val bool1: Boolean = itemOutputHandler.canInsert(recipe.assemble(access))
-            val bool2: Boolean = fluidOutputHandler.canInsert(recipe.assembleFluid(access))
+            val bool1: Boolean = itemOutputHandler.canInsert(recipe.assemble(true))
+            val bool2: Boolean = fluidOutputHandler.canInsert(recipe.assembleFluid())
             return bool1 && bool2
         }
 
@@ -139,9 +137,8 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe>,
         ) {
             // output
-            val access: RegistryAccess = level.registryAccess()
-            itemOutputHandler.insert(recipe.assemble(access))
-            fluidOutputHandler.insert(recipe.assembleFluid(access))
+            itemOutputHandler.insert(recipe.assemble(false))
+            fluidOutputHandler.insert(recipe.assembleFluid())
             // input
             val (itemAmount: Int?, fluidAmount: Int?) = recipe.map(HTItemOrFluidRecipe::getRequiredAmount).toPair()
             fluidInputHandler.consume(fluidAmount ?: 0)

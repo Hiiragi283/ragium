@@ -232,7 +232,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             results += resultCreator.create(dust, CommonParts.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
             // 副産物
             entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
-                ?.getResult(HTExtraOreResultMap.Phase.WASH_CRUSHED)
+                ?.getResult(resultCreator, HTExtraOreResultMap.Phase.WASH_CRUSHED)
                 ?.let(results::add)
 
             recipeId suffix "_from_crushed_ore/water"

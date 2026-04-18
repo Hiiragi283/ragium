@@ -10,7 +10,7 @@
   },
   "item_result": {
     "id": "ragium:petroleum_coke_fuel",
-    "tag": "c:petroleum_coke"
+    "tag": "#c:petroleum_coke"
   },
   "time": 200
 }

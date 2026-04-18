@@ -96,45 +96,5 @@ class RagiumItemTagsProvider(
         factory
             .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
             .add(RagiumBlocks.ENCHANTER)
-
-        // Specific
-        factory
-            .apply(RagiumTags.Items.EXTRA_VOIDING_UPGRADABLE)
-            .add(RagiumBlocks.CUTTING_MACHINE)
-            .add(RagiumBlocks.CRUSHER)
-        factory
-            .apply(RagiumTags.Items.EFFICIENT_CRUSHING_UPGRADABLE)
-            .add(RagiumBlocks.CRUSHER)
-        factory
-            .apply(RagiumTags.Items.SMELTING_UPGRADABLE)
-
-        // Storage
-        factory
-            .apply(RagiumTags.Items.ENERGY_CAPACITY_UPGRADABLE)
-            .addTag(RagiumTags.Items.GENERATOR_UPGRADABLE)
-            .addTag(RagiumTags.Items.MACHINE_UPGRADABLE)
-            // Storage
-            .add(RagiumBlocks.BATTERY)
-        factory
-            .apply(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE)
-            // Generator
-            .add(RagiumBlocks.BOILER)
-            // Machine
-            .add(RagiumBlocks.BREWERY)
-            .add(RagiumBlocks.FLUID_DUPLICATOR)
-            .add(RagiumBlocks.FLUID_MIXER)
-            .add(RagiumBlocks.FREEZER)
-            .add(RagiumBlocks.MELTER)
-            .add(RagiumBlocks.MIXER)
-            .add(RagiumBlocks.PLANTER)
-            .add(RagiumBlocks.PYROLYZER)
-            .add(RagiumBlocks.WASHER)
-            // Device
-            .add(RagiumBlocks.ENCHANTER)
-            // Storage
-            .add(RagiumBlocks.TANK)
-        factory
-            .apply(RagiumTags.Items.ITEM_CAPACITY_UPGRADABLE)
-            .add(RagiumBlocks.CRATE)
     }
 }

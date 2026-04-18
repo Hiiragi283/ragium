@@ -1,11 +1,10 @@
 package hiiragi283.ragium.common.crafting
 
 import hiiragi283.core.api.data.buildDataPatch
-import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.crafting.HTCustomRecipe
 import hiiragi283.core.common.crafting.ImmutableRecipeInput
-import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -34,14 +33,10 @@ class HTBatteryCombiningRecipe(category: CraftingBookCategory) : HTCustomRecipe(
             // 容量の倍率を合算する
             capacityScale += stack.getOrDefault(RagiumDataComponents.CAPACITY_SCALE, 1)
         }
-        return createItemStack(
+        return HTStorageHelper.createStackWithEnergy(
             RagiumBlocks.BATTERY,
-            patch = buildDataPatch {
-                if (amount > 0) {
-                    set(HCDataComponents.ENERGY, amount)
-                }
-                set(RagiumDataComponents.CAPACITY_SCALE, capacityScale)
-            },
+            amount,
+            patch = buildDataPatch { set(RagiumDataComponents.CAPACITY_SCALE, capacityScale) },
         )
     }
 

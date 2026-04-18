@@ -81,11 +81,11 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
             level: ServerLevel,
             pos: BlockPos,
             recipe: HTHandledRecipe<HTDoubleRecipeInput, HTAssemblingRecipe>,
-        ): Boolean = recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+        ): Boolean = recipe.assemble(true).let(outputHandler::canInsert)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTDoubleRecipeInput, HTAssemblingRecipe>) {
             // output
-            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            recipe.assemble(false).let(outputHandler::insert)
             // input
             val recipe: HTAssemblingRecipe = recipe.recipe
             leftInputHandler.consume(recipe.itemIngredients[0])

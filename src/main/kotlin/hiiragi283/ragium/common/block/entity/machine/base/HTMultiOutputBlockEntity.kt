@@ -59,13 +59,13 @@ abstract class HTMultiOutputBlockEntity<INPUT : RecipeInput, RECIPE : HTMultiOut
         final override fun findRecipe(level: ServerLevel, pos: BlockPos, input: INPUT): RECIPE? = cache.getFirstRecipe(input, level)
 
         final override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<INPUT, RECIPE>): Boolean = recipe
-            .map(level.registryAccess(), HTMultiOutputRecipe<INPUT>::assembleItems)
+            .map(true, HTMultiOutputRecipe<INPUT>::assembleItems)
             .all(outputHandler::canInsert)
 
         final override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<INPUT, RECIPE>) {
             // outputs
             recipe
-                .map(level.registryAccess(), HTMultiOutputRecipe<INPUT>::assembleItems)
+                .map(false, HTMultiOutputRecipe<INPUT>::assembleItems)
                 .forEach(outputHandler::insert)
             // input
             completeInput(level, pos, recipe)

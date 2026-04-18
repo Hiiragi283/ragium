@@ -200,13 +200,13 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun tankInteraction() {
         HTTankInteractionRecipeBuilder.emptying(output) {
-            ingredient = inputCreator.create(RagiumItems.MERCURY_BOTTLE)
+            ingredient = itemCreator.create(RagiumItems.MERCURY_BOTTLE)
             fluidResult = resultCreator.create(RagiumFluids.MERCURY, 250)
             itemResult = resultCreator.create(Items.GLASS_BOTTLE)
         }
 
         HTTankInteractionRecipeBuilder.filling(output) {
-            itemIngredient = inputCreator.create(Items.GLASS_BOTTLE)
+            itemIngredient = itemCreator.create(Items.GLASS_BOTTLE)
             fluidIngredient = inputCreator.create(RagiumFluids.MERCURY, 250)
             itemResult = resultCreator.create(RagiumItems.MERCURY_BOTTLE)
         }

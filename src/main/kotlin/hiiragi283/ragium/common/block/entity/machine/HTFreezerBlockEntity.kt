@@ -114,11 +114,11 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
             level: ServerLevel,
             pos: BlockPos,
             recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTFreezingRecipe>,
-        ): Boolean = recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+        ): Boolean = recipe.assemble(true).let(outputHandler::canInsert)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTFreezingRecipe>) {
             // output
-            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            recipe.assemble(false).let(outputHandler::insert)
             // input
             val recipe: HTFreezingRecipe = recipe.recipe
             fluidInputHandler.consume(recipe.fluidIngredient)

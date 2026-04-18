@@ -6,7 +6,6 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
@@ -19,11 +18,11 @@ class HTMeltingRecipe(val ingredient: HTItemIngredient, val result: HTFluidResul
     override fun test(input: SingleRecipeInput): Boolean = ingredient.test(input.item())
 
     @Deprecated("Not used", level = DeprecationLevel.ERROR)
-    override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
+    override fun assemble(input: SingleRecipeInput, preview: Boolean): ItemStack = ItemStack.EMPTY
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MELTING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MELTING.get()
 
-    override fun assembleFluid(input: SingleRecipeInput, registries: HolderLookup.Provider): FluidStack = result.getStackOrEmpty(registries)
+    override fun assembleFluid(input: SingleRecipeInput): FluidStack = result.getOrEmpty()
 }

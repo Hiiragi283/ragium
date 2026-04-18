@@ -6,7 +6,7 @@ import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.text.Text
 import hiiragi283.core.client.gui.widget.HTSpriteWidgetRenderer
 import hiiragi283.core.util.HTSpriteRenderHelper
-import hiiragi283.core.util.HTTooltipHelper
+import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import net.minecraft.client.gui.GuiGraphics
@@ -42,6 +42,6 @@ class HTEnergySlotWidgetRenderer(gui: HTAbstractGui, widget: HTEnergySlotWidget)
     override fun getLevel(): Fraction = widget.getLevelAsFraction()
 
     override fun collectTooltips(consumer: Consumer<Text>, flag: TooltipFlag) {
-        HTTooltipHelper.addEnergyTooltip(widget.getAmount(), consumer, false)
+        HTStorageHelper.addEnergyTooltip(widget, consumer, false)
     }
 }

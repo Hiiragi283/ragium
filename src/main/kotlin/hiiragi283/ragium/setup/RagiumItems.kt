@@ -13,6 +13,7 @@ import hiiragi283.core.common.storage.energy.HTBasicItemEnergyBattery
 import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.item.HTBatteryItem
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
@@ -148,6 +149,9 @@ object RagiumItems {
     @JvmField
     val LOCATION_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
 
+    @JvmField
+    val CRYSTAL_BATTERY: HTSimpleItemHolderLike = REGISTER.registerItem("crystal_battery", ::HTBatteryItem)
+
     //    End Game    //
 
     @JvmField
@@ -192,6 +196,12 @@ object RagiumItems {
             RagiumBlocks.BATTERY,
         )
         HTEnergyCapabilities.registerItemEnergy(event, { HTInfiniteEnergyBattery }, RagiumBlocks.CREATIVE_BATTERY)
+
+        HTEnergyCapabilities.registerItemEnergy(
+            event,
+            { container: ItemStack -> HTBasicItemEnergyBattery.create(container, 8000) },
+            CRYSTAL_BATTERY,
+        )
     }
 
     @JvmStatic

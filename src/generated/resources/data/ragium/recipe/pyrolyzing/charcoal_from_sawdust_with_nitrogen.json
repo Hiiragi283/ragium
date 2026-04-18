@@ -15,7 +15,7 @@
   "item_result": {
     "count": 8,
     "id": "minecraft:charcoal",
-    "tag": "c:charcoal"
+    "tag": "#c:charcoal"
   },
   "time": 100
 }

@@ -9,7 +9,6 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.MapBiCodec
 import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.input.HTMixingRecipeInput
-import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
@@ -48,9 +47,9 @@ data class HTViewerMixingRecipe(
 
     override fun getRequiredAmounts(input: HTMixingRecipeInput): HTMixingRecipe.RequiredAmounts = HTMixingRecipe.RequiredAmounts.EMPTY
 
-    override fun assembleFluids(input: HTMixingRecipeInput, registries: HolderLookup.Provider): List<FluidStack> = emptyList()
+    override fun assembleFluids(input: HTMixingRecipeInput): List<FluidStack> = emptyList()
 
-    override fun assembleItems(input: HTMixingRecipeInput, registries: HolderLookup.Provider): List<ItemStack> = emptyList()
+    override fun assembleItems(input: HTMixingRecipeInput, preview: Boolean): List<ItemStack> = emptyList()
 
     override fun test(input: HTMixingRecipeInput): Boolean = false
 }

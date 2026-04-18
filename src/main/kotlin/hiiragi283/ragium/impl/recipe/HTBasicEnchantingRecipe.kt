@@ -3,7 +3,6 @@ package hiiragi283.ragium.impl.recipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
 
@@ -26,8 +25,7 @@ abstract class HTBasicEnchantingRecipe(val ingredient: HTItemIngredient) : HTEnc
 
     protected abstract fun testBase(stack: ItemStack): Boolean
 
-    final override fun assemble(input: HTEnchantingRecipe.Input, registries: HolderLookup.Provider): ItemStack =
-        applyEnchantment(input.base)
+    final override fun assemble(input: HTEnchantingRecipe.Input, preview: Boolean): ItemStack = applyEnchantment(input.base)
 
     abstract class Serializable(ingredient: HTItemIngredient) :
         HTBasicEnchantingRecipe(ingredient),

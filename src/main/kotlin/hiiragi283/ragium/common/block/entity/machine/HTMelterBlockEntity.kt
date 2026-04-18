@@ -98,11 +98,11 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
             cache.getFirstRecipe(input, level)
 
         override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<SingleRecipeInput, HTMeltingRecipe>): Boolean =
-            recipe.assembleFluid(level.registryAccess()).let(outputHandler::canInsert)
+            recipe.assembleFluid().let(outputHandler::canInsert)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<SingleRecipeInput, HTMeltingRecipe>) {
             // output
-            recipe.assembleFluid(level.registryAccess()).let(outputHandler::insert)
+            recipe.assembleFluid().let(outputHandler::insert)
             // input
             inputHandler.consume(recipe.recipe.ingredient)
 

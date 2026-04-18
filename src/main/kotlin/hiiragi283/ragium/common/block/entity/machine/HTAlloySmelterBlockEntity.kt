@@ -96,11 +96,11 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
             level: ServerLevel,
             pos: BlockPos,
             recipe: HTHandledRecipe<HTShapelessRecipeInput, HTAlloyingRecipe>,
-        ): Boolean = recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+        ): Boolean = recipe.assemble(true).let(outputHandler::canInsert)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTShapelessRecipeInput, HTAlloyingRecipe>) {
             // output
-            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            recipe.assemble(false).let(outputHandler::insert)
             // input
             val recipe: HTAlloyingRecipe = recipe.recipe
             HTShapelessRecipeHelper.shapelessConsume(recipe.ingredients, inputSlots)

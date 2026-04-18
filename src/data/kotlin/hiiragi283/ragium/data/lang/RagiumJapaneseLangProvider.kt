@@ -140,6 +140,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.BLANK_DISC, "空のレコード")
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
 
+        add(RagiumItems.CRYSTAL_BATTERY, "クリスタルバッテリー")
+
         add(RagiumItems.RAGI_MATTER, "らぎマター")
         add(RagiumItems.LOOT_TICKET, "らぎチケット")
         // Recipe
@@ -166,15 +168,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTags.Items.PROCESSOR_UPGRADABLE, "処理装置")
         add(RagiumTags.Items.MACHINE_UPGRADABLE, "機械")
         add(RagiumTags.Items.DEVICE_UPGRADABLE, "設備")
-        add(RagiumTags.Items.EXTRA_VOIDING_UPGRADABLE, "追加の出力スロットをもつ処理機械")
-        add(RagiumTags.Items.EFFICIENT_CRUSHING_UPGRADABLE, "粉砕機または破砕機")
-        add(RagiumTags.Items.ENERGY_CAPACITY_UPGRADABLE, "エネルギーストレージ")
-        add(RagiumTags.Items.FLUID_CAPACITY_UPGRADABLE, "液体ストレージ")
-        add(RagiumTags.Items.ITEM_CAPACITY_UPGRADABLE, "アイテムストレージ")
-        add(RagiumTags.Items.SMELTING_UPGRADABLE, "電動かまどまたは並列製錬炉")
-
-        add(RagiumTags.Items.EXTRACTOR_EXCLUSIVE, "抽出機に対応したアップグレード")
-        add(RagiumTags.Items.SMELTER_EXCLUSIVE, "製錬機械に対応したアップグレード")
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")
 

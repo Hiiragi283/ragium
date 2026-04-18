@@ -11,7 +11,7 @@
   "item_result": {
     "count": 2,
     "id": "hiiragi_core:plastic_plate",
-    "tag": "c:plates/plastic"
+    "tag": "#c:plates/plastic"
   },
   "time": 200
 }

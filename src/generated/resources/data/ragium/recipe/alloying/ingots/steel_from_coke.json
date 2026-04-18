@@ -18,7 +18,7 @@
   ],
   "result": {
     "id": "hiiragi_core:steel_ingot",
-    "tag": "c:ingots/steel"
+    "tag": "#c:ingots/steel"
   },
   "time": 200
 }

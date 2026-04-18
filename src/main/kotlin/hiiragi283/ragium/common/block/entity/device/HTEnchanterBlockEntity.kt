@@ -121,7 +121,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             level: ServerLevel,
             pos: BlockPos,
             recipe: HTHandledRecipe<HTEnchantingRecipe.Input, HTEnchantingRecipe>,
-        ): Boolean = recipe.assemble(level.registryAccess()).let(outputHandler::canInsert)
+        ): Boolean = recipe.assemble(true).let(outputHandler::canInsert)
 
         override fun getMaxProgress(recipe: HTHandledRecipe<HTEnchantingRecipe.Input, HTEnchantingRecipe>): Int = modifyTime(200)
 
@@ -129,7 +129,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTEnchantingRecipe.Input, HTEnchantingRecipe>) {
             // output
-            recipe.assemble(level.registryAccess()).let(outputHandler::insert)
+            recipe.assemble(false).let(outputHandler::insert)
             // inputs
             recipe.map(HTEnchantingRecipe::getRequiredExpAmount).let(fluidInputHandler::consume)
             baseInputHandler.consume(1)

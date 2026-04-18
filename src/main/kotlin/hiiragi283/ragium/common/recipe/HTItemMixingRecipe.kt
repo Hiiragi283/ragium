@@ -9,7 +9,6 @@ import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.input.HTMixingRecipeInput
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
@@ -21,11 +20,11 @@ class HTItemMixingRecipe(
     val result: Ior<HTItemResult, HTFluidResult>,
     override val time: Int,
 ) : HTMixingRecipe.Serializable {
-    override fun assembleFluids(input: HTMixingRecipeInput, registries: HolderLookup.Provider): List<FluidStack> =
-        listOfNotNull(result.getRight()?.getStackOrEmpty(registries))
+    override fun assembleFluids(input: HTMixingRecipeInput): List<FluidStack> =
+        listOfNotNull(result.getRight()?.getOrEmpty()).filterNot(FluidStack::isEmpty)
 
-    override fun assembleItems(input: HTMixingRecipeInput, registries: HolderLookup.Provider): List<ItemStack> =
-        listOfNotNull(result.getLeft()?.getStackOrEmpty(registries))
+    override fun assembleItems(input: HTMixingRecipeInput, preview: Boolean): List<ItemStack> =
+        listOfNotNull(result.getLeft()?.getOrEmpty(preview)).filterNot(ItemStack::isEmpty)
 
     override fun getRequiredAmounts(input: HTMixingRecipeInput): HTMixingRecipe.RequiredAmounts {
         val (firstItem: ItemStack, secondItem: ItemStack, firstFluid: FluidStack, _: FluidStack) = input

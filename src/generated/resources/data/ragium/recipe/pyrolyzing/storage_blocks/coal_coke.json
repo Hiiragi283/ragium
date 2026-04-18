@@ -10,7 +10,7 @@
   },
   "item_result": {
     "id": "hiiragi_core:coal_coke_block",
-    "tag": "c:storage_blocks/coal_coke"
+    "tag": "#c:storage_blocks/coal_coke"
   },
   "time": 600
 }

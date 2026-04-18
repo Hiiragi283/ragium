@@ -7,7 +7,7 @@
   "results": {
     "count": 3,
     "id": "hiiragi_core:carbon_dust",
-    "tag": "c:dusts/carbon"
+    "tag": "#c:dusts/carbon"
   },
   "time": 100
 }

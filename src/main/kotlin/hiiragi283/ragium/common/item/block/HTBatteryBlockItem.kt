@@ -5,7 +5,9 @@ import hiiragi283.core.api.storage.amount.HTAmountSlot
 import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.core.api.text.Text
 import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
+import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
@@ -48,4 +50,10 @@ class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStor
             )
         }.let(tooltips::add)
     }
+
+    override fun isBarVisible(stack: ItemStack): Boolean = stack.count == 1 && !isCreative(stack)
+
+    override fun getBarWidth(stack: ItemStack): Int = HTStorageHelper.getEnergyBarWidth(stack)
+
+    override fun getBarColor(stack: ItemStack): Int = RagiumConfig.COMMON.energyBarColor.get()
 }

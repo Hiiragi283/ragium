@@ -36,7 +36,6 @@ import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.RegistryAccess
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
@@ -177,9 +176,8 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         if (input.isEmpty) return false
         val recipe: HTTankEmptyingRecipe = emptyingCache.getFirstRecipe(input, level) ?: return false
 
-        val access: RegistryAccess = level.registryAccess()
-        val emptyContainer: ItemStack = recipe.assemble(input, access)
-        val fluidStack: FluidStack = recipe.assembleFluid(input, access)
+        val emptyContainer: ItemStack = recipe.assemble(input, true)
+        val fluidStack: FluidStack = recipe.assembleFluid(input)
         if (outputHandler.canInsert(emptyContainer) && fluidOutputHandler.canInsert(fluidStack)) {
             // outputs
             outputHandler.insert(emptyContainer)
@@ -198,7 +196,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
         val recipe: HTTankFillingRecipe = fillingCache.getFirstRecipe(input, level) ?: return false
 
-        val filledContainer: ItemStack = recipe.assemble(input, level.registryAccess())
+        val filledContainer: ItemStack = recipe.assemble(input, true)
         if (outputHandler.canInsert(filledContainer)) {
             outputHandler.insert(filledContainer)
             inputHandler.consume(1)

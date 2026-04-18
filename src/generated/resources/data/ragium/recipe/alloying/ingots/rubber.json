@@ -13,7 +13,7 @@
   "result": {
     "count": 2,
     "id": "hiiragi_core:rubber_ingot",
-    "tag": "c:ingots/rubber"
+    "tag": "#c:ingots/rubber"
   },
   "time": 200
 }

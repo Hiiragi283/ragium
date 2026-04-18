@@ -15,7 +15,6 @@ import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.BlockPos
-import net.minecraft.core.RegistryAccess
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
@@ -54,17 +53,15 @@ abstract class HTMixerBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Block
             pos: BlockPos,
             recipe: HTHandledRecipe<HTMixingRecipeInput, HTMixingRecipe>,
         ): Boolean {
-            val access: RegistryAccess = level.registryAccess()
-            val bool1: Boolean = recipe.map(access, HTMixingRecipe::assembleItems).all(itemOutputHandler::canInsert)
-            val bool2: Boolean = recipe.map(access, HTMixingRecipe::assembleFluids).all(fluidOutputHandler::canInsert)
+            val bool1: Boolean = recipe.map(true, HTMixingRecipe::assembleItems).all(itemOutputHandler::canInsert)
+            val bool2: Boolean = recipe.map(HTMixingRecipe::assembleFluids).all(fluidOutputHandler::canInsert)
             return bool1 && bool2
         }
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTMixingRecipeInput, HTMixingRecipe>) {
-            val access: RegistryAccess = level.registryAccess()
             // outputs
-            recipe.map(access, HTMixingRecipe::assembleItems).forEach(itemOutputHandler::insert)
-            recipe.map(access, HTMixingRecipe::assembleFluids).forEach(fluidOutputHandler::insert)
+            recipe.map(false, HTMixingRecipe::assembleItems).forEach(itemOutputHandler::insert)
+            recipe.map(HTMixingRecipe::assembleFluids).forEach(fluidOutputHandler::insert)
             // inputs
             recipe.map(HTMixingRecipe::getRequiredAmounts).let(::consumeInputs)
             // sound
