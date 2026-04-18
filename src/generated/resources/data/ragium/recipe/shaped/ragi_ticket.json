@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "A": {
-      "tag": "c:gems/ragi_crystal"
+      "item": "ragium:ragi_matter"
     },
     "B": {
       "tag": "c:dyes/red"

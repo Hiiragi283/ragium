@@ -275,7 +275,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     private fun lootTickets() {
         HTShapedRecipeBuilder.create(output) {
             cross8()
-            define('A') += CommonTagPrefixes.GEM to RagiumMaterialKeys.RAGI_CRYSTAL
+            define('A') += RagiumItems.RAGI_MATTER
             define('B') += Tags.Items.DYES_RED
             define('C') += Items.PAPER
             resultStack += RagiumItems.LOOT_TICKET to 4

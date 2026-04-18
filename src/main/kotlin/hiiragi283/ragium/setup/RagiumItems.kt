@@ -148,13 +148,13 @@ object RagiumItems {
     @JvmField
     val LOCATION_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
 
-    @JvmField
-    val LOOT_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
-
     //    End Game    //
 
     @JvmField
     val RAGI_MATTER: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_matter", ::HTCreativeItem)
+
+    @JvmField
+    val LOOT_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
 
     //    Event    //
 
