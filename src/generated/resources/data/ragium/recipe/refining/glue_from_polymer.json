@@ -1,0 +1,15 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "fluid_result": {
+    "id": "ragium:glue"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "hiiragi_core:polymer_resin"
+  },
+  "time": 200
+}

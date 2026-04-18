@@ -92,6 +92,12 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             setName("Raginite", "ラギナイト")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
         }
+        provider.getBuilder(RagiumMaterialKeys.BORAX).apply {
+            addItemPrefixes(CommonParts.DUST)
+
+            setName("Borax", "ホウ砂")
+            setTextureSet("mineral", HTMaterialTextureSet.DULL)
+        }
     }
 
     @JvmStatic

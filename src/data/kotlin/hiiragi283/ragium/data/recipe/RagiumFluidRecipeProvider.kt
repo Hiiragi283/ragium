@@ -186,11 +186,17 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             results += resultCreator.create(Items.FLINT, chance = fraction(1, 3))
             time = 20 * 5
         }
-
+        // Sand -> Quartz Dust + Borax Dust
+        RagiumRecipeBuilder.washing(output) {
+            ingredient = inputCreator.create(Tags.Items.SANDS)
+            results += resultCreator.material(CommonParts.DUST, VanillaMaterialKeys.QUARTZ, chance = fraction(1, 2))
+            results += resultCreator.material(CommonParts.DUST, RagiumMaterialKeys.BORAX, chance = fraction(1, 4))
+        }
         // Ash + Water -> Carbon
         RagiumRecipeBuilder.washing(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH, 4)
             results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
+            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, chance = fraction(1, 4))
             time = 20 * 5
         }
     }

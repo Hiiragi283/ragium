@@ -17,6 +17,9 @@ object RagiumMaterialKeys {
     @JvmStatic
     val RAGINITE: HTMaterialKey = create("raginite")
 
+    @JvmStatic
+    val BORAX: HTMaterialKey = create("borax")
+
     //    Gems    //
 
     @JvmStatic

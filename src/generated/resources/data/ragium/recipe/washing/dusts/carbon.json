@@ -4,10 +4,17 @@
     "amount": 4,
     "items": "#c:dusts/ash"
   },
-  "results": {
-    "count": 3,
-    "id": "hiiragi_core:carbon_dust",
-    "tag": "#c:dusts/carbon"
-  },
+  "results": [
+    {
+      "count": 3,
+      "id": "hiiragi_core:carbon_dust",
+      "tag": "#c:dusts/carbon"
+    },
+    {
+      "chance": "1/4",
+      "id": "hiiragi_core:carbon_dust",
+      "tag": "#c:dusts/carbon"
+    }
+  ],
   "time": 100
 }

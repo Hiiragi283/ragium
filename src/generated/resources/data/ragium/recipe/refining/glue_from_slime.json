@@ -1,15 +1,15 @@
 {
-  "type": "ragium:chemical_washing",
+  "type": "ragium:refining",
   "fluid_ingredient": {
     "amount": 1000,
     "fluids": "#c:water"
   },
   "fluid_result": {
-    "id": "ragium:sodium_hydroxide_solution"
+    "id": "ragium:glue"
   },
   "item_ingredient": {
     "amount": 1,
-    "items": "minecraft:slime_ball"
+    "items": "#c:slime_balls"
   },
   "time": 200
 }

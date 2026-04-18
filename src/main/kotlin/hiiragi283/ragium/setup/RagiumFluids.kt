@@ -50,6 +50,9 @@ object RagiumFluids {
 
     // Organic
     @JvmField
+    val GLUE: HTFluidContent = REGISTER.registerFlowing("glue") { properties = liquid().motionScale(0.0001) }
+
+    @JvmField
     val METHANE: HTFluidContent = REGISTER.registerVirtual("methane") { properties = gas() }
 
     @JvmField

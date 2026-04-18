@@ -89,6 +89,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.SYNTHETIC_GAS, "Synthetic Gas")
         addFluid(RagiumFluids.SYNTHETIC_OIL, "Synthetic Oil")
 
+        addFluid(RagiumFluids.GLUE, "Glue")
         addFluid(RagiumFluids.METHANE, "Methane")
         addFluid(RagiumFluids.CRUDE_BIO, "Crude Bio")
         addFluid(RagiumFluids.ETHANOL, "Ethanol")
@@ -97,7 +98,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.NITROGEN, "Nitrogen")
         addFluid(RagiumFluids.LIQUID_NITROGEN, "Liquid Nitrogen")
 
-        addFluid(RagiumFluids.NAOH_SOLUTION, "Slime Solution")
+        addFluid(RagiumFluids.NAOH_SOLUTION, "Alkali Solution")
 
         addFluid(RagiumFluids.MERCURY, "Mercury")
 
