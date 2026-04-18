@@ -1,0 +1,16 @@
+{
+  "type": "ragium:imploding",
+  "explosive": {
+    "amount": 1,
+    "items": "ragium:industrial_tnt"
+  },
+  "ingredient": {
+    "amount": 16,
+    "items": "#c:dusts/carbon"
+  },
+  "results": {
+    "id": "minecraft:diamond",
+    "tag": "#c:gems/diamond"
+  },
+  "time": 100
+}

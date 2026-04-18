@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -22,6 +23,7 @@ import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
@@ -378,6 +380,39 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredients += RagiumItems.SMOKELESS_POWDER
             resultStack += Items.GUNPOWDER to 4
             recipeId suffix "_from_smokeless"
+        }
+        // Smokeless -> Industrial TNT
+        HTShapedRecipeBuilder.create(output) {
+            mosaic9()
+            define('A') += RagiumItems.SMOKELESS_POWDER
+            define('B') += Tags.Items.SANDS
+            resultStack += RagiumBlocks.INDUSTRIAL_TNT
+        }
+
+        // Carbon -> Diamond
+        RagiumRecipeBuilder.imploding(output) {
+            base = inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE), 32)
+            addition = inputCreator.create(Items.TNT)
+            results += resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND, chance = fraction(1, 2))
+            recipeId suffix "_from_coal_coke"
+        }
+        RagiumRecipeBuilder.imploding(output) {
+            base = inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE), 32)
+            addition = inputCreator.create(RagiumBlocks.INDUSTRIAL_TNT)
+            results += resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            recipeId suffix "_from_coal_coke/smokeless"
+        }
+        RagiumRecipeBuilder.imploding(output) {
+            base = inputCreator.create(baseOrDust(CommonMaterialKeys.CARBON), 16)
+            addition = inputCreator.create(Items.TNT)
+            results += resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND, chance = fraction(1, 2))
+            recipeId suffix "_from_carbon"
+        }
+        RagiumRecipeBuilder.imploding(output) {
+            base = inputCreator.create(baseOrDust(CommonMaterialKeys.CARBON), 16)
+            addition = inputCreator.create(RagiumBlocks.INDUSTRIAL_TNT)
+            results += resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            recipeId suffix "_from_carbon/smokeless"
         }
     }
 

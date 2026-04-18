@@ -39,6 +39,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "Bone with Meat")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
+        add(RagiumBlocks.INDUSTRIAL_TNT, "Industrial TNT")
         // Generator
         add(RagiumBlocks.BOILER, "Boiler")
         // Machine
@@ -151,13 +152,14 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeLookups.PLANTING, "Planting")
 
         add(RagiumRecipeLookups.FREEZING, "Freezing")
+        add(RagiumRecipeLookups.IMPLODING, "Implosion Compressing")
         add(RagiumRecipeLookups.MELTING, "Melting")
         add(RagiumRecipeLookups.PYROLYZING, "Pyrolyzing")
         add(RagiumRecipeLookups.REFINING, "Refining")
+        add(RagiumRecipeLookups.WASHING, "Washing")
 
         add(RagiumRecipeLookups.CHEMICAL_WASHING, "Chemical Washing")
         add(RagiumRecipeLookups.MIXING, "Mixing")
-        add(RagiumRecipeLookups.WASHING, "Washing")
 
         add(RagiumRecipeLookups.ENCHANTING, "Enchanting")
 

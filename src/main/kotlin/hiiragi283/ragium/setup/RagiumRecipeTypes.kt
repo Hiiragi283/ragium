@@ -38,6 +38,9 @@ object RagiumRecipeTypes {
     val FREEZING: Supplier<RecipeType<HTFreezingRecipe>> = REGISTER.registerType(RagiumConst.FREEZING)
 
     @JvmField
+    val IMPLODING: Supplier<RecipeType<HTDoubleMultiOutputRecipe.Serializable>> = REGISTER.registerType(RagiumConst.IMPLODING)
+
+    @JvmField
     val MELTING: Supplier<RecipeType<HTMeltingRecipe>> = REGISTER.registerType(RagiumConst.MELTING)
 
     @JvmField

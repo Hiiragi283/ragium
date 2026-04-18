@@ -39,6 +39,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "骨付き肉ブロック")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
+        add(RagiumBlocks.INDUSTRIAL_TNT, "工業用TNT")
         // Generator
         add(RagiumBlocks.BOILER, "ボイラー")
         // Machine
@@ -151,13 +152,14 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeLookups.PLANTING, "栽培")
 
         add(RagiumRecipeLookups.FREEZING, "冷却")
+        add(RagiumRecipeLookups.IMPLODING, "内爆圧縮")
         add(RagiumRecipeLookups.MELTING, "溶融")
         add(RagiumRecipeLookups.PYROLYZING, "熱分解")
         add(RagiumRecipeLookups.REFINING, "精製")
+        add(RagiumRecipeLookups.WASHING, "洗浄")
 
         add(RagiumRecipeLookups.CHEMICAL_WASHING, "化学洗浄")
         add(RagiumRecipeLookups.MIXING, "混合")
-        add(RagiumRecipeLookups.WASHING, "洗浄")
 
         add(RagiumRecipeLookups.ENCHANTING, "エンチャント")
 

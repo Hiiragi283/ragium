@@ -34,6 +34,8 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
     val chemical = "chemical"
 
     override fun registerStatesAndModels() {
+        // Material
+        cubeColumn(RagiumBlocks.INDUSTRIAL_TNT)
         // Machine
         frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.ASSEMBLER, RagiumConst.MACHINE, basic)

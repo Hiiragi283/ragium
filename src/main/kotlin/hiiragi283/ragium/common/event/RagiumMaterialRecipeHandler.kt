@@ -25,16 +25,19 @@ import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.common.data.recipe.blueprint
 import hiiragi283.core.common.data.recipe.builder.HTDoubleMultiOutputRecipeBuilder
 import hiiragi283.core.common.event.HCRuntimeRecipeHandler
+import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
+import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.TagKey
 import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
@@ -58,8 +61,8 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             meltPrefixToMolten(event, entry, CommonParts.INGOT)
             meltPrefixToMolten(event, entry, CommonParts.PEARL)
 
-            refineDustToPrefix(event, entry, CommonTagPrefixes.GEM)
-            refineDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
+            implodeDustToPrefix(event, entry, CommonTagPrefixes.GEM)
+            implodeDustToPrefix(event, entry, CommonTagPrefixes.PEARL)
             // Cool
             freezeMoltenToPrefix(event, entry, CommonParts.DUST)
             freezeMoltenToPrefix(event, entry, CommonParts.INGOT)
@@ -158,6 +161,37 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         }
     }
 
+    //    Imploding    //
+
+    @JvmStatic
+    private fun implodeDustToPrefix(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
+        // 材料が存在するか判定
+        val crushedPart: HTPartLike = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART)
+        val crushedPrefix: HTTagPrefix = crushedPart.tagPrefix ?: return
+        if (!event.isPresentTag(crushedPrefix, entry)) return
+        // 完成品を取得
+        val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
+        // レシピを登録
+        val suffix = "from_${crushedPart.asPartName()}"
+        // TNT
+        RagiumRecipeBuilder.imploding(output) {
+            base = inputCreator.create(crushedPrefix, entry, 4)
+            addition = inputCreator.create(Items.TNT)
+            results += resultCreator.create(resultItem, 3)
+            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.ASH)
+            time /= 2
+            recipeId suffix suffix
+        }
+        // 工業用TNT
+        RagiumRecipeBuilder.imploding(output) {
+            base = inputCreator.create(crushedPrefix, entry, 4)
+            addition = inputCreator.create(RagiumBlocks.INDUSTRIAL_TNT)
+            results += resultCreator.create(resultItem, 4)
+            time /= 2
+            recipeId suffix "$suffix/smokeless"
+        }
+    }
+
     //    Melting    //
 
     @JvmStatic
@@ -175,43 +209,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             result = resultCreator.create(molten, fluidAmount)
             recipeId suffix "_from_${part.asPartName()}"
             time = HCRuntimeRecipeHandler.getTimeFromMelting(entry, time) ?: return
-        }
-    }
-
-    //    Mixing    //
-
-    /*private fun mixFlourToDough(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 素材のプロパティから材料を取得
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PREFIX)
-        if (!event.isPresentTag(crushedPrefix, entry)) return
-        // 完成品を取得
-        val dough: HTItemHolderLike<*> = event.getFirstHolder(CommonTagPrefixes.DOUGH, entry) ?: return
-        // レシピを登録
-        HTChemicalRecipeBuilder.mixing(output) {
-            itemIngredients += inputCreator.create(crushedPrefix, entry)
-            fluidIngredients += inputCreator.water(250)
-            time /= 2
-            itemResults += resultCreator.create(dough)
-        }
-    }*/
-
-    //    Refining    //
-
-    @JvmStatic
-    private fun refineDustToPrefix(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry, prefix: HTTagPrefix) {
-        // 材料が存在するか判定
-        val crushedPart: HTPartLike = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART)
-        val crushedPrefix: HTTagPrefix = crushedPart.tagPrefix ?: return
-        if (!event.isPresentTag(crushedPrefix, entry)) return
-        // 完成品を取得
-        val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
-        // レシピを登録
-        HTItemOrFluidRecipeBuilder.refining(output) {
-            ingredient += inputCreator.create(crushedPrefix, entry)
-            ingredient += inputCreator.create(RagiumFluids.STEAM, 250)
-            result += resultCreator.create(resultItem)
-            time /= 2
-            recipeId suffix "from_${crushedPart.asPartName()}"
         }
     }
 

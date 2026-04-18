@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
+import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
@@ -68,6 +69,10 @@ object RagiumRecipeViewerTypes {
     @JvmField
     val FREEZING: HTHolderRecipeViewerType<HTFreezingRecipe> =
         simple(RagiumRecipeLookups.FREEZING, RagiumBlocks.FREEZER, 18 * 6)
+
+    @JvmField
+    val IMPLODING: HTLookupRecipeViewerType<HTDoubleMultiOutputRecipe, HTImplodingRecipe> =
+        lookup(RagiumRecipeLookups.IMPLODING, RagiumBlocks.INDUSTRIAL_TNT, 18 * 7, 18 * 2)
 
     @JvmField
     val MELTING: HTHolderRecipeViewerType<HTMeltingRecipe> =

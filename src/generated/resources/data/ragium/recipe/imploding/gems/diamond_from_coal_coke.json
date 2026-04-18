@@ -1,0 +1,20 @@
+{
+  "type": "ragium:imploding",
+  "explosive": {
+    "amount": 1,
+    "items": "minecraft:tnt"
+  },
+  "ingredient": {
+    "amount": 32,
+    "items": [
+      "#c:coal_coke",
+      "#c:dusts/coal_coke"
+    ]
+  },
+  "results": {
+    "chance": "1/2",
+    "id": "minecraft:diamond",
+    "tag": "#c:gems/diamond"
+  },
+  "time": 100
+}

@@ -38,6 +38,9 @@ data object RagiumRecipeLookups {
     val FREEZING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTFreezingRecipe> = create(RagiumConst.FREEZING)
 
     @JvmField
+    val IMPLODING: HTRecipeTypeImpl<HTDoubleRecipeInput, HTDoubleMultiOutputRecipe> = create(RagiumConst.IMPLODING)
+
+    @JvmField
     val MELTING: HTRecipeTypeImpl<SingleRecipeInput, HTMeltingRecipe> = create(RagiumConst.MELTING)
 
     @JvmField
@@ -72,6 +75,7 @@ data object RagiumRecipeLookups {
         PLANTING.addProvider(RagiumRecipeTypes.PLANTING.get(), identity())
 
         FREEZING.addProvider(RagiumRecipeTypes.FREEZING.get(), identity())
+        IMPLODING.addProvider(RagiumRecipeTypes.IMPLODING.get(), identity())
         MELTING.addProvider(RagiumRecipeTypes.MELTING.get(), identity())
         PYROLYZING.addProvider(RagiumRecipeTypes.PYROLYZING.get(), identity())
         REFINING.addProvider(RagiumRecipeTypes.REFINING.get(), identity())

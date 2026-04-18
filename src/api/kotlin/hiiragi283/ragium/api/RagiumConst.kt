@@ -17,16 +17,17 @@ object RagiumConst {
 
     // Machine - Advanced
     const val FREEZER = "freezer"
+    const val IMPLOSION_COMPRESSOR = "implosion_compressor"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
     const val REFINERY = "refinery"
+    const val WASHER = "washer"
 
     // Machine - Elite
     const val BREWERY = "brewery"
     const val CHEMICAL_WASHER = "chemical_washer"
     const val FLUID_MIXER = "fluid_mixer"
     const val MIXER = "mixer"
-    const val WASHER = "washer"
 
     // Machine - Ultimate
     const val ENCHANTER = "enchanter"
@@ -55,13 +56,14 @@ object RagiumConst {
 
     // Advanced
     const val FREEZING = "freezing"
+    const val IMPLODING = "imploding"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
     const val REFINING = "refining"
+    const val WASHING = "washing"
 
     // Elite
     const val CHEMICAL_WASHING = "chemical_washing"
-    const val WASHING = "washing"
 
     const val MIXING = "mixing"
     const val FLUID_MIXING = "fluid_mixing"

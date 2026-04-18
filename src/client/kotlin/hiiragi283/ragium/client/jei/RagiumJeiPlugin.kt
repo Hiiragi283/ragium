@@ -16,6 +16,7 @@ import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTImplodingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
@@ -69,6 +70,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTCuttingRecipeCategory(guiHelper),
             // Machine - Advanced
             HTFreezingRecipeCategory(guiHelper),
+            HTImplodingRecipeCategory(guiHelper),
             HTMeltingRecipeCategory(guiHelper),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeSerializers.PYROLYZING),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.REFINING, RagiumRecipeSerializers.REFINING),
@@ -90,6 +92,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         // HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.PLANTING, RagiumRecipeLookups.PLANTING)
         // Machine - Advanced
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.FREEZING, RagiumRecipeLookups.FREEZING)
+        HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.IMPLODING, RagiumRecipeLookups.IMPLODING)
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.MELTING, RagiumRecipeLookups.MELTING)
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
         HTJeiRecipeHelper.addLookupRecipes(registration, RagiumRecipeViewerTypes.REFINING, RagiumRecipeLookups.REFINING)
@@ -177,6 +180,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.PLANTING,
             // Machine - Advanced
             RagiumRecipeViewerTypes.FREEZING,
+            RagiumRecipeViewerTypes.IMPLODING,
             RagiumRecipeViewerTypes.MELTING,
             RagiumRecipeViewerTypes.PYROLYZING,
             RagiumRecipeViewerTypes.REFINING,

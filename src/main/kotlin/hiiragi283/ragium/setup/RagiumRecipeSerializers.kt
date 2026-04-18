@@ -26,6 +26,7 @@ import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTFluidMixingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
+import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTItemMixingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -139,6 +140,21 @@ object RagiumRecipeSerializers {
     )
 
     @JvmField
+    val IMPLODING: RecipeSerializer<HTImplodingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.IMPLODING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTImplodingRecipe::ingredient),
+            HTItemIngredient.CODEC.fieldOf("explosive").forGetter(HTImplodingRecipe::explosive),
+            HTItemResult.CODEC
+                .listOrElement(HTImplodingRecipe.OUTPUT_RANGE)
+                .fieldOf(HTConst.RESULTS)
+                .forGetter(HTImplodingRecipe::results),
+            HTProcessingRecipe.timeCodec(),
+            ::HTImplodingRecipe,
+        ),
+    )
+
+    @JvmField
     val MELTING: RecipeSerializer<HTMeltingRecipe> = REGISTER.registerSerializer(
         RagiumConst.MELTING,
         MapBiCodec.composite(
@@ -156,6 +172,17 @@ object RagiumRecipeSerializers {
     @JvmField
     val REFINING: RecipeSerializer<HTRefiningRecipe> =
         REGISTER.registerSerializer(RagiumConst.REFINING, itemOrFluid(::HTRefiningRecipe))
+
+    @JvmField
+    val WASHING: RecipeSerializer<HTWashingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.WASHING,
+        HCRecipeSerializers.singleItemToMulti(
+            HTWashingRecipe.OUTPUT_RANGE,
+            HTWashingRecipe::ingredient,
+            HTWashingRecipe::results,
+            ::HTWashingRecipe,
+        ),
+    )
 
     // Machine - Elite
     @JvmField
@@ -200,17 +227,6 @@ object RagiumRecipeSerializers {
                 HTProcessingRecipe.timeCodec(),
                 ::HTItemMixingRecipe,
             ),
-    )
-
-    @JvmField
-    val WASHING: RecipeSerializer<HTWashingRecipe> = REGISTER.registerSerializer(
-        RagiumConst.WASHING,
-        HCRecipeSerializers.singleItemToMulti(
-            HTWashingRecipe.OUTPUT_RANGE,
-            HTWashingRecipe::ingredient,
-            HTWashingRecipe::results,
-            ::HTWashingRecipe,
-        ),
     )
 
     // Device - Ultimate

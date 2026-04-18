@@ -7,6 +7,7 @@ import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.core.common.registry.HTDeferredBlockAndItem
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import hiiragi283.core.common.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.core.common.registry.register.HTDeferredBlockAndItemRegister
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
@@ -63,6 +64,10 @@ object RagiumBlocks {
         copyOf(Blocks.PACKED_MUD).mapColor(MapColor.COLOR_RED),
         ::HTMeatBlock.partially1(Foods.COOKED_BEEF),
     )
+
+    @JvmField
+    val INDUSTRIAL_TNT: HTSimpleDeferredBlockAndItem =
+        REGISTER.registerSimple("industrial_tnt", copyOf(Blocks.TNT).mapColor(MapColor.TERRACOTTA_ORANGE))
 
     //    Generator    //
 
