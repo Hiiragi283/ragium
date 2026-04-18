@@ -1,15 +1,22 @@
-package hiiragi283.ragium.data.server.tag
+package hiiragi283.ragium.data.tag
 
-import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.setup.RagiumBlocks
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.common.data.ExistingFileHelper
+import java.util.concurrent.CompletableFuture
 
-class RagiumBlockTagsProvider(context: HTDataGenContext) : HTTagsProvider.DataGen<Block>(RagiumAPI.MOD_ID, Registries.BLOCK, context) {
+class RagiumBlockTagsProvider(
+    fileHelper: ExistingFileHelper,
+    output: PackOutput,
+    lookupProvider: CompletableFuture<HolderLookup.Provider>,
+) : HTTagsProvider.DataGen<Block>(fileHelper, output, Registries.BLOCK, lookupProvider, RagiumAPI.MOD_ID) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Block>) {
         // Mineable
         val hoe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_HOE)

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.client
+package hiiragi283.ragium.data.lang
 
 import hiiragi283.core.api.data.lang.HTLangPatternProvider
 import hiiragi283.core.api.data.lang.HTLangProvider

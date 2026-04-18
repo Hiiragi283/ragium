@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.server.loot
+package hiiragi283.ragium.data.loot
 
 import hiiragi283.core.api.data.loot.HTBlockLootTableProvider
 import hiiragi283.core.api.registry.HTBlockHolderLike

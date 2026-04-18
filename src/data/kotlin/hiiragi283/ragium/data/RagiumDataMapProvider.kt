@@ -1,6 +1,5 @@
-package hiiragi283.ragium.data.server
+package hiiragi283.ragium.data
 
-import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.map.HTDataMapProvider
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
@@ -8,15 +7,19 @@ import hiiragi283.core.api.tag.createCommonTag
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumFluids
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.PackOutput
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
+import java.util.concurrent.CompletableFuture
 
-class RagiumDataMapProvider(context: HTDataGenContext) : HTDataMapProvider(context) {
+class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
+    HTDataMapProvider(packOutput, lookupProvider) {
     override fun gatherInternal() {
         fermentSources()
         mobHeads()

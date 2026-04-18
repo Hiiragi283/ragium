@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.server.recipe
+package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider

@@ -1,8 +1,8 @@
 {
   "type": "ragium:enchanting/holder",
-  "enchantment": "minecraft:swift_sneak",
+  "enchantment": "hiiragi_core:purification",
   "ingredient": {
     "amount": 16,
-    "items": "#c:dusts/echo"
+    "items": "#c:dusts/iridium"
   }
 }

@@ -1,8 +1,7 @@
-package hiiragi283.ragium.data.client
+package hiiragi283.ragium.data.model
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HiiragiCoreAPI
-import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTItemModelProvider
 import hiiragi283.core.api.data.model.withExistingParent
 import hiiragi283.core.api.registry.HTFluidContent
@@ -13,10 +12,13 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
+import net.neoforged.neoforge.common.data.ExistingFileHelper
 import kotlin.collections.iterator
 
-class RagiumItemModelProvider(context: HTDataGenContext) : HTItemModelProvider(RagiumAPI.MOD_ID, context) {
+class RagiumItemModelProvider(fileHelper: ExistingFileHelper, output: PackOutput) :
+    HTItemModelProvider(fileHelper, output, RagiumAPI.MOD_ID) {
     private val wireOverlay: ResourceLocation = HiiragiCoreAPI.id(HTConst.ITEM, "wire_overlay")
 
     override fun registerModels() {

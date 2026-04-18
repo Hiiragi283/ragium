@@ -1,7 +1,6 @@
-package hiiragi283.ragium.data.server.tag
+package hiiragi283.ragium.data.tag
 
 import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.data.tag.HTTagDependType
@@ -19,13 +18,20 @@ import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
-class RagiumItemTagsProvider(blockTags: CompletableFuture<TagLookup<Block>>, context: HTDataGenContext) :
-    HTItemTagsProvider(RagiumAPI.MOD_ID, blockTags, context) {
+class RagiumItemTagsProvider(
+    fileHelper: ExistingFileHelper,
+    output: PackOutput,
+    lookupProvider: CompletableFuture<HolderLookup.Provider>,
+    blockTags: CompletableFuture<TagLookup<Block>>,
+) : HTItemTagsProvider(fileHelper, output, lookupProvider, RagiumAPI.MOD_ID, blockTags) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Item>) {
         val items: HTMaterialContents<HTPart, HTMaterialContents.ItemEntry> = HiiragiCoreAccess.INSTANCE.registeredContents.items
         // Buckets

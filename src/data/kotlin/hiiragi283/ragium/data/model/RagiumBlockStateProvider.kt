@@ -1,7 +1,6 @@
-package hiiragi283.ragium.data.client
+package hiiragi283.ragium.data.model
 
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.data.HTDataGenContext
 import hiiragi283.core.api.data.model.HTBlockStateProvider
 import hiiragi283.core.api.data.model.blockTexture
 import hiiragi283.core.api.data.model.existsTexture
@@ -18,14 +17,17 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
+import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
+import net.neoforged.neoforge.common.data.ExistingFileHelper
 
-class RagiumBlockStateProvider(context: HTDataGenContext) : HTBlockStateProvider(RagiumAPI.MOD_ID, context) {
+class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutput) :
+    HTBlockStateProvider(fileHelper, output, RagiumAPI.MOD_ID) {
     val basic = "basic"
     val heat = "heat"
     val cool = "cool"

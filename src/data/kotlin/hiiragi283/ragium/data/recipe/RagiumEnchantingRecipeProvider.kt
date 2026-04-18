@@ -1,10 +1,11 @@
-package hiiragi283.ragium.data.server.recipe
+package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.setup.HCEnchantments
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTEnchantingRecipeBuilder
 import net.minecraft.core.HolderLookup
@@ -23,7 +24,7 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         melee()
         tool()
         bow()
-        lure()
+        fishingRod()
         trident()
         crossBow()
         mace()
@@ -40,6 +41,8 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
             ingredient = inputCreator.create(Tags.Items.NETHER_STARS)
             enchantment = enchLookup.getOrThrow(Enchantments.MENDING)
         }
+
+        hiiragiCore()
     }
 
     @JvmStatic
@@ -89,7 +92,7 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
             enchantment = enchLookup.getOrThrow(Enchantments.SOUL_SPEED)
         }
         HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO, 16)
+            ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.ECHO, 16)
             enchantment = enchLookup.getOrThrow(Enchantments.SWIFT_SNEAK)
         }
     }
@@ -167,7 +170,7 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
     }
 
     @JvmStatic
-    private fun lure() {
+    private fun fishingRod() {
         HTEnchantingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(Items.PRISMARINE_SHARD, 64)
             enchantment = enchLookup.getOrThrow(Enchantments.LUCK_OF_THE_SEA)
@@ -203,4 +206,26 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
 
     @JvmStatic
     private fun mace() {}
+
+    @JvmStatic
+    private fun hiiragiCore() {
+        // Sword
+        HTEnchantingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(Items.OMINOUS_BOTTLE)
+            enchantment = enchLookup.getOrThrow(HCEnchantments.HAMMER_OF_JUSTICE)
+        }
+        HTEnchantingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO, 64)
+            enchantment = enchLookup.getOrThrow(HCEnchantments.NOISE_CANCELING)
+        }
+        HTEnchantingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.IRIDIUM, 16)
+            enchantment = enchLookup.getOrThrow(HCEnchantments.PURIFICATION)
+        }
+        // Armor
+        HTEnchantingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.ECHO, 16)
+            enchantment = enchLookup.getOrThrow(HCEnchantments.SONIC_PROTECTION)
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.client
+package hiiragi283.ragium.data.lang
 
 import hiiragi283.core.api.data.lang.HTLangProvider
 import hiiragi283.core.api.data.lang.HTLangTypes
@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
-import hiiragi283.ragium.data.server.advancement.RagiumAdvancementKeys
+import hiiragi283.ragium.data.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems

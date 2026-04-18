@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.server.advancement
+package hiiragi283.ragium.data.advancement
 
 import hiiragi283.core.api.data.advancement.HTAdvancementKey
 import hiiragi283.core.api.material.HTMaterialLike
