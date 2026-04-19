@@ -6,6 +6,7 @@ import hiiragi283.core.api.data.holder.HTIngredientHolder
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialLike
+import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
@@ -258,7 +259,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         HTShapedRecipeBuilder.create(output) {
             crossLayered()
             define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
-            define('B') += CommonTagPrefixes.PLATE to top
+            define('B') += materialManager.getOrEmpty(top).getDefaultPart(top) ?: return
             define('C') += Tags.Items.GLASS_BLOCKS
             define('D') += core
             resultStack += block

@@ -198,7 +198,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     private fun rubber() {
         // Raw Rubber + Sulfur -> Rubber
         HTCombiningRecipeBuilder.alloying(output) {
-            result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 2)
+            result = resultCreator.create(HCItems.CURED_RUBBER, 2)
             ingredients += inputCreator.create(HCItems.RAW_RUBBER)
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
         }
@@ -210,7 +210,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // Raw Rubber + Sulfur + Carbon -> Rubber
         HTCombiningRecipeBuilder.alloying(output) {
-            result = resultCreator.material(CommonParts.INGOT, CommonMaterialKeys.RUBBER, 3)
+            result = resultCreator.create(HCItems.CURED_RUBBER, 3)
             ingredients += inputCreator.create(HCItems.RAW_RUBBER)
             ingredients += inputCreator.create(RagiumItems.CARBON_COMPOUND)
             recipeId suffix "_with_carbon"
