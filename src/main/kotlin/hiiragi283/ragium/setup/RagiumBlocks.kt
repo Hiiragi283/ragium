@@ -135,7 +135,7 @@ object RagiumBlocks {
 
     @JvmField
     val CHEMICAL_WASHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.CHEMICAL_WASHER, RagiumTranslation.REFINERY, machine().noOcclusion())
+        registerMachine(RagiumBlockEntityTypes.CHEMICAL_WASHER, RagiumTranslation.CHEMICAL_WASHER, machine().noOcclusion())
 
     @JvmField
     val FLUID_MIXER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
@@ -148,7 +148,7 @@ object RagiumBlocks {
     // Ultimate
     @JvmField
     val FLUID_DUPLICATOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.FLUID_DUPLICATOR, RagiumTranslation.ENCHANTER, machine().noOcclusion())
+        registerMachine(RagiumBlockEntityTypes.FLUID_DUPLICATOR, RagiumTranslation.FLUID_DUPLICATOR, machine().noOcclusion())
 
     //    Device    //
 

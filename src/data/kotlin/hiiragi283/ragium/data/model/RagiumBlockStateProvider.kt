@@ -56,6 +56,8 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
         frontMachineBlock(RagiumBlocks.FLUID_MIXER, RagiumConst.MACHINE, chemical, mixerFront)
         frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
 
+        refineryBlock(RagiumBlocks.FLUID_DUPLICATOR)
+
         // Storage
         variableBlock(RagiumBlocks.BATTERY, RagiumBlocks.CREATIVE_BATTERY)
         variableBlock(RagiumBlocks.CRATE, RagiumBlocks.CREATIVE_CRATE)

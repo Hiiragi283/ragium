@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,is_active=false": {
+      "model": "ragium:block/fluid_duplicator",
+      "y": 90
+    },
+    "facing=east,is_active=true": {
+      "model": "ragium:block/fluid_duplicator",
+      "y": 90
+    },
+    "facing=north,is_active=false": {
+      "model": "ragium:block/fluid_duplicator"
+    },
+    "facing=north,is_active=true": {
+      "model": "ragium:block/fluid_duplicator"
+    },
+    "facing=south,is_active=false": {
+      "model": "ragium:block/fluid_duplicator",
+      "y": 180
+    },
+    "facing=south,is_active=true": {
+      "model": "ragium:block/fluid_duplicator",
+      "y": 180
+    },
+    "facing=west,is_active=false": {
+      "model": "ragium:block/fluid_duplicator",
+      "y": 270
+    },
+    "facing=west,is_active=true": {
+      "model": "ragium:block/fluid_duplicator",
+      "y": 270
+    }
+  }
+}

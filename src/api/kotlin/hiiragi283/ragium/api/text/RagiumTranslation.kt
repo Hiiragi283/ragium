@@ -13,12 +13,6 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     // Config
     CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),
     CONFIG_ENERGY_RATE("config", "energy_rate"),
-    CONFIG_FLUID_FIRST_INPUT("config", "fluid", "first_input"),
-    CONFIG_FLUID_SECOND_INPUT("config", "fluid", "second_input"),
-    CONFIG_FLUID_THIRD_INPUT("config", "fluid", "third_input"),
-    CONFIG_FLUID_FIRST_OUTPUT("config", "fluid", "first_output"),
-    CONFIG_FLUID_SECOND_OUTPUT("config", "fluid", "second_output"),
-    CONFIG_FLUID_THIRD_OUTPUT("config", "fluid", "third_output"),
 
     // GUI
     GUI_SLOT_BOTH(HTConst.GUI, "slot", "both"),
@@ -47,7 +41,10 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     WASHER(HTConst.DESCRIPTION, RagiumConst.WASHER),
 
     BREWERY(HTConst.DESCRIPTION, RagiumConst.BREWERY),
+    CHEMICAL_WASHER(HTConst.DESCRIPTION, RagiumConst.CHEMICAL_WASHER),
     MIXER(HTConst.DESCRIPTION, RagiumConst.MIXER),
+
+    FLUID_DUPLICATOR(HTConst.DESCRIPTION, RagiumConst.FLUID_DUPLICATOR),
 
     // Blocks - Device
     PLANTER(HTConst.DESCRIPTION, "planter"),

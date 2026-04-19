@@ -176,12 +176,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "Energy Capacity")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "Energy Rate")
-        add(RagiumTranslation.CONFIG_FLUID_FIRST_INPUT, "First Input Tank Capacity")
-        add(RagiumTranslation.CONFIG_FLUID_SECOND_INPUT, "Second Input Tank Capacity")
-        add(RagiumTranslation.CONFIG_FLUID_THIRD_INPUT, "Third Input Tank Capacity")
-        add(RagiumTranslation.CONFIG_FLUID_FIRST_OUTPUT, "First Output Tank Capacity")
-        add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "Second Output Tank Capacity")
-        add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "Third Output Tank Capacity")
 
         add(RagiumTranslation.GUI_SLOT_BOTH, "%s: Both")
         add(RagiumTranslation.GUI_SLOT_INPUT, "%s: Input")
@@ -199,9 +193,13 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.PYROLYZER, "A machine which converts log or coal into charcoal or coal coke.")
 
         add(RagiumTranslation.FREEZER, "A machine which freeze item or cools down fluid.")
-
-        add(RagiumTranslation.MIXER, "A machine which combines multiple items or fluids.")
         add(RagiumTranslation.WASHER, "A machine which producing item from crushed ore and fluid.")
+
+        add(RagiumTranslation.BREWERY, "A machine which brews fluid potion.")
+        add(RagiumTranslation.MIXER, "A machine which combines multiple items or fluids.")
+        add(RagiumTranslation.CHEMICAL_WASHER, "A machine which washes item with chemicals.")
+
+        add(RagiumTranslation.FLUID_DUPLICATOR, "A machine which duplicates ANY fluid with liquid matter.")
 
         add(RagiumTranslation.BATTERY, "A energy storage which capacity is extendable by crafting with others.")
         add(RagiumTranslation.CRATE, "A item storage which capacity is extendable by crafting with others.")

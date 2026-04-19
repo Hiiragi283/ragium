@@ -176,12 +176,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         add(RagiumTranslation.CONFIG_ENERGY_CAPACITY, "エネルギー容量")
         add(RagiumTranslation.CONFIG_ENERGY_RATE, "エネルギー使用速度")
-        add(RagiumTranslation.CONFIG_FLUID_FIRST_INPUT, "1番目の入力タンクの容量")
-        add(RagiumTranslation.CONFIG_FLUID_SECOND_INPUT, "2番目の入力タンクの容量")
-        add(RagiumTranslation.CONFIG_FLUID_THIRD_INPUT, "3番目の入力タンクの容量")
-        add(RagiumTranslation.CONFIG_FLUID_FIRST_OUTPUT, "1番目の出力タンクの容量")
-        add(RagiumTranslation.CONFIG_FLUID_SECOND_OUTPUT, "2番目の出力タンクの容量")
-        add(RagiumTranslation.CONFIG_FLUID_THIRD_OUTPUT, "3番目の出力タンクの容量")
 
         add(RagiumTranslation.GUI_SLOT_BOTH, "%s: 双方")
         add(RagiumTranslation.GUI_SLOT_INPUT, "%s: 入力")
@@ -199,9 +193,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.PYROLYZER, "原木や石炭を木炭やコークスに加工する機械です。")
 
         add(RagiumTranslation.FREEZER, "アイテムを凍らせたり，液体を冷却したりする機械です。")
-
-        add(RagiumTranslation.MIXER, "複数のアイテムや液体を混ぜる機械です。")
         add(RagiumTranslation.WASHER, "砕いた鉱石と液体からアイテムを生産する機械です。")
+
+        add(RagiumTranslation.BREWERY, "液体のポーションを醸造する機械です。")
+        add(RagiumTranslation.CHEMICAL_WASHER, "アイテムを化学物質で洗浄する機械です。")
+        add(RagiumTranslation.MIXER, "複数のアイテムや液体を混ぜる機械です。")
+
+        add(RagiumTranslation.FLUID_DUPLICATOR, "液体のマターを消費して任意の液体を複製する機械です。")
 
         add(RagiumTranslation.BATTERY, "クラフトで合体させることで容量を拡張可能なエネルギーストレージです。")
         add(RagiumTranslation.CRATE, "クラフトで合体させることで容量を拡張可能なアイテムストレージです。")
