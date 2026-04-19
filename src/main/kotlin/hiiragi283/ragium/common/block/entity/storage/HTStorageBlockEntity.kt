@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.util.HTStackSlotHelper
+import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTStorageCapacityComponent
 import net.minecraft.core.BlockPos
@@ -31,7 +31,7 @@ abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     }
 
     final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
-        HTStackSlotHelper.calculateRedstoneLevel(getAmountView())
+        HTStorageHelper.calculateRedstoneLevel(getAmountView())
 
     open fun setupMenu(widgetHolder: HTWidgetHolder) {}
 

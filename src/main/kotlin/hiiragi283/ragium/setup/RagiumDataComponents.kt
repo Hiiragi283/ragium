@@ -8,7 +8,6 @@ import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
-import net.minecraft.util.Unit
 import org.apache.commons.lang3.math.Fraction
 import java.util.function.IntSupplier
 
@@ -24,9 +23,6 @@ object RagiumDataComponents {
 
     @JvmField
     val CHARGE_POWER: DataComponentType<Fraction> = REGISTER.registerType("charge_power", BiCodecs.NON_NEGATIVE_FRACTION)
-
-    @JvmField
-    val CREATIVE_STORAGE: DataComponentType<Unit> = REGISTER.registerFlag("creative_storage")
 
     @JvmField
     val LOOT_TICKET: DataComponentType<HTLootTicketTargets> = REGISTER.registerType("loot_ticket", HTLootTicketTargets.CODEC)

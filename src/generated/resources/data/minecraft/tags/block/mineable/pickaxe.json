@@ -1,32 +1,8 @@
 {
   "values": [
-    "ragium:alloy_smelter",
-    "ragium:assembler",
-    "ragium:auto_chisel",
-    "ragium:battery",
-    "ragium:boiler",
-    "ragium:brewery",
-    "ragium:chemical_washer",
-    "ragium:crate",
-    "ragium:creative_battery",
-    "ragium:creative_crate",
-    "ragium:creative_tank",
-    "ragium:crusher",
-    "ragium:cutting_machine",
-    "ragium:electric_furnace",
-    "ragium:enchanter",
-    "ragium:fluid_duplicator",
-    "ragium:fluid_mixer",
-    "ragium:freezer",
-    "ragium:imitation_spawner",
-    "ragium:melter",
-    "ragium:mixer",
-    "ragium:planter",
-    "ragium:pyrolyzer",
-    "ragium:refinery",
-    "ragium:tank",
-    "ragium:universal_chest",
-    "ragium:void_tank",
-    "ragium:washer"
+    "#ragium:devices",
+    "#ragium:generators",
+    "#ragium:machines",
+    "#ragium:storages"
   ]
 }

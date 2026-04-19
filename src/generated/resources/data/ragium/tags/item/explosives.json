@@ -2,6 +2,7 @@
   "values": [
     "#ragium:explosives/advanced",
     "#ragium:explosives/basic",
-    "#ragium:explosives/elite"
+    "#ragium:explosives/elite",
+    "#ragium:explosives/ultimate"
   ]
 }

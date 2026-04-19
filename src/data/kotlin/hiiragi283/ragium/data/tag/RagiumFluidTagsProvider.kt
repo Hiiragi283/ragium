@@ -24,22 +24,22 @@ class RagiumFluidTagsProvider(
         factory
             .apply(RagiumTags.Fluids.ALCOHOL)
             .addContentTag(RagiumFluids.ETHANOL)
-            .addTag(commonTag("alcohol"), HTTagDependType.OPTIONAL)
-            .addTag(commonTag("bioethanol"), HTTagDependType.OPTIONAL)
+            .addTag(factory.commonTag("alcohol"), HTTagDependType.OPTIONAL)
+            .addTag(factory.commonTag("bioethanol"), HTTagDependType.OPTIONAL)
         // Other
         factory
             .apply(RagiumTags.Fluids.BIODIESEL)
             .addContentTag(RagiumFluids.BIOFUEL)
-            .addTag(commonTag("biodiesel"), HTTagDependType.OPTIONAL)
+            .addTag(factory.commonTag("biodiesel"), HTTagDependType.OPTIONAL)
 
         factory
             .apply(RagiumTags.Fluids.DIESEL)
             .addContentTag(RagiumFluids.FUEL)
-            .addTag(commonTag("diesel"), HTTagDependType.OPTIONAL)
+            .addTag(factory.commonTag("diesel"), HTTagDependType.OPTIONAL)
 
         factory
             .apply(RagiumTags.Fluids.LIQUID_MATTER)
             .addContentTag(RagiumFluids.RAGI_MATTER)
-            .addTag(commonTag("uu_matter"), HTTagDependType.OPTIONAL)
+            .addTag(factory.commonTag("uu_matter"), HTTagDependType.OPTIONAL)
     }
 }

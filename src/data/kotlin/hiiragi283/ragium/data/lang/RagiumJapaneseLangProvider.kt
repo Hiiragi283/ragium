@@ -171,16 +171,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTags.Fluids.DIESEL, "ディーゼル")
         add(RagiumTags.Fluids.LIQUID_MATTER, "液体マター")
 
-        add(RagiumTags.Items.EXPLOSIVES, "爆発物")
-        add(RagiumTags.Items.EXPLOSIVES_BASIC, "基本爆発物")
-        add(RagiumTags.Items.EXPLOSIVES_ADVANCED, "発展爆発物")
-        add(RagiumTags.Items.EXPLOSIVES_ELITE, "精鋭爆発物")
         add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")
-
-        add(RagiumTags.Items.GENERATOR_UPGRADABLE, "発電機")
-        add(RagiumTags.Items.PROCESSOR_UPGRADABLE, "処理装置")
-        add(RagiumTags.Items.MACHINE_UPGRADABLE, "機械")
-        add(RagiumTags.Items.DEVICE_UPGRADABLE, "設備")
         // Text
         add(RagiumTranslation.RAGIUM, "ラギウム")
 

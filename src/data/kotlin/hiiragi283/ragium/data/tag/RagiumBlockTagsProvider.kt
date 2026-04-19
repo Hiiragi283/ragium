@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.tag
 
-import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.data.tag.HTTagsProvider
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumBlocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -19,54 +19,64 @@ class RagiumBlockTagsProvider(
 ) : HTTagsProvider.DataGen<Block>(fileHelper, output, Registries.BLOCK, lookupProvider, RagiumAPI.MOD_ID) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Block>) {
         // Mineable
-        val hoe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_HOE)
-        sequence {
-            yield(RagiumBlocks.MEAT_BLOCK)
-            yield(RagiumBlocks.COOKED_MEAT_BLOCK)
-        }.forEach(hoe::add)
+        factory
+            .apply(BlockTags.MINEABLE_WITH_HOE)
+            .add(RagiumBlocks.MEAT_BLOCK)
+            .add(RagiumBlocks.COOKED_MEAT_BLOCK)
 
-        val pickaxe: HTTagBuilder<Block> = factory.apply(BlockTags.MINEABLE_WITH_PICKAXE)
-        sequence {
-            // Generator
-            yield(RagiumBlocks.BOILER)
-            // Machine
-            yield(RagiumBlocks.ALLOY_SMELTER)
-            yield(RagiumBlocks.ASSEMBLER)
-            yield(RagiumBlocks.AUTO_CHISEL)
-            yield(RagiumBlocks.CRUSHER)
-            yield(RagiumBlocks.CUTTING_MACHINE)
-            yield(RagiumBlocks.ELECTRIC_FURNACE)
-            yield(RagiumBlocks.PLANTER)
-
-            yield(RagiumBlocks.FREEZER)
-            yield(RagiumBlocks.MELTER)
-            yield(RagiumBlocks.PYROLYZER)
-            yield(RagiumBlocks.REFINERY)
-            yield(RagiumBlocks.WASHER)
-
-            yield(RagiumBlocks.BREWERY)
-            yield(RagiumBlocks.CHEMICAL_WASHER)
-            yield(RagiumBlocks.FLUID_MIXER)
-            yield(RagiumBlocks.MIXER)
-
-            yield(RagiumBlocks.FLUID_DUPLICATOR)
-            // Device
-            yield(RagiumBlocks.ENCHANTER)
-            // Storage
-            yield(RagiumBlocks.UNIVERSAL_CHEST)
-
-            yield(RagiumBlocks.BATTERY)
-            yield(RagiumBlocks.CRATE)
-            yield(RagiumBlocks.TANK)
-
-            yield(RagiumBlocks.VOID_TANK)
-
-            yield(RagiumBlocks.IMITATION_SPAWNER)
-
-            yield(RagiumBlocks.CREATIVE_BATTERY)
-            yield(RagiumBlocks.CREATIVE_CRATE)
-            yield(RagiumBlocks.CREATIVE_TANK)
-        }.forEach(pickaxe::add)
+        factory
+            .apply(BlockTags.MINEABLE_WITH_PICKAXE)
+            .addTag(RagiumTags.Blocks.DEVICES.base)
+            .addTag(RagiumTags.Blocks.GENERATORS.base)
+            .addTag(RagiumTags.Blocks.MACHINES.base)
+            .addTag(RagiumTags.Blocks.STORAGES)
         // Other
+        RagiumTags.Blocks.DEVICES.apply(factory)
+
+        RagiumTags.Blocks.GENERATORS.apply(factory)
+        factory
+            .apply(RagiumTags.Blocks.GENERATORS.basic)
+            .add(RagiumBlocks.BOILER)
+
+        RagiumTags.Blocks.MACHINES.apply(factory)
+        factory
+            .apply(RagiumTags.Blocks.MACHINES.basic)
+            .add(RagiumBlocks.ALLOY_SMELTER)
+            .add(RagiumBlocks.ASSEMBLER)
+            .add(RagiumBlocks.AUTO_CHISEL)
+            .add(RagiumBlocks.CRUSHER)
+            .add(RagiumBlocks.CUTTING_MACHINE)
+            .add(RagiumBlocks.ELECTRIC_FURNACE)
+            .add(RagiumBlocks.PLANTER)
+        factory
+            .apply(RagiumTags.Blocks.MACHINES.advanced)
+            .add(RagiumBlocks.FREEZER)
+            .add(RagiumBlocks.MELTER)
+            .add(RagiumBlocks.PYROLYZER)
+            .add(RagiumBlocks.REFINERY)
+            .add(RagiumBlocks.WASHER)
+        factory
+            .apply(RagiumTags.Blocks.MACHINES.elite)
+            .add(RagiumBlocks.BREWERY)
+            .add(RagiumBlocks.CHEMICAL_WASHER)
+            .add(RagiumBlocks.FLUID_MIXER)
+            .add(RagiumBlocks.MIXER)
+        factory
+            .apply(RagiumTags.Blocks.MACHINES.ultimate)
+            .add(RagiumBlocks.FLUID_DUPLICATOR)
+
+        factory
+            .apply(RagiumTags.Blocks.STORAGES)
+            .addTag(RagiumTags.Blocks.STORAGES_CREATIVE)
+            .add(RagiumBlocks.BATTERY)
+            .add(RagiumBlocks.CRATE)
+            .add(RagiumBlocks.TANK)
+            .add(RagiumBlocks.UNIVERSAL_CHEST)
+            .add(RagiumBlocks.VOID_TANK)
+        factory
+            .apply(RagiumTags.Blocks.STORAGES_CREATIVE)
+            .add(RagiumBlocks.CREATIVE_BATTERY)
+            .add(RagiumBlocks.CREATIVE_CRATE)
+            .add(RagiumBlocks.CREATIVE_TANK)
     }
 }

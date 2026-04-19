@@ -171,16 +171,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTags.Fluids.DIESEL, "Diesel")
         add(RagiumTags.Fluids.LIQUID_MATTER, "Liquid Matter")
 
-        add(RagiumTags.Items.EXPLOSIVES, "Explosives")
-        add(RagiumTags.Items.EXPLOSIVES_BASIC, "Basic Explosive")
-        add(RagiumTags.Items.EXPLOSIVES_ADVANCED, "Advanced Explosive")
-        add(RagiumTags.Items.EXPLOSIVES_ELITE, "Elite Explosive")
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")
-
-        add(RagiumTags.Items.GENERATOR_UPGRADABLE, "Generators")
-        add(RagiumTags.Items.PROCESSOR_UPGRADABLE, "Processors")
-        add(RagiumTags.Items.MACHINE_UPGRADABLE, "Machines")
-        add(RagiumTags.Items.DEVICE_UPGRADABLE, "Devices")
         // Text
         add(RagiumTranslation.RAGIUM, "Ragium")
 

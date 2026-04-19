@@ -131,7 +131,7 @@ class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnti
                 fuelHandler.consume(1)
                 val ashStack: ItemStack = HiiragiCoreAccess.INSTANCE
                     .getMaterialItem(CommonParts.DUST, CommonMaterialKeys.ASH)
-                    ?.toStack()
+                    ?.toStack(maxOf(1, burnTime / 20 * 10))
                     ?: return
                 ashHandler.insert(ashStack)
             }

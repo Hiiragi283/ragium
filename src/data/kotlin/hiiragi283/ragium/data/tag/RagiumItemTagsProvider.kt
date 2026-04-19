@@ -34,16 +34,27 @@ class RagiumItemTagsProvider(
 ) : HTItemTagsProvider(fileHelper, output, lookupProvider, RagiumAPI.MOD_ID, blockTags) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Item>) {
         val items: HTMaterialContents<HTPart, HTMaterialContents.ItemEntry> = HiiragiCoreAccess.INSTANCE.registeredContents.items
+        // Copy
+        copy(RagiumTags.Blocks.DEVICES, RagiumTags.Items.DEVICES)
+        copy(RagiumTags.Blocks.GENERATORS, RagiumTags.Items.GENERATORS)
+        copy(RagiumTags.Blocks.MACHINES, RagiumTags.Items.MACHINES)
+
+        copy(RagiumTags.Blocks.STORAGES, RagiumTags.Items.STORAGES)
+        copy(RagiumTags.Blocks.STORAGES_CREATIVE, RagiumTags.Items.STORAGES_CREATIVE)
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
-            addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.getBucket())
+            factory.addTags(Tags.Items.BUCKETS, content.bucketTag).add(content.getBucket())
         }
         // Explosives
-        addTags(factory, RagiumTags.Items.EXPLOSIVES, RagiumTags.Items.EXPLOSIVES_BASIC)
+        RagiumTags.Items.EXPLOSIVES.apply(factory)
+        factory
+            .apply(RagiumTags.Items.EXPLOSIVES.basic)
             .add(RagiumItems.DYNAMITE)
-        addTags(factory, RagiumTags.Items.EXPLOSIVES, RagiumTags.Items.EXPLOSIVES_ADVANCED)
+        factory
+            .apply(RagiumTags.Items.EXPLOSIVES.advanced)
             .addItem(Items.TNT)
-        addTags(factory, RagiumTags.Items.EXPLOSIVES, RagiumTags.Items.EXPLOSIVES_ELITE)
+        factory
+            .apply(RagiumTags.Items.EXPLOSIVES.elite)
             .add(RagiumBlocks.INDUSTRIAL_TNT)
             .addItem(Items.END_CRYSTAL)
         // Foods
@@ -52,7 +63,7 @@ class RagiumItemTagsProvider(
             .add(RagiumBlocks.MEAT_BLOCK)
             .add(RagiumBlocks.COOKED_MEAT_BLOCK)
 
-        val foodsCan: HTTagBuilder<Item> = addTags(factory, Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
+        val foodsCan: HTTagBuilder<Item> = factory.addTags(Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
         HTFoodCanType.entries.forEach(foodsCan::add)
 
         factory
@@ -65,45 +76,13 @@ class RagiumItemTagsProvider(
         factory
             .apply(HiiragiCoreTags.Items.SILICON)
             .add(RagiumItems.CRUDE_SILICON)
-
-        upgradeTargets(factory)
     }
 
-    private fun upgradeTargets(factory: HTTagsProvider.BuilderFactory<Item>) {
-        // Group
-        factory
-            .apply(RagiumTags.Items.GENERATOR_UPGRADABLE)
-            // Basic
-            .add(RagiumBlocks.BOILER)
-        factory
-            .apply(RagiumTags.Items.PROCESSOR_UPGRADABLE)
-            .addTag(RagiumTags.Items.MACHINE_UPGRADABLE)
-            .addTag(RagiumTags.Items.DEVICE_UPGRADABLE)
-        factory
-            .apply(RagiumTags.Items.MACHINE_UPGRADABLE)
-            // Basic
-            .add(RagiumBlocks.ALLOY_SMELTER)
-            .add(RagiumBlocks.ASSEMBLER)
-            .add(RagiumBlocks.AUTO_CHISEL)
-            .add(RagiumBlocks.CRUSHER)
-            .add(RagiumBlocks.CUTTING_MACHINE)
-            .add(RagiumBlocks.ELECTRIC_FURNACE)
-            .add(RagiumBlocks.PLANTER)
-            // Advanced
-            .add(RagiumBlocks.FREEZER)
-            .add(RagiumBlocks.MELTER)
-            .add(RagiumBlocks.PYROLYZER)
-            .add(RagiumBlocks.REFINERY)
-            .add(RagiumBlocks.WASHER)
-            // Elite
-            .add(RagiumBlocks.BREWERY)
-            .add(RagiumBlocks.CHEMICAL_WASHER)
-            .add(RagiumBlocks.FLUID_MIXER)
-            .add(RagiumBlocks.MIXER)
-            // Ultimate
-            .add(RagiumBlocks.FLUID_DUPLICATOR)
-        factory
-            .apply(RagiumTags.Items.DEVICE_UPGRADABLE)
-            .add(RagiumBlocks.ENCHANTER)
+    private fun copy(blockTags: RagiumTags.TieredTags<Block>, itemTags: RagiumTags.TieredTags<Item>) {
+        copy(blockTags.base, itemTags.base)
+        copy(blockTags.basic, itemTags.basic)
+        copy(blockTags.advanced, itemTags.advanced)
+        copy(blockTags.elite, itemTags.elite)
+        copy(blockTags.ultimate, itemTags.ultimate)
     }
 }
