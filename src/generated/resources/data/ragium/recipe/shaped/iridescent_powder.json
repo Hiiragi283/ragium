@@ -3,22 +3,37 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "ragium:ragi_matter"
+      "tag": "c:dusts/ruthenium"
     },
     "B": {
-      "item": "minecraft:conduit"
+      "tag": "c:dusts/rhodium"
     },
     "C": {
-      "item": "minecraft:heavy_core"
+      "tag": "c:dusts/palladium"
     },
     "D": {
+      "item": "minecraft:conduit"
+    },
+    "E": {
       "tag": "c:nether_stars"
+    },
+    "F": {
+      "item": "minecraft:heavy_core"
+    },
+    "G": {
+      "tag": "c:dusts/osmium"
+    },
+    "H": {
+      "tag": "c:dusts/iridium"
+    },
+    "I": {
+      "tag": "c:dusts/platinum"
     }
   },
   "pattern": [
-    "ABA",
-    "CDC",
-    "ABA"
+    "ABC",
+    "DEF",
+    "GHI"
   ],
   "result": {
     "count": 1,

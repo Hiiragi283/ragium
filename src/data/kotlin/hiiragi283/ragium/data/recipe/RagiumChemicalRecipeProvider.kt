@@ -582,30 +582,23 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     private fun endGame() {
-        matter()
         iridescent()
-    }
-
-    @JvmStatic
-    private fun matter() {
-        // Liquid Ragi-Matter
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(RagiumItems.RAGI_MATTER)
-            ingredient += inputCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, 250)
-            result += resultCreator.create(RagiumFluids.RAGI_MATTER, 250)
-            time *= 10
-        }
     }
 
     @JvmStatic
     private fun iridescent() {
         // Iridescent Powder
         HTShapedRecipeBuilder.create(output) {
-            crossLayered()
-            define('A') += RagiumItems.RAGI_MATTER
-            define('B') += Items.CONDUIT
-            define('C') += Items.HEAVY_CORE
-            define('D') += Tags.Items.NETHER_STARS
+            pattern("ABC", "DEF", "GHI")
+            define('A') += CommonTagPrefixes.DUST to CommonMaterialKeys.RUTHENIUM
+            define('B') += CommonTagPrefixes.DUST to CommonMaterialKeys.RHODIUM
+            define('C') += CommonTagPrefixes.DUST to CommonMaterialKeys.PALLADIUM
+            define('D') += Items.CONDUIT
+            define('E') += Tags.Items.NETHER_STARS
+            define('F') += Items.HEAVY_CORE
+            define('G') += CommonTagPrefixes.DUST to CommonMaterialKeys.OSMIUM
+            define('H') += CommonTagPrefixes.DUST to CommonMaterialKeys.IRIDIUM
+            define('I') += CommonTagPrefixes.DUST to CommonMaterialKeys.PLATINUM
             resultStack += HCItems.IRIDESCENT_POWDER
         }
 

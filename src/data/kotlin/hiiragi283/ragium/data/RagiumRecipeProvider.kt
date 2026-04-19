@@ -9,6 +9,7 @@ import hiiragi283.ragium.data.recipe.RagiumEnchantingRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumFluidRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumMaterialRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumMatterRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumPlantingRecipeBuilder
 import hiiragi283.ragium.data.recipe.RagiumUtilitiesRecipeProvider
 import net.minecraft.core.HolderLookup
@@ -26,6 +27,7 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         consumer.accept(RagiumEnchantingRecipeProvider)
         consumer.accept(RagiumHeatRecipeProvider)
         consumer.accept(RagiumPlantingRecipeBuilder)
+        consumer.accept(RagiumMatterRecipeProvider)
 
         consumer.accept(RagiumMaterialRecipeProvider)
         consumer.accept(RagiumUtilitiesRecipeProvider)
