@@ -142,6 +142,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.BLANK_DISC, "空のレコード")
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
 
+        add(RagiumItems.ELECTRIC_IGNITER, "電動着火器")
         add(RagiumItems.CRYSTAL_BATTERY, "クリスタルバッテリー")
 
         add(RagiumItems.RAGI_MATTER, "らぎマター")

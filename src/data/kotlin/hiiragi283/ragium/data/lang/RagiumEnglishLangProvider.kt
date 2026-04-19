@@ -142,6 +142,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.BLANK_DISC, "Blank Disc")
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
 
+        add(RagiumItems.ELECTRIC_IGNITER, "Electric Igniter")
         add(RagiumItems.CRYSTAL_BATTERY, "Crystal Battery")
 
         add(RagiumItems.RAGI_MATTER, "Ragi-Matter")

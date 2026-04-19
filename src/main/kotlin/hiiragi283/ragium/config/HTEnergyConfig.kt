@@ -1,5 +1,6 @@
 package hiiragi283.ragium.config
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.config.definePositiveInt
 import hiiragi283.core.api.config.translation
 import hiiragi283.ragium.api.RagiumAPI
@@ -15,31 +16,47 @@ data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: I
 
     companion object {
         @JvmStatic
-        private fun energyCapacity(builder: ModConfigSpec.Builder, rate: Int): ModConfigSpec.IntValue = builder
+        private fun energyCapacity(builder: ModConfigSpec.Builder, value: Int): ModConfigSpec.IntValue = builder
             .translation(RagiumTranslation.CONFIG_ENERGY_CAPACITY)
-            .definePositiveInt("energy_capacity", rate * 20 * 10 * 10)
+            .definePositiveInt("energy_capacity", value)
 
         @JvmStatic
-        private fun energyRate(builder: ModConfigSpec.Builder, rate: Int): ModConfigSpec.IntValue = builder
+        private fun energyRate(builder: ModConfigSpec.Builder, value: Int): ModConfigSpec.IntValue = builder
             .translation(RagiumTranslation.CONFIG_ENERGY_RATE)
-            .definePositiveInt("energy_rate", rate)
+            .definePositiveInt("energy_rate", value)
 
         @JvmStatic
-        fun create(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig {
-            builder.translation("block.${RagiumAPI.MOD_ID}.$name").push(name)
-            return HTEnergyConfig(
-                energyCapacity(builder, rate),
-                energyRate(builder, rate),
-            ).apply { builder.pop() }
-        }
+        fun createMachine(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig =
+            createBlock(builder, name, rate, rate * 20 * 10 * 10)
 
         @JvmStatic
-        fun createSimple(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig {
-            builder.translation("block.${RagiumAPI.MOD_ID}.$name").push(name)
-            return HTEnergyConfig(
-                energyCapacity(builder, rate),
-                energyRate(builder, rate),
-            ).apply { builder.pop() }
+        fun createBlock(
+            builder: ModConfigSpec.Builder,
+            name: String,
+            usage: Int,
+            capacity: Int,
+        ): HTEnergyConfig = create(builder, "${HTConst.BLOCK}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
+
+        @JvmStatic
+        fun createItem(
+            builder: ModConfigSpec.Builder,
+            name: String,
+            usage: Int,
+            capacity: Int,
+        ): HTEnergyConfig = create(builder, "${HTConst.ITEM}.${RagiumAPI.MOD_ID}.$name", name, usage, capacity)
+
+        @JvmStatic
+        fun create(
+            builder: ModConfigSpec.Builder,
+            translationKey: String,
+            name: String,
+            usage: Int,
+            capacity: Int,
+        ): HTEnergyConfig {
+            builder.translation(translationKey).push(name)
+            val config = HTEnergyConfig(energyCapacity(builder, capacity), energyRate(builder, usage))
+            builder.pop()
+            return config
         }
     }
 }

@@ -56,6 +56,12 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             define('A') += HiiragiCoreTags.Items.PLASTICS
             resultStack += RagiumItems.BLANK_DISC
         }
+        // Electric Igniter
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += CommonTagPrefixes.INGOT to RagiumMaterialKeys.RAGI_ALLOY
+            ingredients += Items.FLINT
+            resultStack += RagiumItems.ELECTRIC_IGNITER
+        }
 
         // Loot Ticket
         lootTickets()
