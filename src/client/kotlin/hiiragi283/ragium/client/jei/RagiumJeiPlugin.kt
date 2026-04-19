@@ -11,8 +11,8 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
+import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTAssemblingRecipeCategory
-import hiiragi283.ragium.client.jei.category.HTCombiningRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
@@ -65,7 +65,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         registration.addRecipeCategories(
             // Machine - Basic
-            HTCombiningRecipeCategory(guiHelper, RagiumRecipeViewerTypes.ALLOYING, RagiumRecipeSerializers.ALLOYING, 3),
+            HTAlloyingRecipeCategory(guiHelper),
             HTAssemblingRecipeCategory(guiHelper),
             HTCuttingRecipeCategory(guiHelper),
             // Machine - Advanced

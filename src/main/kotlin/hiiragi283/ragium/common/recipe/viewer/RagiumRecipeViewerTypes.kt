@@ -51,7 +51,7 @@ object RagiumRecipeViewerTypes {
     // Machine - Basic
     @JvmField
     val ALLOYING: HTHolderRecipeViewerType<HTAlloyingRecipe> =
-        simple(RagiumRecipeLookups.ALLOYING, RagiumBlocks.ALLOY_SMELTER, 18 * 6)
+        simple(RagiumRecipeLookups.ALLOYING, RagiumBlocks.ALLOY_SMELTER, 18 * 7)
 
     @JvmField
     val ASSEMBLING: HTHolderRecipeViewerType<HTAssemblingRecipe> =

@@ -6,7 +6,6 @@ import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
 import hiiragi283.core.impl.recipe.HTRecipeTypeImpl
 import hiiragi283.core.impl.recipe.HTRecipeTypeManager
 import hiiragi283.core.impl.recipe.addProvider
@@ -22,7 +21,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 data object RagiumRecipeLookups {
     // Machine - Basic
     @JvmField
-    val ALLOYING: HTRecipeTypeImpl<HTShapelessRecipeInput, HTAlloyingRecipe> = create(RagiumConst.ALLOYING)
+    val ALLOYING: HTRecipeTypeImpl<HTAlloyingRecipe.Input, HTAlloyingRecipe> = create(RagiumConst.ALLOYING)
 
     @JvmField
     val ASSEMBLING: HTRecipeTypeImpl<HTDoubleRecipeInput, HTAssemblingRecipe> = create(RagiumConst.ASSEMBLING)

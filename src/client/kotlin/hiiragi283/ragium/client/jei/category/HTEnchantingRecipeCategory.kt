@@ -5,9 +5,11 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addFluidIngredient
 import hiiragi283.core.api.integration.jei.addItemIngredient
 import hiiragi283.core.api.integration.jei.category.HTHolderRecipeCategory
+import hiiragi283.core.api.integration.jei.setTankRenderer
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.common.recipe.viewer.HTViewerEnchantingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.config.RagiumConfig
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
@@ -20,8 +22,8 @@ class HTEnchantingRecipeCategory(guiHelper: IGuiHelper) :
         val requiredExpAmount: Int = recipe.requiredExpAmount
         builder
             .addInputSlot(getPosition(0), getPosition(0))
-            .addFluidIngredient(HTIngredientCreator.create(HCFluids.EXPERIENCE, requiredExpAmount), false)
-            .setFluidRenderer(requiredExpAmount.toLong(), false, 16, 18 * 3 - 2)
+            .addFluidIngredient(HTIngredientCreator.create(HCFluids.EXPERIENCE, requiredExpAmount))
+            .setTankRenderer(RagiumConfig.COMMON.machine.tankCapacity)
             .setTankBackground(HTBackgroundType.INPUT)
 
         builder

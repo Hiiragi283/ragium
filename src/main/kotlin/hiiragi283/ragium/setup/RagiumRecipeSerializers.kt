@@ -17,7 +17,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.crafting.HTBatteryCombiningRecipe
 import hiiragi283.ragium.common.crafting.HTTankCombiningRecipe
-import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
@@ -33,7 +32,6 @@ import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
-import hiiragi283.ragium.impl.recipe.HTCombiningRecipe
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -68,20 +66,6 @@ object RagiumRecipeSerializers {
         )
 
     @JvmStatic
-    private fun <R : HTCombiningRecipe> combine(
-        inputRange: IntRange,
-        factory: HTCombiningRecipeBuilder.Factory<R>,
-    ): MapBiCodec<RegistryFriendlyByteBuf, R> = MapBiCodec.composite(
-        HTItemIngredient.CODEC
-            .listOf(inputRange)
-            .fieldOf(HTConst.INGREDIENT)
-            .forGetter(HTCombiningRecipe::ingredients),
-        HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTCombiningRecipe::result),
-        HTProcessingRecipe.timeCodec(),
-        factory::create,
-    )
-
-    @JvmStatic
     private fun <RECIPE : HTBasicItemOrFluidRecipe> itemOrFluid(
         factory: HTItemOrFluidRecipeBuilder.Factory<RECIPE>,
     ): MapBiCodec<RegistryFriendlyByteBuf, RECIPE> = MapBiCodec.composite(
@@ -97,8 +81,18 @@ object RagiumRecipeSerializers {
 
     // Machine - Basic
     @JvmField
-    val ALLOYING: RecipeSerializer<HTAlloyingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.ALLOYING, combine(2..3, ::HTAlloyingRecipe))
+    val ALLOYING: RecipeSerializer<HTAlloyingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.ALLOYING,
+        MapBiCodec.composite(
+            HTItemIngredient.CODEC
+                .listOf(2, 3)
+                .fieldOf(HTConst.INGREDIENT)
+                .forGetter { listOfNotNull(it.primary, it.secondary, it.tertiary) },
+            HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAlloyingRecipe::result),
+            HTProcessingRecipe.timeCodec(),
+            ::HTAlloyingRecipe,
+        ),
+    )
 
     @JvmField
     val ASSEMBLING: RecipeSerializer<HTAssemblingRecipe> = REGISTER.registerSerializer(

@@ -5,9 +5,11 @@ import hiiragi283.core.api.integration.jei.addFluidIngredient
 import hiiragi283.core.api.integration.jei.addItemIngredient
 import hiiragi283.core.api.integration.jei.addItemResult
 import hiiragi283.core.api.integration.jei.category.HTHolderRecipeCategory
+import hiiragi283.core.api.integration.jei.setTankRenderer
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -21,8 +23,8 @@ class HTWashingRecipeCategory(guiHelper: IGuiHelper) :
         val water: HTFluidIngredient = HTWashingRecipe.WATER_INGREDIENT
         builder
             .addInputSlot(getPosition(0), getPosition(0))
-            .addFluidIngredient(water, false)
-            .setFluidRenderer(water.amount.toLong(), false, 16, 18 * 3 - 2)
+            .addFluidIngredient(water)
+            .setTankRenderer(RagiumConfig.COMMON.machine.tankCapacity)
             .setTankBackground(HTBackgroundType.EXTRA_INPUT)
 
         builder
