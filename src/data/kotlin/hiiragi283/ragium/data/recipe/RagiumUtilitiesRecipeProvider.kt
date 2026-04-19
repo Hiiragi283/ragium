@@ -285,7 +285,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             define('A') += RagiumItems.RAGI_MATTER
             define('B') += Tags.Items.DYES_RED
             define('C') += Items.PAPER
-            resultStack += RagiumItems.LOOT_TICKET to 4
+            resultStack += RagiumItems.RAGI_TICKET to 4
             category = CraftingBookCategory.EQUIPMENT
         }
 
@@ -361,7 +361,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     @JvmStatic
     private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, consumer: (HTIngredientHolder.Multiple) -> Unit) {
         HTShapelessRecipeBuilder.create(output) {
-            ingredients += RagiumItems.LOOT_TICKET
+            ingredients += RagiumItems.RAGI_TICKET
             ingredients.let(consumer)
             resultStack += HTDefaultLootTickets.getLootTicket(lootTicket)
             category = CraftingBookCategory.EQUIPMENT

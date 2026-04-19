@@ -28,16 +28,15 @@ import hiiragi283.core.common.event.HCRuntimeRecipeHandler
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
+import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
-import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.TagKey
 import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.Items
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
@@ -173,19 +172,28 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         // レシピを登録
         val suffix = "from_${crushedPart.asPartName()}"
-        // TNT
+        // Basic
         RagiumRecipeBuilder.imploding(output) {
             base = inputCreator.create(crushedPrefix, entry, 4)
-            addition = inputCreator.create(Items.TNT)
+            addition = inputCreator.create(RagiumTags.Items.EXPLOSIVES_BASIC)
+            results += resultCreator.create(resultItem, 2)
+            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.ASH, 2)
+            time /= 2
+            recipeId suffix "$suffix/basic"
+        }
+        // Advanced
+        RagiumRecipeBuilder.imploding(output) {
+            base = inputCreator.create(crushedPrefix, entry, 4)
+            addition = inputCreator.create(RagiumTags.Items.EXPLOSIVES_ADVANCED)
             results += resultCreator.create(resultItem, 3)
             results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.ASH)
             time /= 2
-            recipeId suffix suffix
+            recipeId suffix "$suffix/advanced"
         }
-        // 工業用TNT
+        // Elite
         RagiumRecipeBuilder.imploding(output) {
             base = inputCreator.create(crushedPrefix, entry, 4)
-            addition = inputCreator.create(RagiumBlocks.INDUSTRIAL_TNT)
+            addition = inputCreator.create(RagiumTags.Items.EXPLOSIVES_ELITE)
             results += resultCreator.create(resultItem, 4)
             time /= 2
             recipeId suffix "$suffix/smokeless"

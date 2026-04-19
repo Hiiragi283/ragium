@@ -20,6 +20,7 @@ import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -37,6 +38,14 @@ class RagiumItemTagsProvider(
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
             addTags(factory, Tags.Items.BUCKETS, content.bucketTag).add(content.getBucket())
         }
+        // Explosives
+        addTags(factory, RagiumTags.Items.EXPLOSIVES, RagiumTags.Items.EXPLOSIVES_BASIC)
+            .add(RagiumItems.DYNAMITE)
+        addTags(factory, RagiumTags.Items.EXPLOSIVES, RagiumTags.Items.EXPLOSIVES_ADVANCED)
+            .addItem(Items.TNT)
+        addTags(factory, RagiumTags.Items.EXPLOSIVES, RagiumTags.Items.EXPLOSIVES_ELITE)
+            .add(RagiumBlocks.INDUSTRIAL_TNT)
+            .addItem(Items.END_CRYSTAL)
         // Foods
         factory
             .apply(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)

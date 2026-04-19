@@ -1,7 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -373,17 +372,25 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_from_carbon_compound"
         }
 
-        // HNO3 + Paper -> Nitrocellulose
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(Items.PAPER)
-            ingredient += inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
-            result += resultCreator.create(RagiumItems.NITROCELLULOSE)
-        }
         // HNO3 + Glycerol -> Nitroglycerin
         HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(RagiumItems.GLYCEROL_DROP)
             ingredient += inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
             result += resultCreator.create(RagiumItems.NITROGLYCERIN)
+        }
+        // Nitroglycerin -> Dynamite
+        HTShapelessRecipeBuilder.create(output) {
+            ingredients += Items.PAPER
+            ingredients += Tags.Items.STRINGS
+            ingredients += Tags.Items.SANDS
+            ingredients += RagiumItems.NITROGLYCERIN
+            resultStack += RagiumItems.DYNAMITE to 2
+        }
+        // HNO3 + Paper -> Nitrocellulose
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+            ingredient += inputCreator.create(Items.PAPER)
+            ingredient += inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
+            result += resultCreator.create(RagiumItems.NITROCELLULOSE)
         }
         // Nitrocellulose + Nitroglycerin -> Smokeless Powder
         HTShapelessRecipeBuilder.create(output) {
@@ -403,32 +410,6 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             define('A') += RagiumItems.SMOKELESS_POWDER
             define('B') += Tags.Items.SANDS
             resultStack += RagiumBlocks.INDUSTRIAL_TNT
-        }
-
-        // Carbon -> Diamond
-        RagiumRecipeBuilder.imploding(output) {
-            base = inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE), 32)
-            addition = inputCreator.create(Items.TNT)
-            results += resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND, chance = fraction(1, 2))
-            recipeId suffix "_from_coal_coke"
-        }
-        RagiumRecipeBuilder.imploding(output) {
-            base = inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE), 32)
-            addition = inputCreator.create(RagiumBlocks.INDUSTRIAL_TNT)
-            results += resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
-            recipeId suffix "_from_coal_coke/smokeless"
-        }
-        RagiumRecipeBuilder.imploding(output) {
-            base = inputCreator.create(baseOrDust(CommonMaterialKeys.CARBON), 16)
-            addition = inputCreator.create(Items.TNT)
-            results += resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND, chance = fraction(1, 2))
-            recipeId suffix "_from_carbon"
-        }
-        RagiumRecipeBuilder.imploding(output) {
-            base = inputCreator.create(baseOrDust(CommonMaterialKeys.CARBON), 16)
-            addition = inputCreator.create(RagiumBlocks.INDUSTRIAL_TNT)
-            results += resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
-            recipeId suffix "_from_carbon/smokeless"
         }
     }
 

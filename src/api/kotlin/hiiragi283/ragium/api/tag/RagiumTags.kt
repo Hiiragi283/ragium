@@ -36,7 +36,7 @@ object RagiumTags {
 
         // Mod
         @JvmField
-        val IS_MATTER: TagKey<Fluid> = mod("is_matter")
+        val LIQUID_MATTER: TagKey<Fluid> = mod("liquid_matter")
 
         @JvmStatic
         private fun common(vararg path: String): TagKey<Fluid> = Registries.FLUID.createTagKey(HTConst.COMMON.toId(*path))
@@ -48,6 +48,18 @@ object RagiumTags {
     //    Items    //
 
     object Items {
+        @JvmField
+        val EXPLOSIVES: TagKey<Item> = mod("explosives")
+
+        @JvmField
+        val EXPLOSIVES_BASIC: TagKey<Item> = mod("explosives", "basic")
+
+        @JvmField
+        val EXPLOSIVES_ADVANCED: TagKey<Item> = mod("explosives", "advanced")
+
+        @JvmField
+        val EXPLOSIVES_ELITE: TagKey<Item> = mod("explosives", "elite")
+
         @JvmField
         val FOODS_CAN: TagKey<Item> = common("foods", "can")
 

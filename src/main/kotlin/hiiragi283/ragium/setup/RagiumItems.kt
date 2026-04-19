@@ -144,17 +144,25 @@ object RagiumItems {
 
     //    Utilities    //
 
+    // Basic
     @JvmField
     val BLANK_DISC: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("blank_disc")
 
     @JvmField
-    val LOCATION_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
-
-    @JvmField
     val ELECTRIC_IGNITER: HTSimpleItemHolderLike = REGISTER.registerItem("electric_igniter", ::HTElectricIgniterItem)
 
+    // Advanced
+    @JvmField
+    val LOCATION_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
+
+    // Elite
     @JvmField
     val CRYSTAL_BATTERY: HTSimpleItemHolderLike = REGISTER.registerItem("crystal_battery", ::HTBatteryItem)
+
+    @JvmField
+    val DYNAMITE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("dynamite")
+
+    // Ultimate
 
     //    End Game    //
 
@@ -162,7 +170,7 @@ object RagiumItems {
     val RAGI_MATTER: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_matter", ::HTCreativeItem)
 
     @JvmField
-    val LOOT_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
+    val RAGI_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
 
     //    Event    //
 

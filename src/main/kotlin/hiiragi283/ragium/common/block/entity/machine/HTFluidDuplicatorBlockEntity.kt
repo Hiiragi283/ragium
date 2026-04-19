@@ -37,7 +37,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) :
             HTVariableFluidTank.input(
                 listener,
                 getTankCapacity(),
-                filter = { !it.isOf(RagiumTags.Fluids.IS_MATTER) },
+                filter = { !it.isOf(RagiumTags.Fluids.LIQUID_MATTER) },
             ),
         )
         matterTank = builder.addSlot(
@@ -45,7 +45,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) :
             HTVariableFluidTank.input(
                 listener,
                 getTankCapacity(),
-                filter = { it.isOf(RagiumTags.Fluids.IS_MATTER) },
+                filter = { it.isOf(RagiumTags.Fluids.LIQUID_MATTER) },
             ),
         )
         outputTank = builder.addSlot(HTSlotInfo.OUTPUT, HTVariableFluidTank.output(listener, getTankCapacity()))

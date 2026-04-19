@@ -64,25 +64,25 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(1.5), HTSlotHelper.getSlotPosY(1))
+        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // slots
         widgetHolder += HTItemSlotWidget.container(
             topInputSlot,
-            HTSlotHelper.getSlotPosX(1.5),
+            HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
         widgetHolder += HTItemSlotWidget.container(
             leftInputSlot,
-            HTSlotHelper.getSlotPosX(1),
+            HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_INPUT,
         )
         widgetHolder += HTItemSlotWidget.container(
             rightInputSlot,
-            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_INPUT,
         )

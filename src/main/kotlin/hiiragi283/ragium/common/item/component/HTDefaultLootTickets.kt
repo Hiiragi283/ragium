@@ -51,7 +51,7 @@ enum class HTDefaultLootTickets(val targets: HTLootTicketTargets) {
         @JvmStatic
         fun getLootTicket(lootTicket: HTDefaultLootTickets, count: Int = 1): ItemStack = ticketCache
             .computeIfAbsent(lootTicket) {
-                createItemStack(RagiumItems.LOOT_TICKET, RagiumDataComponents.LOOT_TICKET, it.targets).toResource()!!
+                createItemStack(RagiumItems.RAGI_TICKET, RagiumDataComponents.LOOT_TICKET, it.targets).toResource()!!
             }.toStack(count)
     }
 

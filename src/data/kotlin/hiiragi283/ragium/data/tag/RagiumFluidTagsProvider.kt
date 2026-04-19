@@ -37,6 +37,9 @@ class RagiumFluidTagsProvider(
             .addContentTag(RagiumFluids.FUEL)
             .addTag(commonTag("diesel"), HTTagDependType.OPTIONAL)
 
-        factory.apply(RagiumTags.Fluids.IS_MATTER).addContentTag(RagiumFluids.RAGI_MATTER)
+        factory
+            .apply(RagiumTags.Fluids.LIQUID_MATTER)
+            .addContentTag(RagiumFluids.RAGI_MATTER)
+            .addTag(commonTag("uu_matter"), HTTagDependType.OPTIONAL)
     }
 }

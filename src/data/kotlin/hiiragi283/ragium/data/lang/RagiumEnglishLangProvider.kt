@@ -140,13 +140,13 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.EMPTY_CAN, "Empty Can")
 
         add(RagiumItems.BLANK_DISC, "Blank Disc")
+        add(RagiumItems.CRYSTAL_BATTERY, "Crystal Battery")
+        add(RagiumItems.DYNAMITE, "Dynamite")
+        add(RagiumItems.ELECTRIC_IGNITER, "Electric Igniter")
         add(RagiumItems.LOCATION_TICKET, "Location Ticket")
 
-        add(RagiumItems.ELECTRIC_IGNITER, "Electric Igniter")
-        add(RagiumItems.CRYSTAL_BATTERY, "Crystal Battery")
-
         add(RagiumItems.RAGI_MATTER, "Ragi-Matter")
-        add(RagiumItems.LOOT_TICKET, "Ragi-Ticket")
+        add(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         // Recipe
         add(RagiumRecipeLookups.ALLOYING, "Alloying")
         add(RagiumRecipeLookups.ASSEMBLING, "Assembling")
@@ -166,6 +166,15 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeLookups.ENCHANTING, "Enchanting")
 
         // Tag
+        add(RagiumTags.Fluids.ALCOHOL, "Alcohol")
+        add(RagiumTags.Fluids.BIODIESEL, "Biodiesel")
+        add(RagiumTags.Fluids.DIESEL, "Diesel")
+        add(RagiumTags.Fluids.LIQUID_MATTER, "Liquid Matter")
+
+        add(RagiumTags.Items.EXPLOSIVES, "Explosives")
+        add(RagiumTags.Items.EXPLOSIVES_BASIC, "Basic Explosive")
+        add(RagiumTags.Items.EXPLOSIVES_ADVANCED, "Advanced Explosive")
+        add(RagiumTags.Items.EXPLOSIVES_ELITE, "Elite Explosive")
         add(RagiumTags.Items.FOODS_CAN, "Canned Foods")
 
         add(RagiumTags.Items.GENERATOR_UPGRADABLE, "Generators")

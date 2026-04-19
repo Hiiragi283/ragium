@@ -140,13 +140,13 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.EMPTY_CAN, "空の缶詰")
 
         add(RagiumItems.BLANK_DISC, "空のレコード")
+        add(RagiumItems.CRYSTAL_BATTERY, "クリスタルバッテリー")
+        add(RagiumItems.DYNAMITE, "ダイナマイト")
+        add(RagiumItems.ELECTRIC_IGNITER, "電動着火器")
         add(RagiumItems.LOCATION_TICKET, "座標チケット")
 
-        add(RagiumItems.ELECTRIC_IGNITER, "電動着火器")
-        add(RagiumItems.CRYSTAL_BATTERY, "クリスタルバッテリー")
-
         add(RagiumItems.RAGI_MATTER, "らぎマター")
-        add(RagiumItems.LOOT_TICKET, "らぎチケット")
+        add(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Recipe
         add(RagiumRecipeLookups.ALLOYING, "合金")
         add(RagiumRecipeLookups.ASSEMBLING, "組立")
@@ -166,6 +166,15 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeLookups.ENCHANTING, "エンチャント")
 
         // Tag
+        add(RagiumTags.Fluids.ALCOHOL, "アルコール")
+        add(RagiumTags.Fluids.BIODIESEL, "バイオディーゼル")
+        add(RagiumTags.Fluids.DIESEL, "ディーゼル")
+        add(RagiumTags.Fluids.LIQUID_MATTER, "液体マター")
+
+        add(RagiumTags.Items.EXPLOSIVES, "爆発物")
+        add(RagiumTags.Items.EXPLOSIVES_BASIC, "基本爆発物")
+        add(RagiumTags.Items.EXPLOSIVES_ADVANCED, "発展爆発物")
+        add(RagiumTags.Items.EXPLOSIVES_ELITE, "精鋭爆発物")
         add(RagiumTags.Items.FOODS_CAN, "缶詰の食料")
 
         add(RagiumTags.Items.GENERATOR_UPGRADABLE, "発電機")
