@@ -163,6 +163,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumRecipeLookups.CHEMICAL_WASHING, "化学洗浄")
         add(RagiumRecipeLookups.MIXING, "混合")
 
+        add(RagiumRecipeLookups.MASS_FABRICATING, "マター生成")
+
         add(RagiumRecipeLookups.ENCHANTING, "エンチャント")
 
         // Tag

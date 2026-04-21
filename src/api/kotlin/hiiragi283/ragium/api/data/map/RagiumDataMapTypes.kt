@@ -7,30 +7,23 @@ import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.serialization.codec.BiCodec
 import hiiragi283.core.api.serialization.codec.BiCodecs
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.RagiumAPI
-import net.minecraft.core.BlockPos
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.BlockGetter
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.registries.datamaps.DataMapType
-import org.apache.commons.lang3.math.Fraction
 
 /**
  * Ragiumで使用する[DataMapType]へのアクセス
  * @see mekanism.api.datamaps.IMekanismDataMapTypes
  */
 object RagiumDataMapTypes {
-    // Block
-    @JvmField
-    val FERMENT_SOURCE: DataMapType<Block, Int> = create("ferment_source", Registries.BLOCK, BiCodecs.POSITIVE_INT)
-
     // Entity Type
     @JvmField
     val MOB_HEAD: DataMapType<EntityType<*>, HTSimpleItemHolderLike> =
@@ -46,21 +39,11 @@ object RagiumDataMapTypes {
     @JvmField
     val COMBUSTION_FUEL: DataMapType<Fluid, Int> = createFuel("combustion")
 
+    // Item
     @JvmField
-    val FERTILIZER: DataMapType<Fluid, Fraction> = create("fertilizer", Registries.FLUID, BiCodecs.POSITIVE_FRACTION)
+    val MATTER_POINT: DataMapType<Item, Int> = create("matter_point", Registries.ITEM, BiCodecs.POSITIVE_INT)
 
     //    Extensions    //
-
-    @JvmStatic
-    fun getFermentLevel(getter: BlockGetter, centerPos: BlockPos): Int = BlockPos
-        .betweenClosed(centerPos.offset(-1, 0, -1), centerPos.offset(1, -1, 1))
-        .asSequence()
-        .map(getter::getBlockState)
-        .mapNotNull(::getFermentLevel)
-        .sum()
-
-    @JvmStatic
-    fun getFermentLevel(state: BlockState): Int? = state.blockHolder.getData(FERMENT_SOURCE)
 
     /**
      * 指定した[entity]からエンチャントでドロップするモブの頭を取得します。
@@ -91,7 +74,10 @@ object RagiumDataMapTypes {
     fun getTimeFromCombustion(resource: HTFluidResourceType): Int = resource.getData(COMBUSTION_FUEL) ?: 0
 
     @JvmStatic
-    fun getFluidFertilizer(resource: HTFluidResourceType): Fraction? = resource.getData(FERTILIZER)
+    fun getMatterPoint(resource: HTItemResourceType): Int = resource.getData(MATTER_POINT) ?: 0
+
+    @JvmStatic
+    fun getMatterPoint(stack: ItemStack): Int = stack.itemHolder.getData(MATTER_POINT) ?: 0
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =

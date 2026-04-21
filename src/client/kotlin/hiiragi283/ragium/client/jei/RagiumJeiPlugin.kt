@@ -18,6 +18,7 @@ import hiiragi283.ragium.client.jei.category.HTEnchantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTImplodingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTMassFabricatingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
@@ -78,9 +79,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Elite
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeSerializers.CHEMICAL_WASHING),
             HTMixingRecipeCategory(guiHelper),
+            // Machine - Ultimate
+            HTMassFabricatingRecipeCategory(guiHelper),
             // Device - Ultimate
             HTEnchantingRecipeCategory(guiHelper),
-            // Device
         )
     }
 
@@ -128,6 +130,13 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
                         }
                     }
                 },
+        )
+        // Machine - Ultimate
+        HTJeiRecipeHelper.addLookupRecipes(
+            registration,
+            RagiumRecipeViewerTypes.MASS_FABRICATING,
+            RagiumRecipeLookups.MASS_FABRICATING,
+            compareBy { it.point },
         )
         // Device - Ultimate
         val manager: IIngredientManager = registration.ingredientManager
@@ -188,6 +197,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Elite
             RagiumRecipeViewerTypes.CHEMICAL_WASHING,
             RagiumRecipeViewerTypes.MIXING,
+            // Machine - Ultimate
+            RagiumRecipeViewerTypes.MASS_FABRICATING,
             // Device - Ultimate
             RagiumRecipeViewerTypes.ENCHANTING,
         )

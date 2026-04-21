@@ -1,20 +1,28 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.core.api.function.identity
+import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.base.HTDoubleMultiOutputRecipe
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
 import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.registry.HTSimpleHolderLike
+import hiiragi283.core.api.registry.getDataSequence
 import hiiragi283.core.impl.recipe.HTRecipeTypeImpl
 import hiiragi283.core.impl.recipe.HTRecipeTypeManager
 import hiiragi283.core.impl.recipe.addProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.input.HTMixingRecipeInput
 import hiiragi283.ragium.setup.RagiumRecipeTypes
+import net.minecraft.core.RegistryAccess
+import net.minecraft.core.registries.Registries
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
@@ -60,6 +68,10 @@ data object RagiumRecipeLookups {
 
     // Machine - Ultimate
     @JvmField
+    val MASS_FABRICATING: HTRecipeTypeImpl<SingleRecipeInput, HTMassFabricatingRecipe> = create(RagiumConst.MASS_FABRICATING)
+
+    // Device - Ultimate
+    @JvmField
     val ENCHANTING: HTRecipeTypeImpl<HTEnchantingRecipe.Input, HTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
 
     @JvmStatic
@@ -82,6 +94,18 @@ data object RagiumRecipeLookups {
 
         CHEMICAL_WASHING.addProvider(RagiumRecipeTypes.CHEMICAL_WASHING.get(), identity())
         MIXING.addProvider(RagiumRecipeTypes.MIXING.get(), identity())
+
+        MASS_FABRICATING.addProvider { (_, access: RegistryAccess, _) ->
+            access
+                .lookupOrThrow(Registries.ITEM)
+                .getDataSequence(RagiumDataMapTypes.MATTER_POINT)
+                .map { (item: HTSimpleHolderLike<Item>, point: Int) ->
+                    HTRecipeHolder(
+                        item.getId().withPrefix("${RagiumConst.MASS_FABRICATING}/"),
+                        HTMassFabricatingRecipe(ItemStack(item.get()), point),
+                    )
+                }
+        }
 
         ENCHANTING.addProvider(RagiumRecipeTypes.ENCHANTING.get(), identity())
     }

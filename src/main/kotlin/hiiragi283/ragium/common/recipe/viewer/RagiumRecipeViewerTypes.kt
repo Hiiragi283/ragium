@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
+import hiiragi283.ragium.common.recipe.HTMassFabricatingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
@@ -24,6 +25,7 @@ import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.setup.RagiumBlocks
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.ItemLike
 
@@ -100,6 +102,9 @@ object RagiumRecipeViewerTypes {
         lookup(RagiumRecipeLookups.MIXING, RagiumBlocks.MIXER, 18 * 6, 18 * 2)
 
     // Machine - Ultimate
+    @JvmField
+    val MASS_FABRICATING: HTHolderRecipeViewerType<HTMassFabricatingRecipe> =
+        simple(RagiumRecipeLookups.MASS_FABRICATING, RagiumItems.RAGI_MATTER, 18 * 8)
 
     // Device - Ultimate
     @JvmField

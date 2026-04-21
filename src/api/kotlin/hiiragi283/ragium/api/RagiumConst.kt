@@ -6,6 +6,8 @@ object RagiumConst {
     const val ELITE = "elite"
     const val ULTIMATE = "ultimate"
 
+    const val MAX_MATTER_POINT = 1024
+
     //    Blocks    //
 
     // Generator - Basic
@@ -53,13 +55,13 @@ object RagiumConst {
 
     //    Recipes    //
 
-    // Basic
+    // Machine - Basic
     const val ALLOYING = "alloying"
     const val ASSEMBLING = "assembling"
     const val CUTTING = "cutting"
     const val PLANTING = "planting"
 
-    // Advanced
+    // Machine - Advanced
     const val FREEZING = "freezing"
     const val IMPLODING = "imploding"
     const val MELTING = "melting"
@@ -67,13 +69,16 @@ object RagiumConst {
     const val REFINING = "refining"
     const val WASHING = "washing"
 
-    // Elite
+    // Machine - Elite
     const val CHEMICAL_WASHING = "chemical_washing"
 
     const val MIXING = "mixing"
     const val FLUID_MIXING = "fluid_mixing"
     const val ITEM_MIXING = "item_mixing"
 
-    // Ultimate
+    // Machine - Ultimate
+    const val MASS_FABRICATING = "mass_fabricating"
+
+    // Device - Ultimate
     const val ENCHANTING = "enchanting"
 }

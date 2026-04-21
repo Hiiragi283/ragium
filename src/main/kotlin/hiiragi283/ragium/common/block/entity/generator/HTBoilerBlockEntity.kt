@@ -43,7 +43,7 @@ class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnti
             HTVariableFluidTank.input(
                 listener,
                 getTankCapacity(),
-                filter = VanillaFluidContents.WATER::isOf,
+                filter = { it.isOf(VanillaFluidContents.WATER.fluidTag) },
             ),
         )
         steamTank = builder.addSlot(
