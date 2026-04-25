@@ -66,6 +66,11 @@ data object RagiumRecipeLookups {
 
     // Machine - Elite
     @JvmField
+    val CHEMICAL_REACTING: HTRecipeLookup<HTChemicalReactingRecipe.Input, HTChemicalReactingRecipe> = create(
+        RagiumRecipeTypes.CHEMICAL_REACTING,
+    )
+
+    @JvmField
     val CHEMICAL_WASHING: HTRecipeLookupImpl<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> = create(RagiumConst.CHEMICAL_WASHING)
 
     @JvmField

@@ -1,0 +1,17 @@
+{
+  "type": "ragium:chemical_reacting",
+  "catalyst": "#c:dusts/platinum",
+  "fluid_result": {
+    "amount": 4000,
+    "id": "ragium:nitrogen_dioxide"
+  },
+  "primal": {
+    "amount": 4000,
+    "fluids": "#c:ammonia"
+  },
+  "secondary": {
+    "amount": 7000,
+    "fluids": "#c:oxygen"
+  },
+  "time": 200
+}

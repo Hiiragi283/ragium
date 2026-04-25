@@ -1,0 +1,15 @@
+{
+  "type": "ragium:chemical_reacting",
+  "fluid_result": {
+    "id": "ragium:sulfuric_acid"
+  },
+  "primal": {
+    "amount": 1000,
+    "fluids": "#c:sulfur_trioxide"
+  },
+  "secondary": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "time": 200
+}

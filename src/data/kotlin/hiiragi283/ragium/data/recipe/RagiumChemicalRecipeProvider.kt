@@ -3,7 +3,6 @@ package hiiragi283.ragium.data.recipe
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
@@ -16,8 +15,8 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTAssemblingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTFluidMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -27,6 +26,7 @@ import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
 
 object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
@@ -51,7 +51,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     }
 
     @JvmStatic
-    private fun catalyst(material: HTMaterialLike): HTItemIngredient = inputCreator.create(CommonTagPrefixes.DUST, material, 0)
+    private fun catalyst(material: HTMaterialLike): Ingredient = itemCreator.create(CommonTagPrefixes.DUST, material)
 
     //    Overworld    //
 
@@ -63,11 +63,11 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         rubber()
 
         // 2x H2O -> 2x H2 + O2
-        HTFluidMixingRecipeBuilder.create(output) {
-            fluidIngredients += inputCreator.water()
-            itemIngredient = inputCreator.create(Items.HEART_OF_THE_SEA)
-            results += resultCreator.create(RagiumFluids.HYDROGEN)
-            results += resultCreator.create(RagiumFluids.OXYGEN, 500)
+        HTChemicalReactingRecipeBuilder.create(output) {
+            ingredients += inputCreator.water()
+            catalyst += itemCreator.create(Items.HEART_OF_THE_SEA)
+            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN)
+            fluidResults += resultCreator.create(RagiumFluids.OXYGEN, 500)
             recipeId suffix "_from_water"
         }
     }
@@ -108,20 +108,20 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // Coal + Steam -> Synthetic Gas
-        HTFluidMixingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
-            fluidIngredients += inputCreator.create(RagiumFluids.STEAM, 250)
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+            ingredient += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
+            ingredient += inputCreator.create(RagiumFluids.STEAM, 250)
 
-            results += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
+            result += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 250)
             recipeId suffix "_from_coal"
         }
         // Synthetic Gas + H2O -> CO2 + 2x H2
-        HTFluidMixingRecipeBuilder.create(output) {
-            itemIngredient = catalyst(CommonMaterialKeys.PLATINUM)
-            fluidIngredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
-            fluidIngredients += inputCreator.water()
+        HTChemicalReactingRecipeBuilder.create(output) {
+            ingredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
+            ingredients += inputCreator.water()
+            catalyst += catalyst(CommonMaterialKeys.PLATINUM)
 
-            results += resultCreator.create(RagiumFluids.HYDROGEN, 2000)
+            fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 2000)
             recipeId replace RagiumAPI.id("water_gas_shift_reaction")
         }
         // Coal -> Synthetic Oil
@@ -276,12 +276,12 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // CH4 + H2O -> Synthetic Gas
-        HTFluidMixingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL)
-            fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
-            fluidIngredients += inputCreator.water()
+        HTChemicalReactingRecipeBuilder.create(output) {
+            ingredients += inputCreator.create(RagiumFluids.METHANE, 1000)
+            ingredients += inputCreator.water()
+            catalyst += itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL)
 
-            results += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 2000)
+            fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 2000)
             recipeId suffix "_from_methane"
         }
     }
@@ -336,18 +336,18 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // 3x H2 + N2 -> 2x NH3
-        HTFluidMixingRecipeBuilder.create(output) {
-            itemIngredient = catalyst(VanillaMaterialKeys.IRON)
-            fluidIngredients += inputCreator.create(RagiumFluids.HYDROGEN, 3000)
-            fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN)
-            results += resultCreator.create(RagiumFluids.AMMONIA, 2000)
+        HTChemicalReactingRecipeBuilder.create(output) {
+            ingredients += inputCreator.create(RagiumFluids.HYDROGEN, 3000)
+            ingredients += inputCreator.create(RagiumFluids.NITROGEN)
+            catalyst += catalyst(VanillaMaterialKeys.IRON)
+            fluidResults += resultCreator.create(RagiumFluids.AMMONIA, 2000)
         }
         // 4x NH3 + 7x O2 -> 4x NO2 + 6x H2O
-        HTFluidMixingRecipeBuilder.create(output) {
-            itemIngredient = catalyst(CommonMaterialKeys.PLATINUM)
-            fluidIngredients += inputCreator.create(RagiumFluids.AMMONIA, 4000)
-            fluidIngredients += inputCreator.create(RagiumFluids.OXYGEN, 7000)
-            results += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE, 4000)
+        HTChemicalReactingRecipeBuilder.create(output) {
+            ingredients += inputCreator.create(RagiumFluids.AMMONIA, 4000)
+            ingredients += inputCreator.create(RagiumFluids.OXYGEN, 7000)
+            catalyst += catalyst(CommonMaterialKeys.PLATINUM)
+            fluidResults += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE, 4000)
         }
         // Ghast Tear -> NO2
         HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
@@ -355,10 +355,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE)
         }
         // 3x NO2 + H2O -> 2x HNO3 + NO
-        HTFluidMixingRecipeBuilder.create(output) {
-            fluidIngredients += inputCreator.create(RagiumFluids.NITROGEN_DIOXIDE, 3000)
-            fluidIngredients += inputCreator.water()
-            results += resultCreator.create(RagiumFluids.NITRIC_ACID, 2000)
+        HTChemicalReactingRecipeBuilder.create(output) {
+            ingredients += inputCreator.create(RagiumFluids.NITROGEN_DIOXIDE, 3000)
+            ingredients += inputCreator.water()
+            fluidResults += resultCreator.create(RagiumFluids.NITRIC_ACID, 2000)
         }
     }
 
@@ -421,11 +421,11 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result += resultCreator.create(RagiumFluids.SULFUR_DIOXIDE)
         }
         // 2x SO2 + O2 -> 2x SO3
-        HTFluidMixingRecipeBuilder.create(output) {
-            itemIngredient = catalyst(VanillaMaterialKeys.IRON)
-            fluidIngredients += inputCreator.create(RagiumFluids.SULFUR_DIOXIDE)
-            fluidIngredients += inputCreator.create(RagiumFluids.OXYGEN, 500)
-            results += resultCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
+        HTChemicalReactingRecipeBuilder.create(output) {
+            ingredients += inputCreator.create(RagiumFluids.SULFUR_DIOXIDE)
+            ingredients += inputCreator.create(RagiumFluids.OXYGEN, 500)
+            catalyst += catalyst(VanillaMaterialKeys.IRON)
+            fluidResults += resultCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
         }
         // Blaze Powder -> SO3
         HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
@@ -433,10 +433,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result += resultCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
         }
         // SO3 + H2O -> H2SO4
-        HTFluidMixingRecipeBuilder.create(output) {
-            fluidIngredients += inputCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
-            fluidIngredients += inputCreator.water()
-            results += resultCreator.create(RagiumFluids.SULFURIC_ACID)
+        HTChemicalReactingRecipeBuilder.create(output) {
+            ingredients += inputCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
+            ingredients += inputCreator.water()
+            fluidResults += resultCreator.create(RagiumFluids.SULFURIC_ACID)
         }
     }
 
@@ -508,12 +508,12 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun eldritch() {
         // Eldritch Flux
-        HTFluidMixingRecipeBuilder.create(output) {
+        /*HTChemicalReactingRecipeBuilder.create(output) {
             itemIngredient = inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
             fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
             results += resultCreator.molten(HCMaterialKeys.ELDRITCH)
-        }
+        }*/
 
         // Artificial Artifact
         HTShapedRecipeBuilder.create(output) {

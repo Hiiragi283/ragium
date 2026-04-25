@@ -1,0 +1,17 @@
+{
+  "type": "ragium:chemical_reacting",
+  "catalyst": "#c:dusts/platinum",
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:hydrogen"
+  },
+  "primal": {
+    "amount": 1000,
+    "fluids": "#c:synthetic_gas"
+  },
+  "secondary": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "time": 200
+}

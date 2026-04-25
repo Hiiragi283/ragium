@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.crafting.HTTankCombiningRecipe
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
@@ -199,6 +200,30 @@ object RagiumRecipeSerializers {
     )
 
     // Machine - Elite
+    @JvmField
+    val CHEMICAL_REACTING: RecipeSerializer<HTChemicalReactingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.CHEMICAL_REACTING,
+        RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTFluidIngredient.CODEC
+                        .fieldOf("primal")
+                        .forGetter(HTChemicalReactingRecipe::primary),
+                    HTCodecs
+                        .ior(
+                            HTFluidIngredient.CODEC.fieldOf("secondary"),
+                            HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST),
+                        ).forGetter(HTChemicalReactingRecipe::secondary),
+                    HTFluidResult.CODEC
+                        .listOrElement(1, 2)
+                        .fieldOf(HTConst.FLUID_RESULT)
+                        .forGetter(HTChemicalReactingRecipe::fluidResults),
+                    HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).forGetter(HTChemicalReactingRecipe::itemResult),
+                    HTProcessingRecipe.timeCodec(),
+                ).apply(instance, ::HTChemicalReactingRecipe)
+        },
+    )
+
     @JvmField
     val CHEMICAL_WASHING: RecipeSerializer<HTChemicalWashingRecipe> =
         REGISTER.registerSerializer(RagiumConst.CHEMICAL_WASHING, itemOrFluid(::HTChemicalWashingRecipe))

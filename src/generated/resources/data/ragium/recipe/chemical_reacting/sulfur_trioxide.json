@@ -1,0 +1,16 @@
+{
+  "type": "ragium:chemical_reacting",
+  "catalyst": "#c:dusts/iron",
+  "fluid_result": {
+    "id": "ragium:sulfur_trioxide"
+  },
+  "primal": {
+    "amount": 1000,
+    "fluids": "#c:sulfur_dioxide"
+  },
+  "secondary": {
+    "amount": 500,
+    "fluids": "#c:oxygen"
+  },
+  "time": 200
+}
