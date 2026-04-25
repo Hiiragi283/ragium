@@ -5,7 +5,6 @@ import hiiragi283.core.common.data.recipe.builder.HTSingleMultiOutputRecipeBuild
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
-import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 
@@ -25,11 +24,6 @@ data object RagiumRecipeBuilder {
                 time,
             )
         }.apply(builderAction).save(output)
-    }
-
-    @JvmStatic
-    inline fun planting(output: RecipeOutput, builderAction: HTDoubleMultiOutputRecipeBuilder.() -> Unit) {
-        HTDoubleMultiOutputRecipeBuilder(RagiumConst.PLANTING, ::HTPlantingRecipe).apply(builderAction).save(output)
     }
 
     @JvmStatic

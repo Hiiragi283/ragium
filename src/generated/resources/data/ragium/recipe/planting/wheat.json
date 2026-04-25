@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "minecraft:farmland"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:wheat_seeds"
-  },
+  "plant": "minecraft:wheat_seeds",
   "results": [
     {
       "count": 1,
@@ -19,5 +12,6 @@
       "id": "minecraft:wheat_seeds"
     }
   ],
+  "soil": "minecraft:farmland",
   "time": 100
 }

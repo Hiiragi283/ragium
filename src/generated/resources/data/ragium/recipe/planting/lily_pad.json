@@ -1,16 +1,10 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "#c:buckets/water"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:lily_pad"
-  },
+  "plant": "minecraft:lily_pad",
   "results": {
     "count": 4,
     "id": "minecraft:lily_pad"
   },
+  "soil": "#c:buckets/water",
   "time": 100
 }

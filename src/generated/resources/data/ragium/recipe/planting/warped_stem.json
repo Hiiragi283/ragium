@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "minecraft:warped_nylium"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:warped_fungus"
-  },
+  "plant": "minecraft:warped_fungus",
   "results": [
     {
       "count": 6,
@@ -19,5 +12,6 @@
       "id": "minecraft:warped_fungus"
     }
   ],
+  "soil": "minecraft:warped_nylium",
   "time": 100
 }

@@ -12,8 +12,8 @@ import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.api.util.Ior
 import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
-import hiiragi283.core.impl.recipe.HTBasicDoubleMultiOutputRecipe
 import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
+import hiiragi283.core.impl.recipe.HTBasicMultiOutputRecipe
 import hiiragi283.core.impl.recipe.HTBasicSingleMultiOutputRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -121,7 +121,15 @@ object RagiumRecipeSerializers {
     @JvmField
     val PLANTING: RecipeSerializer<HTPlantingRecipe> = REGISTER.registerSerializer(
         RagiumConst.PLANTING,
-        HTBasicDoubleMultiOutputRecipe.codec(HTPlantingRecipe.OUTPUT_RANGE, ::HTPlantingRecipe),
+        RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTCodecs.INGREDIENT.fieldOf("plant").forGetter(HTPlantingRecipe::plant),
+                    HTCodecs.INGREDIENT.fieldOf("soil").forGetter(HTPlantingRecipe::soil),
+                    HTBasicMultiOutputRecipe.resultCodec(HTPlantingRecipe.OUTPUT_RANGE),
+                    HTProcessingRecipe.timeCodec(),
+                ).apply(instance, ::HTPlantingRecipe)
+        },
     )
 
     // Machine - Advanced
@@ -184,10 +192,7 @@ object RagiumRecipeSerializers {
             instance
                 .group(
                     HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTWashingRecipe::ingredient),
-                    HTItemResult.CODEC
-                        .listOrElement(HTWashingRecipe.OUTPUT_RANGE)
-                        .fieldOf(HTConst.RESULTS)
-                        .forGetter(HTWashingRecipe::results),
+                    HTBasicMultiOutputRecipe.resultCodec(HTWashingRecipe.OUTPUT_RANGE),
                     HTProcessingRecipe.timeCodec(),
                 ).apply(instance, ::HTWashingRecipe)
         },

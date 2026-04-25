@@ -1,16 +1,10 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "minecraft:horn_coral_block"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:horn_coral"
-  },
+  "plant": "minecraft:horn_coral",
   "results": {
     "count": 4,
     "id": "minecraft:horn_coral"
   },
+  "soil": "minecraft:horn_coral_block",
   "time": 100
 }

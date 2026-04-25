@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "#minecraft:dirt"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:acacia_sapling"
-  },
+  "plant": "minecraft:acacia_sapling",
   "results": [
     {
       "count": 6,
@@ -19,5 +12,6 @@
       "id": "minecraft:acacia_sapling"
     }
   ],
+  "soil": "#minecraft:dirt",
   "time": 100
 }

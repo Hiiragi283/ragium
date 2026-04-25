@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "minecraft:soul_sand"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:nether_wart"
-  },
+  "plant": "minecraft:nether_wart",
   "results": [
     {
       "count": 3,
@@ -19,5 +12,6 @@
       "id": "minecraft:nether_wart"
     }
   ],
+  "soil": "minecraft:soul_sand",
   "time": 100
 }

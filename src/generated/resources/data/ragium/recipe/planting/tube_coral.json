@@ -1,16 +1,10 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "minecraft:tube_coral_block"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:tube_coral"
-  },
+  "plant": "minecraft:tube_coral",
   "results": {
     "count": 4,
     "id": "minecraft:tube_coral"
   },
+  "soil": "minecraft:tube_coral_block",
   "time": 100
 }

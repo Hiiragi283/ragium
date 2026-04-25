@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "#c:sands"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:cactus"
-  },
+  "plant": "minecraft:cactus",
   "results": [
     {
       "count": 3,
@@ -19,5 +12,6 @@
       "id": "minecraft:cactus"
     }
   ],
+  "soil": "#c:sands",
   "time": 100
 }

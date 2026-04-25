@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "minecraft:farmland"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:sweet_berries"
-  },
+  "plant": "minecraft:sweet_berries",
   "results": [
     {
       "count": 3,
@@ -19,5 +12,6 @@
       "id": "minecraft:sweet_berries"
     }
   ],
+  "soil": "minecraft:farmland",
   "time": 100
 }

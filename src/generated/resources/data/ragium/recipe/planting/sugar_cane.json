@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "#c:sands"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:sugar_cane"
-  },
+  "plant": "minecraft:sugar_cane",
   "results": [
     {
       "count": 3,
@@ -19,5 +12,6 @@
       "id": "minecraft:sugar_cane"
     }
   ],
+  "soil": "#c:sands",
   "time": 100
 }

@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "minecraft:farmland"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:melon_seeds"
-  },
+  "plant": "minecraft:melon_seeds",
   "results": [
     {
       "count": 1,
@@ -19,5 +12,6 @@
       "id": "minecraft:melon_seeds"
     }
   ],
+  "soil": "minecraft:farmland",
   "time": 100
 }

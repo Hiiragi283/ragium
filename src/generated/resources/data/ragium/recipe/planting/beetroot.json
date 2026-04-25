@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "minecraft:farmland"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:beetroot_seeds"
-  },
+  "plant": "minecraft:beetroot_seeds",
   "results": [
     {
       "count": 3,
@@ -19,5 +12,6 @@
       "id": "minecraft:beetroot_seeds"
     }
   ],
+  "soil": "minecraft:farmland",
   "time": 100
 }

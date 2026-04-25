@@ -1,13 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "amount": 1,
-    "items": "#minecraft:dirt"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:jungle_sapling"
-  },
+  "plant": "minecraft:jungle_sapling",
   "results": [
     {
       "count": 6,
@@ -19,5 +12,6 @@
       "id": "minecraft:jungle_sapling"
     }
   ],
+  "soil": "#minecraft:dirt",
   "time": 100
 }
