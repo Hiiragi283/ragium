@@ -9,6 +9,7 @@
     "items": "hiiragi_core:wither_doll"
   },
   "item_result": {
+    "count": 1,
     "id": "hiiragi_core:wither_star"
   },
   "time": 200

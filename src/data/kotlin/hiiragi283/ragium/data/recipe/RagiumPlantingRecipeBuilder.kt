@@ -47,7 +47,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
 
     @JvmStatic
     private fun crops() {
-        val farmland: HTItemIngredient = inputCreator.create(Items.FARMLAND, amount = 0)
+        val farmland: HTItemIngredient = inputCreator.create(Items.FARMLAND)
         // Wheat
         planting(Items.WHEAT_SEEDS, fraction(1, 3)) {
             addition = farmland
@@ -81,24 +81,24 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         // Cactus, Sugar Cane
         for (item: Item in listOf(Items.CACTUS, Items.SUGAR_CANE)) {
             planting(item, fraction(1, 3)) {
-                addition = inputCreator.create(Tags.Items.SANDS, amount = 0)
+                addition = inputCreator.create(Tags.Items.SANDS)
                 results += resultCreator.create(item, 3)
             }
         }
 
         // Apple
         planting(Items.APPLE, fraction(1, 3)) {
-            addition = inputCreator.create(Items.OAK_SAPLING, amount = 0)
+            addition = inputCreator.create(Items.OAK_SAPLING)
             results += resultCreator.create(Items.APPLE, 3)
         }
         // Cocoa Beans
         planting(Items.COCOA_BEANS, fraction(1, 3)) {
-            addition = inputCreator.create(ItemTags.JUNGLE_LOGS, amount = 0)
+            addition = inputCreator.create(ItemTags.JUNGLE_LOGS)
             results += resultCreator.create(Items.COCOA_BEANS, 3)
         }
         // Nether Wart
         planting(Items.NETHER_WART, fraction(1, 3)) {
-            addition = inputCreator.create(Items.SOUL_SAND, amount = 0)
+            addition = inputCreator.create(Items.SOUL_SAND)
             results += resultCreator.create(Items.NETHER_WART, 3)
         }
 
@@ -110,7 +110,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             }
 
             planting(item, fraction(1, 3)) {
-                addition = inputCreator.create(Items.MYCELIUM, amount = 0)
+                addition = inputCreator.create(Items.MYCELIUM)
                 results += resultCreator.create(item, 5)
                 recipeId suffix "_with_mycelium"
             }
@@ -120,7 +120,7 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
     @JvmStatic
     private fun trees() {
         // Trees
-        val dirt: HTItemIngredient = inputCreator.create(ItemTags.DIRT, amount = 0)
+        val dirt: HTItemIngredient = inputCreator.create(ItemTags.DIRT)
         mapOf(
             Items.OAK_SAPLING to Items.OAK_LOG,
             Items.SPRUCE_SAPLING to Items.SPRUCE_LOG,
@@ -139,17 +139,17 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         }
         // Fungus
         planting(Items.CRIMSON_FUNGUS, fraction(1, 6)) {
-            addition = inputCreator.create(Items.CRIMSON_NYLIUM, amount = 0)
+            addition = inputCreator.create(Items.CRIMSON_NYLIUM)
             results += resultCreator.create(Items.CRIMSON_STEM, 6)
         }
 
         planting(Items.WARPED_FUNGUS, fraction(1, 6)) {
-            addition = inputCreator.create(Items.WARPED_NYLIUM, amount = 0)
+            addition = inputCreator.create(Items.WARPED_NYLIUM)
             results += resultCreator.create(Items.WARPED_STEM, 6)
         }
         // Chorus
         planting(Items.CHORUS_FLOWER, fraction(1, 6)) {
-            addition = inputCreator.create(Tags.Items.END_STONES, amount = 0)
+            addition = inputCreator.create(Tags.Items.END_STONES)
             results += resultCreator.create(Items.CHORUS_FRUIT, 6)
         }
     }
@@ -175,17 +175,14 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
             Items.HORN_CORAL_FAN to Either.Right(Items.HORN_CORAL_BLOCK),
         ).forEach { (plant: Item, soil: Either<List<TagKey<Item>>, Item>) ->
             planting(plant, Fraction.ZERO) {
-                addition = soil.map(
-                    { tagKeys: List<TagKey<Item>> -> inputCreator.create(tagKeys, amount = 0) },
-                    { item: Item -> inputCreator.create(item, amount = 0) },
-                )
+                addition = soil.map(inputCreator::create, inputCreator::create)
                 results += resultCreator.create(plant, 4)
             }
         }
 
         // Kelp
         planting(Items.KELP, Fraction.ZERO) {
-            addition = inputCreator.create(aquaticSoil, amount = 0)
+            addition = inputCreator.create(aquaticSoil)
             results += resultCreator.create(Items.KELP, 6)
         }
     }

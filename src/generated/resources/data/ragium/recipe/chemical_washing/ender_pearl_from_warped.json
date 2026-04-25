@@ -9,6 +9,7 @@
     "items": "#c:dusts/warped_crystal"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:ender_pearl"
   },
   "time": 200

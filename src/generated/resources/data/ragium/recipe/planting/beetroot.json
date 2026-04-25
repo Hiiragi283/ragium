@@ -1,6 +1,7 @@
 {
   "type": "ragium:planting",
   "addition": {
+    "amount": 1,
     "items": "minecraft:farmland"
   },
   "base": {
@@ -14,6 +15,7 @@
     },
     {
       "chance": "1/3",
+      "count": 1,
       "id": "minecraft:beetroot_seeds"
     }
   ],

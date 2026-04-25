@@ -16,7 +16,7 @@ class HTItemMixingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.ITEM_MIX
     companion object {
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTItemMixingRecipeBuilder.() -> Unit) {
-            HTItemMixingRecipeBuilder().apply(builderAction).save(output)
+            // HTItemMixingRecipeBuilder().apply(builderAction).save(output)
         }
     }
 

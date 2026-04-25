@@ -9,6 +9,7 @@
     "items": "#c:cobblestones/normal"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:mossy_cobblestone"
   },
   "time": 100

@@ -4,8 +4,7 @@ import com.mojang.serialization.Codec
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
-import hiiragi283.core.api.serialization.codec.BiCodec
-import hiiragi283.core.api.serialization.codec.BiCodecs
+import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.ragium.api.RagiumAPI
@@ -31,7 +30,7 @@ object RagiumDataMapTypes {
 
     // Fluid
     @JvmField
-    val COOLANT: DataMapType<Fluid, Int> = create("coolant", Registries.FLUID, BiCodecs.POSITIVE_INT)
+    val COOLANT: DataMapType<Fluid, Int> = create("coolant", Registries.FLUID, HTCodecs.POSITIVE_INT)
 
     @JvmField
     val MAGMATIC_FUEL: DataMapType<Fluid, Int> = createFuel("magmatic")
@@ -41,7 +40,7 @@ object RagiumDataMapTypes {
 
     // Item
     @JvmField
-    val MATTER_POINT: DataMapType<Item, Int> = create("matter_point", Registries.ITEM, BiCodecs.POSITIVE_INT)
+    val MATTER_POINT: DataMapType<Item, Int> = create("matter_point", Registries.ITEM, HTCodecs.POSITIVE_INT)
 
     //    Extensions    //
 
@@ -80,10 +79,6 @@ object RagiumDataMapTypes {
     fun getMatterPoint(stack: ItemStack): Int = stack.itemHolder.getData(MATTER_POINT) ?: 0
 
     @JvmStatic
-    private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: BiCodec<*, T>): DataMapType<R, T> =
-        create(path, registryKey, codec.codec)
-
-    @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: Codec<T>): DataMapType<R, T> =
         DataMapType
             .builder(RagiumAPI.id(path), registryKey, codec)
@@ -91,5 +86,5 @@ object RagiumDataMapTypes {
             .build()
 
     @JvmStatic
-    private fun createFuel(path: String): DataMapType<Fluid, Int> = create("fuel/$path", Registries.FLUID, BiCodecs.POSITIVE_INT)
+    private fun createFuel(path: String): DataMapType<Fluid, Int> = create("fuel/$path", Registries.FLUID, HTCodecs.POSITIVE_INT)
 }

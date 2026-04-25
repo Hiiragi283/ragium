@@ -7,8 +7,8 @@
     }
   },
   "pattern": [
-    " A ",
     "AAA",
+    " A ",
     "AAA"
   ],
   "result": {

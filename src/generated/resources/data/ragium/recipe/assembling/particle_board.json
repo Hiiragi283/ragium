@@ -6,6 +6,7 @@
       "items": "#c:dusts/wood"
     },
     {
+      "amount": 1,
       "items": {
         "type": "hiiragi_core:blue_print",
         "number": 5
@@ -13,6 +14,7 @@
     }
   ],
   "result": {
+    "count": 1,
     "id": "hiiragi_core:particle_board"
   },
   "time": 200

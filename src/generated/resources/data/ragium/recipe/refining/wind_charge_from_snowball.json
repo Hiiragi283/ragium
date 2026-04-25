@@ -9,6 +9,7 @@
     "items": "minecraft:snowball"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:wind_charge"
   },
   "time": 200

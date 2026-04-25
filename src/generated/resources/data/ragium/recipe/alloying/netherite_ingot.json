@@ -1,0 +1,23 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 4,
+      "items": [
+        "#c:dusts/gold",
+        "#c:ingots/gold"
+      ]
+    },
+    {
+      "amount": 4,
+      "items": "minecraft:netherite_scrap"
+    }
+  ],
+  "result": {
+    "type": "hiiragi_core:material_part",
+    "count": 2,
+    "material": "hiiragi_core:netherite",
+    "part": "ingot"
+  },
+  "time": 200
+}

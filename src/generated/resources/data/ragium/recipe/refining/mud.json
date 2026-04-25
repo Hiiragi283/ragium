@@ -9,6 +9,7 @@
     "items": "minecraft:dirt"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:mud"
   },
   "time": 100

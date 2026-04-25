@@ -5,7 +5,6 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.input.HTMixingRecipeInput
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -30,7 +29,7 @@ data class HTFluidMixingRecipe(
         val amounts = IntArray(4) { 0 }
         // first item
         if (itemIngredient.isPresent && !itemIngredient.get().test(firstItem)) {
-            amounts[0] = itemIngredient.get().amount
+            amounts[0] = 0 // itemIngredient.get().amount
         }
         // fluids
         val firstFluidIng: HTFluidIngredient = fluidIngredients[0]
@@ -57,7 +56,7 @@ data class HTFluidMixingRecipe(
         return ingredient.test(secondFluid) || ingredient.test(firstFluid)
     }
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.FLUID_MIXING
+    override fun getSerializer(): RecipeSerializer<*> = TODO()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING.get()
 }

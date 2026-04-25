@@ -3,6 +3,7 @@ package hiiragi283.ragium.data.tag
 import hiiragi283.core.api.data.tag.HTFluidTagsProvider
 import hiiragi283.core.api.data.tag.HTTagDependType
 import hiiragi283.core.api.data.tag.HTTagsProvider
+import hiiragi283.core.api.tag.RawTagKey
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumFluids
@@ -24,22 +25,22 @@ class RagiumFluidTagsProvider(
         factory
             .apply(RagiumTags.Fluids.ALCOHOL)
             .addContentTag(RagiumFluids.ETHANOL)
-            .addTag(factory.commonTag("alcohol"), HTTagDependType.OPTIONAL)
-            .addTag(factory.commonTag("bioethanol"), HTTagDependType.OPTIONAL)
+            .addTag(RawTagKey.common("alcohol"), HTTagDependType.OPTIONAL)
+            .addTag(RawTagKey.common("bioethanol"), HTTagDependType.OPTIONAL)
         // Other
         factory
             .apply(RagiumTags.Fluids.BIODIESEL)
             .addContentTag(RagiumFluids.BIOFUEL)
-            .addTag(factory.commonTag("biodiesel"), HTTagDependType.OPTIONAL)
+            .addTag(RawTagKey.common("biodiesel"), HTTagDependType.OPTIONAL)
 
         factory
             .apply(RagiumTags.Fluids.DIESEL)
             .addContentTag(RagiumFluids.FUEL)
-            .addTag(factory.commonTag("diesel"), HTTagDependType.OPTIONAL)
+            .addTag(RawTagKey.common("diesel"), HTTagDependType.OPTIONAL)
 
         factory
             .apply(RagiumTags.Fluids.LIQUID_MATTER)
             .addContentTag(RagiumFluids.RAGI_MATTER)
-            .addTag(factory.commonTag("uu_matter"), HTTagDependType.OPTIONAL)
+            .addTag(RawTagKey.common("uu_matter"), HTTagDependType.OPTIONAL)
     }
 }

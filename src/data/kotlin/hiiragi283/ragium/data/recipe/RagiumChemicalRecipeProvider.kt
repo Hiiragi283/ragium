@@ -65,7 +65,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // 2x H2O -> 2x H2 + O2
         HTFluidMixingRecipeBuilder.create(output) {
             fluidIngredients += inputCreator.water()
-            itemIngredient = inputCreator.create(Items.HEART_OF_THE_SEA, amount = 0)
+            itemIngredient = inputCreator.create(Items.HEART_OF_THE_SEA)
             results += resultCreator.create(RagiumFluids.HYDROGEN)
             results += resultCreator.create(RagiumFluids.OXYGEN, 500)
             recipeId suffix "_from_water"
@@ -277,7 +277,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
         // CH4 + H2O -> Synthetic Gas
         HTFluidMixingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL, amount = 0)
+            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL)
             fluidIngredients += inputCreator.create(RagiumFluids.METHANE, 1000)
             fluidIngredients += inputCreator.water()
 

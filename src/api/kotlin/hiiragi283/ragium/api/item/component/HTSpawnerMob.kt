@@ -1,14 +1,16 @@
 package hiiragi283.ragium.api.item.component
 
+import com.mojang.serialization.Codec
 import hiiragi283.core.api.registry.HTHolderLike
-import hiiragi283.core.api.serialization.codec.BiCodec
-import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.core.api.serialization.codec.HTCodecs
+import hiiragi283.core.api.serialization.network.HTStreamCodecs
 import hiiragi283.core.api.text.HTHasText
 import hiiragi283.core.api.text.Text
 import hiiragi283.core.api.util.Either
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.EntityType
 
@@ -19,9 +21,11 @@ data class HTSpawnerMob private constructor(private val value: Holder<EntityType
     HTHasText {
         companion object {
             @JvmField
-            val CODEC: BiCodec<RegistryFriendlyByteBuf, HTSpawnerMob> = VanillaBiCodecs
-                .holder(Registries.ENTITY_TYPE)
-                .xmap(::of, HTSpawnerMob::value)
+            val CODEC: Codec<HTSpawnerMob> = HTCodecs.holder(Registries.ENTITY_TYPE).xmap(::of, HTSpawnerMob::value)
+
+            @JvmField
+            val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, HTSpawnerMob> =
+                HTStreamCodecs.holder(Registries.ENTITY_TYPE).map(::of, HTSpawnerMob::value)
 
             @Suppress("DEPRECATION")
             @JvmStatic

@@ -10,6 +10,7 @@ import hiiragi283.ragium.data.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.data.PackOutput
 
 class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, RagiumAPI.MOD_ID, HTLangTypes.EN_US) {
@@ -148,24 +149,24 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumItems.RAGI_MATTER, "Ragi-Matter")
         add(RagiumItems.RAGI_TICKET, "Ragi-Ticket")
         // Recipe
-        add(RagiumRecipeLookups.ALLOYING, "Alloying")
-        add(RagiumRecipeLookups.ASSEMBLING, "Assembling")
-        add(RagiumRecipeLookups.CUTTING, "Cutting")
-        add(RagiumRecipeLookups.PLANTING, "Planting")
+        add(RagiumRecipeTypes.ALLOYING, "Alloying")
+        add(RagiumRecipeTypes.ASSEMBLING, "Assembling")
+        add(RagiumRecipeTypes.CUTTING, "Cutting")
+        add(RagiumRecipeTypes.PLANTING, "Planting")
 
-        add(RagiumRecipeLookups.FREEZING, "Freezing")
-        add(RagiumRecipeLookups.IMPLODING, "Implosion Compressing")
-        add(RagiumRecipeLookups.MELTING, "Melting")
-        add(RagiumRecipeLookups.PYROLYZING, "Pyrolyzing")
-        add(RagiumRecipeLookups.REFINING, "Refining")
-        add(RagiumRecipeLookups.WASHING, "Washing")
+        add(RagiumRecipeTypes.FREEZING, "Freezing")
+        add(RagiumRecipeTypes.IMPLODING, "Implosion Compressing")
+        add(RagiumRecipeTypes.MELTING, "Melting")
+        add(RagiumRecipeTypes.PYROLYZING, "Pyrolyzing")
+        add(RagiumRecipeTypes.REFINING, "Refining")
+        add(RagiumRecipeTypes.WASHING, "Washing")
 
-        add(RagiumRecipeLookups.CHEMICAL_WASHING, "Chemical Washing")
-        add(RagiumRecipeLookups.MIXING, "Mixing")
+        add(RagiumRecipeTypes.CHEMICAL_WASHING, "Chemical Washing")
+        add(RagiumRecipeTypes.MIXING, "Mixing")
 
         add(RagiumRecipeLookups.MASS_FABRICATING, "Mass Fabricating")
 
-        add(RagiumRecipeLookups.ENCHANTING, "Enchanting")
+        add(RagiumRecipeTypes.ENCHANTING, "Enchanting")
 
         // Tag
         add(RagiumTags.Fluids.ALCOHOL, "Alcohol")

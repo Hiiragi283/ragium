@@ -9,6 +9,7 @@
     "items": "minecraft:paper"
   },
   "item_result": {
+    "count": 1,
     "id": "ragium:nitrocellulose"
   },
   "time": 200

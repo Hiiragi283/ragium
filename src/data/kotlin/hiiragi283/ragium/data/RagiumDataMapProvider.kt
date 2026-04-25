@@ -1,10 +1,12 @@
 package hiiragi283.ragium.data
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.map.HTDataMapProvider
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
+import hiiragi283.core.api.resource.toId
 import hiiragi283.core.api.tag.CommonTagPrefixes
-import hiiragi283.core.api.tag.createCommonTag
+import hiiragi283.core.api.tag.createTagKey
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.tag.RagiumTags
@@ -165,7 +167,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent, value: T): Builder<T, Fluid> = add(content.fluidTag, value, false)
 
     private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> =
-        add(Registries.FLUID.createCommonTag(path), value, false)
+        add(Registries.FLUID.createTagKey(HTConst.COMMON.toId(path)), value, false)
 
     // Entity Type
     @Suppress("DEPRECATION")

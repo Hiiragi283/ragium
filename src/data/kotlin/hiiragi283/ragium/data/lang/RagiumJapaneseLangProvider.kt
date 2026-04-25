@@ -10,6 +10,7 @@ import hiiragi283.ragium.data.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.data.PackOutput
 
 class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, RagiumAPI.MOD_ID, HTLangTypes.JA_JP) {
@@ -148,24 +149,24 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumItems.RAGI_MATTER, "らぎマター")
         add(RagiumItems.RAGI_TICKET, "らぎチケット")
         // Recipe
-        add(RagiumRecipeLookups.ALLOYING, "合金")
-        add(RagiumRecipeLookups.ASSEMBLING, "組立")
-        add(RagiumRecipeLookups.CUTTING, "切断")
-        add(RagiumRecipeLookups.PLANTING, "栽培")
+        add(RagiumRecipeTypes.ALLOYING, "合金")
+        add(RagiumRecipeTypes.ASSEMBLING, "組立")
+        add(RagiumRecipeTypes.CUTTING, "切断")
+        add(RagiumRecipeTypes.PLANTING, "栽培")
 
-        add(RagiumRecipeLookups.FREEZING, "冷却")
-        add(RagiumRecipeLookups.IMPLODING, "内爆圧縮")
-        add(RagiumRecipeLookups.MELTING, "溶融")
-        add(RagiumRecipeLookups.PYROLYZING, "熱分解")
-        add(RagiumRecipeLookups.REFINING, "精製")
-        add(RagiumRecipeLookups.WASHING, "洗浄")
+        add(RagiumRecipeTypes.FREEZING, "冷却")
+        add(RagiumRecipeTypes.IMPLODING, "内爆圧縮")
+        add(RagiumRecipeTypes.MELTING, "溶融")
+        add(RagiumRecipeTypes.PYROLYZING, "熱分解")
+        add(RagiumRecipeTypes.REFINING, "精製")
+        add(RagiumRecipeTypes.WASHING, "洗浄")
 
-        add(RagiumRecipeLookups.CHEMICAL_WASHING, "化学洗浄")
-        add(RagiumRecipeLookups.MIXING, "混合")
+        add(RagiumRecipeTypes.CHEMICAL_WASHING, "化学洗浄")
+        add(RagiumRecipeTypes.MIXING, "混合")
 
         add(RagiumRecipeLookups.MASS_FABRICATING, "マター生成")
 
-        add(RagiumRecipeLookups.ENCHANTING, "エンチャント")
+        add(RagiumRecipeTypes.ENCHANTING, "エンチャント")
 
         // Tag
         add(RagiumTags.Fluids.ALCOHOL, "アルコール")

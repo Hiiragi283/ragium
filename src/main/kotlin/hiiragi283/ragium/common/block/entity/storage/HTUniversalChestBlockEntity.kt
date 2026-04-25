@@ -1,11 +1,8 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.api.serialization.value.read
-import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.HTHandlerProvider
 import hiiragi283.core.api.storage.item.HTItemHandler
 import hiiragi283.core.api.storage.item.HTItemSlot
@@ -20,6 +17,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.server.ServerLifecycleHooks
 
 class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
     HTExtendedBlockEntity(RagiumBlockEntityTypes.UNIVERSAL_CHEST, pos, state),
@@ -62,7 +60,7 @@ class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
     //    HTHandlerProvider    //
 
     override fun getItemHandler(direction: Direction?): HTItemHandler? {
-        val server: MinecraftServer = HiiragiCoreAPI.getActiveServer() ?: return null
+        val server: MinecraftServer = ServerLifecycleHooks.getCurrentServer() ?: return null
         return HTUniversalChestManager.getHandler(server, color)
     }
 

@@ -1,6 +1,7 @@
 {
   "type": "ragium:planting",
   "addition": {
+    "amount": 1,
     "items": "#minecraft:dirt"
   },
   "base": {
@@ -14,6 +15,7 @@
     },
     {
       "chance": "1/6",
+      "count": 1,
       "id": "minecraft:birch_sapling"
     }
   ],

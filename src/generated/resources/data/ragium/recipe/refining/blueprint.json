@@ -9,6 +9,7 @@
     "items": "minecraft:paper"
   },
   "item_result": {
+    "count": 1,
     "id": "hiiragi_core:blueprint"
   },
   "time": 200

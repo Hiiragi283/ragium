@@ -5,12 +5,14 @@
     "fluids": "#c:dyes/light_gray"
   },
   "item_ingredient": {
+    "amount": 1,
     "items": {
       "type": "hiiragi_core:blue_print",
       "number": 0
     }
   },
   "result": {
+    "count": 1,
     "id": "minecraft:light_gray_dye"
   },
   "time": 200

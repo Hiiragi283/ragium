@@ -13,7 +13,7 @@ abstract class HTBasicEnchantingRecipe(val ingredient: HTItemIngredient) : HTEnc
 
     final override fun getRequiredExpAmount(input: HTEnchantingRecipe.Input): Int = requiredExpAmount
 
-    final override fun getRequiredAdditionAmount(input: HTEnchantingRecipe.Input): Int = ingredient.amount
+    final override fun getRequiredAdditionAmount(input: HTEnchantingRecipe.Input): Int = ingredient.getRequiredAmount(input.addition)
 
     final override fun test(input: HTEnchantingRecipe.Input): Boolean {
         val (base: ItemStack, addition: ItemStack, expAmount: Int) = input

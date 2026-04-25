@@ -1,14 +1,14 @@
 package hiiragi283.ragium.common.storge.holder
 
+import com.mojang.serialization.Codec
 import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.serialization.codec.BiCodec
-import hiiragi283.core.api.serialization.codec.BiCodecs
+import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.text.Text
 import hiiragi283.ragium.api.text.RagiumTranslation
-import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
+import net.minecraft.util.StringRepresentable
 
-enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: HTDefaultColor) {
+enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color: HTDefaultColor) : StringRepresentable {
     BOTH(true, true, HTDefaultColor.PURPLE),
     INPUT(true, false, HTDefaultColor.RED),
     OUTPUT(false, true, HTDefaultColor.LIGHT_BLUE),
@@ -19,7 +19,7 @@ enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color
 
     companion object {
         @JvmField
-        val CODEC: BiCodec<ByteBuf, HTSlotInfo> = BiCodecs.enum()
+        val CODEC: Codec<HTSlotInfo> = HTCodecs.stringEnum(HTSlotInfo::getSerializedName)
     }
 
     fun getText(side: Direction): Text = when (this) {
@@ -30,4 +30,6 @@ enum class HTSlotInfo(val canInsert: Boolean, val canExtract: Boolean, val color
         EXTRA_OUTPUT -> RagiumTranslation.GUI_SLOT_EXTRA_OUTPUT
         NONE -> RagiumTranslation.GUI_SLOT_NONE
     }.translateColored(color, HTDefaultColor.WHITE, side)
+
+    override fun getSerializedName(): String = name.lowercase()
 }

@@ -9,6 +9,7 @@
     "items": "#c:dusts/sulfur"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:blaze_powder"
   },
   "time": 200

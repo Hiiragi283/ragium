@@ -9,6 +9,7 @@
     "items": "minecraft:ice"
   },
   "result": {
+    "count": 1,
     "id": "minecraft:packed_ice"
   },
   "time": 200

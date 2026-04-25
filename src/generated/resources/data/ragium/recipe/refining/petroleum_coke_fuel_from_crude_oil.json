@@ -1,0 +1,18 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "amount": 500,
+    "fluids": "#c:crude_oil"
+  },
+  "fluid_result": {
+    "amount": 300,
+    "id": "ragium:naphtha"
+  },
+  "item_result": {
+    "type": "hiiragi_core:material_part",
+    "count": 1,
+    "material": "ragium:petroleum_coke",
+    "part": "fuel"
+  },
+  "time": 200
+}

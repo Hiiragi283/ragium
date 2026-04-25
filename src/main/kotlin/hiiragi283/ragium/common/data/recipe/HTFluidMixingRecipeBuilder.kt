@@ -14,7 +14,7 @@ class HTFluidMixingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.FLUID_M
     companion object {
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTFluidMixingRecipeBuilder.() -> Unit) {
-            HTFluidMixingRecipeBuilder().apply(builderAction).save(output)
+            // HTFluidMixingRecipeBuilder().apply(builderAction).save(output)
         }
     }
 

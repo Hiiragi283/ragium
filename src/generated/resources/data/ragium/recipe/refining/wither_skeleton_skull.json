@@ -9,6 +9,7 @@
     "items": "minecraft:skeleton_skull"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:wither_skeleton_skull"
   },
   "time": 200

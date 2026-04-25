@@ -9,6 +9,7 @@
     "items": "#c:dusts/wood"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:paper"
   },
   "time": 100

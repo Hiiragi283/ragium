@@ -1,0 +1,18 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "amount": 500,
+    "id": "ragium:creosote"
+  },
+  "item_ingredient": {
+    "amount": 8,
+    "items": "#c:pellets/wood"
+  },
+  "item_result": {
+    "type": "hiiragi_core:material_part",
+    "count": 8,
+    "material": "hiiragi_core:charcoal",
+    "part": "fuel"
+  },
+  "time": 200
+}

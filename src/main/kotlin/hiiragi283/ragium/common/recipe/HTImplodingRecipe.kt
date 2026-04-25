@@ -30,9 +30,9 @@ class HTImplodingRecipe(
         return ingredient.test(first) && explosive.test(second)
     }
 
-    override fun getBaseAmount(input: HTDoubleRecipeInput): Int = ingredient.amount
+    override fun getBaseAmount(input: HTDoubleRecipeInput): Int = ingredient.getRequiredAmount(input.first)
 
-    override fun getAdditionAmount(input: HTDoubleRecipeInput): Int = explosive.amount
+    override fun getAdditionAmount(input: HTDoubleRecipeInput): Int = explosive.getRequiredAmount(input.second)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.IMPLODING
 

@@ -1,0 +1,17 @@
+{
+  "type": "ragium:pyrolyzing",
+  "fluid_result": {
+    "id": "ragium:creosote"
+  },
+  "item_ingredient": {
+    "amount": 8,
+    "items": "#minecraft:logs_that_burn"
+  },
+  "item_result": {
+    "type": "hiiragi_core:material_part",
+    "count": 8,
+    "material": "hiiragi_core:charcoal",
+    "part": "fuel"
+  },
+  "time": 600
+}

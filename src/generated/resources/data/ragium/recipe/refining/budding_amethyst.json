@@ -9,6 +9,7 @@
     "items": "#c:storage_blocks/amethyst"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:budding_amethyst"
   },
   "time": 200

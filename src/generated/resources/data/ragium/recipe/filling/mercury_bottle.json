@@ -6,6 +6,7 @@
   },
   "item_ingredient": "minecraft:glass_bottle",
   "result": {
+    "count": 1,
     "id": "ragium:mercury_bottle"
   }
 }

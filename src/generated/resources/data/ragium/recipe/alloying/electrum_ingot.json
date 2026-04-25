@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/electrum"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/gold",
+        "#c:ingots/gold"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/silver",
+        "#c:ingots/silver"
+      ]
+    }
+  ],
+  "result": {
+    "type": "hiiragi_core:material_part",
+    "count": 2,
+    "material": "hiiragi_core:electrum",
+    "part": "ingot"
+  },
+  "time": 200
+}

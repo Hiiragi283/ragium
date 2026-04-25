@@ -9,6 +9,7 @@
     "items": "minecraft:trial_key"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:ominous_trial_key"
   },
   "time": 200

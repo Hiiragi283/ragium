@@ -9,6 +9,7 @@
     "items": "minecraft:sponge"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:wet_sponge"
   },
   "time": 100

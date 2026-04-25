@@ -9,6 +9,7 @@
     "items": "#c:storage_blocks/quartz"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:ghast_tear"
   },
   "time": 200

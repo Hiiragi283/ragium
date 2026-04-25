@@ -13,6 +13,7 @@
     "items": "#c:dusts/saltpeter"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:magma_cream"
   },
   "time": 200

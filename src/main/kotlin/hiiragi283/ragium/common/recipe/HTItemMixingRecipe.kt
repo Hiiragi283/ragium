@@ -7,7 +7,6 @@ import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.util.Ior
 import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
 import hiiragi283.ragium.api.recipe.input.HTMixingRecipeInput
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -35,13 +34,13 @@ class HTItemMixingRecipe(
         }
         // items
         val (firstItemIng: HTItemIngredient, secondItemIng: HTItemIngredient) = itemIngredients
-        if (firstItemIng.test(firstItem) && secondItemIng.test(secondItem)) {
+        /*if (firstItemIng.test(firstItem) && secondItemIng.test(secondItem)) {
             amounts[0] = firstItemIng.amount
             amounts[1] = secondItemIng.amount
         } else if (firstItemIng.test(secondItem) && secondItemIng.test(firstItem)) {
             amounts[1] = firstItemIng.amount
             amounts[0] = secondItemIng.amount
-        }
+        }*/
         return HTMixingRecipe.RequiredAmounts(amounts)
     }
 
@@ -56,7 +55,7 @@ class HTItemMixingRecipe(
         }
     }
 
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ITEM_MIXING
+    override fun getSerializer(): RecipeSerializer<*> = TODO()
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING.get()
 }

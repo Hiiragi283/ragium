@@ -1,0 +1,23 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/copper",
+        "#c:ingots/copper"
+      ]
+    },
+    {
+      "amount": 2,
+      "items": "#c:dusts/raginite"
+    }
+  ],
+  "result": {
+    "type": "hiiragi_core:material_part",
+    "count": 1,
+    "material": "ragium:ragi_alloy",
+    "part": "ingot"
+  },
+  "time": 200
+}

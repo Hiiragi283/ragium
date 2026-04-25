@@ -1,0 +1,26 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/amethyst",
+        "#c:gems/amethyst"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/lapis",
+        "#c:gems/lapis"
+      ]
+    }
+  ],
+  "result": {
+    "type": "hiiragi_core:material_part",
+    "count": 2,
+    "material": "hiiragi_core:azure",
+    "part": "gem"
+  },
+  "time": 200
+}

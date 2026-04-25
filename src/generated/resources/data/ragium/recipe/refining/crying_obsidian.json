@@ -9,6 +9,7 @@
     "items": "#c:obsidians/normal"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:crying_obsidian"
   },
   "time": 200

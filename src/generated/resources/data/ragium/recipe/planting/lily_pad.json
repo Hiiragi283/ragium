@@ -1,6 +1,7 @@
 {
   "type": "ragium:planting",
   "addition": {
+    "amount": 1,
     "items": "#c:buckets/water"
   },
   "base": {

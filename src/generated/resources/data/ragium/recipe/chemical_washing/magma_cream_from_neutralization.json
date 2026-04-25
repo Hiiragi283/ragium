@@ -13,6 +13,7 @@
     "items": "minecraft:slime_ball"
   },
   "item_result": {
+    "count": 1,
     "id": "minecraft:magma_cream"
   },
   "time": 200
