@@ -10,7 +10,7 @@
       "id": "ragium:oxygen"
     }
   ],
-  "primal": {
+  "primary": {
     "amount": 1000,
     "fluids": "#c:water"
   },

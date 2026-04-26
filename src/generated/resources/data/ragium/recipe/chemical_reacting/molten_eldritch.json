@@ -5,7 +5,7 @@
     "amount": 90,
     "id": "hiiragi_core:molten_eldritch"
   },
-  "primal": {
+  "primary": {
     "amount": 90,
     "fluids": "#c:molten_crimson_crystal"
   },

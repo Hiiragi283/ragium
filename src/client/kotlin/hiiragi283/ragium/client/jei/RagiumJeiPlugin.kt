@@ -23,6 +23,7 @@ import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMassFabricatingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTPlantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -77,6 +78,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Elite
             HTChemicalReactingRecipeCategory(guiHelper),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_WASHING),
+            HTMixingRecipeCategory(guiHelper),
             // Machine - Ultimate
             HTMassFabricatingRecipeCategory(guiHelper),
             // Device - Ultimate
@@ -138,6 +140,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeDisplayFactories::reacting,
         )
         itemOrFluid(RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeLookups.CHEMICAL_WASHING)
+        addDisplayRecipes(
+            registration,
+            RagiumRecipeViewerTypes.MIXING,
+            RagiumRecipeLookups.MIXING,
+            RagiumRecipeDisplayFactories::mixing,
+        )
         // Machine - Ultimate
         addLookupRecipes(registration, RagiumRecipeViewerTypes.MASS_FABRICATING, RagiumRecipeLookups.MASS_FABRICATING)
         // Device - Ultimate

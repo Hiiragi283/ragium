@@ -73,7 +73,7 @@ data object RagiumRecipeViewerTypes {
 
     @JvmField
     val MIXING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
-        create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 6, 18 * 2)
+        create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 8, 18 * 3)
 
     // Machine - Ultimate
     @JvmField

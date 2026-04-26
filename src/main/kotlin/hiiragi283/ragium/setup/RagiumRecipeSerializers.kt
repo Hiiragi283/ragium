@@ -29,6 +29,7 @@ import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTHolderEnchantingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -207,7 +208,7 @@ object RagiumRecipeSerializers {
             instance
                 .group(
                     HTFluidIngredient.CODEC
-                        .fieldOf("primal")
+                        .fieldOf("primary")
                         .forGetter(HTChemicalReactingRecipe::primary),
                     HTCodecs
                         .ior(
@@ -227,6 +228,23 @@ object RagiumRecipeSerializers {
     @JvmField
     val CHEMICAL_WASHING: RecipeSerializer<HTChemicalWashingRecipe> =
         REGISTER.registerSerializer(RagiumConst.CHEMICAL_WASHING, itemOrFluid(::HTChemicalWashingRecipe))
+
+    @JvmField
+    val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(
+        RagiumConst.MIXING,
+        RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTItemIngredient.CODEC
+                        .listOf(2, 2)
+                        .fieldOf(HTConst.ITEM_INGREDIENT)
+                        .forGetter { listOf(it.primary, it.secondary) },
+                    HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTMixingRecipe::fluidIngredient),
+                    COMPLEX_RESULT.forGetter(HTMixingRecipe::result),
+                    HTProcessingRecipe.timeCodec(),
+                ).apply(instance, ::HTMixingRecipe)
+        },
+    )
 
     // Device - Ultimate
     @JvmField

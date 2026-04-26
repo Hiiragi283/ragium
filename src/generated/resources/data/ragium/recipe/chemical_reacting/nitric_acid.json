@@ -4,7 +4,7 @@
     "amount": 2000,
     "id": "ragium:nitric_acid"
   },
-  "primal": {
+  "primary": {
     "amount": 3000,
     "fluids": "#c:nitrogen_dioxide"
   },

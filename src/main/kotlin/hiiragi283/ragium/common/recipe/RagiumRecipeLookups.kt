@@ -20,8 +20,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
-import hiiragi283.ragium.api.recipe.base.HTMixingRecipe
-import hiiragi283.ragium.api.recipe.input.HTMixingRecipeInput
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -74,7 +72,7 @@ data object RagiumRecipeLookups {
     val CHEMICAL_WASHING: HTRecipeLookupImpl<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> = create(RagiumConst.CHEMICAL_WASHING)
 
     @JvmField
-    val MIXING: HTRecipeLookupImpl<HTMixingRecipeInput, HTMixingRecipe> = create(RagiumConst.MIXING)
+    val MIXING: HTRecipeLookup<HTMixingRecipe.Input, HTMixingRecipe> = create(RagiumRecipeTypes.MIXING)
 
     // Machine - Ultimate
     @JvmField
@@ -116,7 +114,6 @@ data object RagiumRecipeLookups {
         REFINING.addProvider(RagiumRecipeTypes.REFINING.get(), identity())
 
         CHEMICAL_WASHING.addProvider(RagiumRecipeTypes.CHEMICAL_WASHING.get(), identity())
-        MIXING.addProvider(RagiumRecipeTypes.MIXING.get(), identity())
 
         ENCHANTING.addProvider(RagiumRecipeTypes.ENCHANTING.get(), identity())
     }

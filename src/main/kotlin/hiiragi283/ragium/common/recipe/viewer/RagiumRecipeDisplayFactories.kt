@@ -9,6 +9,7 @@ import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 
@@ -78,6 +79,15 @@ data object RagiumRecipeDisplayFactories {
             it.fluidResults.forEach(::addOutput)
             it.itemResult.ifPresent(::addOutput)
         }
+
+    @JvmStatic
+    fun mixing(holder: HTRecipeHolder<HTMixingRecipe>): HTProcessingRecipeDisplay = HTRecipeDisplayFactories.processing(holder) {
+        addInput(it.primary)
+        addInput(it.secondary)
+        addInput(it.fluidIngredient)
+        it.result.getLeft()?.let(::addOutput)
+        it.result.getRight()?.let(::addOutput)
+    }
 
     // Machine - Ultimate
 

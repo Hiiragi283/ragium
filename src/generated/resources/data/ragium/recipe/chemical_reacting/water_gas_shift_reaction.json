@@ -5,7 +5,7 @@
     "amount": 2000,
     "id": "ragium:hydrogen"
   },
-  "primal": {
+  "primary": {
     "amount": 1000,
     "fluids": "#c:synthetic_gas"
   },

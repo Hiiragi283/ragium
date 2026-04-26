@@ -5,7 +5,7 @@
     "amount": 2000,
     "id": "ragium:ammonia"
   },
-  "primal": {
+  "primary": {
     "amount": 3000,
     "fluids": "#c:hydrogen"
   },

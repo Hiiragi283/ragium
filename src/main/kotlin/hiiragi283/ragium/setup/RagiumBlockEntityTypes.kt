@@ -22,7 +22,6 @@ import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFluidDuplicatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTItemMixerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
@@ -128,8 +127,8 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.CHEMICAL_WASHER, ::HTChemicalWasherBlockEntity)
 
     @JvmField
-    val MIXER: HTDeferredBlockEntityType<HTItemMixerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.MIXER, ::HTItemMixerBlockEntity)
+    val MIXER: HTDeferredBlockEntityType<HTChemicalWasherBlockEntity> =
+        REGISTER.registerTick(RagiumConst.MIXER, ::HTChemicalWasherBlockEntity)
 
     // Ultimate
     @JvmField

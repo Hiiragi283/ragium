@@ -3,7 +3,7 @@
   "fluid_result": {
     "id": "ragium:sulfuric_acid"
   },
-  "primal": {
+  "primary": {
     "amount": 1000,
     "fluids": "#c:sulfur_trioxide"
   },

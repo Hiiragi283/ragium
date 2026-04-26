@@ -5,7 +5,7 @@
     "amount": 4000,
     "id": "ragium:nitrogen_dioxide"
   },
-  "primal": {
+  "primary": {
     "amount": 4000,
     "fluids": "#c:ammonia"
   },

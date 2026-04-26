@@ -1,0 +1,16 @@
+{
+  "type": "ragium:refining",
+  "fluid_ingredient": {
+    "amount": 125,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:purple_concrete_powder"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:purple_concrete"
+  },
+  "time": 25
+}

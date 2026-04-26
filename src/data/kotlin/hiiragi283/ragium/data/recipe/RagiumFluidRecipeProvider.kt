@@ -20,16 +20,19 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         refining()
+        mixing()
         washing()
 
         tankInteraction()
@@ -172,6 +175,29 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             ingredient += inputCreator.create(HCItems.WITHER_DOLL)
             ingredient += eldritch(4)
             result += resultCreator.create(HCItems.WITHER_STAR)
+        }
+    }
+
+    //    Mixing    //
+
+    @JvmStatic
+    private fun mixing() {
+        for ((color: HTDefaultColor, concrete: ItemLike) in VanillaColoredContents.CONCRETE) {
+            // Gravel + Sand + Liquid Dye -> Concrete
+            HTMixingRecipeBuilder.create(output) {
+                itemIngredients += inputCreator.create(Tags.Items.GRAVELS, 4)
+                itemIngredients += inputCreator.create(Tags.Items.SANDS, 4)
+                fluidIngredient = inputCreator.create(HCFluids.DyeContents[color], 250)
+                result += resultCreator.create(concrete, 8)
+            }
+            // Powder + Water -> Concrete
+            val powder: ItemLike = VanillaColoredContents.CONCRETE_POWDER[color] ?: continue
+            HTItemOrFluidRecipeBuilder.refining(output) {
+                ingredient += inputCreator.create(powder)
+                ingredient += inputCreator.water(125)
+                result += resultCreator.create(concrete)
+                time /= 8
+            }
         }
     }
 
