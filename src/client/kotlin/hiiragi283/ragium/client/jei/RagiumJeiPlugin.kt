@@ -17,6 +17,7 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTAssemblingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTChemicalReactingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
@@ -74,6 +75,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.REFINING),
             HTWashingRecipeCategory(guiHelper),
             // Machine - Elite
+            HTChemicalReactingRecipeCategory(guiHelper),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_WASHING),
             // Machine - Ultimate
             HTMassFabricatingRecipeCategory(guiHelper),
@@ -129,6 +131,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeDisplayFactories::washing,
         )
         // Machine - Elite
+        addDisplayRecipes(
+            registration,
+            RagiumRecipeViewerTypes.CHEMICAL_REACTING,
+            RagiumRecipeLookups.CHEMICAL_REACTING,
+            RagiumRecipeDisplayFactories::reacting,
+        )
         itemOrFluid(RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeLookups.CHEMICAL_WASHING)
         // Machine - Ultimate
         addLookupRecipes(registration, RagiumRecipeViewerTypes.MASS_FABRICATING, RagiumRecipeLookups.MASS_FABRICATING)
@@ -162,6 +170,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.REFINING,
             RagiumRecipeViewerTypes.WASHING,
             // Machine - Elite
+            RagiumRecipeViewerTypes.CHEMICAL_REACTING,
             RagiumRecipeViewerTypes.CHEMICAL_WASHING,
             RagiumRecipeViewerTypes.MIXING,
             // Machine - Ultimate

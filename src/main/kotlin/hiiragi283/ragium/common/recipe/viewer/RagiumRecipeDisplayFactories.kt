@@ -6,6 +6,7 @@ import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.core.impl.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPlantingRecipe
@@ -68,6 +69,15 @@ data object RagiumRecipeDisplayFactories {
     }
 
     // Machine - Elite
+    @JvmStatic
+    fun reacting(holder: HTRecipeHolder<HTChemicalReactingRecipe>): HTProcessingRecipeDisplay =
+        HTRecipeDisplayFactories.processing(holder) {
+            addInput(it.primary)
+            addInput(it.secondary.getLeft())
+            addCatalyst(it.secondary.getRight())
+            it.fluidResults.forEach(::addOutput)
+            it.itemResult.ifPresent(::addOutput)
+        }
 
     // Machine - Ultimate
 

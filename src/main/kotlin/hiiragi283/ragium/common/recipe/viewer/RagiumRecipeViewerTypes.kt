@@ -64,6 +64,10 @@ data object RagiumRecipeViewerTypes {
 
     // Machine - Elite
     @JvmField
+    val CHEMICAL_REACTING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+        create(RagiumRecipeTypes.CHEMICAL_REACTING, RagiumBlocks.CHEMICAL_WASHER, 18 * 8, 18 * 3)
+
+    @JvmField
     val CHEMICAL_WASHING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
         create(RagiumRecipeTypes.CHEMICAL_WASHING, RagiumBlocks.CHEMICAL_WASHER, 18 * 8)
 
