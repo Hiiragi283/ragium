@@ -135,7 +135,7 @@ object RagiumFluids {
 
     // He
     @JvmField
-    val HELIUM: HTFluidContent = REGISTER.registerVirtual("helium") { properties = gas() }
+    val CHORUS_GAS: HTFluidContent = REGISTER.registerVirtual("chorus_gas") { properties = gas() }
 
     //    End Game    //
 

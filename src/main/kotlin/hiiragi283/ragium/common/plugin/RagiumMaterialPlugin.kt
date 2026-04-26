@@ -111,6 +111,15 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             setTextureSet("diamond", HTMaterialTextureSet.SHINE)
             put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumMaterialKeys.RAGINITE.getId())
         }
+        provider.getBuilder(RagiumMaterialKeys.LEVITATINE).apply {
+            setDefaultPart(HTDefaultPart.Prefixed.GEM)
+            addBlockPrefixes(CommonParts.BLOCK)
+            addItemPrefixes(CommonParts.DUST, CommonParts.GEM)
+            
+            setName("Levitatine", "浮遊石")
+            addBlockPrefixes(CommonParts.BLOCK)
+            setTextureSet("echo")
+        }
     }
 
     @JvmStatic

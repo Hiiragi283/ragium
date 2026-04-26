@@ -6,14 +6,11 @@
   },
   "item_ingredient": {
     "amount": 1,
-    "items": [
-      "#c:dusts/warped_crystal",
-      "#c:gems/warped_crystal"
-    ]
+    "items": "#c:stones"
   },
   "item_result": {
     "count": 1,
-    "id": "minecraft:ender_pearl"
+    "id": "minecraft:end_stone"
   },
-  "time": 200
+  "time": 100
 }

@@ -5,12 +5,12 @@
     "fluids": "#c:nitrogen"
   },
   "fluid_result": {
-    "amount": 500,
-    "id": "ragium:helium"
+    "amount": 250,
+    "id": "ragium:chorus_gas"
   },
   "item_ingredient": {
-    "amount": 4,
-    "items": "#c:end_stones"
+    "amount": 1,
+    "items": "minecraft:chorus_fruit"
   },
   "time": 300
 }

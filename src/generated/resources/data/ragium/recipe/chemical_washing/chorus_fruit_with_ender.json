@@ -6,14 +6,11 @@
   },
   "item_ingredient": {
     "amount": 1,
-    "items": [
-      "#c:dusts/warped_crystal",
-      "#c:gems/warped_crystal"
-    ]
+    "items": "#c:foods/fruit"
   },
   "item_result": {
     "count": 1,
-    "id": "minecraft:ender_pearl"
+    "id": "minecraft:chorus_fruit"
   },
-  "time": 200
+  "time": 100
 }

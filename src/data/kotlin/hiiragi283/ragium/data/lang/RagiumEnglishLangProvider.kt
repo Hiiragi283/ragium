@@ -115,7 +115,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         addFluid(RagiumFluids.SULFUR_TRIOXIDE, "Sulfur Trioxide")
         addFluid(RagiumFluids.SULFURIC_ACID, "Sulfuric Acid")
 
-        addFluid(RagiumFluids.HELIUM, "Helium")
+        addFluid(RagiumFluids.CHORUS_GAS, "Chorus Gas")
 
         addFluid(RagiumFluids.RAGI_MATTER, "Ragi-Matter")
         // Item

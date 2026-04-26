@@ -4,6 +4,7 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
@@ -20,6 +21,7 @@ import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -308,14 +310,6 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result += resultCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
             recipeId suffix "_from_warped_stem"
         }
-        // Warped Dust + Lava -> Ender Pearl
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL)
-            ingredient += inputCreator.lava(250)
-
-            result += resultCreator.create(Items.ENDER_PEARL)
-            recipeId suffix "_from_warped"
-        }
     }
 
     @JvmStatic
@@ -499,8 +493,54 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     private fun end() {
+        chorus()
+        ender()
+
         eldritch()
-        helium()
+    }
+
+    @JvmStatic
+    private fun chorus() {
+        // Chorus Fruit -> Chorus Gas
+        pyrolyzing {
+            ingredient += inputCreator.create(Items.CHORUS_FRUIT)
+            result += resultCreator.create(RagiumFluids.CHORUS_GAS, 250)
+        }
+        // Chorus Gas + Phantom Membrane + Shulker Shell -> Levitatine
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(Items.PHANTOM_MEMBRANE)
+            itemIngredients += inputCreator.create(Items.SHULKER_SHELL)
+            fluidIngredient = inputCreator.create(RagiumFluids.CHORUS_GAS)
+            result += resultCreator.material(CommonParts.GEM, RagiumMaterialKeys.LEVITATINE)
+        }
+    }
+
+    @JvmStatic
+    private fun ender() {
+        val moltenEnder: HTFluidIngredient = inputCreator.molten(VanillaMaterialKeys.ENDER) { it / 3 }
+        // Warped Crystal -> Ender Pearl
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+            ingredient += inputCreator.create(baseOrDust(HCMaterialKeys.WARPED_CRYSTAL))
+            ingredient += moltenEnder
+            result += resultCreator.create(Items.ENDER_PEARL)
+            recipeId suffix "_from_warped"
+        }
+        // Fruit -> Chorus Fruit
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+            ingredient += inputCreator.create(Tags.Items.FOODS_FRUIT)
+            ingredient += moltenEnder
+            result += resultCreator.create(Items.CHORUS_FRUIT)
+            time /= 2
+            recipeId suffix "_with_ender"
+        }
+        // Stone -> End Stone
+        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+            ingredient += inputCreator.create(Tags.Items.STONES)
+            ingredient += moltenEnder
+            result += resultCreator.create(Items.END_STONE)
+            time /= 2
+            recipeId suffix "_with_ender"
+        }
     }
 
     @JvmStatic
@@ -546,15 +586,6 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             define('A') += HiiragiCoreTags.Items.PLASTICS
             define('B') += RagiumItems.ARTIFICIAL_ARTIFACT
             resultStack += Items.ELYTRA
-        }
-    }
-
-    @JvmStatic
-    private fun helium() {
-        // End Stone -> Helium
-        pyrolyzing {
-            ingredient += inputCreator.create(Tags.Items.END_STONES, 4)
-            result += resultCreator.create(RagiumFluids.HELIUM, 500)
         }
     }
 
