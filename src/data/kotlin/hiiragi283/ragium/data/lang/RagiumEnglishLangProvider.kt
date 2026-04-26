@@ -60,7 +60,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         add(RagiumBlocks.BREWERY, "Brewery")
         add(RagiumBlocks.CHEMICAL_WASHER, "Chemical Washer")
-        add(RagiumBlocks.FLUID_MIXER, "Fluid Mixer")
         add(RagiumBlocks.MIXER, "Mixer")
 
         add(RagiumBlocks.FLUID_DUPLICATOR, "Fluid Duplicator")

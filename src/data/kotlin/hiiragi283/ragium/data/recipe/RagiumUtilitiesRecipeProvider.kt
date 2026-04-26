@@ -145,7 +145,6 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             define('C') += CommonTagPrefixes.GEAR to RagiumMaterialKeys.STAINLESS_STEEL
             resultStack += RagiumBlocks.CHEMICAL_WASHER
         }
-        elite(RagiumBlocks.FLUID_MIXER) { it += RagiumBlocks.TANK }
         elite(RagiumBlocks.MIXER) { it += Items.COPPER_GRATE }
         // Ultimate
         HTShapedRecipeBuilder.create(output) {

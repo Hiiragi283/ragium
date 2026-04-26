@@ -34,7 +34,6 @@ object RagiumConst {
     const val BREWERY = "brewery"
     const val CHEMICAL_REACTOR = "chemical_reactor"
     const val CHEMICAL_WASHER = "chemical_washer"
-    const val FLUID_MIXER = "fluid_mixer"
     const val MIXER = "mixer"
 
     // Machine - Ultimate
@@ -75,7 +74,6 @@ object RagiumConst {
     const val CHEMICAL_WASHING = "chemical_washing"
 
     const val MIXING = "mixing"
-    const val FLUID_MIXING = "fluid_mixing"
     const val ITEM_MIXING = "item_mixing"
 
     // Machine - Ultimate

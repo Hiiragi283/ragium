@@ -508,12 +508,13 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun eldritch() {
         // Eldritch Flux
-        /*HTChemicalReactingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
-            fluidIngredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
-            results += resultCreator.molten(HCMaterialKeys.ELDRITCH)
-        }*/
+        HTChemicalReactingRecipeBuilder.create(output) {
+            ingredients += inputCreator.molten(HCMaterialKeys.CRIMSON_CRYSTAL)
+            ingredients += inputCreator.molten(HCMaterialKeys.WARPED_CRYSTAL)
+            catalyst += itemCreator.create(HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER)
+
+            fluidResults += resultCreator.molten(HCMaterialKeys.ELDRITCH)
+        }
 
         // Artificial Artifact
         HTShapedRecipeBuilder.create(output) {

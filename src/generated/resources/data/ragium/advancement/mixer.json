@@ -5,10 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "ragium:fluid_mixer",
-              "ragium:mixer"
-            ]
+            "items": "ragium:mixer"
           }
         ]
       },

@@ -50,10 +50,8 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
         refineryBlock(RagiumBlocks.REFINERY)
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, cool)
 
-        val mixerFront: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, RagiumConst.MACHINE, RagiumConst.MIXER)
         frontMachineBlock(RagiumBlocks.BREWERY, RagiumConst.MACHINE, chemical)
         refineryBlock(RagiumBlocks.CHEMICAL_WASHER)
-        frontMachineBlock(RagiumBlocks.FLUID_MIXER, RagiumConst.MACHINE, chemical, mixerFront)
         frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
 
         refineryBlock(RagiumBlocks.FLUID_DUPLICATOR)

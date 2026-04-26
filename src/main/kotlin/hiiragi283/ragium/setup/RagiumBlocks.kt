@@ -137,10 +137,6 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.CHEMICAL_WASHER, RagiumTranslation.CHEMICAL_WASHER, machine().noOcclusion())
 
     @JvmField
-    val FLUID_MIXER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.FLUID_MIXER, RagiumTranslation.MIXER)
-
-    @JvmField
     val MIXER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
 
