@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
-import hiiragi283.core.common.data.recipe.blueprint
+import hiiragi283.core.common.recipe.ingredient.HTBluePrintIngredient
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
@@ -16,40 +16,42 @@ object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     private fun freezing() {
         // Water -> Ice
         HTFreezingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.blueprint(0)
-            fluidIngredient = inputCreator.water()
+            ingredient = inputCreator.water()
+            catalyst += HTBluePrintIngredient(0).toVanilla()
             result = resultCreator.create(Items.ICE)
         }
         // Ice -> Packed Ice
         HTFreezingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(Items.ICE, 6)
-            fluidIngredient = inputCreator.water()
+            ingredient = inputCreator.water(6000)
+            catalyst += itemCreator.create(Items.PACKED_ICE)
             result = resultCreator.create(Items.PACKED_ICE)
+            time *= 3
         }
         // Packed Ice -> Blue Ice
         HTFreezingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.create(Items.PACKED_ICE, 6)
-            fluidIngredient = inputCreator.water()
+            ingredient = inputCreator.water(36000)
+            catalyst += itemCreator.create(Items.BLUE_ICE)
             result = resultCreator.create(Items.BLUE_ICE)
+            time *= 9
         }
 
         // Lava -> Obsidian
         HTFreezingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.blueprint(0)
-            fluidIngredient = inputCreator.lava()
+            ingredient = inputCreator.lava()
+            catalyst += HTBluePrintIngredient(0).toVanilla()
             result = resultCreator.create(Items.OBSIDIAN)
         }
         // Lava -> Magma Block
         HTFreezingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.blueprint(1)
-            fluidIngredient = inputCreator.lava(250)
+            ingredient = inputCreator.lava(250)
+            catalyst += HTBluePrintIngredient(1).toVanilla()
             result = resultCreator.create(Items.MAGMA_BLOCK)
         }
 
         // Honey -> Honey Block
         HTFreezingRecipeBuilder.create(output) {
-            itemIngredient = inputCreator.blueprint(0)
-            fluidIngredient = inputCreator.create(HCFluids.HONEY)
+            ingredient = inputCreator.create(HCFluids.HONEY)
+            catalyst += HTBluePrintIngredient(0).toVanilla()
             result = resultCreator.create(Items.HONEY_BLOCK)
         }
     }

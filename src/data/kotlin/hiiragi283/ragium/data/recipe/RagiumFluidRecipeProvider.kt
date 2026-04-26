@@ -11,10 +11,10 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.core.common.data.recipe.blueprint
 import hiiragi283.core.common.data.recipe.builder.HTTankInteractionRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.common.recipe.ingredient.HTBluePrintIngredient
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
@@ -56,8 +56,8 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             // Liquid Dye -> Dye
             val dye: HTSimpleItemHolderLike = VanillaColoredContents.DYE[color] ?: continue
             HTFreezingRecipeBuilder.create(output) {
-                itemIngredient = inputCreator.blueprint(0)
-                fluidIngredient = inputCreator.create(content, 250)
+                ingredient = inputCreator.create(content, 250)
+                catalyst += HTBluePrintIngredient(0).toVanilla()
                 result = resultCreator.create(dye)
             }
         }

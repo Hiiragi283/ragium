@@ -140,8 +140,8 @@ object RagiumRecipeSerializers {
         RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
-                    HTItemIngredient.CODEC.fieldOf(HTConst.ITEM_INGREDIENT).forGetter(HTFreezingRecipe::itemIngredient),
-                    HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTFreezingRecipe::fluidIngredient),
+                    HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTFreezingRecipe::ingredient),
+                    HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST).forGetter(HTFreezingRecipe::catalyst),
                     HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTFreezingRecipe::result),
                     HTProcessingRecipe.timeCodec(),
                 ).apply(instance, ::HTFreezingRecipe)

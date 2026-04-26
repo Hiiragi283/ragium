@@ -151,10 +151,8 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // レシピを登録
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         HTFreezingRecipeBuilder.create(output) {
-            itemIngredient = getBlueprint(prefix)
-            fluidIngredient = inputCreator.create(HTFluidPart.MOLTEN, entry) {
-                part.getScaledAmount(it, entry).toInt()
-            }
+            ingredient = inputCreator.create(HTFluidPart.MOLTEN, entry) { part.getScaledAmount(it, entry).toInt() }
+            catalyst += getBlueprint(prefix).unsized
             result = resultCreator.create(resultItem)
             recipeId suffix "_from_molten"
         }

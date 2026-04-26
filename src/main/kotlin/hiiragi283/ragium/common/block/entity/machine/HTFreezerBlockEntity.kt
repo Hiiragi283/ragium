@@ -121,8 +121,8 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
             recipe.assemble(false).let(outputHandler::insert)
             // input
             val recipe: HTFreezingRecipe = recipe.recipe
-            fluidInputHandler.consume(recipe.fluidIngredient)
-            itemInputHandler.consume(recipe.itemIngredient)
+            fluidInputHandler.consume(recipe.ingredient)
+            itemInputHandler.consume(1)
 
             playSound(SoundEvents.GLASS_HIT)
         }

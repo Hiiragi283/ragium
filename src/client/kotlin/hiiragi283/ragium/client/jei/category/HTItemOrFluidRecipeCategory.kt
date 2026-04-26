@@ -1,46 +1,45 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.integration.jei.addFluidIngredient
-import hiiragi283.core.api.integration.jei.addFluidResult
-import hiiragi283.core.api.integration.jei.addItemIngredient
-import hiiragi283.core.api.integration.jei.addItemResult
-import hiiragi283.core.api.integration.jei.category.HTHolderRecipeCategory
-import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
-import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
+import hiiragi283.core.api.integration.jei.addChancedItem
+import hiiragi283.core.api.integration.jei.addFluidStack
+import hiiragi283.core.api.integration.jei.addFluidStacks
+import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
+import hiiragi283.core.api.integration.jei.setFluidSlotRenderer
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
+import hiiragi283.core.api.recipe.viewer.display.HTProcessingRecipeDisplay
+import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import net.minecraft.world.item.crafting.RecipeSerializer
 
-open class HTItemOrFluidRecipeCategory<RECIPE : HTBasicItemOrFluidRecipe>(
-    guiHelper: IGuiHelper,
-    recipeType: HTHolderRecipeViewerType<RECIPE>,
-    serializer: RecipeSerializer<RECIPE>,
-) : HTHolderRecipeCategory.Registered<RECIPE>(guiHelper, recipeType, serializer) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: RECIPE, focuses: IFocusGroup) {
+class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeViewerType<HTProcessingRecipeDisplay>) :
+    HTDisplayRecipeCategory.Processing(guiHelper, recipeType) {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
         builder
             .addInputSlot(getPosition(0), getPosition(0))
-            .addFluidIngredient(recipe.ingredient.getRight())
+            .addFluidStacks(contents.inputFluid(0))
             .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
+            .setFluidSlotRenderer()
         builder
             .addInputSlot(getPosition(2), getPosition(0))
-            .addItemIngredient(recipe.ingredient.getLeft())
+            .addItemStacks(contents.inputItem(0))
             .setSlotBackground(HTBackgroundType.INPUT)
         // outputs
         builder
             .addOutputSlot(getPosition(5), getPosition(0))
-            .addItemResult(recipe.result.getLeft())
+            .addChancedItem(contents.outputItem(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
         builder
             .addOutputSlot(getPosition(7), getPosition(0))
-            .addFluidResult(recipe.result.getRight())
+            .addFluidStack(contents.outputFluid(0))
             .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
+            .setFluidSlotRenderer()
     }
 
-    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RECIPE, focuses: IFocusGroup) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProcessingRecipeDisplay, focuses: IFocusGroup) {
         builder.addRecipePlus(getPosition(1))
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
         builder.addRecipePlus(getPosition(6))

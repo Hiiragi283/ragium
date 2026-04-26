@@ -1,15 +1,12 @@
 {
   "type": "ragium:freezing",
-  "fluid_ingredient": {
+  "catalyst": {
+    "type": "hiiragi_core:blue_print",
+    "number": 0
+  },
+  "ingredient": {
     "amount": 250,
     "fluids": "#c:dyes/lime"
-  },
-  "item_ingredient": {
-    "amount": 1,
-    "items": {
-      "type": "hiiragi_core:blue_print",
-      "number": 0
-    }
   },
   "result": {
     "count": 1,

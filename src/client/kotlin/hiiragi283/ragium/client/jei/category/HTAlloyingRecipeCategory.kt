@@ -1,41 +1,40 @@
 package hiiragi283.ragium.client.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
-import hiiragi283.core.api.integration.jei.addItemIngredient
-import hiiragi283.core.api.integration.jei.addItemResult
-import hiiragi283.core.api.integration.jei.category.HTHolderRecipeCategory
-import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
+import hiiragi283.core.api.integration.jei.addChancedItem
+import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
+import hiiragi283.core.api.recipe.viewer.display.HTProcessingRecipeDisplay
+import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
-import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class HTAlloyingRecipeCategory(guiHelper: IGuiHelper) :
-    HTHolderRecipeCategory.Registered<HTAlloyingRecipe>(guiHelper, RagiumRecipeViewerTypes.ALLOYING, RagiumRecipeSerializers.ALLOYING) {
-    override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTAlloyingRecipe, focuses: IFocusGroup) {
+    HTDisplayRecipeCategory.Processing(guiHelper, RagiumRecipeViewerTypes.ALLOYING) {
+    override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
         builder
             .addInputSlot(getPosition(0), getPosition(0))
-            .addItemIngredient(recipe.primary)
+            .addItemStacks(contents.inputItem(0))
             .setSlotBackground(HTBackgroundType.INPUT)
         builder
             .addInputSlot(getPosition(2), getPosition(0))
-            .addItemIngredient(recipe.secondary)
+            .addItemStacks(contents.inputItem(1))
             .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
         builder
             .addInputSlot(getPosition(3), getPosition(0))
-            .addItemIngredient(recipe.tertiary)
+            .addItemStacks(contents.inputItem(2))
             .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
         // output
         builder
             .addInputSlot(getPosition(6), getPosition(0))
-            .addItemResult(recipe.result)
+            .addChancedItem(contents.outputItem(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 
-    override fun setupRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTAlloyingRecipe, focuses: IFocusGroup) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProcessingRecipeDisplay, focuses: IFocusGroup) {
         builder.addRecipePlus(getPosition(1))
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(4.25), getPosition(0))
     }

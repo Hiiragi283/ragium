@@ -67,6 +67,7 @@ object RagiumConst {
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
     const val REFINING = "refining"
+    const val SOLIDIFYING = "solidifying"
     const val WASHING = "washing"
 
     // Machine - Elite
