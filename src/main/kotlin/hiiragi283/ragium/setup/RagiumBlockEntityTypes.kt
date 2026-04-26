@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFluidDuplicatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMassFabricatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
@@ -142,6 +143,10 @@ object RagiumBlockEntityTypes {
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
         REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
 
+    @JvmField
+    val MASS_FABRICATOR: HTDeferredBlockEntityType<HTMassFabricatorBlockEntity> =
+        REGISTER.registerTick(RagiumConst.MASS_FABRICATOR, ::HTMassFabricatorBlockEntity)
+
     //    Storage    //
 
     @JvmField
@@ -219,6 +224,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, FLUID_DUPLICATOR.get())
         // Device
         registerHandler(event, ENCHANTER.get())
+        registerHandler(event, MASS_FABRICATOR.get())
 
         // Storage
         HTItemCapabilities.registerBlockEntity(event, UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)

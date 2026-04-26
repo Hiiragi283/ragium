@@ -152,6 +152,10 @@ object RagiumBlocks {
     val ENCHANTER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
         registerMachine(RagiumBlockEntityTypes.ENCHANTER, RagiumTranslation.ENCHANTER)
 
+    @JvmField
+    val MASS_FABRICATOR: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.MASS_FABRICATOR, RagiumTranslation.MASS_FABRICATOR)
+
     //    Storages    //
 
     @JvmField

@@ -78,7 +78,10 @@ data object RagiumRecipeViewerTypes {
     // Machine - Ultimate
     @JvmField
     val MASS_FABRICATING: HTHolderRecipeViewerType<HTMassFabricatingRecipe> =
-        createHolder(RagiumRecipeLookups.MASS_FABRICATING, RagiumItems.RAGI_MATTER, 18 * 8)
+        createHolder(RagiumRecipeLookups.MASS_FABRICATING, RagiumItems.RAGI_MATTER, 18 * 8) {
+            workStations.clear()
+            workStations += RagiumBlocks.MASS_FABRICATOR.toStack()
+        }
 
     // Device - Ultimate
     @JvmField

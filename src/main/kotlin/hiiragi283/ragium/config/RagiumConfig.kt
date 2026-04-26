@@ -123,7 +123,10 @@ object RagiumConfig {
 
             // Ultimate
             @JvmField
-            val fluidDuplicator: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.FLUID_DUPLICATOR)
+            val fluidDuplicator: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.FLUID_DUPLICATOR, 1024)
+
+            @JvmField
+            val massFabricator: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.MASS_FABRICATOR, 1024)
         }
 
         class Device(builder: ModConfigSpec.Builder)

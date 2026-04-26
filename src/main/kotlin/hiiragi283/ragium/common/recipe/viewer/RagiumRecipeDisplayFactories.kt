@@ -23,7 +23,7 @@ data object RagiumRecipeDisplayFactories {
             addInput(it.ingredient.getLeft())
             addInput(it.ingredient.getRight())
             it.result.getLeft()?.let(::addOutput)
-            it.result.getLeft()?.let(::addOutput)
+            it.result.getRight()?.let(::addOutput)
         }
 
     // Machine - Basic

@@ -34,9 +34,11 @@ abstract class HTSingleItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
         private set
 
     override fun createItemSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
-        inputSlot = builder.addSlot(HTSlotInfo.INPUT, HTBasicItemSlot.input(listener))
+        inputSlot = builder.addSlot(HTSlotInfo.INPUT, createInputSlot(listener))
         outputSlot = builder.addSlot(HTSlotInfo.OUTPUT, HTBasicItemSlot.output(listener))
     }
+
+    protected open fun createInputSlot(listener: HTContentListener): HTBasicItemSlot = HTBasicItemSlot.input(listener)
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
@@ -59,43 +61,47 @@ abstract class HTSingleItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
         )
     }
 
-    //    Processing    //
+    //    Basic    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<SingleRecipeInput, HTSingleItemRecipe>() {
-        private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
-        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+    abstract class Basic(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+        HTSingleItemBlockEntity(type, pos, state) {
+        //    Processing    //
 
-        override fun createInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)
+        protected inner class SingleProgressHandler : ProgressHandler<SingleRecipeInput, HTSingleItemRecipe>() {
+            private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
+            private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: SingleRecipeInput): HTSingleItemRecipe? =
-            getCache().getFirstRecipe(input, level)
+            override fun createInput(level: ServerLevel, pos: BlockPos): SingleRecipeInput? = createInput(inputHandler)
 
-        override fun canComplete(
-            level: ServerLevel,
-            pos: BlockPos,
-            recipe: HTHandledRecipe<SingleRecipeInput, HTSingleItemRecipe>,
-        ): Boolean = recipe.assemble(true).let(outputHandler::canInsert)
+            override fun findRecipe(level: ServerLevel, pos: BlockPos, input: SingleRecipeInput): HTSingleItemRecipe? =
+                getCache().getFirstRecipe(input, level)
 
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<SingleRecipeInput, HTSingleItemRecipe>) {
-            // output
-            recipe.assemble(false).let(outputHandler::insert)
-            // input
-            inputHandler.consume(recipe.map(HTSingleItemRecipe::getRequiredAmount))
+            override fun canComplete(
+                level: ServerLevel,
+                pos: BlockPos,
+                recipe: HTHandledRecipe<SingleRecipeInput, HTSingleItemRecipe>,
+            ): Boolean = recipe.assemble(true).let(outputHandler::canInsert)
 
-            playSound()
+            override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<SingleRecipeInput, HTSingleItemRecipe>) {
+                // output
+                recipe.assemble(false).let(outputHandler::insert)
+                // input
+                inputHandler.consume(recipe.map(HTSingleItemRecipe::getRequiredAmount))
+
+                playSound()
+            }
         }
+
+        final override fun createHandler(): HTProgressHandler<*> = SingleProgressHandler()
+
+        protected abstract fun getCache(): HTRecipeCache<SingleRecipeInput, out HTSingleItemRecipe>
+
+        protected abstract fun playSound()
     }
-
-    final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
-
-    protected abstract fun getCache(): HTRecipeCache<SingleRecipeInput, out HTSingleItemRecipe>
-
-    protected abstract fun playSound()
 
     //    Simple    //
 
-    abstract class Simple(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-        HTSingleItemBlockEntity(type, pos, state) {
+    abstract class Simple(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : Basic(type, pos, state) {
         //    Serialize    //
 
         private val cache: HTRecipeCache<SingleRecipeInput, out HTSingleItemRecipe> = getCache()

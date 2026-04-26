@@ -147,6 +147,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         }
         elite(RagiumBlocks.MIXER) { it += Items.COPPER_GRATE }
         // Ultimate
+        ultimate(RagiumBlocks.MASS_FABRICATOR) { it += Tags.Items.NETHER_STARS }
         HTShapedRecipeBuilder.create(output) {
             pattern(
                 "ABA",
@@ -203,6 +204,22 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             define('B').let(consumer)
             define('C') += RagiumItems.ELECTRIC_CIRCUIT
             define('D') += CommonTagPrefixes.PLATE to CommonMaterialKeys.CARBON
+            resultStack += block
+        }
+    }
+
+    @JvmStatic
+    private fun ultimate(block: ItemLike, consumer: (HTIngredientHolder.Single) -> Unit) {
+        HTShapedRecipeBuilder.create(output) {
+            pattern(
+                "AAA",
+                "BCB",
+                "DDD",
+            )
+            define('A') += CommonTagPrefixes.INGOT to VanillaMaterialKeys.NETHERITE
+            define('B').let(consumer)
+            define('C') += RagiumItems.ARTIFICIAL_ARTIFACT
+            define('D') += Tags.Items.OBSIDIANS_CRYING
             resultStack += block
         }
     }

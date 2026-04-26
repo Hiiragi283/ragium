@@ -147,7 +147,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeDisplayFactories::mixing,
         )
         // Machine - Ultimate
-        addLookupRecipes(registration, RagiumRecipeViewerTypes.MASS_FABRICATING, RagiumRecipeLookups.MASS_FABRICATING)
+        addLookupRecipes(
+            registration,
+            RagiumRecipeViewerTypes.MASS_FABRICATING,
+            RagiumRecipeLookups.MASS_FABRICATING,
+            sorter = compareBy { it.point },
+        )
         // Device - Ultimate
     }
 

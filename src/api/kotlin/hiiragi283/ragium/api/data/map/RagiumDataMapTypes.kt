@@ -7,6 +7,7 @@ import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
+import hiiragi283.core.api.storage.item.toResource
 import hiiragi283.ragium.api.RagiumAPI
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
@@ -76,7 +77,10 @@ object RagiumDataMapTypes {
     fun getMatterPoint(resource: HTItemResourceType): Int = resource.getData(MATTER_POINT) ?: 0
 
     @JvmStatic
-    fun getMatterPoint(stack: ItemStack): Int = stack.itemHolder.getData(MATTER_POINT) ?: 0
+    fun getTotalMatterPoint(stack: ItemStack): Int {
+        val base: Int = stack.toResource()?.let(::getMatterPoint) ?: return 0
+        return base * stack.count
+    }
 
     @JvmStatic
     private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: Codec<T>): DataMapType<R, T> =

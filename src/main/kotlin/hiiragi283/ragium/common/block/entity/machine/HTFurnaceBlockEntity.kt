@@ -14,7 +14,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 class HTFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemBlockEntity(RagiumBlockEntityTypes.ELECTRIC_FURNACE, pos, state) {
+    HTSingleItemBlockEntity.Basic(RagiumBlockEntityTypes.ELECTRIC_FURNACE, pos, state) {
     // TODO: Support Blasting or Smoking recipe type
     override fun getCache(): HTRecipeCache<SingleRecipeInput, out HTSingleItemRecipe> =
         HTLookupRecipeCache.forRecipe(HTVanillaRecipeTypes.SMELTING)

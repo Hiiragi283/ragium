@@ -32,6 +32,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     CRUSHER(HTConst.DESCRIPTION, RagiumConst.CRUSHER),
     CUTTING_MACHINE(HTConst.DESCRIPTION, RagiumConst.CUTTING_MACHINE),
     ELECTRIC_FURNACE(HTConst.DESCRIPTION, RagiumConst.ELECTRIC_FURNACE),
+    PLANTER(HTConst.DESCRIPTION, RagiumConst.PLANTER),
 
     MELTER(HTConst.DESCRIPTION, RagiumConst.MELTER),
     PYROLYZER(HTConst.DESCRIPTION, RagiumConst.PYROLYZER),
@@ -47,8 +48,8 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     FLUID_DUPLICATOR(HTConst.DESCRIPTION, RagiumConst.FLUID_DUPLICATOR),
 
     // Blocks - Device
-    PLANTER(HTConst.DESCRIPTION, "planter"),
-    ENCHANTER(HTConst.DESCRIPTION, "enchanter"),
+    ENCHANTER(HTConst.DESCRIPTION, RagiumConst.ENCHANTER),
+    MASS_FABRICATOR(HTConst.DESCRIPTION, RagiumConst.MASS_FABRICATOR),
 
     // Blocks - Storages
     BATTERY(HTConst.DESCRIPTION, "battery"),

@@ -65,6 +65,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.FLUID_DUPLICATOR, "液体複製機")
         // Device
         add(RagiumBlocks.ENCHANTER, "エンチャンター")
+        add(RagiumBlocks.MASS_FABRICATOR, "物質生成機")
         // Storage
         add(RagiumBlocks.UNIVERSAL_CHEST, "共有チェスト")
 

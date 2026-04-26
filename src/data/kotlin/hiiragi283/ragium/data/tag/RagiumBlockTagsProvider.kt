@@ -32,6 +32,9 @@ class RagiumBlockTagsProvider(
             .addTag(RagiumTags.Blocks.STORAGES)
         // Other
         RagiumTags.Blocks.DEVICES.apply(factory)
+        factory
+            .apply(RagiumTags.Blocks.DEVICES.ultimate)
+            .add(RagiumBlocks.ENCHANTER)
 
         RagiumTags.Blocks.GENERATORS.apply(factory)
         factory
@@ -63,6 +66,7 @@ class RagiumBlockTagsProvider(
         factory
             .apply(RagiumTags.Blocks.MACHINES.ultimate)
             .add(RagiumBlocks.FLUID_DUPLICATOR)
+            .add(RagiumBlocks.MASS_FABRICATOR)
 
         factory
             .apply(RagiumTags.Blocks.STORAGES)

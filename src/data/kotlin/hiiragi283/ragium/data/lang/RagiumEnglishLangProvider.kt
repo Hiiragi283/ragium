@@ -65,6 +65,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.FLUID_DUPLICATOR, "Fluid Duplicator")
         // Device
         add(RagiumBlocks.ENCHANTER, "Enchanter")
+        add(RagiumBlocks.MASS_FABRICATOR, "Mass Fabricator")
         // Storage
         add(RagiumBlocks.UNIVERSAL_CHEST, "Universal Chest")
 
