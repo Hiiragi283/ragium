@@ -24,7 +24,6 @@ class RagiumItemModelProvider(fileHelper: ExistingFileHelper, output: PackOutput
     override fun registerModels() {
         existingFileHelper.trackGenerated(wireOverlay, TEXTURE)
 
-        trackItem(RagiumItems.CARBON_COMPOUND)
         trackItem(RagiumItems.CRYO_CHARGE)
 
         trackItem(RagiumItems.CRUDE_SILICON)

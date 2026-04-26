@@ -7,7 +7,11 @@
     },
     {
       "amount": 1,
-      "items": "ragium:carbon_compound"
+      "items": "#c:dusts/sulfur"
+    },
+    {
+      "amount": 1,
+      "items": "#c:dusts/carbon"
     }
   ],
   "result": {

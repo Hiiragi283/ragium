@@ -59,9 +59,6 @@ object RagiumItems {
     val RAGI_ALLOY_COMPOUND: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("ragi_alloy_compound")
 
     @JvmField
-    val CARBON_COMPOUND: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("carbon_compound")
-
-    @JvmField
     val CRYO_CHARGE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("cryo_charge")
 
     // Nether

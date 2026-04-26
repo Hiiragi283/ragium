@@ -1,6 +1,7 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -201,17 +202,12 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredients += inputCreator.create(HCItems.RAW_RUBBER)
             ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
         }
-        // Carbon Compound
-        HTShapelessRecipeBuilder.create(output) {
-            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.CARBON
-            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.SULFUR
-            resultStack += RagiumItems.CARBON_COMPOUND
-        }
         // Raw Rubber + Sulfur + Carbon -> Rubber
         HTCombiningRecipeBuilder.alloying(output) {
             result = resultCreator.create(HCItems.CURED_RUBBER, 3)
             ingredients += inputCreator.create(HCItems.RAW_RUBBER)
-            ingredients += inputCreator.create(RagiumItems.CARBON_COMPOUND)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.CARBON)
             recipeId suffix "_with_carbon"
         }
     }
@@ -366,8 +362,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     private fun explosive() {
         // Carbon Compound + Saltpeter -> Gunpowder
         HTShapelessRecipeBuilder.create(output) {
-            ingredients += RagiumItems.CARBON_COMPOUND
+            val carbons: List<HTMaterialKey> = listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL, CommonMaterialKeys.CARBON)
+            ingredients += listOf(CommonTagPrefixes.DUST) to carbons
             ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.SALTPETER
+            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.SULFUR
             resultStack += Items.GUNPOWDER
             recipeId suffix "_from_carbon_compound"
         }

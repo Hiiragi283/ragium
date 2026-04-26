@@ -119,7 +119,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         addFluid(RagiumFluids.RAGI_MATTER, "らぎマター")
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "ラギ合金混合物")
-        add(RagiumItems.CARBON_COMPOUND, "炭素混合物")
         add(RagiumItems.CRYO_CHARGE, "クライオチャージ")
 
         add(RagiumItems.CRUDE_SILICON, "粗製シリコン")
