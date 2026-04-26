@@ -29,7 +29,7 @@ class HTAlloyingRecipeCategory(guiHelper: IGuiHelper) :
             .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
         // output
         builder
-            .addInputSlot(getPosition(6), getPosition(0))
+            .addOutputSlot(getPosition(6), getPosition(0))
             .addChancedItem(contents.outputItem(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }

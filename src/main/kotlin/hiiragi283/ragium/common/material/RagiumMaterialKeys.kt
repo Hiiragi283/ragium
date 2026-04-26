@@ -27,7 +27,7 @@ object RagiumMaterialKeys {
 
     @JvmStatic
     val LEVITATINE: HTMaterialKey = create("levitatine")
-    
+
     //    Alloys    //
 
     @JvmStatic

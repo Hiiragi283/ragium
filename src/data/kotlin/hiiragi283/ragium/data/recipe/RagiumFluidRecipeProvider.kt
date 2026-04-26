@@ -8,7 +8,6 @@ import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.registry.HTFluidContent
-import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTTankInteractionRecipeBuilder
@@ -36,6 +35,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         washing()
 
         tankInteraction()
+        coloring()
     }
 
     //    Refining    //
@@ -47,22 +47,6 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.DIAMOND)
             ingredient += inputCreator.molten(RagiumMaterialKeys.RAGINITE) { it * 6 }
             result += resultCreator.material(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-        }
-        // Liquid Dyes
-        for ((color: HTDefaultColor, content: HTFluidContent) in HCFluids.DyeContents) {
-            // Dye + Water -> Liquid Dye
-            HTItemOrFluidRecipeBuilder.refining(output) {
-                ingredient += inputCreator.create(color.dyesTag)
-                ingredient += inputCreator.water(250)
-                result += resultCreator.create(content, 250)
-            }
-            // Liquid Dye -> Dye
-            val dye: HTSimpleItemHolderLike = VanillaColoredContents.DYE[color] ?: continue
-            HTFreezingRecipeBuilder.create(output) {
-                ingredient = inputCreator.create(content, 250)
-                catalyst += HTBluePrintIngredient(0).toVanilla()
-                result = resultCreator.create(dye)
-            }
         }
 
         waterRefining()
@@ -183,21 +167,6 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun mixing() {
         for ((color: HTDefaultColor, concrete: ItemLike) in VanillaColoredContents.CONCRETE) {
-            // Gravel + Sand + Liquid Dye -> Concrete
-            HTMixingRecipeBuilder.create(output) {
-                itemIngredients += inputCreator.create(Tags.Items.GRAVELS, 4)
-                itemIngredients += inputCreator.create(Tags.Items.SANDS, 4)
-                fluidIngredient = inputCreator.create(HCFluids.DyeContents[color], 250)
-                result += resultCreator.create(concrete, 8)
-            }
-            // Powder + Water -> Concrete
-            val powder: ItemLike = VanillaColoredContents.CONCRETE_POWDER[color] ?: continue
-            HTItemOrFluidRecipeBuilder.refining(output) {
-                ingredient += inputCreator.create(powder)
-                ingredient += inputCreator.water(125)
-                result += resultCreator.create(concrete)
-                time /= 8
-            }
         }
     }
 
@@ -241,6 +210,46 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             itemIngredient = itemCreator.create(Items.GLASS_BOTTLE)
             fluidIngredient = inputCreator.create(RagiumFluids.MERCURY, 250)
             itemResult = resultCreator.create(RagiumItems.MERCURY_BOTTLE)
+        }
+    }
+
+    //    Coloring    //
+
+    @JvmStatic
+    private fun coloring() {
+        for ((color: HTDefaultColor, content: HTFluidContent) in HCFluids.DyeContents) {
+            // Dye + Water -> Liquid Dye
+            HTItemOrFluidRecipeBuilder.refining(output) {
+                ingredient += inputCreator.create(color.dyesTag)
+                ingredient += inputCreator.water(250)
+                result += resultCreator.create(content, 250)
+            }
+            // Liquid Dye -> Dye
+            VanillaColoredContents.DYE[color]?.let { dye: ItemLike ->
+                HTFreezingRecipeBuilder.create(output) {
+                    ingredient = inputCreator.create(content, 250)
+                    catalyst += HTBluePrintIngredient(0).toVanilla()
+                    result = resultCreator.create(dye)
+                }
+            }
+            // Gravel + Sand + Liquid Dye -> Concrete
+            VanillaColoredContents.CONCRETE[color]?.let { concrete: ItemLike ->
+                HTMixingRecipeBuilder.create(output) {
+                    itemIngredients += inputCreator.create(Tags.Items.GRAVELS, 4)
+                    itemIngredients += inputCreator.create(Tags.Items.SANDS, 4)
+                    fluidIngredient = inputCreator.create(content, 250)
+                    result += resultCreator.create(concrete, 8)
+                }
+                // Powder + Water -> Concrete
+                VanillaColoredContents.CONCRETE_POWDER[color]?.let { powder ->
+                    HTItemOrFluidRecipeBuilder.refining(output) {
+                        ingredient += inputCreator.create(powder)
+                        ingredient += inputCreator.water(125)
+                        result += resultCreator.create(concrete)
+                        time /= 8
+                    }
+                }
+            }
         }
     }
 }
