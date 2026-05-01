@@ -5,6 +5,7 @@
     "fluids": "#c:nitrogen"
   },
   "fluid_result": {
+    "amount": 1000,
     "id": "ragium:creosote"
   },
   "item_ingredient": {

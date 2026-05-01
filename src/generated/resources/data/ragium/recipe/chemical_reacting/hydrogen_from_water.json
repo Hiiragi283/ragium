@@ -3,6 +3,7 @@
   "catalyst": "minecraft:heart_of_the_sea",
   "fluid_result": [
     {
+      "amount": 1000,
       "id": "ragium:hydrogen"
     },
     {

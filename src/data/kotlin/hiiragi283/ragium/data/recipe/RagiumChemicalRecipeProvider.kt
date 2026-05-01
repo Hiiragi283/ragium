@@ -7,6 +7,7 @@ import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
+import hiiragi283.core.common.data.recipe.builder.HTItemOrFluidRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -19,7 +20,6 @@ import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTAssemblingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -43,9 +43,9 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private inline fun pyrolyzing(builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
         // Without Nitrogen
-        HTItemOrFluidRecipeBuilder.pyrolyzing(output, builderAction)
+        RagiumRecipeBuilder.pyrolyzing(output, builderAction)
         // With Nitrogen
-        HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
+        RagiumRecipeBuilder.pyrolyzing(output) {
             builderAction()
             ingredient += inputCreator.create(RagiumFluids.NITROGEN)
             time /= 2
@@ -111,7 +111,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // Coal + Steam -> Synthetic Gas
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
             ingredient += inputCreator.create(RagiumFluids.STEAM, 250)
 
@@ -133,7 +133,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result = resultCreator.create(RagiumFluids.SYNTHETIC_OIL, 125)
         }
         // Synthetic Oil -> Fuel
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
             result += resultCreator.create(RagiumFluids.FUEL, 200)
             recipeId suffix "_from_synthetic_oil"
@@ -165,7 +165,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun slime() {
         // H2SO4 + 2x NaOH aq -> Na2SO4 + 2x H2O
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(Items.SLIME_BALL)
             ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID)
             result += resultCreator.create(Items.MAGMA_CREAM)
@@ -174,21 +174,21 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // Slimeball + Water -> Glue
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(Tags.Items.SLIME_BALLS)
             ingredient += inputCreator.water()
             result += resultCreator.create(RagiumFluids.GLUE)
             recipeId suffix "_from_slime"
         }
         // Polymer Resin + Water -> Glue
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(HCItems.POLYMER_RESIN)
             ingredient += inputCreator.water()
             result += resultCreator.create(RagiumFluids.GLUE)
             recipeId suffix "_from_polymer"
         }
         // Borax + Glue -> Slimeball
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.BORAX)
             ingredient += inputCreator.create(RagiumFluids.GLUE)
             result += resultCreator.create(Items.SLIME_BALL, 4)
@@ -253,21 +253,21 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // Crude Oil -> Petroleum Coke + Naphtha
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(RagiumFluids.CRUDE_OIL, 500)
             result += resultCreator.material(CommonParts.FUEL, RagiumMaterialKeys.PETROLEUM_COKE)
             result += resultCreator.create(RagiumFluids.NAPHTHA, 300)
             recipeId suffix "_from_crude_oil"
         }
         // Naphtha -> Polymer Resin + Fuel
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(RagiumFluids.NAPHTHA, 500)
             result += resultCreator.create(HCItems.POLYMER_RESIN)
             result += resultCreator.create(RagiumFluids.FUEL, 300)
             recipeId suffix "_from_naphtha"
         }
         // Polymer Resin + Oxygen -> Plastic
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(HCItems.POLYMER_RESIN)
             ingredient += inputCreator.create(RagiumFluids.OXYGEN, 250)
             result += resultCreator.material(CommonParts.PLATE, CommonMaterialKeys.PLASTIC, 2)
@@ -293,7 +293,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_from_crimson_stem"
         }
         // Crimson Dust + Lava -> Blaze Powder
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL)
             ingredient += inputCreator.lava(250)
 
@@ -317,7 +317,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Soul Soil -> KNO3
 
         // 2x KNO3 + H2SO4 -> 2x HNO3 + K2SO4
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER, 2)
             ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID)
             result += resultCreator.create(Items.MAGMA_CREAM)
@@ -340,7 +340,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             fluidResults += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE, 4000)
         }
         // Ghast Tear -> NO2
-        HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
+        RagiumRecipeBuilder.pyrolyzing(output) {
             ingredient += inputCreator.create(Items.GHAST_TEAR)
             result += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE)
         }
@@ -365,7 +365,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // HNO3 + Glycerol -> Nitroglycerin
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(RagiumItems.GLYCEROL_DROP)
             ingredient += inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
             result += resultCreator.create(RagiumItems.NITROGLYCERIN)
@@ -379,7 +379,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             resultStack += RagiumItems.DYNAMITE to 2
         }
         // HNO3 + Paper -> Nitrocellulose
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(Items.PAPER)
             ingredient += inputCreator.create(RagiumFluids.NITRIC_ACID, 250)
             result += resultCreator.create(RagiumItems.NITROCELLULOSE)
@@ -408,7 +408,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun blaze() {
         // S -> SO2
-        HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
+        RagiumRecipeBuilder.pyrolyzing(output) {
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             result += resultCreator.create(RagiumFluids.SULFUR_DIOXIDE)
         }
@@ -420,7 +420,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             fluidResults += resultCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
         }
         // Blaze Powder -> SO3
-        HTItemOrFluidRecipeBuilder.pyrolyzing(output) {
+        RagiumRecipeBuilder.pyrolyzing(output) {
             ingredient += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.BLAZE)
             result += resultCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
         }
@@ -448,7 +448,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_with_coal_coke"
         }
         // Crude Silicon + Sulfuric Acid -> Refined Silicon
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(HiiragiCoreTags.Items.SILICON)
             ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
             result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.SILICON)
@@ -519,14 +519,14 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     private fun ender() {
         val moltenEnder: HTFluidIngredient = inputCreator.molten(VanillaMaterialKeys.ENDER) { it / 3 }
         // Warped Crystal -> Ender Pearl
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(baseOrDust(HCMaterialKeys.WARPED_CRYSTAL))
             ingredient += moltenEnder
             result += resultCreator.create(Items.ENDER_PEARL)
             recipeId suffix "_from_warped"
         }
         // Fruit -> Chorus Fruit
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(Tags.Items.FOODS_FRUIT)
             ingredient += moltenEnder
             result += resultCreator.create(Items.CHORUS_FRUIT)
@@ -534,7 +534,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_with_ender"
         }
         // Stone -> End Stone
-        HTItemOrFluidRecipeBuilder.chemicalWashing(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(Tags.Items.STONES)
             ingredient += moltenEnder
             result += resultCreator.create(Items.END_STONE)

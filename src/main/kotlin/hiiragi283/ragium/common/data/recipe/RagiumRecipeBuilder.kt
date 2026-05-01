@@ -15,7 +15,10 @@ data object RagiumRecipeBuilder {
 
     @JvmStatic
     inline fun cutting(output: RecipeOutput, builderAction: HTItemToMultiItemRecipeBuilder.() -> Unit) {
-        HTItemToMultiItemRecipeBuilder(RagiumConst.CUTTING, ::HTCuttingRecipe).apply(builderAction).save(output)
+        HTItemToMultiItemRecipeBuilder(RagiumConst.CUTTING, ::HTCuttingRecipe)
+            .apply { time /= 2 }
+            .apply(builderAction)
+            .save(output)
     }
 
     //    Advanced    //
@@ -35,7 +38,10 @@ data object RagiumRecipeBuilder {
 
     @JvmStatic
     inline fun washing(output: RecipeOutput, builderAction: HTItemToMultiItemRecipeBuilder.() -> Unit) {
-        HTItemToMultiItemRecipeBuilder(RagiumConst.WASHING, ::HTWashingRecipe).apply(builderAction).save(output)
+        HTItemToMultiItemRecipeBuilder(RagiumConst.WASHING, ::HTWashingRecipe)
+            .apply { time /= 2 }
+            .apply(builderAction)
+            .save(output)
     }
 
     //    Elite    //

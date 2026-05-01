@@ -5,6 +5,7 @@
     "fluids": "#c:water"
   },
   "fluid_result": {
+    "amount": 1000,
     "id": "ragium:glue"
   },
   "item_ingredient": {

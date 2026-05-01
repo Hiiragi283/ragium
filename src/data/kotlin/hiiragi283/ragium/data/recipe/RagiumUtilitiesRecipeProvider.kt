@@ -21,7 +21,7 @@ import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.crafting.HTBatteryCombiningRecipe
 import hiiragi283.ragium.common.crafting.HTTankCombiningRecipe
-import hiiragi283.ragium.common.data.recipe.HTItemOrFluidRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -41,7 +41,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         parts()
 
         // Blueprint
-        HTItemOrFluidRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.refining(output) {
             ingredient += inputCreator.create(Items.PAPER)
             ingredient += inputCreator.create(HCFluids.DyeContents[HTDefaultColor.BLUE], 250)
 
