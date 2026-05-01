@@ -2,6 +2,7 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -11,6 +12,7 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.world.item.Items
@@ -19,6 +21,7 @@ import net.neoforged.neoforge.common.Tags
 object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         alloying()
+        imploding()
         melting()
     }
 
@@ -111,6 +114,36 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             result = resultCreator.material(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
             ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.DIAMOND))
             ingredients += inputCreator.create(baseOrDust(RagiumMaterialKeys.RAGINITE), 8)
+        }
+    }
+
+    //    Imploding    //
+
+    @JvmStatic
+    private fun imploding() {
+        // Coal -> Diamond
+        val coals: List<HTMaterialKey> = listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL)
+        RagiumRecipeBuilder.imploding(output) {
+            ingredient = inputCreator.create(coals.flatMap(::baseOrDust), 64)
+            result = resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            recipeId suffix "_from_coals"
+        }
+        RagiumRecipeBuilder.imploding(output) {
+            ingredient = inputCreator.create(coals.map(CommonTagPrefixes.STORAGE_BLOCK::itemTagKey), 7)
+            result = resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            recipeId suffix "_from_coal_blocks"
+        }
+        // Coal Coke -> Diamond
+        RagiumRecipeBuilder.imploding(output) {
+            ingredient = inputCreator.create(baseOrDust(CommonMaterialKeys.COAL_COKE), 32)
+            result = resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            recipeId suffix "_from_coal_coke"
+        }
+        // Carbon -> Diamond
+        RagiumRecipeBuilder.imploding(output) {
+            ingredient = inputCreator.create(baseOrDust(CommonMaterialKeys.CARBON), 16)
+            result = resultCreator.material(CommonParts.GEM, VanillaMaterialKeys.DIAMOND)
+            recipeId suffix "_from_carbon"
         }
     }
 

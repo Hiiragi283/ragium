@@ -68,7 +68,7 @@ data object RagiumRecipeDisplayFactories {
         .map { (tagKey: TagKey<Item>, amount: Int) ->
             val (id: ResourceLocation, recipe: HTImplodingRecipe) = holder
             HTProgressRecipeDisplay(
-                id.withSuffix("/${tagKey.location.path}"),
+                id.withSuffix("/${tagKey.location.path.split("/", limit = 2)[1]}"),
                 HTRecipeContents.create {
                     addInput(recipe.ingredient)
                     addInput(HTIngredientCreator.create(tagKey, amount))
