@@ -6,16 +6,21 @@ import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper.addFlatDisplayRecip
 import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper.addLookupRecipes
 import hiiragi283.core.api.integration.jei.HTJeiWorkstationHelper
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
+import hiiragi283.core.api.item.createEnchantedBook
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
+import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
+import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.core.impl.recipe.HTBasicItemToMultiItemRecipe
 import hiiragi283.core.impl.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.client.jei.category.HTAlloyingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTAssemblingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTChemicalReactingRecipeCategory
@@ -28,8 +33,11 @@ import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTPlantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
+import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -42,7 +50,14 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
+import mezz.jei.api.runtime.IIngredientManager
+import net.minecraft.client.Minecraft
+import net.minecraft.core.Holder
+import net.minecraft.core.RegistryAccess
+import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.enchantment.Enchantment
+import kotlin.streams.asSequence
 
 @JeiPlugin
 class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
@@ -89,6 +104,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
+        val ingredientManager: IIngredientManager = registration.ingredientManager
+
         fun itemOrFluid(viewerType: HTRecipeViewerType<HTProgressRecipeDisplay>, lookup: HTRecipeLookup<HTItemOrFluidRecipe>) {
             addDisplayRecipes(registration, viewerType, lookup) {
                 it.castRecipe<HTBasicItemOrFluidRecipe>()?.let(RagiumRecipeDisplayFactories::itemOrFluid)
@@ -102,12 +119,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeLookups.ALLOYING,
             RagiumRecipeDisplayFactories::alloying,
         )
-        addDisplayRecipes(
-            registration,
-            RagiumRecipeViewerTypes.ASSEMBLING,
-            RagiumRecipeLookups.ASSEMBLING,
-            RagiumRecipeDisplayFactories::assembling,
-        )
+        addDisplayRecipes(registration, RagiumRecipeViewerTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING) {
+            it.castRecipe<HTAssemblingRecipe>()?.let(RagiumRecipeDisplayFactories::assembling)
+        }
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.CUTTING, RagiumRecipeLookups.CUTTING) {
             it.castRecipe<HTBasicItemToMultiItemRecipe>()?.let(HTRecipeDisplayFactories::itemToMultiItem)
         }
@@ -127,12 +141,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeLookups.IMPLODING,
             RagiumRecipeDisplayFactories::imploding,
         )
-        addDisplayRecipes(
-            registration,
-            RagiumRecipeViewerTypes.MELTING,
-            RagiumRecipeLookups.MELTING,
-            RagiumRecipeDisplayFactories::melting,
-        )
+        addDisplayRecipes(registration, RagiumRecipeViewerTypes.MELTING, RagiumRecipeLookups.MELTING) {
+            it.castRecipe<HTMeltingRecipe>()?.let(RagiumRecipeDisplayFactories::melting)
+        }
         itemOrFluid(RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
         itemOrFluid(RagiumRecipeViewerTypes.REFINING, RagiumRecipeLookups.REFINING)
         addDisplayRecipes(
@@ -163,6 +174,32 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             sorter = compareBy { it.point },
         )
         // Device - Ultimate
+
+        registerCustomRecipes(registration)
+    }
+
+    private fun registerCustomRecipes(registration: IRecipeRegistration) {
+        val access: RegistryAccess = Minecraft.getInstance().level?.registryAccess() ?: return
+
+        addDisplayRecipes(
+            registration,
+            RagiumRecipeViewerTypes.MELTING,
+            access
+                .registryOrThrow(Registries.ENCHANTMENT)
+                .holders()
+                .asSequence()
+                .map { holder: Holder.Reference<Enchantment> ->
+                    HTProgressRecipeDisplay(
+                        holder.toLike().getId().withPrefix("${RagiumConst.MELTING}/exp_from_ench_book/"),
+                        HTRecipeContents.create {
+                            val enchBook: ItemStack = createEnchantedBook(holder)
+                            addInput(enchBook)
+                            addOutput(HTBookMeltingRecipe.assemble(enchBook))
+                        },
+                        HTProgressData.time(100),
+                    )
+                },
+        )
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

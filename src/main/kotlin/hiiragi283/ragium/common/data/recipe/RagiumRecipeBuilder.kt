@@ -1,8 +1,9 @@
 package hiiragi283.ragium.common.data.recipe
 
+import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.common.data.recipe.builder.HTItemOrFluidRecipeBuilder
-import hiiragi283.core.common.data.recipe.builder.HTItemToItemRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTItemToResultRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
@@ -26,8 +27,8 @@ data object RagiumRecipeBuilder {
     //    Advanced    //
 
     @JvmStatic
-    inline fun imploding(output: RecipeOutput, builderAction: HTItemToItemRecipeBuilder.() -> Unit) {
-        HTItemToItemRecipeBuilder(RagiumConst.IMPLODING, ::HTImplodingRecipe)
+    inline fun imploding(output: RecipeOutput, builderAction: HTItemToResultRecipeBuilder<HTItemResult>.() -> Unit) {
+        HTItemToResultRecipeBuilder(RagiumConst.IMPLODING, ::HTImplodingRecipe)
             .apply { time /= 2 }
             .apply(builderAction)
             .save(output)

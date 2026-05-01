@@ -16,7 +16,6 @@ import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
-import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -70,7 +69,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
     //    Processing    //
 
     private inner class ProgressHandlerImpl : ProgressHandler<HTItemToFluidRecipe, HTSingleToSingleCompletedRecipe.ItemToFluid>() {
-        private val cache: HTRecipeCaches.SingleItem<HTMeltingRecipe> = HTRecipeCaches.SingleItem(RagiumRecipeLookups.MELTING)
+        private val cache: HTRecipeCaches.SingleItem<HTItemToFluidRecipe> = HTRecipeCaches.SingleItem(RagiumRecipeLookups.MELTING)
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 

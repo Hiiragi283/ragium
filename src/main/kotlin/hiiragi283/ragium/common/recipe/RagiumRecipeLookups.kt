@@ -1,9 +1,12 @@
 package hiiragi283.ragium.common.recipe
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.function.identity
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.HTRecipeType
+import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.registry.HTSimpleHolderLike
@@ -18,6 +21,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
@@ -32,7 +36,7 @@ data object RagiumRecipeLookups {
     val ALLOYING: HTRecipeLookup<HTAlloyingRecipe> = create(RagiumRecipeTypes.ALLOYING)
 
     @JvmField
-    val ASSEMBLING: HTRecipeLookup<HTAssemblingRecipe> = create(RagiumRecipeTypes.ASSEMBLING)
+    val ASSEMBLING: HTRecipeLookupImpl<HTDoubleItemToItemRecipe> = create(RagiumConst.ASSEMBLING)
 
     @JvmField
     val CUTTING: HTRecipeLookupImpl<HTItemToMultiItemRecipe> = create(RagiumConst.CUTTING)
@@ -48,7 +52,7 @@ data object RagiumRecipeLookups {
     val IMPLODING: HTRecipeLookup<HTImplodingRecipe> = create(RagiumRecipeTypes.IMPLODING)
 
     @JvmField
-    val MELTING: HTRecipeLookup<HTMeltingRecipe> = create(RagiumRecipeTypes.MELTING)
+    val MELTING: HTRecipeLookupImpl<HTItemToFluidRecipe> = create(RagiumConst.MELTING)
 
     @JvmField
     val PYROLYZING: HTRecipeLookupImpl<HTItemOrFluidRecipe> = create(RagiumConst.PYROLYZING)
@@ -99,9 +103,12 @@ data object RagiumRecipeLookups {
 
     @JvmStatic
     fun init() {
+        ASSEMBLING.addProvider(RagiumRecipeTypes.ASSEMBLING.get(), identity())
         CUTTING.addProvider(RagiumRecipeTypes.CUTTING.get(), identity())
         PLANTING.addProvider(RagiumRecipeTypes.PLANTING.get(), identity())
 
+        MELTING.addProvider(RagiumRecipeTypes.MELTING.get(), identity())
+        MELTING.addProvider(RagiumAPI.id(HTConst.MELTING, "exp_from_ench_book") to HTBookMeltingRecipe)
         PYROLYZING.addProvider(RagiumRecipeTypes.PYROLYZING.get(), identity())
         REFINING.addProvider(RagiumRecipeTypes.REFINING.get(), identity())
 

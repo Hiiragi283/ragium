@@ -20,7 +20,7 @@ class HTPlantingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.
             .setSlotBackground(HTBackgroundType.INPUT)
         builder
             .addInputSlot(getPosition(0), getPosition(2))
-            .addItemStacks(contents.catalyst(1))
+            .addItemStacks(contents.catalyst(0))
             .setSlotBackground(HTBackgroundType.NONE)
         // outputs
         repeat(4) { index: Int ->
