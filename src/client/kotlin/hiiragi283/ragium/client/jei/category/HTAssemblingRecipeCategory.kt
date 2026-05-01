@@ -3,7 +3,7 @@ package hiiragi283.ragium.client.jei.category
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addChancedItem
 import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
-import hiiragi283.core.api.recipe.viewer.display.HTProcessingRecipeDisplay
+import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -12,7 +12,7 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
 class HTAssemblingRecipeCategory(guiHelper: IGuiHelper) :
-    HTDisplayRecipeCategory.Processing(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING) {
+    HTDisplayRecipeCategory.Progress(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
         builder
@@ -30,7 +30,7 @@ class HTAssemblingRecipeCategory(guiHelper: IGuiHelper) :
             .setSlotBackground(HTBackgroundType.OUTPUT)
     }
 
-    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProcessingRecipeDisplay, focuses: IFocusGroup) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProgressRecipeDisplay, focuses: IFocusGroup) {
         builder.addRecipeArrow().setPosition(getPosition(3.25), getPosition(0))
         builder.addRecipePlus(getPosition(1))
     }

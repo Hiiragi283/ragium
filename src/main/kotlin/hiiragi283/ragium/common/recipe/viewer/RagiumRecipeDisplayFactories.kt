@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.recipe.viewer
 
 import hiiragi283.core.api.recipe.HTRecipeHolder
-import hiiragi283.core.api.recipe.viewer.display.HTProcessingRecipeDisplay
+import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.core.impl.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -10,16 +10,16 @@ import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
-import hiiragi283.ragium.common.recipe.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
+import hiiragi283.ragium.common.recipe.RTPlantingRecipe
 
 /**
  * @see hiiragi283.core.common.recipe.viewer.display.HCRecipeDisplayFactories
  */
 data object RagiumRecipeDisplayFactories {
     @JvmStatic
-    fun itemOrFluid(holder: HTRecipeHolder<out HTBasicItemOrFluidRecipe>): HTProcessingRecipeDisplay =
-        HTRecipeDisplayFactories.processing(holder) {
+    fun itemOrFluid(holder: HTRecipeHolder<out HTBasicItemOrFluidRecipe>): HTProgressRecipeDisplay =
+        HTRecipeDisplayFactories.progress(holder) {
             addInput(it.ingredient.getLeft())
             addInput(it.ingredient.getRight())
             it.result.getLeft()?.let(::addOutput)
@@ -28,7 +28,7 @@ data object RagiumRecipeDisplayFactories {
 
     // Machine - Basic
     @JvmStatic
-    fun alloying(holder: HTRecipeHolder<HTAlloyingRecipe>): HTProcessingRecipeDisplay = HTRecipeDisplayFactories.processing(holder) {
+    fun alloying(holder: HTRecipeHolder<HTAlloyingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.primary)
         addInput(it.secondary)
         addInput(it.tertiary)
@@ -36,13 +36,14 @@ data object RagiumRecipeDisplayFactories {
     }
 
     @JvmStatic
-    fun assembling(holder: HTRecipeHolder<HTAssemblingRecipe>): HTProcessingRecipeDisplay = HTRecipeDisplayFactories.processing(holder) {
-        it.itemIngredients.forEach(::addInput)
+    fun assembling(holder: HTRecipeHolder<HTAssemblingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+        addInput(it.primary)
+        addInput(it.secondary)
         addOutput(it.result)
     }
 
     @JvmStatic
-    fun planting(holder: HTRecipeHolder<HTPlantingRecipe>): HTProcessingRecipeDisplay = HTRecipeDisplayFactories.processing(holder) {
+    fun planting(holder: HTRecipeHolder<RTPlantingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.plant)
         addCatalyst(it.soil)
         it.results.forEach(::addOutput)
@@ -50,20 +51,20 @@ data object RagiumRecipeDisplayFactories {
 
     // Machine - Advanced
     @JvmStatic
-    fun freezing(holder: HTRecipeHolder<HTFreezingRecipe>): HTProcessingRecipeDisplay = HTRecipeDisplayFactories.processing(holder) {
+    fun freezing(holder: HTRecipeHolder<HTFreezingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.ingredient)
         addCatalyst(it.catalyst)
         addOutput(it.result)
     }
 
     @JvmStatic
-    fun melting(holder: HTRecipeHolder<HTMeltingRecipe>): HTProcessingRecipeDisplay = HTRecipeDisplayFactories.processing(holder) {
+    fun melting(holder: HTRecipeHolder<HTMeltingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.ingredient)
         addOutput(it.result)
     }
 
     @JvmStatic
-    fun washing(holder: HTRecipeHolder<HTWashingRecipe>): HTProcessingRecipeDisplay = HTRecipeDisplayFactories.processing(holder) {
+    fun washing(holder: HTRecipeHolder<HTWashingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.ingredient)
         addInput(HTWashingRecipe.WATER_INGREDIENT)
         it.results.forEach(::addOutput)
@@ -71,17 +72,16 @@ data object RagiumRecipeDisplayFactories {
 
     // Machine - Elite
     @JvmStatic
-    fun reacting(holder: HTRecipeHolder<HTChemicalReactingRecipe>): HTProcessingRecipeDisplay =
-        HTRecipeDisplayFactories.processing(holder) {
-            addInput(it.primary)
-            addInput(it.secondary.getLeft())
-            addCatalyst(it.secondary.getRight())
-            it.fluidResults.forEach(::addOutput)
-            it.itemResult.ifPresent(::addOutput)
-        }
+    fun reacting(holder: HTRecipeHolder<HTChemicalReactingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+        addInput(it.primary)
+        addInput(it.secondary.getLeft())
+        addCatalyst(it.secondary.getRight())
+        it.fluidResults.forEach(::addOutput)
+        it.itemResult.ifPresent(::addOutput)
+    }
 
     @JvmStatic
-    fun mixing(holder: HTRecipeHolder<HTMixingRecipe>): HTProcessingRecipeDisplay = HTRecipeDisplayFactories.processing(holder) {
+    fun mixing(holder: HTRecipeHolder<HTMixingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.primary)
         addInput(it.secondary)
         addInput(it.fluidIngredient)

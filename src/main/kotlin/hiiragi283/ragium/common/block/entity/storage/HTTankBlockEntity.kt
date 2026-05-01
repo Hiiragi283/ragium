@@ -1,28 +1,25 @@
 package hiiragi283.ragium.common.block.entity.storage
 
-import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTTankEmptyingRecipe
 import hiiragi283.core.api.recipe.base.HTTankFillingRecipe
-import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.api.serialization.value.read
-import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.api.util.Ior
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
@@ -39,7 +36,6 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidActionResult
 import net.neoforged.neoforge.fluids.FluidStack
@@ -111,18 +107,6 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     //    Sync    //
 
-    override fun writeValue(output: HTValueOutput) {
-        super.writeValue(output)
-        output.write(HTConst.EMPTYING, emptyingCache)
-        output.write(HTConst.FILLING, fillingCache)
-    }
-
-    override fun readValue(input: HTValueInput) {
-        super.readValue(input)
-        input.read(HTConst.EMPTYING, emptyingCache)
-        input.read(HTConst.FILLING, fillingCache)
-    }
-
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
         super.applyImplicitComponents(componentInput)
         componentInput.get(HCDataComponents.FLUID)?.copy()?.let(tank::setStack)
@@ -149,10 +133,8 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     //    Recipe    //
 
     private var checkRecipe: Boolean = false
-    private val emptyingCache: HTLookupRecipeCache<SingleRecipeInput, HTTankEmptyingRecipe> =
-        HTLookupRecipeCache.forRecipe(HCRecipeLookups.EMPTYING)
-    private val fillingCache: HTLookupRecipeCache<HTItemAndFluidRecipeInput, HTTankFillingRecipe> =
-        HTLookupRecipeCache.forRecipe(HCRecipeLookups.FILLING)
+    private val emptyingCache: HTRecipeCaches.SingleItem<HTTankEmptyingRecipe> = HTRecipeCaches.SingleItem(HCRecipeLookups.EMPTYING)
+    private val fillingCache: HTRecipeCaches.ItemAndFluid<HTTankFillingRecipe> = HTRecipeCaches.ItemAndFluid(HCRecipeLookups.FILLING)
 
     private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
@@ -172,15 +154,14 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     private fun drainContainer(level: ServerLevel): Boolean {
-        val input = SingleRecipeInput(inputHandler.getItemStack())
-        if (input.isEmpty) return false
-        val recipe: HTTankEmptyingRecipe = emptyingCache.getFirstRecipe(input, level) ?: return false
+        val stack: ItemStack = inputHandler.getItemStack()
+        val recipe: HTTankEmptyingRecipe = emptyingCache.findFirstRecipe(stack, level) ?: return false
 
-        val emptyContainer: ItemStack = recipe.assemble(input, true)
-        val fluidStack: FluidStack = recipe.assembleFluid(input)
-        if (outputHandler.canInsert(emptyContainer) && fluidOutputHandler.canInsert(fluidStack)) {
+        val rawResult: Ior<ItemStack, FluidStack> = recipe.assemble(stack)
+        val fluidStack: FluidStack = rawResult.getRight() ?: return false
+        if (outputHandler.canInsert(stack) && fluidOutputHandler.canInsert(fluidStack)) {
             // outputs
-            outputHandler.insert(emptyContainer)
+            outputHandler.insert(stack)
             fluidOutputHandler.insert(fluidStack)
             // input
             inputHandler.consume(1)
@@ -191,16 +172,18 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
     }
 
     private fun fillContainer(level: ServerLevel): Boolean {
-        val input = HTItemAndFluidRecipeInput(inputHandler.getItemStack(), fluidInputHandler.getFluidStack())
-        if (input.isEmpty) return false
+        val itemStack: ItemStack = inputHandler.getItemStack()
+        val fluidStack: FluidStack = fluidInputHandler.getFluidStack()
 
-        val recipe: HTTankFillingRecipe = fillingCache.getFirstRecipe(input, level) ?: return false
+        val recipe: HTTankFillingRecipe = fillingCache.findFirstRecipe(itemStack, fluidStack, level) ?: return false
 
-        val filledContainer: ItemStack = recipe.assemble(input, true)
+        val filledContainer: ItemStack = recipe.assemble(itemStack, fluidStack)
         if (outputHandler.canInsert(filledContainer)) {
             outputHandler.insert(filledContainer)
-            inputHandler.consume(1)
-            recipe.getRequiredFluidAmount(input).let(fluidInputHandler::consume)
+            recipe.getRequiredAmount(itemStack, fluidStack).let { (first: Int, second: Int) ->
+                inputHandler.consume(first)
+                fluidInputHandler.consume(second)
+            }
             return true
         } else {
             return false

@@ -3,25 +3,10 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTRecipe
-import hiiragi283.core.api.recipe.base.HTProcessingRecipe
-import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
-import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
-import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
-import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.fluid.HTFluidView
-import hiiragi283.core.api.storage.fluid.toStackOrEmpty
 import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
-import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.api.storage.item.HTItemView
-import hiiragi283.core.api.storage.item.toStackOrEmpty
-import hiiragi283.core.api.util.Ior
-import hiiragi283.core.api.util.toIor
 import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
@@ -34,7 +19,6 @@ import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
@@ -89,38 +73,6 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     fun modifyTime(time: Int): Int = time // modifyValue(HTUpgradeKeys.SPEED) { time / (it * getBaseMultiplier()) }
 
     override fun onUpdateMachine(level: ServerLevel, pos: BlockPos, state: BlockState): Boolean = recipeHandler.tick(level, pos)
-
-    //    Extension    //
-
-    fun createInput(view: HTItemView): SingleRecipeInput? {
-        val resource: HTItemResourceType = view.getResource() ?: return null
-        return SingleRecipeInput(resource.toStack(view.getAmount()))
-    }
-
-    fun createInput(view: HTFluidView): HTSingleFluidRecipeInput? {
-        val resource: HTFluidResourceType = view.getResource() ?: return null
-        return HTSingleFluidRecipeInput(resource.toStack(view.getAmount()))
-    }
-
-    fun createInput(firstView: HTItemView, secondView: HTItemView): HTDoubleRecipeInput? {
-        val ior: Ior<HTItemResourceType, HTItemResourceType> = (firstView.getResource() to secondView.getResource()).toIor() ?: return null
-        return ior.toPair().let { (first: HTItemResourceType?, second: HTItemResourceType?) ->
-            HTDoubleRecipeInput(
-                first.toStackOrEmpty(firstView.getAmount()),
-                second.toStackOrEmpty(secondView.getAmount()),
-            )
-        }
-    }
-
-    fun createInput(itemView: HTItemView, fluidView: HTFluidView): HTItemAndFluidRecipeInput? {
-        val ior: Ior<HTItemResourceType, HTFluidResourceType> = (itemView.getResource() to fluidView.getResource()).toIor() ?: return null
-        return ior.toPair().let { (item: HTItemResourceType?, fluid: HTFluidResourceType?) ->
-            HTItemAndFluidRecipeInput(
-                item.toStackOrEmpty(itemView.getAmount()),
-                fluid.toStackOrEmpty(fluidView.getAmount()),
-            )
-        }
-    }
 
     //    RecipeHandler    //
 

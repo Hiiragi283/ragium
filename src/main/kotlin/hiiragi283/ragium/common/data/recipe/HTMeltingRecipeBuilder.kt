@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.ragium.api.RagiumConst
@@ -8,7 +8,7 @@ import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
-class HTMeltingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.MELTING) {
+class HTMeltingRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.MELTING) {
     companion object {
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTMeltingRecipeBuilder.() -> Unit) {
@@ -24,6 +24,6 @@ class HTMeltingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.MELTING) {
     override fun createRecipe(): HTMeltingRecipe = HTMeltingRecipe(
         ingredient,
         result,
-        time,
+        progressData,
     )
 }

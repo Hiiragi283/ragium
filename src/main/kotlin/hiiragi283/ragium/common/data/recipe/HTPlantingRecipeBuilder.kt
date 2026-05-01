@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.impl.data.recipe.builder.HTMultiOutputRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.recipe.HTPlantingRecipe
+import hiiragi283.ragium.common.recipe.RTPlantingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.world.item.crafting.Ingredient
 
@@ -21,5 +21,5 @@ class HTPlantingRecipeBuilder : HTMultiOutputRecipeBuilder(RagiumConst.PLANTING)
     lateinit var plant: Ingredient
     lateinit var soil: Ingredient
 
-    override fun createRecipe(): HTPlantingRecipe = HTPlantingRecipe(plant, soil, results, time)
+    override fun createRecipe(): RTPlantingRecipe = RTPlantingRecipe(plant, soil, createList(), progressData)
 }

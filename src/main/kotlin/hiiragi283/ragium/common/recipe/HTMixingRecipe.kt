@@ -1,13 +1,20 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.base.HTFluidRecipe
-import hiiragi283.core.api.recipe.base.HTProcessingRecipe
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
+import hiiragi283.core.api.recipe.base.HTRecipeFactories
+import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.util.Ior
+import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
+import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -20,30 +27,56 @@ class HTMixingRecipe(
     val secondary: HTItemIngredient,
     val fluidIngredient: HTFluidIngredient,
     val result: Ior<HTItemResult, HTFluidResult>,
-    override val time: Int,
-) : HTProcessingRecipe.Serializable<HTMixingRecipe.Input>,
-    HTFluidRecipe<HTMixingRecipe.Input> {
+    override val progressData: HTProgressData,
+) : HTRecipePredicates.TripleInput<HTMixingRecipe.Input, ItemStack, ItemStack, FluidStack>,
+    HTRecipeFactories.DoubleItemAndFluid<Ior<ItemStack, FluidStack>>,
+    HTProgressRecipe.Simple<HTMixingRecipe.Input>,
+    HTSerializableRecipe<HTMixingRecipe.Input> {
+    companion object {
+        @JvmField
+        val CODEC: MapCodec<HTMixingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTItemIngredient.CODEC
+                        .listOf(2, 2)
+                        .fieldOf(HTConst.ITEM_INGREDIENT)
+                        .forGetter { listOf(it.primary, it.secondary) },
+                    HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTMixingRecipe::fluidIngredient),
+                    HTBasicItemOrFluidRecipe.RESULT_CODEC.forGetter(HTMixingRecipe::result),
+                    HTProgressData.CODEC.forGetter(HTMixingRecipe::progressData),
+                ).apply(instance, ::HTMixingRecipe)
+        }
+    }
+
     constructor(
         itemIngredient: List<HTItemIngredient>,
         fluidIngredient: HTFluidIngredient,
         result: Ior<HTItemResult, HTFluidResult>,
-        time: Int,
+        progressData: HTProgressData,
     ) : this(
         itemIngredient[0],
         itemIngredient[1],
         fluidIngredient,
         result,
-        time,
+        progressData,
     )
 
-    override fun test(input: Input): Boolean {
+    override fun test(first: ItemStack, second: ItemStack, third: FluidStack): Boolean =
+        primary.test(first) && secondary.test(second) && fluidIngredient.test(third)
+
+    override fun matches(input: Input): Boolean {
         val (firstItem: ItemStack, secondItem: ItemStack, fluid: FluidStack) = input
-        return primary.test(firstItem) && secondary.test(secondItem) && fluidIngredient.test(fluid)
+        return test(firstItem, secondItem, fluid)
     }
 
-    override fun assemble(input: Input, preview: Boolean): ItemStack = result.getLeft()?.getOrEmpty(preview) ?: ItemStack.EMPTY
+    override fun getRequiredAmount(first: ItemStack, second: ItemStack, third: FluidStack): Triple<Int, Int, Int> = Triple(
+        primary.getRequiredAmount(first),
+        secondary.getRequiredAmount(second),
+        fluidIngredient.getRequiredAmount(third),
+    )
 
-    override fun assembleFluid(input: Input): FluidStack = result.getRight()?.getOrEmpty() ?: FluidStack.EMPTY
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: FluidStack): Ior<ItemStack, FluidStack> =
+        result.mapLeft { it.getOrEmpty() }.mapRight { it.create() }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 

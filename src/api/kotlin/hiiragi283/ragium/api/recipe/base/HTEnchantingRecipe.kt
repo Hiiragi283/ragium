@@ -1,18 +1,25 @@
 package hiiragi283.ragium.api.recipe.base
 
-import hiiragi283.core.api.recipe.HTRecipe
-import hiiragi283.core.api.recipe.base.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTRecipePredicate
+import hiiragi283.core.api.recipe.HTTriRecipeFactory
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
+import net.neoforged.neoforge.common.util.TriPredicate
 
-interface HTEnchantingRecipe : HTRecipe<HTEnchantingRecipe.Input> {
-    fun getRequiredExpAmount(input: Input): Int
+interface HTEnchantingRecipe :
+    HTRecipePredicate<HTEnchantingRecipe.Input>,
+    TriPredicate<ItemStack, ItemStack, Int>,
+    HTTriRecipeFactory<ItemStack, ItemStack, Int, ItemStack> {
+    override fun test(base: ItemStack, addition: ItemStack, expAmount: Int): Boolean
 
-    fun getRequiredAdditionAmount(input: Input): Int
+    fun getRequiredExpAmount(base: ItemStack, addition: ItemStack): Int
 
-    interface Serializable :
-        HTEnchantingRecipe,
-        HTSerializableRecipe<Input>
+    fun getRequiredAdditionAmount(base: ItemStack, addition: ItemStack, expAmount: Int): Int
+
+    override fun matches(input: Input): Boolean {
+        val (base: ItemStack, addition: ItemStack, expAmount: Int) = input
+        return test(base, addition, expAmount)
+    }
 
     @JvmRecord
     data class Input(val base: ItemStack, val addition: ItemStack, val expAmount: Int) : RecipeInput {

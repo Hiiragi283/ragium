@@ -4,7 +4,7 @@ import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
-import hiiragi283.core.api.recipe.viewer.display.HTProcessingRecipeDisplay
+import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.util.Either
 import hiiragi283.core.impl.recipe.viewer.HTRecipeViewerTypeImpl
@@ -22,57 +22,57 @@ import net.minecraft.world.level.ItemLike
 data object RagiumRecipeViewerTypes {
     // Machine - Basic
     @JvmField
-    val ALLOYING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val ALLOYING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.ALLOYING, RagiumBlocks.ALLOY_SMELTER, 18 * 7)
 
     @JvmField
-    val ASSEMBLING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val ASSEMBLING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER, 18 * 6)
 
     @JvmField
-    val CUTTING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val CUTTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 5, 18 * 2)
 
     @JvmField
-    val PLANTING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val PLANTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.PLANTING, RagiumBlocks.PLANTER, 18 * 5, 18 * 3)
 
     // Machine - Advanced
     @JvmField
-    val FREEZING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val FREEZING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.FREEZING, RagiumBlocks.FREEZER, 18 * 6)
 
     @JvmField
-    val IMPLODING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val IMPLODING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.IMPLODING, RagiumBlocks.INDUSTRIAL_TNT, 18 * 7, 18 * 2)
 
     @JvmField
-    val MELTING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val MELTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.MELTING, RagiumBlocks.MELTER, 18 * 4)
 
     @JvmField
-    val PYROLYZING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val PYROLYZING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.PYROLYZING, RagiumBlocks.PYROLYZER, 18 * 8)
 
     @JvmField
-    val REFINING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val REFINING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY, 18 * 8)
 
     @JvmField
-    val WASHING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val WASHING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.WASHING, RagiumBlocks.WASHER, 18 * 7, 18 * 3)
 
     // Machine - Elite
     @JvmField
-    val CHEMICAL_REACTING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val CHEMICAL_REACTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.CHEMICAL_REACTING, RagiumBlocks.CHEMICAL_WASHER, 18 * 8, 18 * 3)
 
     @JvmField
-    val CHEMICAL_WASHING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val CHEMICAL_WASHING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.CHEMICAL_WASHING, RagiumBlocks.CHEMICAL_WASHER, 18 * 8)
 
     @JvmField
-    val MIXING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val MIXING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.MIXING, RagiumBlocks.MIXER, 18 * 8, 18 * 3)
 
     // Machine - Ultimate
@@ -85,7 +85,7 @@ data object RagiumRecipeViewerTypes {
 
     // Device - Ultimate
     @JvmField
-    val ENCHANTING: HTRecipeViewerType<HTProcessingRecipeDisplay> =
+    val ENCHANTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.ENCHANTING, RagiumBlocks.ENCHANTER, 18 * 8, 18 * 3)
 
     @JvmStatic

@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.core.api.function.identityLeft
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
@@ -12,7 +12,7 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
-class HTMixingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.MIXING) {
+class HTMixingRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.MIXING) {
     companion object {
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTMixingRecipeBuilder.() -> Unit) {
@@ -26,5 +26,5 @@ class HTMixingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.MIXING) {
 
     override fun getPrimalId(): ResourceLocation = result.toIor().map(HTItemResult::getId, HTFluidResult::getId, identityLeft())
 
-    override fun createRecipe(): HTMixingRecipe = HTMixingRecipe(itemIngredients, fluidIngredient, result.toIor(), time)
+    override fun createRecipe(): HTMixingRecipe = HTMixingRecipe(itemIngredients, fluidIngredient, result.toIor(), progressData)
 }

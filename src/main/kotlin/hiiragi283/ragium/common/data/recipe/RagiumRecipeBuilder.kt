@@ -1,33 +1,47 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.common.data.recipe.builder.HTDoubleMultiOutputRecipeBuilder
-import hiiragi283.core.common.data.recipe.builder.HTSingleMultiOutputRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTItemOrFluidRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTImplodingRecipe
+import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 
 data object RagiumRecipeBuilder {
+    //    Basic    //
+
     @JvmStatic
-    inline fun cutting(output: RecipeOutput, builderAction: HTSingleMultiOutputRecipeBuilder.() -> Unit) {
-        HTSingleMultiOutputRecipeBuilder(RagiumConst.CUTTING, ::HTCuttingRecipe).apply(builderAction).save(output)
+    inline fun cutting(output: RecipeOutput, builderAction: HTItemToMultiItemRecipeBuilder.() -> Unit) {
+        HTItemToMultiItemRecipeBuilder(RagiumConst.CUTTING, ::HTCuttingRecipe).apply(builderAction).save(output)
+    }
+
+    //    Advanced    //
+
+    @JvmStatic
+    inline fun pyrolyzing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
+        HTItemOrFluidRecipeBuilder(RagiumConst.PYROLYZING, ::HTPyrolyzingRecipe)
+            .apply { time *= 3 }
+            .apply(builderAction)
+            .save(output)
     }
 
     @JvmStatic
-    inline fun imploding(output: RecipeOutput, builderAction: HTDoubleMultiOutputRecipeBuilder.() -> Unit) {
-        HTDoubleMultiOutputRecipeBuilder(RagiumConst.IMPLODING) { base, addition, results, time ->
-            HTImplodingRecipe(
-                base,
-                addition.orElseThrow { error("Requires explosive for Imploding recipe") },
-                results,
-                time,
-            )
-        }.apply(builderAction).save(output)
+    inline fun refining(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
+        HTItemOrFluidRecipeBuilder(RagiumConst.REFINING, ::HTRefiningRecipe).apply(builderAction).save(output)
     }
 
     @JvmStatic
-    inline fun washing(output: RecipeOutput, builderAction: HTSingleMultiOutputRecipeBuilder.() -> Unit) {
-        HTSingleMultiOutputRecipeBuilder(RagiumConst.WASHING, ::HTWashingRecipe).apply(builderAction).save(output)
+    inline fun washing(output: RecipeOutput, builderAction: HTItemToMultiItemRecipeBuilder.() -> Unit) {
+        HTItemToMultiItemRecipeBuilder(RagiumConst.WASHING, ::HTWashingRecipe).apply(builderAction).save(output)
+    }
+
+    //    Elite    //
+
+    @JvmStatic
+    inline fun chemicalWashing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
+        HTItemOrFluidRecipeBuilder(RagiumConst.CHEMICAL_WASHING, ::HTChemicalWashingRecipe).apply(builderAction).save(output)
     }
 }

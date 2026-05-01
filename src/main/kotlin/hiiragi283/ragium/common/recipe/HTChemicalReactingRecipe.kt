@@ -1,11 +1,20 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.base.HTProcessingRecipe
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
+import hiiragi283.core.api.recipe.base.HTRecipeFactories
+import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
-import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.recipe.result.HTListFluidResult
+import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.util.Ior
+import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -18,35 +27,74 @@ import java.util.Optional
 class HTChemicalReactingRecipe(
     val primary: HTFluidIngredient,
     val secondary: Ior<HTFluidIngredient, Ingredient>,
-    val fluidResults: List<HTFluidResult>,
+    val fluidResults: HTListFluidResult,
     val itemResult: Optional<HTItemResult>,
-    override val time: Int,
-) : HTProcessingRecipe.Serializable<HTChemicalReactingRecipe.Input> {
-    override fun test(input: Input): Boolean {
-        val (catalyst: ItemStack, first: FluidStack, second: FluidStack) = input
-        if (!primary.test(first)) return false
+    override val progressData: HTProgressData,
+) : HTRecipePredicates.TripleInput<HTChemicalReactingRecipe.Input, ItemStack, FluidStack, FluidStack>,
+    HTRecipeFactories.ItemAndDoubleFluid<HTChemicalReactingRecipe.Output>,
+    HTProgressRecipe.Simple<HTChemicalReactingRecipe.Input>,
+    HTSerializableRecipe<HTChemicalReactingRecipe.Input> {
+    companion object {
+        @JvmField
+        val CODEC: MapCodec<HTChemicalReactingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTFluidIngredient.CODEC
+                        .fieldOf("primary")
+                        .forGetter(HTChemicalReactingRecipe::primary),
+                    HTCodecs
+                        .ior(
+                            HTFluidIngredient.CODEC.fieldOf("secondary"),
+                            HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST),
+                        ).forGetter(HTChemicalReactingRecipe::secondary),
+                    HTListFluidResult
+                        .codec(2)
+                        .fieldOf(HTConst.FLUID_RESULT)
+                        .forGetter(HTChemicalReactingRecipe::fluidResults),
+                    HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).forGetter(HTChemicalReactingRecipe::itemResult),
+                    HTProgressData.CODEC.forGetter { it.progressData },
+                ).apply(instance, ::HTChemicalReactingRecipe)
+        }
+    }
+
+    override fun matches(input: Input): Boolean {
+        val (catalyst: ItemStack, firstFluid: FluidStack, secondFluid: FluidStack) = input
+        return test(catalyst, firstFluid, secondFluid)
+    }
+
+    override fun test(first: ItemStack, second: FluidStack, third: FluidStack): Boolean {
+        if (!primary.test(second)) return false
         return secondary.fold(
-            { it.test(second) && catalyst.isEmpty },
-            { it.test(catalyst) && second.isEmpty },
-            { secondary, catalyst1 ->
-                catalyst1.test(catalyst) && secondary.test(second)
-            },
+            { it.test(third) && first.isEmpty },
+            { it.test(first) && third.isEmpty },
+            { secondary: HTFluidIngredient, catalyst1: Ingredient -> catalyst1.test(first) && secondary.test(third) },
         )
     }
 
-    override fun assemble(input: Input, preview: Boolean): ItemStack = itemResult.map { it.getOrEmpty(false) }.orElseGet(ItemStack::EMPTY)
+    override fun getRequiredAmount(first: ItemStack, second: FluidStack, third: FluidStack): Triple<Int, Int, Int> = Triple(
+        secondary.getRight()?.getRequiredAmount(first) ?: 0,
+        primary.getRequiredAmount(second),
+        secondary.getLeft()?.getRequiredAmount(third) ?: 0,
+    )
 
-    fun assembleFluids(): List<FluidStack> = fluidResults.map { it.getOrEmpty() }
+    override fun assemble(firstInput: ItemStack, secondInput: FluidStack, thirdInput: FluidStack): Output {
+        val stacks: List<FluidStack> = fluidResults.toList()
+        return Output(
+            itemResult.map { it.getOrEmpty() }.orElseGet(ItemStack::EMPTY),
+            stacks.first(),
+            stacks.getOrNull(1) ?: FluidStack.EMPTY,
+        )
+    }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CHEMICAL_REACTING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.CHEMICAL_REACTING.get()
 
     @JvmRecord
-    data class Input(val catalyst: ItemStack, val first: FluidStack, val second: FluidStack) : HTFluidRecipeInput {
+    data class Input(val catalyst: ItemStack, val firstFluid: FluidStack, val secondFluid: FluidStack) : HTFluidRecipeInput {
         override fun getFluid(index: Int): FluidStack = when (index) {
-            0 -> first
-            1 -> second
+            0 -> firstFluid
+            1 -> secondFluid
             else -> error("No fluid for index $index")
         }
 
@@ -59,4 +107,7 @@ class HTChemicalReactingRecipe(
 
         override fun size(): Int = 1
     }
+
+    @JvmRecord
+    data class Output(val item: ItemStack, val first: FluidStack, val second: FluidStack)
 }

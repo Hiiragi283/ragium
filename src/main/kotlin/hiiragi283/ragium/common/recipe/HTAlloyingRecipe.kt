@@ -1,8 +1,15 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.base.HTProcessingRecipe
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
+import hiiragi283.core.api.recipe.base.HTRecipeFactories
+import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -15,39 +22,48 @@ class HTAlloyingRecipe(
     val secondary: HTItemIngredient,
     val tertiary: HTItemIngredient?,
     val result: HTItemResult,
-    override val time: Int,
-) : HTProcessingRecipe.Serializable<HTAlloyingRecipe.Input> {
-    constructor(ingredients: List<HTItemIngredient>, result: HTItemResult, time: Int) : this(
+    override val progressData: HTProgressData,
+) : HTRecipePredicates.TripleItem,
+    HTRecipeFactories.TripleItem<ItemStack>,
+    HTProgressRecipe.Simple<RecipeInput>,
+    HTSerializableRecipe<RecipeInput> {
+    companion object {
+        @JvmField
+        val CODEC: MapCodec<HTAlloyingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTItemIngredient.CODEC
+                        .listOf(2, 3)
+                        .fieldOf(HTConst.INGREDIENT)
+                        .forGetter { listOfNotNull(it.primary, it.secondary, it.tertiary) },
+                    HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAlloyingRecipe::result),
+                    HTProgressData.CODEC.forGetter { it.progressData },
+                ).apply(instance, ::HTAlloyingRecipe)
+        }
+    }
+
+    constructor(ingredients: List<HTItemIngredient>, result: HTItemResult, progressData: HTProgressData) : this(
         ingredients[0],
         ingredients[1],
         ingredients.getOrNull(2),
         result,
-        time,
+        progressData,
     )
 
-    override fun test(input: Input): Boolean {
-        val (first: ItemStack, second: ItemStack, third: ItemStack) = input
+    override fun test(first: ItemStack, second: ItemStack, third: ItemStack): Boolean {
         if (!primary.test(first) || !secondary.test(second)) return false
         return tertiary?.test(third) ?: third.isEmpty
     }
 
-    override fun assemble(input: Input, preview: Boolean): ItemStack = result.getOrEmpty(preview)
+    override fun getRequiredAmount(first: ItemStack, second: ItemStack, third: ItemStack): Triple<Int, Int, Int> = Triple(
+        primary.getRequiredAmount(first),
+        secondary.getRequiredAmount(second),
+        tertiary?.getRequiredAmount(third) ?: 0,
+    )
+
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): ItemStack = result.getOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ALLOYING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ALLOYING.get()
-
-    @JvmRecord
-    data class Input(val first: ItemStack, val second: ItemStack, val third: ItemStack) : RecipeInput {
-        constructor(items: List<ItemStack>) : this(items[0], items[1], items[2])
-
-        override fun getItem(index: Int): ItemStack = when (index) {
-            0 -> first
-            1 -> second
-            2 -> third
-            else -> error("No item for index $index")
-        }
-
-        override fun size(): Int = 3
-    }
 }

@@ -1,23 +1,59 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.base.HTProcessingRecipe
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
+import hiiragi283.core.api.recipe.base.HTRecipeFactories
+import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTAssemblingRecipe(val itemIngredients: List<HTItemIngredient>, val result: HTItemResult, override val time: Int) :
-    HTProcessingRecipe.Serializable<HTDoubleRecipeInput> {
-    override fun test(input: HTDoubleRecipeInput): Boolean {
-        val (first: ItemStack, second: ItemStack) = input
-        return itemIngredients[0].test(first) && itemIngredients[1].test(second)
+class HTAssemblingRecipe(
+    val primary: HTItemIngredient,
+    val secondary: HTItemIngredient,
+    val result: HTItemResult,
+    override val progressData: HTProgressData,
+) : HTRecipePredicates.DoubleItem,
+    HTRecipeFactories.DoubleItem<ItemStack>,
+    HTProgressRecipe.Simple<RecipeInput>,
+    HTSerializableRecipe<RecipeInput> {
+    companion object {
+        @JvmField
+        val CODEC: MapCodec<HTAssemblingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTItemIngredient.CODEC
+                        .listOf(2, 2)
+                        .fieldOf(HTConst.INGREDIENT)
+                        .forGetter { listOf(it.primary, it.secondary) },
+                    HTItemResult.CODEC.fieldOf(HTConst.RESULT).forGetter(HTAssemblingRecipe::result),
+                    HTProgressData.CODEC.forGetter { it.progressData },
+                ).apply(instance, ::HTAssemblingRecipe)
+        }
     }
 
-    override fun assemble(input: HTDoubleRecipeInput, preview: Boolean): ItemStack = result.getOrEmpty(preview)
+    constructor(ingredients: List<HTItemIngredient>, result: HTItemResult, progressData: HTProgressData) : this(
+        ingredients[0],
+        ingredients[1],
+        result,
+        progressData,
+    )
+
+    override fun test(first: ItemStack, second: ItemStack): Boolean = primary.test(first) && secondary.test(second)
+
+    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> =
+        primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)
+
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = result.getOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ASSEMBLING
 

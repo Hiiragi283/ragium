@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.HTStorageAccess
@@ -18,7 +19,6 @@ import hiiragi283.core.common.recipe.HCChargingRecipe
 import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.setup.HCDataComponents
@@ -93,21 +93,6 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
         )
     }
 
-    //    Serialize    //
-
-    private val cache: HTLookupRecipeCache<HCChargingRecipe.Input, HCChargingRecipe> =
-        HTLookupRecipeCache.forRecipe(HCRecipeLookups.CHARGING)
-
-    override fun writeValue(output: HTValueOutput) {
-        super.writeValue(output)
-        cache.serialize(output)
-    }
-
-    override fun readValue(input: HTValueInput) {
-        super.readValue(input)
-        cache.deserialize(input)
-    }
-
     //    Sync    //
 
     override fun applyImplicitComponents(componentInput: DataComponentInput) {
@@ -136,6 +121,7 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
     //    Recipe    //
 
     private var checkRecipe: Boolean = false
+    private val cache: HTRecipeCaches.SingleItem<HCChargingRecipe> = HTRecipeCaches.SingleItem(HCRecipeLookups.CHARGING)
     private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
@@ -149,14 +135,12 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
 
     private fun chargeItem(): Boolean {
         val level: Level = this.level ?: return false
-        val stack: ItemStack = inputHandler.getItemStack()
-        if (stack.isEmpty) return false
-        val input = HCChargingRecipe.Input(stack, battery.getAmount())
-        val recipe: HCChargingRecipe = cache.getFirstRecipe(input, level) ?: return false
+        val input: ItemStack = inputHandler.getItemStack()
+        val recipe: HCChargingRecipe = cache.findFirstRecipe(input, level) ?: return false
 
-        val result: ItemStack = recipe.assemble(input, true)
+        val result: ItemStack = recipe.assemble(input)
         if (!outputHandler.canInsert(result)) return false
-        val requiredEnergy: Int = recipe.requiredEnergy
+        val requiredEnergy: Int = recipe.energy
         if (battery.extract(requiredEnergy, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) < requiredEnergy) return false
         outputHandler.insert(result)
         inputHandler.consume(1)

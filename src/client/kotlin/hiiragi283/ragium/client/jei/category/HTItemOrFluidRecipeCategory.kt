@@ -7,15 +7,15 @@ import hiiragi283.core.api.integration.jei.addFluidStacks
 import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
 import hiiragi283.core.api.integration.jei.setFluidSlotRenderer
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
-import hiiragi283.core.api.recipe.viewer.display.HTProcessingRecipeDisplay
+import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeViewerType<HTProcessingRecipeDisplay>) :
-    HTDisplayRecipeCategory.Processing(guiHelper, recipeType) {
+class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeViewerType<HTProgressRecipeDisplay>) :
+    HTDisplayRecipeCategory.Progress(guiHelper, recipeType) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
         builder
@@ -39,7 +39,7 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
             .setFluidSlotRenderer()
     }
 
-    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProcessingRecipeDisplay, focuses: IFocusGroup) {
+    override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProgressRecipeDisplay, focuses: IFocusGroup) {
         builder.addRecipePlus(getPosition(1))
         builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
         builder.addRecipePlus(getPosition(6))
