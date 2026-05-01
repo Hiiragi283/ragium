@@ -2,6 +2,7 @@ package hiiragi283.ragium.client.jei
 
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
 import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper.addDisplayRecipes
+import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper.addFlatDisplayRecipes
 import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper.addLookupRecipes
 import hiiragi283.core.api.integration.jei.HTJeiWorkstationHelper
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
@@ -20,10 +21,12 @@ import hiiragi283.ragium.client.jei.category.HTAssemblingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTChemicalReactingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTImplodingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMassFabricatingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTPlantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
@@ -67,9 +70,10 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTAlloyingRecipeCategory(guiHelper),
             HTAssemblingRecipeCategory(guiHelper),
             HTCuttingRecipeCategory(guiHelper),
-            // HTPlantingRecipeCategory(guiHelper),
+            HTPlantingRecipeCategory(guiHelper),
             // Machine - Advanced
             HTFreezingRecipeCategory(guiHelper),
+            HTImplodingRecipeCategory(guiHelper),
             HTMeltingRecipeCategory(guiHelper),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PYROLYZING),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.REFINING),
@@ -109,7 +113,6 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         }
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.PLANTING, RagiumRecipeLookups.PLANTING) {
             it.castRecipe<RTPlantingRecipe>()?.let(RagiumRecipeDisplayFactories::planting)
-            null // TODO
         }
         // Machine - Advanced
         addDisplayRecipes(
@@ -117,6 +120,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.FREEZING,
             RagiumRecipeLookups.FREEZING,
             RagiumRecipeDisplayFactories::freezing,
+        )
+        addFlatDisplayRecipes(
+            registration,
+            RagiumRecipeViewerTypes.IMPLODING,
+            RagiumRecipeLookups.IMPLODING,
+            RagiumRecipeDisplayFactories::imploding,
         )
         addDisplayRecipes(
             registration,

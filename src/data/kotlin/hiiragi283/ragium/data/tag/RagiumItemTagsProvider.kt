@@ -50,6 +50,7 @@ class RagiumItemTagsProvider(
         factory
             .apply(RagiumTags.Items.EXPLOSIVES.basic)
             .add(RagiumItems.DYNAMITE)
+            .addItem(Items.FIREWORK_ROCKET)
         factory
             .apply(RagiumTags.Items.EXPLOSIVES.advanced)
             .addItem(Items.TNT)

@@ -1,17 +1,23 @@
 package hiiragi283.ragium.common.recipe.viewer
 
+import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
+import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.core.impl.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
+import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 
 /**
  * @see hiiragi283.core.common.recipe.viewer.display.HCRecipeDisplayFactories
@@ -56,6 +62,21 @@ data object RagiumRecipeDisplayFactories {
         addCatalyst(it.catalyst)
         addOutput(it.result)
     }
+
+    @JvmStatic
+    fun imploding(holder: HTRecipeHolder<HTImplodingRecipe>): Sequence<HTProgressRecipeDisplay> = HTImplodingRecipe.EXPLOSIVE_AMOUNTS
+        .map { (tagKey: TagKey<Item>, amount: Int) ->
+            val (id: ResourceLocation, recipe: HTImplodingRecipe) = holder
+            HTProgressRecipeDisplay(
+                id.withSuffix("/${tagKey.location.path}"),
+                HTRecipeContents.create {
+                    addInput(recipe.ingredient)
+                    addInput(HTIngredientCreator.create(tagKey, amount))
+                    addOutput(recipe.result)
+                },
+                recipe.progressData,
+            )
+        }.asSequence()
 
     @JvmStatic
     fun melting(holder: HTRecipeHolder<HTMeltingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {

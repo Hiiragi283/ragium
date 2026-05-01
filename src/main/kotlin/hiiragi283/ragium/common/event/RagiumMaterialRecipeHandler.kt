@@ -166,33 +166,11 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         // レシピを登録
-        val suffix = "from_${crushedPart.asPartName()}"
-        // Basic
-        /*RagiumRecipeBuilder.imploding(output) {
-            base = inputCreator.create(crushedPrefix, entry, 4)
-            addition = inputCreator.create(RagiumTags.Items.EXPLOSIVES.basic)
-            results += resultCreator.create(resultItem, 2)
-            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.ASH, 2)
-            time /= 2
-            recipeId suffix "$suffix/basic"
-        }
-        // Advanced
         RagiumRecipeBuilder.imploding(output) {
-            base = inputCreator.create(crushedPrefix, entry, 4)
-            addition = inputCreator.create(RagiumTags.Items.EXPLOSIVES.advanced)
-            results += resultCreator.create(resultItem, 3)
-            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.ASH)
-            time /= 2
-            recipeId suffix "$suffix/advanced"
+            ingredient = inputCreator.create(crushedPrefix, entry)
+            result = resultCreator.create(resultItem)
+            recipeId suffix "from_${crushedPart.asPartName()}"
         }
-        // Elite
-        RagiumRecipeBuilder.imploding(output) {
-            base = inputCreator.create(crushedPrefix, entry, 4)
-            addition = inputCreator.create(RagiumTags.Items.EXPLOSIVES.elite)
-            results += resultCreator.create(resultItem, 4)
-            time /= 2
-            recipeId suffix "$suffix/smokeless"
-        }*/
     }
 
     //    Melting    //
