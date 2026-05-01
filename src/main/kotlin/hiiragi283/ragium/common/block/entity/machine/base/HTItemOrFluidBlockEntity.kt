@@ -4,21 +4,16 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTRecipeCache
-import hiiragi283.core.api.recipe.HTRecipeLookup
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
-import hiiragi283.core.api.recipe.handler.HTHandledRecipe
+import hiiragi283.core.api.recipe.cache.HTRecipeCaches
+import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.api.recipe.handler.assembleFluid
-import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.api.serialization.value.HTValueInput
-import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.HTLookupRecipeCache
+import hiiragi283.core.impl.recipe.cache.completed.HTItemOrFluidCompletedRecipe
 import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
@@ -91,66 +86,32 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             ).setBackground(HTBackgroundType.EXTRA_OUTPUT)
     }
 
-    //    Serialize    //
-
-    private val cache: HTRecipeCache<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe> =
-        HTLookupRecipeCache.forRecipe(getLookup())
-
-    override fun writeValue(output: HTValueOutput) {
-        super.writeValue(output)
-        cache.serialize(output)
-    }
-
-    override fun readValue(input: HTValueInput) {
-        super.readValue(input)
-        cache.deserialize(input)
-    }
-
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe>() {
+    private inner class ProgressHandlerImpl : ProgressHandler<HTItemOrFluidRecipe, HTItemOrFluidCompletedRecipe>() {
+        private val cache: HTRecipeCaches.ItemAndFluid<out HTItemOrFluidRecipe> = HTRecipeCaches.ItemAndFluid(getLookup())
+
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val itemInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
 
         private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
         private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun createInput(level: ServerLevel, pos: BlockPos): HTItemAndFluidRecipeInput? =
-            createInput(itemInputHandler, fluidInputHandler)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemOrFluidRecipe? =
+            cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
 
-        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: HTItemAndFluidRecipeInput): HTItemOrFluidRecipe? =
-            cache.getFirstRecipe(input, level)
+        override fun completeRecipe(recipe: HTItemOrFluidRecipe): HTItemOrFluidCompletedRecipe =
+            HTItemOrFluidCompletedRecipe(recipe, itemInputHandler, fluidInputHandler, itemOutputHandler, fluidOutputHandler)
 
-        override fun canComplete(
-            level: ServerLevel,
-            pos: BlockPos,
-            recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe>,
-        ): Boolean {
-            val bool1: Boolean = itemOutputHandler.canInsert(recipe.assemble(true))
-            val bool2: Boolean = fluidOutputHandler.canInsert(recipe.assembleFluid())
-            return bool1 && bool2
-        }
-
-        override fun onComplete(
-            level: ServerLevel,
-            pos: BlockPos,
-            recipe: HTHandledRecipe<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe>,
-        ) {
-            // output
-            itemOutputHandler.insert(recipe.assemble(false))
-            fluidOutputHandler.insert(recipe.assembleFluid())
-            // input
-            val (itemAmount: Int?, fluidAmount: Int?) = recipe.map(HTItemOrFluidRecipe::getRequiredAmount).toPair()
-            fluidInputHandler.consume(fluidAmount ?: 0)
-            itemInputHandler.consume(itemAmount ?: 0)
-
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTItemOrFluidCompletedRecipe) {
+            recipe.complete()
             playSound()
         }
     }
 
     final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    protected abstract fun getLookup(): HTRecipeLookup<HTItemAndFluidRecipeInput, out HTItemOrFluidRecipe>
+    protected abstract fun getLookup(): HTRecipeLookup<out HTItemOrFluidRecipe>
 
     protected abstract fun playSound()
 }

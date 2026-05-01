@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
-import hiiragi283.core.api.recipe.handler.HTRecipeHandler
+import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
@@ -38,7 +38,7 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createHandler(): HTRecipeHandler<*, *> {
+    override fun createHandler(): HTProgressHandler<*> {
         TODO("Not yet implemented")
     }
 

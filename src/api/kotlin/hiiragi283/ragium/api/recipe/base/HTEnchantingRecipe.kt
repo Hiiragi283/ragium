@@ -1,17 +1,13 @@
 package hiiragi283.ragium.api.recipe.base
 
-import hiiragi283.core.api.recipe.HTRecipePredicate
 import hiiragi283.core.api.recipe.HTTriRecipeFactory
+import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
-import net.neoforged.neoforge.common.util.TriPredicate
 
 interface HTEnchantingRecipe :
-    HTRecipePredicate<HTEnchantingRecipe.Input>,
-    TriPredicate<ItemStack, ItemStack, Int>,
+    HTRecipePredicates.TripleInput<HTEnchantingRecipe.Input, ItemStack, ItemStack, Int>,
     HTTriRecipeFactory<ItemStack, ItemStack, Int, ItemStack> {
-    override fun test(base: ItemStack, addition: ItemStack, expAmount: Int): Boolean
-
     fun getRequiredExpAmount(base: ItemStack, addition: ItemStack): Int
 
     fun getRequiredAdditionAmount(base: ItemStack, addition: ItemStack, expAmount: Int): Int

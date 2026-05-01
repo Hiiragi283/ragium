@@ -4,15 +4,12 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.api.serialization.value.HTValueInput
-import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.HTLookupRecipeCache
+import hiiragi283.core.impl.recipe.cache.HTTripleInputRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
@@ -24,10 +21,12 @@ import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.ragium.impl.recipe.cache.HTEnchantingCompletedRecipe
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
 class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.ENCHANTER, pos, state) {
@@ -86,57 +85,41 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         )
     }
 
-    //    Serialize    //
-
-    private val cache: HTLookupRecipeCache<HTEnchantingRecipe.Input, HTEnchantingRecipe> =
-        HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.ENCHANTING)
-
-    override fun writeValue(output: HTValueOutput) {
-        super.writeValue(output)
-        cache.serialize(output)
-    }
-
-    override fun readValue(input: HTValueInput) {
-        super.readValue(input)
-        cache.deserialize(input)
-    }
-
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : RecipeHandler<HTEnchantingRecipe.Input, HTEnchantingRecipe>() {
+    private inner class ProgressHandlerImpl : RecipeHandler<HTEnchantingRecipe, HTEnchantingCompletedRecipe>() {
+        private val cache = EnchantingCache()
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val baseInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(baseSlot) }
         private val additionInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(additionSlot) }
 
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun createInput(level: ServerLevel, pos: BlockPos): HTEnchantingRecipe.Input? = HTEnchantingRecipe
-            .Input(baseSlot.getStack(), additionSlot.getStack(), inputTank.getAmount())
-            .takeUnless(HTEnchantingRecipe.Input::isEmpty)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTEnchantingRecipe? =
+            cache.findFirstRecipe(baseInputHandler.getStack(), additionInputHandler.getStack(), fluidInputHandler.getAmount(), level)
 
-        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: HTEnchantingRecipe.Input): HTEnchantingRecipe? =
-            cache.getFirstRecipe(input, level)
+        override fun completeRecipe(recipe: HTEnchantingRecipe): HTEnchantingCompletedRecipe = HTEnchantingCompletedRecipe(
+            recipe,
+            baseInputHandler,
+            additionInputHandler,
+            fluidInputHandler,
+            outputHandler,
+        )
 
-        override fun canComplete(
-            level: ServerLevel,
-            pos: BlockPos,
-            recipe: HTHandledRecipe<HTEnchantingRecipe.Input, HTEnchantingRecipe>,
-        ): Boolean = recipe.assemble(true).let(outputHandler::canInsert)
-
-        override fun getMaxProgress(recipe: HTHandledRecipe<HTEnchantingRecipe.Input, HTEnchantingRecipe>): Int = modifyTime(200)
+        override fun getMaxProgress(recipe: HTEnchantingCompletedRecipe): Int = modifyTime(200)
 
         override fun getProgress(level: ServerLevel, pos: BlockPos): Int = 1
 
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTEnchantingRecipe.Input, HTEnchantingRecipe>) {
-            // output
-            recipe.assemble(false).let(outputHandler::insert)
-            // inputs
-            recipe.map(HTEnchantingRecipe::getRequiredExpAmount).let(fluidInputHandler::consume)
-            baseInputHandler.consume(1)
-            recipe.map(HTEnchantingRecipe::getRequiredAdditionAmount).let(additionInputHandler::consume)
-            // sound
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTEnchantingCompletedRecipe) {
+            recipe.complete()
             playSound(SoundEvents.ENCHANTMENT_TABLE_USE)
         }
+    }
+
+    private class EnchantingCache :
+        HTTripleInputRecipeCache<ItemStack, ItemStack, Int, HTEnchantingRecipe>(RagiumRecipeLookups.ENCHANTING) {
+        override fun isEmpty(firstInput: ItemStack, secondInput: ItemStack, thirdInput: Int): Boolean =
+            firstInput.isEmpty || secondInput.isEmpty || thirdInput <= 0
     }
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()

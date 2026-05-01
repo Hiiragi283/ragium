@@ -8,7 +8,7 @@ import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
-import hiiragi283.ragium.common.block.entity.machine.base.HTSingleItemBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.base.HTItemToItemBlockEntity
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
 class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTSingleItemBlockEntity(RagiumBlockEntityTypes.MASS_FABRICATOR, pos, state) {
+    HTItemToItemBlockEntity(RagiumBlockEntityTypes.MASS_FABRICATOR, pos, state) {
     override fun createInputSlot(listener: HTContentListener): HTBasicItemSlot = HTBasicItemSlot.input(
         listener,
         canInsert = { RagiumDataMapTypes.getMatterPoint(it) > 0 },

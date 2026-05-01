@@ -26,6 +26,6 @@ class HTMeltingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.P
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProgressRecipeDisplay, focuses: IFocusGroup) {
-        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(1.25), getPosition(0))
+        builder.addRecipeArrow(recipe).setPosition(getPosition(1.25), getPosition(0))
     }
 }

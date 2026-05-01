@@ -4,14 +4,10 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTRecipeCache
-import hiiragi283.core.api.recipe.handler.HTHandledRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.api.serialization.value.HTValueInput
-import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.HTLookupRecipeCache
+import hiiragi283.core.impl.recipe.cache.HTTripleInputRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
@@ -22,6 +18,7 @@ import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
+import hiiragi283.ragium.impl.recipe.cache.HTAlloyingCompletedRecipe
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -95,54 +92,36 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         )
     }
 
-    //    Serialize    //
-
-    private val cache: HTRecipeCache<HTAlloyingRecipe.Input, HTAlloyingRecipe> = HTLookupRecipeCache.forRecipe(RagiumRecipeLookups.ALLOYING)
-
-    override fun writeValue(output: HTValueOutput) {
-        super.writeValue(output)
-        cache.serialize(output)
-    }
-
-    override fun readValue(input: HTValueInput) {
-        super.readValue(input)
-        cache.deserialize(input)
-    }
-
     //    Processing    //
 
-    private inner class ProgressHandlerImpl : ProgressHandler<HTAlloyingRecipe.Input, HTAlloyingRecipe>() {
+    private inner class ProgressHandlerImpl : ProgressHandler<HTAlloyingRecipe, HTAlloyingCompletedRecipe>() {
+        private val cache = AlloyingCache()
         private val topInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(topInputSlot) }
         private val leftInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(leftInputSlot) }
         private val rightInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(rightInputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun createInput(level: ServerLevel, pos: BlockPos): HTAlloyingRecipe.Input? {
-            val topStack: ItemStack = topInputSlot.getStack()
-            val leftStack: ItemStack = leftInputSlot.getStack()
-            if (topStack.isEmpty || leftStack.isEmpty) return null
-            return HTAlloyingRecipe.Input(topStack, leftStack, rightInputSlot.getStack())
-        }
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTAlloyingRecipe? =
+            cache.findFirstRecipe(topInputHandler.getStack(), leftInputHandler.getStack(), rightInputHandler.getStack(), level)
 
-        override fun findRecipe(level: ServerLevel, pos: BlockPos, input: HTAlloyingRecipe.Input): HTAlloyingRecipe? =
-            cache.getFirstRecipe(input, level)
+        override fun completeRecipe(recipe: HTAlloyingRecipe): HTAlloyingCompletedRecipe = HTAlloyingCompletedRecipe(
+            recipe,
+            topInputHandler,
+            leftInputHandler,
+            rightInputHandler,
+            outputHandler,
+        )
 
-        override fun canComplete(
-            level: ServerLevel,
-            pos: BlockPos,
-            recipe: HTHandledRecipe<HTAlloyingRecipe.Input, HTAlloyingRecipe>,
-        ): Boolean = recipe.assemble(true).let(outputHandler::canInsert)
-
-        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTHandledRecipe<HTAlloyingRecipe.Input, HTAlloyingRecipe>) {
-            // output
-            recipe.assemble(false).let(outputHandler::insert)
-            // input
-            val recipe: HTAlloyingRecipe = recipe.recipe
-            topInputHandler.consume(recipe.primary)
-            leftInputHandler.consume(recipe.secondary)
-            rightInputHandler.consume(recipe.tertiary)
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTAlloyingCompletedRecipe) {
+            recipe.complete()
             playSound(SoundEvents.FIRE_EXTINGUISH)
         }
+    }
+
+    private class AlloyingCache :
+        HTTripleInputRecipeCache<ItemStack, ItemStack, ItemStack, HTAlloyingRecipe>(RagiumRecipeLookups.ALLOYING) {
+        override fun isEmpty(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): Boolean =
+            firstInput.isEmpty || secondInput.isEmpty
     }
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()

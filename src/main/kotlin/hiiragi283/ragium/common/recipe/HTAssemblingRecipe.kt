@@ -3,10 +3,9 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
-import hiiragi283.core.api.recipe.base.HTRecipeFactories
-import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
@@ -22,8 +21,7 @@ class HTAssemblingRecipe(
     val secondary: HTItemIngredient,
     val result: HTItemResult,
     override val progressData: HTProgressData,
-) : HTRecipePredicates.DoubleItem,
-    HTRecipeFactories.DoubleItem<ItemStack>,
+) : HTDoubleItemToItemRecipe,
     HTProgressRecipe.Simple<RecipeInput>,
     HTSerializableRecipe<RecipeInput> {
     companion object {

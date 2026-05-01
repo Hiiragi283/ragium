@@ -34,6 +34,6 @@ class HTFreezingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProgressRecipeDisplay, focuses: IFocusGroup) {
         builder.addRecipePlus(getPosition(1))
-        builder.addAnimatedRecipeArrow(recipe.time).setPosition(getPosition(3.25), getPosition(0))
+        builder.addRecipeArrow(recipe).setPosition(getPosition(3.25), getPosition(0))
     }
 }

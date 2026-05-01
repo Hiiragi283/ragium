@@ -3,10 +3,9 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
-import hiiragi283.core.api.recipe.base.HTRecipeFactories
-import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
@@ -19,8 +18,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTMeltingRecipe(val ingredient: HTItemIngredient, val result: HTFluidResult, override val progressData: HTProgressData) :
-    HTRecipePredicates.SingleItem,
-    HTRecipeFactories.SingleItemTo<FluidStack>,
+    HTItemToFluidRecipe,
     HTProgressRecipe.Simple<SingleRecipeInput>,
     HTSerializableRecipe<SingleRecipeInput> {
     companion object {

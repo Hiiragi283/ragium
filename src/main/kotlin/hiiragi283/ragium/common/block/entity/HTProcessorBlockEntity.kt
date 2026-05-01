@@ -9,6 +9,7 @@ import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import hiiragi283.core.impl.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
@@ -18,7 +19,6 @@ import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.crafting.RecipeInput
 import net.minecraft.world.level.block.state.BlockState
 
 abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
@@ -76,16 +76,14 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     //    RecipeHandler    //
 
-    abstract class RecipeHandler<INPUT : RecipeInput, RECIPE : HTRecipe<INPUT>> : HTRecipeHandler<INPUT, RECIPE>() {
-        final override fun findRecipe(level: ServerLevel, pos: BlockPos): HTHandledRecipe<INPUT, RECIPE>? {
-            val input: INPUT = createInput(level, pos) ?: return null
-            val recipe: RECIPE = findRecipe(level, pos, input) ?: return null
-            return HTHandledRecipe.create(input, recipe)
-        }
+    abstract class RecipeHandler<RECIPE : Any, COMP : HTCompletedRecipe<RECIPE>> : HTProgressHandler<COMP>() {
+        final override fun findRecipe(level: ServerLevel, pos: BlockPos): COMP? = findFirstRecipe(level, pos)?.let(::completeRecipe)
 
-        protected abstract fun createInput(level: ServerLevel, pos: BlockPos): INPUT?
+        protected abstract fun findFirstRecipe(level: ServerLevel, pos: BlockPos): RECIPE?
 
-        protected abstract fun findRecipe(level: ServerLevel, pos: BlockPos, input: INPUT): RECIPE?
+        protected abstract fun completeRecipe(recipe: RECIPE): COMP
+
+        override fun canComplete(level: ServerLevel, pos: BlockPos, recipe: COMP): Boolean = recipe.canComplete()
     }
 
     //    Energized    //
@@ -110,8 +108,11 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
         //    ProgressHandler    //
 
-        abstract inner class ProgressHandler<INPUT : RecipeInput, RECIPE : HTProcessingRecipe<INPUT>> : RecipeHandler<INPUT, RECIPE>() {
-            final override fun getMaxProgress(recipe: HTHandledRecipe<INPUT, RECIPE>): Int = recipe.recipe.time.let(::updateAndGetProgress)
+        abstract inner class ProgressHandler<RECIPE : Any, COMP : HTCompletedRecipe.WithProgress<RECIPE>> : RecipeHandler<RECIPE, COMP>() {
+            override fun getMaxProgress(recipe: COMP): Int = recipe
+                .getProgress()
+                .getProcessTime(battery.currentEnergyPerTick)
+                .let(::updateAndGetProgress)
 
             final override fun getProgress(level: ServerLevel, pos: BlockPos): Int = battery.consume()
         }

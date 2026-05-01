@@ -109,6 +109,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         }
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.PLANTING, RagiumRecipeLookups.PLANTING) {
             it.castRecipe<RTPlantingRecipe>()?.let(RagiumRecipeDisplayFactories::planting)
+            null // TODO
         }
         // Machine - Advanced
         addDisplayRecipes(
