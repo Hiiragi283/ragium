@@ -17,6 +17,7 @@ import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTChemicalWasherBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFluidDuplicatorBlockEntity
@@ -80,6 +81,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val AUTO_CHISEL: HTDeferredBlockEntityType<HTStonecutterBlockEntity> =
         REGISTER.registerTick(RagiumConst.AUTO_CHISEL, ::HTStonecutterBlockEntity)
+
+    @JvmField
+    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> =
+        REGISTER.registerTick(RagiumConst.COMPRESSOR, ::HTCompressorBlockEntity)
 
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
@@ -206,6 +211,7 @@ object RagiumBlockEntityTypes {
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, ASSEMBLER.get())
         registerHandler(event, AUTO_CHISEL.get())
+        registerHandler(event, COMPRESSOR.get())
         registerHandler(event, CRUSHER.get())
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, ELECTRIC_FURNACE.get())

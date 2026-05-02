@@ -114,6 +114,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         basic(RagiumBlocks.ALLOY_SMELTER) { it += Items.FURNACE }
         basic(RagiumBlocks.ASSEMBLER) { it += Items.CRAFTER }
         basic(RagiumBlocks.AUTO_CHISEL) { it += Items.STONECUTTER }
+        basic(RagiumBlocks.COMPRESSOR) { it += Items.PISTON }
         basic(RagiumBlocks.CRUSHER) { it += CommonTagPrefixes.GEM to VanillaMaterialKeys.DIAMOND }
         basic(RagiumBlocks.CUTTING_MACHINE) { it += Items.IRON_AXE }
         basic(RagiumBlocks.ELECTRIC_FURNACE) { it += Items.FURNACE }

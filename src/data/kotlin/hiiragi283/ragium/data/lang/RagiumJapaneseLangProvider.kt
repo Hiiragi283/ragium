@@ -47,6 +47,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.ALLOY_SMELTER, "合金炉")
         add(RagiumBlocks.ASSEMBLER, "組立機")
         add(RagiumBlocks.AUTO_CHISEL, "自動石切台")
+        add(RagiumBlocks.COMPRESSOR, "圧縮機")
         add(RagiumBlocks.CRUSHER, "粉砕機")
         add(RagiumBlocks.CUTTING_MACHINE, "切断機")
         add(RagiumBlocks.ELECTRIC_FURNACE, "電動精錬機")

@@ -87,6 +87,9 @@ object RagiumConfig {
             val crusher: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.CRUSHER)
 
             @JvmField
+            val compressor: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.COMPRESSOR)
+
+            @JvmField
             val cuttingMachine: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.CUTTING_MACHINE)
 
             @JvmField

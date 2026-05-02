@@ -47,6 +47,7 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.ALLOY_SMELTER, "Alloy Smelter")
         add(RagiumBlocks.ASSEMBLER, "Assembler")
         add(RagiumBlocks.AUTO_CHISEL, "Auto Chisel")
+        add(RagiumBlocks.COMPRESSOR, "Compressor")
         add(RagiumBlocks.CRUSHER, "Crusher")
         add(RagiumBlocks.CUTTING_MACHINE, "Cutting Machine")
         add(RagiumBlocks.ELECTRIC_FURNACE, "Electric Furnace")

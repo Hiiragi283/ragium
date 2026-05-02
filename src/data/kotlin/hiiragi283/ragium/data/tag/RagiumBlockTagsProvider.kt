@@ -47,6 +47,7 @@ class RagiumBlockTagsProvider(
             .add(RagiumBlocks.ALLOY_SMELTER)
             .add(RagiumBlocks.ASSEMBLER)
             .add(RagiumBlocks.AUTO_CHISEL)
+            .add(RagiumBlocks.COMPRESSOR)
             .add(RagiumBlocks.CRUSHER)
             .add(RagiumBlocks.CUTTING_MACHINE)
             .add(RagiumBlocks.ELECTRIC_FURNACE)

@@ -40,6 +40,7 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
         frontMachineBlock(RagiumBlocks.ALLOY_SMELTER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.ASSEMBLER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.AUTO_CHISEL, RagiumConst.MACHINE, basic)
+        frontMachineBlock(RagiumBlocks.COMPRESSOR, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CRUSHER, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.CUTTING_MACHINE, RagiumConst.MACHINE, basic)
         frontMachineBlock(RagiumBlocks.ELECTRIC_FURNACE, RagiumConst.MACHINE, basic)
