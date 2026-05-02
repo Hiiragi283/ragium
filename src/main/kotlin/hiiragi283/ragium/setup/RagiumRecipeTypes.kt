@@ -8,6 +8,7 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
+import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
@@ -32,6 +33,9 @@ object RagiumRecipeTypes {
 
     @JvmField
     val CUTTING: HTDeferredRecipeType<HTCuttingRecipe> = REGISTER.registerType(RagiumConst.CUTTING)
+
+    @JvmField
+    val COMPRESSING: HTDeferredRecipeType<HTCompressingRecipe> = REGISTER.registerType(RagiumConst.COMPRESSING)
 
     @JvmField
     val PLANTING: HTDeferredRecipeType<RTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)

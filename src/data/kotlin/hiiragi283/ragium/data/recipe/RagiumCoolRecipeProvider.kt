@@ -14,25 +14,18 @@ object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
 
     @JvmStatic
     private fun freezing() {
-        // Water -> Ice
+        // Water -> Snowball
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.water()
             catalyst += HTBluePrintIngredient(0).toVanilla()
+            result = resultCreator.create(Items.SNOWBALL, 4)
+            time /= 4
+        }
+        // Water -> Ice
+        HTFreezingRecipeBuilder.create(output) {
+            ingredient = inputCreator.water()
+            catalyst += HTBluePrintIngredient(1).toVanilla()
             result = resultCreator.create(Items.ICE)
-        }
-        // Ice -> Packed Ice
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.water(6000)
-            catalyst += itemCreator.create(Items.PACKED_ICE)
-            result = resultCreator.create(Items.PACKED_ICE)
-            time *= 3
-        }
-        // Packed Ice -> Blue Ice
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.water(36000)
-            catalyst += itemCreator.create(Items.BLUE_ICE)
-            result = resultCreator.create(Items.BLUE_ICE)
-            time *= 9
         }
 
         // Lava -> Obsidian

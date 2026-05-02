@@ -1,29 +1,165 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.tag.HiiragiCoreTags
+import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTAssemblingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
+import net.neoforged.neoforge.common.Tags
 
 object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         assembling()
+        compressing()
         crushing()
         cutting()
-        pressing()
+    }
+
+    //    Assembling    //
+
+    @JvmStatic
+    private fun assembling() {
+        // Blackstone + Gold -> Gilded Blackstone
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.GILDED_BLACKSTONE)
+            ingredients += inputCreator.create(Items.BLACKSTONE)
+            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.GOLD, 8)
+        }
+        // Dirt + Leaves -> Podzol
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.PODZOL)
+            ingredients += inputCreator.create(Items.DIRT)
+            ingredients += inputCreator.create(ItemTags.LEAVES, 8)
+        }
+        // Dirt + Mushroom -> Mycelium
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.MYCELIUM)
+            ingredients += inputCreator.create(Items.DIRT)
+            ingredients += inputCreator.create(Tags.Items.MUSHROOMS)
+        }
+        // Crimson Nylium
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.CRIMSON_NYLIUM)
+            ingredients += inputCreator.create(Tags.Items.NETHERRACKS)
+            ingredients += inputCreator.create(Items.CRIMSON_FUNGUS)
+        }
+        // Warped Nylium
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.WARPED_NYLIUM)
+            ingredients += inputCreator.create(Tags.Items.NETHERRACKS)
+            ingredients += inputCreator.create(Items.WARPED_FUNGUS)
+        }
+        // String + Sticky -> Cobweb
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.COBWEB)
+            ingredients += inputCreator.create(Tags.Items.STRINGS, 5)
+            ingredients += inputCreator.create(HiiragiCoreTags.Items.STICKY_BALLS)
+        }
+
+        // Iron Ingot + Iron Nugget -> Chain
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.CHAIN, 3)
+            ingredients += inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON)
+            ingredients += inputCreator.create(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.IRON, 3)
+        }
+        // Iron Ingot + Torch -> Lantern
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.LANTERN, 2)
+            ingredients += inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON)
+            ingredients += inputCreator.create(Items.TORCH)
+        }
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.SOUL_LANTERN, 2)
+            ingredients += inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON)
+            ingredients += inputCreator.create(Items.SOUL_TORCH)
+        }
+        // Iron Ingot + Chest -> Hopper
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.HOPPER)
+            ingredients += inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON, 5)
+            ingredients += inputCreator.create(Tags.Items.CHESTS_WOODEN)
+        }
+        // Dropper + Bow -> Dispenser
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.DISPENSER)
+            ingredients += inputCreator.create(Items.DROPPER)
+            ingredients += inputCreator.create(Tags.Items.TOOLS_BOW)
+        }
+        // TNT
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.TNT, 2)
+            ingredients += inputCreator.create(Tags.Items.SANDS, 4)
+            ingredients += inputCreator.create(Tags.Items.GUNPOWDERS, 5)
+        }
+
+        // Leather + Iron Nugget -> Saddle
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.SADDLE)
+            ingredients += inputCreator.create(Tags.Items.LEATHERS, 5)
+            ingredients += inputCreator.create(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.IRON, 2)
+        }
+        // Head
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.ZOMBIE_HEAD)
+            ingredients += inputCreator.create(Items.SKELETON_SKULL)
+            ingredients += inputCreator.create(Items.ROTTEN_FLESH, 8)
+        }
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.CREEPER_HEAD)
+            ingredients += inputCreator.create(Items.SKELETON_SKULL)
+            ingredients += inputCreator.create(Tags.Items.GUNPOWDERS, 8)
+        }
+        HTAssemblingRecipeBuilder.create(output) {
+            result = resultCreator.create(Items.PIGLIN_HEAD)
+            ingredients += inputCreator.create(Items.SKELETON_SKULL)
+            ingredients += inputCreator.create(Items.PORKCHOP, 8)
+        }
     }
 
     //    Compressing    //
 
     @JvmStatic
-    private fun assembling() {
+    private fun compressing() {
+        // Snow Block -> Ice -> Packed Ice -> Blue Ice
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(Items.SNOW_BLOCK, 4)
+            result = resultCreator.create(Items.ICE)
+        }
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(Items.ICE, 6)
+            result = resultCreator.create(Items.PACKED_ICE)
+        }
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(Items.PACKED_ICE, 6)
+            result = resultCreator.create(Items.BLUE_ICE)
+        }
+
+        // Snow -> Snow Block
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(Items.SNOW, 8)
+            result = resultCreator.create(Items.SNOW_BLOCK)
+        }
+        // Moss Carpet -> Moss
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(Items.MOSS_CARPET, 8)
+            result = resultCreator.create(Items.MOSS_BLOCK)
+        }
         // Sculk Vein -> Sculk
-        /*HTAssemblingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(Items.SCULK_VEIN, 8)
             result = resultCreator.create(Items.SCULK)
-            ingredients += inputCreator.create(Items.SCULK_VEIN, 8)
-            ingredients += inputCreator.blueprint(0)
-        }*/
+        }
+
+        // Sawdust -> Particle Board
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 2)
+            result = resultCreator.create(HCItems.PARTICLE_BOARD)
+        }
     }
 
     //    Crushing    //
@@ -56,18 +192,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
             results += resultCreator.create(Items.LEATHER)
             recipeId suffix "_from_book"
         }
-    }
-
-    //    Pressing    //
-
-    @JvmStatic
-    private fun pressing() {
-        // Sawdust -> Particle Board
-        /*HTAssemblingRecipeBuilder.create(output) {
-            result = resultCreator.create(HCItems.PARTICLE_BOARD)
-            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 2)
-            ingredients += inputCreator.blueprint(5)
-        }*/
     }
 
     //    Printing    //

@@ -2,15 +2,15 @@
   "type": "ragium:freezing",
   "catalyst": {
     "type": "hiiragi_core:blue_print",
-    "number": 1
+    "number": 0
   },
   "ingredient": {
     "amount": 1000,
     "fluids": "#c:water"
   },
   "result": {
-    "count": 1,
-    "id": "minecraft:ice"
+    "count": 4,
+    "id": "minecraft:snowball"
   },
-  "time": 200
+  "time": 50
 }

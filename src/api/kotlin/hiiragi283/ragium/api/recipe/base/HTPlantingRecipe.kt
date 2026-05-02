@@ -9,4 +9,8 @@ import net.minecraft.world.item.crafting.RecipeInput
 interface HTPlantingRecipe :
     HTRecipePredicates.DoubleItem,
     HTRecipeFactories.DoubleItem<Iterable<ItemStack>>,
-    HTProgressRecipe<RecipeInput>
+    HTProgressRecipe<RecipeInput> {
+    fun getRequiredPlantAmount(first: ItemStack): Int
+
+    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = getRequiredPlantAmount(first) to 0
+}

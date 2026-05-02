@@ -7,6 +7,7 @@ import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
+import hiiragi283.core.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.registry.HTSimpleHolderLike
@@ -37,6 +38,9 @@ data object RagiumRecipeLookups {
 
     @JvmField
     val ASSEMBLING: HTRecipeLookupImpl<HTDoubleItemToItemRecipe> = create(RagiumConst.ASSEMBLING)
+
+    @JvmField
+    val COMPRESSING: HTRecipeLookupImpl<HTItemToItemRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
     val CUTTING: HTRecipeLookupImpl<HTItemToMultiItemRecipe> = create(RagiumConst.CUTTING)
@@ -104,6 +108,7 @@ data object RagiumRecipeLookups {
     @JvmStatic
     fun init() {
         ASSEMBLING.addProvider(RagiumRecipeTypes.ASSEMBLING.get(), identity())
+        COMPRESSING.addProvider(RagiumRecipeTypes.COMPRESSING.get(), identity())
         CUTTING.addProvider(RagiumRecipeTypes.CUTTING.get(), identity())
         PLANTING.addProvider(RagiumRecipeTypes.PLANTING.get(), identity())
 

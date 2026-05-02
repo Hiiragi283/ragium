@@ -28,9 +28,6 @@ class RTPlantingRecipe(
     HTSerializableRecipe<RecipeInput> {
     companion object {
         @JvmField
-        val OUTPUT_RANGE: IntRange = 1..4
-
-        @JvmField
         val CODEC: MapCodec<RTPlantingRecipe> = RecordCodecBuilder.mapCodec { instance ->
             instance
                 .group(
@@ -44,7 +41,7 @@ class RTPlantingRecipe(
 
     override fun test(first: ItemStack, second: ItemStack): Boolean = plant.test(first) && soil.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = plant.getRequiredAmount(first) to 0
+    override fun getRequiredPlantAmount(first: ItemStack): Int = plant.getRequiredAmount(first)
 
     override fun assemble(firstInput: ItemStack, secondInput: ItemStack): Iterable<ItemStack> = results
 

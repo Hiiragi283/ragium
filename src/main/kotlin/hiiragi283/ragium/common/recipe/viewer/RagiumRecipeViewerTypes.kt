@@ -14,6 +14,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 
 /**
@@ -28,6 +29,10 @@ data object RagiumRecipeViewerTypes {
     @JvmField
     val ASSEMBLING: HTRecipeViewerType<HTProgressRecipeDisplay> =
         create(RagiumRecipeTypes.ASSEMBLING, RagiumBlocks.ASSEMBLER, 18 * 6)
+
+    @JvmField
+    val COMPRESSING: HTRecipeViewerType<HTProgressRecipeDisplay> =
+        create(RagiumRecipeTypes.COMPRESSING, Items.PISTON, 18 * 4)
 
     @JvmField
     val CUTTING: HTRecipeViewerType<HTProgressRecipeDisplay> =

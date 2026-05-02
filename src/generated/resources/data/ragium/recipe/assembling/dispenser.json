@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": "minecraft:dropper"
+    },
+    {
+      "amount": 1,
+      "items": "#c:tools/bow"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:dispenser"
+  },
+  "time": 200
+}

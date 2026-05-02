@@ -14,8 +14,10 @@ import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.core.api.registry.toLike
+import hiiragi283.core.client.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
+import hiiragi283.core.impl.recipe.HTBasicItemToItemRecipe
 import hiiragi283.core.impl.recipe.HTBasicItemToMultiItemRecipe
 import hiiragi283.core.impl.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.core.setup.HCDataComponents
@@ -84,6 +86,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Basic
             HTAlloyingRecipeCategory(guiHelper),
             HTAssemblingRecipeCategory(guiHelper),
+            HTItemToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.COMPRESSING),
             HTCuttingRecipeCategory(guiHelper),
             HTPlantingRecipeCategory(guiHelper),
             // Machine - Advanced
@@ -121,6 +124,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         )
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING) {
             it.castRecipe<HTAssemblingRecipe>()?.let(RagiumRecipeDisplayFactories::assembling)
+        }
+        addDisplayRecipes(registration, RagiumRecipeViewerTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING) {
+            it.castRecipe<HTBasicItemToItemRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)
         }
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.CUTTING, RagiumRecipeLookups.CUTTING) {
             it.castRecipe<HTBasicItemToMultiItemRecipe>()?.let(HTRecipeDisplayFactories::itemToMultiItem)
@@ -219,6 +225,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             // Machine - Basic
             RagiumRecipeViewerTypes.ALLOYING,
             RagiumRecipeViewerTypes.ASSEMBLING,
+            RagiumRecipeViewerTypes.COMPRESSING,
             RagiumRecipeViewerTypes.CUTTING,
             RagiumRecipeViewerTypes.PLANTING,
             // Machine - Advanced

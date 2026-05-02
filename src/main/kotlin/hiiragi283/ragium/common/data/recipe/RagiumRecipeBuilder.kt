@@ -6,6 +6,7 @@ import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTItemToResultRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
+import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
@@ -15,6 +16,11 @@ import net.minecraft.data.recipes.RecipeOutput
 
 data object RagiumRecipeBuilder {
     //    Basic    //
+
+    @JvmStatic
+    inline fun compressing(output: RecipeOutput, builderAction: HTItemToResultRecipeBuilder<HTItemResult>.() -> Unit) {
+        HTItemToResultRecipeBuilder(RagiumConst.COMPRESSING, ::HTCompressingRecipe).apply(builderAction).save(output)
+    }
 
     @JvmStatic
     inline fun cutting(output: RecipeOutput, builderAction: HTItemToMultiItemRecipeBuilder.() -> Unit) {
