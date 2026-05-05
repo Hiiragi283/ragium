@@ -33,15 +33,17 @@ object RagiumConst {
 
     // Machine - Elite
     const val BREWERY = "brewery"
+    const val CHEMICAL_BATH = "chemical_bath"
     const val CHEMICAL_REACTOR = "chemical_reactor"
-    const val CHEMICAL_WASHER = "chemical_washer"
     const val MIXER = "mixer"
 
     // Machine - Ultimate
-    const val ENCHANTER = "enchanter"
     const val FLUID_DUPLICATOR = "fluid_duplicator"
     const val MASS_FABRICATOR = "mass_fabricator"
 
+    // Device - Ultimate
+    const val ENCHANTER = "enchanter"
+    
     // Storage
     const val UNIVERSAL_CHEST = "universal_chest"
 

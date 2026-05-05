@@ -135,8 +135,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         }
         advanced(RagiumBlocks.WASHER, HCMaterialKeys.AZURE_STEEL) { it += Items.IRON_BARS }
         // Elite
-        elite(RagiumBlocks.BREWERY) { it += Items.BREWING_STAND }
-        HTShapedRecipeBuilder.create(output) {
+        /*HTShapedRecipeBuilder.create(output) {
             pattern(
                 "ABA",
                 "BCB",
@@ -145,7 +144,8 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             define('B') += Tags.Items.GLASS_BLOCKS_TINTED
             define('C') += CommonTagPrefixes.GEAR to RagiumMaterialKeys.STAINLESS_STEEL
             resultStack += RagiumBlocks.CHEMICAL_WASHER
-        }
+        }*/
+        elite(RagiumBlocks.BREWERY) { it += Items.BREWING_STAND }
         elite(RagiumBlocks.MIXER) { it += Items.COPPER_GRATE }
         // Ultimate
         ultimate(RagiumBlocks.MASS_FABRICATOR) { it += Tags.Items.NETHER_STARS }

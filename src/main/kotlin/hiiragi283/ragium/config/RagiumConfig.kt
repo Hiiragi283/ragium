@@ -113,10 +113,13 @@ object RagiumConfig {
 
             // Elite
             @JvmField
-            val chemicalWasher: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.CHEMICAL_WASHER)
+            val brewery: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.BREWERY)
 
             @JvmField
-            val brewery: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.BREWERY)
+            val chemicalBath: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.CHEMICAL_BATH)
+
+            @JvmField
+            val chemicalReactor: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.CHEMICAL_REACTOR)
 
             @JvmField
             val mixer: HTEnergyConfig = HTEnergyConfig.createMachine(builder, RagiumConst.MIXER)

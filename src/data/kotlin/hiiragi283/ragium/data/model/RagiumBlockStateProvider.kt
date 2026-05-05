@@ -52,7 +52,7 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
         frontMachineBlock(RagiumBlocks.WASHER, RagiumConst.MACHINE, cool)
 
         frontMachineBlock(RagiumBlocks.BREWERY, RagiumConst.MACHINE, chemical)
-        refineryBlock(RagiumBlocks.CHEMICAL_WASHER)
+        // refineryBlock(RagiumBlocks.CHEMICAL_WASHER)
         frontMachineBlock(RagiumBlocks.MIXER, RagiumConst.MACHINE, chemical)
 
         refineryBlock(RagiumBlocks.FLUID_DUPLICATOR)

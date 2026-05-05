@@ -62,7 +62,6 @@ class RagiumBlockTagsProvider(
         factory
             .apply(RagiumTags.Blocks.MACHINES.elite)
             .add(RagiumBlocks.BREWERY)
-            .add(RagiumBlocks.CHEMICAL_WASHER)
             .add(RagiumBlocks.MIXER)
         factory
             .apply(RagiumTags.Blocks.MACHINES.ultimate)

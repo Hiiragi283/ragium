@@ -60,7 +60,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.WASHER, "洗浄機")
 
         add(RagiumBlocks.BREWERY, "醸造機")
-        add(RagiumBlocks.CHEMICAL_WASHER, "化学洗浄機")
         add(RagiumBlocks.MIXER, "混合機")
 
         add(RagiumBlocks.FLUID_DUPLICATOR, "液体複製機")
@@ -202,7 +201,6 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumTranslation.WASHER, "砕いた鉱石と液体からアイテムを生産する機械です。")
 
         add(RagiumTranslation.BREWERY, "液体のポーションを醸造する機械です。")
-        add(RagiumTranslation.CHEMICAL_WASHER, "アイテムを化学物質で洗浄する機械です。")
         add(RagiumTranslation.MIXER, "複数のアイテムや液体を混ぜる機械です。")
 
         add(RagiumTranslation.FLUID_DUPLICATOR, "液体のマターを消費して任意の液体を複製する機械です。")

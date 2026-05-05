@@ -43,7 +43,7 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     WASHER(HTConst.DESCRIPTION, RagiumConst.WASHER),
 
     BREWERY(HTConst.DESCRIPTION, RagiumConst.BREWERY),
-    CHEMICAL_WASHER(HTConst.DESCRIPTION, RagiumConst.CHEMICAL_WASHER),
+    CHEMICAL_BATH(HTConst.DESCRIPTION, RagiumConst.CHEMICAL_BATH),
     MIXER(HTConst.DESCRIPTION, RagiumConst.MIXER),
 
     FLUID_DUPLICATOR(HTConst.DESCRIPTION, RagiumConst.FLUID_DUPLICATOR),

@@ -1,7 +1,6 @@
 {
   "values": [
     "ragium:brewery",
-    "ragium:chemical_washer",
     "ragium:mixer"
   ]
 }

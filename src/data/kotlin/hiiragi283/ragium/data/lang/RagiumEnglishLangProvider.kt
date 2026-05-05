@@ -60,7 +60,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.WASHER, "Washer")
 
         add(RagiumBlocks.BREWERY, "Brewery")
-        add(RagiumBlocks.CHEMICAL_WASHER, "Chemical Washer")
         add(RagiumBlocks.MIXER, "Mixer")
 
         add(RagiumBlocks.FLUID_DUPLICATOR, "Fluid Duplicator")
@@ -203,7 +202,6 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         add(RagiumTranslation.BREWERY, "A machine which brews fluid potion.")
         add(RagiumTranslation.MIXER, "A machine which combines multiple items or fluids.")
-        add(RagiumTranslation.CHEMICAL_WASHER, "A machine which washes item with chemicals.")
 
         add(RagiumTranslation.FLUID_DUPLICATOR, "A machine which duplicates ANY fluid with liquid matter.")
 

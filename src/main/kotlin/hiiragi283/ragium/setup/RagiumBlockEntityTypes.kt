@@ -16,7 +16,6 @@ import hiiragi283.ragium.common.block.entity.generator.HTBoilerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTChemicalWasherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
@@ -129,12 +128,8 @@ object RagiumBlockEntityTypes {
         REGISTER.registerTick(RagiumConst.BREWERY, ::HTBreweryBlockEntity)
 
     @JvmField
-    val CHEMICAL_WASHER: HTDeferredBlockEntityType<HTChemicalWasherBlockEntity> =
-        REGISTER.registerTick(RagiumConst.CHEMICAL_WASHER, ::HTChemicalWasherBlockEntity)
-
-    @JvmField
-    val MIXER: HTDeferredBlockEntityType<HTChemicalWasherBlockEntity> =
-        REGISTER.registerTick(RagiumConst.MIXER, ::HTChemicalWasherBlockEntity)
+    val MIXER: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
+        REGISTER.registerTick(RagiumConst.MIXER, ::HTBreweryBlockEntity)
 
     // Ultimate
     @JvmField
@@ -223,7 +218,6 @@ object RagiumBlockEntityTypes {
         registerHandler(event, REFINERY.get())
 
         registerHandler(event, BREWERY.get())
-        registerHandler(event, CHEMICAL_WASHER.get())
         registerHandler(event, MIXER.get())
         registerHandler(event, WASHER.get())
 
