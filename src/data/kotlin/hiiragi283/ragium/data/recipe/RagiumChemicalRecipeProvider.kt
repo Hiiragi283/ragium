@@ -22,6 +22,7 @@ import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -133,9 +134,9 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             result = resultCreator.create(RagiumFluids.SYNTHETIC_OIL, 125)
         }
         // Synthetic Oil -> Fuel
-        RagiumRecipeBuilder.refining(output) {
-            ingredient += inputCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
-            result += resultCreator.create(RagiumFluids.FUEL, 200)
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.SYNTHETIC_OIL, 500)
+            fluidResults += resultCreator.create(RagiumFluids.FUEL, 200)
             recipeId suffix "_from_synthetic_oil"
         }
     }
@@ -174,23 +175,23 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // Slimeball + Water -> Glue
-        RagiumRecipeBuilder.refining(output) {
-            ingredient += inputCreator.create(Tags.Items.SLIME_BALLS)
-            ingredient += inputCreator.water()
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(Tags.Items.SLIME_BALLS)
+            fluidIngredient = inputCreator.water()
             result += resultCreator.create(RagiumFluids.GLUE)
             recipeId suffix "_from_slime"
         }
         // Polymer Resin + Water -> Glue
-        RagiumRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(HCItems.POLYMER_RESIN)
             ingredient += inputCreator.water()
             result += resultCreator.create(RagiumFluids.GLUE)
             recipeId suffix "_from_polymer"
         }
         // Borax + Glue -> Slimeball
-        RagiumRecipeBuilder.refining(output) {
-            ingredient += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.BORAX)
-            ingredient += inputCreator.create(RagiumFluids.GLUE)
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.BORAX)
+            fluidIngredient = inputCreator.create(RagiumFluids.GLUE)
             result += resultCreator.create(Items.SLIME_BALL, 4)
             recipeId suffix "_from_glue"
         }
@@ -253,17 +254,17 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
 
         // Crude Oil -> Petroleum Coke + Naphtha
-        RagiumRecipeBuilder.refining(output) {
-            ingredient += inputCreator.create(RagiumFluids.CRUDE_OIL, 500)
-            result += resultCreator.material(CommonParts.FUEL, RagiumMaterialKeys.PETROLEUM_COKE)
-            result += resultCreator.create(RagiumFluids.NAPHTHA, 300)
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.CRUDE_OIL, 500)
+            itemResult = resultCreator.material(CommonParts.FUEL, RagiumMaterialKeys.PETROLEUM_COKE)
+            fluidResults += resultCreator.create(RagiumFluids.NAPHTHA, 300)
             recipeId suffix "_from_crude_oil"
         }
         // Naphtha -> Polymer Resin + Fuel
-        RagiumRecipeBuilder.refining(output) {
-            ingredient += inputCreator.create(RagiumFluids.NAPHTHA, 500)
-            result += resultCreator.create(HCItems.POLYMER_RESIN)
-            result += resultCreator.create(RagiumFluids.FUEL, 300)
+        HTRefiningRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(RagiumFluids.NAPHTHA, 500)
+            itemResult = resultCreator.create(HCItems.POLYMER_RESIN)
+            fluidResults += resultCreator.create(RagiumFluids.FUEL, 300)
             recipeId suffix "_from_naphtha"
         }
         // Polymer Resin + Oxygen -> Plastic
@@ -448,7 +449,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId suffix "_with_coal_coke"
         }
         // Crude Silicon + Sulfuric Acid -> Refined Silicon
-        RagiumRecipeBuilder.refining(output) {
+        RagiumRecipeBuilder.chemicalWashing(output) {
             ingredient += inputCreator.create(HiiragiCoreTags.Items.SILICON)
             ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 500)
             result += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.SILICON)

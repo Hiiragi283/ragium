@@ -77,7 +77,7 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val REFINING: RecipeSerializer<HTRefiningRecipe> =
-        REGISTER.registerSerializer(RagiumConst.REFINING, HTBasicItemOrFluidRecipe.codec(::HTRefiningRecipe))
+        REGISTER.registerSerializer(RagiumConst.REFINING, HTRefiningRecipe.CODEC)
 
     @JvmField
     val WASHING: RecipeSerializer<HTWashingRecipe> = REGISTER.registerSerializer(RagiumConst.WASHING, HTWashingRecipe.CODEC)

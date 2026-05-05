@@ -1,6 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.function.partially2
 import hiiragi283.core.api.text.HTTranslation
@@ -53,14 +54,14 @@ object RagiumBlocks {
     @JvmField
     val MEAT_BLOCK: HTBasicDeferredBlockAndItem<HTMeatBlock> = REGISTER.registerSimple(
         "meat_block",
-        copyOf(Blocks.MUD).mapColor(MapColor.COLOR_RED),
+        copyOf(Blocks.MUD).mapColor(MapColor.COLOR_RED).requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL),
         ::HTMeatBlock.partially1(Foods.BEEF),
     )
 
     @JvmField
     val COOKED_MEAT_BLOCK: HTBasicDeferredBlockAndItem<HTMeatBlock> = REGISTER.registerSimple(
         "cooked_meat_block",
-        copyOf(Blocks.PACKED_MUD).mapColor(MapColor.COLOR_RED),
+        copyOf(Blocks.PACKED_MUD).mapColor(MapColor.COLOR_RED).requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL),
         ::HTMeatBlock.partially1(Foods.COOKED_BEEF),
     )
 
@@ -124,8 +125,11 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
     @JvmField
-    val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY, machine().noOcclusion())
+    val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(
+        RagiumBlockEntityTypes.REFINERY,
+        RagiumTranslation.REFINERY,
+        machine().noOcclusion().requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL),
+    )
 
     @JvmField
     val WASHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
@@ -141,8 +145,11 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.CHEMICAL_WASHER, RagiumTranslation.CHEMICAL_WASHER, machine().noOcclusion())
 
     @JvmField
-    val MIXER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
-        registerMachine(RagiumBlockEntityTypes.MIXER, RagiumTranslation.MIXER)
+    val MIXER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(
+        RagiumBlockEntityTypes.MIXER,
+        RagiumTranslation.MIXER,
+        machine().requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL),
+    )
 
     // Ultimate
     @JvmField
@@ -235,7 +242,7 @@ object RagiumBlocks {
     val IMITATION_SPAWNER: HTDeferredBlockAndItem<HTImitationSpawnerBlock, HTImitationSpawnerBlockItem> =
         REGISTER.register(
             "imitation_spawner",
-            copyOf(Blocks.SPAWNER),
+            copyOf(Blocks.SPAWNER).requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL),
             ::HTImitationSpawnerBlock,
             ::HTImitationSpawnerBlockItem,
         )

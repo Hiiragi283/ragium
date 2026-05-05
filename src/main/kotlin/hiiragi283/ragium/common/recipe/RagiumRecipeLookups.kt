@@ -62,7 +62,7 @@ data object RagiumRecipeLookups {
     val PYROLYZING: HTRecipeLookupImpl<HTItemOrFluidRecipe> = create(RagiumConst.PYROLYZING)
 
     @JvmField
-    val REFINING: HTRecipeLookupImpl<HTItemOrFluidRecipe> = create(RagiumConst.REFINING)
+    val REFINING: HTRecipeLookup<HTRefiningRecipe> = create(RagiumRecipeTypes.REFINING)
 
     @JvmField
     val WASHING: HTRecipeLookup<HTWashingRecipe> = create(RagiumRecipeTypes.WASHING)
@@ -115,7 +115,6 @@ data object RagiumRecipeLookups {
         MELTING.addProvider(RagiumRecipeTypes.MELTING.get(), identity())
         MELTING.addProvider(RagiumAPI.id(HTConst.MELTING, "exp_from_ench_book") to HTBookMeltingRecipe)
         PYROLYZING.addProvider(RagiumRecipeTypes.PYROLYZING.get(), identity())
-        REFINING.addProvider(RagiumRecipeTypes.REFINING.get(), identity())
 
         CHEMICAL_WASHING.addProvider(RagiumRecipeTypes.CHEMICAL_WASHING.get(), identity())
 

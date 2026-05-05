@@ -5,7 +5,6 @@ import hiiragi283.core.api.integration.jei.addChancedItem
 import hiiragi283.core.api.integration.jei.addFluidStack
 import hiiragi283.core.api.integration.jei.addFluidStacks
 import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
-import hiiragi283.core.api.integration.jei.setFluidSlotRenderer
 import hiiragi283.core.api.integration.jei.setTankRenderer
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
@@ -38,10 +37,10 @@ class HTMixingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.Pr
             .addChancedItem(contents.outputItem(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
         builder
-            .addOutputSlot(getPosition(7), getPosition(1))
+            .addOutputSlot(getPosition(7), getPosition(0))
             .addFluidStack(contents.outputFluid(0))
-            .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
-            .setFluidSlotRenderer()
+            .setTankBackground(HTBackgroundType.EXTRA_OUTPUT)
+            .setTankRenderer(RagiumConfig.COMMON.machine.tankCapacity)
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProgressRecipeDisplay, focuses: IFocusGroup) {

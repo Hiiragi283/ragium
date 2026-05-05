@@ -60,7 +60,7 @@ data object RagiumRecipeViewerTypes {
 
     @JvmField
     val REFINING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY, 18 * 8)
+        create(RagiumRecipeTypes.REFINING, RagiumBlocks.REFINERY, 18 * 6, 18 * 3)
 
     @JvmField
     val WASHING: HTRecipeViewerType<HTProgressRecipeDisplay> =

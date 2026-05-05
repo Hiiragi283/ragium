@@ -1,0 +1,16 @@
+{
+  "type": "ragium:chemical_washing",
+  "fluid_ingredient": {
+    "amount": 500,
+    "fluids": "#c:experience"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:storage_blocks/quartz"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:ghast_tear"
+  },
+  "time": 200
+}

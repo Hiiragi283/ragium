@@ -12,7 +12,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.REFINERY, pos, state) {
-    override fun getLookup(): HTRecipeLookup<out HTItemOrFluidRecipe> = RagiumRecipeLookups.REFINING
+    override fun getLookup(): HTRecipeLookup<out HTItemOrFluidRecipe> = RagiumRecipeLookups.CHEMICAL_WASHING // TODO
 
     override fun playSound() {
         playSound(SoundEvents.LAVA_POP)

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:chemical_washing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:experience"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:dusts/sulfur"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:blaze_powder"
+  },
+  "time": 200
+}

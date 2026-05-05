@@ -1,16 +1,24 @@
 package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.impl.recipe.cache.completed.HTDoubleInputCompletedRecipe
+import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
+import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
+import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
 class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
@@ -40,7 +48,30 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
 
     //    Processing    //
 
-    override fun createHandler(): HTProgressHandler<*> = TODO()
+    private inner class ProgressHandlerImpl : ProgressHandler<HTDoubleItemToItemRecipe, HTDoubleInputCompletedRecipe.DoubleItem>() {
+        private val cache: HTRecipeCaches.DoubleItem<HTDoubleItemToItemRecipe> = HTRecipeCaches.DoubleItem(RagiumRecipeLookups.ASSEMBLING)
+        private val leftInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(leftInputSlot) }
+        private val rightInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(rightInputSlot) }
+        private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
+
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTDoubleItemToItemRecipe? =
+            cache.findFirstRecipe(leftInputHandler.getStack(), rightInputHandler.getStack(), level)
+
+        override fun completeRecipe(recipe: HTDoubleItemToItemRecipe): HTDoubleInputCompletedRecipe.DoubleItem =
+            HTDoubleInputCompletedRecipe.DoubleItem(
+                recipe,
+                leftInputHandler,
+                rightInputHandler,
+                outputHandler,
+            )
+
+        override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTDoubleInputCompletedRecipe.DoubleItem) {
+            recipe.complete()
+            playSound(SoundEvents.CRAFTER_CRAFT)
+        }
+    }
+
+    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.assembler
 }

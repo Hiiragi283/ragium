@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.data.recipe
 
+import hiiragi283.core.api.data.holder.HTIorHolder
 import hiiragi283.core.api.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.core.api.function.identityLeft
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
@@ -7,7 +8,6 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.data.holder.HTIorHolder
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation

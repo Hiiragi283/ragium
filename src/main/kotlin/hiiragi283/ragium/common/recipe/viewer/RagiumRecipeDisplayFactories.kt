@@ -13,6 +13,7 @@ import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
 import net.minecraft.resources.ResourceLocation
@@ -82,6 +83,14 @@ data object RagiumRecipeDisplayFactories {
     fun melting(holder: HTRecipeHolder<HTMeltingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.ingredient)
         addOutput(it.result)
+    }
+
+    @JvmStatic
+    fun refining(holder: HTRecipeHolder<HTRefiningRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+        addInput(it.ingredient)
+        it.catalyst.ifPresent(::addCatalyst)
+        it.fluidResults.forEach(::addOutput)
+        it.itemResult.ifPresent(::addOutput)
     }
 
     @JvmStatic

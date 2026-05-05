@@ -34,6 +34,7 @@ import hiiragi283.ragium.client.jei.category.HTMassFabricatingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTPlantingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTRefiningRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
@@ -94,7 +95,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTImplodingRecipeCategory(guiHelper),
             HTMeltingRecipeCategory(guiHelper),
             HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.PYROLYZING),
-            HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.REFINING),
+            HTRefiningRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
             // Machine - Elite
             HTChemicalReactingRecipeCategory(guiHelper),
@@ -151,7 +152,12 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             it.castRecipe<HTMeltingRecipe>()?.let(RagiumRecipeDisplayFactories::melting)
         }
         itemOrFluid(RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
-        itemOrFluid(RagiumRecipeViewerTypes.REFINING, RagiumRecipeLookups.REFINING)
+        addDisplayRecipes(
+            registration,
+            RagiumRecipeViewerTypes.REFINING,
+            RagiumRecipeLookups.REFINING,
+            RagiumRecipeDisplayFactories::refining,
+        )
         addDisplayRecipes(
             registration,
             RagiumRecipeViewerTypes.WASHING,

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:chemical_washing",
+  "fluid_ingredient": {
+    "amount": 90,
+    "fluids": "#hiiragi_core:eldritch"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:obsidians/normal"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:crying_obsidian"
+  },
+  "time": 200
+}

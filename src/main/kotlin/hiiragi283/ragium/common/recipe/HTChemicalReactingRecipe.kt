@@ -15,6 +15,7 @@ import hiiragi283.core.api.recipe.result.HTListFluidResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.util.Ior
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -31,7 +32,7 @@ class HTChemicalReactingRecipe(
     val itemResult: Optional<HTItemResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.TripleInput<HTChemicalReactingRecipe.Input, ItemStack, FluidStack, FluidStack>,
-    HTRecipeFactories.ItemAndDoubleFluid<HTChemicalReactingRecipe.Output>,
+    HTRecipeFactories.ItemAndDoubleFluid<HTChemicalResult>,
     HTProgressRecipe.Simple<HTChemicalReactingRecipe.Input>,
     HTSerializableRecipe<HTChemicalReactingRecipe.Input> {
     companion object {
@@ -77,14 +78,8 @@ class HTChemicalReactingRecipe(
         secondary.getLeft()?.getRequiredAmount(third) ?: 0,
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: FluidStack, thirdInput: FluidStack): Output {
-        val stacks: List<FluidStack> = fluidResults.toList()
-        return Output(
-            itemResult.map { it.getOrEmpty() }.orElseGet(ItemStack::EMPTY),
-            stacks.first(),
-            stacks.getOrNull(1) ?: FluidStack.EMPTY,
-        )
-    }
+    override fun assemble(firstInput: ItemStack, secondInput: FluidStack, thirdInput: FluidStack): HTChemicalResult =
+        HTChemicalResult.create(fluidResults, itemResult)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CHEMICAL_REACTING
 
@@ -107,7 +102,4 @@ class HTChemicalReactingRecipe(
 
         override fun size(): Int = 1
     }
-
-    @JvmRecord
-    data class Output(val item: ItemStack, val first: FluidStack, val second: FluidStack)
 }

@@ -12,6 +12,7 @@ import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.api.util.Ior
 import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
@@ -24,7 +25,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 
 class HTMixingRecipe(
     val primary: HTItemIngredient,
-    val secondary: HTItemIngredient,
+    val secondary: HTItemIngredient?,
     val fluidIngredient: HTFluidIngredient,
     val result: Ior<HTItemResult, HTFluidResult>,
     override val progressData: HTProgressData,
@@ -38,9 +39,9 @@ class HTMixingRecipe(
             instance
                 .group(
                     HTItemIngredient.CODEC
-                        .listOf(2, 2)
+                        .listOrElement(1, 2)
                         .fieldOf(HTConst.ITEM_INGREDIENT)
-                        .forGetter { listOf(it.primary, it.secondary) },
+                        .forGetter { listOfNotNull(it.primary, it.secondary) },
                     HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTMixingRecipe::fluidIngredient),
                     HTBasicItemOrFluidRecipe.RESULT_CODEC.forGetter(HTMixingRecipe::result),
                     HTProgressData.CODEC.forGetter(HTMixingRecipe::progressData),
@@ -55,14 +56,14 @@ class HTMixingRecipe(
         progressData: HTProgressData,
     ) : this(
         itemIngredient[0],
-        itemIngredient[1],
+        itemIngredient.getOrNull(1),
         fluidIngredient,
         result,
         progressData,
     )
 
     override fun test(first: ItemStack, second: ItemStack, third: FluidStack): Boolean =
-        primary.test(first) && secondary.test(second) && fluidIngredient.test(third)
+        primary.test(first) && (secondary?.test(second) ?: second.isEmpty) && fluidIngredient.test(third)
 
     override fun matches(input: Input): Boolean {
         val (firstItem: ItemStack, secondItem: ItemStack, fluid: FluidStack) = input
@@ -71,7 +72,7 @@ class HTMixingRecipe(
 
     override fun getRequiredAmount(first: ItemStack, second: ItemStack, third: FluidStack): Triple<Int, Int, Int> = Triple(
         primary.getRequiredAmount(first),
-        secondary.getRequiredAmount(second),
+        secondary?.getRequiredAmount(second) ?: 0,
         fluidIngredient.getRequiredAmount(third),
     )
 

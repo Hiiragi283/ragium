@@ -1,5 +1,6 @@
 package hiiragi283.ragium.setup
 
+import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.material.getOrThrow
 import hiiragi283.core.api.material.part.CommonParts
@@ -108,7 +109,7 @@ object RagiumItems {
     //    Foods    //
 
     @JvmField
-    val EMPTY_CAN: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("empty_can")
+    val EMPTY_CAN: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("empty_can") { it.requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL) }
 
     @JvmField
     val FOOD_CANS: Map<HTFoodCanType, HTSimpleItemHolderLike> = HTFoodCanType.entries.associateWith { canType ->
@@ -127,15 +128,16 @@ object RagiumItems {
             HTFoodCanType.VEGETABLE -> 0.6f
         }
         REGISTER.registerSimpleItem("${canType.serializedName}_can") {
-            it.food(
-                FoodProperties
-                    .Builder()
-                    .nutrition(nutrition)
-                    .saturationModifier(saturation)
-                    .fast()
-                    .usingConvertsTo(EMPTY_CAN)
-                    .build(),
-            )
+            it
+                .food(
+                    FoodProperties
+                        .Builder()
+                        .nutrition(nutrition)
+                        .saturationModifier(saturation)
+                        .fast()
+                        .usingConvertsTo(EMPTY_CAN)
+                        .build(),
+                ).requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL)
         }
     }
 
