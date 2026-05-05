@@ -1,26 +1,31 @@
 package hiiragi283.ragium.common.recipe
 
+import com.mojang.serialization.MapCodec
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.util.Ior
-import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.ragium.impl.recipe.HTBasicItemAndFluidToItemRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 
-class HTChemicalWashingRecipe(
-    ingredient: Ior<HTItemIngredient, HTFluidIngredient>,
-    result: Ior<HTItemResult, HTFluidResult>,
+class HTBathingRecipe(
+    itemIngredient: HTItemIngredient,
+    fluidIngredient: HTFluidIngredient,
+    result: HTItemResult,
     progressData: HTProgressData,
-) : HTBasicItemOrFluidRecipe(ingredient, result, progressData),
+) : HTBasicItemAndFluidToItemRecipe(itemIngredient, fluidIngredient, result, progressData),
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
-    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CHEMICAL_WASHING
+    companion object {
+        @JvmField
+        val CODEC: MapCodec<HTBathingRecipe> = codec(::HTBathingRecipe)
+    }
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CHEMICAL_WASHING.get()
+    override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BATHING
+
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.BATHING.get()
 }

@@ -18,6 +18,7 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -83,31 +84,31 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun expRefining() {
         // Quartz Block -> Ghast Tear
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ)
-            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 500)
-            result += resultCreator.create(Items.GHAST_TEAR)
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ)
+            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 500)
+            result = resultCreator.create(Items.GHAST_TEAR)
             recipeId suffix "_from_quartz"
         }
         // Sulfur Dust -> Blaze Powder
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
-            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 250)
-            result += resultCreator.create(Items.BLAZE_POWDER)
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
+            result = resultCreator.create(Items.BLAZE_POWDER)
             recipeId suffix "_from_sulfur"
         }
         // Leather -> Phantom Membrane
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(Tags.Items.LEATHERS)
-            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 250)
-            result += resultCreator.create(Items.PHANTOM_MEMBRANE)
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Tags.Items.LEATHERS)
+            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
+            result = resultCreator.create(Items.PHANTOM_MEMBRANE)
             recipeId suffix "_from_leather"
         }
         // Snowball -> Wind Charge
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(Items.SNOWBALL)
-            ingredient += inputCreator.create(HCFluids.EXPERIENCE, 250)
-            result += resultCreator.create(Items.WIND_CHARGE)
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Items.SNOWBALL)
+            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
+            result = resultCreator.create(Items.WIND_CHARGE)
             recipeId suffix "_from_snowball"
         }
     }
@@ -120,36 +121,36 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         )
 
         // Obsidian -> Crying Obsidian
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(Tags.Items.OBSIDIANS_NORMAL)
-            ingredient += eldritch(1)
-            result += resultCreator.create(Items.CRYING_OBSIDIAN)
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Tags.Items.OBSIDIANS_NORMAL)
+            fluidIngredient = eldritch(1)
+            result = resultCreator.create(Items.CRYING_OBSIDIAN)
         }
         // Amethyst Block -> Budding Amethyst
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
-            ingredient += eldritch(9)
-            result += resultCreator.create(Items.BUDDING_AMETHYST)
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
+            fluidIngredient = eldritch(9)
+            result = resultCreator.create(Items.BUDDING_AMETHYST)
         }
         // Skeleton Skull -> Wither Skeleton Skull
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(Items.SKELETON_SKULL)
-            ingredient += eldritch(1)
-            result += resultCreator.create(Items.WITHER_SKELETON_SKULL)
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Items.SKELETON_SKULL)
+            fluidIngredient = eldritch(1)
+            result = resultCreator.create(Items.WITHER_SKELETON_SKULL)
         }
 
         // Trial Key -> Ominous Key
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(Items.TRIAL_KEY)
-            ingredient += eldritch(4)
-            result += resultCreator.create(Items.OMINOUS_TRIAL_KEY)
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(Items.TRIAL_KEY)
+            fluidIngredient = eldritch(4)
+            result = resultCreator.create(Items.OMINOUS_TRIAL_KEY)
         }
 
         // Wither Doll -> Wither Star
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(HCItems.WITHER_DOLL)
-            ingredient += eldritch(4)
-            result += resultCreator.create(HCItems.WITHER_STAR)
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+            itemIngredient = inputCreator.create(HCItems.WITHER_DOLL)
+            fluidIngredient = eldritch(4)
+            result = resultCreator.create(HCItems.WITHER_STAR)
         }
     }
 

@@ -4,7 +4,6 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.VanillaMaterialKeys
-import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTAssemblingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -153,12 +152,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         RagiumRecipeBuilder.compressing(output) {
             ingredient = inputCreator.create(Items.SCULK_VEIN, 8)
             result = resultCreator.create(Items.SCULK)
-        }
-
-        // Sawdust -> Particle Board
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD, 2)
-            result = resultCreator.create(HCItems.PARTICLE_BOARD)
         }
     }
 

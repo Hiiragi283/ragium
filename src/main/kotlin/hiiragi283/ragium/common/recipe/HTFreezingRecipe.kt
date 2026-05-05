@@ -5,14 +5,12 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
-import hiiragi283.core.api.recipe.base.HTRecipeFactories
-import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -26,8 +24,7 @@ class HTFreezingRecipe(
     val catalyst: Ingredient,
     val result: HTItemResult,
     override val progressData: HTProgressData,
-) : HTRecipePredicates.ItemAndFluid,
-    HTRecipeFactories.ItemAndFluid<ItemStack>,
+) : HTItemAndFluidToItemRecipe,
     HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     companion object {
@@ -45,8 +42,7 @@ class HTFreezingRecipe(
 
     override fun test(first: ItemStack, second: FluidStack): Boolean = catalyst.test(first) && ingredient.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> =
-        catalyst.getRequiredAmount(first) to ingredient.getRequiredAmount(second)
+    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = 0 to ingredient.getRequiredAmount(second)
 
     override fun assemble(firstInput: ItemStack, secondInput: FluidStack): ItemStack = result.getOrEmpty()
 

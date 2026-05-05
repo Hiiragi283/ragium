@@ -1,16 +1,16 @@
 {
-  "type": "ragium:chemical_washing",
+  "type": "ragium:mixing",
   "fluid_ingredient": {
     "amount": 1000,
     "fluids": "#c:sulfuric_acid"
   },
   "fluid_result": {
     "amount": 2000,
-    "id": "minecraft:water"
+    "id": "ragium:nitric_acid"
   },
   "item_ingredient": {
-    "amount": 1,
-    "items": "minecraft:slime_ball"
+    "amount": 2,
+    "items": "#c:dusts/saltpeter"
   },
   "item_result": {
     "count": 1,

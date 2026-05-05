@@ -8,8 +8,8 @@ import hiiragi283.ragium.common.crafting.HTBatteryCombiningRecipe
 import hiiragi283.ragium.common.crafting.HTTankCombiningRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
-import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
@@ -84,12 +84,11 @@ object RagiumRecipeSerializers {
 
     // Machine - Elite
     @JvmField
-    val CHEMICAL_REACTING: RecipeSerializer<HTChemicalReactingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.CHEMICAL_REACTING, HTChemicalReactingRecipe.CODEC)
+    val BATHING: RecipeSerializer<HTBathingRecipe> = REGISTER.registerSerializer(RagiumConst.BATHING, HTBathingRecipe.CODEC)
 
     @JvmField
-    val CHEMICAL_WASHING: RecipeSerializer<HTChemicalWashingRecipe> =
-        REGISTER.registerSerializer(RagiumConst.CHEMICAL_WASHING, HTBasicItemOrFluidRecipe.codec(::HTChemicalWashingRecipe))
+    val CHEMICAL_REACTING: RecipeSerializer<HTChemicalReactingRecipe> =
+        REGISTER.registerSerializer(RagiumConst.CHEMICAL_REACTING, HTChemicalReactingRecipe.CODEC)
 
     @JvmField
     val MIXING: RecipeSerializer<HTMixingRecipe> = REGISTER.registerSerializer(RagiumConst.MIXING, HTMixingRecipe.CODEC)

@@ -10,7 +10,7 @@ import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
@@ -19,9 +19,9 @@ import net.minecraft.world.level.ItemLike
 object RagiumMatterRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     override fun buildRecipeInternal() {
         // Liquid Ragi-Matter
-        RagiumRecipeBuilder.chemicalWashing(output) {
-            ingredient += inputCreator.create(RagiumItems.RAGI_MATTER)
-            ingredient += inputCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, 250)
+        HTMixingRecipeBuilder.create(output) {
+            itemIngredients += inputCreator.create(RagiumItems.RAGI_MATTER)
+            fluidIngredient = inputCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, 250)
             result += resultCreator.create(RagiumFluids.RAGI_MATTER, 250)
             time *= 10
         }

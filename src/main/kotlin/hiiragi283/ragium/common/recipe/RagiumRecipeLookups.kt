@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.function.identity
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.HTRecipeType
@@ -21,6 +20,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
+import hiiragi283.ragium.api.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -50,7 +50,7 @@ data object RagiumRecipeLookups {
 
     // Machine - Advanced
     @JvmField
-    val FREEZING: HTRecipeLookup<HTFreezingRecipe> = create(RagiumRecipeTypes.FREEZING)
+    val FREEZING: HTRecipeLookupImpl<HTItemAndFluidToItemRecipe> = create(RagiumConst.FREEZING)
 
     @JvmField
     val IMPLODING: HTRecipeLookup<HTImplodingRecipe> = create(RagiumRecipeTypes.IMPLODING)
@@ -69,10 +69,10 @@ data object RagiumRecipeLookups {
 
     // Machine - Elite
     @JvmField
-    val CHEMICAL_REACTING: HTRecipeLookup<HTChemicalReactingRecipe> = create(RagiumRecipeTypes.CHEMICAL_REACTING)
+    val BATHING: HTRecipeLookupImpl<HTItemAndFluidToItemRecipe> = create(RagiumConst.BATHING)
 
     @JvmField
-    val CHEMICAL_WASHING: HTRecipeLookupImpl<HTItemOrFluidRecipe> = create(RagiumConst.CHEMICAL_WASHING)
+    val CHEMICAL_REACTING: HTRecipeLookup<HTChemicalReactingRecipe> = create(RagiumRecipeTypes.CHEMICAL_REACTING)
 
     @JvmField
     val MIXING: HTRecipeLookup<HTMixingRecipe> = create(RagiumRecipeTypes.MIXING)
@@ -112,11 +112,12 @@ data object RagiumRecipeLookups {
         CUTTING.addProvider(RagiumRecipeTypes.CUTTING.get(), identity())
         PLANTING.addProvider(RagiumRecipeTypes.PLANTING.get(), identity())
 
+        FREEZING.addProvider(RagiumRecipeTypes.FREEZING.get(), identity())
         MELTING.addProvider(RagiumRecipeTypes.MELTING.get(), identity())
-        MELTING.addProvider(RagiumAPI.id(HTConst.MELTING, "exp_from_ench_book") to HTBookMeltingRecipe)
+        MELTING.addProvider(RagiumAPI.id(RagiumConst.MELTING, "exp_from_ench_book") to HTBookMeltingRecipe)
         PYROLYZING.addProvider(RagiumRecipeTypes.PYROLYZING.get(), identity())
 
-        CHEMICAL_WASHING.addProvider(RagiumRecipeTypes.CHEMICAL_WASHING.get(), identity())
+        BATHING.addProvider(RagiumRecipeTypes.BATHING.get(), identity())
 
         ENCHANTING.addProvider(RagiumRecipeTypes.ENCHANTING.get(), identity())
     }

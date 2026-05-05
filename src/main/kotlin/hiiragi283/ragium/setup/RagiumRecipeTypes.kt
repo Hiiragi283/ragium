@@ -6,8 +6,8 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
-import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
@@ -61,10 +61,10 @@ object RagiumRecipeTypes {
 
     // Machine - Elite
     @JvmField
-    val CHEMICAL_REACTING: HTDeferredRecipeType<HTChemicalReactingRecipe> = REGISTER.registerType(RagiumConst.CHEMICAL_REACTING)
+    val BATHING: HTDeferredRecipeType<HTBathingRecipe> = REGISTER.registerType(RagiumConst.BATHING)
 
     @JvmField
-    val CHEMICAL_WASHING: HTDeferredRecipeType<HTChemicalWashingRecipe> = REGISTER.registerType(RagiumConst.CHEMICAL_WASHING)
+    val CHEMICAL_REACTING: HTDeferredRecipeType<HTChemicalReactingRecipe> = REGISTER.registerType(RagiumConst.CHEMICAL_REACTING)
 
     @JvmField
     val MIXING: HTDeferredRecipeType<HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)

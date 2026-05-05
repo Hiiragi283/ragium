@@ -41,7 +41,7 @@ class HTChemicalReactingRecipeCategory(guiHelper: IGuiHelper) :
                 .addFluidStack(it)
                 .setTankBackground(HTBackgroundType.OUTPUT, it.amount)
         }
-        contents.outputFluid(0) {
+        contents.outputFluid(1) {
             builder
                 .addOutputSlot(getPosition(7), getPosition(0))
                 .addFluidStack(it)

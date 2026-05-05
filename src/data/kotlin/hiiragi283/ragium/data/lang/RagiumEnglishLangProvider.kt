@@ -162,8 +162,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumRecipeTypes.REFINING, "Refining")
         add(RagiumRecipeTypes.WASHING, "Washing")
 
+        add(RagiumRecipeTypes.BATHING, "Chemical Bathing")
         add(RagiumRecipeTypes.CHEMICAL_REACTING, "Chemical Reacting")
-        add(RagiumRecipeTypes.CHEMICAL_WASHING, "Chemical Washing")
         add(RagiumRecipeTypes.MIXING, "Mixing")
 
         add(RagiumRecipeLookups.MASS_FABRICATING, "Mass Fabricating")

@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTChemicalWasherBlockEntity(pos: BlockPos, state: BlockState) :
     HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.CHEMICAL_WASHER, pos, state) {
-    override fun getLookup(): HTRecipeLookup<out HTItemOrFluidRecipe> = RagiumRecipeLookups.CHEMICAL_WASHING
+    override fun getLookup(): HTRecipeLookup<out HTItemOrFluidRecipe> = RagiumRecipeLookups.PYROLYZING // TODO
 
     override fun playSound() {
         playSound(SoundEvents.LAVA_POP)

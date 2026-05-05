@@ -72,8 +72,8 @@ object RagiumConst {
     const val WASHING = "washing"
 
     // Machine - Elite
+    const val BATHING = "bathing"
     const val CHEMICAL_REACTING = "chemical_reacting"
-    const val CHEMICAL_WASHING = "chemical_washing"
     const val MIXING = "mixing"
 
     // Machine - Ultimate

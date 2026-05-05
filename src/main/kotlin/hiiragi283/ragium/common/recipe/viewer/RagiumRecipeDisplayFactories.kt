@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
+import hiiragi283.ragium.impl.recipe.HTBasicItemAndFluidToItemRecipe
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
@@ -31,6 +32,14 @@ data object RagiumRecipeDisplayFactories {
             addInput(it.ingredient.getRight())
             it.result.getLeft()?.let(::addOutput)
             it.result.getRight()?.let(::addOutput)
+        }
+
+    @JvmStatic
+    fun itemAndFluidToItem(holder: HTRecipeHolder<out HTBasicItemAndFluidToItemRecipe>): HTProgressRecipeDisplay =
+        HTRecipeDisplayFactories.progress(holder) {
+            addInput(it.itemIngredient)
+            addInput(it.fluidIngredient)
+            addOutput(it.result)
         }
 
     // Machine - Basic

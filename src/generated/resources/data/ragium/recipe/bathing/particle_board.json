@@ -1,6 +1,10 @@
 {
-  "type": "ragium:compressing",
-  "ingredient": {
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:glue"
+  },
+  "item_ingredient": {
     "amount": 2,
     "items": "#c:dusts/wood"
   },

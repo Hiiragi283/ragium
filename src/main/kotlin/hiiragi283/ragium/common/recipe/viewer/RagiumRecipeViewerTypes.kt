@@ -35,7 +35,7 @@ data object RagiumRecipeViewerTypes {
 
     @JvmField
     val CUTTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 5, 18 * 2)
+        create(RagiumRecipeTypes.CUTTING, RagiumBlocks.CUTTING_MACHINE, 18 * 4, 18 * 2)
 
     @JvmField
     val PLANTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
@@ -68,12 +68,12 @@ data object RagiumRecipeViewerTypes {
 
     // Machine - Elite
     @JvmField
-    val CHEMICAL_REACTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.CHEMICAL_REACTING, RagiumBlocks.CHEMICAL_WASHER, 18 * 8, 18 * 3)
+    val BATHING: HTRecipeViewerType<HTProgressRecipeDisplay> =
+        create(RagiumRecipeTypes.BATHING, RagiumBlocks.CHEMICAL_WASHER, 18 * 6)
 
     @JvmField
-    val CHEMICAL_WASHING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.CHEMICAL_WASHING, RagiumBlocks.CHEMICAL_WASHER, 18 * 8)
+    val CHEMICAL_REACTING: HTRecipeViewerType<HTProgressRecipeDisplay> =
+        create(RagiumRecipeTypes.CHEMICAL_REACTING, RagiumBlocks.CHEMICAL_WASHER, 18 * 8, 18 * 3)
 
     @JvmField
     val MIXING: HTRecipeViewerType<HTProgressRecipeDisplay> =

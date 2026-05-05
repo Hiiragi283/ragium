@@ -1,16 +1,16 @@
 {
-  "type": "ragium:chemical_washing",
+  "type": "ragium:bathing",
   "fluid_ingredient": {
-    "amount": 360,
+    "amount": 90,
     "fluids": "#hiiragi_core:eldritch"
   },
   "item_ingredient": {
     "amount": 1,
-    "items": "minecraft:trial_key"
+    "items": "minecraft:skeleton_skull"
   },
-  "item_result": {
+  "result": {
     "count": 1,
-    "id": "minecraft:ominous_trial_key"
+    "id": "minecraft:wither_skeleton_skull"
   },
   "time": 200
 }

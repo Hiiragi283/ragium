@@ -21,19 +21,18 @@ import hiiragi283.core.api.registry.HTFluidHolderLike
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
-import hiiragi283.core.common.data.recipe.builder.HCForgingRecipeBuilder
 import hiiragi283.core.common.event.HCRuntimeRecipeHandler
-import hiiragi283.core.common.recipe.ingredient.HTBluePrintIngredient
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.TagKey
 import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 
@@ -47,10 +46,11 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
 
         for (entry: HTMaterialManager.Entry in materialManager) {
             // Basic
+            compressDustToPellet(event, entry)
+            compressIngotToPlate(event, entry)
+
             cutBaseToRod(event, entry)
             cutBlockToPlate(event, entry)
-
-            forgeDustToPellet(event, entry)
             // Heat
             meltPrefixToMolten(event, entry, CommonParts.DUST)
             meltPrefixToMolten(event, entry, CommonParts.GEM)
@@ -74,12 +74,35 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         }
     }
 
+    //    Compressing    //
+
     @JvmStatic
-    private fun getBlueprint(prefix: HTTagPrefix): Ingredient {
-        return when (prefix) {
-            RagiumTagPrefixes.PELLET -> 8
-            else -> return HCRuntimeRecipeHandler.getBlueprint(prefix)
-        }.let(::HTBluePrintIngredient).toVanilla()
+    private fun compressDustToPellet(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 材料が存在するか判定
+        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART).tagPrefix ?: return
+        if (!event.isPresentTag(crushedPrefix, entry)) return
+        // 完成品を取得
+        val pellet: HTItemHolderLike<*> = event.getFirstHolder(RagiumTagPrefixes.PELLET, entry) ?: return
+        // レシピを登録
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(crushedPrefix, entry, 8)
+            result = resultCreator.create(pellet)
+            recipeId suffix "_from_dust"
+        }
+    }
+
+    @JvmStatic
+    private fun compressIngotToPlate(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
+        // 材料が存在するか判定
+        if (!event.isPresentTag(CommonTagPrefixes.INGOT, entry)) return
+        // 完成品を取得
+        val plate: ItemLike = event.getFirstHolder(CommonTagPrefixes.PLATE, entry) ?: return
+        // レシピを登録
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.INGOT, entry)
+            result = resultCreator.create(plate)
+            recipeId suffix "_from_ingot"
+        }
     }
 
     //    Cutting    //
@@ -120,24 +143,6 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         }
     }
 
-    //    Forging    //
-
-    @JvmStatic
-    private fun forgeDustToPellet(event: HTRegisterRuntimeRecipeEvent, entry: HTMaterialManager.Entry) {
-        // 材料が存在するか判定
-        val crushedPrefix: HTTagPrefix = entry.getOrDefault(HTMaterialPropertyKeys.CRUSHED_PART).tagPrefix ?: return
-        if (!event.isPresentTag(crushedPrefix, entry)) return
-        // 完成品を取得
-        val pellet: HTItemHolderLike<*> = event.getFirstHolder(RagiumTagPrefixes.PELLET, entry) ?: return
-        // レシピを登録
-        HCForgingRecipeBuilder.create(output) {
-            primary = inputCreator.create(crushedPrefix, entry, 8)
-            secondary += getBlueprint(RagiumTagPrefixes.PELLET)
-            result = resultCreator.create(pellet)
-            recipeId suffix "_from_dust"
-        }
-    }
-
     //    Freezing    //
 
     @JvmStatic
@@ -149,7 +154,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(HTFluidPart.MOLTEN, entry) { part.getScaledAmount(it, entry).toInt() }
-            catalyst += getBlueprint(prefix)
+            catalyst += HCRuntimeRecipeHandler.getBlueprint(prefix)
             result = resultCreator.create(resultItem)
             recipeId suffix "_from_molten"
         }
@@ -216,16 +221,16 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             recipeId suffix "_from_crushed_ore/water"
         }
         // 硫酸 -> 1.5x 主産物
-        RagiumRecipeBuilder.chemicalWashing(output) {
+        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
             // 材料
-            ingredient += inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
-            ingredient += inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)
+            itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
+            fluidIngredient = inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)
             // 主産物
             val outputCount: Int = CommonParts.CRUSHED_ORE
                 .getScaledAmount(fraction(3, 2), entry)
                 .toFloat()
                 .let(Mth::ceil)
-            result += resultCreator.create(dust, outputCount)
+            result = resultCreator.create(dust, outputCount)
 
             recipeId suffix "_from_crushed_ore/sulfuric_acid"
         }

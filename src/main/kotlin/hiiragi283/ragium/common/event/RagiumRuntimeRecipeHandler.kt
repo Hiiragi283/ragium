@@ -10,6 +10,7 @@ import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.registry.getDataSequence
 import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
 import net.mehvahdjukaar.moonlight.api.set.wood.VanillaWoodChildKeys
@@ -221,17 +222,17 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             }.forEach { (before: HTSimpleItemHolderLike, after: HTSimpleItemHolderLike) ->
                 // レシピを登録
                 // Oxidization
-                RagiumRecipeBuilder.chemicalWashing(output) {
-                    ingredient += inputCreator.create(before)
-                    ingredient += inputCreator.create(RagiumFluids.OXYGEN, 250)
-                    result += resultCreator.create(after)
+                HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+                    itemIngredient = inputCreator.create(before)
+                    fluidIngredient = inputCreator.create(RagiumFluids.OXYGEN, 250)
+                    result = resultCreator.create(after)
                     recipeId suffix "_from_${before.path}"
                 }
                 // Reduction
-                RagiumRecipeBuilder.chemicalWashing(output) {
-                    ingredient += inputCreator.create(after)
-                    ingredient += inputCreator.create(RagiumFluids.HYDROGEN, 250)
-                    result += resultCreator.create(before)
+                HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+                    itemIngredient = inputCreator.create(after)
+                    fluidIngredient = inputCreator.create(RagiumFluids.HYDROGEN, 250)
+                    result = resultCreator.create(before)
                     recipeId suffix "_from_${after.path}"
                 }
             }

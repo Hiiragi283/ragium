@@ -29,6 +29,7 @@ import hiiragi283.ragium.client.jei.category.HTChemicalReactingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTCuttingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTFreezingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTImplodingRecipeCategory
+import hiiragi283.ragium.client.jei.category.HTItemAndFluidToItemRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTItemOrFluidRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMassFabricatingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTMeltingRecipeCategory
@@ -37,12 +38,14 @@ import hiiragi283.ragium.client.jei.category.HTPlantingRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTRefiningRecipeCategory
 import hiiragi283.ragium.client.jei.category.HTWashingRecipeCategory
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
+import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.impl.recipe.HTBasicItemAndFluidToItemRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems
@@ -98,8 +101,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             HTRefiningRecipeCategory(guiHelper),
             HTWashingRecipeCategory(guiHelper),
             // Machine - Elite
+            HTItemAndFluidToItemRecipeCategory(guiHelper, RagiumRecipeViewerTypes.BATHING),
             HTChemicalReactingRecipeCategory(guiHelper),
-            HTItemOrFluidRecipeCategory(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_WASHING),
             HTMixingRecipeCategory(guiHelper),
             // Machine - Ultimate
             HTMassFabricatingRecipeCategory(guiHelper),
@@ -136,12 +139,9 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             it.castRecipe<RTPlantingRecipe>()?.let(RagiumRecipeDisplayFactories::planting)
         }
         // Machine - Advanced
-        addDisplayRecipes(
-            registration,
-            RagiumRecipeViewerTypes.FREEZING,
-            RagiumRecipeLookups.FREEZING,
-            RagiumRecipeDisplayFactories::freezing,
-        )
+        addDisplayRecipes(registration, RagiumRecipeViewerTypes.FREEZING, RagiumRecipeLookups.FREEZING) {
+            it.castRecipe<HTFreezingRecipe>()?.let(RagiumRecipeDisplayFactories::freezing)
+        }
         addFlatDisplayRecipes(
             registration,
             RagiumRecipeViewerTypes.IMPLODING,
@@ -165,13 +165,15 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeDisplayFactories::washing,
         )
         // Machine - Elite
+        addDisplayRecipes(registration, RagiumRecipeViewerTypes.BATHING, RagiumRecipeLookups.BATHING) {
+            it.castRecipe<HTBasicItemAndFluidToItemRecipe>()?.let(RagiumRecipeDisplayFactories::itemAndFluidToItem)
+        }
         addDisplayRecipes(
             registration,
             RagiumRecipeViewerTypes.CHEMICAL_REACTING,
             RagiumRecipeLookups.CHEMICAL_REACTING,
             RagiumRecipeDisplayFactories::reacting,
         )
-        itemOrFluid(RagiumRecipeViewerTypes.CHEMICAL_WASHING, RagiumRecipeLookups.CHEMICAL_WASHING)
         addDisplayRecipes(
             registration,
             RagiumRecipeViewerTypes.MIXING,
@@ -242,8 +244,8 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeViewerTypes.REFINING,
             RagiumRecipeViewerTypes.WASHING,
             // Machine - Elite
+            RagiumRecipeViewerTypes.BATHING,
             RagiumRecipeViewerTypes.CHEMICAL_REACTING,
-            RagiumRecipeViewerTypes.CHEMICAL_WASHING,
             RagiumRecipeViewerTypes.MIXING,
             // Machine - Ultimate
             RagiumRecipeViewerTypes.MASS_FABRICATING,

@@ -1,16 +1,16 @@
 {
-  "type": "ragium:chemical_washing",
+  "type": "ragium:bathing",
   "fluid_ingredient": {
-    "amount": 250,
+    "amount": 500,
     "fluids": "#c:experience"
   },
   "item_ingredient": {
     "amount": 1,
-    "items": "#c:leathers"
+    "items": "#c:storage_blocks/quartz"
   },
-  "item_result": {
+  "result": {
     "count": 1,
-    "id": "minecraft:phantom_membrane"
+    "id": "minecraft:ghast_tear"
   },
   "time": 200
 }

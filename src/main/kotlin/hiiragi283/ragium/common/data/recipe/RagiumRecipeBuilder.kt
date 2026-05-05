@@ -5,7 +5,6 @@ import hiiragi283.core.common.data.recipe.builder.HTItemOrFluidRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTItemToResultRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.recipe.HTChemicalWashingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
@@ -53,12 +52,5 @@ data object RagiumRecipeBuilder {
             .apply { time /= 2 }
             .apply(builderAction)
             .save(output)
-    }
-
-    //    Elite    //
-
-    @JvmStatic
-    inline fun chemicalWashing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
-        HTItemOrFluidRecipeBuilder(RagiumConst.CHEMICAL_WASHING, ::HTChemicalWashingRecipe).apply(builderAction).save(output)
     }
 }
