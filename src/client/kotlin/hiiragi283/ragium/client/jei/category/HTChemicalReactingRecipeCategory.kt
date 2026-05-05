@@ -5,11 +5,9 @@ import hiiragi283.core.api.integration.jei.addChancedItem
 import hiiragi283.core.api.integration.jei.addFluidStack
 import hiiragi283.core.api.integration.jei.addFluidStacks
 import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
-import hiiragi283.core.api.integration.jei.setTankRenderer
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
-import hiiragi283.ragium.config.RagiumConfig
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
@@ -19,32 +17,36 @@ class HTChemicalReactingRecipeCategory(guiHelper: IGuiHelper) :
     HTDisplayRecipeCategory.Progress(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_REACTING) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
-        builder
-            .addInputSlot(getPosition(0), getPosition(0))
-            .addFluidStacks(contents.inputFluid(0))
-            .setTankRenderer(RagiumConfig.COMMON.machine.tankCapacity)
-            .setTankBackground(HTBackgroundType.INPUT)
-        builder
-            .addInputSlot(getPosition(2), getPosition(0))
-            .addFluidStacks(contents.inputFluid(1))
-            .setTankRenderer(RagiumConfig.COMMON.machine.tankCapacity)
-            .setTankBackground(HTBackgroundType.EXTRA_INPUT)
+        contents.inputFluid(0) {
+            builder
+                .addInputSlot(getPosition(0), getPosition(0))
+                .addFluidStacks(it.stacks)
+                .setTankBackground(HTBackgroundType.INPUT, it.capacity)
+        }
+        contents.inputFluid(1) {
+            builder
+                .addInputSlot(getPosition(2), getPosition(0))
+                .addFluidStacks(it.stacks)
+                .setTankBackground(HTBackgroundType.EXTRA_INPUT, it.capacity)
+        }
         // catalyst
         builder
             .addInputSlot(getPosition(3.5), getPosition(0))
             .addItemStacks(contents.catalyst(0))
             .setSlotBackground(HTBackgroundType.NONE)
         // outputs
-        builder
-            .addOutputSlot(getPosition(5), getPosition(0))
-            .addFluidStack(contents.outputFluid(0))
-            .setTankRenderer(RagiumConfig.COMMON.machine.tankCapacity)
-            .setTankBackground(HTBackgroundType.OUTPUT)
-        builder
-            .addOutputSlot(getPosition(7), getPosition(0))
-            .addFluidStack(contents.outputFluid(1))
-            .setTankRenderer(RagiumConfig.COMMON.machine.tankCapacity)
-            .setTankBackground(HTBackgroundType.EXTRA_OUTPUT)
+        contents.outputFluid(0) {
+            builder
+                .addOutputSlot(getPosition(5), getPosition(0))
+                .addFluidStack(it)
+                .setTankBackground(HTBackgroundType.OUTPUT, it.amount)
+        }
+        contents.outputFluid(0) {
+            builder
+                .addOutputSlot(getPosition(7), getPosition(0))
+                .addFluidStack(it)
+                .setTankBackground(HTBackgroundType.EXTRA_OUTPUT, it.amount)
+        }
         builder
             .addOutputSlot(getPosition(3.5), getPosition(2))
             .addChancedItem(contents.outputItem(0))

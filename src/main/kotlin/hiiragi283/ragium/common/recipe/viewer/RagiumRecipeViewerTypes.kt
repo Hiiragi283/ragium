@@ -48,7 +48,7 @@ data object RagiumRecipeViewerTypes {
 
     @JvmField
     val IMPLODING: HTRecipeViewerType<HTProgressRecipeDisplay> =
-        create(RagiumRecipeTypes.IMPLODING, RagiumBlocks.INDUSTRIAL_TNT, 18 * 7, 18 * 2)
+        create(RagiumRecipeTypes.IMPLODING, RagiumBlocks.INDUSTRIAL_TNT, 18 * 6)
 
     @JvmField
     val MELTING: HTRecipeViewerType<HTProgressRecipeDisplay> =

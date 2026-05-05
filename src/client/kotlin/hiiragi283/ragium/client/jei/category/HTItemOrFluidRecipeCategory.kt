@@ -5,7 +5,6 @@ import hiiragi283.core.api.integration.jei.addChancedItem
 import hiiragi283.core.api.integration.jei.addFluidStack
 import hiiragi283.core.api.integration.jei.addFluidStacks
 import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
-import hiiragi283.core.api.integration.jei.setFluidSlotRenderer
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
@@ -18,11 +17,12 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
     HTDisplayRecipeCategory.Progress(guiHelper, recipeType) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
-        builder
-            .addInputSlot(getPosition(0), getPosition(0))
-            .addFluidStacks(contents.inputFluid(0))
-            .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
-            .setFluidSlotRenderer()
+        contents.inputFluid(0) {
+            builder
+                .addInputSlot(getPosition(0), getPosition(0))
+                .addFluidStacks(it.stacks)
+                .setSlotBackground(HTBackgroundType.EXTRA_INPUT, it.capacity)
+        }
         builder
             .addInputSlot(getPosition(2), getPosition(0))
             .addItemStacks(contents.inputItem(0))
@@ -32,11 +32,12 @@ class HTItemOrFluidRecipeCategory(guiHelper: IGuiHelper, recipeType: HTRecipeVie
             .addOutputSlot(getPosition(5), getPosition(0))
             .addChancedItem(contents.outputItem(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
-        builder
-            .addOutputSlot(getPosition(7), getPosition(0))
-            .addFluidStack(contents.outputFluid(0))
-            .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT)
-            .setFluidSlotRenderer()
+        contents.outputFluid(0) {
+            builder
+                .addOutputSlot(getPosition(7), getPosition(0))
+                .addFluidStack(it)
+                .setSlotBackground(HTBackgroundType.EXTRA_OUTPUT, it.amount)
+        }
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProgressRecipeDisplay, focuses: IFocusGroup) {

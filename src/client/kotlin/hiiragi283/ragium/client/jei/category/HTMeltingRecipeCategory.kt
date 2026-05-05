@@ -3,7 +3,6 @@ package hiiragi283.ragium.client.jei.category
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addFluidStack
 import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
-import hiiragi283.core.api.integration.jei.setFluidSlotRenderer
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
@@ -20,11 +19,12 @@ class HTMeltingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.P
             .addItemStacks(contents.inputItem(0))
             .setSlotBackground(HTBackgroundType.INPUT)
         // output
-        builder
-            .addOutputSlot(getPosition(3), getPosition(0))
-            .addFluidStack(contents.outputFluid(0))
-            .setSlotBackground(HTBackgroundType.OUTPUT)
-            .setFluidSlotRenderer()
+        contents.outputFluid(0) {
+            builder
+                .addOutputSlot(getPosition(3), getPosition(0))
+                .addFluidStack(it)
+                .setSlotBackground(HTBackgroundType.OUTPUT, it.amount)
+        }
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProgressRecipeDisplay, focuses: IFocusGroup) {

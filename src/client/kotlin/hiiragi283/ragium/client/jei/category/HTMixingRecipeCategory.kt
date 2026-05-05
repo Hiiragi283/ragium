@@ -5,11 +5,9 @@ import hiiragi283.core.api.integration.jei.addChancedItem
 import hiiragi283.core.api.integration.jei.addFluidStack
 import hiiragi283.core.api.integration.jei.addFluidStacks
 import hiiragi283.core.api.integration.jei.category.HTDisplayRecipeCategory
-import hiiragi283.core.api.integration.jei.setTankRenderer
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
-import hiiragi283.ragium.config.RagiumConfig
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
@@ -18,11 +16,12 @@ import mezz.jei.api.recipe.IFocusGroup
 class HTMixingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.Progress(guiHelper, RagiumRecipeViewerTypes.MIXING) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
-        builder
-            .addInputSlot(getPosition(0), getPosition(0))
-            .addFluidStacks(contents.inputFluid(0))
-            .setTankRenderer(RagiumConfig.COMMON.machine.tankCapacity)
-            .setTankBackground(HTBackgroundType.INPUT)
+        contents.inputFluid(0) {
+            builder
+                .addInputSlot(getPosition(0), getPosition(0))
+                .addFluidStacks(it.stacks)
+                .setTankBackground(HTBackgroundType.INPUT, it.capacity)
+        }
         builder
             .addInputSlot(getPosition(2), getPosition(0.5))
             .addItemStacks(contents.inputItem(0))
@@ -36,11 +35,12 @@ class HTMixingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.Pr
             .addOutputSlot(getPosition(5), getPosition(1))
             .addChancedItem(contents.outputItem(0))
             .setSlotBackground(HTBackgroundType.OUTPUT)
-        builder
-            .addOutputSlot(getPosition(7), getPosition(0))
-            .addFluidStack(contents.outputFluid(0))
-            .setTankBackground(HTBackgroundType.EXTRA_OUTPUT)
-            .setTankRenderer(RagiumConfig.COMMON.machine.tankCapacity)
+        contents.outputFluid(0) {
+            builder
+                .addOutputSlot(getPosition(7), getPosition(0))
+                .addFluidStack(it)
+                .setTankBackground(HTBackgroundType.EXTRA_OUTPUT, it.amount)
+        }
     }
 
     override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: HTProgressRecipeDisplay, focuses: IFocusGroup) {
