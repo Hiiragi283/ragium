@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "type": "ragium:chemical_reacting",
+  "fluid_result": {
+    "amount": 1000,
+    "id": "immersiveengineering:high_power_biodiesel"
+  },
+  "primary": {
+    "amount": 950,
+    "fluids": "#c:biodiesel"
+  },
+  "secondary": {
+    "type": "hiiragi_core:potion",
+    "amount": 50,
+    "bottle_type": "default",
+    "potions": "minecraft:strength"
+  },
+  "time": 200
+}

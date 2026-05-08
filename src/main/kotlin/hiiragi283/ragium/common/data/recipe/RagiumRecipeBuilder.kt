@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.data.recipe
 
+import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.common.data.recipe.builder.HTItemOrFluidRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
@@ -8,6 +9,7 @@ import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import net.minecraft.data.recipes.RecipeOutput
@@ -34,6 +36,13 @@ data object RagiumRecipeBuilder {
     inline fun imploding(output: RecipeOutput, builderAction: HTItemToResultRecipeBuilder<HTItemResult>.() -> Unit) {
         HTItemToResultRecipeBuilder(RagiumConst.IMPLODING, ::HTImplodingRecipe)
             .apply { time /= 2 }
+            .apply(builderAction)
+            .save(output)
+    }
+
+    @JvmStatic
+    inline fun melting(output: RecipeOutput, builderAction: HTItemToResultRecipeBuilder<HTFluidResult>.() -> Unit) {
+        HTItemToResultRecipeBuilder(RagiumConst.MELTING, ::HTMeltingRecipe)
             .apply(builderAction)
             .save(output)
     }

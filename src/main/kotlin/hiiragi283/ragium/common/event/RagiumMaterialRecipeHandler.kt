@@ -26,7 +26,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.TagKey
@@ -190,7 +189,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // 完成品を取得
         val molten: HTFluidHolderLike<*> = event.getFirstHolder(HTFluidPart.MOLTEN, entry) ?: return
         // レシピを登録
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(prefix, entry)
             result = resultCreator.create(molten, fluidAmount)
             recipeId suffix "_from_${part.asPartName()}"

@@ -20,7 +20,6 @@ import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -129,7 +128,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             recipeId replace RagiumAPI.id("water_gas_shift_reaction")
         }
         // Coal -> Synthetic Oil
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(baseOrDust(VanillaMaterialKeys.COAL))
             result = resultCreator.create(RagiumFluids.SYNTHETIC_OIL, 125)
         }
@@ -144,7 +143,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     @JvmStatic
     private fun breeze() {
         // Wind Charge -> N2
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Items.WIND_CHARGE)
             result = resultCreator.create(RagiumFluids.NITROGEN, 125)
         }
@@ -157,7 +156,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             resultStack += RagiumItems.CRYO_CHARGE
         }
         // Cryo-Charge -> liq N2
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(RagiumItems.CRYO_CHARGE)
             result = resultCreator.create(RagiumFluids.LIQUID_NITROGEN, 125)
         }

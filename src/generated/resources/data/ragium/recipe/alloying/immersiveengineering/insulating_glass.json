@@ -1,0 +1,24 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 2,
+      "items": "#c:glass_blocks"
+    },
+    {
+      "amount": 1,
+      "items": "#c:dusts/iron"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "immersiveengineering:insulating_glass"
+  },
+  "time": 200
+}

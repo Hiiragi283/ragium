@@ -13,6 +13,7 @@ import hiiragi283.ragium.data.recipe.RagiumMatterRecipeProvider
 import hiiragi283.ragium.data.recipe.RagiumPlantingRecipeBuilder
 import hiiragi283.ragium.data.recipe.RagiumUtilitiesRecipeProvider
 import hiiragi283.ragium.data.recipe.integration.RagiumAERecipeProvider
+import hiiragi283.ragium.data.recipe.integration.RagiumIERecipeProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import java.util.concurrent.CompletableFuture
@@ -33,5 +34,6 @@ class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<Hol
         consumer.accept(RagiumUtilitiesRecipeProvider)
         // Integration
         consumer.accept(RagiumAERecipeProvider)
+        consumer.accept(RagiumIERecipeProvider)
     }
 }

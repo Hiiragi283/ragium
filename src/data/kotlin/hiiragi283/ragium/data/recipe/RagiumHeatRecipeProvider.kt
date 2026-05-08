@@ -11,7 +11,6 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTMeltingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
@@ -152,50 +151,50 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
     @JvmStatic
     private fun melting() {
         // Water
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Items.SNOW_BLOCK)
             result = resultCreator.water(1000)
             time = 20 * 5
             recipeId suffix "_from_snow_block"
         }
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Items.SNOWBALL)
             result = resultCreator.water(250)
             time = 20
             recipeId suffix "_from_snowball"
         }
         // Lava
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(listOf(Tags.Items.COBBLESTONES, Tags.Items.STONES))
             result = resultCreator.lava(125)
             time = 20 * 30
             recipeId suffix "_from_stones"
         }
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Tags.Items.NETHERRACKS)
             result = resultCreator.lava(125)
             recipeId suffix "_from_netherrack"
         }
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Items.MAGMA_BLOCK)
             result = resultCreator.lava(250)
             recipeId suffix "_from_magma"
         }
         // Honey
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Items.HONEY_BLOCK)
             result = resultCreator.create(HCFluids.HONEY)
             recipeId suffix "_from_block"
         }
 
         // Meat
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Items.ROTTEN_FLESH)
             result = resultCreator.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT)
             recipeId suffix "_from_rotten"
         }
         // Glass
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Tags.Items.GLASS_PANES)
             result = resultCreator.molten(VanillaMaterialKeys.GLASS) { 375 }
             recipeId suffix "_from_pane"
@@ -207,7 +206,7 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             ingredients += inputCreator.create(baseOrDust(CommonMaterialKeys.CINNABAR), 8)
             ingredients += inputCreator.create(Tags.Items.BUCKETS_EMPTY)
         }
-        HTMeltingRecipeBuilder.create(output) {
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(baseOrDust(CommonMaterialKeys.CINNABAR))
             result = resultCreator.create(RagiumFluids.MERCURY, 125)
             recipeId suffix "_from_cinnabar"
