@@ -16,6 +16,7 @@ import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.HTPrintingRecipe
 import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
@@ -51,6 +52,9 @@ object RagiumRecipeSerializers {
 
     @JvmField
     val ASSEMBLING: RecipeSerializer<HTAssemblingRecipe> = REGISTER.registerSerializer(RagiumConst.ASSEMBLING, HTAssemblingRecipe.CODEC)
+
+    @JvmField
+    val PRINTING: RecipeSerializer<HTPrintingRecipe> = REGISTER.registerSerializer(RagiumConst.PRINTING, HTPrintingRecipe.CODEC)
 
     @JvmField
     val CUTTING: RecipeSerializer<HTCuttingRecipe> = REGISTER.registerSerializer(RagiumConst.CUTTING, HTCuttingRecipe.CODEC)

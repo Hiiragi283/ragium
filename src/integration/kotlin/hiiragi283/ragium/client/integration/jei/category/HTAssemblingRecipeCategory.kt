@@ -10,6 +10,8 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
+import mezz.jei.api.recipe.RecipeIngredientRole
+import net.minecraft.world.item.ItemStack
 
 class HTAssemblingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.Progress(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
@@ -18,10 +20,17 @@ class HTAssemblingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategor
             .addInputSlot(getPosition(0), getPosition(0))
             .addItemStacks(contents.inputItem(0))
             .setSlotBackground(HTBackgroundType.INPUT)
-        builder
-            .addInputSlot(getPosition(2), getPosition(0))
-            .addItemStacks(contents.inputItem(1))
-            .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
+        val secondary: List<ItemStack> = contents.inputItem(1)
+        if (secondary.isEmpty()) {
+            builder
+                .addSlot(RecipeIngredientRole.CATALYST, getPosition(2), getPosition(0))
+                .addItemStacks(contents.catalyst(0))
+        } else {
+            builder
+                .addInputSlot(getPosition(2), getPosition(0))
+                .addItemStacks(secondary)
+                .setSlotBackground(HTBackgroundType.EXTRA_INPUT)
+        }
         // output
         builder
             .addOutputSlot(getPosition(5), getPosition(0))

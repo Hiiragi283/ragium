@@ -64,6 +64,7 @@ object RagiumConst {
     const val COMPRESSING = "compressing"
     const val CUTTING = "cutting"
     const val PLANTING = "planting"
+    const val PRINTING = "printing"
 
     // Machine - Advanced
     const val FREEZING = "freezing"

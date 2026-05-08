@@ -37,7 +37,6 @@ import hiiragi283.ragium.client.integration.jei.category.HTMixingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTPlantingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTRefiningRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTWashingRecipeCategory
-import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
@@ -45,6 +44,7 @@ import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.impl.recipe.HTBasicAssemblingRecipe
 import hiiragi283.ragium.impl.recipe.HTBasicItemAndFluidToItemRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -127,7 +127,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeDisplayFactories::alloying,
         )
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING) {
-            it.castRecipe<HTAssemblingRecipe>()?.let(RagiumRecipeDisplayFactories::assembling)
+            it.castRecipe<HTBasicAssemblingRecipe>()?.let(RagiumRecipeDisplayFactories::assembling)
         }
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING) {
             it.castRecipe<HTBasicItemToItemRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)

@@ -13,9 +13,11 @@ import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
 import hiiragi283.ragium.common.recipe.HTMeltingRecipe
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
+import hiiragi283.ragium.common.recipe.HTPrintingRecipe
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
+import hiiragi283.ragium.impl.recipe.HTBasicAssemblingRecipe
 import hiiragi283.ragium.impl.recipe.HTBasicItemAndFluidToItemRecipe
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
@@ -50,9 +52,17 @@ data object RagiumRecipeDisplayFactories {
     }
 
     @JvmStatic
-    fun assembling(holder: HTRecipeHolder<HTAssemblingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
-        addInput(it.primary)
-        addInput(it.secondary)
+    fun assembling(holder: HTRecipeHolder<out HTBasicAssemblingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+        when (it) {
+            is HTAssemblingRecipe -> {
+                addInput(it.primary)
+                addInput(it.secondary)
+            }
+            is HTPrintingRecipe -> {
+                addInput(it.ingredient)
+                addCatalyst(it.press)
+            }
+        }
         addOutput(it.result)
     }
 
