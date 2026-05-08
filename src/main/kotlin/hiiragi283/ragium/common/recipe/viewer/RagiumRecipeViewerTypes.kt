@@ -1,12 +1,12 @@
 package hiiragi283.ragium.common.recipe.viewer
 
+import com.mojang.datafixers.util.Either
 import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.viewer.HTHolderRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.resource.HTIdLike
-import hiiragi283.core.api.util.Either
 import hiiragi283.core.impl.recipe.viewer.HTRecipeViewerTypeImpl
 import hiiragi283.ragium.common.recipe.HTMassFabricatingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
@@ -103,7 +103,7 @@ data object RagiumRecipeViewerTypes {
         id = recipeType
         title = recipeType
         val iconStack = ItemStack(iconItem)
-        icon = Either.Right(iconStack)
+        icon = Either.right(iconStack)
         bounds = HTBounds(0, 0, width, height)
         workStations += iconStack
         builderAction()

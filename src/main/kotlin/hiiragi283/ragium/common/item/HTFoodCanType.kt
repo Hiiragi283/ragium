@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.item
 
+import com.mojang.datafixers.util.Either
 import hiiragi283.core.api.data.lang.HTLangName
 import hiiragi283.core.api.data.lang.HTLangType
 import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
-import hiiragi283.core.api.util.Either
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceKey

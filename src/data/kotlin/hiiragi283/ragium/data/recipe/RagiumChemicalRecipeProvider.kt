@@ -514,13 +514,13 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             ingredient += inputCreator.create(Items.CHORUS_FRUIT)
             result += resultCreator.create(RagiumFluids.CHORUS_GAS, 250)
         }
-        // Chorus Gas + Phantom Membrane + Shulker Shell -> Levitatine
-        HTMixingRecipeBuilder.create(output) {
+        // Chorus Gas + Phantom Membrane + Shulker Shell -> ???
+        /*HTMixingRecipeBuilder.create(output) {
             itemIngredients += inputCreator.create(Items.PHANTOM_MEMBRANE)
             itemIngredients += inputCreator.create(Items.SHULKER_SHELL)
             fluidIngredient = inputCreator.create(RagiumFluids.CHORUS_GAS)
             result += resultCreator.material(CommonParts.GEM, RagiumMaterialKeys.LEVITATINE)
-        }
+        }*/
     }
 
     @JvmStatic

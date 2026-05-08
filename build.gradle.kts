@@ -1,16 +1,16 @@
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.slf4j.event.Level
 
 plugins {
     idea
+    id("signing")
     kotlin("jvm") version "2.2.20"
     alias(libs.plugins.neo.moddev)
 
     alias(libs.plugins.dokka.asProvider())
     alias(libs.plugins.dokka.javadoc)
-    alias(libs.plugins.ktlint)
+    alias(libs.plugins.spotless)
 
     alias(libs.plugins.axion.release)
     alias(libs.plugins.maven.publish)
@@ -18,7 +18,7 @@ plugins {
 
 val modId = "ragium"
 
-group = "io.github.hiiragi283"
+val generateModMetadata: TaskProvider<ProcessResources> by tasks.registering(ProcessResources::class)
 
 scmVersion {
     useHighestVersion = true
@@ -36,46 +36,33 @@ scmVersion {
     }
 }
 
-version = scmVersion.version
-base.archivesName = modId
-
-val apiModule: SourceSet = sourceSets.create("api")
-val clientModule: SourceSet = sourceSets.create("client")
-val dataModule: SourceSet = sourceSets.create("data")
-
-sourceSets {
-    main {
-        compileClasspath += apiModule.output
-        runtimeClasspath += apiModule.output
-        resources {
-            srcDir("src/generated/resources")
-        }
-    }
-    getByName("client") {
-        val main: SourceSet by main
-        compileClasspath += main.compileClasspath
-        compileClasspath += main.output
-        runtimeClasspath += main.runtimeClasspath
-        runtimeClasspath += main.output
-    }
-    getByName("data") {
-        compileClasspath += clientModule.compileClasspath
-        compileClasspath += clientModule.output
-        runtimeClasspath += clientModule.runtimeClasspath
-        runtimeClasspath += clientModule.output
-    }
+base {
+    archivesName = modId
+    group = "io.github.hiiragi283"
+    version = scmVersion.version
 }
 
-// Sets up a dependency configuration called 'localRuntime'.
-// This configuration should be used instead of 'runtimeOnly' to declare
-// a dependency that will be present for runtime testing but that is
-// "optional", meaning it will not be pulled by dependents of this mod.
-configurations.apply {
-    runtimeClasspath.get().extendsFrom(create("localRuntime"))
+val apiModule: SourceSet by sourceSets.register("api")
+val mainModule: SourceSet by sourceSets.named("main") {
+    compileClasspath += apiModule.output
+    runtimeClasspath += apiModule.output
 
-    getByName("apiCompileClasspath").extendsFrom(getByName("compileClasspath"))
-    getByName("compileClasspath").extendsFrom(getByName("clientCompileClasspath"))
-    getByName("clientCompileClasspath").extendsFrom(getByName("dataCompileClasspath"))
+    resources {
+        srcDirs("src/generated/resources", generateModMetadata.get().outputs.files)
+        exclude("**/.cache/**")
+    }
+}
+val clientModule: SourceSet by sourceSets.register("client") {
+    compileClasspath += mainModule.output + mainModule.compileClasspath
+    runtimeClasspath += mainModule.output + mainModule.runtimeClasspath
+}
+val integrationModule: SourceSet by sourceSets.register("integration") {
+    compileClasspath += clientModule.output + clientModule.compileClasspath
+    runtimeClasspath += clientModule.output + clientModule.runtimeClasspath
+}
+val dataModule: SourceSet by sourceSets.register("data") {
+    compileClasspath += integrationModule.output + integrationModule.compileClasspath
+    runtimeClasspath += integrationModule.output + integrationModule.runtimeClasspath
 }
 
 repositories {
@@ -89,9 +76,10 @@ repositories {
 
     maven(url = "https://maven4.bai.lol/") // WTHIT
     maven(url = "https://maven.architectury.dev/") // Arch
-    maven(url = "https://maven.blamejared.com/") // Patchouli, Ars
+    maven(url = "https://maven.blamejared.com/") // Patchouli, Ars, JEI
     maven(url = "https://maven.createmod.net") // Create, Flywheel
     maven(url = "https://maven.firstdark.dev/snapshots") // LDLib
+    maven(url = "https://maven.ftb.dev/") // FTB
     maven(url = "https://maven.k-4u.nl/") // TOP
     maven(url = "https://maven.rover656.dev/releases") // EIO
     maven(url = "https://maven.saps.dev/releases") // AA
@@ -102,7 +90,7 @@ repositories {
     maven(url = "https://maven.terraformersmc.com/") // EMI
     maven(url = "https://maven.theillusivec4.top/") // Curios
     maven(url = "https://maven.wispforest.io/releases") // Accessories
-    maven(url = "https://modmaven.dev/") // AU, Mekanism, PnC, Oritech
+    maven(url = "https://modmaven.dev/") // AU, Mekanism, MI, PnC, Oritech
     maven(url = "https://mvn.devos.one/snapshots") // Registrate
     maven(url = "https://registry.somethingcatchy.net/repository/maven-releases/") // Moonlight
     maven(url = "https://thedarkcolour.github.io/KotlinForForge/") // KFF
@@ -113,12 +101,13 @@ repositories {
     maven(url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/") {
         content { includeGroup("com.klikli_dev") } // Theurgy
     }
-    maven(url = "https://maven.pkg.github.com/refinedmods/refinedstorage2") {
+    /*maven(url = "https://maven.pkg.github.com/refinedmods/refinedstorage2") {
         credentials {
             username = "anything"
             password = "\u0067hp_oGjcDFCn8jeTzIj4Ke9pLoEVtpnZMP4VQgaX"
         }
-    } // RS2
+    }*/
+    // RS2
 
     maven(url = "https://central.sonatype.com/repository/maven-snapshots/") {
         content { includeGroup("io.github.hiiragi283") }
@@ -147,31 +136,29 @@ neoForge {
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
-        create("client").apply {
+        register("client") {
             client()
             sourceSet = clientModule
 
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            systemProperty("neoforge.enabledGameTestNamespaces", modId)
             jvmArgument("-Dmixin.debug.export=true")
             devLogin = true
         }
 
-        create("server").apply {
+        register("server") {
             server()
             programArgument("--nogui")
-            systemProperty("neoforge.enabledGameTestNamespaces", modId)
         }
 
-        // This run config launches GameTestServer and runs all registered gametests, then exits.
-        // By default, the server will crash when no gametests are provided.
-        // The gametest system is also enabled by default for other run configs under the /test command.
-        create("gameTestServer").apply {
-            type = "gameTestServer"
-            systemProperty("neoforge.enabledGameTestNamespaces", modId)
+        register("integration") {
+            client()
+            gameDirectory = project.file("run")
+            sourceSet = integrationModule
+
+            jvmArgument("-Dmixin.debug.export=true")
+            devLogin = true
         }
 
-        create("data").apply {
+        register("data") {
             data()
             sourceSet = dataModule
 
@@ -216,9 +203,12 @@ neoForge {
             sourceSet(sourceSets.main.get())
             sourceSet(apiModule)
             sourceSet(clientModule)
+            sourceSet(integrationModule)
             sourceSet(dataModule)
         }
     }
+
+    ideSyncTask(generateModMetadata)
 }
 
 dependencies {
@@ -244,55 +234,35 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+    configurations.apply {
+        runtimeClasspath.get().extendsFrom(create("localRuntime"))
+
+        val apiCompileClasspath: Configuration by named("apiCompileClasspath")
+        val compileClasspath: Configuration by named("compileClasspath")
+        val clientCompileClasspath: Configuration by named("clientCompileClasspath")
+        val integrationCompileClasspath: Configuration by named("integrationCompileClasspath")
+        val dataCompileClasspath: Configuration by named("dataCompileClasspath")
+
+        apiCompileClasspath.extendsFrom(compileClasspath)
+        compileClasspath.extendsFrom(clientCompileClasspath)
+        clientCompileClasspath.extendsFrom(integrationCompileClasspath)
+        integrationCompileClasspath.extendsFrom(dataCompileClasspath)
+    }
+
     implementation(libs.kff)
-
-    implementation(libs.bundles.mods.impl)
-    implementation(libs.bundles.mods.transitive) { isTransitive = false }
-    compileOnly(libs.bundles.mods.compile)
-    runtimeOnly(libs.bundles.mods.runtime)
-
     implementation(libs.mek.get().toString() + ":all")
-    implementation(libs.enchdesc) { exclude(group = "mezz.jei") }
+    runtimeOnly(libs.enchdesc) { exclude(group = "mezz.jei") }
+
+    implementation(libs.bundles.common.impl)
+    compileOnly(libs.bundles.common.compile)
+    runtimeOnly(libs.bundles.common.runtime)
+
+    "integrationImplementation"(libs.bundles.integration.impl)
+    "integrationCompileOnly"(libs.bundles.integration.compile)
+    "integrationRuntimeOnly"(libs.bundles.integration.runtime)
 }
 
-// This block of code expands all declared replace properties in the specified resource targets.
-// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
-val generateModMetadata: TaskProvider<ProcessResources> = tasks.register("generateModMetadata", ProcessResources::class.java) {
-    val mcVersion: String = libs.versions.minecraft.get()
-    val neoVersion: String = libs.versions.neo.version
-        .get()
-    val kffVersion: String = libs.versions.kff.version
-        .get()
-
-    val replaceProperties: Map<String, String> = mapOf(
-        "minecraft_version" to mcVersion,
-        "minecraft_version_range" to "[$mcVersion]",
-        "neo_version" to neoVersion,
-        "neo_version_range" to "[$neoVersion,)",
-        "kff_version" to kffVersion,
-        "kff_version_range" to "[$kffVersion,)",
-        "loader_version_range" to "[1,)",
-        "mod_id" to modId,
-        "mod_name" to "Ragium",
-        "mod_license" to "MPL-2.0",
-        "mod_version" to version.toString(),
-        "mod_authors" to "Hiiragi283",
-        "mod_description" to "A simple tech mod for vanilla expansion and automation",
-    )
-    inputs.properties(replaceProperties)
-    expand(replaceProperties)
-    from("src/main/templates")
-    into("build/generated/sources/modMetadata")
-}
-// Include the output of "generateModMetadata" as an input directory for the build
-// this works with both building through Gradle and the IDE.
-sourceSets.main
-    .get()
-    .resources
-    .srcDir(generateModMetadata)
-// To avoid having to run "generateModMetadata" manually, make it run on every project reload
-neoForge.ideSyncTask(generateModMetadata)
-
+// Example configuration to allow publishing using the maven-publish plugin
 pluginManager.withPlugin("com.vanniktech.maven.publish") {
     extensions.configure<MavenPublishBaseExtension> {
         publishToMavenCentral()
@@ -333,65 +303,110 @@ idea {
     }
 }
 
-tasks {
-    compileJava {
-        options.encoding = "UTF-8"
-    }
-
-    processResources {
-        exclude("**/.cache/**")
-    }
-
-    jar {
-        from("LICENSE") {
-            rename { "${it}_ragium" }
-        }
-        from(apiModule.output)
-        from(clientModule.output)
-        from(dataModule.output)
-        exclude("**/ragium/data/**")
-    }
-
-    /*wrapper {
-        distributionType = Wrapper.DistributionType.BIN
-    }*/
-}
+val jdkVersion = 21
 
 java {
     withSourcesJar()
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
-tasks.named("sourcesJar", Jar::class.java) {
-    dependsOn("apiClasses", "clientClasses")
-    duplicatesStrategy = DuplicatesStrategy.FAIL
-    from(apiModule.kotlin.srcDirs, clientModule.kotlin.srcDirs)
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(jdkVersion)
+    }
+    JavaVersion.toVersion(jdkVersion).let {
+        sourceCompatibility = it
+        targetCompatibility = it
+    }
 }
 
 kotlin {
-    jvmToolchain(21)
-    compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_21)
-        freeCompilerArgs.add("-Xjvm-default=all")
-    }
-}
+    jvmToolchain(jdkVersion)
 
-ktlint {
-    version = "1.5.0"
-    reporters {
-        reporter(ReporterType.JSON)
-    }
-    filter {
-        exclude("**/generated/**")
-        include("**/kotlin/**")
+    compilerOptions {
+        jvmTarget = JvmTarget.fromTarget("$jdkVersion")
+        freeCompilerArgs.addAll()
     }
 }
 
 dokka {
     dokkaSourceSets {
         configureEach {
-            sourceRoots.from(apiModule.kotlin.srcDirs, clientModule.kotlin.srcDirs)
+            sourceRoots.from(apiModule.kotlin.srcDirs, clientModule.kotlin.srcDirs, integrationModule.kotlin.srcDirs)
         }
     }
+}
+
+spotless {
+    kotlin {
+        target("src/**/*.kt")
+        ktlint().editorConfigOverride(
+            mapOf(
+                "ktlint_standard_import-ordering" to "disabled",
+                "ktlint_standard_comment-spacing" to "disabled",
+            ),
+        )
+    }
+    kotlinGradle {
+        target("*.gradle.kts")
+        ktlint()
+    }
+    java {
+        target("src/**/*.java")
+        palantirJavaFormat("2.90.0")
+    }
+}
+
+tasks {
+    compileJava {
+        options.encoding = "UTF-8"
+    }
+
+    processResources {
+        dependsOn(generateModMetadata)
+    }
+
+    jar {
+        from("LICENSE") {
+            rename { "${it}_ragium" }
+        }
+        from(apiModule.allSource, clientModule.allSource, integrationModule.allSource)
+        from(dataModule.allSource) {
+            this.include("**/core/data/bootsrap/**")
+        }
+    }
+
+    named<Jar>("sourcesJar") {
+        dependsOn("apiClasses", "clientClasses", "integrationClasses")
+        duplicatesStrategy = DuplicatesStrategy.FAIL
+        from(apiModule.kotlin.srcDirs, clientModule.kotlin.srcDirs, integrationModule.kotlin.srcDirs)
+    }
+
+    generateModMetadata {
+        val mcVersion: String = libs.versions.minecraft.get()
+        val neoVersion: String = libs.versions.neo.version
+            .get()
+        val kffVersion: String = libs.versions.kff.version
+            .get()
+
+        val replaceProperties: Map<String, String> = mapOf(
+            "minecraft_version" to mcVersion,
+            "minecraft_version_range" to "[$mcVersion]",
+            "neo_version" to neoVersion,
+            "neo_version_range" to "[$neoVersion,)",
+            "kff_version" to kffVersion,
+            "kff_version_range" to "[$kffVersion,)",
+            "loader_version_range" to "[1,)",
+            "mod_id" to modId,
+            "mod_name" to "Ragium",
+            "mod_license" to "MPL-2.0",
+            "mod_version" to version.toString(),
+            "mod_authors" to "Hiiragi283",
+            "mod_description" to "A simple tech mod for vanilla expansion and automation",
+        )
+        inputs.properties(replaceProperties)
+        expand(replaceProperties)
+        from("src/main/templates")
+        into("build/generated/sources/modMetadata")
+    }
+
+    /*wrapper {
+        distributionType = Wrapper.DistributionType.BIN
+    }*/
 }

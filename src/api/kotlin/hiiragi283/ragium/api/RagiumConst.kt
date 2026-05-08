@@ -43,7 +43,7 @@ object RagiumConst {
 
     // Device - Ultimate
     const val ENCHANTER = "enchanter"
-    
+
     // Storage
     const val UNIVERSAL_CHEST = "universal_chest"
 

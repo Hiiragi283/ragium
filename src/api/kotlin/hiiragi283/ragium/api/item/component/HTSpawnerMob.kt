@@ -1,12 +1,12 @@
 package hiiragi283.ragium.api.item.component
 
+import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
 import hiiragi283.core.api.registry.HTHolderLike
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.network.HTStreamCodecs
 import hiiragi283.core.api.text.HTHasText
 import hiiragi283.core.api.text.Text
-import hiiragi283.core.api.util.Either
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -35,7 +35,7 @@ data class HTSpawnerMob private constructor(private val value: Holder<EntityType
             fun of(holder: Holder<EntityType<*>>): HTSpawnerMob = HTSpawnerMob(holder.delegate)
         }
 
-        override fun unwrap(): Either<ResourceKey<EntityType<*>>, Holder<EntityType<*>>> = Either.Right(value.delegate)
+        override fun unwrap(): Either<ResourceKey<EntityType<*>>, Holder<EntityType<*>>> = Either.right(value.delegate)
 
         override fun get(): EntityType<*> = value.value()
 

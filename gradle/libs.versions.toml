@@ -6,10 +6,10 @@ parchment-map = "2024.11.17"
 
 neo-moddev = "2.0.141"
 neo-version = "21.1.228"
+kff-version = "5.11.0"
 
 dokka = "2.1.0"
-kff-version = "5.11.0"
-ktlint = "14.2.0"
+spotless = "7.2.1"
 
 axion-release = "1.21.1"
 maven-publish = "0.36.0"
@@ -72,6 +72,7 @@ kc = { group = "maven.modrinth", name = "kaleidoscope-cookery", version.ref = "k
 magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
 moonlight = { group = "net.mehvahdjukaar", name = "moonlight-common", version.ref = "moonlight" }
+moonlight-neo = { group = "net.mehvahdjukaar", name = "moonlight-neoforge", version.ref = "moonlight" }
 moonlight-runtime = { group = "maven.modrinth", name = "moonlight", version.ref = "moonlight" }
 oritech = { group = "rearth.oritech", name = "oritech-neoforge-1.21.1", version.ref = "oritech" }
 pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
@@ -93,22 +94,34 @@ rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforg
 
 [bundles]
 
-mods-impl = [
-    "ae2",
+api-impl = [
     "hiiragi-core",
+]
+
+common-impl = [
+    "hiiragi-core",
+]
+
+common-compile = [
+    "moonlight",
+    "moonlight-neo",
+]
+
+common-runtime = [
+    "moonlight-runtime",
+]
+
+integration-impl = [
+    "ae2",
     "jade",
 ]
 
-mods-transitive = []
-
-mods-compile = [
+integration-compile = [
     "jei-api",
-    "moonlight",
 ]
 
-mods-runtime = [
-    "jei",
-    "moonlight-runtime",
+integration-runtime = [
+    "jei"
 ]
 
 [plugins]
@@ -117,7 +130,7 @@ neo-moddev = { id = "net.neoforged.moddev", version.ref = "neo-moddev" }
 
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 axion-release = { id = "pl.allegro.tech.build.axion-release", version.ref = "axion-release" }
 maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }

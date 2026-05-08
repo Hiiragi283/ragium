@@ -1,9 +1,9 @@
-package hiiragi283.ragium.client.jei.category
+package hiiragi283.ragium.client.integration.jei.category
 
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.integration.jei.addChancedItem
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
-import hiiragi283.core.client.jei.category.base.HTItemToMultiItemRecipeCategory
+import hiiragi283.core.client.integration.jei.category.base.HTItemToMultiItemRecipeCategory
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.helpers.IGuiHelper
