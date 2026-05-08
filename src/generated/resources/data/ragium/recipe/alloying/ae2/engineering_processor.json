@@ -1,0 +1,28 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ae2"
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": "ae2:printed_engineering_processor"
+    },
+    {
+      "amount": 1,
+      "items": "#c:dusts/redstone"
+    },
+    {
+      "amount": 1,
+      "items": "ae2:printed_silicon"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ae2:engineering_processor"
+  },
+  "time": 200
+}

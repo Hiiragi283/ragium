@@ -25,6 +25,7 @@ class HTAssemblingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategor
             builder
                 .addSlot(RecipeIngredientRole.CATALYST, getPosition(2), getPosition(0))
                 .addItemStacks(contents.catalyst(0))
+                .setSlotBackground(HTBackgroundType.NONE)
         } else {
             builder
                 .addInputSlot(getPosition(2), getPosition(0))
