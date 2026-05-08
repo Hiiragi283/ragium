@@ -102,8 +102,7 @@ data object RagiumRecipeLookups {
     private fun <RECIPE : Any> create(path: String): HTRecipeLookupImpl<RECIPE> = HTRecipeLookupManager.create(RagiumAPI.id(path))
 
     @JvmStatic
-    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(recipeType: HTDeferredRecipeType<RECIPE>): HTRecipeLookup<RECIPE> =
-        HTVanillaRecipeLookup(recipeType)
+    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(recipeType: HTDeferredRecipeType<RECIPE>): HTRecipeLookup<RECIPE> = HTVanillaRecipeLookup(recipeType)
 
     @JvmStatic
     fun init() {

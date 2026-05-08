@@ -31,8 +31,7 @@ class HTElectricIgniterItem(properties: Properties) : HTBatteryItem(properties) 
 
     private fun canUse(battery: HTEnergyBattery): Boolean = battery.getAmount() >= getEnergyUsage()
 
-    private fun consumeEnergy(battery: HTEnergyBattery): Int =
-        battery.extract(getEnergyUsage(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+    private fun consumeEnergy(battery: HTEnergyBattery): Int = battery.extract(getEnergyUsage(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
 
     override fun useOn(context: UseOnContext): InteractionResult {
         val stack: ItemStack = context.itemInHand

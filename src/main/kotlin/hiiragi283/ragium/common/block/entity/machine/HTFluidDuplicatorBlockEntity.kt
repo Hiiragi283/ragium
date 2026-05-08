@@ -25,8 +25,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FLUID_DUPLICATOR, pos, state) {
+class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FLUID_DUPLICATOR, pos, state) {
     private lateinit var inputTank: HTBasicFluidTank
     private lateinit var matterTank: HTBasicFluidTank
     private lateinit var outputTank: HTBasicFluidTank

@@ -21,8 +21,7 @@ import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
-class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FREEZER, pos, state) {
+class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FREEZER, pos, state) {
     private lateinit var inputTank: HTBasicFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {

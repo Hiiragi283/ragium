@@ -95,8 +95,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
 
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTEnchantingRecipe? =
-            cache.findFirstRecipe(baseInputHandler.getStack(), additionInputHandler.getStack(), fluidInputHandler.getAmount(), level)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTEnchantingRecipe? = cache.findFirstRecipe(baseInputHandler.getStack(), additionInputHandler.getStack(), fluidInputHandler.getAmount(), level)
 
         override fun completeRecipe(recipe: HTEnchantingRecipe): HTEnchantingCompletedRecipe = HTEnchantingCompletedRecipe(
             recipe,
@@ -116,10 +115,8 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         }
     }
 
-    private class EnchantingCache :
-        HTTripleInputRecipeCache<ItemStack, ItemStack, Int, HTEnchantingRecipe>(RagiumRecipeLookups.ENCHANTING) {
-        override fun isEmpty(firstInput: ItemStack, secondInput: ItemStack, thirdInput: Int): Boolean =
-            firstInput.isEmpty || secondInput.isEmpty || thirdInput <= 0
+    private class EnchantingCache : HTTripleInputRecipeCache<ItemStack, ItemStack, Int, HTEnchantingRecipe>(RagiumRecipeLookups.ENCHANTING) {
+        override fun isEmpty(firstInput: ItemStack, secondInput: ItemStack, thirdInput: Int): Boolean = firstInput.isEmpty || secondInput.isEmpty || thirdInput <= 0
     }
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()

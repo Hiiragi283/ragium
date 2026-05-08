@@ -21,8 +21,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ASSEMBLER, pos, state) {
+class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ASSEMBLER, pos, state) {
     private lateinit var leftInputSlot: HTBasicItemSlot
     private lateinit var rightInputSlot: HTBasicItemSlot
     private lateinit var outputSlot: HTBasicItemSlot
@@ -54,16 +53,14 @@ class HTAssemblerBlockEntity(pos: BlockPos, state: BlockState) :
         private val rightInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(rightInputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTDoubleItemToItemRecipe? =
-            cache.findFirstRecipe(leftInputHandler.getStack(), rightInputHandler.getStack(), level)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTDoubleItemToItemRecipe? = cache.findFirstRecipe(leftInputHandler.getStack(), rightInputHandler.getStack(), level)
 
-        override fun completeRecipe(recipe: HTDoubleItemToItemRecipe): HTDoubleInputCompletedRecipe.DoubleItem =
-            HTDoubleInputCompletedRecipe.DoubleItem(
-                recipe,
-                leftInputHandler,
-                rightInputHandler,
-                outputHandler,
-            )
+        override fun completeRecipe(recipe: HTDoubleItemToItemRecipe): HTDoubleInputCompletedRecipe.DoubleItem = HTDoubleInputCompletedRecipe.DoubleItem(
+            recipe,
+            leftInputHandler,
+            rightInputHandler,
+            outputHandler,
+        )
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTDoubleInputCompletedRecipe.DoubleItem) {
             recipe.complete()

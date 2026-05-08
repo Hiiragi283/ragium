@@ -13,8 +13,7 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTChemicalReactingRecipeCategory(guiHelper: IGuiHelper) :
-    HTDisplayRecipeCategory.Progress(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_REACTING) {
+class HTChemicalReactingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.Progress(guiHelper, RagiumRecipeViewerTypes.CHEMICAL_REACTING) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
         contents.inputFluid(0) {

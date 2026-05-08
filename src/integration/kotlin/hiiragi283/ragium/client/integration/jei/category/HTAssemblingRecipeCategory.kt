@@ -11,8 +11,7 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTAssemblingRecipeCategory(guiHelper: IGuiHelper) :
-    HTDisplayRecipeCategory.Progress(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING) {
+class HTAssemblingRecipeCategory(guiHelper: IGuiHelper) : HTDisplayRecipeCategory.Progress(guiHelper, RagiumRecipeViewerTypes.ASSEMBLING) {
     override fun setRecipe(builder: IRecipeLayoutBuilder, contents: HTRecipeContents, focuses: IFocusGroup) {
         // inputs
         builder

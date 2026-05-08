@@ -31,8 +31,7 @@ abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
         level?.updateNeighbourForOutputSignal(blockPos, blockState.block)
     }
 
-    final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int =
-        HTStorageHelper.calculateRedstoneLevel(getAmountView())
+    final override fun getComparatorOutput(state: BlockState, level: Level, pos: BlockPos): Int = HTStorageHelper.calculateRedstoneLevel(getAmountView())
 
     //    Ticking    //
 

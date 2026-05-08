@@ -21,8 +21,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTItemToMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTMultiItemBlockEntity(type, pos, state) {
+abstract class HTItemToMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMultiItemBlockEntity(type, pos, state) {
     private lateinit var inputSlot: HTBasicItemSlot
 
     final override fun createInputSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -53,11 +52,9 @@ abstract class HTItemToMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, 
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
 
-        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemToMultiItemRecipe? =
-            cache.findFirstRecipe(inputHandler.getStack(), level)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemToMultiItemRecipe? = cache.findFirstRecipe(inputHandler.getStack(), level)
 
-        override fun completeRecipe(recipe: HTItemToMultiItemRecipe): HTSingleToMultiItemCompletedRecipe.ItemToItem =
-            HTSingleToMultiItemCompletedRecipe.ItemToItem(recipe, inputHandler, outputHandler)
+        override fun completeRecipe(recipe: HTItemToMultiItemRecipe): HTSingleToMultiItemCompletedRecipe.ItemToItem = HTSingleToMultiItemCompletedRecipe.ItemToItem(recipe, inputHandler, outputHandler)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTSingleToMultiItemCompletedRecipe.ItemToItem) {
             recipe.complete()

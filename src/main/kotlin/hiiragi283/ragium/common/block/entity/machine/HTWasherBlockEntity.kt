@@ -87,11 +87,9 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
         private val fluidInputHandler: HTFluidInputHandler by lazy { HTFluidInputHandler(inputTank) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
 
-        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTWashingRecipe? =
-            cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTWashingRecipe? = cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
 
-        override fun completeRecipe(recipe: HTWashingRecipe): HTWashingCompletedRecipe =
-            HTWashingCompletedRecipe(recipe, itemInputHandler, fluidInputHandler, outputHandler)
+        override fun completeRecipe(recipe: HTWashingRecipe): HTWashingCompletedRecipe = HTWashingCompletedRecipe(recipe, itemInputHandler, fluidInputHandler, outputHandler)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTWashingCompletedRecipe) {
             recipe.complete()

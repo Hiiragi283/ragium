@@ -19,8 +19,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
-class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToItemBlockEntity(RagiumBlockEntityTypes.MASS_FABRICATOR, pos, state) {
+class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity(RagiumBlockEntityTypes.MASS_FABRICATOR, pos, state) {
     override fun createInputSlot(listener: HTContentListener): HTBasicItemSlot = HTBasicItemSlot.input(
         listener,
         canInsert = { RagiumDataMapTypes.getMatterPoint(it) > 0 },

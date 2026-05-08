@@ -11,8 +11,7 @@ import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
-class HTItemAndFluidToItemRecipeBuilder(prefix: String, private val factory: Factory<out HTSerializableRecipe<*>>) :
-    HTProgressRecipeBuilder(prefix) {
+class HTItemAndFluidToItemRecipeBuilder(prefix: String, private val factory: Factory<out HTSerializableRecipe<*>>) : HTProgressRecipeBuilder(prefix) {
     companion object {
         @JvmStatic
         inline fun bathing(output: RecipeOutput, builderAction: HTItemAndFluidToItemRecipeBuilder.() -> Unit) {

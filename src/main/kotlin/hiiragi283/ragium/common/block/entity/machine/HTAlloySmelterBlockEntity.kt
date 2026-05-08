@@ -26,8 +26,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
-class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ALLOY_SMELTER, pos, state) {
+class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.ALLOY_SMELTER, pos, state) {
     private lateinit var topInputSlot: HTBasicItemSlot
     private lateinit var leftInputSlot: HTBasicItemSlot
     private lateinit var rightInputSlot: HTBasicItemSlot
@@ -101,8 +100,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         private val rightInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(rightInputSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTAlloyingRecipe? =
-            cache.findFirstRecipe(topInputHandler.getStack(), leftInputHandler.getStack(), rightInputHandler.getStack(), level)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTAlloyingRecipe? = cache.findFirstRecipe(topInputHandler.getStack(), leftInputHandler.getStack(), rightInputHandler.getStack(), level)
 
         override fun completeRecipe(recipe: HTAlloyingRecipe): HTAlloyingCompletedRecipe = HTAlloyingCompletedRecipe(
             recipe,
@@ -118,10 +116,8 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) :
         }
     }
 
-    private class AlloyingCache :
-        HTTripleInputRecipeCache<ItemStack, ItemStack, ItemStack, HTAlloyingRecipe>(RagiumRecipeLookups.ALLOYING) {
-        override fun isEmpty(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): Boolean =
-            firstInput.isEmpty || secondInput.isEmpty
+    private class AlloyingCache : HTTripleInputRecipeCache<ItemStack, ItemStack, ItemStack, HTAlloyingRecipe>(RagiumRecipeLookups.ALLOYING) {
+        override fun isEmpty(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): Boolean = firstInput.isEmpty || secondInput.isEmpty
     }
 
     override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()

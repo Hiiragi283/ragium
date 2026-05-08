@@ -17,8 +17,7 @@ import net.minecraft.resources.ResourceLocation
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import kotlin.collections.iterator
 
-class RagiumItemModelProvider(fileHelper: ExistingFileHelper, output: PackOutput) :
-    HTItemModelProvider(fileHelper, output, RagiumAPI.MOD_ID) {
+class RagiumItemModelProvider(fileHelper: ExistingFileHelper, output: PackOutput) : HTItemModelProvider(fileHelper, output, RagiumAPI.MOD_ID) {
     private val wireOverlay: ResourceLocation = HiiragiCoreAPI.id(HTConst.ITEM, "wire_overlay")
 
     override fun registerModels() {

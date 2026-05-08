@@ -29,8 +29,7 @@ open class HTBatteryItem(properties: Properties) : Item(properties) {
         HTStorageHelper.addEnergyTooltip(view, tooltips::add, false)
     }
 
-    override fun shouldCauseReequipAnimation(oldStack: ItemStack, newStack: ItemStack, slotChanged: Boolean): Boolean =
-        slotChanged || oldStack.item != newStack.item
+    override fun shouldCauseReequipAnimation(oldStack: ItemStack, newStack: ItemStack, slotChanged: Boolean): Boolean = slotChanged || oldStack.item != newStack.item
 
     override fun shouldCauseBlockBreakReset(oldStack: ItemStack, newStack: ItemStack): Boolean = oldStack.item != newStack.item
 }

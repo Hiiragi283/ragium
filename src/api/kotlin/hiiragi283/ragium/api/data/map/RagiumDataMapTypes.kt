@@ -83,11 +83,10 @@ object RagiumDataMapTypes {
     }
 
     @JvmStatic
-    private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: Codec<T>): DataMapType<R, T> =
-        DataMapType
-            .builder(RagiumAPI.id(path), registryKey, codec)
-            .synced(codec, false)
-            .build()
+    private fun <T : Any, R : Any> create(path: String, registryKey: ResourceKey<Registry<R>>, codec: Codec<T>): DataMapType<R, T> = DataMapType
+        .builder(RagiumAPI.id(path), registryKey, codec)
+        .synced(codec, false)
+        .build()
 
     @JvmStatic
     private fun createFuel(path: String): DataMapType<Fluid, Int> = create("fuel/$path", Registries.FLUID, HTCodecs.POSITIVE_INT)

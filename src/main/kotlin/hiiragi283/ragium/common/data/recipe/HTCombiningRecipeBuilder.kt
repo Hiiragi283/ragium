@@ -10,8 +10,7 @@ import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
-class HTCombiningRecipeBuilder(prefix: String, private val factory: Factory<out HTSerializableRecipe<*>>) :
-    HTProgressRecipeBuilder(prefix) {
+class HTCombiningRecipeBuilder(prefix: String, private val factory: Factory<out HTSerializableRecipe<*>>) : HTProgressRecipeBuilder(prefix) {
     companion object {
         @JvmStatic
         inline fun alloying(output: RecipeOutput, builderAction: HTCombiningRecipeBuilder.() -> Unit) {

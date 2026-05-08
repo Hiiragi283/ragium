@@ -26,8 +26,7 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
-class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutput) :
-    HTBlockStateProvider(fileHelper, output, RagiumAPI.MOD_ID) {
+class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutput) : HTBlockStateProvider(fileHelper, output, RagiumAPI.MOD_ID) {
     val basic = "basic"
     val heat = "heat"
     val cool = "cool"

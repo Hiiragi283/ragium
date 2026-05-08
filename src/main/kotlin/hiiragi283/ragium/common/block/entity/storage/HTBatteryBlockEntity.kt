@@ -36,8 +36,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
-open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTStorageBlockEntity(type, pos, state) {
+open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
     constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.BATTERY, pos, state)
 
     lateinit var battery: HTEnergyBattery.Basic
@@ -55,8 +54,7 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
         return builder.build()
     }
 
-    protected open fun createBattery(listener: HTContentListener): HTEnergyBattery.Basic =
-        HTVariableEnergyBattery.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.batteryCapacity) }
+    protected open fun createBattery(listener: HTContentListener): HTEnergyBattery.Basic = HTVariableEnergyBattery.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.batteryCapacity) }
 
     final override fun getAmountView(): HTAmountView = battery
 

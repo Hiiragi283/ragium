@@ -26,21 +26,19 @@ import net.minecraft.world.item.Item
  */
 data object RagiumRecipeDisplayFactories {
     @JvmStatic
-    fun itemOrFluid(holder: HTRecipeHolder<out HTBasicItemOrFluidRecipe>): HTProgressRecipeDisplay =
-        HTRecipeDisplayFactories.progress(holder) {
-            addInput(it.ingredient.getLeft())
-            addInput(it.ingredient.getRight())
-            it.result.getLeft()?.let(::addOutput)
-            it.result.getRight()?.let(::addOutput)
-        }
+    fun itemOrFluid(holder: HTRecipeHolder<out HTBasicItemOrFluidRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+        addInput(it.ingredient.getLeft())
+        addInput(it.ingredient.getRight())
+        it.result.getLeft()?.let(::addOutput)
+        it.result.getRight()?.let(::addOutput)
+    }
 
     @JvmStatic
-    fun itemAndFluidToItem(holder: HTRecipeHolder<out HTBasicItemAndFluidToItemRecipe>): HTProgressRecipeDisplay =
-        HTRecipeDisplayFactories.progress(holder) {
-            addInput(it.itemIngredient)
-            addInput(it.fluidIngredient)
-            addOutput(it.result)
-        }
+    fun itemAndFluidToItem(holder: HTRecipeHolder<out HTBasicItemAndFluidToItemRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+        addInput(it.itemIngredient)
+        addInput(it.fluidIngredient)
+        addOutput(it.result)
+    }
 
     // Machine - Basic
     @JvmStatic

@@ -35,8 +35,7 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
 
-class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.AUTO_CHISEL, pos, state) {
+class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.AUTO_CHISEL, pos, state) {
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var catalystSlot: HTBasicItemSlot
     private lateinit var outputSlot: HTBasicItemSlot
@@ -91,11 +90,9 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
         private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTDoubleItemToItemRecipe? =
-            cache.findFirstRecipe(inputHandler.getStack(), catalystHandler.getStack(), level)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTDoubleItemToItemRecipe? = cache.findFirstRecipe(inputHandler.getStack(), catalystHandler.getStack(), level)
 
-        override fun completeRecipe(recipe: HTDoubleItemToItemRecipe): HTDoubleInputCompletedRecipe.DoubleItem =
-            HTDoubleInputCompletedRecipe.DoubleItem(recipe, inputHandler, catalystHandler, outputHandler)
+        override fun completeRecipe(recipe: HTDoubleItemToItemRecipe): HTDoubleInputCompletedRecipe.DoubleItem = HTDoubleInputCompletedRecipe.DoubleItem(recipe, inputHandler, catalystHandler, outputHandler)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTDoubleInputCompletedRecipe.DoubleItem) {
             recipe.complete()
@@ -109,8 +106,7 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) :
         private val accessor: SingleItemRecipeAccessor = recipe as SingleItemRecipeAccessor
         private val ingredient: Ingredient = accessor.ingredient
 
-        override fun test(first: ItemStack, second: ItemStack): Boolean =
-            ingredient.test(first) && ItemStack.isSameItemSameComponents(accessor.result, second)
+        override fun test(first: ItemStack, second: ItemStack): Boolean = ingredient.test(first) && ItemStack.isSameItemSameComponents(accessor.result, second)
 
         override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = ingredient.getRequiredAmount(first) to 0
 

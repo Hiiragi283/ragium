@@ -78,8 +78,7 @@ class HTChemicalReactingRecipe(
         secondary.getLeft()?.getRequiredAmount(third) ?: 0,
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: FluidStack, thirdInput: FluidStack): HTChemicalResult =
-        HTChemicalResult.create(fluidResults, itemResult)
+    override fun assemble(firstInput: ItemStack, secondInput: FluidStack, thirdInput: FluidStack): HTChemicalResult = HTChemicalResult.create(fluidResults, itemResult)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CHEMICAL_REACTING
 

@@ -21,8 +21,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTMachineBlockEntity(type, pos, state) {
+abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMachineBlockEntity(type, pos, state) {
     protected lateinit var recipeHandler: HTProgressHandler<*>
         private set
     protected lateinit var recipeComponent: HTRecipeComponent
@@ -88,8 +87,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     //    Energized    //
 
-    abstract class Energized(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-        HTProcessorBlockEntity(type, pos, state) {
+    abstract class Energized(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
         lateinit var battery: HTMachineEnergyBattery.Processor
             private set
 

@@ -17,8 +17,7 @@ class HTWashingCompletedRecipe(
 ) : HTCompletedRecipe.WithProgress<HTWashingRecipe>(recipe) {
     private val outputs: Iterable<ItemStack> = recipe.assemble(inputHandler.getStack())
 
-    override fun getProgress(): HTProgressData =
-        HTItemAndFluidRecipeInput(inputHandler.getStack(), waterHandler.getStack()).let(recipe::getProgressData)
+    override fun getProgress(): HTProgressData = HTItemAndFluidRecipeInput(inputHandler.getStack(), waterHandler.getStack()).let(recipe::getProgressData)
 
     override fun canComplete(): Boolean = outputs.all(outputHandler::canInsert)
 

@@ -6,8 +6,7 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.storage.HTStorageBlock
 import net.minecraft.world.item.ItemStack
 
-abstract class HTStorageBlockItem<BLOCK : HTStorageBlock>(block: BLOCK, properties: Properties) :
-    HTDescriptionBlockItem<BLOCK>(block, properties) {
+abstract class HTStorageBlockItem<BLOCK : HTStorageBlock>(block: BLOCK, properties: Properties) : HTDescriptionBlockItem<BLOCK>(block, properties) {
     protected fun isCreative(stack: ItemStack): Boolean = stack.`is`(RagiumTags.Items.STORAGES_CREATIVE)
 
     final override fun isFoil(stack: ItemStack): Boolean = super.isFoil(stack) || isCreative(stack)

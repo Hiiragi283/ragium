@@ -73,11 +73,9 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val outputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
 
-        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemToFluidRecipe? =
-            cache.findFirstRecipe(inputHandler.getStack(), level)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemToFluidRecipe? = cache.findFirstRecipe(inputHandler.getStack(), level)
 
-        override fun completeRecipe(recipe: HTItemToFluidRecipe): HTSingleToSingleCompletedRecipe.ItemToFluid =
-            HTSingleToSingleCompletedRecipe.ItemToFluid(recipe, inputHandler, outputHandler)
+        override fun completeRecipe(recipe: HTItemToFluidRecipe): HTSingleToSingleCompletedRecipe.ItemToFluid = HTSingleToSingleCompletedRecipe.ItemToFluid(recipe, inputHandler, outputHandler)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTSingleToSingleCompletedRecipe.ItemToFluid) {
             recipe.complete()

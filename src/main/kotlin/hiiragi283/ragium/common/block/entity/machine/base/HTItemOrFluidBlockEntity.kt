@@ -28,8 +28,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(type, pos, state) {
+abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(type, pos, state) {
     private lateinit var inputTank: HTBasicFluidTank
     private lateinit var outputTank: HTBasicFluidTank
 
@@ -97,11 +96,9 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         private val fluidOutputHandler: HTFluidOutputHandler by lazy { HTFluidOutputHandler.single(outputTank) }
         private val itemOutputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemOrFluidRecipe? =
-            cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemOrFluidRecipe? = cache.findFirstRecipe(itemInputHandler.getStack(), fluidInputHandler.getStack(), level)
 
-        override fun completeRecipe(recipe: HTItemOrFluidRecipe): HTItemOrFluidCompletedRecipe =
-            HTItemOrFluidCompletedRecipe(recipe, itemInputHandler, fluidInputHandler, itemOutputHandler, fluidOutputHandler)
+        override fun completeRecipe(recipe: HTItemOrFluidRecipe): HTItemOrFluidCompletedRecipe = HTItemOrFluidCompletedRecipe(recipe, itemInputHandler, fluidInputHandler, itemOutputHandler, fluidOutputHandler)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTItemOrFluidCompletedRecipe) {
             recipe.complete()

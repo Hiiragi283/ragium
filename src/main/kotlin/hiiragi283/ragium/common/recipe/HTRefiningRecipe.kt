@@ -48,14 +48,11 @@ class HTRefiningRecipe(
         }
     }
 
-    override fun test(first: ItemStack, second: FluidStack): Boolean =
-        catalyst.map { it.test(first) }.orElseGet(first::isEmpty) && ingredient.test(second)
+    override fun test(first: ItemStack, second: FluidStack): Boolean = catalyst.map { it.test(first) }.orElseGet(first::isEmpty) && ingredient.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> =
-        catalyst.map { it.getRequiredAmount(first) }.orElseGet { 0 } to ingredient.getRequiredAmount(second)
+    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = catalyst.map { it.getRequiredAmount(first) }.orElseGet { 0 } to ingredient.getRequiredAmount(second)
 
-    override fun assemble(firstInput: ItemStack, secondInput: FluidStack): HTChemicalResult =
-        HTChemicalResult.create(fluidResults, itemResult)
+    override fun assemble(firstInput: ItemStack, secondInput: FluidStack): HTChemicalResult = HTChemicalResult.create(fluidResults, itemResult)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.REFINING
 

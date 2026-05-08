@@ -15,8 +15,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CUTTING_MACHINE, pos, state) {
+class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CUTTING_MACHINE, pos, state) {
     override fun playSound() {
         playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
     }

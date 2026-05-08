@@ -11,8 +11,7 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.neoforge.fluids.FluidStack
 
 data object HTBookMeltingRecipe : HTItemToFluidRecipe {
-    private fun getStoredEnchantments(input: ItemStack): ItemEnchantments =
-        input.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY)
+    private fun getStoredEnchantments(input: ItemStack): ItemEnchantments = input.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY)
 
     override fun test(input: ItemStack): Boolean = !getStoredEnchantments(input).isEmpty
 

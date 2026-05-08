@@ -19,8 +19,7 @@ import org.apache.commons.lang3.math.Fraction
 import java.util.function.Consumer
 
 @OnlyIn(Dist.CLIENT)
-class HTEnergySlotWidgetRenderer(gui: HTAbstractGui, widget: HTEnergySlotWidget) :
-    HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {
+class HTEnergySlotWidgetRenderer(gui: HTAbstractGui, widget: HTEnergySlotWidget) : HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {
     companion object {
         @JvmField
         val SPRITE: ResourceLocation = RagiumAPI.id(HTConst.GUI, "energy_slot")

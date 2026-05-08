@@ -42,8 +42,7 @@ class HTWashingRecipe(val ingredient: HTItemIngredient, val results: HTListItemR
 
     override fun test(first: ItemStack, second: FluidStack): Boolean = ingredient.test(first) && WATER_INGREDIENT.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> =
-        ingredient.getRequiredAmount(first) to WATER_INGREDIENT.getRequiredAmount(second)
+    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = ingredient.getRequiredAmount(first) to WATER_INGREDIENT.getRequiredAmount(second)
 
     override fun assemble(input: ItemStack): Iterable<ItemStack> = results
 

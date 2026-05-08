@@ -22,8 +22,7 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.conditions.ICondition
 import java.util.concurrent.CompletableFuture
 
-class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) :
-    HTDataMapProvider(packOutput, lookupProvider) {
+class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) : HTDataMapProvider(packOutput, lookupProvider) {
     override fun gatherInternal() {
         mobHeads()
 
@@ -166,8 +165,7 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     // Fluid
     private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent, value: T): Builder<T, Fluid> = add(content.fluidTag, value, false)
 
-    private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> =
-        add(Registries.FLUID.createTagKey(HTConst.COMMON.toId(path)), value, false)
+    private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> = add(Registries.FLUID.createTagKey(HTConst.COMMON.toId(path)), value, false)
 
     // Entity Type
     @Suppress("DEPRECATION")

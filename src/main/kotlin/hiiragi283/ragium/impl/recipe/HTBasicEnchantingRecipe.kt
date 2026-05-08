@@ -11,13 +11,11 @@ abstract class HTBasicEnchantingRecipe(val ingredient: HTItemIngredient) : HTEnc
 
     protected abstract fun testBase(stack: ItemStack): Boolean
 
-    override fun test(first: ItemStack, second: ItemStack, third: Int): Boolean =
-        testBase(first) && ingredient.test(second) && third >= getRequiredExpAmount(first, second)
+    override fun test(first: ItemStack, second: ItemStack, third: Int): Boolean = testBase(first) && ingredient.test(second) && third >= getRequiredExpAmount(first, second)
 
     override fun getRequiredExpAmount(base: ItemStack, addition: ItemStack): Int = requiredExpAmount
 
-    override fun getRequiredAdditionAmount(base: ItemStack, addition: ItemStack, expAmount: Int): Int =
-        ingredient.getRequiredAmount(addition)
+    override fun getRequiredAdditionAmount(base: ItemStack, addition: ItemStack, expAmount: Int): Int = ingredient.getRequiredAmount(addition)
 
     override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: Int): ItemStack = applyEnchantment(firstInput)
 }

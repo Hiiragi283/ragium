@@ -48,8 +48,7 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         }
     }
 
-    private fun ItemPredicate.Builder.of(prefix: HTTagPrefix, material: HTMaterialLike): ItemPredicate.Builder =
-        this.of(prefix.itemTagKey(material))
+    private fun ItemPredicate.Builder.of(prefix: HTTagPrefix, material: HTMaterialLike): ItemPredicate.Builder = this.of(prefix.itemTagKey(material))
 
     override fun generate(registries: HolderLookup.Provider) {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.ROOT) {

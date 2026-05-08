@@ -22,8 +22,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(type, pos, state) {
+abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(type, pos, state) {
     protected lateinit var inputSlot: HTBasicItemSlot
         private set
     protected lateinit var outputSlot: HTBasicItemSlot
@@ -59,19 +58,16 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
 
     //    Basic    //
 
-    abstract class Basic(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-        HTItemToItemBlockEntity(type, pos, state) {
+    abstract class Basic(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity(type, pos, state) {
         //    Processing    //
 
         protected inner class SingleProgressHandler : ProgressHandler<HTItemToItemRecipe, HTSingleToSingleCompletedRecipe.ItemToItem>() {
             private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
             private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
-            override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemToItemRecipe? =
-                getCache().findFirstRecipe(inputHandler.getStack(), level)
+            override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTItemToItemRecipe? = getCache().findFirstRecipe(inputHandler.getStack(), level)
 
-            override fun completeRecipe(recipe: HTItemToItemRecipe): HTSingleToSingleCompletedRecipe.ItemToItem =
-                HTSingleToSingleCompletedRecipe.ItemToItem(recipe, inputHandler, outputHandler)
+            override fun completeRecipe(recipe: HTItemToItemRecipe): HTSingleToSingleCompletedRecipe.ItemToItem = HTSingleToSingleCompletedRecipe.ItemToItem(recipe, inputHandler, outputHandler)
 
             override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTSingleToSingleCompletedRecipe.ItemToItem) {
                 recipe.complete()

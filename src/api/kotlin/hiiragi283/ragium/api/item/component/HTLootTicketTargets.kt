@@ -32,8 +32,7 @@ data class HTLootTicketTargets private constructor(val lootTables: List<Resource
         val EMPTY = HTLootTicketTargets(listOf())
 
         @JvmStatic
-        fun create(lootTables: List<ResourceKey<LootTable>>): HTLootTicketTargets =
-            lootTables.takeUnless(List<ResourceKey<LootTable>>::isEmpty)?.let(::HTLootTicketTargets) ?: EMPTY
+        fun create(lootTables: List<ResourceKey<LootTable>>): HTLootTicketTargets = lootTables.takeUnless(List<ResourceKey<LootTable>>::isEmpty)?.let(::HTLootTicketTargets) ?: EMPTY
 
         @JvmStatic
         fun create(vararg lootTables: ResourceKey<LootTable>): HTLootTicketTargets = create(lootTables.toList())

@@ -11,8 +11,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.PYROLYZER, pos, state) {
+class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.PYROLYZER, pos, state) {
     override fun getLookup(): HTRecipeLookup<out HTItemOrFluidRecipe> = RagiumRecipeLookups.PYROLYZING
 
     override fun playSound() {

@@ -46,8 +46,7 @@ import net.neoforged.neoforge.fluids.SimpleFluidContent
  * @see mekanism.common.tile.TileEntityFluidTank
  * @see hiiragi283.core.common.block.entity.HTCopperBasinBlockEntity
  */
-open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTStorageBlockEntity(type, pos, state) {
+open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
     constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.TANK, pos, state)
 
     lateinit var tank: HTFluidStackResourceSlot
@@ -63,8 +62,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         return builder.build()
     }
 
-    protected open fun createTank(listener: HTContentListener): HTFluidStackResourceSlot =
-        HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
+    protected open fun createTank(listener: HTContentListener): HTFluidStackResourceSlot = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
 
     final override fun getAmountView(): HTAmountView = tank
 

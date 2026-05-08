@@ -17,8 +17,7 @@ import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
-open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTStorageBlockEntity(type, pos, state) {
+open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
     constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.CRATE, pos, state)
 
     lateinit var slot: HTItemStackResourceSlot
@@ -30,8 +29,7 @@ open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos,
         return builder.build()
     }
 
-    protected open fun createSlot(listener: HTContentListener): HTItemStackResourceSlot =
-        HTVariableItemSlot.create(listener, { capacityComponent.getCapacity(RagiumConfig.COMMON.crateCapacity) })
+    protected open fun createSlot(listener: HTContentListener): HTItemStackResourceSlot = HTVariableItemSlot.create(listener, { capacityComponent.getCapacity(RagiumConfig.COMMON.crateCapacity) })
 
     final override fun getAmountView(): HTAmountView = slot
 

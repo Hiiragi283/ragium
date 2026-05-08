@@ -223,11 +223,9 @@ object RagiumItems {
     }
 
     @JvmStatic
-    private fun getCapacity(context: ItemStack, base: IntSupplier): Int =
-        RagiumDataComponents.getCapacity(base, context.getOrDefault(RagiumDataComponents.CAPACITY_SCALE, 1))
+    private fun getCapacity(context: ItemStack, base: IntSupplier): Int = RagiumDataComponents.getCapacity(base, context.getOrDefault(RagiumDataComponents.CAPACITY_SCALE, 1))
 
     //    Extensions    //
 
-    private fun Item.Properties.description(translation: HTTranslation): Item.Properties =
-        this.component(HCDataComponents.DESCRIPTION, translation)
+    private fun Item.Properties.description(translation: HTTranslation): Item.Properties = this.component(HCDataComponents.DESCRIPTION, translation)
 }

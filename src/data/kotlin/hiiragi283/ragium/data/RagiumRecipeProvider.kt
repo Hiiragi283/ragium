@@ -17,8 +17,7 @@ import net.minecraft.data.PackOutput
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
-class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) :
-    HTRecipeProvider(output, registries) {
+class RagiumRecipeProvider(output: PackOutput, registries: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(output, registries) {
     override fun collectProviders(consumer: Consumer<HTSubRecipeProvider>) {
         consumer.accept(RagiumBasicRecipeProvider)
         consumer.accept(RagiumFluidRecipeProvider)

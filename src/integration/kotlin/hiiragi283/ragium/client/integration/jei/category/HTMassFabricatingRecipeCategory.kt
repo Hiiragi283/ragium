@@ -12,8 +12,7 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 
-class HTMassFabricatingRecipeCategory(guiHelper: IGuiHelper) :
-    HTHolderRecipeCategory<HTMassFabricatingRecipe>(guiHelper, RagiumRecipeViewerTypes.MASS_FABRICATING, HTMassFabricatingRecipe.CODEC) {
+class HTMassFabricatingRecipeCategory(guiHelper: IGuiHelper) : HTHolderRecipeCategory<HTMassFabricatingRecipe>(guiHelper, RagiumRecipeViewerTypes.MASS_FABRICATING, HTMassFabricatingRecipe.CODEC) {
     override fun setupRecipe(builder: IRecipeLayoutBuilder, recipe: HTMassFabricatingRecipe, focuses: IFocusGroup) {
         // input
         builder

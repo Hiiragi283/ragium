@@ -9,8 +9,7 @@ import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTProcessorBlockEntity.Energized(type, pos, state) {
+abstract class HTMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(type, pos, state) {
     protected lateinit var outputSlots: List<HTBasicItemSlot>
         private set
 

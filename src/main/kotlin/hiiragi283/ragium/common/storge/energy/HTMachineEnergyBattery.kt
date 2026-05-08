@@ -23,8 +23,7 @@ sealed class HTMachineEnergyBattery<BE : HTMachineBlockEntity>(
 ) : HTBasicEnergyBattery(capacity, canExtract, canInsert, listener) {
     companion object {
         @JvmStatic
-        fun input(listener: HTContentListener?, blockEntity: HTProcessorBlockEntity.Energized): Processor =
-            Processor(blockEntity.getConfig(), listener, blockEntity)
+        fun input(listener: HTContentListener?, blockEntity: HTProcessorBlockEntity.Energized): Processor = Processor(blockEntity.getConfig(), listener, blockEntity)
 
         /*fun <BE : HTGeneratorBlockEntity> output(listener: HTContentListener?, blockEntity: BE): Generator {
             val attribute: HTEnergyBlockAttribute = validateAttribute(blockEntity)

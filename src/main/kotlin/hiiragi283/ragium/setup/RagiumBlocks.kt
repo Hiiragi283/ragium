@@ -249,8 +249,7 @@ object RagiumBlocks {
     private fun copyOf(block: Block): BlockBehaviour.Properties = BlockBehaviour.Properties.ofFullCopy(block)
 
     @JvmStatic
-    private fun properties(hardness: Float, resistance: Float = hardness): BlockBehaviour.Properties =
-        BlockBehaviour.Properties.of().strength(hardness, resistance)
+    private fun properties(hardness: Float, resistance: Float = hardness): BlockBehaviour.Properties = BlockBehaviour.Properties.of().strength(hardness, resistance)
 
     @JvmStatic
     fun machine(): BlockBehaviour.Properties = properties(3.5f, 16f)

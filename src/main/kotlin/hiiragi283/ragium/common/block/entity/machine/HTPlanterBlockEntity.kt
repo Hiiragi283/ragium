@@ -50,11 +50,9 @@ class HTPlanterBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockE
         private val soilInputHandler: HTItemInputHandler by lazy { HTItemInputHandler(soilSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.multiple(outputSlots) }
 
-        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTPlantingRecipe? =
-            cache.findFirstRecipe(plantInputHandler.getStack(), soilInputHandler.getStack(), level)
+        override fun findFirstRecipe(level: ServerLevel, pos: BlockPos): HTPlantingRecipe? = cache.findFirstRecipe(plantInputHandler.getStack(), soilInputHandler.getStack(), level)
 
-        override fun completeRecipe(recipe: HTPlantingRecipe): HTDoubleToMultiItemCompletedRecipe.Planting =
-            HTDoubleToMultiItemCompletedRecipe.Planting(recipe, plantInputHandler, soilInputHandler, outputHandler)
+        override fun completeRecipe(recipe: HTPlantingRecipe): HTDoubleToMultiItemCompletedRecipe.Planting = HTDoubleToMultiItemCompletedRecipe.Planting(recipe, plantInputHandler, soilInputHandler, outputHandler)
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: HTDoubleToMultiItemCompletedRecipe.Planting) {
             recipe.complete()

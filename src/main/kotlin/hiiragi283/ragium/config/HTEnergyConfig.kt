@@ -26,8 +26,7 @@ data class HTEnergyConfig(private val capacity: IntSupplier, private val rate: I
             .definePositiveInt("energy_rate", value)
 
         @JvmStatic
-        fun createMachine(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig =
-            createBlock(builder, name, rate, rate * 20 * 10 * 10)
+        fun createMachine(builder: ModConfigSpec.Builder, name: String, rate: Int = 16): HTEnergyConfig = createBlock(builder, name, rate, rate * 20 * 10 * 10)
 
         @JvmStatic
         fun createBlock(

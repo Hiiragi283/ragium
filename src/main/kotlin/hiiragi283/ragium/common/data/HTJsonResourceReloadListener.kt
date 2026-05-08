@@ -18,15 +18,13 @@ import kotlin.jvm.optionals.getOrNull
 /**
  * @see net.neoforged.neoforge.common.loot.LootModifierManager
  */
-class HTJsonResourceReloadListener<T : Any>(directory: String, codec: Codec<T>, private val clazz: Class<T>) :
-    SimpleJsonResourceReloadListener(GSON, directory) {
+class HTJsonResourceReloadListener<T : Any>(directory: String, codec: Codec<T>, private val clazz: Class<T>) : SimpleJsonResourceReloadListener(GSON, directory) {
     companion object {
         @JvmStatic
         private val GSON: Gson = GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create()
 
         @JvmStatic
-        inline fun <reified T : Any> create(directory: String, codec: Codec<T>): HTJsonResourceReloadListener<T> =
-            HTJsonResourceReloadListener(directory, codec, T::class.java)
+        inline fun <reified T : Any> create(directory: String, codec: Codec<T>): HTJsonResourceReloadListener<T> = HTJsonResourceReloadListener(directory, codec, T::class.java)
     }
 
     private val decoder: Decoder<Optional<T>> = ConditionalOps.createConditionalCodec(codec)

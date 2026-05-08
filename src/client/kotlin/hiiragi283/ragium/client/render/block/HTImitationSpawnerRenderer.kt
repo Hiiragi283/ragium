@@ -14,8 +14,7 @@ import net.minecraft.world.level.Level
 /**
  * @see SpawnerRenderer
  */
-class HTImitationSpawnerRenderer(context: BlockEntityRendererProvider.Context) :
-    HTBlockEntityRenderer<HTImitationSpawnerBlockEntity>(context) {
+class HTImitationSpawnerRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEntityRenderer<HTImitationSpawnerBlockEntity>(context) {
     private val entityRenderer: EntityRenderDispatcher = context.entityRenderer
 
     override fun render(

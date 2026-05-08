@@ -62,8 +62,7 @@ class HTMixingRecipe(
         progressData,
     )
 
-    override fun test(first: ItemStack, second: ItemStack, third: FluidStack): Boolean =
-        primary.test(first) && (secondary?.test(second) ?: second.isEmpty) && fluidIngredient.test(third)
+    override fun test(first: ItemStack, second: ItemStack, third: FluidStack): Boolean = primary.test(first) && (secondary?.test(second) ?: second.isEmpty) && fluidIngredient.test(third)
 
     override fun matches(input: Input): Boolean {
         val (firstItem: ItemStack, secondItem: ItemStack, fluid: FluidStack) = input
@@ -76,8 +75,7 @@ class HTMixingRecipe(
         fluidIngredient.getRequiredAmount(third),
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: FluidStack): Ior<ItemStack, FluidStack> =
-        result.mapLeft { it.getOrEmpty() }.mapRight { it.create() }
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: FluidStack): Ior<ItemStack, FluidStack> = result.mapLeft { it.getOrEmpty() }.mapRight { it.create() }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 

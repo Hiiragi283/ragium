@@ -11,8 +11,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTFurnaceBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToItemBlockEntity.Basic(RagiumBlockEntityTypes.ELECTRIC_FURNACE, pos, state) {
+class HTFurnaceBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity.Basic(RagiumBlockEntityTypes.ELECTRIC_FURNACE, pos, state) {
     // TODO: Support Blasting or Smoking recipe type
     override fun getCache(): HTRecipeCaches.SingleItem<out HTItemToItemRecipe> = HTRecipeCaches.SingleItem(HTVanillaRecipeTypes.SMELTING)
 

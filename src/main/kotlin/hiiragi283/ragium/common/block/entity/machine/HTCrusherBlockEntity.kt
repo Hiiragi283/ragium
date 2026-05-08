@@ -16,8 +16,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) :
-    HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state) {
+class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state) {
     override fun playSound() {
         playSound(SoundEvents.GRINDSTONE_USE)
     }
