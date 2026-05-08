@@ -117,6 +117,10 @@ object RagiumTags {
         @JvmField
         val STORAGES_CREATIVE: TagKey<Item> = mod("storages", "creative")
 
+        // Integration
+        @JvmField
+        val ENRICHED_RAGINITE: TagKey<Item> = mod("enriched", "raginite")
+
         @JvmStatic
         private fun common(vararg path: String): TagKey<Item> = Registries.ITEM.createTagKey(HTConst.COMMON.toId(*path))
 

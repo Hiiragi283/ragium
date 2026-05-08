@@ -9,6 +9,7 @@ import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.itemId
 import hiiragi283.core.api.resource.toId
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.integration.mek.RagiumMekItems
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
@@ -61,6 +62,9 @@ class RagiumItemModelProvider(fileHelper: ExistingFileHelper, output: PackOutput
         }
         // Buckets
         registerBuckets()
+
+        // Integration
+        RagiumMekItems.REGISTER.asItemSequence().forEach(::basicItem)
     }
 
     private fun registerBuckets() {

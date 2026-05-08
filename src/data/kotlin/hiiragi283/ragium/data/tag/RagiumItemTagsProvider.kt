@@ -12,6 +12,7 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
+import hiiragi283.ragium.common.integration.mek.RagiumMekItems
 import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
+import mekanism.common.tags.MekanismTags
 
 class RagiumItemTagsProvider(
     fileHelper: ExistingFileHelper,
@@ -77,6 +79,11 @@ class RagiumItemTagsProvider(
         factory
             .apply(HiiragiCoreTags.Items.SILICON)
             .add(RagiumItems.CRUDE_SILICON)
+
+        // Integration
+        factory
+            .addTags(MekanismTags.Items.ENRICHED, RagiumTags.Items.ENRICHED_RAGINITE)
+            .add(RagiumMekItems.ENRICHED_RAGINITE)
     }
 
     private fun copy(blockTags: RagiumTags.TieredTags<Block>, itemTags: RagiumTags.TieredTags<Item>) {

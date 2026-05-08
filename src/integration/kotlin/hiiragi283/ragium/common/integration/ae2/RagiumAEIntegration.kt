@@ -10,7 +10,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 /**
  * @see hiiragi283.core.common.integration.ae2.HCAEIntegration
  */
-data object RTAEIntegration {
+data object RagiumAEIntegration {
     //    Setup    //
 
     @JvmStatic

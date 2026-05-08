@@ -5,6 +5,8 @@ import hiiragi283.core.api.data.lang.HTLangTypes
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.api.text.RagiumTranslation
+import hiiragi283.ragium.common.integration.mek.RagiumChemicals
+import hiiragi283.ragium.common.integration.mek.RagiumMekItems
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.data.advancement.RagiumAdvancementKeys
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -215,5 +217,9 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumTranslation.TOOLTIP_CHARGE_POWER, $$"Power: %1$s")
         add(RagiumTranslation.TOOLTIP_DIMENSION, $$"Dimension: %1$s")
         add(RagiumTranslation.TOOLTIP_LOOT_TABLE_ID, $$"Loot Table: %1$s")
+        // Integration
+        add(RagiumChemicals.RAGINITE.translationKey, "Raginite")
+
+        add(RagiumMekItems.ENRICHED_RAGINITE, "Enriched Raginite")
     }
 }
