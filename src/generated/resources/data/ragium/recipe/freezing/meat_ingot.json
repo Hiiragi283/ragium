@@ -1,0 +1,16 @@
+{
+  "type": "ragium:freezing",
+  "catalyst": {
+    "type": "hiiragi_core:blue_print",
+    "number": 0
+  },
+  "ingredient": {
+    "amount": 1000,
+    "fluids": "#c:meat"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:meat_ingot"
+  },
+  "time": 200
+}

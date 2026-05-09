@@ -1,19 +1,13 @@
 package hiiragi283.ragium.data.tag
 
-import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
-import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.data.tag.HTTagsProvider
-import hiiragi283.core.api.material.HTMaterialContents
-import hiiragi283.core.api.material.getOrThrow
-import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTPart
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.integration.mek.RagiumMekItems
-import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
@@ -35,7 +29,6 @@ class RagiumItemTagsProvider(
     blockTags: CompletableFuture<TagLookup<Block>>,
 ) : HTItemTagsProvider(fileHelper, output, lookupProvider, RagiumAPI.MOD_ID, blockTags) {
     override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Item>) {
-        val items: HTMaterialContents<HTPart, HTMaterialContents.ItemEntry> = HiiragiCoreAccess.INSTANCE.registeredContents.items
         // Copy
         copy(RagiumTags.Blocks.DEVICES, RagiumTags.Items.DEVICES)
         copy(RagiumTags.Blocks.GENERATORS, RagiumTags.Items.GENERATORS)
@@ -66,15 +59,14 @@ class RagiumItemTagsProvider(
             .add(RagiumBlocks.MEAT_BLOCK)
             .add(RagiumBlocks.COOKED_MEAT_BLOCK)
 
-        val foodsCan: HTTagBuilder<Item> = factory.addTags(Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN)
-        HTFoodCanType.entries.forEach(foodsCan::add)
+        factory.addTags(Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN).add(RagiumItems.CANNED_COOKED_MEAT)
 
-        factory
-            .apply(Tags.Items.FOODS_RAW_MEAT)
-            .add(items.getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.MEAT))
-        factory
-            .apply(Tags.Items.FOODS_COOKED_MEAT)
-            .add(items.getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT))
+        factory.apply(Tags.Items.FOODS_RAW_MEAT).add(RagiumItems.MEAT_INGOT)
+        factory.apply(Tags.Items.FOODS_COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
+
+        factory.addMaterial(CommonTagPrefixes.DUST, RagiumMaterialKeys.MEAT).add(RagiumItems.MINCED_MEAT)
+        factory.addMaterial(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT).add(RagiumItems.MEAT_INGOT)
+        factory.addMaterial(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
         // Others
         factory
             .apply(HiiragiCoreTags.Items.SILICON)

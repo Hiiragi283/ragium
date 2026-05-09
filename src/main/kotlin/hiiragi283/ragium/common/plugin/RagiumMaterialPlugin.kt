@@ -12,7 +12,6 @@ import hiiragi283.core.api.material.property.HTMaterialLevel
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.HTMaterialTextureSet
 import hiiragi283.core.api.material.property.addBlockPrefixes
-import hiiragi283.core.api.material.property.addCustomName
 import hiiragi283.core.api.material.property.addFluidPrefixes
 import hiiragi283.core.api.material.property.addItemPrefixes
 import hiiragi283.core.api.material.property.setDefaultPart
@@ -21,7 +20,6 @@ import hiiragi283.core.api.material.property.setTextureSet
 import hiiragi283.core.api.plugin.HTMaterialPlugin
 import hiiragi283.core.api.plugin.HTPlugin
 import hiiragi283.core.api.property.add
-import hiiragi283.core.api.property.plusAssign
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -31,8 +29,8 @@ import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.part.RagiumParts
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
-import net.neoforged.neoforge.common.Tags
 
 @HTPlugin
 data object RagiumMaterialPlugin : HTMaterialPlugin {
@@ -46,6 +44,13 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
             addNamePattern("%s Pellet", "%sペレット")
         }
+    }
+
+    override fun registerExistingItem(consumer: HTMaterialPlugin.ItemConsumer) {
+        consumer.accept(CommonParts.DUST, RagiumMaterialKeys.MEAT, RagiumItems.MINCED_MEAT)
+        consumer.accept(CommonParts.INGOT, RagiumMaterialKeys.MEAT, RagiumItems.MEAT_INGOT)
+
+        consumer.accept(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT, RagiumItems.COOKED_MEAT_INGOT)
     }
 
     override fun modifyMaterial(provider: HTMaterialPlugin.MaterialProvider) {
@@ -156,27 +161,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
     }
 
     @JvmStatic
-    private fun other(provider: HTMaterialPlugin.MaterialProvider) {
-        provider.getBuilder(RagiumMaterialKeys.MEAT).apply {
-            setDefaultPart(Tags.Items.FOODS_RAW_MEAT, createItem(CommonParts.INGOT, RagiumMaterialKeys.MEAT))
-            addItemPrefixes(CommonParts.DUST, CommonParts.INGOT)
-            put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.NONE)
-            put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.NONE)
-            put(HTMaterialPropertyKeys.SMELTED_TO, RagiumMaterialKeys.COOKED_MEAT)
-
-            setName("Meat", "肉")
-            addCustomName(CommonParts.DUST, "Minced Meat", "ひき肉")
-        }
-        provider.getBuilder(RagiumMaterialKeys.COOKED_MEAT).apply {
-            setDefaultPart(Tags.Items.FOODS_COOKED_MEAT, createItem(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT))
-            addItemPrefixes(CommonParts.INGOT)
-            put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.NONE)
-            put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.NONE)
-            this += HTMaterialPropertyKeys.DISABLE_SMELTING
-
-            setName("Cooked Meat", "焼肉")
-        }
-    }
+    private fun other(provider: HTMaterialPlugin.MaterialProvider) {}
 
     @JvmStatic
     private fun existing(provider: HTMaterialPlugin.MaterialProvider) {

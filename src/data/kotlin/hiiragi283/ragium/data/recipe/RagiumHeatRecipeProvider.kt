@@ -189,6 +189,10 @@ object RagiumHeatRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
 
         // Meat
         RagiumRecipeBuilder.melting(output) {
+            ingredient = inputCreator.create(setOf(Tags.Items.FOODS_RAW_MEAT, Tags.Items.FOODS_RAW_FISH))
+            result = resultCreator.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT * 2)
+        }
+        RagiumRecipeBuilder.melting(output) {
             ingredient = inputCreator.create(Items.ROTTEN_FLESH)
             result = resultCreator.create(HCFluids.MEAT, HTConst.INGOT_AMOUNT)
             recipeId suffix "_from_rotten"

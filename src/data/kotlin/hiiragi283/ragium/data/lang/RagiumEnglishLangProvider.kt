@@ -139,7 +139,10 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
 
         add(RagiumItems.ARTIFICIAL_ARTIFACT, "Artificial Artifact")
 
-        add(RagiumItems.EMPTY_CAN, "Empty Can")
+        add(RagiumItems.MINCED_MEAT, "Minced Meat")
+        add(RagiumItems.MEAT_INGOT, "Meat Ingot")
+        add(RagiumItems.COOKED_MEAT_INGOT, "Cooked Meat Ingot")
+        add(RagiumItems.CANNED_COOKED_MEAT, "Canned Cooked Meat")
 
         add(RagiumItems.BLANK_DISC, "Blank Disc")
         add(RagiumItems.CRYSTAL_BATTERY, "Crystal Battery")

@@ -139,7 +139,10 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
 
         add(RagiumItems.ARTIFICIAL_ARTIFACT, "人工遺物")
 
-        add(RagiumItems.EMPTY_CAN, "空の缶詰")
+        add(RagiumItems.MINCED_MEAT, "ひき肉")
+        add(RagiumItems.MEAT_INGOT, "肉インゴット")
+        add(RagiumItems.COOKED_MEAT_INGOT, "焼肉インゴット")
+        add(RagiumItems.CANNED_COOKED_MEAT, "焼肉の缶詰")
 
         add(RagiumItems.BLANK_DISC, "空のレコード")
         add(RagiumItems.CRYSTAL_BATTERY, "クリスタルバッテリー")

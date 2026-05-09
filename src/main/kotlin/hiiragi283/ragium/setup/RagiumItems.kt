@@ -1,9 +1,5 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.HiiragiCoreAPI
-import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.material.getOrThrow
-import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
@@ -16,18 +12,14 @@ import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTBatteryItem
 import hiiragi283.ragium.common.item.HTElectricIgniterItem
-import hiiragi283.ragium.common.item.HTFoodCanType
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.storge.energy.HTInfiniteEnergyBattery
 import hiiragi283.ragium.common.storge.fluid.HTInfiniteItemFluidTank
 import hiiragi283.ragium.common.storge.fluid.HTVoidItemFluidTank
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.component.DataComponents
-import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -109,37 +101,16 @@ object RagiumItems {
     //    Foods    //
 
     @JvmField
-    val EMPTY_CAN: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("empty_can") { it.requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL) }
+    val MINCED_MEAT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("meat_dust")
 
     @JvmField
-    val FOOD_CANS: Map<HTFoodCanType, HTSimpleItemHolderLike> = HTFoodCanType.entries.associateWith { canType ->
-        val nutrition: Int = when (canType) {
-            HTFoodCanType.FISH -> 5
-            HTFoodCanType.FRUIT -> 4
-            HTFoodCanType.MEAT -> 8
-            HTFoodCanType.SOUP -> 6
-            HTFoodCanType.VEGETABLE -> 5
-        }
-        val saturation: Float = when (canType) {
-            HTFoodCanType.FISH -> 0.6f
-            HTFoodCanType.FRUIT -> 0.3f
-            HTFoodCanType.MEAT -> 0.8f
-            HTFoodCanType.SOUP -> 0.6f
-            HTFoodCanType.VEGETABLE -> 0.6f
-        }
-        REGISTER.registerSimpleItem("${canType.serializedName}_can") {
-            it
-                .food(
-                    FoodProperties
-                        .Builder()
-                        .nutrition(nutrition)
-                        .saturationModifier(saturation)
-                        .fast()
-                        .usingConvertsTo(EMPTY_CAN)
-                        .build(),
-                ).requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL)
-        }
-    }
+    val MEAT_INGOT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("meat_ingot") { it.food(Foods.BEEF) }
+
+    @JvmField
+    val COOKED_MEAT_INGOT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("cooked_meat_ingot") { it.food(Foods.COOKED_BEEF) }
+
+    @JvmField
+    val CANNED_COOKED_MEAT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("canned_cooked_meat") { it.food(RagiumFoods.CANNED_COOKED_MEAT) }
 
     //    Utilities    //
 
@@ -178,11 +149,6 @@ object RagiumItems {
         fun <T : Any> modify(item: ItemLike, type: DataComponentType<T>, value: T) {
             event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
         }
-
-        with(HiiragiCoreAccess.INSTANCE.registeredContents.items) {
-            modify(getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
-            modify(getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
-        }
     }
 
     @JvmStatic
@@ -190,9 +156,7 @@ object RagiumItems {
         // Fluid
         HTFluidCapabilities.registerItemTank(
             event,
-            { container: ItemStack ->
-                HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity))
-            },
+            { container: ItemStack -> HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity)) },
             RagiumBlocks.TANK,
         )
         HTFluidCapabilities.registerItemTank(event, ::HTVoidItemFluidTank, RagiumBlocks.VOID_TANK)
@@ -201,18 +165,14 @@ object RagiumItems {
         // Energy
         HTEnergyCapabilities.registerItemEnergy(
             event,
-            { container: ItemStack ->
-                HTBasicItemEnergyBattery.create(container, getCapacity(container, RagiumConfig.COMMON.batteryCapacity))
-            },
+            { container: ItemStack -> HTBasicItemEnergyBattery.create(container, getCapacity(container, RagiumConfig.COMMON.batteryCapacity)) },
             RagiumBlocks.BATTERY,
         )
         HTEnergyCapabilities.registerItemEnergy(event, { HTInfiniteEnergyBattery }, RagiumBlocks.CREATIVE_BATTERY)
 
         HTEnergyCapabilities.registerItemEnergy(
             event,
-            { container: ItemStack ->
-                HTBasicItemEnergyBattery.create(container, RagiumConfig.COMMON.electricIgniter.getCapacity())
-            },
+            { container: ItemStack -> HTBasicItemEnergyBattery.create(container, RagiumConfig.COMMON.electricIgniter.getCapacity()) },
             ELECTRIC_IGNITER,
         )
         HTEnergyCapabilities.registerItemEnergy(

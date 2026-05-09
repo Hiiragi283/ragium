@@ -350,6 +350,9 @@ spotless {
     java {
         target("src/**/*.java")
         palantirJavaFormat("2.90.0")
+        endWithNewline()
+        formatAnnotations()
+        removeUnusedImports()
     }
 }
 
@@ -366,8 +369,8 @@ tasks {
         from("LICENSE") {
             rename { "${it}_ragium" }
         }
-        from(apiModule.allSource, clientModule.allSource, integrationModule.allSource)
-        from(dataModule.allSource) {
+        from(apiModule.output, clientModule.output, integrationModule.output)
+        from(dataModule.output) {
             this.include("**/core/data/bootsrap/**")
         }
     }
@@ -375,7 +378,7 @@ tasks {
     named<Jar>("sourcesJar") {
         dependsOn("apiClasses", "clientClasses", "integrationClasses")
         duplicatesStrategy = DuplicatesStrategy.FAIL
-        from(apiModule.kotlin.srcDirs, clientModule.kotlin.srcDirs, integrationModule.kotlin.srcDirs)
+        from(apiModule.allSource, clientModule.allSource, integrationModule.allSource)
     }
 
     generateModMetadata {

@@ -4,9 +4,6 @@ import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 
-/**
- * @see hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
- */
 @JvmRecord
 data class HTDoubleFluidRecipeInput(val first: FluidStack, val second: FluidStack) : HTFluidRecipeInput {
     override fun getFluid(index: Int): FluidStack = when (index) {

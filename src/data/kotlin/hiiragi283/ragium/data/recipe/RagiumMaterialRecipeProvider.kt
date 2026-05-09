@@ -8,17 +8,17 @@ import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPartLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.data.recipe.builder.HTCookingRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.item.HTFoodCanType
+import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Item
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
 object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
@@ -48,10 +48,20 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
 
     @JvmStatic
     private fun meat() {
+        // Raw Meat -> Minced Meat
+        HTItemToMultiItemRecipeBuilder.crushing(output) {
+            ingredient = inputCreator.create(listOf(Tags.Items.FOODS_RAW_MEAT, Tags.Items.FOODS_RAW_FISH))
+            results += resultCreator.material(CommonParts.DUST, RagiumMaterialKeys.MEAT)
+        }
+        // Minced Meat -> Meat Ingot
+        RagiumRecipeBuilder.compressing(output) {
+            ingredient = inputCreator.create(CommonTagPrefixes.DUST, RagiumMaterialKeys.MEAT)
+            result = resultCreator.material(CommonParts.INGOT, RagiumMaterialKeys.MEAT)
+        }
         // Meat Ingot -> Cooked Meat Ingot
         HTCookingRecipeBuilder.smeltingAndSmoking(output) {
             ingredient += CommonTagPrefixes.INGOT to RagiumMaterialKeys.MEAT
-            resultStack += getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT)
+            resultStack += RagiumItems.COOKED_MEAT_INGOT
             exp = 0.35f
             recipeId suffix "_from_ingot"
         }
@@ -62,14 +72,6 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             define('B') += Tags.Items.BONES
             resultStack += RagiumBlocks.MEAT_BLOCK
         }
-
-        HTShapedRecipeBuilder.create(output) {
-            hollow8()
-            define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.COOKED_MEAT
-            define('B') += Tags.Items.BONES
-            resultStack += RagiumBlocks.COOKED_MEAT_BLOCK
-        }
-
         HTCookingRecipeBuilder.smeltingAndSmoking(output) {
             ingredient += RagiumBlocks.MEAT_BLOCK
             resultStack += RagiumBlocks.COOKED_MEAT_BLOCK
@@ -77,9 +79,12 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
             exp = 1f
             recipeId suffix "_from_raw"
         }
-
-        // Food Cans
-        for ((canType: HTFoodCanType, item: ItemLike) in RagiumItems.FOOD_CANS) {
+        // Canned Cooked Meat
+        HTShapedRecipeBuilder.create(output) {
+            hollow8()
+            define('A') += CommonTagPrefixes.INGOT to RagiumMaterialKeys.COOKED_MEAT
+            define('B') += CommonTagPrefixes.PLATE to VanillaMaterialKeys.IRON
+            resultStack += RagiumItems.COOKED_MEAT_INGOT to 8
         }
     }
 

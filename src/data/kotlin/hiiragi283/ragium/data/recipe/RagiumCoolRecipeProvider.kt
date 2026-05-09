@@ -5,6 +5,7 @@ import hiiragi283.core.common.recipe.ingredient.HTBluePrintIngredient
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
+import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.world.item.Items
 
 object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
@@ -46,6 +47,13 @@ object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
             ingredient = inputCreator.create(HCFluids.HONEY)
             catalyst += HTBluePrintIngredient(0).toVanilla()
             result = resultCreator.create(Items.HONEY_BLOCK)
+        }
+
+        // Meat -> Meat Ingot
+        HTFreezingRecipeBuilder.create(output) {
+            ingredient = inputCreator.create(HCFluids.MEAT)
+            catalyst += HTBluePrintIngredient(0).toVanilla()
+            result = resultCreator.create(RagiumItems.MEAT_INGOT)
         }
     }
 }
