@@ -18,7 +18,6 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -84,28 +83,28 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
     @JvmStatic
     private fun expRefining() {
         // Quartz Block -> Ghast Tear
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ)
             fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 500)
             result = resultCreator.create(Items.GHAST_TEAR)
             recipeId suffix "_from_quartz"
         }
         // Sulfur Dust -> Blaze Powder
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
             fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
             result = resultCreator.create(Items.BLAZE_POWDER)
             recipeId suffix "_from_sulfur"
         }
         // Leather -> Phantom Membrane
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Tags.Items.LEATHERS)
             fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
             result = resultCreator.create(Items.PHANTOM_MEMBRANE)
             recipeId suffix "_from_leather"
         }
         // Snowball -> Wind Charge
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Items.SNOWBALL)
             fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
             result = resultCreator.create(Items.WIND_CHARGE)
@@ -121,33 +120,33 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         )
 
         // Obsidian -> Crying Obsidian
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Tags.Items.OBSIDIANS_NORMAL)
             fluidIngredient = eldritch(1)
             result = resultCreator.create(Items.CRYING_OBSIDIAN)
         }
         // Amethyst Block -> Budding Amethyst
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
             fluidIngredient = eldritch(9)
             result = resultCreator.create(Items.BUDDING_AMETHYST)
         }
         // Skeleton Skull -> Wither Skeleton Skull
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Items.SKELETON_SKULL)
             fluidIngredient = eldritch(1)
             result = resultCreator.create(Items.WITHER_SKELETON_SKULL)
         }
 
         // Trial Key -> Ominous Key
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(Items.TRIAL_KEY)
             fluidIngredient = eldritch(4)
             result = resultCreator.create(Items.OMINOUS_TRIAL_KEY)
         }
 
         // Wither Doll -> Wither Star
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(HCItems.WITHER_DOLL)
             fluidIngredient = eldritch(4)
             result = resultCreator.create(HCItems.WITHER_STAR)

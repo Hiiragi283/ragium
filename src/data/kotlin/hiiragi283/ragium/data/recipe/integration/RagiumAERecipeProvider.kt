@@ -11,8 +11,8 @@ import hiiragi283.core.common.material.HCIntegrationMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPrintingRecipeBuilder
+import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import net.minecraft.world.level.ItemLike
 
 data object RagiumAERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.MOD_ID, "ae2") {
@@ -27,13 +27,13 @@ data object RagiumAERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.M
             recipeId suffix "_from_stone"
         }
         // Budding Certus Quartz
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, HCIntegrationMaterialKeys.CERTUS_QUARTZ)
             fluidIngredient = inputCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, 810)
             result = resultCreator.create(AEBlocks.FLAWLESS_BUDDING_QUARTZ)
         }
         // Mysterious Cube
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(AEBlocks.NOT_SO_MYSTERIOUS_CUBE)
             fluidIngredient = inputCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, 810)
             result = resultCreator.create(AEBlocks.MYSTERIOUS_CUBE)

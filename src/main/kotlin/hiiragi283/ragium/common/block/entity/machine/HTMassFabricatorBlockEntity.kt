@@ -46,7 +46,7 @@ class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToIt
         return super.onUpdateMachine(level, pos, state)
     }
 
-    override fun createHandler(): HTProgressHandler<*> = object : HTProgressHandler<ItemStack>() {
+    private inner class ProgressHandlerImpl : HTProgressHandler<ItemStack>() {
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
         override fun findRecipe(level: ServerLevel, pos: BlockPos): ItemStack = RagiumItems.RAGI_MATTER.toStack()
@@ -66,6 +66,8 @@ class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToIt
             playSound(SoundEvents.RESPAWN_ANCHOR_CHARGE)
         }
     }
+
+    override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.massFabricator
 }

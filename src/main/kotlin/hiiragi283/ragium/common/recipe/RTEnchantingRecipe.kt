@@ -36,9 +36,7 @@ class RTEnchantingRecipe(ingredient: HTItemIngredient, val holder: Holder<Enchan
         return enchantment.getMaxCost(enchantment.maxLevel)
     }
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack, third: Int): Triple<Int, Int, Int> {
-        TODO("Not yet implemented")
-    }
+    override fun getRequiredAmount(first: ItemStack, second: ItemStack, third: Int): Triple<Int, Int, Int> = Triple(1, ingredient.getRequiredAmount(second), getRequiredExpAmount(first, second))
 
     override fun applyEnchantment(stack: ItemStack): ItemStack {
         val result: ItemStack = stack.copyWithCount(1)

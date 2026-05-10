@@ -8,15 +8,6 @@ import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Items
 
 object RagiumFoods {
-    //    Ragium    //
-
-    @JvmStatic
-    val AMBROSIA: FoodProperties = HTFoodBuilder.create {
-        nutrition = FoodConstants.MAX_FOOD
-        saturation = 0.5f
-        alwaysEat = true
-    }
-
     @JvmField
     val CANNED_COOKED_MEAT: FoodProperties = HTFoodBuilder.copyOf(Foods.COOKED_BEEF) {
         fastFood()
@@ -74,11 +65,6 @@ object RagiumFoods {
     val SWEET_BERRIES_CAKE: FoodProperties = HTFoodBuilder.create {
         nutrition = 2
         saturation = FoodConstants.FOOD_SATURATION_POOR
-    }
-
-    @JvmStatic
-    val WARPED_WART: FoodProperties = HTFoodBuilder.create {
-        alwaysEat = true
     }
 
     //    Mekanism    //

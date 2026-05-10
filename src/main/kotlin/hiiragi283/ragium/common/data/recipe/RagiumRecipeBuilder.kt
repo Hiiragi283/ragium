@@ -6,6 +6,8 @@ import hiiragi283.core.common.data.recipe.builder.HTItemOrFluidRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTItemToResultRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.core.common.data.recipe.builder.HTItemAndFluidToItemRecipeBuilder
+import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
 import hiiragi283.ragium.common.recipe.HTImplodingRecipe
@@ -61,5 +63,12 @@ data object RagiumRecipeBuilder {
             .apply { time /= 2 }
             .apply(builderAction)
             .save(output)
+    }
+
+    //    Elite    //
+
+    @JvmStatic
+    inline fun bathing(output: RecipeOutput, builderAction: HTItemAndFluidToItemRecipeBuilder.() -> Unit) {
+        HTItemAndFluidToItemRecipeBuilder(RagiumConst.BATHING, ::HTBathingRecipe).apply(builderAction).save(output)
     }
 }

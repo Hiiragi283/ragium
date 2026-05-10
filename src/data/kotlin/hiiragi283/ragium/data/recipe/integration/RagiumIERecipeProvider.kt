@@ -18,7 +18,6 @@ import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
@@ -50,7 +49,7 @@ data object RagiumIERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.M
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.COAL_COKE, 8)
             result = resultCreator.material(CommonParts.DUST, HCIntegrationMaterialKeys.HOP_GRAPHITE)
         }
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, HCIntegrationMaterialKeys.HOP_GRAPHITE)
             fluidIngredient = inputCreator.create(RagiumFluids.CREOSOTE, 250)
             result = resultCreator.create(IEItems.Ingredients.PLATE_HOP_GRAPHITE)

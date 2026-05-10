@@ -16,6 +16,7 @@ import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.client.integration.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
+import hiiragi283.core.impl.recipe.HTBasicItemAndFluidToItemRecipe
 import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.core.impl.recipe.HTBasicItemToItemRecipe
 import hiiragi283.core.impl.recipe.HTBasicItemToMultiItemRecipe
@@ -45,7 +46,6 @@ import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.impl.recipe.HTBasicAssemblingRecipe
-import hiiragi283.ragium.impl.recipe.HTBasicItemAndFluidToItemRecipe
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumItems

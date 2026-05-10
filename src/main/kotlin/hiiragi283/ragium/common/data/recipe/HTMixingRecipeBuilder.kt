@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.holder.HTIorHolder
 import hiiragi283.core.api.data.recipe.builder.HTProgressRecipeBuilder
-import hiiragi283.core.api.function.identityLeft
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
@@ -24,7 +23,7 @@ class HTMixingRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.MIXING) {
     lateinit var fluidIngredient: HTFluidIngredient
     val result: HTIorHolder<HTItemResult, HTFluidResult> = HTIorHolder()
 
-    override fun getPrimalId(): ResourceLocation = result.toIor().map(HTItemResult::getId, HTFluidResult::getId, identityLeft())
+    override fun getPrimalId(): ResourceLocation = result.toIor().swap().map(HTFluidResult::getId, HTItemResult::getId)
 
     override fun createRecipe(): HTMixingRecipe = HTMixingRecipe(itemIngredients, fluidIngredient, result.toIor(), progressData)
 }

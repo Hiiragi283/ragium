@@ -4,6 +4,7 @@ import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
+import hiiragi283.core.impl.recipe.HTBasicItemAndFluidToItemRecipe
 import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.core.impl.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -18,7 +19,6 @@ import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
 import hiiragi283.ragium.impl.recipe.HTBasicAssemblingRecipe
-import hiiragi283.ragium.impl.recipe.HTBasicItemAndFluidToItemRecipe
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item

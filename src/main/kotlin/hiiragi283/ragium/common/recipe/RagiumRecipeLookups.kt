@@ -4,6 +4,7 @@ import hiiragi283.core.api.function.identity
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.core.api.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
 import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.core.api.recipe.base.HTItemToItemRecipe
@@ -20,7 +21,6 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
-import hiiragi283.ragium.api.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeTypes

@@ -18,7 +18,7 @@ import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
-import hiiragi283.ragium.impl.recipe.cache.HTAlloyingCompletedRecipe
+import hiiragi283.ragium.impl.recipe.cache.completed.HTAlloyingCompletedRecipe
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel

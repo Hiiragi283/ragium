@@ -125,11 +125,8 @@ object RagiumBlocks {
         registerMachine(RagiumBlockEntityTypes.PYROLYZER, RagiumTranslation.PYROLYZER)
 
     @JvmField
-    val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = registerMachine(
-        RagiumBlockEntityTypes.REFINERY,
-        RagiumTranslation.REFINERY,
-        machine().noOcclusion().requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL),
-    )
+    val REFINERY: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =
+        registerMachine(RagiumBlockEntityTypes.REFINERY, RagiumTranslation.REFINERY, machine().noOcclusion())
 
     @JvmField
     val WASHER: HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> =

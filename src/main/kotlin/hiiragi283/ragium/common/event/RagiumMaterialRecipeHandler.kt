@@ -25,7 +25,6 @@ import hiiragi283.core.common.event.HCRuntimeRecipeHandler
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
-import hiiragi283.ragium.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.tags.TagKey
@@ -220,7 +219,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             recipeId suffix "_from_crushed_ore/water"
         }
         // 硫酸 -> 1.5x 主産物
-        HTItemAndFluidToItemRecipeBuilder.bathing(output) {
+        RagiumRecipeBuilder.bathing(output) {
             // 材料
             itemIngredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
             fluidIngredient = inputCreator.create(RagiumFluids.SULFURIC_ACID, 250)

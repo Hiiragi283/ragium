@@ -6,7 +6,7 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.recipe.result.HTListFluidResult
-import hiiragi283.core.api.util.wrapOptional
+import hiiragi283.core.api.util.toOptional
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import net.minecraft.data.recipes.RecipeOutput
@@ -29,9 +29,9 @@ class HTRefiningRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.REFINING) {
 
     override fun createRecipe(): HTRefiningRecipe = HTRefiningRecipe(
         ingredient,
-        catalyst.getOrNull().wrapOptional(),
+        catalyst.getOrNull().toOptional(),
         HTListFluidResult(fluidResults),
-        itemResult.wrapOptional(),
+        itemResult.toOptional(),
         progressData,
     )
 }
