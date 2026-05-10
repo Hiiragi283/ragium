@@ -4,9 +4,10 @@ import hiiragi283.core.api.data.createAdvancements
 import hiiragi283.core.api.data.createLootTables
 import hiiragi283.core.api.data.createProviderWithHelper
 import hiiragi283.core.api.function.partially1
-import hiiragi283.core.data.bootsrap.HCEnchantmentProvider
+import hiiragi283.core.data.bootstrap.HCEnchantmentProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
+import hiiragi283.ragium.data.bootsrap.RagiumWorldData
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
 import hiiragi283.ragium.data.loot.RagiumBlockLootProvider
@@ -29,7 +30,7 @@ object RagiumDatagen {
     fun gatherData(event: GatherDataEvent) {
         val fileHelper: ExistingFileHelper = event.existingFileHelper
         event.createDatapackRegistryObjects(
-            RegistrySetBuilder().add(Registries.ENCHANTMENT, HCEnchantmentProvider),
+            RegistrySetBuilder().add(Registries.ENCHANTMENT, HCEnchantmentProvider).also(RagiumWorldData::bootsrap),
         )
         // Server
         event.createAdvancements(listOf(RagiumAdvancementProvider))
