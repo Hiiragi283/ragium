@@ -1,0 +1,18 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:oxygen"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "hiiragi_core:polymer_resin"
+  },
+  "result": {
+    "type": "hiiragi_core:material_part",
+    "count": 2,
+    "material": "hiiragi_core:plastic",
+    "part": "plate"
+  },
+  "time": 200
+}

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": "minecraft:dirt"
+    },
+    {
+      "amount": 1,
+      "items": "#c:mushrooms"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:mycelium"
+  },
+  "time": 200
+}

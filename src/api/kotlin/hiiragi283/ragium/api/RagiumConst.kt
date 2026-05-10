@@ -1,31 +1,47 @@
 package hiiragi283.ragium.api
 
 object RagiumConst {
+    const val BASIC = "basic"
+    const val ADVANCED = "advanced"
+    const val ELITE = "elite"
+    const val ULTIMATE = "ultimate"
+
+    const val MAX_MATTER_POINT = 1024
+
     //    Blocks    //
 
-    // Basic
+    // Generator - Basic
+    const val BOILER = "boiler"
+
+    // Machine - Basic
     const val ALLOY_SMELTER = "alloy_smelter"
     const val ASSEMBLER = "assembler"
     const val AUTO_CHISEL = "auto_chisel"
     const val CRUSHER = "crusher"
+    const val COMPRESSOR = "compressor"
     const val CUTTING_MACHINE = "cutting_machine"
     const val ELECTRIC_FURNACE = "electric_furnace"
     const val PLANTER = "planter"
 
-    // Advanced
+    // Machine - Advanced
     const val FREEZER = "freezer"
+    const val IMPLOSION_COMPRESSOR = "implosion_compressor"
     const val MELTER = "melter"
     const val PYROLYZER = "pyrolyzer"
     const val REFINERY = "refinery"
-
-    // Elite
-    const val BREWERY = "brewery"
-    const val ELECTROLYZER = "electrolyzer"
-    const val MIXER = "mixer"
     const val WASHER = "washer"
 
-    // Ultimate
-    const val MASS_DUPLICATOR = "mass_duplicator"
+    // Machine - Elite
+    const val BREWERY = "brewery"
+    const val CHEMICAL_BATH = "chemical_bath"
+    const val CHEMICAL_REACTOR = "chemical_reactor"
+    const val MIXER = "mixer"
+
+    // Machine - Ultimate
+    const val FLUID_DUPLICATOR = "fluid_duplicator"
+    const val MASS_FABRICATOR = "mass_fabricator"
+
+    // Device - Ultimate
     const val ENCHANTER = "enchanter"
 
     // Storage
@@ -42,25 +58,30 @@ object RagiumConst {
 
     //    Recipes    //
 
-    // Basic
+    // Machine - Basic
     const val ALLOYING = "alloying"
     const val ASSEMBLING = "assembling"
+    const val COMPRESSING = "compressing"
     const val CUTTING = "cutting"
     const val PLANTING = "planting"
+    const val PRINTING = "printing"
 
-    // Advanced
+    // Machine - Advanced
     const val FREEZING = "freezing"
+    const val IMPLODING = "imploding"
     const val MELTING = "melting"
     const val PYROLYZING = "pyrolyzing"
     const val REFINING = "refining"
-
-    // Elite
-    const val CHEMICAL_WASHING = "chemical_washing"
-    const val ELECTROLYZING = "electrolyzing"
-    const val MIXING = "mixing"
     const val WASHING = "washing"
 
-    // Ultimate
-    const val DUPLICATING = "duplicating"
+    // Machine - Elite
+    const val BATHING = "bathing"
+    const val CHEMICAL_REACTING = "chemical_reacting"
+    const val MIXING = "mixing"
+
+    // Machine - Ultimate
+    const val MASS_FABRICATING = "mass_fabricating"
+
+    // Device - Ultimate
     const val ENCHANTING = "enchanting"
 }

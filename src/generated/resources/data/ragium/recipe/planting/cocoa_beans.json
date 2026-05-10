@@ -1,12 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "items": "#minecraft:jungle_logs"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:cocoa_beans"
-  },
+  "plant": "minecraft:cocoa_beans",
   "results": [
     {
       "count": 3,
@@ -14,8 +8,10 @@
     },
     {
       "chance": "1/3",
+      "count": 1,
       "id": "minecraft:cocoa_beans"
     }
   ],
+  "soil": "#minecraft:jungle_logs",
   "time": 100
 }

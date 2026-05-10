@@ -1,11 +1,9 @@
 {
   "type": "ragium:mixing",
-  "fluid_ingredient": [
-    {
-      "amount": 250,
-      "fluids": "#c:steam"
-    }
-  ],
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:steam"
+  },
   "fluid_result": {
     "amount": 250,
     "id": "ragium:synthetic_gas"

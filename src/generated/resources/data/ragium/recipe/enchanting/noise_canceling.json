@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanting/holder",
+  "enchantment": "hiiragi_core:noise_canceling",
+  "ingredient": {
+    "amount": 64,
+    "items": "#c:gems/echo"
+  }
+}

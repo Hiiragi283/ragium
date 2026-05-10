@@ -1,0 +1,19 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 30,
+    "fluids": "#c:molten_ender"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": [
+      "#c:dusts/warped_crystal",
+      "#c:gems/warped_crystal"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:ender_pearl"
+  },
+  "time": 200
+}

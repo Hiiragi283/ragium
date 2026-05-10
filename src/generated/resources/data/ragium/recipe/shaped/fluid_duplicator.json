@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:artificial_artifact"
+    },
+    "B": {
+      "item": "ragium:tank"
+    },
+    "C": {
+      "tag": "c:gears/netherite"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "BCB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ragium:fluid_duplicator"
+  }
+}

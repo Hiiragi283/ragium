@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:glue"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:dusts/borax"
+  },
+  "item_result": {
+    "count": 4,
+    "id": "minecraft:slime_ball"
+  },
+  "time": 200
+}

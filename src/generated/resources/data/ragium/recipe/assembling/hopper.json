@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredient": [
+    {
+      "amount": 5,
+      "items": "#c:ingots/iron"
+    },
+    {
+      "amount": 1,
+      "items": "#c:chests/wooden"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:hopper"
+  },
+  "time": 200
+}

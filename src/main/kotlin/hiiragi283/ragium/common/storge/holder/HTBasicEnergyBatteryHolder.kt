@@ -17,6 +17,5 @@ class HTBasicEnergyBatteryHolder private constructor(
 
     override fun getEnergyBatteries(side: Direction?): List<HTEnergyBattery> = getSlots(side)
 
-    class Builder(configGetter: HTSlotInfoProvider?) :
-        HTSlottedCapabilityHolder.Builder<HTEnergyBattery, HTEnergyBatteryHolder>(configGetter, ::HTBasicEnergyBatteryHolder)
+    class Builder(configGetter: HTSlotInfoProvider?) : HTSlottedCapabilityHolder.Builder<HTEnergyBattery, HTEnergyBatteryHolder>(configGetter, ::HTBasicEnergyBatteryHolder)
 }

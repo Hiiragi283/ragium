@@ -17,6 +17,5 @@ class HTBasicFluidTankHolder private constructor(
 
     override fun getFluidTank(side: Direction?): List<HTFluidTank> = getSlots(side)
 
-    class Builder(configGetter: HTSlotInfoProvider?) :
-        HTSlottedCapabilityHolder.Builder<HTFluidTank, HTFluidTankHolder>(configGetter, ::HTBasicFluidTankHolder)
+    class Builder(configGetter: HTSlotInfoProvider?) : HTSlottedCapabilityHolder.Builder<HTFluidTank, HTFluidTankHolder>(configGetter, ::HTBasicFluidTankHolder)
 }

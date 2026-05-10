@@ -17,6 +17,5 @@ class HTBasicItemSlotHolder private constructor(
 
     override fun getItemSlot(side: Direction?): List<HTItemSlot> = getSlots(side)
 
-    class Builder(configGetter: HTSlotInfoProvider?) :
-        HTSlottedCapabilityHolder.Builder<HTItemSlot, HTItemSlotHolder>(configGetter, ::HTBasicItemSlotHolder)
+    class Builder(configGetter: HTSlotInfoProvider?) : HTSlottedCapabilityHolder.Builder<HTItemSlot, HTItemSlotHolder>(configGetter, ::HTBasicItemSlotHolder)
 }

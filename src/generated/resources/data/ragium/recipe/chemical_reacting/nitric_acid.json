@@ -1,0 +1,16 @@
+{
+  "type": "ragium:chemical_reacting",
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:nitric_acid"
+  },
+  "primary": {
+    "amount": 3000,
+    "fluids": "#c:nitrogen_dioxide"
+  },
+  "secondary": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "time": 200
+}

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:nitric_acid"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "ragium:glycerol_drop"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:nitroglycerin"
+  },
+  "time": 200
+}

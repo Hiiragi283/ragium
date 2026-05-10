@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 810,
+    "fluids": "#hiiragi_core:eldritch"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:storage_blocks/amethyst"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:budding_amethyst"
+  },
+  "time": 200
+}

@@ -1,15 +1,15 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.data.recipe.builder.HTProcessingRecipeBuilder
+import hiiragi283.core.api.data.holder.HTIngredientHolder
+import hiiragi283.core.api.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTFreezingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 
-class HTFreezingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.FREEZING) {
+class HTFreezingRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.FREEZING) {
     companion object {
         @JvmStatic
         inline fun create(output: RecipeOutput, builderAction: HTFreezingRecipeBuilder.() -> Unit) {
@@ -17,16 +17,16 @@ class HTFreezingRecipeBuilder : HTProcessingRecipeBuilder(RagiumConst.FREEZING) 
         }
     }
 
-    lateinit var itemIngredient: HTItemIngredient
-    lateinit var fluidIngredient: HTFluidIngredient
+    lateinit var ingredient: HTFluidIngredient
+    val catalyst: HTIngredientHolder.Single = HTIngredientHolder.Single()
     lateinit var result: HTItemResult
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 
     override fun createRecipe(): HTFreezingRecipe = HTFreezingRecipe(
-        itemIngredient,
-        fluidIngredient,
+        ingredient,
+        catalyst.ingredient,
         result,
-        time,
+        progressData,
     )
 }

@@ -6,7 +6,7 @@ import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
 import hiiragi283.core.common.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
+import hiiragi283.ragium.api.block.entity.HTBlockEntityWithMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerPlayer
@@ -53,6 +53,6 @@ open class HTMachineBlock(private val translation: HTTranslation, type: HTDeferr
     override fun getDescription(): HTTranslation = translation
 
     override fun setup(context: HTBlockWidgetHolderContext, widgetHolder: HTWidgetHolder) {
-        (context.blockEntity as? HTMachineBlockEntity)?.setupMenu(widgetHolder)
+        (context.blockEntity as? HTBlockEntityWithMenu)?.setupMenu(widgetHolder)
     }
 }

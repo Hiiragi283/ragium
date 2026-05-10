@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "c:dusts/ruthenium"
+    },
+    "B": {
+      "tag": "c:dusts/rhodium"
+    },
+    "C": {
+      "tag": "c:dusts/palladium"
+    },
+    "D": {
+      "item": "minecraft:conduit"
+    },
+    "E": {
+      "tag": "c:nether_stars"
+    },
+    "F": {
+      "item": "minecraft:heavy_core"
+    },
+    "G": {
+      "tag": "c:dusts/osmium"
+    },
+    "H": {
+      "tag": "c:dusts/iridium"
+    },
+    "I": {
+      "tag": "c:dusts/platinum"
+    }
+  },
+  "pattern": [
+    "ABC",
+    "DEF",
+    "GHI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "hiiragi_core:iridescent_powder"
+  }
+}

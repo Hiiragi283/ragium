@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanting/holder",
+  "enchantment": "hiiragi_core:sonic_protection",
+  "ingredient": {
+    "amount": 16,
+    "items": "#c:storage_blocks/echo"
+  }
+}

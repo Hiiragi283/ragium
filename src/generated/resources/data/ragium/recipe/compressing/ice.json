@@ -1,0 +1,12 @@
+{
+  "type": "ragium:compressing",
+  "ingredient": {
+    "amount": 4,
+    "items": "minecraft:snow_block"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:ice"
+  },
+  "time": 200
+}

@@ -1,0 +1,26 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 3,
+      "items": [
+        "#c:dusts/copper",
+        "#c:ingots/copper"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/tin",
+        "#c:ingots/tin"
+      ]
+    }
+  ],
+  "result": {
+    "type": "hiiragi_core:material_part",
+    "count": 4,
+    "material": "hiiragi_core:bronze",
+    "part": "ingot"
+  },
+  "time": 200
+}

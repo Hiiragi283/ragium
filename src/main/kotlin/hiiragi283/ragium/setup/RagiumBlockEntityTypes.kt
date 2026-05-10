@@ -11,17 +11,20 @@ import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegiste
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
-import hiiragi283.ragium.common.block.entity.device.HTPlanterBlockEntity
+import hiiragi283.ragium.common.block.entity.device.HTEnchanterBlockEntity
+import hiiragi283.ragium.common.block.entity.generator.HTBoilerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAssemblerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTBreweryBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTCompressorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCrusherBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTCuttingMachineBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTEnchanterBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTFluidDuplicatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFreezerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTFurnaceBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTMassFabricatorBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTMelterBlockEntity
-import hiiragi283.ragium.common.block.entity.machine.HTMixerBlockEntity
+import hiiragi283.ragium.common.block.entity.machine.HTPlanterBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTPyrolyzerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTRefineryBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTStonecutterBlockEntity
@@ -56,6 +59,13 @@ object RagiumBlockEntityTypes {
     val IMITATION_SPAWNER: HTDeferredBlockEntityType<HTImitationSpawnerBlockEntity> =
         REGISTER.registerType("imitation_spawner", ::HTImitationSpawnerBlockEntity)
 
+    //    Generator    //
+
+    // Basic
+    @JvmField
+    val BOILER: HTDeferredBlockEntityType<HTBoilerBlockEntity> =
+        REGISTER.registerTick(RagiumConst.BOILER, ::HTBoilerBlockEntity)
+
     //    Machine    //
 
     // Basic
@@ -70,6 +80,10 @@ object RagiumBlockEntityTypes {
     @JvmField
     val AUTO_CHISEL: HTDeferredBlockEntityType<HTStonecutterBlockEntity> =
         REGISTER.registerTick(RagiumConst.AUTO_CHISEL, ::HTStonecutterBlockEntity)
+
+    @JvmField
+    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> =
+        REGISTER.registerTick(RagiumConst.COMPRESSOR, ::HTCompressorBlockEntity)
 
     @JvmField
     val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
@@ -104,25 +118,34 @@ object RagiumBlockEntityTypes {
     val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> =
         REGISTER.registerTick(RagiumConst.REFINERY, ::HTRefineryBlockEntity)
 
+    @JvmField
+    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> =
+        REGISTER.registerTick(RagiumConst.WASHER, ::HTWasherBlockEntity)
+
     // Elite
     @JvmField
     val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
         REGISTER.registerTick(RagiumConst.BREWERY, ::HTBreweryBlockEntity)
 
     @JvmField
-    val MIXER: HTDeferredBlockEntityType<HTMixerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.MIXER, ::HTMixerBlockEntity)
+    val MIXER: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
+        REGISTER.registerTick(RagiumConst.MIXER, ::HTBreweryBlockEntity)
 
+    // Ultimate
     @JvmField
-    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> =
-        REGISTER.registerTick(RagiumConst.WASHER, ::HTWasherBlockEntity)
+    val FLUID_DUPLICATOR: HTDeferredBlockEntityType<HTFluidDuplicatorBlockEntity> =
+        REGISTER.registerTick(RagiumConst.FLUID_DUPLICATOR, ::HTFluidDuplicatorBlockEntity)
+
+    //    Device    //
 
     // Ultimate
     @JvmField
     val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
         REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
 
-    //    Device    //
+    @JvmField
+    val MASS_FABRICATOR: HTDeferredBlockEntityType<HTMassFabricatorBlockEntity> =
+        REGISTER.registerTick(RagiumConst.MASS_FABRICATOR, ::HTMassFabricatorBlockEntity)
 
     //    Storage    //
 
@@ -177,10 +200,13 @@ object RagiumBlockEntityTypes {
     // Capabilities
     @JvmStatic
     private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
+        // Generator
+        registerHandler(event, BOILER.get())
         // Machine
         registerHandler(event, ALLOY_SMELTER.get())
         registerHandler(event, ASSEMBLER.get())
         registerHandler(event, AUTO_CHISEL.get())
+        registerHandler(event, COMPRESSOR.get())
         registerHandler(event, CRUSHER.get())
         registerHandler(event, CUTTING_MACHINE.get())
         registerHandler(event, ELECTRIC_FURNACE.get())
@@ -195,9 +221,10 @@ object RagiumBlockEntityTypes {
         registerHandler(event, MIXER.get())
         registerHandler(event, WASHER.get())
 
-        registerHandler(event, ENCHANTER.get())
-
+        registerHandler(event, FLUID_DUPLICATOR.get())
         // Device
+        registerHandler(event, ENCHANTER.get())
+        registerHandler(event, MASS_FABRICATOR.get())
 
         // Storage
         HTItemCapabilities.registerBlockEntity(event, UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)

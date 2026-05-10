@@ -1,18 +1,13 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "items": [
-      "#c:gravels",
-      "#c:sands"
-    ]
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:seagrass"
-  },
+  "plant": "minecraft:seagrass",
   "results": {
     "count": 4,
     "id": "minecraft:seagrass"
   },
+  "soil": [
+    "#c:gravels",
+    "#c:sands"
+  ],
   "time": 100
 }

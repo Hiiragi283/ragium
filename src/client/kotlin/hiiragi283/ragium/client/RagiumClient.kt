@@ -122,6 +122,7 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.SYNTHETIC_GAS, Color(0xffcc99))
         event.molten(RagiumFluids.SYNTHETIC_OIL, Color(0x333344))
 
+        event.dull(RagiumFluids.GLUE, Color(0xff9933))
         event.clear(RagiumFluids.METHANE, Color(0xcc9999))
         event.dull(RagiumFluids.CRUDE_BIO, Color(0x336600))
         event.clear(RagiumFluids.ETHANOL, Color(0x99cc66))
@@ -130,7 +131,7 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.NITROGEN, Color(0x0099cc))
         event.dull(RagiumFluids.LIQUID_NITROGEN, Color(0x0099cc))
 
-        event.dull(RagiumFluids.NAOH_SOLUTION, Color(0x99cc00))
+        event.dull(RagiumFluids.NAOH_SOLUTION, Color(0x003399))
         event.dull(RagiumFluids.MERCURY, Color(0xcc99cc))
         // Nether
         event.dull(RagiumFluids.CRUDE_OIL, Color(0x333333))
@@ -145,7 +146,9 @@ data object RagiumClient : HTClientMod() {
         event.clear(RagiumFluids.SULFUR_TRIOXIDE, Color(0xcc9900))
         event.dull(RagiumFluids.SULFURIC_ACID, Color(0xcccc00))
         // The End
-        event.clear(RagiumFluids.HELIUM, Color(0xffff99))
+        event.clear(RagiumFluids.CHORUS_GAS, Color(0x9966cc))
+        // End Game
+        event.clear(RagiumFluids.RAGI_MATTER, Color(0xff0033))
     }
 
     override fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {

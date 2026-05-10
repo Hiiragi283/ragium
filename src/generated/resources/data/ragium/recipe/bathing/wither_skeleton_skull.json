@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 90,
+    "fluids": "#hiiragi_core:eldritch"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:skeleton_skull"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:wither_skeleton_skull"
+  },
+  "time": 200
+}

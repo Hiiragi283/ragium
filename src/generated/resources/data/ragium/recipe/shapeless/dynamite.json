@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "tag": "c:strings"
+    },
+    {
+      "tag": "c:sands"
+    },
+    {
+      "item": "ragium:nitroglycerin"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "ragium:dynamite"
+  }
+}

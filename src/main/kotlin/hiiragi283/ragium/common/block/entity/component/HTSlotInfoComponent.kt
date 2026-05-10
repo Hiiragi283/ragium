@@ -1,21 +1,17 @@
 package hiiragi283.ragium.common.block.entity.component
 
+import com.mojang.serialization.Codec
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
 import hiiragi283.core.api.function.nextEntry
-import hiiragi283.core.api.serialization.codec.BiCodec
-import hiiragi283.core.api.serialization.codec.BiCodecs
-import hiiragi283.core.api.serialization.codec.VanillaBiCodecs
+import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.component.DataComponentGetter
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.api.serialization.value.read
-import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.common.storge.holder.HTSlotInfoProvider
-import io.netty.buffer.ByteBuf
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import java.util.*
@@ -28,8 +24,7 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
     HTSlotInfoProvider {
     companion object {
         @JvmStatic
-        private val CONFIG_CODEC: BiCodec<ByteBuf, Map<Direction, HTSlotInfo>> =
-            BiCodecs.mapOf(VanillaBiCodecs.DIRECTION, HTSlotInfo.CODEC)
+        private val CONFIG_CODEC: Codec<Map<Direction, HTSlotInfo>> = HTCodecs.mapOf(Direction.CODEC, HTSlotInfo.CODEC)
     }
 
     init {

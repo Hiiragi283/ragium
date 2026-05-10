@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:tag_empty",
+        "tag": "c:ingots/constantan"
+      }
+    }
+  ],
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/copper",
+        "#c:ingots/copper"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/nickel",
+        "#c:ingots/nickel"
+      ]
+    }
+  ],
+  "result": {
+    "type": "hiiragi_core:material_part",
+    "count": 2,
+    "material": "hiiragi_core:constantan",
+    "part": "ingot"
+  },
+  "time": 200
+}

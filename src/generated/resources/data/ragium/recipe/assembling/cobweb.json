@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredient": [
+    {
+      "amount": 5,
+      "items": "#c:strings"
+    },
+    {
+      "amount": 1,
+      "items": "#c:sticky_balls"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:cobweb"
+  },
+  "time": 200
+}

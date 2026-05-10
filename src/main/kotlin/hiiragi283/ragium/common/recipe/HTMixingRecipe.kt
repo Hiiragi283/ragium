@@ -1,45 +1,101 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.recipe.base.HTFluidRecipe
-import hiiragi283.core.api.recipe.base.HTProcessingRecipe
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
+import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.base.HTProgressRecipe
+import hiiragi283.core.api.recipe.base.HTRecipeFactories
+import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
+import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.api.util.Ior
-import hiiragi283.core.util.HTShapelessRecipeHelper
-import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
+import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
+import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
-import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidStack
 
 class HTMixingRecipe(
-    val ingredient: Ior<HTItemIngredient, List<HTFluidIngredient>>,
+    val primary: HTItemIngredient,
+    val secondary: HTItemIngredient?,
+    val fluidIngredient: HTFluidIngredient,
     val result: Ior<HTItemResult, HTFluidResult>,
-    override val time: Int,
-) : HTProcessingRecipe.Serializable<HTChemicalRecipeInput>,
-    HTFluidRecipe<HTChemicalRecipeInput> {
+    override val progressData: HTProgressData,
+) : HTRecipePredicates.TripleInput<HTMixingRecipe.Input, ItemStack, ItemStack, FluidStack>,
+    HTRecipeFactories.DoubleItemAndFluid<Ior<ItemStack, FluidStack>>,
+    HTProgressRecipe.Simple<HTMixingRecipe.Input>,
+    HTSerializableRecipe<HTMixingRecipe.Input> {
     companion object {
-        const val MAX_FLUID_INPUT = 2
+        @JvmField
+        val CODEC: MapCodec<HTMixingRecipe> = RecordCodecBuilder.mapCodec { instance ->
+            instance
+                .group(
+                    HTItemIngredient.CODEC
+                        .listOrElement(1, 2)
+                        .fieldOf(HTConst.ITEM_INGREDIENT)
+                        .forGetter { listOfNotNull(it.primary, it.secondary) },
+                    HTFluidIngredient.CODEC.fieldOf(HTConst.FLUID_INGREDIENT).forGetter(HTMixingRecipe::fluidIngredient),
+                    HTBasicItemOrFluidRecipe.RESULT_CODEC.forGetter(HTMixingRecipe::result),
+                    HTProgressData.CODEC.forGetter(HTMixingRecipe::progressData),
+                ).apply(instance, ::HTMixingRecipe)
+        }
     }
 
-    override fun test(input: HTChemicalRecipeInput): Boolean = ingredient.map(
-        { HTShapelessRecipeHelper.shapelessMatch(listOf(it), input.items).isNotEmpty() },
-        { HTShapelessRecipeHelper.shapelessMatch(it, input.fluids).isNotEmpty() },
-        { item: Boolean, fluid: Boolean -> item && fluid },
+    constructor(
+        itemIngredient: List<HTItemIngredient>,
+        fluidIngredient: HTFluidIngredient,
+        result: Ior<HTItemResult, HTFluidResult>,
+        progressData: HTProgressData,
+    ) : this(
+        itemIngredient[0],
+        itemIngredient.getOrNull(1),
+        fluidIngredient,
+        result,
+        progressData,
     )
 
-    override fun assemble(input: HTChemicalRecipeInput, registries: HolderLookup.Provider): ItemStack =
-        result.getLeft()?.getStackResult(registries)?.value() ?: ItemStack.EMPTY
+    override fun test(first: ItemStack, second: ItemStack, third: FluidStack): Boolean = primary.test(first) && (secondary?.test(second) ?: second.isEmpty) && fluidIngredient.test(third)
+
+    override fun matches(input: Input): Boolean {
+        val (firstItem: ItemStack, secondItem: ItemStack, fluid: FluidStack) = input
+        return test(firstItem, secondItem, fluid)
+    }
+
+    override fun getRequiredAmount(first: ItemStack, second: ItemStack, third: FluidStack): Triple<Int, Int, Int> = Triple(
+        primary.getRequiredAmount(first),
+        secondary?.getRequiredAmount(second) ?: 0,
+        fluidIngredient.getRequiredAmount(third),
+    )
+
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: FluidStack): Ior<ItemStack, FluidStack> = result.mapLeft { it.getOrEmpty() }.mapRight { it.create() }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING.get()
 
-    override fun assembleFluid(input: HTChemicalRecipeInput, registries: HolderLookup.Provider): FluidStack =
-        result.getRight()?.getStackResult(registries)?.value() ?: FluidStack.EMPTY
+    @JvmRecord
+    data class Input(val firstItem: ItemStack, val secondItem: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {
+        override fun getFluid(index: Int): FluidStack = when (index) {
+            0 -> fluid
+            else -> error("No fluid for index $index")
+        }
+
+        override fun getFluidSize(): Int = 2
+
+        override fun getItem(index: Int): ItemStack = when (index) {
+            0 -> firstItem
+            1 -> secondItem
+            else -> error("No fluid for index $index")
+        }
+
+        override fun size(): Int = 2
+    }
 }

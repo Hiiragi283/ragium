@@ -1,32 +1,29 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.material.getOrThrow
-import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
+import hiiragi283.core.common.item.HTCreativeItem
 import hiiragi283.core.common.registry.register.HTDeferredItemRegister
 import hiiragi283.core.common.storage.energy.HTBasicItemEnergyBattery
 import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.common.item.HTFoodCanType
+import hiiragi283.ragium.common.item.HTBatteryItem
+import hiiragi283.ragium.common.item.HTElectricIgniterItem
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.storge.energy.HTInfiniteEnergyBattery
 import hiiragi283.ragium.common.storge.fluid.HTInfiniteItemFluidTank
 import hiiragi283.ragium.common.storge.fluid.HTVoidItemFluidTank
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
-import net.minecraft.core.component.DataComponents
-import net.minecraft.world.food.FoodProperties
 import net.minecraft.world.food.Foods
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
@@ -53,9 +50,6 @@ object RagiumItems {
     // Overworld
     @JvmField
     val RAGI_ALLOY_COMPOUND: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("ragi_alloy_compound")
-
-    @JvmField
-    val CARBON_COMPOUND: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("carbon_compound")
 
     @JvmField
     val CRYO_CHARGE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("cryo_charge")
@@ -85,7 +79,7 @@ object RagiumItems {
     val MERCURY_BOTTLE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("mercury_bottle")
 
     @JvmField
-    val THERMOMETER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("thermometer")
+    val THERMOMETER: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("thermometer") { it.rarity(Rarity.UNCOMMON) }
 
     // Elite
     @JvmField
@@ -98,56 +92,55 @@ object RagiumItems {
     val CIRCUIT_BOARD: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("circuit_board")
 
     @JvmField
-    val ELECTRIC_CIRCUIT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("electric_circuit")
+    val ELECTRIC_CIRCUIT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("electric_circuit") { it.rarity(Rarity.RARE) }
 
     // Ultimate
     @JvmField
-    val ARTIFICIAL_ARTIFACT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("artificial_artifact")
+    val ARTIFICIAL_ARTIFACT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("artificial_artifact") { it.rarity(Rarity.EPIC) }
 
     //    Foods    //
 
     @JvmField
-    val EMPTY_CAN: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("empty_can")
+    val MINCED_MEAT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("meat_dust")
 
     @JvmField
-    val FOOD_CANS: Map<HTFoodCanType, HTSimpleItemHolderLike> = HTFoodCanType.entries.associateWith { canType ->
-        val nutrition: Int = when (canType) {
-            HTFoodCanType.FISH -> 5
-            HTFoodCanType.FRUIT -> 4
-            HTFoodCanType.MEAT -> 8
-            HTFoodCanType.SOUP -> 6
-            HTFoodCanType.VEGETABLE -> 5
-        }
-        val saturation: Float = when (canType) {
-            HTFoodCanType.FISH -> 0.6f
-            HTFoodCanType.FRUIT -> 0.3f
-            HTFoodCanType.MEAT -> 0.8f
-            HTFoodCanType.SOUP -> 0.6f
-            HTFoodCanType.VEGETABLE -> 0.6f
-        }
-        REGISTER.registerSimpleItem("${canType.serializedName}_can") {
-            it.food(
-                FoodProperties
-                    .Builder()
-                    .nutrition(nutrition)
-                    .saturationModifier(saturation)
-                    .fast()
-                    .usingConvertsTo(EMPTY_CAN)
-                    .build(),
-            )
-        }
-    }
+    val MEAT_INGOT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("meat_ingot") { it.food(Foods.BEEF) }
+
+    @JvmField
+    val COOKED_MEAT_INGOT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("cooked_meat_ingot") { it.food(Foods.COOKED_BEEF) }
+
+    @JvmField
+    val CANNED_COOKED_MEAT: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("canned_cooked_meat") { it.food(RagiumFoods.CANNED_COOKED_MEAT) }
 
     //    Utilities    //
 
+    // Basic
     @JvmField
     val BLANK_DISC: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("blank_disc")
 
     @JvmField
+    val ELECTRIC_IGNITER: HTSimpleItemHolderLike = REGISTER.registerItem("electric_igniter", ::HTElectricIgniterItem)
+
+    // Advanced
+    @JvmField
     val LOCATION_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("location_ticket", ::HTLocationTicketItem)
 
+    // Elite
     @JvmField
-    val LOOT_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
+    val CRYSTAL_BATTERY: HTSimpleItemHolderLike = REGISTER.registerItem("crystal_battery", ::HTBatteryItem)
+
+    @JvmField
+    val DYNAMITE: HTSimpleItemHolderLike = REGISTER.registerSimpleItem("dynamite")
+
+    // Ultimate
+
+    //    End Game    //
+
+    @JvmField
+    val RAGI_MATTER: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_matter", ::HTCreativeItem)
+
+    @JvmField
+    val RAGI_TICKET: HTSimpleItemHolderLike = REGISTER.registerItem("ragi_ticket", ::HTLootTicketItem)
 
     //    Event    //
 
@@ -156,11 +149,6 @@ object RagiumItems {
         fun <T : Any> modify(item: ItemLike, type: DataComponentType<T>, value: T) {
             event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
         }
-
-        with(HiiragiCoreAccess.INSTANCE.registeredContents.items) {
-            modify(getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.MEAT), DataComponents.FOOD, Foods.BEEF)
-            modify(getOrThrow(CommonParts.INGOT, RagiumMaterialKeys.COOKED_MEAT), DataComponents.FOOD, Foods.COOKED_BEEF)
-        }
     }
 
     @JvmStatic
@@ -168,9 +156,7 @@ object RagiumItems {
         // Fluid
         HTFluidCapabilities.registerItemTank(
             event,
-            { container: ItemStack ->
-                HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity))
-            },
+            { container: ItemStack -> HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity)) },
             RagiumBlocks.TANK,
         )
         HTFluidCapabilities.registerItemTank(event, ::HTVoidItemFluidTank, RagiumBlocks.VOID_TANK)
@@ -179,20 +165,27 @@ object RagiumItems {
         // Energy
         HTEnergyCapabilities.registerItemEnergy(
             event,
-            { container: ItemStack ->
-                HTBasicItemEnergyBattery.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity))
-            },
+            { container: ItemStack -> HTBasicItemEnergyBattery.create(container, getCapacity(container, RagiumConfig.COMMON.batteryCapacity)) },
             RagiumBlocks.BATTERY,
         )
         HTEnergyCapabilities.registerItemEnergy(event, { HTInfiniteEnergyBattery }, RagiumBlocks.CREATIVE_BATTERY)
+
+        HTEnergyCapabilities.registerItemEnergy(
+            event,
+            { container: ItemStack -> HTBasicItemEnergyBattery.create(container, RagiumConfig.COMMON.electricIgniter.getCapacity()) },
+            ELECTRIC_IGNITER,
+        )
+        HTEnergyCapabilities.registerItemEnergy(
+            event,
+            { container: ItemStack -> HTBasicItemEnergyBattery.create(container, 8000) },
+            CRYSTAL_BATTERY,
+        )
     }
 
     @JvmStatic
-    private fun getCapacity(context: ItemStack, base: IntSupplier): Int =
-        RagiumDataComponents.getCapacity(base, context.getOrDefault(RagiumDataComponents.CAPACITY_SCALE, 1))
+    private fun getCapacity(context: ItemStack, base: IntSupplier): Int = RagiumDataComponents.getCapacity(base, context.getOrDefault(RagiumDataComponents.CAPACITY_SCALE, 1))
 
     //    Extensions    //
 
-    private fun Item.Properties.description(translation: HTTranslation): Item.Properties =
-        this.component(HCDataComponents.DESCRIPTION, translation)
+    private fun Item.Properties.description(translation: HTTranslation): Item.Properties = this.component(HCDataComponents.DESCRIPTION, translation)
 }

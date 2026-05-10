@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": "minecraft:skeleton_skull"
+    },
+    {
+      "amount": 8,
+      "items": "minecraft:porkchop"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:piglin_head"
+  },
+  "time": 200
+}

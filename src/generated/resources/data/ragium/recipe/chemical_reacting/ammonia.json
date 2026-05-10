@@ -1,0 +1,17 @@
+{
+  "type": "ragium:chemical_reacting",
+  "catalyst": "#c:dusts/iron",
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:ammonia"
+  },
+  "primary": {
+    "amount": 3000,
+    "fluids": "#c:hydrogen"
+  },
+  "secondary": {
+    "amount": 1000,
+    "fluids": "#c:nitrogen"
+  },
+  "time": 200
+}

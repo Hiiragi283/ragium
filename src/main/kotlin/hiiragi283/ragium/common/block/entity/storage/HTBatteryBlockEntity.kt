@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.base.HTSingleItemRecipe
+import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.HTStorageAccess
@@ -15,10 +15,10 @@ import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.recipe.HCChargingRecipe
 import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.HTLookupRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.setup.HCDataComponents
@@ -33,12 +33,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
-open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
-    HTStorageBlockEntity(type, pos, state) {
+open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
     constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.BATTERY, pos, state)
 
     lateinit var battery: HTEnergyBattery.Basic
@@ -56,8 +54,7 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
         return builder.build()
     }
 
-    protected open fun createBattery(listener: HTContentListener): HTEnergyBattery.Basic =
-        HTVariableEnergyBattery.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.batteryCapacity) }
+    protected open fun createBattery(listener: HTContentListener): HTEnergyBattery.Basic = HTVariableEnergyBattery.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.batteryCapacity) }
 
     final override fun getAmountView(): HTAmountView = battery
 
@@ -122,8 +119,7 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
     //    Recipe    //
 
     private var checkRecipe: Boolean = false
-
-    private val cache: HTLookupRecipeCache<SingleRecipeInput, HTSingleItemRecipe> = HTLookupRecipeCache.forRecipe(HCRecipeLookups.CHARGING)
+    private val cache: HTRecipeCaches.SingleItem<HCChargingRecipe> = HTRecipeCaches.SingleItem(HCRecipeLookups.CHARGING)
     private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
 
@@ -137,18 +133,16 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
 
     private fun chargeItem(): Boolean {
         val level: Level = this.level ?: return false
-        val stack: ItemStack = inputHandler.getItemStack()
-        if (stack.isEmpty) return false
-        val input = SingleRecipeInput(stack)
-        val recipe: HTSingleItemRecipe = cache.getFirstRecipe(input, level) ?: return false
+        val input: ItemStack = inputHandler.getItemStack()
+        val recipe: HCChargingRecipe = cache.findFirstRecipe(input, level) ?: return false
 
-        val result: ItemStack = recipe.assemble(input, level.registryAccess())
+        val result: ItemStack = recipe.assemble(input)
         if (!outputHandler.canInsert(result)) return false
-        val energy = 1_000_000 // TODO
-        if (battery.extract(energy, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) < energy) return false
+        val requiredEnergy: Int = recipe.energy
+        if (battery.extract(requiredEnergy, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) < requiredEnergy) return false
         outputHandler.insert(result)
-        inputHandler.consume(recipe.getRequiredAmount(input))
-        battery.extract(energy, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        inputHandler.consume(1)
+        battery.extract(requiredEnergy, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         return true
     }
 }

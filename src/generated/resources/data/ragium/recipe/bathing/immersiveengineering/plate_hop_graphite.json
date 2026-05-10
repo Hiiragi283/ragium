@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "immersiveengineering"
+    }
+  ],
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:creosote"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:dusts/hop_graphite"
+  },
+  "result": {
+    "count": 1,
+    "id": "immersiveengineering:plate_hop_graphite"
+  },
+  "time": 200
+}

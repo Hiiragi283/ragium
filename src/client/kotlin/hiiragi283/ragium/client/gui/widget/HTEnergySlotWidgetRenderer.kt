@@ -6,7 +6,7 @@ import hiiragi283.core.api.gui.HTBounds
 import hiiragi283.core.api.text.Text
 import hiiragi283.core.client.gui.widget.HTSpriteWidgetRenderer
 import hiiragi283.core.util.HTSpriteRenderHelper
-import hiiragi283.core.util.HTTooltipHelper
+import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import net.minecraft.client.gui.GuiGraphics
@@ -19,8 +19,7 @@ import org.apache.commons.lang3.math.Fraction
 import java.util.function.Consumer
 
 @OnlyIn(Dist.CLIENT)
-class HTEnergySlotWidgetRenderer(gui: HTAbstractGui, widget: HTEnergySlotWidget) :
-    HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {
+class HTEnergySlotWidgetRenderer(gui: HTAbstractGui, widget: HTEnergySlotWidget) : HTSpriteWidgetRenderer<HTEnergySlotWidget>(gui, widget) {
     companion object {
         @JvmField
         val SPRITE: ResourceLocation = RagiumAPI.id(HTConst.GUI, "energy_slot")
@@ -42,6 +41,6 @@ class HTEnergySlotWidgetRenderer(gui: HTAbstractGui, widget: HTEnergySlotWidget)
     override fun getLevel(): Fraction = widget.getLevelAsFraction()
 
     override fun collectTooltips(consumer: Consumer<Text>, flag: TooltipFlag) {
-        HTTooltipHelper.addEnergyTooltip(widget.getAmount(), consumer, false)
+        HTStorageHelper.addEnergyTooltip(widget, consumer, false)
     }
 }

@@ -1,9 +1,5 @@
 {
   "values": [
-    "ragium:fish_can",
-    "ragium:fruit_can",
-    "ragium:meat_can",
-    "ragium:soup_can",
-    "ragium:vegetable_can"
+    "ragium:canned_cooked_meat"
   ]
 }

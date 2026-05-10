@@ -1,0 +1,22 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": "hiiragi_core:raw_rubber"
+    },
+    {
+      "amount": 1,
+      "items": "#c:dusts/sulfur"
+    },
+    {
+      "amount": 1,
+      "items": "#c:dusts/carbon"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "id": "hiiragi_core:cured_rubber"
+  },
+  "time": 200
+}

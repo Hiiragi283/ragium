@@ -1,16 +1,15 @@
 {
   "type": "ragium:freezing",
-  "fluid_ingredient": {
+  "catalyst": {
+    "type": "hiiragi_core:blue_print",
+    "number": 0
+  },
+  "ingredient": {
     "amount": 250,
     "fluids": "#c:dyes/yellow"
   },
-  "item_ingredient": {
-    "items": {
-      "type": "hiiragi_core:blue_print",
-      "number": 0
-    }
-  },
   "result": {
+    "count": 1,
     "id": "minecraft:yellow_dye"
   },
   "time": 200

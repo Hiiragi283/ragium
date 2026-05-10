@@ -5,48 +5,48 @@ parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"
 
 neo-moddev = "2.0.141"
-neo-version = "21.1.222"
+neo-version = "21.1.228"
+kff-version = "5.11.0"
 
 dokka = "2.1.0"
-kff-version = "5.11.0"
-ktlint = "14.2.0"
+spotless = "7.2.1"
 
 axion-release = "1.21.1"
 maven-publish = "0.36.0"
 
-aa = "1.3.20+mc1.21.1"
-accessories = "1.1.0-beta.52+1.21.1"
+aa = "1.3.25+mc1.21.1"
+accessories = "1.1.0-beta.53+1.21.1"
 ae2 = "19.2.17"
-almost = "1.21.1-1.3.0"
-create = "6.0.8-169"
+almost = "1.21.1-1.4.1"
+create = "6.0.10-281"
 curious = "9.5.1+1.21.1"
-delight = "1.21.1-1.2.9"
-ender-io = "8.0.6-alpha"
-fusion = "1.2.11b-neoforge-mc1.21"
-hiiragi-core = "0.15.0"
+delight = "1.21.1-1.3.1"
+ender-io = "8.2.8-beta"
+fusion = "1.2.12-neoforge-mc1.21"
+hiiragi-core = "+"
 hostile = "1.21.1-6.3.0"
 immersive = "1.21.1-12.4.2-194"
 jade = "15.10.5+neoforge"
 jei = "19.27.0.340"
-kc = "1.1.1-neoforge+mc1.21.1"
-magitech = "0.12.1"
-mek = "1.21.1-10.7.17.83"
-moonlight = "1.21-2.29.20"
-oritech = "1.0.1"
+kc = "1.3.0-neoforge+mc1.21.1"
+magitech = "1.1.3"
+mek = "1.21.1-10.7.19.85"
+moonlight = "1.21.1-3.0.5"
+oritech = "1.2.6"
 pneuma = "8.2.13+mc1.21.1"
-replica = "1.21-1.2.6"
+replica = "1.21-1.2.7"
 
 arch = "13.0.8"
-ars = "5.10.5.1219"
-create-ench = "2.2.5b"
-create-dragon = "1.8.5"
-dire = "6369120"
+ars = "5.11.3.1329"
+create-ench = "2.3.1"
+create-dragon = "1.10.0b"
+dire = "7463040"
 enchdesc = "21.1.9"
-flywheel = "1.0.6-beta-37"
+flywheel = "1.0.6-beta-38"
 guide = "21.1.15"
-owo = "0.12.15.1-beta.6+1.21"
+owo = "0.12.15.5-beta.1+1.21"
 patchouli-gen = "1.21.1-1.0.11-Snapshot.5"
-placebo = "1.21.1-9.9.0"
+placebo = "1.21.1-9.9.1"
 registrate = "MC1.21-1.3.0+67"
 rs2 = "2.0.0-beta.10"
 
@@ -71,7 +71,9 @@ jei-api = { group = "mezz.jei", name = "jei-1.21.1-neoforge-api", version.ref = 
 kc = { group = "maven.modrinth", name = "kaleidoscope-cookery", version.ref = "kc" }
 magitech = { group = "maven.modrinth", name = "magitech_mod", version.ref = "magitech" }
 mek = { group = "mekanism", name = "Mekanism", version.ref = "mek" }
-moonlight = { group = "net.mehvahdjukaar", name = "moonlight-neoforge", version.ref = "moonlight" }
+moonlight = { group = "net.mehvahdjukaar", name = "moonlight-common", version.ref = "moonlight" }
+moonlight-neo = { group = "net.mehvahdjukaar", name = "moonlight-neoforge", version.ref = "moonlight" }
+moonlight-runtime = { group = "maven.modrinth", name = "moonlight", version.ref = "moonlight" }
 oritech = { group = "rearth.oritech", name = "oritech-neoforge-1.21.1", version.ref = "oritech" }
 pneuma = { group = "me.desht.pneumaticcraft", name = "pneumaticcraft-repressurized", version.ref = "pneuma" }
 replica = { group = "maven.modrinth", name = "replication", version.ref = "replica" }
@@ -92,22 +94,38 @@ rs2 = { group = "com.refinedmods.refinedstorage", name = "refinedstorage-neoforg
 
 [bundles]
 
-mods-impl = [
-    "ae2",
+api-impl = [
     "hiiragi-core",
+]
+
+common-impl = [
+    "hiiragi-core",
+]
+
+common-compile = [
+    "moonlight",
+    "moonlight-neo",
+]
+
+common-runtime = [
+    "moonlight-runtime",
+]
+
+integration-impl = [
+    "ae2",
+    "dire",
+    "immersive",
     "jade",
+    "oritech",
+    "replica",
 ]
 
-mods-transitive = [
-    "moonlight"
+integration-compile = [
+    "jei-api",
 ]
 
-mods-compile = [
-    "jei-api"
-]
-
-mods-runtime = [
-    "jei",
+integration-runtime = [
+    "jei"
 ]
 
 [plugins]
@@ -116,7 +134,7 @@ neo-moddev = { id = "net.neoforged.moddev", version.ref = "neo-moddev" }
 
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 dokka-javadoc = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 axion-release = { id = "pl.allegro.tech.build.axion-release", version.ref = "axion-release" }
 maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }

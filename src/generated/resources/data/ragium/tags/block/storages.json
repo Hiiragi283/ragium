@@ -1,0 +1,10 @@
+{
+  "values": [
+    "#ragium:storages/creative",
+    "ragium:battery",
+    "ragium:crate",
+    "ragium:tank",
+    "ragium:universal_chest",
+    "ragium:void_tank"
+  ]
+}

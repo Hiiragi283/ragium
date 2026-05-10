@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:glue"
+  },
+  "item_ingredient": {
+    "amount": 2,
+    "items": "#c:dusts/wood"
+  },
+  "result": {
+    "count": 1,
+    "id": "hiiragi_core:particle_board"
+  },
+  "time": 200
+}

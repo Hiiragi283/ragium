@@ -1,0 +1,24 @@
+{
+  "type": "ragium:washing",
+  "ingredient": {
+    "amount": 1,
+    "items": "#c:sands"
+  },
+  "results": [
+    {
+      "type": "hiiragi_core:material_part",
+      "chance": "1/2",
+      "count": 1,
+      "material": "hiiragi_core:quartz",
+      "part": "dust"
+    },
+    {
+      "type": "hiiragi_core:material_part",
+      "chance": "1/4",
+      "count": 1,
+      "material": "ragium:borax",
+      "part": "dust"
+    }
+  ],
+  "time": 100
+}

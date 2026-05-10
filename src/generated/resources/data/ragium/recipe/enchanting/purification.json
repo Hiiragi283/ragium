@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanting/holder",
+  "enchantment": "hiiragi_core:purification",
+  "ingredient": {
+    "amount": 16,
+    "items": "#c:dusts/iridium"
+  }
+}

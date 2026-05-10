@@ -1,0 +1,23 @@
+{
+  "type": "ragium:washing",
+  "ingredient": {
+    "amount": 4,
+    "items": "#c:dusts/ash"
+  },
+  "results": [
+    {
+      "type": "hiiragi_core:material_part",
+      "count": 3,
+      "material": "hiiragi_core:carbon",
+      "part": "dust"
+    },
+    {
+      "type": "hiiragi_core:material_part",
+      "chance": "1/4",
+      "count": 1,
+      "material": "hiiragi_core:carbon",
+      "part": "dust"
+    }
+  ],
+  "time": 100
+}

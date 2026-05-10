@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 125,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "minecraft:green_concrete_powder"
+  },
+  "item_result": {
+    "count": 1,
+    "id": "minecraft:green_concrete"
+  },
+  "time": 25
+}

@@ -1,0 +1,8 @@
+{
+  "values": [
+    "#ragium:generators/advanced",
+    "#ragium:generators/basic",
+    "#ragium:generators/elite",
+    "#ragium:generators/ultimate"
+  ]
+}

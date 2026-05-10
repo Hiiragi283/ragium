@@ -1,0 +1,19 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ae2"
+    }
+  ],
+  "type": "ragium:printing",
+  "ingredient": {
+    "amount": 1,
+    "items": "#c:silicon"
+  },
+  "press": "ae2:silicon_press",
+  "result": {
+    "count": 1,
+    "id": "ae2:printed_silicon"
+  },
+  "time": 200
+}

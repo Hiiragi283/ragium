@@ -1,0 +1,15 @@
+{
+  "type": "ragium:melting",
+  "ingredient": {
+    "amount": 1,
+    "items": [
+      "#c:foods/raw_fish",
+      "#c:foods/raw_meat"
+    ]
+  },
+  "result": {
+    "amount": 180,
+    "id": "hiiragi_core:meat"
+  },
+  "time": 200
+}

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:experience"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:leathers"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:phantom_membrane"
+  },
+  "time": 200
+}

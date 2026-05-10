@@ -1,0 +1,26 @@
+{
+  "type": "ragium:alloying",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": [
+        "#c:dusts/iron",
+        "#c:ingots/iron"
+      ]
+    },
+    {
+      "amount": 1,
+      "items": [
+        "#c:coal_coke",
+        "#c:dusts/coal_coke"
+      ]
+    }
+  ],
+  "result": {
+    "type": "hiiragi_core:material_part",
+    "count": 1,
+    "material": "hiiragi_core:steel",
+    "part": "ingot"
+  },
+  "time": 200
+}

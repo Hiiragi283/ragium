@@ -13,12 +13,6 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     // Config
     CONFIG_ENERGY_CAPACITY("config", "energy_capacity"),
     CONFIG_ENERGY_RATE("config", "energy_rate"),
-    CONFIG_FLUID_FIRST_INPUT("config", "fluid", "first_input"),
-    CONFIG_FLUID_SECOND_INPUT("config", "fluid", "second_input"),
-    CONFIG_FLUID_THIRD_INPUT("config", "fluid", "third_input"),
-    CONFIG_FLUID_FIRST_OUTPUT("config", "fluid", "first_output"),
-    CONFIG_FLUID_SECOND_OUTPUT("config", "fluid", "second_output"),
-    CONFIG_FLUID_THIRD_OUTPUT("config", "fluid", "third_output"),
 
     // GUI
     GUI_SLOT_BOTH(HTConst.GUI, "slot", "both"),
@@ -28,27 +22,35 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     GUI_SLOT_EXTRA_OUTPUT(HTConst.GUI, "slot", "extra_output"),
     GUI_SLOT_NONE(HTConst.GUI, "slot", "none"),
 
+    // Blocks - Generator
+    BOILER(HTConst.DESCRIPTION, RagiumConst.BOILER),
+
     // Blocks - Machine
     ALLOY_SMELTER(HTConst.DESCRIPTION, RagiumConst.ALLOY_SMELTER),
     ASSEMBLER(HTConst.DESCRIPTION, RagiumConst.ASSEMBLER),
     AUTO_CHISEL(HTConst.DESCRIPTION, RagiumConst.AUTO_CHISEL),
+    COMPRESSOR(HTConst.DESCRIPTION, RagiumConst.COMPRESSOR),
     CRUSHER(HTConst.DESCRIPTION, RagiumConst.CRUSHER),
     CUTTING_MACHINE(HTConst.DESCRIPTION, RagiumConst.CUTTING_MACHINE),
     ELECTRIC_FURNACE(HTConst.DESCRIPTION, RagiumConst.ELECTRIC_FURNACE),
+    PLANTER(HTConst.DESCRIPTION, RagiumConst.PLANTER),
 
     MELTER(HTConst.DESCRIPTION, RagiumConst.MELTER),
     PYROLYZER(HTConst.DESCRIPTION, RagiumConst.PYROLYZER),
     REFINERY(HTConst.DESCRIPTION, RagiumConst.REFINERY),
 
     FREEZER(HTConst.DESCRIPTION, RagiumConst.FREEZER),
-
-    BREWERY(HTConst.DESCRIPTION, RagiumConst.BREWERY),
-    MIXER(HTConst.DESCRIPTION, RagiumConst.MIXER),
     WASHER(HTConst.DESCRIPTION, RagiumConst.WASHER),
 
+    BREWERY(HTConst.DESCRIPTION, RagiumConst.BREWERY),
+    CHEMICAL_BATH(HTConst.DESCRIPTION, RagiumConst.CHEMICAL_BATH),
+    MIXER(HTConst.DESCRIPTION, RagiumConst.MIXER),
+
+    FLUID_DUPLICATOR(HTConst.DESCRIPTION, RagiumConst.FLUID_DUPLICATOR),
+
     // Blocks - Device
-    PLANTER(HTConst.DESCRIPTION, "planter"),
-    ENCHANTER(HTConst.DESCRIPTION, "enchanter"),
+    ENCHANTER(HTConst.DESCRIPTION, RagiumConst.ENCHANTER),
+    MASS_FABRICATOR(HTConst.DESCRIPTION, RagiumConst.MASS_FABRICATOR),
 
     // Blocks - Storages
     BATTERY(HTConst.DESCRIPTION, "battery"),

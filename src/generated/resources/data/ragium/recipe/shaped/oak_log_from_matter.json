@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "ragium:ragi_matter"
+    }
+  },
+  "pattern": [
+    "A ",
+    " A"
+  ],
+  "result": {
+    "count": 8,
+    "id": "minecraft:oak_log"
+  }
+}

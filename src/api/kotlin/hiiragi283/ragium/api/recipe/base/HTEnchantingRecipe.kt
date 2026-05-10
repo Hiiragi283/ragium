@@ -1,39 +1,27 @@
 package hiiragi283.ragium.api.recipe.base
 
-import hiiragi283.core.api.recipe.base.HTSerializableRecipe
-import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
-import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.api.storage.fluid.toResourcePair
-import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.api.recipe.HTTriRecipeFactory
+import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.fluids.FluidStack
+import net.minecraft.world.item.crafting.RecipeInput
 
-interface HTEnchantingRecipe : HTSerializableRecipe<HTEnchantingRecipe.Input> {
-    override fun test(input: Input): Boolean {
-        val (resource: HTFluidResourceType, amount: Int) = input.fluid.toResourcePair() ?: return false
-        val bool1: Boolean = HCFluids.EXPERIENCE.isOf(resource) && amount >= getRequiredExpAmount(input)
-        val bool2: Boolean = testBook(input.book)
-        val bool3: Boolean = testItem(input.item)
-        return bool1 && bool2 && bool3
+interface HTEnchantingRecipe :
+    HTRecipePredicates.TripleInput<HTEnchantingRecipe.Input, ItemStack, ItemStack, Int>,
+    HTTriRecipeFactory<ItemStack, ItemStack, Int, ItemStack> {
+    fun getRequiredExpAmount(base: ItemStack, addition: ItemStack): Int
+
+    fun getRequiredAdditionAmount(base: ItemStack, addition: ItemStack, expAmount: Int): Int
+
+    override fun matches(input: Input): Boolean {
+        val (base: ItemStack, addition: ItemStack, expAmount: Int) = input
+        return test(base, addition, expAmount)
     }
 
-    fun testBook(stack: ItemStack): Boolean
-
-    fun testItem(stack: ItemStack): Boolean
-
-    fun getRequiredExpAmount(input: Input): Int
-
-    fun getRequiredItemAmount(input: Input): Int
-
     @JvmRecord
-    data class Input(val book: ItemStack, val item: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {
-        override fun getFluid(index: Int): FluidStack = fluid
-
-        override fun getFluidSize(): Int = 0
-
+    data class Input(val base: ItemStack, val addition: ItemStack, val expAmount: Int) : RecipeInput {
         override fun getItem(index: Int): ItemStack = when (index) {
-            0 -> book
-            1 -> item
+            0 -> base
+            1 -> addition
             else -> error("No item for index: $index")
         }
 

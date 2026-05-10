@@ -1,18 +1,13 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "items": [
-      "#c:gravels",
-      "#c:sands"
-    ]
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:kelp"
-  },
+  "plant": "minecraft:kelp",
   "results": {
     "count": 6,
     "id": "minecraft:kelp"
   },
+  "soil": [
+    "#c:gravels",
+    "#c:sands"
+  ],
   "time": 100
 }

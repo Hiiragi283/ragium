@@ -1,0 +1,6 @@
+{
+  "parent": "ragium:block/refinery_template",
+  "textures": {
+    "all": "ragium:block/refinery"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "ragium:assembling",
+  "ingredient": [
+    {
+      "amount": 1,
+      "items": "minecraft:skeleton_skull"
+    },
+    {
+      "amount": 8,
+      "items": "#c:gunpowders"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:creeper_head"
+  },
+  "time": 200
+}

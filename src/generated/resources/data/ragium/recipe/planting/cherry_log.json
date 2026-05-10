@@ -1,12 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "items": "#minecraft:dirt"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:cherry_sapling"
-  },
+  "plant": "minecraft:cherry_sapling",
   "results": [
     {
       "count": 6,
@@ -14,8 +8,10 @@
     },
     {
       "chance": "1/6",
+      "count": 1,
       "id": "minecraft:cherry_sapling"
     }
   ],
+  "soil": "#minecraft:dirt",
   "time": 100
 }

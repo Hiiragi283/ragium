@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootTable
+import java.util.EnumMap
 
 enum class HTDefaultLootTickets(val targets: HTLootTicketTargets) {
     END_CITY(BuiltInLootTables.END_CITY_TREASURE),
@@ -45,12 +46,12 @@ enum class HTDefaultLootTickets(val targets: HTLootTicketTargets) {
 
     companion object {
         @JvmStatic
-        private val ticketCache: MutableMap<HTDefaultLootTickets, HTItemResourceType> = hashMapOf()
+        private val ticketCache: MutableMap<HTDefaultLootTickets, HTItemResourceType> = EnumMap(HTDefaultLootTickets::class.java)
 
         @JvmStatic
         fun getLootTicket(lootTicket: HTDefaultLootTickets, count: Int = 1): ItemStack = ticketCache
             .computeIfAbsent(lootTicket) {
-                createItemStack(RagiumItems.LOOT_TICKET, RagiumDataComponents.LOOT_TICKET, it.targets).toResource()!!
+                createItemStack(RagiumItems.RAGI_TICKET, RagiumDataComponents.LOOT_TICKET, it.targets).toResource()!!
             }.toStack(count)
     }
 

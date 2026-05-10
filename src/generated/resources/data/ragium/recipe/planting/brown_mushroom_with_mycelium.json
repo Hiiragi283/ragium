@@ -1,12 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "items": "minecraft:mycelium"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:brown_mushroom"
-  },
+  "plant": "minecraft:brown_mushroom",
   "results": [
     {
       "count": 5,
@@ -14,8 +8,10 @@
     },
     {
       "chance": "1/3",
+      "count": 1,
       "id": "minecraft:brown_mushroom"
     }
   ],
+  "soil": "minecraft:mycelium",
   "time": 100
 }

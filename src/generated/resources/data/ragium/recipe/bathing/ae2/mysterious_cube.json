@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ae2"
+    }
+  ],
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 810,
+    "fluids": "#hiiragi_core:eldritch"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "ae2:not_so_mysterious_cube"
+  },
+  "result": {
+    "count": 1,
+    "id": "ae2:mysterious_cube"
+  },
+  "time": 200
+}

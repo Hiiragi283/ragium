@@ -1,20 +1,17 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "items": "minecraft:farmland"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:pumpkin_seeds"
-  },
+  "plant": "minecraft:pumpkin_seeds",
   "results": [
     {
+      "count": 1,
       "id": "minecraft:pumpkin"
     },
     {
       "chance": "1/3",
+      "count": 1,
       "id": "minecraft:pumpkin_seeds"
     }
   ],
+  "soil": "minecraft:farmland",
   "time": 100
 }

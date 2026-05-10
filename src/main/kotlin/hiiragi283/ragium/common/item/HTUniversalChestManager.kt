@@ -15,8 +15,7 @@ import net.minecraft.server.MinecraftServer
 class HTUniversalChestManager private constructor(private val map: MutableMap<HTDefaultColor, HTItemHandler>) : HTValueSerializable {
     companion object {
         @JvmStatic
-        fun getHandler(server: MinecraftServer, color: HTDefaultColor): HTItemHandler =
-            server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_CHEST).getHandler(color)
+        fun getHandler(server: MinecraftServer, color: HTDefaultColor): HTItemHandler = server.overworld().getData(RagiumAttachmentTypes.UNIVERSAL_CHEST).getHandler(color)
 
         @JvmStatic
         fun createSlots(): List<HTBasicItemSlot> = List(27) { HTBasicItemSlot.create(null) }

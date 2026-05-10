@@ -1,0 +1,22 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:dyes/blue"
+  },
+  "item_ingredient": [
+    {
+      "amount": 4,
+      "items": "#c:gravels"
+    },
+    {
+      "amount": 4,
+      "items": "#c:sands"
+    }
+  ],
+  "item_result": {
+    "count": 8,
+    "id": "minecraft:blue_concrete"
+  },
+  "time": 200
+}

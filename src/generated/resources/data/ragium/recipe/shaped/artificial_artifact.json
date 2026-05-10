@@ -3,25 +3,19 @@
   "category": "misc",
   "key": {
     "A": {
-      "item": "minecraft:conduit"
+      "tag": "c:nuggets/netherite"
     },
     "B": {
-      "item": "minecraft:budding_amethyst"
+      "item": "ragium:electric_circuit"
     },
     "C": {
-      "item": "minecraft:heavy_core"
-    },
-    "D": {
-      "item": "minecraft:crying_obsidian"
-    },
-    "E": {
-      "item": "minecraft:nether_star"
+      "tag": "c:eldritch_pearls"
     }
   },
   "pattern": [
-    "ABC",
-    "DED",
-    "CBA"
+    "ABA",
+    "BCB",
+    "ABA"
   ],
   "result": {
     "count": 1,

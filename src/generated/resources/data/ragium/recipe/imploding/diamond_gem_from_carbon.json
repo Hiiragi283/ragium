@@ -1,0 +1,14 @@
+{
+  "type": "ragium:imploding",
+  "ingredient": {
+    "amount": 16,
+    "items": "#c:dusts/carbon"
+  },
+  "result": {
+    "type": "hiiragi_core:material_part",
+    "count": 1,
+    "material": "hiiragi_core:diamond",
+    "part": "gem"
+  },
+  "time": 100
+}

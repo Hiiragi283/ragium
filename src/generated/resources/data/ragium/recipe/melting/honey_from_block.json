@@ -5,6 +5,7 @@
     "items": "minecraft:honey_block"
   },
   "result": {
+    "amount": 1000,
     "id": "hiiragi_core:honey"
   },
   "time": 200

@@ -1,0 +1,17 @@
+{
+  "type": "ragium:chemical_reacting",
+  "catalyst": "#c:dusts/nickel",
+  "fluid_result": {
+    "amount": 2000,
+    "id": "ragium:synthetic_gas"
+  },
+  "primary": {
+    "amount": 1000,
+    "fluids": "#c:methane"
+  },
+  "secondary": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "time": 200
+}

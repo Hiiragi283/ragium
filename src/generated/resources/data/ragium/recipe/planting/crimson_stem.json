@@ -1,12 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "items": "minecraft:crimson_nylium"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:crimson_fungus"
-  },
+  "plant": "minecraft:crimson_fungus",
   "results": [
     {
       "count": 6,
@@ -14,8 +8,10 @@
     },
     {
       "chance": "1/6",
+      "count": 1,
       "id": "minecraft:crimson_fungus"
     }
   ],
+  "soil": "minecraft:crimson_nylium",
   "time": 100
 }

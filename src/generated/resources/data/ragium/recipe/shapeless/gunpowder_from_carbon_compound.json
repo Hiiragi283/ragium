@@ -2,11 +2,22 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "ragium:carbon_compound"
-    },
+    [
+      {
+        "tag": "c:dusts/coal"
+      },
+      {
+        "tag": "c:dusts/charcoal"
+      },
+      {
+        "tag": "c:dusts/carbon"
+      }
+    ],
     {
       "tag": "c:dusts/saltpeter"
+    },
+    {
+      "tag": "c:dusts/sulfur"
     }
   ],
   "result": {

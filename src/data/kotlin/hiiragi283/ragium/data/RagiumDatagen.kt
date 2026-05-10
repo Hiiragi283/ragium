@@ -1,51 +1,54 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.core.api.data.HTRootDataGenerator
+import hiiragi283.core.api.data.createAdvancements
+import hiiragi283.core.api.data.createLootTables
+import hiiragi283.core.api.data.createProviderWithHelper
+import hiiragi283.core.api.function.partially1
+import hiiragi283.core.data.bootstrap.HCEnchantmentProvider
 import hiiragi283.ragium.api.RagiumAPI
-import hiiragi283.ragium.data.client.RagiumBlockStateProvider
-import hiiragi283.ragium.data.client.RagiumEnglishLangProvider
-import hiiragi283.ragium.data.client.RagiumItemModelProvider
-import hiiragi283.ragium.data.client.RagiumJapaneseLangProvider
-import hiiragi283.ragium.data.client.RagiumSpriteSourceProvider
-import hiiragi283.ragium.data.server.RagiumDataMapProvider
-import hiiragi283.ragium.data.server.RagiumRecipeProvider
-import hiiragi283.ragium.data.server.RagiumTankInteractionProvider
-import hiiragi283.ragium.data.server.advancement.RagiumAdvancementProvider
-import hiiragi283.ragium.data.server.loot.RagiumBlockLootProvider
-import hiiragi283.ragium.data.server.tag.RagiumBlockTagsProvider
-import hiiragi283.ragium.data.server.tag.RagiumFluidTagsProvider
-import hiiragi283.ragium.data.server.tag.RagiumItemTagsProvider
+import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
+import hiiragi283.ragium.data.bootsrap.RagiumWorldData
+import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
+import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
+import hiiragi283.ragium.data.loot.RagiumBlockLootProvider
+import hiiragi283.ragium.data.model.RagiumBlockStateProvider
+import hiiragi283.ragium.data.model.RagiumItemModelProvider
+import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
+import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
+import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
+import net.minecraft.core.RegistrySetBuilder
+import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.data.ExistingFileHelper
 import net.neoforged.neoforge.data.event.GatherDataEvent
 
 @EventBusSubscriber(modid = RagiumAPI.MOD_ID)
 object RagiumDatagen {
     @SubscribeEvent
     fun gatherData(event: GatherDataEvent) {
-        val (server: HTRootDataGenerator, client: HTRootDataGenerator) = HTRootDataGenerator.withDataPack(event)
-        // Server
-        server.addLootTables(
-            ::RagiumBlockLootProvider to LootContextParamSets.BLOCK,
+        val fileHelper: ExistingFileHelper = event.existingFileHelper
+        event.createDatapackRegistryObjects(
+            RegistrySetBuilder().add(Registries.ENCHANTMENT, HCEnchantmentProvider).also(RagiumWorldData::bootsrap),
         )
-        server.addAdvancements(RagiumAdvancementProvider)
+        // Server
+        event.createAdvancements(listOf(RagiumAdvancementProvider))
+        event.createLootTables(::RagiumBlockLootProvider to LootContextParamSets.BLOCK)
 
-        server.addProvider(::RagiumRecipeProvider)
+        event.createProvider(::RagiumRecipeProvider)
 
-        server.addProvider(::RagiumFluidTagsProvider)
-        server.addBlockAndItemTags(::RagiumBlockTagsProvider, ::RagiumItemTagsProvider)
+        event.createProviderWithHelper(::RagiumFluidTagsProvider)
+        event.createBlockAndItemTags(::RagiumBlockTagsProvider.partially1(fileHelper), ::RagiumItemTagsProvider.partially1(fileHelper))
 
-        server.addProvider(::RagiumDataMapProvider)
-
-        server.addProvider(::RagiumTankInteractionProvider)
+        event.createProvider(::RagiumDataMapProvider)
         // Client
-        client.addProvider(::RagiumEnglishLangProvider)
-        client.addProvider(::RagiumJapaneseLangProvider)
+        event.createProvider(::RagiumEnglishLangProvider)
+        event.createProvider(::RagiumJapaneseLangProvider)
 
-        client.addProvider(::RagiumSpriteSourceProvider)
+        event.createProviderWithHelper(::RagiumSpriteSourceProvider)
 
-        client.addProvider(::RagiumBlockStateProvider)
-        client.addProvider(::RagiumItemModelProvider)
+        event.createProviderWithHelper(::RagiumBlockStateProvider)
+        event.createProviderWithHelper(::RagiumItemModelProvider)
     }
 }

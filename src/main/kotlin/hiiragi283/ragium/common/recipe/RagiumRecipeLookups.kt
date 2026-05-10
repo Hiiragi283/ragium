@@ -1,108 +1,123 @@
 package hiiragi283.ragium.common.recipe
 
-import hiiragi283.core.api.data.recipe.HTIngredientCreator
 import hiiragi283.core.api.function.identity
 import hiiragi283.core.api.recipe.HTRecipeHolder
-import hiiragi283.core.api.recipe.HTRecipeLookup
-import hiiragi283.core.api.recipe.base.HTDoubleMultiOutputRecipe
+import hiiragi283.core.api.recipe.HTRecipeType
+import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.core.api.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
-import hiiragi283.core.api.recipe.base.HTSingleMultiOutputRecipe
-import hiiragi283.core.api.recipe.input.HTDoubleRecipeInput
-import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.api.recipe.input.HTShapelessRecipeInput
-import hiiragi283.core.api.recipe.input.HTSingleFluidRecipeInput
+import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
+import hiiragi283.core.api.recipe.base.HTItemToItemRecipe
+import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
+import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.registry.HTSimpleHolderLike
 import hiiragi283.core.api.registry.getDataSequence
-import hiiragi283.core.impl.recipe.HTRecipeTypeImpl
-import hiiragi283.core.impl.recipe.HTRecipeTypeManager
-import hiiragi283.core.impl.recipe.addProvider
+import hiiragi283.core.common.registry.HTDeferredRecipeType
+import hiiragi283.core.impl.recipe.cache.HTRecipeLookupImpl
+import hiiragi283.core.impl.recipe.cache.HTRecipeLookupManager
+import hiiragi283.core.impl.recipe.cache.HTVanillaRecipeLookup
+import hiiragi283.core.impl.recipe.cache.addProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
-import hiiragi283.ragium.common.recipe.input.HTChemicalRecipeInput
+import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
+import hiiragi283.ragium.common.recipe.custom.HTBookMeltingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.SingleRecipeInput
 
 data object RagiumRecipeLookups {
     // Machine - Basic
     @JvmField
-    val ALLOYING: HTRecipeTypeImpl<HTShapelessRecipeInput, HTAlloyingRecipe> = create(RagiumConst.ALLOYING)
+    val ALLOYING: HTRecipeLookup<HTAlloyingRecipe> = create(RagiumRecipeTypes.ALLOYING)
 
     @JvmField
-    val ASSEMBLING: HTRecipeTypeImpl<HTShapelessRecipeInput, HTAssemblingRecipe> = create(RagiumConst.ASSEMBLING)
+    val ASSEMBLING: HTRecipeLookupImpl<HTDoubleItemToItemRecipe> = create(RagiumConst.ASSEMBLING)
 
     @JvmField
-    val CUTTING: HTRecipeTypeImpl<SingleRecipeInput, HTSingleMultiOutputRecipe> = create(RagiumConst.CUTTING)
+    val COMPRESSING: HTRecipeLookupImpl<HTItemToItemRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
-    val PLANTING: HTRecipeTypeImpl<HTDoubleRecipeInput, HTDoubleMultiOutputRecipe> = create(RagiumConst.PLANTING)
+    val CUTTING: HTRecipeLookupImpl<HTItemToMultiItemRecipe> = create(RagiumConst.CUTTING)
+
+    @JvmField
+    val PLANTING: HTRecipeLookupImpl<HTPlantingRecipe> = create(RagiumConst.PLANTING)
 
     // Machine - Advanced
     @JvmField
-    val FREEZING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTFreezingRecipe> = create(RagiumConst.FREEZING)
+    val FREEZING: HTRecipeLookupImpl<HTItemAndFluidToItemRecipe> = create(RagiumConst.FREEZING)
 
     @JvmField
-    val MELTING: HTRecipeTypeImpl<SingleRecipeInput, HTMeltingRecipe> = create(RagiumConst.MELTING)
+    val IMPLODING: HTRecipeLookup<HTImplodingRecipe> = create(RagiumRecipeTypes.IMPLODING)
 
     @JvmField
-    val PYROLYZING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> = create(RagiumConst.PYROLYZING)
+    val MELTING: HTRecipeLookupImpl<HTItemToFluidRecipe> = create(RagiumConst.MELTING)
 
     @JvmField
-    val REFINING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> = create(RagiumConst.REFINING)
+    val PYROLYZING: HTRecipeLookupImpl<HTItemOrFluidRecipe> = create(RagiumConst.PYROLYZING)
+
+    @JvmField
+    val REFINING: HTRecipeLookup<HTRefiningRecipe> = create(RagiumRecipeTypes.REFINING)
+
+    @JvmField
+    val WASHING: HTRecipeLookup<HTWashingRecipe> = create(RagiumRecipeTypes.WASHING)
 
     // Machine - Elite
     @JvmField
-    val CHEMICAL_WASHING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTItemOrFluidRecipe> = create(RagiumConst.CHEMICAL_WASHING)
+    val BATHING: HTRecipeLookupImpl<HTItemAndFluidToItemRecipe> = create(RagiumConst.BATHING)
 
     @JvmField
-    val ELECTROLYZING: HTRecipeTypeImpl<HTSingleFluidRecipeInput, HTElectrolyzingRecipe> = create(RagiumConst.ELECTROLYZING)
+    val CHEMICAL_REACTING: HTRecipeLookup<HTChemicalReactingRecipe> = create(RagiumRecipeTypes.CHEMICAL_REACTING)
 
     @JvmField
-    val MIXING: HTRecipeTypeImpl<HTChemicalRecipeInput, HTMixingRecipe> = create(RagiumConst.MIXING)
-
-    @JvmField
-    val WASHING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, HTWashingRecipe> = create(RagiumConst.WASHING)
+    val MIXING: HTRecipeLookup<HTMixingRecipe> = create(RagiumRecipeTypes.MIXING)
 
     // Machine - Ultimate
     @JvmField
-    val DUPLICATING: HTRecipeTypeImpl<HTItemAndFluidRecipeInput, RagiumDuplicatingRecipe> = create(RagiumConst.DUPLICATING)
+    val MASS_FABRICATING: HTRecipeType<HTMassFabricatingRecipe> = object : HTRecipeType<HTMassFabricatingRecipe> {
+        override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<HTMassFabricatingRecipe>> = context
+            .lookup(Registries.ITEM)
+            ?.getDataSequence(RagiumDataMapTypes.MATTER_POINT)
+            ?.map { (item: HTSimpleHolderLike<Item>, point: Int) ->
+                HTRecipeHolder(
+                    item.getId().withPrefix("${RagiumConst.MASS_FABRICATING}/"),
+                    HTMassFabricatingRecipe(ItemStack(item.get()), point),
+                )
+            }
+            ?: emptySequence()
 
+        override fun getId(): ResourceLocation = RagiumAPI.id(RagiumConst.MASS_FABRICATING)
+    }
+
+    // Device - Ultimate
     @JvmField
-    val ENCHANTING: HTRecipeTypeImpl<HTEnchantingRecipe.Input, HTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
+    val ENCHANTING: HTRecipeLookupImpl<HTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
 
     @JvmStatic
-    private fun <INPUT : RecipeInput, RECIPE : Any> create(path: String): HTRecipeTypeImpl<INPUT, RECIPE> =
-        HTRecipeTypeManager.create(RagiumAPI.id(path))
+    private fun <RECIPE : Any> create(path: String): HTRecipeLookupImpl<RECIPE> = HTRecipeLookupManager.create(RagiumAPI.id(path))
+
+    @JvmStatic
+    private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(recipeType: HTDeferredRecipeType<RECIPE>): HTRecipeLookup<RECIPE> = HTVanillaRecipeLookup(recipeType)
 
     @JvmStatic
     fun init() {
-        ALLOYING.addProvider(RagiumRecipeTypes.ALLOYING.get(), identity())
         ASSEMBLING.addProvider(RagiumRecipeTypes.ASSEMBLING.get(), identity())
+        COMPRESSING.addProvider(RagiumRecipeTypes.COMPRESSING.get(), identity())
         CUTTING.addProvider(RagiumRecipeTypes.CUTTING.get(), identity())
         PLANTING.addProvider(RagiumRecipeTypes.PLANTING.get(), identity())
 
         FREEZING.addProvider(RagiumRecipeTypes.FREEZING.get(), identity())
         MELTING.addProvider(RagiumRecipeTypes.MELTING.get(), identity())
+        MELTING.addProvider(RagiumAPI.id(RagiumConst.MELTING, "exp_from_ench_book") to HTBookMeltingRecipe)
         PYROLYZING.addProvider(RagiumRecipeTypes.PYROLYZING.get(), identity())
-        REFINING.addProvider(RagiumRecipeTypes.REFINING.get(), identity())
 
-        CHEMICAL_WASHING.addProvider(RagiumRecipeTypes.CHEMICAL_WASHING.get(), identity())
-        ELECTROLYZING.addProvider(RagiumRecipeTypes.ELECTROLYZING.get(), identity())
-        MIXING.addProvider(RagiumRecipeTypes.MIXING.get(), identity())
-        WASHING.addProvider(RagiumRecipeTypes.WASHING.get(), identity())
+        BATHING.addProvider(RagiumRecipeTypes.BATHING.get(), identity())
 
-        DUPLICATING.addProvider { context: HTRecipeLookup.Context ->
-            context.access
-                .lookupOrThrow(Registries.ITEM)
-                .getDataSequence(RagiumDataMapTypes.DUPLICATION_COST)
-                .map { (holder: HTSimpleHolderLike<Item>, matterValue: Int) ->
-                    HTRecipeHolder(holder.getId(), RagiumDuplicatingRecipe(HTIngredientCreator.create(holder.get()), matterValue))
-                }
-        }
         ENCHANTING.addProvider(RagiumRecipeTypes.ENCHANTING.get(), identity())
     }
 }

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 360,
+    "fluids": "#hiiragi_core:eldritch"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "hiiragi_core:wither_doll"
+  },
+  "result": {
+    "count": 1,
+    "id": "hiiragi_core:wither_star"
+  },
+  "time": 200
+}

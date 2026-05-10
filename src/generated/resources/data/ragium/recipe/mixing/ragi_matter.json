@@ -1,0 +1,16 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#hiiragi_core:eldritch"
+  },
+  "fluid_result": {
+    "amount": 250,
+    "id": "ragium:ragi_matter"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "ragium:ragi_matter"
+  },
+  "time": 2000
+}

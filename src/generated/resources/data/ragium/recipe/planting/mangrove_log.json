@@ -1,12 +1,6 @@
 {
   "type": "ragium:planting",
-  "addition": {
-    "items": "#minecraft:dirt"
-  },
-  "base": {
-    "amount": 1,
-    "items": "minecraft:mangrove_propagule"
-  },
+  "plant": "minecraft:mangrove_propagule",
   "results": [
     {
       "count": 6,
@@ -14,8 +8,10 @@
     },
     {
       "chance": "1/6",
+      "count": 1,
       "id": "minecraft:mangrove_propagule"
     }
   ],
+  "soil": "#minecraft:dirt",
   "time": 100
 }

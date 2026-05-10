@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "ragium:block/industrial_tnt_top",
+    "side": "ragium:block/industrial_tnt_side"
+  }
+}

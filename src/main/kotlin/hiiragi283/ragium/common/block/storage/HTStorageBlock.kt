@@ -5,7 +5,7 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.common.block.HTBasicEntityBlock
 import hiiragi283.core.common.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.ragium.common.block.entity.storage.HTStorageBlockEntity
+import hiiragi283.ragium.api.block.entity.HTBlockEntityWithMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionResult
@@ -31,7 +31,7 @@ abstract class HTStorageBlock(type: HTDeferredBlockEntityType<*>, properties: Pr
         return InteractionResult.sidedSuccess(level.isClientSide)
     }
 
-    final override fun setup(context: HTBlockWidgetHolderContext, widgetHolder: HTWidgetHolder) {
-        (context.blockEntity as? HTStorageBlockEntity)?.setupMenu(widgetHolder)
+    override fun setup(context: HTBlockWidgetHolderContext, widgetHolder: HTWidgetHolder) {
+        (context.blockEntity as? HTBlockEntityWithMenu)?.setupMenu(widgetHolder)
     }
 }

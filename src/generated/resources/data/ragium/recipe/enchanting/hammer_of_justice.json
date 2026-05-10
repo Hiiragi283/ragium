@@ -1,0 +1,8 @@
+{
+  "type": "ragium:enchanting/holder",
+  "enchantment": "hiiragi_core:hammer_of_justice",
+  "ingredient": {
+    "amount": 1,
+    "items": "minecraft:ominous_bottle"
+  }
+}

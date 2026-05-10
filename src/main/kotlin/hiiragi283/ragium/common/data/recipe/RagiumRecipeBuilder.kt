@@ -1,26 +1,74 @@
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.common.data.recipe.builder.HTDoubleMultiOutputRecipeBuilder
-import hiiragi283.core.common.data.recipe.builder.HTSingleMultiOutputRecipeBuilder
+import hiiragi283.core.api.recipe.result.HTFluidResult
+import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.common.data.recipe.builder.HTItemOrFluidRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
+import hiiragi283.core.common.data.recipe.builder.HTItemToResultRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.core.common.data.recipe.builder.HTItemAndFluidToItemRecipeBuilder
+import hiiragi283.ragium.common.recipe.HTBathingRecipe
+import hiiragi283.ragium.common.recipe.HTCompressingRecipe
 import hiiragi283.ragium.common.recipe.HTCuttingRecipe
-import hiiragi283.ragium.common.recipe.HTPlantingRecipe
+import hiiragi283.ragium.common.recipe.HTImplodingRecipe
+import hiiragi283.ragium.common.recipe.HTMeltingRecipe
+import hiiragi283.ragium.common.recipe.HTPyrolyzingRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import net.minecraft.data.recipes.RecipeOutput
 
 data object RagiumRecipeBuilder {
+    //    Basic    //
+
     @JvmStatic
-    inline fun cutting(output: RecipeOutput, builderAction: HTSingleMultiOutputRecipeBuilder.() -> Unit) {
-        HTSingleMultiOutputRecipeBuilder(RagiumConst.CUTTING, ::HTCuttingRecipe).apply(builderAction).save(output)
+    inline fun compressing(output: RecipeOutput, builderAction: HTItemToResultRecipeBuilder<HTItemResult>.() -> Unit) {
+        HTItemToResultRecipeBuilder(RagiumConst.COMPRESSING, ::HTCompressingRecipe).apply(builderAction).save(output)
     }
 
     @JvmStatic
-    inline fun planting(output: RecipeOutput, builderAction: HTDoubleMultiOutputRecipeBuilder.() -> Unit) {
-        HTDoubleMultiOutputRecipeBuilder(RagiumConst.PLANTING, ::HTPlantingRecipe).apply(builderAction).save(output)
+    inline fun cutting(output: RecipeOutput, builderAction: HTItemToMultiItemRecipeBuilder.() -> Unit) {
+        HTItemToMultiItemRecipeBuilder(RagiumConst.CUTTING, ::HTCuttingRecipe)
+            .apply { time /= 2 }
+            .apply(builderAction)
+            .save(output)
+    }
+
+    //    Advanced    //
+
+    @JvmStatic
+    inline fun imploding(output: RecipeOutput, builderAction: HTItemToResultRecipeBuilder<HTItemResult>.() -> Unit) {
+        HTItemToResultRecipeBuilder(RagiumConst.IMPLODING, ::HTImplodingRecipe)
+            .apply { time /= 2 }
+            .apply(builderAction)
+            .save(output)
     }
 
     @JvmStatic
-    inline fun washing(output: RecipeOutput, builderAction: HTSingleMultiOutputRecipeBuilder.() -> Unit) {
-        HTSingleMultiOutputRecipeBuilder(RagiumConst.WASHING, ::HTWashingRecipe).apply(builderAction).save(output)
+    inline fun melting(output: RecipeOutput, builderAction: HTItemToResultRecipeBuilder<HTFluidResult>.() -> Unit) {
+        HTItemToResultRecipeBuilder(RagiumConst.MELTING, ::HTMeltingRecipe)
+            .apply(builderAction)
+            .save(output)
+    }
+
+    @JvmStatic
+    inline fun pyrolyzing(output: RecipeOutput, builderAction: HTItemOrFluidRecipeBuilder.() -> Unit) {
+        HTItemOrFluidRecipeBuilder(RagiumConst.PYROLYZING, ::HTPyrolyzingRecipe)
+            .apply { time *= 3 }
+            .apply(builderAction)
+            .save(output)
+    }
+
+    @JvmStatic
+    inline fun washing(output: RecipeOutput, builderAction: HTItemToMultiItemRecipeBuilder.() -> Unit) {
+        HTItemToMultiItemRecipeBuilder(RagiumConst.WASHING, ::HTWashingRecipe)
+            .apply { time /= 2 }
+            .apply(builderAction)
+            .save(output)
+    }
+
+    //    Elite    //
+
+    @JvmStatic
+    inline fun bathing(output: RecipeOutput, builderAction: HTItemAndFluidToItemRecipeBuilder.() -> Unit) {
+        HTItemAndFluidToItemRecipeBuilder(RagiumConst.BATHING, ::HTBathingRecipe).apply(builderAction).save(output)
     }
 }
