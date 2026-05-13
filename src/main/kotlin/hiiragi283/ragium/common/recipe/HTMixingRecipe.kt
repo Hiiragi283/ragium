@@ -75,7 +75,7 @@ class HTMixingRecipe(
         fluidIngredient.getRequiredAmount(third),
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: FluidStack): Ior<ItemStack, FluidStack> = result.mapLeft { it.getOrEmpty() }.mapRight { it.create() }
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: FluidStack): Ior<ItemStack, FluidStack> = result.mapLeft { it.createOrEmpty() }.mapRight { it.create() }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 

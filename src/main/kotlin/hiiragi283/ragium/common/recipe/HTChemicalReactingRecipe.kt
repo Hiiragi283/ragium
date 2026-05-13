@@ -10,9 +10,10 @@ import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
+import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.recipe.result.HTListFluidResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
+import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.api.util.Ior
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.recipe.result.HTChemicalResult
@@ -28,7 +29,7 @@ import java.util.Optional
 class HTChemicalReactingRecipe(
     val primary: HTFluidIngredient,
     val secondary: Ior<HTFluidIngredient, Ingredient>,
-    val fluidResults: HTListFluidResult,
+    val fluidResults: List<HTFluidResult>,
     val itemResult: Optional<HTItemResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.TripleInput<HTChemicalReactingRecipe.Input, ItemStack, FluidStack, FluidStack>,
@@ -48,8 +49,8 @@ class HTChemicalReactingRecipe(
                             HTFluidIngredient.CODEC.fieldOf("secondary"),
                             HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST),
                         ).forGetter(HTChemicalReactingRecipe::secondary),
-                    HTListFluidResult
-                        .codec(2)
+                    HTFluidResult.CODEC
+                        .listOrElement(1..2)
                         .fieldOf(HTConst.FLUID_RESULT)
                         .forGetter(HTChemicalReactingRecipe::fluidResults),
                     HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).forGetter(HTChemicalReactingRecipe::itemResult),

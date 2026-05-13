@@ -61,7 +61,7 @@ class HTAlloyingRecipe(
         tertiary?.getRequiredAmount(third) ?: 0,
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): ItemStack = result.getOrEmpty()
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): ItemStack = result.createOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ALLOYING
 

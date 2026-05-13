@@ -27,6 +27,7 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
@@ -67,7 +68,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // 2x H2O -> 2x H2 + O2
         HTChemicalReactingRecipeBuilder.create(output) {
             ingredients += inputCreator.water()
-            catalyst += itemCreator.create(Items.HEART_OF_THE_SEA)
+            catalyst = itemCreator.create(Items.HEART_OF_THE_SEA)
             fluidResults += resultCreator.create(RagiumFluids.HYDROGEN)
             fluidResults += resultCreator.create(RagiumFluids.OXYGEN, 500)
             recipeId suffix "_from_water"
@@ -121,7 +122,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTChemicalReactingRecipeBuilder.create(output) {
             ingredients += inputCreator.create(RagiumFluids.SYNTHETIC_GAS, 1000)
             ingredients += inputCreator.water()
-            catalyst += catalyst(CommonMaterialKeys.PLATINUM)
+            catalyst = catalyst(CommonMaterialKeys.PLATINUM)
 
             fluidResults += resultCreator.create(RagiumFluids.HYDROGEN, 2000)
             recipeId replace RagiumAPI.id("water_gas_shift_reaction")
@@ -149,10 +150,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Cryo-Charge
         HTShapedRecipeBuilder.create(output) {
             cross8()
-            define('A') += Items.PACKED_ICE
-            define('B') += Items.BLUE_ICE
-            define('C') += CommonTagPrefixes.DUST to VanillaMaterialKeys.BREEZE
-            resultStack += RagiumItems.CRYO_CHARGE
+            define('A') { itemCreator.create(Items.PACKED_ICE) }
+            define('B') { itemCreator.create(Items.BLUE_ICE) }
+            define('C') { itemCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.BREEZE) }
+            resultStack = RagiumItems.CRYO_CHARGE.toStack()
         }
         // Cryo-Charge -> liq N2
         RagiumRecipeBuilder.melting(output) {
@@ -282,7 +283,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTChemicalReactingRecipeBuilder.create(output) {
             ingredients += inputCreator.create(RagiumFluids.METHANE, 1000)
             ingredients += inputCreator.water()
-            catalyst += itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL)
+            catalyst = itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.NICKEL)
 
             fluidResults += resultCreator.create(RagiumFluids.SYNTHETIC_GAS, 2000)
             recipeId suffix "_from_methane"
@@ -334,14 +335,14 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTChemicalReactingRecipeBuilder.create(output) {
             ingredients += inputCreator.create(RagiumFluids.HYDROGEN, 3000)
             ingredients += inputCreator.create(RagiumFluids.NITROGEN)
-            catalyst += catalyst(VanillaMaterialKeys.IRON)
+            catalyst = catalyst(VanillaMaterialKeys.IRON)
             fluidResults += resultCreator.create(RagiumFluids.AMMONIA, 2000)
         }
         // 4x NH3 + 7x O2 -> 4x NO2 + 6x H2O
         HTChemicalReactingRecipeBuilder.create(output) {
             ingredients += inputCreator.create(RagiumFluids.AMMONIA, 4000)
             ingredients += inputCreator.create(RagiumFluids.OXYGEN, 7000)
-            catalyst += catalyst(CommonMaterialKeys.PLATINUM)
+            catalyst = catalyst(CommonMaterialKeys.PLATINUM)
             fluidResults += resultCreator.create(RagiumFluids.NITROGEN_DIOXIDE, 4000)
         }
         // Ghast Tear -> NO2
@@ -362,10 +363,10 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Carbon Compound + Saltpeter -> Gunpowder
         HTShapelessRecipeBuilder.create(output) {
             val carbons: List<HTMaterialKey> = listOf(VanillaMaterialKeys.COAL, VanillaMaterialKeys.CHARCOAL, CommonMaterialKeys.CARBON)
-            ingredients += listOf(CommonTagPrefixes.DUST) to carbons
-            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.SALTPETER
-            ingredients += CommonTagPrefixes.DUST to CommonMaterialKeys.SULFUR
-            resultStack += Items.GUNPOWDER
+            ingredients += carbons.map(CommonTagPrefixes.DUST::itemTagKey).let(itemCreator::create)
+            ingredients += itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SALTPETER)
+            ingredients += itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+            resultStack = ItemStack(Items.GUNPOWDER)
             recipeId suffix "_from_carbon_compound"
         }
 
@@ -377,11 +378,11 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // Nitroglycerin -> Dynamite
         HTShapelessRecipeBuilder.create(output) {
-            ingredients += Items.PAPER
-            ingredients += Tags.Items.STRINGS
-            ingredients += Tags.Items.SANDS
-            ingredients += RagiumItems.NITROGLYCERIN
-            resultStack += RagiumItems.DYNAMITE to 2
+            ingredients += itemCreator.create(Items.PAPER)
+            ingredients += itemCreator.create(Tags.Items.STRINGS)
+            ingredients += itemCreator.create(Tags.Items.SANDS)
+            ingredients += itemCreator.create(RagiumItems.NITROGLYCERIN)
+            resultStack = RagiumItems.DYNAMITE.toStack(2)
         }
         // HNO3 + Paper -> Nitrocellulose
         RagiumRecipeBuilder.bathing(output) {
@@ -391,22 +392,22 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         }
         // Nitrocellulose + Nitroglycerin -> Smokeless Powder
         HTShapelessRecipeBuilder.create(output) {
-            ingredients += RagiumItems.NITROCELLULOSE
-            ingredients += RagiumItems.NITROGLYCERIN
-            resultStack += RagiumItems.SMOKELESS_POWDER
+            ingredients += itemCreator.create(RagiumItems.NITROCELLULOSE)
+            ingredients += itemCreator.create(RagiumItems.NITROGLYCERIN)
+            resultStack = RagiumItems.SMOKELESS_POWDER.toStack()
         }
         // Smokeless -> 4x Gunpowder
         HTShapelessRecipeBuilder.create(output) {
-            ingredients += RagiumItems.SMOKELESS_POWDER
-            resultStack += Items.GUNPOWDER to 4
+            ingredients += itemCreator.create(RagiumItems.SMOKELESS_POWDER)
+            resultStack = ItemStack(Items.GUNPOWDER, 4)
             recipeId suffix "_from_smokeless"
         }
         // Smokeless -> Industrial TNT
         HTShapedRecipeBuilder.create(output) {
             mosaic9()
-            define('A') += RagiumItems.SMOKELESS_POWDER
-            define('B') += Tags.Items.SANDS
-            resultStack += RagiumBlocks.INDUSTRIAL_TNT
+            define('A') { itemCreator.create(RagiumItems.SMOKELESS_POWDER) }
+            define('B') { itemCreator.create(Tags.Items.SANDS) }
+            resultStack = RagiumBlocks.INDUSTRIAL_TNT.toStack()
         }
     }
 
@@ -421,7 +422,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         HTChemicalReactingRecipeBuilder.create(output) {
             ingredients += inputCreator.create(RagiumFluids.SULFUR_DIOXIDE)
             ingredients += inputCreator.create(RagiumFluids.OXYGEN, 500)
-            catalyst += catalyst(VanillaMaterialKeys.IRON)
+            catalyst = catalyst(VanillaMaterialKeys.IRON)
             fluidResults += resultCreator.create(RagiumFluids.SULFUR_TRIOXIDE)
         }
         // Blaze Powder -> SO3
@@ -484,7 +485,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Silicon Wafer -> Circuit Chip
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(RagiumItems.SILICON_WAFER)
-            results += resultCreator.create(RagiumItems.CIRCUIT_CHIP, 4)
+            results += resultCreator.create(RagiumItems.CIRCUIT_CHIP, 4).withChance()
         }
         // Circuit Board + Circuit chip -> Electric Circuit
         HTCombiningRecipeBuilder.assembling(output) {
@@ -569,24 +570,24 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Artificial Artifact
         HTShapedRecipeBuilder.create(output) {
             cross8()
-            define('A') += CommonTagPrefixes.NUGGET to VanillaMaterialKeys.NETHERITE
-            define('B') += RagiumItems.ELECTRIC_CIRCUIT
-            define('C') += CommonTagPrefixes.PEARL to HCMaterialKeys.ELDRITCH
-            resultStack += RagiumItems.ARTIFICIAL_ARTIFACT
+            define('A') { itemCreator.create(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.NETHERITE) }
+            define('B') { itemCreator.create(RagiumItems.ELECTRIC_CIRCUIT) }
+            define('C') { itemCreator.create(CommonTagPrefixes.PEARL, HCMaterialKeys.ELDRITCH) }
+            resultStack = RagiumItems.ARTIFICIAL_ARTIFACT.toStack()
         }
         // Reinforced Deepslate
         HTShapedRecipeBuilder.create(output) {
             hollow8()
-            define('A') += Items.DEEPSLATE
-            define('B') += RagiumItems.ARTIFICIAL_ARTIFACT
-            resultStack += Items.REINFORCED_DEEPSLATE to 8
+            define('A') { itemCreator.create(Items.DEEPSLATE) }
+            define('B') { itemCreator.create(RagiumItems.ARTIFICIAL_ARTIFACT) }
+            resultStack = ItemStack(Items.REINFORCED_DEEPSLATE, 8)
         }
         // Heavy Core
         HTShapedRecipeBuilder.create(output) {
             hollow8()
-            define('A') += CommonTagPrefixes.INGOT to VanillaMaterialKeys.NETHERITE
-            define('B') += RagiumItems.ARTIFICIAL_ARTIFACT
-            resultStack += Items.HEAVY_CORE
+            define('A') { itemCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.NETHERITE) }
+            define('B') { itemCreator.create(RagiumItems.ARTIFICIAL_ARTIFACT) }
+            resultStack = ItemStack(Items.HEAVY_CORE)
         }
         // Elytra
         HTShapedRecipeBuilder.create(output) {
@@ -595,9 +596,9 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
                 "A A",
                 "A A",
             )
-            define('A') += HiiragiCoreTags.Items.PLASTICS
-            define('B') += RagiumItems.ARTIFICIAL_ARTIFACT
-            resultStack += Items.ELYTRA
+            define('A') { itemCreator.create(HiiragiCoreTags.Items.PLASTICS) }
+            define('B') { itemCreator.create(RagiumItems.ARTIFICIAL_ARTIFACT) }
+            resultStack = ItemStack(Items.ELYTRA)
         }
     }
 
@@ -613,16 +614,16 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Iridescent Powder
         HTShapedRecipeBuilder.create(output) {
             pattern("ABC", "DEF", "GHI")
-            define('A') += CommonTagPrefixes.DUST to CommonMaterialKeys.RUTHENIUM
-            define('B') += CommonTagPrefixes.DUST to CommonMaterialKeys.RHODIUM
-            define('C') += CommonTagPrefixes.DUST to CommonMaterialKeys.PALLADIUM
-            define('D') += Items.CONDUIT
-            define('E') += Tags.Items.NETHER_STARS
-            define('F') += Items.HEAVY_CORE
-            define('G') += CommonTagPrefixes.DUST to CommonMaterialKeys.OSMIUM
-            define('H') += CommonTagPrefixes.DUST to CommonMaterialKeys.IRIDIUM
-            define('I') += CommonTagPrefixes.DUST to CommonMaterialKeys.PLATINUM
-            resultStack += HCItems.IRIDESCENT_POWDER
+            define('A') { itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.RUTHENIUM) }
+            define('B') { itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.RHODIUM) }
+            define('C') { itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PALLADIUM) }
+            define('D') { itemCreator.create(Items.CONDUIT) }
+            define('E') { itemCreator.create(Tags.Items.NETHER_STARS) }
+            define('F') { itemCreator.create(Items.HEAVY_CORE) }
+            define('G') { itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.OSMIUM) }
+            define('H') { itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.IRIDIUM) }
+            define('I') { itemCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.PLATINUM) }
+            resultStack = HCItems.IRIDESCENT_POWDER.toStack()
         }
 
         // Ambrosia

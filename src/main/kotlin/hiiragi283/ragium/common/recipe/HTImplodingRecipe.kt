@@ -59,7 +59,7 @@ class HTImplodingRecipe(val ingredient: HTItemIngredient, val result: HTItemResu
             }?.value ?: 0,
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = result.getOrEmpty()
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = result.createOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.IMPLODING
 

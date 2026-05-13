@@ -52,14 +52,14 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.STRIPPED_LOG)?.let { strippedLog: Item ->
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(strippedLog)
-                    results += resultCreator.create(planks, 6)
+                    results += resultCreator.create(planks, 6).withChance()
                     recipeId suffix "_from_log"
                 }
                 // Log -> Stripped Log
                 type.getItemOfThis(VanillaWoodChildKeys.LOG)?.let {
                     RagiumRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
-                        results += resultCreator.create(strippedLog)
+                        results += resultCreator.create(strippedLog).withChance()
                         recipeId suffix "_from_log"
                     }
                 }
@@ -68,14 +68,14 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.STRIPPED_WOOD)?.let { strippedWood: Item ->
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(strippedWood)
-                    results += resultCreator.create(planks, 6)
+                    results += resultCreator.create(planks, 6).withChance()
                     recipeId suffix "_from_wood"
                 }
                 // Wood -> Stripped Wood
                 type.getItemOfThis(VanillaWoodChildKeys.WOOD)?.let {
                     RagiumRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
-                        results += resultCreator.create(strippedWood)
+                        results += resultCreator.create(strippedWood).withChance()
                         recipeId suffix "_from_wood"
                     }
                 }
@@ -84,15 +84,15 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.BOAT)?.let { boat: Item ->
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(boat)
-                    results += resultCreator.create(planks, 5)
+                    results += resultCreator.create(planks, 5).withChance()
                     recipeId suffix "_from_boat"
                 }
                 // Chest Boat
                 type.getItemOfThis(VanillaWoodChildKeys.CHEST_BOAT)?.let {
                     RagiumRecipeBuilder.cutting(output) {
                         ingredient = inputCreator.create(it)
-                        results += resultCreator.create(boat)
-                        results += resultCreator.create(Items.CHEST)
+                        results += resultCreator.create(boat).withChance()
+                        results += resultCreator.create(Items.CHEST).withChance()
                     }
                 }
             }
@@ -101,8 +101,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.FENCE)?.let {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
-                    results += resultCreator.create(planks)
-                    results += resultCreator.create(Items.STICK)
+                    results += resultCreator.create(planks).withChance()
+                    results += resultCreator.create(Items.STICK).withChance()
                     recipeId suffix "_from_fence"
                 }
             }
@@ -110,8 +110,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.FENCE_GATE)?.let {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
-                    results += resultCreator.create(planks, 2)
-                    results += resultCreator.create(Items.STICK, 4)
+                    results += resultCreator.create(planks, 2).withChance()
+                    results += resultCreator.create(Items.STICK, 4).withChance()
                     recipeId suffix "_from_fence_gate"
                 }
             }
@@ -119,7 +119,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.PRESSURE_PLATE)?.let {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
-                    results += resultCreator.create(planks, 2)
+                    results += resultCreator.create(planks, 2).withChance()
                     recipeId suffix "_from_pressure_plate"
                 }
             }
@@ -127,8 +127,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.SIGN)?.let {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
-                    results += resultCreator.create(planks, 2)
-                    results += resultCreator.create(Items.STICK, chance = fraction(1, 3))
+                    results += resultCreator.create(planks, 2).withChance()
+                    results += resultCreator.create(Items.STICK).withChance(fraction(1, 3))
                     recipeId suffix "_from_sign"
                 }
             }
@@ -136,8 +136,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.HANGING_SIGN)?.let {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
-                    results += resultCreator.create(planks, 4)
-                    results += resultCreator.create(Items.CHAIN, chance = fraction(1, 3))
+                    results += resultCreator.create(planks, 4).withChance()
+                    results += resultCreator.create(Items.CHAIN).withChance(fraction(1, 3))
                     recipeId suffix "_from_hanging_sign"
                 }
             }
@@ -145,7 +145,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.SLAB)?.let {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(planks)
-                    results += resultCreator.create(it, 2)
+                    results += resultCreator.create(it, 2).withChance()
                 }
             }
             // Stairs
@@ -153,7 +153,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.DOOR)?.let {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
-                    results += resultCreator.create(planks, 2)
+                    results += resultCreator.create(planks, 2).withChance()
                     recipeId suffix "_from_door"
                 }
             }
@@ -161,7 +161,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             type.getItemOfThis(VanillaWoodChildKeys.TRAPDOOR)?.let {
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(it)
-                    results += resultCreator.create(planks, 3)
+                    results += resultCreator.create(planks, 3).withChance()
                     recipeId suffix "_from_trapdoor"
                 }
             }
@@ -174,8 +174,8 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
             val wool: HTSimpleItemHolderLike = VanillaColoredContents.WOOL[color] ?: continue
             RagiumRecipeBuilder.cutting(output) {
                 ingredient = inputCreator.create(bed)
-                results += resultCreator.create(wool, 3)
-                results += resultCreator.create(Items.OAK_PLANKS, 3)
+                results += resultCreator.create(wool, 3).withChance()
+                results += resultCreator.create(Items.OAK_PLANKS, 3).withChance()
                 recipeId suffix "_from_bed"
             }
         }
@@ -199,7 +199,7 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
                 // Dis-waxing
                 RagiumRecipeBuilder.cutting(output) {
                     ingredient = inputCreator.create(after)
-                    results += resultCreator.create(before)
+                    results += resultCreator.create(before).withChance()
                     recipeId suffix "_from_${after.path}"
                 }
             }

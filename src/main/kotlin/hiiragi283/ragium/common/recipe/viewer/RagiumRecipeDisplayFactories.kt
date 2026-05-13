@@ -70,7 +70,7 @@ data object RagiumRecipeDisplayFactories {
     fun planting(holder: HTRecipeHolder<RTPlantingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.plant)
         addCatalyst(it.soil)
-        it.results.results.forEach(::addOutput)
+        it.results.forEach(::addOutput)
     }
 
     // Machine - Advanced
@@ -114,7 +114,7 @@ data object RagiumRecipeDisplayFactories {
     fun washing(holder: HTRecipeHolder<HTWashingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.ingredient)
         addInput(HTWashingRecipe.WATER_INGREDIENT)
-        it.results.results.forEach(::addOutput)
+        it.results.forEach(::addOutput)
     }
 
     // Machine - Elite

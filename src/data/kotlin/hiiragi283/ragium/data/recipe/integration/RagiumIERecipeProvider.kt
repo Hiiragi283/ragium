@@ -36,12 +36,12 @@ data object RagiumIERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.M
         // Duroplast
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(IETags.fluidResin, 4000)
-            catalyst += HTBluePrintIngredient(0).toVanilla()
+            catalyst = HTBluePrintIngredient(0).toVanilla()
             result = resultCreator.create(IEBlocks.StoneDecoration.DUROPLAST)
         }
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(IETags.fluidResin)
-            catalyst += HTBluePrintIngredient(1).toVanilla()
+            catalyst = HTBluePrintIngredient(1).toVanilla()
             result = resultCreator.create(IEItems.Ingredients.DUROPLAST_PLATE)
         }
         // HOP Graphite
@@ -65,7 +65,7 @@ data object RagiumIERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.M
         // Acetaldehyde
         HTRefiningRecipeBuilder.create(output) {
             ingredient = inputCreator.create(IETags.fluidEthanol, 250)
-            catalyst += CommonTagPrefixes.PLATE to CommonMaterialKeys.SILVER
+            catalyst = itemCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.SILVER)
             fluidResults += resultCreator.create(IEFluids.ACETALDEHYDE.still, 250)
         }
 

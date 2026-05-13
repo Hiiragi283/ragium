@@ -14,5 +14,5 @@ abstract class HTBasicAssemblingRecipe(
 ) : HTDoubleItemToItemRecipe,
     HTProgressRecipe.Simple<RecipeInput>,
     HTSerializableRecipe<RecipeInput> {
-    final override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = result.getOrEmpty()
+    final override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = result.createOrEmpty()
 }

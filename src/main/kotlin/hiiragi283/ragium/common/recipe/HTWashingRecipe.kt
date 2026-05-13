@@ -11,8 +11,10 @@ import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
-import hiiragi283.core.api.recipe.result.HTListItemResult
+import hiiragi283.core.api.recipe.result.HTChancedItemResult
+import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -20,7 +22,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTWashingRecipe(val ingredient: HTItemIngredient, val results: HTListItemResult, override val progressData: HTProgressData) :
+class HTWashingRecipe(val ingredient: HTItemIngredient, val results: List<HTChancedItemResult>, override val progressData: HTProgressData) :
     HTRecipePredicates.ItemAndFluid,
     HTRecipeFactories.SingleItemTo<Iterable<ItemStack>>,
     HTProgressRecipe.Simple<HTItemAndFluidRecipeInput>,
@@ -31,7 +33,7 @@ class HTWashingRecipe(val ingredient: HTItemIngredient, val results: HTListItemR
             instance
                 .group(
                     HTItemIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTWashingRecipe::ingredient),
-                    HTListItemResult.codec(4).fieldOf(HTConst.RESULTS).forGetter(HTWashingRecipe::results),
+                    HTChancedItemResult.CODEC.listOrElement(1..4).fieldOf(HTConst.RESULTS).forGetter(HTWashingRecipe::results),
                     HTProgressData.CODEC.forGetter(HTWashingRecipe::progressData),
                 ).apply(instance, ::HTWashingRecipe)
         }
@@ -44,7 +46,7 @@ class HTWashingRecipe(val ingredient: HTItemIngredient, val results: HTListItemR
 
     override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = ingredient.getRequiredAmount(first) to WATER_INGREDIENT.getRequiredAmount(second)
 
-    override fun assemble(input: ItemStack): Iterable<ItemStack> = results
+    override fun assemble(input: ItemStack): Iterable<ItemStack> = results.map(HTChancedItemResult::createOrEmpty).let(HTShapelessRecipeHelper::mergeStacks)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.WASHING
 

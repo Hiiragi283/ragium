@@ -13,6 +13,7 @@ import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 
@@ -63,8 +64,8 @@ object RagiumMatterRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID)
     private fun matterRecipe(result: ItemLike, vararg pattern: String, count: Int = 1) {
         HTShapedRecipeBuilder.create(output) {
             pattern(*pattern)
-            define('A') += RagiumItems.RAGI_MATTER
-            resultStack += result to count
+            define('A') { itemCreator.create(RagiumItems.RAGI_MATTER) }
+            resultStack = ItemStack(result, count)
             recipeId suffix "_from_matter"
         }
     }

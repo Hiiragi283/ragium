@@ -14,7 +14,6 @@ import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.api.util.Ior
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemSlotWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
@@ -155,12 +154,11 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         val stack: ItemStack = inputHandler.getItemStack()
         val recipe: HTTankEmptyingRecipe = emptyingCache.findFirstRecipe(stack, level) ?: return false
 
-        val rawResult: Ior<ItemStack, FluidStack> = recipe.assemble(stack)
-        val fluidStack: FluidStack = rawResult.getRight() ?: return false
-        if (outputHandler.canInsert(stack) && fluidOutputHandler.canInsert(fluidStack)) {
+        val (item: ItemStack, fluid: FluidStack) = recipe.assemble(stack)
+        if (outputHandler.canInsert(item) && fluidOutputHandler.canInsert(fluid)) {
             // outputs
-            outputHandler.insert(stack)
-            fluidOutputHandler.insert(fluidStack)
+            outputHandler.insert(item)
+            fluidOutputHandler.insert(fluid)
             // input
             inputHandler.consume(1)
             return true

@@ -44,7 +44,7 @@ class HTFreezingRecipe(
 
     override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = 0 to ingredient.getRequiredAmount(second)
 
-    override fun assemble(firstInput: ItemStack, secondInput: FluidStack): ItemStack = result.getOrEmpty()
+    override fun assemble(firstInput: ItemStack, secondInput: FluidStack): ItemStack = result.createOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.FREEZING
 

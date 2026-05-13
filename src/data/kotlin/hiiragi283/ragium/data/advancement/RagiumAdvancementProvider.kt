@@ -42,7 +42,7 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         HTAdvancementBuilder.create(output, key) {
             parent = parentKey
             display {
-                iconStack += item
+                iconStack = item.toStack()
             }
             criteria["has_${item.path}"] = { predicates += { of(item) } }
         }
@@ -53,7 +53,7 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
     override fun generate(registries: HolderLookup.Provider) {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.ROOT) {
             display {
-                iconStack += getItem(CommonParts.DUST, RagiumMaterialKeys.RAGINITE)
+                iconStack = getItem(CommonParts.DUST, RagiumMaterialKeys.RAGINITE).toStack()
                 backGround = HTConst.MINECRAFT.toId(HTConst.TEXTURES, HTConst.BLOCK, "smooth_stone.png")
                 showToast = false
                 showChat = false
@@ -72,7 +72,7 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.RAGI_ALLOY) {
             parent = RagiumAdvancementKeys.ROOT
             display {
-                iconStack += getItem(CommonParts.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+                iconStack = getItem(CommonParts.INGOT, RagiumMaterialKeys.RAGI_ALLOY).toStack()
                 type = AdvancementType.GOAL
             }
             criteria["has_ragi_alloy"] = { predicates += { of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) } }
@@ -86,7 +86,7 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY) {
             parent = RagiumAdvancementKeys.RAGI_ALLOY
             display {
-                iconStack += getItem(CommonParts.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
+                iconStack = getItem(CommonParts.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY).toStack()
             }
             criteria["has_adv_ragi_alloy"] = { predicates += { of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) } }
         }
@@ -94,7 +94,7 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.THERMOMETER) {
             parent = RagiumAdvancementKeys.ALLOY_SMELTER
             display {
-                iconStack += RagiumItems.THERMOMETER
+                iconStack = RagiumItems.THERMOMETER.toStack()
                 type = AdvancementType.GOAL
             }
             criteria["has_thermometer"] = { predicates += { of(RagiumItems.THERMOMETER) } }
@@ -103,14 +103,14 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.PLASTIC) {
             parent = RagiumAdvancementKeys.REFINERY
             display {
-                iconStack += getItem(CommonParts.PLATE, CommonMaterialKeys.PLASTIC)
+                iconStack = getItem(CommonParts.PLATE, CommonMaterialKeys.PLASTIC).toStack()
             }
             criteria["has_plastic"] = { predicates += { of(HiiragiCoreTags.Items.PLASTICS) } }
         }
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.REFINED_SILICON) {
             parent = RagiumAdvancementKeys.REFINERY
             display {
-                iconStack += getItem(CommonParts.DUST, CommonMaterialKeys.SILICON)
+                iconStack = getItem(CommonParts.DUST, CommonMaterialKeys.SILICON).toStack()
             }
             criteria["has_silicon"] = { predicates += { of(CommonTagPrefixes.DUST, CommonMaterialKeys.SILICON) } }
         }
@@ -119,14 +119,14 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.CRIMSON_CRYSTAL) {
             parent = RagiumAdvancementKeys.PYROLYZER
             display {
-                iconStack += getItem(CommonParts.GEM, HCMaterialKeys.CRIMSON_CRYSTAL)
+                iconStack = getItem(CommonParts.GEM, HCMaterialKeys.CRIMSON_CRYSTAL).toStack()
             }
             criteria["has_crimson_crystal"] = { predicates += { of(CommonTagPrefixes.GEM, HCMaterialKeys.CRIMSON_CRYSTAL) } }
         }
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.WARPED_CRYSTAL) {
             parent = RagiumAdvancementKeys.PYROLYZER
             display {
-                iconStack += getItem(CommonParts.GEM, HCMaterialKeys.WARPED_CRYSTAL)
+                iconStack = getItem(CommonParts.GEM, HCMaterialKeys.WARPED_CRYSTAL).toStack()
             }
             criteria["has_warped_crystal"] = { predicates += { of(CommonTagPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL) } }
         }
@@ -137,14 +137,14 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.RAGI_CRYSTAL) {
             parent = RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY
             display {
-                iconStack += getItem(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+                iconStack = getItem(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL).toStack()
             }
             criteria["has_ragi_crystal"] = { predicates += { of(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) } }
         }
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.STAINLESS_STEEL) {
             parent = RagiumAdvancementKeys.RAGI_CRYSTAL
             display {
-                iconStack += getItem(CommonParts.INGOT, RagiumMaterialKeys.STAINLESS_STEEL)
+                iconStack = getItem(CommonParts.INGOT, RagiumMaterialKeys.STAINLESS_STEEL).toStack()
             }
             criteria["has_stainless_steel"] = { predicates += { of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.STAINLESS_STEEL) } }
         }
@@ -152,7 +152,7 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.ELECTRIC_CIRCUIT) {
             parent = RagiumAdvancementKeys.REFINED_SILICON
             display {
-                iconStack += RagiumItems.ELECTRIC_CIRCUIT
+                iconStack = RagiumItems.ELECTRIC_CIRCUIT.toStack()
                 type = AdvancementType.GOAL
             }
             criteria["has_electric_circuit"] = { predicates += { of(RagiumItems.ELECTRIC_CIRCUIT) } }

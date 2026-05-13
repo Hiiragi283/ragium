@@ -23,7 +23,7 @@ data object RagiumAERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.M
         // Sky Stone Dust
         HTItemToMultiItemRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(AEBlocks.SKY_STONE_BLOCK)
-            results += resultCreator.material(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE)
+            results += resultCreator.material(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE).withChance()
             recipeId suffix "_from_stone"
         }
         // Budding Certus Quartz
@@ -68,22 +68,22 @@ data object RagiumAERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.M
     private fun printing() {
         HTPrintingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.GEM, HCIntegrationMaterialKeys.CERTUS_QUARTZ)
-            press += itemCreator.create(AEItems.CALCULATION_PROCESSOR_PRESS)
+            press = itemCreator.create(AEItems.CALCULATION_PROCESSOR_PRESS)
             result = resultCreator.create(AEItems.CALCULATION_PROCESSOR_PRINT)
         }
         HTPrintingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
-            press += itemCreator.create(AEItems.ENGINEERING_PROCESSOR_PRESS)
+            press = itemCreator.create(AEItems.ENGINEERING_PROCESSOR_PRESS)
             result = resultCreator.create(AEItems.ENGINEERING_PROCESSOR_PRINT)
         }
         HTPrintingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD)
-            press += itemCreator.create(AEItems.LOGIC_PROCESSOR_PRESS)
+            press = itemCreator.create(AEItems.LOGIC_PROCESSOR_PRESS)
             result = resultCreator.create(AEItems.LOGIC_PROCESSOR_PRINT)
         }
         HTPrintingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(HiiragiCoreTags.Items.SILICON)
-            press += itemCreator.create(AEItems.SILICON_PRESS)
+            press = itemCreator.create(AEItems.SILICON_PRESS)
             result = resultCreator.create(AEItems.SILICON_PRINT)
         }
     }

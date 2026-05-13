@@ -7,7 +7,7 @@ import hiiragi283.core.api.function.partially1
 import hiiragi283.core.data.bootstrap.HCEnchantmentProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
-import hiiragi283.ragium.data.bootsrap.RagiumWorldData
+import hiiragi283.ragium.data.bootstrap.RagiumWorldData
 import hiiragi283.ragium.data.lang.RagiumEnglishLangProvider
 import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
 import hiiragi283.ragium.data.loot.RagiumBlockLootProvider

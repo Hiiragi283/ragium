@@ -168,21 +168,21 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         // Sapling -> Stick
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(ItemTags.SAPLINGS)
-            results += resultCreator.create(Items.STICK)
+            results += resultCreator.create(Items.STICK).withChance()
             recipeId suffix "_from_saplings"
         }
         // Slab -> Stick
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(ItemTags.WOODEN_SLABS)
-            results += resultCreator.create(Items.STICK, 2)
+            results += resultCreator.create(Items.STICK, 2).withChance()
             recipeId suffix "_from_wooden_slabs"
         }
 
         // Book -> Paper + Leather
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(Items.BOOK)
-            results += resultCreator.create(Items.PAPER, 3)
-            results += resultCreator.create(Items.LEATHER)
+            results += resultCreator.create(Items.PAPER, 3).withChance()
+            results += resultCreator.create(Items.LEATHER).withChance()
             recipeId suffix "_from_book"
         }
     }

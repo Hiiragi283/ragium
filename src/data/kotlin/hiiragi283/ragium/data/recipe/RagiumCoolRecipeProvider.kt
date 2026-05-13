@@ -18,41 +18,41 @@ object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
         // Water -> Snowball
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.water()
-            catalyst += HTBluePrintIngredient(0).toVanilla()
+            catalyst = HTBluePrintIngredient(0).toVanilla()
             result = resultCreator.create(Items.SNOWBALL, 4)
             time /= 4
         }
         // Water -> Ice
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.water()
-            catalyst += HTBluePrintIngredient(1).toVanilla()
+            catalyst = HTBluePrintIngredient(1).toVanilla()
             result = resultCreator.create(Items.ICE)
         }
 
         // Lava -> Obsidian
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.lava()
-            catalyst += HTBluePrintIngredient(0).toVanilla()
+            catalyst = HTBluePrintIngredient(0).toVanilla()
             result = resultCreator.create(Items.OBSIDIAN)
         }
         // Lava -> Magma Block
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.lava(250)
-            catalyst += HTBluePrintIngredient(1).toVanilla()
+            catalyst = HTBluePrintIngredient(1).toVanilla()
             result = resultCreator.create(Items.MAGMA_BLOCK)
         }
 
         // Honey -> Honey Block
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(HCFluids.HONEY)
-            catalyst += HTBluePrintIngredient(0).toVanilla()
+            catalyst = HTBluePrintIngredient(0).toVanilla()
             result = resultCreator.create(Items.HONEY_BLOCK)
         }
 
         // Meat -> Meat Ingot
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(HCFluids.MEAT)
-            catalyst += HTBluePrintIngredient(0).toVanilla()
+            catalyst = HTBluePrintIngredient(0).toVanilla()
             result = resultCreator.create(RagiumItems.MEAT_INGOT)
         }
     }

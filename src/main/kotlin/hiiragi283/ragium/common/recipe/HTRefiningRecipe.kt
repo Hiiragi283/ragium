@@ -10,9 +10,10 @@ import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
+import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.recipe.result.HTListFluidResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
+import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -27,7 +28,7 @@ import java.util.Optional
 class HTRefiningRecipe(
     val ingredient: HTFluidIngredient,
     val catalyst: Optional<Ingredient>,
-    val fluidResults: HTListFluidResult,
+    val fluidResults: List<HTFluidResult>,
     val itemResult: Optional<HTItemResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.ItemAndFluid,
@@ -41,7 +42,7 @@ class HTRefiningRecipe(
                 .group(
                     HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTRefiningRecipe::ingredient),
                     HTCodecs.INGREDIENT.optionalFieldOf(HTConst.CATALYST).forGetter(HTRefiningRecipe::catalyst),
-                    HTListFluidResult.codec(2).fieldOf(HTConst.FLUID_RESULT).forGetter(HTRefiningRecipe::fluidResults),
+                    HTFluidResult.CODEC.listOrElement(1..2).fieldOf(HTConst.FLUID_RESULT).forGetter(HTRefiningRecipe::fluidResults),
                     HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).forGetter(HTRefiningRecipe::itemResult),
                     HTProgressData.CODEC.forGetter(HTRefiningRecipe::progressData),
                 ).apply(instance, ::HTRefiningRecipe)

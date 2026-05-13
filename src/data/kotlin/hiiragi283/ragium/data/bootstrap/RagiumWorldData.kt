@@ -1,4 +1,4 @@
-package hiiragi283.ragium.data.bootsrap
+package hiiragi283.ragium.data.bootstrap
 
 import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.worldgen.HTWorldGenData

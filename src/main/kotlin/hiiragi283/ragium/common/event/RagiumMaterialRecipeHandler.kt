@@ -120,7 +120,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // レシピを登録
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(inputTag, inputCount)
-            results += resultCreator.create(rod, outputCount)
+            results += resultCreator.create(rod, outputCount).withChance()
             time = HCRuntimeRecipeHandler.getTimeFromHardness(entry, time * 3) ?: return
             recipeId suffix "_from_${defaultPart.getSuffix()}"
         }
@@ -135,7 +135,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         // レシピを登録
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, entry)
-            results += resultCreator.create(plate, entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount)
+            results += resultCreator.create(plate, entry.getOrDefault(HTMaterialPropertyKeys.STORAGE_BLOCK).baseCount).withChance()
             time = HCRuntimeRecipeHandler.getTimeFromHardness(entry, time * 3) ?: (time * 3)
             recipeId suffix "_from_block"
         }
@@ -152,7 +152,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
         val resultItem: HTItemHolderLike<*> = event.getFirstHolder(prefix, entry) ?: return
         HTFreezingRecipeBuilder.create(output) {
             ingredient = inputCreator.create(HTFluidPart.MOLTEN, entry) { part.getScaledAmount(it, entry).toInt() }
-            catalyst += HCRuntimeRecipeHandler.getBlueprint(prefix)
+            catalyst = HCRuntimeRecipeHandler.getBlueprint(prefix)
             result = resultCreator.create(resultItem)
             recipeId suffix "_from_molten"
         }
@@ -210,7 +210,7 @@ object RagiumMaterialRecipeHandler : HTRecipeProviderContext.Delegated() {
             // 材料
             ingredient = inputCreator.create(CommonTagPrefixes.CRUSHED_ORE, entry)
             // 主産物
-            results += resultCreator.create(dust, CommonParts.CRUSHED_ORE.getScaledAmount(1, entry).toInt())
+            results += resultCreator.create(dust, CommonParts.CRUSHED_ORE.getScaledAmount(1, entry).toInt()).withChance()
             // 副産物
             entry[HTMaterialPropertyKeys.EXTRA_ORE_RESULTS]
                 ?.getResult(resultCreator, HTExtraOreResultMap.Phase.WASH_CRUSHED)
