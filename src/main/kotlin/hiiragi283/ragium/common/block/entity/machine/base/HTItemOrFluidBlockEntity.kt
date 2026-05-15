@@ -9,7 +9,7 @@ import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -58,31 +58,33 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // inputs
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTFluidWidget
-            .createTank(
-                inputTank,
-                HTSlotHelper.getSlotPosX(1),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.EXTRA_INPUT)
+        widgetHolder += HTFluidWidget.Tank(
+            inputTank,
+            HTSlotHelper.getSlotPosX(1),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.EXTRA_INPUT,
+            false,
+        )
         // outputs
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.OUTPUT,
         )
-        widgetHolder += HTFluidWidget
-            .createTank(
-                outputTank,
-                HTSlotHelper.getSlotPosX(7.5),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.EXTRA_OUTPUT)
+        widgetHolder += HTFluidWidget.Tank(
+            outputTank,
+            HTSlotHelper.getSlotPosX(7.5),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.EXTRA_OUTPUT,
+            false,
+        )
     }
 
     //    Processing    //

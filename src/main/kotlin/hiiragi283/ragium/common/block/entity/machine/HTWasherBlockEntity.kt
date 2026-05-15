@@ -7,7 +7,7 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
@@ -54,22 +54,23 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // inputs
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTFluidWidget
-            .createTank(
-                inputTank,
-                HTSlotHelper.getSlotPosX(1),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.EXTRA_INPUT)
+        widgetHolder += HTFluidWidget.Tank(
+            inputTank,
+            HTSlotHelper.getSlotPosX(1),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.EXTRA_INPUT,
+            false,
+        )
         // outputs
         outputSlots
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->
-                HTItemSlotWidget.container(
+                HTItemWidget.Container(
                     slot,
                     HTSlotHelper.getSlotPosX(6 + index % 2),
                     HTSlotHelper.getSlotPosY(0.5 + index / 2),

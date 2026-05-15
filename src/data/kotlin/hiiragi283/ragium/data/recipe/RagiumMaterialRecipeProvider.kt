@@ -51,7 +51,7 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Raw Meat -> Minced Meat
         HTItemToMultiItemRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(listOf(Tags.Items.FOODS_RAW_MEAT, Tags.Items.FOODS_RAW_FISH))
-            results += resultCreator.material(CommonParts.DUST, RagiumMaterialKeys.MEAT).withChance()
+            results += resultCreator.material(CommonParts.DUST, RagiumMaterialKeys.MEAT)
         }
         // Minced Meat -> Meat Ingot
         RagiumRecipeBuilder.compressing(output) {

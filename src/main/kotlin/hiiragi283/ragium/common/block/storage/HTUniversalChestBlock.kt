@@ -6,7 +6,7 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.item.HTItemSlot
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.gui.factory.HTBlockWidgetHolderContext
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
@@ -25,7 +25,7 @@ class HTUniversalChestBlock(properties: Properties) : HTStorageBlock(RagiumBlock
             ?: HTUniversalChestManager.createSlots()
         slots.forEachIndexed { index: Int, slot: HTItemSlot ->
             if (slot is HTBasicItemSlot) {
-                widgetHolder += HTItemSlotWidget.container(
+                widgetHolder += HTItemWidget.Container(
                     slot,
                     HTSlotHelper.getSlotPosX(index % 9),
                     HTSlotHelper.getSlotPosY(index / 9),

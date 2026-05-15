@@ -6,6 +6,7 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.util.HTDelegates
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTMixingRecipe
 import net.minecraft.data.recipes.RecipeOutput
@@ -20,7 +21,7 @@ class HTMixingRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.MIXING) {
     }
 
     val itemIngredients: MutableList<HTItemIngredient> = mutableListOf()
-    lateinit var fluidIngredient: HTFluidIngredient
+    var fluidIngredient: HTFluidIngredient by HTDelegates.onceInitialize()
     val result: HTIorHolder<HTItemResult, HTFluidResult> = HTIorHolder()
 
     override fun getPrimalId(): ResourceLocation = result.toIor().swap().map(HTFluidResult::getId, HTItemResult::getId)

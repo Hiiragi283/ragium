@@ -15,7 +15,7 @@ import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -83,23 +83,20 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         // slot
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.OUTPUT,
         )
         // tank
-        val fluidWidget: HTFluidWidget =
-            HTFluidWidget.createTank(tank, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0))
-        if (isCreative()) fluidWidget.setGhost()
-        widgetHolder += fluidWidget
+        widgetHolder += HTFluidWidget.Tank(tank, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0), HTBackgroundType.NONE, isCreative())
     }
 
     //    Sync    //

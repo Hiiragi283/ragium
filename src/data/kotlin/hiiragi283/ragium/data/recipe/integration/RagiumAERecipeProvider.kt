@@ -23,7 +23,7 @@ data object RagiumAERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.M
         // Sky Stone Dust
         HTItemToMultiItemRecipeBuilder.crushing(output) {
             ingredient = inputCreator.create(AEBlocks.SKY_STONE_BLOCK)
-            results += resultCreator.material(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE).withChance()
+            results += resultCreator.material(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE)
             recipeId suffix "_from_stone"
         }
         // Budding Certus Quartz

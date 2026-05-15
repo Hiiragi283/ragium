@@ -11,7 +11,7 @@ import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.cache.completed.HTDoubleInputCompletedRecipe
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
@@ -54,20 +54,20 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // slots
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             catalystSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.NONE,
         )
 
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),

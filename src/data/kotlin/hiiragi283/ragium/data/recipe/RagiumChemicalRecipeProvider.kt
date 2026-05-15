@@ -485,7 +485,7 @@ object RagiumChemicalRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
         // Silicon Wafer -> Circuit Chip
         RagiumRecipeBuilder.cutting(output) {
             ingredient = inputCreator.create(RagiumItems.SILICON_WAFER)
-            results += resultCreator.create(RagiumItems.CIRCUIT_CHIP, 4).withChance()
+            results += resultCreator.create(RagiumItems.CIRCUIT_CHIP, 4)
         }
         // Circuit Board + Circuit chip -> Electric Circuit
         HTCombiningRecipeBuilder.assembling(output) {

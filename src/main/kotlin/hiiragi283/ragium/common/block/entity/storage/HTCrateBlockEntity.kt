@@ -6,7 +6,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.impl.storage.item.HTItemStackResourceSlot
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -39,7 +39,7 @@ open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos,
         widgetHolder += createSlotWidget()
     }
 
-    protected open fun createSlotWidget(): HTItemSlotWidget = HTItemSlotWidget.container(
+    protected open fun createSlotWidget(): HTItemWidget = HTItemWidget.Container(
         slot,
         HTSlotHelper.getSlotPosX(4),
         HTSlotHelper.getSlotPosY(0),

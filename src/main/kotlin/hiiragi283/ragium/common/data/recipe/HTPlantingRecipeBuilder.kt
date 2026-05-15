@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.data.recipe
 
+import hiiragi283.core.api.util.HTDelegates
 import hiiragi283.core.impl.data.recipe.builder.HTMultiOutputRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
@@ -18,8 +19,8 @@ class HTPlantingRecipeBuilder : HTMultiOutputRecipeBuilder(RagiumConst.PLANTING)
         time /= 2
     }
 
-    lateinit var plant: Ingredient
-    lateinit var soil: Ingredient
+    var plant: Ingredient by HTDelegates.onceInitialize()
+    var soil: Ingredient by HTDelegates.onceInitialize()
 
     override fun createRecipe(): RTPlantingRecipe = RTPlantingRecipe(plant, soil, createList(), progressData)
 }

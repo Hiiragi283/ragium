@@ -6,7 +6,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.cache.HTTripleInputRecipeCache
@@ -58,26 +58,27 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(5.25))
         // slots
-        widgetHolder += HTFluidWidget
-            .createTank(
-                inputTank,
-                HTSlotHelper.getSlotPosX(0),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.INPUT)
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTFluidWidget.Tank(
+            inputTank,
+            HTSlotHelper.getSlotPosX(0),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+            false,
+        )
+        widgetHolder += HTItemWidget.Container(
             baseSlot,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             additionSlot,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.EXTRA_INPUT,
         )
 
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(7),
             HTSlotHelper.getSlotPosY(1),

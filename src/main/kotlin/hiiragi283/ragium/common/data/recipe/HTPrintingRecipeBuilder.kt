@@ -18,9 +18,9 @@ class HTPrintingRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.PRINTING) {
         }
     }
 
-    lateinit var ingredient: HTItemIngredient
+    var ingredient: HTItemIngredient by HTDelegates.onceInitialize()
     var press: Ingredient by HTDelegates.onceInitialize()
-    lateinit var result: HTItemResult
+    var result: HTItemResult by HTDelegates.onceInitialize()
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 

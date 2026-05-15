@@ -10,7 +10,7 @@ import hiiragi283.core.api.registry.VanillaFluidContents
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -69,31 +69,33 @@ class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnti
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
         // slot
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             fuelSlot,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             ashSlot,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_OUTPUT,
         )
         // tanks
-        widgetHolder += HTFluidWidget
-            .createTank(
-                waterTank,
-                HTSlotHelper.getSlotPosX(2),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.INPUT)
-        widgetHolder += HTFluidWidget
-            .createTank(
-                steamTank,
-                HTSlotHelper.getSlotPosX(6),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.OUTPUT)
+        widgetHolder += HTFluidWidget.Tank(
+            waterTank,
+            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+            false,
+        )
+        widgetHolder += HTFluidWidget.Tank(
+            steamTank,
+            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.OUTPUT,
+            false,
+        )
     }
 
     //    Processing    //

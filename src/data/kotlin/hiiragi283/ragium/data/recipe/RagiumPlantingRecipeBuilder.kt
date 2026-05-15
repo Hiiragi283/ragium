@@ -46,67 +46,67 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         // Wheat
         planting(Items.WHEAT_SEEDS, fraction(1, 3)) {
             soil = farmland
-            results += resultCreator.create(Items.WHEAT).withChance()
+            results += resultCreator.create(Items.WHEAT)
         }
         // Beetroot
         planting(Items.BEETROOT_SEEDS, fraction(1, 3)) {
             soil = farmland
-            results += resultCreator.create(Items.BEETROOT, 3).withChance()
+            results += resultCreator.create(Items.BEETROOT, 3)
         }
 
         // Carrot, Potato, Berries
         for (seed: Item in listOf(Items.CARROT, Items.POTATO, Items.SWEET_BERRIES, Items.GLOW_BERRIES)) {
             planting(seed, fraction(1, 3)) {
                 soil = farmland
-                results += resultCreator.create(seed, 3).withChance()
+                results += resultCreator.create(seed, 3)
             }
         }
 
         // Melon
         planting(Items.MELON_SEEDS, fraction(1, 3)) {
             soil = farmland
-            results += resultCreator.create(Items.MELON).withChance()
+            results += resultCreator.create(Items.MELON)
         }
         // Pumpkin
         planting(Items.PUMPKIN_SEEDS, fraction(1, 3)) {
             soil = farmland
-            results += resultCreator.create(Items.PUMPKIN).withChance()
+            results += resultCreator.create(Items.PUMPKIN)
         }
 
         // Cactus, Sugar Cane
         for (item: Item in listOf(Items.CACTUS, Items.SUGAR_CANE)) {
             planting(item, fraction(1, 3)) {
                 soil = itemCreator.create(Tags.Items.SANDS)
-                results += resultCreator.create(item, 3).withChance()
+                results += resultCreator.create(item, 3)
             }
         }
 
         // Apple
         planting(Items.APPLE, fraction(1, 3)) {
             soil = itemCreator.create(Items.OAK_SAPLING)
-            results += resultCreator.create(Items.APPLE, 3).withChance()
+            results += resultCreator.create(Items.APPLE, 3)
         }
         // Cocoa Beans
         planting(Items.COCOA_BEANS, fraction(1, 3)) {
             soil = itemCreator.create(ItemTags.JUNGLE_LOGS)
-            results += resultCreator.create(Items.COCOA_BEANS, 3).withChance()
+            results += resultCreator.create(Items.COCOA_BEANS, 3)
         }
         // Nether Wart
         planting(Items.NETHER_WART, fraction(1, 3)) {
             soil = itemCreator.create(Items.SOUL_SAND)
-            results += resultCreator.create(Items.NETHER_WART, 3).withChance()
+            results += resultCreator.create(Items.NETHER_WART, 3)
         }
 
         // Mushrooms
         for (item: Item in listOf(Items.RED_MUSHROOM, Items.BROWN_MUSHROOM)) {
             planting(item, fraction(1, 3)) {
                 soil = farmland
-                results += resultCreator.create(item, 3).withChance()
+                results += resultCreator.create(item, 3)
             }
 
             planting(item, fraction(1, 3)) {
                 soil = itemCreator.create(Items.MYCELIUM)
-                results += resultCreator.create(item, 5).withChance()
+                results += resultCreator.create(item, 5)
                 recipeId suffix "_with_mycelium"
             }
         }
@@ -129,23 +129,23 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         ).forEach { (sapling: Item, log: Item) ->
             planting(sapling, fraction(1, 6)) {
                 soil = dirt
-                results += resultCreator.create(log, 6).withChance()
+                results += resultCreator.create(log, 6)
             }
         }
         // Fungus
         planting(Items.CRIMSON_FUNGUS, fraction(1, 6)) {
             soil = itemCreator.create(Items.CRIMSON_NYLIUM)
-            results += resultCreator.create(Items.CRIMSON_STEM, 6).withChance()
+            results += resultCreator.create(Items.CRIMSON_STEM, 6)
         }
 
         planting(Items.WARPED_FUNGUS, fraction(1, 6)) {
             soil = itemCreator.create(Items.WARPED_NYLIUM)
-            results += resultCreator.create(Items.WARPED_STEM, 6).withChance()
+            results += resultCreator.create(Items.WARPED_STEM, 6)
         }
         // Chorus
         planting(Items.CHORUS_FLOWER, fraction(1, 6)) {
             soil = itemCreator.create(Tags.Items.END_STONES)
-            results += resultCreator.create(Items.CHORUS_FRUIT, 6).withChance()
+            results += resultCreator.create(Items.CHORUS_FRUIT, 6)
         }
     }
 
@@ -171,14 +171,14 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         ).forEach { (plant: Item, soilTag: Either<List<TagKey<Item>>, Item>) ->
             planting(plant, Fraction.ZERO) {
                 soil = soilTag.map(itemCreator::create, itemCreator::create)
-                results += resultCreator.create(plant, 4).withChance()
+                results += resultCreator.create(plant, 4)
             }
         }
 
         // Kelp
         planting(Items.KELP, Fraction.ZERO) {
             soil = itemCreator.create(aquaticSoil)
-            results += resultCreator.create(Items.KELP, 6).withChance()
+            results += resultCreator.create(Items.KELP, 6)
         }
     }
 }

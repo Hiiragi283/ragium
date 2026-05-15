@@ -4,6 +4,7 @@ import hiiragi283.core.api.data.recipe.builder.HTProgressRecipeBuilder
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
+import hiiragi283.core.api.util.HTDelegates
 import hiiragi283.core.api.util.toOptional
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
@@ -19,7 +20,7 @@ class HTRefiningRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.REFINING) {
         }
     }
 
-    lateinit var ingredient: HTFluidIngredient
+    var ingredient: HTFluidIngredient by HTDelegates.onceInitialize()
     var catalyst: Ingredient? = null
     val fluidResults: MutableList<HTFluidResult> = mutableListOf()
     var itemResult: HTItemResult? = null

@@ -18,9 +18,9 @@ class HTFreezingRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.FREEZING) {
         }
     }
 
-    lateinit var ingredient: HTFluidIngredient
+    var ingredient: HTFluidIngredient by HTDelegates.onceInitialize()
     var catalyst: Ingredient by HTDelegates.onceInitialize()
-    lateinit var result: HTItemResult
+    var result: HTItemResult by HTDelegates.onceInitialize()
 
     override fun getPrimalId(): ResourceLocation = result.getId()
 

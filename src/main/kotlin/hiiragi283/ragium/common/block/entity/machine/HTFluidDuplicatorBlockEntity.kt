@@ -56,25 +56,28 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(5.25))
         // tanks
-        widgetHolder += HTFluidWidget
-            .createTank(
-                inputTank,
-                HTSlotHelper.getSlotPosX(1),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.INPUT)
-        widgetHolder += HTFluidWidget
-            .createTank(
-                matterTank,
-                HTSlotHelper.getSlotPosX(4),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.EXTRA_INPUT)
+        widgetHolder += HTFluidWidget.Tank(
+            inputTank,
+            HTSlotHelper.getSlotPosX(1),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+            false,
+        )
+        widgetHolder += HTFluidWidget.Tank(
+            matterTank,
+            HTSlotHelper.getSlotPosX(4),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.EXTRA_INPUT,
+            false,
+        )
 
-        widgetHolder += HTFluidWidget
-            .createTank(
-                outputTank,
-                HTSlotHelper.getSlotPosX(7),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.OUTPUT)
+        widgetHolder += HTFluidWidget.Tank(
+            outputTank,
+            HTSlotHelper.getSlotPosX(7),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.OUTPUT,
+            false,
+        )
     }
 
     //    Processing    //

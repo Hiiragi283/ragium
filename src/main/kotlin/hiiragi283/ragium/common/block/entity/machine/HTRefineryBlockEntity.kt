@@ -7,7 +7,7 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
@@ -58,29 +58,35 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlock
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(3))
         // slots
-        widgetHolder += HTFluidWidget.createTank(
+        widgetHolder += HTFluidWidget.Tank(
             inputTank,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(0),
-        ).setBackground(HTBackgroundType.INPUT)
-        widgetHolder += HTItemSlotWidget.container(
+            HTBackgroundType.INPUT,
+            false,
+        )
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(3.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.NONE,
         )
 
-        widgetHolder += HTFluidWidget.createTank(
+        widgetHolder += HTFluidWidget.Tank(
             firstOutputTank,
             HTSlotHelper.getSlotPosX(5),
             HTSlotHelper.getSlotPosY(0),
-        ).setBackground(HTBackgroundType.OUTPUT)
-        widgetHolder += HTFluidWidget.createTank(
+            HTBackgroundType.OUTPUT,
+            false,
+        )
+        widgetHolder += HTFluidWidget.Tank(
             secondOutputTank,
             HTSlotHelper.getSlotPosX(7),
             HTSlotHelper.getSlotPosY(0),
-        ).setBackground(HTBackgroundType.EXTRA_OUTPUT)
-        widgetHolder += HTItemSlotWidget.container(
+            HTBackgroundType.EXTRA_OUTPUT,
+            false,
+        )
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(3.5),
             HTSlotHelper.getSlotPosY(2),

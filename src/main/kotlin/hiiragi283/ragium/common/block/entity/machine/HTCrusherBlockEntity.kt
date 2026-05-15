@@ -5,7 +5,7 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToMultiItemBlockEntity
@@ -26,7 +26,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
     override fun setupOutputSlots(widgetHolder: HTWidgetHolder) {
         outputSlots
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->
-                HTItemSlotWidget.container(
+                HTItemWidget.Container(
                     slot,
                     HTSlotHelper.getSlotPosX(6 + index % 2),
                     HTSlotHelper.getSlotPosY(0.5 + index / 2),

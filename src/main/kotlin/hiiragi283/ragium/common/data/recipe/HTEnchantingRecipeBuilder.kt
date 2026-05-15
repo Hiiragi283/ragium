@@ -5,6 +5,7 @@ import hiiragi283.core.api.function.andThen
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.HTIdLike
+import hiiragi283.core.api.util.HTDelegates
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.RTEnchantingRecipe
@@ -26,8 +27,8 @@ class HTEnchantingRecipeBuilder<ENCH : Any>(
         }
     }
 
-    lateinit var ingredient: HTItemIngredient
-    lateinit var enchantment: ENCH
+    var ingredient: HTItemIngredient by HTDelegates.onceInitialize()
+    var enchantment: ENCH by HTDelegates.onceInitialize()
 
     override fun getPrimalId(): ResourceLocation = idFactory(enchantment)
 

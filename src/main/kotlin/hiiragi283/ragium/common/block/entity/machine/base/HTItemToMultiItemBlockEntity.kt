@@ -8,7 +8,7 @@ import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.cache.completed.HTSingleToMultiItemCompletedRecipe
@@ -34,7 +34,7 @@ abstract class HTItemToMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, 
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // slots
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),

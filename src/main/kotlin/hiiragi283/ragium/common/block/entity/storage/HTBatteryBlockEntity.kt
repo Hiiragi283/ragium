@@ -14,7 +14,7 @@ import hiiragi283.core.api.storage.energy.HTEnergyBattery
 import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCChargingRecipe
 import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -77,13 +77,13 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
         // slot
         widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0))
 
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6.5),
             HTSlotHelper.getSlotPosY(0),

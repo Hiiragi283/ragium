@@ -208,7 +208,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         // Gravel + Water -> Flint
         RagiumRecipeBuilder.washing(output) {
             ingredient = inputCreator.create(Tags.Items.GRAVELS)
-            results += resultCreator.create(Items.FLINT).withChance()
+            results += resultCreator.create(Items.FLINT)
             results += resultCreator.create(Items.FLINT).withChance(fraction(1, 3))
             time = 20 * 5
         }
@@ -221,7 +221,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         // Ash + Water -> Carbon
         RagiumRecipeBuilder.washing(output) {
             ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH, 4)
-            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 3).withChance()
+            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
             results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON).withChance(fraction(1, 4))
             time = 20 * 5
         }

@@ -5,7 +5,7 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.cache.HTTripleInputRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
@@ -64,26 +64,26 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // slots
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             topInputSlot,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             leftInputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             rightInputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_INPUT,
         )
 
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
