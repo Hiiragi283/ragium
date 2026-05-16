@@ -8,6 +8,7 @@ import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
@@ -32,7 +33,7 @@ abstract class HTItemToMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, 
         super.setupMenu(widgetHolder)
         widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
         // progress
-        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4), getViewerTypes())
         // slots
         widgetHolder += HTItemWidget.Container(
             inputSlot,
@@ -44,6 +45,8 @@ abstract class HTItemToMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, 
     }
 
     protected abstract fun setupOutputSlots(widgetHolder: HTWidgetHolder)
+
+    protected open fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = emptyList()
 
     //    Processing    //
 

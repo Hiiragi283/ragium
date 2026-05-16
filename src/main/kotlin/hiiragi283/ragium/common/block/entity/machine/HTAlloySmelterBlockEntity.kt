@@ -14,6 +14,7 @@ import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
@@ -62,7 +63,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
         super.setupMenu(widgetHolder)
         widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
         // progress
-        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4), RagiumRecipeViewerTypes.ALLOYING)
         // slots
         widgetHolder += HTItemWidget.Container(
             topInputSlot,

@@ -5,9 +5,11 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToMultiItemBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -36,6 +38,8 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMu
             HTBackgroundType.EXTRA_OUTPUT,
         )
     }
+
+    override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(RagiumRecipeViewerTypes.CUTTING)
 
     override fun getLookup(): HTRecipeLookup<out HTItemToMultiItemRecipe> = RagiumRecipeLookups.CUTTING
 

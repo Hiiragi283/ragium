@@ -13,10 +13,9 @@ import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.registry.HTSimpleHolderLike
 import hiiragi283.core.api.registry.getDataSequence
 import hiiragi283.core.common.registry.HTDeferredRecipeType
-import hiiragi283.core.impl.recipe.cache.HTRecipeLookupImpl
-import hiiragi283.core.impl.recipe.cache.HTRecipeLookupManager
+import hiiragi283.core.impl.recipe.cache.HTCompoundRecipeLookup
 import hiiragi283.core.impl.recipe.cache.HTVanillaRecipeLookup
-import hiiragi283.core.impl.recipe.cache.addProvider
+import hiiragi283.core.impl.recipe.cache.fromRecipeType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
@@ -37,29 +36,29 @@ data object RagiumRecipeLookups {
     val ALLOYING: HTRecipeLookup<HTAlloyingRecipe> = create(RagiumRecipeTypes.ALLOYING)
 
     @JvmField
-    val ASSEMBLING: HTRecipeLookupImpl<HTDoubleItemToItemRecipe> = create(RagiumConst.ASSEMBLING)
+    val ASSEMBLING: HTCompoundRecipeLookup<HTDoubleItemToItemRecipe> = create(RagiumConst.ASSEMBLING)
 
     @JvmField
-    val COMPRESSING: HTRecipeLookupImpl<HTItemToItemRecipe> = create(RagiumConst.COMPRESSING)
+    val COMPRESSING: HTCompoundRecipeLookup<HTItemToItemRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
-    val CUTTING: HTRecipeLookupImpl<HTItemToMultiItemRecipe> = create(RagiumConst.CUTTING)
+    val CUTTING: HTCompoundRecipeLookup<HTItemToMultiItemRecipe> = create(RagiumConst.CUTTING)
 
     @JvmField
-    val PLANTING: HTRecipeLookupImpl<HTPlantingRecipe> = create(RagiumConst.PLANTING)
+    val PLANTING: HTCompoundRecipeLookup<HTPlantingRecipe> = create(RagiumConst.PLANTING)
 
     // Machine - Advanced
     @JvmField
-    val FREEZING: HTRecipeLookupImpl<HTItemAndFluidToItemRecipe> = create(RagiumConst.FREEZING)
+    val FREEZING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConst.FREEZING)
 
     @JvmField
     val IMPLODING: HTRecipeLookup<HTImplodingRecipe> = create(RagiumRecipeTypes.IMPLODING)
 
     @JvmField
-    val MELTING: HTRecipeLookupImpl<HTItemToFluidRecipe> = create(RagiumConst.MELTING)
+    val MELTING: HTCompoundRecipeLookup<HTItemToFluidRecipe> = create(RagiumConst.MELTING)
 
     @JvmField
-    val PYROLYZING: HTRecipeLookupImpl<HTItemOrFluidRecipe> = create(RagiumConst.PYROLYZING)
+    val PYROLYZING: HTCompoundRecipeLookup<HTItemOrFluidRecipe> = create(RagiumConst.PYROLYZING)
 
     @JvmField
     val REFINING: HTRecipeLookup<HTRefiningRecipe> = create(RagiumRecipeTypes.REFINING)
@@ -69,7 +68,7 @@ data object RagiumRecipeLookups {
 
     // Machine - Elite
     @JvmField
-    val BATHING: HTRecipeLookupImpl<HTItemAndFluidToItemRecipe> = create(RagiumConst.BATHING)
+    val BATHING: HTCompoundRecipeLookup<HTItemAndFluidToItemRecipe> = create(RagiumConst.BATHING)
 
     @JvmField
     val CHEMICAL_REACTING: HTRecipeLookup<HTChemicalReactingRecipe> = create(RagiumRecipeTypes.CHEMICAL_REACTING)
@@ -96,28 +95,28 @@ data object RagiumRecipeLookups {
 
     // Device - Ultimate
     @JvmField
-    val ENCHANTING: HTRecipeLookupImpl<HTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
+    val ENCHANTING: HTCompoundRecipeLookup<HTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
 
     @JvmStatic
-    private fun <RECIPE : Any> create(path: String): HTRecipeLookupImpl<RECIPE> = HTRecipeLookupManager.create(RagiumAPI.id(path))
+    private fun <RECIPE : Any> create(path: String): HTCompoundRecipeLookup<RECIPE> = HTCompoundRecipeLookup.create(RagiumAPI.id(path))
 
     @JvmStatic
     private fun <INPUT : RecipeInput, RECIPE : Recipe<INPUT>> create(recipeType: HTDeferredRecipeType<RECIPE>): HTRecipeLookup<RECIPE> = HTVanillaRecipeLookup(recipeType)
 
     @JvmStatic
     fun init() {
-        ASSEMBLING.addProvider(RagiumRecipeTypes.ASSEMBLING.get(), identity())
-        COMPRESSING.addProvider(RagiumRecipeTypes.COMPRESSING.get(), identity())
-        CUTTING.addProvider(RagiumRecipeTypes.CUTTING.get(), identity())
-        PLANTING.addProvider(RagiumRecipeTypes.PLANTING.get(), identity())
+        ASSEMBLING.fromRecipeType(RagiumRecipeTypes.ASSEMBLING.get(), identity())
+        COMPRESSING.fromRecipeType(RagiumRecipeTypes.COMPRESSING.get(), identity())
+        CUTTING.fromRecipeType(RagiumRecipeTypes.CUTTING.get(), identity())
+        PLANTING.fromRecipeType(RagiumRecipeTypes.PLANTING.get(), identity())
 
-        FREEZING.addProvider(RagiumRecipeTypes.FREEZING.get(), identity())
-        MELTING.addProvider(RagiumRecipeTypes.MELTING.get(), identity())
-        MELTING.addProvider(RagiumAPI.id(RagiumConst.MELTING, "exp_from_ench_book") to HTBookMeltingRecipe)
-        PYROLYZING.addProvider(RagiumRecipeTypes.PYROLYZING.get(), identity())
+        FREEZING.fromRecipeType(RagiumRecipeTypes.FREEZING.get(), identity())
+        MELTING.fromRecipeType(RagiumRecipeTypes.MELTING.get(), identity())
+        MELTING.addRecipes(RagiumAPI.id(RagiumConst.MELTING, "exp_from_ench_book") to HTBookMeltingRecipe)
+        PYROLYZING.fromRecipeType(RagiumRecipeTypes.PYROLYZING.get(), identity())
 
-        BATHING.addProvider(RagiumRecipeTypes.BATHING.get(), identity())
+        BATHING.fromRecipeType(RagiumRecipeTypes.BATHING.get(), identity())
 
-        ENCHANTING.addProvider(RagiumRecipeTypes.ENCHANTING.get(), identity())
+        ENCHANTING.fromRecipeType(RagiumRecipeTypes.ENCHANTING.get(), identity())
     }
 }

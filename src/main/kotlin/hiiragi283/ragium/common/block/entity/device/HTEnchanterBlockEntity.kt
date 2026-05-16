@@ -17,6 +17,7 @@ import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -56,7 +57,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
         // progress
-        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(5.25))
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(5.25), RagiumRecipeViewerTypes.ENCHANTING)
         // slots
         widgetHolder += HTFluidWidget.Tank(
             inputTank,

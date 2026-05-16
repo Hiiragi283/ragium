@@ -5,8 +5,10 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
+import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToMultiItemBlockEntity
 import hiiragi283.ragium.config.HTEnergyConfig
@@ -34,6 +36,8 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
                 )
             }.forEach(widgetHolder::addWidget)
     }
+
+    override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(HCRecipeViewerTypes.CRUSHING)
 
     override fun getLookup(): HTRecipeLookup<out HTItemToMultiItemRecipe> = HCRecipeLookups.CRUSHING
 

@@ -4,6 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
@@ -35,12 +36,20 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     protected abstract fun createHandler(): HTProgressHandler<*>
 
-    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4)) {
+    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4), vararg recipeTypes: HTRecipeViewerType<*>) {
         widgetHolder += HTProgressWidget.createArrow(
             recipeComponent.fractionSlot,
             x,
             HTSlotHelper.getSlotPosY(1),
-        )
+        ).setSupportedRecipeTypes(*recipeTypes)
+    }
+
+    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4), recipeTypes: Iterable<HTRecipeViewerType<*>>) {
+        widgetHolder += HTProgressWidget.createArrow(
+            recipeComponent.fractionSlot,
+            x,
+            HTSlotHelper.getSlotPosY(1),
+        ).setSupportedRecipeTypes(recipeTypes)
     }
 
     final override fun createFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
