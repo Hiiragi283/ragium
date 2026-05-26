@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState
 class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.PYROLYZER, pos, state) {
     override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(RagiumRecipeViewerTypes.PYROLYZING)
 
-    override fun getLookup(): HTRecipeLookup<out HTItemOrFluidRecipe> = RagiumRecipeLookups.PYROLYZING
+    override fun getLookup(): HTRecipeLookup<HTItemOrFluidRecipe> = RagiumRecipeLookups.PYROLYZING
 
     override fun playSound() {
         playSound(SoundEvents.FIRE_EXTINGUISH)

@@ -13,7 +13,10 @@ import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
+import hiiragi283.core.api.serialization.codec.convert
 import hiiragi283.core.api.serialization.codec.listOrElement
+import hiiragi283.core.api.util.Option
+import hiiragi283.core.api.util.getOrElse
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -23,13 +26,12 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.Optional
 
 class HTRefiningRecipe(
     val ingredient: HTFluidIngredient,
-    val catalyst: Optional<Ingredient>,
+    val catalyst: Option<Ingredient>,
     val fluidResults: List<HTFluidResult>,
-    val itemResult: Optional<HTItemResult>,
+    val itemResult: Option<HTItemResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.ItemAndFluid,
     HTRecipeFactories.ItemAndFluid<HTChemicalResult>,
@@ -41,17 +43,17 @@ class HTRefiningRecipe(
             instance
                 .group(
                     HTFluidIngredient.CODEC.fieldOf(HTConst.INGREDIENT).forGetter(HTRefiningRecipe::ingredient),
-                    HTCodecs.INGREDIENT.optionalFieldOf(HTConst.CATALYST).forGetter(HTRefiningRecipe::catalyst),
+                    HTCodecs.INGREDIENT.optionalFieldOf(HTConst.CATALYST).convert().forGetter(HTRefiningRecipe::catalyst),
                     HTFluidResult.CODEC.listOrElement(1..2).fieldOf(HTConst.FLUID_RESULT).forGetter(HTRefiningRecipe::fluidResults),
-                    HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).forGetter(HTRefiningRecipe::itemResult),
+                    HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).convert().forGetter(HTRefiningRecipe::itemResult),
                     HTProgressData.CODEC.forGetter(HTRefiningRecipe::progressData),
                 ).apply(instance, ::HTRefiningRecipe)
         }
     }
 
-    override fun test(first: ItemStack, second: FluidStack): Boolean = catalyst.map { it.test(first) }.orElseGet(first::isEmpty) && ingredient.test(second)
+    override fun test(first: ItemStack, second: FluidStack): Boolean = catalyst.map { it.test(first) }.getOrElse(first::isEmpty) && ingredient.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = catalyst.map { it.getRequiredAmount(first) }.orElseGet { 0 } to ingredient.getRequiredAmount(second)
+    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = catalyst.map { it.getRequiredAmount(first) }.getOrElse { 0 } to ingredient.getRequiredAmount(second)
 
     override fun assemble(firstInput: ItemStack, secondInput: FluidStack): HTChemicalResult = HTChemicalResult.create(fluidResults, itemResult)
 

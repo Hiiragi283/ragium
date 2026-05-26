@@ -113,7 +113,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
 
     final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    protected abstract fun getLookup(): HTRecipeLookup<out HTItemOrFluidRecipe>
+    protected abstract fun getLookup(): HTRecipeLookup<HTItemOrFluidRecipe>
 
     protected abstract fun playSound()
 }

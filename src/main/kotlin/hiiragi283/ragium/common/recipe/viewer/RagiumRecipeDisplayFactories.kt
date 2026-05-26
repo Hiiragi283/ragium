@@ -24,11 +24,11 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 
 /**
- * @see hiiragi283.core.common.recipe.viewer.display.HCRecipeDisplayFactories
+ * @see hiiragi283.core.common.recipe.viewer.HCRecipeDisplayFactories
  */
 data object RagiumRecipeDisplayFactories {
     @JvmStatic
-    fun itemOrFluid(holder: HTRecipeHolder<out HTBasicItemOrFluidRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+    fun itemOrFluid(holder: HTRecipeHolder<HTBasicItemOrFluidRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.ingredient.getLeft())
         addInput(it.ingredient.getRight())
         it.result.getLeft()?.let(::addOutput)
@@ -36,7 +36,7 @@ data object RagiumRecipeDisplayFactories {
     }
 
     @JvmStatic
-    fun itemAndFluidToItem(holder: HTRecipeHolder<out HTBasicItemAndFluidToItemRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+    fun itemAndFluidToItem(holder: HTRecipeHolder<HTBasicItemAndFluidToItemRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.itemIngredient)
         addInput(it.fluidIngredient)
         addOutput(it.result)
@@ -52,7 +52,7 @@ data object RagiumRecipeDisplayFactories {
     }
 
     @JvmStatic
-    fun assembling(holder: HTRecipeHolder<out HTBasicAssemblingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
+    fun assembling(holder: HTRecipeHolder<HTBasicAssemblingRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         when (it) {
             is HTAssemblingRecipe -> {
                 addInput(it.primary)
@@ -105,9 +105,9 @@ data object RagiumRecipeDisplayFactories {
     @JvmStatic
     fun refining(holder: HTRecipeHolder<HTRefiningRecipe>): HTProgressRecipeDisplay = HTRecipeDisplayFactories.progress(holder) {
         addInput(it.ingredient)
-        it.catalyst.ifPresent(::addCatalyst)
+        it.catalyst.onSome(::addCatalyst)
         it.fluidResults.forEach(::addOutput)
-        it.itemResult.ifPresent(::addOutput)
+        it.itemResult.onSome(::addOutput)
     }
 
     @JvmStatic
@@ -124,7 +124,7 @@ data object RagiumRecipeDisplayFactories {
         addInput(it.secondary.getLeft())
         addCatalyst(it.secondary.getRight())
         it.fluidResults.forEach(::addOutput)
-        it.itemResult.ifPresent(::addOutput)
+        it.itemResult.onSome(::addOutput)
     }
 
     @JvmStatic

@@ -6,7 +6,7 @@ import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.property.getDefaultPart
-import hiiragi283.core.api.registry.HTItemLike
+import hiiragi283.core.api.registry.HTDeferredBlockAndItem
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
@@ -14,7 +14,6 @@ import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
-import hiiragi283.core.common.registry.HTDeferredBlockAndItem
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
@@ -80,7 +79,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
                 ingredients += itemCreator.create(RagiumItems.MERCURY_BOTTLE)
             }
             ingredients += itemCreator.create(Tags.Items.BUCKETS_EMPTY)
-            resultStack = RagiumFluids.MERCURY.getBucket().toStack()
+            resultStack = RagiumFluids.MERCURY.bucketHolder.toStack()
             recipeId suffix "_from_bottles"
         }
         HTShapelessRecipeBuilder.create(output) {
@@ -162,7 +161,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     }
 
     @JvmStatic
-    private fun basic(block: HTItemLike<*>, consumer: () -> Ingredient) {
+    private fun basic(block: HTDeferredBlockAndItem<*, *>, consumer: () -> Ingredient) {
         HTShapedRecipeBuilder.create(output) {
             pattern(
                 "AAA",
@@ -178,7 +177,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     }
 
     @JvmStatic
-    private fun advanced(block: HTItemLike<*>, material: HTMaterialLike, consumer: () -> Ingredient) {
+    private fun advanced(block: HTDeferredBlockAndItem<*, *>, material: HTMaterialLike, consumer: () -> Ingredient) {
         HTShapedRecipeBuilder.create(output) {
             pattern(
                 "AAA",
@@ -194,7 +193,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     }
 
     @JvmStatic
-    private fun elite(block: HTItemLike<*>, consumer: () -> Ingredient) {
+    private fun elite(block: HTDeferredBlockAndItem<*, *>, consumer: () -> Ingredient) {
         HTShapedRecipeBuilder.create(output) {
             pattern(
                 "AAA",
@@ -210,7 +209,7 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
     }
 
     @JvmStatic
-    private fun ultimate(block: HTItemLike<*>, consumer: () -> Ingredient) {
+    private fun ultimate(block: HTDeferredBlockAndItem<*, *>, consumer: () -> Ingredient) {
         HTShapedRecipeBuilder.create(output) {
             pattern(
                 "AAA",

@@ -5,10 +5,9 @@ import hiiragi283.core.api.VanillaColoredContents
 import hiiragi283.core.api.data.recipe.HTRecipeProviderContext
 import hiiragi283.core.api.event.HTRegisterRuntimeRecipeEvent
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.registry.HTSimpleHolderLike
-import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.registry.getDataSequence
-import hiiragi283.core.api.registry.toItemLike
+import hiiragi283.core.api.registry.toLike
+import hiiragi283.core.api.resource.SupplierWithId
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
@@ -170,11 +169,11 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
 
     @JvmStatic
     private fun cutBedToPlanks() {
-        for ((color: HTDefaultColor, bed: HTSimpleItemHolderLike) in VanillaColoredContents.BED) {
-            val wool: HTSimpleItemHolderLike = VanillaColoredContents.WOOL[color] ?: continue
+        for ((color: HTDefaultColor, bed: SupplierWithId<ItemLike>) in VanillaColoredContents.BED) {
+            val wool: SupplierWithId<ItemLike> = VanillaColoredContents.WOOL[color] ?: continue
             RagiumRecipeBuilder.cutting(output) {
-                ingredient = inputCreator.create(bed)
-                results += resultCreator.create(wool, 3)
+                ingredient = inputCreator.create(bed.get())
+                results += resultCreator.create(wool.get(), 3)
                 results += resultCreator.create(Items.OAK_PLANKS, 3)
                 recipeId suffix "_from_bed"
             }
@@ -186,20 +185,20 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         provider
             .lookupOrThrow(Registries.BLOCK)
             .getDataSequence(NeoForgeDataMaps.WAXABLES)
-            .mapNotNull { (holder: HTSimpleHolderLike<Block>, waxable: Waxable) ->
+            .mapNotNull { (holder: SupplierWithId<Block>, waxable: Waxable) ->
                 val before: Block = holder.get()
                 if (ItemStack(before).isEmpty) return@mapNotNull null
                 val after: Block = waxable.waxed()
                 if (ItemStack(after).isEmpty) return@mapNotNull null
-                before.toItemLike() to after.toItemLike()
-            }.forEach { (before: HTSimpleItemHolderLike, after: HTSimpleItemHolderLike) ->
+                holder to after.toLike()
+            }.forEach { (before: SupplierWithId<Block>, after: SupplierWithId<Block>) ->
                 // レシピを登録
                 // Waxing
 
                 // Dis-waxing
                 RagiumRecipeBuilder.cutting(output) {
-                    ingredient = inputCreator.create(after)
-                    results += resultCreator.create(before)
+                    ingredient = inputCreator.create(after.get())
+                    results += resultCreator.create(before.get())
                     recipeId suffix "_from_${after.path}"
                 }
             }
@@ -212,26 +211,26 @@ object RagiumRuntimeRecipeHandler : HTRecipeProviderContext.Delegated() {
         provider
             .lookupOrThrow(Registries.BLOCK)
             .getDataSequence(NeoForgeDataMaps.OXIDIZABLES)
-            .mapNotNull { (holder: HTSimpleHolderLike<Block>, oxidizable: Oxidizable) ->
+            .mapNotNull { (holder: SupplierWithId<Block>, oxidizable: Oxidizable) ->
                 val before: Block = holder.get()
                 if (ItemStack(before).isEmpty) return@mapNotNull null
                 val after: Block = oxidizable.nextOxidationStage()
                 if (ItemStack(after).isEmpty) return@mapNotNull null
-                before.toItemLike() to after.toItemLike()
-            }.forEach { (before: HTSimpleItemHolderLike, after: HTSimpleItemHolderLike) ->
+                holder to after.toLike()
+            }.forEach { (before: SupplierWithId<Block>, after: SupplierWithId<Block>) ->
                 // レシピを登録
                 // Oxidization
                 RagiumRecipeBuilder.bathing(output) {
-                    itemIngredient = inputCreator.create(before)
+                    itemIngredient = inputCreator.create(before.get())
                     fluidIngredient = inputCreator.create(RagiumFluids.OXYGEN, 250)
-                    result = resultCreator.create(after)
+                    result = resultCreator.create(after.get())
                     recipeId suffix "_from_${before.path}"
                 }
                 // Reduction
                 RagiumRecipeBuilder.bathing(output) {
-                    itemIngredient = inputCreator.create(after)
+                    itemIngredient = inputCreator.create(after.get())
                     fluidIngredient = inputCreator.create(RagiumFluids.HYDROGEN, 250)
-                    result = resultCreator.create(before)
+                    result = resultCreator.create(before.get())
                     recipeId suffix "_from_${after.path}"
                 }
             }

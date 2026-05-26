@@ -1,6 +1,6 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.common.registry.register.HTDeferredRecipeSerializerRegister
+import hiiragi283.core.api.registry.HTDeferredRecipeSerializerRegister
 import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst

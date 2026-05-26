@@ -1,8 +1,8 @@
 package hiiragi283.ragium.api.item.component
 
-import com.mojang.datafixers.util.Either
 import com.mojang.serialization.Codec
-import hiiragi283.core.api.registry.HTHolderLike
+import hiiragi283.core.api.registry.getKeyOrThrow
+import hiiragi283.core.api.resource.SupplierWithId
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.network.HTStreamCodecs
 import hiiragi283.core.api.text.HTHasText
@@ -11,13 +11,12 @@ import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EntityType
 
-@ConsistentCopyVisibility
-@JvmRecord
-data class HTSpawnerMob private constructor(private val value: Holder<EntityType<*>>) :
-    HTHolderLike<EntityType<*>, EntityType<*>>,
+@JvmInline
+value class HTSpawnerMob private constructor(private val value: Holder<EntityType<*>>) :
+    SupplierWithId<EntityType<*>>,
     HTHasText {
     companion object {
         @JvmField
@@ -35,9 +34,9 @@ data class HTSpawnerMob private constructor(private val value: Holder<EntityType
         fun of(holder: Holder<EntityType<*>>): HTSpawnerMob = HTSpawnerMob(holder.delegate)
     }
 
-    override fun unwrap(): Either<ResourceKey<EntityType<*>>, Holder<EntityType<*>>> = Either.right(value.delegate)
-
     override fun get(): EntityType<*> = value.value()
+
+    override fun getId(): ResourceLocation = value.getKeyOrThrow().location()
 
     override fun getText(): Text = get().description
 }

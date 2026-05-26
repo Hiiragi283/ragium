@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.item
 import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.text.Text
 import hiiragi283.core.common.item.HTCreativeItem
 import hiiragi283.core.util.HTItemDropHelper
@@ -11,6 +10,7 @@ import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.item.component.HTDefaultLootTickets
 import hiiragi283.ragium.setup.RagiumDataComponents
 import net.minecraft.advancements.CriteriaTriggers
+import net.minecraft.core.Holder
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
@@ -20,6 +20,7 @@ import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
@@ -80,9 +81,9 @@ class HTLootTicketItem(properties: Properties) :
             .forEach(tooltips::add)
     }
 
-    override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
+    override fun addItems(baseItem: Holder<Item>, context: HTSubCreativeTabContents.Context) {
         for (tickets: HTDefaultLootTickets in HTDefaultLootTickets.entries) {
-            createItemStack(baseItem, RagiumDataComponents.LOOT_TICKET, tickets.targets).let(context)
+            createItemStack(baseItem.value(), RagiumDataComponents.LOOT_TICKET, tickets.targets).let(context)
         }
     }
 }

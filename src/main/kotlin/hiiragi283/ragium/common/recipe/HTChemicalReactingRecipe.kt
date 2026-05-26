@@ -13,8 +13,10 @@ import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
+import hiiragi283.core.api.serialization.codec.convert
 import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.api.util.Ior
+import hiiragi283.core.api.util.Option
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
@@ -24,13 +26,12 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.Optional
 
 class HTChemicalReactingRecipe(
     val primary: HTFluidIngredient,
     val secondary: Ior<HTFluidIngredient, Ingredient>,
     val fluidResults: List<HTFluidResult>,
-    val itemResult: Optional<HTItemResult>,
+    val itemResult: Option<HTItemResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.TripleInput<HTChemicalReactingRecipe.Input, ItemStack, FluidStack, FluidStack>,
     HTRecipeFactories.ItemAndDoubleFluid<HTChemicalResult>,
@@ -53,7 +54,7 @@ class HTChemicalReactingRecipe(
                         .listOrElement(1..2)
                         .fieldOf(HTConst.FLUID_RESULT)
                         .forGetter(HTChemicalReactingRecipe::fluidResults),
-                    HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).forGetter(HTChemicalReactingRecipe::itemResult),
+                    HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).convert().forGetter(HTChemicalReactingRecipe::itemResult),
                     HTProgressData.CODEC.forGetter { it.progressData },
                 ).apply(instance, ::HTChemicalReactingRecipe)
         }

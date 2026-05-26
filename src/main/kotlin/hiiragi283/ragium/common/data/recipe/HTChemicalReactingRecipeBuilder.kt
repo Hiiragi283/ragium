@@ -5,7 +5,7 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.util.Ior
-import hiiragi283.core.api.util.toOptional
+import hiiragi283.core.api.util.toOption
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
 import net.minecraft.data.recipes.RecipeOutput
@@ -31,7 +31,7 @@ class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.CHEM
         ingredients[0],
         Ior.fromNullable(ingredients.getOrNull(1), catalyst) ?: error("Either second fluid ingredient or catalyst required"),
         fluidResults,
-        itemResult.toOptional(),
+        itemResult.toOption(),
         progressData,
     )
 }

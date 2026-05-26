@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.loot
 
 import hiiragi283.core.api.data.loot.HTBlockLootTableProvider
-import hiiragi283.core.api.registry.HTBlockHolderLike
+import hiiragi283.core.api.resource.SupplierWithId
 import hiiragi283.core.common.block.HTBlockWithEntity
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
@@ -24,7 +24,7 @@ class RagiumBlockLootProvider(registries: HolderLookup.Provider) : HTBlockLootTa
     override fun generate() {
         RagiumBlocks.REGISTER
             .asBlockSequence()
-            .map(HTBlockHolderLike<*>::get)
+            .map(SupplierWithId<Block>::get)
             .forEach { block: Block ->
                 add(
                     block,

@@ -2,12 +2,14 @@ package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.item.toStack
+import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.material.getResult
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPartLike
-import hiiragi283.core.api.registry.HTItemLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.api.util.getOrThrow
 import hiiragi283.core.common.data.recipe.builder.HTCookingRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
 import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
@@ -117,8 +119,5 @@ object RagiumMaterialRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_I
     }
 
     @JvmStatic
-    private fun getOrThrow(part: HTPartLike, material: HTMaterialLike): HTItemLike<*> = HiiragiCoreAccess.INSTANCE
-        .registeredContents
-        .items
-        .getOrThrow(part, material)
+    private fun getOrThrow(part: HTPartLike, material: HTMaterialLike): HTMaterialContents.ItemEntry = HiiragiCoreAccess.INSTANCE.registeredContents.items.getResult(part, material).getOrThrow()
 }

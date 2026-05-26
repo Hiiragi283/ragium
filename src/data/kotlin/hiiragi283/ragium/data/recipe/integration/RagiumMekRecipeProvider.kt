@@ -2,13 +2,15 @@ package hiiragi283.ragium.data.recipe.integration
 
 import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.item.toStack
+import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.material.getResult
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPartLike
-import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
+import hiiragi283.core.api.util.getOrThrow
 import hiiragi283.core.common.integration.HCIConstants
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
@@ -95,10 +97,7 @@ data object RagiumMekRecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.
     }
 
     @JvmStatic
-    private fun getOrThrow(part: HTPartLike, material: HTMaterialLike): HTSimpleItemHolderLike = HiiragiCoreAccess.INSTANCE
-        .registeredContents
-        .items
-        .getOrThrow(part, material)
+    private fun getOrThrow(part: HTPartLike, material: HTMaterialLike): HTMaterialContents.ItemEntry = HiiragiCoreAccess.INSTANCE.registeredContents.items.getResult(part, material).getOrThrow()
 
     //    Extension    //
 

@@ -1,9 +1,9 @@
 package hiiragi283.ragium.setup
 
 import com.google.common.primitives.Ints
+import hiiragi283.core.api.registry.HTDeferredDataComponentRegister
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.network.HTStreamCodecs
-import hiiragi283.core.common.registry.register.HTDeferredDataComponentRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.item.component.HTLootTicketTargets
 import hiiragi283.ragium.api.item.component.HTSpawnerMob

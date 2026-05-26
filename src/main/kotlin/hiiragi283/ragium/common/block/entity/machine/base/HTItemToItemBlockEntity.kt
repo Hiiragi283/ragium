@@ -90,7 +90,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
     abstract class Simple(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : Basic(type, pos, state) {
         private val cache: HTRecipeCaches.SingleItem<out HTItemToItemRecipe> = HTRecipeCaches.SingleItem(getLookup())
 
-        protected abstract fun getLookup(): HTRecipeLookup<out HTItemToItemRecipe>
+        protected abstract fun getLookup(): HTRecipeLookup<HTItemToItemRecipe>
 
         override fun getCache(): HTRecipeCaches.SingleItem<out HTItemToItemRecipe> = cache
     }

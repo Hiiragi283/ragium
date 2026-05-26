@@ -21,7 +21,7 @@ class HTTankCombiningRecipe(category: CraftingBookCategory) : HTCustomRecipe(cat
     override fun matches(input: ImmutableRecipeInput, level: Level): Boolean {
         for (stack: ItemStack in input) {
             if (stack.isEmpty) continue
-            if (!RagiumBlocks.TANK.isOf(stack)) return false
+            if (!stack.`is`(RagiumBlocks.TANK.itemHolder)) return false
         }
         return true
     }

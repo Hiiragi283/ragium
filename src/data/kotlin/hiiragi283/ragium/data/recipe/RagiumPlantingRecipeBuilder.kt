@@ -1,11 +1,9 @@
 package hiiragi283.ragium.data.recipe
 
-import com.mojang.datafixers.util.Either
 import hiiragi283.core.api.compareTo
 import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.registry.toItemLike
+import hiiragi283.core.api.util.Either
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTPlantingRecipeBuilder
 import net.minecraft.tags.ItemTags
@@ -26,11 +24,6 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
 
     @JvmStatic
     private inline fun planting(seed: ItemLike, seedChance: Fraction, builderAction: HTPlantingRecipeBuilder.() -> Unit) {
-        planting(seed.toItemLike(), seedChance, builderAction)
-    }
-
-    @JvmStatic
-    private inline fun planting(seed: HTItemHolderLike<*>, seedChance: Fraction, builderAction: HTPlantingRecipeBuilder.() -> Unit) {
         HTPlantingRecipeBuilder.create(output) {
             plant = itemCreator.create(seed)
             builderAction()
@@ -154,23 +147,23 @@ object RagiumPlantingRecipeBuilder : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID
         val aquaticSoil: List<TagKey<Item>> = listOf(Tags.Items.GRAVELS, Tags.Items.SANDS)
 
         mapOf<Item, Either<List<TagKey<Item>>, Item>>(
-            Items.VINE to Either.left(listOf(Tags.Items.COBBLESTONES)),
-            Items.LILY_PAD to Either.left(listOf(Tags.Items.BUCKETS_WATER)),
-            Items.SEAGRASS to Either.left(aquaticSoil),
-            Items.SEA_PICKLE to Either.left(aquaticSoil),
-            Items.TUBE_CORAL to Either.right(Items.TUBE_CORAL_BLOCK),
-            Items.BRAIN_CORAL to Either.right(Items.BRAIN_CORAL_BLOCK),
-            Items.BUBBLE_CORAL to Either.right(Items.BUBBLE_CORAL_BLOCK),
-            Items.FIRE_CORAL to Either.right(Items.FIRE_CORAL_BLOCK),
-            Items.HORN_CORAL to Either.right(Items.HORN_CORAL_BLOCK),
-            Items.TUBE_CORAL_FAN to Either.right(Items.TUBE_CORAL_BLOCK),
-            Items.BRAIN_CORAL_FAN to Either.right(Items.BRAIN_CORAL_BLOCK),
-            Items.BUBBLE_CORAL_FAN to Either.right(Items.BUBBLE_CORAL_BLOCK),
-            Items.FIRE_CORAL_FAN to Either.right(Items.FIRE_CORAL_BLOCK),
-            Items.HORN_CORAL_FAN to Either.right(Items.HORN_CORAL_BLOCK),
+            Items.VINE to Either.Left(listOf(Tags.Items.COBBLESTONES)),
+            Items.LILY_PAD to Either.Left(listOf(Tags.Items.BUCKETS_WATER)),
+            Items.SEAGRASS to Either.Left(aquaticSoil),
+            Items.SEA_PICKLE to Either.Left(aquaticSoil),
+            Items.TUBE_CORAL to Either.Right(Items.TUBE_CORAL_BLOCK),
+            Items.BRAIN_CORAL to Either.Right(Items.BRAIN_CORAL_BLOCK),
+            Items.BUBBLE_CORAL to Either.Right(Items.BUBBLE_CORAL_BLOCK),
+            Items.FIRE_CORAL to Either.Right(Items.FIRE_CORAL_BLOCK),
+            Items.HORN_CORAL to Either.Right(Items.HORN_CORAL_BLOCK),
+            Items.TUBE_CORAL_FAN to Either.Right(Items.TUBE_CORAL_BLOCK),
+            Items.BRAIN_CORAL_FAN to Either.Right(Items.BRAIN_CORAL_BLOCK),
+            Items.BUBBLE_CORAL_FAN to Either.Right(Items.BUBBLE_CORAL_BLOCK),
+            Items.FIRE_CORAL_FAN to Either.Right(Items.FIRE_CORAL_BLOCK),
+            Items.HORN_CORAL_FAN to Either.Right(Items.HORN_CORAL_BLOCK),
         ).forEach { (plant: Item, soilTag: Either<List<TagKey<Item>>, Item>) ->
             planting(plant, Fraction.ZERO) {
-                soil = soilTag.map(itemCreator::create, itemCreator::create)
+                soil = soilTag.fold(itemCreator::create, itemCreator::create)
                 results += resultCreator.create(plant, 4)
             }
         }

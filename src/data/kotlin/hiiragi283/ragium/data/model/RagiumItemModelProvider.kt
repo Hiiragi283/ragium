@@ -56,7 +56,7 @@ class RagiumItemModelProvider(fileHelper: ExistingFileHelper, output: PackOutput
         registerBuckets()
 
         // Integration
-        RagiumMekItems.REGISTER.asItemSequence().forEach(::basicItem)
+        RagiumMekItems.REGISTER.asSequence().forEach(::basicItem)
     }
 
     private fun registerBuckets() {

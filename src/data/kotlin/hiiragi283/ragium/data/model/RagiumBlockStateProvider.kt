@@ -6,9 +6,9 @@ import hiiragi283.core.api.data.model.blockTexture
 import hiiragi283.core.api.data.model.existsTexture
 import hiiragi283.core.api.data.model.fixedBlockTexture
 import hiiragi283.core.api.data.model.withExistingParent
-import hiiragi283.core.api.registry.HTBlockHolderLike
-import hiiragi283.core.api.registry.HTHolderLike
+import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.resource.HTIdLike
+import hiiragi283.core.api.resource.SupplierWithId
 import hiiragi283.core.api.resource.blockId
 import hiiragi283.core.api.resource.toId
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
@@ -84,18 +84,18 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
         cutoutSimpleBlock(RagiumBlocks.IMITATION_SPAWNER)
 
         // Fluid
-        RagiumFluids.REGISTER.asSequence().forEach(::liquidBlock)
+        RagiumFluids.REGISTER.asSequence().filterIsInstance<HTFluidContent.Flowing>().forEach(::liquidBlock)
     }
 
     //    Extensions    //
 
-    private fun variableBlock(base: HTBlockHolderLike<*>, creative: HTBlockHolderLike<*>) {
+    private fun variableBlock(base: SupplierWithId<Block>, creative: SupplierWithId<Block>) {
         val model: ModelFile.ExistingModelFile = models().getExistingFile(base.blockId)
         simpleBlockAndItem(base, model, builtIn)
         simpleBlockAndItem(creative, model, builtIn)
     }
 
-    private fun machineBlock(block: HTHolderLike<Block, *>, model: ModelFile) {
+    private fun machineBlock(block: SupplierWithId<Block>, model: ModelFile) {
         getVariantBuilder(block.get())
             .forAllStates { state: BlockState ->
                 ConfiguredModel
@@ -107,7 +107,7 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
         itemModels().simpleBlockItem(block.getId())
     }
 
-    private fun refineryBlock(block: HTHolderLike<Block, *>) {
+    private fun refineryBlock(block: SupplierWithId<Block>) {
         machineBlock(
             block,
             models()
@@ -116,7 +116,7 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
         )
     }
 
-    private fun machineBlock(block: HTHolderLike<Block, *>, inactive: ModelFile, active: ModelFile) {
+    private fun machineBlock(block: SupplierWithId<Block>, inactive: ModelFile, active: ModelFile) {
         getVariantBuilder(block.get())
             .forAllStates { state: BlockState ->
                 ConfiguredModel
@@ -133,7 +133,7 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
     }
 
     private fun frontMachineBlock(
-        block: HTHolderLike<Block, *>,
+        block: SupplierWithId<Block>,
         prefix: String,
         tier: String,
         front: ResourceLocation = block.getId().withPath { "${HTConst.BLOCK}/$prefix/${it}_front" },
@@ -146,7 +146,7 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
      * @see net.minecraft.data.models.model.ModelTemplates.CUBE_ORIENTABLE_TOP_BOTTOM
      */
     private fun frontMachineModel(
-        block: HTHolderLike<Block, *>,
+        block: SupplierWithId<Block>,
         prefix: String,
         tier: String,
         front: ResourceLocation,

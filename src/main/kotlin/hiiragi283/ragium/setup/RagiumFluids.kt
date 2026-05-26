@@ -2,8 +2,8 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.HTFluidContentRegister
 import hiiragi283.core.common.fluid.HTExplosiveFluidType
-import hiiragi283.core.common.registry.register.HTFluidContentRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.fluid.HTCreativeFluidType
 import hiiragi283.ragium.common.fluid.HTLiquidGasFluidType
@@ -29,47 +29,47 @@ object RagiumFluids {
 
     // H
     @JvmField
-    val HYDROGEN: HTFluidContent = REGISTER.registerVirtual("hydrogen") { properties = gas() }
+    val HYDROGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("hydrogen") { properties = gas() }
 
     @JvmField
-    val STEAM: HTFluidContent = REGISTER.registerVirtual("steam") { properties = gas().temperature(400) }
+    val STEAM: HTFluidContent.Virtual = REGISTER.registerVirtual("steam") { properties = gas().temperature(400) }
 
     // O
     @JvmField
-    val OXYGEN: HTFluidContent = REGISTER.registerVirtual("oxygen") { properties = gas() }
+    val OXYGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("oxygen") { properties = gas() }
 
     // C
     @JvmField
-    val CREOSOTE: HTFluidContent = REGISTER.registerFlowing("creosote") { properties = liquid() }
+    val CREOSOTE: HTFluidContent.Flowing = REGISTER.registerFlowing("creosote") { properties = liquid() }
 
     @JvmField
-    val SYNTHETIC_GAS: HTFluidContent = REGISTER.registerVirtual("synthetic_gas") { properties = gas() }
+    val SYNTHETIC_GAS: HTFluidContent.Virtual = REGISTER.registerVirtual("synthetic_gas") { properties = gas() }
 
     @JvmField
-    val SYNTHETIC_OIL: HTFluidContent = REGISTER.registerFlowing("synthetic_oil") { properties = liquid() }
+    val SYNTHETIC_OIL: HTFluidContent.Flowing = REGISTER.registerFlowing("synthetic_oil") { properties = liquid() }
 
     // Organic
     @JvmField
-    val GLUE: HTFluidContent = REGISTER.registerFlowing("glue") { properties = liquid().motionScale(0.0001) }
+    val GLUE: HTFluidContent.Flowing = REGISTER.registerFlowing("glue") { properties = liquid().motionScale(0.0001) }
 
     @JvmField
-    val METHANE: HTFluidContent = REGISTER.registerVirtual("methane") { properties = gas() }
+    val METHANE: HTFluidContent.Virtual = REGISTER.registerVirtual("methane") { properties = gas() }
 
     @JvmField
-    val CRUDE_BIO: HTFluidContent = REGISTER.registerFlowing("crude_bio") { properties = liquid().motionScale(0.0001) }
+    val CRUDE_BIO: HTFluidContent.Flowing = REGISTER.registerFlowing("crude_bio") { properties = liquid().motionScale(0.0001) }
 
     @JvmField
-    val ETHANOL: HTFluidContent = REGISTER.registerFlowing("ethanol") { properties = liquid() }
+    val ETHANOL: HTFluidContent.Flowing = REGISTER.registerFlowing("ethanol") { properties = liquid() }
 
     @JvmField
-    val BIOFUEL: HTFluidContent = REGISTER.registerFlowing("biofuel") { properties = liquid() }
+    val BIOFUEL: HTFluidContent.Flowing = REGISTER.registerFlowing("biofuel") { properties = liquid() }
 
     // N
     @JvmField
-    val NITROGEN: HTFluidContent = REGISTER.registerVirtual("nitrogen") { properties = gas() }
+    val NITROGEN: HTFluidContent.Virtual = REGISTER.registerVirtual("nitrogen") { properties = gas() }
 
     @JvmField
-    val LIQUID_NITROGEN: HTFluidContent = REGISTER.registerFlowing("liquid_nitrogen") {
+    val LIQUID_NITROGEN: HTFluidContent.Flowing = REGISTER.registerFlowing("liquid_nitrogen") {
         properties = liquid().temperature(300 - 196)
         typeFactory = ::HTLiquidGasFluidType
         blockFactory = null
@@ -77,17 +77,17 @@ object RagiumFluids {
 
     // Na
     @JvmField
-    val NAOH_SOLUTION: HTFluidContent = REGISTER.registerFlowing("sodium_hydroxide_solution") { properties = liquid() }
+    val NAOH_SOLUTION: HTFluidContent.Flowing = REGISTER.registerFlowing("sodium_hydroxide_solution") { properties = liquid() }
 
     // Hg
     @JvmField
-    val MERCURY: HTFluidContent = REGISTER.registerVirtual("mercury") { properties = liquid() }
+    val MERCURY: HTFluidContent.Virtual = REGISTER.registerVirtual("mercury") { properties = liquid() }
 
     //    Nether    //
 
     // C
     @JvmField
-    val CRUDE_OIL: HTFluidContent = REGISTER.registerFlowing("crude_oil") {
+    val CRUDE_OIL: HTFluidContent.Flowing = REGISTER.registerFlowing("crude_oil") {
         properties = molten()
             .canSwim(false)
             .pathType(PathType.LAVA)
@@ -100,47 +100,47 @@ object RagiumFluids {
     }
 
     @JvmField
-    val NAPHTHA: HTFluidContent = REGISTER.registerFlowing("naphtha") {
+    val NAPHTHA: HTFluidContent.Flowing = REGISTER.registerFlowing("naphtha") {
         properties = liquid()
         typeFactory = ::HTExplosiveFluidType.partially1(3f)
     }
 
     @JvmField
-    val FUEL: HTFluidContent = REGISTER.registerFlowing("fuel") {
+    val FUEL: HTFluidContent.Flowing = REGISTER.registerFlowing("fuel") {
         properties = liquid()
         typeFactory = ::HTExplosiveFluidType.partially1(4f)
     }
 
     // N
     @JvmField
-    val NITROGEN_DIOXIDE: HTFluidContent = REGISTER.registerVirtual("nitrogen_dioxide") { properties = gas() }
+    val NITROGEN_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("nitrogen_dioxide") { properties = gas() }
 
     @JvmField
-    val AMMONIA: HTFluidContent = REGISTER.registerFlowing("ammonia") { properties = gas() }
+    val AMMONIA: HTFluidContent.Flowing = REGISTER.registerFlowing("ammonia") { properties = gas() }
 
     @JvmField
-    val NITRIC_ACID: HTFluidContent = REGISTER.registerFlowing("nitric_acid") { properties = liquid() }
+    val NITRIC_ACID: HTFluidContent.Flowing = REGISTER.registerFlowing("nitric_acid") { properties = liquid() }
 
     // S
     @JvmField
-    val SULFUR_DIOXIDE: HTFluidContent = REGISTER.registerVirtual("sulfur_dioxide") { properties = gas() }
+    val SULFUR_DIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfur_dioxide") { properties = gas() }
 
     @JvmField
-    val SULFUR_TRIOXIDE: HTFluidContent = REGISTER.registerVirtual("sulfur_trioxide") { properties = gas() }
+    val SULFUR_TRIOXIDE: HTFluidContent.Virtual = REGISTER.registerVirtual("sulfur_trioxide") { properties = gas() }
 
     @JvmField
-    val SULFURIC_ACID: HTFluidContent = REGISTER.registerFlowing("sulfuric_acid") { properties = liquid() }
+    val SULFURIC_ACID: HTFluidContent.Flowing = REGISTER.registerFlowing("sulfuric_acid") { properties = liquid() }
 
     //    The End    //
 
     // He
     @JvmField
-    val CHORUS_GAS: HTFluidContent = REGISTER.registerVirtual("chorus_gas") { properties = gas() }
+    val CHORUS_GAS: HTFluidContent.Virtual = REGISTER.registerVirtual("chorus_gas") { properties = gas() }
 
     //    End Game    //
 
     @JvmField
-    val RAGI_MATTER: HTFluidContent = REGISTER.registerFlowing("ragi_matter") {
+    val RAGI_MATTER: HTFluidContent.Flowing = REGISTER.registerFlowing("ragi_matter") {
         properties = liquid()
         typeFactory = ::HTCreativeFluidType
     }

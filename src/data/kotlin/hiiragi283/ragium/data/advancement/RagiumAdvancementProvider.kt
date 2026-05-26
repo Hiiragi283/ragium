@@ -5,19 +5,21 @@ import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.advancement.HTAdvancementKey
 import hiiragi283.core.api.data.advancement.HTSubAdvancementProvider
 import hiiragi283.core.api.data.advancement.builder.HTAdvancementBuilder
+import hiiragi283.core.api.item.toStack
+import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.material.getResult
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPartLike
-import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.registry.HTSimpleItemHolderLike
+import hiiragi283.core.api.registry.HTDeferredBlockAndItem
+import hiiragi283.core.api.registry.HTDeferredItem
 import hiiragi283.core.api.resource.toId
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.HiiragiCoreTags
+import hiiragi283.core.api.util.getOrThrow
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
-import hiiragi283.core.common.registry.HTDeferredBlockAndItem
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
@@ -27,10 +29,7 @@ import net.minecraft.core.HolderLookup
 
 data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
     @JvmStatic
-    private fun getItem(part: HTPartLike, material: HTMaterialLike): HTSimpleItemHolderLike = HiiragiCoreAccess.INSTANCE
-        .registeredContents
-        .items
-        .getOrThrow(part, material)
+    private fun getItem(part: HTPartLike, material: HTMaterialLike): HTMaterialContents.ItemEntry = HiiragiCoreAccess.INSTANCE.registeredContents.items.getResult(part, material).getOrThrow()
 
     @JvmStatic
     private fun createSimple(key: HTAdvancementKey, parentKey: HTAdvancementKey, block: HTDeferredBlockAndItem<*, *>) {
@@ -38,7 +37,7 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
     }
 
     @JvmStatic
-    private fun createSimple(key: HTAdvancementKey, parentKey: HTAdvancementKey, item: HTItemHolderLike<*>) {
+    private fun createSimple(key: HTAdvancementKey, parentKey: HTAdvancementKey, item: HTDeferredItem<*>) {
         HTAdvancementBuilder.create(output, key) {
             parent = parentKey
             display {

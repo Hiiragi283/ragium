@@ -4,12 +4,12 @@ import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.function.partially2
+import hiiragi283.core.api.registry.HTBasicDeferredBlockAndItem
+import hiiragi283.core.api.registry.HTDeferredBlockAndItem
+import hiiragi283.core.api.registry.HTDeferredBlockAndItemRegister
+import hiiragi283.core.api.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.core.api.text.HTTranslation
-import hiiragi283.core.common.registry.HTBasicDeferredBlockAndItem
-import hiiragi283.core.common.registry.HTDeferredBlockAndItem
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.registry.HTSimpleDeferredBlockAndItem
-import hiiragi283.core.common.registry.register.HTDeferredBlockAndItemRegister
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst

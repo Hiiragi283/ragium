@@ -38,7 +38,7 @@ class RagiumItemTagsProvider(
         copy(RagiumTags.Blocks.STORAGES_CREATIVE, RagiumTags.Items.STORAGES_CREATIVE)
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
-            factory.addTags(Tags.Items.BUCKETS, content.bucketTag).add(content.getBucket())
+            factory.addTags(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)
         }
         // Explosives
         RagiumTags.Items.EXPLOSIVES.apply(factory)

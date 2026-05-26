@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.recipe
 
 import hiiragi283.core.api.function.identity
+import hiiragi283.core.api.item.toStack
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
@@ -10,9 +11,9 @@ import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
 import hiiragi283.core.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
-import hiiragi283.core.api.registry.HTSimpleHolderLike
+import hiiragi283.core.api.registry.HTDeferredRecipeType
 import hiiragi283.core.api.registry.getDataSequence
-import hiiragi283.core.common.registry.HTDeferredRecipeType
+import hiiragi283.core.api.resource.SupplierWithId
 import hiiragi283.core.impl.recipe.cache.HTCompoundRecipeLookup
 import hiiragi283.core.impl.recipe.cache.HTVanillaRecipeLookup
 import hiiragi283.core.impl.recipe.cache.fromRecipeType
@@ -26,7 +27,6 @@ import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeInput
 
@@ -81,11 +81,12 @@ data object RagiumRecipeLookups {
     val MASS_FABRICATING: HTRecipeType<HTMassFabricatingRecipe> = object : HTRecipeType<HTMassFabricatingRecipe> {
         override fun getAllRecipes(context: HTRecipeLookup.Context): Sequence<HTRecipeHolder<HTMassFabricatingRecipe>> = context
             .lookup(Registries.ITEM)
+            .getOrNull()
             ?.getDataSequence(RagiumDataMapTypes.MATTER_POINT)
-            ?.map { (item: HTSimpleHolderLike<Item>, point: Int) ->
+            ?.map { (item: SupplierWithId<Item>, point: Int) ->
                 HTRecipeHolder(
                     item.getId().withPrefix("${RagiumConst.MASS_FABRICATING}/"),
-                    HTMassFabricatingRecipe(ItemStack(item.get()), point),
+                    HTMassFabricatingRecipe(item.toStack(), point),
                 )
             }
             ?: emptySequence()

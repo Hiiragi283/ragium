@@ -172,7 +172,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
                 result += resultCreator.create(content, 250)
             }
             // Liquid Dye -> Dye
-            VanillaColoredContents.DYE[color]?.let { dye: ItemLike ->
+            VanillaColoredContents.DYE[color]?.get()?.let { dye: ItemLike ->
                 HTFreezingRecipeBuilder.create(output) {
                     ingredient = inputCreator.create(content, 250)
                     catalyst = HTBluePrintIngredient(0).toVanilla()
@@ -180,7 +180,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
                 }
             }
             // Gravel + Sand + Liquid Dye -> Concrete
-            VanillaColoredContents.CONCRETE[color]?.let { concrete: ItemLike ->
+            VanillaColoredContents.CONCRETE[color]?.get()?.let { concrete: ItemLike ->
                 HTMixingRecipeBuilder.create(output) {
                     itemIngredients += inputCreator.create(Tags.Items.GRAVELS, 4)
                     itemIngredients += inputCreator.create(Tags.Items.SANDS, 4)
@@ -188,7 +188,7 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
                     result += resultCreator.create(concrete, 8)
                 }
                 // Powder + Water -> Concrete
-                VanillaColoredContents.CONCRETE_POWDER[color]?.let { powder ->
+                VanillaColoredContents.CONCRETE_POWDER[color]?.get()?.let { powder: ItemLike ->
                     HTMixingRecipeBuilder.create(output) {
                         itemIngredients += inputCreator.create(powder)
                         fluidIngredient = inputCreator.water(125)

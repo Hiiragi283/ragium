@@ -5,7 +5,7 @@ parchment-mc = "1.21.1"
 parchment-map = "2024.11.17"
 
 neo-moddev = "2.0.141"
-neo-version = "21.1.228"
+neo-version = "21.1.230"
 kff-version = "5.11.0"
 
 dokka = "2.1.0"

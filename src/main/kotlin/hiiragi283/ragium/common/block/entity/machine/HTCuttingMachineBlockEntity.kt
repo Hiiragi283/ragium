@@ -41,7 +41,7 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMu
 
     override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(RagiumRecipeViewerTypes.CUTTING)
 
-    override fun getLookup(): HTRecipeLookup<out HTItemToMultiItemRecipe> = RagiumRecipeLookups.CUTTING
+    override fun getLookup(): HTRecipeLookup<HTItemToMultiItemRecipe> = RagiumRecipeLookups.CUTTING
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.cuttingMachine
 }

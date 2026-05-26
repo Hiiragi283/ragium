@@ -5,6 +5,7 @@ import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.item.toStack
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.registry.VanillaFluidContents
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder

@@ -5,10 +5,10 @@ import hiiragi283.core.api.data.worldgen.HTWorldGenData
 import hiiragi283.core.api.data.worldgen.HTWorldGenHelper
 import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.material.getResult
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPartLike
-import hiiragi283.core.api.registry.getDefaultState
+import hiiragi283.core.api.util.getOrThrow
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.core.RegistrySetBuilder
@@ -51,19 +51,12 @@ data object RagiumWorldData {
                     ORE_RAGINITE,
                     Feature.ORE,
                     OreConfiguration(
-                        listOf(
-                            OreConfiguration.target(
-                                STONE_ORE,
-                                getBlockOrThrow(CommonParts.ORE, RagiumMaterialKeys.RAGINITE).getDefaultState(),
-                            ),
-                            OreConfiguration.target(
-                                DEEPSLATE_ORE,
-                                getBlockOrThrow(
-                                    CommonParts.ORE_DEEPSLATE,
-                                    RagiumMaterialKeys.RAGINITE,
-                                ).getDefaultState(),
-                            ),
-                        ),
+                        mapOf(
+                            STONE_ORE to getBlockOrThrow(CommonParts.ORE, RagiumMaterialKeys.RAGINITE),
+                            DEEPSLATE_ORE to getBlockOrThrow(CommonParts.ORE_DEEPSLATE, RagiumMaterialKeys.RAGINITE),
+                        ).map { (rule: TagMatchTest, block: HTMaterialContents.SimpleEntry<Block>) ->
+                            OreConfiguration.target(rule, block.get().defaultBlockState())
+                        },
                         10,
                     ),
                 )
@@ -89,5 +82,5 @@ data object RagiumWorldData {
     }
 
     @JvmStatic
-    private fun getBlockOrThrow(part: HTPartLike, material: HTMaterialLike): HTMaterialContents.SimpleEntry<Block> = HiiragiCoreAccess.INSTANCE.registeredContents.blocks.getOrThrow(part, material)
+    private fun getBlockOrThrow(part: HTPartLike, material: HTMaterialLike): HTMaterialContents.SimpleEntry<Block> = HiiragiCoreAccess.INSTANCE.registeredContents.blocks.getResult(part, material).getOrThrow()
 }

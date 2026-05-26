@@ -20,8 +20,8 @@ import hiiragi283.core.api.material.property.setTextureSet
 import hiiragi283.core.api.plugin.HTMaterialPlugin
 import hiiragi283.core.api.plugin.HTPlugin
 import hiiragi283.core.api.property.add
-import hiiragi283.core.api.registry.HTSimpleItemHolderLike
-import hiiragi283.core.api.registry.toItemLike
+import hiiragi283.core.api.registry.HTDeferredItem
+import hiiragi283.core.api.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
@@ -187,5 +187,5 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
     }
 
     @JvmStatic
-    private fun createItem(part: HTPartLike, key: HTMaterialKey): HTSimpleItemHolderLike = part.createId(key).toItemLike()
+    private fun createItem(part: HTPartLike, key: HTMaterialKey): HTSimpleDeferredItem = HTDeferredItem(part.createId(key))
 }

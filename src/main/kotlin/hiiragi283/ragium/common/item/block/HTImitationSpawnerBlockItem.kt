@@ -3,7 +3,6 @@ package hiiragi283.ragium.common.item.block
 import hiiragi283.core.api.item.HTBlockItem
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
-import hiiragi283.core.api.registry.HTItemHolderLike
 import hiiragi283.core.api.text.Text
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.common.block.HTImitationSpawnerBlock
@@ -12,6 +11,7 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
@@ -33,7 +33,7 @@ class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Pr
             ?.let(tooltips::add)
     }
 
-    override fun addItems(baseItem: HTItemHolderLike<*>, context: HTSubCreativeTabContents.Context) {
+    override fun addItems(baseItem: Holder<Item>, context: HTSubCreativeTabContents.Context) {
         context
             .provider
             .lookupOrThrow(Registries.ENTITY_TYPE)
@@ -41,7 +41,7 @@ class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Pr
             .listElements()
             .map { holder: Holder<EntityType<*>> ->
                 createItemStack(
-                    baseItem,
+                    baseItem.value(),
                     RagiumDataComponents.SPAWNER_MOB,
                     HTSpawnerMob.of(holder),
                 )

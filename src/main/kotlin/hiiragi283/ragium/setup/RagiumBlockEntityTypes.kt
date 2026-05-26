@@ -1,6 +1,6 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.registry.HTBlockHolderLike
+import hiiragi283.core.api.registry.HTDeferredBlock
 import hiiragi283.core.common.block.HTBlockWithEntity
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.core.common.capability.HTEnergyCapabilities
@@ -189,7 +189,7 @@ object RagiumBlockEntityTypes {
     // Supported Blocks
     @JvmStatic
     private fun addSupportedBlocks(event: BlockEntityTypeAddBlocksEvent) {
-        for (holder: HTBlockHolderLike<*> in RagiumBlocks.REGISTER.asBlockSequence()) {
+        for (holder: HTDeferredBlock<*> in RagiumBlocks.REGISTER.asBlockSequence()) {
             val block: Block = holder.get()
             if (block is HTBlockWithEntity) {
                 event.modify(block.getBlockEntityType().get(), block)

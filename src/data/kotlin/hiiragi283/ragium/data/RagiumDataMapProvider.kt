@@ -3,6 +3,7 @@ package hiiragi283.ragium.data
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.map.HTDataMapProvider
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.HTSimpleDeferredItem
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.toId
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -42,12 +43,12 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     // Entity Type
     private fun mobHeads() {
         builder(RagiumDataMapTypes.MOB_HEAD)
-            .add(EntityType.SKELETON, Items.SKELETON_SKULL.toLike())
-            .add(EntityType.WITHER_SKELETON, Items.WITHER_SKELETON_SKULL.toLike())
-            .add(EntityType.ZOMBIE, Items.ZOMBIE_HEAD.toLike())
-            .add(EntityType.CREEPER, Items.CREEPER_HEAD.toLike())
-            .add(EntityType.ENDER_DRAGON, Items.DRAGON_HEAD.toLike())
-            .add(EntityType.PIGLIN, Items.PIGLIN_HEAD.toLike())
+            .add(EntityType.SKELETON, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("skeleton_skull")))
+            .add(EntityType.WITHER_SKELETON, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("wither_skeleton_skull")))
+            .add(EntityType.ZOMBIE, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("zombie_head")))
+            .add(EntityType.CREEPER, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("creeper_head")))
+            .add(EntityType.ENDER_DRAGON, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("dragon_head")))
+            .add(EntityType.PIGLIN, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("piglin_head")))
     }
 
     // Fluid
