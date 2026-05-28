@@ -27,6 +27,7 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
 
     override fun setupOutputSlots(widgetHolder: HTWidgetHolder) {
         outputSlots
+            .onEach { widgetHolder.track(it) }
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->
                 HTItemWidget.Container(
                     slot,

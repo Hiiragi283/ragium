@@ -1,7 +1,12 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.common.gui.sync.HTFluidSyncSlot
+import hiiragi283.core.common.gui.sync.HTItemSyncSlot
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import hiiragi283.core.impl.storage.fluid.HTFluidStackResourceSlot
+import hiiragi283.core.impl.storage.item.HTItemStackResourceSlot
 import hiiragi283.ragium.api.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.config.RagiumConfig
@@ -20,6 +25,14 @@ abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     fun isActive(state: BlockState): Boolean = state.getOptionalValue(HTMachineBlock.IS_ACTIVE).orElseGet { false }
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {}
+
+    protected fun HTWidgetHolder.track(slot: HTFluidStackResourceSlot, syncType: HTSyncType = HTSyncType.S2C) {
+        this.track(HTFluidSyncSlot(slot), syncType)
+    }
+
+    protected fun HTWidgetHolder.track(slot: HTItemStackResourceSlot, syncType: HTSyncType = HTSyncType.S2C) {
+        this.track(HTItemSyncSlot(slot), syncType)
+    }
 
     //    Ticking    //
 

@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.serialization.value.HTValueInput
@@ -14,6 +15,7 @@ import hiiragi283.core.api.storage.energy.HTEnergyBattery
 import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.common.gui.sync.HTIntSyncSlot
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCChargingRecipe
 import hiiragi283.core.common.recipe.HCRecipeLookups
@@ -76,6 +78,9 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
         widgetHolder.rows = 1
         // slot
         widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0))
+        getSlotSyncType()?.let { syncType: HTSyncType ->
+            widgetHolder.track(HTIntSyncSlot.create(battery), syncType)
+        }
 
         widgetHolder += HTItemWidget.Container(
             inputSlot,

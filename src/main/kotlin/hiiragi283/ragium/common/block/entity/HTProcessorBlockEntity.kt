@@ -2,16 +2,19 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
+import hiiragi283.core.common.gui.sync.HTIntSyncSlot
 import hiiragi283.core.common.gui.widget.HTProgressWidget
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.impl.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
+import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyBattery
 import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -38,7 +41,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4), vararg recipeTypes: HTRecipeViewerType<*>) {
         widgetHolder += HTProgressWidget.createArrow(
-            recipeComponent.fractionSlot,
+            recipeComponent.fractionSlot::amountAsFraction,
             x,
             HTSlotHelper.getSlotPosY(1),
         ).setSupportedRecipeTypes(*recipeTypes)
@@ -46,7 +49,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4), recipeTypes: Iterable<HTRecipeViewerType<*>>) {
         widgetHolder += HTProgressWidget.createArrow(
-            recipeComponent.fractionSlot,
+            recipeComponent.fractionSlot::amountAsFraction,
             x,
             HTSlotHelper.getSlotPosY(1),
         ).setSupportedRecipeTypes(recipeTypes)
@@ -111,6 +114,11 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
             battery.currentEnergyPerTick = battery.baseEnergyPerTick
             // modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
             return battery.currentEnergyPerTick * modifyTime(time)
+        }
+
+        fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
+            widgetHolder += HTEnergySlotWidget(battery, x, y)
+            widgetHolder.track(HTIntSyncSlot.create(battery), HTSyncType.S2C)
         }
 
         //    ProgressHandler    //

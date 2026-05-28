@@ -11,7 +11,6 @@ import hiiragi283.core.impl.recipe.cache.HTTripleInputRecipeCache
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
@@ -61,7 +60,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2), HTSlotHelper.getSlotPosY(1))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4), RagiumRecipeViewerTypes.ALLOYING)
         // slots
@@ -71,18 +70,21 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
+        widgetHolder.track(topInputSlot)
         widgetHolder += HTItemWidget.Container(
             leftInputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_INPUT,
         )
+        widgetHolder.track(leftInputSlot)
         widgetHolder += HTItemWidget.Container(
             rightInputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_INPUT,
         )
+        widgetHolder.track(rightInputSlot)
 
         widgetHolder += HTItemWidget.Container(
             outputSlot,
@@ -90,6 +92,7 @@ class HTAlloySmelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorB
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.OUTPUT,
         )
+        widgetHolder.track(outputSlot)
     }
 
     //    Processing    //

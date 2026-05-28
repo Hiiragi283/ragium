@@ -20,7 +20,6 @@ import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -55,7 +54,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4), getViewerTypes())
         // inputs
@@ -65,6 +64,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
+        widgetHolder.track(inputSlot)
         widgetHolder += HTFluidWidget.Tank(
             inputTank,
             HTSlotHelper.getSlotPosX(1),
@@ -72,6 +72,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             HTBackgroundType.EXTRA_INPUT,
             false,
         )
+        widgetHolder.track(inputTank)
         // outputs
         widgetHolder += HTItemWidget.Container(
             outputSlot,
@@ -79,6 +80,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.OUTPUT,
         )
+        widgetHolder.track(outputSlot)
         widgetHolder += HTFluidWidget.Tank(
             outputTank,
             HTSlotHelper.getSlotPosX(7.5),
@@ -86,6 +88,7 @@ abstract class HTItemOrFluidBlockEntity(type: HTDeferredBlockEntityType<*>, pos:
             HTBackgroundType.EXTRA_OUTPUT,
             false,
         )
+        widgetHolder.track(outputTank)
     }
 
     protected open fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = emptyList()

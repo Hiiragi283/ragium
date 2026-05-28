@@ -66,18 +66,21 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             HTBackgroundType.INPUT,
             false,
         )
+        widgetHolder.track(inputTank)
         widgetHolder += HTItemWidget.Container(
             baseSlot,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.INPUT,
         )
+        widgetHolder.track(baseSlot)
         widgetHolder += HTItemWidget.Container(
             additionSlot,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.EXTRA_INPUT,
         )
+        widgetHolder.track(additionSlot)
 
         widgetHolder += HTItemWidget.Container(
             outputSlot,
@@ -85,6 +88,7 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.OUTPUT,
         )
+        widgetHolder.track(outputSlot)
     }
 
     //    Processing    //

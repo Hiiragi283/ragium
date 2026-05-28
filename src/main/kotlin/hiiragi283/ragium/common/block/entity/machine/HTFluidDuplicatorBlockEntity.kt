@@ -12,7 +12,6 @@ import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
@@ -52,7 +51,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(2))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(2))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(5.25))
         // tanks
@@ -63,6 +62,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
             HTBackgroundType.INPUT,
             false,
         )
+        widgetHolder.track(inputTank)
         widgetHolder += HTFluidWidget.Tank(
             matterTank,
             HTSlotHelper.getSlotPosX(4),
@@ -70,6 +70,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
             HTBackgroundType.EXTRA_INPUT,
             false,
         )
+        widgetHolder.track(matterTank)
 
         widgetHolder += HTFluidWidget.Tank(
             outputTank,
@@ -78,6 +79,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
             HTBackgroundType.OUTPUT,
             false,
         )
+        widgetHolder.track(outputTank)
     }
 
     //    Processing    //

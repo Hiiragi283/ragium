@@ -16,7 +16,6 @@ import hiiragi283.core.impl.recipe.cache.completed.HTSingleToSingleCompletedReci
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
@@ -38,7 +37,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4), getViewerTypes())
         // slots
@@ -48,6 +47,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
+        widgetHolder.track(inputSlot)
 
         widgetHolder += HTItemWidget.Container(
             outputSlot,
@@ -55,6 +55,7 @@ abstract class HTItemToItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: 
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.OUTPUT,
         )
+        widgetHolder.track(outputSlot)
     }
 
     protected open fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = emptyList()

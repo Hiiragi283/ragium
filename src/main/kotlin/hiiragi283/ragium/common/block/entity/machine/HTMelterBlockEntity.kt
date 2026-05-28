@@ -15,7 +15,6 @@ import hiiragi283.core.impl.recipe.cache.completed.HTSingleToSingleCompletedReci
 import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -48,7 +47,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4), RagiumRecipeViewerTypes.MELTING)
         // input
@@ -58,6 +57,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
+        widgetHolder.track(inputSlot)
         // output
         widgetHolder += HTFluidWidget.Tank(
             outputTank,
@@ -66,6 +66,7 @@ class HTMelterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEn
             HTBackgroundType.OUTPUT,
             false,
         )
+        widgetHolder.track(outputTank)
     }
 
     //    Processing    //

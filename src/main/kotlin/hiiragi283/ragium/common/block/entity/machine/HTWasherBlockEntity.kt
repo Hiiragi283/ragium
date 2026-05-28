@@ -14,7 +14,6 @@ import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.machine.base.HTMultiItemBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
@@ -51,7 +50,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4), RagiumRecipeViewerTypes.WASHING)
         // inputs
@@ -61,6 +60,7 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
+        widgetHolder.track(inputSlot)
         widgetHolder += HTFluidWidget.Tank(
             inputTank,
             HTSlotHelper.getSlotPosX(1),
@@ -68,8 +68,10 @@ class HTWasherBlockEntity(pos: BlockPos, state: BlockState) : HTMultiItemBlockEn
             HTBackgroundType.EXTRA_INPUT,
             false,
         )
+        widgetHolder.track(inputTank)
         // outputs
         outputSlots
+            .onEach { widgetHolder.track(it) }
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->
                 HTItemWidget.Container(
                     slot,

@@ -16,7 +16,6 @@ import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -52,7 +51,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4), RagiumRecipeViewerTypes.FREEZING)
         // inputs
@@ -62,6 +61,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
+        widgetHolder.track(inputSlot)
         widgetHolder += HTFluidWidget.Tank(
             inputTank,
             HTSlotHelper.getSlotPosX(1),
@@ -69,6 +69,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
             HTBackgroundType.EXTRA_INPUT,
             false,
         )
+        widgetHolder.track(inputTank)
         // output
         widgetHolder += HTItemWidget.Container(
             outputSlot,
@@ -76,6 +77,7 @@ class HTFreezerBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockE
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.OUTPUT,
         )
+        widgetHolder.track(outputSlot)
     }
 
     //    Processing    //

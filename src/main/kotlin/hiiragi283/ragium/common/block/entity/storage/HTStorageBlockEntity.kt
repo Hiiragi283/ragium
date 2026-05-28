@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.util.HTStorageHelper
@@ -26,6 +27,8 @@ abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected open fun isCreative(): Boolean = false
 
     protected abstract fun getAmountView(): HTAmountView
+
+    protected open fun getSlotSyncType(): HTSyncType? = HTSyncType.S2C
 
     final override fun markDirtyComparator() {
         level?.updateNeighbourForOutputSignal(blockPos, blockState.block)

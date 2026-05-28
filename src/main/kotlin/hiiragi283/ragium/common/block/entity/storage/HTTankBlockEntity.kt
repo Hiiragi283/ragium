@@ -3,6 +3,7 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTTankEmptyingRecipe
 import hiiragi283.core.api.recipe.base.HTTankFillingRecipe
@@ -14,10 +15,12 @@ import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
+import hiiragi283.core.common.gui.sync.HTFluidSyncSlot
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
 import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
@@ -97,6 +100,8 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         )
         // tank
         widgetHolder += HTFluidWidget.Tank(tank, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0), HTBackgroundType.NONE, isCreative())
+        val syncType: HTSyncType = getSlotSyncType() ?: return
+        widgetHolder.track(HTFluidSyncSlot(tank), syncType)
     }
 
     //    Sync    //
@@ -202,5 +207,11 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
                 inputHandler.consume(1)
             }
         }
+    }
+
+    //    Simple    //
+
+    class Simple(pos: BlockPos, state: BlockState) : HTTankBlockEntity(RagiumBlockEntityTypes.TANK, pos, state) {
+        override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
     }
 }

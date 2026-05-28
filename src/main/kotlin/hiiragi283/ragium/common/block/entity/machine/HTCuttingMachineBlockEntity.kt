@@ -7,6 +7,7 @@ import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.common.gui.widget.HTItemWidget
+import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToMultiItemBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
@@ -25,18 +26,21 @@ class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMu
     override fun getOutputSlotSize(): Int = 2
 
     override fun setupOutputSlots(widgetHolder: HTWidgetHolder) {
+        val (firstOutput: HTBasicItemSlot, secondOutput: HTBasicItemSlot) = outputSlots
         widgetHolder += HTItemWidget.Container(
-            outputSlots[0],
+            firstOutput,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.OUTPUT,
         )
+        widgetHolder.track(firstOutput)
         widgetHolder += HTItemWidget.Container(
-            outputSlots[1],
+            secondOutput,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_OUTPUT,
         )
+        widgetHolder.track(secondOutput)
     }
 
     override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(RagiumRecipeViewerTypes.CUTTING)

@@ -76,12 +76,14 @@ class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnti
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
+        widgetHolder.track(fuelSlot)
         widgetHolder += HTItemWidget.Container(
             ashSlot,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_OUTPUT,
         )
+        widgetHolder.track(ashSlot)
         // tanks
         widgetHolder += HTFluidWidget.Tank(
             waterTank,
@@ -90,6 +92,7 @@ class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnti
             HTBackgroundType.INPUT,
             false,
         )
+        widgetHolder.track(waterTank)
         widgetHolder += HTFluidWidget.Tank(
             steamTank,
             HTSlotHelper.getSlotPosX(6),
@@ -97,6 +100,7 @@ class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnti
             HTBackgroundType.OUTPUT,
             false,
         )
+        widgetHolder.track(steamTank)
     }
 
     //    Processing    //

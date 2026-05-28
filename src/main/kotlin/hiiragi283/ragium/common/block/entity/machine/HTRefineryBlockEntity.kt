@@ -15,7 +15,6 @@ import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
 import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
@@ -55,7 +54,7 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlock
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(1))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(1), HTSlotHelper.getSlotPosY(1))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(3), RagiumRecipeViewerTypes.REFINING)
         // slots
@@ -66,12 +65,14 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlock
             HTBackgroundType.INPUT,
             false,
         )
+        widgetHolder.track(inputTank)
         widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(3.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.NONE,
         )
+        widgetHolder.track(inputSlot)
 
         widgetHolder += HTFluidWidget.Tank(
             firstOutputTank,
@@ -87,12 +88,14 @@ class HTRefineryBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlock
             HTBackgroundType.EXTRA_OUTPUT,
             false,
         )
+        widgetHolder.track(secondOutputTank)
         widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(3.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.OUTPUT,
         )
+        widgetHolder.track(outputSlot)
     }
 
     //    Processing    //

@@ -1,6 +1,7 @@
 package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.serialization.value.HTValueSerializable
 import hiiragi283.core.api.storage.energy.HTEnergyBattery
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -17,4 +18,6 @@ class HTCreativeBatteryBlockEntity(pos: BlockPos, state: BlockState) : HTBattery
     }
 
     override fun isCreative(): Boolean = true
+
+    override fun getSlotSyncType(): HTSyncType? = null
 }
