@@ -15,7 +15,6 @@ import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 
@@ -65,8 +64,6 @@ class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler? = null
-
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 
     override fun getItemSlots(side: Direction?): List<HTItemSlot> = getItemHandler(side)?.getItemSlots(side) ?: listOf()
 }

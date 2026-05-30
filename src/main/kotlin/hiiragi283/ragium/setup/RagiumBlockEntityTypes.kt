@@ -11,6 +11,7 @@ import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegiste
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
+import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTBoilerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
@@ -155,8 +156,8 @@ object RagiumBlockEntityTypes {
 
     // variable
     @JvmField
-    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity> =
-        REGISTER.registerTick("battery", ::HTBatteryBlockEntity)
+    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity.Simple> =
+        REGISTER.registerTick("battery", HTBatteryBlockEntity<*>::Simple)
 
     @JvmField
     val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> =
@@ -203,39 +204,39 @@ object RagiumBlockEntityTypes {
         // Generator
         registerHandler(event, BOILER.get())
         // Machine
-        registerHandler(event, ALLOY_SMELTER.get())
-        registerHandler(event, ASSEMBLER.get())
-        registerHandler(event, AUTO_CHISEL.get())
-        registerHandler(event, COMPRESSOR.get())
-        registerHandler(event, CRUSHER.get())
-        registerHandler(event, CUTTING_MACHINE.get())
-        registerHandler(event, ELECTRIC_FURNACE.get())
-        registerHandler(event, PLANTER.get())
+        registerProcessor(event, ALLOY_SMELTER.get())
+        registerProcessor(event, ASSEMBLER.get())
+        registerProcessor(event, AUTO_CHISEL.get())
+        registerProcessor(event, COMPRESSOR.get())
+        registerProcessor(event, CRUSHER.get())
+        registerProcessor(event, CUTTING_MACHINE.get())
+        registerProcessor(event, ELECTRIC_FURNACE.get())
+        registerProcessor(event, PLANTER.get())
 
-        registerHandler(event, FREEZER.get())
-        registerHandler(event, MELTER.get())
-        registerHandler(event, PYROLYZER.get())
-        registerHandler(event, REFINERY.get())
+        registerProcessor(event, FREEZER.get())
+        registerProcessor(event, MELTER.get())
+        registerProcessor(event, PYROLYZER.get())
+        registerProcessor(event, REFINERY.get())
 
-        registerHandler(event, BREWERY.get())
-        registerHandler(event, MIXER.get())
-        registerHandler(event, WASHER.get())
+        registerProcessor(event, BREWERY.get())
+        registerProcessor(event, MIXER.get())
+        registerProcessor(event, WASHER.get())
 
-        registerHandler(event, FLUID_DUPLICATOR.get())
+        registerProcessor(event, FLUID_DUPLICATOR.get())
         // Device
         registerHandler(event, ENCHANTER.get())
-        registerHandler(event, MASS_FABRICATOR.get())
+        registerProcessor(event, MASS_FABRICATOR.get())
 
         // Storage
         HTItemCapabilities.registerBlockEntity(event, UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)
 
-        registerHandler(event, BATTERY.get())
+        registerBattery(event, BATTERY.get())
         registerHandler(event, CRATE.get())
         registerHandler(event, TANK.get())
 
         registerHandler(event, VOID_TANK.get())
 
-        registerHandler(event, CREATIVE_BATTERY.get())
+        registerBattery(event, CREATIVE_BATTERY.get())
         registerHandler(event, CREATIVE_CRATE.get())
         registerHandler(event, CREATIVE_TANK.get())
     }
@@ -244,6 +245,19 @@ object RagiumBlockEntityTypes {
     private fun <BE : HTBlockEntity> registerHandler(event: RegisterCapabilitiesEvent, type: BlockEntityType<BE>) {
         HTItemCapabilities.registerBlockEntity(event, type, HTBlockEntity::getItemHandler)
         HTFluidCapabilities.registerBlockEntity(event, type, HTBlockEntity::getFluidHandler)
-        HTEnergyCapabilities.registerBlockEntity(event, type, HTBlockEntity::getEnergyStorage)
+    }
+
+    @JvmStatic
+    private fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(event: RegisterCapabilitiesEvent, type: BlockEntityType<BE>) {
+        HTItemCapabilities.registerBlockEntity(event, type, HTBlockEntity::getItemHandler)
+        HTFluidCapabilities.registerBlockEntity(event, type, HTBlockEntity::getFluidHandler)
+        HTEnergyCapabilities.registerBlockEntity(event, type, { processor: BE, _ -> processor.handler })
+    }
+
+    @JvmStatic
+    private fun <BE : HTBatteryBlockEntity<*>> registerBattery(event: RegisterCapabilitiesEvent, type: BlockEntityType<BE>) {
+        HTItemCapabilities.registerBlockEntity(event, type, HTBlockEntity::getItemHandler)
+        HTFluidCapabilities.registerBlockEntity(event, type, HTBlockEntity::getFluidHandler)
+        HTEnergyCapabilities.registerBlockEntity(event, type, { processor: BE, _ -> processor.handler })
     }
 }

@@ -3,19 +3,19 @@ package hiiragi283.ragium.common.storge.energy
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStoragePredicates
-import hiiragi283.core.common.storage.energy.HTBasicEnergyBattery
+import hiiragi283.core.common.storage.energy.HTBasicEnergyHandler
 import java.util.function.IntSupplier
 import java.util.function.Predicate
 
-class HTVariableEnergyBattery(
+class HTVariableEnergyHandler(
     private val capacitySupplier: IntSupplier,
     canExtract: Predicate<HTStorageAccess>,
     canInsert: Predicate<HTStorageAccess>,
     listener: HTContentListener?,
-) : HTBasicEnergyBattery(capacitySupplier.asInt, canExtract, canInsert, listener) {
+) : HTBasicEnergyHandler(capacitySupplier.asInt, canExtract, canInsert, listener) {
     companion object {
         @JvmStatic
-        fun create(listener: HTContentListener?, capacity: IntSupplier): HTBasicEnergyBattery = HTVariableEnergyBattery(
+        fun create(listener: HTContentListener?, capacity: IntSupplier): HTBasicEnergyHandler = HTVariableEnergyHandler(
             capacity,
             HTStoragePredicates.alwaysTrue(),
             HTStoragePredicates.alwaysTrue(),
@@ -23,7 +23,7 @@ class HTVariableEnergyBattery(
         )
 
         @JvmStatic
-        fun input(listener: HTContentListener?, capacity: IntSupplier): HTBasicEnergyBattery = HTVariableEnergyBattery(
+        fun input(listener: HTContentListener?, capacity: IntSupplier): HTBasicEnergyHandler = HTVariableEnergyHandler(
             capacity,
             HTStorageAccess.NOT_EXTERNAL,
             HTStoragePredicates.alwaysTrue(),
@@ -31,7 +31,7 @@ class HTVariableEnergyBattery(
         )
 
         @JvmStatic
-        fun output(listener: HTContentListener?, capacity: IntSupplier): HTBasicEnergyBattery = HTVariableEnergyBattery(
+        fun output(listener: HTContentListener?, capacity: IntSupplier): HTBasicEnergyHandler = HTVariableEnergyHandler(
             capacity,
             HTStoragePredicates.alwaysTrue(),
             HTStorageAccess.INTERNAL_ONLY,

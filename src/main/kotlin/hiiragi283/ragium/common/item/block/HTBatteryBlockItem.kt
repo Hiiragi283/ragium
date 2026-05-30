@@ -22,7 +22,7 @@ class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStor
         flag: TooltipFlag,
     ) {
         val isCreative: Boolean = isCreative(stack)
-        val view: HTAmountSlot = HTEnergyCapabilities.getBattery(stack) ?: return
+        val view: HTAmountSlot = HTEnergyCapabilities.getHandler(stack) ?: return
         // Energy Amount
         val amount: Int = view.getAmount()
         when {

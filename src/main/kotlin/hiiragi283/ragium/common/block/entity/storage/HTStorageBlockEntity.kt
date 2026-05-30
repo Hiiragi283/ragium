@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
@@ -19,8 +20,8 @@ abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: Blo
     protected lateinit var capacityComponent: HTStorageCapacityComponent
         private set
 
-    override fun initializeVariables() {
-        super.initializeVariables()
+    override fun initializeVariables(listener: HTContentListener) {
+        super.initializeVariables(listener)
         capacityComponent = HTStorageCapacityComponent(this)
     }
 

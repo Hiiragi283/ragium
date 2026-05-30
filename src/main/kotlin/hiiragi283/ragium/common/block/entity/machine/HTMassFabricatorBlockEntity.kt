@@ -59,7 +59,7 @@ class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToIt
 
         override fun getMaxProgress(recipe: ItemStack): Int = updateAndGetProgress(20 * 60)
 
-        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = battery.consume()
+        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = handler.consume()
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: ItemStack) {
             // output

@@ -1,5 +1,6 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.common.block.entity.component.HTSlotInfoComponent
@@ -22,8 +23,8 @@ abstract class HTConfigurableBlockEntity(type: HTDeferredBlockEntityType<*>, pos
     HTSlotInfoProvider {
     //    HTSlotInfoProvider    //
 
-    override fun initializeVariables() {
-        super.initializeVariables()
+    override fun initializeVariables(listener: HTContentListener) {
+        super.initializeVariables(listener)
         machineSlot = HTSlotInfoComponent(this)
     }
 

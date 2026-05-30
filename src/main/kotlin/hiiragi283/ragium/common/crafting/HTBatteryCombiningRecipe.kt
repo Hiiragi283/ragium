@@ -29,7 +29,7 @@ class HTBatteryCombiningRecipe(category: CraftingBookCategory) : HTCustomRecipe(
         for (stack: ItemStack in input) {
             if (stack.isEmpty) continue
             // 中身の値を合算する
-            HTEnergyCapabilities.getBattery(stack)?.getAmount()?.let { amount += it }
+            HTEnergyCapabilities.getHandler(stack)?.getAmount()?.let { amount += it }
             // 容量の倍率を合算する
             capacityScale += stack.getOrDefault(RagiumDataComponents.CAPACITY_SCALE, 1)
         }

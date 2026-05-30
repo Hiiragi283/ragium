@@ -27,16 +27,16 @@ data object HTBatteryRenderer {
     }
 
     @OnlyIn(Dist.CLIENT)
-    class BlockRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEntityRenderer<HTBatteryBlockEntity>(context) {
+    class BlockRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEntityRenderer<HTBatteryBlockEntity<*>>(context) {
         override fun render(
-            blockEntity: HTBatteryBlockEntity,
+            blockEntity: HTBatteryBlockEntity<*>,
             partialTick: Float,
             poseStack: PoseStack,
             bufferSource: MultiBufferSource,
             packedLight: Int,
             packedOverlay: Int,
         ) {
-            renderCube(blockEntity.battery, poseStack, bufferSource, packedLight, packedOverlay)
+            renderCube(blockEntity.handler, poseStack, bufferSource, packedLight, packedOverlay)
         }
     }
 
@@ -52,7 +52,7 @@ data object HTBatteryRenderer {
             packedLight: Int,
             packedOverlay: Int,
         ) {
-            val view: HTAmountView = HTEnergyCapabilities.getBattery(stack) ?: return
+            val view: HTAmountView = HTEnergyCapabilities.getHandler(stack) ?: return
             renderCube(view, poseStack, buffer, packedLight, packedOverlay)
             renderBlockItem(stack, displayContext, poseStack, buffer, packedLight, packedOverlay)
         }

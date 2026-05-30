@@ -102,7 +102,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
 
         override fun getMaxProgress(recipe: FluidStack): Int = updateAndGetProgress(recipe.amount)
 
-        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = battery.consume()
+        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = handler.consume()
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: FluidStack) {
             // output

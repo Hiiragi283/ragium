@@ -6,7 +6,8 @@ import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.capability.HTEnergyCapabilities
 import hiiragi283.core.common.capability.HTFluidCapabilities
 import hiiragi283.core.common.item.HTCreativeItem
-import hiiragi283.core.common.storage.energy.HTBasicItemEnergyBattery
+import hiiragi283.core.common.storage.energy.HTBasicItemEnergyHandler
+import hiiragi283.core.common.storage.energy.HTInfiniteEnergyHandler
 import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
@@ -14,7 +15,6 @@ import hiiragi283.ragium.common.item.HTBatteryItem
 import hiiragi283.ragium.common.item.HTElectricIgniterItem
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
-import hiiragi283.ragium.common.storge.energy.HTInfiniteEnergyBattery
 import hiiragi283.ragium.common.storge.fluid.HTInfiniteItemFluidTank
 import hiiragi283.ragium.common.storge.fluid.HTVoidItemFluidTank
 import hiiragi283.ragium.config.RagiumConfig
@@ -163,21 +163,21 @@ object RagiumItems {
         HTFluidCapabilities.registerItemTank(event, ::HTInfiniteItemFluidTank, RagiumBlocks.CREATIVE_TANK)
 
         // Energy
-        HTEnergyCapabilities.registerItemEnergy(
+        HTEnergyCapabilities.registerItem(
             event,
-            { container: ItemStack -> HTBasicItemEnergyBattery.create(container, getCapacity(container, RagiumConfig.COMMON.batteryCapacity)) },
+            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, getCapacity(container, RagiumConfig.COMMON.batteryCapacity)) },
             RagiumBlocks.BATTERY,
         )
-        HTEnergyCapabilities.registerItemEnergy(event, { HTInfiniteEnergyBattery }, RagiumBlocks.CREATIVE_BATTERY)
+        HTEnergyCapabilities.registerItem(event, { HTInfiniteEnergyHandler }, RagiumBlocks.CREATIVE_BATTERY)
 
-        HTEnergyCapabilities.registerItemEnergy(
+        HTEnergyCapabilities.registerItem(
             event,
-            { container: ItemStack -> HTBasicItemEnergyBattery.create(container, RagiumConfig.COMMON.electricIgniter.getCapacity()) },
+            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, RagiumConfig.COMMON.electricIgniter.getCapacity()) },
             ELECTRIC_IGNITER,
         )
-        HTEnergyCapabilities.registerItemEnergy(
+        HTEnergyCapabilities.registerItem(
             event,
-            { container: ItemStack -> HTBasicItemEnergyBattery.create(container, 8000) },
+            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, 8000) },
             CRYSTAL_BATTERY,
         )
     }
