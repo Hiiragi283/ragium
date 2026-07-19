@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client
 
 import hiiragi283.core.api.color.HTDefaultColor
+import hiiragi283.core.api.data.pack.HTDynamicResourcePack
 import hiiragi283.core.api.event.HTRegisterWidgetRendererEvent
 import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
@@ -44,6 +45,7 @@ data object RagiumClient : HTClientMod() {
         configScreen(container)
 
         HCClientResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
+        HTDynamicResourcePack.addDomain(RagiumAPI.MOD_ID)
 
         RegHelper.registerDynamicResourceProvider(RagiumClientResourceProvider)
         RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")

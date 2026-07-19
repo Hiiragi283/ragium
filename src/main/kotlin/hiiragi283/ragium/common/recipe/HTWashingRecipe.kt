@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.FluidIngredientBuilder
+import hiiragi283.core.api.recipe.HTRecipeResultHelper
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
@@ -15,7 +16,6 @@ import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.registry.VanillaFluidContents
 import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
-import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -48,11 +48,13 @@ class HTWashingRecipe(val ingredient: HTItemIngredient, val results: List<HTChan
 
     override fun test(first: ItemStack, second: FluidStack): Boolean = ingredient.test(first) && WATER_INGREDIENT.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = ingredient.getRequiredAmount(first) to WATER_INGREDIENT.getRequiredAmount(second)
+    override fun getMatchingStacks(first: ItemStack, second: FluidStack): Pair<ItemStack, FluidStack> = ingredient.getMatchingStack(first) to WATER_INGREDIENT.getMatchingStack(second)
 
-    override fun assemble(input: ItemStack): Iterable<ItemStack> = results.map(HTChancedItemResult::createOrEmpty).let(HTShapelessRecipeHelper::mergeStacks)
+    override fun assemble(input: ItemStack): Iterable<ItemStack> = results.map(HTChancedItemResult::createOrEmpty).let(HTRecipeResultHelper::mergeStacks)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.WASHING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.WASHING
+
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || results.any(HTChancedItemResult::isIncomplete)
 }

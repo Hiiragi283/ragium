@@ -36,7 +36,11 @@ class RTEnchantingRecipe(ingredient: HTItemIngredient, val holder: Holder<Enchan
         return enchantment.getMaxCost(enchantment.maxLevel)
     }
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack, third: Int): Triple<Int, Int, Int> = Triple(1, ingredient.getRequiredAmount(second), getRequiredExpAmount(first, second))
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack, third: Int): Triple<ItemStack, ItemStack, Int> = Triple(
+        ItemStack.EMPTY,
+        ingredient.getMatchingStack(second),
+        getRequiredExpAmount(first, second),
+    )
 
     override fun applyEnchantment(stack: ItemStack): ItemStack {
         val result: ItemStack = stack.copyWithCount(1)
@@ -49,4 +53,6 @@ class RTEnchantingRecipe(ingredient: HTItemIngredient, val holder: Holder<Enchan
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.HOLDER_ENCHANTING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTING
+
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete()
 }

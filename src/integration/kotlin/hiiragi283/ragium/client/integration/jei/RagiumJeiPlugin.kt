@@ -1,9 +1,8 @@
 package hiiragi283.ragium.client.integration.jei
 
+import hiiragi283.core.api.HTPhysicalSideHelper
 import hiiragi283.core.api.integration.jei.HTJeiPlugin
-import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper.addDisplayRecipes
-import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper.addFlatDisplayRecipes
-import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper.addLookupRecipes
+import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper
 import hiiragi283.core.api.integration.jei.HTJeiWorkstationHelper
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.api.item.createEnchantedBook
@@ -20,6 +19,7 @@ import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
 import hiiragi283.core.api.registry.toLike
+import hiiragi283.core.api.util.getOrThrow
 import hiiragi283.core.client.integration.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
 import hiiragi283.core.impl.recipe.HTBasicItemAndFluidToItemRecipe
@@ -59,14 +59,9 @@ import hiiragi283.ragium.setup.RagiumItems
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.helpers.IGuiHelper
-import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
-import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.registration.ISubtypeRegistration
-import mezz.jei.api.runtime.IIngredientManager
-import net.minecraft.client.Minecraft
 import net.minecraft.core.Holder
-import net.minecraft.core.RegistryAccess
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
@@ -117,97 +112,57 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         )
     }
 
-    override fun registerRecipes(registration: IRecipeRegistration) {
-        val ingredientManager: IIngredientManager = registration.ingredientManager
-
+    override fun registerRecipes(helper: HTJeiRecipeHelper) {
         fun itemOrFluid(viewerType: HTRecipeViewerType<HTProgressRecipeDisplay>, lookup: HTRecipeLookup<HTItemOrFluidRecipe>) {
-            addDisplayRecipes(registration, viewerType, lookup) {
+            helper.addDisplayRecipes(viewerType, lookup) {
                 it.castRecipe<HTItemOrFluidRecipe, HTBasicItemOrFluidRecipe>()?.let(RagiumRecipeDisplayFactories::itemOrFluid)
             }
         }
 
         // Machine - Basic
-        addDisplayRecipes(
-            registration,
-            RagiumRecipeViewerTypes.ALLOYING,
-            RagiumRecipeLookups.ALLOYING,
-            RagiumRecipeDisplayFactories::alloying,
-        )
-        addDisplayRecipes(registration, RagiumRecipeViewerTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING) {
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.ALLOYING, RagiumRecipeLookups.ALLOYING, RagiumRecipeDisplayFactories::alloying)
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING) {
             it.castRecipe<HTDoubleItemToItemRecipe, HTBasicAssemblingRecipe>()?.let(RagiumRecipeDisplayFactories::assembling)
         }
-        addDisplayRecipes(registration, RagiumRecipeViewerTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING) {
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING) {
             it.castRecipe<HTItemToItemRecipe, HTBasicItemToItemRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)
         }
-        addDisplayRecipes(registration, RagiumRecipeViewerTypes.CUTTING, RagiumRecipeLookups.CUTTING) {
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.CUTTING, RagiumRecipeLookups.CUTTING) {
             it.castRecipe<HTItemToMultiItemRecipe, HTBasicItemToMultiItemRecipe>()?.let(HTRecipeDisplayFactories::itemToMultiItem)
         }
-        addDisplayRecipes(registration, RagiumRecipeViewerTypes.PLANTING, RagiumRecipeLookups.PLANTING) {
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.PLANTING, RagiumRecipeLookups.PLANTING) {
             it.castRecipe<HTPlantingRecipe, RTPlantingRecipe>()?.let(RagiumRecipeDisplayFactories::planting)
         }
         // Machine - Advanced
-        addDisplayRecipes(registration, RagiumRecipeViewerTypes.FREEZING, RagiumRecipeLookups.FREEZING) {
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.FREEZING, RagiumRecipeLookups.FREEZING) {
             it.castRecipe<HTItemAndFluidToItemRecipe, HTFreezingRecipe>()?.let(RagiumRecipeDisplayFactories::freezing)
         }
-        addFlatDisplayRecipes(
-            registration,
-            RagiumRecipeViewerTypes.IMPLODING,
-            RagiumRecipeLookups.IMPLODING,
-            RagiumRecipeDisplayFactories::imploding,
-        )
-        addDisplayRecipes(registration, RagiumRecipeViewerTypes.MELTING, RagiumRecipeLookups.MELTING) {
+        helper.addFlatDisplayRecipes(RagiumRecipeViewerTypes.IMPLODING, RagiumRecipeLookups.IMPLODING, RagiumRecipeDisplayFactories::imploding)
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.MELTING, RagiumRecipeLookups.MELTING) {
             it.castRecipe<HTItemToFluidRecipe, HTMeltingRecipe>()?.let(RagiumRecipeDisplayFactories::melting)
         }
         itemOrFluid(RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
-        addDisplayRecipes(
-            registration,
-            RagiumRecipeViewerTypes.REFINING,
-            RagiumRecipeLookups.REFINING,
-            RagiumRecipeDisplayFactories::refining,
-        )
-        addDisplayRecipes(
-            registration,
-            RagiumRecipeViewerTypes.WASHING,
-            RagiumRecipeLookups.WASHING,
-            RagiumRecipeDisplayFactories::washing,
-        )
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.REFINING, RagiumRecipeLookups.REFINING, RagiumRecipeDisplayFactories::refining)
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.WASHING, RagiumRecipeLookups.WASHING, RagiumRecipeDisplayFactories::washing)
         // Machine - Elite
-        addDisplayRecipes(registration, RagiumRecipeViewerTypes.BATHING, RagiumRecipeLookups.BATHING) {
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.BATHING, RagiumRecipeLookups.BATHING) {
             it.castRecipe<HTItemAndFluidToItemRecipe, HTBasicItemAndFluidToItemRecipe>()?.let(RagiumRecipeDisplayFactories::itemAndFluidToItem)
         }
-        addDisplayRecipes(
-            registration,
-            RagiumRecipeViewerTypes.CHEMICAL_REACTING,
-            RagiumRecipeLookups.CHEMICAL_REACTING,
-            RagiumRecipeDisplayFactories::reacting,
-        )
-        addDisplayRecipes(
-            registration,
-            RagiumRecipeViewerTypes.MIXING,
-            RagiumRecipeLookups.MIXING,
-            RagiumRecipeDisplayFactories::mixing,
-        )
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.CHEMICAL_REACTING, RagiumRecipeLookups.CHEMICAL_REACTING, RagiumRecipeDisplayFactories::reacting)
+        helper.addDisplayRecipes(RagiumRecipeViewerTypes.MIXING, RagiumRecipeLookups.MIXING, RagiumRecipeDisplayFactories::mixing)
         // Machine - Ultimate
-        addLookupRecipes(
-            registration,
-            RagiumRecipeViewerTypes.MASS_FABRICATING,
-            RagiumRecipeLookups.MASS_FABRICATING,
-            sorter = compareBy { it.point },
-        )
+        helper.addLookupRecipes(RagiumRecipeViewerTypes.MASS_FABRICATING, RagiumRecipeLookups.MASS_FABRICATING, sorter = compareBy { it.point })
         // Device - Ultimate
 
-        registerCustomRecipes(registration)
+        registerCustomRecipes(helper)
     }
 
-    private fun registerCustomRecipes(registration: IRecipeRegistration) {
-        val access: RegistryAccess = Minecraft.getInstance().level?.registryAccess() ?: return
-
-        addDisplayRecipes(
-            registration,
+    private fun registerCustomRecipes(helper: HTJeiRecipeHelper) {
+        helper.addDisplayRecipes(
             RagiumRecipeViewerTypes.MELTING,
-            access
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .holders()
+            HTPhysicalSideHelper.lookup(Registries.ENCHANTMENT)
+                .getOrThrow()
+                .listElements()
                 .asSequence()
                 .map { holder: Holder.Reference<Enchantment> ->
                     HTProgressRecipeDisplay(
@@ -223,20 +178,18 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         )
     }
 
-    override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-        HTJeiWorkstationHelper.add(registration, HCRecipeViewerTypes.BREWING, RagiumBlocks.BREWERY)
-        HTJeiWorkstationHelper.add(registration, HCRecipeViewerTypes.CHARGING, RagiumBlocks.BATTERY, RagiumBlocks.CREATIVE_BATTERY)
-        HTJeiWorkstationHelper.add(registration, HCRecipeViewerTypes.CRUSHING, RagiumBlocks.CRUSHER)
-        val tanks: List<ItemStack> =
-            listOf(RagiumBlocks.TANK, RagiumBlocks.VOID_TANK, RagiumBlocks.CREATIVE_TANK).map { it.toStack() }
-        HTJeiWorkstationHelper.add(registration, HCRecipeViewerTypes.EMPTYING, tanks)
-        HTJeiWorkstationHelper.add(registration, HCRecipeViewerTypes.FILLING, tanks)
+    override fun registerRecipeCatalysts(helper: HTJeiWorkstationHelper) {
+        helper.add(HCRecipeViewerTypes.BREWING, RagiumBlocks.BREWERY.toStack())
+        helper.addAll(HCRecipeViewerTypes.CHARGING, setOf(RagiumBlocks.BATTERY, RagiumBlocks.CREATIVE_BATTERY).map { it.toStack() })
+        helper.add(HCRecipeViewerTypes.CRUSHING, RagiumBlocks.CRUSHER.toStack())
+        val tanks: List<ItemStack> = listOf(RagiumBlocks.TANK, RagiumBlocks.VOID_TANK, RagiumBlocks.CREATIVE_TANK).map { it.toStack() }
+        helper.addAll(HCRecipeViewerTypes.EMPTYING, tanks)
+        helper.addAll(HCRecipeViewerTypes.FILLING, tanks)
 
-        registration.addRecipeCatalysts(RecipeTypes.SMELTING, RagiumBlocks.ELECTRIC_FURNACE)
-        registration.addRecipeCatalysts(RecipeTypes.STONECUTTING, RagiumBlocks.AUTO_CHISEL)
+        helper.add(RecipeTypes.SMELTING, RagiumBlocks.ELECTRIC_FURNACE.toStack())
+        helper.add(RecipeTypes.STONECUTTING, RagiumBlocks.AUTO_CHISEL.toStack())
 
-        HTJeiWorkstationHelper.addFromViewerType(
-            registration,
+        helper.addFromViewerType(
             // Machine - Basic
             RagiumRecipeViewerTypes.ALLOYING,
             RagiumRecipeViewerTypes.ASSEMBLING,

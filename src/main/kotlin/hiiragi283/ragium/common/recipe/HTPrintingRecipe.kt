@@ -36,9 +36,11 @@ class HTPrintingRecipe(
 
     override fun test(first: ItemStack, second: ItemStack): Boolean = ingredient.test(first) && press.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = ingredient.getRequiredAmount(first) to 0
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack): Pair<ItemStack, ItemStack> = ingredient.getMatchingStack(first) to ItemStack.EMPTY
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PRINTING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING
+
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || press.hasNoItems() || result.isIncomplete()
 }

@@ -21,7 +21,7 @@ abstract class HTDoubleToMultiItemCompletedRecipe<
     protected val firstInputHandler: HTInputHandler<INPUT_A>,
     protected val secondInputHandler: HTInputHandler<INPUT_B>,
     protected val outputHandler: HTOutputHandler<ItemStack>,
-    private val amountGetter: (RECIPE, INPUT_A, INPUT_B) -> Pair<Int, Int>,
+    private val amountGetter: (RECIPE, INPUT_A, INPUT_B) -> Pair<INPUT_A, INPUT_B>,
 ) : HTCompletedRecipe.WithProgress<RECIPE>(recipe) {
     private val output: Iterable<ItemStack> = recipe.assemble(firstInputHandler.getStack(), secondInputHandler.getStack())
 
@@ -29,7 +29,7 @@ abstract class HTDoubleToMultiItemCompletedRecipe<
 
     override fun complete() {
         output.forEach(outputHandler::insert)
-        amountGetter(recipe, firstInputHandler.getStack(), secondInputHandler.getStack()).let { (first: Int, second: Int) ->
+        amountGetter(recipe, firstInputHandler.getStack(), secondInputHandler.getStack()).let { (first: INPUT_A, second: INPUT_B) ->
             firstInputHandler.consume(first)
             secondInputHandler.consume(second)
         }
@@ -45,7 +45,7 @@ abstract class HTDoubleToMultiItemCompletedRecipe<
         firstInputHandler,
         secondInputHandler,
         outputHandler,
-        HTPlantingRecipe::getRequiredAmount,
+        HTPlantingRecipe::getMatchingStacks,
     ) {
         override fun getProgress(): HTProgressData = HTItemListRecipeInput(firstInputHandler.getStack(), secondInputHandler.getStack())
             .let(recipe::getProgressData)

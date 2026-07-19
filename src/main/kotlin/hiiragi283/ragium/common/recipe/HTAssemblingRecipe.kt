@@ -43,9 +43,11 @@ class HTAssemblingRecipe(
 
     override fun test(first: ItemStack, second: ItemStack): Boolean = primary.test(first) && secondary.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack): Pair<ItemStack, ItemStack> = primary.getMatchingStack(first) to secondary.getMatchingStack(second)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ASSEMBLING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING
+
+    override fun isIncomplete(): Boolean = primary.isIncomplete() || secondary.isIncomplete() || result.isIncomplete()
 }

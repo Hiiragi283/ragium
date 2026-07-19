@@ -3,14 +3,14 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.HTRecipeResultHelper
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
-import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
+import hiiragi283.core.api.recipe.ingredient.getMatchingStack
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
-import hiiragi283.core.util.HTShapelessRecipeHelper
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -43,11 +43,13 @@ class RTPlantingRecipe(
 
     override fun test(first: ItemStack, second: ItemStack): Boolean = plant.test(first) && soil.test(second)
 
-    override fun getRequiredPlantAmount(first: ItemStack): Int = plant.getRequiredAmount(first)
+    override fun getRequiredPlantStack(first: ItemStack): ItemStack = plant.getMatchingStack(first)
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack): Iterable<ItemStack> = results.map(HTChancedItemResult::createOrEmpty).let(HTShapelessRecipeHelper::mergeStacks)
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack): Iterable<ItemStack> = results.map(HTChancedItemResult::createOrEmpty).let(HTRecipeResultHelper::mergeStacks)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PLANTING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.PLANTING
+
+    override fun isIncomplete(): Boolean = plant.hasNoItems() || soil.hasNoItems() || results.any(HTChancedItemResult::isIncomplete)
 }

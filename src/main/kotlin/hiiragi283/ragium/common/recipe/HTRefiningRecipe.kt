@@ -8,7 +8,7 @@ import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
+import hiiragi283.core.api.recipe.ingredient.getMatchingStack
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
@@ -53,11 +53,13 @@ class HTRefiningRecipe(
 
     override fun test(first: ItemStack, second: FluidStack): Boolean = catalyst.map { it.test(first) }.getOrElse(first::isEmpty) && ingredient.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = catalyst.map { it.getRequiredAmount(first) }.getOrElse { 0 } to ingredient.getRequiredAmount(second)
+    override fun getMatchingStacks(first: ItemStack, second: FluidStack): Pair<ItemStack, FluidStack> = catalyst.fold(ItemStack::EMPTY) { it.getMatchingStack(first) } to ingredient.getMatchingStack(second)
 
     override fun assemble(firstInput: ItemStack, secondInput: FluidStack): HTChemicalResult = HTChemicalResult.create(fluidResults, itemResult)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.REFINING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.REFINING
+
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || catalyst.fold({ false }, Ingredient::hasNoItems) || itemResult.fold({ false }, HTItemResult::isIncomplete)
 }

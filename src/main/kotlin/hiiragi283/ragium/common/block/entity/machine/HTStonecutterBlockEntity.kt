@@ -9,7 +9,9 @@ import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
+import hiiragi283.core.api.recipe.id
+import hiiragi283.core.api.recipe.ingredient.getMatchingStack
+import hiiragi283.core.api.recipe.recipe
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.storage.item.HTBasicItemSlot
 import hiiragi283.core.impl.recipe.cache.completed.HTDoubleInputCompletedRecipe
@@ -28,7 +30,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
@@ -79,10 +80,7 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
     //    Processing    //
 
     private inner class ProgressHandlerImpl : ProgressHandler<HTDoubleItemToItemRecipe, HTDoubleInputCompletedRecipe.DoubleItem>() {
-        private val cache: HTRecipeCaches.DoubleItem<WrappedRecipe> = HTRecipeCaches.DoubleItem { context: HTRecipeLookup.Context ->
-            val manager: RecipeManager = context[HTRecipeLookup.Context.MANAGER] ?: return@DoubleItem mapOf()
-            manager.getAllRecipesFor(RecipeType.STONECUTTING).associate { it.id() to WrappedRecipe(it.value()) }
-        }
+        private val cache: HTRecipeCaches.DoubleItem<WrappedRecipe> = HTRecipeCaches.DoubleItem { context: HTRecipeLookup.Context -> context.getAllRecipes(RecipeType.STONECUTTING).associate { it.id to WrappedRecipe(it.recipe) } }
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
@@ -105,11 +103,13 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
 
         override fun test(first: ItemStack, second: ItemStack): Boolean = ingredient.test(first) && ItemStack.isSameItemSameComponents(accessor.result, second)
 
-        override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = ingredient.getRequiredAmount(first) to 0
+        override fun getMatchingStacks(first: ItemStack, second: ItemStack): Pair<ItemStack, ItemStack> = ingredient.getMatchingStack(first) to ItemStack.EMPTY
 
         override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = accessor.result.copy()
 
         override fun getProgressData(input: RecipeInput): HTProgressData = HTProgressData.time(5)
+
+        override fun isIncomplete(): Boolean = ingredient.hasNoItems()
     }
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.autoChisel

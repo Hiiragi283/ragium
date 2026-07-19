@@ -32,8 +32,8 @@ class HTAlloyingCompletedRecipe(
         // output
         outputHandler.insert(output)
         recipe
-            .getRequiredAmount(primaryInputHandler.getStack(), secondaryInputHandler.getStack(), tertiaryInputHandler.getStack())
-            .let { (first: Int, second: Int, third: Int) ->
+            .getMatchingStacks(primaryInputHandler.getStack(), secondaryInputHandler.getStack(), tertiaryInputHandler.getStack())
+            .let { (first: ItemStack, second: ItemStack, third: ItemStack) ->
                 primaryInputHandler.consume(first)
                 secondaryInputHandler.consume(second)
                 tertiaryInputHandler.consume(third)

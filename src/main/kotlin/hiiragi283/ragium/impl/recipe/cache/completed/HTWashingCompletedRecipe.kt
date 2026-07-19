@@ -25,7 +25,7 @@ class HTWashingCompletedRecipe(
         // outputs
         outputs.forEach(outputHandler::insert)
         // inputs
-        recipe.getRequiredAmount(inputHandler.getStack(), waterHandler.getStack()).let { (item: Int, fluid: Int) ->
+        recipe.getMatchingStacks(inputHandler.getStack(), waterHandler.getStack()).let { (item: ItemStack, fluid: FluidStack) ->
             inputHandler.consume(item)
             waterHandler.consume(fluid)
         }

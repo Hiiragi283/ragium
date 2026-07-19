@@ -42,11 +42,13 @@ class HTFreezingRecipe(
 
     override fun test(first: ItemStack, second: FluidStack): Boolean = catalyst.test(first) && ingredient.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = 0 to ingredient.getRequiredAmount(second)
+    override fun getMatchingStacks(first: ItemStack, second: FluidStack): Pair<ItemStack, FluidStack> = ItemStack.EMPTY to ingredient.getMatchingStack(second)
 
     override fun assemble(firstInput: ItemStack, secondInput: FluidStack): ItemStack = result.createOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.FREEZING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.FREEZING
+
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || catalyst.hasNoItems() || result.isIncomplete()
 }

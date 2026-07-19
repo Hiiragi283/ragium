@@ -178,7 +178,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         val filledContainer: ItemStack = recipe.assemble(itemStack, fluidStack)
         if (outputHandler.canInsert(filledContainer)) {
             outputHandler.insert(filledContainer)
-            recipe.getRequiredAmount(itemStack, fluidStack).let { (first: Int, second: Int) ->
+            recipe.getMatchingStacks(itemStack, fluidStack).let { (first: ItemStack, second: FluidStack) ->
                 inputHandler.consume(first)
                 fluidInputHandler.consume(second)
             }

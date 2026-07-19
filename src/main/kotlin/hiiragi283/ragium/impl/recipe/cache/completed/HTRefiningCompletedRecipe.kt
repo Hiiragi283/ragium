@@ -34,7 +34,7 @@ class HTRefiningCompletedRecipe(
         secondFluidOutputHandler.canInsert(second)
         itemOutputHandler.canInsert(item)
         // inputs
-        recipe.getRequiredAmount(itemInputHandler.getStack(), fluidInputHandler.getStack()).let { (item: Int, fluid: Int) ->
+        recipe.getMatchingStacks(itemInputHandler.getStack(), fluidInputHandler.getStack()).let { (item: ItemStack, fluid: FluidStack) ->
             itemInputHandler.consume(item)
             fluidInputHandler.consume(fluid)
         }

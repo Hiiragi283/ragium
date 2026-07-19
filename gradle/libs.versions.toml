@@ -102,16 +102,12 @@ api-impl = [
 
 common-impl = [
     "hiiragi-core",
-]
-
-common-compile = [
-    "moonlight",
     "moonlight-neo",
 ]
 
-common-runtime = [
-    "moonlight-runtime",
-]
+common-compile = []
+
+common-runtime = []
 
 integration-impl = [
     "ae2",

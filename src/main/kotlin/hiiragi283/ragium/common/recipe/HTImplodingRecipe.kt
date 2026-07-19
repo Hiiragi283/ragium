@@ -51,12 +51,14 @@ class HTImplodingRecipe(val ingredient: HTItemIngredient, val result: HTItemResu
         return false
     }
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = Pair(
-        ingredient.getRequiredAmount(first),
-        EXPLOSIVE_AMOUNTS.entries
-            .firstOrNull { (tagKey: TagKey<Item>, amount: Int) ->
-                second.`is`(tagKey) && second.count >= amount
-            }?.value ?: 0,
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack): Pair<ItemStack, ItemStack> = Pair(
+        ingredient.getMatchingStack(first),
+        second.copyWithCount(
+            EXPLOSIVE_AMOUNTS.entries
+                .firstOrNull { (tagKey: TagKey<Item>, amount: Int) -> second.`is`(tagKey) && second.count >= amount }
+                ?.value
+                ?: 0,
+        ),
     )
 
     override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = result.createOrEmpty()
@@ -64,4 +66,6 @@ class HTImplodingRecipe(val ingredient: HTItemIngredient, val result: HTItemResu
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.IMPLODING
 
     override fun getType(): RecipeType<*> = RagiumRecipeTypes.IMPLODING
+
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || result.isIncomplete()
 }
