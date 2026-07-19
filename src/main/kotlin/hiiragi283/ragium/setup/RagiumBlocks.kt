@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.HTDefaultColor
 import hiiragi283.core.api.HiiragiCoreAPI
+import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.function.partially2
 import hiiragi283.core.api.registry.HTBasicDeferredBlockAndItem
@@ -40,7 +40,7 @@ import net.neoforged.bus.api.IEventBus
 /**
  * @see hiiragi283.core.setup.HCBlocks
  */
-object RagiumBlocks {
+data object RagiumBlocks {
     @JvmField
     val REGISTER = HTDeferredBlockAndItemRegister(RagiumAPI.MOD_ID)
 

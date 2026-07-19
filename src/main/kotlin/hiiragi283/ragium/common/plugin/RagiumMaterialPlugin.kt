@@ -1,7 +1,6 @@
 package hiiragi283.ragium.common.plugin
 
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTFluidPart
 import hiiragi283.core.api.material.part.HTPartLike
@@ -20,13 +19,12 @@ import hiiragi283.core.api.material.property.setTextureSet
 import hiiragi283.core.api.plugin.HTMaterialPlugin
 import hiiragi283.core.api.plugin.HTPlugin
 import hiiragi283.core.api.property.add
-import hiiragi283.core.api.registry.HTDeferredItem
-import hiiragi283.core.api.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
+import hiiragi283.ragium.common.data.RagiumDynamicServerResources
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.part.RagiumParts
 import hiiragi283.ragium.setup.RagiumItems
@@ -39,7 +37,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
     override fun getId(): ResourceLocation = RagiumAPI.id("material_plugin")
 
     override fun registerPart(registrar: HTMaterialPlugin.PartRegistrar) {
-        RagiumParts.pellet = registrar.register("pellet", "%s_pellet") {
+        registrar.register("pellet", "%s_pellet") {
             put(HTPartPropertyKeys.TAG_PREFIX, RagiumTagPrefixes.PELLET)
 
             addNamePattern("%s Pellet", "%sペレット")
@@ -165,7 +163,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
     @JvmStatic
     private fun existing(provider: HTMaterialPlugin.MaterialProvider) {
-        provider.getBuilder(VanillaMaterialKeys.WOOD).addItemPrefixes(RagiumParts.pellet)
+        provider.getBuilder(VanillaMaterialKeys.WOOD).addItemPrefixes(RagiumParts.PELLET)
 
         provider.getBuilder(CommonMaterialKeys.SILICON).apply {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
@@ -186,6 +184,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
         provider.getBuilder(CommonMaterialKeys.URANIUM)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 4096
     }
 
-    @JvmStatic
-    private fun createItem(part: HTPartLike, key: HTMaterialKey): HTSimpleDeferredItem = HTDeferredItem(part.createId(key))
+    override fun registerServerResources() {
+        RagiumDynamicServerResources.initialize()
+    }
 }

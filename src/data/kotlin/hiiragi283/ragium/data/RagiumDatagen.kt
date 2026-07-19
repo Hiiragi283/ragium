@@ -4,7 +4,7 @@ import hiiragi283.core.api.data.createAdvancements
 import hiiragi283.core.api.data.createLootTables
 import hiiragi283.core.api.data.createProviderWithHelper
 import hiiragi283.core.api.function.partially1
-import hiiragi283.core.data.bootstrap.HCEnchantmentProvider
+import hiiragi283.core.setup.HCEnchantments
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
 import hiiragi283.ragium.data.bootstrap.RagiumWorldData
@@ -13,6 +13,19 @@ import hiiragi283.ragium.data.lang.RagiumJapaneseLangProvider
 import hiiragi283.ragium.data.loot.RagiumBlockLootProvider
 import hiiragi283.ragium.data.model.RagiumBlockStateProvider
 import hiiragi283.ragium.data.model.RagiumItemModelProvider
+import hiiragi283.ragium.data.recipe.RagiumBasicRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumChemicalRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumCoolRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumEnchantingRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumFluidRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumHeatRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumMaterialRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumMatterRecipeProvider
+import hiiragi283.ragium.data.recipe.RagiumPlantingRecipeBuilder
+import hiiragi283.ragium.data.recipe.RagiumUtilitiesRecipeProvider
+import hiiragi283.ragium.data.recipe.integration.RagiumAERecipeProvider
+import hiiragi283.ragium.data.recipe.integration.RagiumIERecipeProvider
+import hiiragi283.ragium.data.recipe.integration.RagiumMekRecipeProvider
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
@@ -30,13 +43,26 @@ object RagiumDatagen {
     fun gatherData(event: GatherDataEvent) {
         val fileHelper: ExistingFileHelper = event.existingFileHelper
         event.createDatapackRegistryObjects(
-            RegistrySetBuilder().add(Registries.ENCHANTMENT, HCEnchantmentProvider).also(RagiumWorldData::bootsrap),
+            RegistrySetBuilder().add(Registries.ENCHANTMENT, HCEnchantments).also(RagiumWorldData::bootsrap),
         )
         // Server
         event.createAdvancements(listOf(RagiumAdvancementProvider))
         event.createLootTables(::RagiumBlockLootProvider to LootContextParamSets.BLOCK)
 
-        event.createProvider(::RagiumRecipeProvider)
+        event.createProvider(::RagiumBasicRecipeProvider)
+        event.createProvider(::RagiumChemicalRecipeProvider)
+        event.createProvider(::RagiumCoolRecipeProvider)
+        event.createProvider(::RagiumEnchantingRecipeProvider)
+        event.createProvider(::RagiumFluidRecipeProvider)
+        event.createProvider(::RagiumHeatRecipeProvider)
+        event.createProvider(::RagiumMaterialRecipeProvider)
+        event.createProvider(::RagiumMatterRecipeProvider)
+        event.createProvider(::RagiumPlantingRecipeBuilder)
+        event.createProvider(::RagiumUtilitiesRecipeProvider)
+
+        event.createProvider(::RagiumAERecipeProvider)
+        event.createProvider(::RagiumMekRecipeProvider)
+        event.createProvider(::RagiumIERecipeProvider)
 
         event.createProviderWithHelper(::RagiumFluidTagsProvider)
         event.createBlockAndItemTags(::RagiumBlockTagsProvider.partially1(fileHelper), ::RagiumItemTagsProvider.partially1(fileHelper))

@@ -10,7 +10,7 @@ import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.resource.SupplierWithId
 import hiiragi283.core.api.resource.blockId
-import hiiragi283.core.api.resource.toId
+import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -76,7 +76,7 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
 
         layeredBlock(
             RagiumBlocks.UNIVERSAL_CHEST,
-            HTConst.MINECRAFT.toId("block", "white_concrete"),
+            vanillaId(HTConst.BLOCK, "white_concrete"),
             RagiumBlocks.UNIVERSAL_CHEST.blockId,
         )
 
@@ -152,7 +152,7 @@ class RagiumBlockStateProvider(fileHelper: ExistingFileHelper, output: PackOutpu
         front: ResourceLocation,
     ): Pair<BlockModelBuilder, BlockModelBuilder> {
         val path: String = block.blockId.path
-        val modelId: ResourceLocation = HTConst.MINECRAFT.toId(HTConst.BLOCK, "orientable_with_bottom")
+        val modelId: ResourceLocation = vanillaId(HTConst.BLOCK, "orientable_with_bottom")
 
         val top: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix, "top_$tier")
         val side: ResourceLocation = RagiumAPI.id(HTConst.BLOCK, prefix, "side_$tier")

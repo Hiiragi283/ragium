@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.crimson_crystal.desc"
+      "translate": "advancement.ragium.crimson_crystal.desc"
     },
     "icon": {
       "count": 1,
       "id": "hiiragi_core:crimson_crystal_gem"
     },
     "title": {
-      "translate": "advancements.ragium.crimson_crystal.title"
+      "translate": "advancement.ragium.crimson_crystal.title"
     }
   },
   "requirements": [

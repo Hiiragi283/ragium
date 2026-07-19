@@ -4,7 +4,6 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.cache.HTRecipeCaches
@@ -81,12 +80,8 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
 
     private inner class ProgressHandlerImpl : ProgressHandler<HTDoubleItemToItemRecipe, HTDoubleInputCompletedRecipe.DoubleItem>() {
         private val cache: HTRecipeCaches.DoubleItem<WrappedRecipe> = HTRecipeCaches.DoubleItem { context: HTRecipeLookup.Context ->
-            val manager: RecipeManager = context[HTRecipeLookup.Context.MANAGER] ?: return@DoubleItem emptySequence()
-            manager
-                .getAllRecipesFor(RecipeType.STONECUTTING)
-                .asSequence()
-                .map(HTRecipeHolder.Companion::from)
-                .map { holder: HTRecipeHolder<StonecutterRecipe> -> holder.mapRecipe(::WrappedRecipe) }
+            val manager: RecipeManager = context[HTRecipeLookup.Context.MANAGER] ?: return@DoubleItem mapOf()
+            manager.getAllRecipesFor(RecipeType.STONECUTTING).associate { it.id() to WrappedRecipe(it.value()) }
         }
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }

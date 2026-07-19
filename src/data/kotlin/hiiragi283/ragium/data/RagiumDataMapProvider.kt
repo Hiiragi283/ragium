@@ -2,10 +2,10 @@ package hiiragi283.ragium.data
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.map.HTDataMapProvider
-import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTSimpleDeferredItem
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.toId
+import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.createTagKey
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -20,7 +20,6 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.conditions.ICondition
 import java.util.concurrent.CompletableFuture
 
 class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) : HTDataMapProvider(packOutput, lookupProvider) {
@@ -43,19 +42,19 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
     // Entity Type
     private fun mobHeads() {
         builder(RagiumDataMapTypes.MOB_HEAD)
-            .add(EntityType.SKELETON, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("skeleton_skull")))
-            .add(EntityType.WITHER_SKELETON, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("wither_skeleton_skull")))
-            .add(EntityType.ZOMBIE, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("zombie_head")))
-            .add(EntityType.CREEPER, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("creeper_head")))
-            .add(EntityType.ENDER_DRAGON, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("dragon_head")))
-            .add(EntityType.PIGLIN, HTSimpleDeferredItem(HTConst.MINECRAFT.toId("piglin_head")))
+            .add(EntityType.SKELETON.toLike(), HTSimpleDeferredItem(vanillaId("skeleton_skull")))
+            .add(EntityType.WITHER_SKELETON.toLike(), HTSimpleDeferredItem(vanillaId("wither_skeleton_skull")))
+            .add(EntityType.ZOMBIE.toLike(), HTSimpleDeferredItem(vanillaId("zombie_head")))
+            .add(EntityType.CREEPER.toLike(), HTSimpleDeferredItem(vanillaId("creeper_head")))
+            .add(EntityType.ENDER_DRAGON.toLike(), HTSimpleDeferredItem(vanillaId("dragon_head")))
+            .add(EntityType.PIGLIN.toLike(), HTSimpleDeferredItem(vanillaId("piglin_head")))
     }
 
     // Fluid
     private fun coolants() {
         builder(RagiumDataMapTypes.COOLANT)
             .add(Tags.Fluids.WATER, 100, false)
-            .add(RagiumFluids.LIQUID_NITROGEN, 5)
+            .addTag(RagiumFluids.LIQUID_NITROGEN, 5)
     }
 
     private fun magmaticFuels() {
@@ -85,18 +84,18 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
 
         builder(RagiumDataMapTypes.COMBUSTION_FUEL)
             // lowest
-            .add(RagiumFluids.CREOSOTE, lowest)
+            .addTag(RagiumFluids.CREOSOTE, lowest)
             // low
             .add("oil", low)
-            .add(RagiumFluids.CRUDE_OIL, low)
-            .add(RagiumFluids.SYNTHETIC_OIL, low)
+            .addTag(RagiumFluids.CRUDE_OIL, low)
+            .addTag(RagiumFluids.SYNTHETIC_OIL, low)
             .add(RagiumTags.Fluids.ALCOHOL, medium, false)
             // medium
             .add("lpg", medium)
             .add("ethene", medium)
-            .add(RagiumFluids.METHANE, medium)
+            .addTag(RagiumFluids.METHANE, medium)
             // high
-            .add(RagiumFluids.FUEL, high)
+            .addTag(RagiumFluids.FUEL, high)
             .add(RagiumTags.Fluids.BIODIESEL, high, false)
             .add(RagiumTags.Fluids.DIESEL, high, false)
             // highest
@@ -141,38 +140,27 @@ class RagiumDataMapProvider(packOutput: PackOutput, lookupProvider: CompletableF
             .add(Tags.Items.SLIME_BALLS, 8, false)
             .add(Tags.Items.STONES, 1, false)
             .add(Tags.Items.STRINGS, 1, false)
-            .addItem(Items.CAKE, 64)
-            .addItem(Items.CHORUS_FLOWER, 128)
-            .addItem(Items.DRAGON_BREATH, 128)
-            .addItem(Items.ENCHANTED_GOLDEN_APPLE, 256)
-            .addItem(Items.GHAST_TEAR, 64)
-            .addItem(Items.HEART_OF_THE_SEA, 128)
-            .addItem(Items.HEAVY_CORE, 512)
-            .addItem(Items.HONEYCOMB, 16)
-            .addItem(Items.MAGMA_CREAM, 16)
-            .addItem(Items.NAUTILUS_SHELL, 32)
-            .addItem(Items.PHANTOM_MEMBRANE, 64)
-            .addItem(Items.REINFORCED_DEEPSLATE, 128)
-            .addItem(Items.SCULK_CATALYST, 32)
-            .addItem(Items.SCULK_SENSOR, 16)
-            .addItem(Items.SCULK_SHRIEKER, 128)
-            .addItem(Items.SHULKER_SHELL, 64)
-            .addItem(Items.SPONGE, 64)
-            .addItem(Items.TOTEM_OF_UNDYING, 256)
+            .add(Items.CAKE.toLike(), 64)
+            .add(Items.CHORUS_FLOWER.toLike(), 128)
+            .add(Items.DRAGON_BREATH.toLike(), 128)
+            .add(Items.ENCHANTED_GOLDEN_APPLE.toLike(), 256)
+            .add(Items.GHAST_TEAR.toLike(), 64)
+            .add(Items.HEART_OF_THE_SEA.toLike(), 128)
+            .add(Items.HEAVY_CORE.toLike(), 512)
+            .add(Items.HONEYCOMB.toLike(), 16)
+            .add(Items.MAGMA_CREAM.toLike(), 16)
+            .add(Items.NAUTILUS_SHELL.toLike(), 32)
+            .add(Items.PHANTOM_MEMBRANE.toLike(), 64)
+            .add(Items.REINFORCED_DEEPSLATE.toLike(), 128)
+            .add(Items.SCULK_CATALYST.toLike(), 32)
+            .add(Items.SCULK_SENSOR.toLike(), 16)
+            .add(Items.SCULK_SHRIEKER.toLike(), 128)
+            .add(Items.SHULKER_SHELL.toLike(), 64)
+            .add(Items.SPONGE.toLike(), 64)
+            .add(Items.TOTEM_OF_UNDYING.toLike(), 256)
     }
 
     //    Extensions    //
 
-    // Fluid
-    private fun <T : Any> Builder<T, Fluid>.add(content: HTFluidContent, value: T): Builder<T, Fluid> = add(content.fluidTag, value, false)
-
     private fun <T : Any> Builder<T, Fluid>.add(path: String, value: T): Builder<T, Fluid> = add(Registries.FLUID.createTagKey(HTConst.COMMON.toId(path)), value, false)
-
-    // Entity Type
-    @Suppress("DEPRECATION")
-    private fun <T : Any> Builder<T, EntityType<*>>.add(
-        type: EntityType<*>,
-        value: T,
-        vararg conditions: ICondition,
-    ): Builder<T, EntityType<*>> = addHolder(type.builtInRegistryHolder().toLike(), value, *conditions)
 }

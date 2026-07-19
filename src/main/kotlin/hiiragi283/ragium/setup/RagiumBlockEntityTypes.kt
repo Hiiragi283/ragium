@@ -2,16 +2,11 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.registry.HTDeferredBlock
 import hiiragi283.core.common.block.HTBlockWithEntity
-import hiiragi283.core.common.block.entity.HTBlockEntity
-import hiiragi283.core.common.capability.HTEnergyCapabilities
-import hiiragi283.core.common.capability.HTFluidCapabilities
-import hiiragi283.core.common.capability.HTItemCapabilities
 import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.registry.register.HTDeferredBlockEntityTypeRegister
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.block.entity.HTImitationSpawnerBlockEntity
-import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.device.HTEnchanterBlockEntity
 import hiiragi283.ragium.common.block.entity.generator.HTBoilerBlockEntity
 import hiiragi283.ragium.common.block.entity.machine.HTAlloySmelterBlockEntity
@@ -39,151 +34,120 @@ import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTVoidTankBlockEntity
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent
 
-object RagiumBlockEntityTypes {
+data object RagiumBlockEntityTypes {
     @JvmField
     val REGISTER = HTDeferredBlockEntityTypeRegister(RagiumAPI.MOD_ID)
 
     @JvmStatic
     fun register(eventBus: IEventBus) {
         eventBus.addListener(::addSupportedBlocks)
-        eventBus.addListener(::registerBlockCapabilities)
 
         REGISTER.register(eventBus)
     }
 
     @JvmField
-    val IMITATION_SPAWNER: HTDeferredBlockEntityType<HTImitationSpawnerBlockEntity> =
-        REGISTER.registerType("imitation_spawner", ::HTImitationSpawnerBlockEntity)
+    val IMITATION_SPAWNER: HTDeferredBlockEntityType<HTImitationSpawnerBlockEntity> = REGISTER.registerType("imitation_spawner", ::HTImitationSpawnerBlockEntity)
 
     //    Generator    //
 
     // Basic
     @JvmField
-    val BOILER: HTDeferredBlockEntityType<HTBoilerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.BOILER, ::HTBoilerBlockEntity)
+    val BOILER: HTDeferredBlockEntityType<HTBoilerBlockEntity> = REGISTER.registerTick(RagiumConst.BOILER, ::HTBoilerBlockEntity)
 
     //    Machine    //
 
     // Basic
     @JvmField
-    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
+    val ALLOY_SMELTER: HTDeferredBlockEntityType<HTAlloySmelterBlockEntity> = REGISTER.registerTick(RagiumConst.ALLOY_SMELTER, ::HTAlloySmelterBlockEntity)
 
     @JvmField
-    val ASSEMBLER: HTDeferredBlockEntityType<HTAssemblerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.ASSEMBLER, ::HTAssemblerBlockEntity)
+    val ASSEMBLER: HTDeferredBlockEntityType<HTAssemblerBlockEntity> = REGISTER.registerTick(RagiumConst.ASSEMBLER, ::HTAssemblerBlockEntity)
 
     @JvmField
-    val AUTO_CHISEL: HTDeferredBlockEntityType<HTStonecutterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.AUTO_CHISEL, ::HTStonecutterBlockEntity)
+    val AUTO_CHISEL: HTDeferredBlockEntityType<HTStonecutterBlockEntity> = REGISTER.registerTick(RagiumConst.AUTO_CHISEL, ::HTStonecutterBlockEntity)
 
     @JvmField
-    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> =
-        REGISTER.registerTick(RagiumConst.COMPRESSOR, ::HTCompressorBlockEntity)
+    val COMPRESSOR: HTDeferredBlockEntityType<HTCompressorBlockEntity> = REGISTER.registerTick(RagiumConst.COMPRESSOR, ::HTCompressorBlockEntity)
 
     @JvmField
-    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> =
-        REGISTER.registerTick(RagiumConst.CRUSHER, ::HTCrusherBlockEntity)
+    val CRUSHER: HTDeferredBlockEntityType<HTCrusherBlockEntity> = REGISTER.registerTick(RagiumConst.CRUSHER, ::HTCrusherBlockEntity)
 
     @JvmField
-    val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> =
-        REGISTER.registerTick(RagiumConst.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
+    val CUTTING_MACHINE: HTDeferredBlockEntityType<HTCuttingMachineBlockEntity> = REGISTER.registerTick(RagiumConst.CUTTING_MACHINE, ::HTCuttingMachineBlockEntity)
 
     @JvmField
-    val ELECTRIC_FURNACE: HTDeferredBlockEntityType<HTFurnaceBlockEntity> =
-        REGISTER.registerTick(RagiumConst.ELECTRIC_FURNACE, ::HTFurnaceBlockEntity)
+    val ELECTRIC_FURNACE: HTDeferredBlockEntityType<HTFurnaceBlockEntity> = REGISTER.registerTick(RagiumConst.ELECTRIC_FURNACE, ::HTFurnaceBlockEntity)
 
     @JvmField
-    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
+    val PLANTER: HTDeferredBlockEntityType<HTPlanterBlockEntity> = REGISTER.registerTick(RagiumConst.PLANTER, ::HTPlanterBlockEntity)
 
     // Advanced
     @JvmField
-    val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.FREEZER, ::HTFreezerBlockEntity)
+    val FREEZER: HTDeferredBlockEntityType<HTFreezerBlockEntity> = REGISTER.registerTick(RagiumConst.FREEZER, ::HTFreezerBlockEntity)
 
     @JvmField
-    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
+    val MELTER: HTDeferredBlockEntityType<HTMelterBlockEntity> = REGISTER.registerTick(RagiumConst.MELTER, ::HTMelterBlockEntity)
 
     @JvmField
-    val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> =
-        REGISTER.registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
+    val PYROLYZER: HTDeferredBlockEntityType<HTPyrolyzerBlockEntity> = REGISTER.registerTick(RagiumConst.PYROLYZER, ::HTPyrolyzerBlockEntity)
 
     @JvmField
-    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> =
-        REGISTER.registerTick(RagiumConst.REFINERY, ::HTRefineryBlockEntity)
+    val REFINERY: HTDeferredBlockEntityType<HTRefineryBlockEntity> = REGISTER.registerTick(RagiumConst.REFINERY, ::HTRefineryBlockEntity)
 
     @JvmField
-    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> =
-        REGISTER.registerTick(RagiumConst.WASHER, ::HTWasherBlockEntity)
+    val WASHER: HTDeferredBlockEntityType<HTWasherBlockEntity> = REGISTER.registerTick(RagiumConst.WASHER, ::HTWasherBlockEntity)
 
     // Elite
     @JvmField
-    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
-        REGISTER.registerTick(RagiumConst.BREWERY, ::HTBreweryBlockEntity)
+    val BREWERY: HTDeferredBlockEntityType<HTBreweryBlockEntity> = REGISTER.registerTick(RagiumConst.BREWERY, ::HTBreweryBlockEntity)
 
     @JvmField
-    val MIXER: HTDeferredBlockEntityType<HTBreweryBlockEntity> =
-        REGISTER.registerTick(RagiumConst.MIXER, ::HTBreweryBlockEntity)
+    val MIXER: HTDeferredBlockEntityType<HTBreweryBlockEntity> = REGISTER.registerTick(RagiumConst.MIXER, ::HTBreweryBlockEntity)
 
     // Ultimate
     @JvmField
-    val FLUID_DUPLICATOR: HTDeferredBlockEntityType<HTFluidDuplicatorBlockEntity> =
-        REGISTER.registerTick(RagiumConst.FLUID_DUPLICATOR, ::HTFluidDuplicatorBlockEntity)
+    val FLUID_DUPLICATOR: HTDeferredBlockEntityType<HTFluidDuplicatorBlockEntity> = REGISTER.registerTick(RagiumConst.FLUID_DUPLICATOR, ::HTFluidDuplicatorBlockEntity)
 
     //    Device    //
 
     // Ultimate
     @JvmField
-    val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> =
-        REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
+    val ENCHANTER: HTDeferredBlockEntityType<HTEnchanterBlockEntity> = REGISTER.registerTick(RagiumConst.ENCHANTER, ::HTEnchanterBlockEntity)
 
     @JvmField
-    val MASS_FABRICATOR: HTDeferredBlockEntityType<HTMassFabricatorBlockEntity> =
-        REGISTER.registerTick(RagiumConst.MASS_FABRICATOR, ::HTMassFabricatorBlockEntity)
+    val MASS_FABRICATOR: HTDeferredBlockEntityType<HTMassFabricatorBlockEntity> = REGISTER.registerTick(RagiumConst.MASS_FABRICATOR, ::HTMassFabricatorBlockEntity)
 
     //    Storage    //
 
     @JvmField
-    val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> =
-        REGISTER.registerType(RagiumConst.UNIVERSAL_CHEST, ::HTUniversalChestBlockEntity)
+    val UNIVERSAL_CHEST: HTDeferredBlockEntityType<HTUniversalChestBlockEntity> = REGISTER.registerType(RagiumConst.UNIVERSAL_CHEST, ::HTUniversalChestBlockEntity)
 
     // variable
     @JvmField
-    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity.Simple> =
-        REGISTER.registerTick("battery", HTBatteryBlockEntity<*>::Simple)
+    val BATTERY: HTDeferredBlockEntityType<HTBatteryBlockEntity.Simple> = REGISTER.registerTick("battery", HTBatteryBlockEntity<*>::Simple)
 
     @JvmField
-    val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> =
-        REGISTER.registerTick("crate", ::HTCrateBlockEntity)
+    val CRATE: HTDeferredBlockEntityType<HTCrateBlockEntity> = REGISTER.registerTick("crate", ::HTCrateBlockEntity)
 
     @JvmField
-    val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> =
-        REGISTER.registerTick("tank", ::HTTankBlockEntity)
+    val TANK: HTDeferredBlockEntityType<HTTankBlockEntity> = REGISTER.registerTick("tank", ::HTTankBlockEntity)
 
     // Void
     @JvmField
-    val VOID_TANK: HTDeferredBlockEntityType<HTVoidTankBlockEntity> =
-        REGISTER.registerTick("void_tank", ::HTVoidTankBlockEntity)
+    val VOID_TANK: HTDeferredBlockEntityType<HTVoidTankBlockEntity> = REGISTER.registerTick("void_tank", ::HTVoidTankBlockEntity)
 
     // Creative
     @JvmField
-    val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> =
-        REGISTER.registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
+    val CREATIVE_BATTERY: HTDeferredBlockEntityType<HTCreativeBatteryBlockEntity> = REGISTER.registerTick("creative_battery", ::HTCreativeBatteryBlockEntity)
 
     @JvmField
-    val CREATIVE_CRATE: HTDeferredBlockEntityType<HTCreativeCrateBlockEntity> =
-        REGISTER.registerTick("creative_crate", ::HTCreativeCrateBlockEntity)
+    val CREATIVE_CRATE: HTDeferredBlockEntityType<HTCreativeCrateBlockEntity> = REGISTER.registerTick("creative_crate", ::HTCreativeCrateBlockEntity)
 
     @JvmField
-    val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> =
-        REGISTER.registerTick("creative_tank", ::HTCreativeTankBlockEntity)
+    val CREATIVE_TANK: HTDeferredBlockEntityType<HTCreativeTankBlockEntity> = REGISTER.registerTick("creative_tank", ::HTCreativeTankBlockEntity)
 
     //    Event    //
 
@@ -196,68 +160,5 @@ object RagiumBlockEntityTypes {
                 event.modify(block.getBlockEntityType().get(), block)
             }
         }
-    }
-
-    // Capabilities
-    @JvmStatic
-    private fun registerBlockCapabilities(event: RegisterCapabilitiesEvent) {
-        // Generator
-        registerHandler(event, BOILER.get())
-        // Machine
-        registerProcessor(event, ALLOY_SMELTER.get())
-        registerProcessor(event, ASSEMBLER.get())
-        registerProcessor(event, AUTO_CHISEL.get())
-        registerProcessor(event, COMPRESSOR.get())
-        registerProcessor(event, CRUSHER.get())
-        registerProcessor(event, CUTTING_MACHINE.get())
-        registerProcessor(event, ELECTRIC_FURNACE.get())
-        registerProcessor(event, PLANTER.get())
-
-        registerProcessor(event, FREEZER.get())
-        registerProcessor(event, MELTER.get())
-        registerProcessor(event, PYROLYZER.get())
-        registerProcessor(event, REFINERY.get())
-
-        registerProcessor(event, BREWERY.get())
-        registerProcessor(event, MIXER.get())
-        registerProcessor(event, WASHER.get())
-
-        registerProcessor(event, FLUID_DUPLICATOR.get())
-        // Device
-        registerHandler(event, ENCHANTER.get())
-        registerProcessor(event, MASS_FABRICATOR.get())
-
-        // Storage
-        HTItemCapabilities.registerBlockEntity(event, UNIVERSAL_CHEST.get(), HTUniversalChestBlockEntity::getItemHandler)
-
-        registerBattery(event, BATTERY.get())
-        registerHandler(event, CRATE.get())
-        registerHandler(event, TANK.get())
-
-        registerHandler(event, VOID_TANK.get())
-
-        registerBattery(event, CREATIVE_BATTERY.get())
-        registerHandler(event, CREATIVE_CRATE.get())
-        registerHandler(event, CREATIVE_TANK.get())
-    }
-
-    @JvmStatic
-    private fun <BE : HTBlockEntity> registerHandler(event: RegisterCapabilitiesEvent, type: BlockEntityType<BE>) {
-        HTItemCapabilities.registerBlockEntity(event, type, HTBlockEntity::getItemHandler)
-        HTFluidCapabilities.registerBlockEntity(event, type, HTBlockEntity::getFluidHandler)
-    }
-
-    @JvmStatic
-    private fun <BE : HTProcessorBlockEntity.Energized> registerProcessor(event: RegisterCapabilitiesEvent, type: BlockEntityType<BE>) {
-        HTItemCapabilities.registerBlockEntity(event, type, HTBlockEntity::getItemHandler)
-        HTFluidCapabilities.registerBlockEntity(event, type, HTBlockEntity::getFluidHandler)
-        HTEnergyCapabilities.registerBlockEntity(event, type, { processor: BE, _ -> processor.handler })
-    }
-
-    @JvmStatic
-    private fun <BE : HTBatteryBlockEntity<*>> registerBattery(event: RegisterCapabilitiesEvent, type: BlockEntityType<BE>) {
-        HTItemCapabilities.registerBlockEntity(event, type, HTBlockEntity::getItemHandler)
-        HTFluidCapabilities.registerBlockEntity(event, type, HTBlockEntity::getFluidHandler)
-        HTEnergyCapabilities.registerBlockEntity(event, type, { processor: BE, _ -> processor.handler })
     }
 }

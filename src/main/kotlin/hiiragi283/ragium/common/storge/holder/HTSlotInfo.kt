@@ -1,7 +1,7 @@
 package hiiragi283.ragium.common.storge.holder
 
 import com.mojang.serialization.Codec
-import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.text.Text
 import hiiragi283.ragium.api.text.RagiumTranslation

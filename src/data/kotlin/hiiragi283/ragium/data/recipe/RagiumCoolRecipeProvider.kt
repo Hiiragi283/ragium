@@ -1,59 +1,69 @@
 package hiiragi283.ragium.data.recipe
 
-import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.common.recipe.ingredient.HTBluePrintIngredient
 import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTFreezingRecipeBuilder
 import hiiragi283.ragium.setup.RagiumItems
+import java.util.concurrent.CompletableFuture
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
 
-object RagiumCoolRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
-    override fun buildRecipeInternal() {
+class RagiumCoolRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+    override fun buildRecipes() {
         freezing()
     }
 
-    @JvmStatic
     private fun freezing() {
         // Water -> Snowball
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.water()
-            catalyst = HTBluePrintIngredient(0).toVanilla()
-            result = resultCreator.create(Items.SNOWBALL, 4)
+        HTFreezingRecipeBuilder.create {
+            ingredient { water() }
+            catalyst { +HTBluePrintIngredient(0) }
+            result {
+                +Items.SNOWBALL
+                count = 4
+            }
             time /= 4
-        }
+        }.save(exporter)
         // Water -> Ice
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.water()
-            catalyst = HTBluePrintIngredient(1).toVanilla()
-            result = resultCreator.create(Items.ICE)
-        }
+        HTFreezingRecipeBuilder.create {
+            ingredient { water() }
+            catalyst { +HTBluePrintIngredient(1) }
+            result { +Items.ICE }
+        }.save(exporter)
 
         // Lava -> Obsidian
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.lava()
-            catalyst = HTBluePrintIngredient(0).toVanilla()
-            result = resultCreator.create(Items.OBSIDIAN)
-        }
+        HTFreezingRecipeBuilder.create {
+            ingredient { lava() }
+            catalyst { +HTBluePrintIngredient(0) }
+            result { +Items.OBSIDIAN }
+        }.save(exporter)
         // Lava -> Magma Block
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.lava(250)
-            catalyst = HTBluePrintIngredient(1).toVanilla()
-            result = resultCreator.create(Items.MAGMA_BLOCK)
-        }
+        HTFreezingRecipeBuilder.create {
+            ingredient {
+                lava()
+                amount = 250
+            }
+            catalyst { +HTBluePrintIngredient(1) }
+            result { +Items.MAGMA_BLOCK }
+        }.save(exporter)
 
         // Honey -> Honey Block
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(HCFluids.HONEY)
-            catalyst = HTBluePrintIngredient(0).toVanilla()
-            result = resultCreator.create(Items.HONEY_BLOCK)
-        }
+        HTFreezingRecipeBuilder.create {
+            ingredient { +HCFluids.HONEY }
+            catalyst { +HTBluePrintIngredient(0) }
+            result { +Items.HONEY_BLOCK }
+        }.save(exporter)
 
         // Meat -> Meat Ingot
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(HCFluids.MEAT)
-            catalyst = HTBluePrintIngredient(0).toVanilla()
-            result = resultCreator.create(RagiumItems.MEAT_INGOT)
-        }
+        HTFreezingRecipeBuilder.create {
+            ingredient { +HCFluids.MEAT }
+            catalyst { +HTBluePrintIngredient(0) }
+            result { +RagiumItems.MEAT_INGOT }
+        }.save(exporter)
     }
+
+    override fun getName(): String = "Cool Recipes"
 }

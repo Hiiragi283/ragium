@@ -22,5 +22,5 @@ class HTCompressingRecipe(ingredient: HTItemIngredient, result: HTItemResult, pr
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.COMPRESSING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.COMPRESSING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.COMPRESSING
 }

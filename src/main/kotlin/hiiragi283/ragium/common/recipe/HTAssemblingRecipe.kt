@@ -47,5 +47,5 @@ class HTAssemblingRecipe(
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ASSEMBLING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING
 }

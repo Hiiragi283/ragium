@@ -5,7 +5,7 @@ import org.slf4j.event.Level
 plugins {
     idea
     id("signing")
-    kotlin("jvm") version "2.2.20"
+    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.neo.moddev)
 
     alias(libs.plugins.dokka.asProvider())
@@ -14,11 +14,39 @@ plugins {
 
     alias(libs.plugins.axion.release)
     alias(libs.plugins.maven.publish)
+    alias(libs.plugins.mod.publish)
 }
 
 val modId = "ragium"
 
-val generateModMetadata: TaskProvider<ProcessResources> by tasks.registering(ProcessResources::class)
+val generateModMetadata: TaskProvider<ProcessResources> = tasks.register<ProcessResources>("generateModMetadata") {
+    description = "Generate mod metadata"
+    val mcVersion: String = libs.versions.minecraft.get()
+    val neoVersion: String = libs.versions.neo.version
+        .get()
+    val kffVersion: String = libs.versions.kff.version
+        .get()
+
+    val replaceProperties: Map<String, String> = mapOf(
+        "minecraft_version" to mcVersion,
+        "minecraft_version_range" to "[$mcVersion]",
+        "neo_version" to neoVersion,
+        "neo_version_range" to "[$neoVersion,)",
+        "kff_version" to kffVersion,
+        "kff_version_range" to "[$kffVersion,)",
+        "loader_version_range" to "[1,)",
+        "mod_id" to modId,
+        "mod_name" to "Ragium",
+        "mod_license" to "MPL-2.0",
+        "mod_version" to version.toString(),
+        "mod_authors" to "Hiiragi283",
+        "mod_description" to "A simple tech mod for vanilla expansion and automation",
+    )
+    inputs.properties(replaceProperties)
+    expand(replaceProperties)
+    from("src/main/templates")
+    into("build/generated/sources/modMetadata")
+}
 
 scmVersion {
     useHighestVersion = true
@@ -42,8 +70,8 @@ base {
     version = scmVersion.version
 }
 
-val apiModule: SourceSet by sourceSets.register("api")
-val mainModule: SourceSet by sourceSets.named("main") {
+val apiModule: SourceSet = sourceSets.register("api").get()
+val mainModule: SourceSet = sourceSets.named("main") {
     compileClasspath += apiModule.output
     runtimeClasspath += apiModule.output
 
@@ -51,19 +79,19 @@ val mainModule: SourceSet by sourceSets.named("main") {
         srcDirs("src/generated/resources", generateModMetadata.get().outputs.files)
         exclude("**/.cache/**")
     }
-}
-val clientModule: SourceSet by sourceSets.register("client") {
+}.get()
+val clientModule: SourceSet = sourceSets.register("client") {
     compileClasspath += mainModule.output + mainModule.compileClasspath
     runtimeClasspath += mainModule.output + mainModule.runtimeClasspath
-}
-val integrationModule: SourceSet by sourceSets.register("integration") {
+}.get()
+val integrationModule: SourceSet = sourceSets.register("integration") {
     compileClasspath += clientModule.output + clientModule.compileClasspath
     runtimeClasspath += clientModule.output + clientModule.runtimeClasspath
-}
-val dataModule: SourceSet by sourceSets.register("data") {
+}.get()
+val dataModule: SourceSet = sourceSets.register("data") {
     compileClasspath += integrationModule.output + integrationModule.compileClasspath
     runtimeClasspath += integrationModule.output + integrationModule.runtimeClasspath
-}
+}.get()
 
 repositories {
     mavenLocal()
@@ -109,9 +137,6 @@ repositories {
     }*/
     // RS2
 
-    maven(url = "https://central.sonatype.com/repository/maven-snapshots/") {
-        content { includeGroup("io.github.hiiragi283") }
-    }
     mavenCentral()
 }
 
@@ -254,11 +279,11 @@ dependencies {
     configurations.apply {
         runtimeClasspath.get().extendsFrom(create("localRuntime"))
 
-        val apiCompileClasspath: Configuration by named("apiCompileClasspath")
-        val compileClasspath: Configuration by named("compileClasspath")
-        val clientCompileClasspath: Configuration by named("clientCompileClasspath")
-        val integrationCompileClasspath: Configuration by named("integrationCompileClasspath")
-        val dataCompileClasspath: Configuration by named("dataCompileClasspath")
+        val apiCompileClasspath: Configuration = named("apiCompileClasspath").get()
+        val compileClasspath: Configuration = named("compileClasspath").get()
+        val clientCompileClasspath: Configuration = named("clientCompileClasspath").get()
+        val integrationCompileClasspath: Configuration = named("integrationCompileClasspath").get()
+        val dataCompileClasspath: Configuration = named("dataCompileClasspath").get()
 
         apiCompileClasspath.extendsFrom(compileClasspath)
         compileClasspath.extendsFrom(clientCompileClasspath)
@@ -396,34 +421,6 @@ tasks {
         dependsOn("apiClasses", "clientClasses", "integrationClasses")
         duplicatesStrategy = DuplicatesStrategy.FAIL
         from(apiModule.allSource, clientModule.allSource, integrationModule.allSource)
-    }
-
-    generateModMetadata {
-        val mcVersion: String = libs.versions.minecraft.get()
-        val neoVersion: String = libs.versions.neo.version
-            .get()
-        val kffVersion: String = libs.versions.kff.version
-            .get()
-
-        val replaceProperties: Map<String, String> = mapOf(
-            "minecraft_version" to mcVersion,
-            "minecraft_version_range" to "[$mcVersion]",
-            "neo_version" to neoVersion,
-            "neo_version_range" to "[$neoVersion,)",
-            "kff_version" to kffVersion,
-            "kff_version_range" to "[$kffVersion,)",
-            "loader_version_range" to "[1,)",
-            "mod_id" to modId,
-            "mod_name" to "Ragium",
-            "mod_license" to "MPL-2.0",
-            "mod_version" to version.toString(),
-            "mod_authors" to "Hiiragi283",
-            "mod_description" to "A simple tech mod for vanilla expansion and automation",
-        )
-        inputs.properties(replaceProperties)
-        expand(replaceProperties)
-        from("src/main/templates")
-        into("build/generated/sources/modMetadata")
     }
 
     /*wrapper {

@@ -48,5 +48,5 @@ class RTEnchantingRecipe(ingredient: HTItemIngredient, val holder: Holder<Enchan
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.HOLDER_ENCHANTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ENCHANTING
 }

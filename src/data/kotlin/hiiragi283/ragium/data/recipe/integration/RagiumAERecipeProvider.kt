@@ -2,89 +2,109 @@ package hiiragi283.ragium.data.recipe.integration
 
 import appeng.core.definitions.AEBlocks
 import appeng.core.definitions.AEItems
-import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.core.common.data.recipe.builder.HTItemToMultiItemRecipeBuilder
+import hiiragi283.core.common.data.recipe.HTItemToMultiItemRecipeBuilder
+import hiiragi283.core.common.integration.HCIConstants
 import hiiragi283.core.common.material.HCIntegrationMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTPrintingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
+import java.util.concurrent.CompletableFuture
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 import net.minecraft.world.level.ItemLike
 
-data object RagiumAERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.MOD_ID, "ae2") {
-    override fun buildRecipeInternal() {
+class RagiumAERecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider.Integration(packOutput, future, RagiumAPI.MOD_ID, HCIConstants.AE2) {
+    override fun buildRecipes() {
         alloying()
         printing()
 
         // Sky Stone Dust
-        HTItemToMultiItemRecipeBuilder.crushing(output) {
-            ingredient = inputCreator.create(AEBlocks.SKY_STONE_BLOCK)
-            results += resultCreator.material(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE)
+        HTItemToMultiItemRecipeBuilder.crushing {
+            ingredient { +AEBlocks.SKY_STONE_BLOCK }
+            result { +HTItemResult.MaterialPart(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE) }
             recipeId suffix "_from_stone"
-        }
+            condition { +condition }
+        }.save(exporter)
         // Budding Certus Quartz
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, HCIntegrationMaterialKeys.CERTUS_QUARTZ)
-            fluidIngredient = inputCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, 810)
-            result = resultCreator.create(AEBlocks.FLAWLESS_BUDDING_QUARTZ)
-        }
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +tag(CommonTagPrefixes.STORAGE_BLOCK, HCIntegrationMaterialKeys.CERTUS_QUARTZ) }
+            fluidIngredient {
+                +HiiragiCoreTags.Fluids.ELDRITCH
+                amount = 810
+            }
+            result { +AEBlocks.FLAWLESS_BUDDING_QUARTZ }
+            condition { +condition }
+        }.save(exporter)
         // Mysterious Cube
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(AEBlocks.NOT_SO_MYSTERIOUS_CUBE)
-            fluidIngredient = inputCreator.create(HiiragiCoreTags.Fluids.ELDRITCH, 810)
-            result = resultCreator.create(AEBlocks.MYSTERIOUS_CUBE)
-        }
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +AEBlocks.NOT_SO_MYSTERIOUS_CUBE }
+            fluidIngredient {
+                +HiiragiCoreTags.Fluids.ELDRITCH
+                amount = 810
+            }
+            result { +AEBlocks.MYSTERIOUS_CUBE }
+            condition { +condition }
+        }.save(exporter)
     }
 
-    @JvmStatic
+    override fun getName(): String = "AE Recipes"
+
     private fun alloying() {
         // Fluix Crystal
-        HTCombiningRecipeBuilder.alloying(output) {
-            result = resultCreator.material(CommonParts.GEM, HCIntegrationMaterialKeys.FLUIX)
-            ingredients += inputCreator.create(baseOrDust(HCIntegrationMaterialKeys.CERTUS_QUARTZ))
-            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-            ingredients += inputCreator.create(baseOrDust(VanillaMaterialKeys.QUARTZ))
-        }
+        HTCombiningRecipeBuilder.alloying {
+            result { +HTItemResult.MaterialPart(CommonParts.GEM, HCIntegrationMaterialKeys.FLUIX) }
+            ingredient { +baseOrDust(HCIntegrationMaterialKeys.CERTUS_QUARTZ) }
+            ingredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE) }
+            ingredient { +baseOrDust(VanillaMaterialKeys.QUARTZ) }
+            condition { +condition }
+        }.save(exporter)
         // Processor
         mapOf(
             AEItems.CALCULATION_PROCESSOR to AEItems.CALCULATION_PROCESSOR_PRINT,
             AEItems.ENGINEERING_PROCESSOR to AEItems.ENGINEERING_PROCESSOR_PRINT,
             AEItems.LOGIC_PROCESSOR to AEItems.LOGIC_PROCESSOR_PRINT,
         ).forEach { (processor: ItemLike, print: ItemLike) ->
-            HTCombiningRecipeBuilder.alloying(output) {
-                result = resultCreator.create(processor)
-                ingredients += inputCreator.create(print)
-                ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-                ingredients += inputCreator.create(AEItems.SILICON_PRINT)
-            }
+            HTCombiningRecipeBuilder.alloying {
+                result { +processor }
+                ingredient { +print }
+                ingredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE) }
+                ingredient { +AEItems.SILICON_PRINT }
+                condition { +condition }
+            }.save(exporter)
         }
     }
 
-    @JvmStatic
     private fun printing() {
-        HTPrintingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.GEM, HCIntegrationMaterialKeys.CERTUS_QUARTZ)
-            press = itemCreator.create(AEItems.CALCULATION_PROCESSOR_PRESS)
-            result = resultCreator.create(AEItems.CALCULATION_PROCESSOR_PRINT)
-        }
-        HTPrintingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND)
-            press = itemCreator.create(AEItems.ENGINEERING_PROCESSOR_PRESS)
-            result = resultCreator.create(AEItems.ENGINEERING_PROCESSOR_PRINT)
-        }
-        HTPrintingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD)
-            press = itemCreator.create(AEItems.LOGIC_PROCESSOR_PRESS)
-            result = resultCreator.create(AEItems.LOGIC_PROCESSOR_PRINT)
-        }
-        HTPrintingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(HiiragiCoreTags.Items.SILICON)
-            press = itemCreator.create(AEItems.SILICON_PRESS)
-            result = resultCreator.create(AEItems.SILICON_PRINT)
-        }
+        HTPrintingRecipeBuilder.create {
+            ingredient { +tag(CommonTagPrefixes.GEM, HCIntegrationMaterialKeys.CERTUS_QUARTZ) }
+            press { +AEItems.CALCULATION_PROCESSOR_PRESS }
+            result { +AEItems.CALCULATION_PROCESSOR_PRINT }
+            condition { +condition }
+        }.save(exporter)
+        HTPrintingRecipeBuilder.create {
+            ingredient { +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND) }
+            press { +AEItems.ENGINEERING_PROCESSOR_PRESS }
+            result { +AEItems.ENGINEERING_PROCESSOR_PRINT }
+            condition { +condition }
+        }.save(exporter)
+        HTPrintingRecipeBuilder.create {
+            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD) }
+            press { +AEItems.LOGIC_PROCESSOR_PRESS }
+            result { +AEItems.LOGIC_PROCESSOR_PRINT }
+            condition { +condition }
+        }.save(exporter)
+        HTPrintingRecipeBuilder.create {
+            ingredient { +HiiragiCoreTags.Items.SILICON }
+            press { +AEItems.SILICON_PRESS }
+            result { +AEItems.SILICON_PRINT }
+            condition { +condition }
+        }.save(exporter)
     }
 }

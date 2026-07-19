@@ -1,10 +1,16 @@
 {
   "type": "ragium:chemical_reacting",
   "catalyst": "#c:dusts/platinum",
-  "fluid_result": {
-    "amount": 4000,
-    "id": "ragium:nitrogen_dioxide"
-  },
+  "fluid_result": [
+    {
+      "amount": 4000,
+      "id": "ragium:nitrogen_dioxide"
+    },
+    {
+      "amount": 6000,
+      "id": "minecraft:water"
+    }
+  ],
   "primary": {
     "amount": 4000,
     "fluids": "#c:ammonia"

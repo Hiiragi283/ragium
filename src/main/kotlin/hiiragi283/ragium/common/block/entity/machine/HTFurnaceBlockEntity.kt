@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.recipe.base.HTItemToItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeCaches
-import hiiragi283.core.common.recipe.HTVanillaRecipeTypes
+import hiiragi283.core.common.recipe.VanillaRecipeLookups
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToItemBlockEntity
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class HTFurnaceBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity.Basic(RagiumBlockEntityTypes.ELECTRIC_FURNACE, pos, state) {
     // TODO: Support Blasting or Smoking recipe type
-    override fun getCache(): HTRecipeCaches.SingleItem<out HTItemToItemRecipe> = HTRecipeCaches.SingleItem(HTVanillaRecipeTypes.SMELTING)
+    override fun getCache(): HTRecipeCaches.SingleItem<out HTItemToItemRecipe> = HTRecipeCaches.SingleItem(VanillaRecipeLookups.SMELTING)
 
     override fun playSound() {
         playSound(SoundEvents.FIRE_EXTINGUISH)

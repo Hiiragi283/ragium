@@ -11,6 +11,7 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
@@ -33,9 +34,8 @@ class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Pr
             ?.let(tooltips::add)
     }
 
-    override fun addItems(baseItem: Holder<Item>, context: HTSubCreativeTabContents.Context) {
-        context
-            .provider
+    override fun addItems(baseItem: Holder<Item>, parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output) {
+        parameters.holders()
             .lookupOrThrow(Registries.ENTITY_TYPE)
             .filterElements(HTImitationSpawnerBlock::filterEntityType)
             .listElements()
@@ -45,6 +45,6 @@ class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Pr
                     RagiumDataComponents.SPAWNER_MOB,
                     HTSpawnerMob.of(holder),
                 )
-            }.forEach(context)
+            }.forEach(output::accept)
     }
 }

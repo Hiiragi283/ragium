@@ -1,16 +1,19 @@
+@file:OptIn(ExperimentalContracts::class)
+
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.color.HTDefaultColor
+import hiiragi283.core.api.data.recipe.HTRecipeProvider
+import hiiragi283.core.api.data.recipe.IngredientBuilder
+import hiiragi283.core.api.item.HTSimpleItemLike
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.property.getDefaultPart
-import hiiragi283.core.api.registry.HTDeferredBlockAndItem
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.core.common.data.recipe.builder.HTShapedRecipeBuilder
-import hiiragi283.core.common.data.recipe.builder.HTShapelessRecipeBuilder
+import hiiragi283.core.common.data.recipe.HTShapedRecipeBuilder
+import hiiragi283.core.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -27,41 +30,47 @@ import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import java.util.concurrent.CompletableFuture
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.CraftingBookCategory
-import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.Tags
 
-object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
-    override fun buildRecipeInternal() {
+class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+    override fun buildRecipes() {
         parts()
 
         // Blueprint
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Items.PAPER)
-            fluidIngredient = inputCreator.create(HCFluids.DyeContents[HTDefaultColor.BLUE], 250)
-
-            result += resultCreator.create(HCItems.BLUEPRINT)
-        }
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Items.PAPER }
+            fluidIngredient {
+                +HCFluids.DYES[HTDefaultColor.BLUE]
+                amount = 250
+            }
+            itemResult { +HCItems.BLUEPRINT }
+        }.save(exporter)
         // Blank Disc
-        HTShapedRecipeBuilder.create(output) {
-            pattern(
-                " A ",
-                "A A",
-                " A ",
-            )
-            define('A') { itemCreator.create(HiiragiCoreTags.Items.PLASTICS) }
-            resultStack = RagiumItems.BLANK_DISC.toStack()
-        }
+        HTShapedRecipeBuilder.create {
+            +" A "
+            +"A A"
+            +" A "
+            define('A') { +HiiragiCoreTags.Items.PLASTICS }
+            +RagiumItems.BLANK_DISC.toStack()
+        }.save(exporter)
         // Electric Igniter
-        HTShapelessRecipeBuilder.create(output) {
-            ingredients += itemCreator.create(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
-            ingredients += itemCreator.create(Items.FLINT)
-            resultStack = RagiumItems.ELECTRIC_IGNITER.toStack()
-        }
+        HTShapelessRecipeBuilder.create {
+            ingredient { +tag(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) }
+            ingredient { +Items.FLINT }
+            result { +RagiumItems.ELECTRIC_IGNITER }
+        }.save(exporter)
 
         // Loot Ticket
         lootTickets()
@@ -71,70 +80,60 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
         storages()
     }
 
-    @JvmStatic
     private fun parts() {
         // Mercury Bottle <-> Mercury Bucket
-        HTShapelessRecipeBuilder.create(output) {
-            repeat(4) {
-                ingredients += itemCreator.create(RagiumItems.MERCURY_BOTTLE)
-            }
-            ingredients += itemCreator.create(Tags.Items.BUCKETS_EMPTY)
-            resultStack = RagiumFluids.MERCURY.bucketHolder.toStack()
+        HTShapelessRecipeBuilder.create {
+            repeat(4) { ingredient { +RagiumItems.MERCURY_BOTTLE } }
+            ingredient { +Tags.Items.BUCKETS_EMPTY }
+            +RagiumFluids.MERCURY.bucketHolder.toStack()
             recipeId suffix "_from_bottles"
-        }
-        HTShapelessRecipeBuilder.create(output) {
-            ingredients += itemCreator.create(RagiumFluids.MERCURY.bucketTag)
-            repeat(4) {
-                ingredients += itemCreator.create(Items.GLASS_BOTTLE)
-            }
-            resultStack = RagiumItems.MERCURY_BOTTLE.toStack(4)
+        }.save(exporter)
+        HTShapelessRecipeBuilder.create {
+            ingredient { +RagiumFluids.MERCURY.bucketTag }
+            repeat(4) { ingredient { +Items.GLASS_BOTTLE } }
+            +RagiumItems.MERCURY_BOTTLE.toStack(4)
             recipeId suffix "_from_bucket"
-        }
+        }.save(exporter)
         // Thermometer
-        HTShapedRecipeBuilder.create(output) {
-            pattern(
-                " AB",
-                "ACA",
-                "DA ",
-            )
-            define('A') { itemCreator.create(Tags.Items.GLASS_PANES_COLORLESS) }
-            define('B') { itemCreator.create(Tags.Items.DYES_RED) }
-            define('C') { itemCreator.create(RagiumItems.MERCURY_BOTTLE) }
-            define('D') { itemCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.COPPER) }
-            resultStack = RagiumItems.THERMOMETER.toStack()
-        }
+        HTShapedRecipeBuilder.create {
+            +" AB"
+            +"ACA"
+            +"DA "
+            define('A') { +Tags.Items.GLASS_PANES_COLORLESS }
+            define('B') { +Tags.Items.DYES_RED }
+            define('C') { +RagiumItems.MERCURY_BOTTLE }
+            define('D') { +tag(CommonTagPrefixes.PLATE, VanillaMaterialKeys.COPPER) }
+            +RagiumItems.THERMOMETER.toStack()
+        }.save(exporter)
     }
 
     //    Machine    //
 
-    @JvmStatic
     private fun machines() {
         // Basic
-        basic(RagiumBlocks.ALLOY_SMELTER) { itemCreator.create(Items.FURNACE) }
-        basic(RagiumBlocks.ASSEMBLER) { itemCreator.create(Items.CRAFTER) }
-        basic(RagiumBlocks.AUTO_CHISEL) { itemCreator.create(Items.STONECUTTER) }
-        basic(RagiumBlocks.COMPRESSOR) { itemCreator.create(Items.PISTON) }
-        basic(RagiumBlocks.CRUSHER) { itemCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND) }
-        basic(RagiumBlocks.CUTTING_MACHINE) { itemCreator.create(Items.IRON_AXE) }
-        basic(RagiumBlocks.ELECTRIC_FURNACE) { itemCreator.create(Items.FURNACE) }
-        basic(RagiumBlocks.PLANTER) { itemCreator.create(Tags.Items.GLASS_BLOCKS) }
+        basic(RagiumBlocks.ALLOY_SMELTER) { +Items.FURNACE }
+        basic(RagiumBlocks.ASSEMBLER) { +Items.CRAFTER }
+        basic(RagiumBlocks.AUTO_CHISEL) { +Items.STONECUTTER }
+        basic(RagiumBlocks.COMPRESSOR) { +Items.PISTON }
+        basic(RagiumBlocks.CRUSHER) { +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.DIAMOND) }
+        basic(RagiumBlocks.CUTTING_MACHINE) { +Items.IRON_AXE }
+        basic(RagiumBlocks.ELECTRIC_FURNACE) { +Items.FURNACE }
+        basic(RagiumBlocks.PLANTER) { +Tags.Items.GLASS_BLOCKS }
         // Heat
-        advanced(RagiumBlocks.FREEZER, HCMaterialKeys.AZURE_STEEL) { itemCreator.create(Items.SNOW_BLOCK) }
-        advanced(RagiumBlocks.MELTER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { itemCreator.create(Items.BLAST_FURNACE) }
-        advanced(RagiumBlocks.PYROLYZER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { itemCreator.create(Items.NETHER_BRICKS) }
-        HTShapedRecipeBuilder.create(output) {
-            pattern(
-                "ABA",
-                "BCB",
-            )
-            define('A') { itemCreator.create(RagiumItems.THERMOMETER) }
-            define('B') { itemCreator.create(Tags.Items.GLASS_BLOCKS) }
-            define('C') { itemCreator.create(CommonTagPrefixes.GEAR, VanillaMaterialKeys.DIAMOND) }
-            resultStack = RagiumBlocks.REFINERY.toStack()
-        }
-        advanced(RagiumBlocks.WASHER, HCMaterialKeys.AZURE_STEEL) { itemCreator.create(Items.IRON_BARS) }
+        advanced(RagiumBlocks.FREEZER, HCMaterialKeys.AZURE_STEEL) { +Items.SNOW_BLOCK }
+        advanced(RagiumBlocks.MELTER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { +Items.BLAST_FURNACE }
+        advanced(RagiumBlocks.PYROLYZER, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) { +Items.NETHER_BRICKS }
+        HTShapedRecipeBuilder.create {
+            +"ABA"
+            +"BCB"
+            define('A') { +RagiumItems.THERMOMETER }
+            define('B') { +Tags.Items.GLASS_BLOCKS }
+            define('C') { +tag(CommonTagPrefixes.GEAR, VanillaMaterialKeys.DIAMOND) }
+            +RagiumBlocks.REFINERY.toStack()
+        }.save(exporter)
+        advanced(RagiumBlocks.WASHER, HCMaterialKeys.AZURE_STEEL) { +Items.IRON_BARS }
         // Elite
-        /*HTShapedRecipeBuilder.create(output) {
+        /*HTShapedRecipeBuilder.create) {
             pattern(
                 "ABA",
                 "BCB",
@@ -144,94 +143,78 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             define('C') += CommonTagPrefixes.GEAR to RagiumMaterialKeys.STAINLESS_STEEL
             resultStack += RagiumBlocks.CHEMICAL_WASHER
         }*/
-        elite(RagiumBlocks.BREWERY) { itemCreator.create(Items.BREWING_STAND) }
-        elite(RagiumBlocks.MIXER) { itemCreator.create(Items.COPPER_GRATE) }
+        elite(RagiumBlocks.BREWERY) { +Items.BREWING_STAND }
+        elite(RagiumBlocks.MIXER) { +Items.COPPER_GRATE }
         // Ultimate
-        ultimate(RagiumBlocks.MASS_FABRICATOR) { itemCreator.create(Tags.Items.NETHER_STARS) }
-        HTShapedRecipeBuilder.create(output) {
-            pattern(
-                "ABA",
-                "BCB",
-            )
-            define('A') { itemCreator.create(RagiumItems.ARTIFICIAL_ARTIFACT) }
-            define('B') { itemCreator.create(RagiumBlocks.TANK) }
-            define('C') { itemCreator.create(CommonTagPrefixes.GEAR, VanillaMaterialKeys.NETHERITE) }
-            resultStack = RagiumBlocks.FLUID_DUPLICATOR.toStack()
-        }
+        ultimate(RagiumBlocks.MASS_FABRICATOR) { +Tags.Items.NETHER_STARS }
+        HTShapedRecipeBuilder.create {
+            +"ABA"
+            +"BCB"
+            define('A') { +RagiumItems.ARTIFICIAL_ARTIFACT }
+            define('B') { +RagiumBlocks.TANK }
+            define('C') { +tag(CommonTagPrefixes.GEAR, VanillaMaterialKeys.NETHERITE) }
+            +RagiumBlocks.FLUID_DUPLICATOR.toStack()
+        }.save(exporter)
     }
 
-    @JvmStatic
-    private fun basic(block: HTDeferredBlockAndItem<*, *>, consumer: () -> Ingredient) {
-        HTShapedRecipeBuilder.create(output) {
-            pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            )
-            define('A') { itemCreator.create(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) }
-            define('B', consumer)
-            define('C') { itemCreator.create(CommonTagPrefixes.GEAR, VanillaMaterialKeys.COPPER) }
-            define('D') { itemCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
-            resultStack = block.toStack()
-        }
+    private inline fun basic(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+        HTShapedRecipeBuilder.create {
+            +"AAA"
+            +"BCB"
+            +"DDD"
+            define('A') { +tag(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) }
+            define('B', builderAction)
+            define('C') { +tag(CommonTagPrefixes.GEAR, VanillaMaterialKeys.COPPER) }
+            define('D') { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
+            +block.toStack()
+        }.save(exporter)
     }
 
-    @JvmStatic
-    private fun advanced(block: HTDeferredBlockAndItem<*, *>, material: HTMaterialLike, consumer: () -> Ingredient) {
-        HTShapedRecipeBuilder.create(output) {
-            pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            )
-            define('A') { itemCreator.create(CommonTagPrefixes.INGOT, material) }
-            define('B', consumer)
-            define('C') { itemCreator.create(RagiumItems.THERMOMETER) }
-            define('D') { itemCreator.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
-            resultStack = block.toStack()
-        }
+    private inline fun advanced(block: HTSimpleItemLike, material: HTMaterialLike, builderAction: IngredientBuilder.() -> Unit) {
+        HTShapedRecipeBuilder.create {
+            +"AAA"
+            +"BCB"
+            +"DDD"
+            define('A') { +tag(CommonTagPrefixes.INGOT, material) }
+            define('B', builderAction)
+            define('C') { +RagiumItems.THERMOMETER }
+            define('D') { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
+            +block.toStack()
+        }.save(exporter)
     }
 
-    @JvmStatic
-    private fun elite(block: HTDeferredBlockAndItem<*, *>, consumer: () -> Ingredient) {
-        HTShapedRecipeBuilder.create(output) {
-            pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            )
-            define('A') { itemCreator.create(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
-            define('B', consumer)
-            define('C') { itemCreator.create(RagiumItems.ELECTRIC_CIRCUIT) }
-            define('D') { itemCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.CARBON) }
-            resultStack = block.toStack()
-        }
+    private inline fun elite(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+        HTShapedRecipeBuilder.create {
+            +"AAA"
+            +"BCB"
+            +"DDD"
+            define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
+            define('B', builderAction)
+            define('C') { +RagiumItems.ELECTRIC_CIRCUIT }
+            define('D') { +tag(CommonTagPrefixes.PLATE, CommonMaterialKeys.CARBON) }
+            +block.toStack()
+        }.save(exporter)
     }
 
-    @JvmStatic
-    private fun ultimate(block: HTDeferredBlockAndItem<*, *>, consumer: () -> Ingredient) {
-        HTShapedRecipeBuilder.create(output) {
-            pattern(
-                "AAA",
-                "BCB",
-                "DDD",
-            )
-            define('A') { itemCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.NETHERITE) }
-            define('B', consumer)
-            define('C') { itemCreator.create(RagiumItems.ARTIFICIAL_ARTIFACT) }
-            define('D') { itemCreator.create(Tags.Items.OBSIDIANS_CRYING) }
-            resultStack = block.toStack()
-        }
+    private inline fun ultimate(block: HTSimpleItemLike, builderAction: IngredientBuilder.() -> Unit) {
+        HTShapedRecipeBuilder.create {
+            +"AAA"
+            +"BCB"
+            +"DDD"
+            define('A') { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.NETHERITE) }
+            define('B', builderAction)
+            define('C') { +RagiumItems.ARTIFICIAL_ARTIFACT }
+            define('D') { +Tags.Items.OBSIDIANS_CRYING }
+            +block.toStack()
+        }.save(exporter)
     }
 
     //    Device    //
 
-    @JvmStatic
     private fun devices() {}
 
     //    Storage    //
 
-    @JvmStatic
     private fun storages() {
         // Battery
         variableStorage(
@@ -240,149 +223,151 @@ object RagiumUtilitiesRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_
             CommonTagPrefixes.GEM.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL),
             CommonTagPrefixes.STORAGE_BLOCK.itemTagKey(RagiumMaterialKeys.RAGI_CRYSTAL),
         )
-        save(id(HTConst.SHAPELESS, "combining", "battery"), HTBatteryCombiningRecipe(CraftingBookCategory.MISC))
+        exporter.accept(id(HTConst.SHAPELESS, "combining", "battery"), HTBatteryCombiningRecipe(CraftingBookCategory.MISC))
         // Crate
         variableStorage(RagiumBlocks.CRATE, CommonMaterialKeys.PLASTIC, Tags.Items.CHESTS)
         // Tank
         variableStorage(RagiumBlocks.TANK, CommonMaterialKeys.RUBBER, Tags.Items.BUCKETS_EMPTY)
-        save(id(HTConst.SHAPELESS, "combining", "tank"), HTTankCombiningRecipe(CraftingBookCategory.MISC))
+        exporter.accept(id(HTConst.SHAPELESS, "combining", "tank"), HTTankCombiningRecipe(CraftingBookCategory.MISC))
         // Universal Chest
-        HTShapedRecipeBuilder.create(output) {
+        HTShapedRecipeBuilder.create {
             hollow8()
-            define('A') { itemCreator.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
-            define('B') { itemCreator.create(CommonTagPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL) }
-            resultStack = RagiumBlocks.UNIVERSAL_CHEST.toStack()
-        }
+            define('A') { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
+            define('B') { +tag(CommonTagPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL) }
+            +RagiumBlocks.UNIVERSAL_CHEST.toStack()
+        }.save(exporter)
 
         for (color: HTDefaultColor in HTDefaultColor.entries) {
-            HTShapelessRecipeBuilder.create(output) {
-                ingredients += itemCreator.create(RagiumBlocks.UNIVERSAL_CHEST)
-                ingredients += itemCreator.create(color.dyesTag)
-                resultStack = createItemStack(RagiumBlocks.UNIVERSAL_CHEST, HCDataComponents.COLOR, color)
+            HTShapelessRecipeBuilder.create {
+                ingredient { +RagiumBlocks.UNIVERSAL_CHEST }
+                ingredient { +color.dyesTag }
+                +createItemStack(RagiumBlocks.UNIVERSAL_CHEST, HCDataComponents.COLOR, color)
                 recipeId prefix "${color.serializedName}_"
-            }
+            }.save(exporter)
         }
     }
 
-    @JvmStatic
     private fun variableStorage(
-        block: HTDeferredBlockAndItem<*, *>,
+        block: HTSimpleItemLike,
         top: HTMaterialLike,
         core: TagKey<Item>,
         largeCore: TagKey<Item> = core,
     ) {
         // Shaped
-        val defaultPart: Ingredient = materialManager.getOrEmpty(top).getDefaultPart(top)?.let(itemCreator::create) ?: return
-        HTShapedRecipeBuilder.create(output) {
+        val defaultPart: TagKey<Item> = materialManager.getOrEmpty(top).getDefaultPart(top) ?: return
+        HTShapedRecipeBuilder.create {
             crossLayered()
-            define('A') { itemCreator.create(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) }
-            define('B') { defaultPart }
-            define('C') { itemCreator.create(Tags.Items.GLASS_BLOCKS) }
-            define('D') { itemCreator.create(core) }
-            resultStack = block.toStack()
-        }
+            define('A') { +tag(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) }
+            define('B') { +defaultPart }
+            define('C') { +Tags.Items.GLASS_BLOCKS }
+            define('D') { +core }
+            +block.toStack()
+        }.save(exporter)
         // x10 Capacity
-        HTShapedRecipeBuilder.create(output) {
+        HTShapedRecipeBuilder.create {
             crossLayered()
-            define('A') { itemCreator.create(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.RAGI_ALLOY) }
-            define('B') { itemCreator.create(CommonTagPrefixes.STORAGE_BLOCK, top) }
-            define('C') { itemCreator.create(Tags.Items.GLASS_BLOCKS) }
-            define('D') { itemCreator.create(largeCore) }
-            resultStack = createItemStack(block, RagiumDataComponents.CAPACITY_SCALE, 10)
+            define('A') { +tag(CommonTagPrefixes.STORAGE_BLOCK, RagiumMaterialKeys.RAGI_ALLOY) }
+            define('B') { +tag(CommonTagPrefixes.STORAGE_BLOCK, top) }
+            define('C') { +Tags.Items.GLASS_BLOCKS }
+            define('D') { +largeCore }
+            +createItemStack(block, RagiumDataComponents.CAPACITY_SCALE, 10)
             recipeId prefix "larger_"
-        }
+        }.save(exporter)
     }
 
     //    Other    //
 
-    @JvmStatic
     private fun lootTickets() {
-        HTShapedRecipeBuilder.create(output) {
+        HTShapedRecipeBuilder.create {
             cross8()
-            define('A') { itemCreator.create(RagiumItems.RAGI_MATTER) }
-            define('B') { itemCreator.create(Tags.Items.DYES_RED) }
-            define('C') { itemCreator.create(Items.PAPER) }
-            resultStack = RagiumItems.RAGI_TICKET.toStack(4)
-            category = CraftingBookCategory.EQUIPMENT
-        }
+            define('A') { +RagiumItems.RAGI_MATTER }
+            define('B') { +Tags.Items.DYES_RED }
+            define('C') { +Items.PAPER }
+            +RagiumItems.RAGI_TICKET.toStack(4)
+            category = RecipeCategory.TOOLS
+        }.save(exporter)
 
         // End City
         addLootTicket(HTDefaultLootTickets.END_CITY) {
-            it += itemCreator.create(Items.PURPUR_BLOCK)
-            it += itemCreator.create(Items.SHULKER_SHELL)
+            ingredient { +Items.PURPUR_BLOCK }
+            ingredient { +Items.SHULKER_SHELL }
         }
         // Simple Dungeon
         addLootTicket(HTDefaultLootTickets.DUNGEON) {
-            it += itemCreator.create(Tags.Items.COBBLESTONES_MOSSY)
-            it += itemCreator.create(Items.ROTTEN_FLESH)
+            ingredient { +Tags.Items.COBBLESTONES_MOSSY }
+            ingredient { +Items.ROTTEN_FLESH }
         }
         // Mineshaft
         addLootTicket(HTDefaultLootTickets.MINESHAFT) {
-            it += itemCreator.create(ItemTags.PLANKS)
-            it += itemCreator.create(ItemTags.RAILS)
+            ingredient { +ItemTags.PLANKS }
+            ingredient { +ItemTags.RAILS }
         }
         // Nether Fortress
         addLootTicket(HTDefaultLootTickets.NETHER_FORTRESS) {
-            it += itemCreator.create(Items.NETHER_BRICKS)
-            it += itemCreator.create(Tags.Items.CROPS_NETHER_WART)
+            ingredient { +Items.NETHER_BRICKS }
+            ingredient { +Tags.Items.CROPS_NETHER_WART }
         }
 
         // Desert Pyramid
         addLootTicket(HTDefaultLootTickets.DESERT_PYRAMID) {
-            it += itemCreator.create(Tags.Items.SANDSTONE_UNCOLORED_BLOCKS)
-            it += itemCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD)
+            ingredient { +Tags.Items.SANDSTONE_UNCOLORED_BLOCKS }
+            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD) }
         }
         // Jungle Temple
         addLootTicket(HTDefaultLootTickets.TEMPLE) {
-            it += itemCreator.create(Tags.Items.COBBLESTONES_MOSSY)
-            it += itemCreator.create(Items.VINE)
+            ingredient { +Tags.Items.COBBLESTONES_MOSSY }
+            ingredient { +Items.VINE }
         }
         // Igloo Chest
         addLootTicket(HTDefaultLootTickets.IGLOO) {
-            it += itemCreator.create(Items.SNOW_BLOCK)
-            it += itemCreator.create(ItemTags.BEDS)
+            ingredient { +Items.SNOW_BLOCK }
+            ingredient { +ItemTags.BEDS }
         }
         // Mansion
         addLootTicket(HTDefaultLootTickets.MANSION) {
-            it += itemCreator.create(Items.DARK_OAK_PLANKS)
-            it += itemCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.EMERALD)
+            ingredient { +Items.DARK_OAK_PLANKS }
+            ingredient { +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.EMERALD) }
         }
 
         // Buried Treasure
         addLootTicket(HTDefaultLootTickets.BURIED_TREASURE) {
-            it += itemCreator.create(Tags.Items.SANDS_COLORLESS)
-            it += itemCreator.create(Items.PUFFERFISH)
+            ingredient { +Tags.Items.SANDS_COLORLESS }
+            ingredient { +Items.PUFFERFISH }
         }
         // Shipwreck
         addLootTicket(HTDefaultLootTickets.SHIPWRECK) {
-            it += itemCreator.create(Tags.Items.CHESTS_WOODEN)
-            it += itemCreator.create(Items.KELP)
+            ingredient { +Tags.Items.CHESTS_WOODEN }
+            ingredient { +Items.KELP }
         }
         // Bastion Remnant
         addLootTicket(HTDefaultLootTickets.BASTION_REMNANT) {
-            it += itemCreator.create(Items.BLACKSTONE)
-            it += itemCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD)
+            ingredient { +Items.BLACKSTONE }
+            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.GOLD) }
         }
         // Ancient City
         addLootTicket(HTDefaultLootTickets.ANCIENT_CITY) {
-            it += itemCreator.create(Items.DEEPSLATE_TILES)
-            it += itemCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO)
+            ingredient { +Items.DEEPSLATE_TILES }
+            ingredient { +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO) }
         }
         // Ruined Portal
         addLootTicket(HTDefaultLootTickets.RUINED_PORTAL) {
-            it += itemCreator.create(Tags.Items.OBSIDIANS_NORMAL)
-            it += itemCreator.create(Tags.Items.CROPS_NETHER_WART)
+            ingredient { +Tags.Items.OBSIDIANS_NORMAL }
+            ingredient { +Tags.Items.CROPS_NETHER_WART }
         }
     }
 
-    @JvmStatic
-    private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, action: (MutableList<Ingredient>) -> Unit) {
-        HTShapelessRecipeBuilder.create(output) {
-            ingredients += itemCreator.create(RagiumItems.RAGI_TICKET)
-            action(ingredients)
-            resultStack = HTDefaultLootTickets.getLootTicket(lootTicket)
-            category = CraftingBookCategory.EQUIPMENT
-            recipeId suffix "/${lootTicket.name.lowercase()}"
+    private inline fun addLootTicket(lootTicket: HTDefaultLootTickets, builderAction: HTShapelessRecipeBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
         }
+        HTShapelessRecipeBuilder.create {
+            ingredient { +RagiumItems.RAGI_TICKET }
+            builderAction()
+            +HTDefaultLootTickets.getLootTicket(lootTicket)
+            recipeId suffix "/${lootTicket.name.lowercase()}"
+            category = RecipeCategory.TOOLS
+        }.save(exporter)
     }
+
+    override fun getName(): String = "Utilities Recipes"
 }

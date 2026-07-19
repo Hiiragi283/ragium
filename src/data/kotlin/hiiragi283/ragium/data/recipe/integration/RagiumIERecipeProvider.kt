@@ -4,8 +4,9 @@ import blusunrize.immersiveengineering.api.IETags
 import blusunrize.immersiveengineering.common.register.IEBlocks
 import blusunrize.immersiveengineering.common.register.IEFluids
 import blusunrize.immersiveengineering.common.register.IEItems
-import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.material.part.CommonParts
+import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.common.integration.HCIConstants
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -22,70 +23,137 @@ import hiiragi283.ragium.common.data.recipe.HTMixingRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.HTRefiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.setup.RagiumFluids
+import java.util.concurrent.CompletableFuture
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.neoforge.common.Tags
 
-data object RagiumIERecipeProvider : HTSubRecipeProvider.Integration(RagiumAPI.MOD_ID, HCIConstants.IMMERSIVE) {
-    override fun buildRecipeInternal() {
+class RagiumIERecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider.Integration(packOutput, future, RagiumAPI.MOD_ID, HCIConstants.IMMERSIVE) {
+    override fun buildRecipes() {
         // Insulating Glass
-        HTCombiningRecipeBuilder.alloying(output) {
-            result = resultCreator.create(IEBlocks.StoneDecoration.INSULATING_GLASS, 2)
-            ingredients += inputCreator.create(Tags.Items.GLASS_BLOCKS, 2)
-            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.IRON)
-        }
+        HTCombiningRecipeBuilder.alloying {
+            result {
+                +IEBlocks.StoneDecoration.INSULATING_GLASS
+                count = 2
+            }
+            ingredient {
+                +Tags.Items.GLASS_BLOCKS
+                count = 2
+            }
+            ingredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.IRON) }
+            condition { +condition }
+        }.save(exporter)
         // Duroplast
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(IETags.fluidResin, 4000)
-            catalyst = HTBluePrintIngredient(0).toVanilla()
-            result = resultCreator.create(IEBlocks.StoneDecoration.DUROPLAST)
-        }
-        HTFreezingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(IETags.fluidResin)
-            catalyst = HTBluePrintIngredient(1).toVanilla()
-            result = resultCreator.create(IEItems.Ingredients.DUROPLAST_PLATE)
-        }
+        HTFreezingRecipeBuilder.create {
+            ingredient {
+                +IETags.fluidResin
+                amount = 4000
+            }
+            catalyst { +HTBluePrintIngredient(0) }
+            result { +IEBlocks.StoneDecoration.DUROPLAST }
+            condition { +condition }
+        }.save(exporter)
+        HTFreezingRecipeBuilder.create {
+            ingredient { +IETags.fluidResin }
+            catalyst { +HTBluePrintIngredient(1) }
+            result { +IEItems.Ingredients.DUROPLAST_PLATE }
+            condition { +condition }
+        }.save(exporter)
         // HOP Graphite
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.COAL_COKE, 8)
-            result = resultCreator.material(CommonParts.DUST, HCIntegrationMaterialKeys.HOP_GRAPHITE)
-        }
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, HCIntegrationMaterialKeys.HOP_GRAPHITE)
-            fluidIngredient = inputCreator.create(RagiumFluids.CREOSOTE, 250)
-            result = resultCreator.create(IEItems.Ingredients.PLATE_HOP_GRAPHITE)
-        }
+        RagiumRecipeBuilder.compressing {
+            ingredient {
+                +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.COAL_COKE)
+                count = 8
+            }
+            +HTItemResult.MaterialPart(CommonParts.DUST, HCIntegrationMaterialKeys.HOP_GRAPHITE)
+            condition { +condition }
+        }.save(exporter)
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +tag(CommonTagPrefixes.DUST, HCIntegrationMaterialKeys.HOP_GRAPHITE) }
+            fluidIngredient {
+                +RagiumFluids.CREOSOTE
+                amount = 250
+            }
+            result { +IEItems.Ingredients.PLATE_HOP_GRAPHITE }
+            condition { +condition }
+        }.save(exporter)
         // TODO: 100 % Carbon Electrode
 
         // Redstone Acid
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
-            fluidIngredient = inputCreator.water(250)
-            result += resultCreator.create(IEFluids.REDSTONE_ACID.still, 250)
-        }
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE) }
+            fluidIngredient {
+                water()
+                amount = 250
+            }
+            fluidResult {
+                +IEFluids.REDSTONE_ACID.still
+                amount = 250
+            }
+            condition { +condition }
+        }.save(exporter)
         // Acetaldehyde
-        HTRefiningRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(IETags.fluidEthanol, 250)
-            catalyst = itemCreator.create(CommonTagPrefixes.PLATE, CommonMaterialKeys.SILVER)
-            fluidResults += resultCreator.create(IEFluids.ACETALDEHYDE.still, 250)
-        }
+        HTRefiningRecipeBuilder.create {
+            fluidIngredient {
+                +IETags.fluidEthanol
+                amount = 250
+            }
+            catalyst { +tag(CommonTagPrefixes.PLATE, CommonMaterialKeys.SILVER) }
+            fluidResult {
+                +IEFluids.ACETALDEHYDE.still
+                amount = 250
+            }
+            condition { +condition }
+        }.save(exporter)
 
         // Phenolic Resin
-        HTChemicalReactingRecipeBuilder.create(output) {
-            ingredients += inputCreator.create(IETags.fluidAcetaldehyde, 300)
-            ingredients += inputCreator.create(RagiumFluids.CREOSOTE, 200)
-            fluidResults += resultCreator.create(IEFluids.PHENOLIC_RESIN.still, 200)
-        }
+        HTChemicalReactingRecipeBuilder.create {
+            ingredient {
+                +IETags.fluidAcetaldehyde
+                amount = 300
+            }
+            ingredient {
+                +RagiumFluids.CREOSOTE
+                amount = 200
+            }
+            fluidResult {
+                +IEFluids.PHENOLIC_RESIN.still
+                amount = 200
+            }
+            condition { +condition }
+        }.save(exporter)
         // Biodiesel
-        HTChemicalReactingRecipeBuilder.create(output) {
-            ingredients += inputCreator.create(IETags.fluidPlantoil, 500)
-            ingredients += inputCreator.create(IETags.fluidEthanol, 500)
-            fluidResults += resultCreator.create(IEFluids.BIODIESEL.still)
-        }
+        HTChemicalReactingRecipeBuilder.create {
+            ingredient {
+                +IETags.fluidPlantoil
+                amount = 500
+            }
+            ingredient {
+                +IETags.fluidEthanol
+                amount = 500
+            }
+            fluidResult {
+                +IEFluids.BIODIESEL.still
+            }
+            condition { +condition }
+        }.save(exporter)
         // High-Cetane Diesel
-        HTChemicalReactingRecipeBuilder.create(output) {
-            ingredients += inputCreator.create(RagiumTags.Fluids.BIODIESEL, 950)
-            ingredients += inputCreator.create(HTPotionFluidIngredient(Potions.STRENGTH), 50)
-            fluidResults += resultCreator.create(IEFluids.HIGH_POWER_BIODIESEL.still)
-        }
+        HTChemicalReactingRecipeBuilder.create {
+            ingredient {
+                +RagiumTags.Fluids.BIODIESEL
+                amount = 950
+            }
+            ingredient {
+                +HTPotionFluidIngredient(Potions.STRENGTH)
+                amount = 50
+            }
+            fluidResult {
+                +IEFluids.HIGH_POWER_BIODIESEL.still
+            }
+            condition { +condition }
+        }.save(exporter)
     }
+
+    override fun getName(): String = "IE Recipes"
 }

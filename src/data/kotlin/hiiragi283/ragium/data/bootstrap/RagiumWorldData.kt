@@ -16,7 +16,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.BlockTags
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature
@@ -54,7 +53,7 @@ data object RagiumWorldData {
                         mapOf(
                             STONE_ORE to getBlockOrThrow(CommonParts.ORE, RagiumMaterialKeys.RAGINITE),
                             DEEPSLATE_ORE to getBlockOrThrow(CommonParts.ORE_DEEPSLATE, RagiumMaterialKeys.RAGINITE),
-                        ).map { (rule: TagMatchTest, block: HTMaterialContents.SimpleEntry<Block>) ->
+                        ).map { (rule: TagMatchTest, block: HTMaterialContents.BlockEntry) ->
                             OreConfiguration.target(rule, block.get().defaultBlockState())
                         },
                         10,
@@ -82,5 +81,5 @@ data object RagiumWorldData {
     }
 
     @JvmStatic
-    private fun getBlockOrThrow(part: HTPartLike, material: HTMaterialLike): HTMaterialContents.SimpleEntry<Block> = HiiragiCoreAccess.INSTANCE.registeredContents.blocks.getResult(part, material).getOrThrow()
+    private fun getBlockOrThrow(part: HTPartLike, material: HTMaterialLike): HTMaterialContents.BlockEntry = HiiragiCoreAccess.INSTANCE.registeredContents.blocks.getResult(part, material).getOrThrow()
 }

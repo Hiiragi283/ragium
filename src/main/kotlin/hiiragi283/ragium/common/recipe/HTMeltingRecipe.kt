@@ -33,5 +33,5 @@ class HTMeltingRecipe(ingredient: HTItemIngredient, result: HTFluidResult, progr
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MELTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MELTING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MELTING
 }

@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.refinery.desc"
+      "translate": "advancement.ragium.refinery.desc"
     },
     "icon": {
       "count": 1,
       "id": "ragium:refinery"
     },
     "title": {
-      "translate": "advancements.ragium.refinery.title"
+      "translate": "advancement.ragium.refinery.title"
     }
   },
   "requirements": [

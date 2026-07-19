@@ -63,5 +63,5 @@ class HTImplodingRecipe(val ingredient: HTItemIngredient, val result: HTItemResu
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.IMPLODING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.IMPLODING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.IMPLODING
 }

@@ -2,10 +2,9 @@ package hiiragi283.ragium.data.advancement
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.data.advancement.HTAdvancementKey
+import hiiragi283.core.api.data.advancement.AdvancementKey
 import hiiragi283.core.api.data.advancement.HTSubAdvancementProvider
 import hiiragi283.core.api.data.advancement.builder.HTAdvancementBuilder
-import hiiragi283.core.api.item.toStack
 import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.getResult
@@ -13,7 +12,7 @@ import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPartLike
 import hiiragi283.core.api.registry.HTDeferredBlockAndItem
 import hiiragi283.core.api.registry.HTDeferredItem
-import hiiragi283.core.api.resource.toId
+import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.HiiragiCoreTags
@@ -32,12 +31,12 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
     private fun getItem(part: HTPartLike, material: HTMaterialLike): HTMaterialContents.ItemEntry = HiiragiCoreAccess.INSTANCE.registeredContents.items.getResult(part, material).getOrThrow()
 
     @JvmStatic
-    private fun createSimple(key: HTAdvancementKey, parentKey: HTAdvancementKey, block: HTDeferredBlockAndItem<*, *>) {
+    private fun createSimple(key: AdvancementKey, parentKey: AdvancementKey, block: HTDeferredBlockAndItem<*, *>) {
         createSimple(key, parentKey, block.itemHolder)
     }
 
     @JvmStatic
-    private fun createSimple(key: HTAdvancementKey, parentKey: HTAdvancementKey, item: HTDeferredItem<*>) {
+    private fun createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: HTDeferredItem<*>) {
         HTAdvancementBuilder.create(output, key) {
             parent = parentKey
             display {
@@ -53,7 +52,7 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         HTAdvancementBuilder.create(output, RagiumAdvancementKeys.ROOT) {
             display {
                 iconStack = getItem(CommonParts.DUST, RagiumMaterialKeys.RAGINITE).toStack()
-                backGround = HTConst.MINECRAFT.toId(HTConst.TEXTURES, HTConst.BLOCK, "smooth_stone.png")
+                backGround = vanillaId(HTConst.TEXTURES, HTConst.BLOCK, "smooth_stone.png")
                 showToast = false
                 showChat = false
             }

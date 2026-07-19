@@ -1,6 +1,6 @@
 package hiiragi283.ragium.data.recipe
 
-import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -8,18 +8,20 @@ import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCEnchantments
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTEnchantingRecipeBuilder
+import java.util.concurrent.CompletableFuture
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.neoforged.neoforge.common.Tags
 
-object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
-    private val enchLookup: HolderLookup.RegistryLookup<Enchantment> by lazy { provider.lookupOrThrow(Registries.ENCHANTMENT) }
+class RagiumEnchantingRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+    private val enchLookup: HolderLookup.RegistryLookup<Enchantment> by lazy { registries.lookupOrThrow(Registries.ENCHANTMENT) }
 
-    override fun buildRecipeInternal() {
+    override fun buildRecipes() {
         armor()
         melee()
         tool()
@@ -29,203 +31,294 @@ object RagiumEnchantingRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD
         crossBow()
         mace()
 
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Tags.Items.PUMPKINS_CARVED)
-            enchantment = enchLookup.getOrThrow(Enchantments.BINDING_CURSE)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Tags.Items.COBBLESTONES)
-            enchantment = enchLookup.getOrThrow(Enchantments.VANISHING_CURSE)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Tags.Items.NETHER_STARS)
-            enchantment = enchLookup.getOrThrow(Enchantments.MENDING)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient { +Tags.Items.PUMPKINS_CARVED }
+            +enchLookup.getOrThrow(Enchantments.BINDING_CURSE)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient { +Tags.Items.COBBLESTONES }
+            +enchLookup.getOrThrow(Enchantments.VANISHING_CURSE)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient { +Tags.Items.NETHER_STARS }
+            +enchLookup.getOrThrow(Enchantments.MENDING)
+        }.save(exporter)
 
         hiiragiCore()
     }
 
-    @JvmStatic
     private fun armor() {
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.PROTECTION)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.MAGMA_CREAM, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.FIRE_PROTECTION)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Tags.Items.FEATHERS, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.FEATHER_FALLING)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.PROJECTILE_PROTECTION)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.PROTECTION)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.MAGMA_CREAM
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.FIRE_PROTECTION)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Tags.Items.FEATHERS
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.FEATHER_FALLING)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.PROJECTILE_PROTECTION)
+        }.save(exporter)
 
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.PUFFERFISH, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.RESPIRATION)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.TROPICAL_FISH, 16)
-            enchantment = enchLookup.getOrThrow(Enchantments.AQUA_AFFINITY)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.PUFFERFISH
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.RESPIRATION)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.TROPICAL_FISH
+                count = 16
+            }
+            +enchLookup.getOrThrow(Enchantments.AQUA_AFFINITY)
+        }.save(exporter)
 
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Tags.Items.CROPS_CACTUS)
-            enchantment = enchLookup.getOrThrow(Enchantments.THORNS)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient { +Tags.Items.CROPS_CACTUS }
+            +enchLookup.getOrThrow(Enchantments.THORNS)
+        }.save(exporter)
 
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(HiiragiCoreTags.Items.PLASTICS, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.DEPTH_STRIDER)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.PACKED_ICE, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.FROST_WALKER)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +HiiragiCoreTags.Items.PLASTICS
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.DEPTH_STRIDER)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.PACKED_ICE
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.FROST_WALKER)
+        }.save(exporter)
 
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(ItemTags.SOUL_FIRE_BASE_BLOCKS, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.SOUL_SPEED)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.ECHO, 16)
-            enchantment = enchLookup.getOrThrow(Enchantments.SWIFT_SNEAK)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +ItemTags.SOUL_FIRE_BASE_BLOCKS
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.SOUL_SPEED)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.ECHO)
+                count = 16
+            }
+            +enchLookup.getOrThrow(Enchantments.SWIFT_SNEAK)
+        }.save(exporter)
     }
 
-    @JvmStatic
     private fun melee() {
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.QUARTZ, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.SHARPNESS)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SALT, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.SMITE)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.BANE_OF_ARTHROPODS)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.PISTON, 16)
-            enchantment = enchLookup.getOrThrow(Enchantments.KNOCKBACK)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.BLAZE_POWDER, 32)
-            enchantment = enchLookup.getOrThrow(Enchantments.FIRE_ASPECT)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.EMERALD, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.LOOTING)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.PLATE, VanillaMaterialKeys.IRON, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.SWEEPING_EDGE)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.QUARTZ)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.SHARPNESS)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.SALT)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.SMITE)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.BANE_OF_ARTHROPODS)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.PISTON
+                count = 16
+            }
+            +enchLookup.getOrThrow(Enchantments.KNOCKBACK)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.BLAZE_POWDER
+                count = 32
+            }
+            +enchLookup.getOrThrow(Enchantments.FIRE_ASPECT)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.EMERALD)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.LOOTING)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.PLATE, VanillaMaterialKeys.IRON)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.SWEEPING_EDGE)
+        }.save(exporter)
     }
 
-    @JvmStatic
     private fun tool() {
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.EFFICIENCY)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Tags.Items.STRINGS, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.SILK_TOUCH)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Tags.Items.OBSIDIANS, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.UNBREAKING)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.LAPIS, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.FORTUNE)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.REDSTONE)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.EFFICIENCY)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Tags.Items.STRINGS
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.SILK_TOUCH)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Tags.Items.OBSIDIANS
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.UNBREAKING)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.LAPIS)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.FORTUNE)
+        }.save(exporter)
     }
 
-    @JvmStatic
     private fun bow() {
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.AMETHYST, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.POWER)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.STICKY_PISTON, 16)
-            enchantment = enchLookup.getOrThrow(Enchantments.PUNCH)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Tags.Items.RODS_BLAZE, 16)
-            enchantment = enchLookup.getOrThrow(Enchantments.FLAME)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.INGOT, CommonMaterialKeys.IRIDIUM)
-            enchantment = enchLookup.getOrThrow(Enchantments.INFINITY)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.AMETHYST)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.POWER)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.STICKY_PISTON
+                count = 16
+            }
+            +enchLookup.getOrThrow(Enchantments.PUNCH)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Tags.Items.RODS_BLAZE
+                count = 16
+            }
+            +enchLookup.getOrThrow(Enchantments.FLAME)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.IRIDIUM)
+            }
+            +enchLookup.getOrThrow(Enchantments.INFINITY)
+        }.save(exporter)
     }
 
-    @JvmStatic
     private fun fishingRod() {
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.PRISMARINE_SHARD, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.LUCK_OF_THE_SEA)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.PRISMARINE, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.LURE)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.PRISMARINE_SHARD
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.LUCK_OF_THE_SEA)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.PRISMARINE)
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.LURE)
+        }.save(exporter)
     }
 
-    @JvmStatic
     private fun trident() {
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.LEAD, 64)
-            enchantment = enchLookup.getOrThrow(Enchantments.LOYALTY)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.NAUTILUS_SHELL, 32)
-            enchantment = enchLookup.getOrThrow(Enchantments.IMPALING)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.HEART_OF_THE_SEA)
-            enchantment = enchLookup.getOrThrow(Enchantments.RIPTIDE)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.LIGHTNING_ROD, 16)
-            enchantment = enchLookup.getOrThrow(Enchantments.CHANNELING)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.LEAD
+                count = 64
+            }
+            +enchLookup.getOrThrow(Enchantments.LOYALTY)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.NAUTILUS_SHELL
+                count = 32
+            }
+            +enchLookup.getOrThrow(Enchantments.IMPALING)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient { +Items.HEART_OF_THE_SEA }
+            +enchLookup.getOrThrow(Enchantments.RIPTIDE)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +Items.LIGHTNING_ROD
+                count = 16
+            }
+            +enchLookup.getOrThrow(Enchantments.CHANNELING)
+        }.save(exporter)
     }
 
-    @JvmStatic
     private fun crossBow() {}
 
-    @JvmStatic
     private fun mace() {}
 
-    @JvmStatic
     private fun hiiragiCore() {
         // Sword
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(Items.OMINOUS_BOTTLE)
-            enchantment = enchLookup.getOrThrow(HCEnchantments.HAMMER_OF_JUSTICE)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO, 64)
-            enchantment = enchLookup.getOrThrow(HCEnchantments.NOISE_CANCELING)
-        }
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.IRIDIUM, 16)
-            enchantment = enchLookup.getOrThrow(HCEnchantments.PURIFICATION)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient { +Items.OMINOUS_BOTTLE }
+            +enchLookup.getOrThrow(HCEnchantments.HAMMER_OF_JUSTICE)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.GEM, VanillaMaterialKeys.ECHO)
+                count = 64
+            }
+            +enchLookup.getOrThrow(HCEnchantments.NOISE_CANCELING)
+        }.save(exporter)
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.IRIDIUM)
+                count = 16
+            }
+            +enchLookup.getOrThrow(HCEnchantments.PURIFICATION)
+        }.save(exporter)
         // Armor
-        HTEnchantingRecipeBuilder.create(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.ECHO, 16)
-            enchantment = enchLookup.getOrThrow(HCEnchantments.SONIC_PROTECTION)
-        }
+        HTEnchantingRecipeBuilder.create {
+            ingredient {
+                +tag(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.ECHO)
+                count = 16
+            }
+            +enchLookup.getOrThrow(HCEnchantments.SONIC_PROTECTION)
+        }.save(exporter)
     }
+
+    override fun getName(): String = "Enchanting Recipes"
 }

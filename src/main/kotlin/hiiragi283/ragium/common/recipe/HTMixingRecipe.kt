@@ -79,7 +79,7 @@ class HTMixingRecipe(
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING
 
     @JvmRecord
     data class Input(val firstItem: ItemStack, val secondItem: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {

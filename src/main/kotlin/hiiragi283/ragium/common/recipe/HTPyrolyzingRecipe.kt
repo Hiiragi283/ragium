@@ -22,5 +22,5 @@ class HTPyrolyzingRecipe(
     HTSerializableRecipe<HTItemAndFluidRecipeInput> {
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PYROLYZING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.PYROLYZING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.PYROLYZING
 }

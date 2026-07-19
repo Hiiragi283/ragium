@@ -48,5 +48,5 @@ class HTFreezingRecipe(
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.FREEZING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.FREEZING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.FREEZING
 }

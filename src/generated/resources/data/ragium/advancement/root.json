@@ -15,7 +15,7 @@
     "announce_to_chat": false,
     "background": "minecraft:textures/block/smooth_stone.png",
     "description": {
-      "translate": "advancements.ragium.root.desc"
+      "translate": "advancement.ragium.root.desc"
     },
     "icon": {
       "count": 1,
@@ -23,7 +23,7 @@
     },
     "show_toast": false,
     "title": {
-      "translate": "advancements.ragium.root.title"
+      "translate": "advancement.ragium.root.title"
     }
   },
   "requirements": [

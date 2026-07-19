@@ -49,5 +49,5 @@ class RTPlantingRecipe(
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PLANTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.PLANTING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.PLANTING
 }

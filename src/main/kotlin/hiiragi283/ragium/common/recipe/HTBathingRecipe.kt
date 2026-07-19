@@ -27,5 +27,5 @@ class HTBathingRecipe(
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.BATHING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.BATHING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.BATHING
 }

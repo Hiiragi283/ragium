@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item.block
 
-import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.item.HTDescriptionBlockItem
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -28,10 +29,10 @@ class HTUniversalChestBlockItem(block: HTUniversalChestBlock, properties: Proper
 
     //    HTSubCreativeTabContents    //
 
-    override fun addItems(baseItem: Holder<Item>, context: HTSubCreativeTabContents.Context) {
+    override fun addItems(baseItem: Holder<Item>, parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output) {
         HTDefaultColor.entries
             .map { color: HTDefaultColor -> createItemStack(baseItem.value(), HCDataComponents.COLOR, color) }
-            .forEach(context)
+            .forEach(output::accept)
     }
 
     override fun shouldAddDefault(): Boolean = false

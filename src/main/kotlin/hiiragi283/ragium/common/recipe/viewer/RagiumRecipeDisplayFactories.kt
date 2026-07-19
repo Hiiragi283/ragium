@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.recipe.viewer
 
-import hiiragi283.core.api.data.recipe.HTIngredientCreator
+import hiiragi283.core.api.data.recipe.IngredientBuilder
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
@@ -89,7 +89,12 @@ data object RagiumRecipeDisplayFactories {
                 id.withSuffix("/${tagKey.location.path.split("/", limit = 2)[1]}"),
                 HTRecipeContents.create {
                     addInput(recipe.ingredient)
-                    addInput(HTIngredientCreator.create(tagKey, amount))
+                    addInput(
+                        IngredientBuilder().apply {
+                            +tagKey
+                            count = amount
+                        }.buildSized(),
+                    )
                     addOutput(recipe.result)
                 },
                 recipe.progressData,

@@ -22,5 +22,5 @@ class HTCuttingRecipe(ingredient: HTItemIngredient, results: List<HTChancedItemR
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CUTTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CUTTING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CUTTING
 }

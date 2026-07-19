@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.tag
 
 import hiiragi283.core.api.data.tag.HTItemTagsProvider
-import hiiragi283.core.api.data.tag.HTTagsProvider
 import hiiragi283.core.api.registry.HTFluidContent
+import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.ragium.api.RagiumAPI
@@ -21,6 +21,7 @@ import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 import mekanism.common.tags.MekanismTags
+import net.minecraft.tags.TagKey
 
 class RagiumItemTagsProvider(
     fileHelper: ExistingFileHelper,
@@ -28,7 +29,11 @@ class RagiumItemTagsProvider(
     lookupProvider: CompletableFuture<HolderLookup.Provider>,
     blockTags: CompletableFuture<TagLookup<Block>>,
 ) : HTItemTagsProvider(fileHelper, output, lookupProvider, RagiumAPI.MOD_ID, blockTags) {
-    override fun addTagsInternal(factory: HTTagsProvider.BuilderFactory<Item>) {
+    override fun createEmptyTags(registries: HolderLookup.Provider, consumer: (TagKey<Item>) -> Unit) {
+        RagiumTags.Items.EXPLOSIVES.prepare(consumer)
+    }
+
+    override fun appendTags(registries: HolderLookup.Provider) {
         // Copy
         copy(RagiumTags.Blocks.DEVICES, RagiumTags.Items.DEVICES)
         copy(RagiumTags.Blocks.GENERATORS, RagiumTags.Items.GENERATORS)
@@ -38,44 +43,37 @@ class RagiumItemTagsProvider(
         copy(RagiumTags.Blocks.STORAGES_CREATIVE, RagiumTags.Items.STORAGES_CREATIVE)
         // Buckets
         for (content: HTFluidContent in RagiumFluids.REGISTER.asSequence()) {
-            factory.addTags(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)
+            tags(Tags.Items.BUCKETS, content.bucketTag).add(content.bucketHolder)
         }
         // Explosives
-        RagiumTags.Items.EXPLOSIVES.apply(factory)
-        factory
-            .apply(RagiumTags.Items.EXPLOSIVES.basic)
+        RagiumTags.Items.EXPLOSIVES.apply(::builder)
+        builder(RagiumTags.Items.EXPLOSIVES.basic)
             .add(RagiumItems.DYNAMITE)
-            .addItem(Items.FIREWORK_ROCKET)
-        factory
-            .apply(RagiumTags.Items.EXPLOSIVES.advanced)
-            .addItem(Items.TNT)
-        factory
-            .apply(RagiumTags.Items.EXPLOSIVES.elite)
+            .add(Items.FIREWORK_ROCKET.toLike())
+        builder(RagiumTags.Items.EXPLOSIVES.advanced)
+            .add(Items.TNT.toLike())
+        builder(RagiumTags.Items.EXPLOSIVES.elite)
             .add(RagiumBlocks.INDUSTRIAL_TNT)
-            .addItem(Items.END_CRYSTAL)
+            .add(Items.END_CRYSTAL.toLike())
         // Foods
-        factory
-            .apply(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)
+        builder(Tags.Items.FOODS_EDIBLE_WHEN_PLACED)
             .add(RagiumBlocks.MEAT_BLOCK)
             .add(RagiumBlocks.COOKED_MEAT_BLOCK)
 
-        factory.addTags(Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN).add(RagiumItems.CANNED_COOKED_MEAT)
+        tags(Tags.Items.FOODS, RagiumTags.Items.FOODS_CAN).add(RagiumItems.CANNED_COOKED_MEAT)
 
-        factory.apply(Tags.Items.FOODS_RAW_MEAT).add(RagiumItems.MEAT_INGOT)
-        factory.apply(Tags.Items.FOODS_COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
+        builder(Tags.Items.FOODS_RAW_MEAT).add(RagiumItems.MEAT_INGOT)
+        builder(Tags.Items.FOODS_COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
 
-        factory.addMaterial(CommonTagPrefixes.DUST, RagiumMaterialKeys.MEAT).add(RagiumItems.MINCED_MEAT)
-        factory.addMaterial(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT).add(RagiumItems.MEAT_INGOT)
-        factory.addMaterial(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
+        tags(CommonTagPrefixes.DUST, RagiumMaterialKeys.MEAT).add(RagiumItems.MINCED_MEAT)
+        tags(CommonTagPrefixes.INGOT, RagiumMaterialKeys.MEAT).add(RagiumItems.MEAT_INGOT)
+        tags(CommonTagPrefixes.INGOT, RagiumMaterialKeys.COOKED_MEAT).add(RagiumItems.COOKED_MEAT_INGOT)
         // Others
-        factory
-            .apply(HiiragiCoreTags.Items.SILICON)
+        builder(HiiragiCoreTags.Items.SILICON)
             .add(RagiumItems.CRUDE_SILICON)
 
         // Integration
-        factory
-            .addTags(MekanismTags.Items.ENRICHED, RagiumTags.Items.ENRICHED_RAGINITE)
-            .add(RagiumMekItems.ENRICHED_RAGINITE)
+        tags(MekanismTags.Items.ENRICHED, RagiumTags.Items.ENRICHED_RAGINITE).add(RagiumMekItems.ENRICHED_RAGINITE)
     }
 
     private fun copy(blockTags: RagiumTags.TieredTags<Block>, itemTags: RagiumTags.TieredTags<Item>) {

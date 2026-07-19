@@ -2,38 +2,24 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.registry.HTDeferredItemRegister
 import hiiragi283.core.api.registry.HTSimpleDeferredItem
-import hiiragi283.core.api.text.HTTranslation
-import hiiragi283.core.common.capability.HTEnergyCapabilities
-import hiiragi283.core.common.capability.HTFluidCapabilities
-import hiiragi283.core.common.item.HTCreativeItem
-import hiiragi283.core.common.storage.energy.HTBasicItemEnergyHandler
-import hiiragi283.core.common.storage.energy.HTInfiniteEnergyHandler
-import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
-import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.common.item.endgame.HTCreativeItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.item.HTBatteryItem
 import hiiragi283.ragium.common.item.HTElectricIgniterItem
 import hiiragi283.ragium.common.item.HTLocationTicketItem
 import hiiragi283.ragium.common.item.HTLootTicketItem
-import hiiragi283.ragium.common.storge.fluid.HTInfiniteItemFluidTank
-import hiiragi283.ragium.common.storge.fluid.HTVoidItemFluidTank
-import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.world.food.Foods
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.ItemLike
 import net.neoforged.bus.api.IEventBus
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent
-import java.util.function.IntSupplier
 
 /**
  * @see hiiragi283.core.setup.HCItems
  */
-object RagiumItems {
+data object RagiumItems {
     @JvmField
     val REGISTER = HTDeferredItemRegister(RagiumAPI.MOD_ID)
 
@@ -42,7 +28,6 @@ object RagiumItems {
         REGISTER.register(eventBus)
 
         eventBus.addListener(::modifyComponents)
-        eventBus.addListener(::registerItemCapabilities)
     }
 
     //    Materials    //
@@ -150,42 +135,4 @@ object RagiumItems {
             event.modify(item) { builder: DataComponentPatch.Builder -> builder.set(type, value) }
         }
     }
-
-    @JvmStatic
-    private fun registerItemCapabilities(event: RegisterCapabilitiesEvent) {
-        // Fluid
-        HTFluidCapabilities.registerItemTank(
-            event,
-            { container: ItemStack -> HTBasicItemFluidTank.create(container, getCapacity(container, RagiumConfig.COMMON.tankCapacity)) },
-            RagiumBlocks.TANK,
-        )
-        HTFluidCapabilities.registerItemTank(event, ::HTVoidItemFluidTank, RagiumBlocks.VOID_TANK)
-        HTFluidCapabilities.registerItemTank(event, ::HTInfiniteItemFluidTank, RagiumBlocks.CREATIVE_TANK)
-
-        // Energy
-        HTEnergyCapabilities.registerItem(
-            event,
-            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, getCapacity(container, RagiumConfig.COMMON.batteryCapacity)) },
-            RagiumBlocks.BATTERY,
-        )
-        HTEnergyCapabilities.registerItem(event, { HTInfiniteEnergyHandler }, RagiumBlocks.CREATIVE_BATTERY)
-
-        HTEnergyCapabilities.registerItem(
-            event,
-            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, RagiumConfig.COMMON.electricIgniter.getCapacity()) },
-            ELECTRIC_IGNITER,
-        )
-        HTEnergyCapabilities.registerItem(
-            event,
-            { container: ItemStack -> HTBasicItemEnergyHandler.create(container, 8000) },
-            CRYSTAL_BATTERY,
-        )
-    }
-
-    @JvmStatic
-    private fun getCapacity(context: ItemStack, base: IntSupplier): Int = RagiumDataComponents.getCapacity(base, context.getOrDefault(RagiumDataComponents.CAPACITY_SCALE, 1))
-
-    //    Extensions    //
-
-    private fun Item.Properties.description(translation: HTTranslation): Item.Properties = this.component(HCDataComponents.DESCRIPTION, translation)
 }

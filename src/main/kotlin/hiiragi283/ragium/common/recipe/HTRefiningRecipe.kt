@@ -59,5 +59,5 @@ class HTRefiningRecipe(
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.REFINING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.REFINING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.REFINING
 }

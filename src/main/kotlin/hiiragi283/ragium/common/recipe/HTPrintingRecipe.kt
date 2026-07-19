@@ -40,5 +40,5 @@ class HTPrintingRecipe(
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PRINTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING
 }

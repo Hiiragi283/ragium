@@ -1,6 +1,6 @@
 package hiiragi283.ragium.client
 
-import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.event.HTRegisterWidgetRendererEvent
 import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
@@ -50,7 +50,7 @@ data object RagiumClient : HTClientMod() {
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
-        event.register(RagiumWidgetTypes.ENERGY_SLOT.get(), ::HTEnergySlotWidgetRenderer)
+        event.register(RagiumWidgetTypes.ENERGY_SLOT, ::HTEnergySlotWidgetRenderer)
     }
 
     override fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {

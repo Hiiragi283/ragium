@@ -7,9 +7,15 @@ import hiiragi283.core.api.integration.jei.HTJeiRecipeHelper.addLookupRecipes
 import hiiragi283.core.api.integration.jei.HTJeiWorkstationHelper
 import hiiragi283.core.api.integration.jei.HTSubtypeInterpreter
 import hiiragi283.core.api.item.createEnchantedBook
+import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
+import hiiragi283.core.api.recipe.base.HTItemAndFluidToItemRecipe
 import hiiragi283.core.api.recipe.base.HTItemOrFluidRecipe
+import hiiragi283.core.api.recipe.base.HTItemToFluidRecipe
+import hiiragi283.core.api.recipe.base.HTItemToItemRecipe
+import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.castRecipe
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
@@ -24,6 +30,7 @@ import hiiragi283.core.impl.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
+import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import hiiragi283.ragium.client.integration.jei.category.HTAlloyingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTAssemblingRecipeCategory
 import hiiragi283.ragium.client.integration.jei.category.HTChemicalReactingRecipeCategory
@@ -115,7 +122,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
 
         fun itemOrFluid(viewerType: HTRecipeViewerType<HTProgressRecipeDisplay>, lookup: HTRecipeLookup<HTItemOrFluidRecipe>) {
             addDisplayRecipes(registration, viewerType, lookup) {
-                it.castRecipe<HTBasicItemOrFluidRecipe>()?.let(RagiumRecipeDisplayFactories::itemOrFluid)
+                it.castRecipe<HTItemOrFluidRecipe, HTBasicItemOrFluidRecipe>()?.let(RagiumRecipeDisplayFactories::itemOrFluid)
             }
         }
 
@@ -127,20 +134,20 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeDisplayFactories::alloying,
         )
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.ASSEMBLING, RagiumRecipeLookups.ASSEMBLING) {
-            it.castRecipe<HTBasicAssemblingRecipe>()?.let(RagiumRecipeDisplayFactories::assembling)
+            it.castRecipe<HTDoubleItemToItemRecipe, HTBasicAssemblingRecipe>()?.let(RagiumRecipeDisplayFactories::assembling)
         }
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.COMPRESSING, RagiumRecipeLookups.COMPRESSING) {
-            it.castRecipe<HTBasicItemToItemRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)
+            it.castRecipe<HTItemToItemRecipe, HTBasicItemToItemRecipe>()?.let(HTRecipeDisplayFactories::itemToItem)
         }
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.CUTTING, RagiumRecipeLookups.CUTTING) {
-            it.castRecipe<HTBasicItemToMultiItemRecipe>()?.let(HTRecipeDisplayFactories::itemToMultiItem)
+            it.castRecipe<HTItemToMultiItemRecipe, HTBasicItemToMultiItemRecipe>()?.let(HTRecipeDisplayFactories::itemToMultiItem)
         }
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.PLANTING, RagiumRecipeLookups.PLANTING) {
-            it.castRecipe<RTPlantingRecipe>()?.let(RagiumRecipeDisplayFactories::planting)
+            it.castRecipe<HTPlantingRecipe, RTPlantingRecipe>()?.let(RagiumRecipeDisplayFactories::planting)
         }
         // Machine - Advanced
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.FREEZING, RagiumRecipeLookups.FREEZING) {
-            it.castRecipe<HTFreezingRecipe>()?.let(RagiumRecipeDisplayFactories::freezing)
+            it.castRecipe<HTItemAndFluidToItemRecipe, HTFreezingRecipe>()?.let(RagiumRecipeDisplayFactories::freezing)
         }
         addFlatDisplayRecipes(
             registration,
@@ -149,7 +156,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
             RagiumRecipeDisplayFactories::imploding,
         )
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.MELTING, RagiumRecipeLookups.MELTING) {
-            it.castRecipe<HTMeltingRecipe>()?.let(RagiumRecipeDisplayFactories::melting)
+            it.castRecipe<HTItemToFluidRecipe, HTMeltingRecipe>()?.let(RagiumRecipeDisplayFactories::melting)
         }
         itemOrFluid(RagiumRecipeViewerTypes.PYROLYZING, RagiumRecipeLookups.PYROLYZING)
         addDisplayRecipes(
@@ -166,7 +173,7 @@ class RagiumJeiPlugin : HTJeiPlugin(RagiumAPI.MOD_ID) {
         )
         // Machine - Elite
         addDisplayRecipes(registration, RagiumRecipeViewerTypes.BATHING, RagiumRecipeLookups.BATHING) {
-            it.castRecipe<HTBasicItemAndFluidToItemRecipe>()?.let(RagiumRecipeDisplayFactories::itemAndFluidToItem)
+            it.castRecipe<HTItemAndFluidToItemRecipe, HTBasicItemAndFluidToItemRecipe>()?.let(RagiumRecipeDisplayFactories::itemAndFluidToItem)
         }
         addDisplayRecipes(
             registration,

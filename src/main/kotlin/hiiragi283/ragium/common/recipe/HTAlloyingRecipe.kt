@@ -65,5 +65,5 @@ class HTAlloyingRecipe(
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ALLOYING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ALLOYING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ALLOYING
 }

@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.advanced_ragi_alloy.desc"
+      "translate": "advancement.ragium.advanced_ragi_alloy.desc"
     },
     "icon": {
       "count": 1,
       "id": "ragium:advanced_ragi_alloy_ingot"
     },
     "title": {
-      "translate": "advancements.ragium.advanced_ragi_alloy.title"
+      "translate": "advancement.ragium.advanced_ragi_alloy.title"
     }
   },
   "requirements": [

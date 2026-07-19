@@ -11,5 +11,5 @@ class HTEnergySlotWidget(
     y: Int,
 ) : HTAbstractWidget(x, y, 18, 18),
     HTAmountView by view {
-    override fun getType(): HTWidgetType<HTEnergySlotWidget> = RagiumWidgetTypes.ENERGY_SLOT.get()
+    override fun getType(): HTWidgetType<HTEnergySlotWidget> = RagiumWidgetTypes.ENERGY_SLOT
 }

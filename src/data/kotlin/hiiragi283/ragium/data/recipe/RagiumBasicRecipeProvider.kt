@@ -1,18 +1,21 @@
 package hiiragi283.ragium.data.recipe
 
-import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.data.recipe.HTCombiningRecipeBuilder
 import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
+import java.util.concurrent.CompletableFuture
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.common.Tags
 
-object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
-    override fun buildRecipeInternal() {
+class RagiumBasicRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+    override fun buildRecipes() {
         assembling()
         compressing()
         crushing()
@@ -21,170 +24,238 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
     //    Assembling    //
 
-    @JvmStatic
     private fun assembling() {
         // Blackstone + Gold -> Gilded Blackstone
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.GILDED_BLACKSTONE)
-            ingredients += inputCreator.create(Items.BLACKSTONE)
-            ingredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.GOLD, 8)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.GILDED_BLACKSTONE }
+            ingredient { +Items.BLACKSTONE }
+            ingredient {
+                +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.GOLD)
+                count = 8
+            }
+        }.save(exporter)
         // Dirt + Leaves -> Podzol
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.PODZOL)
-            ingredients += inputCreator.create(Items.DIRT)
-            ingredients += inputCreator.create(ItemTags.LEAVES, 8)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.PODZOL }
+            ingredient { +Items.DIRT }
+            ingredient {
+                +ItemTags.LEAVES
+                count = 8
+            }
+        }.save(exporter)
         // Dirt + Mushroom -> Mycelium
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.MYCELIUM)
-            ingredients += inputCreator.create(Items.DIRT)
-            ingredients += inputCreator.create(Tags.Items.MUSHROOMS)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.MYCELIUM }
+            ingredient { +Items.DIRT }
+            ingredient { +Tags.Items.MUSHROOMS }
+        }.save(exporter)
         // Crimson Nylium
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.CRIMSON_NYLIUM)
-            ingredients += inputCreator.create(Tags.Items.NETHERRACKS)
-            ingredients += inputCreator.create(Items.CRIMSON_FUNGUS)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.CRIMSON_NYLIUM }
+            ingredient { +Tags.Items.NETHERRACKS }
+            ingredient { +Items.CRIMSON_FUNGUS }
+        }.save(exporter)
         // Warped Nylium
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.WARPED_NYLIUM)
-            ingredients += inputCreator.create(Tags.Items.NETHERRACKS)
-            ingredients += inputCreator.create(Items.WARPED_FUNGUS)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.WARPED_NYLIUM }
+            ingredient { +Tags.Items.NETHERRACKS }
+            ingredient { +Items.WARPED_FUNGUS }
+        }.save(exporter)
         // String + Sticky -> Cobweb
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.COBWEB)
-            ingredients += inputCreator.create(Tags.Items.STRINGS, 5)
-            ingredients += inputCreator.create(HiiragiCoreTags.Items.STICKY_BALLS)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.COBWEB }
+            ingredient {
+                +Tags.Items.STRINGS
+                count = 5
+            }
+            ingredient { +HiiragiCoreTags.Items.STICKY_BALLS }
+        }.save(exporter)
 
         // Iron Ingot + Iron Nugget -> Chain
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.CHAIN, 3)
-            ingredients += inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON)
-            ingredients += inputCreator.create(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.IRON, 3)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result {
+                +Items.CHAIN
+                count = 3
+            }
+            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
+            ingredient {
+                +tag(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.IRON)
+                count = 3
+            }
+        }.save(exporter)
         // Iron Ingot + Torch -> Lantern
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.LANTERN, 2)
-            ingredients += inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON)
-            ingredients += inputCreator.create(Items.TORCH)
-        }
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.SOUL_LANTERN, 2)
-            ingredients += inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON)
-            ingredients += inputCreator.create(Items.SOUL_TORCH)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result {
+                +Items.LANTERN
+                count = 2
+            }
+            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
+            ingredient { +Items.TORCH }
+        }.save(exporter)
+        HTCombiningRecipeBuilder.assembling {
+            result {
+                +Items.SOUL_LANTERN
+                count = 2
+            }
+            ingredient { +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON) }
+            ingredient { +Items.SOUL_TORCH }
+        }.save(exporter)
         // Iron Ingot + Chest -> Hopper
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.HOPPER)
-            ingredients += inputCreator.create(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON, 5)
-            ingredients += inputCreator.create(Tags.Items.CHESTS_WOODEN)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.HOPPER }
+            ingredient {
+                +tag(CommonTagPrefixes.INGOT, VanillaMaterialKeys.IRON)
+                count = 5
+            }
+            ingredient { +Tags.Items.CHESTS_WOODEN }
+        }.save(exporter)
         // Dropper + Bow -> Dispenser
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.DISPENSER)
-            ingredients += inputCreator.create(Items.DROPPER)
-            ingredients += inputCreator.create(Tags.Items.TOOLS_BOW)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.DISPENSER }
+            ingredient { +Items.DROPPER }
+            ingredient { +Tags.Items.TOOLS_BOW }
+        }.save(exporter)
         // TNT
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.TNT, 2)
-            ingredients += inputCreator.create(Tags.Items.SANDS, 4)
-            ingredients += inputCreator.create(Tags.Items.GUNPOWDERS, 5)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result {
+                +Items.TNT
+                count = 2
+            }
+            ingredient {
+                +Tags.Items.SANDS
+                count = 4
+            }
+            ingredient {
+                +Tags.Items.GUNPOWDERS
+                count = 5
+            }
+        }.save(exporter)
 
         // Leather + Iron Nugget -> Saddle
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.SADDLE)
-            ingredients += inputCreator.create(Tags.Items.LEATHERS, 5)
-            ingredients += inputCreator.create(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.IRON, 2)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.SADDLE }
+            ingredient {
+                +Tags.Items.LEATHERS
+                count = 5
+            }
+            ingredient {
+                +tag(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.IRON)
+                count = 2
+            }
+        }.save(exporter)
         // Head
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.ZOMBIE_HEAD)
-            ingredients += inputCreator.create(Items.SKELETON_SKULL)
-            ingredients += inputCreator.create(Items.ROTTEN_FLESH, 8)
-        }
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.CREEPER_HEAD)
-            ingredients += inputCreator.create(Items.SKELETON_SKULL)
-            ingredients += inputCreator.create(Tags.Items.GUNPOWDERS, 8)
-        }
-        HTCombiningRecipeBuilder.assembling(output) {
-            result = resultCreator.create(Items.PIGLIN_HEAD)
-            ingredients += inputCreator.create(Items.SKELETON_SKULL)
-            ingredients += inputCreator.create(Items.PORKCHOP, 8)
-        }
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.ZOMBIE_HEAD }
+            ingredient { +Items.SKELETON_SKULL }
+            ingredient {
+                +Items.ROTTEN_FLESH
+                count = 8
+            }
+        }.save(exporter)
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.CREEPER_HEAD }
+            ingredient { +Items.SKELETON_SKULL }
+            ingredient {
+                +Tags.Items.GUNPOWDERS
+                count = 8
+            }
+        }.save(exporter)
+        HTCombiningRecipeBuilder.assembling {
+            result { +Items.PIGLIN_HEAD }
+            ingredient { +Items.SKELETON_SKULL }
+            ingredient {
+                +Items.PORKCHOP
+                count = 8
+            }
+        }.save(exporter)
     }
 
     //    Compressing    //
 
-    @JvmStatic
     private fun compressing() {
         // Snow Block -> Ice -> Packed Ice -> Blue Ice
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(Items.SNOW_BLOCK, 4)
-            result = resultCreator.create(Items.ICE)
-        }
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(Items.ICE, 6)
-            result = resultCreator.create(Items.PACKED_ICE)
-        }
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(Items.PACKED_ICE, 6)
-            result = resultCreator.create(Items.BLUE_ICE)
-        }
+        RagiumRecipeBuilder.compressing {
+            ingredient {
+                +Items.SNOW_BLOCK
+                count = 4
+            }
+            result { +Items.ICE }
+        }.save(exporter)
+        RagiumRecipeBuilder.compressing {
+            ingredient {
+                +Items.ICE
+                count = 6
+            }
+            result { +Items.PACKED_ICE }
+        }.save(exporter)
+        RagiumRecipeBuilder.compressing {
+            ingredient {
+                +Items.PACKED_ICE
+                count = 6
+            }
+            result { +Items.BLUE_ICE }
+        }.save(exporter)
 
         // Snow -> Snow Block
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(Items.SNOW, 8)
-            result = resultCreator.create(Items.SNOW_BLOCK)
-        }
+        RagiumRecipeBuilder.compressing {
+            ingredient {
+                +Items.SNOW
+                count = 8
+            }
+            result { +Items.SNOW_BLOCK }
+        }.save(exporter)
         // Moss Carpet -> Moss
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(Items.MOSS_CARPET, 8)
-            result = resultCreator.create(Items.MOSS_BLOCK)
-        }
+        RagiumRecipeBuilder.compressing {
+            ingredient {
+                +Items.MOSS_CARPET
+                count = 8
+            }
+            result { +Items.MOSS_BLOCK }
+        }.save(exporter)
         // Sculk Vein -> Sculk
-        RagiumRecipeBuilder.compressing(output) {
-            ingredient = inputCreator.create(Items.SCULK_VEIN, 8)
-            result = resultCreator.create(Items.SCULK)
-        }
+        RagiumRecipeBuilder.compressing {
+            ingredient {
+                +Items.SCULK_VEIN
+                count = 8
+            }
+            result { +Items.SCULK }
+        }.save(exporter)
     }
 
     //    Crushing    //
 
-    @JvmStatic
     private fun crushing() {
     }
 
     //    Cutting    //
 
-    @JvmStatic
     private fun cutting() {
         // Sapling -> Stick
-        RagiumRecipeBuilder.cutting(output) {
-            ingredient = inputCreator.create(ItemTags.SAPLINGS)
-            results += resultCreator.create(Items.STICK)
+        RagiumRecipeBuilder.cutting {
+            ingredient { +ItemTags.SAPLINGS }
+            result { +Items.STICK }
             recipeId suffix "_from_saplings"
-        }
+        }.save(exporter)
         // Slab -> Stick
-        RagiumRecipeBuilder.cutting(output) {
-            ingredient = inputCreator.create(ItemTags.WOODEN_SLABS)
-            results += resultCreator.create(Items.STICK, 2)
+        RagiumRecipeBuilder.cutting {
+            ingredient { +ItemTags.WOODEN_SLABS }
+            result {
+                +Items.STICK
+                count = 2
+            }
             recipeId suffix "_from_wooden_slabs"
-        }
+        }.save(exporter)
 
         // Book -> Paper + Leather
-        RagiumRecipeBuilder.cutting(output) {
-            ingredient = inputCreator.create(Items.BOOK)
-            results += resultCreator.create(Items.PAPER, 3)
-            results += resultCreator.create(Items.LEATHER)
+        RagiumRecipeBuilder.cutting {
+            ingredient { +Items.BOOK }
+            result {
+                +Items.PAPER
+                count = 3
+            }
+            result { +Items.LEATHER }
             recipeId suffix "_from_book"
-        }
+        }.save(exporter)
     }
 
     //    Printing    //
@@ -223,4 +294,6 @@ object RagiumBasicRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
         // Writable Book -> Written Book
         save(id(RagiumConst.PRINTING, "book_cloning"), HTBookCloningRecipe)
     }*/
+
+    override fun getName(): String = "Basic Processing Recipes"
 }

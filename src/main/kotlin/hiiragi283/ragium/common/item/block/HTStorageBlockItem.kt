@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.item.block
 
-import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.item.HTDescriptionBlockItem
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.storage.HTStorageBlock

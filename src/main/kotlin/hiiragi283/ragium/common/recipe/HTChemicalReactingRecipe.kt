@@ -84,7 +84,7 @@ class HTChemicalReactingRecipe(
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CHEMICAL_REACTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CHEMICAL_REACTING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CHEMICAL_REACTING
 
     @JvmRecord
     data class Input(val catalyst: ItemStack, val firstFluid: FluidStack, val secondFluid: FluidStack) : HTFluidRecipeInput {

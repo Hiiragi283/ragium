@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.data.recipe.HTIngredientCreator
+import hiiragi283.core.api.data.recipe.FluidIngredientBuilder
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
@@ -12,6 +12,7 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
+import hiiragi283.core.api.registry.VanillaFluidContents
 import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.core.util.HTShapelessRecipeHelper
@@ -39,7 +40,10 @@ class HTWashingRecipe(val ingredient: HTItemIngredient, val results: List<HTChan
         }
 
         @JvmField
-        val WATER_INGREDIENT: HTFluidIngredient = HTIngredientCreator.water(250)
+        val WATER_INGREDIENT: HTFluidIngredient = FluidIngredientBuilder().apply {
+            +VanillaFluidContents.WATER
+            amount = 250
+        }.buildSized()
     }
 
     override fun test(first: ItemStack, second: FluidStack): Boolean = ingredient.test(first) && WATER_INGREDIENT.test(second)
@@ -50,5 +54,5 @@ class HTWashingRecipe(val ingredient: HTItemIngredient, val results: List<HTChan
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.WASHING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.WASHING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.WASHING
 }

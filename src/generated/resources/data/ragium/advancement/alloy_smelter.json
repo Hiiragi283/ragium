@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.alloy_smelter.desc"
+      "translate": "advancement.ragium.alloy_smelter.desc"
     },
     "icon": {
       "count": 1,
       "id": "ragium:alloy_smelter"
     },
     "title": {
-      "translate": "advancements.ragium.alloy_smelter.title"
+      "translate": "advancement.ragium.alloy_smelter.title"
     }
   },
   "requirements": [
