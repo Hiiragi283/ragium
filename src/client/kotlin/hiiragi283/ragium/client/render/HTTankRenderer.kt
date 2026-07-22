@@ -8,7 +8,7 @@ import hiiragi283.core.api.storage.fluid.getStillTexture
 import hiiragi283.core.api.storage.fluid.getTintColor
 import hiiragi283.core.client.render.block.HTBlockEntityRenderer
 import hiiragi283.core.client.render.item.HTItemRenderer
-import hiiragi283.core.common.capability.HTFluidCapabilities
+import hiiragi283.core.support.capability.HTFluidCapabilities
 import hiiragi283.core.util.HTSpriteRenderHelper
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.client.Minecraft

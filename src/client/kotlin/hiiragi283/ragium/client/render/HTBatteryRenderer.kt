@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.client.render.block.HTBlockEntityRenderer
 import hiiragi283.core.client.render.item.HTItemRenderer
-import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.support.capability.HTEnergyCapabilities
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider

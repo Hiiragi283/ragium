@@ -7,8 +7,8 @@ import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.util.Ior
-import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTSerializableRecipe
+import hiiragi283.core.support.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer

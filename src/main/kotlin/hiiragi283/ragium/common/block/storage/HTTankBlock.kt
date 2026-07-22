@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.block.storage
 
+import hiiragi283.core.api.registry.HTDeferredBlockEntityType
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.api.world.getTypedBlockEntity
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.core.BlockPos

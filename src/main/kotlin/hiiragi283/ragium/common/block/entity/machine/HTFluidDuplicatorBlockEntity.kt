@@ -7,9 +7,9 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
@@ -24,7 +24,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FLUID_DUPLICATOR, pos, state) {
+class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FLUID_DUPLICATOR.get(), pos, state) {
     private lateinit var inputTank: HTBasicFluidTank
     private lateinit var matterTank: HTBasicFluidTank
     private lateinit var outputTank: HTBasicFluidTank

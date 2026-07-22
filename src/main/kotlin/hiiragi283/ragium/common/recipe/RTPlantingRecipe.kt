@@ -10,7 +10,7 @@ import hiiragi283.core.api.recipe.ingredient.getMatchingStack
 import hiiragi283.core.api.recipe.result.HTChancedItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.codec.listOrElement
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes

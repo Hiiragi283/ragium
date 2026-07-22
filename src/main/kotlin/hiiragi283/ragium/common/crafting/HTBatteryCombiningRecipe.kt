@@ -1,9 +1,9 @@
 package hiiragi283.ragium.common.crafting
 
 import hiiragi283.core.api.data.buildDataPatch
-import hiiragi283.core.common.capability.HTEnergyCapabilities
-import hiiragi283.core.common.crafting.HTCustomRecipe
-import hiiragi283.core.common.crafting.ImmutableRecipeInput
+import hiiragi283.core.support.capability.HTEnergyCapabilities
+import hiiragi283.core.support.crafting.HTCustomRecipe
+import hiiragi283.core.support.crafting.ImmutableRecipeInput
 import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents

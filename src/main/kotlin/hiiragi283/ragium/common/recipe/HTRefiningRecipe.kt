@@ -17,7 +17,7 @@ import hiiragi283.core.api.serialization.codec.convert
 import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.api.util.Option
 import hiiragi283.core.api.util.getOrElse
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes

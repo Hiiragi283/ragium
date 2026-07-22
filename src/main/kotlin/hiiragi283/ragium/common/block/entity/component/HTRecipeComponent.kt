@@ -9,7 +9,7 @@ import hiiragi283.core.api.serialization.component.DataComponentSerializable
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.block.entity.HTBlockEntity
-import hiiragi283.core.common.gui.sync.HTFractionSyncSlot
+import hiiragi283.core.support.gui.sync.HTFractionSyncSlot
 import hiiragi283.ragium.api.RagiumConst
 import org.apache.commons.lang3.math.Fraction
 

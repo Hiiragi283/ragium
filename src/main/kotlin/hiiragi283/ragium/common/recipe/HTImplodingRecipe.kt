@@ -8,7 +8,7 @@ import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.core.api.storage.energy.HTEnergyHandler
 import hiiragi283.core.api.text.Text
-import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.support.capability.HTEnergyCapabilities
 import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.item.Item

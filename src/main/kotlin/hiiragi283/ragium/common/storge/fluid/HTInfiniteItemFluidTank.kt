@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.storge.fluid
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
+import hiiragi283.core.api.storage.fluid.HTItemFluidTank
 import hiiragi283.core.api.storage.fluid.toResource
-import hiiragi283.core.impl.storage.fluid.HTItemFluidTank
 import hiiragi283.core.util.HTStorageHelper
 import net.minecraft.world.item.ItemStack
 

@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.item
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.energy.HTEnergyHandler
-import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.support.capability.HTEnergyCapabilities
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos

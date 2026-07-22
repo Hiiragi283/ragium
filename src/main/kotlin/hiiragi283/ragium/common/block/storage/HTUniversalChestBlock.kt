@@ -5,9 +5,9 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.item.HTItemSlot
 import hiiragi283.core.api.text.HTTranslation
-import hiiragi283.core.common.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.core.common.gui.widget.HTItemWidget
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.support.gui.factory.HTBlockWidgetHolderContext
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.common.item.HTUniversalChestManager

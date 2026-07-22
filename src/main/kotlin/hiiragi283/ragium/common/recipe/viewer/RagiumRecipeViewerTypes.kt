@@ -7,7 +7,7 @@ import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.resource.HTIdLike
 import hiiragi283.core.api.util.Either
-import hiiragi283.core.impl.recipe.viewer.HTRecipeViewerTypeImpl
+import hiiragi283.core.support.recipe.viewer.HTSimpleRecipeViewerType
 import hiiragi283.ragium.common.recipe.HTMassFabricatingRecipe
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.setup.RagiumBlocks
@@ -98,8 +98,8 @@ data object RagiumRecipeViewerTypes {
         iconItem: ItemLike,
         width: Int,
         height: Int = 18 * 1,
-        builderAction: HTRecipeViewerTypeImpl.Builder.() -> Unit = {},
-    ): HTRecipeViewerType<T> = HTRecipeViewerTypeImpl.create<T> {
+        builderAction: HTSimpleRecipeViewerType.Builder.() -> Unit = {},
+    ): HTRecipeViewerType<T> = HTSimpleRecipeViewerType.create<T> {
         id = recipeType
         title = recipeType
         val iconStack = ItemStack(iconItem)
@@ -115,6 +115,6 @@ data object RagiumRecipeViewerTypes {
         iconItem: ItemLike,
         width: Int,
         height: Int = 18 * 1,
-        builderAction: HTRecipeViewerTypeImpl.Builder.() -> Unit = {},
+        builderAction: HTSimpleRecipeViewerType.Builder.() -> Unit = {},
     ): HTHolderRecipeViewerType<RECIPE> = create<HTRecipeHolder<RECIPE>>(recipeType, iconItem, width, height, builderAction)
 }

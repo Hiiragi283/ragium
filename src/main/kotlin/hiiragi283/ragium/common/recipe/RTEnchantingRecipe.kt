@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.serialization.codec.HTCodecs
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.impl.recipe.HTBasicEnchantingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers

@@ -2,11 +2,10 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.common.gui.sync.HTFluidSyncSlot
-import hiiragi283.core.common.gui.sync.HTItemSyncSlot
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.impl.storage.fluid.HTFluidStackResourceSlot
-import hiiragi283.core.impl.storage.item.HTItemStackResourceSlot
+import hiiragi283.core.support.gui.sync.HTFluidSyncSlot
+import hiiragi283.core.support.gui.sync.HTItemSyncSlot
+import hiiragi283.core.support.storage.fluid.HTFluidStackResourceSlot
+import hiiragi283.core.support.storage.item.HTItemStackResourceSlot
 import hiiragi283.ragium.api.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.config.RagiumConfig
@@ -14,8 +13,9 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.state.BlockState
 import java.util.function.IntSupplier
+import net.minecraft.world.level.block.entity.BlockEntityType
 
-abstract class HTMachineBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTMachineBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),
     HTBlockEntityWithMenu {
     protected fun getTankCapacity(): IntSupplier = RagiumConfig.COMMON.machine.tankCapacity

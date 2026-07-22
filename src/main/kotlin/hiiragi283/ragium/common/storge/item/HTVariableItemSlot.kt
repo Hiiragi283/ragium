@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStoragePredicates
 import hiiragi283.core.api.storage.item.HTItemResourceType
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import java.util.function.BiPredicate
 import java.util.function.IntSupplier
 import java.util.function.Predicate

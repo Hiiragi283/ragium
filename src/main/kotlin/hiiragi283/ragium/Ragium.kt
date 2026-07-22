@@ -2,10 +2,10 @@ package hiiragi283.ragium
 
 import hiiragi283.core.api.data.pack.HTDynamicDatapack
 import hiiragi283.core.api.mod.HTCommonMod
-import hiiragi283.core.common.capability.HTEnergyCapabilities
-import hiiragi283.core.common.capability.HTItemCapabilities
+import hiiragi283.core.support.capability.HTEnergyCapabilities
+import hiiragi283.core.support.capability.HTItemCapabilities
 import hiiragi283.core.common.storage.energy.HTBasicItemEnergyHandler
-import hiiragi283.core.common.storage.energy.HTInfiniteEnergyHandler
+import hiiragi283.core.support.storage.energy.HTInfiniteEnergyHandler
 import hiiragi283.core.common.storage.fluid.HTBasicItemFluidTank
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes

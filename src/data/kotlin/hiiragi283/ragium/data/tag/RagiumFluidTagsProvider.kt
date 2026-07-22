@@ -1,8 +1,8 @@
 package hiiragi283.ragium.data.tag
 
-import hiiragi283.core.api.data.tag.HTFluidTagsProvider
 import hiiragi283.core.api.data.tag.HTTagDependType
 import hiiragi283.core.api.tag.RawTagKey
+import hiiragi283.core.support.data.tag.HTFluidTagsProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumFluids

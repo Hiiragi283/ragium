@@ -5,7 +5,7 @@ import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.core.api.text.Text
-import hiiragi283.core.common.capability.HTFluidCapabilities
+import hiiragi283.core.support.capability.HTFluidCapabilities
 import hiiragi283.ragium.common.block.storage.HTTankBlock
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag

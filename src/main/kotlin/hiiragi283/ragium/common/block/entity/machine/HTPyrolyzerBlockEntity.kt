@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.PYROLYZER, pos, state) {
+class HTPyrolyzerBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.PYROLYZER.get(), pos, state) {
     override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(RagiumRecipeViewerTypes.PYROLYZING)
 
     override fun getLookup(): HTRecipeLookup<HTItemOrFluidRecipe> = RagiumRecipeLookups.PYROLYZING

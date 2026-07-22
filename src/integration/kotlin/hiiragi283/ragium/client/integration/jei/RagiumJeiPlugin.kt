@@ -22,12 +22,12 @@ import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.util.getOrThrow
 import hiiragi283.core.client.integration.jei.category.HTItemToItemRecipeCategory
 import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
-import hiiragi283.core.impl.recipe.HTBasicItemAndFluidToItemRecipe
-import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
-import hiiragi283.core.impl.recipe.HTBasicItemToItemRecipe
-import hiiragi283.core.impl.recipe.HTBasicItemToMultiItemRecipe
-import hiiragi283.core.impl.recipe.viewer.display.HTRecipeDisplayFactories
+import hiiragi283.core.support.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.support.recipe.base.HTBasicItemAndFluidToItemRecipe
+import hiiragi283.core.support.recipe.base.HTBasicItemOrFluidRecipe
+import hiiragi283.core.support.recipe.base.HTBasicItemToItemRecipe
+import hiiragi283.core.support.recipe.base.HTBasicItemToMultiItemRecipe
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe

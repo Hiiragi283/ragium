@@ -2,11 +2,11 @@
 
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.common.data.recipe.HTItemAndFluidToItemRecipeBuilder
-import hiiragi283.core.common.data.recipe.HTItemOrFluidRecipeBuilder
-import hiiragi283.core.common.data.recipe.HTItemToFluidRecipeBuilder
-import hiiragi283.core.common.data.recipe.HTItemToItemRecipeBuilder
-import hiiragi283.core.common.data.recipe.HTItemToMultiItemRecipeBuilder
+import hiiragi283.core.support.data.recipe.HTItemAndFluidToItemRecipeBuilder
+import hiiragi283.core.support.data.recipe.HTItemOrFluidRecipeBuilder
+import hiiragi283.core.support.data.recipe.HTItemToFluidRecipeBuilder
+import hiiragi283.core.support.data.recipe.HTItemToItemRecipeBuilder
+import hiiragi283.core.support.data.recipe.HTItemToMultiItemRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTBathingRecipe
 import hiiragi283.ragium.common.recipe.HTCompressingRecipe

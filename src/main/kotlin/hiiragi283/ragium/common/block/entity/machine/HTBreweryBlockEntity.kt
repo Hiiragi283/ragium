@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.BREWERY, pos, state) {
+class HTBreweryBlockEntity(pos: BlockPos, state: BlockState) : HTItemOrFluidBlockEntity(RagiumBlockEntityTypes.BREWERY.get(), pos, state) {
     override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(HCRecipeViewerTypes.BREWING)
 
     override fun getLookup(): HTRecipeLookup<HTItemOrFluidRecipe> = VanillaRecipeLookups.BREWING

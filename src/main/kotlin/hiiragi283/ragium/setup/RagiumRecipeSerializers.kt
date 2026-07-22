@@ -1,7 +1,7 @@
 package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.recipe.RecipeSerializer
-import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
+import hiiragi283.core.support.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.common.crafting.HTBatteryCombiningRecipe
 import hiiragi283.ragium.common.crafting.HTTankCombiningRecipe
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe

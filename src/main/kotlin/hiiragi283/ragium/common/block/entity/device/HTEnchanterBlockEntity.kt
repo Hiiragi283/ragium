@@ -7,13 +7,13 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemWidget
-import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.cache.HTTripleInputRecipeCache
-import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.support.recipe.cache.HTTripleInputRecipeCache
+import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
@@ -30,7 +30,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
-class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.ENCHANTER, pos, state) {
+class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.ENCHANTER.get(), pos, state) {
     private lateinit var inputTank: HTBasicFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {

@@ -7,7 +7,6 @@ import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTTankEmptyingRecipe
 import hiiragi283.core.api.recipe.base.HTTankFillingRecipe
-import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.amount.HTAmountView
@@ -15,19 +14,19 @@ import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.common.gui.sync.HTFluidSyncSlot
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
-import hiiragi283.core.impl.storage.fluid.HTFluidStackResourceSlot
 import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.support.gui.sync.HTFluidSyncSlot
+import hiiragi283.core.support.recipe.cache.HTRecipeCaches
+import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.fluid.HTFluidStackResourceSlot
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -38,6 +37,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidActionResult
 import net.neoforged.neoforge.fluids.FluidStack
@@ -48,8 +48,8 @@ import net.neoforged.neoforge.fluids.SimpleFluidContent
  * @see mekanism.common.tile.TileEntityFluidTank
  * @see hiiragi283.core.common.block.entity.HTCopperBasinBlockEntity
  */
-open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
-    constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.TANK, pos, state)
+open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
+    constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.TANK.get(), pos, state)
 
     lateinit var tank: HTFluidStackResourceSlot
         private set
@@ -211,7 +211,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     //    Simple    //
 
-    class Simple(pos: BlockPos, state: BlockState) : HTTankBlockEntity(RagiumBlockEntityTypes.TANK, pos, state) {
+    class Simple(pos: BlockPos, state: BlockState) : HTTankBlockEntity(RagiumBlockEntityTypes.TANK.get(), pos, state) {
         override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
     }
 }

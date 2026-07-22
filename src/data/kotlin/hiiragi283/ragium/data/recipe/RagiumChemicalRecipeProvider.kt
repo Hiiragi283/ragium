@@ -10,7 +10,6 @@ import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.core.common.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.core.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -18,6 +17,7 @@ import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCBlocks
 import hiiragi283.core.setup.HCItems
+import hiiragi283.core.support.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.recipe.HTChemicalReactingRecipeBuilder
@@ -748,7 +748,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         // Artificial Artifact
         HTShapedRecipeBuilder.create {
             cross8()
-            define('A') { +tag(CommonTagPrefixes.NUGGET, VanillaMaterialKeys.NETHERITE) }
+            define('A') { +tag(CommonTagPrefixes.PLATE, VanillaMaterialKeys.NETHERITE) }
             define('B') { +RagiumItems.ELECTRIC_CIRCUIT }
             define('C') { +tag(CommonTagPrefixes.PEARL, HCMaterialKeys.ELDRITCH) }
             +RagiumItems.ARTIFICIAL_ARTIFACT.toStack()

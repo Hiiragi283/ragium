@@ -7,7 +7,7 @@ import hiiragi283.core.api.serialization.value.HTValueSerializable
 import hiiragi283.core.api.storage.item.HTItemHandler
 import hiiragi283.core.api.storage.item.HTItemSlot
 import hiiragi283.core.common.storage.HTCapabilityCodec
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.setup.RagiumAttachmentTypes
 import net.minecraft.core.Direction
 import net.minecraft.server.MinecraftServer

@@ -5,6 +5,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.serialization.value.HTValueInput
@@ -13,10 +14,8 @@ import hiiragi283.core.api.serialization.value.read
 import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
-import hiiragi283.core.common.gui.sync.HTIntSyncSlot
 import hiiragi283.core.common.gui.widget.HTProgressWidget
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.impl.recipe.cache.completed.HTCompletedRecipe
+import hiiragi283.core.support.gui.sync.HTIntSyncSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.energy.HTMachineEnergyHandler
@@ -25,9 +24,10 @@ import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMachineBlockEntity(type, pos, state) {
+abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMachineBlockEntity(type, pos, state) {
     protected lateinit var recipeHandler: HTProgressHandler<*>
         private set
     protected lateinit var recipeComponent: HTRecipeComponent
@@ -93,7 +93,7 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     //    Energized    //
 
-    abstract class Energized(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
+    abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
         lateinit var handler: HTMachineEnergyHandler.Processor
             private set
 

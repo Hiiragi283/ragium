@@ -1,10 +1,10 @@
 package hiiragi283.ragium.impl.recipe
 
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeInput
 

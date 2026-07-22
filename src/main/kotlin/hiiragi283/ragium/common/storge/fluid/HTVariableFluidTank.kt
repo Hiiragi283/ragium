@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStoragePredicates
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
 import java.util.function.BiPredicate
 import java.util.function.IntSupplier
 import java.util.function.Predicate

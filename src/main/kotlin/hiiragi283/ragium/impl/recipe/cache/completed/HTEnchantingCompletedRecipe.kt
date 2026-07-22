@@ -1,8 +1,8 @@
 package hiiragi283.ragium.impl.recipe.cache.completed
 
+import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTInputHandler
 import hiiragi283.core.api.recipe.handler.HTOutputHandler
-import hiiragi283.core.impl.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack

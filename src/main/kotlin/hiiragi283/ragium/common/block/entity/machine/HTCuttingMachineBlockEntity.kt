@@ -7,7 +7,7 @@ import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
 import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.common.gui.widget.HTItemWidget
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToMultiItemBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
 import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
@@ -18,7 +18,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CUTTING_MACHINE, pos, state) {
+class HTCuttingMachineBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CUTTING_MACHINE.get(), pos, state) {
     override fun playSound() {
         playSound(SoundEvents.UI_STONECUTTER_TAKE_RESULT)
     }

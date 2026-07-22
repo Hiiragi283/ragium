@@ -1,10 +1,10 @@
 package hiiragi283.ragium.data.tag
 
-import hiiragi283.core.api.data.tag.HTItemTagsProvider
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
+import hiiragi283.core.support.data.tag.HTItemTagsProvider
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.integration.mek.RagiumMekItems

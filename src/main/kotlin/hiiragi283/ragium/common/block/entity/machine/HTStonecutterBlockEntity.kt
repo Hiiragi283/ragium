@@ -6,17 +6,17 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
-import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.cache.completed.HTDoubleInputCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.recipe.id
 import hiiragi283.core.api.recipe.ingredient.getMatchingStack
 import hiiragi283.core.api.recipe.recipe
 import hiiragi283.core.common.gui.widget.HTItemWidget
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.cache.completed.HTDoubleInputCompletedRecipe
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.recipe.cache.HTRecipeCaches
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
@@ -34,7 +34,7 @@ import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
 
-class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.AUTO_CHISEL, pos, state) {
+class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.AUTO_CHISEL.get(), pos, state) {
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var catalystSlot: HTBasicItemSlot
     private lateinit var outputSlot: HTBasicItemSlot

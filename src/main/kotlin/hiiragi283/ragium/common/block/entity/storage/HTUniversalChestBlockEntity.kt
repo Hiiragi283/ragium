@@ -19,7 +19,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 
 class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
-    HTExtendedBlockEntity(RagiumBlockEntityTypes.UNIVERSAL_CHEST, pos, state),
+    HTExtendedBlockEntity(RagiumBlockEntityTypes.UNIVERSAL_CHEST.get(), pos, state),
     HTHandlerProvider,
     HTItemHandler {
     var color: HTDefaultColor = HTDefaultColor.WHITE

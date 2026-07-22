@@ -7,18 +7,18 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.gui.widget.HTItemWidget
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.impl.storage.item.HTItemStackResourceSlot
+import hiiragi283.core.support.storage.item.HTItemStackResourceSlot
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.common.storge.holder.HTSlotInfo
 import hiiragi283.ragium.common.storge.item.HTVariableItemSlot
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-open class HTCrateBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
-    constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.CRATE, pos, state)
+open class HTCrateBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
+    constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.CRATE.get(), pos, state)
 
     lateinit var slot: HTItemStackResourceSlot
         private set

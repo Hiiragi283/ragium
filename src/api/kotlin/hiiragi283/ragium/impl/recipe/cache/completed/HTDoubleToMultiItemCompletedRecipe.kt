@@ -2,15 +2,15 @@ package hiiragi283.ragium.impl.recipe.cache.completed
 
 import hiiragi283.core.api.recipe.HTBiRecipeFactory
 import hiiragi283.core.api.recipe.base.HTProgressData
+import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTInputHandler
 import hiiragi283.core.api.recipe.handler.HTOutputHandler
 import hiiragi283.core.api.recipe.input.HTItemListRecipeInput
-import hiiragi283.core.impl.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.ragium.api.recipe.base.HTPlantingRecipe
 import net.minecraft.world.item.ItemStack
 
 /**
- * @see hiiragi283.core.impl.recipe.cache.completed.HTSingleToMultiItemCompletedRecipe
+ * @see hiiragi283.core.api.recipe.cache.completed.HTSingleToMultiItemCompletedRecipe
  */
 abstract class HTDoubleToMultiItemCompletedRecipe<
     INPUT_A : Any,

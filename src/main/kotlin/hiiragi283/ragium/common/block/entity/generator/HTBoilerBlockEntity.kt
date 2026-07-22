@@ -12,12 +12,12 @@ import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.gui.widget.HTFluidWidget
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
 import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
@@ -31,7 +31,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.BOILER, pos, state) {
+class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.BOILER.get(), pos, state) {
     lateinit var waterTank: HTBasicFluidTank
         private set
     private lateinit var steamTank: HTBasicFluidTank

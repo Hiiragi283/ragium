@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity.Simple(RagiumBlockEntityTypes.COMPRESSOR, pos, state) {
+class HTCompressorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity.Simple(RagiumBlockEntityTypes.COMPRESSOR.get(), pos, state) {
     override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(RagiumRecipeViewerTypes.COMPRESSING)
 
     override fun getLookup(): HTRecipeLookup<HTItemToItemRecipe> = RagiumRecipeLookups.COMPRESSING

@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.storge.fluid
 
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
-import hiiragi283.core.impl.storage.fluid.HTFluidStackResourceSlot
-import hiiragi283.core.impl.storage.fluid.HTItemFluidTank
+import hiiragi283.core.api.storage.fluid.HTItemFluidTank
+import hiiragi283.core.support.storage.fluid.HTFluidStackResourceSlot
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.fluids.FluidStack
 

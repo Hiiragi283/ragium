@@ -1,11 +1,11 @@
 package hiiragi283.ragium.common.item.block
 
 import hiiragi283.core.api.color.HTDefaultColor
-import hiiragi283.core.api.item.HTDescriptionBlockItem
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
-import hiiragi283.core.common.gui.factory.HTItemWidgetHolderContext
 import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.support.gui.factory.HTItemWidgetHolderContext
+import hiiragi283.core.support.item.HTDescriptionBlockItem
 import hiiragi283.ragium.common.block.storage.HTUniversalChestBlock
 import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerPlayer

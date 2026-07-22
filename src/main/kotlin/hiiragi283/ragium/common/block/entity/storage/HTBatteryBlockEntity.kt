@@ -6,7 +6,6 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.serialization.value.read
@@ -17,17 +16,17 @@ import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.api.storage.energy.HTEnergyHandler
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.common.gui.sync.HTIntSyncSlot
-import hiiragi283.core.common.gui.sync.HTItemSyncSlot
 import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCChargingRecipe
 import hiiragi283.core.common.recipe.HCRecipeLookups
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.storage.energy.HTBasicEnergyHandler
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.support.gui.sync.HTIntSyncSlot
+import hiiragi283.core.support.gui.sync.HTItemSyncSlot
+import hiiragi283.core.support.recipe.cache.HTRecipeCaches
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.energy.HTBasicEnergyHandler
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
 import hiiragi283.ragium.common.storge.energy.HTVariableEnergyHandler
 import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
@@ -39,9 +38,10 @@ import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTBatteryBlockEntity<T : HTEnergyHandler>(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
+abstract class HTBatteryBlockEntity<T : HTEnergyHandler>(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
     abstract val handler: T
 
     override fun getAmountView(): HTAmountView = handler
@@ -113,7 +113,7 @@ abstract class HTBatteryBlockEntity<T : HTEnergyHandler>(type: HTDeferredBlockEn
 
     //    Simple    //
 
-    class Simple(pos: BlockPos, state: BlockState) : HTBatteryBlockEntity<HTBasicEnergyHandler>(RagiumBlockEntityTypes.BATTERY, pos, state) {
+    class Simple(pos: BlockPos, state: BlockState) : HTBatteryBlockEntity<HTBasicEnergyHandler>(RagiumBlockEntityTypes.BATTERY.get(), pos, state) {
         override lateinit var handler: HTBasicEnergyHandler
 
         override fun initializeVariables(listener: HTContentListener) {

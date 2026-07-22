@@ -7,7 +7,7 @@ import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.core.common.data.recipe.HTItemToMultiItemRecipeBuilder
+import hiiragi283.core.common.data.recipe.HCRecipeBuilders
 import hiiragi283.core.common.integration.HCIConstants
 import hiiragi283.core.common.material.HCIntegrationMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
@@ -26,7 +26,7 @@ class RagiumAERecipeProvider(packOutput: PackOutput, future: CompletableFuture<H
         printing()
 
         // Sky Stone Dust
-        HTItemToMultiItemRecipeBuilder.crushing {
+        HCRecipeBuilders.crushing {
             ingredient { +AEBlocks.SKY_STONE_BLOCK }
             result { +HTItemResult.MaterialPart(CommonParts.DUST, HCIntegrationMaterialKeys.SKY_STONE) }
             recipeId suffix "_from_stone"

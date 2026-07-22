@@ -3,7 +3,7 @@ package hiiragi283.ragium.common.storge.energy
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStoragePredicates
-import hiiragi283.core.common.storage.energy.HTBasicEnergyHandler
+import hiiragi283.core.support.storage.energy.HTBasicEnergyHandler
 import java.util.function.IntSupplier
 import java.util.function.Predicate
 

@@ -26,6 +26,7 @@ import hiiragi283.ragium.data.recipe.RagiumUtilitiesRecipeProvider
 import hiiragi283.ragium.data.recipe.integration.RagiumAERecipeProvider
 import hiiragi283.ragium.data.recipe.integration.RagiumIERecipeProvider
 import hiiragi283.ragium.data.recipe.integration.RagiumMekRecipeProvider
+import hiiragi283.ragium.data.recipe.integration.RagiumOritechRecipeProvider
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
@@ -61,8 +62,9 @@ object RagiumDatagen {
         event.createProvider(::RagiumUtilitiesRecipeProvider)
 
         event.createProvider(::RagiumAERecipeProvider)
-        event.createProvider(::RagiumMekRecipeProvider)
         event.createProvider(::RagiumIERecipeProvider)
+        event.createProvider(::RagiumMekRecipeProvider)
+        event.createProvider(::RagiumOritechRecipeProvider)
 
         event.createProviderWithHelper(::RagiumFluidTagsProvider)
         event.createBlockAndItemTags(::RagiumBlockTagsProvider.partially1(fileHelper), ::RagiumItemTagsProvider.partially1(fileHelper))

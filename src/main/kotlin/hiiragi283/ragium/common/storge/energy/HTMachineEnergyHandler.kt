@@ -4,7 +4,7 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.HTStoragePredicates
-import hiiragi283.core.common.storage.energy.HTBasicEnergyHandler
+import hiiragi283.core.support.storage.energy.HTBasicEnergyHandler
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.config.HTEnergyConfig

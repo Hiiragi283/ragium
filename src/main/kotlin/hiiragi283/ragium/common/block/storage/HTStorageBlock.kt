@@ -2,9 +2,9 @@ package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.core.api.block.HTBlockWithDescription
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.block.HTBasicEntityBlock
-import hiiragi283.core.common.gui.factory.HTBlockWidgetHolderContext
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import hiiragi283.core.support.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.api.block.entity.HTBlockEntityWithMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer

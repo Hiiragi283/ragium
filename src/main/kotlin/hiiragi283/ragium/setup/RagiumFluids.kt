@@ -3,7 +3,7 @@ package hiiragi283.ragium.setup
 import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTFluidContentRegister
-import hiiragi283.core.common.fluid.HTExplosiveFluidType
+import hiiragi283.core.support.fluid.HTExplosiveFluidType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.fluid.HTCreativeFluidType
 import hiiragi283.ragium.common.fluid.HTLiquidGasFluidType

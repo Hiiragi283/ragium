@@ -4,7 +4,7 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.recipe.IngredientBuilder
 import hiiragi283.core.api.util.HTDelegates
-import hiiragi283.core.impl.data.recipe.HTMultiOutputRecipeBuilder
+import hiiragi283.core.support.data.recipe.HTMultiOutputRecipeBuilder
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
 import kotlin.contracts.ExperimentalContracts

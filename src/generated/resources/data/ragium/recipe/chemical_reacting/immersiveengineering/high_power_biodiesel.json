@@ -15,10 +15,12 @@
     "fluids": "#c:biodiesel"
   },
   "secondary": {
-    "type": "hiiragi_core:potion",
     "amount": 50,
-    "bottle_type": "default",
-    "potions": "minecraft:strength"
+    "fluids": {
+      "type": "hiiragi_core:potion",
+      "bottle_type": "default",
+      "potions": "minecraft:strength"
+    }
   },
   "time": 200
 }

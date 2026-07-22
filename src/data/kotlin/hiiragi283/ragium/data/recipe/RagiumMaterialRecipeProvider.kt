@@ -4,8 +4,8 @@ import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
+import hiiragi283.core.common.data.recipe.HCRecipeBuilders
 import hiiragi283.core.common.data.recipe.HTCookingRecipeBuilder
-import hiiragi283.core.common.data.recipe.HTItemToMultiItemRecipeBuilder
 import hiiragi283.core.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.core.common.data.recipe.HTShapelessRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -48,7 +48,7 @@ class RagiumMaterialRecipeProvider(packOutput: PackOutput, future: CompletableFu
 
     private fun meat() {
         // Raw Meat -> Minced Meat
-        HTItemToMultiItemRecipeBuilder.crushing {
+        HCRecipeBuilders.crushing {
             ingredient { +listOf(Tags.Items.FOODS_RAW_MEAT, Tags.Items.FOODS_RAW_FISH) }
             +HTItemResult.MaterialPart(CommonParts.DUST, RagiumMaterialKeys.MEAT)
         }.save(exporter)

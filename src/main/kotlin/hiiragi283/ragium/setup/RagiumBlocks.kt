@@ -9,7 +9,7 @@ import hiiragi283.core.api.registry.HTDeferredBlockAndItem
 import hiiragi283.core.api.registry.HTDeferredBlockAndItemRegister
 import hiiragi283.core.api.registry.HTSimpleDeferredBlockAndItem
 import hiiragi283.core.api.text.HTTranslation
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
+import hiiragi283.core.api.registry.HTDeferredBlockEntityType
 import hiiragi283.core.setup.HCDataComponents
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst

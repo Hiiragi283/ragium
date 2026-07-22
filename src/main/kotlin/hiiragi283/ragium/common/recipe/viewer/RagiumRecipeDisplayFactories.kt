@@ -4,9 +4,9 @@ import hiiragi283.core.api.data.recipe.IngredientBuilder
 import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.viewer.display.HTProgressRecipeDisplay
 import hiiragi283.core.api.recipe.viewer.display.HTRecipeContents
-import hiiragi283.core.impl.recipe.HTBasicItemAndFluidToItemRecipe
-import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
-import hiiragi283.core.impl.recipe.viewer.display.HTRecipeDisplayFactories
+import hiiragi283.core.support.recipe.base.HTBasicItemAndFluidToItemRecipe
+import hiiragi283.core.support.recipe.base.HTBasicItemOrFluidRecipe
+import hiiragi283.core.support.recipe.viewer.display.HTRecipeDisplayFactories
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
 import hiiragi283.ragium.common.recipe.HTAssemblingRecipe
 import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe

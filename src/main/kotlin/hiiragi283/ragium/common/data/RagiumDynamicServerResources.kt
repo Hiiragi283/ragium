@@ -23,7 +23,7 @@ import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.property.getOrDefault
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTSimpleDeferredBlockAndItem
-import hiiragi283.core.api.registry.getDataMap
+import hiiragi283.core.api.registry.forEachData
 import hiiragi283.core.api.registry.toLike
 import hiiragi283.core.api.resource.SimpleSupplierWithKey
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -41,7 +41,6 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.tags.TagKey
 import net.minecraft.util.Mth
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
@@ -95,38 +94,31 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
 
     @JvmStatic
     private fun redox() {
-        BuiltInRegistries.BLOCK
-            .asLookup()
-            .getDataMap(NeoForgeDataMaps.OXIDIZABLES)
-            .mapNotNull { (holder: Holder<Block>, oxidizable: Oxidizable) ->
-                val before: Block = holder.value()
-                if (ItemStack(before).isEmpty) return@mapNotNull null
-                val after: Block = oxidizable.nextOxidationStage()
-                if (ItemStack(after).isEmpty) return@mapNotNull null
-                holder.toLike() to after.toLike()
-            }.forEach { (before: SimpleSupplierWithKey<Block>, after: SimpleSupplierWithKey<Block>) ->
-                // レシピを登録
-                // Oxidization
-                RagiumRecipeBuilder.bathing {
-                    itemIngredient { +before.get() }
-                    fluidIngredient {
-                        +RagiumFluids.OXYGEN
-                        amount = 250
-                    }
-                    result { +after.get() }
-                    recipeId suffix "_from_${before.path}"
-                }.save(exporter)
-                // Reduction
-                RagiumRecipeBuilder.bathing {
-                    itemIngredient { +after.get() }
-                    fluidIngredient {
-                        +RagiumFluids.HYDROGEN
-                        amount = 250
-                    }
-                    result { +before.get() }
-                    recipeId suffix "_from_${after.path}"
-                }.save(exporter)
-            }
+        BuiltInRegistries.BLOCK.asLookup().forEachData(NeoForgeDataMaps.OXIDIZABLES) { holder: Holder<Block>, oxidizable: Oxidizable ->
+            val before: SimpleSupplierWithKey<Block> = holder.toLike()
+            val after: SimpleSupplierWithKey<Block> = oxidizable.nextOxidationStage().toLike()
+            // レシピを登録
+            // Oxidization
+            RagiumRecipeBuilder.bathing {
+                itemIngredient { +before.get() }
+                fluidIngredient {
+                    +RagiumFluids.OXYGEN
+                    amount = 250
+                }
+                result { +oxidizable.nextOxidationStage() }
+                recipeId suffix "_from_${before.path}"
+            }.save(exporter)
+            // Reduction
+            RagiumRecipeBuilder.bathing {
+                itemIngredient { +oxidizable.nextOxidationStage() }
+                fluidIngredient {
+                    +RagiumFluids.HYDROGEN
+                    amount = 250
+                }
+                result { +before.get() }
+                recipeId suffix "_from_${after.path}"
+            }.save(exporter)
+        }
     }
 
     //    Compressing    //
@@ -380,26 +372,19 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
 
     @JvmStatic
     private fun waxing() {
-        BuiltInRegistries.BLOCK
-            .asLookup()
-            .getDataMap(NeoForgeDataMaps.WAXABLES)
-            .mapNotNull { (holder: Holder<Block>, waxable: Waxable) ->
-                val before: Block = holder.value()
-                if (ItemStack(before).isEmpty) return@mapNotNull null
-                val after: Block = waxable.waxed()
-                if (ItemStack(after).isEmpty) return@mapNotNull null
-                holder.toLike() to after.toLike()
-            }.forEach { (before: SimpleSupplierWithKey<Block>, after: SimpleSupplierWithKey<Block>) ->
-                // レシピを登録
-                // Waxing
+        BuiltInRegistries.BLOCK.asLookup().forEachData(NeoForgeDataMaps.WAXABLES) { holder: Holder<Block>, waxable: Waxable ->
+            val before: SimpleSupplierWithKey<Block> = holder.toLike()
+            val after: SimpleSupplierWithKey<Block> = waxable.waxed().toLike()
+            // レシピを登録
+            // Waxing
 
-                // Dis-waxing
-                RagiumRecipeBuilder.cutting {
-                    ingredient { +after.get() }
-                    result { +before.get() }
-                    recipeId suffix "_from_${after.path}"
-                }.save(exporter)
-            }
+            // Dis-waxing
+            RagiumRecipeBuilder.cutting {
+                ingredient { +after.get() }
+                result { +before.get() }
+                recipeId suffix "_from_${after.path}"
+            }.save(exporter)
+        }
     }
 
     //    Freezing    //
@@ -442,7 +427,8 @@ internal data object RagiumDynamicServerResources : HTRecipeProviderContext.Dele
         // 素材のプロパティから液体材料を取得
         val fluidAmount: Int = part.getScaledAmount(entry.getDefaultFluidAmount(), entry).toInt()
         // 完成品を取得
-        val molten: HTMaterialContents.FluidEntry = HiiragiCoreAccess.INSTANCE.registeredFluids.get(HTFluidPart.MOLTEN, entry) ?: return
+        val molten: HTMaterialContents.FluidEntry = HiiragiCoreAccess.INSTANCE.registeredFluids[HTFluidPart.MOLTEN, entry]
+            ?: return
         // レシピを登録
         RagiumRecipeBuilder.melting {
             ingredient { +tag(prefix, entry) }
