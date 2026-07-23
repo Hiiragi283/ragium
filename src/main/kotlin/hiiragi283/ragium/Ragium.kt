@@ -13,8 +13,8 @@ import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import hiiragi283.ragium.common.block.entity.storage.HTUniversalChestBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
-import hiiragi283.ragium.common.storge.fluid.HTInfiniteItemFluidTank
-import hiiragi283.ragium.common.storge.fluid.HTVoidItemFluidTank
+import hiiragi283.ragium.support.storage.fluid.HTInfiniteItemFluidTank
+import hiiragi283.ragium.support.storage.fluid.HTVoidItemFluidTank
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumBlocks

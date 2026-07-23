@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storge.holder
+package hiiragi283.ragium.support.storage.holder
 
 import com.mojang.serialization.Codec
 import hiiragi283.core.api.color.HTDefaultColor

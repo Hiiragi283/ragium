@@ -1,4 +1,4 @@
-package hiiragi283.ragium.impl.recipe.cache.completed
+package hiiragi283.ragium.common.recipe.cache.completed
 
 import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTInputHandler

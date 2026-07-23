@@ -1,4 +1,4 @@
-package hiiragi283.ragium.impl.recipe
+package hiiragi283.ragium.support.recipe.base
 
 import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe

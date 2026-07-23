@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storge.item
+package hiiragi283.ragium.support.storage.item
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.storage.HTStorageAccess

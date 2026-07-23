@@ -8,8 +8,8 @@ import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
-import hiiragi283.ragium.common.storge.holder.HTSlotInfoProvider
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
+import hiiragi283.ragium.support.storage.holder.HTSlotInfoProvider
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import java.util.*

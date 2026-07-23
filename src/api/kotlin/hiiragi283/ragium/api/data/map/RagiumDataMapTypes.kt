@@ -21,7 +21,7 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
  * Ragiumで使用する[DataMapType]へのアクセス
  * @see mekanism.api.datamaps.IMekanismDataMapTypes
  */
-object RagiumDataMapTypes {
+data object RagiumDataMapTypes {
     // Entity Type
     @JvmField
     val MOB_HEAD: DataMapType<EntityType<*>, Holder<Item>> = create("mob_head", Registries.ENTITY_TYPE, HTCodecs.holder(Registries.ITEM))

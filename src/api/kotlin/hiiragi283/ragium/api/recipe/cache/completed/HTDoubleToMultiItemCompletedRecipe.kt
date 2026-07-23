@@ -1,4 +1,4 @@
-package hiiragi283.ragium.impl.recipe.cache.completed
+package hiiragi283.ragium.api.recipe.cache.completed
 
 import hiiragi283.core.api.recipe.HTBiRecipeFactory
 import hiiragi283.core.api.recipe.base.HTProgressData

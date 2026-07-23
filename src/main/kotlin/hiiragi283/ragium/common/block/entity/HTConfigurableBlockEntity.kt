@@ -3,8 +3,8 @@ package hiiragi283.ragium.common.block.entity
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.common.block.entity.HTBlockEntity
 import hiiragi283.ragium.common.block.entity.component.HTSlotInfoComponent
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
-import hiiragi283.ragium.common.storge.holder.HTSlotInfoProvider
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
+import hiiragi283.ragium.support.storage.holder.HTSlotInfoProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.entity.BlockEntityType

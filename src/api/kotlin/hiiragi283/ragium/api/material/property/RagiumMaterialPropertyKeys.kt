@@ -6,7 +6,7 @@ import hiiragi283.ragium.api.RagiumAPI
 /**
  * @see hiiragi283.core.api.material.property.HTMaterialPropertyKeys
  */
-object RagiumMaterialPropertyKeys {
+data object RagiumMaterialPropertyKeys {
     @JvmField
     val MATTER_VALUE: HTPropertyKey<Int?> = HTPropertyKey.createNullable(RagiumAPI.id("matter_value"))
 }

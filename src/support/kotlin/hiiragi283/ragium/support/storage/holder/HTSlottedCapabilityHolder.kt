@@ -1,4 +1,4 @@
-package hiiragi283.ragium.common.storge.holder
+package hiiragi283.ragium.support.storage.holder
 
 import hiiragi283.core.api.storage.holder.HTCapabilityHolder
 import hiiragi283.ragium.api.RagiumAPI
