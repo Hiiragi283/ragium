@@ -1,6 +1,5 @@
 package hiiragi283.ragium.data
 
-import hiiragi283.core.api.data.createAdvancements
 import hiiragi283.core.api.data.createLootTables
 import hiiragi283.core.api.data.createProviderWithHelper
 import hiiragi283.core.api.function.partially1
@@ -47,7 +46,7 @@ object RagiumDatagen {
             RegistrySetBuilder().add(Registries.ENCHANTMENT, HCEnchantments).also(RagiumWorldData::bootsrap),
         )
         // Server
-        event.createAdvancements(listOf(RagiumAdvancementProvider))
+        event.createProvider(::RagiumAdvancementProvider)
         event.createLootTables(::RagiumBlockLootProvider to LootContextParamSets.BLOCK)
 
         event.createProvider(::RagiumBasicRecipeProvider)
