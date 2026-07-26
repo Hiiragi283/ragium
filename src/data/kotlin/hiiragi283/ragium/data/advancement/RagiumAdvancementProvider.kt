@@ -7,7 +7,7 @@ import hiiragi283.core.api.data.advancement.HTAdvancementProvider
 import hiiragi283.core.api.data.advancement.builder.HTAdvancementBuilder
 import hiiragi283.core.api.item.HTItemLike
 import hiiragi283.core.api.material.HTMaterialContents
-import hiiragi283.core.api.material.HTMaterialLike
+import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.getResult
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPartLike
@@ -31,7 +31,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 
 class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTAdvancementProvider(packOutput, future, RagiumAPI.MOD_ID) {
-    private fun getItem(part: HTPartLike, material: HTMaterialLike): HTMaterialContents.ItemEntry = HiiragiCoreAccess.INSTANCE.registeredContents.items.getResult(part, material).getOrThrow()
+    private fun getItem(part: HTPartLike, key: HTMaterialKey): HTMaterialContents.ItemEntry = HiiragiCoreAccess.INSTANCE.registeredContents.items.getResult(part, key).getOrThrow()
 
     private fun <T> createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: T) where T : HTItemLike<*>, T : HTIdLike {
         HTAdvancementBuilder.create(key) {
@@ -41,7 +41,7 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         }.save(exporter)
     }
 
-    private fun ItemPredicate.Builder.of(prefix: HTTagPrefix, material: HTMaterialLike): ItemPredicate.Builder = this.of(prefix.itemTagKey(material))
+    private fun ItemPredicate.Builder.of(prefix: HTTagPrefix, key: HTMaterialKey): ItemPredicate.Builder = this.of(prefix.itemTagKey(key))
 
     override fun buildAdvancements() {
         HTAdvancementBuilder.create(RagiumAdvancementKeys.ROOT) {

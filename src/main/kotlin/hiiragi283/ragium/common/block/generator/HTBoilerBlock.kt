@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.block.generator
 
 import hiiragi283.core.api.storage.fluid.HTFluidHandler
 import hiiragi283.core.api.world.getTypedBlockEntity
-import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.HTMachineBlock
 import hiiragi283.ragium.common.block.entity.generator.HTBoilerBlockEntity
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -16,7 +15,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.fluids.FluidUtil
 
-class HTBoilerBlock(properties: Properties) : HTMachineBlock(RagiumTranslation.BOILER, RagiumBlockEntityTypes.BOILER, properties) {
+class HTBoilerBlock(properties: Properties) : HTMachineBlock(RagiumBlockEntityTypes.BOILER, properties) {
     override fun useItemOn(
         stack: ItemStack,
         state: BlockState,

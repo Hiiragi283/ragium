@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.block.storage
 
-import hiiragi283.core.api.block.HTBlockWithDescription
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.registry.HTDeferredBlockEntityType
 import hiiragi283.core.common.block.HTBasicEntityBlock
@@ -16,7 +15,6 @@ import net.minecraft.world.phys.BlockHitResult
 
 abstract class HTStorageBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) :
     HTBasicEntityBlock(type, properties),
-    HTBlockWithDescription,
     HTBlockWidgetHolderContext.Factory {
     override fun useWithoutItem(
         state: BlockState,

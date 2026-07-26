@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common.block
 
-import hiiragi283.core.api.block.HTBlockWithDescription
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.registry.HTDeferredBlockEntityType
-import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.common.block.HTHorizontalEntityBlock
 import hiiragi283.core.support.gui.factory.HTBlockWidgetHolderContext
 import hiiragi283.ragium.api.block.entity.HTBlockEntityWithMenu
@@ -19,9 +17,8 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.phys.BlockHitResult
 
-open class HTMachineBlock(private val translation: HTTranslation, type: HTDeferredBlockEntityType<*>, properties: Properties) :
+open class HTMachineBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) :
     HTHorizontalEntityBlock(type, properties),
-    HTBlockWithDescription,
     HTBlockWidgetHolderContext.Factory {
     companion object {
         @JvmField
@@ -49,8 +46,6 @@ open class HTMachineBlock(private val translation: HTTranslation, type: HTDeferr
         super.createBlockStateDefinition(builder)
         builder.add(IS_ACTIVE)
     }
-
-    override fun getDescription(): HTTranslation = translation
 
     override fun setup(context: HTBlockWidgetHolderContext, widgetHolder: HTWidgetHolder) {
         (context.blockEntity as? HTBlockEntityWithMenu)?.setupMenu(widgetHolder)

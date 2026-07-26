@@ -13,7 +13,7 @@
   "result": {
     "type": "hiiragi_core:material_part",
     "count": 1,
-    "material": "immersiveengineering:hop_graphite",
+    "material": "hiiragi_core:hop_graphite",
     "part": "dust"
   },
   "time": 200

@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common.block.storage
 
 import hiiragi283.core.api.registry.HTDeferredBlockEntityType
-import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.core.api.world.getTypedBlockEntity
-import hiiragi283.ragium.api.text.RagiumTranslation
 import hiiragi283.ragium.common.block.entity.storage.HTTankBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
@@ -51,6 +49,4 @@ class HTTankBlock(type: HTDeferredBlockEntityType<*>, properties: Properties) : 
         pos: BlockPos,
         context: CollisionContext,
     ): VoxelShape = SHAPE
-
-    override fun getDescription(): HTTranslation = RagiumTranslation.TANK
 }

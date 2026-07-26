@@ -1,6 +1,5 @@
 package hiiragi283.ragium.common.item.block
 
-import hiiragi283.core.api.item.HTBlockItem
 import hiiragi283.core.api.item.HTSubCreativeTabContents
 import hiiragi283.core.api.item.createItemStack
 import hiiragi283.core.api.text.Text
@@ -11,13 +10,15 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.level.block.Block
 
-class HTImitationSpawnerBlockItem(block: HTImitationSpawnerBlock, properties: Properties) :
-    HTBlockItem<HTImitationSpawnerBlock>(block, properties),
+class HTImitationSpawnerBlockItem(block: Block, properties: Properties) :
+    BlockItem(block, properties),
     HTSubCreativeTabContents {
     override fun appendHoverText(
         stack: ItemStack,

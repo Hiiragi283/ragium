@@ -2,8 +2,6 @@ package hiiragi283.ragium.setup
 
 import hiiragi283.core.api.HiiragiCoreAPI
 import hiiragi283.core.api.color.HTDefaultColor
-import hiiragi283.core.api.function.partially1
-import hiiragi283.core.api.function.partially2
 import hiiragi283.core.api.registry.HTBasicDeferredBlockAndItem
 import hiiragi283.core.api.registry.HTDeferredBlockAndItem
 import hiiragi283.core.api.registry.HTDeferredBlockAndItemRegister
@@ -55,14 +53,14 @@ data object RagiumBlocks {
     val MEAT_BLOCK: HTBasicDeferredBlockAndItem<HTMeatBlock> = REGISTER.registerSimple(
         "meat_block",
         copyOf(Blocks.MUD).mapColor(MapColor.COLOR_RED).requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL),
-        ::HTMeatBlock.partially1(Foods.BEEF),
+        { prop: BlockBehaviour.Properties -> HTMeatBlock(Foods.BEEF, prop) },
     )
 
     @JvmField
     val COOKED_MEAT_BLOCK: HTBasicDeferredBlockAndItem<HTMeatBlock> = REGISTER.registerSimple(
         "cooked_meat_block",
         copyOf(Blocks.PACKED_MUD).mapColor(MapColor.COLOR_RED).requiredFeatures(HiiragiCoreAPI.EXPERIMENTAL),
-        ::HTMeatBlock.partially1(Foods.COOKED_BEEF),
+        { prop: BlockBehaviour.Properties -> HTMeatBlock(Foods.COOKED_BEEF, prop) },
     )
 
     @JvmField
@@ -175,7 +173,7 @@ data object RagiumBlocks {
     val BATTERY: HTDeferredBlockAndItem<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
         "battery",
         machine().noOcclusion(),
-        ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.BATTERY),
+        { prop: BlockBehaviour.Properties -> HTBatteryBlock(RagiumBlockEntityTypes.BATTERY, prop) },
         ::HTBatteryBlockItem,
     ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
 
@@ -183,7 +181,7 @@ data object RagiumBlocks {
     val CRATE: HTDeferredBlockAndItem<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
         "crate",
         machine().noOcclusion(),
-        ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CRATE),
+        { prop: BlockBehaviour.Properties -> HTCrateBlock(RagiumBlockEntityTypes.CRATE, prop) },
         ::HTCrateBlockItem,
     ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
 
@@ -191,7 +189,7 @@ data object RagiumBlocks {
     val TANK: HTDeferredBlockAndItem<HTTankBlock, HTTankBlockItem> = REGISTER.register(
         "tank",
         machine().noOcclusion(),
-        ::HTTankBlock.partially1(RagiumBlockEntityTypes.TANK),
+        { prop: BlockBehaviour.Properties -> HTTankBlock(RagiumBlockEntityTypes.TANK, prop) },
         ::HTTankBlockItem,
     ) { prop: Item.Properties -> prop.component(RagiumDataComponents.CAPACITY_SCALE, 1) }
 
@@ -200,7 +198,7 @@ data object RagiumBlocks {
     val VOID_TANK: HTDeferredBlockAndItem<HTTankBlock, HTTankBlockItem> = REGISTER.register(
         "void_tank",
         machine().noOcclusion(),
-        ::HTTankBlock.partially1(RagiumBlockEntityTypes.VOID_TANK),
+        { prop: BlockBehaviour.Properties -> HTTankBlock(RagiumBlockEntityTypes.VOID_TANK, prop) },
         ::HTTankBlockItem,
     )
 
@@ -209,7 +207,7 @@ data object RagiumBlocks {
     val CREATIVE_BATTERY: HTDeferredBlockAndItem<HTBatteryBlock, HTBatteryBlockItem> = REGISTER.register(
         "creative_battery",
         machine().noOcclusion(),
-        ::HTBatteryBlock.partially1(RagiumBlockEntityTypes.CREATIVE_BATTERY),
+        { prop: BlockBehaviour.Properties -> HTBatteryBlock(RagiumBlockEntityTypes.CREATIVE_BATTERY, prop) },
         ::HTBatteryBlockItem,
     )
 
@@ -217,7 +215,7 @@ data object RagiumBlocks {
     val CREATIVE_CRATE: HTDeferredBlockAndItem<HTCrateBlock, HTCrateBlockItem> = REGISTER.register(
         "creative_crate",
         machine().noOcclusion(),
-        ::HTCrateBlock.partially1(RagiumBlockEntityTypes.CREATIVE_CRATE),
+        { prop: BlockBehaviour.Properties -> HTCrateBlock(RagiumBlockEntityTypes.CREATIVE_CRATE, prop) },
         ::HTCrateBlockItem,
     )
 
@@ -225,7 +223,7 @@ data object RagiumBlocks {
     val CREATIVE_TANK: HTDeferredBlockAndItem<HTTankBlock, HTTankBlockItem> = REGISTER.register(
         "creative_tank",
         machine().noOcclusion(),
-        ::HTTankBlock.partially1(RagiumBlockEntityTypes.CREATIVE_TANK),
+        { prop: BlockBehaviour.Properties -> HTTankBlock(RagiumBlockEntityTypes.CREATIVE_TANK, prop) },
         ::HTTankBlockItem,
     )
 
@@ -262,7 +260,7 @@ data object RagiumBlocks {
     ): HTDeferredBlockAndItem<HTMachineBlock, HTMachineBlockItem> = REGISTER.register(
         type.path,
         properties,
-        ::HTMachineBlock.partially2(translation, type),
+        { prop: BlockBehaviour.Properties -> HTMachineBlock(type, prop) },
         ::HTMachineBlockItem,
     )
 }

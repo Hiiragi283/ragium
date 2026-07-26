@@ -13,7 +13,7 @@
   "results": {
     "type": "hiiragi_core:material_part",
     "count": 1,
-    "material": "ae2:sky_stone",
+    "material": "hiiragi_core:sky_stone",
     "part": "dust"
   },
   "time": 100

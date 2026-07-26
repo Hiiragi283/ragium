@@ -115,6 +115,8 @@ data object RagiumClient : HTClientMod() {
 
     private fun registerFluidExtensions(event: RegisterClientExtensionsEvent) {
         // Overworld
+        event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
+
         event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
         event.clear(RagiumFluids.STEAM, Color(0xcccccc))
 

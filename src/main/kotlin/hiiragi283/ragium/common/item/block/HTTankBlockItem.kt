@@ -10,7 +10,7 @@ import hiiragi283.ragium.common.block.storage.HTTankBlock
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
-class HTTankBlockItem(block: HTTankBlock, properties: Properties) : HTStorageBlockItem<HTTankBlock>(block, properties) {
+class HTTankBlockItem(block: HTTankBlock, properties: Properties) : HTStorageBlockItem(block, properties) {
     /**
      * @see mekanism.common.item.block.machine.ItemBlockFluidTank.addStats
      */

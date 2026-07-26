@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
 class HTUniversalChestBlockItem(block: HTUniversalChestBlock, properties: Properties) :
-    HTDescriptionBlockItem<HTUniversalChestBlock>(block, properties),
+    HTDescriptionBlockItem(block, properties),
     HTSubCreativeTabContents {
     override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
         if (player is ServerPlayer) {

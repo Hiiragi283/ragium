@@ -2,7 +2,6 @@ package hiiragi283.ragium.data
 
 import hiiragi283.core.api.data.createLootTables
 import hiiragi283.core.api.data.createProviderWithHelper
-import hiiragi283.core.api.function.partially1
 import hiiragi283.core.setup.HCEnchantments
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.data.advancement.RagiumAdvancementProvider
@@ -29,8 +28,13 @@ import hiiragi283.ragium.data.recipe.integration.RagiumOritechRecipeProvider
 import hiiragi283.ragium.data.tag.RagiumBlockTagsProvider
 import hiiragi283.ragium.data.tag.RagiumFluidTagsProvider
 import hiiragi283.ragium.data.tag.RagiumItemTagsProvider
+import java.util.concurrent.CompletableFuture
+import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.PackOutput
+import net.minecraft.data.tags.TagsProvider
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -66,7 +70,10 @@ object RagiumDatagen {
         event.createProvider(::RagiumOritechRecipeProvider)
 
         event.createProviderWithHelper(::RagiumFluidTagsProvider)
-        event.createBlockAndItemTags(::RagiumBlockTagsProvider.partially1(fileHelper), ::RagiumItemTagsProvider.partially1(fileHelper))
+        event.createBlockAndItemTags(
+            { output: PackOutput, future: CompletableFuture<HolderLookup.Provider> -> RagiumBlockTagsProvider(fileHelper, output, future) },
+            { output: PackOutput, future: CompletableFuture<HolderLookup.Provider>, future1: CompletableFuture<TagsProvider.TagLookup<Block>> -> RagiumItemTagsProvider(fileHelper, output, future, future1) },
+        )
 
         event.createProvider(::RagiumDataMapProvider)
         // Client

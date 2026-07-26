@@ -83,6 +83,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumBlocks.CREATIVE_CRATE, "Creative Crate")
         add(RagiumBlocks.CREATIVE_TANK, "Creative Tank")
         // Fluid
+        addFluid(RagiumFluids.MOLTEN_RAGINITE, "Molten Raginite")
+
         addFluid(RagiumFluids.HYDROGEN, "Hydrogen")
         addFluid(RagiumFluids.STEAM, "Steam")
 

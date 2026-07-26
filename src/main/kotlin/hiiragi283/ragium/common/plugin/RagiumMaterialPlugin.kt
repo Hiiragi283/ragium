@@ -2,7 +2,6 @@ package hiiragi283.ragium.common.plugin
 
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTFluidPart
 import hiiragi283.core.api.material.part.HTPartLike
 import hiiragi283.core.api.material.part.property.HTPartPropertyKeys
 import hiiragi283.core.api.material.part.property.addNamePattern
@@ -11,7 +10,6 @@ import hiiragi283.core.api.material.property.HTMaterialLevel
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.HTMaterialTextureSet
 import hiiragi283.core.api.material.property.addBlockPrefixes
-import hiiragi283.core.api.material.property.addFluidPrefixes
 import hiiragi283.core.api.material.property.addItemPrefixes
 import hiiragi283.core.api.material.property.setDefaultPart
 import hiiragi283.core.api.material.property.setName
@@ -77,6 +75,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             addItemPrefixes(CommonParts.DUST, CommonParts.FUEL, CommonParts.TINY)
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.NONE)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.NONE)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Petroleum Coke", "石油コークス")
             setTextureSet("fuel")
@@ -88,15 +87,16 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
     private fun mineral(provider: HTMaterialPlugin.MaterialProvider) {
         provider.getBuilder(RagiumMaterialKeys.RAGINITE).apply {
             addBlockPrefixes(materialBlockSet)
-            addFluidPrefixes(HTFluidPart.MOLTEN)
             addItemPrefixes(CommonParts.DUST, CommonParts.RAW, CommonParts.CRUSHED_ORE)
             put(HTMaterialPropertyKeys.ORE_RESULT_MULTIPLIER, fraction(3))
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Raginite", "ラギナイト")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
         }
         provider.getBuilder(RagiumMaterialKeys.BORAX).apply {
             addItemPrefixes(CommonParts.DUST)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Borax", "ホウ砂")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
@@ -109,6 +109,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             setDefaultPart(HTDefaultPart.Prefixed.GEM)
             addBlockPrefixes(CommonParts.BLOCK)
             addItemPrefixes(CommonParts.DUST, CommonParts.GEM)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Ragi-Crystal", "ラギクリスタル")
             setTextureSet("diamond", HTMaterialTextureSet.SHINE)
@@ -131,6 +132,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
             addBlockPrefixes(CommonParts.BLOCK)
             addItemPrefixes(alloySet)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Ragi-Alloy", "ラギ合金")
             put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
@@ -141,17 +143,18 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             addItemPrefixes(alloySet)
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.MEDIUM)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.MEDIUM)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Advanced Ragi-Alloy", "発展ラギ合金")
         }
         provider.getBuilder(RagiumMaterialKeys.STAINLESS_STEEL).apply {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
             addBlockPrefixes(CommonParts.BLOCK)
-            addFluidPrefixes(HTFluidPart.MOLTEN)
             addItemPrefixes(alloySet.minus(CommonParts.WIRE))
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.HIGH)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.HIGH)
             add(HTMaterialPropertyKeys.DISABLE_SMELTING)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Stainless Steel", "ステンレス鋼")
             setTextureSet(HTMaterialTextureSet.SHINE)

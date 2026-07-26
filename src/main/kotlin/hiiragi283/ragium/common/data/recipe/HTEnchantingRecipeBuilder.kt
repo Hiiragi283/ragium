@@ -4,10 +4,8 @@ package hiiragi283.ragium.common.data.recipe
 
 import hiiragi283.core.api.data.recipe.HTRecipeBuilder
 import hiiragi283.core.api.data.recipe.IngredientBuilder
-import hiiragi283.core.api.function.andThen
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
-import hiiragi283.core.api.registry.toLike
-import hiiragi283.core.api.resource.HTIdLike
+import hiiragi283.core.api.registry.getKeyOrThrow
 import hiiragi283.core.api.util.HTDelegates
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.RTEnchantingRecipe
@@ -26,7 +24,7 @@ class HTEnchantingRecipeBuilder<ENCH : Any, out RECIPE : Recipe<*>>(private val 
             contract {
                 callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
             }
-            return HTEnchantingRecipeBuilder(::RTEnchantingRecipe, Holder<Enchantment>::toLike.andThen(HTIdLike::getId)).apply(builderAction)
+            return HTEnchantingRecipeBuilder(::RTEnchantingRecipe) { it.getKeyOrThrow().location() }.apply(builderAction)
         }
     }
 

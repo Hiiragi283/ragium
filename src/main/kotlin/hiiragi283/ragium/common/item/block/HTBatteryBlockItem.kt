@@ -11,7 +11,7 @@ import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
-class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStorageBlockItem<HTBatteryBlock>(block, properties) {
+class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStorageBlockItem(block, properties) {
     /**
      * @see mekanism.common.item.block.ItemBlockEnergyCube.addStats
      */

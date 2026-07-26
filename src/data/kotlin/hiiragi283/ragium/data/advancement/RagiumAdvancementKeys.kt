@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.advancement
 
 import hiiragi283.core.api.data.advancement.AdvancementKey
-import hiiragi283.core.api.material.HTMaterialLike
+import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
@@ -63,7 +63,7 @@ object RagiumAdvancementKeys {
     // Ultimate
 
     @JvmStatic
-    private fun create(material: HTMaterialLike): AdvancementKey = create(material.asMaterialId().path)
+    private fun create(key: HTMaterialKey): AdvancementKey = create(key.getId().path)
 
     @JvmStatic
     private fun create(path: String): AdvancementKey = AdvancementKey(RagiumAPI.id(path))

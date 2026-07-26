@@ -261,7 +261,10 @@ class RagiumHeatRecipeProvider(packOutput: PackOutput, future: CompletableFuture
         // Glass
         RagiumRecipeBuilder.melting {
             ingredient { +Tags.Items.GLASS_PANES }
-            +molten(VanillaMaterialKeys.GLASS) { 375 }
+            result {
+                +HCFluids.MOLTEN_GLASS
+                amount = 375
+            }
             recipeId suffix "_from_pane"
         }.save(exporter)
 

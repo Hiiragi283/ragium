@@ -29,7 +29,7 @@
   "result": {
     "type": "hiiragi_core:material_part",
     "count": 1,
-    "material": "ae2:fluix",
+    "material": "hiiragi_core:fluix",
     "part": "gem"
   },
   "time": 200

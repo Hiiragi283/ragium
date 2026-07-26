@@ -1,6 +1,5 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.api.function.partially1
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.registry.HTFluidContentRegister
 import hiiragi283.core.support.fluid.HTExplosiveFluidType
@@ -26,6 +25,9 @@ object RagiumFluids {
     }
 
     //    Overworld    //
+
+    @JvmField
+    val MOLTEN_RAGINITE: HTFluidContent.Virtual = REGISTER.registerVirtual("molten_raginite") { properties = molten() }
 
     // H
     @JvmField
@@ -94,7 +96,7 @@ object RagiumFluids {
             .density(3000)
             .viscosity(6000)
             .motionScale(0.0001)
-        typeFactory = ::HTExplosiveFluidType.partially1(2f)
+        typeFactory = { HTExplosiveFluidType(2f, it) }
 
         blockProperties = { it.speedFactor(0.4f) }
     }
@@ -102,13 +104,13 @@ object RagiumFluids {
     @JvmField
     val NAPHTHA: HTFluidContent.Flowing = REGISTER.registerFlowing("naphtha") {
         properties = liquid()
-        typeFactory = ::HTExplosiveFluidType.partially1(3f)
+        typeFactory = { HTExplosiveFluidType(3f, it) }
     }
 
     @JvmField
     val FUEL: HTFluidContent.Flowing = REGISTER.registerFlowing("fuel") {
         properties = liquid()
-        typeFactory = ::HTExplosiveFluidType.partially1(4f)
+        typeFactory = { HTExplosiveFluidType(4f, it) }
     }
 
     // N

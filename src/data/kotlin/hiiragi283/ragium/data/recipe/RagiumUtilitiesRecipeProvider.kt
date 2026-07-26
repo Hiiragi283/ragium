@@ -8,7 +8,7 @@ import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.data.recipe.IngredientBuilder
 import hiiragi283.core.api.item.HTSimpleItemLike
 import hiiragi283.core.api.item.createItemStack
-import hiiragi283.core.api.material.HTMaterialLike
+import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.property.getDefaultPart
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
@@ -170,12 +170,12 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
         }.save(exporter)
     }
 
-    private inline fun advanced(block: HTSimpleItemLike, material: HTMaterialLike, builderAction: IngredientBuilder.() -> Unit) {
+    private inline fun advanced(block: HTSimpleItemLike, key: HTMaterialKey, builderAction: IngredientBuilder.() -> Unit) {
         HTShapedRecipeBuilder.create {
             +"AAA"
             +"BCB"
             +"DDD"
-            define('A') { +tag(CommonTagPrefixes.INGOT, material) }
+            define('A') { +tag(CommonTagPrefixes.INGOT, key) }
             define('B', builderAction)
             define('C') { +RagiumItems.THERMOMETER }
             define('D') { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
@@ -249,7 +249,7 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
 
     private fun variableStorage(
         block: HTSimpleItemLike,
-        top: HTMaterialLike,
+        top: HTMaterialKey,
         core: TagKey<Item>,
         largeCore: TagKey<Item> = core,
     ) {

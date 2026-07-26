@@ -1,7 +1,7 @@
 package hiiragi283.ragium.data.recipe.integration
 
 import hiiragi283.core.api.data.recipe.HTRecipeProvider
-import hiiragi283.core.api.material.HTMaterialLike
+import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
@@ -110,7 +110,7 @@ class RagiumMekRecipeProvider(packOutput: PackOutput, future: CompletableFuture<
 
     //    Extension    //
 
-    fun IItemStackIngredientCreator.from(prefix: HTTagPrefix, material: HTMaterialLike, amount: Int = 1): ItemStackIngredient = this.from(prefix.itemTagKey(material), amount)
+    fun IItemStackIngredientCreator.from(prefix: HTTagPrefix, key: HTMaterialKey, amount: Int = 1): ItemStackIngredient = this.from(prefix.itemTagKey(key), amount)
 
     fun IItemStackIngredientCreator.from(tagKeys: Iterable<TagKey<Item>>, amount: Int = 1): ItemStackIngredient = this.from(amount, tagKeys.toList())
 }

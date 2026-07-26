@@ -7,8 +7,6 @@ import hiiragi283.core.api.data.recipe.FluidIngredientBuilder
 import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTFluidPart
-import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.tag.CommonTagPrefixes
@@ -181,8 +179,8 @@ class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFutur
         HTMixingRecipeBuilder.create {
             itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.DIAMOND) }
             fluidIngredient {
-                +tag(HTFluidPart.MOLTEN, RagiumMaterialKeys.RAGINITE)
-                amount = materialManager.getOrEmpty(RagiumMaterialKeys.RAGINITE).getDefaultFluidAmount() * 6
+                +RagiumFluids.MOLTEN_RAGINITE
+                amount = HTConst.INGOT_AMOUNT * 6
             }
             +HTItemResult.MaterialPart(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
         }.save(exporter)

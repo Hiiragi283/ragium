@@ -1,12 +1,10 @@
 package hiiragi283.ragium.data.recipe
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.data.recipe.FluidIngredientBuilder
 import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.HTMaterialLike
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTFluidPart
-import hiiragi283.core.api.material.property.getDefaultFluidAmount
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
@@ -16,6 +14,7 @@ import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.setup.HCBlocks
+import hiiragi283.core.setup.HCFluids
 import hiiragi283.core.setup.HCItems
 import hiiragi283.core.support.data.recipe.HTItemOrFluidRecipeBuilder
 import hiiragi283.ragium.api.RagiumAPI
@@ -61,7 +60,7 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         }.save(exporter)
     }
 
-    private fun catalyst(material: HTMaterialLike): TagKey<Item> = tag(CommonTagPrefixes.DUST, material)
+    private fun catalyst(key: HTMaterialKey): TagKey<Item> = tag(CommonTagPrefixes.DUST, key)
 
     //    Overworld    //
 
@@ -407,7 +406,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +ItemTags.CRIMSON_STEMS
                 count = 8
             }
-            +molten(HCMaterialKeys.CRIMSON_CRYSTAL)
+            fluidResult {
+                +HCFluids.MOLTEN_CRIMSON_CRYSTAL
+                amount = HTConst.INGOT_AMOUNT
+            }
             recipeId suffix "_from_crimson_stem"
         }
         // Crimson Dust + Lava -> Blaze Powder
@@ -429,7 +431,10 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
                 +ItemTags.WARPED_STEMS
                 count = 8
             }
-            +molten(HCMaterialKeys.WARPED_CRYSTAL)
+            fluidResult {
+                +HCFluids.MOLTEN_WARPED_CRYSTAL
+                amount = HTConst.INGOT_AMOUNT
+            }
             recipeId suffix "_from_warped_stem"
         }
     }
@@ -694,8 +699,8 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
 
     private fun ender() {
         val moltenEnder: FluidIngredientBuilder.() -> Unit = {
-            +tag(HTFluidPart.MOLTEN, VanillaMaterialKeys.ENDER)
-            amount = materialManager.getOrEmpty(VanillaMaterialKeys.ENDER).getDefaultFluidAmount() / 3
+            +HCFluids.MOLTEN_ENDER
+            amount = HTConst.INGOT_AMOUNT / 3
         }
         // Warped Crystal -> Ender Pearl
         RagiumRecipeBuilder.bathing {
@@ -728,20 +733,26 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
             itemIngredient { +tag(CommonTagPrefixes.DUST, HCMaterialKeys.CRIMSON_CRYSTAL) }
             itemIngredient { +HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER }
             fluidIngredient {
-                +tag(HTFluidPart.MOLTEN, HCMaterialKeys.WARPED_CRYSTAL)
-                amount = materialManager.getOrEmpty(HCMaterialKeys.WARPED_CRYSTAL).getDefaultFluidAmount()
+                +HCFluids.MOLTEN_WARPED_CRYSTAL
+                amount = HTConst.INGOT_AMOUNT
             }
-            +molten(HCMaterialKeys.ELDRITCH)
+            fluidResult {
+                +HCFluids.MOLTEN_ELDRITCH
+                amount = HTConst.INGOT_AMOUNT
+            }
             recipeId suffix "_from_molten_warped_crystal"
         }.save(exporter)
         HTMixingRecipeBuilder.create {
             itemIngredient { +tag(CommonTagPrefixes.DUST, HCMaterialKeys.WARPED_CRYSTAL) }
             itemIngredient { +HiiragiCoreTags.Items.ELDRITCH_PEARL_BINDER }
             fluidIngredient {
-                +tag(HTFluidPart.MOLTEN, HCMaterialKeys.CRIMSON_CRYSTAL)
-                amount = materialManager.getOrEmpty(HCMaterialKeys.CRIMSON_CRYSTAL).getDefaultFluidAmount()
+                +HCFluids.MOLTEN_CRIMSON_CRYSTAL
+                amount = HTConst.INGOT_AMOUNT
             }
-            +molten(HCMaterialKeys.ELDRITCH)
+            fluidResult {
+                +HCFluids.MOLTEN_ELDRITCH
+                amount = HTConst.INGOT_AMOUNT
+            }
             recipeId suffix "_from_molten_crimson_crystal"
         }.save(exporter)
 
