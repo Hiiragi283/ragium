@@ -1,4 +1,5 @@
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import me.modmuss50.mpp.ReleaseType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.slf4j.event.Level
 
@@ -395,6 +396,57 @@ spotless {
         endWithNewline()
         formatAnnotations()
         removeUnusedImports()
+    }
+}
+
+publishMods {
+    val mcVersion: Provider<String> = libs.versions.minecraft
+
+    file = tasks.jar.flatMap { it.archiveFile }
+    additionalFiles.from(tasks.named<Jar>("sourcesJar").flatMap { it.archiveFile })
+    changelog = providers.gradleProperty("CHANGELOG").orElse("")
+    type = ReleaseType.BETA
+    modLoaders.add("neoforge")
+
+    curseforge {
+        accessToken = providers.gradleProperty("CURSEFORGE_TOKEN")
+        projectId = providers.gradleProperty("CURSEFORGE_RAGIUM")
+        minecraftVersions.add(mcVersion)
+        changelogType = "markdown"
+        announcementTitle = "Download from CurseForge"
+        projectSlug = "ragium"
+
+        javaVersions.add(JavaVersion.VERSION_21)
+        client = true
+        server = true
+
+        requires("kotlin-for-forge")
+        requires("selene")
+        optional("jei")
+        optional("guideme")
+    }
+    modrinth {
+        accessToken = providers.gradleProperty("MODRINTH_TOKEN")
+        projectId = providers.gradleProperty("MODRINTH_RAGIUM")
+        minecraftVersions.add(mcVersion)
+        announcementTitle = "Download from Modrinth"
+
+        requires("kotlin-for-forge")
+        requires("moonlight")
+        optional("jei")
+        optional("guideme")
+    }
+    discord {
+        webhookUrl = providers.gradleProperty("DISCORD_TOKEN")
+        username = "Hiiragi Series Announcement"
+        content = changelog.map {
+            """
+            ## 新しいバージョン「${rootProject.version}」がリリースされました！
+            ## Changelog
+            $it
+            """.trimIndent()
+        }
+        setPlatforms(publishMods.platforms.getByName("curseforge"), publishMods.platforms.getByName("modrinth"))
     }
 }
 
