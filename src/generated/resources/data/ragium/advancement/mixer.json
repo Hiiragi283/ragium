@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.mixer.desc"
+      "translate": "advancement.ragium.mixer.desc"
     },
     "icon": {
       "count": 1,
       "id": "ragium:mixer"
     },
     "title": {
-      "translate": "advancements.ragium.mixer.title"
+      "translate": "advancement.ragium.mixer.title"
     }
   },
   "requirements": [

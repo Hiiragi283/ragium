@@ -2,8 +2,6 @@ package hiiragi283.ragium.common.block.entity
 
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.api.serialization.value.read
-import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.common.block.entity.HTExtendedBlockEntity
 import hiiragi283.ragium.api.item.component.HTSpawnerMob
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -16,7 +14,7 @@ import net.minecraft.world.level.Spawner
 import net.minecraft.world.level.block.state.BlockState
 
 class HTImitationSpawnerBlockEntity(pos: BlockPos, state: BlockState) :
-    HTExtendedBlockEntity(RagiumBlockEntityTypes.IMITATION_SPAWNER, pos, state),
+    HTExtendedBlockEntity(RagiumBlockEntityTypes.IMITATION_SPAWNER.get(), pos, state),
     Spawner {
     var spawnerMob: HTSpawnerMob? = null
 

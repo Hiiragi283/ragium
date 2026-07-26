@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import hiiragi283.core.api.storage.amount.HTAmountView
 import hiiragi283.core.client.render.block.HTBlockEntityRenderer
 import hiiragi283.core.client.render.item.HTItemRenderer
-import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.support.capability.HTEnergyCapabilities
 import hiiragi283.ragium.common.block.entity.storage.HTBatteryBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
@@ -27,16 +27,16 @@ data object HTBatteryRenderer {
     }
 
     @OnlyIn(Dist.CLIENT)
-    class BlockRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEntityRenderer<HTBatteryBlockEntity>(context) {
+    class BlockRenderer(context: BlockEntityRendererProvider.Context) : HTBlockEntityRenderer<HTBatteryBlockEntity<*>>(context) {
         override fun render(
-            blockEntity: HTBatteryBlockEntity,
+            blockEntity: HTBatteryBlockEntity<*>,
             partialTick: Float,
             poseStack: PoseStack,
             bufferSource: MultiBufferSource,
             packedLight: Int,
             packedOverlay: Int,
         ) {
-            renderCube(blockEntity.battery, poseStack, bufferSource, packedLight, packedOverlay)
+            renderCube(blockEntity.handler, poseStack, bufferSource, packedLight, packedOverlay)
         }
     }
 
@@ -52,7 +52,7 @@ data object HTBatteryRenderer {
             packedLight: Int,
             packedOverlay: Int,
         ) {
-            val view: HTAmountView = HTEnergyCapabilities.getBattery(stack) ?: return
+            val view: HTAmountView = HTEnergyCapabilities.getHandler(stack) ?: return
             renderCube(view, poseStack, buffer, packedLight, packedOverlay)
             renderBlockItem(stack, displayContext, poseStack, buffer, packedLight, packedOverlay)
         }

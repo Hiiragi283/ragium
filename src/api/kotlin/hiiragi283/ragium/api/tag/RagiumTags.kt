@@ -1,7 +1,7 @@
 package hiiragi283.ragium.api.tag
 
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.data.tag.HTTagsProvider
+import hiiragi283.core.api.data.tag.HTTagBuilder
 import hiiragi283.core.api.registry.RegistryKey
 import hiiragi283.core.api.resource.toId
 import hiiragi283.core.api.tag.createTagKey
@@ -30,13 +30,15 @@ object RagiumTags {
             registryKey.createTagKey(base.withSuffix("/${RagiumConst.ULTIMATE}")),
         )
 
-        fun apply(factory: HTTagsProvider.BuilderFactory<T>) {
-            factory.apply(basic)
-            factory.apply(advanced)
-            factory.apply(elite)
-            factory.apply(ultimate)
-            factory
-                .apply(base)
+        inline fun prepare(consumer: (TagKey<T>) -> Unit) {
+            consumer(basic)
+            consumer(advanced)
+            consumer(elite)
+            consumer(ultimate)
+        }
+
+        inline fun apply(factory: (TagKey<T>) -> HTTagBuilder<T>) {
+            factory(base)
                 .addTag(basic)
                 .addTag(advanced)
                 .addTag(elite)

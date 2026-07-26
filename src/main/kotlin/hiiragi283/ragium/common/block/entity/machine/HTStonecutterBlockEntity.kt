@@ -4,22 +4,22 @@ import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.HTRecipeHolder
 import hiiragi283.core.api.recipe.base.HTDoubleItemToItemRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
-import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.cache.completed.HTDoubleInputCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.cache.completed.HTDoubleInputCompletedRecipe
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.api.recipe.id
+import hiiragi283.core.api.recipe.ingredient.getMatchingStack
+import hiiragi283.core.api.recipe.recipe
+import hiiragi283.core.common.gui.widget.HTItemWidget
+import hiiragi283.core.support.recipe.cache.HTRecipeCaches
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
-import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.mixin.SingleItemRecipeAccessor
@@ -30,12 +30,11 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.RecipeManager
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.StonecutterRecipe
 import net.minecraft.world.level.block.state.BlockState
 
-class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.AUTO_CHISEL, pos, state) {
+class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.AUTO_CHISEL.get(), pos, state) {
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var catalystSlot: HTBasicItemSlot
     private lateinit var outputSlot: HTBasicItemSlot
@@ -50,42 +49,38 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
         // slots
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder.track(inputSlot)
+        widgetHolder += HTItemWidget.Container(
             catalystSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.NONE,
         )
+        widgetHolder.track(catalystSlot)
 
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.OUTPUT,
         )
+        widgetHolder.track(outputSlot)
     }
 
     //    Processing    //
 
     private inner class ProgressHandlerImpl : ProgressHandler<HTDoubleItemToItemRecipe, HTDoubleInputCompletedRecipe.DoubleItem>() {
-        private val cache: HTRecipeCaches.DoubleItem<WrappedRecipe> = HTRecipeCaches.DoubleItem { context: HTRecipeLookup.Context ->
-            val manager: RecipeManager = context[HTRecipeLookup.Context.MANAGER] ?: return@DoubleItem emptySequence()
-            manager
-                .getAllRecipesFor(RecipeType.STONECUTTING)
-                .asSequence()
-                .map(HTRecipeHolder.Companion::from)
-                .map { holder: HTRecipeHolder<StonecutterRecipe> -> holder.mapRecipe(::WrappedRecipe) }
-        }
+        private val cache: HTRecipeCaches.DoubleItem<WrappedRecipe> = HTRecipeCaches.DoubleItem { context: HTRecipeLookup.Context -> context.getAllRecipes(RecipeType.STONECUTTING).associate { it.id to WrappedRecipe(it.recipe) } }
         private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
         private val catalystHandler: HTItemInputHandler by lazy { HTItemInputHandler(catalystSlot) }
         private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
@@ -108,11 +103,13 @@ class HTStonecutterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBl
 
         override fun test(first: ItemStack, second: ItemStack): Boolean = ingredient.test(first) && ItemStack.isSameItemSameComponents(accessor.result, second)
 
-        override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = ingredient.getRequiredAmount(first) to 0
+        override fun getMatchingStacks(first: ItemStack, second: ItemStack): Pair<ItemStack, ItemStack> = ingredient.getMatchingStack(first) to ItemStack.EMPTY
 
         override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = accessor.result.copy()
 
         override fun getProgressData(input: RecipeInput): HTProgressData = HTProgressData.time(5)
+
+        override fun isIncomplete(): Boolean = ingredient.hasNoItems()
     }
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.autoChisel

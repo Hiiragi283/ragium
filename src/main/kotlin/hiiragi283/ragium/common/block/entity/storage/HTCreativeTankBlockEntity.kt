@@ -2,22 +2,23 @@ package hiiragi283.ragium.common.block.entity.storage
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
-import hiiragi283.core.api.serialization.value.read
-import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.toStackOrEmpty
-import hiiragi283.core.impl.storage.fluid.HTFluidStackResourceSlot
+import hiiragi283.core.support.storage.fluid.HTFluidStackResourceSlot
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTCreativeTankBlockEntity(pos: BlockPos, state: BlockState) : HTTankBlockEntity(RagiumBlockEntityTypes.CREATIVE_TANK, pos, state) {
+class HTCreativeTankBlockEntity(pos: BlockPos, state: BlockState) : HTTankBlockEntity(RagiumBlockEntityTypes.CREATIVE_TANK.get(), pos, state) {
     override fun createTank(listener: HTContentListener): HTFluidStackResourceSlot = CreativeFluidTank()
 
     override fun isCreative(): Boolean = true
+
+    override fun getSlotSyncType(): HTSyncType = HTSyncType.BOTH
 
     private inner class CreativeFluidTank :
         HTFluidStackResourceSlot(),

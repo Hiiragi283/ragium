@@ -1,8 +1,8 @@
 package hiiragi283.ragium.common.item
 
-import hiiragi283.core.api.storage.energy.HTEnergyBattery
+import hiiragi283.core.api.storage.energy.HTEnergyHandler
 import hiiragi283.core.api.text.Text
-import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.support.capability.HTEnergyCapabilities
 import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.item.Item
@@ -25,8 +25,8 @@ open class HTBatteryItem(properties: Properties) : Item(properties) {
         tooltips: MutableList<Text>,
         tooltipFlag: TooltipFlag,
     ) {
-        val view: HTEnergyBattery = HTEnergyCapabilities.getBattery(stack) ?: return
-        HTStorageHelper.addEnergyTooltip(view, tooltips::add, false)
+        val handler: HTEnergyHandler = HTEnergyCapabilities.getHandler(stack) ?: return
+        HTStorageHelper.addEnergyTooltip(handler, tooltips::add, false)
     }
 
     override fun shouldCauseReequipAnimation(oldStack: ItemStack, newStack: ItemStack, slotChanged: Boolean): Boolean = slotChanged || oldStack.item != newStack.item

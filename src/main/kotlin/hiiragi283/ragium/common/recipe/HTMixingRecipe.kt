@@ -14,8 +14,8 @@ import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.api.util.Ior
-import hiiragi283.core.impl.recipe.HTBasicItemOrFluidRecipe
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTSerializableRecipe
+import hiiragi283.core.support.recipe.base.HTBasicItemOrFluidRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -69,17 +69,24 @@ class HTMixingRecipe(
         return test(firstItem, secondItem, fluid)
     }
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack, third: FluidStack): Triple<Int, Int, Int> = Triple(
-        primary.getRequiredAmount(first),
-        secondary?.getRequiredAmount(second) ?: 0,
-        fluidIngredient.getRequiredAmount(third),
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack, third: FluidStack): Triple<ItemStack, ItemStack, FluidStack> = Triple(
+        primary.getMatchingStack(first),
+        secondary?.getMatchingStack(second) ?: ItemStack.EMPTY,
+        fluidIngredient.getMatchingStack(third),
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: FluidStack): Ior<ItemStack, FluidStack> = result.mapLeft { it.getOrEmpty() }.mapRight { it.create() }
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: FluidStack): Ior<ItemStack, FluidStack> = result.mapLeft { it.createOrEmpty() }.mapRight { it.create() }
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MIXING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MIXING
+
+    override fun isIncomplete(): Boolean {
+        if (primary.isIncomplete()) return true
+        if (secondary?.isIncomplete() ?: false) return true
+        if (fluidIngredient.isIncomplete()) return true
+        return result.getLeft()?.isIncomplete() ?: false
+    }
 
     @JvmRecord
     data class Input(val firstItem: ItemStack, val secondItem: ItemStack, val fluid: FluidStack) : HTFluidRecipeInput {

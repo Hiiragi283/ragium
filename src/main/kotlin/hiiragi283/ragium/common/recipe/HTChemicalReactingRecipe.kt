@@ -8,13 +8,16 @@ import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
-import hiiragi283.core.api.recipe.ingredient.getRequiredAmount
+import hiiragi283.core.api.recipe.ingredient.getMatchingStack
 import hiiragi283.core.api.recipe.input.HTFluidRecipeInput
+import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.recipe.result.HTListFluidResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
+import hiiragi283.core.api.serialization.codec.convert
+import hiiragi283.core.api.serialization.codec.listOrElement
 import hiiragi283.core.api.util.Ior
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.util.Option
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.recipe.result.HTChemicalResult
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -23,13 +26,12 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.fluids.FluidStack
-import java.util.Optional
 
 class HTChemicalReactingRecipe(
     val primary: HTFluidIngredient,
     val secondary: Ior<HTFluidIngredient, Ingredient>,
-    val fluidResults: HTListFluidResult,
-    val itemResult: Optional<HTItemResult>,
+    val fluidResults: List<HTFluidResult>,
+    val itemResult: Option<HTItemResult>,
     override val progressData: HTProgressData,
 ) : HTRecipePredicates.TripleInput<HTChemicalReactingRecipe.Input, ItemStack, FluidStack, FluidStack>,
     HTRecipeFactories.ItemAndDoubleFluid<HTChemicalResult>,
@@ -48,11 +50,11 @@ class HTChemicalReactingRecipe(
                             HTFluidIngredient.CODEC.fieldOf("secondary"),
                             HTCodecs.INGREDIENT.fieldOf(HTConst.CATALYST),
                         ).forGetter(HTChemicalReactingRecipe::secondary),
-                    HTListFluidResult
-                        .codec(2)
+                    HTFluidResult.CODEC
+                        .listOrElement(1..2)
                         .fieldOf(HTConst.FLUID_RESULT)
                         .forGetter(HTChemicalReactingRecipe::fluidResults),
-                    HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).forGetter(HTChemicalReactingRecipe::itemResult),
+                    HTItemResult.CODEC.optionalFieldOf(HTConst.ITEM_RESULT).convert().forGetter(HTChemicalReactingRecipe::itemResult),
                     HTProgressData.CODEC.forGetter { it.progressData },
                 ).apply(instance, ::HTChemicalReactingRecipe)
         }
@@ -65,24 +67,30 @@ class HTChemicalReactingRecipe(
 
     override fun test(first: ItemStack, second: FluidStack, third: FluidStack): Boolean {
         if (!primary.test(second)) return false
-        return secondary.fold(
+        return secondary.merge(
             { it.test(third) && first.isEmpty },
             { it.test(first) && third.isEmpty },
-            { secondary: HTFluidIngredient, catalyst1: Ingredient -> catalyst1.test(first) && secondary.test(third) },
+            { secondary: Boolean, catalyst1: Boolean -> catalyst1 && secondary },
         )
     }
 
-    override fun getRequiredAmount(first: ItemStack, second: FluidStack, third: FluidStack): Triple<Int, Int, Int> = Triple(
-        secondary.getRight()?.getRequiredAmount(first) ?: 0,
-        primary.getRequiredAmount(second),
-        secondary.getLeft()?.getRequiredAmount(third) ?: 0,
+    override fun getMatchingStacks(first: ItemStack, second: FluidStack, third: FluidStack): Triple<ItemStack, FluidStack, FluidStack> = Triple(
+        secondary.getRight()?.getMatchingStack(first) ?: ItemStack.EMPTY,
+        primary.getMatchingStack(second),
+        secondary.getLeft()?.getMatchingStack(third) ?: FluidStack.EMPTY,
     )
 
     override fun assemble(firstInput: ItemStack, secondInput: FluidStack, thirdInput: FluidStack): HTChemicalResult = HTChemicalResult.create(fluidResults, itemResult)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.CHEMICAL_REACTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CHEMICAL_REACTING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.CHEMICAL_REACTING
+
+    override fun isIncomplete(): Boolean {
+        if (primary.isIncomplete()) return true
+        if (secondary.merge(HTFluidIngredient::isIncomplete, Ingredient::hasNoItems) { fluid: Boolean, item: Boolean -> fluid || item }) return true
+        return itemResult.fold({ false }, HTItemResult::isIncomplete)
+    }
 
     @JvmRecord
     data class Input(val catalyst: ItemStack, val firstFluid: FluidStack, val secondFluid: FluidStack) : HTFluidRecipeInput {

@@ -10,7 +10,7 @@ import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.input.HTItemAndFluidRecipeInput
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -42,11 +42,13 @@ class HTFreezingRecipe(
 
     override fun test(first: ItemStack, second: FluidStack): Boolean = catalyst.test(first) && ingredient.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: FluidStack): Pair<Int, Int> = 0 to ingredient.getRequiredAmount(second)
+    override fun getMatchingStacks(first: ItemStack, second: FluidStack): Pair<ItemStack, FluidStack> = ItemStack.EMPTY to ingredient.getMatchingStack(second)
 
-    override fun assemble(firstInput: ItemStack, secondInput: FluidStack): ItemStack = result.getOrEmpty()
+    override fun assemble(firstInput: ItemStack, secondInput: FluidStack): ItemStack = result.createOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.FREEZING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.FREEZING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.FREEZING
+
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || catalyst.hasNoItems() || result.isIncomplete()
 }

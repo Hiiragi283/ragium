@@ -6,22 +6,23 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.cache.HTTripleInputRecipeCache
-import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.setup.HCFluids
+import hiiragi283.core.support.recipe.cache.HTTripleInputRecipeCache
+import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.api.recipe.base.HTEnchantingRecipe
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
 import hiiragi283.ragium.common.recipe.RagiumRecipeLookups
-import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
-import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
-import hiiragi283.ragium.impl.recipe.cache.completed.HTEnchantingCompletedRecipe
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
+import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
+import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
+import hiiragi283.ragium.common.recipe.cache.completed.HTEnchantingCompletedRecipe
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -29,7 +30,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
-class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.ENCHANTER, pos, state) {
+class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(RagiumBlockEntityTypes.ENCHANTER.get(), pos, state) {
     private lateinit var inputTank: HTBasicFluidTank
 
     override fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {
@@ -56,33 +57,38 @@ class HTEnchanterBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBloc
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
         // progress
-        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(5.25))
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(5.25), RagiumRecipeViewerTypes.ENCHANTING)
         // slots
-        widgetHolder += HTFluidWidget
-            .createTank(
-                inputTank,
-                HTSlotHelper.getSlotPosX(0),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.INPUT)
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTFluidWidget.Tank(
+            inputTank,
+            HTSlotHelper.getSlotPosX(0),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+            false,
+        )
+        widgetHolder.track(inputTank)
+        widgetHolder += HTItemWidget.Container(
             baseSlot,
             HTSlotHelper.getSlotPosX(2),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder.track(baseSlot)
+        widgetHolder += HTItemWidget.Container(
             additionSlot,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.EXTRA_INPUT,
         )
+        widgetHolder.track(additionSlot)
 
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(7),
             HTSlotHelper.getSlotPosY(1),
             HTBackgroundType.OUTPUT,
         )
+        widgetHolder.track(outputSlot)
     }
 
     //    Processing    //

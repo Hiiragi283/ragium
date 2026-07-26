@@ -4,13 +4,13 @@
   "ingredients": [
     [
       {
-        "tag": "c:dusts/coal"
+        "tag": "c:dusts/carbon"
       },
       {
         "tag": "c:dusts/charcoal"
       },
       {
-        "tag": "c:dusts/carbon"
+        "tag": "c:dusts/coal"
       }
     ],
     {

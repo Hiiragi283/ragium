@@ -1,11 +1,12 @@
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
+import me.modmuss50.mpp.ReleaseType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.slf4j.event.Level
 
 plugins {
     idea
     id("signing")
-    kotlin("jvm") version "2.2.20"
+    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.neo.moddev)
 
     alias(libs.plugins.dokka.asProvider())
@@ -14,11 +15,39 @@ plugins {
 
     alias(libs.plugins.axion.release)
     alias(libs.plugins.maven.publish)
+    alias(libs.plugins.mod.publish)
 }
 
 val modId = "ragium"
 
-val generateModMetadata: TaskProvider<ProcessResources> by tasks.registering(ProcessResources::class)
+val generateModMetadata: TaskProvider<ProcessResources> = tasks.register<ProcessResources>("generateModMetadata") {
+    description = "Generate mod metadata"
+    val mcVersion: String = libs.versions.minecraft.get()
+    val neoVersion: String = libs.versions.neo.version
+        .get()
+    val kffVersion: String = libs.versions.kff.version
+        .get()
+
+    val replaceProperties: Map<String, String> = mapOf(
+        "minecraft_version" to mcVersion,
+        "minecraft_version_range" to "[$mcVersion]",
+        "neo_version" to neoVersion,
+        "neo_version_range" to "[$neoVersion,)",
+        "kff_version" to kffVersion,
+        "kff_version_range" to "[$kffVersion,)",
+        "loader_version_range" to "[1,)",
+        "mod_id" to modId,
+        "mod_name" to "Ragium",
+        "mod_license" to "MPL-2.0",
+        "mod_version" to version.toString(),
+        "mod_authors" to "Hiiragi283",
+        "mod_description" to "A simple tech mod for vanilla expansion and automation",
+    )
+    inputs.properties(replaceProperties)
+    expand(replaceProperties)
+    from("src/main/templates")
+    into("build/generated/sources/modMetadata")
+}
 
 scmVersion {
     useHighestVersion = true
@@ -42,28 +71,32 @@ base {
     version = scmVersion.version
 }
 
-val apiModule: SourceSet by sourceSets.register("api")
-val mainModule: SourceSet by sourceSets.named("main") {
-    compileClasspath += apiModule.output
-    runtimeClasspath += apiModule.output
+val apiModule: SourceSet = sourceSets.register("api").get()
+val supportModule: SourceSet = sourceSets.register("support") {
+    compileClasspath += apiModule.output + apiModule.compileClasspath
+    runtimeClasspath += apiModule.output + apiModule.runtimeClasspath
+}.get()
+val mainModule: SourceSet = sourceSets.named("main") {
+    compileClasspath += supportModule.output + supportModule.compileClasspath
+    runtimeClasspath += supportModule.output + supportModule.runtimeClasspath
 
     resources {
         srcDirs("src/generated/resources", generateModMetadata.get().outputs.files)
         exclude("**/.cache/**")
     }
-}
-val clientModule: SourceSet by sourceSets.register("client") {
+}.get()
+val clientModule: SourceSet = sourceSets.register("client") {
     compileClasspath += mainModule.output + mainModule.compileClasspath
     runtimeClasspath += mainModule.output + mainModule.runtimeClasspath
-}
-val integrationModule: SourceSet by sourceSets.register("integration") {
+}.get()
+val integrationModule: SourceSet = sourceSets.register("integration") {
     compileClasspath += clientModule.output + clientModule.compileClasspath
     runtimeClasspath += clientModule.output + clientModule.runtimeClasspath
-}
-val dataModule: SourceSet by sourceSets.register("data") {
+}.get()
+val dataModule: SourceSet = sourceSets.register("data") {
     compileClasspath += integrationModule.output + integrationModule.compileClasspath
     runtimeClasspath += integrationModule.output + integrationModule.runtimeClasspath
-}
+}.get()
 
 repositories {
     mavenLocal()
@@ -101,17 +134,7 @@ repositories {
     maven(url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/") {
         content { includeGroup("com.klikli_dev") } // Theurgy
     }
-    /*maven(url = "https://maven.pkg.github.com/refinedmods/refinedstorage2") {
-        credentials {
-            username = "anything"
-            password = "\u0067hp_oGjcDFCn8jeTzIj4Ke9pLoEVtpnZMP4VQgaX"
-        }
-    }*/
-    // RS2
 
-    maven(url = "https://central.sonatype.com/repository/maven-snapshots/") {
-        content { includeGroup("io.github.hiiragi283") }
-    }
     mavenCentral()
 }
 
@@ -130,11 +153,28 @@ neoForge {
             .get()
     }
 
-    // This line is optional. Access Transformers are automatically detected
-    // accessTransformers = project.files("src/main/resources/META-INF/accesstransformer.cfg")
+    accessTransformers {
+        rootProject.fileTree("src")
+            .matching { include("*/resources/META-INF/accesstransformer.cfg") }
+            .forEach { atFile ->
+                println("adding access transformer file: $atFile")
 
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
+                from(atFile)
+                publish(atFile)
+            }
+    }
+
+    interfaceInjectionData {
+        rootProject.fileTree("src")
+            .matching { include("*/resources/META-INF/interfaceinjection.json") }
+            .forEach { atFile ->
+                println("adding interface injection file: $atFile")
+
+                from(atFile)
+                publish(atFile)
+            }
+    }
+
     runs {
         register("client") {
             client()
@@ -151,7 +191,7 @@ neoForge {
 
         register("integration") {
             client()
-            gameDirectory = project.file("run")
+            gameDirectory = rootProject.file("run")
             sourceSet = integrationModule
 
             jvmArgument("-Dmixin.debug.export=true")
@@ -163,7 +203,7 @@ neoForge {
             sourceSet = dataModule
 
             // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-            gameDirectory = project.file("run-data")
+            gameDirectory = rootProject.file("run-data")
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             programArguments.addAll(
@@ -202,6 +242,7 @@ neoForge {
         create(modId) {
             sourceSet(sourceSets.main.get())
             sourceSet(apiModule)
+            sourceSet(supportModule)
             sourceSet(clientModule)
             sourceSet(integrationModule)
             sourceSet(dataModule)
@@ -237,13 +278,15 @@ dependencies {
     configurations.apply {
         runtimeClasspath.get().extendsFrom(create("localRuntime"))
 
-        val apiCompileClasspath: Configuration by named("apiCompileClasspath")
-        val compileClasspath: Configuration by named("compileClasspath")
-        val clientCompileClasspath: Configuration by named("clientCompileClasspath")
-        val integrationCompileClasspath: Configuration by named("integrationCompileClasspath")
-        val dataCompileClasspath: Configuration by named("dataCompileClasspath")
+        val apiCompileClasspath: Configuration = named("apiCompileClasspath").get()
+        val supportCompileClasspath: Configuration = named("supportCompileClasspath").get()
+        val compileClasspath: Configuration = named("compileClasspath").get()
+        val clientCompileClasspath: Configuration = named("clientCompileClasspath").get()
+        val integrationCompileClasspath: Configuration = named("integrationCompileClasspath").get()
+        val dataCompileClasspath: Configuration = named("dataCompileClasspath").get()
 
-        apiCompileClasspath.extendsFrom(compileClasspath)
+        apiCompileClasspath.extendsFrom(supportCompileClasspath)
+        supportCompileClasspath.extendsFrom(compileClasspath)
         compileClasspath.extendsFrom(clientCompileClasspath)
         clientCompileClasspath.extendsFrom(integrationCompileClasspath)
         integrationCompileClasspath.extendsFrom(dataCompileClasspath)
@@ -328,7 +371,7 @@ kotlin {
 dokka {
     dokkaSourceSets {
         configureEach {
-            sourceRoots.from(apiModule.kotlin.srcDirs, clientModule.kotlin.srcDirs, integrationModule.kotlin.srcDirs)
+            sourceRoots.from(apiModule.kotlin.srcDirs, supportModule.kotlin.srcDirs)
         }
     }
 }
@@ -356,6 +399,57 @@ spotless {
     }
 }
 
+publishMods {
+    val mcVersion: Provider<String> = libs.versions.minecraft
+
+    file = tasks.jar.flatMap { it.archiveFile }
+    additionalFiles.from(tasks.named<Jar>("sourcesJar").flatMap { it.archiveFile })
+    changelog = providers.gradleProperty("CHANGELOG").orElse("")
+    type = ReleaseType.BETA
+    modLoaders.add("neoforge")
+
+    curseforge {
+        accessToken = providers.gradleProperty("CURSEFORGE_TOKEN")
+        projectId = providers.gradleProperty("CURSEFORGE_RAGIUM")
+        minecraftVersions.add(mcVersion)
+        changelogType = "markdown"
+        announcementTitle = "Download from CurseForge"
+        projectSlug = "ragium"
+
+        javaVersions.add(JavaVersion.VERSION_21)
+        client = true
+        server = true
+
+        requires("kotlin-for-forge")
+        requires("selene")
+        optional("jei")
+        optional("guideme")
+    }
+    modrinth {
+        accessToken = providers.gradleProperty("MODRINTH_TOKEN")
+        projectId = providers.gradleProperty("MODRINTH_RAGIUM")
+        minecraftVersions.add(mcVersion)
+        announcementTitle = "Download from Modrinth"
+
+        requires("kotlin-for-forge")
+        requires("moonlight")
+        optional("jei")
+        optional("guideme")
+    }
+    discord {
+        webhookUrl = providers.gradleProperty("DISCORD_TOKEN")
+        username = "Hiiragi Series Announcement"
+        content = changelog.map {
+            """
+            ## 新しいバージョン「${rootProject.version}」がリリースされました！
+            ## Changelog
+            $it
+            """.trimIndent()
+        }
+        setPlatforms(publishMods.platforms.getByName("curseforge"), publishMods.platforms.getByName("modrinth"))
+    }
+}
+
 tasks {
     compileJava {
         options.encoding = "UTF-8"
@@ -369,44 +463,13 @@ tasks {
         from("LICENSE") {
             rename { "${it}_ragium" }
         }
-        from(apiModule.output, clientModule.output, integrationModule.output)
-        from(dataModule.output) {
-            this.include("**/core/data/bootsrap/**")
-        }
+        from(apiModule.output, supportModule.output, clientModule.output, integrationModule.output)
     }
 
     named<Jar>("sourcesJar") {
-        dependsOn("apiClasses", "clientClasses", "integrationClasses")
+        dependsOn("apiClasses", "supportClasses", "clientClasses", "integrationClasses")
         duplicatesStrategy = DuplicatesStrategy.FAIL
-        from(apiModule.allSource, clientModule.allSource, integrationModule.allSource)
-    }
-
-    generateModMetadata {
-        val mcVersion: String = libs.versions.minecraft.get()
-        val neoVersion: String = libs.versions.neo.version
-            .get()
-        val kffVersion: String = libs.versions.kff.version
-            .get()
-
-        val replaceProperties: Map<String, String> = mapOf(
-            "minecraft_version" to mcVersion,
-            "minecraft_version_range" to "[$mcVersion]",
-            "neo_version" to neoVersion,
-            "neo_version_range" to "[$neoVersion,)",
-            "kff_version" to kffVersion,
-            "kff_version_range" to "[$kffVersion,)",
-            "loader_version_range" to "[1,)",
-            "mod_id" to modId,
-            "mod_name" to "Ragium",
-            "mod_license" to "MPL-2.0",
-            "mod_version" to version.toString(),
-            "mod_authors" to "Hiiragi283",
-            "mod_description" to "A simple tech mod for vanilla expansion and automation",
-        )
-        inputs.properties(replaceProperties)
-        expand(replaceProperties)
-        from("src/main/templates")
-        into("build/generated/sources/modMetadata")
+        from(apiModule.allSource, supportModule.allSource, clientModule.allSource, integrationModule.allSource)
     }
 
     /*wrapper {

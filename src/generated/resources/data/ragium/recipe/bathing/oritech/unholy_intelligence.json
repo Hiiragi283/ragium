@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#hiiragi_core:eldritch"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "oritech:dubios_container"
+  },
+  "result": {
+    "count": 1,
+    "id": "oritech:unholy_intelligence"
+  },
+  "time": 200
+}

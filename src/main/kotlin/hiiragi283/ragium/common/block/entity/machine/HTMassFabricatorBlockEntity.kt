@@ -2,13 +2,15 @@ package hiiragi283.ragium.common.block.entity.machine
 
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.data.map.RagiumDataMapTypes
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToItemBlockEntity
+import hiiragi283.ragium.common.recipe.viewer.RagiumRecipeViewerTypes
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -19,11 +21,13 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
-class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity(RagiumBlockEntityTypes.MASS_FABRICATOR, pos, state) {
+class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToItemBlockEntity(RagiumBlockEntityTypes.MASS_FABRICATOR.get(), pos, state) {
     override fun createInputSlot(listener: HTContentListener): HTBasicItemSlot = HTBasicItemSlot.input(
         listener,
         canInsert = { RagiumDataMapTypes.getMatterPoint(it) > 0 },
     )
+
+    override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(RagiumRecipeViewerTypes.MASS_FABRICATING)
 
     //    Processing    //
 
@@ -55,7 +59,7 @@ class HTMassFabricatorBlockEntity(pos: BlockPos, state: BlockState) : HTItemToIt
 
         override fun getMaxProgress(recipe: ItemStack): Int = updateAndGetProgress(20 * 60)
 
-        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = battery.consume()
+        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = handler.consume()
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: ItemStack) {
             // output

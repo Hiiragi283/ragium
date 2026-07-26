@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.ragi_crystal.desc"
+      "translate": "advancement.ragium.ragi_crystal.desc"
     },
     "icon": {
       "count": 1,
       "id": "ragium:ragi_crystal_gem"
     },
     "title": {
-      "translate": "advancements.ragium.ragi_crystal.title"
+      "translate": "advancement.ragium.ragi_crystal.title"
     }
   },
   "requirements": [

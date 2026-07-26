@@ -3,10 +3,10 @@ package hiiragi283.ragium.common.block.entity.storage
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTTankEmptyingRecipe
 import hiiragi283.core.api.recipe.base.HTTankFillingRecipe
-import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.amount.HTAmountView
@@ -14,28 +14,30 @@ import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.api.util.Ior
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
-import hiiragi283.core.impl.storage.fluid.HTFluidStackResourceSlot
 import hiiragi283.core.setup.HCDataComponents
-import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
-import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.core.support.gui.sync.HTFluidSyncSlot
+import hiiragi283.core.support.recipe.cache.HTRecipeCaches
+import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.fluid.HTFluidStackResourceSlot
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
+import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidActionResult
 import net.neoforged.neoforge.fluids.FluidStack
@@ -46,8 +48,8 @@ import net.neoforged.neoforge.fluids.SimpleFluidContent
  * @see mekanism.common.tile.TileEntityFluidTank
  * @see hiiragi283.core.common.block.entity.HTCopperBasinBlockEntity
  */
-open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
-    constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.TANK, pos, state)
+open class HTTankBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
+    constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.TANK.get(), pos, state)
 
     lateinit var tank: HTFluidStackResourceSlot
         private set
@@ -84,23 +86,22 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         // slot
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.OUTPUT,
         )
         // tank
-        val fluidWidget: HTFluidWidget =
-            HTFluidWidget.createTank(tank, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0))
-        if (isCreative()) fluidWidget.setGhost()
-        widgetHolder += fluidWidget
+        widgetHolder += HTFluidWidget.Tank(tank, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0), HTBackgroundType.NONE, isCreative())
+        val syncType: HTSyncType = getSlotSyncType() ?: return
+        widgetHolder.track(HTFluidSyncSlot(tank), syncType)
     }
 
     //    Sync    //
@@ -155,12 +156,11 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         val stack: ItemStack = inputHandler.getItemStack()
         val recipe: HTTankEmptyingRecipe = emptyingCache.findFirstRecipe(stack, level) ?: return false
 
-        val rawResult: Ior<ItemStack, FluidStack> = recipe.assemble(stack)
-        val fluidStack: FluidStack = rawResult.getRight() ?: return false
-        if (outputHandler.canInsert(stack) && fluidOutputHandler.canInsert(fluidStack)) {
+        val (item: ItemStack, fluid: FluidStack) = recipe.assemble(stack)
+        if (outputHandler.canInsert(item) && fluidOutputHandler.canInsert(fluid)) {
             // outputs
-            outputHandler.insert(stack)
-            fluidOutputHandler.insert(fluidStack)
+            outputHandler.insert(item)
+            fluidOutputHandler.insert(fluid)
             // input
             inputHandler.consume(1)
             return true
@@ -178,7 +178,7 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
         val filledContainer: ItemStack = recipe.assemble(itemStack, fluidStack)
         if (outputHandler.canInsert(filledContainer)) {
             outputHandler.insert(filledContainer)
-            recipe.getRequiredAmount(itemStack, fluidStack).let { (first: Int, second: Int) ->
+            recipe.getMatchingStacks(itemStack, fluidStack).let { (first: ItemStack, second: FluidStack) ->
                 inputHandler.consume(first)
                 fluidInputHandler.consume(second)
             }
@@ -207,5 +207,11 @@ open class HTTankBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, 
                 inputHandler.consume(1)
             }
         }
+    }
+
+    //    Simple    //
+
+    class Simple(pos: BlockPos, state: BlockState) : HTTankBlockEntity(RagiumBlockEntityTypes.TANK.get(), pos, state) {
+        override fun createTank(listener: HTContentListener): HTBasicFluidTank = HTVariableFluidTank.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.tankCapacity) }
     }
 }

@@ -2,16 +2,14 @@ package hiiragi283.ragium.common.block.entity.component
 
 import com.mojang.serialization.Codec
 import hiiragi283.core.api.block.entity.HTBlockEntityComponent
-import hiiragi283.core.api.function.nextEntry
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.serialization.component.DataComponentGetter
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.common.block.entity.HTBlockEntity
-import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
-import hiiragi283.ragium.common.storge.holder.HTSlotInfoProvider
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
+import hiiragi283.ragium.support.storage.holder.HTSlotInfoProvider
 import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import java.util.*
@@ -54,10 +52,4 @@ class HTSlotInfoComponent(owner: HTBlockEntity) :
     //    HTSlotInfoProvider    //
 
     override fun getSlotInfo(side: Direction): HTSlotInfo = slotInfoCache.computeIfAbsent(side) { HTSlotInfo.BOTH }
-
-    fun cycleSlotInfo(side: Direction) {
-        val newSlot: HTSlotInfo = getSlotInfo(side).nextEntry()
-        val oldSlot: HTSlotInfo? = slotInfoCache.put(side, newSlot)
-        RagiumAPI.LOGGER.debug("Updated slot info for {} from {} to {}", side, oldSlot, newSlot)
-    }
 }

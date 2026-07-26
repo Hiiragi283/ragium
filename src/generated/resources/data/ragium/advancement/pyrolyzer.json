@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.pyrolyzer.desc"
+      "translate": "advancement.ragium.pyrolyzer.desc"
     },
     "icon": {
       "count": 1,
       "id": "ragium:pyrolyzer"
     },
     "title": {
-      "translate": "advancements.ragium.pyrolyzer.title"
+      "translate": "advancement.ragium.pyrolyzer.title"
     }
   },
   "requirements": [

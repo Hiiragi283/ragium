@@ -3,13 +3,13 @@ package hiiragi283.ragium.common.recipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import hiiragi283.core.api.HTConst
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.base.HTRecipeFactories
 import hiiragi283.core.api.recipe.base.HTRecipePredicates
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -55,15 +55,17 @@ class HTAlloyingRecipe(
         return tertiary?.test(third) ?: third.isEmpty
     }
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack, third: ItemStack): Triple<Int, Int, Int> = Triple(
-        primary.getRequiredAmount(first),
-        secondary.getRequiredAmount(second),
-        tertiary?.getRequiredAmount(third) ?: 0,
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack, third: ItemStack): Triple<ItemStack, ItemStack, ItemStack> = Triple(
+        primary.getMatchingStack(first),
+        secondary.getMatchingStack(second),
+        tertiary?.getMatchingStack(third) ?: ItemStack.EMPTY,
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): ItemStack = result.getOrEmpty()
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack, thirdInput: ItemStack): ItemStack = result.createOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ALLOYING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ALLOYING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ALLOYING
+
+    override fun isIncomplete(): Boolean = primary.isIncomplete() || secondary.isIncomplete() || (tertiary?.isIncomplete() ?: false) || result.isIncomplete()
 }

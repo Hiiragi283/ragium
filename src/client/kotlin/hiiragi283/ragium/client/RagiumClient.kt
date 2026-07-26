@@ -1,6 +1,7 @@
 package hiiragi283.ragium.client
 
-import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.color.HTDefaultColor
+import hiiragi283.core.api.data.pack.HTDynamicResourcePack
 import hiiragi283.core.api.event.HTRegisterWidgetRendererEvent
 import hiiragi283.core.api.mod.HTClientMod
 import hiiragi283.core.api.registry.HTFluidContent
@@ -44,13 +45,14 @@ data object RagiumClient : HTClientMod() {
         configScreen(container)
 
         HCClientResourceProvider.addSupportedNamespaces(RagiumAPI.MOD_ID)
+        HTDynamicResourcePack.addDomain(RagiumAPI.MOD_ID)
 
         RegHelper.registerDynamicResourceProvider(RagiumClientResourceProvider)
         RagiumAPI.LOGGER.info("Hiiragi-Core loaded on client side")
     }
 
     override fun registerWidgetRenderer(event: HTRegisterWidgetRendererEvent) {
-        event.register(RagiumWidgetTypes.ENERGY_SLOT.get(), ::HTEnergySlotWidgetRenderer)
+        event.register(RagiumWidgetTypes.ENERGY_SLOT, ::HTEnergySlotWidgetRenderer)
     }
 
     override fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
@@ -113,6 +115,8 @@ data object RagiumClient : HTClientMod() {
 
     private fun registerFluidExtensions(event: RegisterClientExtensionsEvent) {
         // Overworld
+        event.molten(RagiumFluids.MOLTEN_RAGINITE, Color(0xff3366))
+
         event.clear(RagiumFluids.HYDROGEN, Color(0x3333cc))
         event.clear(RagiumFluids.STEAM, Color(0xcccccc))
 

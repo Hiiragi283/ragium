@@ -2,64 +2,57 @@ package hiiragi283.ragium.data.advancement
 
 import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HiiragiCoreAccess
-import hiiragi283.core.api.data.advancement.HTAdvancementKey
-import hiiragi283.core.api.data.advancement.HTSubAdvancementProvider
+import hiiragi283.core.api.data.advancement.AdvancementKey
+import hiiragi283.core.api.data.advancement.HTAdvancementProvider
 import hiiragi283.core.api.data.advancement.builder.HTAdvancementBuilder
-import hiiragi283.core.api.material.HTMaterialLike
-import hiiragi283.core.api.material.getOrThrow
+import hiiragi283.core.api.item.HTItemLike
+import hiiragi283.core.api.material.HTMaterialContents
+import hiiragi283.core.api.material.HTMaterialKey
+import hiiragi283.core.api.material.getResult
 import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.material.part.HTPartLike
-import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.registry.HTSimpleItemHolderLike
-import hiiragi283.core.api.resource.toId
+import hiiragi283.core.api.resource.HTIdLike
+import hiiragi283.core.api.resource.vanillaId
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HTTagPrefix
 import hiiragi283.core.api.tag.HiiragiCoreTags
+import hiiragi283.core.api.util.getOrThrow
+import hiiragi283.core.api.util.some
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.HCMaterialKeys
-import hiiragi283.core.common.registry.HTDeferredBlockAndItem
+import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumItems
+import java.util.concurrent.CompletableFuture
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 
-data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
-    @JvmStatic
-    private fun getItem(part: HTPartLike, material: HTMaterialLike): HTSimpleItemHolderLike = HiiragiCoreAccess.INSTANCE
-        .registeredContents
-        .items
-        .getOrThrow(part, material)
+class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTAdvancementProvider(packOutput, future, RagiumAPI.MOD_ID) {
+    private fun getItem(part: HTPartLike, key: HTMaterialKey): HTMaterialContents.ItemEntry = HiiragiCoreAccess.INSTANCE.registeredContents.items.getResult(part, key).getOrThrow()
 
-    @JvmStatic
-    private fun createSimple(key: HTAdvancementKey, parentKey: HTAdvancementKey, block: HTDeferredBlockAndItem<*, *>) {
-        createSimple(key, parentKey, block.itemHolder)
+    private fun <T> createSimple(key: AdvancementKey, parentKey: AdvancementKey, item: T) where T : HTItemLike<*>, T : HTIdLike {
+        HTAdvancementBuilder.create(key) {
+            +parentKey
+            display { +item.toStack() }
+            inventory("has_${item.path}") { +ItemPredicate.Builder.item().of(item) }
+        }.save(exporter)
     }
 
-    @JvmStatic
-    private fun createSimple(key: HTAdvancementKey, parentKey: HTAdvancementKey, item: HTItemHolderLike<*>) {
-        HTAdvancementBuilder.create(output, key) {
-            parent = parentKey
-            display {
-                iconStack += item
-            }
-            criteria["has_${item.path}"] = { predicates += { of(item) } }
-        }
-    }
+    private fun ItemPredicate.Builder.of(prefix: HTTagPrefix, key: HTMaterialKey): ItemPredicate.Builder = this.of(prefix.itemTagKey(key))
 
-    private fun ItemPredicate.Builder.of(prefix: HTTagPrefix, material: HTMaterialLike): ItemPredicate.Builder = this.of(prefix.itemTagKey(material))
-
-    override fun generate(registries: HolderLookup.Provider) {
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.ROOT) {
+    override fun buildAdvancements() {
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.ROOT) {
             display {
-                iconStack += getItem(CommonParts.DUST, RagiumMaterialKeys.RAGINITE)
-                backGround = HTConst.MINECRAFT.toId(HTConst.TEXTURES, HTConst.BLOCK, "smooth_stone.png")
+                +getItem(CommonParts.DUST, RagiumMaterialKeys.RAGINITE).toStack()
+                backGround = vanillaId(HTConst.TEXTURES, HTConst.BLOCK, "smooth_stone.png").some()
                 showToast = false
                 showChat = false
             }
-            criteria["has_raginite"] = { predicates += { of(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE) } }
-        }
+            inventory("has_raginite") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE) }
+        }.save(exporter)
 
         basic()
         advanced()
@@ -67,100 +60,84 @@ data object RagiumAdvancementProvider : HTSubAdvancementProvider() {
         ultimate()
     }
 
-    @JvmStatic
+    override fun getName(): String = "Advancements - $modId"
+
     private fun basic() {
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.RAGI_ALLOY) {
-            parent = RagiumAdvancementKeys.ROOT
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.RAGI_ALLOY) {
+            +RagiumAdvancementKeys.ROOT
             display {
-                iconStack += getItem(CommonParts.INGOT, RagiumMaterialKeys.RAGI_ALLOY)
+                +getItem(CommonParts.INGOT, RagiumMaterialKeys.RAGI_ALLOY).toStack()
                 type = AdvancementType.GOAL
             }
-            criteria["has_ragi_alloy"] = { predicates += { of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) } }
-        }
+            inventory("has_ragi_alloy") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) }
+        }.save(exporter)
 
         createSimple(RagiumAdvancementKeys.ALLOY_SMELTER, RagiumAdvancementKeys.RAGI_ALLOY, RagiumBlocks.ALLOY_SMELTER)
     }
 
-    @JvmStatic
     private fun advanced() {
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY) {
-            parent = RagiumAdvancementKeys.RAGI_ALLOY
-            display {
-                iconStack += getItem(CommonParts.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY)
-            }
-            criteria["has_adv_ragi_alloy"] = { predicates += { of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) } }
-        }
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY) {
+            +RagiumAdvancementKeys.RAGI_ALLOY
+            display { +getItem(CommonParts.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY).toStack() }
+            inventory("has_adv_ragi_alloy") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) }
+        }.save(exporter)
 
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.THERMOMETER) {
-            parent = RagiumAdvancementKeys.ALLOY_SMELTER
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.THERMOMETER) {
+            +RagiumAdvancementKeys.ALLOY_SMELTER
             display {
-                iconStack += RagiumItems.THERMOMETER
+                +RagiumItems.THERMOMETER.toStack()
                 type = AdvancementType.GOAL
             }
-            criteria["has_thermometer"] = { predicates += { of(RagiumItems.THERMOMETER) } }
-        }
+            inventory("has_thermometer") { +ItemPredicate.Builder.item().of(RagiumItems.THERMOMETER) }
+        }.save(exporter)
         createSimple(RagiumAdvancementKeys.REFINERY, RagiumAdvancementKeys.THERMOMETER, RagiumBlocks.REFINERY)
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.PLASTIC) {
-            parent = RagiumAdvancementKeys.REFINERY
-            display {
-                iconStack += getItem(CommonParts.PLATE, CommonMaterialKeys.PLASTIC)
-            }
-            criteria["has_plastic"] = { predicates += { of(HiiragiCoreTags.Items.PLASTICS) } }
-        }
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.REFINED_SILICON) {
-            parent = RagiumAdvancementKeys.REFINERY
-            display {
-                iconStack += getItem(CommonParts.DUST, CommonMaterialKeys.SILICON)
-            }
-            criteria["has_silicon"] = { predicates += { of(CommonTagPrefixes.DUST, CommonMaterialKeys.SILICON) } }
-        }
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.PLASTIC) {
+            +RagiumAdvancementKeys.REFINERY
+            display { +getItem(CommonParts.PLATE, CommonMaterialKeys.PLASTIC).toStack() }
+            inventory("has_plastic") { +ItemPredicate.Builder.item().of(HiiragiCoreTags.Items.PLASTICS) }
+        }.save(exporter)
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.REFINED_SILICON) {
+            +RagiumAdvancementKeys.REFINERY
+            display { +getItem(CommonParts.DUST, CommonMaterialKeys.SILICON).toStack() }
+            inventory("has_silicon") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.DUST, CommonMaterialKeys.SILICON) }
+        }.save(exporter)
 
         createSimple(RagiumAdvancementKeys.PYROLYZER, RagiumAdvancementKeys.THERMOMETER, RagiumBlocks.PYROLYZER)
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.CRIMSON_CRYSTAL) {
-            parent = RagiumAdvancementKeys.PYROLYZER
-            display {
-                iconStack += getItem(CommonParts.GEM, HCMaterialKeys.CRIMSON_CRYSTAL)
-            }
-            criteria["has_crimson_crystal"] = { predicates += { of(CommonTagPrefixes.GEM, HCMaterialKeys.CRIMSON_CRYSTAL) } }
-        }
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.WARPED_CRYSTAL) {
-            parent = RagiumAdvancementKeys.PYROLYZER
-            display {
-                iconStack += getItem(CommonParts.GEM, HCMaterialKeys.WARPED_CRYSTAL)
-            }
-            criteria["has_warped_crystal"] = { predicates += { of(CommonTagPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL) } }
-        }
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.CRIMSON_CRYSTAL) {
+            +RagiumAdvancementKeys.PYROLYZER
+            display { +getItem(CommonParts.GEM, HCMaterialKeys.CRIMSON_CRYSTAL).toStack() }
+            inventory("has_crimson_crystal") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.GEM, HCMaterialKeys.CRIMSON_CRYSTAL) }
+        }.save(exporter)
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.WARPED_CRYSTAL) {
+            +RagiumAdvancementKeys.PYROLYZER
+            display { +getItem(CommonParts.GEM, HCMaterialKeys.WARPED_CRYSTAL).toStack() }
+            inventory("has_warped_crystal") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.GEM, HCMaterialKeys.WARPED_CRYSTAL) }
+        }.save(exporter)
     }
 
-    @JvmStatic
     private fun elite() {
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.RAGI_CRYSTAL) {
-            parent = RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY
-            display {
-                iconStack += getItem(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-            }
-            criteria["has_ragi_crystal"] = { predicates += { of(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) } }
-        }
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.STAINLESS_STEEL) {
-            parent = RagiumAdvancementKeys.RAGI_CRYSTAL
-            display {
-                iconStack += getItem(CommonParts.INGOT, RagiumMaterialKeys.STAINLESS_STEEL)
-            }
-            criteria["has_stainless_steel"] = { predicates += { of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.STAINLESS_STEEL) } }
-        }
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.RAGI_CRYSTAL) {
+            +RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY
+            display { +getItem(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL).toStack() }
+            inventory("has_ragi_crystal") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
+        }.save(exporter)
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.STAINLESS_STEEL) {
+            +RagiumAdvancementKeys.RAGI_CRYSTAL
+            display { +getItem(CommonParts.INGOT, RagiumMaterialKeys.STAINLESS_STEEL).toStack() }
+            inventory("has_stainless_steel") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.STAINLESS_STEEL) }
+        }.save(exporter)
 
-        HTAdvancementBuilder.create(output, RagiumAdvancementKeys.ELECTRIC_CIRCUIT) {
-            parent = RagiumAdvancementKeys.REFINED_SILICON
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.ELECTRIC_CIRCUIT) {
+            +RagiumAdvancementKeys.REFINED_SILICON
             display {
-                iconStack += RagiumItems.ELECTRIC_CIRCUIT
+                +RagiumItems.ELECTRIC_CIRCUIT.toStack()
                 type = AdvancementType.GOAL
             }
-            criteria["has_electric_circuit"] = { predicates += { of(RagiumItems.ELECTRIC_CIRCUIT) } }
-        }
+            inventory("has_electric_circuit") { +ItemPredicate.Builder.item().of(RagiumItems.ELECTRIC_CIRCUIT) }
+        }.save(exporter)
         createSimple(RagiumAdvancementKeys.BREWERY, RagiumAdvancementKeys.ELECTRIC_CIRCUIT, RagiumBlocks.BREWERY)
         createSimple(RagiumAdvancementKeys.MIXER, RagiumAdvancementKeys.ELECTRIC_CIRCUIT, RagiumBlocks.MIXER)
     }
 
-    @JvmStatic
     private fun ultimate() {}
 }

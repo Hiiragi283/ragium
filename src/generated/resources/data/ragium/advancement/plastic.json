@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.plastic.desc"
+      "translate": "advancement.ragium.plastic.desc"
     },
     "icon": {
       "count": 1,
       "id": "hiiragi_core:plastic_plate"
     },
     "title": {
-      "translate": "advancements.ragium.plastic.title"
+      "translate": "advancement.ragium.plastic.title"
     }
   },
   "requirements": [

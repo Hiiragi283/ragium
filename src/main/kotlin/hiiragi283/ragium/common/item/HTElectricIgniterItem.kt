@@ -2,8 +2,8 @@ package hiiragi283.ragium.common.item
 
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
-import hiiragi283.core.api.storage.energy.HTEnergyBattery
-import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.api.storage.energy.HTEnergyHandler
+import hiiragi283.core.support.capability.HTEnergyCapabilities
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.advancements.CriteriaTriggers
 import net.minecraft.core.BlockPos
@@ -27,16 +27,16 @@ import net.neoforged.neoforge.common.ItemAbility
 class HTElectricIgniterItem(properties: Properties) : HTBatteryItem(properties) {
     private fun getEnergyUsage(): Int = RagiumConfig.COMMON.electricIgniter.getUsage()
 
-    private fun canUse(stack: ItemStack): Boolean = HTEnergyCapabilities.getBattery(stack)?.let(::canUse) ?: false
+    private fun canUse(stack: ItemStack): Boolean = HTEnergyCapabilities.getHandler(stack)?.let(::canUse) ?: false
 
-    private fun canUse(battery: HTEnergyBattery): Boolean = battery.getAmount() >= getEnergyUsage()
+    private fun canUse(handler: HTEnergyHandler): Boolean = handler.getAmount() >= getEnergyUsage()
 
-    private fun consumeEnergy(battery: HTEnergyBattery): Int = battery.extract(getEnergyUsage(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+    private fun consumeEnergy(handler: HTEnergyHandler): Int = handler.extract(getEnergyUsage(), HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
 
     override fun useOn(context: UseOnContext): InteractionResult {
         val stack: ItemStack = context.itemInHand
-        val battery: HTEnergyBattery = HTEnergyCapabilities.getBattery(stack) ?: return InteractionResult.FAIL
-        if (!canUse(battery)) return InteractionResult.FAIL
+        val handler: HTEnergyHandler = HTEnergyCapabilities.getHandler(stack) ?: return InteractionResult.FAIL
+        if (!canUse(handler)) return InteractionResult.FAIL
 
         val player: Player? = context.player
         val level: Level = context.level
@@ -51,7 +51,7 @@ class HTElectricIgniterItem(properties: Properties) : HTBatteryItem(properties) 
                 level.gameEvent(player, GameEvent.BLOCK_PLACE, pos)
                 if (player is ServerPlayer) {
                     CriteriaTriggers.PLACED_BLOCK.trigger(player, posOffset, stack)
-                    consumeEnergy(battery)
+                    consumeEnergy(handler)
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide)
             } else {
@@ -61,7 +61,7 @@ class HTElectricIgniterItem(properties: Properties) : HTBatteryItem(properties) 
             level.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS)
             level.setBlock(pos, newState, 11)
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos)
-            consumeEnergy(battery)
+            consumeEnergy(handler)
             return InteractionResult.sidedSuccess(level.isClientSide)
         }
     }

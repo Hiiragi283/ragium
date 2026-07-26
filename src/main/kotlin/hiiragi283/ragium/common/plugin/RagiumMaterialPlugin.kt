@@ -1,9 +1,7 @@
 package hiiragi283.ragium.common.plugin
 
 import hiiragi283.core.api.fraction
-import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTFluidPart
 import hiiragi283.core.api.material.part.HTPartLike
 import hiiragi283.core.api.material.part.property.HTPartPropertyKeys
 import hiiragi283.core.api.material.part.property.addNamePattern
@@ -12,7 +10,6 @@ import hiiragi283.core.api.material.property.HTMaterialLevel
 import hiiragi283.core.api.material.property.HTMaterialPropertyKeys
 import hiiragi283.core.api.material.property.HTMaterialTextureSet
 import hiiragi283.core.api.material.property.addBlockPrefixes
-import hiiragi283.core.api.material.property.addFluidPrefixes
 import hiiragi283.core.api.material.property.addItemPrefixes
 import hiiragi283.core.api.material.property.setDefaultPart
 import hiiragi283.core.api.material.property.setName
@@ -20,13 +17,12 @@ import hiiragi283.core.api.material.property.setTextureSet
 import hiiragi283.core.api.plugin.HTMaterialPlugin
 import hiiragi283.core.api.plugin.HTPlugin
 import hiiragi283.core.api.property.add
-import hiiragi283.core.api.registry.HTSimpleItemHolderLike
-import hiiragi283.core.api.registry.toItemLike
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
+import hiiragi283.ragium.common.data.RagiumDynamicServerResources
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.part.RagiumParts
 import hiiragi283.ragium.setup.RagiumItems
@@ -39,7 +35,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
     override fun getId(): ResourceLocation = RagiumAPI.id("material_plugin")
 
     override fun registerPart(registrar: HTMaterialPlugin.PartRegistrar) {
-        RagiumParts.pellet = registrar.register("pellet", "%s_pellet") {
+        registrar.register("pellet", "%s_pellet") {
             put(HTPartPropertyKeys.TAG_PREFIX, RagiumTagPrefixes.PELLET)
 
             addNamePattern("%s Pellet", "%sペレット")
@@ -79,6 +75,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             addItemPrefixes(CommonParts.DUST, CommonParts.FUEL, CommonParts.TINY)
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.NONE)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.NONE)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Petroleum Coke", "石油コークス")
             setTextureSet("fuel")
@@ -90,15 +87,16 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
     private fun mineral(provider: HTMaterialPlugin.MaterialProvider) {
         provider.getBuilder(RagiumMaterialKeys.RAGINITE).apply {
             addBlockPrefixes(materialBlockSet)
-            addFluidPrefixes(HTFluidPart.MOLTEN)
             addItemPrefixes(CommonParts.DUST, CommonParts.RAW, CommonParts.CRUSHED_ORE)
             put(HTMaterialPropertyKeys.ORE_RESULT_MULTIPLIER, fraction(3))
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Raginite", "ラギナイト")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
         }
         provider.getBuilder(RagiumMaterialKeys.BORAX).apply {
             addItemPrefixes(CommonParts.DUST)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Borax", "ホウ砂")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
@@ -111,6 +109,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             setDefaultPart(HTDefaultPart.Prefixed.GEM)
             addBlockPrefixes(CommonParts.BLOCK)
             addItemPrefixes(CommonParts.DUST, CommonParts.GEM)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Ragi-Crystal", "ラギクリスタル")
             setTextureSet("diamond", HTMaterialTextureSet.SHINE)
@@ -133,6 +132,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
             addBlockPrefixes(CommonParts.BLOCK)
             addItemPrefixes(alloySet)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Ragi-Alloy", "ラギ合金")
             put(HTMaterialPropertyKeys.TEXTURE_COLOR, RagiumAPI.id("raginite"))
@@ -143,17 +143,18 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             addItemPrefixes(alloySet)
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.MEDIUM)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.MEDIUM)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Advanced Ragi-Alloy", "発展ラギ合金")
         }
         provider.getBuilder(RagiumMaterialKeys.STAINLESS_STEEL).apply {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
             addBlockPrefixes(CommonParts.BLOCK)
-            addFluidPrefixes(HTFluidPart.MOLTEN)
             addItemPrefixes(alloySet.minus(CommonParts.WIRE))
             put(HTMaterialPropertyKeys.HARDNESS, HTMaterialLevel.HIGH)
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.HIGH)
             add(HTMaterialPropertyKeys.DISABLE_SMELTING)
+            put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
 
             setName("Stainless Steel", "ステンレス鋼")
             setTextureSet(HTMaterialTextureSet.SHINE)
@@ -165,7 +166,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
     @JvmStatic
     private fun existing(provider: HTMaterialPlugin.MaterialProvider) {
-        provider.getBuilder(VanillaMaterialKeys.WOOD).addItemPrefixes(RagiumParts.pellet)
+        provider.getBuilder(VanillaMaterialKeys.WOOD).addItemPrefixes(RagiumParts.PELLET)
 
         provider.getBuilder(CommonMaterialKeys.SILICON).apply {
             setDefaultPart(HTDefaultPart.Prefixed.INGOT)
@@ -186,6 +187,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
         provider.getBuilder(CommonMaterialKeys.URANIUM)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 4096
     }
 
-    @JvmStatic
-    private fun createItem(part: HTPartLike, key: HTMaterialKey): HTSimpleItemHolderLike = part.createId(key).toItemLike()
+    override fun registerServerResources() {
+        RagiumDynamicServerResources.initialize()
+    }
 }

@@ -5,7 +5,7 @@ import hiiragi283.ragium.api.RagiumAPI
 
 object RagiumMaterialKeys {
     @JvmStatic
-    private fun create(path: String): HTMaterialKey = HTMaterialKey.of((RagiumAPI.id(path)))
+    private fun create(path: String): HTMaterialKey = HTMaterialKey(RagiumAPI.id(path))
 
     //    Fuels    //
 

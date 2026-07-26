@@ -1,16 +1,17 @@
 package hiiragi283.ragium.data.recipe
 
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.HTDefaultColor
-import hiiragi283.core.api.VanillaColoredContents
-import hiiragi283.core.api.data.recipe.HTSubRecipeProvider
+import hiiragi283.core.api.color.HTDefaultColor
+import hiiragi283.core.api.color.VanillaColoredCollections
+import hiiragi283.core.api.data.recipe.FluidIngredientBuilder
+import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
+import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.registry.HTFluidContent
 import hiiragi283.core.api.tag.CommonTagPrefixes
 import hiiragi283.core.api.tag.HiiragiCoreTags
-import hiiragi283.core.common.data.recipe.builder.HTTankInteractionRecipeBuilder
+import hiiragi283.core.common.data.recipe.HTTankInteractionRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
 import hiiragi283.core.common.recipe.ingredient.HTBluePrintIngredient
@@ -23,12 +24,14 @@ import hiiragi283.ragium.common.data.recipe.RagiumRecipeBuilder
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
+import java.util.concurrent.CompletableFuture
+import net.minecraft.core.HolderLookup
+import net.minecraft.data.PackOutput
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 
-object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) {
-    override fun buildRecipeInternal() {
+class RagiumFluidRecipeProvider(packOutput: PackOutput, future: CompletableFuture<HolderLookup.Provider>) : HTRecipeProvider(packOutput, future, RagiumAPI.MOD_ID) {
+    override fun buildRecipes() {
         refining()
         mixing()
         washing()
@@ -38,209 +41,263 @@ object RagiumFluidRecipeProvider : HTSubRecipeProvider.Direct(RagiumAPI.MOD_ID) 
 
     //    Refining    //
 
-    @JvmStatic
     private fun refining() {
         waterRefining()
         expRefining()
         eldritchRefining()
     }
 
-    @JvmStatic
     private fun waterRefining() {
         // Cobblestone -> Mossy
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Tags.Items.COBBLESTONES_NORMAL)
-            fluidIngredient = inputCreator.water(250)
-            result += resultCreator.create(Items.MOSSY_COBBLESTONE)
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Tags.Items.COBBLESTONES_NORMAL }
+            fluidIngredient {
+                water()
+                amount = 250
+            }
+            itemResult { +Items.MOSSY_COBBLESTONE }
             time /= 2
-        }
+        }.save(exporter)
         // XX Concrete Powder -> XX Concrete
         // Dirt + Water -> Mud
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Items.DIRT)
-            fluidIngredient = inputCreator.water(250)
-            result += resultCreator.create(Items.MUD)
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Items.DIRT }
+            fluidIngredient {
+                water()
+                amount = 250
+            }
+            itemResult { +Items.MUD }
             time /= 2
-        }
+        }.save(exporter)
         // XX Dead Coral -> XX Coral
         // Sponge -> Wet Sponge
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(Items.SPONGE)
-            fluidIngredient = inputCreator.water()
-            result += resultCreator.create(Items.WET_SPONGE)
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +Items.SPONGE }
+            fluidIngredient { water() }
+            itemResult { +Items.WET_SPONGE }
             time /= 2
-        }
+        }.save(exporter)
 
         // Sawdust -> Paper
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD)
-            fluidIngredient = inputCreator.water(125)
-            result += resultCreator.create(Items.PAPER)
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.WOOD) }
+            fluidIngredient {
+                water()
+                amount = 125
+            }
+            itemResult { +Items.PAPER }
             time /= 2
-        }
+        }.save(exporter)
     }
 
-    @JvmStatic
     private fun expRefining() {
         // Quartz Block -> Ghast Tear
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ)
-            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 500)
-            result = resultCreator.create(Items.GHAST_TEAR)
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +tag(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.QUARTZ) }
+            fluidIngredient {
+                +HCFluids.EXPERIENCE
+                amount = 500
+            }
+            result { +Items.GHAST_TEAR }
             recipeId suffix "_from_quartz"
-        }
+        }.save(exporter)
         // Sulfur Dust -> Blaze Powder
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR)
-            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
-            result = resultCreator.create(Items.BLAZE_POWDER)
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.SULFUR) }
+            fluidIngredient {
+                +HCFluids.EXPERIENCE
+                amount = 250
+            }
+            result { +Items.BLAZE_POWDER }
             recipeId suffix "_from_sulfur"
-        }
+        }.save(exporter)
         // Leather -> Phantom Membrane
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(Tags.Items.LEATHERS)
-            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
-            result = resultCreator.create(Items.PHANTOM_MEMBRANE)
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +Tags.Items.LEATHERS }
+            fluidIngredient {
+                +HCFluids.EXPERIENCE
+                amount = 250
+            }
+            result { +Items.PHANTOM_MEMBRANE }
             recipeId suffix "_from_leather"
-        }
+        }.save(exporter)
         // Snowball -> Wind Charge
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(Items.SNOWBALL)
-            fluidIngredient = inputCreator.create(HCFluids.EXPERIENCE, 250)
-            result = resultCreator.create(Items.WIND_CHARGE)
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +Items.SNOWBALL }
+            fluidIngredient {
+                +HCFluids.EXPERIENCE
+                amount = 250
+            }
+            result { +Items.WIND_CHARGE }
             recipeId suffix "_from_snowball"
-        }
+        }.save(exporter)
     }
 
-    @JvmStatic
     private fun eldritchRefining() {
-        fun eldritch(multiplier: Int): HTFluidIngredient = inputCreator.create(
-            HiiragiCoreTags.Fluids.ELDRITCH,
-            HTConst.INGOT_AMOUNT * multiplier,
-        )
-
+        fun eldritch(multiplier: Int): FluidIngredientBuilder.() -> Unit = {
+            +HiiragiCoreTags.Fluids.ELDRITCH
+            amount = HTConst.INGOT_AMOUNT * multiplier
+        }
         // Obsidian -> Crying Obsidian
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(Tags.Items.OBSIDIANS_NORMAL)
-            fluidIngredient = eldritch(1)
-            result = resultCreator.create(Items.CRYING_OBSIDIAN)
-        }
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +Tags.Items.OBSIDIANS_NORMAL }
+            fluidIngredient(eldritch(1))
+            result { +Items.CRYING_OBSIDIAN }
+        }.save(exporter)
         // Amethyst Block -> Budding Amethyst
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST)
-            fluidIngredient = eldritch(9)
-            result = resultCreator.create(Items.BUDDING_AMETHYST)
-        }
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +tag(CommonTagPrefixes.STORAGE_BLOCK, VanillaMaterialKeys.AMETHYST) }
+            fluidIngredient(eldritch(9))
+            result { +Items.BUDDING_AMETHYST }
+        }.save(exporter)
         // Skeleton Skull -> Wither Skeleton Skull
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(Items.SKELETON_SKULL)
-            fluidIngredient = eldritch(1)
-            result = resultCreator.create(Items.WITHER_SKELETON_SKULL)
-        }
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +Items.SKELETON_SKULL }
+            fluidIngredient(eldritch(1))
+            result { +Items.WITHER_SKELETON_SKULL }
+        }.save(exporter)
 
         // Trial Key -> Ominous Key
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(Items.TRIAL_KEY)
-            fluidIngredient = eldritch(4)
-            result = resultCreator.create(Items.OMINOUS_TRIAL_KEY)
-        }
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +Items.TRIAL_KEY }
+            fluidIngredient(eldritch(4))
+            result { +Items.OMINOUS_TRIAL_KEY }
+        }.save(exporter)
 
         // Wither Doll -> Wither Star
-        RagiumRecipeBuilder.bathing(output) {
-            itemIngredient = inputCreator.create(HCItems.WITHER_DOLL)
-            fluidIngredient = eldritch(4)
-            result = resultCreator.create(HCItems.WITHER_STAR)
-        }
+        RagiumRecipeBuilder.bathing {
+            itemIngredient { +HCItems.WITHER_DOLL }
+            fluidIngredient(eldritch(4))
+            result { +HCItems.WITHER_STAR }
+        }.save(exporter)
     }
 
     //    Mixing    //
 
-    @JvmStatic
     private fun mixing() {
         // Diamond + Raginite -> Ragi-Crystal
-        HTMixingRecipeBuilder.create(output) {
-            itemIngredients += inputCreator.create(CommonTagPrefixes.DUST, VanillaMaterialKeys.DIAMOND)
-            fluidIngredient = inputCreator.molten(RagiumMaterialKeys.RAGINITE) { it * 6 }
-            result += resultCreator.material(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
-        }
+        HTMixingRecipeBuilder.create {
+            itemIngredient { +tag(CommonTagPrefixes.DUST, VanillaMaterialKeys.DIAMOND) }
+            fluidIngredient {
+                +RagiumFluids.MOLTEN_RAGINITE
+                amount = HTConst.INGOT_AMOUNT * 6
+            }
+            +HTItemResult.MaterialPart(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL)
+        }.save(exporter)
         // Liquid Dyes
-        for ((color: HTDefaultColor, content: HTFluidContent) in HCFluids.DyeContents) {
+        for ((color: HTDefaultColor, content: HTFluidContent) in HCFluids.DYES.asSequenceWithColor()) {
             // Dye + Water -> Liquid Dye
-            HTMixingRecipeBuilder.create(output) {
-                itemIngredients += inputCreator.create(color.dyesTag)
-                fluidIngredient = inputCreator.water(250)
-                result += resultCreator.create(content, 250)
-            }
+            HTMixingRecipeBuilder.create {
+                itemIngredient { +color.dyesTag }
+                fluidIngredient {
+                    water()
+                    amount = 250
+                }
+                fluidResult {
+                    +content
+                    amount = 250
+                }
+            }.save(exporter)
             // Liquid Dye -> Dye
-            VanillaColoredContents.DYE[color]?.let { dye: ItemLike ->
-                HTFreezingRecipeBuilder.create(output) {
-                    ingredient = inputCreator.create(content, 250)
-                    catalyst += HTBluePrintIngredient(0).toVanilla()
-                    result = resultCreator.create(dye)
+            HTFreezingRecipeBuilder.create {
+                ingredient {
+                    +content
+                    amount = 250
                 }
-            }
+                catalyst { +HTBluePrintIngredient(0) }
+                result { +VanillaColoredCollections.DYE[color] }
+            }.save(exporter)
             // Gravel + Sand + Liquid Dye -> Concrete
-            VanillaColoredContents.CONCRETE[color]?.let { concrete: ItemLike ->
-                HTMixingRecipeBuilder.create(output) {
-                    itemIngredients += inputCreator.create(Tags.Items.GRAVELS, 4)
-                    itemIngredients += inputCreator.create(Tags.Items.SANDS, 4)
-                    fluidIngredient = inputCreator.create(content, 250)
-                    result += resultCreator.create(concrete, 8)
+            HTMixingRecipeBuilder.create {
+                itemIngredient {
+                    +Tags.Items.GRAVELS
+                    count = 4
                 }
-                // Powder + Water -> Concrete
-                VanillaColoredContents.CONCRETE_POWDER[color]?.let { powder ->
-                    HTMixingRecipeBuilder.create(output) {
-                        itemIngredients += inputCreator.create(powder)
-                        fluidIngredient = inputCreator.water(125)
-                        result += resultCreator.create(concrete)
-                        time /= 8
-                        recipeId suffix "_by_water"
-                    }
+                itemIngredient {
+                    +Tags.Items.SANDS
+                    count = 4
                 }
-            }
+                fluidIngredient {
+                    +content
+                    amount = 250
+                }
+                itemResult {
+                    +VanillaColoredCollections.CONCRETE[color]
+                    count = 8
+                }
+            }.save(exporter)
+            // Powder + Water -> Concrete
+            HTMixingRecipeBuilder.create {
+                itemIngredient { +VanillaColoredCollections.CONCRETE_POWDER[color] }
+                fluidIngredient {
+                    water()
+                    amount = 125
+                }
+                itemResult { +VanillaColoredCollections.CONCRETE[color] }
+                time /= 8
+                recipeId suffix "_by_water"
+            }.save(exporter)
         }
     }
 
     //    Washing    //
 
-    @JvmStatic
     private fun washing() {
         // Gravel + Water -> Flint
-        RagiumRecipeBuilder.washing(output) {
-            ingredient = inputCreator.create(Tags.Items.GRAVELS)
-            results += resultCreator.create(Items.FLINT)
-            results += resultCreator.create(Items.FLINT, chance = fraction(1, 3))
+        RagiumRecipeBuilder.washing {
+            ingredient { +Tags.Items.GRAVELS }
+            result { +Items.FLINT }
+            result {
+                +Items.FLINT
+                chance = fraction(1, 3)
+            }
             time = 20 * 5
-        }
+        }.save(exporter)
         // Sand -> Quartz Dust + Borax Dust
-        RagiumRecipeBuilder.washing(output) {
-            ingredient = inputCreator.create(Tags.Items.SANDS)
-            results += resultCreator.material(CommonParts.DUST, VanillaMaterialKeys.QUARTZ, chance = fraction(1, 2))
-            results += resultCreator.material(CommonParts.DUST, RagiumMaterialKeys.BORAX, chance = fraction(1, 4))
-        }
+        RagiumRecipeBuilder.washing {
+            ingredient { +Tags.Items.SANDS }
+            result {
+                +HTItemResult.MaterialPart(CommonParts.DUST, VanillaMaterialKeys.QUARTZ)
+                chance = fraction(1, 2)
+            }
+            result {
+                +HTItemResult.MaterialPart(CommonParts.DUST, RagiumMaterialKeys.BORAX)
+                chance = fraction(1, 4)
+            }
+        }.save(exporter)
         // Ash + Water -> Carbon
-        RagiumRecipeBuilder.washing(output) {
-            ingredient = inputCreator.create(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH, 4)
-            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
-            results += resultCreator.material(CommonParts.DUST, CommonMaterialKeys.CARBON, chance = fraction(1, 4))
+        RagiumRecipeBuilder.washing {
+            ingredient {
+                +tag(CommonTagPrefixes.DUST, CommonMaterialKeys.ASH)
+                count = 4
+            }
+            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.CARBON, 3)
+            +HTItemResult.MaterialPart(CommonParts.DUST, CommonMaterialKeys.CARBON).withChance(fraction(1, 4))
             time = 20 * 5
-        }
+        }.save(exporter)
     }
 
     //    Tank Interaction    //
 
-    @JvmStatic
     private fun tankInteraction() {
-        HTTankInteractionRecipeBuilder.emptying(output) {
-            ingredient = itemCreator.create(RagiumItems.MERCURY_BOTTLE)
-            fluidResult = resultCreator.create(RagiumFluids.MERCURY, 250)
-            itemResult = resultCreator.create(Items.GLASS_BOTTLE)
-        }
+        HTTankInteractionRecipeBuilder.emptying {
+            ingredient { +RagiumItems.MERCURY_BOTTLE }
+            fluidResult {
+                +RagiumFluids.MERCURY
+                amount = 250
+            }
+            itemResult { +Items.GLASS_BOTTLE }
+        }.save(exporter)
 
-        HTTankInteractionRecipeBuilder.filling(output) {
-            itemIngredient = itemCreator.create(Items.GLASS_BOTTLE)
-            fluidIngredient = inputCreator.create(RagiumFluids.MERCURY, 250)
-            itemResult = resultCreator.create(RagiumItems.MERCURY_BOTTLE)
-        }
+        HTTankInteractionRecipeBuilder.filling {
+            itemIngredient { +Items.GLASS_BOTTLE }
+            fluidIngredient {
+                +RagiumFluids.MERCURY
+                amount = 250
+            }
+            result { +RagiumItems.MERCURY_BOTTLE }
+        }.save(exporter)
     }
+
+    override fun getName(): String = "Fluid Recipes"
 }

@@ -7,15 +7,14 @@ import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
 import hiiragi283.core.api.storage.fluid.getFluidStack
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.common.block.entity.HTProcessorBlockEntity
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
-import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
-import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
+import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
@@ -25,7 +24,7 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FLUID_DUPLICATOR, pos, state) {
+class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcessorBlockEntity.Energized(RagiumBlockEntityTypes.FLUID_DUPLICATOR.get(), pos, state) {
     private lateinit var inputTank: HTBasicFluidTank
     private lateinit var matterTank: HTBasicFluidTank
     private lateinit var outputTank: HTBasicFluidTank
@@ -52,29 +51,35 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
 
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(2))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(2))
         // progress
         addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(5.25))
         // tanks
-        widgetHolder += HTFluidWidget
-            .createTank(
-                inputTank,
-                HTSlotHelper.getSlotPosX(1),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.INPUT)
-        widgetHolder += HTFluidWidget
-            .createTank(
-                matterTank,
-                HTSlotHelper.getSlotPosX(4),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.EXTRA_INPUT)
+        widgetHolder += HTFluidWidget.Tank(
+            inputTank,
+            HTSlotHelper.getSlotPosX(1),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+            false,
+        )
+        widgetHolder.track(inputTank)
+        widgetHolder += HTFluidWidget.Tank(
+            matterTank,
+            HTSlotHelper.getSlotPosX(4),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.EXTRA_INPUT,
+            false,
+        )
+        widgetHolder.track(matterTank)
 
-        widgetHolder += HTFluidWidget
-            .createTank(
-                outputTank,
-                HTSlotHelper.getSlotPosX(7),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.OUTPUT)
+        widgetHolder += HTFluidWidget.Tank(
+            outputTank,
+            HTSlotHelper.getSlotPosX(7),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.OUTPUT,
+            false,
+        )
+        widgetHolder.track(outputTank)
     }
 
     //    Processing    //
@@ -97,7 +102,7 @@ class HTFluidDuplicatorBlockEntity(pos: BlockPos, state: BlockState) : HTProcess
 
         override fun getMaxProgress(recipe: FluidStack): Int = updateAndGetProgress(recipe.amount)
 
-        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = battery.consume()
+        override fun getProgress(level: ServerLevel, pos: BlockPos): Int = handler.consume()
 
         override fun onComplete(level: ServerLevel, pos: BlockPos, recipe: FluidStack) {
             // output

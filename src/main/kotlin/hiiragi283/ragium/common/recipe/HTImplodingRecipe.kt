@@ -8,7 +8,7 @@ import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTSerializableRecipe
 import hiiragi283.ragium.api.tag.RagiumTags
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
@@ -51,17 +51,21 @@ class HTImplodingRecipe(val ingredient: HTItemIngredient, val result: HTItemResu
         return false
     }
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = Pair(
-        ingredient.getRequiredAmount(first),
-        EXPLOSIVE_AMOUNTS.entries
-            .firstOrNull { (tagKey: TagKey<Item>, amount: Int) ->
-                second.`is`(tagKey) && second.count >= amount
-            }?.value ?: 0,
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack): Pair<ItemStack, ItemStack> = Pair(
+        ingredient.getMatchingStack(first),
+        second.copyWithCount(
+            EXPLOSIVE_AMOUNTS.entries
+                .firstOrNull { (tagKey: TagKey<Item>, amount: Int) -> second.`is`(tagKey) && second.count >= amount }
+                ?.value
+                ?: 0,
+        ),
     )
 
-    override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = result.getOrEmpty()
+    override fun assemble(firstInput: ItemStack, secondInput: ItemStack): ItemStack = result.createOrEmpty()
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.IMPLODING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.IMPLODING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.IMPLODING
+
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || result.isIncomplete()
 }

@@ -7,8 +7,8 @@ import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.base.HTProgressRecipe
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
-import hiiragi283.core.impl.recipe.HTBasicItemToFluidRecipe
-import hiiragi283.core.impl.recipe.HTSerializableRecipe
+import hiiragi283.core.api.recipe.HTSerializableRecipe
+import hiiragi283.core.support.recipe.base.HTBasicItemToFluidRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -33,5 +33,5 @@ class HTMeltingRecipe(ingredient: HTItemIngredient, result: HTFluidResult, progr
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.MELTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MELTING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.MELTING
 }

@@ -1,38 +1,97 @@
+@file:OptIn(ExperimentalContracts::class)
+
 package hiiragi283.ragium.common.data.recipe
 
-import hiiragi283.core.api.data.holder.HTIngredientHolder
-import hiiragi283.core.api.data.recipe.builder.HTProgressRecipeBuilder
+import hiiragi283.core.api.data.recipe.FluidIngredientBuilder
+import hiiragi283.core.api.data.recipe.HTFluidResultBuilder
+import hiiragi283.core.api.data.recipe.HTItemResultBuilder
+import hiiragi283.core.api.data.recipe.HTProgressRecipeBuilder
+import hiiragi283.core.api.data.recipe.IngredientBuilder
 import hiiragi283.core.api.recipe.ingredient.HTFluidIngredient
 import hiiragi283.core.api.recipe.result.HTFluidResult
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.core.api.recipe.result.HTListFluidResult
-import hiiragi283.core.api.util.toIorOrThrow
-import hiiragi283.core.api.util.toOptional
+import hiiragi283.core.api.util.HTDelegates
+import hiiragi283.core.api.util.Ior
+import hiiragi283.core.api.util.Option
+import hiiragi283.core.api.util.some
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTChemicalReactingRecipe
-import net.minecraft.data.recipes.RecipeOutput
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.crafting.Ingredient
 
-class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder(RagiumConst.CHEMICAL_REACTING) {
+class HTChemicalReactingRecipeBuilder : HTProgressRecipeBuilder<HTChemicalReactingRecipe>(RagiumConst.CHEMICAL_REACTING) {
     companion object {
         @JvmStatic
-        inline fun create(output: RecipeOutput, builderAction: HTChemicalReactingRecipeBuilder.() -> Unit) {
-            HTChemicalReactingRecipeBuilder().apply(builderAction).save(output)
+        inline fun create(builderAction: HTChemicalReactingRecipeBuilder.() -> Unit): HTChemicalReactingRecipeBuilder {
+            contract {
+                callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+            }
+            return HTChemicalReactingRecipeBuilder().apply(builderAction)
         }
     }
 
-    val ingredients: MutableList<HTFluidIngredient> = mutableListOf()
-    val catalyst: HTIngredientHolder.Single = HTIngredientHolder.Single()
-    val fluidResults: MutableList<HTFluidResult> = mutableListOf()
-    var itemResult: HTItemResult? = null
+    @PublishedApi internal val ingredients: MutableList<HTFluidIngredient> = mutableListOf()
+
+    @PublishedApi internal var catalyst: Option<Ingredient> by HTDelegates.optionalOnceInitialize()
+
+    @PublishedApi internal val fluidResults: MutableList<HTFluidResult> = mutableListOf()
+
+    @PublishedApi internal var itemResult: Option<HTItemResult> by HTDelegates.optionalOnceInitialize()
+
+    operator fun HTFluidIngredient.unaryPlus() {
+        ingredients += this
+    }
+
+    operator fun Ingredient.unaryPlus() {
+        catalyst = this.some()
+    }
+
+    operator fun HTFluidResult.unaryPlus() {
+        fluidResults += this
+    }
+
+    operator fun HTItemResult.unaryPlus() {
+        itemResult = this.some()
+    }
+
+    inline fun ingredient(builderAction: FluidIngredientBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        ingredients += FluidIngredientBuilder().apply(builderAction).buildSized()
+    }
+
+    inline fun catalyst(builderAction: IngredientBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        +IngredientBuilder().apply(builderAction).build()
+    }
+
+    inline fun fluidResult(builderAction: HTFluidResultBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        fluidResults += HTFluidResultBuilder().apply(builderAction).build()
+    }
+
+    inline fun itemResult(builderAction: HTItemResultBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builderAction, InvocationKind.EXACTLY_ONCE)
+        }
+        +HTItemResultBuilder().apply(builderAction).build()
+    }
 
     override fun getPrimalId(): ResourceLocation = fluidResults[0].getId()
 
     override fun createRecipe(): HTChemicalReactingRecipe = HTChemicalReactingRecipe(
         ingredients[0],
-        (ingredients.getOrNull(1) to catalyst.getOrNull()).toIorOrThrow(),
-        HTListFluidResult(fluidResults),
-        itemResult.toOptional(),
+        Ior.fromNullable(ingredients.getOrNull(1), catalyst.getOrNull()) ?: error("Either second fluid ingredient or catalyst required"),
+        fluidResults,
+        itemResult,
         progressData,
     )
 }

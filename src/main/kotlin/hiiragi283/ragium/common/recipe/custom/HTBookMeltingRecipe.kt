@@ -15,9 +15,9 @@ data object HTBookMeltingRecipe : HTItemToFluidRecipe {
 
     override fun test(input: ItemStack): Boolean = !getStoredEnchantments(input).isEmpty
 
-    override fun getRequiredAmount(input: ItemStack): Int = when {
-        test(input) -> 1
-        else -> 0
+    override fun getMatchingStack(input: ItemStack): ItemStack = when {
+        test(input) -> input.copyWithCount(1)
+        else -> ItemStack.EMPTY
     }
 
     override fun assemble(input: ItemStack): FluidStack = getStoredEnchantments(input)
@@ -32,4 +32,6 @@ data object HTBookMeltingRecipe : HTItemToFluidRecipe {
             .keySet()
             .size * 100,
     )
+
+    override fun isIncomplete(): Boolean = false
 }

@@ -1,17 +1,17 @@
 package hiiragi283.ragium.common.item.block
 
-import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.storage.amount.HTAmountSlot
 import hiiragi283.core.api.text.HTCommonTranslation
 import hiiragi283.core.api.text.Text
-import hiiragi283.core.common.capability.HTEnergyCapabilities
+import hiiragi283.core.support.capability.HTEnergyCapabilities
 import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.common.block.storage.HTBatteryBlock
 import hiiragi283.ragium.config.RagiumConfig
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 
-class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStorageBlockItem<HTBatteryBlock>(block, properties) {
+class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStorageBlockItem(block, properties) {
     /**
      * @see mekanism.common.item.block.ItemBlockEnergyCube.addStats
      */
@@ -22,7 +22,7 @@ class HTBatteryBlockItem(block: HTBatteryBlock, properties: Properties) : HTStor
         flag: TooltipFlag,
     ) {
         val isCreative: Boolean = isCreative(stack)
-        val view: HTAmountSlot = HTEnergyCapabilities.getBattery(stack) ?: return
+        val view: HTAmountSlot = HTEnergyCapabilities.getHandler(stack) ?: return
         // Energy Amount
         val amount: Int = view.getAmount()
         when {

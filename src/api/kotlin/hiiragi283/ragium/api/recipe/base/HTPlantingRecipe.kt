@@ -10,7 +10,7 @@ interface HTPlantingRecipe :
     HTRecipePredicates.DoubleItem,
     HTRecipeFactories.DoubleItem<Iterable<ItemStack>>,
     HTProgressRecipe<RecipeInput> {
-    fun getRequiredPlantAmount(first: ItemStack): Int
+    fun getRequiredPlantStack(first: ItemStack): ItemStack
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = getRequiredPlantAmount(first) to 0
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack): Pair<ItemStack, ItemStack> = getRequiredPlantStack(first) to ItemStack.EMPTY
 }

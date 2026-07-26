@@ -1,7 +1,6 @@
 package hiiragi283.ragium.setup
 
-import hiiragi283.core.common.registry.HTDeferredRecipeType
-import hiiragi283.core.common.registry.register.HTDeferredRecipeTypeRegister
+import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.common.recipe.HTAlloyingRecipe
@@ -19,57 +18,61 @@ import hiiragi283.ragium.common.recipe.HTRefiningRecipe
 import hiiragi283.ragium.common.recipe.HTWashingRecipe
 import hiiragi283.ragium.common.recipe.RTEnchantingRecipe
 import hiiragi283.ragium.common.recipe.RTPlantingRecipe
+import net.minecraft.world.item.crafting.Recipe
 
-object RagiumRecipeTypes {
-    @JvmField
-    val REGISTER = HTDeferredRecipeTypeRegister(RagiumAPI.MOD_ID)
+data object RagiumRecipeTypes {
+    @JvmStatic
+    val allTypes: Set<HTRecipeType<*>> field: MutableSet<HTRecipeType<*>> = mutableSetOf()
+
+    @JvmStatic
+    private fun <T : Recipe<*>> create(name: String): HTRecipeType<T> = HTRecipeType<T>(RagiumAPI.id(name)).also(allTypes::add)
 
     // Machine - Basic
     @JvmField
-    val ALLOYING: HTDeferredRecipeType<HTAlloyingRecipe> = REGISTER.registerType(RagiumConst.ALLOYING)
+    val ALLOYING: HTRecipeType<HTAlloyingRecipe> = create(RagiumConst.ALLOYING)
 
     @JvmField
-    val ASSEMBLING: HTDeferredRecipeType<HTAssemblingRecipe> = REGISTER.registerType(RagiumConst.ASSEMBLING)
+    val ASSEMBLING: HTRecipeType<HTAssemblingRecipe> = create(RagiumConst.ASSEMBLING)
 
     @JvmField
-    val CUTTING: HTDeferredRecipeType<HTCuttingRecipe> = REGISTER.registerType(RagiumConst.CUTTING)
+    val CUTTING: HTRecipeType<HTCuttingRecipe> = create(RagiumConst.CUTTING)
 
     @JvmField
-    val COMPRESSING: HTDeferredRecipeType<HTCompressingRecipe> = REGISTER.registerType(RagiumConst.COMPRESSING)
+    val COMPRESSING: HTRecipeType<HTCompressingRecipe> = create(RagiumConst.COMPRESSING)
 
     @JvmField
-    val PLANTING: HTDeferredRecipeType<RTPlantingRecipe> = REGISTER.registerType(RagiumConst.PLANTING)
+    val PLANTING: HTRecipeType<RTPlantingRecipe> = create(RagiumConst.PLANTING)
 
     // Machine - Advanced
     @JvmField
-    val FREEZING: HTDeferredRecipeType<HTFreezingRecipe> = REGISTER.registerType(RagiumConst.FREEZING)
+    val FREEZING: HTRecipeType<HTFreezingRecipe> = create(RagiumConst.FREEZING)
 
     @JvmField
-    val IMPLODING: HTDeferredRecipeType<HTImplodingRecipe> = REGISTER.registerType(RagiumConst.IMPLODING)
+    val IMPLODING: HTRecipeType<HTImplodingRecipe> = create(RagiumConst.IMPLODING)
 
     @JvmField
-    val MELTING: HTDeferredRecipeType<HTMeltingRecipe> = REGISTER.registerType(RagiumConst.MELTING)
+    val MELTING: HTRecipeType<HTMeltingRecipe> = create(RagiumConst.MELTING)
 
     @JvmField
-    val PYROLYZING: HTDeferredRecipeType<HTPyrolyzingRecipe> = REGISTER.registerType(RagiumConst.PYROLYZING)
+    val PYROLYZING: HTRecipeType<HTPyrolyzingRecipe> = create(RagiumConst.PYROLYZING)
 
     @JvmField
-    val REFINING: HTDeferredRecipeType<HTRefiningRecipe> = REGISTER.registerType(RagiumConst.REFINING)
+    val REFINING: HTRecipeType<HTRefiningRecipe> = create(RagiumConst.REFINING)
 
     @JvmField
-    val WASHING: HTDeferredRecipeType<HTWashingRecipe> = REGISTER.registerType(RagiumConst.WASHING)
+    val WASHING: HTRecipeType<HTWashingRecipe> = create(RagiumConst.WASHING)
 
     // Machine - Elite
     @JvmField
-    val BATHING: HTDeferredRecipeType<HTBathingRecipe> = REGISTER.registerType(RagiumConst.BATHING)
+    val BATHING: HTRecipeType<HTBathingRecipe> = create(RagiumConst.BATHING)
 
     @JvmField
-    val CHEMICAL_REACTING: HTDeferredRecipeType<HTChemicalReactingRecipe> = REGISTER.registerType(RagiumConst.CHEMICAL_REACTING)
+    val CHEMICAL_REACTING: HTRecipeType<HTChemicalReactingRecipe> = create(RagiumConst.CHEMICAL_REACTING)
 
     @JvmField
-    val MIXING: HTDeferredRecipeType<HTMixingRecipe> = REGISTER.registerType(RagiumConst.MIXING)
+    val MIXING: HTRecipeType<HTMixingRecipe> = create(RagiumConst.MIXING)
 
     // Machine - Ultimate
     @JvmField
-    val ENCHANTING: HTDeferredRecipeType<RTEnchantingRecipe> = REGISTER.registerType(RagiumConst.ENCHANTING)
+    val ENCHANTING: HTRecipeType<RTEnchantingRecipe> = create(RagiumConst.ENCHANTING)
 }

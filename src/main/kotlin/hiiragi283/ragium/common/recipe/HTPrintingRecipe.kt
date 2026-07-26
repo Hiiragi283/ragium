@@ -7,7 +7,7 @@ import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
 import hiiragi283.core.api.serialization.codec.HTCodecs
-import hiiragi283.ragium.impl.recipe.HTBasicAssemblingRecipe
+import hiiragi283.ragium.support.recipe.base.HTBasicAssemblingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -36,9 +36,11 @@ class HTPrintingRecipe(
 
     override fun test(first: ItemStack, second: ItemStack): Boolean = ingredient.test(first) && press.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = ingredient.getRequiredAmount(first) to 0
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack): Pair<ItemStack, ItemStack> = ingredient.getMatchingStack(first) to ItemStack.EMPTY
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.PRINTING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING
+
+    override fun isIncomplete(): Boolean = ingredient.isIncomplete() || press.hasNoItems() || result.isIncomplete()
 }

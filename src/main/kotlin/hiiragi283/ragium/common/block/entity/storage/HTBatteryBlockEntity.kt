@@ -1,32 +1,36 @@
 package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
-import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.api.serialization.value.read
+import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.amount.HTAmountView
-import hiiragi283.core.api.storage.energy.HTEnergyBattery
-import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
+import hiiragi283.core.api.storage.energy.HTEnergyHandler
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.api.storage.item.getItemStack
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCChargingRecipe
 import hiiragi283.core.common.recipe.HCRecipeLookups
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
 import hiiragi283.core.setup.HCDataComponents
+import hiiragi283.core.support.gui.sync.HTIntSyncSlot
+import hiiragi283.core.support.gui.sync.HTItemSyncSlot
+import hiiragi283.core.support.recipe.cache.HTRecipeCaches
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.energy.HTBasicEnergyHandler
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
-import hiiragi283.ragium.common.storge.energy.HTVariableEnergyBattery
-import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
-import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.ragium.support.storage.energy.HTVariableEnergyHandler
+import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import hiiragi283.ragium.config.RagiumConfig
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -34,29 +38,13 @@ import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
-    constructor(pos: BlockPos, state: BlockState) : this(RagiumBlockEntityTypes.BATTERY, pos, state)
+abstract class HTBatteryBlockEntity<T : HTEnergyHandler>(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTStorageBlockEntity(type, pos, state) {
+    abstract val handler: T
 
-    lateinit var battery: HTEnergyBattery.Basic
-        private set
-
-    final override fun createEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
-        val builder = HTBasicEnergyBatteryHolder.Builder(this)
-        battery = builder.addSlot(
-            HTSlotInfo.BOTH,
-            createBattery {
-                checkRecipe = true
-                listener.onContentsChanged()
-            },
-        )
-        return builder.build()
-    }
-
-    protected open fun createBattery(listener: HTContentListener): HTEnergyBattery.Basic = HTVariableEnergyBattery.create(listener) { capacityComponent.getCapacity(RagiumConfig.COMMON.batteryCapacity) }
-
-    final override fun getAmountView(): HTAmountView = battery
+    override fun getAmountView(): HTAmountView = handler
 
     private lateinit var inputSlot: HTBasicItemSlot
     private lateinit var outputSlot: HTBasicItemSlot
@@ -75,50 +63,27 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         widgetHolder.rows = 1
         // slot
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0))
+        widgetHolder += HTEnergySlotWidget(handler, HTSlotHelper.getSlotPosX(4), HTSlotHelper.getSlotPosY(0))
 
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(1.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder.track(HTItemSyncSlot(inputSlot), HTSyncType.S2C)
+        widgetHolder += HTItemWidget.Container(
             outputSlot,
             HTSlotHelper.getSlotPosX(6.5),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.OUTPUT,
         )
-    }
-
-    //    Sync    //
-
-    override fun applyImplicitComponents(componentInput: DataComponentInput) {
-        super.applyImplicitComponents(componentInput)
-        componentInput.get(HCDataComponents.ENERGY)?.let(battery::setAmount)
-    }
-
-    override fun collectImplicitComponents(builder: DataComponentMap.Builder) {
-        super.collectImplicitComponents(builder)
-        val amount: Int = battery.getAmount()
-        if (amount > 0) {
-            builder.set(HCDataComponents.ENERGY, amount)
-        }
-    }
-
-    override fun initReducedUpdateTag(output: HTValueOutput) {
-        super.initReducedUpdateTag(output)
-        battery.serialize(output)
-    }
-
-    override fun handleUpdateTag(input: HTValueInput) {
-        super.handleUpdateTag(input)
-        battery.deserialize(input)
+        widgetHolder.track(HTItemSyncSlot(outputSlot), HTSyncType.S2C)
     }
 
     //    Recipe    //
 
-    private var checkRecipe: Boolean = false
+    protected var checkRecipe: Boolean = false
     private val cache: HTRecipeCaches.SingleItem<HCChargingRecipe> = HTRecipeCaches.SingleItem(HCRecipeLookups.CHARGING)
     private val inputHandler: HTItemInputHandler by lazy { HTItemInputHandler(inputSlot) }
     private val outputHandler: HTItemOutputHandler by lazy { HTItemOutputHandler.single(outputSlot) }
@@ -139,10 +104,71 @@ open class HTBatteryBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPo
         val result: ItemStack = recipe.assemble(input)
         if (!outputHandler.canInsert(result)) return false
         val requiredEnergy: Int = recipe.energy
-        if (battery.extract(requiredEnergy, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) < requiredEnergy) return false
+        if (handler.extract(requiredEnergy, HTStorageAction.SIMULATE, HTStorageAccess.INTERNAL) < requiredEnergy) return false
         outputHandler.insert(result)
         inputHandler.consume(1)
-        battery.extract(requiredEnergy, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
+        handler.extract(requiredEnergy, HTStorageAction.EXECUTE, HTStorageAccess.INTERNAL)
         return true
+    }
+
+    //    Simple    //
+
+    class Simple(pos: BlockPos, state: BlockState) : HTBatteryBlockEntity<HTBasicEnergyHandler>(RagiumBlockEntityTypes.BATTERY.get(), pos, state) {
+        override lateinit var handler: HTBasicEnergyHandler
+
+        override fun initializeVariables(listener: HTContentListener) {
+            super.initializeVariables(listener)
+            handler = HTVariableEnergyHandler.create(
+                {
+                    checkRecipe = true
+                    listener.onContentsChanged()
+                },
+                {
+                    capacityComponent.getCapacity(RagiumConfig.COMMON.batteryCapacity)
+                },
+            )
+        }
+
+        override fun setupMenu(widgetHolder: HTWidgetHolder) {
+            super.setupMenu(widgetHolder)
+            widgetHolder.track(HTIntSyncSlot.create(handler), HTSyncType.S2C)
+        }
+
+        //    Sync    //
+
+        override fun applyImplicitComponents(componentInput: DataComponentInput) {
+            super.applyImplicitComponents(componentInput)
+            componentInput.get(HCDataComponents.ENERGY)?.let(handler::setAmount)
+        }
+
+        override fun collectImplicitComponents(builder: DataComponentMap.Builder) {
+            super.collectImplicitComponents(builder)
+            val amount: Int = handler.getAmount()
+            if (amount > 0) {
+                builder.set(HCDataComponents.ENERGY, amount)
+            }
+        }
+
+        override fun writeValue(output: HTValueOutput) {
+            super.writeValue(output)
+            output.write(HTConst.ENERGY, handler)
+        }
+
+        override fun readValue(input: HTValueInput) {
+            super.readValue(input)
+            input.read(HTConst.ENERGY, handler)
+            // migration
+            input.child("batteries")?.read(HTConst.SLOT, handler)
+        }
+
+        override fun initReducedUpdateTag(output: HTValueOutput) {
+            super.initReducedUpdateTag(output)
+            handler.serialize(output)
+        }
+
+        override fun handleUpdateTag(input: HTValueInput) {
+            super.handleUpdateTag(input)
+            handler.deserialize(input)
+        }
     }
 }

@@ -6,7 +6,7 @@ import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.recipe.base.HTProgressData
 import hiiragi283.core.api.recipe.ingredient.HTItemIngredient
 import hiiragi283.core.api.recipe.result.HTItemResult
-import hiiragi283.ragium.impl.recipe.HTBasicAssemblingRecipe
+import hiiragi283.ragium.support.recipe.base.HTBasicAssemblingRecipe
 import hiiragi283.ragium.setup.RagiumRecipeSerializers
 import hiiragi283.ragium.setup.RagiumRecipeTypes
 import net.minecraft.world.item.ItemStack
@@ -43,9 +43,11 @@ class HTAssemblingRecipe(
 
     override fun test(first: ItemStack, second: ItemStack): Boolean = primary.test(first) && secondary.test(second)
 
-    override fun getRequiredAmount(first: ItemStack, second: ItemStack): Pair<Int, Int> = primary.getRequiredAmount(first) to secondary.getRequiredAmount(second)
+    override fun getMatchingStacks(first: ItemStack, second: ItemStack): Pair<ItemStack, ItemStack> = primary.getMatchingStack(first) to secondary.getMatchingStack(second)
 
     override fun getSerializer(): RecipeSerializer<*> = RagiumRecipeSerializers.ASSEMBLING
 
-    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING.get()
+    override fun getType(): RecipeType<*> = RagiumRecipeTypes.ASSEMBLING
+
+    override fun isIncomplete(): Boolean = primary.isIncomplete() || secondary.isIncomplete() || result.isIncomplete()
 }

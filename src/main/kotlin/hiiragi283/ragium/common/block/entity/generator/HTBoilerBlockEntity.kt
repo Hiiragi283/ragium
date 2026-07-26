@@ -10,19 +10,19 @@ import hiiragi283.core.api.registry.VanillaFluidContents
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.gui.widget.HTFluidWidget
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.material.CommonMaterialKeys
-import hiiragi283.core.common.storage.fluid.HTBasicFluidTank
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.handler.HTFluidInputHandler
-import hiiragi283.core.impl.recipe.handler.HTFluidOutputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.recipe.handler.HTFluidInputHandler
+import hiiragi283.core.support.recipe.handler.HTFluidOutputHandler
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.fluid.HTBasicFluidTank
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.HTMachineBlockEntity
-import hiiragi283.ragium.common.storge.fluid.HTVariableFluidTank
-import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.ragium.support.storage.fluid.HTVariableFluidTank
+import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import hiiragi283.ragium.setup.RagiumBlockEntityTypes
 import hiiragi283.ragium.setup.RagiumFluids
 import net.minecraft.core.BlockPos
@@ -31,7 +31,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
 
-class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.BOILER, pos, state) {
+class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEntity(RagiumBlockEntityTypes.BOILER.get(), pos, state) {
     lateinit var waterTank: HTBasicFluidTank
         private set
     private lateinit var steamTank: HTBasicFluidTank
@@ -69,31 +69,37 @@ class HTBoilerBlockEntity(pos: BlockPos, state: BlockState) : HTMachineBlockEnti
     override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
         // slot
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             fuelSlot,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(0),
             HTBackgroundType.INPUT,
         )
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder.track(fuelSlot)
+        widgetHolder += HTItemWidget.Container(
             ashSlot,
             HTSlotHelper.getSlotPosX(4),
             HTSlotHelper.getSlotPosY(2),
             HTBackgroundType.EXTRA_OUTPUT,
         )
+        widgetHolder.track(ashSlot)
         // tanks
-        widgetHolder += HTFluidWidget
-            .createTank(
-                waterTank,
-                HTSlotHelper.getSlotPosX(2),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.INPUT)
-        widgetHolder += HTFluidWidget
-            .createTank(
-                steamTank,
-                HTSlotHelper.getSlotPosX(6),
-                HTSlotHelper.getSlotPosY(0),
-            ).setBackground(HTBackgroundType.OUTPUT)
+        widgetHolder += HTFluidWidget.Tank(
+            waterTank,
+            HTSlotHelper.getSlotPosX(2),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.INPUT,
+            false,
+        )
+        widgetHolder.track(waterTank)
+        widgetHolder += HTFluidWidget.Tank(
+            steamTank,
+            HTSlotHelper.getSlotPosX(6),
+            HTSlotHelper.getSlotPosY(0),
+            HTBackgroundType.OUTPUT,
+            false,
+        )
+        widgetHolder.track(steamTank)
     }
 
     //    Processing    //

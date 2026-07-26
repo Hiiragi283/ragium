@@ -1,14 +1,12 @@
 package hiiragi283.ragium.api.data.map
 
 import com.mojang.serialization.Codec
-import hiiragi283.core.api.item.createItemStack
-import hiiragi283.core.api.registry.HTItemHolderLike
-import hiiragi283.core.api.registry.HTSimpleItemHolderLike
 import hiiragi283.core.api.serialization.codec.HTCodecs
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.item.HTItemResourceType
 import hiiragi283.core.api.storage.item.toResource
 import hiiragi283.ragium.api.RagiumAPI
+import net.minecraft.core.Holder
 import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
@@ -23,11 +21,10 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
  * Ragiumで使用する[DataMapType]へのアクセス
  * @see mekanism.api.datamaps.IMekanismDataMapTypes
  */
-object RagiumDataMapTypes {
+data object RagiumDataMapTypes {
     // Entity Type
     @JvmField
-    val MOB_HEAD: DataMapType<EntityType<*>, HTSimpleItemHolderLike> =
-        create("mob_head", Registries.ENTITY_TYPE, HTItemHolderLike.CODEC)
+    val MOB_HEAD: DataMapType<EntityType<*>, Holder<Item>> = create("mob_head", Registries.ENTITY_TYPE, HTCodecs.holder(Registries.ITEM))
 
     // Fluid
     @JvmField
@@ -53,7 +50,8 @@ object RagiumDataMapTypes {
     fun getMobHead(entity: Entity): ItemStack = entity.type
         .builtInRegistryHolder()
         .getData(MOB_HEAD)
-        .let(::createItemStack)
+        ?.let(::ItemStack)
+        ?: ItemStack.EMPTY
 
     /**
      * 指定した[resource]から，一度の処理に必要な冷却材の使用量を取得します。

@@ -1,0 +1,19 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 250,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": [
+      "oritech:solid_biofuel",
+      "oritech:packed_wheat"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "oritech:raw_biopolymer"
+  },
+  "time": 200
+}

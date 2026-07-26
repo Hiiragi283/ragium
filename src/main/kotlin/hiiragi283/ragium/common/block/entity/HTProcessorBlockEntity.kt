@@ -1,46 +1,60 @@
 package hiiragi283.ragium.common.block.entity
 
+import hiiragi283.core.api.HTConst
 import hiiragi283.core.api.HTContentListener
 import hiiragi283.core.api.gui.HTSlotHelper
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
+import hiiragi283.core.api.recipe.cache.completed.HTCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.api.storage.holder.HTEnergyBatteryHolder
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
+import hiiragi283.core.api.serialization.value.HTValueInput
+import hiiragi283.core.api.serialization.value.HTValueOutput
+import hiiragi283.core.api.serialization.value.read
+import hiiragi283.core.api.serialization.value.write
 import hiiragi283.core.api.storage.holder.HTFluidTankHolder
 import hiiragi283.core.api.storage.holder.HTItemSlotHolder
 import hiiragi283.core.common.gui.widget.HTProgressWidget
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.impl.recipe.cache.completed.HTCompletedRecipe
+import hiiragi283.core.support.gui.sync.HTIntSyncSlot
 import hiiragi283.ragium.common.block.entity.component.HTRecipeComponent
-import hiiragi283.ragium.common.storge.energy.HTMachineEnergyBattery
-import hiiragi283.ragium.common.storge.holder.HTBasicEnergyBatteryHolder
-import hiiragi283.ragium.common.storge.holder.HTBasicFluidTankHolder
-import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
+import hiiragi283.ragium.common.storge.energy.HTMachineEnergyHandler
+import hiiragi283.ragium.support.storage.holder.HTBasicFluidTankHolder
+import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
 import hiiragi283.ragium.config.HTEnergyConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMachineBlockEntity(type, pos, state) {
+abstract class HTProcessorBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMachineBlockEntity(type, pos, state) {
     protected lateinit var recipeHandler: HTProgressHandler<*>
         private set
     protected lateinit var recipeComponent: HTRecipeComponent
         private set
 
-    override fun initializeVariables() {
-        super.initializeVariables()
+    override fun initializeVariables(listener: HTContentListener) {
+        super.initializeVariables(listener)
         recipeHandler = createHandler()
         recipeComponent = HTRecipeComponent(this, recipeHandler)
     }
 
     protected abstract fun createHandler(): HTProgressHandler<*>
 
-    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4)) {
+    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4), vararg recipeTypes: HTRecipeViewerType<*>) {
         widgetHolder += HTProgressWidget.createArrow(
-            recipeComponent.fractionSlot,
+            recipeComponent.fractionSlot::amountAsFraction,
             x,
             HTSlotHelper.getSlotPosY(1),
-        )
+        ).setSupportedRecipeTypes(*recipeTypes)
+    }
+
+    fun addProgressBar(widgetHolder: HTWidgetHolder, x: Int = HTSlotHelper.getSlotPosX(4), recipeTypes: Iterable<HTRecipeViewerType<*>>) {
+        widgetHolder += HTProgressWidget.createArrow(
+            recipeComponent.fractionSlot::amountAsFraction,
+            x,
+            HTSlotHelper.getSlotPosY(1),
+        ).setSupportedRecipeTypes(recipeTypes)
     }
 
     final override fun createFluidHandler(listener: HTContentListener): HTFluidTankHolder? {
@@ -50,14 +64,6 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
     }
 
     protected open fun createFluidTanks(builder: HTBasicFluidTankHolder.Builder, listener: HTContentListener) {}
-
-    final override fun createEnergyHandler(listener: HTContentListener): HTEnergyBatteryHolder? {
-        val builder: HTBasicEnergyBatteryHolder.Builder = HTBasicEnergyBatteryHolder.builder(this)
-        createEnergyBattery(builder, recipeHandler.createListener(listener))
-        return builder.build()
-    }
-
-    protected open fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {}
 
     final override fun createItemHandler(listener: HTContentListener): HTItemSlotHolder? {
         val builder: HTBasicItemSlotHolder.Builder = HTBasicItemSlotHolder.builder(this)
@@ -87,21 +93,39 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
 
     //    Energized    //
 
-    abstract class Energized(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
-        lateinit var battery: HTMachineEnergyBattery.Processor
+    abstract class Energized(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTProcessorBlockEntity(type, pos, state) {
+        lateinit var handler: HTMachineEnergyHandler.Processor
             private set
 
-        final override fun createEnergyBattery(builder: HTBasicEnergyBatteryHolder.Builder, listener: HTContentListener) {
-            battery = builder.addSlot(HTSlotInfo.INPUT, HTMachineEnergyBattery.input(listener, this))
+        override fun initializeVariables(listener: HTContentListener) {
+            super.initializeVariables(listener)
+            handler = HTMachineEnergyHandler.input(recipeHandler.createListener(listener), this)
         }
 
         abstract fun getConfig(): HTEnergyConfig
 
         fun updateAndGetProgress(time: Int): Int {
             // if (isCreative()) return 0
-            battery.currentEnergyPerTick = battery.baseEnergyPerTick
+            handler.currentEnergyPerTick = handler.baseEnergyPerTick
             // modifyValue(HTUpgradeKeys.ENERGY_EFFICIENCY) { battery.baseEnergyPerTick / it }
-            return battery.currentEnergyPerTick * modifyTime(time)
+            return handler.currentEnergyPerTick * modifyTime(time)
+        }
+
+        fun addEnergySlot(widgetHolder: HTWidgetHolder, x: Int, y: Int) {
+            widgetHolder += HTEnergySlotWidget(handler, x, y)
+            widgetHolder.track(HTIntSyncSlot.create(handler), HTSyncType.S2C)
+        }
+
+        override fun writeValue(output: HTValueOutput) {
+            super.writeValue(output)
+            output.write(HTConst.ENERGY, handler)
+        }
+
+        override fun readValue(input: HTValueInput) {
+            super.readValue(input)
+            input.read(HTConst.ENERGY, handler)
+            // migration
+            input.child("batteries")?.read(HTConst.SLOT, handler)
         }
 
         //    ProgressHandler    //
@@ -109,10 +133,10 @@ abstract class HTProcessorBlockEntity(type: HTDeferredBlockEntityType<*>, pos: B
         abstract inner class ProgressHandler<RECIPE : Any, COMP : HTCompletedRecipe.WithProgress<RECIPE>> : RecipeHandler<RECIPE, COMP>() {
             override fun getMaxProgress(recipe: COMP): Int = recipe
                 .getProgress()
-                .getProcessTime(battery.currentEnergyPerTick)
+                .getProcessTime(handler.currentEnergyPerTick)
                 .let(::updateAndGetProgress)
 
-            final override fun getProgress(level: ServerLevel, pos: BlockPos): Int = battery.consume()
+            final override fun getProgress(level: ServerLevel, pos: BlockPos): Int = handler.consume()
         }
     }
 }

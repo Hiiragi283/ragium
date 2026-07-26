@@ -1,7 +1,8 @@
 package hiiragi283.ragium.common.block.entity.storage
 
+import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.gui.sync.HTSyncType
 import hiiragi283.core.api.storage.amount.HTAmountView
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
 import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.api.block.entity.HTBlockEntityWithMenu
 import hiiragi283.ragium.common.block.entity.HTConfigurableBlockEntity
@@ -9,23 +10,26 @@ import hiiragi283.ragium.common.block.entity.component.HTStorageCapacityComponen
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import org.apache.commons.lang3.math.Fraction
 
-abstract class HTStorageBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) :
+abstract class HTStorageBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) :
     HTConfigurableBlockEntity(type, pos, state),
     HTBlockEntityWithMenu {
     protected lateinit var capacityComponent: HTStorageCapacityComponent
         private set
 
-    override fun initializeVariables() {
-        super.initializeVariables()
+    override fun initializeVariables(listener: HTContentListener) {
+        super.initializeVariables(listener)
         capacityComponent = HTStorageCapacityComponent(this)
     }
 
     protected open fun isCreative(): Boolean = false
 
     protected abstract fun getAmountView(): HTAmountView
+
+    protected open fun getSlotSyncType(): HTSyncType? = HTSyncType.S2C
 
     final override fun markDirtyComparator() {
         level?.updateNeighbourForOutputSignal(blockPos, blockState.block)

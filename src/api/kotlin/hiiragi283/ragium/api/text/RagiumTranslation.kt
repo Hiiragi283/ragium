@@ -1,7 +1,6 @@
 package hiiragi283.ragium.api.text
 
 import hiiragi283.core.api.HTConst
-import hiiragi283.core.api.resource.toDescriptionKey
 import hiiragi283.core.api.text.HTTranslation
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
@@ -68,5 +67,5 @@ enum class RagiumTranslation(type: String, vararg path: String) : HTTranslation 
     TOOLTIP_LOOT_TABLE_ID("tooltip", "loot_table_id"),
     ;
 
-    override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toDescriptionKey(type)
+    override val translationKey: String = RagiumAPI.id(path.joinToString(separator = ".")).toLanguageKey(type)
 }

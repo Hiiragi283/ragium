@@ -4,9 +4,9 @@ import hiiragi283.core.api.data.buildDataPatch
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
 import hiiragi283.core.api.storage.fluid.HTFluidView
 import hiiragi283.core.api.storage.fluid.toStackOrEmpty
-import hiiragi283.core.common.capability.HTFluidCapabilities
-import hiiragi283.core.common.crafting.HTCustomRecipe
-import hiiragi283.core.common.crafting.ImmutableRecipeInput
+import hiiragi283.core.support.capability.HTFluidCapabilities
+import hiiragi283.core.support.crafting.HTCustomRecipe
+import hiiragi283.core.support.crafting.ImmutableRecipeInput
 import hiiragi283.core.util.HTStorageHelper
 import hiiragi283.ragium.setup.RagiumBlocks
 import hiiragi283.ragium.setup.RagiumDataComponents
@@ -21,7 +21,7 @@ class HTTankCombiningRecipe(category: CraftingBookCategory) : HTCustomRecipe(cat
     override fun matches(input: ImmutableRecipeInput, level: Level): Boolean {
         for (stack: ItemStack in input) {
             if (stack.isEmpty) continue
-            if (!RagiumBlocks.TANK.isOf(stack)) return false
+            if (!stack.`is`(RagiumBlocks.TANK.itemHolder)) return false
         }
         return true
     }

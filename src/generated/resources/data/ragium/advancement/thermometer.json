@@ -14,7 +14,7 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.thermometer.desc"
+      "translate": "advancement.ragium.thermometer.desc"
     },
     "frame": "goal",
     "icon": {
@@ -22,7 +22,7 @@
       "id": "ragium:thermometer"
     },
     "title": {
-      "translate": "advancements.ragium.thermometer.title"
+      "translate": "advancement.ragium.thermometer.title"
     }
   },
   "requirements": [

@@ -14,7 +14,7 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.electric_circuit.desc"
+      "translate": "advancement.ragium.electric_circuit.desc"
     },
     "frame": "goal",
     "icon": {
@@ -22,7 +22,7 @@
       "id": "ragium:electric_circuit"
     },
     "title": {
-      "translate": "advancements.ragium.electric_circuit.title"
+      "translate": "advancement.ragium.electric_circuit.title"
     }
   },
   "requirements": [

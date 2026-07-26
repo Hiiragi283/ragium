@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "oritech:still_silicon_wash"
+  },
+  "item_ingredient": {
+    "amount": 1,
+    "items": "#c:dusts/ragi_crystal"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:silicon_wafer"
+  },
+  "time": 200
+}

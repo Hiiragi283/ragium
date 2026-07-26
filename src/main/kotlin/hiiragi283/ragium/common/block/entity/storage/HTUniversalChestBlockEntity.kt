@@ -1,6 +1,6 @@
 package hiiragi283.ragium.common.block.entity.storage
 
-import hiiragi283.core.api.HTDefaultColor
+import hiiragi283.core.api.color.HTDefaultColor
 import hiiragi283.core.api.serialization.value.HTValueInput
 import hiiragi283.core.api.serialization.value.HTValueOutput
 import hiiragi283.core.api.storage.HTHandlerProvider
@@ -15,12 +15,11 @@ import net.minecraft.core.Direction
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.server.MinecraftServer
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.server.ServerLifecycleHooks
 
 class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
-    HTExtendedBlockEntity(RagiumBlockEntityTypes.UNIVERSAL_CHEST, pos, state),
+    HTExtendedBlockEntity(RagiumBlockEntityTypes.UNIVERSAL_CHEST.get(), pos, state),
     HTHandlerProvider,
     HTItemHandler {
     var color: HTDefaultColor = HTDefaultColor.WHITE
@@ -65,8 +64,6 @@ class HTUniversalChestBlockEntity(pos: BlockPos, state: BlockState) :
     }
 
     override fun getFluidHandler(direction: Direction?): IFluidHandler? = null
-
-    override fun getEnergyStorage(direction: Direction?): IEnergyStorage? = null
 
     override fun getItemSlots(side: Direction?): List<HTItemSlot> = getItemHandler(side)?.getItemSlots(side) ?: listOf()
 }

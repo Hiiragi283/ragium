@@ -5,9 +5,11 @@ import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
+import hiiragi283.core.common.gui.widget.HTItemWidget
 import hiiragi283.core.common.recipe.HCRecipeLookups
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
+import hiiragi283.core.common.recipe.viewer.HCRecipeViewerTypes
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
 import hiiragi283.ragium.common.block.entity.machine.base.HTItemToMultiItemBlockEntity
 import hiiragi283.ragium.config.HTEnergyConfig
 import hiiragi283.ragium.config.RagiumConfig
@@ -16,7 +18,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.level.block.state.BlockState
 
-class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CRUSHER, pos, state) {
+class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItemBlockEntity(RagiumBlockEntityTypes.CRUSHER.get(), pos, state) {
     override fun playSound() {
         playSound(SoundEvents.GRINDSTONE_USE)
     }
@@ -25,8 +27,9 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
 
     override fun setupOutputSlots(widgetHolder: HTWidgetHolder) {
         outputSlots
+            .onEach { widgetHolder.track(it) }
             .mapIndexed { index: Int, slot: HTBasicItemSlot ->
-                HTItemSlotWidget.container(
+                HTItemWidget.Container(
                     slot,
                     HTSlotHelper.getSlotPosX(6 + index % 2),
                     HTSlotHelper.getSlotPosY(0.5 + index / 2),
@@ -35,7 +38,9 @@ class HTCrusherBlockEntity(pos: BlockPos, state: BlockState) : HTItemToMultiItem
             }.forEach(widgetHolder::addWidget)
     }
 
-    override fun getLookup(): HTRecipeLookup<out HTItemToMultiItemRecipe> = HCRecipeLookups.CRUSHING
+    override fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = listOf(HCRecipeViewerTypes.CRUSHING)
+
+    override fun getLookup(): HTRecipeLookup<HTItemToMultiItemRecipe> = HCRecipeLookups.CRUSHING
 
     override fun getConfig(): HTEnergyConfig = RagiumConfig.COMMON.machine.crusher
 }

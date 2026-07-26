@@ -14,14 +14,14 @@
   },
   "display": {
     "description": {
-      "translate": "advancements.ragium.brewery.desc"
+      "translate": "advancement.ragium.brewery.desc"
     },
     "icon": {
       "count": 1,
       "id": "ragium:brewery"
     },
     "title": {
-      "translate": "advancements.ragium.brewery.title"
+      "translate": "advancement.ragium.brewery.title"
     }
   },
   "requirements": [

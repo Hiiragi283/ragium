@@ -5,23 +5,23 @@ import hiiragi283.core.api.gui.HTBackgroundType
 import hiiragi283.core.api.gui.HTSlotHelper
 import hiiragi283.core.api.gui.widget.HTWidgetHolder
 import hiiragi283.core.api.recipe.base.HTItemToMultiItemRecipe
-import hiiragi283.core.api.recipe.cache.HTRecipeCaches
 import hiiragi283.core.api.recipe.cache.HTRecipeLookup
+import hiiragi283.core.api.recipe.cache.completed.HTSingleToMultiItemCompletedRecipe
 import hiiragi283.core.api.recipe.handler.HTProgressHandler
-import hiiragi283.core.common.gui.widget.HTItemSlotWidget
-import hiiragi283.core.common.registry.HTDeferredBlockEntityType
-import hiiragi283.core.common.storage.item.HTBasicItemSlot
-import hiiragi283.core.impl.recipe.cache.completed.HTSingleToMultiItemCompletedRecipe
-import hiiragi283.core.impl.recipe.handler.HTItemInputHandler
-import hiiragi283.core.impl.recipe.handler.HTItemOutputHandler
-import hiiragi283.ragium.common.gui.widget.HTEnergySlotWidget
-import hiiragi283.ragium.common.storge.holder.HTBasicItemSlotHolder
-import hiiragi283.ragium.common.storge.holder.HTSlotInfo
+import hiiragi283.core.api.recipe.viewer.HTRecipeViewerType
+import hiiragi283.core.common.gui.widget.HTItemWidget
+import hiiragi283.core.support.recipe.cache.HTRecipeCaches
+import hiiragi283.core.support.recipe.handler.HTItemInputHandler
+import hiiragi283.core.support.recipe.handler.HTItemOutputHandler
+import hiiragi283.core.support.storage.item.HTBasicItemSlot
+import hiiragi283.ragium.support.storage.holder.HTBasicItemSlotHolder
+import hiiragi283.ragium.support.storage.holder.HTSlotInfo
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class HTItemToMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMultiItemBlockEntity(type, pos, state) {
+abstract class HTItemToMultiItemBlockEntity(type: BlockEntityType<*>, pos: BlockPos, state: BlockState) : HTMultiItemBlockEntity(type, pos, state) {
     private lateinit var inputSlot: HTBasicItemSlot
 
     final override fun createInputSlots(builder: HTBasicItemSlotHolder.Builder, listener: HTContentListener) {
@@ -30,20 +30,24 @@ abstract class HTItemToMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, 
 
     final override fun setupMenu(widgetHolder: HTWidgetHolder) {
         super.setupMenu(widgetHolder)
-        widgetHolder += HTEnergySlotWidget(battery, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
+        addEnergySlot(widgetHolder, HTSlotHelper.getSlotPosX(2.5), HTSlotHelper.getSlotPosY(1.5))
         // progress
-        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4))
+        addProgressBar(widgetHolder, HTSlotHelper.getSlotPosX(4), getViewerTypes())
         // slots
-        widgetHolder += HTItemSlotWidget.container(
+        widgetHolder += HTItemWidget.Container(
             inputSlot,
             HTSlotHelper.getSlotPosX(2.5),
             HTSlotHelper.getSlotPosY(0.5),
             HTBackgroundType.INPUT,
         )
+        widgetHolder.track(inputSlot)
+
         setupOutputSlots(widgetHolder)
     }
 
     protected abstract fun setupOutputSlots(widgetHolder: HTWidgetHolder)
+
+    protected open fun getViewerTypes(): Iterable<HTRecipeViewerType<*>> = emptyList()
 
     //    Processing    //
 
@@ -64,7 +68,7 @@ abstract class HTItemToMultiItemBlockEntity(type: HTDeferredBlockEntityType<*>, 
 
     final override fun createHandler(): HTProgressHandler<*> = ProgressHandlerImpl()
 
-    protected abstract fun getLookup(): HTRecipeLookup<out HTItemToMultiItemRecipe>
+    protected abstract fun getLookup(): HTRecipeLookup<HTItemToMultiItemRecipe>
 
     protected abstract fun playSound()
 }
