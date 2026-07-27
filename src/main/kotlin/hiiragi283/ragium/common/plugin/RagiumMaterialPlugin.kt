@@ -18,15 +18,19 @@ import hiiragi283.core.api.plugin.HTMaterialPlugin
 import hiiragi283.core.api.plugin.HTPlugin
 import hiiragi283.core.api.property.add
 import hiiragi283.core.common.material.CommonMaterialKeys
+import hiiragi283.core.common.material.HCMaterialKeys
 import hiiragi283.core.common.material.VanillaMaterialKeys
+import hiiragi283.core.setup.HCFluids
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.material.property.RagiumMaterialPropertyKeys
 import hiiragi283.ragium.api.tag.RagiumTagPrefixes
 import hiiragi283.ragium.common.data.RagiumDynamicServerResources
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import hiiragi283.ragium.common.material.part.RagiumParts
+import hiiragi283.ragium.setup.RagiumFluids
 import hiiragi283.ragium.setup.RagiumItems
 import net.minecraft.resources.ResourceLocation
+import net.neoforged.neoforge.fluids.FluidType
 
 @HTPlugin
 data object RagiumMaterialPlugin : HTMaterialPlugin {
@@ -90,6 +94,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             addItemPrefixes(CommonParts.DUST, CommonParts.RAW, CommonParts.CRUSHED_ORE)
             put(HTMaterialPropertyKeys.ORE_RESULT_MULTIPLIER, fraction(3))
             put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
+            put(RagiumMaterialPropertyKeys.MOLTEN_FLUID, RagiumFluids.MOLTEN_RAGINITE)
 
             setName("Raginite", "ラギナイト")
             setTextureSet("mineral", HTMaterialTextureSet.DULL)
@@ -155,6 +160,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
             put(HTMaterialPropertyKeys.MELTING_POINT, HTMaterialLevel.HIGH)
             add(HTMaterialPropertyKeys.DISABLE_SMELTING)
             put(HTMaterialPropertyKeys.ORIGIN_MOD_ID, RagiumAPI.MOD_ID)
+            put(RagiumMaterialPropertyKeys.MOLTEN_FLUID, RagiumFluids.MOLTEN_STAINLESS_STEEL)
 
             setName("Stainless Steel", "ステンレス鋼")
             setTextureSet(HTMaterialTextureSet.SHINE)
@@ -173,6 +179,18 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
             addItemPrefixes(CommonParts.DUST, CommonParts.INGOT, CommonParts.PLATE)
         }
+        // Molten Fluid
+        provider.getBuilder(VanillaMaterialKeys.GLASS).apply {
+            put(RagiumMaterialPropertyKeys.MOLTEN_FLUID, HCFluids.MOLTEN_GLASS)
+            put(RagiumMaterialPropertyKeys.DEFAULT_FLUID_AMOUNT, FluidType.BUCKET_VOLUME)
+        }
+
+        provider.getBuilder(VanillaMaterialKeys.ENDER)[RagiumMaterialPropertyKeys.MOLTEN_FLUID] = HCFluids.MOLTEN_ENDER
+        provider.getBuilder(VanillaMaterialKeys.BLAZE)[RagiumMaterialPropertyKeys.MOLTEN_FLUID] = HCFluids.MOLTEN_BLAZE
+
+        provider.getBuilder(HCMaterialKeys.CRIMSON_CRYSTAL)[RagiumMaterialPropertyKeys.MOLTEN_FLUID] = HCFluids.MOLTEN_CRIMSON_CRYSTAL
+        provider.getBuilder(HCMaterialKeys.WARPED_CRYSTAL)[RagiumMaterialPropertyKeys.MOLTEN_FLUID] = HCFluids.MOLTEN_WARPED_CRYSTAL
+        provider.getBuilder(HCMaterialKeys.ELDRITCH)[RagiumMaterialPropertyKeys.MOLTEN_FLUID] = HCFluids.MOLTEN_ELDRITCH
         // Matter Value
         provider.getBuilder(VanillaMaterialKeys.AMETHYST)[RagiumMaterialPropertyKeys.MATTER_VALUE] = 32
 

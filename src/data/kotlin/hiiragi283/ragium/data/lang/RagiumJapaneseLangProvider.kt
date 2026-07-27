@@ -84,6 +84,7 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumBlocks.CREATIVE_TANK, "クリエイティブタンク")
         // Fluid
         addFluid(RagiumFluids.MOLTEN_RAGINITE, "溶融ラギナイト")
+        addFluid(RagiumFluids.MOLTEN_STAINLESS_STEEL, "溶融ステンレス鋼")
 
         addFluid(RagiumFluids.HYDROGEN, "水素")
         addFluid(RagiumFluids.STEAM, "蒸気")
