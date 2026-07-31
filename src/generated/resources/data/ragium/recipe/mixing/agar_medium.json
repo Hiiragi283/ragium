@@ -1,0 +1,22 @@
+{
+  "type": "ragium:mixing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": [
+    {
+      "amount": 1,
+      "items": "minecraft:sugar"
+    },
+    {
+      "amount": 1,
+      "items": "ragium:agar"
+    }
+  ],
+  "item_result": {
+    "count": 1,
+    "id": "ragium:agar_medium"
+  },
+  "time": 200
+}

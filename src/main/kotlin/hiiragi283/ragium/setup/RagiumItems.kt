@@ -4,6 +4,7 @@ import hiiragi283.core.api.registry.HTDeferredItemRegister
 import hiiragi283.core.api.registry.HTSimpleDeferredItem
 import hiiragi283.core.common.item.endgame.HTCreativeItem
 import hiiragi283.ragium.api.RagiumAPI
+import hiiragi283.ragium.common.item.HTAgarMediumItem
 import hiiragi283.ragium.common.item.HTBatteryItem
 import hiiragi283.ragium.common.item.HTElectricIgniterItem
 import hiiragi283.ragium.common.item.HTLocationTicketItem
@@ -38,6 +39,12 @@ data object RagiumItems {
 
     @JvmField
     val CRYO_CHARGE: HTSimpleDeferredItem = REGISTER.registerSimpleItem("cryo_charge")
+
+    @JvmField
+    val AGAR: HTSimpleDeferredItem = REGISTER.registerSimpleItem("agar")
+
+    @JvmField
+    val AGAR_MEDIUM: HTSimpleDeferredItem = REGISTER.registerItem("agar_medium", ::HTAgarMediumItem)
 
     // Nether
     @JvmField

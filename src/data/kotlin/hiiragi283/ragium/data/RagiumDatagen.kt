@@ -83,6 +83,6 @@ object RagiumDatagen {
         event.createProviderWithHelper(::RagiumSpriteSourceProvider)
 
         event.createProviderWithHelper(::RagiumBlockStateProvider)
-        event.createProviderWithHelper(::RagiumItemModelProvider)
+        event.createProvider(::RagiumItemModelProvider)
     }
 }

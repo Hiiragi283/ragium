@@ -116,6 +116,8 @@
   "gui.ragium.slot.input": "%s: Input",
   "gui.ragium.slot.none": "%s: None",
   "gui.ragium.slot.output": "%s: Output",
+  "item.ragium.agar": "Agar",
+  "item.ragium.agar_medium": "Agar Medium",
   "item.ragium.ammonia_bucket": "Ammonia Bucket",
   "item.ragium.artificial_artifact": "Artificial Artifact",
   "item.ragium.biofuel_bucket": "Biofuel Bucket",

@@ -1,0 +1,16 @@
+{
+  "type": "ragium:bathing",
+  "fluid_ingredient": {
+    "amount": 1000,
+    "fluids": "#c:water"
+  },
+  "item_ingredient": {
+    "amount": 4,
+    "items": "minecraft:seagrass"
+  },
+  "result": {
+    "count": 1,
+    "id": "ragium:agar"
+  },
+  "time": 200
+}

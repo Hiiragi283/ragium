@@ -126,6 +126,8 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         // Item
         add(RagiumItems.RAGI_ALLOY_COMPOUND, "Ragi-Alloy Compound")
         add(RagiumItems.CRYO_CHARGE, "Cryo-Charge")
+        add(RagiumItems.AGAR, "Agar")
+        add(RagiumItems.AGAR_MEDIUM, "Agar Medium")
 
         add(RagiumItems.CRUDE_SILICON, "Crude Silicon")
         add(RagiumItems.GLYCEROL_DROP, "Glycerol")

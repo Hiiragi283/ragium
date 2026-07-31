@@ -116,6 +116,8 @@
   "gui.ragium.slot.input": "%s: 入力",
   "gui.ragium.slot.none": "%s: なし",
   "gui.ragium.slot.output": "%s: 出力",
+  "item.ragium.agar": "寒天",
+  "item.ragium.agar_medium": "寒天培地",
   "item.ragium.ammonia_bucket": "アンモニア入りバケツ",
   "item.ragium.artificial_artifact": "人工遺物",
   "item.ragium.biofuel_bucket": "バイオ燃料入りバケツ",
