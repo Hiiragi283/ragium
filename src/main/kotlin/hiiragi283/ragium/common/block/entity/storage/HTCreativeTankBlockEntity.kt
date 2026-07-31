@@ -22,7 +22,7 @@ class HTCreativeTankBlockEntity(pos: BlockPos, state: BlockState) : HTTankBlockE
 
     private inner class CreativeFluidTank :
         HTFluidStackResourceSlot(),
-        HTContentListener.Empty {
+        HTContentListener by HTContentListener.NOTHING {
         private var fluid: HTFluidResourceType? = null
 
         override fun getStack(): FluidStack = fluid.toStackOrEmpty(Int.MAX_VALUE)

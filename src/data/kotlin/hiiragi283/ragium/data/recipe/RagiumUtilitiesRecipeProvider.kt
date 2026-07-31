@@ -254,7 +254,7 @@ class RagiumUtilitiesRecipeProvider(packOutput: PackOutput, future: CompletableF
         largeCore: TagKey<Item> = core,
     ) {
         // Shaped
-        val defaultPart: TagKey<Item> = materialManager.getOrEmpty(top).getDefaultPart(top) ?: return
+        val defaultPart: TagKey<Item> = materialManager[top]?.getDefaultPart(top) ?: return
         HTShapedRecipeBuilder.create {
             crossLayered()
             define('A') { +tag(CommonTagPrefixes.INGOT, RagiumMaterialKeys.RAGI_ALLOY) }

@@ -3,13 +3,11 @@ package hiiragi283.ragium.setup
 import hiiragi283.core.api.HCRegistries
 import hiiragi283.core.api.gui.widget.HTWidgetType
 import hiiragi283.core.api.item.HTCreativeModeTabHelper
-import hiiragi283.core.api.material.part.CommonParts
 import hiiragi283.core.api.recipe.HTRecipeType
 import hiiragi283.core.api.registry.HTSimpleDeferredItem
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.api.RagiumConst
 import hiiragi283.ragium.api.text.RagiumTranslation
-import hiiragi283.ragium.common.material.RagiumMaterialKeys
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.CreativeModeTab
 import net.neoforged.neoforge.registries.NeoForgeRegistries
@@ -22,7 +20,7 @@ internal data object RagiumMiscRegister {
         event.register(Registries.CREATIVE_MODE_TAB) { helper ->
             helper.register(
                 RagiumCreativeTabs.COMMON,
-                HTCreativeModeTabHelper.createSimpleTab(RagiumTranslation.RAGIUM, HTSimpleDeferredItem(CommonParts.INGOT.createId(RagiumMaterialKeys.RAGI_ALLOY))) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
+                HTCreativeModeTabHelper.createSimpleTab(RagiumTranslation.RAGIUM, HTSimpleDeferredItem(RagiumAPI.id("ragi_alloy_ingot"))) { parameters: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
                     // Items
                     HTCreativeModeTabHelper.addToDisplay(parameters, output, RagiumItems.REGISTER.asSequence())
                     // Blocks

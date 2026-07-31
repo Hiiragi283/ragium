@@ -5,9 +5,8 @@ import hiiragi283.core.api.data.worldgen.HTWorldGenData
 import hiiragi283.core.api.data.worldgen.HTWorldGenHelper
 import hiiragi283.core.api.material.HTMaterialContents
 import hiiragi283.core.api.material.HTMaterialKey
-import hiiragi283.core.api.material.getResult
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTPartLike
+import hiiragi283.core.api.material.part.HTPartKey
 import hiiragi283.core.api.util.getOrThrow
 import hiiragi283.ragium.api.RagiumAPI
 import hiiragi283.ragium.common.material.RagiumMaterialKeys
@@ -81,5 +80,5 @@ data object RagiumWorldData {
     }
 
     @JvmStatic
-    private fun getBlockOrThrow(part: HTPartLike, key: HTMaterialKey): HTMaterialContents.BlockEntry = HiiragiCoreAccess.INSTANCE.registeredContents.blocks.getResult(part, key).getOrThrow()
+    private fun getBlockOrThrow(part: HTPartKey, key: HTMaterialKey): HTMaterialContents.BlockEntry = HiiragiCoreAccess.INSTANCE.registeredContents.blocks.getResult(part, key).getOrThrow()
 }

@@ -2,7 +2,7 @@ package hiiragi283.ragium.common.plugin
 
 import hiiragi283.core.api.fraction
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTPartLike
+import hiiragi283.core.api.material.part.HTPartKey
 import hiiragi283.core.api.material.part.property.HTPartPropertyKeys
 import hiiragi283.core.api.material.part.property.addNamePattern
 import hiiragi283.core.api.material.property.HTDefaultPart
@@ -39,7 +39,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
     override fun getId(): ResourceLocation = RagiumAPI.id("material_plugin")
 
     override fun registerPart(registrar: HTMaterialPlugin.PartRegistrar) {
-        registrar.register("pellet", "%s_pellet") {
+        registrar.register(RagiumParts.PELLET, "%s_pellet") {
             put(HTPartPropertyKeys.TAG_PREFIX, RagiumTagPrefixes.PELLET)
 
             addNamePattern("%s Pellet", "%sペレット")
@@ -63,7 +63,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
         existing(provider)
     }
 
-    private val materialBlockSet: Set<HTPartLike> = setOf(
+    private val materialBlockSet: Set<HTPartKey> = setOf(
         CommonParts.ORE,
         CommonParts.ORE_DEEPSLATE,
         CommonParts.ORE_NETHER,
@@ -124,7 +124,7 @@ data object RagiumMaterialPlugin : HTMaterialPlugin {
 
     @JvmStatic
     private fun alloy(provider: HTMaterialPlugin.MaterialProvider) {
-        val alloySet: Set<HTPartLike> = setOf(
+        val alloySet: Set<HTPartKey> = setOf(
             CommonParts.DUST,
             CommonParts.INGOT,
             CommonParts.NUGGET,

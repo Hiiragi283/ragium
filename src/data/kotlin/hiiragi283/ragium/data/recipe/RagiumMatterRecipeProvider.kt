@@ -4,7 +4,7 @@ import hiiragi283.core.api.HiiragiCoreAccess
 import hiiragi283.core.api.data.recipe.HTRecipeProvider
 import hiiragi283.core.api.material.HTMaterialKey
 import hiiragi283.core.api.material.part.CommonParts
-import hiiragi283.core.api.material.part.HTPartLike
+import hiiragi283.core.api.material.part.HTPartKey
 import hiiragi283.core.api.tag.HiiragiCoreTags
 import hiiragi283.core.common.data.recipe.HTShapedRecipeBuilder
 import hiiragi283.core.common.material.CommonMaterialKeys
@@ -58,7 +58,7 @@ class RagiumMatterRecipeProvider(packOutput: PackOutput, future: CompletableFutu
         matterRecipe(CommonParts.GEM, VanillaMaterialKeys.DIAMOND, "AAA", "AAA", "AAA")
     }
 
-    private fun matterRecipe(part: HTPartLike, key: HTMaterialKey, vararg pattern: String, count: Int = 1) {
+    private fun matterRecipe(part: HTPartKey, key: HTMaterialKey, vararg pattern: String, count: Int = 1) {
         val result: ItemLike = HiiragiCoreAccess.INSTANCE.getMaterialBlockOrItem(part, key) ?: return
         matterRecipe(result, *pattern, count = count)
     }

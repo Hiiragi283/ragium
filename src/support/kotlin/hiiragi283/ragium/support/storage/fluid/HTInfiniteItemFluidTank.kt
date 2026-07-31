@@ -1,5 +1,7 @@
 package hiiragi283.ragium.support.storage.fluid
 
+import hiiragi283.core.api.HTContentListener
+import hiiragi283.core.api.serialization.value.HTValueSerializable
 import hiiragi283.core.api.storage.HTStorageAccess
 import hiiragi283.core.api.storage.HTStorageAction
 import hiiragi283.core.api.storage.fluid.HTFluidResourceType
@@ -8,7 +10,10 @@ import hiiragi283.core.api.storage.fluid.toResource
 import hiiragi283.core.util.HTStorageHelper
 import net.minecraft.world.item.ItemStack
 
-class HTInfiniteItemFluidTank(override val container: ItemStack) : HTItemFluidTank {
+class HTInfiniteItemFluidTank(override val container: ItemStack) :
+    HTItemFluidTank,
+    HTContentListener by HTContentListener.NOTHING,
+    HTValueSerializable by HTValueSerializable.NOTHING {
     override fun isValid(resource: HTFluidResourceType): Boolean = true
 
     override fun insert(
