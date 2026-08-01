@@ -673,10 +673,11 @@ class RagiumChemicalRecipeProvider(packOutput: PackOutput, future: CompletableFu
         HTShapedRecipeBuilder.create {
             +" AB"
             +"ACA"
-            +"CA "
+            +"DA "
             define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
-            define('B') { +tag(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
-            define('C') { +Tags.Items.GLASS_BLOCKS_COLORLESS }
+            define('B') { +Tags.Items.GLASS_BLOCKS_COLORLESS }
+            define('C') { +tag(CommonTagPrefixes.GEM, RagiumMaterialKeys.RAGI_CRYSTAL) }
+            define('D') { +RagiumItems.ELECTRIC_CIRCUIT }
             +RagiumItems.LASER_EMITTER.toStack()
         }.save(exporter)
     }

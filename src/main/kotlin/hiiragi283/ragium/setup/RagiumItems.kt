@@ -66,13 +66,19 @@ data object RagiumItems {
 
     //    Parts    //
 
-    // Basic
+    // Mechanical
 
-    // Advanced
+    // Heat
+
+    // Chemical
     @JvmField
     val THERMOMETER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("thermometer") { it.rarity(Rarity.UNCOMMON) }
 
-    // Elite
+    // Bio
+
+    // Cold
+
+    // Electronics
     @JvmField
     val SILICON_WAFER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("silicon_wafer")
 
@@ -88,7 +94,7 @@ data object RagiumItems {
     @JvmField
     val LASER_EMITTER: HTSimpleDeferredItem = REGISTER.registerSimpleItem("laser_emitter")
 
-    // Ultimate
+    // Arcane
     @JvmField
     val ARTIFICIAL_ARTIFACT: HTSimpleDeferredItem = REGISTER.registerSimpleItem("artificial_artifact") { it.rarity(Rarity.EPIC) }
 

@@ -53,15 +53,18 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             inventory("has_raginite") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.DUST, RagiumMaterialKeys.RAGINITE) }
         }.save(exporter)
 
-        basic()
-        advanced()
-        elite()
-        ultimate()
+        mechanical()
+        heat()
+        chemical()
+        bio()
+        cold()
+        electronics()
+        arcane()
     }
 
     override fun getName(): String = "Advancements - $modId"
 
-    private fun basic() {
+    private fun mechanical() {
         HTAdvancementBuilder.create(RagiumAdvancementKeys.RAGI_ALLOY) {
             +RagiumAdvancementKeys.ROOT
             display {
@@ -74,21 +77,21 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         createSimple(RagiumAdvancementKeys.ALLOY_SMELTER, RagiumAdvancementKeys.RAGI_ALLOY, RagiumBlocks.ALLOY_SMELTER)
     }
 
-    private fun advanced() {
+    private fun heat() {
         HTAdvancementBuilder.create(RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY) {
             +RagiumAdvancementKeys.RAGI_ALLOY
             display { +getItem(CommonParts.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY).toStack() }
             inventory("has_adv_ragi_alloy") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) }
         }.save(exporter)
-
         HTAdvancementBuilder.create(RagiumAdvancementKeys.HEATING_COIL) {
-            +RagiumAdvancementKeys.ALLOY_SMELTER
+            +RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY
             display {
                 +RagiumBlocks.HEATING_COIL.toStack()
                 type = AdvancementType.GOAL
             }
             inventory("has_heating_coil") { +ItemPredicate.Builder.item().of(RagiumBlocks.HEATING_COIL) }
         }.save(exporter)
+
         createSimple(RagiumAdvancementKeys.REFINERY, RagiumAdvancementKeys.HEATING_COIL, RagiumBlocks.REFINERY)
         HTAdvancementBuilder.create(RagiumAdvancementKeys.PLASTIC) {
             +RagiumAdvancementKeys.REFINERY
@@ -114,7 +117,25 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
         }.save(exporter)
     }
 
-    private fun elite() {
+    private fun chemical() {
+        HTAdvancementBuilder.create(RagiumAdvancementKeys.THERMOMETER) {
+            +RagiumAdvancementKeys.HEATING_COIL
+            display {
+                +RagiumItems.THERMOMETER.toStack()
+                type = AdvancementType.GOAL
+            }
+            inventory("has_thermometer") { +ItemPredicate.Builder.item().of(RagiumItems.THERMOMETER) }
+        }.save(exporter)
+        createSimple(RagiumAdvancementKeys.MIXER, RagiumAdvancementKeys.THERMOMETER, RagiumBlocks.MIXER)
+    }
+
+    private fun bio() {
+        createSimple(RagiumAdvancementKeys.BREWERY, RagiumAdvancementKeys.THERMOMETER, RagiumBlocks.BREWERY)
+    }
+
+    private fun cold() {}
+
+    private fun electronics() {
         HTAdvancementBuilder.create(RagiumAdvancementKeys.RAGI_CRYSTAL) {
             +RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY
             display { +getItem(CommonParts.GEM, RagiumMaterialKeys.RAGI_CRYSTAL).toStack() }
@@ -125,7 +146,6 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             display { +getItem(CommonParts.INGOT, RagiumMaterialKeys.STAINLESS_STEEL).toStack() }
             inventory("has_stainless_steel") { +ItemPredicate.Builder.item().of(CommonTagPrefixes.INGOT, RagiumMaterialKeys.STAINLESS_STEEL) }
         }.save(exporter)
-
         HTAdvancementBuilder.create(RagiumAdvancementKeys.ELECTRIC_CIRCUIT) {
             +RagiumAdvancementKeys.REFINED_SILICON
             display {
@@ -134,9 +154,8 @@ class RagiumAdvancementProvider(packOutput: PackOutput, future: CompletableFutur
             }
             inventory("has_electric_circuit") { +ItemPredicate.Builder.item().of(RagiumItems.ELECTRIC_CIRCUIT) }
         }.save(exporter)
-        createSimple(RagiumAdvancementKeys.BREWERY, RagiumAdvancementKeys.ELECTRIC_CIRCUIT, RagiumBlocks.BREWERY)
-        createSimple(RagiumAdvancementKeys.MIXER, RagiumAdvancementKeys.ELECTRIC_CIRCUIT, RagiumBlocks.MIXER)
+        createSimple(RagiumAdvancementKeys.LASER_EMITTER, RagiumAdvancementKeys.ELECTRIC_CIRCUIT, RagiumItems.LASER_EMITTER)
     }
 
-    private fun ultimate() {}
+    private fun arcane() {}
 }

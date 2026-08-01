@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "c:plates/advanced_ragi_alloy"
+      "tag": "c:plates/stainless_steel"
     }
   },
   "pattern": [
@@ -13,6 +13,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "ragium:heating_coil"
+    "id": "ragium:cooling_unit"
   }
 }

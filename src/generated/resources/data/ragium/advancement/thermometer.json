@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:thermometer",
+  "parent": "ragium:heating_coil",
   "criteria": {
-    "has_brewery": {
+    "has_thermometer": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:brewery"
+            "items": "ragium:thermometer"
           }
         ]
       },
@@ -14,19 +14,20 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.brewery.desc"
+      "translate": "advancement.ragium.thermometer.desc"
     },
+    "frame": "goal",
     "icon": {
       "count": 1,
-      "id": "ragium:brewery"
+      "id": "ragium:thermometer"
     },
     "title": {
-      "translate": "advancement.ragium.brewery.title"
+      "translate": "advancement.ragium.thermometer.title"
     }
   },
   "requirements": [
     [
-      "has_brewery"
+      "has_thermometer"
     ]
   ],
   "sends_telemetry_event": true

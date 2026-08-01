@@ -25,24 +25,30 @@ class RagiumEnglishLangProvider(output: PackOutput) : HTLangProvider(output, Rag
         add(RagiumAdvancementKeys.RAGI_ALLOY, "0xFF003f", "Get Ragi-Alloy Ingot")
         add(RagiumAdvancementKeys.ALLOY_SMELTER, "Al-Chemistry", "Get Alloy Smelter")
 
-        add(RagiumAdvancementKeys.HEATING_COIL, "Heat! Metal!", "Get Heating Coil")
         add(RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY, "Maybe Red", "Get Advanced Ragi-Alloy Ingot")
+        add(RagiumAdvancementKeys.HEATING_COIL, "Heat! Metal!", "Get Heating Coil")
         add(RagiumAdvancementKeys.REFINERY, "A BC is DEFinitely Good", "Get Refinery")
         add(RagiumAdvancementKeys.PLASTIC, "Plus-TiC", "Get Plastic Sheet")
         add(RagiumAdvancementKeys.REFINED_SILICON, "Refined Silicon", "Get Silicon Dust")
         add(RagiumAdvancementKeys.PYROLYZER, "Electric Coke Oven", "Get Pyrolyzer")
         add(RagiumAdvancementKeys.CRIMSON_CRYSTAL, "Chao!", "Get Crimson Crystal")
         add(RagiumAdvancementKeys.WARPED_CRYSTAL, "Stabilized Warp", "Get Warped Crystal")
+        add(RagiumAdvancementKeys.STAINLESS_STEEL, "Chrome than Edge", "Get Stainless Steel Ingot")
+
+        add(RagiumAdvancementKeys.THERMOMETER, "Thermal Examination", "Get Thermometer")
+        add(RagiumAdvancementKeys.MIXER, "Best Match!", "Get Mixer")
+
+        add(RagiumAdvancementKeys.BREWERY, "Automatic Brewing", "Get Brewery")
 
         add(RagiumAdvancementKeys.RAGI_CRYSTAL, "Not a Energium", "Get Ragi-Crystal")
-        add(RagiumAdvancementKeys.STAINLESS_STEEL, "Not a HV Age", "Get Stainless Steel Ingot")
         add(RagiumAdvancementKeys.ELECTRIC_CIRCUIT, "PCB: Pretty Cool Board", "Get Electric Circuit")
-        add(RagiumAdvancementKeys.BREWERY, "Automatic Brewing", "Get Brewery")
-        add(RagiumAdvancementKeys.MIXER, "Best Match!", "Get Mixer")
+        add(RagiumAdvancementKeys.LASER_EMITTER, "Do not look in", "Get Laser Emitter")
+
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "Bone with Meat")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "Bone with Cooked Meat")
         add(RagiumBlocks.HEATING_COIL, "Heating Coil")
+        add(RagiumBlocks.COOLING_UNIT, "Cooling Unit")
         add(RagiumBlocks.INDUSTRIAL_TNT, "Industrial TNT")
         // Generator
         add(RagiumBlocks.BOILER, "Boiler")

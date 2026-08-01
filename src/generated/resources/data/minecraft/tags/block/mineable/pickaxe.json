@@ -3,6 +3,7 @@
     "#ragium:machines",
     "#ragium:storages",
     "ragium:boiler",
+    "ragium:cooling_unit",
     "ragium:heating_coil"
   ]
 }

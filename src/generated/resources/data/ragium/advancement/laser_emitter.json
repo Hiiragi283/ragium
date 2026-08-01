@@ -1,11 +1,11 @@
 {
-  "parent": "ragium:thermometer",
+  "parent": "ragium:electric_circuit",
   "criteria": {
-    "has_brewery": {
+    "has_laser_emitter": {
       "conditions": {
         "items": [
           {
-            "items": "ragium:brewery"
+            "items": "ragium:laser_emitter"
           }
         ]
       },
@@ -14,19 +14,19 @@
   },
   "display": {
     "description": {
-      "translate": "advancement.ragium.brewery.desc"
+      "translate": "advancement.ragium.laser_emitter.desc"
     },
     "icon": {
       "count": 1,
-      "id": "ragium:brewery"
+      "id": "ragium:laser_emitter"
     },
     "title": {
-      "translate": "advancement.ragium.brewery.title"
+      "translate": "advancement.ragium.laser_emitter.title"
     }
   },
   "requirements": [
     [
-      "has_brewery"
+      "has_laser_emitter"
     ]
   ],
   "sends_telemetry_event": true

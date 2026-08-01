@@ -45,8 +45,14 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
         // Heating Coil
         HTShapedRecipeBuilder.create {
             hollow()
-            define('A') { +tag(CommonTagPrefixes.ROD, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) }
+            define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.ADVANCED_RAGI_ALLOY) }
             +RagiumBlocks.HEATING_COIL.toStack()
+        }.save(exporter)
+        // Cooling Unit
+        HTShapedRecipeBuilder.create {
+            hollow()
+            define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
+            +RagiumBlocks.COOLING_UNIT.toStack()
         }.save(exporter)
 
         // Blank Disc
@@ -155,7 +161,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"DDD"
             define('A') { +tag(CommonTagPrefixes.PLATE, RagiumMaterialKeys.STAINLESS_STEEL) }
             define('B', builderAction)
-            define('C') { +RagiumItems.ELECTRIC_CIRCUIT }
+            define('C') { +RagiumItems.THERMOMETER }
             define('D') { +tag(CommonTagPrefixes.PLATE, CommonMaterialKeys.CARBON) }
             +block.toStack()
         }.save(exporter)
@@ -168,7 +174,7 @@ class RagiumVanillaRecipeProvider(packOutput: PackOutput, future: CompletableFut
             +"DDD"
             define('A') { +tag(CommonTagPrefixes.INGOT, HCMaterialKeys.AZURE_STEEL) }
             define('B', builderAction)
-            define('C') { +Items.PACKED_ICE }
+            define('C') { +RagiumBlocks.COOLING_UNIT }
             define('D') { +tag(CommonTagPrefixes.INGOT, CommonMaterialKeys.STEEL) }
             +block.toStack()
         }.save(exporter)

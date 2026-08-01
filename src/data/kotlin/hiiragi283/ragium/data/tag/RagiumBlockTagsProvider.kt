@@ -33,6 +33,7 @@ class RagiumBlockTagsProvider(
 
         builder(BlockTags.MINEABLE_WITH_PICKAXE)
             .add(RagiumBlocks.HEATING_COIL)
+            .add(RagiumBlocks.COOLING_UNIT)
             .add(RagiumBlocks.BOILER)
             .addTag(RagiumTags.BlockItems.MACHINES)
             .addTag(RagiumTags.BlockItems.STORAGES)

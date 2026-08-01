@@ -25,8 +25,8 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumAdvancementKeys.RAGI_ALLOY, "0xFF003F", "ラギ合金インゴットを手に入れる")
         add(RagiumAdvancementKeys.ALLOY_SMELTER, "アル-ケミストリー", "合金炉を手に入れる")
 
-        add(RagiumAdvancementKeys.HEATING_COIL, "ヒート！メタル！", "加熱コイルを手に入れる")
         add(RagiumAdvancementKeys.ADVANCED_RAGI_ALLOY, "多分赤色", "発展ラギ合金インゴットを手に入れる")
+        add(RagiumAdvancementKeys.HEATING_COIL, "ヒート！メタル！", "加熱コイルを手に入れる")
         add(RagiumAdvancementKeys.REFINERY, "かなりリファイナリーだよこれ", "精製機を手に入れる")
         add(RagiumAdvancementKeys.PLASTIC, "Plus-TiC", "プラスチックを手に入れる")
         add(RagiumAdvancementKeys.REFINED_SILICON, "精製シリコン", "シリコンの粉を手に入れる")
@@ -34,15 +34,20 @@ class RagiumJapaneseLangProvider(output: PackOutput) : HTLangProvider(output, Ra
         add(RagiumAdvancementKeys.CRIMSON_CRYSTAL, "チャオ！", "深紅のクリスタルを手に入れる")
         add(RagiumAdvancementKeys.WARPED_CRYSTAL, "安定した歪み", "歪んだのクリスタルを手に入れる")
 
-        add(RagiumAdvancementKeys.RAGI_CRYSTAL, "エナジウムではない", "ラギクリスタリルを手に入れる")
-        add(RagiumAdvancementKeys.STAINLESS_STEEL, "HV時代ではない", "ステンレス鋼インゴットを手に入れる")
-        add(RagiumAdvancementKeys.ELECTRIC_CIRCUIT, "PCB: プリチーでカッコイイボード", "電子回路を手に入れる")
-        add(RagiumAdvancementKeys.BREWERY, "全自動醸造機", "醸造機を手に入れる")
+        add(RagiumAdvancementKeys.THERMOMETER, "Thermal Examination", "温度計を手に入れる")
         add(RagiumAdvancementKeys.MIXER, "ベストマッチ！", "混合機を手に入れる")
+
+        add(RagiumAdvancementKeys.BREWERY, "全自動醸造機", "醸造機を手に入れる")
+
+        add(RagiumAdvancementKeys.RAGI_CRYSTAL, "エナジウムではない", "ラギクリスタリルを手に入れる")
+        add(RagiumAdvancementKeys.STAINLESS_STEEL, "エッジよりもクロム派", "ステンレス鋼インゴットを手に入れる")
+        add(RagiumAdvancementKeys.ELECTRIC_CIRCUIT, "PCB: プリチーでカッコイイボード", "電子回路を手に入れる")
+        add(RagiumAdvancementKeys.LASER_EMITTER, "覗き込まないで", "レーザー発振器を手に入れる")
         // Block
         add(RagiumBlocks.MEAT_BLOCK, "骨付き肉ブロック")
         add(RagiumBlocks.COOKED_MEAT_BLOCK, "骨付き焼肉ブロック")
         add(RagiumBlocks.HEATING_COIL, "加熱コイル")
+        add(RagiumBlocks.COOLING_UNIT, "冷却ユニット")
         add(RagiumBlocks.INDUSTRIAL_TNT, "工業用TNT")
         // Generator
         add(RagiumBlocks.BOILER, "ボイラー")

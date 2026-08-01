@@ -31,7 +31,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.RotatedPillarBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.MapColor
@@ -66,7 +65,10 @@ data object RagiumBlocks {
     )
 
     @JvmField
-    val HEATING_COIL: HTBasicDeferredBlockAndItem<RotatedPillarBlock> = REGISTER.registerSimple("heating_coil", copyOf(Blocks.COPPER_BLOCK), ::RotatedPillarBlock) { it.rarity(Rarity.UNCOMMON) }
+    val HEATING_COIL: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple("heating_coil", copyOf(Blocks.COPPER_BLOCK).noOcclusion()) { it.rarity(Rarity.UNCOMMON) }
+
+    @JvmField
+    val COOLING_UNIT: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple("cooling_unit", copyOf(Blocks.COPPER_BLOCK).noOcclusion()) { it.rarity(Rarity.UNCOMMON) }
 
     @JvmField
     val INDUSTRIAL_TNT: HTSimpleDeferredBlockAndItem = REGISTER.registerSimple("industrial_tnt", copyOf(Blocks.TNT).mapColor(MapColor.TERRACOTTA_ORANGE))

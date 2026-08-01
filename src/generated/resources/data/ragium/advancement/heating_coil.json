@@ -1,5 +1,5 @@
 {
-  "parent": "ragium:alloy_smelter",
+  "parent": "ragium:advanced_ragi_alloy",
   "criteria": {
     "has_heating_coil": {
       "conditions": {
